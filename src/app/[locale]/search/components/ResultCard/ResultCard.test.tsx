@@ -16,6 +16,14 @@ describe("ResultCard", () => {
             />
         );
 
+        const formattedDate = `Date range: ${formatDate(
+            mockResult.metadata.provenance.temporal.startDate || "",
+            "YYYY"
+        )}-${formatDate(
+            mockResult.metadata.provenance.temporal.endDate || "",
+            "YYYY"
+        )}`;
+
         expect(
             screen.getByText(mockResult.metadata.summary.abstract)
         ).toBeInTheDocument();
@@ -28,16 +36,7 @@ describe("ResultCard", () => {
             screen.getByText(mockResult.metadata.summary.shortTitle)
         ).toBeInTheDocument();
         expect(
-            screen.getByText(
-                `Date range: ${formatDate(
-                    mockResult.metadata.provenance.temporal.startDate || "",
-                    "YYYY"
-                )}-${formatDate(
-                    mockResult.metadata.provenance.temporal.endDate || "",
-                    "YYYY"
-                )}`,
-                { exact: false }
-            )
+            screen.getByText(formattedDate, { exact: false })
         ).toBeInTheDocument();
     });
     it("should render n/a when no date", async () => {
