@@ -225,7 +225,7 @@
             "dataUse": "Data Use",
             "tools": "Software / Tools",
             "collections": "Collections",
-            "searchExplainer": "Search by keywords, phenotypes, ICD10 codes",
+            "searchExplainer": "Search by keywords, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
             "components": {
