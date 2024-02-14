@@ -3,29 +3,23 @@ import { inputComponents } from ".";
 const defaultValues = {
     sortField: "updated",
     searchTitle: "",
-    sortDirection: "desc",
 };
 
 const sortByOptions = [
     {
         label: "Sort By Date of Last Update",
         value: "updated",
-        direction: "desc",
+        initialDirection: "desc",
     },
     {
         label: "Sort By Date of Creation",
         value: "created",
-        direction: "desc",
+        initialDirection: "desc",
     },
     {
         label: "Sort By Title",
-        value: "properties/summary/title",
-        direction: "asc",
-    },
-    {
-        label: "Sort By Publisher Name",
-        value: "properties/summary/publisher/publisherName",
-        direction: "asc",
+        value: "metadata.summary.title",
+        initialDirection: "asc",
     },
 ];
 
