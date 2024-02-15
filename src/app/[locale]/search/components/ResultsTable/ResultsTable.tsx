@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { SearchResult } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Paper from "@/components/Paper";
@@ -22,9 +23,11 @@ const columnHelper = createColumnHelper<SearchResult>();
 const getColumns = ({
     handleSelect,
     selected,
+    translations,
 }: {
     handleSelect: (data: { [id: string]: boolean }) => void;
     selected: { [id: string]: boolean };
+    translations: { [id: string]: string };
 }) => [
     columnHelper.display({
         id: "actions",
@@ -50,7 +53,7 @@ const getColumns = ({
     columnHelper.accessor("metadata.metadata.summary.title", {
         cell: info => <EllipsisLineLimit text={info.getValue()} />,
         meta: { isPinned: true, hasPinnedBorder: true },
-        header: () => <span>Metadata title</span>,
+        header: () => <span>{translations.metaDataLabel}</span>,
         size: 240,
     }),
     columnHelper.accessor(POPULATION_SIZE_PATH, {
@@ -61,8 +64,8 @@ const getColumns = ({
             <TooltipIcon
                 buttonSx={{ p: 0 }}
                 size="small"
-                label="Population Size"
-                content="Population size associated with the population type in the dataset"
+                label={translations.populationSizeTooltip}
+                content={translations.dateRangePublisherLabel}
             />
         ),
         size: 120,
@@ -78,8 +81,8 @@ const getColumns = ({
             <TooltipIcon
                 buttonSx={{ p: 0 }}
                 size="small"
-                label="Date range"
-                content="Start and end of the time period that the dataset provides coverage for"
+                label={translations.dateRangePublisherLabel}
+                content={translations.dateRangePublisherTooltip}
             />
         ),
         size: 120,
@@ -92,9 +95,8 @@ const getColumns = ({
             <TooltipIcon
                 buttonSx={{ p: 0 }}
                 size="small"
-                label="Data standard"
-                content="Data models standards that the dataset has been
-                            stored in or transformed to"
+                label={translations.dataStandardLabel}
+                content={translations.dataStandardTooltip}
             />
         ),
         size: 120,
@@ -108,20 +110,34 @@ const getColumns = ({
         header: () => (
             <TooltipIcon
                 buttonSx={{ p: 0 }}
-                label="Data publisher"
+                label={translations.dataPublisherLabel}
                 size="small"
-                content="Individual or organisation publishing metadata on the Gateway"
+                content={translations.dataPublisherTooltip}
             />
         ),
         size: 120,
     }),
 ];
 
+const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
 const ResultTable = ({ results }: ResultTableProps) => {
     const [selected, setSelected] = useState({});
+    const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
 
     const handleSelect = (data: { [id: string]: boolean }) => {
         setSelected({ ...selected, ...data });
+    };
+
+    const translations = {
+        metaDataLabel: t("title.label"),
+        populationSizeLabel: t("populationSize.label"),
+        populationSizeTooltip: t("populationSize.tooltip"),
+        dateRangePublisherLabel: t("dateRangePublisher.label"),
+        dateRangePublisherTooltip: t("dateRangePublisher.tooltip"),
+        dataStandardLabel: t("dataStandard.label"),
+        dataStandardTooltip: t("dataStandard.tooltip"),
+        dataPublisherLabel: t("dataPublisher.label"),
+        dataPublisherTooltip: t("dataPublisher.tooltip"),
     };
 
     return (
@@ -135,7 +151,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
                 mb: 4,
             }}>
             <Table<SearchResult>
-                columns={getColumns({ handleSelect, selected })}
+                columns={getColumns({ handleSelect, selected, translations })}
                 rows={results}
             />
         </Paper>

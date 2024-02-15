@@ -160,13 +160,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         {
             icon: AppsIcon,
             value: ViewType.TABLE,
-            label: "Table",
+            label: t("components.Search.toggleLabelTable"),
             onClick: () => setResultsView(ViewType.TABLE),
         },
         {
             icon: ViewListIcon,
             value: ViewType.LIST,
-            label: "List",
+            label: t("components.Search.toggleLabelList"),
             onClick: () => setResultsView(ViewType.LIST),
         },
     ];
