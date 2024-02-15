@@ -6,6 +6,7 @@ import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
 
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
+window.scrollTo = jest.fn();
 
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
