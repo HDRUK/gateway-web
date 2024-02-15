@@ -3,7 +3,9 @@ import { colors } from "@/config/theme";
 
 export const table = css({
     width: "100%",
-    borderCollapse: "collapse",
+    borderCollapse: "separate",
+    borderSpacing: 0,
+    tableLayout: "fixed",
 });
 
 export const th = css({
