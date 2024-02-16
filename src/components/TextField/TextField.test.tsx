@@ -39,7 +39,7 @@ describe("TextField", () => {
         expect(wrapper.container).toMatchSnapshot();
     });
     it("should throw Error if `showClearButton` set but not provided `setValue`", async () => {
-        jest.spyOn(console, "error").mockImplementation(() => {});
+        jest.spyOn(console, "error").mockImplementation();
 
         expect(() => {
             render(<Component showClearButton />);
