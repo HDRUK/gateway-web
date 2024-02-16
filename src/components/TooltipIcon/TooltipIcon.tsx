@@ -8,10 +8,19 @@ interface TooltipIconProps {
     label: ReactNode;
     content: ReactNode;
     icon?: ReactNode;
+    size?: "medium" | "small" | "inherit" | "large";
     boxSx?: SxProps;
+    buttonSx?: SxProps;
 }
 
-const TooltipIcon = ({ label, content, icon, boxSx }: TooltipIconProps) => {
+const TooltipIcon = ({
+    label,
+    content,
+    icon,
+    size = "medium",
+    boxSx,
+    buttonSx,
+}: TooltipIconProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,9 +41,10 @@ const TooltipIcon = ({ label, content, icon, boxSx }: TooltipIconProps) => {
             {label}
             <IconButton
                 disableRipple
+                sx={{ ...buttonSx }}
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}>
-                {icon || <InfoIcon color="primary" fontSize="medium" />}
+                {icon || <InfoIcon color="primary" fontSize={size} />}
             </IconButton>
             <Popover
                 id="tooltip"

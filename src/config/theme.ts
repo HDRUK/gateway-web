@@ -197,6 +197,19 @@ const theme = createTheme({
                 },
             },
         },
+        MuiToggleButton: {
+            styleOverrides: {
+                root: {
+                    background: colors.grey200,
+
+                    "&.Mui-selected": {
+                        background: "white",
+                    },
+                    borderRadius: 0,
+                    border: "none",
+                },
+            },
+        },
         MuiButton: {
             variants: [
                 {

@@ -15,6 +15,37 @@ interface Metadata {
             publisherName: string;
         };
     };
+    accessibility: {
+        access: {
+            deliveryLeadTime: string;
+            jurisdiction: string;
+            dataController: string;
+            dataProcessor: string;
+            accessRights: string;
+            accessService: string;
+            accessRequestCost: string;
+        };
+        usage: {
+            dataUseLimitation: string;
+            dataUseRequirement: string;
+            resourceCreator: string;
+        };
+        formatAndStandards: {
+            vocabularyEncodingSchemes: string;
+            conformsTo: string;
+            languages: string;
+            formats: string;
+        };
+    };
+    observations: [
+        {
+            observedNode: string;
+            measuredValue: number;
+            observationDate: string;
+            measuredProperty: string;
+            disambiguatingDescription: string;
+        }
+    ];
     provenance: {
         temporal: {
             startDate: string | undefined;

@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useEffect, useRef } from "react";
+import { CSSProperties, useCallback, useEffect, useRef } from "react";
 import {
     flexRender,
     getCoreRowModel,
     useReactTable,
     ColumnDef,
+    Column,
 } from "@tanstack/react-table";
+import { colors } from "@/config/theme";
 import * as styles from "./Table.styles";
 
 interface OnUpdateProps {
@@ -15,6 +17,11 @@ interface OnUpdateProps {
 }
 
 interface TableProps<T> {
+    defaultColumn?: {
+        size?: number;
+        minSize?: number;
+        maxSize?: number;
+    };
     columns: ColumnDef<T, unknown>[];
     rows: T[];
     onUpdate?: (
@@ -39,11 +46,38 @@ function useSkipper() {
     return [shouldSkip, skip] as const;
 }
 
-const Table = <T,>({ columns, rows, onUpdate }: TableProps<T>) => {
+const getCommonCellStyles = <T,>(column: Column<T>): CSSProperties => {
+    const {
+        columnDef: { meta = {} },
+    } = column;
+
+    const { isPinned, hasPinnedBorder } = meta as {
+        isPinned?: boolean;
+        hasPinnedBorder?: boolean;
+    };
+
+    return {
+        backgroundColor: isPinned ? colors.grey100 : "white",
+        boxShadow: hasPinnedBorder ? `1px 0 ${colors.grey300}` : undefined,
+        left: isPinned ? `${column.getStart()}px` : undefined,
+        opacity: isPinned ? 0.95 : 1,
+        position: isPinned ? "sticky" : "relative",
+        width: column.getSize(),
+        zIndex: isPinned ? 1 : 0,
+    };
+};
+
+const Table = <T,>({
+    columns,
+    rows,
+    onUpdate,
+    defaultColumn,
+}: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
     const table = useReactTable({
         data: rows,
         columns,
+        defaultColumn,
         autoResetPageIndex,
         getCoreRowModel: getCoreRowModel(),
         meta: {
@@ -77,13 +111,20 @@ const Table = <T,>({ columns, rows, onUpdate }: TableProps<T>) => {
                 {table.getHeaderGroups().map(headerGroup => (
                     <tr key={headerGroup.id}>
                         {headerGroup.headers.map(header => (
-                            <th css={styles.th} key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.header,
-                                          header.getContext()
-                                      )}
+                            <th
+                                css={styles.th}
+                                key={header.id}
+                                style={{
+                                    ...getCommonCellStyles(header.column),
+                                }}>
+                                <div className="whitespace-nowrap">
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                              header.column.columnDef.header,
+                                              header.getContext()
+                                          )}
+                                </div>
                             </th>
                         ))}
                     </tr>
@@ -97,7 +138,7 @@ const Table = <T,>({ columns, rows, onUpdate }: TableProps<T>) => {
                                 css={styles.td}
                                 key={cell.id}
                                 style={{
-                                    width: cell.column.getSize(),
+                                    ...getCommonCellStyles(cell.column),
                                 }}>
                                 {flexRender(
                                     cell.column.columnDef.cell,

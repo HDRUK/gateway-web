@@ -229,12 +229,35 @@
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
             "components": {
+                "Search": {
+                    "toggleLabelTable": "Table",
+                    "toggleLabelList": "List"
+                },
                 "FilterPanel": {
                     "populationSize": "Population size",
                     "datasetPopulation": "Dataset Population"
                 },
                 "ResultCard": {
                     "dateLabel": "Date range"
+                },
+                "ResultsTable": {
+                    "title": { "label": "Metadata title" },
+                    "populationSize": {
+                        "label": "Population Size",
+                        "tooltip": "Population size associated with the population type in the dataset"
+                    },
+                    "dateRangePublisher": {
+                        "label": "Date range",
+                        "tooltip": "Start and end of the time period that the dataset provides coverage for"
+                    },
+                    "dataStandard": {
+                        "label": "Data standard",
+                        "tooltip": "Data models standards that the dataset has been stored in or transformed to"
+                    },
+                    "dataPublisher": {
+                        "label": "Data publisher",
+                        "tooltip": "Individual or organisation publishing metadata on the Gateway"
+                    }
                 }
             }
         }
