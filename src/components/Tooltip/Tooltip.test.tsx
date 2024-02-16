@@ -1,7 +1,5 @@
-import React from "react";
-import userEvent from "@testing-library/user-event";
 import Tooltip from "@/components/Tooltip";
-import { render, screen, waitFor } from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
 describe("Tooltip", () => {
     it("should render anchor and content", async () => {
@@ -13,7 +11,7 @@ describe("Tooltip", () => {
         const anchor = screen.getByText("tooltip content");
         expect(anchor).toBeInTheDocument();
 
-        userEvent.hover(anchor);
+        fireEvent.mouseOver(anchor);
 
         await waitFor(() => {
             const title = screen.getByText("tooltip title");

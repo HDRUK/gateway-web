@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AccountNav from "@/modules/AccountNav";
 import useLogout from "@/hooks/useLogout";
-import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
+import { act, fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { userV1 } from "@/mocks/data";
 
 jest.mock("@/hooks/useLogout", () => jest.fn());
@@ -29,7 +29,7 @@ const DemoComponent = (props: { onCloseMenu?: () => void }) => {
 
 describe("AccountNav", () => {
     it("should render component", async () => {
-        const wrapper = render(<DemoComponent />);
+        const wrapper = await act(() => render(<DemoComponent />));
 
         expect(wrapper.container).toMatchSnapshot();
     });
