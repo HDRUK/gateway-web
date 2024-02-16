@@ -85,10 +85,15 @@ const useRunFederation = <T extends FieldValues>({
         const payload = pick(
             getValues(),
             watchFederationKeys
-        ) as unknown as Federation;
+        ) as unknown as IntegrationForm;
+
+        const updatedPayload = {
+            ...payload,
+            run_time_hour: parseInt(payload.run_time_hour, 10),
+        } as Federation;
 
         const response = (await runFederationTest(
-            payload
+            updatedPayload
         )) as unknown as FederationRunResponse;
 
         /* Send 'runStatus' to show correct section within run component */
