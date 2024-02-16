@@ -47,5 +47,6 @@ export const navLink = css({
     marginRight: "25px",
     textDecoration: "none",
     fontSize: "14px",
+    fontWeight: 500,
     padding: "6px 8px",
 });

@@ -132,7 +132,10 @@ const palette = {
 
 const theme = createTheme({
     typography: {
-        fontFamily: ["Arial"].join(","),
+        fontFamily: [
+            "__Source_Sans_3_32aa65",
+            "__Source_Sans_3_Fallback_32aa65",
+        ].join(","),
         body1: {
             fontSize: 14,
         },
@@ -191,6 +194,19 @@ const theme = createTheme({
                 indicator: {
                     height: 3,
                     backgroundColor: palette.secondary.main,
+                },
+            },
+        },
+        MuiToggleButton: {
+            styleOverrides: {
+                root: {
+                    background: colors.grey200,
+
+                    "&.Mui-selected": {
+                        background: "white",
+                    },
+                    borderRadius: 0,
+                    border: "none",
                 },
             },
         },

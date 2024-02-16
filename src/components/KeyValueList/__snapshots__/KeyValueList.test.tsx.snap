@@ -9,13 +9,13 @@ exports[`KeyValueList should render component 1`] = `
       class="MuiBox-root mui-style-8hlr3i"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-154s3lx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
       >
         one
         :
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-n13pj7-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
       >
         1
       </p>
@@ -24,13 +24,13 @@ exports[`KeyValueList should render component 1`] = `
       class="MuiBox-root mui-style-8hlr3i"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-154s3lx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
       >
         two
         :
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-n13pj7-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
       >
         2
       </p>
@@ -39,13 +39,13 @@ exports[`KeyValueList should render component 1`] = `
       class="MuiBox-root mui-style-8hlr3i"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-154s3lx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
       >
         three
         :
       </p>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-n13pj7-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
       >
         3
       </p>

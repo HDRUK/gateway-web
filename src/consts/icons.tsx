@@ -2,6 +2,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddIcon from "@mui/icons-material/Add";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import AppsIcon from "@mui/icons-material/Apps";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -45,11 +46,13 @@ import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import ViewListIcon from "@mui/icons-material/ViewList";
 import WarningIcon from "@mui/icons-material/Warning";
 
 export * from "./customIcons";
 
 export {
+    AppsIcon,
     FilterAltOffIcon,
     FilterAltIcon,
     InfoIcon,
@@ -98,4 +101,5 @@ export {
     DownloadIcon,
     WarningIcon,
     CircleIcon,
+    ViewListIcon,
 };

@@ -16,6 +16,7 @@ import SearchBar from "@/components/SearchBar";
 import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
+import ToggleTabs from "@/components/ToggleTabs";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import searchFormConfig, {
@@ -23,14 +24,22 @@ import searchFormConfig, {
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
+import { AppsIcon, ViewListIcon } from "@/consts/icons";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
+import ResultsTable from "../ResultsTable";
 
 const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
 
+const enum ViewType {
+    "TABLE",
+    "LIST",
+}
+
 const Search = ({ filters }: { filters: Filter[] }) => {
+    const [resultsView, setResultsView] = useState(ViewType.TABLE);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -147,6 +156,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         },
     ];
 
+    const toggleButtons = [
+        {
+            icon: AppsIcon,
+            value: ViewType.TABLE,
+            label: t("components.Search.toggleLabelTable"),
+            onClick: () => setResultsView(ViewType.TABLE),
+        },
+        {
+            icon: ViewListIcon,
+            value: ViewType.LIST,
+            label: t("components.Search.toggleLabelList"),
+            onClick: () => setResultsView(ViewType.LIST),
+        },
+    ];
+
     return (
         <>
             <Box
@@ -220,52 +244,70 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
                     }}>
-                    {isSearching && <Loading />}
-
-                    {!isSearching && !data?.list.length && (
-                        <Typography variant="h3">{t("noResults")}</Typography>
-                    )}
-
-                    {!isSearching && !!data?.list.length && (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            m: 2,
+                        }}>
                         <Box
                             sx={{
                                 display: "flex",
-                                flexDirection: "column",
-                                // alignItems: "center",
-                                m: 2,
+                                justifyContent: "space-between",
+                                alignItems: "center",
                             }}>
                             <ShowingXofX
                                 to={data?.to}
                                 from={data?.from}
                                 total={data?.total}
                             />
-                            <List
-                                sx={{
-                                    width: "100%",
-                                    bgcolor: "background.paper",
-                                    mb: 2,
-                                    pb: 2,
-                                }}>
-                                {data?.list.map(result => (
-                                    <ResultCard result={result} />
-                                ))}
-                            </List>
-                            <Pagination
-                                isLoading={isSearching}
-                                page={parseInt(queryParams.page, 10)}
-                                count={data?.lastPage}
-                                onChange={(
-                                    e: React.ChangeEvent<unknown>,
-                                    page: number
-                                ) =>
-                                    setQueryParams({
-                                        ...queryParams,
-                                        page: page.toString(),
-                                    })
-                                }
+                            <ToggleTabs<ViewType>
+                                selected={resultsView}
+                                buttons={toggleButtons}
                             />
                         </Box>
-                    )}
+                        {isSearching && <Loading />}
+
+                        {!isSearching && !data?.list.length && (
+                            <Typography variant="h3">
+                                {t("noResults")}
+                            </Typography>
+                        )}
+                        {!isSearching && !!data?.list.length && (
+                            <>
+                                {resultsView === ViewType.LIST && (
+                                    <List
+                                        sx={{
+                                            width: "100%",
+                                            bgcolor: "background.paper",
+                                            mb: 2,
+                                            pb: 2,
+                                        }}>
+                                        {data?.list.map(result => (
+                                            <ResultCard result={result} />
+                                        ))}
+                                    </List>
+                                )}
+                                {resultsView === ViewType.TABLE && (
+                                    <ResultsTable results={data?.list} />
+                                )}
+                                <Pagination
+                                    isLoading={isSearching}
+                                    page={parseInt(queryParams.page, 10)}
+                                    count={data?.lastPage}
+                                    onChange={(
+                                        e: React.ChangeEvent<unknown>,
+                                        page: number
+                                    ) =>
+                                        setQueryParams({
+                                            ...queryParams,
+                                            page: page.toString(),
+                                        })
+                                    }
+                                />
+                            </>
+                        )}
+                    </Box>
                 </Box>
             </BoxContainer>
         </>

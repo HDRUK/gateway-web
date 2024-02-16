@@ -9,7 +9,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
       class="MuiBox-root mui-style-1ifzgud"
     >
       <h2
-        class="MuiTypography-root MuiTypography-h2 mui-style-1j4mnqy-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
       >
         Cohort Discovery
       </h2>
@@ -54,7 +54,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
             href="button/url"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-1gtm4ny-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-zqi6id-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
@@ -125,7 +125,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-1gtm4ny-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-zqi6id-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >

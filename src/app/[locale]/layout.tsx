@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import NavigationEvents from "@/components/NavigationEvents";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import { sourceSans3 } from "@/config/fonts";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
@@ -41,7 +42,8 @@ export default function RootLayout({
                                     <div
                                         style={{
                                             width: "100%",
-                                            fontFamily: "arial",
+                                            fontFamily:
+                                                sourceSans3.style.fontFamily,
                                         }}>
                                         <Header />
                                         <main>{children}</main>

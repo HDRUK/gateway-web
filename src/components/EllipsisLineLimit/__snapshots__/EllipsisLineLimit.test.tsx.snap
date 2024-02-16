@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EllipsisLineLimit should render component 1`] = `
+<div>
+  <div
+    class="LinesEllipsis  "
+  >
+    Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
+    <wbr />
+  </div>
+</div>
+`;
