@@ -64,8 +64,8 @@ const getColumns = ({
             <TooltipIcon
                 buttonSx={{ p: 0 }}
                 size="small"
-                label={translations.populationSizeTooltip}
-                content={translations.dateRangePublisherLabel}
+                label={translations.populationSizeLabel}
+                content={translations.populationSizeTooltip}
             />
         ),
         size: 120,

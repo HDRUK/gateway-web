@@ -261,8 +261,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 from={data?.from}
                                 total={data?.total}
                             />
-                            <ToggleTabs
-                                selected={resultsView as unknown as string}
+                            <ToggleTabs<ViewType>
+                                selected={resultsView}
                                 buttons={toggleButtons}
                             />
                         </Box>

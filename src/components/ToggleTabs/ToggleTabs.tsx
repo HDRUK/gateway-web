@@ -12,12 +12,12 @@ interface ButtonsProps extends ToggleButtonProps {
     label: string;
 }
 
-interface ToggleTabsProps {
+interface ToggleTabsProps<T> {
     buttons: ButtonsProps[];
-    selected: string;
+    selected: T;
 }
 
-const ToggleTabs = ({ buttons, selected }: ToggleTabsProps) => {
+const ToggleTabs = <T,>({ buttons, selected }: ToggleTabsProps<T>) => {
     return (
         <Paper>
             <ToggleButtonGroup value={selected}>

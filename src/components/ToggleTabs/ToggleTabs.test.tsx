@@ -22,9 +22,9 @@ describe("ToggleTabs", () => {
             />
         );
 
-        expect(screen.getByText("table")).toBeInTheDocument();
+        expect(screen.getByText("Table")).toBeInTheDocument();
         expect(screen.getByTestId("AppsIcon")).toBeInTheDocument();
-        expect(screen.getByText("list")).toBeInTheDocument();
+        expect(screen.getByText("List")).toBeInTheDocument();
         expect(screen.getByTestId("ViewListIcon")).toBeInTheDocument();
     });
 });
