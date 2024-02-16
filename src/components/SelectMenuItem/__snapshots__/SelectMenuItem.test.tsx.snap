@@ -6,7 +6,7 @@ exports[`SelectedMenuItem should render basic component 1`] = `
     class="MuiListItemText-root mui-style-tlelie-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-9vv8vz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-10mf3hg-MuiTypography-root"
     >
        
       Menu label
@@ -36,7 +36,7 @@ exports[`SelectedMenuItem should render component with icon 1`] = `
     class="MuiListItemText-root mui-style-tlelie-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-9vv8vz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-10mf3hg-MuiTypography-root"
     >
        
       Menu label
@@ -51,7 +51,7 @@ exports[`SelectedMenuItem should render component with right position icon 1`] =
     class="MuiListItemText-root mui-style-tlelie-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-9vv8vz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-10mf3hg-MuiTypography-root"
     >
        
       Menu label
@@ -81,7 +81,7 @@ exports[`SelectedMenuItem should render invertListItem component  1`] = `
     class="MuiListItemText-root mui-style-tlelie-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-9vv8vz-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-10mf3hg-MuiTypography-root"
     >
        
       Menu label

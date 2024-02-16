@@ -3,7 +3,7 @@
 exports[`Label should render asterick 1`] = `
 <div>
   <p
-    class="MuiTypography-root MuiTypography-body2 mui-style-15dl2ge-MuiTypography-root-Label"
+    class="MuiTypography-root MuiTypography-body2 mui-style-16qh409-MuiTypography-root-Label"
   >
     <label>
       This is a label

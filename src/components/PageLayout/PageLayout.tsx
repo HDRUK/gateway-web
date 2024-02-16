@@ -8,7 +8,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <div style={{ width: "100%", fontFamily: "arial" }}>
+        <div style={{ width: "100%" }}>
             <Header />
             <main>{children}</main>
             <Footer />
