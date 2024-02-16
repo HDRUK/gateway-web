@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@/utils/testUtils";
+import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import CohortTableDownload from "./CohortTableDownload";
 
 describe("Cohort Table Download", () => {
@@ -19,8 +19,10 @@ describe("Cohort Table Download", () => {
         expect(screen.getByText("Export Filters")).toBeInTheDocument();
         expect(screen.getByText("Date range")).toBeInTheDocument();
 
-        const exportButton = screen.getByText("Export xs file");
-        fireEvent.click(exportButton);
+        await waitFor(() => {
+            const exportButton = screen.getByText("Export xs file");
+            fireEvent.click(exportButton);
+        });
 
         // Wait some time for it to have been called
         setTimeout(() => {

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Control } from "react-hook-form";
 import { Box } from "@mui/material";
 import { FormField } from "@/interfaces/FormField";
@@ -31,7 +30,7 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
                             my: 1,
                         }}>
                         {field.fields.map(subField => (
-                            <>
+                            <div key={subField.name}>
                                 {subField.label}
                                 <InputWrapper
                                     formControlSx={{
@@ -39,12 +38,11 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
                                         mx: 2,
                                         my: "auto",
                                     }}
-                                    key={subField.name}
                                     control={control}
                                     {...subField}
                                     label=""
                                 />
-                            </>
+                            </div>
                         ))}
                     </Box>
                 </>
@@ -57,6 +55,7 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
         <Box sx={{ p: 0 }}>
             {fields.map((field: FieldProps) => (
                 <Box
+                    key={field.name}
                     sx={{
                         py: 1,
                         my: 1,
