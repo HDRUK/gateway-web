@@ -55,7 +55,7 @@ const Footer = () => {
                 <Image src={hdrukLogo} alt="HDRUK logo" width="130" />
                 <ul css={styles.list}>
                     {links.map(link => (
-                        <li key={link.href}>
+                        <li key={`${link.label}-${link.href}`}>
                             <Link css={styles.link} href={link.href}>
                                 {link.label}
                             </Link>

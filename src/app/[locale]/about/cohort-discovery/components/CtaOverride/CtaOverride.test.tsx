@@ -9,8 +9,13 @@ const MOCK_CTA_LINK = {
     title: "CTA TITLE",
 };
 
+jest.mock("@/hooks/useAuth", () => ({
+    __esModule: true,
+    default: () => ({ isLoggedIn: true }),
+}));
+
 describe("CtaOverride", () => {
-    it("should display cta link title text", async () => {
+    it("should display cta link title text", () => {
         render(<CtaOverride ctaLink={MOCK_CTA_LINK} />);
         expect(screen.getByTestId(DATA_TEST_ID)).toBeInTheDocument();
     });

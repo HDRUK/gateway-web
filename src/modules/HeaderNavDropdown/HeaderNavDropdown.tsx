@@ -58,7 +58,7 @@ const Dropdown = ({ onCloseMenu, anchorElement, dropMenus }: DropdownProps) => {
             onClose={handleCloseUserMenu}
             open={Boolean(anchorElement)}>
             {dropMenus.map(link => (
-                <Fragment key={link.href}>
+                <Fragment key={`${link.label}-${link.href}`}>
                     <Link
                         key={link.label}
                         href={link.href}

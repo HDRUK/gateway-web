@@ -1,5 +1,3 @@
-import React from "react";
-import userEvent from "@testing-library/user-event";
 import MapUK from "@/components/MapUK";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
@@ -15,12 +13,14 @@ describe("MapUK", () => {
         const wales = screen.getByTestId("wales");
         fireEvent.click(wales);
 
-        expect(mockFn).toHaveBeenCalledWith({
-            england: false,
-            northernIreland: false,
-            scotland: false,
-            wales: true,
-            world: false,
+        await waitFor(() => {
+            expect(mockFn).toHaveBeenCalledWith({
+                england: false,
+                northernIreland: false,
+                scotland: false,
+                wales: true,
+                world: false,
+            });
         });
     });
 
@@ -28,7 +28,7 @@ describe("MapUK", () => {
         render(<MapUK counts={{ wales: 204 }} />);
 
         const wales = screen.getByTestId("wales");
-        userEvent.hover(wales);
+        fireEvent.mouseOver(wales);
 
         await waitFor(() => {
             const title = screen.getByText("204 datasets");

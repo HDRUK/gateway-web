@@ -70,7 +70,7 @@ const CheckboxGroup = ({
                             : null,
                 }}>
                 {checkboxes.map(checkbox => (
-                    <Box key={checkbox.value} sx={{ p: 0, m: 0 }}>
+                    <Box key={`${checkbox.label}-wrapper`} sx={{ p: 0, m: 0 }}>
                         <Checkbox
                             name={checkbox.value}
                             control={control}

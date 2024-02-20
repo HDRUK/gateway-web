@@ -8,6 +8,7 @@ import IntegrationList from "./IntegrationList";
 describe("IntegrationList", () => {
     mockRouter.query = { teamId: "1" };
     const integrationsV1 = generateIntegrationsV1(10);
+    window.scrollTo = jest.fn();
 
     beforeEach(() => {
         server.use(
