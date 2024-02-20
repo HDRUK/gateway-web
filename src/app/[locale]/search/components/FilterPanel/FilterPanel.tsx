@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import Accordion from "@/components/Accordion";
 import FilterSection from "@/components/FilterSection";
 import Typography from "@/components/Typography";
-import { groupByType } from "@/utils/filters";
+import { groupByType, transformQueryFiltersToForm } from "@/utils/filters";
 import { capitalise, splitCamelcase } from "@/utils/general";
 
 const FilterPanel = ({
@@ -16,11 +17,18 @@ const FilterPanel = ({
     filters: Filter[];
     setFilterQueryParams: (params: string) => void;
 }) => {
+    const searchParams = useSearchParams();
+
+    const getQueryParam = (paramName: string) => {
+        return searchParams?.get(paramName)?.toString();
+    };
+
     const { control, setValue, watch } = useForm({
         defaultValues: {
             publisherName: {
                 input: "",
-                filters: [],
+                filters:
+                    transformQueryFiltersToForm(getQueryParam("filter")) || {},
             },
         },
     });

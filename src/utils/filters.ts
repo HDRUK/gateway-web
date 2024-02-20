@@ -61,4 +61,29 @@ const transformQueryFilters = (type: string, filtersQuery?: string) => {
     };
 };
 
-export { groupByType, convertFilterTypesToObj, transformQueryFilters };
+const transformQueryFiltersToForm = (filtersQuery?: string) => {
+    if (!filtersQuery) {
+        return;
+    }
+
+    const [, valuesString] = filtersQuery.split("=");
+    if (!valuesString) {
+        return;
+    }
+
+    const filtersArray = valuesString.split(",").map(name => name.trim());
+
+    const result: { [key: string]: boolean } = {};
+    filtersArray.map(name => {
+        result[name] = true;
+    });
+
+    return result;
+};
+
+export {
+    groupByType,
+    convertFilterTypesToObj,
+    transformQueryFilters,
+    transformQueryFiltersToForm,
+};

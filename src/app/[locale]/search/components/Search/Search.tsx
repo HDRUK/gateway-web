@@ -105,6 +105,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll.sort]);
 
+    useEffect(() => {
+        router.push(
+            `${pathname}?${updateQueryString(
+                FILTER_FIELD,
+                queryParams.filters || ""
+            )}`
+        );
+    }, [queryParams.filters]);
+
     const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
