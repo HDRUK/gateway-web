@@ -22,7 +22,9 @@ const FilterPanel = ({
 }: {
     filters: Filter[];
     setFilterQueryParams: (params: string) => void;
-    defaultFilterState: any;
+    defaultFilterState: {
+        [key: string]: boolean;
+    };
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
