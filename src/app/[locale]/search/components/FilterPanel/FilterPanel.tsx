@@ -9,7 +9,13 @@ import Typography from "@/components/Typography";
 import { groupByType } from "@/utils/filters";
 import { capitalise, splitCamelcase } from "@/utils/general";
 
-const FilterPanel = ({ filters }: { filters: Filter[] }) => {
+const FilterPanel = ({
+    filters,
+    setFilterQueryParams,
+}: {
+    filters: Filter[];
+    setFilterQueryParams: (params: string) => void;
+}) => {
     const { control, setValue, watch } = useForm({
         defaultValues: {
             publisherName: {
@@ -24,6 +30,19 @@ const FilterPanel = ({ filters }: { filters: Filter[] }) => {
     }, [filters]);
 
     const [minimised, setMinimised] = useState<string[]>([]);
+
+    const watchAll = watch();
+
+    const publisherNameFilters = useMemo(() => {
+        return Object.entries(watchAll.publisherName.filters)
+            .filter(([, value]) => value === true)
+            .map(([key]) => key)
+            .join(",");
+    }, [watchAll]);
+
+    useEffect(() => {
+        setFilterQueryParams("publisherName=".concat(publisherNameFilters));
+    }, [publisherNameFilters]);
 
     return (
         <>

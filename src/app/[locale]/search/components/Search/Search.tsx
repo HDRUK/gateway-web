@@ -20,11 +20,13 @@ import ToggleTabs from "@/components/ToggleTabs";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import searchFormConfig, {
+    FILTER_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon } from "@/consts/icons";
+import { transformQueryFilters } from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
@@ -64,6 +66,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const [queryParams, setQueryParams] = useState({
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
+        filters: getQueryParam(FILTER_FIELD),
         page: "1",
         per_page: "25",
     });
@@ -123,9 +126,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     >(
         `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
         {
-            ...queryParams,
+            query: queryParams.query,
             sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
             direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
+            ...transformQueryFilters("dataset", queryParams.filters),
         },
         {
             keepPreviousData: true,
@@ -238,7 +242,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     sx={{
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
-                    <FilterPanel filters={filters} />
+                    <FilterPanel
+                        filters={filters}
+                        setFilterQueryParams={(params: string) =>
+                            setQueryParams({ ...queryParams, filters: params })
+                        }
+                    />
                 </Box>
                 <Box
                     sx={{

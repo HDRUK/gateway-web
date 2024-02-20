@@ -43,4 +43,22 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
-export { groupByType, convertFilterTypesToObj };
+const transformQueryFilters = (type: string, filtersQuery?: string) => {
+    if (!filtersQuery) {
+        return;
+    }
+
+    const [key, valuesString] = filtersQuery.split("=");
+    if (!valuesString) {
+        return;
+    }
+
+    const filtersArray = valuesString.split(",").map(name => name.trim());
+    return {
+        filters: {
+            [type]: { [key.trim()]: filtersArray },
+        },
+    };
+};
+
+export { groupByType, convertFilterTypesToObj, transformQueryFilters };
