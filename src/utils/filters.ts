@@ -1,4 +1,4 @@
-import { Filter, FilterType } from "@/interfaces/Filter";
+import { BucketCheckbox, Filter, FilterType } from "@/interfaces/Filter";
 
 const convertFilterTypesToObj = <T>(
     filterTypes: FilterType[],
@@ -16,19 +16,31 @@ const convertFilterTypesToObj = <T>(
 };
 
 const groupByType = (
-    data: Filter[]
+    data: Filter[],
+    type: string
 ): {
-    [key in FilterType]: { label: string; value: string; count?: number }[];
-} => {
-    return data.reduce((acc, item) => {
-        const { type, ...rest } = item;
-        acc[type] = acc[type] || [];
-        acc[type].push({
-            value: rest.id.toString(),
-            label: rest.value,
-        });
-        return acc;
-    }, {} as { [key in FilterType]: { label: string; value: string; count?: number }[] });
+    label: string;
+    value: string;
+    buckets: BucketCheckbox[];
+}[] => {
+    return data
+        .filter(item => item.type === type)
+        .reduce((acc, item) => {
+            const { type, ...rest } = item;
+            acc = acc || [];
+            acc.push({
+                value: rest.id.toString(),
+                label: rest.keys,
+                buckets: rest.buckets.map(bucket => {
+                    return {
+                        value: `${rest.keys}.filters.${bucket.key}`,
+                        label: bucket.key,
+                        count: bucket.doc_count,
+                    };
+                }),
+            });
+            return acc;
+        }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
 export { groupByType, convertFilterTypesToObj };
