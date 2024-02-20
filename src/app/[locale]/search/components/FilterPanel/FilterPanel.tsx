@@ -2,33 +2,27 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import Accordion from "@/components/Accordion";
 import FilterSection from "@/components/FilterSection";
 import Typography from "@/components/Typography";
-import { groupByType, transformQueryFiltersToForm } from "@/utils/filters";
+import { groupByType } from "@/utils/filters";
 import { capitalise, splitCamelcase } from "@/utils/general";
 
 const FilterPanel = ({
     filters,
     setFilterQueryParams,
+    defaultFilterState,
 }: {
     filters: Filter[];
     setFilterQueryParams: (params: string) => void;
+    defaultFilterState: any;
 }) => {
-    const searchParams = useSearchParams();
-
-    const getQueryParam = (paramName: string) => {
-        return searchParams?.get(paramName)?.toString();
-    };
-
     const { control, setValue, watch } = useForm({
         defaultValues: {
             publisherName: {
                 input: "",
-                filters:
-                    transformQueryFiltersToForm(getQueryParam("filter")) || {},
+                filters: defaultFilterState,
             },
         },
     });
@@ -55,7 +49,7 @@ const FilterPanel = ({
     return (
         <>
             {filterGroups.map(filterGroup => {
-                const { label, value } = filterGroup;
+                const { label } = filterGroup;
 
                 return (
                     <Accordion
@@ -80,7 +74,6 @@ const FilterPanel = ({
                                 setValue={setValue}
                                 control={control}
                                 filterItems={filterGroup}
-                                value={watch(value)}
                             />
                         }
                     />

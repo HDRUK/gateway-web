@@ -26,7 +26,10 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon } from "@/consts/icons";
-import { transformQueryFilters } from "@/utils/filters";
+import {
+    transformQueryFilters,
+    transformQueryFiltersToForm,
+} from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
@@ -255,6 +258,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         filters={filters}
                         setFilterQueryParams={(params: string) =>
                             setQueryParams({ ...queryParams, filters: params })
+                        }
+                        defaultFilterState={
+                            transformQueryFiltersToForm(
+                                getQueryParam(FILTER_FIELD)
+                            ) || {}
                         }
                     />
                 </Box>
