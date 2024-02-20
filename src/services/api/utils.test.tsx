@@ -46,10 +46,10 @@ describe("Api Service - Utils", () => {
         );
     });
     it("errorNotification - with title from locale config (based on the status)", () => {
-        const error = errorResponseV1(404);
+        const error = errorResponseV1();
         errorNotification({
-            errorResponse: {
-                status: 404,
+            status: 401,
+            error: {
                 data: error,
                 ...expect.any(Object),
             },
@@ -62,14 +62,14 @@ describe("Api Service - Utils", () => {
         expect(notificationService.apiError).toBeCalledWith(error.message, {
             errors: error.errors,
             message: error.message,
-            title: error.title,
         });
     });
     it("errorNotification - with fallback title", () => {
         const unknownError = 342432;
-        const error = errorResponseV1(unknownError);
+        const error = errorResponseV1();
         errorNotification({
-            errorResponse: {
+            status: 403,
+            error: {
                 status: unknownError,
                 data: error,
                 ...expect.any(Object),
@@ -83,7 +83,6 @@ describe("Api Service - Utils", () => {
         expect(notificationService.apiError).toBeCalledWith(error.message, {
             errors: error.errors,
             message: error.message,
-            title: error.title,
         });
     });
 

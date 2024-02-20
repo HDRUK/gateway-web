@@ -1,40 +1,55 @@
 import { RequestOptions } from "@/interfaces/Api";
-import http from "@/utils/http";
-import { errorNotification, successNotification } from "./utils";
+import { errorNotification } from "./utils";
 
 const patchRequest = async <T>(
     url: string,
     data: unknown,
     options: RequestOptions
-): Promise<T> => {
-    const { axiosOptions = {}, notificationOptions } = options;
-    const {
-        successNotificationsOn = true,
-        errorNotificationsOn = true,
-        ...props
-    } = notificationOptions;
+): Promise<T | null> => {
+    const { notificationOptions } = options;
+    const { errorNotificationsOn = true, ...props } = notificationOptions || {};
 
-    return await http
-        .patch(url, data, axiosOptions)
-        .then(res => {
-            if (successNotificationsOn) {
-                successNotification({
-                    method: "patch",
-                    props,
-                });
-            }
-            return res.data?.data;
-        })
-        .catch(error => {
+    try {
+        const response = await fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify(data),
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+
+            return json.data;
+        }
+
+        if (!response.ok) {
+            const error = await response.json();
             if (errorNotificationsOn) {
                 errorNotification({
-                    errorResponse: error.response,
+                    status: response.status,
+                    error: { ...error },
                     props,
                     method: "patch",
                 });
             }
-            throw error;
-        });
+        }
+    } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+            console.error(error);
+        }
+
+        if (errorNotificationsOn) {
+            errorNotification({
+                error,
+                props,
+                method: "patch",
+            });
+        }
+    }
+    return null;
 };
 
-export { patchRequest };
+export default patchRequest;

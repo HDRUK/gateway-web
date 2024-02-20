@@ -1,6 +1,6 @@
 import { rest } from "msw";
-import apis from "@/config/apis";
 import { Filter } from "@/interfaces/Filter";
+import apis from "@/config/apis";
 import { filtersV1, filterV1 } from "@/mocks/data";
 import { errorResponseV1 } from "@/mocks/data/api/v1";
 
@@ -59,7 +59,7 @@ interface DeleteResponse {
 const deleteFilterV1 = (status = 200) => {
     return rest.delete(`${apis.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
-            return res(ctx.status(status), ctx.json(errorResponseV1(status)));
+            return res(ctx.status(status), ctx.json(errorResponseV1()));
         }
         return res(
             ctx.status(status),

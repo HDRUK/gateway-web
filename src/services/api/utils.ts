@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { get } from "lodash";
 import { NotificationOptions } from "@/interfaces/Api";
 import { Error } from "@/interfaces/Error";
@@ -7,33 +6,34 @@ import messages from "@/config/messages/en.json";
 
 interface ErrorNotificationProps {
     props: NotificationOptions;
-    errorResponse: AxiosResponse<Error>;
+    status: number;
+    error: Error;
     method: "delete" | "post" | "put" | "get" | "patch";
 }
 
 const errorNotification = ({
-    errorResponse,
+    error,
     method,
+    status,
     props,
 }: ErrorNotificationProps) => {
     const { t, ...notificationProps } = props;
-    const { data, status } = errorResponse || {};
+    const { errors, message } = error || {};
 
-    const fallbackTitle = get(messages, `api.common.error.status.${status}`)
+    const title = get(messages, `api.common.error.status.${status}`)
         ? t(`common.error.status.${status}`)
         : "There has been an error";
 
-    const title = data?.title || fallbackTitle;
-    const message =
-        data?.message ||
+    const messageTransformed =
+        message ||
         t(`common.error.${method}.message`, {
-            item: props.itemName || "Item",
+            item: props.itemName || "item",
         });
 
     notificationService.apiError(message, {
         title,
-        message,
-        errors: data?.errors,
+        message: messageTransformed,
+        errors,
         ...notificationProps,
     });
 };
@@ -52,7 +52,7 @@ const successNotification = ({ props, method }: SuccessNotificationProps) => {
     )
         ? t(`${props.localeKey}.success.${method}.message`)
         : t(`common.success.${method}.message`, {
-              item: props.itemName || "Item",
+              item: props.itemName || "item",
           });
 
     notificationService.apiSuccess(message, { ...notificationProps });
