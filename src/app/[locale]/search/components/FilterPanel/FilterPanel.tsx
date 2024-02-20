@@ -2,12 +2,18 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { Filter } from "@/interfaces/Filter";
 import Accordion from "@/components/Accordion";
 import FilterSection from "@/components/FilterSection";
+import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import { groupByType } from "@/utils/filters";
-import { capitalise, splitCamelcase } from "@/utils/general";
+
+const TRANSLATION_PATH = "pages.search.components.FilterPanel";
+const TOOLTIP_SUFFIX = "Tooltip";
+const PUBLISHER_NAME = "publisherName";
+const ENABLED_FILTERS = [PUBLISHER_NAME];
 
 const FilterPanel = ({
     filters,
@@ -18,6 +24,8 @@ const FilterPanel = ({
     setFilterQueryParams: (params: string) => void;
     defaultFilterState: any;
 }) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const { control, setValue, watch } = useForm({
         defaultValues: {
             publisherName: {
@@ -28,7 +36,9 @@ const FilterPanel = ({
     });
 
     const filterGroups = useMemo(() => {
-        return groupByType(filters, "dataset");
+        return groupByType(filters, "dataset").filter(filterGroup =>
+            ENABLED_FILTERS.includes(filterGroup.label)
+        );
     }, [filters]);
 
     const [minimised, setMinimised] = useState<string[]>([]);
@@ -43,7 +53,7 @@ const FilterPanel = ({
     }, [watchAll]);
 
     useEffect(() => {
-        setFilterQueryParams("publisherName=".concat(publisherNameFilters));
+        setFilterQueryParams(`${PUBLISHER_NAME}=`.concat(publisherNameFilters));
     }, [publisherNameFilters]);
 
     return (
@@ -54,12 +64,20 @@ const FilterPanel = ({
                 return (
                     <Accordion
                         key={label}
-                        sx={{ background: "transparent", boxShadow: "none" }}
+                        sx={{
+                            background: "transparent",
+                            boxShadow: "none",
+                        }}
                         expanded={!minimised.includes(label)}
                         heading={
-                            <Typography fontWeight="400" fontSize="20px">
-                                {capitalise(splitCamelcase(label))}
-                            </Typography>
+                            <Tooltip
+                                key={label}
+                                placement="right"
+                                title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                <Typography fontWeight="400" fontSize="20px">
+                                    {t(label)}
+                                </Typography>
+                            </Tooltip>
                         }
                         onChange={() =>
                             setMinimised(
