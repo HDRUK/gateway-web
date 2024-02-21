@@ -6,7 +6,7 @@ const postFetch = async <T>(
     data: unknown,
     options: RequestOptions
 ): Promise<T | null> => {
-    const { notificationOptions } = options;
+    const { withPagination, notificationOptions } = options;
     const {
         successNotificationsOn = true,
         errorNotificationsOn = true,
@@ -33,7 +33,18 @@ const postFetch = async <T>(
                 });
             }
 
-            return json.data;
+            if (!withPagination) return json.data;
+
+            const { data, current_page, last_page, next_page_url, ...rest } =
+                json;
+
+            return {
+                list: data,
+                currentPage: current_page,
+                lastPage: last_page,
+                nextPageUrl: next_page_url,
+                ...rest,
+            };
         }
 
         if (!response.ok) {
