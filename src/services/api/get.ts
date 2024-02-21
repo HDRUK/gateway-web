@@ -6,7 +6,7 @@ const getRequest = async <T>(
     options: RequestOptions
 ): Promise<T | unknown> => {
     const { withPagination, notificationOptions } = options;
-    const { errorNotificationsOn = true, ...props } = notificationOptions || {};
+    const { errorNotificationsOn = true, ...props } = notificationOptions;
 
     try {
         const response = await fetch(url, { credentials: "include" });
@@ -53,9 +53,9 @@ const getRequest = async <T>(
             if (errorNotificationsOn) {
                 errorNotification({
                     status: response.status,
-                    error,
+                    error: { ...error },
                     props,
-                    method: "post",
+                    method: "get",
                 });
             }
         }
@@ -66,7 +66,6 @@ const getRequest = async <T>(
 
         if (errorNotificationsOn) {
             errorNotification({
-                error,
                 props,
                 method: "get",
             });

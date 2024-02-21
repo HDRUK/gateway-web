@@ -13,7 +13,9 @@ const getFiltersV1 = (data = filtersV1, status = 200) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
-                ctx.json(`Request failed with status code ${status}`)
+                ctx.json({
+                    message: `Request failed with status code ${status}`,
+                })
             );
         }
         return res(ctx.status(status), ctx.json<GetResponse>({ data }));

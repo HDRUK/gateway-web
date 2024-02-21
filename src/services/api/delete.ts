@@ -1,12 +1,16 @@
 import { RequestOptions } from "@/interfaces/Api";
-import { errorNotification } from "./utils";
+import { errorNotification, successNotification } from "./utils";
 
 const deleteRequest = async <T>(
     url: string,
     options: RequestOptions
 ): Promise<T | null> => {
     const { notificationOptions } = options;
-    const { errorNotificationsOn = true, ...props } = notificationOptions;
+    const {
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
+        ...props
+    } = notificationOptions;
 
     try {
         const response = await fetch(url, {
@@ -16,6 +20,13 @@ const deleteRequest = async <T>(
 
         if (response.ok) {
             const json = await response.json();
+
+            if (successNotificationsOn) {
+                successNotification({
+                    method: "delete",
+                    props,
+                });
+            }
 
             return json.data;
         }
@@ -38,7 +49,6 @@ const deleteRequest = async <T>(
 
         if (errorNotificationsOn) {
             errorNotification({
-                error,
                 props,
                 method: "delete",
             });

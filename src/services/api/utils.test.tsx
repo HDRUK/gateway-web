@@ -25,11 +25,10 @@ jest.mock("@/services/notification/notification", () => {
 describe("Api Service - Utils", () => {
     it("errorNotification - with default title", () => {
         errorNotification({
-            errorResponse: {
-                status: 404,
-                data: {},
+            error: {
                 ...expect.any(Object),
             },
+            status: 404,
             method: "put",
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,7 +39,6 @@ describe("Api Service - Utils", () => {
             "common.error.put.message",
             {
                 errors: undefined,
-                message: "common.error.put.message",
                 title: "common.error.status.404",
             }
         );
@@ -49,10 +47,7 @@ describe("Api Service - Utils", () => {
         const error = errorResponseV1();
         errorNotification({
             status: 401,
-            error: {
-                data: error,
-                ...expect.any(Object),
-            },
+            error,
             method: "put",
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,19 +56,15 @@ describe("Api Service - Utils", () => {
         });
         expect(notificationService.apiError).toBeCalledWith(error.message, {
             errors: error.errors,
-            message: error.message,
+            title: "common.error.status.401",
         });
     });
     it("errorNotification - with fallback title", () => {
         const unknownError = 342432;
         const error = errorResponseV1();
         errorNotification({
-            status: 403,
-            error: {
-                status: unknownError,
-                data: error,
-                ...expect.any(Object),
-            },
+            status: unknownError,
+            error,
             method: "put",
             props: {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,8 +72,8 @@ describe("Api Service - Utils", () => {
             },
         });
         expect(notificationService.apiError).toBeCalledWith(error.message, {
+            title: "There has been an error",
             errors: error.errors,
-            message: error.message,
         });
     });
 
@@ -100,7 +91,7 @@ describe("Api Service - Utils", () => {
         );
     });
 
-    it("successNotification: calls t with default 'Item' label", () => {
+    it("successNotification: calls t with default 'item' label", () => {
         const tMock = jest.fn();
         successNotification({
             method: "put",
@@ -109,7 +100,7 @@ describe("Api Service - Utils", () => {
             },
         });
         expect(tMock).toBeCalledWith("common.success.put.message", {
-            item: "Item",
+            item: "item",
         });
     });
 

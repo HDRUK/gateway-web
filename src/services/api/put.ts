@@ -1,5 +1,5 @@
 import { RequestOptions } from "@/interfaces/Api";
-import { errorNotification } from "./utils";
+import { errorNotification, successNotification } from "./utils";
 
 const putRequest = async <T>(
     url: string,
@@ -7,7 +7,11 @@ const putRequest = async <T>(
     options: RequestOptions
 ): Promise<T | null> => {
     const { notificationOptions } = options;
-    const { errorNotificationsOn = true, ...props } = notificationOptions || {};
+    const {
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
+        ...props
+    } = notificationOptions;
 
     try {
         const response = await fetch(url, {
@@ -21,6 +25,13 @@ const putRequest = async <T>(
 
         if (response.ok) {
             const json = await response.json();
+
+            if (successNotificationsOn) {
+                successNotification({
+                    method: "put",
+                    props,
+                });
+            }
 
             return json.data;
         }
@@ -37,14 +48,12 @@ const putRequest = async <T>(
             }
         }
     } catch (error) {
-        console.log("error: ", error);
         if (process.env.NODE_ENV === "development") {
             console.error(error);
         }
 
         if (errorNotificationsOn) {
             errorNotification({
-                error,
                 props,
                 method: "put",
             });

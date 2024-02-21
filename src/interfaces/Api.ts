@@ -13,8 +13,7 @@ interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
 
 interface RequestOptions {
     withPagination?: boolean;
-    fetchOptions?: RequestInit;
-    notificationOptions?: NotificationOptions;
+    notificationOptions: NotificationOptions;
 }
 
 interface HttpOptions extends MutatorOptions {
@@ -24,16 +23,6 @@ interface HttpOptions extends MutatorOptions {
     errorNotificationsOn?: boolean;
     itemName?: string;
     query?: string;
-    action?: ReactNode;
-}
-interface HttpOptionsGet extends MutatorOptions {
-    localeKey?: string;
-    shouldFetch?: boolean;
-    errorNotificationsOn?: boolean;
-    itemName?: string;
-    query?: string;
-    paginationKey?: string;
-    withPagination?: boolean;
     action?: ReactNode;
 }
 
@@ -60,9 +49,8 @@ interface PaginationResponse {
 }
 
 export type {
-    NotificationOptions,
     RequestOptions,
+    NotificationOptions,
     HttpOptions,
     PaginationResponse,
-    HttpOptionsGet,
 };

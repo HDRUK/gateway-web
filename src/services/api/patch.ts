@@ -1,5 +1,5 @@
 import { RequestOptions } from "@/interfaces/Api";
-import { errorNotification } from "./utils";
+import { errorNotification, successNotification } from "./utils";
 
 const patchRequest = async <T>(
     url: string,
@@ -7,7 +7,11 @@ const patchRequest = async <T>(
     options: RequestOptions
 ): Promise<T | null> => {
     const { notificationOptions } = options;
-    const { errorNotificationsOn = true, ...props } = notificationOptions || {};
+    const {
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
+        ...props
+    } = notificationOptions || {};
 
     try {
         const response = await fetch(url, {
@@ -21,6 +25,13 @@ const patchRequest = async <T>(
 
         if (response.ok) {
             const json = await response.json();
+
+            if (successNotificationsOn) {
+                successNotification({
+                    method: "patch",
+                    props,
+                });
+            }
 
             return json.data;
         }
@@ -43,7 +54,6 @@ const patchRequest = async <T>(
 
         if (errorNotificationsOn) {
             errorNotification({
-                error,
                 props,
                 method: "patch",
             });

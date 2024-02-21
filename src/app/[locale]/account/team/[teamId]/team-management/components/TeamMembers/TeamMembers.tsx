@@ -50,7 +50,7 @@ const TeamMembers = ({
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
 
     const updateTeamRoles = usePatch<RolesPayload[]>(
-        `${apis.teamsV1Url}/${teamId}`
+        `${apis.teamsV1Url}/${"teamId"}`
     );
 
     const { showBar, hideBar } = useActionBar();

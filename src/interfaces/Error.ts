@@ -1,7 +1,7 @@
 interface Error {
-    status: string;
-    message: string;
-    errors: { message: string }[];
+    status?: string; // not currently used in FE
+    message?: string;
+    errors?: { message: string }[];
 }
 
 export type { Error };

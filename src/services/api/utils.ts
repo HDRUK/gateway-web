@@ -6,8 +6,8 @@ import messages from "@/config/messages/en.json";
 
 interface ErrorNotificationProps {
     props: NotificationOptions;
-    status: number;
-    error: Error;
+    status?: number;
+    error?: Error;
     method: "delete" | "post" | "put" | "get" | "patch";
 }
 
@@ -30,9 +30,8 @@ const errorNotification = ({
             item: props.itemName || "item",
         });
 
-    notificationService.apiError(message, {
+    notificationService.apiError(messageTransformed, {
         title,
-        message: messageTransformed,
         errors,
         ...notificationProps,
     });

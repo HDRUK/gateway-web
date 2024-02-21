@@ -30,7 +30,7 @@ describe("delete", () => {
                 },
             }
         );
-        expect(response).toEqual({ message: "success" });
+        expect(response).toEqual(undefined);
         expect(apiUtils.successNotification).not.toHaveBeenCalled();
         expect(apiUtils.errorNotification).not.toHaveBeenCalled();
     });
@@ -60,7 +60,8 @@ describe("delete", () => {
         );
 
         expect(apiUtils.errorNotification).toHaveBeenCalledWith({
-            errorResponse: expect.any(Object),
+            error: expect.any(Object),
+            status: 401,
             method: "delete",
             props: {
                 ...translationProps,
