@@ -2,6 +2,7 @@ import { inputComponents } from ".";
 
 export const QUERY_FIELD = "query";
 export const SORT_FIELD = "sort";
+export const FILTER_FIELD = "filter";
 
 const sortByOptions = [
     {

@@ -235,7 +235,9 @@
                 },
                 "FilterPanel": {
                     "populationSize": "Population size",
-                    "datasetPopulation": "Dataset Population"
+                    "datasetPopulation": "Dataset Population",
+                    "publisherName": "Data publisher",
+                    "publisherNameTooltip": "Individual or organisation publishing metadata on the Gateway"
                 },
                 "ResultCard": {
                     "dateLabel": "Date range"
