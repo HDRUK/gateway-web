@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CsvExport } from "@/interfaces/CsvExport";
 import { Filter } from "@/interfaces/Filter";
 import { PaginationType } from "@/interfaces/Pagination";
 import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
@@ -19,9 +18,8 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
-import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
-import notificationService from "@/services/notification";
+import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import searchFormConfig, {
     FILTER_FIELD,
@@ -30,7 +28,6 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
-import { downloadCSV } from "@/utils/download";
 import {
     transformQueryFilters,
     transformQueryFiltersToForm,
@@ -39,13 +36,22 @@ import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
 
-const SORT_FIELD_DIVIDER = "__";
+export const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
-const TYPE_PARAM = "type";
+export const TYPE_PARAM = "type";
 
 enum ViewType {
     TABLE = "table",
     LIST = "list",
+}
+
+export interface SearchQueryParams {
+    query: string | undefined;
+    sort: string | undefined;
+    filters: string | undefined;
+    page: string;
+    per_page: string;
+    type?: string;
 }
 
 const Search = ({ filters }: { filters: Filter[] }) => {
@@ -60,6 +66,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return searchParams?.get(paramName)?.toString();
     };
 
+    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
+
     const updateQueryString = useCallback(
         (name: string, value: string, existingParams?: string) => {
             const params = existingParams
@@ -72,13 +80,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [searchParams]
     );
 
-    const [queryParams, setQueryParams] = useState({
+    const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
         filters: getQueryParam(FILTER_FIELD),
         page: "1",
         per_page: "25",
     });
+
+    const { handleDownload } = useSearch(searchType, resultsView, queryParams);
 
     const { control, handleSubmit, getValues, setValue, watch } =
         useForm<SearchForm>({
@@ -122,8 +132,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             )}`
         );
     }, [queryParams.filters]);
-
-    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
         setQueryParams({ ...queryParams, query: data.query });
@@ -193,42 +201,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         },
     ];
 
-    const submitRequest = usePost(
-        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
-        {
-            successNotificationsOn: false,
-        }
-    );
-
     const downloadSearchResults = async () => {
-        if (isDownloading) {
-            return;
-        }
-
         setIsDownloading(true);
-        const csvData = await submitRequest({
-            query: queryParams.query,
-            sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
-            direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
-            ...transformQueryFilters("dataset", queryParams.filters),
-            download: true,
-            download_type: resultsView,
-        });
-
-        if (csvData) {
-            let filename = `${
-                getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS
-            }.csv`;
-
-            const formattedCSV = {
-                content: csvData,
-                type: "text/csv",
-                filename,
-            };
-
-            downloadCSV(formattedCSV as CsvExport);
-            notificationService.apiSuccess(t("downloadStarted"));
-        }
+        await handleDownload();
         setIsDownloading(false);
     };
 
@@ -272,7 +247,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 </Box>
 
                 <Button
-                    onClick={downloadSearchResults}
+                    onClick={() => !isDownloading && downloadSearchResults()}
                     variant="text"
                     startIcon={<DownloadIcon />}
                     disabled={isDownloading}>
