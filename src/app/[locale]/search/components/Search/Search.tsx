@@ -5,10 +5,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { CsvExport } from "@/interfaces/CsvExport";
 import { Filter } from "@/interfaces/Filter";
 import { PaginationType } from "@/interfaces/Pagination";
 import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
@@ -17,7 +19,9 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import searchFormConfig, {
     FILTER_FIELD,
@@ -25,7 +29,8 @@ import searchFormConfig, {
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { AppsIcon, ViewListIcon } from "@/consts/icons";
+import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
+import { downloadCSV } from "@/utils/download";
 import {
     transformQueryFilters,
     transformQueryFiltersToForm,
@@ -38,13 +43,14 @@ const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
 
-const enum ViewType {
-    "TABLE",
-    "LIST",
+enum ViewType {
+    TABLE = "table",
+    LIST = "list",
 }
 
 const Search = ({ filters }: { filters: Filter[] }) => {
     const [resultsView, setResultsView] = useState(ViewType.TABLE);
+    const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -187,6 +193,45 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         },
     ];
 
+    const submitRequest = usePost(
+        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
+        {
+            successNotificationsOn: false,
+        }
+    );
+
+    const downloadSearchResults = async () => {
+        if (isDownloading) {
+            return;
+        }
+
+        setIsDownloading(true);
+        const csvData = await submitRequest({
+            query: queryParams.query,
+            sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
+            direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
+            ...transformQueryFilters("dataset", queryParams.filters),
+            download: true,
+            download_type: resultsView,
+        });
+
+        if (csvData) {
+            let filename = `${
+                getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS
+            }.csv`;
+
+            const formattedCSV = {
+                content: csvData,
+                type: "text/csv",
+                filename,
+            };
+
+            downloadCSV(formattedCSV as CsvExport);
+            notificationService.apiSuccess(t("downloadStarted"));
+        }
+        setIsDownloading(false);
+    };
+
     return (
         <>
             <Box
@@ -213,16 +258,26 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     justifyContent: "flex-end",
                     display: "flex",
                     alignItems: "center",
-                    paddingTop: "1em",
-                    paddingRight: "1em",
+                    padding: "1em",
                 }}
                 textAlign="left">
-                <Box sx={{ p: 0 }}>
+                <Box sx={{ p: 0, mr: "1em" }}>
                     <InputWrapper
                         control={control}
                         {...searchFormConfig.sort}
+                        formControlSx={{
+                            marginBottom: 0,
+                        }}
                     />
                 </Box>
+
+                <Button
+                    onClick={downloadSearchResults}
+                    variant="text"
+                    startIcon={<DownloadIcon />}
+                    disabled={isDownloading}>
+                    {t("downloadResults")}
+                </Button>
             </Box>
             <Box>
                 <Tabs
