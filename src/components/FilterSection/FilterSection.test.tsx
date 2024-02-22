@@ -7,10 +7,22 @@ describe("FilterSection", () => {
         const { control, setValue } = useForm();
         return (
             <FilterSection
-                filterItems={[
-                    { value: "1", label: "course 1", count: 234 },
-                    { value: "2", label: "course 2", count: 0 },
-                ]}
+                filterItems={{
+                    buckets: [
+                        {
+                            value: "filter1",
+                            label: "filter 1",
+                            count: 5,
+                        },
+                        {
+                            value: "filter2",
+                            label: "filter 2",
+                            count: 10,
+                        },
+                    ],
+                    value: "1",
+                    label: "course 1",
+                }}
                 filterSection="course"
                 setValue={setValue}
                 control={control}
@@ -19,20 +31,18 @@ describe("FilterSection", () => {
     };
     it("should render component", () => {
         render(<Component />);
-        expect(screen.getByText("course 1")).toBeInTheDocument();
-        expect(screen.getByText("course 2")).toBeInTheDocument();
-        expect(screen.getByText(234)).toBeInTheDocument();
-        expect(screen.getByText(0)).toBeInTheDocument();
+        expect(screen.getByText(5)).toBeInTheDocument();
+        expect(screen.getByText("filter 1")).toBeInTheDocument();
     });
     it("should filter items and reset", () => {
         render(<Component />);
 
         const input = screen.getByPlaceholderText("I'm looking for...");
-        fireEvent.change(input, { target: { value: "course 1" } });
-        expect(screen.getByText("course 1")).toBeInTheDocument();
-        expect(screen.queryByText("course 2")).not.toBeInTheDocument();
+        fireEvent.change(input, { target: { value: "filter 1" } });
+        expect(screen.getByText("filter 1")).toBeInTheDocument();
+        expect(screen.queryByText("filter 2")).not.toBeInTheDocument();
 
         fireEvent.click(screen.getByTestId("CancelIcon"));
-        expect(screen.queryByText("course 2")).toBeInTheDocument();
+        expect(screen.queryByText("filter 2")).toBeInTheDocument();
     });
 });
