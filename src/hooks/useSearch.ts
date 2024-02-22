@@ -1,17 +1,14 @@
 import { useTranslations } from "next-intl";
 import { CsvExport } from "@/interfaces/CsvExport";
-import { SearchCategory } from "@/interfaces/Search";
+import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { downloadCSV } from "@/utils/download";
 import { transformQueryFilters } from "@/utils/filters";
-import {
-    SearchQueryParams,
-    SORT_FIELD_DIVIDER,
-} from "@/app/[locale]/search/components/Search/Search";
 import usePost from "./usePost";
 
 const TRANSLATION_PATH = "pages.search";
+const SORT_FIELD_DIVIDER = "__";
 
 const useSearch = (
     searchType: string,
@@ -38,7 +35,9 @@ const useSearch = (
         });
 
         if (csvData) {
-            let filename = `${queryParams.type || SearchCategory.DATASETS}.csv`;
+            const filename = `${
+                queryParams.type || SearchCategory.DATASETS
+            }.csv`;
 
             const formattedCSV = {
                 content: csvData,

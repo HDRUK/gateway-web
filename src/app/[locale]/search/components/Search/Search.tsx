@@ -7,7 +7,12 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import { PaginationType } from "@/interfaces/Pagination";
-import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
+import {
+    SearchCategory,
+    SearchForm,
+    SearchQueryParams,
+    SearchResult,
+} from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
@@ -36,22 +41,13 @@ import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
 
-export const SORT_FIELD_DIVIDER = "__";
+const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
 export const TYPE_PARAM = "type";
 
 enum ViewType {
     TABLE = "table",
     LIST = "list",
-}
-
-export interface SearchQueryParams {
-    query: string | undefined;
-    sort: string | undefined;
-    filters: string | undefined;
-    page: string;
-    per_page: string;
-    type?: string;
 }
 
 const Search = ({ filters }: { filters: Filter[] }) => {
