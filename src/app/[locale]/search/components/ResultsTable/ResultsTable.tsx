@@ -74,7 +74,7 @@ const getColumns = ({
         id: "dateRange",
         cell: info => (
             <div style={{ textAlign: "center" }}>
-                {getDateRange(info.row.original.metadata.metadata)}
+                {getDateRange(info.row.original.metadata?.metadata)}
             </div>
         ),
         header: () => (

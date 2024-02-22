@@ -18,6 +18,7 @@ import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
+import Paper from "@/components/Paper";
 import SearchBar from "@/components/SearchBar";
 import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
@@ -26,17 +27,17 @@ import ToggleTabs from "@/components/ToggleTabs";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
+import {
+    FILTER_DATA_USE_TITLES,
+    FILTER_PUBLISHER_NAME,
+} from "@/config/forms/filters";
 import searchFormConfig, {
-    FILTER_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
-import {
-    transformQueryFilters,
-    transformQueryFiltersToForm,
-} from "@/utils/filters";
+import { transformQueryFilters } from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
@@ -65,12 +66,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const updateQueryString = useCallback(
-        (name: string, value: string, existingParams?: string) => {
-            const params = existingParams
-                ? new URLSearchParams(existingParams)
-                : new URLSearchParams(searchParams?.toString());
-
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams?.toString());
             params.set(name, value);
+
             return params.toString();
         },
         [searchParams]
@@ -79,7 +78,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
-        filters: getQueryParam(FILTER_FIELD),
+        [FILTER_DATA_USE_TITLES]: getQueryParam(FILTER_DATA_USE_TITLES),
+        [FILTER_PUBLISHER_NAME]: getQueryParam(FILTER_PUBLISHER_NAME),
         page: "1",
         per_page: "25",
     });
@@ -100,6 +100,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         });
     const watchAll = watch();
 
+    const updatePath = (key: string, value: string) => {
+        router.push(`${pathname}?${updateQueryString(key, value)}`);
+    };
+
     useEffect(() => {
         const selectedOption = searchFormConfig.sortByOptions.find(
             o => o.value === watchAll.sort
@@ -114,34 +118,20 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             sort: selectedOption.value,
         });
 
-        router.push(
-            `${pathname}?${updateQueryString(SORT_FIELD, selectedOption.value)}`
-        );
+        updatePath(SORT_FIELD, selectedOption.value);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll.sort]);
-
-    useEffect(() => {
-        router.push(
-            `${pathname}?${updateQueryString(
-                FILTER_FIELD,
-                queryParams.filters || ""
-            )}`
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [queryParams.filters]);
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
         setQueryParams({ ...queryParams, query: data.query });
 
-        router.push(
-            `${pathname}?${updateQueryString(QUERY_FIELD, data.query)}`
-        );
+        updatePath(QUERY_FIELD, data.query);
     };
 
     const resetQueryInput = () => {
         setValue(QUERY_FIELD, "");
         setQueryParams({ ...queryParams, query: "" });
-        router.push(`${pathname}?${updateQueryString(QUERY_FIELD, "")}`);
+        updatePath(QUERY_FIELD, "");
     };
 
     const { data, isLoading: isSearching } = usePostSwr<
@@ -152,7 +142,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             query: queryParams.query,
             sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
             direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
-            ...transformQueryFilters("dataset", queryParams.filters),
+            ...transformQueryFilters("dataset", queryParams),
         },
         {
             keepPreviousData: true,
@@ -283,14 +273,18 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}>
                     <FilterPanel
                         filters={filters}
-                        setFilterQueryParams={(params: string) =>
-                            setQueryParams({ ...queryParams, filters: params })
-                        }
-                        defaultFilterState={
-                            transformQueryFiltersToForm(
-                                getQueryParam(FILTER_FIELD)
-                            ) || {}
-                        }
+                        setFilterQueryParams={(
+                            params: {
+                                [key: string]: string[];
+                            },
+                            updatedSection: string
+                        ) => {
+                            updatePath(
+                                updatedSection,
+                                params[updatedSection].join(", ")
+                            );
+                            setQueryParams({ ...queryParams, ...params });
+                        }}
                     />
                 </Box>
                 <Box
@@ -319,12 +313,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 buttons={toggleButtons}
                             />
                         </Box>
+
                         {isSearching && <Loading />}
 
                         {!isSearching && !data?.list.length && (
-                            <Typography variant="h3">
-                                {t("noResults")}
-                            </Typography>
+                            <Paper sx={{ textAlign: "center", p: 5 }}>
+                                <Typography variant="h3">
+                                    {t("noResults")}
+                                </Typography>
+                            </Paper>
                         )}
                         {!isSearching && !!data?.list.length && (
                             <>

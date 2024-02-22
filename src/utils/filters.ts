@@ -1,4 +1,6 @@
+import { pick } from "lodash";
 import { BucketCheckbox, Filter, FilterType } from "@/interfaces/Filter";
+import { filtersList } from "@/config/forms/filters";
 
 const convertFilterTypesToObj = <T>(
     filterTypes: FilterType[],
@@ -31,7 +33,7 @@ const groupByType = (
                 label: item.keys,
                 buckets: item.buckets?.map(bucket => {
                     return {
-                        value: `${item.keys}.filters.${bucket.key}`,
+                        value: bucket.key,
                         label: bucket.key,
                         count: bucket.doc_count,
                     };
@@ -41,37 +43,28 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
-const transformQueryFilters = (type: string, filtersQuery?: string) => {
-    if (!filtersQuery) {
-        return {};
-    }
-
-    const [key, valuesString] = filtersQuery.split("=");
-    if (!valuesString) {
-        return {};
-    }
-
-    const filtersArray = valuesString.split(",").map(name => name.trim());
+const transformQueryFilters = (
+    type: string,
+    allSearchQueries: { [key: string]: string | undefined }
+) => {
+    const filterQueries = pick(allSearchQueries, filtersList);
     return {
         filters: {
-            [type]: { [key.trim()]: filtersArray },
+            [type]: filterQueries,
         },
     };
 };
 
-const transformQueryFiltersToForm = (filtersQuery?: string) => {
-    if (!filtersQuery) {
-        return {};
-    }
-
-    const [, valuesString] = filtersQuery.split("=");
-    if (!valuesString) {
-        return {};
-    }
-
-    const filtersArray = valuesString.split(",").map(name => name.trim());
-
+const transformQueryFiltersToForm = (
+    filtersQuery: string | null | undefined
+): { [key: string]: boolean } => {
     const result: { [key: string]: boolean } = {};
+    if (!filtersQuery) {
+        return result;
+    }
+
+    const filtersArray = filtersQuery.split(",").map(name => name.trim());
+
     filtersArray.forEach(name => {
         result[name] = true;
     });
