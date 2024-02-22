@@ -16,14 +16,12 @@ describe("Filter utils", () => {
             generateFilterV1({ type: "course" }),
             generateFilterV1({ type: "dataset" }),
         ];
-        expect(groupByType(filters)).toEqual({
-            course: [
-                { label: filters[0].value, value: filters[0].id.toString() },
-                { label: filters[1].value, value: filters[1].id.toString() },
-            ],
-            dataset: [
-                { label: filters[2].value, value: filters[2].id.toString() },
-            ],
-        });
+        expect(groupByType(filters, "dataset")).toEqual([
+            {
+                buckets: undefined,
+                label: filters[2].keys,
+                value: filters[2].id.toString(),
+            },
+        ]);
     });
 });

@@ -127,6 +127,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 queryParams.filters || ""
             )}`
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryParams.filters]);
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {

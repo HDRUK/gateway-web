@@ -26,14 +26,12 @@ const groupByType = (
     return data
         .filter(item => item.type === type)
         .reduce((acc, item) => {
-            const { type, ...rest } = item;
-            acc = acc || [];
             acc.push({
-                value: rest.id.toString(),
-                label: rest.keys,
-                buckets: rest.buckets.map(bucket => {
+                value: item.id.toString(),
+                label: item.keys,
+                buckets: item.buckets?.map(bucket => {
                     return {
-                        value: `${rest.keys}.filters.${bucket.key}`,
+                        value: `${item.keys}.filters.${bucket.key}`,
                         label: bucket.key,
                         count: bucket.doc_count,
                     };
@@ -45,12 +43,12 @@ const groupByType = (
 
 const transformQueryFilters = (type: string, filtersQuery?: string) => {
     if (!filtersQuery) {
-        return;
+        return {};
     }
 
     const [key, valuesString] = filtersQuery.split("=");
     if (!valuesString) {
-        return;
+        return {};
     }
 
     const filtersArray = valuesString.split(",").map(name => name.trim());
@@ -63,18 +61,18 @@ const transformQueryFilters = (type: string, filtersQuery?: string) => {
 
 const transformQueryFiltersToForm = (filtersQuery?: string) => {
     if (!filtersQuery) {
-        return;
+        return {};
     }
 
     const [, valuesString] = filtersQuery.split("=");
     if (!valuesString) {
-        return;
+        return {};
     }
 
     const filtersArray = valuesString.split(",").map(name => name.trim());
 
     const result: { [key: string]: boolean } = {};
-    filtersArray.map(name => {
+    filtersArray.forEach(name => {
         result[name] = true;
     });
 
