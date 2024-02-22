@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
-import { getRequest } from "@/services/api/get";
+import getRequest from "@/services/api/get";
 import apis from "@/config/apis";
 
 const useLogout = () => {

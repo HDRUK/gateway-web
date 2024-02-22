@@ -1,16 +1,10 @@
 import { User } from "@/interfaces/User";
 import usePostSwr from "@/hooks/usePostSwr";
-import * as apiService from "@/services/api/post";
+import postRequest from "@/services/api/post";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
 
-jest.mock("@/services/api/post", () => {
-    return {
-        ...jest.requireActual("@/services/api/post"),
-        postRequest: jest.fn(),
-        __esModule: true,
-    };
-});
+jest.mock("@/services/api/post");
 
 describe("usePostSwr", () => {
     afterEach(() => {
@@ -26,7 +20,7 @@ describe("usePostSwr", () => {
         );
 
         await waitFor(() => {
-            expect(apiService.postRequest).toHaveBeenCalledWith(
+            expect(postRequest).toHaveBeenCalledWith(
                 apis.usersV1Url,
                 {
                     localeKey: "mockLocaleKey",
