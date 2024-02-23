@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
 import apiService from "@/services/api";
-import { ThrowPaginationError } from "@/utils/api";
 
 const usePatch = <T extends { id?: number }>(
     url: string,
@@ -16,8 +15,6 @@ const usePatch = <T extends { id?: number }>(
         errorNotificationsOn = true,
     } = options || {};
     const t = useTranslations("api");
-
-    ThrowPaginationError(options);
 
     return async (id: string | number, payload: T) => {
         const queryString = query ? `?${query}` : "";

@@ -3,11 +3,15 @@ import { fireEvent, render, screen } from "@/utils/testUtils";
 import FilterSection from "./FilterSection";
 
 describe("FilterSection", () => {
+    const mockFn = jest.fn();
+
     const Component = () => {
         const { control, setValue } = useForm();
         return (
             <FilterSection
-                filterItems={{
+                checkboxValues={{}}
+                handleCheckboxChange={mockFn}
+                filterItem={{
                     buckets: [
                         {
                             value: "filter1",

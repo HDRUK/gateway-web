@@ -1,4 +1,7 @@
+import { pick } from "lodash";
 import { BucketCheckbox, Filter, FilterType } from "@/interfaces/Filter";
+import { SearchQueryParams } from "@/interfaces/Search";
+import { filtersList } from "@/config/forms/filters";
 
 const convertFilterTypesToObj = <T>(
     filterTypes: FilterType[],
@@ -31,7 +34,7 @@ const groupByType = (
                 label: item.keys,
                 buckets: item.buckets?.map(bucket => {
                     return {
-                        value: `${item.keys}.filters.${bucket.key}`,
+                        value: bucket.key,
                         label: bucket.key,
                         count: bucket.doc_count,
                     };
@@ -41,37 +44,55 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
-const transformQueryFilters = (type: string, filtersQuery?: string) => {
-    if (!filtersQuery) {
-        return {};
-    }
+function removeEmptyRootObjects(obj: { [key: string]: unknown }): {
+    [key: string]: unknown;
+} {
+    const result: { [key: string]: unknown } = {};
+    Object.keys(obj).forEach(key => {
+        const value = obj[key];
+        if (Array.isArray(value)) {
+            if (value.length > 0) {
+                result[key] = value;
+            }
+        } else if (typeof value === "object" && value !== null) {
+            const nestedResult = removeEmptyRootObjects(
+                value as { [key: string]: unknown }
+            );
+            if (Object.keys(nestedResult).length !== 0) {
+                result[key] = nestedResult;
+            }
+        } else if (value !== undefined) {
+            result[key] = value;
+        }
+    });
+    return result;
+}
 
-    const [key, valuesString] = filtersQuery.split("=");
-    if (!valuesString) {
-        return {};
-    }
+const transformQueryFilters = (
+    type: string,
+    allSearchQueries: SearchQueryParams
+) => {
+    const filterQueries = pick(allSearchQueries, filtersList);
 
-    const filtersArray = valuesString.split(",").map(name => name.trim());
-    return {
-        filters: {
-            [type]: { [key.trim()]: filtersArray },
-        },
+    const filters = {
+        [type]: filterQueries,
     };
+
+    return removeEmptyRootObjects({
+        filters,
+    });
 };
 
-const transformQueryFiltersToForm = (filtersQuery?: string) => {
-    if (!filtersQuery) {
-        return {};
-    }
-
-    const [, valuesString] = filtersQuery.split("=");
-    if (!valuesString) {
-        return {};
-    }
-
-    const filtersArray = valuesString.split(",").map(name => name.trim());
-
+const transformQueryFiltersToForm = (
+    filtersQuery: string | null | undefined
+): { [key: string]: boolean } => {
     const result: { [key: string]: boolean } = {};
+    if (!filtersQuery) {
+        return result;
+    }
+
+    const filtersArray = filtersQuery.split(",").map(name => name.trim());
+
     filtersArray.forEach(name => {
         result[name] = true;
     });
@@ -80,6 +101,7 @@ const transformQueryFiltersToForm = (filtersQuery?: string) => {
 };
 
 export {
+    removeEmptyRootObjects,
     groupByType,
     convertFilterTypesToObj,
     transformQueryFilters,

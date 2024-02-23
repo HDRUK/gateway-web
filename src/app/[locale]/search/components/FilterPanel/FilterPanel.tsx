@@ -1,68 +1,85 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import Accordion from "@/components/Accordion";
 import FilterSection from "@/components/FilterSection";
 import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
-import { groupByType } from "@/utils/filters";
+import { filtersList } from "@/config/forms/filters";
+import { groupByType, transformQueryFiltersToForm } from "@/utils/filters";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
-const PUBLISHER_NAME = "publisherName";
-const ENABLED_FILTERS = [PUBLISHER_NAME];
 
 const FilterPanel = ({
     filters,
     setFilterQueryParams,
-    defaultFilterState,
 }: {
     filters: Filter[];
-    setFilterQueryParams: (params: string) => void;
-    defaultFilterState: {
-        [key: string]: boolean;
-    };
+    setFilterQueryParams: (
+        params: {
+            [key: string]: string[];
+        },
+        filterSection: string
+    ) => void;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
-
-    const { control, setValue, watch } = useForm({
+    const searchParams = useSearchParams();
+    const [checkboxValues, setCheckboxValues] = useState({
+        publisherName: transformQueryFiltersToForm(
+            searchParams?.get("publisherName")
+        ),
+        dataUseTitles: transformQueryFiltersToForm(
+            searchParams?.get("dataUseTitles")
+        ),
+    });
+    const { control, setValue } = useForm({
         defaultValues: {
-            publisherName: {
-                input: "",
-                filters: defaultFilterState,
-            },
+            publisherName: "",
+            dataUseTitles: "",
         },
     });
 
-    const filterGroups = useMemo(() => {
-        return groupByType(filters, "dataset").filter(filterGroup =>
-            ENABLED_FILTERS.includes(filterGroup.label)
+    const filterItems = useMemo(() => {
+        return groupByType(filters, "dataset").filter(filterItem =>
+            filtersList.includes(filterItem.label)
         );
     }, [filters]);
 
     const [minimised, setMinimised] = useState<string[]>([]);
 
-    const watchAll = watch();
+    const updateCheckboxes = (
+        updatedCheckbox: { [key: string]: boolean },
+        filterSection: string
+    ) => {
+        const allUpdates = {
+            ...checkboxValues,
+            [filterSection]: {
+                ...(checkboxValues[filterSection] || {}),
+                ...updatedCheckbox,
+            },
+        };
 
-    const publisherNameFilters = useMemo(() => {
-        return Object.entries(watchAll.publisherName.filters)
-            .filter(([, value]) => value === true)
-            .map(([key]) => key)
-            .join(",");
-    }, [watchAll]);
+        const filterQueryParams = {};
 
-    useEffect(() => {
-        setFilterQueryParams(`${PUBLISHER_NAME}=`.concat(publisherNameFilters));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [publisherNameFilters]);
+        Object.keys(allUpdates).forEach(key => {
+            filterQueryParams[key] = Object.entries(allUpdates[key])
+                .filter(([, value]) => value === true)
+                .map(([key]) => key);
+        });
+
+        setCheckboxValues(allUpdates);
+        setFilterQueryParams(filterQueryParams, filterSection);
+    };
 
     return (
         <>
-            {filterGroups.map(filterGroup => {
-                const { label } = filterGroup;
+            {filterItems.map(filterItem => {
+                const { label } = filterItem;
 
                 return (
                     <Accordion
@@ -91,10 +108,14 @@ const FilterPanel = ({
                         }
                         contents={
                             <FilterSection
+                                handleCheckboxChange={updatedCheckbox =>
+                                    updateCheckboxes(updatedCheckbox, label)
+                                }
+                                checkboxValues={checkboxValues[label]}
                                 filterSection={label}
                                 setValue={setValue}
                                 control={control}
-                                filterItems={filterGroup}
+                                filterItem={filterItem}
                             />
                         }
                     />

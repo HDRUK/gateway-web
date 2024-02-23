@@ -29,7 +29,7 @@ const useSearch = (
             query: queryParams.query,
             sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
             direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
-            ...transformQueryFilters("dataset", queryParams.filters),
+            ...transformQueryFilters("dataset", queryParams),
             download: true,
             download_type: downloadType,
         });
