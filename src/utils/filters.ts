@@ -1,5 +1,6 @@
 import { pick } from "lodash";
 import { BucketCheckbox, Filter, FilterType } from "@/interfaces/Filter";
+import { SearchQueryParams } from "@/interfaces/Search";
 import { filtersList } from "@/config/forms/filters";
 
 const convertFilterTypesToObj = <T>(
@@ -43,16 +44,43 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
+function removeEmptyRootObjects(obj: { [key: string]: unknown }): {
+    [key: string]: unknown;
+} {
+    const result: { [key: string]: unknown } = {};
+    Object.keys(obj).forEach(key => {
+        const value = obj[key];
+        if (Array.isArray(value)) {
+            if (value.length > 0) {
+                result[key] = value;
+            }
+        } else if (typeof value === "object" && value !== null) {
+            const nestedResult = removeEmptyRootObjects(
+                value as { [key: string]: unknown }
+            );
+            if (Object.keys(nestedResult).length !== 0) {
+                result[key] = nestedResult;
+            }
+        } else if (value !== undefined) {
+            result[key] = value;
+        }
+    });
+    return result;
+}
+
 const transformQueryFilters = (
     type: string,
-    allSearchQueries: { [key: string]: string | undefined }
+    allSearchQueries: SearchQueryParams
 ) => {
     const filterQueries = pick(allSearchQueries, filtersList);
-    return {
-        filters: {
-            [type]: filterQueries,
-        },
+
+    const filters = {
+        [type]: filterQueries,
     };
+
+    return removeEmptyRootObjects({
+        filters,
+    });
 };
 
 const transformQueryFiltersToForm = (
@@ -73,6 +101,7 @@ const transformQueryFiltersToForm = (
 };
 
 export {
+    removeEmptyRootObjects,
     groupByType,
     convertFilterTypesToObj,
     transformQueryFilters,

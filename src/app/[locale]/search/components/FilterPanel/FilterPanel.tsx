@@ -64,16 +64,16 @@ const FilterPanel = ({
             },
         };
 
-        const obj = {};
+        const filterQueryParams = {};
 
         Object.keys(allUpdates).forEach(key => {
-            obj[key] = Object.entries(allUpdates[key])
+            filterQueryParams[key] = Object.entries(allUpdates[key])
                 .filter(([, value]) => value === true)
                 .map(([key]) => key);
         });
 
         setCheckboxValues(allUpdates);
-        setFilterQueryParams(obj, filterSection);
+        setFilterQueryParams(filterQueryParams, filterSection);
     };
 
     return (
@@ -108,8 +108,8 @@ const FilterPanel = ({
                         }
                         contents={
                             <FilterSection
-                                handleCheckboxChange={updates =>
-                                    updateCheckboxes(updates, label)
+                                handleCheckboxChange={updatedCheckbox =>
+                                    updateCheckboxes(updatedCheckbox, label)
                                 }
                                 checkboxValues={checkboxValues[label]}
                                 filterSection={label}
