@@ -38,7 +38,7 @@ const searchFormConfig = {
         placeholder: "Search titles",
     },
     sort: {
-        sx: { minWidth: 270 },
+        sx: { minWidth: 270, m: 0 },
         component: inputComponents.Select,
         options: sortByOptions,
         name: SORT_FIELD,

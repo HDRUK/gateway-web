@@ -22,3 +22,12 @@ export enum SearchCategory {
     DATA_USE = "dur",
     TOOLS = "tools",
 }
+
+export interface SearchQueryParams {
+    query: string | undefined;
+    sort: string | undefined;
+    filters: string | undefined;
+    page: string;
+    per_page: string;
+    type?: string;
+}

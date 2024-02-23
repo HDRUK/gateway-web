@@ -56,6 +56,7 @@ const FilterPanel = ({
 
     useEffect(() => {
         setFilterQueryParams(`${PUBLISHER_NAME}=`.concat(publisherNameFilters));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [publisherNameFilters]);
 
     return (

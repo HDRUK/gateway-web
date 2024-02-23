@@ -1,6 +1,11 @@
 import { ReactNode } from "react";
 import { Control, useController } from "react-hook-form";
-import { OutlinedInput, Select as MuiSelect, MenuItem } from "@mui/material";
+import {
+    OutlinedInput,
+    Select as MuiSelect,
+    MenuItem,
+    SxProps,
+} from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import SelectMenuItem from "@/components/SelectMenuItem";
@@ -28,6 +33,7 @@ export interface SelectProps {
     control: Control;
     required?: boolean;
     hasCheckbox?: boolean;
+    formControlSx?: SxProps;
 }
 
 const renderValue = (
@@ -54,6 +60,7 @@ const Select = ({
     control,
     name,
     hasCheckbox,
+    formControlSx,
     required = false,
     multiple = false,
     iconRight = false,
@@ -78,7 +85,8 @@ const Select = ({
             extraInfo={extraInfo}
             error={error}
             disabled={disabled}
-            required={required}>
+            required={required}
+            formControlSx={formControlSx}>
             <MuiSelect
                 fullWidth
                 size="small"

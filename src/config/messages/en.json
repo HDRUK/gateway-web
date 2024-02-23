@@ -228,6 +228,8 @@
             "searchExplainer": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
+            "downloadResults": "Download results",
+            "downloadStarted": "Your download has started",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -236,8 +238,8 @@
                 "FilterPanel": {
                     "populationSize": "Population size",
                     "datasetPopulation": "Dataset Population",
-                    "publisherName": "Data publisher",
-                    "publisherNameTooltip": "Individual or organisation publishing metadata on the Gateway"
+                    "publisherName": "Data provider",
+                    "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                 },
                 "ResultCard": {
                     "dateLabel": "Date range"

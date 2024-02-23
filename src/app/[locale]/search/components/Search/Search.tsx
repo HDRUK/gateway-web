@@ -7,8 +7,14 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import { PaginationType } from "@/interfaces/Pagination";
-import { SearchCategory, SearchForm, SearchResult } from "@/interfaces/Search";
+import {
+    SearchCategory,
+    SearchForm,
+    SearchQueryParams,
+    SearchResult,
+} from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
@@ -18,6 +24,7 @@ import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
 import usePostSwr from "@/hooks/usePostSwr";
+import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import searchFormConfig, {
     FILTER_FIELD,
@@ -25,7 +32,7 @@ import searchFormConfig, {
     SORT_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { AppsIcon, ViewListIcon } from "@/consts/icons";
+import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
 import {
     transformQueryFilters,
     transformQueryFiltersToForm,
@@ -36,15 +43,16 @@ import ResultsTable from "../ResultsTable";
 
 const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
-const TYPE_PARAM = "type";
+export const TYPE_PARAM = "type";
 
-const enum ViewType {
-    "TABLE",
-    "LIST",
+enum ViewType {
+    TABLE = "table",
+    LIST = "list",
 }
 
 const Search = ({ filters }: { filters: Filter[] }) => {
     const [resultsView, setResultsView] = useState(ViewType.TABLE);
+    const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -53,6 +61,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const getQueryParam = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
     };
+
+    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const updateQueryString = useCallback(
         (name: string, value: string, existingParams?: string) => {
@@ -66,13 +76,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [searchParams]
     );
 
-    const [queryParams, setQueryParams] = useState({
+    const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query: getQueryParam(QUERY_FIELD),
         sort: getQueryParam(SORT_FIELD),
         filters: getQueryParam(FILTER_FIELD),
         page: "1",
         per_page: "25",
     });
+
+    const { handleDownload } = useSearch(searchType, resultsView, queryParams);
 
     const { control, handleSubmit, getValues, setValue, watch } =
         useForm<SearchForm>({
@@ -115,9 +127,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 queryParams.filters || ""
             )}`
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryParams.filters]);
-
-    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const onSubmit: SubmitHandler<SearchForm> = async data => {
         setQueryParams({ ...queryParams, query: data.query });
@@ -187,6 +198,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         },
     ];
 
+    const downloadSearchResults = async () => {
+        setIsDownloading(true);
+        await handleDownload();
+        setIsDownloading(false);
+    };
+
     return (
         <>
             <Box
@@ -213,16 +230,26 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     justifyContent: "flex-end",
                     display: "flex",
                     alignItems: "center",
-                    paddingTop: "1em",
-                    paddingRight: "1em",
+                    padding: "1em",
                 }}
                 textAlign="left">
-                <Box sx={{ p: 0 }}>
+                <Box sx={{ p: 0, mr: "1em" }}>
                     <InputWrapper
                         control={control}
                         {...searchFormConfig.sort}
+                        formControlSx={{
+                            marginBottom: 0,
+                        }}
                     />
                 </Box>
+
+                <Button
+                    onClick={() => !isDownloading && downloadSearchResults()}
+                    variant="text"
+                    startIcon={<DownloadIcon />}
+                    disabled={isDownloading}>
+                    {t("downloadResults")}
+                </Button>
             </Box>
             <Box>
                 <Tabs
