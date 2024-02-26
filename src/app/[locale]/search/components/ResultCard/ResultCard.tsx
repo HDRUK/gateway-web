@@ -1,4 +1,5 @@
 import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { SearchResult } from "@/interfaces/Search";
 import Typography from "@/components/Typography";
@@ -12,9 +13,9 @@ const TRANSLATION_PATH = "pages.search.components.ResultCard";
 
 const ResultCard = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const {
-        metadata: { metadata },
-    } = result;
+    const metadata = get(result, "metadata.metadata");
+
+    if (!metadata) return null;
 
     return (
         <>
