@@ -5,7 +5,7 @@ const postFetch = async <T>(
     url: string,
     data: unknown,
     options: RequestOptions
-): Promise<T | null> => {
+): Promise<T | string | null> => {
     const { withPagination, notificationOptions } = options;
     const {
         successNotificationsOn = true,
@@ -24,14 +24,21 @@ const postFetch = async <T>(
         });
 
         if (response.ok) {
-            const json = await response.json();
-
             if (successNotificationsOn) {
                 successNotification({
                     method: "post",
                     props,
                 });
             }
+
+            const contentType = response.headers.get("content-type");
+
+            if (contentType?.includes("text")) {
+                const text = await response.text();
+                return text;
+            }
+
+            const json = await response.json();
 
             if (!withPagination) return json.data;
 
