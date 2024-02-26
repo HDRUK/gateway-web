@@ -42,7 +42,6 @@ import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
 
-const SORT_FIELD_DIVIDER = "__";
 const TRANSLATION_PATH = "pages.search";
 export const TYPE_PARAM = "type";
 
@@ -137,11 +136,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const { data, isLoading: isSearching } = usePostSwr<
         PaginationType<SearchResult>
     >(
-        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
+        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
-            sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
-            direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
             ...transformQueryFilters("dataset", queryParams),
         },
         {
