@@ -8,7 +8,6 @@ import { transformQueryFilters } from "@/utils/filters";
 import usePost from "./usePost";
 
 const TRANSLATION_PATH = "pages.search";
-const SORT_FIELD_DIVIDER = "__";
 
 const useSearch = (
     searchType: string,
@@ -18,7 +17,7 @@ const useSearch = (
     const t = useTranslations(TRANSLATION_PATH);
 
     const submitPostRequest = usePost(
-        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}`,
+        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             successNotificationsOn: false,
         }
@@ -27,8 +26,6 @@ const useSearch = (
     const handleDownload = async () => {
         const csvData = await submitPostRequest({
             query: queryParams.query,
-            sort: queryParams.sort?.split(SORT_FIELD_DIVIDER)[0],
-            direction: queryParams.sort?.split(SORT_FIELD_DIVIDER)[1],
             ...transformQueryFilters("dataset", queryParams),
             download: true,
             download_type: downloadType,

@@ -6,29 +6,29 @@ export const SORT_FIELD = "sort";
 const sortByOptions = [
     {
         label: "Sort By Most Relevant",
-        value: "score__asc",
+        value: "score:asc",
     },
     {
         label: "Sort Alphabetically By Title (A-Z)",
-        value: "title__asc",
+        value: "title:asc",
     },
     {
         label: "Sort Alphabetically by title (Z-A)",
-        value: "title__desc",
+        value: "title:desc",
     },
     {
         label: "Sort By Most Recently Updated",
-        value: "created_at__asc",
+        value: "created_at:asc",
     },
     {
         label: "Sort By Least Recently Updated",
-        value: "created_at__desc",
+        value: "created_at:desc",
     },
 ];
 
 const searchFormConfig = {
     defaultValues: {
-        sort: "score__asc",
+        sort: "score:asc",
         query: "",
     },
     sortByOptions,
