@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Tooltip } from "@mui/material";
 import theme from "@/config/theme";
 
-type SelectedType = { [key: string]: boolean };
+export type SelectedType = { [key: string]: boolean };
 type CountType = { [key: string]: number };
 
 interface MapUKProps {
@@ -1359,35 +1359,35 @@ const World = () => {
 
 const countries = [
     {
-        key: "scotland",
+        key: "Scotland",
         map: Scotland,
         tooltipProps: {
             placement: "right" as const,
         },
     },
     {
-        key: "wales",
+        key: "Wales",
         map: Wales,
         tooltipProps: {
             placement: "left" as const,
         },
     },
     {
-        key: "northernIreland",
+        key: "Northern Ireland",
         map: NorthernIreland,
         tooltipProps: {
             placement: "left" as const,
         },
     },
     {
-        key: "england",
+        key: "England",
         map: England,
         tooltipProps: {
             placement: "right" as const,
         },
     },
     {
-        key: "world",
+        key: "Rest of the world",
         map: World,
         tooltipProps: {
             placement: "bottom" as const,
@@ -1402,11 +1402,11 @@ const MapUK = ({
     width = 300,
 }: MapUKProps) => {
     const [selected, setSelected] = useState<SelectedType>({
-        england: false,
-        scotland: false,
-        wales: false,
-        northernIreland: false,
-        world: false,
+        England: false,
+        Scotland: false,
+        Wales: false,
+        "Northern Ireland": false,
+        "Rest of the world": false,
         ...overrides,
     });
 
@@ -1456,6 +1456,7 @@ const MapUK = ({
                             data-testid={key}
                             onClick={() => updateSelected(key)}
                             style={{
+                                cursor: "pointer",
                                 stroke: theme.palette.grey[700],
                                 fill: selected[key]
                                     ? theme.palette.secondary.main

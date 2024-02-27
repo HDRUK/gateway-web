@@ -1,5 +1,10 @@
 import { pick } from "lodash";
-import { BucketCheckbox, Filter, FilterType } from "@/interfaces/Filter";
+import {
+    Bucket,
+    BucketCheckbox,
+    Filter,
+    FilterType,
+} from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import { filtersList } from "@/config/forms/filters";
 
@@ -100,10 +105,19 @@ const transformQueryFiltersToForm = (
     return result;
 };
 
+const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
+    const transformedData: { [key: string]: number } = {};
+    buckets?.forEach(item => {
+        transformedData[item.key] = item.doc_count;
+    });
+    return transformedData;
+};
+
 export {
     removeEmptyRootObjects,
     groupByType,
     convertFilterTypesToObj,
     transformQueryFilters,
     transformQueryFiltersToForm,
+    formatBucketCounts,
 };

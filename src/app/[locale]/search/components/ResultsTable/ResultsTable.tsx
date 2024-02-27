@@ -58,7 +58,7 @@ const getColumns = ({
     }),
     columnHelper.accessor(POPULATION_SIZE_PATH, {
         cell: info => (
-            <div style={{ textAlign: "center" }}>{info.getValue()}</div>
+            <div style={{ textAlign: "center" }}>{info?.getValue()}</div>
         ),
         header: () => (
             <TooltipIcon

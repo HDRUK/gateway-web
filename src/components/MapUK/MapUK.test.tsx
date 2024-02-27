@@ -7,27 +7,27 @@ describe("MapUK", () => {
         render(<MapUK counts={{}} handleUpdate={mockFn} />);
 
         await waitFor(() => {
-            expect(screen.getByTestId("wales")).toBeInTheDocument();
+            expect(screen.getByTestId("Wales")).toBeInTheDocument();
         });
 
-        const wales = screen.getByTestId("wales");
+        const wales = screen.getByTestId("Wales");
         fireEvent.click(wales);
 
         await waitFor(() => {
             expect(mockFn).toHaveBeenCalledWith({
-                england: false,
-                northernIreland: false,
-                scotland: false,
-                wales: true,
-                world: false,
+                England: false,
+                "Northern Ireland": false,
+                Scotland: false,
+                Wales: true,
+                "Rest of the world": false,
             });
         });
     });
 
     it("should display tooltip with name and count", async () => {
-        render(<MapUK counts={{ wales: 204 }} />);
+        render(<MapUK counts={{ Wales: 204 }} />);
 
-        const wales = screen.getByTestId("wales");
+        const wales = screen.getByTestId("Wales");
         fireEvent.mouseOver(wales);
 
         await waitFor(() => {
