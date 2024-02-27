@@ -31,7 +31,7 @@ describe("MapUK", () => {
         fireEvent.mouseOver(wales);
 
         await waitFor(() => {
-            const title = screen.getByText("204 datasets");
+            const title = screen.getByText("Wales - 204 datasets");
             expect(title).toBeInTheDocument();
         });
     });

@@ -1410,6 +1410,8 @@ const MapUK = ({
         ...overrides,
     });
 
+    const [hovered, setHovered] = useState<string | undefined>();
+
     const updateSelected = (key: string) => {
         const updated = { ...selected, [key]: !selected[key] };
         setSelected(updated);
@@ -1419,7 +1421,7 @@ const MapUK = ({
     };
 
     const getTitle = (key: string) => {
-        return `${counts[key] || 0} datasets`;
+        return `${key} - ${counts[key] || 0} datasets`;
     };
 
     return (
@@ -1437,6 +1439,7 @@ const MapUK = ({
                 </svg>
                 {countries.map(({ key, map: Map, tooltipProps }) => (
                     <Tooltip
+                        disableInteractive
                         key={key}
                         title={getTitle(key)}
                         {...tooltipProps}
@@ -1455,12 +1458,16 @@ const MapUK = ({
                         <svg
                             data-testid={key}
                             onClick={() => updateSelected(key)}
+                            onMouseEnter={() => setHovered(key)}
+                            onMouseLeave={() => setHovered(undefined)}
                             style={{
                                 cursor: "pointer",
                                 stroke: theme.palette.grey[700],
-                                fill: selected[key]
-                                    ? theme.palette.secondary.main
-                                    : theme.palette.grey[500],
+                                fill:
+                                    selected[key] || hovered === key
+                                        ? theme.palette.secondary.main
+                                        : theme.palette.grey[500],
+                                transition: "fill 0.5s ease",
                             }}>
                             <Map />
                         </svg>
