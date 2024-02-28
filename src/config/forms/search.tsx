@@ -41,6 +41,7 @@ const searchFormConfig = {
         component: inputComponents.Select,
         options: sortByOptions,
         name: SORT_FIELD,
+        label: "",
     },
 };
 

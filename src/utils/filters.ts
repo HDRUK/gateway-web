@@ -73,6 +73,20 @@ function removeEmptyRootObjects(obj: { [key: string]: unknown }): {
     return result;
 }
 
+function convertStringToArray(obj: Partial<SearchQueryParams>) {
+    return Object.keys(obj).reduce((result, key) => {
+        const value = obj[key as keyof SearchQueryParams];
+        if (typeof value === "string" && value.length > 0) {
+            return {
+                ...result,
+                [key]: value.split(",").map(item => item.trim()),
+            };
+        }
+
+        return result;
+    }, {});
+}
+
 const transformQueryFilters = (
     type: string,
     allSearchQueries: SearchQueryParams
@@ -80,7 +94,7 @@ const transformQueryFilters = (
     const filterQueries = pick(allSearchQueries, filtersList);
 
     const filters = {
-        [type]: filterQueries,
+        [type]: convertStringToArray(filterQueries),
     };
 
     return removeEmptyRootObjects({

@@ -1,21 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import {
     SearchCategory,
-    SearchForm,
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
@@ -41,6 +39,7 @@ import { transformQueryFilters } from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
+import Sort from "../Sort";
 
 const TRANSLATION_PATH = "pages.search";
 export const TYPE_PARAM = "type";
@@ -75,8 +74,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     );
 
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
-        query: getQueryParam(QUERY_FIELD),
-        sort: getQueryParam(SORT_FIELD),
+        query:
+            getQueryParam(QUERY_FIELD) || searchFormConfig.defaultValues.query,
+        sort: getQueryParam(SORT_FIELD) || searchFormConfig.defaultValues.sort,
         [FILTER_DATA_USE_TITLES]: getQueryParam(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getQueryParam(FILTER_PUBLISHER_NAME),
         page: "1",
@@ -85,57 +85,36 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
     const { handleDownload } = useSearch(searchType, resultsView, queryParams);
 
-    const { control, handleSubmit, getValues, setValue, watch } =
-        useForm<SearchForm>({
-            defaultValues: {
-                ...searchFormConfig.defaultValues,
-                query:
-                    getQueryParam(QUERY_FIELD) ||
-                    searchFormConfig.defaultValues.query,
-                sort:
-                    getQueryParam(SORT_FIELD) ||
-                    searchFormConfig.defaultValues.sort,
-            },
-        });
-    const watchAll = watch();
-
     const updatePath = (key: string, value: string) => {
         router.push(`${pathname}?${updateQueryString(key, value)}`);
     };
 
-    useEffect(() => {
-        const selectedOption = searchFormConfig.sortByOptions.find(
-            o => o.value === watchAll.sort
-        );
-
-        if (!selectedOption?.value) {
-            return;
-        }
-
-        setQueryParams({
-            ...queryParams,
-            sort: selectedOption.value,
-        });
-
-        updatePath(SORT_FIELD, selectedOption.value);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchAll.sort]);
-
-    const onSubmit: SubmitHandler<SearchForm> = async data => {
-        setQueryParams({ ...queryParams, query: data.query });
+    const onQuerySubmit = async (data: FieldValues) => {
+        setQueryParams({ ...queryParams, ...data });
 
         updatePath(QUERY_FIELD, data.query);
     };
 
+    const onSortChange = async (selectedValue: string) => {
+        setQueryParams({
+            ...queryParams,
+            sort: selectedValue,
+        });
+
+        updatePath(SORT_FIELD, selectedValue);
+    };
+
     const resetQueryInput = () => {
-        setValue(QUERY_FIELD, "");
         setQueryParams({ ...queryParams, query: "" });
+
         updatePath(QUERY_FIELD, "");
     };
 
-    const { data, isLoading: isSearching } = usePostSwr<
-        SearchPaginationType<SearchResult>
-    >(
+    const {
+        data,
+        isLoading: isSearching,
+        mutate,
+    } = usePostSwr<SearchPaginationType<SearchResult>>(
         `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
@@ -146,6 +125,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             withPagination: true,
         }
     );
+
+    useEffect(() => {
+        mutate();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const categoryTabs = [
         {
@@ -202,11 +186,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     justifyContent: "center",
                 }}>
                 <SearchBar
-                    control={control}
+                    defaultValue={queryParams.query}
                     explainerText={t("searchExplainer")}
                     resetAction={() => resetQueryInput()}
-                    resetDisabled={!getValues(QUERY_FIELD)}
-                    submitAction={handleSubmit(onSubmit)}
+                    isDisabled={!queryParams.query}
+                    submitAction={onQuerySubmit}
                     queryPlaceholder={t("searchPlaceholder")}
                     queryName={QUERY_FIELD}
                 />
@@ -221,12 +205,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 }}
                 textAlign="left">
                 <Box sx={{ p: 0, mr: "1em" }}>
-                    <InputWrapper
-                        control={control}
-                        {...searchFormConfig.sort}
-                        formControlSx={{
-                            marginBottom: 0,
-                        }}
+                    <Sort
+                        sortName={SORT_FIELD}
+                        defaultValue={queryParams.sort}
+                        submitAction={onSortChange}
                     />
                 </Box>
 

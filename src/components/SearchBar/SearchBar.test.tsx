@@ -1,8 +1,6 @@
-import { useForm } from "react-hook-form";
 import userEvent from "@testing-library/user-event";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import SearchBar, { TEST_ID_RESET_BUTTON, TEST_ID_WRAPPER } from "./SearchBar";
-import { SearchForm } from "./SearchBar.stories";
 
 describe("SearchBar", () => {
     const onSubmit = jest.fn();
@@ -11,21 +9,15 @@ describe("SearchBar", () => {
     const QUERY_DEFAULT_TEXT = "Query";
 
     const WrapperComponent = () => {
-        const { control } = useForm<SearchForm>({
-            defaultValues: {
-                query: QUERY_DEFAULT_TEXT,
-            },
-        });
-
         return (
             <SearchBar
-                control={control}
+                defaultValue={QUERY_DEFAULT_TEXT}
                 explainerText={EXPLAINER_TEXT}
                 resetAction={onReset}
-                resetDisabled={false}
                 submitAction={onSubmit}
                 queryPlaceholder="Enter your search term"
                 queryName="query"
+                isDisabled={false}
             />
         );
     };
