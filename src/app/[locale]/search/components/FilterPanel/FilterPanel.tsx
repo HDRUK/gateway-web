@@ -21,7 +21,6 @@ import {
     groupByType,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
-import MapFilter from "../MapFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";

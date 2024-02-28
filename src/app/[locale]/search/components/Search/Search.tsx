@@ -5,8 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Bucket, Filter } from "@/interfaces/Filter";
-import { PaginationType } from "@/interfaces/Pagination";
+import { Filter } from "@/interfaces/Filter";
 import {
     SearchCategory,
     SearchForm,
@@ -31,7 +30,6 @@ import apis from "@/config/apis";
 import {
     FILTER_DATA_USE_TITLES,
     FILTER_PUBLISHER_NAME,
-    FILTER_GEOGRAPHIC_LOCATION,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
