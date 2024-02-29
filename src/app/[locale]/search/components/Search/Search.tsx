@@ -1,21 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import {
     SearchCategory,
-    SearchForm,
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
@@ -29,6 +27,7 @@ import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
     FILTER_DATA_USE_TITLES,
+    FILTER_GEOGRAPHIC_LOCATION,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
 import searchFormConfig, {
@@ -37,10 +36,11 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
-import { transformQueryFilters } from "@/utils/filters";
+import { pickOnlyFilters } from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultsTable from "../ResultsTable";
+import Sort from "../Sort";
 
 const TRANSLATION_PATH = "pages.search";
 export const TYPE_PARAM = "type";
@@ -58,11 +58,18 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const getQueryParam = (paramName: string) => {
+    const getParamString = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
     };
 
-    const searchType = getQueryParam(TYPE_PARAM) || SearchCategory.DATASETS;
+    const getParamArray = (paramName: string) => {
+        return searchParams
+            ?.get(paramName)
+            ?.split(",")
+            .filter(filter => !!filter);
+    };
+
+    const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
 
     const updateQueryString = useCallback(
         (name: string, value: string) => {
@@ -75,77 +82,63 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     );
 
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
-        query: getQueryParam(QUERY_FIELD),
-        sort: getQueryParam(SORT_FIELD),
-        [FILTER_DATA_USE_TITLES]: getQueryParam(FILTER_DATA_USE_TITLES),
-        [FILTER_PUBLISHER_NAME]: getQueryParam(FILTER_PUBLISHER_NAME),
+        query:
+            getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
+        sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
+        [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
+        [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
+        [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         page: "1",
         per_page: "25",
     });
 
     const { handleDownload } = useSearch(searchType, resultsView, queryParams);
 
-    const { control, handleSubmit, getValues, setValue, watch } =
-        useForm<SearchForm>({
-            defaultValues: {
-                ...searchFormConfig.defaultValues,
-                query:
-                    getQueryParam(QUERY_FIELD) ||
-                    searchFormConfig.defaultValues.query,
-                sort:
-                    getQueryParam(SORT_FIELD) ||
-                    searchFormConfig.defaultValues.sort,
-            },
-        });
-    const watchAll = watch();
-
     const updatePath = (key: string, value: string) => {
         router.push(`${pathname}?${updateQueryString(key, value)}`);
     };
 
-    useEffect(() => {
-        const selectedOption = searchFormConfig.sortByOptions.find(
-            o => o.value === watchAll.sort
-        );
-
-        if (!selectedOption?.value) {
-            return;
-        }
-
-        setQueryParams({
-            ...queryParams,
-            sort: selectedOption.value,
-        });
-
-        updatePath(SORT_FIELD, selectedOption.value);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchAll.sort]);
-
-    const onSubmit: SubmitHandler<SearchForm> = async data => {
-        setQueryParams({ ...queryParams, query: data.query });
+    const onQuerySubmit = async (data: FieldValues) => {
+        setQueryParams({ ...queryParams, ...data });
 
         updatePath(QUERY_FIELD, data.query);
     };
 
+    const onSortChange = async (selectedValue: string) => {
+        setQueryParams({
+            ...queryParams,
+            sort: selectedValue,
+        });
+
+        updatePath(SORT_FIELD, selectedValue);
+    };
+
     const resetQueryInput = () => {
-        setValue(QUERY_FIELD, "");
         setQueryParams({ ...queryParams, query: "" });
+
         updatePath(QUERY_FIELD, "");
     };
 
-    const { data, isLoading: isSearching } = usePostSwr<
-        SearchPaginationType<SearchResult>
-    >(
+    const {
+        data,
+        isLoading: isSearching,
+        mutate,
+    } = usePostSwr<SearchPaginationType<SearchResult>>(
         `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
-            ...transformQueryFilters("dataset", queryParams),
+            ...pickOnlyFilters("dataset", queryParams),
         },
         {
             keepPreviousData: true,
             withPagination: true,
         }
     );
+
+    useEffect(() => {
+        mutate();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const categoryTabs = [
         {
@@ -202,11 +195,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     justifyContent: "center",
                 }}>
                 <SearchBar
-                    control={control}
+                    defaultValue={queryParams.query}
                     explainerText={t("searchExplainer")}
                     resetAction={() => resetQueryInput()}
-                    resetDisabled={!getValues(QUERY_FIELD)}
-                    submitAction={handleSubmit(onSubmit)}
+                    isDisabled={!queryParams.query}
+                    submitAction={onQuerySubmit}
                     queryPlaceholder={t("searchPlaceholder")}
                     queryName={QUERY_FIELD}
                 />
@@ -221,12 +214,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 }}
                 textAlign="left">
                 <Box sx={{ p: 0, mr: "1em" }}>
-                    <InputWrapper
-                        control={control}
-                        {...searchFormConfig.sort}
-                        formControlSx={{
-                            marginBottom: 0,
-                        }}
+                    <Sort
+                        sortName={SORT_FIELD}
+                        defaultValue={queryParams.sort}
+                        submitAction={onSortChange}
                     />
                 </Box>
 
@@ -269,18 +260,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
                     <FilterPanel
-                        filters={filters}
+                        filterSourceData={filters}
                         setFilterQueryParams={(
-                            params: {
-                                [key: string]: string[];
-                            },
-                            updatedSection: string
+                            filterValues: string[],
+                            filterName: string
                         ) => {
-                            updatePath(
-                                updatedSection,
-                                params[updatedSection].join(", ")
-                            );
-                            setQueryParams({ ...queryParams, ...params });
+                            // url requires string format, ie "one, two, three"
+                            updatePath(filterName, filterValues.join(", "));
+
+                            // api requires string[] format, ie ["one", "two", "three"]
+                            setQueryParams({
+                                ...queryParams,
+                                [filterName]: filterValues,
+                            });
                         }}
                         aggregations={data?.aggregations}
                     />

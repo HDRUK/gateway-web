@@ -9,7 +9,7 @@ const nextConfig = withNextIntl({
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
     },
-    webpack: (config, context) => {
+    webpack: config => {
         if (process.env.NEXT_WEBPACK_USEPOLLING) {
             config.watchOptions = {
                 poll: 500,
