@@ -63,7 +63,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const getParamArray = (paramName: string) => {
-        return searchParams?.get(paramName)?.split(", ");
+        return searchParams
+            ?.get(paramName)
+            ?.split(",")
+            .filter(filter => !!filter);
     };
 
     const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
