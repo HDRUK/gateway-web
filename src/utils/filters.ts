@@ -32,6 +32,13 @@ const groupByType = (
 const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
     const filterQueries = pick(allSearchQueries, filtersList);
 
+    const hasFilters =
+        Object.values(filterQueries).filter(p => p !== undefined).length > 0;
+
+    if (!hasFilters) {
+        return {};
+    }
+
     return {
         filters: {
             [type]: filterQueries,
