@@ -4,13 +4,23 @@ import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { Filter } from "@/interfaces/Filter";
+import { BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
+import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
+import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
 import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
-import { filtersList } from "@/config/forms/filters";
-import { groupByType, transformQueryFiltersToForm } from "@/utils/filters";
+import {
+    FILTER_GEOGRAPHIC_LOCATION,
+    filtersList,
+} from "@/config/forms/filters";
+import {
+    formatBucketCounts,
+    groupByType,
+    transformQueryFiltersToForm,
+} from "@/utils/filters";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
@@ -18,6 +28,7 @@ const TOOLTIP_SUFFIX = "Tooltip";
 const FilterPanel = ({
     filters,
     setFilterQueryParams,
+    aggregations,
 }: {
     filters: Filter[];
     setFilterQueryParams: (
@@ -26,21 +37,26 @@ const FilterPanel = ({
         },
         filterSection: string
     ) => void;
+    aggregations?: Aggregations;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
     const searchParams = useSearchParams();
-    const [checkboxValues, setCheckboxValues] = useState({
+    const [filterValues, setFilterValues] = useState({
         publisherName: transformQueryFiltersToForm(
             searchParams?.get("publisherName")
         ),
         dataUseTitles: transformQueryFiltersToForm(
             searchParams?.get("dataUseTitles")
         ),
+        geographicLocation: transformQueryFiltersToForm(
+            searchParams?.get("geographicLocation")
+        ),
     });
     const { control, setValue } = useForm({
         defaultValues: {
             publisherName: "",
             dataUseTitles: "",
+            geographicLocation: "",
         },
     });
 
@@ -57,9 +73,9 @@ const FilterPanel = ({
         filterSection: string
     ) => {
         const allUpdates = {
-            ...checkboxValues,
+            ...filterValues,
             [filterSection]: {
-                ...(checkboxValues[filterSection] || {}),
+                ...(filterValues[filterSection] || {}),
                 ...updatedCheckbox,
             },
         };
@@ -72,8 +88,55 @@ const FilterPanel = ({
                 .map(([key]) => key);
         });
 
-        setCheckboxValues(allUpdates);
+        setFilterValues(allUpdates);
         setFilterQueryParams(filterQueryParams, filterSection);
+    };
+
+    const handleUpdateMap = (mapValue: SelectedType) => {
+        const selectedCountries = Object.keys(mapValue).filter(
+            key => mapValue[key]
+        );
+
+        setFilterQueryParams(
+            { geographicLocation: selectedCountries },
+            FILTER_GEOGRAPHIC_LOCATION
+        );
+    };
+
+    const renderFilterContent = (filterItem: {
+        label: string;
+        value: string;
+        buckets: BucketCheckbox[];
+    }) => {
+        const { label } = filterItem;
+
+        switch (label) {
+            case FILTER_GEOGRAPHIC_LOCATION:
+                return (
+                    <Box style={{ display: "flex", justifyContent: "center" }}>
+                        <MapUK
+                            handleUpdate={handleUpdateMap}
+                            counts={formatBucketCounts(
+                                aggregations?.geographicLocation.buckets
+                            )}
+                            overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
+                        />
+                    </Box>
+                );
+            default:
+                return (
+                    <FilterSection
+                        handleCheckboxChange={updatedCheckbox =>
+                            updateCheckboxes(updatedCheckbox, label)
+                        }
+                        checkboxValues={filterValues[label]}
+                        filterSection={label}
+                        setValue={setValue}
+                        control={control}
+                        filterItem={filterItem}
+                    />
+                );
+        }
     };
 
     return (
@@ -106,18 +169,7 @@ const FilterPanel = ({
                                     : [...minimised, label]
                             )
                         }
-                        contents={
-                            <FilterSection
-                                handleCheckboxChange={updatedCheckbox =>
-                                    updateCheckboxes(updatedCheckbox, label)
-                                }
-                                checkboxValues={checkboxValues[label]}
-                                filterSection={label}
-                                setValue={setValue}
-                                control={control}
-                                filterItem={filterItem}
-                            />
-                        }
+                        contents={renderFilterContent(filterItem)}
                     />
                 );
             })}

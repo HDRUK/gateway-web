@@ -2,6 +2,7 @@ import { FilterType } from "@/interfaces/Filter";
 import { generateFilterV1 } from "@/mocks/data";
 import {
     convertFilterTypesToObj,
+    formatBucketCounts,
     groupByType,
     removeEmptyRootObjects,
 } from "./filters";
@@ -65,6 +66,22 @@ describe("Filter utils", () => {
             const response = removeEmptyRootObjects(obj);
 
             expect(response).toEqual({});
+        });
+    });
+    describe("formatBucketCounts", () => {
+        it("should format bucket counts", () => {
+            const aggregations = [
+                {
+                    doc_count: 100,
+                    key: "England",
+                },
+            ];
+
+            const response = formatBucketCounts(aggregations);
+
+            expect(response).toEqual({
+                England: 100,
+            });
         });
     });
 });

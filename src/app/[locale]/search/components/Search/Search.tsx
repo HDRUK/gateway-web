@@ -6,10 +6,10 @@ import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
-import { PaginationType } from "@/interfaces/Pagination";
 import {
     SearchCategory,
     SearchForm,
+    SearchPaginationType,
     SearchQueryParams,
     SearchResult,
 } from "@/interfaces/Search";
@@ -134,7 +134,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const { data, isLoading: isSearching } = usePostSwr<
-        PaginationType<SearchResult>
+        SearchPaginationType<SearchResult>
     >(
         `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
@@ -282,6 +282,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             );
                             setQueryParams({ ...queryParams, ...params });
                         }}
+                        aggregations={data?.aggregations}
                     />
                 </Box>
                 <Box
