@@ -4,7 +4,7 @@ import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { downloadCSV } from "@/utils/download";
-import { transformQueryFilters } from "@/utils/filters";
+import { pickOnlyFilters } from "@/utils/filters";
 import usePost from "./usePost";
 
 const TRANSLATION_PATH = "pages.search";
@@ -26,7 +26,7 @@ const useSearch = (
     const handleDownload = async () => {
         const csvData = await submitPostRequest({
             query: queryParams.query,
-            ...transformQueryFilters("dataset", queryParams),
+            ...pickOnlyFilters("dataset", queryParams),
             download: true,
             download_type: downloadType,
         });

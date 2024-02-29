@@ -49,8 +49,9 @@ export enum SearchCategory {
 export interface SearchQueryParams {
     query: string | undefined;
     sort: string | undefined;
-    [FILTER_DATA_USE_TITLES]: string | undefined;
-    [FILTER_PUBLISHER_NAME]: string | undefined;
+    [FILTER_DATA_USE_TITLES]: string[] | undefined;
+    [FILTER_PUBLISHER_NAME]: string[] | undefined;
+    [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
     page: string;
     per_page: string;
     type?: string;

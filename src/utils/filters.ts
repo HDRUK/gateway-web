@@ -1,27 +1,7 @@
 import { pick } from "lodash";
-import {
-    Bucket,
-    BucketCheckbox,
-    Filter,
-    FilterType,
-} from "@/interfaces/Filter";
+import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import { filtersList } from "@/config/forms/filters";
-
-const convertFilterTypesToObj = <T>(
-    filterTypes: FilterType[],
-    value: T
-): { [key in FilterType]: T } => {
-    const obj: { [key in FilterType]: T } = {} as {
-        [key in FilterType]: T;
-    };
-
-    filterTypes.forEach(filterType => {
-        obj[filterType] = value;
-    });
-
-    return obj;
-};
 
 const groupByType = (
     data: Filter[],
@@ -49,57 +29,14 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
-function removeEmptyRootObjects(obj: { [key: string]: unknown }): {
-    [key: string]: unknown;
-} {
-    const result: { [key: string]: unknown } = {};
-    Object.keys(obj).forEach(key => {
-        const value = obj[key];
-        if (Array.isArray(value)) {
-            if (value.length > 0) {
-                result[key] = value;
-            }
-        } else if (typeof value === "object" && value !== null) {
-            const nestedResult = removeEmptyRootObjects(
-                value as { [key: string]: unknown }
-            );
-            if (Object.keys(nestedResult).length !== 0) {
-                result[key] = nestedResult;
-            }
-        } else if (value !== undefined) {
-            result[key] = value;
-        }
-    });
-    return result;
-}
-
-function convertStringToArray(obj: Partial<SearchQueryParams>) {
-    return Object.keys(obj).reduce((result, key) => {
-        const value = obj[key as keyof SearchQueryParams];
-        if (typeof value === "string" && value.length > 0) {
-            return {
-                ...result,
-                [key]: value.split(",").map(item => item.trim()),
-            };
-        }
-
-        return result;
-    }, {});
-}
-
-const transformQueryFilters = (
-    type: string,
-    allSearchQueries: SearchQueryParams
-) => {
+const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
     const filterQueries = pick(allSearchQueries, filtersList);
 
-    const filters = {
-        [type]: convertStringToArray(filterQueries),
+    return {
+        filters: {
+            [type]: filterQueries,
+        },
     };
-
-    return removeEmptyRootObjects({
-        filters,
-    });
 };
 
 const transformQueryFiltersToForm = (
@@ -128,10 +65,8 @@ const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
 };
 
 export {
-    removeEmptyRootObjects,
     groupByType,
-    convertFilterTypesToObj,
-    transformQueryFilters,
     transformQueryFiltersToForm,
     formatBucketCounts,
+    pickOnlyFilters,
 };

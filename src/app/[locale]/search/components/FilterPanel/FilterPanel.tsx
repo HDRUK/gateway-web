@@ -13,7 +13,9 @@ import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
 import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import {
+    FILTER_DATA_USE_TITLES,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_PUBLISHER_NAME,
     filtersList,
 } from "@/config/forms/filters";
 import {
@@ -26,45 +28,49 @@ const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
 
 const FilterPanel = ({
-    filters,
+    filterSourceData,
     setFilterQueryParams,
     aggregations,
 }: {
-    filters: Filter[];
+    filterSourceData: Filter[];
     setFilterQueryParams: (
-        params: {
-            [key: string]: string[];
-        },
+        filterValues: string[],
         filterSection: string
     ) => void;
     aggregations?: Aggregations;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
     const searchParams = useSearchParams();
-    const [filterValues, setFilterValues] = useState({
-        publisherName: transformQueryFiltersToForm(
-            searchParams?.get("publisherName")
+
+    // filterValues controls the selected values of each filter
+    const [filterValues, setFilterValues] = useState<{
+        [key: string]: { [key: string]: boolean };
+    }>({
+        [FILTER_PUBLISHER_NAME]: transformQueryFiltersToForm(
+            searchParams?.get(FILTER_PUBLISHER_NAME)
         ),
-        dataUseTitles: transformQueryFiltersToForm(
-            searchParams?.get("dataUseTitles")
+        [FILTER_DATA_USE_TITLES]: transformQueryFiltersToForm(
+            searchParams?.get(FILTER_DATA_USE_TITLES)
         ),
-        geographicLocation: transformQueryFiltersToForm(
-            searchParams?.get("geographicLocation")
+        [FILTER_GEOGRAPHIC_LOCATION]: transformQueryFiltersToForm(
+            searchParams?.get(FILTER_GEOGRAPHIC_LOCATION)
         ),
     });
+
+    // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm({
         defaultValues: {
-            publisherName: "",
-            dataUseTitles: "",
-            geographicLocation: "",
+            [FILTER_PUBLISHER_NAME]: "",
+            [FILTER_DATA_USE_TITLES]: "",
+            [FILTER_GEOGRAPHIC_LOCATION]: "",
         },
     });
 
     const filterItems = useMemo(() => {
-        return groupByType(filters, "dataset").filter(filterItem =>
+        return groupByType(filterSourceData, "dataset").filter(filterItem =>
             filtersList.includes(filterItem.label)
         );
-    }, [filters]);
+    }, [filterSourceData]);
 
     const [minimised, setMinimised] = useState<string[]>([]);
 
@@ -72,24 +78,21 @@ const FilterPanel = ({
         updatedCheckbox: { [key: string]: boolean },
         filterSection: string
     ) => {
-        const allUpdates = {
-            ...filterValues,
-            [filterSection]: {
-                ...(filterValues[filterSection] || {}),
-                ...updatedCheckbox,
-            },
+        const updates = {
+            ...(filterValues[filterSection] || {}),
+            ...updatedCheckbox,
         };
 
-        const filterQueryParams = {};
+        const toStringArray = Object.entries(updates)
+            .filter(([, value]) => value === true)
+            .map(([key]) => key);
 
-        Object.keys(allUpdates).forEach(key => {
-            filterQueryParams[key] = Object.entries(allUpdates[key])
-                .filter(([, value]) => value === true)
-                .map(([key]) => key);
+        setFilterValues({
+            ...filterValues,
+            [filterSection]: updates,
         });
 
-        setFilterValues(allUpdates);
-        setFilterQueryParams(filterQueryParams, filterSection);
+        setFilterQueryParams(toStringArray, filterSection);
     };
 
     const handleUpdateMap = (mapValue: SelectedType) => {
@@ -97,10 +100,12 @@ const FilterPanel = ({
             key => mapValue[key]
         );
 
-        setFilterQueryParams(
-            { geographicLocation: selectedCountries },
-            FILTER_GEOGRAPHIC_LOCATION
-        );
+        setFilterValues({
+            ...filterValues,
+            [FILTER_GEOGRAPHIC_LOCATION]: mapValue,
+        });
+
+        setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
     };
 
     const renderFilterContent = (filterItem: {
