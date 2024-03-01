@@ -11,6 +11,7 @@ import {
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultDataUse,
     SearchResultDataset,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
@@ -201,7 +202,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             case "datasets":
                 return <ResultCard result={result as SearchResultDataset} />;
             default:
-                return <ResultCardDataUse result={result} />;
+                return (
+                    <ResultCardDataUse result={result as SearchResultDataUse} />
+                );
         }
     };
 
@@ -354,7 +357,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     </List>
                                 )}
                                 {resultsView === ViewType.TABLE && (
-                                    <ResultsTable results={data?.list} />
+                                    <ResultsTable
+                                        results={
+                                            data?.list as SearchResultDataset[]
+                                        }
+                                    />
                                 )}
                                 <Pagination
                                     isLoading={isSearching}
