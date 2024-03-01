@@ -35,18 +35,17 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
     const truncateWrapper = (text: string, isButton?: boolean) => {
         const textElement = (text: string) =>
-            isButton ? <Button size="small">{text}</Button> : <>{text}</>;
+            isButton ? <Button size="small">{text}</Button> : text;
 
         if (text.length < CHARACTER_LIMIT) {
             return textElement(text);
-        } else {
-            const truncatedText = `${text.slice(0, CHARACTER_LIMIT)}...`;
-            return (
-                <Tooltip style={{ display: "inline" }} title={text}>
-                    {textElement(truncatedText)}
-                </Tooltip>
-            );
         }
+
+        return (
+            <Tooltip style={{ display: "inline" }} title={text}>
+                <>{textElement(`${text.slice(0, CHARACTER_LIMIT)}...`)}</>
+            </Tooltip>
+        );
     };
 
     return (
@@ -57,13 +56,13 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                     sx={{ padding: 2, paddingBottom: 1, m: 0 }}
                     primary={
                         <Link
-                            href={`/#`}
+                            href="/#"
                             fontSize={16}
                             fontWeight={600}
                             marginBottom={2}>
                             <EllipsisLineLimit
                                 text={result.projectTitle || ""}
-                                showToolTip={true}
+                                showToolTip
                             />
                         </Link>
                     }
