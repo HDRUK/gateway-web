@@ -1,13 +1,13 @@
 import { rest } from "msw";
-import apis from "@/config/apis";
+import { FederationRunResponse } from "@/interfaces/Federation";
 import { Integration } from "@/interfaces/Integration";
 import { PaginationType } from "@/interfaces/Pagination";
+import apis from "@/config/apis";
 import {
     federationsResponseV1,
     integrationV1,
     integrationsV1,
 } from "@/mocks/data/integration";
-import { FederationRunResponse } from "@/interfaces/Federation";
 import { teamV1 } from "@/mocks/data/team";
 
 interface getIntegrationsProps {
@@ -100,6 +100,10 @@ const postIntegrationV1 = ({
     );
 };
 
+interface PostFedResponse {
+    data: FederationRunResponse;
+}
+
 const postFederationsTestV1 = ({
     data = federationsResponseV1,
     teamId = teamV1.id,
@@ -115,10 +119,7 @@ const postFederationsTestV1 = ({
                 );
             }
 
-            return res(
-                ctx.status(status),
-                ctx.json<FederationRunResponse>(data)
-            );
+            return res(ctx.status(status), ctx.json<PostFedResponse>({ data }));
         }
     );
 };

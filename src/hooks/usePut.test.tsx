@@ -1,17 +1,11 @@
 import { User } from "@/interfaces/User";
 import usePut from "@/hooks/usePut";
-import * as apiService from "@/services/api/put";
+import putRequest from "@/services/api/put";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
 import { userV1 } from "@/mocks/data";
 
-jest.mock("@/services/api/put", () => {
-    return {
-        ...jest.requireActual("@/services/api/put"),
-        putRequest: jest.fn(),
-        __esModule: true,
-    };
-});
+jest.mock("@/services/api/put");
 
 describe("usePut", () => {
     afterEach(() => {
@@ -29,7 +23,7 @@ describe("usePut", () => {
         await result.current(userV1.id, userV1);
 
         await waitFor(() =>
-            expect(apiService.putRequest).toHaveBeenCalledWith(
+            expect(putRequest).toHaveBeenCalledWith(
                 `${apis.usersV1Url}/${userV1.id}`,
                 userV1,
                 {

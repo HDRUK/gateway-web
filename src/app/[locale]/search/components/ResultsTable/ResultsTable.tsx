@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { SearchResult } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -50,15 +51,23 @@ const getColumns = ({
         header: () => null,
         size: 43,
     }),
-    columnHelper.accessor("metadata.metadata.summary.title", {
-        cell: info => <EllipsisLineLimit text={info.getValue()} />,
+    columnHelper.display({
+        id: "title",
+        cell: ({ row: { original } }) => (
+            <EllipsisLineLimit
+                text={get(original, "metadata.metadata.summary.title")}
+            />
+        ),
         meta: { isPinned: true, hasPinnedBorder: true },
         header: () => <span>{translations.metaDataLabel}</span>,
         size: 240,
     }),
-    columnHelper.accessor(POPULATION_SIZE_PATH, {
-        cell: info => (
-            <div style={{ textAlign: "center" }}>{info.getValue()}</div>
+    columnHelper.display({
+        id: "populationSize",
+        cell: ({ row: { original } }) => (
+            <div style={{ textAlign: "center" }}>
+                {get(original, POPULATION_SIZE_PATH)}
+            </div>
         ),
         header: () => (
             <TooltipIcon
@@ -74,7 +83,7 @@ const getColumns = ({
         id: "dateRange",
         cell: info => (
             <div style={{ textAlign: "center" }}>
-                {getDateRange(info.row.original.metadata.metadata)}
+                {getDateRange(info.row.original.metadata?.metadata)}
             </div>
         ),
         header: () => (
@@ -87,9 +96,12 @@ const getColumns = ({
         ),
         size: 120,
     }),
-    columnHelper.accessor(CONFORMS_TO_PATH, {
-        cell: info => (
-            <div style={{ textAlign: "center" }}>{info.getValue()}</div>
+    columnHelper.display({
+        id: "conformsTo",
+        cell: ({ row: { original } }) => (
+            <div style={{ textAlign: "center" }}>
+                {get(original, CONFORMS_TO_PATH)}
+            </div>
         ),
         header: () => (
             <TooltipIcon
@@ -101,10 +113,11 @@ const getColumns = ({
         ),
         size: 120,
     }),
-    columnHelper.accessor(PUBLISHER_NAME_PATH, {
-        cell: info => (
+    columnHelper.display({
+        id: "publisherName",
+        cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
-                <EllipsisLineLimit text={info.getValue()} />
+                <EllipsisLineLimit text={get(original, PUBLISHER_NAME_PATH)} />
             </div>
         ),
         header: () => (

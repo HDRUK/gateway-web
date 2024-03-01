@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Suspense, ReactNode } from "react";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
@@ -24,7 +24,7 @@ export default function RootLayout({
     params: { locale },
 }: {
     params: { locale: string };
-    children: React.ReactNode;
+    children: ReactNode;
 }) {
     if (!locales.includes(locale)) notFound();
 
@@ -47,9 +47,9 @@ export default function RootLayout({
                                         }}>
                                         <Header />
                                         <main>{children}</main>
-                                        <React.Suspense fallback={null}>
+                                        <Suspense fallback={null}>
                                             <NavigationEvents />
-                                        </React.Suspense>
+                                        </Suspense>
                                         <Footer />
                                     </div>
                                 </ActionBarProvider>

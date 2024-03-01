@@ -18,7 +18,7 @@
             "error": {
                 "status": {
                     "400": "Invalid argument",
-                    "401": "Invalid authentication credentials",
+                    "401": "Unauthorised request",
                     "403": "Permission denied",
                     "404": "Resource not found",
                     "500": "There has been a server error"
@@ -228,6 +228,8 @@
             "searchExplainer": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
+            "downloadResults": "Download results",
+            "downloadStarted": "Your download has started",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -235,7 +237,13 @@
                 },
                 "FilterPanel": {
                     "populationSize": "Population size",
-                    "datasetPopulation": "Dataset Population"
+                    "datasetPopulation": "Dataset Population",
+                    "publisherName": "Data provider",
+                    "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                    "dataUseTitles": "Data use title",
+                    "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
+                    "geographicLocation": "Geographical coverage",
+                    "geographicLocationTooltip": "The geographical area covered by the dataset"
                 },
                 "ResultCard": {
                     "dateLabel": "Date range"

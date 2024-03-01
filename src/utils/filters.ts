@@ -1,34 +1,79 @@
-import { Filter, FilterType } from "@/interfaces/Filter";
-
-const convertFilterTypesToObj = <T>(
-    filterTypes: FilterType[],
-    value: T
-): { [key in FilterType]: T } => {
-    const obj: { [key in FilterType]: T } = {} as {
-        [key in FilterType]: T;
-    };
-
-    filterTypes.forEach(filterType => {
-        obj[filterType] = value;
-    });
-
-    return obj;
-};
+import { pick } from "lodash";
+import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { SearchQueryParams } from "@/interfaces/Search";
+import { filtersList } from "@/config/forms/filters";
 
 const groupByType = (
-    data: Filter[]
+    data: Filter[],
+    type: string
 ): {
-    [key in FilterType]: { label: string; value: string; count?: number }[];
-} => {
-    return data.reduce((acc, item) => {
-        const { type, ...rest } = item;
-        acc[type] = acc[type] || [];
-        acc[type].push({
-            value: rest.id.toString(),
-            label: rest.value,
-        });
-        return acc;
-    }, {} as { [key in FilterType]: { label: string; value: string; count?: number }[] });
+    label: string;
+    value: string;
+    buckets: BucketCheckbox[];
+}[] => {
+    return data
+        .filter(item => item.type === type)
+        .reduce((acc, item) => {
+            acc.push({
+                value: item.id.toString(),
+                label: item.keys,
+                buckets: item.buckets?.map(bucket => {
+                    return {
+                        value: bucket.key,
+                        label: bucket.key,
+                        count: bucket.doc_count,
+                    };
+                }),
+            });
+            return acc;
+        }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
-export { groupByType, convertFilterTypesToObj };
+const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
+    const filterQueries = pick(allSearchQueries, filtersList);
+
+    const hasFilters =
+        Object.values(filterQueries).filter(p => p !== undefined).length > 0;
+
+    if (!hasFilters) {
+        return {};
+    }
+
+    return {
+        filters: {
+            [type]: filterQueries,
+        },
+    };
+};
+
+const transformQueryFiltersToForm = (
+    filtersQuery: string | null | undefined
+): { [key: string]: boolean } => {
+    const result: { [key: string]: boolean } = {};
+    if (!filtersQuery) {
+        return result;
+    }
+
+    const filtersArray = filtersQuery.split(",").map(name => name.trim());
+
+    filtersArray.forEach(name => {
+        result[name] = true;
+    });
+
+    return result;
+};
+
+const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
+    const transformedData: { [key: string]: number } = {};
+    buckets?.forEach(item => {
+        transformedData[item.key] = item.doc_count;
+    });
+    return transformedData;
+};
+
+export {
+    groupByType,
+    transformQueryFiltersToForm,
+    formatBucketCounts,
+    pickOnlyFilters,
+};

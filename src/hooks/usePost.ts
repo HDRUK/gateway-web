@@ -1,7 +1,6 @@
 import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
 import apiService from "@/services/api";
-import { ThrowPaginationError } from "@/utils/api";
 
 const usePost = <T>(url: string, options?: HttpOptions) => {
     const t = useTranslations("api");
@@ -12,8 +11,6 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
         successNotificationsOn = true,
         errorNotificationsOn = true,
     } = options || {};
-
-    ThrowPaginationError(options);
 
     return async (payload: T) => {
         return await apiService.postRequest<T>(url, payload, {

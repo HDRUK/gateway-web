@@ -31,6 +31,7 @@ const ApplicationList = () => {
         {
             keepPreviousData: true,
             withPagination: true,
+            itemName: "applications",
         }
     );
 

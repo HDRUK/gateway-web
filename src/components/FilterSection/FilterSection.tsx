@@ -1,34 +1,75 @@
 "use client";
 
+import { CSSProperties, useMemo } from "react";
 import { Control, useController } from "react-hook-form";
+import { List, AutoSizer } from "react-virtualized";
 import { useTranslations } from "next-intl";
-import { FilterType } from "@/interfaces/Filter";
-import CheckboxGroup from "@/components/CheckboxGroup";
-import ScrollContent from "@/components/ScrollContent";
+import { BucketCheckbox } from "@/interfaces/Filter";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
+import CheckboxControlled from "../CheckboxControlled";
 
 interface FilterSectionProps {
-    filterItems: { label: string; value: string; count?: number }[];
+    filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     control: Control;
-    filterSection: FilterType;
+    filterSection: string;
     noFilterLabel?: string;
     placeholder?: string;
-    setValue: (name: FilterType, value: string | number) => void;
+    checkboxValues: { [key: string]: boolean };
+    handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
+    setValue: (name: string, value: string | number) => void;
 }
 const FilterSection = ({
-    filterItems,
+    filterItem,
     filterSection,
     control,
+    checkboxValues,
+    handleCheckboxChange,
     noFilterLabel,
     placeholder,
     setValue,
 }: FilterSectionProps) => {
-    const { field } = useController({ control, name: filterSection });
     const t = useTranslations("components.FilterSection");
-    if (!filterItems)
+    const { field } = useController({
+        control,
+        name: filterSection,
+    });
+
+    const checkboxes = useMemo(() => {
+        return filterItem.buckets.filter(bucket =>
+            bucket?.label
+                ?.toLowerCase()
+                ?.includes(field.value?.toLowerCase() || "")
+        );
+    }, [filterItem.buckets, field.value]);
+
+    if (!filterItem.buckets.length)
         return <Typography>{noFilterLabel || t("noFilters")}</Typography>;
+
+    const renderRow = ({
+        index,
+        key,
+        style,
+    }: {
+        index: number;
+        key: string;
+        style: CSSProperties;
+    }) => (
+        <div key={key} style={style}>
+            <CheckboxControlled
+                {...checkboxes[index]}
+                formControlSx={{ pl: 1, pr: 1 }}
+                checked={checkboxValues[checkboxes[index].label]}
+                name={checkboxes[index].label}
+                onChange={(event, value) =>
+                    handleCheckboxChange({
+                        [event.target.name]: value,
+                    })
+                }
+            />
+        </div>
+    );
 
     return (
         <>
@@ -41,20 +82,27 @@ const FilterSection = ({
                 showClearButton
                 setValue={setValue}
             />
-            <ScrollContent sx={{ height: 110, pt: 0 }}>
-                <CheckboxGroup
-                    direction="column"
-                    name="filters"
-                    label=""
-                    size="large"
-                    control={control}
-                    checkboxes={filterItems.filter(filterItem =>
-                        filterItem?.label?.includes(field.value || "")
-                    )}
-                    formControlSx={{ mb: 0 }}
-                    checkboxSx={{ p: "4px" }}
-                />
-            </ScrollContent>
+
+            <div style={{ height: 126 }}>
+                <AutoSizer disableWidth>
+                    {() => {
+                        return (
+                            <List
+                                rowRenderer={renderRow}
+                                rowCount={checkboxes.length}
+                                rowHeight={42}
+                                width={1}
+                                height={126}
+                                containerStyle={{
+                                    width: "100%",
+                                    maxWidth: "100%",
+                                }}
+                                style={{ width: "100%" }}
+                            />
+                        );
+                    }}
+                </AutoSizer>
+            </div>
         </>
     );
 };

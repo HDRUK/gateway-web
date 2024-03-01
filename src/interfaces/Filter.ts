@@ -46,12 +46,24 @@ export type FilterKey =
     | "organisationSector"
     | "fundersAndSponsors";
 
+export interface Bucket {
+    doc_count: number;
+    key: string;
+}
+
+export interface BucketCheckbox {
+    value: string;
+    label: string;
+    count?: number;
+}
+
 interface Filter {
     id: number;
     keys: FilterKey;
     enabled: boolean;
     type: FilterType;
     value: string;
+    buckets: Bucket[];
 }
 
 export type { Filter };

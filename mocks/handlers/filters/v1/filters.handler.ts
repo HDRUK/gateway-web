@@ -1,6 +1,6 @@
 import { rest } from "msw";
-import apis from "@/config/apis";
 import { Filter } from "@/interfaces/Filter";
+import apis from "@/config/apis";
 import { filtersV1, filterV1 } from "@/mocks/data";
 import { errorResponseV1 } from "@/mocks/data/api/v1";
 
@@ -13,7 +13,9 @@ const getFiltersV1 = (data = filtersV1, status = 200) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),
-                ctx.json(`Request failed with status code ${status}`)
+                ctx.json({
+                    message: `Request failed with status code ${status}`,
+                })
             );
         }
         return res(ctx.status(status), ctx.json<GetResponse>({ data }));
@@ -59,7 +61,7 @@ interface DeleteResponse {
 const deleteFilterV1 = (status = 200) => {
     return rest.delete(`${apis.filtersV1Url}/:id`, (req, res, ctx) => {
         if (status !== 200) {
-            return res(ctx.status(status), ctx.json(errorResponseV1(status)));
+            return res(ctx.status(status), ctx.json(errorResponseV1()));
         }
         return res(
             ctx.status(status),

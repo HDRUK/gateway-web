@@ -2,55 +2,182 @@
 
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Filter, FilterType } from "@/interfaces/Filter";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
+import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
+import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
+import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
-import { convertFilterTypesToObj, groupByType } from "@/utils/filters";
-import { capitalise, splitCamelcase } from "@/utils/general";
+import {
+    FILTER_DATA_USE_TITLES,
+    FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_PUBLISHER_NAME,
+    filtersList,
+} from "@/config/forms/filters";
+import {
+    formatBucketCounts,
+    groupByType,
+    transformQueryFiltersToForm,
+} from "@/utils/filters";
 
-const FilterPanel = ({ filters }: { filters: Filter[] }) => {
-    const filterSections: FilterType[] = ["dataset"];
-    const [expanded, setIsExpanded] = useState(
-        convertFilterTypesToObj(filterSections, true)
-    );
-    const { control, setValue, watch } = useForm({
-        defaultValues: convertFilterTypesToObj(filterSections, ""),
+const TRANSLATION_PATH = "pages.search.components.FilterPanel";
+const TOOLTIP_SUFFIX = "Tooltip";
+
+const FilterPanel = ({
+    filterSourceData,
+    setFilterQueryParams,
+    aggregations,
+}: {
+    filterSourceData: Filter[];
+    setFilterQueryParams: (
+        filterValues: string[],
+        filterSection: string
+    ) => void;
+    aggregations?: Aggregations;
+}) => {
+    const t = useTranslations(TRANSLATION_PATH);
+    const searchParams = useSearchParams();
+
+    // filterValues controls the selected values of each filter
+    const [filterValues, setFilterValues] = useState<{
+        [key: string]: { [key: string]: boolean };
+    }>({
+        [FILTER_PUBLISHER_NAME]: transformQueryFiltersToForm(
+            searchParams?.get(FILTER_PUBLISHER_NAME)
+        ),
+        [FILTER_DATA_USE_TITLES]: transformQueryFiltersToForm(
+            searchParams?.get(FILTER_DATA_USE_TITLES)
+        ),
+        [FILTER_GEOGRAPHIC_LOCATION]: transformQueryFiltersToForm(
+            searchParams?.get(FILTER_GEOGRAPHIC_LOCATION)
+        ),
     });
 
-    const filterGroups = useMemo(() => {
-        return groupByType(filters);
-    }, [filters]);
+    // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
+    const { control, setValue } = useForm({
+        defaultValues: {
+            [FILTER_PUBLISHER_NAME]: "",
+            [FILTER_DATA_USE_TITLES]: "",
+            [FILTER_GEOGRAPHIC_LOCATION]: "",
+        },
+    });
+
+    const filterItems = useMemo(() => {
+        return groupByType(filterSourceData, "dataset").filter(filterItem =>
+            filtersList.includes(filterItem.label)
+        );
+    }, [filterSourceData]);
+
+    const [minimised, setMinimised] = useState<string[]>([]);
+
+    const updateCheckboxes = (
+        updatedCheckbox: { [key: string]: boolean },
+        filterSection: string
+    ) => {
+        const updates = {
+            ...(filterValues[filterSection] || {}),
+            ...updatedCheckbox,
+        };
+
+        const toStringArray = Object.entries(updates)
+            .filter(([, value]) => value === true)
+            .map(([key]) => key);
+
+        setFilterValues({
+            ...filterValues,
+            [filterSection]: updates,
+        });
+
+        setFilterQueryParams(toStringArray, filterSection);
+    };
+
+    const handleUpdateMap = (mapValue: SelectedType) => {
+        const selectedCountries = Object.keys(mapValue).filter(
+            key => mapValue[key]
+        );
+
+        setFilterValues({
+            ...filterValues,
+            [FILTER_GEOGRAPHIC_LOCATION]: mapValue,
+        });
+
+        setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
+    };
+
+    const renderFilterContent = (filterItem: {
+        label: string;
+        value: string;
+        buckets: BucketCheckbox[];
+    }) => {
+        const { label } = filterItem;
+
+        switch (label) {
+            case FILTER_GEOGRAPHIC_LOCATION:
+                return (
+                    <Box style={{ display: "flex", justifyContent: "center" }}>
+                        <MapUK
+                            handleUpdate={handleUpdateMap}
+                            counts={formatBucketCounts(
+                                aggregations?.geographicLocation.buckets
+                            )}
+                            overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
+                        />
+                    </Box>
+                );
+            default:
+                return (
+                    <FilterSection
+                        handleCheckboxChange={updatedCheckbox =>
+                            updateCheckboxes(updatedCheckbox, label)
+                        }
+                        checkboxValues={filterValues[label]}
+                        filterSection={label}
+                        setValue={setValue}
+                        control={control}
+                        filterItem={filterItem}
+                    />
+                );
+        }
+    };
 
     return (
         <>
-            {filterSections.map(filterSection => (
-                <Accordion
-                    key={filterSection}
-                    sx={{ background: "transparent", boxShadow: "none" }}
-                    expanded={expanded[filterSection]}
-                    onChange={() =>
-                        setIsExpanded({
-                            ...expanded,
-                            [filterSection]: !expanded[filterSection],
-                        })
-                    }
-                    heading={
-                        <Typography fontWeight="400" fontSize="20px">
-                            {capitalise(splitCamelcase(filterSection))}
-                        </Typography>
-                    }
-                    contents={
-                        <FilterSection
-                            filterSection={filterSection}
-                            setValue={setValue}
-                            value={watch(filterSection)}
-                            control={control}
-                            filterItems={filterGroups[filterSection]}
-                        />
-                    }
-                />
-            ))}
+            {filterItems.map(filterItem => {
+                const { label } = filterItem;
+
+                return (
+                    <Accordion
+                        key={label}
+                        sx={{
+                            background: "transparent",
+                            boxShadow: "none",
+                        }}
+                        expanded={!minimised.includes(label)}
+                        heading={
+                            <Tooltip
+                                key={label}
+                                placement="right"
+                                title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                <Typography fontWeight="400" fontSize="20px">
+                                    {t(label)}
+                                </Typography>
+                            </Tooltip>
+                        }
+                        onChange={() =>
+                            setMinimised(
+                                minimised.includes(label)
+                                    ? minimised.filter(e => e !== label)
+                                    : [...minimised, label]
+                            )
+                        }
+                        contents={renderFilterContent(filterItem)}
+                    />
+                );
+            })}
         </>
     );
 };
