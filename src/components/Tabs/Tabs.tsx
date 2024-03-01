@@ -32,11 +32,12 @@ export interface TabProps {
     variant?: TabVariant;
     paramName?: string;
     renderTabContent?: boolean;
+    persistParams?: boolean;
 }
 
 const CustomLink = forwardRef<
-    HTMLAnchorElement & { param: string },
-    { href: string; children: ReactNode; param: string }
+    HTMLAnchorElement & { param: string; persistParams: boolean },
+    { href: string; children: ReactNode; param: string; persistParams: boolean }
 >((props, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -48,10 +49,15 @@ const CustomLink = forwardRef<
             {...props}
             href={{
                 pathname,
-                query: searchParams?.entries() && {
-                    ...Object.fromEntries(searchParams?.entries()),
-                    [props.param]: props.href,
-                },
+                query:
+                    searchParams?.entries() && props.persistParams
+                        ? {
+                              ...Object.fromEntries(searchParams?.entries()),
+                              [props.param]: props.href,
+                          }
+                        : {
+                              [props.param]: props.href,
+                          },
             }}>
             {props.children}
         </Link>
@@ -67,6 +73,7 @@ const Tabs = ({
     variant = TabVariant.STANDARD,
     paramName = "tab",
     renderTabContent = true,
+    persistParams = true,
 }: TabProps) => {
     const searchParams = useSearchParams();
     const currentTab = searchParams?.get(paramName);
@@ -100,6 +107,7 @@ const Tabs = ({
                                     tabsStyle.tab
                                 }
                                 param={paramName}
+                                persistParams={persistParams}
                             />
                         ))}
                     </MuiTabList>

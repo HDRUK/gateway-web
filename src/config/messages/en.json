@@ -246,7 +246,14 @@
                     "geographicLocationTooltip": "The geographical area covered by the dataset"
                 },
                 "ResultCard": {
-                    "dateLabel": "Date range"
+                    "dateLabel": "Date range",
+                    "leadOrganisation": "Lead organisation",
+                    "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
+                    "datasets": "Datasets",
+                    "datasetsTooltip": "The name of the dataset(s) being accessed",
+                    "dataCustodian": "Data Custodian",
+                    "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
+                    "showAll": "Show all datasets"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },

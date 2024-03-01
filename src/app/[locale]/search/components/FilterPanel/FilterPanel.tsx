@@ -28,10 +28,12 @@ const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
 
 const FilterPanel = ({
+    filterCategory,
     filterSourceData,
     setFilterQueryParams,
     aggregations,
 }: {
+    filterCategory: string;
     filterSourceData: Filter[];
     setFilterQueryParams: (
         filterValues: string[],
@@ -67,10 +69,10 @@ const FilterPanel = ({
     });
 
     const filterItems = useMemo(() => {
-        return groupByType(filterSourceData, "dataset").filter(filterItem =>
-            filtersList.includes(filterItem.label)
+        return groupByType(filterSourceData, filterCategory).filter(
+            filterItem => filtersList.includes(filterItem.label)
         );
-    }, [filterSourceData]);
+    }, [filterCategory, filterSourceData]);
 
     const [minimised, setMinimised] = useState<string[]>([]);
 
