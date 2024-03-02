@@ -1,10 +1,10 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Typography from "@/components/Typography";
 
 export interface BannerProps {
     title: string;
     subTitle?: string;
-    src: StaticImageData;
+    src: string;
 }
 
 const Banner = ({ title, subTitle, src }: BannerProps) => {

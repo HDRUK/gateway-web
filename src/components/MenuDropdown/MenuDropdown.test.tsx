@@ -1,11 +1,11 @@
 import React from "react";
-import HeaderNav from "@/modules/HeaderNav";
+import DesktopNav from "@/modules/DesktopNav";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
-describe("HeaderNav", () => {
+describe("DesktopNav", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Component = (props: any) => {
-        return <HeaderNav {...props} />;
+        return <DesktopNav {...props} />;
     };
     it("renders explore navigation items", async () => {
         render(<Component />);

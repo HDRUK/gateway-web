@@ -10,6 +10,7 @@ type ButtonBaseProps = Pick<
     | "sx"
     | "disableRipple"
     | "startIcon"
+    | "endIcon"
 >;
 export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
 

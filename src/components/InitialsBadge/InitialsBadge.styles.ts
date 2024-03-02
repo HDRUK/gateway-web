@@ -1,8 +1,8 @@
-import { Theme, css } from "@emotion/react";
+import { css } from "@emotion/react";
 
-export const badge = (theme: Theme) =>
+export const badge = () =>
     css({
-        background: theme.palette.primary.main,
+        background: "#90D0EC",
         borderRadius: "18px",
         height: "36px",
         width: "36px",

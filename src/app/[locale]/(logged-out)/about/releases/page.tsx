@@ -1,7 +1,6 @@
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
-import BannerImage from "../../../../../public/images/banners/release-notes.png";
 import ReleaseTabs from "./components/ReleaseTabs";
 
 export const metadata = {
@@ -14,7 +13,10 @@ const ReleasesPage = async () => {
 
     return (
         <>
-            <Banner title="Gateway Releases" src={BannerImage} />
+            <Banner
+                title="Gateway Releases"
+                src="/images/banners/release-notes.png"
+            />
             <Container sx={{ background: "white", padding: 0 }}>
                 <ReleaseTabs allReleases={allReleases} />
             </Container>

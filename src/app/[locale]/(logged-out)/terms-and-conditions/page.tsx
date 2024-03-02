@@ -2,7 +2,6 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getTermsAndConditions } from "@/utils/cms";
-import BannerImage from "../../../../public/images/banners/release-notes.png";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Terms and Conditions",
@@ -14,7 +13,10 @@ const TermsAndConditionsPage = async () => {
 
     return (
         <>
-            <Banner title={cmsPage.title} src={BannerImage} />
+            <Banner
+                title={cmsPage.title}
+                src="/images/banners/release-notes.png"
+            />
             <Container sx={{ padding: 10 }}>
                 <HTMLContent content={cmsPage?.content} />
             </Container>
