@@ -17,7 +17,7 @@ import navItems from "@/config/nav";
 import { MenuIcon } from "@/consts/icons";
 
 interface HeaderProps {
-    isHome: boolean;
+    isHome?: boolean;
 }
 
 function Header({ isHome = false }: HeaderProps) {
@@ -64,7 +64,7 @@ function Header({ isHome = false }: HeaderProps) {
                         }}>
                         <IconButton
                             size="large"
-                            aria-label="account of current user"
+                            aria-label="navigation menu"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}

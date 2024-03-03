@@ -1,36 +1,58 @@
 import React from "react";
-import DesktopNav from "@/modules/DesktopNav";
+import { Button } from "@mui/material";
+import MenuDropdown from "@/components/MenuDropdown";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
-describe("DesktopNav", () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const Component = (props: any) => {
-        return <DesktopNav {...props} />;
-    };
-    it("renders explore navigation items", async () => {
+const menu = [
+    {
+        label: "label 1",
+        href: "/",
+        subItems: [{ label: "sub item label 1", href: "/" }],
+    },
+];
+
+const Component = () => {
+    const [anchorElement, setAnchorElement] =
+        React.useState<null | HTMLElement>(null);
+
+    return (
+        <>
+            <Button onClick={event => setAnchorElement(event.currentTarget)}>
+                Button
+            </Button>
+            <MenuDropdown
+                handleClose={() => setAnchorElement(null)}
+                menuItems={menu}
+                anchorElement={anchorElement}
+            />
+        </>
+    );
+};
+
+describe("MenuDropdown", () => {
+    it("renders sub items on opening", async () => {
         render(<Component />);
 
+        fireEvent.click(screen.getByText("Button"));
+
         await waitFor(() => {
-            expect(screen.getByText("Explore")).toBeInTheDocument();
-            expect(screen.getByText("Help")).toBeInTheDocument();
-            expect(screen.getByText("Usage data")).toBeInTheDocument();
-            expect(screen.getByText("About us")).toBeInTheDocument();
-            expect(screen.getByText("News")).toBeInTheDocument();
-            expect(screen.getByText("Community")).toBeInTheDocument();
+            expect(screen.getByText("sub item label 1")).toBeInTheDocument();
         });
     });
-    it("On click of nav button, drop down should be visible", async () => {
+    it("should close menu on clicking sub item", async () => {
         render(<Component />);
+
+        fireEvent.click(screen.getByText("Button"));
+
         await waitFor(() => {
-            fireEvent.click(screen.getByText("Explore"));
-            expect(screen.getByText("Datasets")).toBeInTheDocument();
-            expect(screen.getByText("Tools")).toBeInTheDocument();
-            expect(screen.getByText("Projects")).toBeInTheDocument();
-            expect(screen.getByText("Papers")).toBeInTheDocument();
-            expect(screen.getByText("Courses")).toBeInTheDocument();
-            expect(screen.getByText("People")).toBeInTheDocument();
-            expect(screen.getByText("Cohort Discovery")).toBeInTheDocument();
-            expect(screen.getByText("Data Utility Wizard")).toBeInTheDocument();
+            expect(screen.getByText("sub item label 1")).toBeInTheDocument();
+        });
+
+        fireEvent.click(screen.getByText("sub item label 1"));
+        await waitFor(() => {
+            expect(
+                screen.queryByText("sub item label 1")
+            ).not.toBeInTheDocument();
         });
     });
 });
