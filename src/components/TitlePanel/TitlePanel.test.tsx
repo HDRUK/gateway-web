@@ -1,11 +1,11 @@
 import React from "react";
-import HomepageTitlePanel from "@/components/HomepageTitlePanel";
+import TitlePanel from "@/components/TitlePanel";
 import { render, screen } from "@/utils/testUtils";
 
-describe("HomepageTitlePanel", () => {
+describe("TitlePanel", () => {
     it("should render anchor and content", async () => {
         render(
-            <HomepageTitlePanel
+            <TitlePanel
                 title="This is a title"
                 text="This is a sub text"
                 image="/images/homepage/welcome-image.png"

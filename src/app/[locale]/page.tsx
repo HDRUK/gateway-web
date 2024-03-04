@@ -1,13 +1,64 @@
 import * as React from "react";
-import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import HomepageTitlePanel from "@/components/HomepageTitlePanel";
+import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
+
+const services = [
+    {
+        id: "datasets",
+        image: "/images/homepage/welcome-image.png",
+        href: "/search?type=datasets",
+    },
+    {
+        id: "dur",
+        image: "/images/homepage/welcome-image.png",
+        href: "/search?type=dur",
+    },
+    {
+        id: "feasibility",
+        image: "/images/homepage/welcome-image.png",
+        href: "/about/cohort-discovery",
+    },
+    {
+        id: "dataProviders",
+        image: "/images/homepage/welcome-image.png",
+        href: "/search?type=dataProvider",
+    },
+    {
+        id: "collections",
+        image: "/images/homepage/welcome-image.png",
+        href: "/search?type=collections",
+    },
+    {
+        id: "phenotypes",
+        image: "/images/homepage/welcome-image.png",
+        href: "https://phenotypes.healthdatagateway.org/",
+    },
+    {
+        id: "diseaseAtlas",
+        image: "/images/homepage/welcome-image.png",
+        href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
+    },
+    {
+        id: "publications",
+        image: "/images/homepage/welcome-image.png",
+        href: "/search?type=publications",
+    },
+
+    {
+        id: "dataAnalysis",
+        image: "/images/homepage/welcome-image.png",
+        href: "/search?type=tools",
+    },
+    {
+        id: "courses",
+        image: "/images/homepage/welcome-image.png",
+        href: "https://www.hdruk.ac.uk/study-and-train/train/learn-with-hdr-uk-futures/",
+    },
+];
 
 export default function HomePage() {
-    const t = useTranslations("pages.home");
-
     return (
         <Container
             maxWidth={false}
@@ -23,11 +74,7 @@ export default function HomePage() {
                         gridTemplateColumns: "repeat(5, 1fr)",
                     }}>
                     <Box sx={{ p: { mobile: 2, desktop: 5 } }}>
-                        <HomepageTitlePanel
-                            image="/images/homepage/welcome-image.png"
-                            text={t("text")}
-                            title={t("title")}
-                        />
+                        <InfoHoverPanelProps items={services} />
                     </Box>
                 </Container>
             </main>

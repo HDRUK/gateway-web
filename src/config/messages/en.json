@@ -218,8 +218,56 @@
             "title": "My account"
         },
         "home": {
-            "title": "Welcome to The Gateway",
-            "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+            "datasets": {
+                "label": "Datasets / Tissues",
+                "title": "Welcome to The Gateway",
+                "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+            },
+            "dur": {
+                "label": "Data Uses / Research projects",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "feasibility": {
+                "label": "Feasibility Analysis",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "dataProviders": {
+                "label": "Data Providers",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "collections": {
+                "label": "Collections",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "phenotypes": {
+                "label": "Phenotypes",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "diseaseAtlas": {
+                "label": "Disease Atlas",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "publications": {
+                "label": "Publications",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "dataAnalysis": {
+                "label": "Data Analysis Scripts/Software",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            },
+            "courses": {
+                "label": "Courses",
+                "title": "Welcome to The Gateway",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut nisi interdum, accumsan dui ut, rutrum mauris. Fusce eu tellus id diam lobortis tempus."
+            }
         },
         "search": {
             "datasets": "Datasets / Tissues",
