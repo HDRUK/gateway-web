@@ -53,7 +53,7 @@ const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
                     actions={[
                         {
                             label: "Delete user",
-                            icon: <DeleteForeverIcon />,
+                            icon: DeleteForeverIcon,
                             onClick: () =>
                                 console.log(`${original.id} clicked`),
                         },

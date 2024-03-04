@@ -4,6 +4,11 @@ import BackButton from "./BackButton";
 const meta: Meta<typeof BackButton> = {
     component: BackButton,
     tags: ["autodocs"],
+    parameters: {
+        nextjs: {
+            appDirectory: true,
+        },
+    },
 };
 
 export default meta;

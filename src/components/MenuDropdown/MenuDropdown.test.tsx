@@ -18,7 +18,7 @@ const Component = () => {
     return (
         <>
             <Button onClick={event => setAnchorElement(event.currentTarget)}>
-                Button
+                Open menu
             </Button>
             <MenuDropdown
                 handleClose={() => setAnchorElement(null)}
@@ -33,7 +33,7 @@ describe("MenuDropdown", () => {
     it("renders sub items on opening", async () => {
         render(<Component />);
 
-        fireEvent.click(screen.getByText("Button"));
+        fireEvent.click(screen.getByText("Open menu"));
 
         await waitFor(() => {
             expect(screen.getByText("sub item label 1")).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe("MenuDropdown", () => {
     it("should close menu on clicking sub item", async () => {
         render(<Component />);
 
-        fireEvent.click(screen.getByText("Button"));
+        fireEvent.click(screen.getByText("Open menu"));
 
         await waitFor(() => {
             expect(screen.getByText("sub item label 1")).toBeInTheDocument();
