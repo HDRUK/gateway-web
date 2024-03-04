@@ -11,6 +11,7 @@ describe("HomepageTitlePanel", () => {
                 image="/images/homepage/welcome-image.png"
             />
         );
-        expect(screen.getByText("Tile")).toBeInTheDocument();
+        expect(screen.getByText("This is a title")).toBeInTheDocument();
+        expect(screen.getByText("This is a sub text")).toBeInTheDocument();
     });
 });
