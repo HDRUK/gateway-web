@@ -16,7 +16,7 @@ const HomepageTitlePanel = ({
     title,
 }: HomepageTitlePanelProps) => {
     return (
-        <Box sx={{ p: 0, display: "flex", alignItems: { desktop: "center" } }}>
+        <Box sx={{ p: 0, display: "flex", alignItems: { tablet: "center" } }}>
             <Box
                 sx={{
                     p: 0,
@@ -28,7 +28,7 @@ const HomepageTitlePanel = ({
                 <TitleWithBg mb={2} title={title} />
                 <Typography
                     color="white"
-                    fontSize={{ mobile: 14, desktop: 24 }}>
+                    fontSize={{ mobile: 14, tablet: 18, desktop: 24 }}>
                     {text}
                 </Typography>
             </Box>
