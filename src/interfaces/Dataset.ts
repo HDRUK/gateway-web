@@ -69,7 +69,7 @@ interface Dataset {
     user_id: number;
     status: DatasetStatus;
     pid: string | null;
-    versions: VersionItem[];
+    latest_metadata: VersionItem;
     updated: string;
     create_origin: "FMA" | "MANUAL" | "API";
 }

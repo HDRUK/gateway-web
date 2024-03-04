@@ -55,11 +55,11 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
         const formData = isDuplicate
             ? {
                   ...omit(
-                      dataset?.versions[0].metadata.metadata,
+                      dataset?.latest_metadata.metadata.metadata,
                       "summary.title"
                   ),
               }
-            : { ...dataset?.versions[0].metadata.metadata };
+            : { ...dataset?.latest_metadata.metadata.metadata };
         reset(formData);
     }, [reset, dataset, isDuplicate]);
 
@@ -70,7 +70,7 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
     const submitForm = async (formData: Metadata) => {
         if (isDuplicate) {
             const newId = await createDataset({
-                ...omit(dataset, ["id", "versions"]),
+                ...omit(dataset, ["id", "latest_metadata"]),
                 status: "DRAFT",
                 metadata: { metadata: formData },
             });
