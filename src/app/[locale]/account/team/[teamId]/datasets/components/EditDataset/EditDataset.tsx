@@ -82,9 +82,9 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
         } else {
             // todo: To be implemented as part of the edit task
             const updatePayload = {
-                ...omit(dataset, ["versions"]),
+                ...omit(dataset, ["latest_metadata"]),
                 metadata: {
-                    ...dataset?.versions[0].metadata,
+                    ...dataset?.latest_metadata.metadata,
                     metadata: formData,
                 },
             };
@@ -104,7 +104,7 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
                 }}>
                 <DynamicInputWrapper
                     control={control}
-                    level={get(dataset, "versions[0].metadata.metadata")}
+                    level={get(dataset, "latest_metadata.metadata.metadata")}
                 />
             </Paper>
             <Paper
