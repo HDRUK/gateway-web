@@ -40,6 +40,7 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                     alignItems: "stretch",
                 }}>
                 {items.map(item => (
+                    // <Box sx={{ p: 0, height: "100%" }}>
                     <Link
                         passHref
                         onMouseEnter={() => setSelected(item)}
@@ -48,16 +49,18 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                             size="large"
                             fullWidth
                             sx={{
+                                height: "100%",
                                 background: "white",
                                 borderColor: "white",
                                 borderRadius: { mobile: 2, tablet: 3 },
-                                p: { mobile: 1, tablet: 3 },
-                                fontSize: { mobile: 14, tablet: 24 },
+                                p: { mobile: 1, tablet: "24px 18px" },
+                                fontSize: { mobile: 14, tablet: 19 },
                             }}
                             variant="outlined">
                             {t(`${item.id}.label`)}
                         </Button>
                     </Link>
+                    // </Box>
                 ))}
             </Box>
         </Box>
