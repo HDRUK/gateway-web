@@ -74,7 +74,7 @@ interface Dataset {
     create_origin: "FMA" | "MANUAL" | "API";
 }
 
-interface NewDataset extends Omit<Dataset, "versions" | "id"> {
+interface NewDataset extends Omit<Dataset, "latest_metadata" | "id"> {
     metadata: { metadata: Metadata };
 }
 
