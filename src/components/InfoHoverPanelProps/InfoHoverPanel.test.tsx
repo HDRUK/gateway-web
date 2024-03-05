@@ -21,14 +21,14 @@ describe("InfoHoverPanel", () => {
         render(<InfoHoverPanel items={items} />);
         expect(screen.getByText("Datasets/Tissues")).toBeInTheDocument();
         expect(
-            screen.getByText("Data Uses/Research projects")
+            screen.getByText("Data Uses / Research projects")
         ).toBeInTheDocument();
         expect(screen.getByText("Welcome to The Gateway")).toBeInTheDocument();
     });
     it("should change on hover default", async () => {
         render(<InfoHoverPanel items={items} />);
 
-        const dur = screen.getByText("Data Uses/Research projects");
+        const dur = screen.getByText("Data Uses / Research projects");
         userEvent.hover(dur);
         expect(screen.getByText("Cras ut nisi interdum")).toBeInTheDocument();
     });
