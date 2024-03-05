@@ -3,7 +3,6 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
 import { getMissionAndPurposes } from "@/utils/cms";
-import BannerImage from "../../../../../public/images/banners/our-mission-and-purpose.png";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - About - Our mission and purpose",
@@ -20,7 +19,10 @@ export default async function MissionsPage() {
 
     return (
         <>
-            <Banner title="Our Mission and purpose" src={BannerImage} />
+            <Banner
+                title="Our Mission and purpose"
+                src="/images/banners/our-mission-and-purpose.png"
+            />
             <Container sx={{ background: "white", padding: 10 }}>
                 <div>
                     {!allMissionsAndPurposes.length && (

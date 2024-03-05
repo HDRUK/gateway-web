@@ -73,6 +73,7 @@
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
         "submit": "Submit",
+        "logout": "Logout",
         "publish": "Publish",
         "cancel": "Cancel",
         "update": "Update",
@@ -285,7 +286,7 @@
         "Footer": {
             "text": "HDR UK {year}. All rights reserved."
         },
-        "HeaderNav": {
+        "DesktopNav": {
             "labels": {
                 "myAccount": "My Account",
                 "signIn": "Sign in"

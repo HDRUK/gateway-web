@@ -2,7 +2,6 @@ import { Suspense, ReactNode } from "react";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import NavigationEvents from "@/components/NavigationEvents";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { sourceSans3 } from "@/config/fonts";
@@ -45,13 +44,12 @@ export default function RootLayout({
                                             fontFamily:
                                                 sourceSans3.style.fontFamily,
                                         }}>
-                                        <Header />
-                                        <main>{children}</main>
-                                        <Suspense fallback={null}>
-                                            <NavigationEvents />
-                                        </Suspense>
+                                        {children}
                                         <Footer />
                                     </div>
+                                    <Suspense fallback={null}>
+                                        <NavigationEvents />
+                                    </Suspense>
                                 </ActionBarProvider>
                             </DialogProvider>
                         </ThemeRegistry>

@@ -41,7 +41,7 @@ import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
 import { pickOnlyFilters } from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
-import ResultCardDataUse from "../ResultCardDataUse/ResultCardDataUse";
+import ResultCardDataUse from "../ResultCardDataUse";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 

@@ -33,15 +33,15 @@ describe("Header", () => {
         await act(() => render(<Header />));
 
         const menuIconButton = screen.getByRole("button", {
-            name: "open drawer",
+            name: "navigation menu",
         });
         expect(menuIconButton).toBeInTheDocument();
     });
     it("logo image is rendered", async () => {
         await act(() => render(<Header />));
 
-        const logoImage = screen.getByAltText("Gateway home logo");
-        expect(logoImage).toBeInTheDocument();
+        const logoImage = screen.getAllByAltText("HDR Gateway logo");
+        expect(logoImage).toHaveLength(2);
     });
     it("on click of sign-in button, opens up sign-in dialog modal", async () => {
         server.use(getAuthInternal(null));
