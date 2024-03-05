@@ -6,6 +6,7 @@ type ButtonBaseProps = Pick<
     | "disabled"
     | "variant"
     | "size"
+    | "fullWidth"
     | "color"
     | "sx"
     | "disableRipple"

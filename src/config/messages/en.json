@@ -218,8 +218,57 @@
             "title": "My account"
         },
         "home": {
-            "title": "Welcome to The Gateway",
-            "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+            "touchDevice": "Explore the different functionalities of the Gateway",
+            "datasets": {
+                "label": "Datasets / Tissues",
+                "title": "Welcome to The Gateway",
+                "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+            },
+            "dur": {
+                "label": "Data Uses / Research projects",
+                "title": "Welcome to The Gateway",
+                "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
+            },
+            "feasibility": {
+                "label": "Feasibility Analysis",
+                "title": "Welcome to The Gateway",
+                "text": "Compare the number of relevant records across different datasets: Query federated datasets to find out how many records match a specified criteria e.g. the number of female asthmatics”"
+            },
+            "dataProviders": {
+                "label": "Data Providers",
+                "title": "Welcome to The Gateway",
+                "text": "Discover information about our data providers: Search and filter data providers and find out how to contact them and the process to access their data."
+            },
+            "collections": {
+                "label": "Collections",
+                "title": "Welcome to The Gateway",
+                "text": "Discover datasets, software and data uses that are grouped around a particular topic: Search and filter collections based on features such as network, disease, or theme"
+            },
+            "phenotypes": {
+                "label": "Phenotypes",
+                "title": "Welcome to The Gateway",
+                "text": "Find reusable phenotype algorithms: Search and deposit human and machine readable phenotype algorithms"
+            },
+            "diseaseAtlas": {
+                "label": "Disease Atlas",
+                "title": "Welcome to The Gateway",
+                "text": "Analyse the prevalence of disease, prognosis and associated clinical guidelines on a population scale"
+            },
+            "publications": {
+                "label": "Publications",
+                "title": "Welcome to The Gateway",
+                "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
+            },
+            "dataAnalysis": {
+                "label": "Data Analysis Scripts / Software",
+                "title": "Welcome to The Gateway",
+                "text": "Discover reusable community shared scripts and software: Search for data analysis/cleaning/transformation/standardisation scripts related to specific datasets or general software/tools"
+            },
+            "courses": {
+                "label": "Courses",
+                "title": "Welcome to The Gateway",
+                "text": "Lessons to help you as a Researcher from the Gateway (Copy to be changed)"
+            }
         },
         "search": {
             "datasets": "Datasets / Tissues",

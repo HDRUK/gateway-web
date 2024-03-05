@@ -4,19 +4,15 @@ import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import TitleWithBg from "../TitleWithBg";
 
-interface HomepageTitlePanelProps extends TypographyProps {
+interface TitlePanelProps extends TypographyProps {
     image: string;
     text: string;
     title: string;
 }
 
-const HomepageTitlePanel = ({
-    image,
-    text,
-    title,
-}: HomepageTitlePanelProps) => {
+const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
     return (
-        <Box sx={{ p: 0, display: "flex", alignItems: { desktop: "center" } }}>
+        <Box sx={{ p: 0, display: "flex", alignItems: { tablet: "center" } }}>
             <Box
                 sx={{
                     p: 0,
@@ -28,7 +24,7 @@ const HomepageTitlePanel = ({
                 <TitleWithBg mb={2} title={title} />
                 <Typography
                     color="white"
-                    fontSize={{ mobile: 14, desktop: 24 }}>
+                    fontSize={{ mobile: 14, tablet: 18, desktop: 24 }}>
                     {text}
                 </Typography>
             </Box>
@@ -50,4 +46,4 @@ const HomepageTitlePanel = ({
     );
 };
 
-export default HomepageTitlePanel;
+export default TitlePanel;

@@ -6,6 +6,10 @@ const navItems = [
                 label: "Datasets",
                 href: "/search?type-datasets",
             },
+            {
+                label: "Cohort discovery",
+                href: "/about/cohort-discovery",
+            },
         ],
     },
     {
