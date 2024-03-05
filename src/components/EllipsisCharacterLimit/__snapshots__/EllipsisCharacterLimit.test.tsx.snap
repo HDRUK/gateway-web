@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EllipsisCharacterLimit should render component 1`] = `
+<div>
+  <div
+    aria-label="Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar"
+    class=""
+    data-mui-internal-clone-element="true"
+  >
+    <span>
+      <span>
+        Cras ut se...
+      </span>
+    </span>
+  </div>
+</div>
+`;

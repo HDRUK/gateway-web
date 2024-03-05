@@ -2,9 +2,9 @@ import { Divider, ListItem, ListItemText } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultDataUse } from "@/interfaces/Search";
 import Button from "@/components/Button";
+import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
-import Tooltip from "@/components/Tooltip";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import {
@@ -32,21 +32,6 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
             -
         </Typography>
     );
-
-    const truncateWrapper = (text: string, isButton?: boolean) => {
-        const textElement = (text: string) =>
-            isButton ? <Button size="small">{text}</Button> : text;
-
-        if (text.length < CHARACTER_LIMIT) {
-            return textElement(text);
-        }
-
-        return (
-            <Tooltip style={{ display: "inline" }} title={text}>
-                <>{textElement(`${text.slice(0, CHARACTER_LIMIT)}...`)}</>
-            </Tooltip>
-        );
-    };
 
     return (
         <>
@@ -102,10 +87,11 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
                                 {(!!result.datasetTitles?.length && (
                                     <ResultButtonWrap>
-                                        {truncateWrapper(
-                                            result.datasetTitles[0] || "",
-                                            true
-                                        )}
+                                        <EllipsisCharacterLimit
+                                            text={result.datasetTitles[0] || ""}
+                                            isButton
+                                            characterLimit={CHARACTER_LIMIT}
+                                        />
 
                                         {result.datasetTitles.length > 1 && (
                                             <Button
@@ -136,7 +122,10 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                 fontWeight: 500,
                                             }}>
                                             {`${result.team?.member_of} > `}
-                                            {truncateWrapper(result.team.name)}
+                                            <EllipsisCharacterLimit
+                                                text={result.team.name}
+                                                characterLimit={CHARACTER_LIMIT}
+                                            />
                                         </Typography>
                                     )) ||
                                     missingDataComponent}
