@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GradientBoxes should render title 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-1yxto0o"
+  >
+    <div
+      class="MuiBox-root mui-style-z8reps"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          <wbr />
+        </div>
+      </h2>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-6y6k6f-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Vestibulum ultrices purus sit amet cursus gravida. Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
+          <wbr />
+        </div>
+      </p>
+    </div>
+    <div
+      class="MuiBox-root mui-style-z8reps"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Vestibulum ultrices purus sit amet cursus gravida. 
+          <wbr />
+        </div>
+      </h2>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-6y6k6f-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
+          <wbr />
+        </div>
+      </p>
+    </div>
+    <div
+      class="MuiBox-root mui-style-z8reps"
+    >
+      <h2
+        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Aenean luctus feugiat eros at laoreet.
+          <wbr />
+        </div>
+      </h2>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-6y6k6f-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
+          <wbr />
+        </div>
+      </p>
+    </div>
+  </div>
+</div>
+`;
