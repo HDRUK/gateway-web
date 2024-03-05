@@ -218,6 +218,7 @@
             "title": "My account"
         },
         "home": {
+            "touchDevice": "Explore the different functionalities of the Gateway",
             "datasets": {
                 "label": "Datasets / Tissues",
                 "title": "Welcome to The Gateway",

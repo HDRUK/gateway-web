@@ -40,8 +40,8 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                     alignItems: "stretch",
                 }}>
                 {items.map(item => (
-                    // <Box sx={{ p: 0, height: "100%" }}>
                     <Link
+                        key={item.id}
                         passHref
                         onMouseEnter={() => setSelected(item)}
                         href={item.href}>
@@ -60,7 +60,6 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                             {t(`${item.id}.label`)}
                         </Button>
                     </Link>
-                    // </Box>
                 ))}
             </Box>
         </Box>
