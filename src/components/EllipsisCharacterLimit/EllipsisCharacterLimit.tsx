@@ -27,9 +27,9 @@ const EllipsisCharacterLimit = ({
     isButton = false,
 }: EllipsisCharacterLimitProps) => {
     const formattedText =
-        text.length < characterLimit
-            ? text
-            : `${text.slice(0, characterLimit)}...`;
+        text.length > characterLimit
+            ? `${text.slice(0, characterLimit)}...`
+            : text;
 
     return (
         <ConditionalWrapper
