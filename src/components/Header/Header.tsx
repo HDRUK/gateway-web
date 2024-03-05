@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { hotjar } from "react-hotjar";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -21,7 +22,14 @@ interface HeaderProps {
 }
 
 function Header({ isHome = false }: HeaderProps) {
+    const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
+    const HOTJAR_VERSION = 6;
     const isTablet = useMediaQuery("(min-width:640px)");
+
+    if (HOTJAR_ID && typeof window !== "undefined" && !hotjar.initialized()) {
+        // eslint-disable-next-line radix
+        hotjar.initialize(parseInt(HOTJAR_ID), HOTJAR_VERSION);
+    }
 
     const [anchorElement, setAnchorElement] =
         React.useState<null | HTMLElement>(null);
