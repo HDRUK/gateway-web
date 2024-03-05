@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import LinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
+import ConditionalWrapper from "../ConditionalWrapper";
 import Tooltip from "../Tooltip";
 
 interface EllipsisLineLimitProps {
@@ -10,6 +11,14 @@ interface EllipsisLineLimitProps {
 }
 
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
+
+const tooltipWrapper = (text: string) => (children: ReactNode) => {
+    return (
+        <Tooltip title={text} placement="bottom">
+            <span>{children}</span>
+        </Tooltip>
+    );
+};
 
 const EllipsisLineLimit = ({
     text,
@@ -23,29 +32,19 @@ const EllipsisLineLimit = ({
         setIsClamped(clamped);
     };
 
-    if (isClamped && showToolTip) {
-        return (
-            <Tooltip title={text} placement="bottom">
-                <ResponsiveEllipsis
-                    text={text}
-                    maxLine={maxLine}
-                    ellipsis="..."
-                    trimRight
-                    basedOn="letters"
-                    onReflow={handleReflow}
-                />
-            </Tooltip>
-        );
-    }
     return (
-        <ResponsiveEllipsis
-            text={text}
-            maxLine={maxLine}
-            ellipsis="..."
-            trimRight
-            basedOn="letters"
-            onReflow={handleReflow}
-        />
+        <ConditionalWrapper
+            requiresWrapper={isClamped && showToolTip}
+            wrapper={tooltipWrapper(text)}>
+            <ResponsiveEllipsis
+                text={text}
+                maxLine={maxLine}
+                ellipsis="..."
+                trimRight
+                basedOn="letters"
+                onReflow={handleReflow}
+            />
+        </ConditionalWrapper>
     );
 };
 
