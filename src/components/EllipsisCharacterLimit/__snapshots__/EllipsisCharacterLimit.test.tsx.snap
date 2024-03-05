@@ -9,7 +9,7 @@ exports[`EllipsisCharacterLimit should render component 1`] = `
   >
     <span>
       <span>
-        Cras ut se...
+        Cras ut sem eu ligula tincidunt aliquet. Lorem ips...
       </span>
     </span>
   </div>
