@@ -23,7 +23,7 @@ export interface SearchPaginationType<T> extends PaginationType<T> {
     aggregations: Aggregations;
 }
 
-export interface SearchResult {
+export interface SearchResultDataset {
     highlight: {
         abstract: string;
         description: string;
@@ -33,6 +33,24 @@ export interface SearchResult {
     };
     _id: string;
 }
+
+export interface SearchResultDataUse {
+    highlight: {
+        abstract: string;
+        description: string;
+    };
+    team: {
+        member_of: string;
+        name: string;
+    };
+    projectTitle: string;
+    organisationName: string;
+    publisher: string;
+    datasetTitles: string[];
+    _id: string;
+}
+
+export type SearchResult = SearchResultDataset | SearchResultDataUse;
 
 export interface SearchForm {
     query: string;

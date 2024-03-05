@@ -1,12 +1,12 @@
 import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { SearchResult } from "@/interfaces/Search";
+import { SearchResultDataset } from "@/interfaces/Search";
 import Typography from "@/components/Typography";
 import { getDateRange } from "@/utils/search";
 
 interface ResultCardProps {
-    result: SearchResult;
+    result: SearchResultDataset;
 }
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";

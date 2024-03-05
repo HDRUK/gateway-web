@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { SearchResult } from "@/interfaces/Search";
+import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Paper from "@/components/Paper";
 import StyledCheckbox from "@/components/StyledCheckbox";
@@ -11,7 +11,7 @@ import TooltipIcon from "@/components/TooltipIcon";
 import { getDateRange } from "@/utils/search";
 
 interface ResultTableProps {
-    results: SearchResult[];
+    results: SearchResultDataset[];
 }
 
 const CONFORMS_TO_PATH =
@@ -19,7 +19,7 @@ const CONFORMS_TO_PATH =
 const PUBLISHER_NAME_PATH = "metadata.metadata.summary.publisher.publisherName";
 const POPULATION_SIZE_PATH = "metadata.metadata.observations.0.measuredValue";
 
-const columnHelper = createColumnHelper<SearchResult>();
+const columnHelper = createColumnHelper<SearchResultDataset>();
 
 const getColumns = ({
     handleSelect,
@@ -163,7 +163,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
                 position: "relative",
                 mb: 4,
             }}>
-            <Table<SearchResult>
+            <Table<SearchResultDataset>
                 columns={getColumns({ handleSelect, selected, translations })}
                 rows={results}
             />

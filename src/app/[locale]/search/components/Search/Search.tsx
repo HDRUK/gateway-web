@@ -11,6 +11,8 @@ import {
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultDataUse,
+    SearchResultDataset,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -39,11 +41,16 @@ import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
 import { pickOnlyFilters } from "@/utils/filters";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
+import ResultCardDataUse from "../ResultCardDataUse/ResultCardDataUse";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 
 const TRANSLATION_PATH = "pages.search";
-export const TYPE_PARAM = "type";
+const TYPE_PARAM = "type";
+const FILTER_CATEGORY: { [key: string]: string } = {
+    datasets: "dataset",
+    dur: "dataUse",
+};
 
 enum ViewType {
     TABLE = "table",
@@ -70,6 +77,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
+
+    useEffect(() => {
+        if (resultsView !== ViewType.LIST && searchType !== "datasets") {
+            setResultsView(ViewType.LIST);
+        }
+    }, [searchType, resultsView]);
 
     const updateQueryString = useCallback(
         (name: string, value: string) => {
@@ -127,7 +140,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
-            ...pickOnlyFilters("dataset", queryParams),
+            ...pickOnlyFilters(FILTER_CATEGORY[searchType], queryParams),
         },
         {
             keepPreviousData: true,
@@ -182,6 +195,17 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         setIsDownloading(true);
         await handleDownload();
         setIsDownloading(false);
+    };
+
+    const renderResultCard = (result: SearchResult) => {
+        switch (searchType) {
+            case "datasets":
+                return <ResultCard result={result as SearchResultDataset} />;
+            default:
+                return (
+                    <ResultCardDataUse result={result as SearchResultDataUse} />
+                );
+        }
     };
 
     return (
@@ -242,6 +266,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     rootBoxSx={{ padding: 0 }}
                     variant={TabVariant.LARGE}
                     paramName={TYPE_PARAM}
+                    persistParams={false}
                 />
             </Box>
             <BoxContainer
@@ -260,6 +285,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
                     <FilterPanel
+                        filterCategory={FILTER_CATEGORY[searchType]}
                         filterSourceData={filters}
                         setFilterQueryParams={(
                             filterValues: string[],
@@ -298,10 +324,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 from={data?.from}
                                 total={data?.total}
                             />
-                            <ToggleTabs<ViewType>
-                                selected={resultsView}
-                                buttons={toggleButtons}
-                            />
+                            {searchType === "datasets" && (
+                                <ToggleTabs<ViewType>
+                                    selected={resultsView}
+                                    buttons={toggleButtons}
+                                />
+                            )}
                         </Box>
 
                         {isSearching && <Loading />}
@@ -323,13 +351,17 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                             mb: 2,
                                             pb: 2,
                                         }}>
-                                        {data?.list.map(result => (
-                                            <ResultCard result={result} />
-                                        ))}
+                                        {data?.list.map(result =>
+                                            renderResultCard(result)
+                                        )}
                                     </List>
                                 )}
                                 {resultsView === ViewType.TABLE && (
-                                    <ResultsTable results={data?.list} />
+                                    <ResultsTable
+                                        results={
+                                            data?.list as SearchResultDataset[]
+                                        }
+                                    />
                                 )}
                                 <Pagination
                                     isLoading={isSearching}
