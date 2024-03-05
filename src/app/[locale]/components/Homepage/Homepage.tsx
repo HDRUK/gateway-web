@@ -3,9 +3,13 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslations } from "next-intl";
+import { PageTemplateDefault } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
+import Box from "@/components/Box";
 import GradientBoxes from "@/components/GradientBoxes";
+import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
+import TitleWithBg from "@/components/TitleWithBg";
 
 const services = [
     {
@@ -76,7 +80,11 @@ const items = [
     },
 ];
 
-export default function HomePage() {
+interface HomePageProps {
+    cmsContent: PageTemplateDefault;
+}
+
+const HomePage = ({ cmsContent }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
 
@@ -94,6 +102,12 @@ export default function HomePage() {
         <>
             <InfoHoverPanelProps items={responsiveServices} />
             <GradientBoxes items={items} maxWidth={420} />
+            <Box textAlign="center">
+                <TitleWithBg mb={2} title={cmsContent.title} />
+                <HTMLContent content={cmsContent.content} />
+            </Box>
         </>
     );
-}
+};
+
+export default HomePage;
