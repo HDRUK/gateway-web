@@ -4,6 +4,7 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslations } from "next-intl";
 import { SearchCategory } from "@/interfaces/Search";
+import GradientBoxes from "@/components/GradientBoxes";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 
 const services = [
@@ -60,6 +61,21 @@ const services = [
     },
 ];
 
+const items = [
+    {
+        title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+        text: "Vestibulum ultrices purus sit amet cursus gravida. Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.",
+    },
+    {
+        title: "Vestibulum ultrices purus sit amet cursus gravida. ",
+        text: "Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.",
+    },
+    {
+        title: "Aenean luctus feugiat eros at laoreet.",
+        text: "Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.",
+    },
+];
+
 export default function HomePage() {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
@@ -74,5 +90,10 @@ export default function HomePage() {
         ? services.map(service => ({ ...service, text: t("touchDevice") }))
         : services;
 
-    return <InfoHoverPanelProps items={responsiveServices} />;
+    return (
+        <>
+            <InfoHoverPanelProps items={responsiveServices} />
+            <GradientBoxes items={items} maxWidth={420} />
+        </>
+    );
 }
