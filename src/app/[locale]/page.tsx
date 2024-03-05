@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
+import HomepageTitlePanel from "@/components/HomepageTitlePanel";
 
 export default function HomePage() {
     const t = useTranslations("pages.home");
@@ -21,9 +22,12 @@ export default function HomePage() {
                     sx={{
                         gridTemplateColumns: "repeat(5, 1fr)",
                     }}>
-                    <Box sx={{ p: 5 }}>
-                        <h1>{t("title")}</h1>
-                        <p>{t("text")}</p>
+                    <Box sx={{ p: { mobile: 2, desktop: 5 } }}>
+                        <HomepageTitlePanel
+                            image="/images/homepage/welcome-image.png"
+                            text={t("text")}
+                            title={t("title")}
+                        />
                     </Box>
                 </Container>
             </main>
