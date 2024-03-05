@@ -1,8 +1,8 @@
 import { ReactNode, useState } from "react";
 import LinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
-import ConditionalWrapper from "../ConditionalWrapper";
-import Tooltip from "../Tooltip";
+import ConditionalWrapper from "@/components/ConditionalWrapper";
+import Tooltip from "@/components/Tooltip";
 
 interface EllipsisLineLimitProps {
     text: string;
