@@ -59,9 +59,12 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
+    DATA_PROVIDERS = "dataProviders",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",
+    PUBLICATIONS = "publications",
+    DATA_ANALYSIS = "dataAnalysis",
 }
 
 export interface SearchQueryParams {

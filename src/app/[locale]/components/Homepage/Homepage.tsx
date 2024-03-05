@@ -3,18 +3,19 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslations } from "next-intl";
+import { SearchCategory } from "@/interfaces/Search";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 
 const services = [
     {
-        id: "datasets",
+        id: SearchCategory.DATASETS,
         image: "/images/homepage/welcome-image.png",
-        href: "/search?type=datasets",
+        href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
-        id: "dur",
+        id: SearchCategory.DATA_USE,
         image: "/images/homepage/welcome-image.png",
-        href: "/search?type=dur",
+        href: `/search?type=${SearchCategory.DATA_USE}`,
     },
     {
         id: "feasibility",
@@ -22,14 +23,14 @@ const services = [
         href: "/about/cohort-discovery",
     },
     {
-        id: "dataProviders",
+        id: SearchCategory.DATA_PROVIDERS,
         image: "/images/homepage/welcome-image.png",
-        href: "/search?type=dataProvider",
+        href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
-        id: "collections",
+        id: SearchCategory.COLLECTIONS,
         image: "/images/homepage/welcome-image.png",
-        href: "/search?type=collections",
+        href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: "phenotypes",
@@ -42,15 +43,15 @@ const services = [
         href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     },
     {
-        id: "publications",
+        id: SearchCategory.PUBLICATIONS,
         image: "/images/homepage/welcome-image.png",
-        href: "/search?type=publications",
+        href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
 
     {
-        id: "dataAnalysis",
+        id: SearchCategory.DATA_ANALYSIS,
         image: "/images/homepage/welcome-image.png",
-        href: "/search?type=tools",
+        href: `/search?type=${SearchCategory.DATA_ANALYSIS}`,
     },
     {
         id: "courses",
