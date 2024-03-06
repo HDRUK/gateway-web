@@ -7,6 +7,8 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import DataUseDetailsDialog from "@/modules/DataUseDetailsDialog";
+import useDialog from "@/hooks/useDialog";
 import {
     ResultButtonWrap,
     ResultRow,
@@ -23,6 +25,7 @@ const CHARACTER_LIMIT = 150;
 
 const ResultCardDataUse = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { showDialog } = useDialog();
 
     const missingDataComponent = (
         <Typography
@@ -32,6 +35,10 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
             -
         </Typography>
     );
+
+    const handleShowAll = () => {
+        showDialog(DataUseDetailsDialog, { result });
+    };
 
     return (
         <>
@@ -95,6 +102,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
                                         {result.datasetTitles.length > 1 && (
                                             <Button
+                                                onClick={handleShowAll}
                                                 size="small"
                                                 variant="outlined"
                                                 color="secondary">

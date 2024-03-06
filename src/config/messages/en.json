@@ -342,6 +342,11 @@
                 "confirmButton": "Accept Terms & Conditions",
                 "discardButton": "Discard",
                 "acceptTerms": "I have read the Terms and Conditions"
+            },
+            "DataUseDetailsDialog": {
+                "datasets": "Datasets",
+                "leadApplicantOrganisation": "Lead applicant organisation",
+                "dataCustodian": "Data Custodian"
             }
         }
     }
