@@ -66,9 +66,7 @@ const generateDatasetV1 = (version = "1.0", data = {}): Dataset => {
         status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
         create_origin: faker.helpers.arrayElement(["FMA", "API", "MANUAL"]),
         pid: faker.datatype.uuid(),
-        versions: Array.from({ length: 3 }).map(() =>
-            generateDatasetVersionV1(version)
-        ),
+        latest_metadata: generateDatasetVersionV1(version),
         updated: faker.date.past().toString(),
         ...data,
     };
