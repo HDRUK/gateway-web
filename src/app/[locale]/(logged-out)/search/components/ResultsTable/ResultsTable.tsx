@@ -55,6 +55,7 @@ const getColumns = ({
         id: "title",
         cell: ({ row: { original } }) => (
             <EllipsisLineLimit
+                showToolTip
                 text={get(original, "metadata.metadata.summary.title")}
             />
         ),
@@ -117,7 +118,10 @@ const getColumns = ({
         id: "publisherName",
         cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
-                <EllipsisLineLimit text={get(original, PUBLISHER_NAME_PATH)} />
+                <EllipsisLineLimit
+                    showToolTip
+                    text={get(original, PUBLISHER_NAME_PATH)}
+                />
             </div>
         ),
         header: () => (
