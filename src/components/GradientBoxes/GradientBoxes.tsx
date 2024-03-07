@@ -10,21 +10,35 @@ interface GradientBoxesProps {
 
 const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
     return (
-        <Box sx={{ display: "flex", justifyContent: "center" }} gap={2}>
+        <Box
+            sx={{
+                display: { tablet: "flex" },
+                justifyContent: "center",
+            }}
+            gap={2}>
             {items.map(item => (
                 <Box
                     key={item.title}
                     sx={{
                         maxWidth,
                         flex: 1,
+                        mb: { mobile: 2, tablet: 0 },
                         p: 3,
                         textAlign: "center",
                         background: `linear-gradient(97.46deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
                     }}>
-                    <Typography fontSize={28} m={0} variant="h2" color="white">
+                    <Typography
+                        fontSize={{ mobile: 20, desktop: 28 }}
+                        m={0}
+                        variant="h2"
+                        color="white">
                         <EllipsisLineLimit maxLine={1} text={item.title} />
                     </Typography>
-                    <Typography fontSize={16} m={0} color="white">
+                    <Typography
+                        sx={{ display: { mobile: "none", desktop: "block" } }}
+                        fontSize={16}
+                        m={0}
+                        color="white">
                         <EllipsisLineLimit maxLine={4} text={item.text} />
                     </Typography>
                 </Box>

@@ -10,6 +10,7 @@ import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 import TitleWithBg from "@/components/TitleWithBg";
+import theme from "@/config/theme";
 
 const services = [
     {
@@ -100,12 +101,61 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
 
     return (
         <>
-            <InfoHoverPanelProps items={responsiveServices} />
-            <GradientBoxes items={items} maxWidth={420} />
-            <Box textAlign="center">
-                <TitleWithBg mb={2} title={cmsContent.title} />
+            <Box
+                sx={{
+                    background:
+                        "linear-gradient(170deg, transparent 70%, #DEF0F0 calc(70% + 1px))",
+                }}>
+                <InfoHoverPanelProps items={responsiveServices} />
+            </Box>
+            <Box
+                sx={{
+                    background: "#DEF0F0",
+                }}>
+                <GradientBoxes items={items} maxWidth={420} />
+            </Box>
+            <Box
+                textAlign="center"
+                sx={{
+                    background: "#fff",
+                }}>
+                <TitleWithBg
+                    size="md"
+                    variant="h2"
+                    mb={2}
+                    title={cmsContent.title}
+                />
+            </Box>
+            <Box
+                textAlign="center"
+                sx={{
+                    background:
+                        "linear-gradient(9deg, #DEF0F0 70%, #fff calc(70% + 1px))",
+                }}>
                 <HTMLContent content={cmsContent.content} />
             </Box>
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background:
+                        "linear-gradient(170deg, #DEF0F0 70%, #fff calc(70% + 1px))",
+                }}
+                textAlign="center"
+            />
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background: `linear-gradient(170deg, #fff 70%, ${theme.palette.secondary.main} calc(70% + 1px))`,
+                }}
+                textAlign="center"
+            />
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
+                }}
+                textAlign="center"
+            />
         </>
     );
 };

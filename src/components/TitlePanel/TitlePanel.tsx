@@ -12,11 +12,12 @@ interface TitlePanelProps extends TypographyProps {
 
 const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
     return (
-        <Box sx={{ p: 0, display: "flex", alignItems: { tablet: "center" } }}>
+        <Box sx={{ p: 0, display: "flex" }}>
             <Box
                 sx={{
                     p: 0,
                     mr: 2,
+                    mt: { tablet: 6 },
                     flex: 1,
                     textAlign: { mobile: "center", tablet: "left" },
                     flexDirection: { mobile: "row", tablet: "column" },

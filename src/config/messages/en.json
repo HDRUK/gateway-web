@@ -232,7 +232,7 @@
             "feasibility": {
                 "label": "Feasibility Analysis",
                 "title": "Welcome to The Gateway",
-                "text": "Compare the number of relevant records across different datasets: Query federated datasets to find out how many records match a specified criteria e.g. the number of female asthmatics”"
+                "text": "Compare the number of relevant records across different datasets: Query federated datasets to find out how many records match a specified criteria e.g. the number of female asthmatics"
             },
             "dataProviders": {
                 "label": "Data Providers",
@@ -262,12 +262,12 @@
             "dataAnalysis": {
                 "label": "Data Analysis Scripts / Software",
                 "title": "Welcome to The Gateway",
-                "text": "Discover reusable community shared scripts and software: Search for data analysis/cleaning/transformation/standardisation scripts related to specific datasets or general software/tools"
+                "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
             },
             "courses": {
                 "label": "Courses",
                 "title": "Welcome to The Gateway",
-                "text": "Lessons to help you as a Researcher from the Gateway (Copy to be changed)"
+                "text": "Lessons to help you as a Researcher from the Gateway"
             }
         },
         "search": {
