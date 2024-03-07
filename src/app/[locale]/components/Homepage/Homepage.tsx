@@ -10,7 +10,7 @@ import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 import TitleWithBg from "@/components/TitleWithBg";
-import theme from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 
 const services = [
     {
@@ -103,14 +103,13 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
         <>
             <Box
                 sx={{
-                    background:
-                        "linear-gradient(170deg, transparent 70%, #DEF0F0 calc(70% + 1px))",
+                    background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
                 }}>
                 <InfoHoverPanelProps items={responsiveServices} />
             </Box>
             <Box
                 sx={{
-                    background: "#DEF0F0",
+                    background: colors.darkGreen50,
                 }}>
                 <GradientBoxes items={items} maxWidth={420} />
             </Box>
@@ -127,18 +126,24 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
                 />
             </Box>
             <Box
-                textAlign="center"
                 sx={{
-                    background:
-                        "linear-gradient(9deg, #DEF0F0 70%, #fff calc(70% + 1px))",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    background: `linear-gradient(9deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
                 }}>
-                <HTMLContent content={cmsContent.content} />
+                <Box
+                    sx={{
+                        width: "100%",
+                        maxWidth: 950,
+                    }}>
+                    <HTMLContent content={cmsContent.content} />
+                </Box>
             </Box>
             <Box
                 sx={{
                     minHeight: 500,
-                    background:
-                        "linear-gradient(170deg, #DEF0F0 70%, #fff calc(70% + 1px))",
+                    background: `linear-gradient(170deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
                 }}
                 textAlign="center"
             />
