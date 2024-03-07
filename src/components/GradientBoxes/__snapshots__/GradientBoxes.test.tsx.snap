@@ -3,13 +3,13 @@
 exports[`GradientBoxes should render title 1`] = `
 <div>
   <div
-    class="MuiBox-root mui-style-1yxto0o"
+    class="MuiBox-root mui-style-1y4d2m4"
   >
     <div
-      class="MuiBox-root mui-style-z8reps"
+      class="MuiBox-root mui-style-11g3ui6"
     >
       <h2
-        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -19,7 +19,7 @@ exports[`GradientBoxes should render title 1`] = `
         </div>
       </h2>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-6y6k6f-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -30,10 +30,10 @@ exports[`GradientBoxes should render title 1`] = `
       </p>
     </div>
     <div
-      class="MuiBox-root mui-style-z8reps"
+      class="MuiBox-root mui-style-11g3ui6"
     >
       <h2
-        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -43,7 +43,7 @@ exports[`GradientBoxes should render title 1`] = `
         </div>
       </h2>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-6y6k6f-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -54,10 +54,10 @@ exports[`GradientBoxes should render title 1`] = `
       </p>
     </div>
     <div
-      class="MuiBox-root mui-style-z8reps"
+      class="MuiBox-root mui-style-11g3ui6"
     >
       <h2
-        class="MuiTypography-root MuiTypography-h2 mui-style-escq77-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -67,7 +67,7 @@ exports[`GradientBoxes should render title 1`] = `
         </div>
       </h2>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-6y6k6f-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "

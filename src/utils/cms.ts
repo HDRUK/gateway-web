@@ -10,6 +10,7 @@ import { ReleaseNode } from "@/interfaces/Releases";
 import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
+import { GetHomePageQuery } from "@/config/queries/homePage";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
@@ -70,6 +71,17 @@ const getCohortDiscovery = async () => {
     return data?.page || null;
 };
 
+const getHomePage = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetHomePageQuery,
+        {
+            next: { revalidate: 10 },
+        }
+    );
+
+    return data?.page || null;
+};
+
 const getTermsAndConditions = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
         GetTermsAndConditionsQuery,
@@ -98,4 +110,5 @@ export {
     getMissionAndPurposes,
     getCohortDiscovery,
     getTermsAndConditions,
+    getHomePage,
 };

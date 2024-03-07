@@ -26,6 +26,7 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                 image={selected.image}
                 text={t(`${selected.id}.text`)}
                 title={t(`${selected.id}.title`)}
+                sx={{ mt: "2rem" }}
             />
             <Box
                 maxWidth={1192}

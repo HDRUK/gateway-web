@@ -3,9 +3,14 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslations } from "next-intl";
+import { PageTemplateDefault } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
+import Box from "@/components/Box";
 import GradientBoxes from "@/components/GradientBoxes";
+import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
+import TitleWithBg from "@/components/TitleWithBg";
+import theme, { colors } from "@/config/theme";
 
 const services = [
     {
@@ -76,7 +81,11 @@ const items = [
     },
 ];
 
-export default function HomePage() {
+interface HomePageProps {
+    cmsContent: PageTemplateDefault;
+}
+
+const HomePage = ({ cmsContent }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
 
@@ -92,8 +101,68 @@ export default function HomePage() {
 
     return (
         <>
-            <InfoHoverPanelProps items={responsiveServices} />
-            <GradientBoxes items={items} maxWidth={420} />
+            <Box
+                sx={{
+                    background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
+                }}>
+                <InfoHoverPanelProps items={responsiveServices} />
+            </Box>
+            <Box
+                sx={{
+                    background: colors.darkGreen50,
+                }}>
+                <GradientBoxes items={items} maxWidth={420} />
+            </Box>
+            <Box
+                textAlign="center"
+                sx={{
+                    background: "#fff",
+                }}>
+                <TitleWithBg
+                    size="md"
+                    variant="h2"
+                    mb={2}
+                    title={cmsContent.title}
+                />
+            </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    background: `linear-gradient(9deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
+                }}>
+                <Box
+                    sx={{
+                        width: "100%",
+                        maxWidth: 950,
+                    }}>
+                    <HTMLContent content={cmsContent.content} />
+                </Box>
+            </Box>
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background: `linear-gradient(170deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
+                }}
+                textAlign="center"
+            />
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background: `linear-gradient(170deg, #fff 70%, ${theme.palette.secondary.main} calc(70% + 1px))`,
+                }}
+                textAlign="center"
+            />
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
+                }}
+                textAlign="center"
+            />
         </>
     );
-}
+};
+
+export default HomePage;

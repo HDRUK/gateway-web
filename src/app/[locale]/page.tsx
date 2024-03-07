@@ -2,9 +2,11 @@ import * as React from "react";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
+import { getHomePage } from "@/utils/cms";
 import Homepage from "./components/Homepage";
 
-export default function HomePage() {
+export default async function HomePage() {
+    const cmsContent = await getHomePage();
     return (
         <Container
             maxWidth={false}
@@ -20,7 +22,7 @@ export default function HomePage() {
                         gridTemplateColumns: "repeat(5, 1fr)",
                     }}>
                     <Box sx={{ p: { mobile: 2, desktop: 5 } }}>
-                        <Homepage />
+                        <Homepage cmsContent={cmsContent} />
                     </Box>
                 </Container>
             </main>
