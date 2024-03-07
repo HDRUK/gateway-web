@@ -6,10 +6,12 @@ type ButtonBaseProps = Pick<
     | "disabled"
     | "variant"
     | "size"
+    | "fullWidth"
     | "color"
     | "sx"
     | "disableRipple"
     | "startIcon"
+    | "endIcon"
 >;
 export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
 

@@ -35,7 +35,7 @@ const validationSchema = yup
     .required();
 
 const WrapperComponent = () => {
-    const { handleSubmit, control } = useForm<FormData>({
+    const { handleSubmit, control, setValue } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
@@ -74,6 +74,7 @@ const WrapperComponent = () => {
                     label="with clear button"
                     control={control}
                     name="fourth"
+                    setValue={setValue}
                     showClearButton
                 />
                 <TextFieldComponent

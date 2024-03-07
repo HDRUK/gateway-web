@@ -1,6 +1,29 @@
+import {
+    FILTER_DATA_USE_TITLES,
+    FILTER_PUBLISHER_NAME,
+    FILTER_GEOGRAPHIC_LOCATION,
+} from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
+import { Bucket } from "./Filter";
+import { PaginationType } from "./Pagination";
 
-export interface SearchResult {
+export interface Aggregations {
+    [FILTER_DATA_USE_TITLES]: {
+        buckets: Bucket[];
+    };
+    [FILTER_GEOGRAPHIC_LOCATION]: {
+        buckets: Bucket[];
+    };
+    [FILTER_PUBLISHER_NAME]: {
+        buckets: Bucket[];
+    };
+}
+
+export interface SearchPaginationType<T> extends PaginationType<T> {
+    aggregations: Aggregations;
+}
+
+export interface SearchResultDataset {
     highlight: {
         abstract: string;
         description: string;
@@ -11,6 +34,24 @@ export interface SearchResult {
     _id: string;
 }
 
+export interface SearchResultDataUse {
+    highlight: {
+        abstract: string;
+        description: string;
+    };
+    team: {
+        member_of: string;
+        name: string;
+    };
+    projectTitle: string;
+    organisationName: string;
+    publisher: string;
+    datasetTitles: string[];
+    _id: string;
+}
+
+export type SearchResult = SearchResultDataset | SearchResultDataUse;
+
 export interface SearchForm {
     query: string;
     sort: string;
@@ -18,7 +59,21 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
+    DATA_PROVIDERS = "dataProviders",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",
+    PUBLICATIONS = "publications",
+    DATA_ANALYSIS = "dataAnalysis",
+}
+
+export interface SearchQueryParams {
+    query: string | undefined;
+    sort: string | undefined;
+    [FILTER_DATA_USE_TITLES]: string[] | undefined;
+    [FILTER_PUBLISHER_NAME]: string[] | undefined;
+    [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
+    page: string;
+    per_page: string;
+    type?: string;
 }

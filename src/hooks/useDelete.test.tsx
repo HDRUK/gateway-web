@@ -1,16 +1,10 @@
 import useDelete from "@/hooks/useDelete";
-import * as apiService from "@/services/api/delete";
+import deleteRequest from "@/services/api/delete";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
 import { userV1 } from "@/mocks/data";
 
-jest.mock("@/services/api/delete", () => {
-    return {
-        ...jest.requireActual("@/services/api/delete"),
-        deleteRequest: jest.fn(),
-        __esModule: true,
-    };
-});
+jest.mock("@/services/api/delete");
 
 describe("useDelete", () => {
     afterEach(() => {
@@ -29,7 +23,7 @@ describe("useDelete", () => {
         await deleteFunction(userV1.id);
 
         await waitFor(() =>
-            expect(apiService.deleteRequest).toHaveBeenCalledWith(
+            expect(deleteRequest).toHaveBeenCalledWith(
                 `${apis.usersV1Url}/${userV1.id}`,
                 {
                     notificationOptions: {

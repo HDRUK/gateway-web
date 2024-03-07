@@ -8,6 +8,7 @@ import ApplicationList from "./ApplicationList";
 describe("ApplicationList", () => {
     mockRouter.query = { teamId: applicationV1.team_id.toString() };
     const data = Array.from({ length: 3 }).map(() => generateApplicationV1());
+    window.scrollTo = jest.fn();
 
     beforeEach(() => {
         server.use(

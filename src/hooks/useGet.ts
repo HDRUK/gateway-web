@@ -1,12 +1,10 @@
 import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import useSWR, { KeyedMutator } from "swr";
-import { Error } from "@/interfaces/Error";
 import apiService from "@/services/api";
 
 interface Response<T> {
     data: T | undefined;
-    error: Error | undefined;
     isLoading: boolean;
     mutate: KeyedMutator<T>;
 }
@@ -33,10 +31,10 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
     } = options || {};
     const t = useTranslations("api");
 
-    const { data, error, mutate, isLoading } = useSWR<T>(
+    const { data, mutate, isLoading } = useSWR(
         shouldFetch ? url : null,
         () => {
-            return apiService.getRequest(url, {
+            return apiService.getRequest<T>(url, {
                 notificationOptions: {
                     localeKey,
                     itemName,
@@ -51,7 +49,6 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
     );
 
     return {
-        error,
         isLoading,
         data,
         mutate,

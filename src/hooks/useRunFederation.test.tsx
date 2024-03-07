@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import useRunFederation from "@/hooks/useRunFederation";
-import { renderHook, waitFor } from "@/utils/testUtils";
+import { act, renderHook, waitFor } from "@/utils/testUtils";
 import { integrationV1 } from "@/mocks/data/integration";
 import { teamV1 } from "@/mocks/data/team";
 import { postFederationsTestV1 } from "@/mocks/handlers/integration";
@@ -82,7 +82,9 @@ describe("useRunFederation", () => {
             })
         );
 
-        result.current.handleRun();
+        act(() => {
+            result.current.handleRun();
+        });
 
         await waitFor(() => {
             expect(result.current).toEqual({

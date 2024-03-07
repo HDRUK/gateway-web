@@ -10,4 +10,10 @@ export default meta;
 
 type Story = StoryObj<typeof ProtectedAccountRoute>;
 
-export const Default: Story = {};
+export const Default: Story = {
+    args: {
+        permissions: { "cohort.read": false },
+        pagePermissions: ["cohort.read"],
+        children: null,
+    },
+};

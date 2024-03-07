@@ -1,19 +1,13 @@
 import { act } from "react-dom/test-utils";
 import mockRouter from "next-router-mock";
 import useLogout from "@/hooks/useLogout";
-import * as apiService from "@/services/api/get";
+import getRequest from "@/services/api/get";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
 
 mockRouter.push("/initial-path");
 
-jest.mock("@/services/api/get", () => {
-    return {
-        ...jest.requireActual("@/services/api/get"),
-        getRequest: jest.fn(),
-        __esModule: true,
-    };
-});
+jest.mock("@/services/api/get");
 
 describe("useLogout", () => {
     it("should logout and redirect", async () => {
@@ -24,14 +18,11 @@ describe("useLogout", () => {
         });
 
         await waitFor(() => {
-            expect(apiService.getRequest).toBeCalledWith(
-                apis.logoutInternalUrl,
-                {
-                    notificationOptions: {
-                        errorNotificationsOn: false,
-                    },
-                }
-            );
+            expect(getRequest).toBeCalledWith(apis.logoutInternalUrl, {
+                notificationOptions: {
+                    errorNotificationsOn: false,
+                },
+            });
             expect(mockRouter).toMatchObject({
                 asPath: "/",
                 pathname: "/",

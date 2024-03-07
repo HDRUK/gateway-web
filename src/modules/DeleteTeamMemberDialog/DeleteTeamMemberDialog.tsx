@@ -32,7 +32,6 @@ const DeleteTeamMemberDialog = ({
         `${apis.teamsV1Url}/${params?.teamId}/users/${user.id}`,
         {
             itemName: `User`,
-            overideUrl: true,
         }
     );
 

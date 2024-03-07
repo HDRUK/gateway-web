@@ -38,7 +38,7 @@ const WrapperComponent = (props: TextTimeProps) => {
 
 export const Default: Story = {
     args: {
-        name: "selectTime",
+        name: { hour: "selectedHour", minute: "selectedMinute" },
         label: "Select Time",
     },
     render: props => <WrapperComponent {...props} />,

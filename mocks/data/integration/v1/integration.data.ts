@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
+import { FederationRunResponse } from "@/interfaces/Federation";
 import {
     Integration,
     FederationType,
     AuthType,
 } from "@/interfaces/Integration";
-import { FederationRunResponse } from "@/interfaces/Federation";
 
 const generateIntegrationV1 = (data = {}): Integration => {
     return {
@@ -29,6 +29,7 @@ const generateIntegrationV1 = (data = {}): Integration => {
         enabled: faker.datatype.boolean(),
         tested: faker.datatype.boolean(),
         notifications: [],
+        id: faker.datatype.number(),
         ...data,
     };
 };

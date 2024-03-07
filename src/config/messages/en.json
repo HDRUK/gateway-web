@@ -18,7 +18,7 @@
             "error": {
                 "status": {
                     "400": "Invalid argument",
-                    "401": "Invalid authentication credentials",
+                    "401": "Unauthorised request",
                     "403": "Permission denied",
                     "404": "Resource not found",
                     "500": "There has been a server error"
@@ -73,6 +73,7 @@
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
         "submit": "Submit",
+        "logout": "Logout",
         "publish": "Publish",
         "cancel": "Cancel",
         "update": "Update",
@@ -217,17 +218,68 @@
             "title": "My account"
         },
         "home": {
-            "title": "Gateway to health data and tools for research",
-            "text": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
+            "touchDevice": "Explore the different functionalities of the Gateway",
+            "datasets": {
+                "label": "Datasets / Tissues",
+                "title": "Welcome to The Gateway",
+                "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+            },
+            "dur": {
+                "label": "Data Uses / Research projects",
+                "title": "Welcome to The Gateway",
+                "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
+            },
+            "feasibility": {
+                "label": "Feasibility Analysis",
+                "title": "Welcome to The Gateway",
+                "text": "Compare the number of relevant records across different datasets: Query federated datasets to find out how many records match a specified criteria e.g. the number of female asthmatics"
+            },
+            "dataProviders": {
+                "label": "Data Providers",
+                "title": "Welcome to The Gateway",
+                "text": "Discover information about our data providers: Search and filter data providers and find out how to contact them and the process to access their data."
+            },
+            "collections": {
+                "label": "Collections",
+                "title": "Welcome to The Gateway",
+                "text": "Discover datasets, software and data uses that are grouped around a particular topic: Search and filter collections based on features such as network, disease, or theme"
+            },
+            "phenotypes": {
+                "label": "Phenotypes",
+                "title": "Welcome to The Gateway",
+                "text": "Find reusable phenotype algorithms: Search and deposit human and machine readable phenotype algorithms"
+            },
+            "diseaseAtlas": {
+                "label": "Disease Atlas",
+                "title": "Welcome to The Gateway",
+                "text": "Analyse the prevalence of disease, prognosis and associated clinical guidelines on a population scale"
+            },
+            "publications": {
+                "label": "Publications",
+                "title": "Welcome to The Gateway",
+                "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
+            },
+            "dataAnalysis": {
+                "label": "Data Analysis Scripts / Software",
+                "title": "Welcome to The Gateway",
+                "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
+            },
+            "courses": {
+                "label": "Courses",
+                "title": "Welcome to The Gateway",
+                "text": "Lessons to help you as a Researcher from the Gateway"
+            }
         },
         "search": {
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
             "tools": "Software / Tools",
             "collections": "Collections",
-            "searchExplainer": "Search by keywords, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
+            "searchExplainer": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
+            "downloadResults": "Download results",
+            "downloadStarted": "Your download has started",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -235,10 +287,23 @@
                 },
                 "FilterPanel": {
                     "populationSize": "Population size",
-                    "datasetPopulation": "Dataset Population"
+                    "datasetPopulation": "Dataset Population",
+                    "publisherName": "Data provider",
+                    "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                    "dataUseTitles": "Data use title",
+                    "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
+                    "geographicLocation": "Geographical coverage",
+                    "geographicLocationTooltip": "The geographical area covered by the dataset"
                 },
                 "ResultCard": {
-                    "dateLabel": "Date range"
+                    "dateLabel": "Date range",
+                    "leadOrganisation": "Lead organisation",
+                    "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
+                    "datasets": "Datasets",
+                    "datasetsTooltip": "The name of the dataset(s) being accessed",
+                    "dataCustodian": "Data Custodian",
+                    "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
+                    "showAll": "Show all datasets"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
@@ -270,7 +335,7 @@
         "Footer": {
             "text": "HDR UK {year}. All rights reserved."
         },
-        "HeaderNav": {
+        "DesktopNav": {
             "labels": {
                 "myAccount": "My Account",
                 "signIn": "Sign in"

@@ -5,6 +5,9 @@ const meta: Meta<typeof Header> = {
     component: Header,
     title: "Layout/Header",
     parameters: {
+        nextjs: {
+            appDirectory: true,
+        },
         layout: "fullscreen",
     },
     tags: ["autodocs"],

@@ -62,11 +62,9 @@ const showAlert = (date: string, status: string) => {
         ? "This user access is close to expiration date"
         : "";
 
-    const iconColor = hasExpired ? "error" : "warning";
-
     const showToolTip = hasExpired || showWarning;
 
-    return { showToolTip, toolTipMessage, iconColor };
+    return { showToolTip, toolTipMessage, hasExpired };
 };
 
 const getColumns = ({
@@ -226,7 +224,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row }) => {
-                const { showToolTip, toolTipMessage, iconColor } = showAlert(
+                const { showToolTip, toolTipMessage, hasExpired } = showAlert(
                     row.original.updated_at,
                     row.original.request_status
                 );
@@ -243,13 +241,9 @@ const getColumns = ({
                                 }}
                                 content={<div>{toolTipMessage}</div>}
                                 icon={
-                                    <IconButton
-                                        sx={{ p: 0 }}
-                                        size="large"
-                                        aria-label="warning"
-                                        color={iconColor}>
-                                        <WarningIcon />
-                                    </IconButton>
+                                    <WarningIcon
+                                        color={hasExpired ? "error" : "warning"}
+                                    />
                                 }
                             />
                         )}

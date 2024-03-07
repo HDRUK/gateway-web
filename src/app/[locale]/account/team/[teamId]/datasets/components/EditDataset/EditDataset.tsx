@@ -35,12 +35,15 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.EditDataset`
     );
 
-    const { teamId, datasetId } = useParams();
+    const params = useParams<{
+        teamId: string;
+        datasetId: string;
+    }>();
     const { push } = useRouter();
 
     const { data: dataset } = useGet<Dataset>(
-        `${apis.datasetsV1Url}/${datasetId}`,
-        { shouldFetch: !!teamId || !!datasetId }
+        `${apis.datasetsV1Url}/${params?.datasetId}`,
+        { shouldFetch: !!params?.teamId || !!params?.datasetId }
     );
 
     const createDataset = usePost<NewDataset>(apis.datasetsV1Url, {
@@ -76,7 +79,7 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
             });
             setTimeout(() => {
                 push(
-                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}/${newId}`
+                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${newId}`
                 );
             });
         } else {

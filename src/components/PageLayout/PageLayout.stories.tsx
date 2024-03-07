@@ -5,6 +5,11 @@ const meta: Meta<typeof PageLayout> = {
     component: PageLayout,
     title: "Layout/PageLayout",
     tags: ["autodocs"],
+    parameters: {
+        nextjs: {
+            appDirectory: true,
+        },
+    },
 };
 
 export default meta;

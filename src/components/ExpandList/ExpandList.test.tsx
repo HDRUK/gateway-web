@@ -1,5 +1,5 @@
 import Typography from "@/components/Typography";
-import { render, screen, waitFor } from "@/utils/testUtils";
+import { act, render, screen, waitFor } from "@/utils/testUtils";
 import ExpandList from "./ExpandList";
 
 describe("ExpandList", () => {
@@ -25,7 +25,9 @@ describe("ExpandList", () => {
 
         const button = screen.getByRole("button", { name: "Show more" });
 
-        button.click();
+        act(() => {
+            button.click();
+        });
 
         await waitFor(() => {
             expect(screen.getAllByRole("listitem")).toHaveLength(4);
@@ -41,7 +43,9 @@ describe("ExpandList", () => {
         );
         const buttonMore = screen.getByRole("button", { name: "Show more" });
 
-        buttonMore.click();
+        act(() => {
+            buttonMore.click();
+        });
 
         await waitFor(() => {
             expect(screen.getAllByRole("listitem")).toHaveLength(4);
@@ -52,7 +56,9 @@ describe("ExpandList", () => {
 
         const buttonLess = screen.getByRole("button", { name: "Show less" });
 
-        buttonLess.click();
+        act(() => {
+            buttonLess.click();
+        });
 
         await waitFor(() => {
             expect(screen.getAllByRole("listitem")).toHaveLength(2);

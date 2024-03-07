@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import AddAPhoto from "@mui/icons-material/AddAPhoto";
 import TextField from "@/components/TextField";
@@ -40,6 +39,8 @@ describe("TextField", () => {
         expect(wrapper.container).toMatchSnapshot();
     });
     it("should throw Error if `showClearButton` set but not provided `setValue`", async () => {
+        jest.spyOn(console, "error").mockImplementation();
+
         expect(() => {
             render(<Component showClearButton />);
         }).toThrowError(

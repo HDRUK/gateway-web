@@ -1,17 +1,11 @@
 import { User } from "@/interfaces/User";
 import usePost from "@/hooks/usePost";
-import * as apiService from "@/services/api/post";
+import postRequest from "@/services/api/post";
 import apis from "@/config/apis";
 import { renderHook, waitFor } from "@/utils/testUtils";
 import { userV1 } from "@/mocks/data";
 
-jest.mock("@/services/api/post", () => {
-    return {
-        ...jest.requireActual("@/services/api/post"),
-        postRequest: jest.fn(),
-        __esModule: true,
-    };
-});
+jest.mock("@/services/api/post");
 
 describe("usePost", () => {
     afterEach(() => {
@@ -30,20 +24,16 @@ describe("usePost", () => {
         await createFunction(userV1);
 
         await waitFor(() =>
-            expect(apiService.postRequest).toHaveBeenCalledWith(
-                apis.usersV1Url,
-                userV1,
-                {
-                    notificationOptions: {
-                        action: undefined,
-                        errorNotificationsOn: true,
-                        itemName: "mockItemName",
-                        localeKey: "mockLocaleKey",
-                        successNotificationsOn: true,
-                        t: expect.any(Function),
-                    },
-                }
-            )
+            expect(postRequest).toHaveBeenCalledWith(apis.usersV1Url, userV1, {
+                notificationOptions: {
+                    action: undefined,
+                    errorNotificationsOn: true,
+                    itemName: "mockItemName",
+                    localeKey: "mockLocaleKey",
+                    successNotificationsOn: true,
+                    t: expect.any(Function),
+                },
+            })
         );
     });
 });

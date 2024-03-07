@@ -102,6 +102,7 @@ export const colors = {
     purple200: "#A2AED3",
     purple500: "#475da7",
     purple700: "#384B91",
+    darkGreen50: "#DEF0F0",
 };
 
 const palette = {
@@ -207,6 +208,13 @@ const theme = createTheme({
                     },
                     borderRadius: 0,
                     border: "none",
+                },
+            },
+        },
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    boxShadow: "none",
                 },
             },
         },

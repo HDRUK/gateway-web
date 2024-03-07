@@ -1,9 +1,7 @@
-import { AxiosError } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { getUserFromToken } from "@/utils/cookies";
-import http from "@/utils/http";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -14,21 +12,35 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             return;
         }
 
-        const { data: user } = await http.get(
-            `${apis.usersV1UrlIP}/${authUser?.id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${req.cookies[config.JWT_COOKIE]}`,
-                },
-                withCredentials: false,
-            }
-        );
+        try {
+            const response = await fetch(
+                `${apis.usersV1UrlIP}/${authUser?.id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${
+                            req.cookies[config.JWT_COOKIE]
+                        }`,
+                    },
+                }
+            );
 
-        res.status(200).json({
-            data: { isLoggedIn: true, user: user.data },
-        });
+            const json = await response.json();
+
+            res.status(200).json({
+                data: { isLoggedIn: true, user: json.data },
+            });
+        } catch (error) {
+            throw new Error("We have been unable to log you in");
+        }
     } catch (error) {
-        const err = error as AxiosError<{ message: string }>;
+        const err = error as {
+            response: {
+                status: number;
+                data?: { message: string };
+            };
+            stack: unknown;
+            message: string;
+        };
         if (err?.response) {
             res.status(err.response.status).send({
                 title: "We have not been able to fetch your profile",

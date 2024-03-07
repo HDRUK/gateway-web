@@ -6,11 +6,13 @@ describe("useGetTeam", () => {
     it("should return initial response", async () => {
         const { result } = renderHook(() => useGetTeam(teamV1.id));
 
-        expect(result.current).toEqual({
-            error: undefined,
-            isTeamLoading: true,
-            team: undefined,
-            mutateTeam: expect.any(Function),
+        await waitFor(() => {
+            expect(result.current).toEqual({
+                error: undefined,
+                isTeamLoading: true,
+                team: undefined,
+                mutateTeam: expect.any(Function),
+            });
         });
     });
     it("should return the loaded team", async () => {

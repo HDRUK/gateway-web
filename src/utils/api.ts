@@ -1,5 +1,4 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
-import { HttpOptions } from "@/interfaces/Api";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
@@ -79,22 +78,4 @@ async function getTeam(
     };
 }
 
-const ThrowPaginationError = (options: HttpOptions | undefined) => {
-    if (
-        (options?.withPagination && !options?.paginationKey) ||
-        (options?.paginationKey && !options?.withPagination)
-    ) {
-        throw Error(
-            "You must provide both paginationKey and withPagination=true"
-        );
-    }
-};
-
-export {
-    getFilters,
-    getUser,
-    getTeam,
-    getApplication,
-    getCohort,
-    ThrowPaginationError,
-};
+export { getFilters, getUser, getTeam, getApplication, getCohort };

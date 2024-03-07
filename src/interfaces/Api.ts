@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { AxiosRequestConfig } from "axios";
 import { OptionsWithExtraProps, VariantType } from "notistack";
 import { MutatorOptions } from "swr";
 
@@ -14,21 +13,16 @@ interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
 
 interface RequestOptions {
     withPagination?: boolean;
-    axiosOptions?: AxiosRequestConfig;
     notificationOptions: NotificationOptions;
 }
 
 interface HttpOptions extends MutatorOptions {
     localeKey?: string;
-    overideUrl?: boolean;
     shouldFetch?: boolean;
     successNotificationsOn?: boolean;
     errorNotificationsOn?: boolean;
     itemName?: string;
     query?: string;
-    data?: unknown;
-    paginationKey?: string;
-    withPagination?: boolean;
     action?: ReactNode;
 }
 
@@ -55,8 +49,8 @@ interface PaginationResponse {
 }
 
 export type {
-    NotificationOptions,
     RequestOptions,
+    NotificationOptions,
     HttpOptions,
     PaginationResponse,
 };
