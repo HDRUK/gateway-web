@@ -219,6 +219,7 @@
         },
         "home": {
             "touchDevice": "Explore the different functionalities of the Gateway",
+            "seeNow": "See now",
             "datasets": {
                 "label": "Datasets / Tissues",
                 "title": "Welcome to The Gateway",

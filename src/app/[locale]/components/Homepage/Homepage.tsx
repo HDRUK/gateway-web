@@ -2,15 +2,19 @@
 
 import * as React from "react";
 import { isMobile } from "react-device-detect";
+import { ArrowForward } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { PageTemplateDefault } from "@/interfaces/Cms";
+import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
+import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
     {
@@ -82,12 +86,14 @@ const items = [
 ];
 
 interface HomePageProps {
-    cmsContent: PageTemplateDefault;
+    cmsContent: PageTemplateHome;
 }
 
 const HomePage = ({ cmsContent }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
+
+    const { meetTheTeam } = cmsContent.template;
 
     React.useEffect(() => {
         if (isMobile) {
@@ -145,8 +151,40 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
                     minHeight: 500,
                     background: `linear-gradient(170deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
                 }}
-                textAlign="center"
-            />
+                textAlign="center">
+                <TitleWithBg
+                    size="md"
+                    variant="h2"
+                    mb={2}
+                    title={meetTheTeam.sectionName}
+                />
+                <TeamWrapper>
+                    <TeamImage
+                        src={meetTheTeam.image.node.sourceUrl}
+                        alt={meetTheTeam.image.node.altText}
+                    />
+
+                    <TeamContent>
+                        <Typography
+                            sx={{
+                                fontSize: { mobile: 20, desktop: 28 },
+                            }}>
+                            {meetTheTeam.title}
+                        </Typography>
+                        <Typography
+                            sx={{
+                                fontSize: 15,
+                            }}>
+                            {meetTheTeam.intro}
+                        </Typography>
+                        <Button
+                            variant="text"
+                            endIcon={<ArrowForward color="primary" />}>
+                            {t("seeNow")}
+                        </Button>
+                    </TeamContent>
+                </TeamWrapper>
+            </Box>
             <Box
                 sx={{
                     minHeight: 500,
