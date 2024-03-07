@@ -35,6 +35,25 @@ interface PageTemplatePromo {
     ctaOverrideComponent?: React.ReactElement;
 }
 
+interface PageTemplateHome {
+    id: string;
+    title: string;
+    content: string;
+    template: {
+        meetTheTeam: {
+            sectionName: string;
+            title: string;
+            intro: string;
+            image: {
+                node: {
+                    altText: string;
+                    sourceUrl: string;
+                };
+            };
+        };
+    };
+}
+
 interface templateRepeatFields {
     title: string;
     subTitle: string;
@@ -53,6 +72,7 @@ interface PageTemplateRepeat {
 export type {
     PageTemplateRepeat,
     PageTemplateDefault,
+    PageTemplateHome,
     PageTemplatePromo,
     templateRepeatFields,
     CMSPostResponse,
