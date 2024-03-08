@@ -40,6 +40,15 @@ interface PageTemplateHome {
     title: string;
     content: string;
     template: {
+        homeFields: {
+            gatewayVideo: string;
+            gatewayVideoHeader: string;
+            logos: {
+                organisationCharity: string;
+                websiteAddress: string;
+                imageLocation: { node: { mediaItemUrl: string } };
+            }[];
+        };
         meetTheTeam: {
             sectionName: string;
             title: string;

@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
+import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
@@ -93,8 +94,20 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
 
-    const { meetTheTeam } = cmsContent.template;
+    const {
+        meetTheTeam,
+        homeFields: { gatewayVideo, gatewayVideoHeader, logos },
+    } = cmsContent.template;
 
+    const logosFormatted = React.useMemo(() => {
+        return logos.map(logo => ({
+            websiteUrl: logo.websiteAddress,
+            imageSrc: logo.imageLocation.node.mediaItemUrl,
+            alt: logo.organisationCharity,
+        }));
+    }, [logos]);
+
+    console.log("logos: ", logos);
     React.useEffect(() => {
         if (isMobile) {
             setIsTouchDevice(true);
@@ -128,7 +141,7 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
                     size="md"
                     variant="h2"
                     mb={2}
-                    title={cmsContent.title}
+                    title={gatewayVideoHeader}
                 />
             </Box>
             <Box
@@ -143,7 +156,7 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
                         width: "100%",
                         maxWidth: 950,
                     }}>
-                    <HTMLContent content={cmsContent.content} />
+                    <HTMLContent content={gatewayVideo} />
                 </Box>
             </Box>
             <Box
@@ -194,11 +207,13 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
             />
             <Box
                 sx={{
+                    p: 0,
                     minHeight: 500,
                     background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
                 }}
-                textAlign="center"
-            />
+                textAlign="center">
+                <LogoSlider logos={logosFormatted} />
+            </Box>
         </>
     );
 };

@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogoSlider should render component 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-c5qhx0"
+  >
+    <div
+      class="mui-style-vtvusl-LogoSlider"
+    >
+      <a
+        href="http://www.google.com"
+        rel="noreferrer"
+        style="margin-left: 10px; margin-right: 10px; width: 100px; flex: 0 0 auto; align-self: flex-start;"
+        target="_blank"
+      >
+        <img
+          alt="Microsoft"
+          data-nimg="1"
+          decoding="async"
+          height="50"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=256&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=128&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=256&q=75 2x"
+          style="color: transparent;"
+          width="100"
+        />
+      </a>
+      <a
+        href="http://www.google.com"
+        rel="noreferrer"
+        style="margin-left: 10px; margin-right: 10px; width: 100px; flex: 0 0 auto; align-self: flex-start;"
+        target="_blank"
+      >
+        <img
+          alt="LinkedIn"
+          data-nimg="1"
+          decoding="async"
+          height="50"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=256&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=128&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=256&q=75 2x"
+          style="color: transparent;"
+          width="100"
+        />
+      </a>
+      <a
+        href="http://www.google.com"
+        rel="noreferrer"
+        style="margin-left: 10px; margin-right: 10px; width: 100px; flex: 0 0 auto; align-self: flex-start;"
+        target="_blank"
+      >
+        <img
+          alt="Google"
+          data-nimg="1"
+          decoding="async"
+          height="50"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=256&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=128&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=256&q=75 2x"
+          style="color: transparent;"
+          width="100"
+        />
+      </a>
+    </div>
+  </div>
+</div>
+`;
