@@ -6,7 +6,7 @@ export const SORT_FIELD = "sort";
 const sortByOptions = [
     {
         label: "Sort By Most Relevant",
-        value: "score:asc",
+        value: "score:desc",
     },
     {
         label: "Sort Alphabetically By Title (A-Z)",
@@ -28,7 +28,7 @@ const sortByOptions = [
 
 const searchFormConfig = {
     defaultValues: {
-        sort: "score:asc",
+        sort: "score:desc",
         query: "",
     },
     sortByOptions,
