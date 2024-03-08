@@ -2,10 +2,28 @@ const GetHomePageQuery = `
 query GetHomePageQuery {
   page(id: "home-page", idType: URI) {
     id    
-    title
-    content
     template {
       ... on HomeTemplate {
+        __typename
+        ... on HomeTemplate {
+          homeFields { 
+            gatewayVideo
+            gatewayVideoHeader
+            affiliateLink {
+              url
+              title
+            }
+            logos {
+              organisationCharity
+              websiteAddress
+              imageLocation {
+                node {
+                mediaItemUrl
+                }
+              }
+            }
+          }
+        }
         meetTheTeam {
           sectionName
           title

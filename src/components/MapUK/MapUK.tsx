@@ -14,7 +14,7 @@ interface MapUKProps {
 
 const Wales = () => {
     return (
-        <svg>
+        <svg data-testid="wales">
             <path
                 d="M145.205 324.797C146.247 324.194 148.199 327.182 146.923 327.645C146.657 325.882 143.338 326.333 145.205 324.797Z"
                 fill="inherit"
@@ -347,7 +347,7 @@ const Ireland = () => {
 
 const Scotland = () => {
     return (
-        <svg>
+        <svg data-testid="scotland">
             <path
                 d="M181.041 117.834C179.965 119.294 180.855 116.927 181.041 117.834V117.834Z"
                 fill="inherit"
@@ -1248,7 +1248,7 @@ const Scotland = () => {
 
 const NorthernIreland = () => {
     return (
-        <svg>
+        <svg data-testid="northernIreland">
             <path
                 d="M111.835 253.116C111.55 255.341 110.879 252.425 109.534 252.742C109.953 252.25 111.894 252.52 111.835 253.116Z"
                 fill="inherit"
@@ -1279,7 +1279,7 @@ const NorthernIreland = () => {
 
 const England = () => {
     return (
-        <svg>
+        <svg data-testid="england">
             <path
                 d="M152.128 285.483C151.012 287.289 152.113 289.027 152.944 289.916C151.461 291.847 151.672 293.679 149.484 294.921C149.153 296.122 146.413 297.301 146.239 298.108C145.1 297.814 144.079 297.434 142.607 298.309C143.479 296.634 143.579 293.879 144.705 292.294C147.931 290.63 147.269 285.678 151.582 285.341C151.792 285.103 152.047 285.207 152.128 285.483Z"
                 fill="inherit"
@@ -1334,7 +1334,7 @@ const England = () => {
 
 const World = () => {
     return (
-        <svg>
+        <svg data-testid="world">
             <circle cx="61" cy="52" r="34" fill="inherit" />
             <path
                 fillRule="evenodd"
