@@ -43,6 +43,10 @@ interface PageTemplateHome {
         homeFields: {
             gatewayVideo: string;
             gatewayVideoHeader: string;
+            affiliateLink: {
+                url: string;
+                title: string;
+            };
             logos: {
                 organisationCharity: string;
                 websiteAddress: string;

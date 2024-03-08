@@ -9,6 +9,10 @@ query GetHomePageQuery {
           homeFields { 
             gatewayVideo
             gatewayVideoHeader
+            affiliateLink {
+              url
+              title
+            }
             logos {
               organisationCharity
               websiteAddress

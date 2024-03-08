@@ -96,7 +96,7 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
 
     const {
         meetTheTeam,
-        homeFields: { gatewayVideo, gatewayVideoHeader, logos },
+        homeFields: { affiliateLink, gatewayVideo, gatewayVideoHeader, logos },
     } = cmsContent.template;
 
     const logosFormatted = React.useMemo(
@@ -213,7 +213,33 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
                     background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
                 }}
                 textAlign="center">
-                <LogoSlider logos={logosFormatted} />
+                <Box
+                    sx={{
+                        display: { tablet: "flex" },
+                        background: "white",
+                        gap: 2,
+                        alignItems: "center",
+                    }}>
+                    <a
+                        href={affiliateLink.url}
+                        target="_blank"
+                        rel="noreferrer">
+                        <Button
+                            sx={{
+                                minWidth: 200,
+                                width: "100%",
+                                whiteSpace: {
+                                    mobile: "unset",
+                                    desktop: "nowrap",
+                                },
+                            }}
+                            color="secondary"
+                            variant="outlined">
+                            {affiliateLink.title}
+                        </Button>
+                    </a>
+                    <LogoSlider logos={logosFormatted} />
+                </Box>
             </Box>
         </>
     );
