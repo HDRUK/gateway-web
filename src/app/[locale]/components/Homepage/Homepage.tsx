@@ -99,15 +99,16 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
         homeFields: { gatewayVideo, gatewayVideoHeader, logos },
     } = cmsContent.template;
 
-    const logosFormatted = React.useMemo(() => {
-        return logos.map(logo => ({
-            websiteUrl: logo.websiteAddress,
-            imageSrc: logo.imageLocation.node.mediaItemUrl,
-            alt: logo.organisationCharity,
-        }));
-    }, [logos]);
+    const logosFormatted = React.useMemo(
+        () =>
+            logos.map(logo => ({
+                websiteUrl: logo.websiteAddress,
+                imageSrc: logo.imageLocation.node.mediaItemUrl,
+                alt: logo.organisationCharity,
+            })),
+        [logos]
+    );
 
-    console.log("logos: ", logos);
     React.useEffect(() => {
         if (isMobile) {
             setIsTouchDevice(true);
