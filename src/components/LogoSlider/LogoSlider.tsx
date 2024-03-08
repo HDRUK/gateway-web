@@ -3,33 +3,35 @@ import Image from "next/image";
 import Box from "@/components/Box";
 import * as styles from "./LogoSlider.styles";
 
+type Logo = { alt: string; imageSrc: string; websiteUrl: string };
 interface LogoSliderProps {
-    logos: { alt: string; imageSrc: string; websiteUrl: string }[];
+    logos: Logo[];
 }
+
+const LogoComponent = ({ logo }: { logo: Logo }) => (
+    <a
+        css={styles.anchor}
+        href={logo.websiteUrl}
+        target="_blank"
+        rel="noreferrer">
+        <Image
+            style={{ objectFit: "contain" }}
+            fill
+            src={logo.imageSrc}
+            alt={logo.alt}
+        />
+    </a>
+);
 
 const LogoSlider = ({ logos }: LogoSliderProps) => {
     return (
-        <Box sx={{ background: "white", overflow: "hidden" }}>
-            <div css={styles.ticker}>
+        <Box css={styles.tickerContainer}>
+            <div css={styles.ticker({ logoCount: logos.length })}>
                 {logos.map(logo => (
-                    <a
-                        style={{
-                            marginLeft: 10,
-                            marginRight: 10,
-                            width: 100,
-                            flex: "none",
-                            alignSelf: "flex-start",
-                        }}
-                        href={logo.websiteUrl}
-                        target="_blank"
-                        rel="noreferrer">
-                        <Image
-                            width={100}
-                            height={50}
-                            src={logo.imageSrc}
-                            alt={logo.alt}
-                        />
-                    </a>
+                    <LogoComponent logo={logo} />
+                ))}
+                {logos.map(logo => (
+                    <LogoComponent logo={logo} />
                 ))}
             </div>
         </Box>
