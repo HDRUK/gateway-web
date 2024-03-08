@@ -21,7 +21,7 @@ interface ResultCardProps {
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";
 const TOOLTIP_SUFFIX = "Tooltip";
-const CHARACTER_LIMIT = 150;
+const CHARACTER_LIMIT = 50;
 
 const ResultCardDataUse = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);

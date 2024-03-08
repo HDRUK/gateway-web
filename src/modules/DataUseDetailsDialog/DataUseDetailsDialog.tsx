@@ -2,8 +2,8 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import { SearchResultDataUse } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
+import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import { CategoryHeader } from "./DataUseDetailsDialog.styles";
 
@@ -12,12 +12,19 @@ interface DataUseDetailsDialogProps {
 }
 
 const TRANSLATION_PATH = "modules.dialogs.DataUseDetailsDialog";
+const TITLE_CHARACTER_LIMIT = 120;
+const CHARACTER_LIMIT = 50;
 
 const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
+    const formattedTitle =
+        result.projectTitle.length > TITLE_CHARACTER_LIMIT
+            ? `${result.projectTitle.slice(0, TITLE_CHARACTER_LIMIT)}...`
+            : result.projectTitle;
+
     return (
-        <Dialog title={result.projectTitle}>
+        <Dialog title={formattedTitle}>
             <MuiDialogContent>
                 <Typography variant="h3" mb={2}>
                     {t("datasets")}
@@ -25,7 +32,11 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
                     {result.datasetTitles.map(dataset => (
-                        <Button size="small">{dataset}</Button>
+                        <EllipsisCharacterLimit
+                            text={dataset}
+                            isButton
+                            characterLimit={CHARACTER_LIMIT}
+                        />
                     ))}
                 </Box>
 
