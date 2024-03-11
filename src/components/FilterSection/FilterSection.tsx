@@ -5,10 +5,11 @@ import { Control, useController } from "react-hook-form";
 import { List, AutoSizer } from "react-virtualized";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
+import CheckboxControlled from "@/components/CheckboxControlled";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
-import CheckboxControlled from "../CheckboxControlled";
+import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 
 interface FilterSectionProps {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
@@ -19,6 +20,7 @@ interface FilterSectionProps {
     checkboxValues: { [key: string]: boolean };
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
     setValue: (name: string, value: string | number) => void;
+    resetFilterSection: () => void;
 }
 const FilterSection = ({
     filterItem,
@@ -29,6 +31,7 @@ const FilterSection = ({
     noFilterLabel,
     placeholder,
     setValue,
+    resetFilterSection,
 }: FilterSectionProps) => {
     const t = useTranslations("components.FilterSection");
     const { field } = useController({
@@ -60,7 +63,7 @@ const FilterSection = ({
             <CheckboxControlled
                 {...checkboxes[index]}
                 formControlSx={{ pl: 1, pr: 1 }}
-                checked={checkboxValues[checkboxes[index].label]}
+                checked={checkboxValues[checkboxes[index].label] || false}
                 name={checkboxes[index].label}
                 onChange={(event, value) =>
                     handleCheckboxChange({
@@ -103,6 +106,10 @@ const FilterSection = ({
                     }}
                 </AutoSizer>
             </div>
+            <ClearFilterButton
+                checkboxValues={checkboxValues}
+                resetFilterSection={resetFilterSection}
+            />
         </>
     );
 };

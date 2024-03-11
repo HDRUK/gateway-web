@@ -294,7 +294,8 @@
                     "dataUseTitles": "Data use title",
                     "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                     "geographicLocation": "Geographical coverage",
-                    "geographicLocationTooltip": "The geographical area covered by the dataset"
+                    "geographicLocationTooltip": "The geographical area covered by the dataset",
+                    "clearFilter": "Clear filter"
                 },
                 "ResultCard": {
                     "dateLabel": "Date range",
