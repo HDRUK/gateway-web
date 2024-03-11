@@ -14,18 +14,17 @@ const ClearFilterButton = ({
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
+    const filterItemCount = Object.values(checkboxValues).filter(
+        value => value === true
+    ).length;
+
     return (
-        <ClearButton variant="text" onClick={resetFilterSection}>
+        <ClearButton
+            variant="text"
+            onClick={resetFilterSection}
+            disabled={!filterItemCount}>
             {t("clearFilter")}
-            <span>
-                (
-                {
-                    Object.values(checkboxValues).filter(
-                        value => value === true
-                    ).length
-                }
-                )
-            </span>
+            <span>({filterItemCount})</span>
         </ClearButton>
     );
 };
