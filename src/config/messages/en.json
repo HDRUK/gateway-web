@@ -298,6 +298,8 @@
                     "clearFilter": "Clear filter"
                 },
                 "ResultCard": {
+                    "populationSizeNotReported": "not reported",
+                    "populationSize": "Dataset population size",
                     "dateLabel": "Date range",
                     "leadOrganisation": "Lead organisation",
                     "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",

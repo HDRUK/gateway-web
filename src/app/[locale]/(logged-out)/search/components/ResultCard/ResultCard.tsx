@@ -2,8 +2,9 @@ import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { SearchResultDataset } from "@/interfaces/Search";
+import Box from "@/components/Box";
 import Typography from "@/components/Typography";
-import { getDateRange } from "@/utils/search";
+import { getDateRange, getPopulationSize } from "@/utils/search";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -48,11 +49,29 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                     color="text.gray">
                                     {metadata.summary.abstract}
                                 </Typography>
-                                <Typography
-                                    color="secondary"
-                                    sx={{ fontSize: 16 }}>
-                                    {t("dateLabel")}: {getDateRange(metadata)}
-                                </Typography>
+                                <Box
+                                    sx={{
+                                        p: 0,
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                    }}>
+                                    <Typography
+                                        color="secondary"
+                                        sx={{ fontSize: 16 }}>
+                                        {t("populationSize")}:{" "}
+                                        {getPopulationSize(
+                                            metadata,
+                                            t("populationSizeNotReported")
+                                        )}
+                                    </Typography>
+                                    <Typography
+                                        color="secondary"
+                                        sx={{ fontSize: 16 }}>
+                                        {t("dateLabel")}:{" "}
+                                        {getDateRange(metadata)}
+                                    </Typography>
+                                    <Typography> </Typography>
+                                </Box>
                             </>
                         }
                     />

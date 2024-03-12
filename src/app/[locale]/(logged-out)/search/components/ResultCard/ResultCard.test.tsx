@@ -16,6 +16,7 @@ describe("ResultCard", () => {
             />
         );
 
+        const populationSize = `Dataset population size: ${mockResult.metadata.observations[0]?.measuredValue.toLocaleString()}`;
         const formattedDate = `Date range: ${formatDate(
             mockResult.metadata.provenance.temporal.startDate || "",
             "YYYY"
@@ -34,6 +35,9 @@ describe("ResultCard", () => {
         ).toBeInTheDocument();
         expect(
             screen.getByText(mockResult.metadata.summary.shortTitle)
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText(populationSize, { exact: false })
         ).toBeInTheDocument();
         expect(
             screen.getByText(formattedDate, { exact: false })
@@ -62,5 +66,26 @@ describe("ResultCard", () => {
             />
         );
         expect(screen.getByText(`Date range: n/a`)).toBeInTheDocument();
+    });
+    it("should render `not reported` when no population", async () => {
+        const mockResult = generateDatasetMetadataV1();
+        const mockWithoutData = {
+            metadata: {
+                ...mockResult.metadata,
+                observations: [],
+            },
+        };
+        render(
+            <ResultCard
+                result={{
+                    highlight: { abstract: "string", description: "string" },
+                    metadata: mockWithoutData,
+                    _id: "1",
+                }}
+            />
+        );
+        expect(
+            screen.getByText(`Dataset population size: not reported`)
+        ).toBeInTheDocument();
     });
 });
