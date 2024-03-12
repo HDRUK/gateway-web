@@ -281,6 +281,7 @@
             "noResults": "No Results Found",
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
+            "filtersApplied": "Filter(s) applied",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",

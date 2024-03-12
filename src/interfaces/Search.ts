@@ -67,7 +67,7 @@ export enum SearchCategory {
     DATA_ANALYSIS = "dataAnalysis",
 }
 
-export interface SearchQueryParams {
+export interface SearchApiParams {
     query: string | undefined;
     sort: string | undefined;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;

@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
@@ -27,13 +26,19 @@ import {
 const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
 
+type DefaultValues = {
+    [key: string]: { [key: string]: boolean };
+};
+
 const FilterPanel = ({
     filterCategory,
     filterSourceData,
+    selectedFilters,
     setFilterQueryParams,
     aggregations,
 }: {
     filterCategory: string;
+    selectedFilters: { [filter: string]: string[] | undefined };
     filterSourceData: Filter[];
     setFilterQueryParams: (
         filterValues: string[],
@@ -42,22 +47,23 @@ const FilterPanel = ({
     aggregations?: Aggregations;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const searchParams = useSearchParams();
 
     // filterValues controls the selected values of each filter
-    const [filterValues, setFilterValues] = useState<{
-        [key: string]: { [key: string]: boolean };
-    }>({
-        [FILTER_PUBLISHER_NAME]: transformQueryFiltersToForm(
-            searchParams?.get(FILTER_PUBLISHER_NAME)
-        ),
-        [FILTER_DATA_USE_TITLES]: transformQueryFiltersToForm(
-            searchParams?.get(FILTER_DATA_USE_TITLES)
-        ),
-        [FILTER_GEOGRAPHIC_LOCATION]: transformQueryFiltersToForm(
-            searchParams?.get(FILTER_GEOGRAPHIC_LOCATION)
-        ),
+    const [filterValues, setFilterValues] = useState<DefaultValues>({
+        [FILTER_PUBLISHER_NAME]: {},
+        [FILTER_DATA_USE_TITLES]: {},
+        [FILTER_GEOGRAPHIC_LOCATION]: {},
     });
+
+    useEffect(() => {
+        const defaultValues: DefaultValues = {};
+        filtersList.forEach(filterName => {
+            defaultValues[filterName] = transformQueryFiltersToForm(
+                selectedFilters[filterName]
+            );
+        });
+        setFilterValues(defaultValues);
+    }, [selectedFilters]);
 
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm({

@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
-import { SearchQueryParams } from "@/interfaces/Search";
+import { SearchApiParams } from "@/interfaces/Search";
 import { filtersList } from "@/config/forms/filters";
 
 const groupByType = (
@@ -29,13 +29,30 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
-const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
-    const filterQueries = pick(allSearchQueries, filtersList);
+const getAllSelectedFilters = (
+    allSearchQueries: SearchApiParams
+): { [filter: string]: string[] | undefined } => {
+    return pick(allSearchQueries, filtersList) as {
+        [key: string]: string[] | undefined;
+    };
+};
 
-    const hasFilters =
-        Object.values(filterQueries).filter(p => p !== undefined).length > 0;
+const isQueryEmpty = (filterQueries: {
+    [filter: string]: string[] | undefined;
+}) => {
+    return (
+        Object.values(filterQueries).filter(
+            p => p !== undefined && p.length > 0
+        ).length === 0
+    );
+};
 
-    if (!hasFilters) {
+const pickOnlyFilters = (type: string, allSearchQueries: SearchApiParams) => {
+    const filterQueries = pick(allSearchQueries, filtersList) as {
+        [key: string]: string[] | undefined;
+    };
+
+    if (isQueryEmpty(filterQueries)) {
         return {};
     }
 
@@ -47,16 +64,14 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
 };
 
 const transformQueryFiltersToForm = (
-    filtersQuery: string | null | undefined
+    filtersQuery: string[] | undefined
 ): { [key: string]: boolean } => {
     const result: { [key: string]: boolean } = {};
     if (!filtersQuery) {
         return result;
     }
 
-    const filtersArray = filtersQuery.split(",").map(name => name.trim());
-
-    filtersArray.forEach(name => {
+    filtersQuery.forEach(name => {
         result[name] = true;
     });
 
@@ -72,6 +87,8 @@ const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
 };
 
 export {
+    isQueryEmpty,
+    getAllSelectedFilters,
     groupByType,
     transformQueryFiltersToForm,
     formatBucketCounts,

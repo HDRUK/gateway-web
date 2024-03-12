@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { CsvExport } from "@/interfaces/CsvExport";
-import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
+import { SearchCategory, SearchApiParams } from "@/interfaces/Search";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { downloadCSV } from "@/utils/download";
@@ -12,7 +12,7 @@ const TRANSLATION_PATH = "pages.search";
 const useSearch = (
     searchType: string,
     downloadType: string,
-    queryParams: SearchQueryParams
+    queryParams: SearchApiParams
 ) => {
     const t = useTranslations(TRANSLATION_PATH);
 
