@@ -15,11 +15,7 @@ describe("MapUK", () => {
 
         await waitFor(() => {
             expect(mockFn).toHaveBeenCalledWith({
-                England: false,
-                "Northern Ireland": false,
-                Scotland: false,
                 Wales: true,
-                "Rest of the world": false,
             });
         });
     });
