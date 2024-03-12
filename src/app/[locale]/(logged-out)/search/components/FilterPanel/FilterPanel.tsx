@@ -110,6 +110,15 @@ const FilterPanel = ({
         setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
     };
 
+    const resetFilterSection = (filterSection: string) => {
+        setFilterValues({
+            ...filterValues,
+            [filterSection]: {},
+        });
+
+        setFilterQueryParams([], filterSection);
+    };
+
     const renderFilterContent = (filterItem: {
         label: string;
         value: string;
@@ -141,6 +150,7 @@ const FilterPanel = ({
                         setValue={setValue}
                         control={control}
                         filterItem={filterItem}
+                        resetFilterSection={() => resetFilterSection(label)}
                     />
                 );
         }
