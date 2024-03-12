@@ -20,11 +20,10 @@ const ClearFilterButton = ({
 
     return (
         <ClearButton
-            variant="text"
+            variant="link"
             onClick={resetFilterSection}
             disabled={!filterItemCount}>
-            {t("clearFilter")}
-            <span>({filterItemCount})</span>
+            {t("clearFilter")} ({filterItemCount})
         </ClearButton>
     );
 };
