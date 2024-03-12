@@ -11,7 +11,7 @@
         "@sentry/tracing": "^6.4.1",
         "@snyk/protect": "^1.1061.0",
         "@storybook/addon-controls": "^6.3.12",
-        "@storybook/addon-docs": "^6.3.12",
+        "@storybook/addon-docs": "^8.0.0",
         "axios": "^0.21.3",
         "babel-plugin-react-docgen": "^4.2.1",
         "bootstrap": "^4.4.1",
