@@ -12,7 +12,7 @@ const getDateRange = (metadata: Metadata) => {
 };
 
 const getPopulationSize = (metadata: Metadata, notReportedLabel: string) => {
-    const population = get(metadata, "observations.0.measuredValue");
+    const population = get(metadata, "summary.populationSize");
     return population
         ? (population as number).toLocaleString()
         : notReportedLabel;

@@ -16,7 +16,7 @@ describe("ResultCard", () => {
             />
         );
 
-        const populationSize = `Dataset population size: ${mockResult.metadata.observations[0]?.measuredValue.toLocaleString()}`;
+        const populationSize = `Dataset population size: ${mockResult.metadata.summary.populationSize.toLocaleString()}`;
         const formattedDate = `Date range: ${formatDate(
             mockResult.metadata.provenance.temporal.startDate || "",
             "YYYY"

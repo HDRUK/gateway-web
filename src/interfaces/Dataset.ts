@@ -11,6 +11,7 @@ interface Metadata {
         keywords: string;
         shortTitle: string;
         title: string;
+        populationSize: number;
         publisher: {
             publisherName: string;
         };
@@ -37,15 +38,6 @@ interface Metadata {
             formats: string;
         };
     };
-    observations: [
-        {
-            observedNode: string;
-            measuredValue: number;
-            observationDate: string;
-            measuredProperty: string;
-            disambiguatingDescription: string;
-        }
-    ];
     provenance: {
         temporal: {
             startDate: string | undefined;
