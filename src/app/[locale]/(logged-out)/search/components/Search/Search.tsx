@@ -264,7 +264,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     maxWidth: 1440,
                 }}
                 textAlign="left">
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1, p: 0 }}>
                     <FilterChips
                         label={t("filtersApplied")}
                         selectedFilters={selectedFilters}
