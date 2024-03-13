@@ -83,6 +83,7 @@ export const colors = {
     black: "#000",
     orange: "#FE9A2D",
     green400: "#3DB28C",
+    green700: "#2c8267",
     amber500: "#ffc107",
     grey: "#F6F7F8",
     grey100: "#F6F7F8",
@@ -114,6 +115,9 @@ const palette = {
     },
     error: {
         main: colors.red700,
+    },
+    success: {
+        main: colors.green700,
     },
     errorBackground: {
         main: colors.red50,

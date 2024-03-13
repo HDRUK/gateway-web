@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -38,7 +38,8 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
-import { pickOnlyFilters } from "@/utils/filters";
+import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
+import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardDataUse from "../ResultCardDataUse";
@@ -94,7 +95,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [searchParams]
     );
 
-    const [queryParams, setQueryParams] = useState<SearchQueryParams>({
+    const [queryParams, setApiParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
@@ -112,13 +113,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
-        setQueryParams({ ...queryParams, ...data });
+        setApiParams({ ...queryParams, ...data });
 
         updatePath(QUERY_FIELD, data.query);
     };
 
     const onSortChange = async (selectedValue: string) => {
-        setQueryParams({
+        setApiParams({
             ...queryParams,
             sort: selectedValue,
         });
@@ -126,8 +127,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(SORT_FIELD, selectedValue);
     };
 
+    const selectedFilters = useMemo(
+        () => getAllSelectedFilters(queryParams),
+        [queryParams]
+    );
+
     const resetQueryInput = () => {
-        setQueryParams({ ...queryParams, query: "" });
+        setApiParams({ ...queryParams, query: "" });
 
         updatePath(QUERY_FIELD, "");
     };
@@ -176,6 +182,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         },
     ];
 
+    const removeFilter = (
+        filterType: keyof SearchQueryParams,
+        removedFilter: string
+    ) => {
+        const filterToUpdate = queryParams[filterType];
+
+        if (!Array.isArray(filterToUpdate)) return;
+
+        const filtered = filterToUpdate.filter(f => f !== removedFilter);
+        setApiParams({ ...queryParams, [filterType]: filtered });
+        updatePath(filterType, filtered.join(","));
+    };
+
     const toggleButtons = [
         {
             icon: AppsIcon,
@@ -209,10 +228,16 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     return (
-        <>
+        <Box
+            display={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+            }}>
             <Box
                 sx={{
                     backgroundColor: "white",
+                    width: "100%",
                     paddingRight: 6,
                     paddingLeft: 6,
                     display: "flex",
@@ -231,29 +256,45 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             <Box
                 sx={{
                     p: 0,
-                    justifyContent: "flex-end",
+                    justifyContent: "space-between",
                     display: "flex",
                     alignItems: "center",
                     padding: "1em",
+                    width: "100%",
+                    maxWidth: 1440,
                 }}
                 textAlign="left">
-                <Box sx={{ p: 0, mr: "1em" }}>
-                    <Sort
-                        sortName={SORT_FIELD}
-                        defaultValue={queryParams.sort}
-                        submitAction={onSortChange}
+                <Box sx={{ flex: 1, p: 0 }}>
+                    <FilterChips
+                        label={t("filtersApplied")}
+                        selectedFilters={selectedFilters}
+                        handleDelete={removeFilter}
                     />
                 </Box>
+                <Box sx={{ display: "flex" }}>
+                    <Box sx={{ p: 0, mr: "1em" }}>
+                        <Sort
+                            sortName={SORT_FIELD}
+                            defaultValue={queryParams.sort}
+                            submitAction={onSortChange}
+                        />
+                    </Box>
 
-                <Button
-                    onClick={() => !isDownloading && downloadSearchResults()}
-                    variant="text"
-                    startIcon={<DownloadIcon />}
-                    disabled={isDownloading}>
-                    {t("downloadResults")}
-                </Button>
+                    <Button
+                        onClick={() =>
+                            !isDownloading && downloadSearchResults()
+                        }
+                        variant="text"
+                        startIcon={<DownloadIcon />}
+                        disabled={isDownloading}>
+                        {t("downloadResults")}
+                    </Button>
+                </Box>
             </Box>
-            <Box>
+            <Box
+                sx={{
+                    width: "100%",
+                }}>
                 <Tabs
                     centered
                     tabs={categoryTabs}
@@ -271,6 +312,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             </Box>
             <BoxContainer
                 sx={{
+                    width: "100%",
                     gridTemplateColumns: {
                         mobile: "repeat(1, 1fr)",
                         tablet: "repeat(7, 1fr)",
@@ -285,6 +327,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
                     <FilterPanel
+                        selectedFilters={selectedFilters}
                         filterCategory={FILTER_CATEGORY[searchType]}
                         filterSourceData={filters}
                         setFilterQueryParams={(
@@ -292,10 +335,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             filterName: string
                         ) => {
                             // url requires string format, ie "one, two, three"
-                            updatePath(filterName, filterValues.join(", "));
+                            updatePath(filterName, filterValues.join(","));
 
                             // api requires string[] format, ie ["one", "two", "three"]
-                            setQueryParams({
+                            setApiParams({
                                 ...queryParams,
                                 [filterName]: filterValues,
                             });
@@ -371,7 +414,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                         e: React.ChangeEvent<unknown>,
                                         page: number
                                     ) =>
-                                        setQueryParams({
+                                        setApiParams({
                                             ...queryParams,
                                             page: page.toString(),
                                         })
@@ -382,7 +425,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     </Box>
                 </Box>
             </BoxContainer>
-        </>
+        </Box>
     );
 };
 

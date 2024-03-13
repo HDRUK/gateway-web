@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
 import theme from "@/config/theme";
 
@@ -1401,14 +1401,11 @@ const MapUK = ({
     counts = {},
     width = 300,
 }: MapUKProps) => {
-    const [selected, setSelected] = useState<SelectedType>({
-        England: false,
-        Scotland: false,
-        Wales: false,
-        "Northern Ireland": false,
-        "Rest of the world": false,
-        ...overrides,
-    });
+    const [selected, setSelected] = useState<SelectedType>({});
+
+    useEffect(() => {
+        setSelected({ ...overrides });
+    }, [overrides]);
 
     const [hovered, setHovered] = useState<string | undefined>();
 

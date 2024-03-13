@@ -39,6 +39,7 @@
         "dayjs": "^1.11.10",
         "eslint": "^8.37.0",
         "eslint-config-next": "^14.1.0",
+        "get-node-dimensions": "^1.2.1",
         "i18next": "^22.5.1",
         "i18next-browser-languagedetector": "^7.1.0",
         "i18next-http-backend": "^2.2.2",

@@ -29,13 +29,30 @@ const groupByType = (
         }, [] as { label: string; value: string; buckets: BucketCheckbox[] }[]);
 };
 
+const getAllSelectedFilters = (
+    allSearchQueries: SearchQueryParams
+): { [filter: string]: string[] | undefined } => {
+    return pick(allSearchQueries, filtersList) as {
+        [key: string]: string[] | undefined;
+    };
+};
+
+const isQueryEmpty = (filterQueries: {
+    [filter: string]: string[] | undefined;
+}) => {
+    return (
+        Object.values(filterQueries).filter(
+            p => p !== undefined && p.length > 0
+        ).length === 0
+    );
+};
+
 const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
-    const filterQueries = pick(allSearchQueries, filtersList);
+    const filterQueries = pick(allSearchQueries, filtersList) as {
+        [key: string]: string[] | undefined;
+    };
 
-    const hasFilters =
-        Object.values(filterQueries).filter(p => p !== undefined).length > 0;
-
-    if (!hasFilters) {
+    if (isQueryEmpty(filterQueries)) {
         return {};
     }
 
@@ -47,16 +64,14 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
 };
 
 const transformQueryFiltersToForm = (
-    filtersQuery: string | null | undefined
+    filtersQuery: string[] | undefined
 ): { [key: string]: boolean } => {
     const result: { [key: string]: boolean } = {};
     if (!filtersQuery) {
         return result;
     }
 
-    const filtersArray = filtersQuery.split(",").map(name => name.trim());
-
-    filtersArray.forEach(name => {
+    filtersQuery.forEach(name => {
         result[name] = true;
     });
 
@@ -72,6 +87,8 @@ const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
 };
 
 export {
+    isQueryEmpty,
+    getAllSelectedFilters,
     groupByType,
     transformQueryFiltersToForm,
     formatBucketCounts,
