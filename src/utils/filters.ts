@@ -1,6 +1,6 @@
 import { pick } from "lodash";
 import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
-import { SearchApiParams } from "@/interfaces/Search";
+import { SearchQueryParams } from "@/interfaces/Search";
 import { filtersList } from "@/config/forms/filters";
 
 const groupByType = (
@@ -30,7 +30,7 @@ const groupByType = (
 };
 
 const getAllSelectedFilters = (
-    allSearchQueries: SearchApiParams
+    allSearchQueries: SearchQueryParams
 ): { [filter: string]: string[] | undefined } => {
     return pick(allSearchQueries, filtersList) as {
         [key: string]: string[] | undefined;
@@ -47,7 +47,7 @@ const isQueryEmpty = (filterQueries: {
     );
 };
 
-const pickOnlyFilters = (type: string, allSearchQueries: SearchApiParams) => {
+const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
     const filterQueries = pick(allSearchQueries, filtersList) as {
         [key: string]: string[] | undefined;
     };

@@ -1,5 +1,5 @@
 import { Chip, ChipProps } from "@mui/material";
-import { SearchApiParams } from "@/interfaces/Search";
+import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import { isQueryEmpty } from "@/utils/filters";
@@ -7,7 +7,7 @@ import { isQueryEmpty } from "@/utils/filters";
 interface FilterChipsProps extends ChipProps {
     selectedFilters: { [filter: string]: string[] | undefined };
     label: string;
-    handleDelete: (filterType: keyof SearchApiParams, filter: string) => void;
+    handleDelete: (filterType: keyof SearchQueryParams, filter: string) => void;
 }
 
 const FilterChips = ({
@@ -48,7 +48,7 @@ const FilterChips = ({
                                 label={filter}
                                 onDelete={() =>
                                     handleDelete(
-                                        filterType as keyof SearchApiParams,
+                                        filterType as keyof SearchQueryParams,
                                         filter
                                     )
                                 }

@@ -9,7 +9,7 @@ import { Filter } from "@/interfaces/Filter";
 import {
     SearchCategory,
     SearchPaginationType,
-    SearchApiParams,
+    SearchQueryParams,
     SearchResult,
     SearchResultDataUse,
     SearchResultDataset,
@@ -95,7 +95,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [searchParams]
     );
 
-    const [apiParams, setApiParams] = useState<SearchApiParams>({
+    const [queryParams, setApiParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
@@ -106,21 +106,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         per_page: "25",
     });
 
-    const { handleDownload } = useSearch(searchType, resultsView, apiParams);
+    const { handleDownload } = useSearch(searchType, resultsView, queryParams);
 
     const updatePath = (key: string, value: string) => {
         router.push(`${pathname}?${updateQueryString(key, value)}`);
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
-        setApiParams({ ...apiParams, ...data });
+        setApiParams({ ...queryParams, ...data });
 
         updatePath(QUERY_FIELD, data.query);
     };
 
     const onSortChange = async (selectedValue: string) => {
         setApiParams({
-            ...apiParams,
+            ...queryParams,
             sort: selectedValue,
         });
 
@@ -128,12 +128,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const selectedFilters = useMemo(
-        () => getAllSelectedFilters(apiParams),
-        [apiParams]
+        () => getAllSelectedFilters(queryParams),
+        [queryParams]
     );
 
     const resetQueryInput = () => {
-        setApiParams({ ...apiParams, query: "" });
+        setApiParams({ ...queryParams, query: "" });
 
         updatePath(QUERY_FIELD, "");
     };
@@ -143,10 +143,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${searchType}?perPage=${apiParams.per_page}&page=${apiParams.page}&sort=${apiParams.sort}`,
+        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
-            query: apiParams.query,
-            ...pickOnlyFilters(FILTER_CATEGORY[searchType], apiParams),
+            query: queryParams.query,
+            ...pickOnlyFilters(FILTER_CATEGORY[searchType], queryParams),
         },
         {
             keepPreviousData: true,
@@ -183,15 +183,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     ];
 
     const removeFilter = (
-        filterType: keyof SearchApiParams,
+        filterType: keyof SearchQueryParams,
         removedFilter: string
     ) => {
-        const filterToUpdate = apiParams[filterType];
+        const filterToUpdate = queryParams[filterType];
 
         if (!Array.isArray(filterToUpdate)) return;
 
         const filtered = filterToUpdate.filter(f => f !== removedFilter);
-        setApiParams({ ...apiParams, [filterType]: filtered });
+        setApiParams({ ...queryParams, [filterType]: filtered });
         updatePath(filterType, filtered.join(","));
     };
 
@@ -244,10 +244,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     justifyContent: "center",
                 }}>
                 <SearchBar
-                    defaultValue={apiParams.query}
+                    defaultValue={queryParams.query}
                     explainerText={t("searchExplainer")}
                     resetAction={() => resetQueryInput()}
-                    isDisabled={!apiParams.query}
+                    isDisabled={!queryParams.query}
                     submitAction={onQuerySubmit}
                     queryPlaceholder={t("searchPlaceholder")}
                     queryName={QUERY_FIELD}
@@ -275,7 +275,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     <Box sx={{ p: 0, mr: "1em" }}>
                         <Sort
                             sortName={SORT_FIELD}
-                            defaultValue={apiParams.sort}
+                            defaultValue={queryParams.sort}
                             submitAction={onSortChange}
                         />
                     </Box>
@@ -339,7 +339,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
                             // api requires string[] format, ie ["one", "two", "three"]
                             setApiParams({
-                                ...apiParams,
+                                ...queryParams,
                                 [filterName]: filterValues,
                             });
                         }}
@@ -408,14 +408,14 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 )}
                                 <Pagination
                                     isLoading={isSearching}
-                                    page={parseInt(apiParams.page, 10)}
+                                    page={parseInt(queryParams.page, 10)}
                                     count={data?.lastPage}
                                     onChange={(
                                         e: React.ChangeEvent<unknown>,
                                         page: number
                                     ) =>
                                         setApiParams({
-                                            ...apiParams,
+                                            ...queryParams,
                                             page: page.toString(),
                                         })
                                     }
