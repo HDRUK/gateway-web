@@ -11,7 +11,7 @@ interface Metadata {
         keywords: string;
         shortTitle: string;
         title: string;
-        populationSize: number;
+        populationSize: number | null;
         publisher: {
             publisherName: string;
         };
