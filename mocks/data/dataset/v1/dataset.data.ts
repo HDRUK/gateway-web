@@ -17,6 +17,7 @@ const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
                 doiName: faker.datatype.string(),
                 keywords: faker.datatype.string(),
                 shortTitle: faker.datatype.string(),
+                populationSize: faker.datatype.number(),
             },
             provenance: {
                 temporal: {

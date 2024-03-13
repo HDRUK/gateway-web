@@ -17,7 +17,7 @@ interface ResultTableProps {
 const CONFORMS_TO_PATH =
     "metadata.metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.metadata.summary.publisher.publisherName";
-const POPULATION_SIZE_PATH = "metadata.metadata.observations.0.measuredValue";
+const POPULATION_SIZE_PATH = "metadata.metadata..summary.populationSize";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
