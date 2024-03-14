@@ -313,6 +313,7 @@
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
                     "populationSize": {
+                        "notReported": "Not reported",
                         "label": "Population Size",
                         "tooltip": "Population size associated with the population type in the dataset"
                     },

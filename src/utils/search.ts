@@ -11,7 +11,12 @@ const getDateRange = (metadata: Metadata) => {
     }`;
 };
 
-const getPopulationSize = (metadata: Metadata, notReportedLabel: string) => {
+const getPopulationSize = (
+    metadata: Metadata | undefined,
+    notReportedLabel: string
+) => {
+    if (!metadata) return notReportedLabel;
+
     const population = get(metadata, "summary.populationSize");
     return population && typeof population === "number" && population > 0
         ? (population as number).toLocaleString()
