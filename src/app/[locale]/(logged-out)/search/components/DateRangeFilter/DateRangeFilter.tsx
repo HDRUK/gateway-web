@@ -9,6 +9,7 @@ import { Aggregations } from "@/interfaces/Search";
 import DatePickerControlled from "@/components/DatePickerControlled";
 import { FILTER_DATE_RANGE } from "@/config/forms/filters";
 import { SearchIcon } from "@/consts/icons";
+import { yearToDayJsDate } from "@/utils/date";
 import { DateFilterWrapper, DateError } from "./DateRangeFilter.styles";
 
 const TRANSLATION_PATH = "pages.search.components.DateRangeFilter";
@@ -65,11 +66,11 @@ const DateRangeFilter = ({
     const endDate = aggregations?.endDate.value_as_string;
 
     const defaultMinDate = dateRange.minYear
-        ? dayjs(`${dateRange.minYear}-01-01T00:00:00.000Z`)
+        ? yearToDayJsDate(dateRange.minYear)
         : null;
 
     const defaultMaxDate = dateRange.maxYear
-        ? dayjs(`${dateRange.maxYear}-01-01T00:00:00.000Z`)
+        ? yearToDayJsDate(dateRange.maxYear)
         : null;
 
     return (
