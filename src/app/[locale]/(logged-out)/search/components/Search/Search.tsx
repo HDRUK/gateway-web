@@ -29,6 +29,7 @@ import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
     FILTER_DATA_USE_TITLES,
+    FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
@@ -70,11 +71,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return searchParams?.get(paramName)?.toString();
     };
 
-    const getParamArray = (paramName: string) => {
-        return searchParams
-            ?.get(paramName)
-            ?.split(",")
-            .filter(filter => !!filter);
+    const getParamArray = (paramName: string, allowEmptyStrings?: boolean) => {
+        const param = searchParams?.get(paramName)?.split(",");
+        return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
 
     const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
@@ -102,6 +101,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
+        [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         page: "1",
         per_page: "25",
     });
@@ -190,7 +190,14 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
         if (!Array.isArray(filterToUpdate)) return;
 
-        const filtered = filterToUpdate.filter(f => f !== removedFilter);
+        let filtered;
+
+        if (filterType === FILTER_DATE_RANGE) {
+            filtered = filterToUpdate.map(f => (f === removedFilter ? "" : f));
+        } else {
+            filtered = filterToUpdate.filter(f => f !== removedFilter);
+        }
+
         setApiParams({ ...queryParams, [filterType]: filtered });
         updatePath(filterType, filtered.join(","));
     };

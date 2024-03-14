@@ -23,6 +23,7 @@ import {
     groupByType,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
+import DateRangeFilter from "../DateRangeFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
@@ -117,6 +118,17 @@ const FilterPanel = ({
         setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
     };
 
+    const handleUpdateDateRange = (dateRange: DateRange) => {
+        setFilterValues({
+            ...filterValues,
+            [FILTER_DATE_RANGE]: transformQueryFiltersToForm(
+                Object.values(dateRange)
+            ),
+        });
+
+        setFilterQueryParams(Object.values(dateRange), FILTER_DATE_RANGE);
+    };
+
     const resetFilterSection = (filterSection: string) => {
         setFilterValues({
             ...filterValues,
@@ -145,6 +157,14 @@ const FilterPanel = ({
                             overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
                         />
                     </Box>
+                );
+            case FILTER_DATE_RANGE:
+                return (
+                    <DateRangeFilter
+                        aggregations={aggregations}
+                        selectedFilters={selectedFilters}
+                        handleUpdate={handleUpdateDateRange}
+                    />
                 );
             default:
                 return (
