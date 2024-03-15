@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -13,6 +13,7 @@ import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import {
     FILTER_DATA_USE_TITLES,
+    FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_PUBLISHER_NAME,
     filtersList,
@@ -22,6 +23,7 @@ import {
     groupByType,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
+import DateRangeFilter from "../DateRangeFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 const TOOLTIP_SUFFIX = "Tooltip";
@@ -53,6 +55,7 @@ const FilterPanel = ({
         [FILTER_PUBLISHER_NAME]: {},
         [FILTER_DATA_USE_TITLES]: {},
         [FILTER_GEOGRAPHIC_LOCATION]: {},
+        [FILTER_DATE_RANGE]: {},
     });
 
     useEffect(() => {
@@ -70,7 +73,6 @@ const FilterPanel = ({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
-            [FILTER_GEOGRAPHIC_LOCATION]: "",
         },
     });
 
@@ -116,6 +118,17 @@ const FilterPanel = ({
         setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
     };
 
+    const handleUpdateDateRange = (dateRange: DateRange) => {
+        setFilterValues({
+            ...filterValues,
+            [FILTER_DATE_RANGE]: transformQueryFiltersToForm(
+                Object.values(dateRange)
+            ),
+        });
+
+        setFilterQueryParams(Object.values(dateRange), FILTER_DATE_RANGE);
+    };
+
     const resetFilterSection = (filterSection: string) => {
         setFilterValues({
             ...filterValues,
@@ -144,6 +157,14 @@ const FilterPanel = ({
                             overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
                         />
                     </Box>
+                );
+            case FILTER_DATE_RANGE:
+                return (
+                    <DateRangeFilter
+                        aggregations={aggregations}
+                        selectedFilters={selectedFilters}
+                        handleUpdate={handleUpdateDateRange}
+                    />
                 );
             default:
                 return (

@@ -296,7 +296,13 @@
                     "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                     "geographicLocation": "Geographical coverage",
                     "geographicLocationTooltip": "The geographical area covered by the dataset",
-                    "clearFilter": "Clear filter"
+                    "clearFilter": "Clear filter",
+                    "dateRange": "Date range",
+                    "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan"
+                },
+                "DateRangeFilter": {
+                    "to": "to",
+                    "minYearErrorMessage": "Please enter a valid starting year"
                 },
                 "ResultCard": {
                     "populationSizeNotReported": "not reported",
