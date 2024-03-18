@@ -25,7 +25,7 @@ import {
 } from "@/utils/filters";
 import DateRangeFilter from "../DateRangeFilter";
 
-const TRANSLATION_PATH = "pages.search.components.FilterPanel";
+const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
 
 type DefaultValues = {
@@ -48,7 +48,7 @@ const FilterPanel = ({
     ) => void;
     aggregations?: Aggregations;
 }) => {
-    const t = useTranslations(TRANSLATION_PATH);
+    const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
 
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({

@@ -51,7 +51,7 @@ const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
-    dur: "dataUse",
+    dur: "dataUseRegister",
 };
 
 enum ViewType {
