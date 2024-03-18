@@ -11,7 +11,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
-import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
+import InfoHoverPanelProps from "@/components/InfoHoverPanel";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";

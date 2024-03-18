@@ -3,6 +3,7 @@ import ImageMediaCard from "./ImageMediaCard";
 
 const meta: Meta<typeof ImageMediaCard> = {
     component: ImageMediaCard,
+    title: "Cards/ImageMediaCard",
     tags: ["autodocs"],
 };
 
