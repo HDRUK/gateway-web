@@ -152,7 +152,7 @@ const FilterPanel = ({
                         <MapUK
                             handleUpdate={handleUpdateMap}
                             counts={formatBucketCounts(
-                                aggregations?.geographicLocation.buckets
+                                aggregations?.geographicLocation?.buckets
                             )}
                             overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
                         />
