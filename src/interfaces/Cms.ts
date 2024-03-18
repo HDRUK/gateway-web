@@ -35,35 +35,64 @@ interface PageTemplatePromo {
     ctaOverrideComponent?: React.ReactElement;
 }
 
-interface PageTemplateHome {
-    id: string;
-    title: string;
-    content: string;
-    template: {
-        homeFields: {
-            gatewayVideo: string;
-            gatewayVideoHeader: string;
-            affiliateLink: {
+interface NewsPost {
+    node: {
+        id: string;
+        title: string;
+        content: string;
+        newsFields: {
+            headline: string;
+            date: string;
+            text: string;
+            content: string;
+            image: {
+                node: {
+                    mediaItemUrl: string;
+                    altText: string;
+                };
+            };
+            link: {
                 url: string;
                 title: string;
             };
-            logos: {
-                organisationCharity: string;
-                websiteAddress: string;
-                imageLocation: { node: { mediaItemUrl: string } };
-            }[];
         };
-        meetTheTeam: {
-            sectionName: string;
-            title: string;
-            intro: string;
-            image: {
-                node: {
-                    altText: string;
-                    sourceUrl: string;
+    };
+}
+interface PageTemplateHome {
+    page: {
+        id: string;
+        title: string;
+        content: string;
+        template: {
+            homeFields: {
+                newsHeader: string;
+                gatewayVideo: string;
+                gatewayVideoHeader: string;
+                affiliateLink: {
+                    url: string;
+                    title: string;
+                };
+                logos: {
+                    organisationCharity: string;
+                    websiteAddress: string;
+                    imageLocation: { node: { mediaItemUrl: string } };
+                }[];
+            };
+            meetTheTeam: {
+                sectionName: string;
+                title: string;
+                intro: string;
+                image: {
+                    node: {
+                        altText: string;
+                        sourceUrl: string;
+                    };
                 };
             };
         };
+    };
+    posts: {
+        edges: NewsPost[];
     };
 }
 
@@ -92,4 +121,5 @@ export type {
     CMSPageResponse,
     CMSPagesResponse,
     CtaLink,
+    NewsPost,
 };

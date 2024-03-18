@@ -21,7 +21,7 @@ export default async function HomePage() {
                     sx={{
                         gridTemplateColumns: "repeat(5, 1fr)",
                     }}>
-                    <Box sx={{ p: { mobile: 2, desktop: 5 } }}>
+                    <Box sx={{ p: { mobile: 2, desktop: 0 } }}>
                         <Homepage cmsContent={cmsContent} />
                     </Box>
                 </Container>
