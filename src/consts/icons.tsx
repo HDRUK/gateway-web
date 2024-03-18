@@ -33,6 +33,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 import InfoIcon from "@mui/icons-material/Info";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -76,6 +77,7 @@ export {
     CancelIcon,
     AddAPhotoIcon,
     CloseIcon,
+    KeyboardDoubleArrowDownIcon,
     UploadFileIcon,
     ArrowDropDownIcon,
     GroupsIcon,
