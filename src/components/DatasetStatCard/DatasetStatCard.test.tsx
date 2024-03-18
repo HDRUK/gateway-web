@@ -1,31 +1,25 @@
-import { render, screen } from "@/utils/testUtils";
-import ImageMediaCard from "./DatasetStatCard";
+import { render } from "@/utils/testUtils";
+import DatasetStatCard from "./DatasetStatCard";
 
 describe("DatasetInfoCard", () => {
-    it("renders the card with image, description, and button text", () => {
-        const img = "test.jpg";
-        const description = "A description";
-        const buttonText = "Learn More";
-        const href = "/link";
+    it("should match snapshot", async () => {
+        const img = "/test.jpg";
+        const title = "A description";
+        const stat = "10";
+        const unit = "days";
+        const helperText = "helper";
 
-        render(
-            <ImageMediaCard
-                img={img}
-                description={description}
-                buttonText={buttonText}
-                href={href}
+        const wrapper = render(
+            <DatasetStatCard
+                iconSrc={img}
+                title={title}
+                stat={stat}
+                largeStatText
+                unit={unit}
+                helperText={helperText}
             />
         );
 
-        const image = screen.getByRole("img");
-        expect(image).toBeInTheDocument();
-        expect(image).toHaveAttribute("src", img);
-
-        const descriptionElement = screen.getByText("A description");
-        expect(descriptionElement).toBeInTheDocument();
-
-        const button = screen.getByRole("button");
-        expect(button).toBeInTheDocument();
-        expect(button).toHaveTextContent(buttonText);
+        expect(wrapper.container).toMatchSnapshot();
     });
 });

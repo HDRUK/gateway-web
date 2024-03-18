@@ -15,7 +15,7 @@ interface DatasetStatCardProps {
     largeStatText: boolean;
     iconSrc: string;
     unit: string;
-    helperText: string;
+    helperText?: string;
 }
 
 const DatasetStatCard = ({
