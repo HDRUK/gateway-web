@@ -3,6 +3,7 @@ import {
     FILTER_PUBLISHER_NAME,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_DATE_RANGE,
+    FILTER_ORGANISATION_NAME,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -77,6 +78,7 @@ export interface SearchQueryParams {
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
     [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
     [FILTER_DATE_RANGE]: string[] | undefined;
+    [FILTER_ORGANISATION_NAME]: string[] | undefined;
     page: string;
     per_page: string;
     type?: string;

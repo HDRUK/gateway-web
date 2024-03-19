@@ -31,6 +31,7 @@ import {
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_ORGANISATION_NAME,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
 import searchFormConfig, {
@@ -98,12 +99,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
+        page: "1",
+        per_page: "25",
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
-        page: "1",
-        per_page: "25",
+        [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
     });
 
     const { handleDownload } = useSearch(searchType, resultsView, queryParams);
@@ -166,6 +168,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_PUBLISHER_NAME]: undefined,
             [FILTER_GEOGRAPHIC_LOCATION]: undefined,
             [FILTER_DATE_RANGE]: undefined,
+            [FILTER_ORGANISATION_NAME]: undefined,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchType]);
