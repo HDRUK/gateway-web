@@ -62,8 +62,8 @@ const DateRangeFilter = ({
         });
     };
 
-    const startDate = aggregations?.startDate.value_as_string;
-    const endDate = aggregations?.endDate.value_as_string;
+    const startDate = aggregations?.startDate?.value_as_string;
+    const endDate = aggregations?.endDate?.value_as_string;
 
     const defaultMinDate = dateRange.minYear
         ? yearToDayJsDate(dateRange.minYear)
