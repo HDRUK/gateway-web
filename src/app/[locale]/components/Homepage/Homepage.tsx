@@ -10,12 +10,12 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
-import IFrameContainer from "@/components/IFrameContainer";
 import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
+import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
@@ -165,9 +165,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         width: "100%",
                         maxWidth: 950,
                     }}>
-                    <IFrameContainer>
+                    <IFrameWrapper>
                         <HTMLContent content={gatewayVideo} />
-                    </IFrameContainer>
+                    </IFrameWrapper>
                 </Box>
             </Box>
             <Box
