@@ -160,7 +160,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
     // Reset query param state when tab is changed
     useEffect(() => {
-        setQueryParams({ ...queryParams, [FILTER_PUBLISHER_NAME]: [] });
+        setQueryParams({
+            ...queryParams,
+            [FILTER_DATA_USE_TITLES]: [],
+            [FILTER_PUBLISHER_NAME]: [],
+            [FILTER_GEOGRAPHIC_LOCATION]: [],
+            [FILTER_DATE_RANGE]: [],
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchType]);
 
