@@ -162,10 +162,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     useEffect(() => {
         setQueryParams({
             ...queryParams,
-            [FILTER_DATA_USE_TITLES]: [],
-            [FILTER_PUBLISHER_NAME]: [],
-            [FILTER_GEOGRAPHIC_LOCATION]: [],
-            [FILTER_DATE_RANGE]: [],
+            [FILTER_DATA_USE_TITLES]: undefined,
+            [FILTER_PUBLISHER_NAME]: undefined,
+            [FILTER_GEOGRAPHIC_LOCATION]: undefined,
+            [FILTER_DATE_RANGE]: undefined,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchType]);
