@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IconButton, SxProps } from "@mui/material";
 import MuiDialog, { DialogProps as MuiDialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
@@ -58,7 +58,9 @@ const Dialog = ({
                 </IconButton>
             )}
             {title && (
-                <MuiDialogTitle sx={{ ...titleSx }}>{title}</MuiDialogTitle>
+                <MuiDialogTitle sx={{ ...titleSx, pr: 6 }}>
+                    {title}
+                </MuiDialogTitle>
             )}
             {children}
         </MuiDialog>

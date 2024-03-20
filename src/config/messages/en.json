@@ -289,17 +289,25 @@
                     "toggleLabelList": "List"
                 },
                 "FilterPanel": {
-                    "populationSize": "Population size",
-                    "datasetPopulation": "Dataset Population",
-                    "publisherName": "Data provider",
-                    "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
-                    "dataUseTitles": "Data use title",
-                    "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
-                    "geographicLocation": "Geographical coverage",
-                    "geographicLocationTooltip": "The geographical area covered by the dataset",
                     "clearFilter": "Clear filter",
-                    "dateRange": "Date range",
-                    "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan"
+                    "filters": {
+                        "dataset": {
+                            "populationSize": "Population size",
+                            "datasetPopulation": "Dataset Population",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "dataUseTitles": "Data use title",
+                            "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
+                            "geographicLocation": "Geographical coverage",
+                            "geographicLocationTooltip": "The geographical area covered by the dataset",
+                            "dateRange": "Date range",
+                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan"
+                        },
+                        "dataUseRegister": {
+                            "publisherName": "Data custodian",
+                            "publisherNameTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data"
+                        }
+                    }
                 },
                 "DateRangeFilter": {
                     "to": "to",
