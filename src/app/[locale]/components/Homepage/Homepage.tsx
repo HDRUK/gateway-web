@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { isMobile } from "react-device-detect";
-import { ArrowForward } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { PageTemplateHome } from "@/interfaces/Cms";
@@ -15,6 +14,9 @@ import InfoHoverPanelProps from "@/components/InfoHoverPanelProps";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
+import { ArrowForward } from "@/consts/icons";
+import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
+import NewsSection from "../NewsSection";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
@@ -90,14 +92,20 @@ interface HomePageProps {
     cmsContent: PageTemplateHome;
 }
 
-const HomePage = ({ cmsContent }: HomePageProps) => {
+const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
 
     const {
         meetTheTeam,
-        homeFields: { affiliateLink, gatewayVideo, gatewayVideoHeader, logos },
-    } = cmsContent.template;
+        homeFields: {
+            affiliateLink,
+            gatewayVideo,
+            gatewayVideoHeader,
+            logos,
+            newsHeader,
+        },
+    } = page.template;
 
     const logosFormatted = React.useMemo(
         () =>
@@ -157,13 +165,24 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
                         width: "100%",
                         maxWidth: 950,
                     }}>
-                    <HTMLContent content={gatewayVideo} />
+                    <IFrameWrapper>
+                        <HTMLContent content={gatewayVideo} />
+                    </IFrameWrapper>
                 </Box>
             </Box>
             <Box
                 sx={{
                     minHeight: 500,
                     background: `linear-gradient(170deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
+                }}
+                textAlign="center">
+                <TitleWithBg size="md" variant="h2" mb={2} title={newsHeader} />
+                <NewsSection posts={posts} />
+            </Box>
+            <Box
+                sx={{
+                    minHeight: 500,
+                    background: `linear-gradient(170deg, #fff 70%, ${theme.palette.secondary.main} calc(70% + 1px))`,
                 }}
                 textAlign="center">
                 <TitleWithBg
@@ -201,45 +220,35 @@ const HomePage = ({ cmsContent }: HomePageProps) => {
             </Box>
             <Box
                 sx={{
-                    minHeight: 500,
-                    background: `linear-gradient(170deg, #fff 70%, ${theme.palette.secondary.main} calc(70% + 1px))`,
+                    p: 0,
+                    minHeight: 520,
+                    background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
                 }}
                 textAlign="center"
             />
             <Box
                 sx={{
-                    p: 0,
-                    minHeight: 500,
-                    background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
-                }}
-                textAlign="center">
-                <Box
-                    sx={{
-                        display: { tablet: "flex" },
-                        background: "white",
-                        gap: 2,
-                        alignItems: "center",
-                    }}>
-                    <a
-                        href={affiliateLink.url}
-                        target="_blank"
-                        rel="noreferrer">
-                        <Button
-                            sx={{
-                                minWidth: 200,
-                                width: "100%",
-                                whiteSpace: {
-                                    mobile: "unset",
-                                    desktop: "nowrap",
-                                },
-                            }}
-                            color="secondary"
-                            variant="outlined">
-                            {affiliateLink.title}
-                        </Button>
-                    </a>
-                    <LogoSlider logos={logosFormatted} />
-                </Box>
+                    display: { tablet: "flex" },
+                    background: "white",
+                    gap: 2,
+                    alignItems: "center",
+                }}>
+                <a href={affiliateLink.url} target="_blank" rel="noreferrer">
+                    <Button
+                        sx={{
+                            minWidth: 200,
+                            width: "100%",
+                            whiteSpace: {
+                                mobile: "unset",
+                                desktop: "nowrap",
+                            },
+                        }}
+                        color="secondary"
+                        variant="outlined">
+                        {affiliateLink.title}
+                    </Button>
+                </a>
+                <LogoSlider logos={logosFormatted} />
             </Box>
         </>
     );

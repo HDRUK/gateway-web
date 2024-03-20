@@ -7,6 +7,7 @@ query GetHomePageQuery {
         __typename
         ... on HomeTemplate {
           homeFields { 
+            newsHeader
             gatewayVideo
             gatewayVideoHeader
             affiliateLink {
@@ -35,6 +36,31 @@ query GetHomePageQuery {
             }
           }
         }
+      }
+    }
+  }
+    posts(first: 4, where:{categoryName: "news",  orderby: {field: DATE, order: ASC}}) {
+      edges {
+        node {
+          title
+          content
+          date
+          newsFields {
+            headline
+            link {
+              url
+              title
+            }
+            text
+            content
+            date
+            image {
+              node {
+                mediaItemUrl
+                altText
+              }
+            }
+          }
       }
     }
   }

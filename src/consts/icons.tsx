@@ -7,6 +7,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowForward from "@mui/icons-material/ArrowForward";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import BackupIcon from "@mui/icons-material/Backup";
@@ -53,6 +54,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 export * from "./customIcons";
 
 export {
+    ArrowForward,
     AppsIcon,
     FilterAltOffIcon,
     FilterAltIcon,

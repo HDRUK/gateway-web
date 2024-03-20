@@ -73,14 +73,11 @@ const getCohortDiscovery = async () => {
 };
 
 const getHomePage = async () => {
-    const data: CMSPageResponse<PageTemplateHome> = await fetchCMS(
-        GetHomePageQuery,
-        {
-            next: { revalidate: 10 },
-        }
-    );
+    const data: PageTemplateHome = await fetchCMS(GetHomePageQuery, {
+        next: { revalidate: 10 },
+    });
 
-    return data?.page || null;
+    return data || null;
 };
 
 const getTermsAndConditions = async () => {
