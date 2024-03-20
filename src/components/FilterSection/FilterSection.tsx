@@ -63,7 +63,11 @@ const FilterSection = ({
             <CheckboxControlled
                 {...checkboxes[index]}
                 formControlSx={{ pl: 1, pr: 1 }}
-                checked={checkboxValues[checkboxes[index].label] || false}
+                checked={
+                    (checkboxValues &&
+                        checkboxValues[checkboxes[index].label]) ||
+                    false
+                }
                 name={checkboxes[index].label}
                 onChange={(event, value) =>
                     handleCheckboxChange({

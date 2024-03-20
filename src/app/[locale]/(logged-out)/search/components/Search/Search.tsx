@@ -28,6 +28,7 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
@@ -37,6 +38,9 @@ import {
 import searchFormConfig, {
     QUERY_FIELD,
     SORT_FIELD,
+    TYPE_FIELD,
+    sortByOptionsDataUse,
+    sortByOptionsDataset,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
@@ -77,14 +81,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
 
-    const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
-
-    useEffect(() => {
-        if (resultsView !== ViewType.LIST && searchType !== "datasets") {
-            setResultsView(ViewType.LIST);
-        }
-    }, [searchType, resultsView]);
-
     const updateQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams?.toString());
@@ -101,14 +97,31 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
         page: "1",
         per_page: "25",
+        type:
+            (getParamString(TYPE_FIELD) as SearchCategory) ||
+            SearchCategory.DATASETS,
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
+        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
     });
 
-    const { handleDownload } = useSearch(searchType, resultsView, queryParams);
+    const { handleDownload } = useSearch(
+        queryParams.type,
+        resultsView,
+        queryParams
+    );
+
+    useEffect(() => {
+        if (
+            resultsView !== ViewType.LIST &&
+            queryParams.type !== SearchCategory.DATASETS
+        ) {
+            setResultsView(ViewType.LIST);
+        }
+    }, [queryParams.type, resultsView]);
 
     const updatePath = (key: string, value: string) => {
         router.push(`${pathname}?${updateQueryString(key, value)}`);
@@ -121,6 +134,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const onSortChange = async (selectedValue: string) => {
+        if (selectedValue === queryParams.sort) return;
+
         setQueryParams({
             ...queryParams,
             sort: selectedValue,
@@ -144,10 +159,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
+        `${apis.searchV1Url}/${queryParams.type}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
-            ...pickOnlyFilters(FILTER_CATEGORY[searchType], queryParams),
+            ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
         },
         {
             keepPreviousData: true,
@@ -161,17 +176,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     }, []);
 
     // Reset query param state when tab is changed
-    useEffect(() => {
+    const resetQueryParamState = (selectedType: SearchCategory) => {
         setQueryParams({
             ...queryParams,
+            sort: searchFormConfig.defaultValues.sort,
+            type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
             [FILTER_GEOGRAPHIC_LOCATION]: undefined,
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,
+            [FILTER_DATA_SET_TITLES]: undefined,
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchType]);
+    };
 
     const categoryTabs = [
         {
@@ -238,13 +255,22 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const renderResultCard = (result: SearchResult) => {
-        switch (searchType) {
-            case "datasets":
+        switch (queryParams.type) {
+            case SearchCategory.DATASETS:
                 return <ResultCard result={result as SearchResultDataset} />;
             default:
                 return (
                     <ResultCardDataUse result={result as SearchResultDataUse} />
                 );
+        }
+    };
+
+    const getSortOptions = () => {
+        switch (queryParams.type) {
+            case SearchCategory.DATA_USE:
+                return sortByOptionsDataUse;
+            default:
+                return sortByOptionsDataset;
         }
     };
 
@@ -298,6 +324,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             sortName={SORT_FIELD}
                             defaultValue={queryParams.sort}
                             submitAction={onSortChange}
+                            sortOptions={getSortOptions()}
                         />
                     </Box>
 
@@ -329,6 +356,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     variant={TabVariant.LARGE}
                     paramName={TYPE_PARAM}
                     persistParams={false}
+                    handleChange={(_, value) =>
+                        resetQueryParamState(value as SearchCategory)
+                    }
                 />
             </Box>
             <BoxContainer
@@ -349,7 +379,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}>
                     <FilterPanel
                         selectedFilters={selectedFilters}
-                        filterCategory={FILTER_CATEGORY[searchType]}
+                        filterCategory={FILTER_CATEGORY[queryParams.type]}
                         filterSourceData={filters}
                         setFilterQueryParams={(
                             filterValues: string[],
@@ -388,7 +418,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 from={data?.from}
                                 total={data?.total}
                             />
-                            {searchType === "datasets" && (
+                            {queryParams.type === SearchCategory.DATASETS && (
                                 <ToggleTabs<ViewType>
                                     selected={resultsView}
                                     buttons={toggleButtons}
