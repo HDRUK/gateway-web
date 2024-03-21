@@ -42,7 +42,8 @@ const isQueryEmpty = (filterQueries: {
 }) => {
     return (
         Object.values(filterQueries).filter(
-            p => p !== undefined && p.length > 0
+            p =>
+                p !== undefined && p.length > 0 && p.some(value => value !== "")
         ).length === 0
     );
 };

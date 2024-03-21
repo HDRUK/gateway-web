@@ -29,7 +29,9 @@ import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
     FILTER_DATA_USE_TITLES,
+    FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_ORGANISATION_NAME,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
 import searchFormConfig, {
@@ -50,7 +52,7 @@ const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
-    dur: "dataUse",
+    dur: "dataUseRegister",
 };
 
 enum ViewType {
@@ -70,11 +72,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return searchParams?.get(paramName)?.toString();
     };
 
-    const getParamArray = (paramName: string) => {
-        return searchParams
-            ?.get(paramName)
-            ?.split(",")
-            .filter(filter => !!filter);
+    const getParamArray = (paramName: string, allowEmptyStrings?: boolean) => {
+        const param = searchParams?.get(paramName)?.split(",");
+        return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
 
     const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
@@ -95,15 +95,17 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [searchParams]
     );
 
-    const [queryParams, setApiParams] = useState<SearchQueryParams>({
+    const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
+        page: "1",
+        per_page: "25",
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
-        page: "1",
-        per_page: "25",
+        [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
+        [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
     });
 
     const { handleDownload } = useSearch(searchType, resultsView, queryParams);
@@ -113,13 +115,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
-        setApiParams({ ...queryParams, ...data });
+        setQueryParams({ ...queryParams, ...data });
 
         updatePath(QUERY_FIELD, data.query);
     };
 
     const onSortChange = async (selectedValue: string) => {
-        setApiParams({
+        setQueryParams({
             ...queryParams,
             sort: selectedValue,
         });
@@ -133,8 +135,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     );
 
     const resetQueryInput = () => {
-        setApiParams({ ...queryParams, query: "" });
-
+        setQueryParams({ ...queryParams, query: "" });
         updatePath(QUERY_FIELD, "");
     };
 
@@ -158,6 +159,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Reset query param state when tab is changed
+    useEffect(() => {
+        setQueryParams({
+            ...queryParams,
+            [FILTER_DATA_USE_TITLES]: undefined,
+            [FILTER_PUBLISHER_NAME]: undefined,
+            [FILTER_GEOGRAPHIC_LOCATION]: undefined,
+            [FILTER_DATE_RANGE]: undefined,
+            [FILTER_ORGANISATION_NAME]: undefined,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchType]);
 
     const categoryTabs = [
         {
@@ -190,8 +204,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
         if (!Array.isArray(filterToUpdate)) return;
 
-        const filtered = filterToUpdate.filter(f => f !== removedFilter);
-        setApiParams({ ...queryParams, [filterType]: filtered });
+        let filtered;
+
+        if (filterType === FILTER_DATE_RANGE) {
+            filtered = filterToUpdate.map(f => (f === removedFilter ? "" : f));
+        } else {
+            filtered = filterToUpdate.filter(f => f !== removedFilter);
+        }
+
+        setQueryParams({ ...queryParams, [filterType]: filtered });
         updatePath(filterType, filtered.join(","));
     };
 
@@ -338,7 +359,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             updatePath(filterName, filterValues.join(","));
 
                             // api requires string[] format, ie ["one", "two", "three"]
-                            setApiParams({
+                            setQueryParams({
                                 ...queryParams,
                                 [filterName]: filterValues,
                             });
@@ -414,7 +435,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                         e: React.ChangeEvent<unknown>,
                                         page: number
                                     ) =>
-                                        setApiParams({
+                                        setQueryParams({
                                             ...queryParams,
                                             page: page.toString(),
                                         })

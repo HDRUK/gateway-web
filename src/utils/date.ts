@@ -19,4 +19,8 @@ const getYear = (date: string | Date) => {
     return getDayjs(date).year();
 };
 
-export { formatDate, differenceInDays, getYear };
+const yearToDayJsDate = (year: string) => {
+    return dayjs(`${year}-01-01T00:00:00.000Z`);
+};
+
+export { formatDate, differenceInDays, getYear, yearToDayJsDate };

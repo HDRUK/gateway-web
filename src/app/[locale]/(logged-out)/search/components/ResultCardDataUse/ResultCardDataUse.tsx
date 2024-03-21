@@ -123,19 +123,18 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                         label={t("dataCustodian")}
                                     />
                                 </ResultRowCategory>
-                                {(!!result?.team?.name &&
-                                    result.datasetTitles[0] && (
-                                        <Typography
-                                            sx={{
-                                                fontWeight: 500,
-                                            }}>
-                                            {`${result.team?.member_of} > `}
-                                            <EllipsisCharacterLimit
-                                                text={result.team.name}
-                                                characterLimit={CHARACTER_LIMIT}
-                                            />
-                                        </Typography>
-                                    )) ||
+                                {(!!result?.team?.name && (
+                                    <Typography
+                                        sx={{
+                                            fontWeight: 500,
+                                        }}>
+                                        {`${result.team?.member_of} > `}
+                                        <EllipsisCharacterLimit
+                                            text={result.team.name}
+                                            characterLimit={CHARACTER_LIMIT}
+                                        />
+                                    </Typography>
+                                )) ||
                                     missingDataComponent}
                             </ResultRow>
                         </>

@@ -7,6 +7,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowForward from "@mui/icons-material/ArrowForward";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import BackupIcon from "@mui/icons-material/Backup";
@@ -33,6 +34,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 import InfoIcon from "@mui/icons-material/Info";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -52,6 +54,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 export * from "./customIcons";
 
 export {
+    ArrowForward,
     AppsIcon,
     FilterAltOffIcon,
     FilterAltIcon,
@@ -76,6 +79,7 @@ export {
     CancelIcon,
     AddAPhotoIcon,
     CloseIcon,
+    KeyboardDoubleArrowDownIcon,
     UploadFileIcon,
     ArrowDropDownIcon,
     GroupsIcon,

@@ -2,6 +2,8 @@ import {
     FILTER_DATA_USE_TITLES,
     FILTER_PUBLISHER_NAME,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_DATE_RANGE,
+    FILTER_ORGANISATION_NAME,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -17,6 +19,8 @@ export interface Aggregations {
     [FILTER_PUBLISHER_NAME]: {
         buckets: Bucket[];
     };
+    startDate: { value_as_string: string };
+    endDate: { value_as_string: string };
 }
 
 export interface SearchPaginationType<T> extends PaginationType<T> {
@@ -73,6 +77,8 @@ export interface SearchQueryParams {
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
     [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
+    [FILTER_DATE_RANGE]: string[] | undefined;
+    [FILTER_ORGANISATION_NAME]: string[] | undefined;
     page: string;
     per_page: string;
     type?: string;

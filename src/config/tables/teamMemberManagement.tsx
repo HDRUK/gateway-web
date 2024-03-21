@@ -30,9 +30,7 @@ const CheckboxesCell = ({
         [roles]
     );
 
-    const lastRoleMessage = permissions[
-        "fe.account.team_management.permission.update.custodian_team_admin"
-    ]
+    const lastRoleMessage = permissions["roles.cta.update"]
         ? translations.lastRoleAdminMessage
         : translations.lastRoleMessage;
 
@@ -134,17 +132,11 @@ const getColumns = ({
                     checkboxes={[
                         {
                             name: ROLE_CUSTODIAN_TEAM_ADMIN,
-                            disabled:
-                                !permissions[
-                                    "fe.account.team_management.permission.update.custodian_team_admin"
-                                ],
+                            disabled: !permissions["roles.cta.update"],
                         },
                         {
                             name: ROLE_CUSTODIAN_DEVELOPER,
-                            disabled:
-                                !permissions[
-                                    "fe.account.team_management.permission.update.developer"
-                                ],
+                            disabled: !permissions["roles.dev.update"],
                         },
                     ]}
                 />
@@ -173,17 +165,11 @@ const getColumns = ({
                     checkboxes={[
                         {
                             name: ROLE_CUSTODIAN_DAR_MANAGER,
-                            disabled:
-                                !permissions[
-                                    "fe.account.team_management.permission.update.custodian_dar_manager"
-                                ],
+                            disabled: !permissions["roles.dar-m.update"],
                         },
                         {
                             name: ROLE_CUSTODIAN_DAR_REVIEWER,
-                            disabled:
-                                !permissions[
-                                    "fe.account.team_management.permission.update.reviewer"
-                                ],
+                            disabled: !permissions["roles.dar-r.update"],
                         },
                     ]}
                 />
@@ -212,23 +198,17 @@ const getColumns = ({
                     checkboxes={[
                         {
                             name: ROLE_CUSTODIAN_METADATA_MANAGER,
-                            disabled:
-                                !permissions[
-                                    "fe.account.team_management.permission.update.custodian_metadata_manager"
-                                ],
+                            disabled: !permissions["roles.mdm.update"],
                         },
                         {
                             name: ROLE_CUSTODIAN_METADATA_EDITOR,
-                            disabled:
-                                !permissions[
-                                    "fe.account.team_management.permission.update.metadata_editor"
-                                ],
+                            disabled: !permissions["roles.mde.update"],
                         },
                     ]}
                 />
             ),
         },
-        ...(permissions["permissions.update"]
+        ...(permissions["team-members.delete"]
             ? [
                   {
                       id: "furtherActions",

@@ -23,7 +23,7 @@ const Tooltip = ({ children, variant, ...rest }: TooltipProps) => {
                     },
                 },
             })}>
-            <div>{children}</div>
+            <span>{children}</span>
         </MuiTooltip>
     );
 };

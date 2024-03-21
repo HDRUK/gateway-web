@@ -36,27 +36,31 @@ const FilterChips = ({
                     {Object.entries(selectedFilters).map(
                         ([filterType, filterValues]) =>
                             Array.isArray(filterValues) &&
-                            filterValues.map((filter: string) => (
-                                <Chip
-                                    key={`${filterType}-${filter}`}
-                                    sx={{
-                                        textOverflow: "ellipsis",
-                                        maxWidth: 200,
-                                        overflow: "hidden",
-                                        whiteSpace: "nowrap",
-                                        marginBottom: "4px",
-                                    }}
-                                    color={color}
-                                    size={size}
-                                    label={filter}
-                                    onDelete={() =>
-                                        handleDelete(
-                                            filterType as keyof SearchQueryParams,
-                                            filter
-                                        )
-                                    }
-                                />
-                            ))
+                            filterValues
+                                .filter(filterValue => filterValue)
+                                .map((filter: string) => {
+                                    return (
+                                        <Chip
+                                            key={`${filterType}-${filter}`}
+                                            sx={{
+                                                textOverflow: "ellipsis",
+                                                maxWidth: 200,
+                                                overflow: "hidden",
+                                                whiteSpace: "nowrap",
+                                                marginBottom: "4px",
+                                            }}
+                                            color={color}
+                                            size={size}
+                                            label={filter}
+                                            onDelete={() =>
+                                                handleDelete(
+                                                    filterType as keyof SearchQueryParams,
+                                                    filter
+                                                )
+                                            }
+                                        />
+                                    );
+                                })
                     )}
                 </Box>
             </ShowMore>
