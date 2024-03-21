@@ -17,6 +17,7 @@ const CHARACTER_LIMIT = 50;
 
 const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const leadOrgNames = result?.organisationName?.split(",");
 
     const formattedTitle =
         result.projectTitle.length > TITLE_CHARACTER_LIMIT
@@ -43,7 +44,9 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
                 <CategoryHeader variant="h3">
                     {t("leadApplicantOrganisation")}
                 </CategoryHeader>
-                <Typography>{result.organisationName}</Typography>
+                {leadOrgNames.map(name => (
+                    <Typography>{name}</Typography>
+                ))}
 
                 <CategoryHeader variant="h3">
                     {t("dataCustodian")}
