@@ -4,6 +4,7 @@ import CardActions from "./CardActions";
 
 const meta: Meta<typeof CardActions> = {
     component: CardActions,
+    title: "Cards/CardActions",
     tags: ["autodocs"],
 };
 

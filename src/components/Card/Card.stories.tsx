@@ -8,7 +8,7 @@ import Card from "./Card";
 
 const meta: Meta<typeof Card> = {
     component: Card,
-    title: "Layout/Card",
+    title: "Cards/Card",
     tags: ["autodocs"],
 };
 
