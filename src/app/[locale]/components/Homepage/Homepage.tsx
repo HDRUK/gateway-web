@@ -162,12 +162,14 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             </Box>
             <Box
                 sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
                     background: `linear-gradient(9deg, ${colors.darkGreen50} 60%, #fff calc(60% + 1px))`,
                 }}>
-                <Container>
+                <Container
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}>
                     <Box
                         sx={{
                             width: "100%",
@@ -244,12 +246,14 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             />
             <Box
                 sx={{
-                    display: { tablet: "flex" },
                     background: "white",
-                    gap: 2,
-                    alignItems: "center",
                 }}>
-                <Container>
+                <Container
+                    sx={{
+                        display: { tablet: "flex" },
+                        gap: 2,
+                        alignItems: "center",
+                    }}>
                     <a
                         href={affiliateLink.url}
                         target="_blank"
