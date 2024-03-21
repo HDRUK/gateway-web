@@ -4,7 +4,7 @@ interface FormField {
     label: string;
     name: string;
     component: ComponentTypes;
-    fields?: FormField;
+    fields?: FormField[];
 }
 
 export type { FormField };

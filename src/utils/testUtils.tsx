@@ -71,10 +71,10 @@ interface OptionHookProps
     wrapperProps: Record<string, unknown>;
 }
 
-const customRenderHook = (
-    ui: (initialProps: unknown) => unknown,
+const customRenderHook = <T,>(
+    ui: (initialProps: unknown) => T,
     options?: OptionHookProps
-): RenderHookResult<unknown, unknown> => {
+): RenderHookResult<T, unknown> => {
     const { wrapperProps, ...rest } = options || {};
     return renderHook(ui, {
         wrapper: props => <Wrapper {...props} {...wrapperProps} />,

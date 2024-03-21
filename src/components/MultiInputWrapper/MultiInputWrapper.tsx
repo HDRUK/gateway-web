@@ -7,7 +7,7 @@ import { FormField } from "@/interfaces/FormField";
 import InputWrapper from "@/components/InputWrapper";
 
 export interface MultiInputWrapperProps {
-    fields: FormField;
+    fields: FormField[];
     control: Control;
 }
 
@@ -30,7 +30,7 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
                             py: 1,
                             my: 1,
                         }}>
-                        {field.fields.map(subField => (
+                        {field.fields?.map(subField => (
                             <Fragment key={subField.name}>
                                 {subField.label}
                                 <InputWrapper
@@ -54,7 +54,7 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
 
     return (
         <Box sx={{ p: 0 }}>
-            {fields.map((field: FieldProps) => (
+            {fields.map((field: FormField) => (
                 <Box
                     key={field.name}
                     sx={{

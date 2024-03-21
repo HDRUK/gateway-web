@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
+        "ts-lint": "tsc --noEmit --incremental --watch",
         "start": "next start",
         "lint": "next lint",
         "test": "TZ=UTC jest --clearCache && jest --detectOpenHandles --forceExit",
