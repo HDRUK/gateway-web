@@ -20,7 +20,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                 <Box
                     key={item.title}
                     sx={{
-                        maxWidth,
+                        maxWidth: { tablet: maxWidth },
                         flex: 1,
                         mb: { mobile: 2, tablet: 0 },
                         p: 3,

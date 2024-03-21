@@ -147,11 +147,10 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 </Container>
             </Box>
             <Box
-                textAlign="center"
                 sx={{
                     background: "#fff",
                 }}>
-                <Container>
+                <Container sx={{ textAlign: "center" }}>
                     <TitleWithBg
                         size="md"
                         variant="h2"
