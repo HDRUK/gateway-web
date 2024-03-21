@@ -36,7 +36,7 @@ const CohortRequestTermsDialog = () => {
     const [navClicked, setNavClicked] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState(1);
     const { push } = useRouter();
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit } = useForm<{ hasAccepted: boolean }>({
         defaultValues: cohortAcceptTermsDefaultValues,
         resolver: yupResolver(cohortAcceptTermsValidationSchema),
     });

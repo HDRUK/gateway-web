@@ -5,7 +5,6 @@ import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
 import { SelectOptionsType } from "@/components/Select/Select";
-import { useHasPermissions } from "@/hooks/useHasPermission";
 import {
     addTeamMemberFormFields,
     getRoleOptions,
@@ -27,11 +26,9 @@ const AddTeamMemberRows = ({
     remove,
     append,
 }: AddTeamMemberRowsProps) => {
-    const permissions = useHasPermissions();
-
     const roleOptionsFiltered = useMemo(() => {
-        return getRoleOptions(permissions);
-    }, [permissions]);
+        return getRoleOptions();
+    }, []);
 
     const [userField, memberField] = addTeamMemberFormFields;
     return (
