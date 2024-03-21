@@ -1,5 +1,4 @@
 import * as React from "react";
-import Box from "@/components/Box";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import { getHomePage } from "@/utils/cms";
@@ -17,14 +16,7 @@ export default async function HomePage() {
             }}>
             <Header isHome />
             <main>
-                <Container
-                    sx={{
-                        gridTemplateColumns: "repeat(5, 1fr)",
-                    }}>
-                    <Box sx={{ p: { mobile: 2, desktop: 0 } }}>
-                        <Homepage cmsContent={cmsContent} />
-                    </Box>
-                </Container>
+                <Homepage cmsContent={cmsContent} />
             </main>
         </Container>
     );

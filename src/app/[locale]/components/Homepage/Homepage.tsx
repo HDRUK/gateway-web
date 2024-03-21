@@ -8,6 +8,7 @@ import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import Container from "@/components/Container";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanel from "@/components/InfoHoverPanel";
@@ -133,122 +134,145 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 sx={{
                     background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
                 }}>
-                <InfoHoverPanel items={responsiveServices} />
+                <Container>
+                    <InfoHoverPanel items={responsiveServices} />
+                </Container>
             </Box>
             <Box
                 sx={{
                     background: colors.darkGreen50,
                 }}>
-                <GradientBoxes items={items} maxWidth={420} />
+                <Container>
+                    <GradientBoxes items={items} maxWidth={420} />
+                </Container>
             </Box>
             <Box
-                textAlign="center"
                 sx={{
                     background: "#fff",
                 }}>
-                <TitleWithBg
-                    size="md"
-                    variant="h2"
-                    mb={2}
-                    title={gatewayVideoHeader}
-                />
-            </Box>
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    background: `linear-gradient(9deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
-                }}>
-                <Box
-                    sx={{
-                        width: "100%",
-                        maxWidth: 950,
-                    }}>
-                    <IFrameWrapper>
-                        <HTMLContent content={gatewayVideo} />
-                    </IFrameWrapper>
-                </Box>
-            </Box>
-            <Box
-                sx={{
-                    minHeight: 500,
-                    background: `linear-gradient(170deg, ${colors.darkGreen50} 70%, #fff calc(70% + 1px))`,
-                }}
-                textAlign="center">
-                <TitleWithBg size="md" variant="h2" mb={2} title={newsHeader} />
-                <NewsSection posts={posts} />
-            </Box>
-            <Box
-                sx={{
-                    minHeight: 500,
-                    background: `linear-gradient(170deg, #fff 70%, ${theme.palette.secondary.main} calc(70% + 1px))`,
-                }}
-                textAlign="center">
-                <TitleWithBg
-                    size="md"
-                    variant="h2"
-                    mb={2}
-                    title={meetTheTeam.sectionName}
-                />
-                <TeamWrapper>
-                    <TeamImage
-                        src={meetTheTeam.image.node.sourceUrl}
-                        alt={meetTheTeam.image.node.altText}
+                <Container sx={{ textAlign: "center" }}>
+                    <TitleWithBg
+                        size="md"
+                        variant="h2"
+                        mb={2}
+                        title={gatewayVideoHeader}
                     />
+                </Container>
+            </Box>
+            <Box
+                sx={{
+                    background: `linear-gradient(9deg, ${colors.darkGreen50} 60%, #fff calc(60% + 1px))`,
+                }}>
+                <Container
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                    }}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            maxWidth: 950,
+                        }}>
+                        <IFrameWrapper>
+                            <HTMLContent content={gatewayVideo} />
+                        </IFrameWrapper>
+                    </Box>
+                </Container>
+            </Box>
+            <Box
+                sx={{
+                    background: colors.darkGreen50,
+                }}
+                textAlign="center">
+                <Container>
+                    <TitleWithBg
+                        size="md"
+                        variant="h2"
+                        mb={2}
+                        title={newsHeader}
+                    />
+                    <NewsSection posts={posts} />
+                </Container>
+            </Box>
+            <Box
+                sx={{
+                    background: `linear-gradient(170deg, ${colors.darkGreen50} 50%, #fff calc(50% + 1px))`,
+                }}
+                textAlign="center">
+                <Container>
+                    <TitleWithBg
+                        size="md"
+                        variant="h2"
+                        mb={2}
+                        title={meetTheTeam.sectionName}
+                    />
+                    <TeamWrapper>
+                        <TeamImage
+                            src={meetTheTeam.image.node.sourceUrl}
+                            alt={meetTheTeam.image.node.altText}
+                        />
 
-                    <TeamContent>
-                        <Typography
-                            sx={{
-                                fontSize: { mobile: 20, desktop: 28 },
-                            }}>
-                            {meetTheTeam.title}
-                        </Typography>
-                        <Typography
-                            sx={{
-                                fontSize: 15,
-                            }}>
-                            {meetTheTeam.intro}
-                        </Typography>
-                        <Button
-                            variant="text"
-                            endIcon={<ArrowForward color="primary" />}>
-                            {t("seeNow")}
-                        </Button>
-                    </TeamContent>
-                </TeamWrapper>
+                        <TeamContent>
+                            <Typography
+                                sx={{
+                                    fontSize: { mobile: 20, desktop: 28 },
+                                }}>
+                                {meetTheTeam.title}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontSize: 15,
+                                }}>
+                                {meetTheTeam.intro}
+                            </Typography>
+                            <Button
+                                variant="text"
+                                endIcon={<ArrowForward color="primary" />}>
+                                {t("seeNow")}
+                            </Button>
+                        </TeamContent>
+                    </TeamWrapper>
+                </Container>
             </Box>
             <Box
                 sx={{
                     p: 0,
                     minHeight: 520,
-                    background: `linear-gradient(170deg,${theme.palette.secondary.main} 70%,  #fff calc(70% + 1px))`,
+                    background: `linear-gradient(170deg, #fff 50%, ${theme.palette.secondary.main}  calc(50% + 1px))`,
                 }}
                 textAlign="center"
             />
             <Box
                 sx={{
-                    display: { tablet: "flex" },
                     background: "white",
-                    gap: 2,
-                    alignItems: "center",
                 }}>
-                <a href={affiliateLink.url} target="_blank" rel="noreferrer">
-                    <Button
-                        sx={{
-                            minWidth: 200,
-                            width: "100%",
-                            whiteSpace: {
-                                mobile: "unset",
-                                desktop: "nowrap",
-                            },
-                        }}
-                        color="secondary"
-                        variant="outlined">
-                        {affiliateLink.title}
-                    </Button>
-                </a>
-                <LogoSlider logos={logosFormatted} />
+                <Container
+                    sx={{
+                        display: { tablet: "flex" },
+                        gap: 2,
+                        alignItems: "center",
+                    }}>
+                    <a
+                        href={affiliateLink.url}
+                        target="_blank"
+                        rel="noreferrer">
+                        <Button
+                            sx={{
+                                minWidth: 200,
+                                width: "100%",
+                                whiteSpace: {
+                                    mobile: "unset",
+                                    desktop: "nowrap",
+                                },
+                            }}
+                            color="secondary"
+                            variant="outlined">
+                            {affiliateLink.title}
+                        </Button>
+                    </a>
+                    <LogoSlider logos={logosFormatted} />
+                </Container>
             </Box>
         </>
     );

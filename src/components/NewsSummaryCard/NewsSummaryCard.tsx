@@ -32,7 +32,7 @@ const NewsSummaryCard = ({
     return (
         <Card
             sx={{
-                maxWidth: 345,
+                maxWidth: { tablet: 345 },
                 background: "transparent",
                 position: "relative",
             }}>
