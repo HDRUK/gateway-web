@@ -22,3 +22,8 @@ export const ResultButtonWrap = styled("div")(({ theme }) => ({
     flexWrap: "wrap",
     gap: theme.spacing(1),
 }));
+
+export const ResultTitle = styled("div")(() => ({
+    display: "flex",
+    justifyContent: "space-between",
+}));

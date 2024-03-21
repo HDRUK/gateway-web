@@ -324,7 +324,7 @@
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
                     "dataCustodian": "Data Custodian",
                     "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
-                    "showAll": "Show all datasets"
+                    "showAll": "Quick view"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },

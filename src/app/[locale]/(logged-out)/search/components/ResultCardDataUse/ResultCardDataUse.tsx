@@ -13,6 +13,7 @@ import {
     ResultButtonWrap,
     ResultRow,
     ResultRowCategory,
+    ResultTitle,
 } from "./ResultCardDataUse.styles";
 
 interface ResultCardProps {
@@ -26,6 +27,8 @@ const CHARACTER_LIMIT = 50;
 const ResultCardDataUse = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
+
+    const leadOrgNames = result?.organisationName?.split(",");
 
     const missingDataComponent = (
         <Typography
@@ -47,16 +50,33 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                     disableTypography
                     sx={{ padding: 2, paddingBottom: 1, m: 0 }}
                     primary={
-                        <Link
-                            href="/#"
-                            fontSize={16}
-                            fontWeight={600}
-                            marginBottom={2}>
-                            <EllipsisLineLimit
-                                text={result.projectTitle || ""}
-                                showToolTip
-                            />
-                        </Link>
+                        <ResultTitle>
+                            <Link
+                                href="/#"
+                                fontSize={16}
+                                fontWeight={600}
+                                marginBottom={2}>
+                                <EllipsisLineLimit
+                                    text={result.projectTitle || ""}
+                                    showToolTip
+                                />
+                            </Link>
+                            {((!!result.datasetTitles?.length &&
+                                result.datasetTitles?.length > 1) ||
+                                leadOrgNames?.length > 1) && (
+                                <Button
+                                    onClick={handleShowAll}
+                                    size="small"
+                                    variant="outlined"
+                                    color="secondary"
+                                    style={{
+                                        flexShrink: 0,
+                                        alignSelf: "flex-start",
+                                    }}>
+                                    {t("showAll")}
+                                </Button>
+                            )}
+                        </ResultTitle>
                     }
                     primaryTypographyProps={{
                         color: "primary",
@@ -76,12 +96,17 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                     />
                                 </ResultRowCategory>
 
-                                <Typography
-                                    sx={{
-                                        fontWeight: 500,
-                                    }}>
-                                    {result.organisationName}
-                                </Typography>
+                                {(!!leadOrgNames && (
+                                    <Typography
+                                        sx={{
+                                            fontWeight: 500,
+                                        }}>
+                                        {leadOrgNames[0]}
+                                        {leadOrgNames.length > 1 &&
+                                            `,... (${leadOrgNames.length})`}
+                                    </Typography>
+                                )) ||
+                                    missingDataComponent}
                             </ResultRow>
 
                             <ResultRow>
@@ -93,23 +118,27 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                 </ResultRowCategory>
 
                                 {(!!result.datasetTitles?.length && (
-                                    <ResultButtonWrap>
-                                        <EllipsisCharacterLimit
-                                            text={result.datasetTitles[0] || ""}
-                                            isButton
-                                            characterLimit={CHARACTER_LIMIT}
-                                        />
-
-                                        {result.datasetTitles.length > 1 && (
-                                            <Button
-                                                onClick={handleShowAll}
-                                                size="small"
-                                                variant="outlined"
-                                                color="secondary">
-                                                {t("showAll")}
-                                            </Button>
+                                    <>
+                                        <ResultButtonWrap>
+                                            <EllipsisCharacterLimit
+                                                text={
+                                                    result.datasetTitles[0] ||
+                                                    ""
+                                                }
+                                                isButton
+                                                characterLimit={CHARACTER_LIMIT}
+                                            />
+                                        </ResultButtonWrap>
+                                        {result.datasetTitles?.length > 1 && (
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: 500,
+                                                    ml: 1,
+                                                }}>
+                                                ({result.datasetTitles?.length})
+                                            </Typography>
                                         )}
-                                    </ResultButtonWrap>
+                                    </>
                                 )) ||
                                     missingDataComponent}
                             </ResultRow>
