@@ -85,3 +85,5 @@ export interface SearchQueryParams {
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
 }
+
+export type CountType = { [key: string]: number };
