@@ -28,10 +28,10 @@ const LogoSlider = ({ logos }: LogoSliderProps) => {
         <Box css={styles.tickerContainer}>
             <div css={styles.ticker({ logoCount: logos.length })}>
                 {logos.map(logo => (
-                    <LogoComponent logo={logo} />
+                    <LogoComponent key={logo.alt} logo={logo} />
                 ))}
                 {logos.map(logo => (
-                    <LogoComponent logo={logo} />
+                    <LogoComponent key={logo.alt} logo={logo} />
                 ))}
             </div>
         </Box>

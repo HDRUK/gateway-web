@@ -218,8 +218,10 @@
             "title": "My account"
         },
         "home": {
+            "flashyText": "Explore the different functionalities of the Gateway",
             "touchDevice": "Explore the different functionalities of the Gateway",
             "seeNow": "See now",
+            "newsCardButtonText": "Read more",
             "datasets": {
                 "label": "Datasets / Tissues",
                 "title": "Welcome to The Gateway",

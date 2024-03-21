@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Button from "@/components/Button";
+import FlashyText from "@/components/FlashyText";
 import TitlePanel from "@/components/TitlePanel";
 
 interface InfoHoverPanelProps {
@@ -28,10 +29,13 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                 title={t(`${selected.id}.title`)}
                 sx={{ mt: "2rem" }}
             />
+            <Box sx={{ p: 0, display: { mobile: "none", desktop: "block" } }}>
+                <FlashyText text={t("flashyText")} />
+            </Box>
             <Box
                 maxWidth={1192}
                 sx={{
-                    mt: 3,
+                    mt: 2,
                     gap: 1,
                     display: "grid",
                     gridTemplateColumns: {
