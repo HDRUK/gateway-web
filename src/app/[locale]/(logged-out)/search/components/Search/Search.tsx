@@ -124,7 +124,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     }, [queryParams.type, resultsView]);
 
     const updatePath = (key: string, value: string) => {
-        router.push(`${pathname}?${updateQueryString(key, value)}`);
+        router.push(`${pathname}?${updateQueryString(key, value)}`, {
+            scroll: false,
+        });
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
