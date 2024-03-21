@@ -1,3 +1,4 @@
+import { Control } from "react-hook-form";
 import Box from "@/components/Box";
 import Switch from "@/components/Switch";
 import { SwitchProps } from "@/components/Switch/Switch";
@@ -7,6 +8,8 @@ import { colors } from "@/config/theme";
 export interface SwitchInlineProps extends SwitchProps {
     extraInfo?: string;
     label?: string;
+    control: Control;
+    name: string;
 }
 
 const SwitchInline = (props: SwitchInlineProps) => {

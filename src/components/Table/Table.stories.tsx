@@ -41,6 +41,7 @@ const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
                 }
             />
         ),
+        cell: () => null,
     },
     {
         id: "furtherActions",
