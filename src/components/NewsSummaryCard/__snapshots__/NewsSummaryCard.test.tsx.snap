@@ -3,7 +3,7 @@
 exports[`NewsSummaryCard should render component 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-1lojyo8-MuiPaper-root-MuiCard-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-x9r5gr-MuiPaper-root-MuiCard-root"
   >
     <img
       alt="Image alt text"
