@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { FilterOptionsState, InputAdornment, Chip } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -15,7 +15,7 @@ export type OptionsType = {
     icon?: IconType;
 };
 
-export interface AutocompleteProps {
+export interface AutocompleteProps<T extends FieldValues> {
     label: string;
     info?: string;
     extraInfo?: string;
@@ -33,8 +33,8 @@ export interface AutocompleteProps {
     selectOnFocus?: boolean;
     placeholder?: string;
     icon?: IconType;
-    name: string;
-    control: Control;
+    name: Path<T>;
+    control: Control<T>;
     horizontalForm?: boolean;
     required?: boolean;
 }
@@ -44,7 +44,7 @@ interface SearchOptions {
     label: string;
 }
 
-const Autocomplete = (props: AutocompleteProps) => {
+const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
         label,
         info,

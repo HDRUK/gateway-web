@@ -1,5 +1,5 @@
 import React, { ElementType } from "react";
-import { Control, FieldValues } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import Autocomplete from "@/components/Autocomplete";
 import Checkbox from "@/components/Checkbox";
@@ -20,10 +20,10 @@ import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
 
-type InputType =
-    | TextFieldBaseProps
-    | SelectProps
-    | TextAreaProps
+type InputType<T extends FieldValues> =
+    | TextFieldBaseProps<T>
+    | SelectProps<T>
+    | TextAreaProps<T>
     | CheckboxRowProps
     | CheckboxProps;
 
@@ -32,8 +32,8 @@ export interface InputWrapperProps {
     component: ComponentTypes;
 }
 
-export type InputWrapperCombinedProps<T extends FieldValues = FieldValues> =
-    InputWrapperProps & InputType & { control: Control<T> };
+export type InputWrapperCombinedProps<T extends FieldValues> =
+    InputWrapperProps & InputType<T>;
 
 function InputWrapper<T extends FieldValues>({
     component,

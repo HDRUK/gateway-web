@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { Stack, Typography, FormControl, SxProps } from "@mui/material";
 import MuiSwitch, { SwitchProps as MuiSwitchProps } from "@mui/material/Switch";
 import Tooltip from "@/components/Tooltip";
 
-export interface SwitchProps extends MuiSwitchProps {
+export interface SwitchProps<T extends FieldValues> extends MuiSwitchProps {
     checkedLabel?: string;
     unCheckedLabel?: string;
-    name: string;
+    name: Path<T>;
     title?: string;
     disabled?: boolean;
-    control: Control;
+    control: Control<T>;
     switchSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const Switch = (props: SwitchProps) => {
+const Switch = <T extends FieldValues>(props: SwitchProps<T>) => {
     const {
         unCheckedLabel,
         checkedLabel,

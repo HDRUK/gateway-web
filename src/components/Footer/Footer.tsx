@@ -2,14 +2,17 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Container from "@/components/Container";
-import Link from "@/components/Link";
 import hdrukLogo from "../../../public/images/logos/hdruk-white.png";
 import linkedInLogo from "../../../public/images/logos/linkedIn-white.png";
 import twitterInLogo from "../../../public/images/logos/twitter-white.png";
-import * as styles from "./Footer.styles";
-
-/** @jsxImportSource @emotion/react */
+import {
+    FooterContainer,
+    FooterWrapper,
+    FooterCopyright,
+    FooterList,
+    FooterLink,
+    FooterSocial,
+} from "./Footer.styles";
 
 const Footer = () => {
     const t = useTranslations("components");
@@ -32,42 +35,42 @@ const Footer = () => {
         {
             href: "https://twitter.com/HDR_UK",
             label: (
-                <span css={styles.social}>
+                <FooterSocial>
                     <Image src={twitterInLogo} alt="Twitter logo" width="17" />
                     <span>Twitter</span>
-                </span>
+                </FooterSocial>
             ),
         },
         {
             href: "https://www.linkedin.com/company/healthdataresearchuk/",
             label: (
-                <span css={styles.social}>
+                <FooterSocial>
                     <Image src={linkedInLogo} alt="LinkedIn logo" width="17" />
                     <span>LinkedIn</span>
-                </span>
+                </FooterSocial>
             ),
         },
     ];
 
     return (
-        <div css={styles.footer}>
-            <Container css={styles.footerContainer}>
+        <FooterWrapper>
+            <FooterContainer>
                 <Image src={hdrukLogo} alt="HDRUK logo" width="130" />
-                <ul css={styles.list}>
+                <FooterList>
                     {links.map(link => (
                         <li key={`${link.label}-${link.href}`}>
-                            <Link css={styles.link} href={link.href}>
+                            <FooterLink href={link.href}>
                                 {link.label}
-                            </Link>
+                            </FooterLink>
                         </li>
                     ))}
-                </ul>
-                <div css={styles.copyright}>
+                </FooterList>
+                <FooterCopyright>
                     {copyright}
                     {t("Footer.text", { year: currentYear })}
-                </div>
-            </Container>
-        </div>
+                </FooterCopyright>
+            </FooterContainer>
+        </FooterWrapper>
     );
 };
 

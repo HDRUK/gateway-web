@@ -1,14 +1,13 @@
-import { css } from "@emotion/react";
+import { styled } from "@mui/material";
 
-export const content = ({ theme }) =>
-    css({
-        h5: {
-            fontSize: 18,
+export const Content = styled("div")(({ theme }) => ({
+    h5: {
+        fontSize: 18,
+    },
+    a: {
+        color: theme.palette.secondary.main,
+        ":hover": {
+            textDecoration: "none",
         },
-        a: {
-            color: theme.palette.secondary.main,
-            ":hover": {
-                textDecoration: "none",
-            },
-        },
-    });
+    },
+}));

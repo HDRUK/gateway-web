@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Control, FieldValues, useWatch } from "react-hook-form";
+import { Control, useWatch } from "react-hook-form";
 import { isEqual, pick } from "lodash";
 import { Federation, FederationRunResponse } from "@/interfaces/Federation";
 import { Integration, IntegrationForm } from "@/interfaces/Integration";
@@ -16,11 +16,11 @@ export const watchFederationKeys = [
     "notifications",
 ];
 
-interface useRunFederationProps<T extends FieldValues> {
+interface useRunFederationProps {
     teamId: string;
     integration: Integration | undefined;
     reset: () => void;
-    control: Control<T>;
+    control: Control<IntegrationForm>;
     setValue: (
         key: keyof IntegrationForm,
         value: string | number | boolean | string[] | undefined
@@ -28,14 +28,14 @@ interface useRunFederationProps<T extends FieldValues> {
     getValues: () => void;
 }
 
-const useRunFederation = <T extends FieldValues>({
+const useRunFederation = ({
     teamId,
     integration,
     reset,
     control,
     setValue,
     getValues,
-}: useRunFederationProps<T>) => {
+}: useRunFederationProps) => {
     const [runStatus, setRunStatus] = useState<
         "NOT_RUN" | "IS_RUNNING" | "RUN_COMPLETE" | "TESTED_IS_TRUE"
     >("NOT_RUN");

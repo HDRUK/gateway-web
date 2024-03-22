@@ -1,17 +1,20 @@
 "use client";
 
 import { Fragment } from "react";
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import { Box } from "@mui/material";
 import { FormField } from "@/interfaces/FormField";
 import InputWrapper from "@/components/InputWrapper";
 
-export interface MultiInputWrapperProps {
+export interface MultiInputWrapperProps<T extends FieldValues> {
     fields: FormField[];
-    control: Control;
+    control: Control<T>;
 }
 
-const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
+const MultiInputWrapper = <T extends FieldValues>({
+    fields,
+    control,
+}: MultiInputWrapperProps<T>) => {
     const renderField = (field: FormField) => {
         if (field.component) {
             return (

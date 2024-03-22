@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
-import { OptionsWithExtraProps, VariantType } from "notistack";
 import { MutatorOptions } from "swr";
 
-interface NotificationOptions extends OptionsWithExtraProps<VariantType> {
+interface NotificationOptions {
     successNotificationsOn?: boolean;
     errorNotificationsOn?: boolean;
     localeKey?: string;

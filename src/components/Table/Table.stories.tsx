@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import Box from "@/components/Box";
 import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
@@ -24,9 +24,17 @@ export default meta;
 
 type Story = StoryObj<typeof Table>;
 
+const columnHelper = createColumnHelper<{
+    firstname: string;
+    lastname: string;
+}>();
+
 const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
-    { id: "Name", accessorFn: row => `${row.firstname} ${row.lastname}` },
-    {
+    columnHelper.display({
+        id: "Name",
+        cell: ({ row }) => `${row.original.firstname} ${row.original.lastname}`,
+    }),
+    columnHelper.display({
         id: "team",
         header: () => (
             <TooltipIcon
@@ -42,8 +50,8 @@ const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
             />
         ),
         cell: () => null,
-    },
-    {
+    }),
+    columnHelper.display({
         id: "furtherActions",
         header: () => <Box textAlign="left">Actions</Box>,
         size: 40,
@@ -62,7 +70,7 @@ const columns: ColumnDef<{ firstname: string; lastname: string }>[] = [
                 />
             );
         },
-    },
+    }),
 ];
 
 export const Default: Story = {

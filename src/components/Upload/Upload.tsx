@@ -1,10 +1,8 @@
-/** @jsxImportSource @emotion/react */
 import { Control, useController } from "react-hook-form";
-import { useTheme } from "@emotion/react";
 import { FormControl, FormControlLabel, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import { UploadFileIcon } from "@/consts/icons";
-import * as styles from "./Upload.styles";
+import { UploadLabel } from "./Upload.styles";
 
 export interface UploadProps extends InputProps {
     label: string;
@@ -15,7 +13,6 @@ export interface UploadProps extends InputProps {
 }
 
 const Upload = (props: UploadProps) => {
-    const theme = useTheme();
     const { label, control, name, formControlSx, uploadSx, ...rest } = props;
 
     const {
@@ -42,10 +39,10 @@ const Upload = (props: UploadProps) => {
                     />
                 }
                 label={
-                    <span css={styles.uploadLabel({ theme })}>
+                    <UploadLabel>
                         <UploadFileIcon color="primary" />
                         {label}
-                    </span>
+                    </UploadLabel>
                 }
             />
         </FormControl>

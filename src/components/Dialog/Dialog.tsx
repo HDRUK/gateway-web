@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { IconButton, SxProps } from "@mui/material";
+import { Breakpoint, IconButton, SxProps } from "@mui/material";
 import MuiDialog, { DialogProps as MuiDialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import useDialog from "@/hooks/useDialog";
@@ -10,7 +10,7 @@ export interface DialogProps {
     children: ReactNode;
     onClose?: (props: unknown) => void;
     title: string;
-    maxWidth?: string;
+    maxWidth?: false | Breakpoint;
     titleSx?: SxProps;
     showCloseButton?: boolean;
     styleProps?: MuiDialogProps;

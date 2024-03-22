@@ -1,4 +1,4 @@
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { SerializedStyles } from "@emotion/react";
 import {
     InputAdornment,
@@ -10,14 +10,14 @@ import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import { CancelIcon } from "@/consts/icons";
 
-export interface TextFieldBaseProps {
+export interface TextFieldBaseProps<T extends FieldValues> {
     label: string;
     placeholder?: string;
     info?: string;
     extraInfo?: string;
     icon?: IconType;
     setValue?: (name: string, value: string | number) => void;
-    name: string;
+    name: Path<T>;
     multiline?: boolean;
     horizontalForm?: boolean;
     rows?: number;
@@ -25,13 +25,13 @@ export interface TextFieldBaseProps {
     disabled?: boolean;
     fullWidth?: boolean;
     showClearButton?: boolean;
-    control: Control;
+    control: Control<T>;
     required?: boolean;
     formControlSx?: SxProps;
     css?: SerializedStyles;
 }
 
-const TextFieldBase = (props: TextFieldBaseProps) => {
+const TextFieldBase = <T extends FieldValues>(props: TextFieldBaseProps<T>) => {
     const {
         horizontalForm = false,
         label,

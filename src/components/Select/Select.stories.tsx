@@ -61,7 +61,7 @@ const WrapperComponent = () => {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = (data: unknown) => console.log(data);
+    const onSubmit = data => console.log(data);
 
     const options = [
         { label: "Red", value: 1 },
