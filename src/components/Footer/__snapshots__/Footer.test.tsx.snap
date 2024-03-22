@@ -3,10 +3,10 @@
 exports[`Footer should render component 1`] = `
 <div>
   <div
-    class="mui-style-nhw023-Footer"
+    class="mui-style-1z0r648"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-tykmfd-MuiContainer-root-Footer"
+      class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-xwsd6o-MuiContainer-root"
     >
       <img
         alt="HDRUK logo"
@@ -20,7 +20,7 @@ exports[`Footer should render component 1`] = `
         width="130"
       />
       <ul
-        class="mui-style-1cjflei-Footer"
+        class="mui-style-1v2o5lg"
       >
         <li>
           <a
@@ -52,7 +52,7 @@ exports[`Footer should render component 1`] = `
             href="https://twitter.com/HDR_UK"
           >
             <span
-              class="mui-style-wm98oe-Footer"
+              class="mui-style-172hjuw"
             >
               <img
                 alt="Twitter logo"
@@ -77,7 +77,7 @@ exports[`Footer should render component 1`] = `
             href="https://www.linkedin.com/company/healthdataresearchuk/"
           >
             <span
-              class="mui-style-wm98oe-Footer"
+              class="mui-style-172hjuw"
             >
               <img
                 alt="LinkedIn logo"
@@ -98,7 +98,7 @@ exports[`Footer should render component 1`] = `
         </li>
       </ul>
       <div
-        class="mui-style-106tbuj-Footer"
+        class="mui-style-vrpanz"
       >
         ©
         HDR UK 2024. All rights reserved.

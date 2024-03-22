@@ -83,6 +83,7 @@ describe("Filter utils", () => {
                         publisherName: ["one"],
                         geographicLocation: [],
                         dataUseTitles: [],
+                        dateRange: [],
                     },
                 },
             });

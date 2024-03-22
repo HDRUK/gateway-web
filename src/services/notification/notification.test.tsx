@@ -15,7 +15,7 @@ describe("Notification Service", () => {
                 horizontal: "right",
                 vertical: "top",
             },
-            persist: "true",
+            persist: true,
             variant: "apiError",
         });
     });
