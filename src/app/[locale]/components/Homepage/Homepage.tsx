@@ -94,8 +94,6 @@ interface HomePageProps {
 }
 
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
-    console.log("page: ", page);
-    console.log("posts: ", posts);
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
 
