@@ -32,8 +32,8 @@ async function fetchCMS(
         }),
         ...options,
     });
+
     const json = await res.json();
-    console.log("json: ", json);
     if (json.errors) {
         console.error(json.errors);
         throw new Error("Failed to fetch API");

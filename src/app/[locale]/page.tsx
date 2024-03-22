@@ -6,7 +6,6 @@ import Homepage from "./components/Homepage";
 
 export default async function HomePage() {
     const cmsContent = await getHomePage();
-    console.log("cmsContent: ", cmsContent);
     return (
         <Container
             maxWidth={false}
