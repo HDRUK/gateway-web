@@ -4,6 +4,7 @@ import {
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
+    FILTER_DATA_SET_TITLES,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -74,12 +75,15 @@ export enum SearchCategory {
 export interface SearchQueryParams {
     query: string | undefined;
     sort: string | undefined;
+    page: string;
+    per_page: string;
+    type: SearchCategory;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
     [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
-    page: string;
-    per_page: string;
-    type?: string;
+    [FILTER_DATA_SET_TITLES]: string[] | undefined;
 }
+
+export type CountType = { [key: string]: number };

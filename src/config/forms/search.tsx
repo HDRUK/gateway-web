@@ -2,8 +2,9 @@ import { inputComponents } from ".";
 
 export const QUERY_FIELD = "query";
 export const SORT_FIELD = "sort";
+export const TYPE_FIELD = "type";
 
-const sortByOptions = [
+export const sortByOptionsDataset = [
     {
         label: "Sort By Most Relevant",
         value: "score:desc",
@@ -13,8 +14,31 @@ const sortByOptions = [
         value: "title:asc",
     },
     {
-        label: "Sort Alphabetically by title (Z-A)",
+        label: "Sort Alphabetically by Title (Z-A)",
         value: "title:desc",
+    },
+    {
+        label: "Sort By Most Recently Updated",
+        value: "created_at:asc",
+    },
+    {
+        label: "Sort By Least Recently Updated",
+        value: "created_at:desc",
+    },
+];
+
+export const sortByOptionsDataUse = [
+    {
+        label: "Sort By Most Relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort Alphabetically By Project Title (A-Z)",
+        value: "projectTitle:asc",
+    },
+    {
+        label: "Sort Alphabetically by Project Title (Z-A)",
+        value: "projectTitle:desc",
     },
     {
         label: "Sort By Most Recently Updated",
@@ -31,7 +55,6 @@ const searchFormConfig = {
         sort: "score:desc",
         query: "",
     },
-    sortByOptions,
     query: {
         name: QUERY_FIELD,
         placeholder: "Search titles",
@@ -39,7 +62,6 @@ const searchFormConfig = {
     sort: {
         sx: { minWidth: 270, m: 0 },
         component: inputComponents.Select,
-        options: sortByOptions,
         name: SORT_FIELD,
         label: "",
     },

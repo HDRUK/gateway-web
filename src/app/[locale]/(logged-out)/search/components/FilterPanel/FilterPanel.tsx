@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
@@ -178,6 +179,9 @@ const FilterPanel = ({
                         control={control}
                         filterItem={filterItem}
                         resetFilterSection={() => resetFilterSection(label)}
+                        counts={formatBucketCounts(
+                            get(aggregations, label)?.buckets
+                        )}
                     />
                 );
         }

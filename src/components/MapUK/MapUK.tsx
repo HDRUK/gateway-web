@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
+import { CountType } from "@/interfaces/Search";
 import theme from "@/config/theme";
 
 export type SelectedType = { [key: string]: boolean };
-type CountType = { [key: string]: number };
 
 interface MapUKProps {
     handleUpdate?: (updated: SelectedType) => void;

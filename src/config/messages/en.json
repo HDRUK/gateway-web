@@ -308,7 +308,9 @@
                             "publisherName": "Data custodian",
                             "publisherNameTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
                             "organisationName": "Lead applicant organisation",
-                            "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data"
+                            "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
                     }
                 },
