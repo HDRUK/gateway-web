@@ -117,6 +117,7 @@ export const colors = {
     purple500: "#475da7",
     purple700: "#384B91",
     darkGreen50: "#DEF0F0",
+    yellow400: "#F4E751",
 };
 
 const palette = {
