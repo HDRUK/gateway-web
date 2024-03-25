@@ -201,6 +201,8 @@
                 },
                 "integrations": {
                     "apiManagement": {
+                        "howTo": "How to setup and manage integrations",
+                        "cannotCreate": "HDR UK cannot create application registrations on behalf of users",
                         "create": {
                             "title": "API management",
                             "text": "Use this form to create, update and manage your api on the Gateway"
