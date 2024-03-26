@@ -4,13 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Popover } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import Button from "@/components/Button";
 import Link from "@/components/Link";
 import {
     CUSTOMER_PORTAL_REPORT_BUG_URL,
     CUSTOMER_PORTAL_SUPPORT_URL,
 } from "@/config/hrefs";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
-import Button from "../Button";
 import { SupportButton, SupportList } from "./SupportPopOut.styles";
 
 const SupportPopOut = () => {
