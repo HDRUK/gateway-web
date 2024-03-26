@@ -375,7 +375,8 @@
             "buttonText": "Need support",
             "giveFeedback": "Give feedback",
             "reportBug": "Report bug",
-            "needSupport": "Need support"
+            "requestSupport": "Request support",
+            "visitSupportCentre": "Visit Support Centre"
         },
         "ShowMore": {
             "showLess": "...show less",

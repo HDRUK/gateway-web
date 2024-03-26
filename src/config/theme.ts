@@ -29,6 +29,7 @@ export type buttonColourType =
     | "error"
     | "info"
     | "warning"
+    | "yellowCustom"
     | "greyCustom";
 
 declare module "@mui/material/Button" {
@@ -40,17 +41,20 @@ declare module "@mui/material/styles" {
     interface Palette {
         warningCustom: Palette["primary"];
         greyCustom: Palette["primary"];
+        yellowCustom: Palette["primary"];
     }
 
     interface PaletteOptions {
         warningCustom?: PaletteOptions["primary"];
         greyCustom?: PaletteOptions["primary"];
+        yellowCustom?: PaletteOptions["primary"];
     }
 }
 
 declare module "@mui/material/Button" {
     interface ButtonPropsColorOverrides {
         greyCustom: true;
+        yellowCustom: true;
     }
 }
 declare module "@mui/material/Switch" {
@@ -135,6 +139,12 @@ const palette = {
     },
     greyCustom: {
         main: colors.grey400,
+        light: "#E9DB5D",
+        dark: "#A29415",
+        contrastText: colors.grey800,
+    },
+    yellowCustom: {
+        main: colors.yellow400,
         light: "#E9DB5D",
         dark: "#A29415",
         contrastText: colors.grey800,
@@ -247,6 +257,19 @@ const theme = createTheme({
                         },
                         "&:hover": {
                             background: palette.greyCustom.main,
+                        },
+                    },
+                },
+                {
+                    props: { color: "yellowCustom" },
+                    style: {
+                        color: colors.grey800,
+                        borderColor: palette.greyCustom.main,
+                        "&:active": {
+                            background: palette.yellowCustom.main,
+                        },
+                        "&:hover": {
+                            background: palette.yellowCustom.main,
                         },
                     },
                 },
