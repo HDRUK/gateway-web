@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 
 interface ApiErrorProps extends CustomContentProps {
     id: string;
-    showDismissButton: boolean;
+    showDismissButton?: boolean;
     action: ReactNode;
     title: string;
     message: string;

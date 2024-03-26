@@ -1,15 +1,19 @@
+import { Control, FieldValues, Path } from "react-hook-form";
 import Box from "@/components/Box";
 import Switch from "@/components/Switch";
 import { SwitchProps } from "@/components/Switch/Switch";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 
-export interface SwitchInlineProps extends SwitchProps {
+export interface SwitchInlineProps<T extends FieldValues>
+    extends SwitchProps<T> {
     extraInfo?: string;
     label?: string;
+    control: Control<T>;
+    name: Path<T>;
 }
 
-const SwitchInline = (props: SwitchInlineProps) => {
+const SwitchInline = <T extends FieldValues>(props: SwitchInlineProps<T>) => {
     const { label, extraInfo, ...rest } = props;
 
     return (

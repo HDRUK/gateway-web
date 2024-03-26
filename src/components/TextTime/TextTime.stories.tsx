@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "@/components/Button";
@@ -15,8 +15,10 @@ export default meta;
 
 type Story = StoryObj<typeof TextTime>;
 
-const WrapperComponent = (props: TextTimeProps) => {
-    const { control, handleSubmit } = useForm({
+const WrapperComponent = <T extends FieldValues>(
+    props: Omit<TextTimeProps<T>, "control">
+) => {
+    const { control, handleSubmit } = useForm<{ selectTime: string }>({
         defaultValues: {
             selectTime: "",
         },

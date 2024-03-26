@@ -67,6 +67,7 @@ describe("Filter utils", () => {
                 publisherName: ["one"],
                 geographicLocation: [],
                 dataUseTitles: [],
+                dateRange: [],
                 query: "diabetes",
                 sort: "desc",
                 page: "",
@@ -82,6 +83,7 @@ describe("Filter utils", () => {
                         publisherName: ["one"],
                         geographicLocation: [],
                         dataUseTitles: [],
+                        dateRange: [],
                     },
                 },
             });

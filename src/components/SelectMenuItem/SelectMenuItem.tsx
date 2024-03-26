@@ -12,7 +12,7 @@ interface SelectMenuItemProps {
     invertListItem?: boolean;
     label: string;
     labelComponent?: ReactNode;
-    itemValue: string;
+    itemValue: string | number;
     value: ValueType | ValueType[];
     multiple?: boolean;
 }

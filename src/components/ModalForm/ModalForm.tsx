@@ -1,24 +1,29 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import { IconButton } from "@mui/material";
 import { FormField } from "@/interfaces/FormField";
 import MultiInputWrapper from "@/components/MultiInputWrapper";
 import useModal from "@/hooks/useModal";
 
-export interface ModalFormProps {
-    formFields: FormField;
-    control: Control;
+export interface ModalFormProps<T extends FieldValues> {
+    formFields: FormField[];
+    control: Control<T>;
     buttonContent?: ReactNode;
+    onSuccess: (data: unknown) => void;
+    onCancel: (data: unknown) => void;
+    confirmText: string;
+    cancelText: string;
+    title: string;
 }
 
-const ModalForm = ({
+const ModalForm = <T extends FieldValues>({
     formFields,
     control,
     buttonContent,
     ...rest
-}: ModalFormProps) => {
+}: ModalFormProps<T>) => {
     const { showModal } = useModal();
 
     const handleClick = () => {

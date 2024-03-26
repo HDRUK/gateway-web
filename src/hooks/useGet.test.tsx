@@ -10,14 +10,12 @@ describe("useGet", () => {
         const { result } = renderHook(() => useGet<User>(apis.usersV1Url));
 
         expect(result.current).toEqual({
-            error: undefined,
             isLoading: true,
             data: undefined,
             mutate: expect.any(Function),
         });
 
         await waitFor(() => {
-            expect(result.current.error).not.toBeDefined();
             expect(result.current.data).toEqual(userV1);
         });
     });
@@ -27,14 +25,12 @@ describe("useGet", () => {
         );
 
         expect(result.current).toEqual({
-            error: undefined,
             isLoading: true,
             data: undefined,
             mutate: expect.any(Function),
         });
 
         await waitFor(() => {
-            expect(result.current.error).not.toBeDefined();
             expect(result.current.data).toEqual(filtersV1);
         });
     });

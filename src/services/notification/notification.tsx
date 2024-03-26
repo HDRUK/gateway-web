@@ -20,7 +20,7 @@ const notification = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return enqueueSnackbar(message, {
-        ...options,
+        ...(typeof options === "object" && { ...options }),
         anchorOrigin: {
             vertical: "top",
             horizontal: "right",
@@ -45,7 +45,7 @@ const apiSuccess = (
         action: (snackbarId: SnackbarKey) => {
             <DismissButton snackbarId={snackbarId} />;
         },
-        ...options,
+        ...(typeof options === "object" && { ...options }),
     });
 };
 
@@ -61,11 +61,11 @@ const apiError = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return notification(message, "apiError", {
-        persist: "true",
+        persist: true,
         action: (snackbarId: SnackbarKey) => (
             <DismissButton snackbarId={snackbarId} />
         ),
-        ...options,
+        ...(typeof options === "object" && { ...options }),
     });
 };
 
@@ -81,11 +81,11 @@ const apiWarning = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return notification(message, "apiWarning", {
-        persist: "true",
+        persist: true,
         action: (snackbarId: SnackbarKey) => (
             <DismissButton snackbarId={snackbarId} />
         ),
-        ...options,
+        ...(typeof options === "object" && { ...options }),
     });
 };
 
@@ -101,11 +101,11 @@ const apiInfo = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return notification(message, "apiInfo", {
-        persist: "true",
+        persist: true,
         action: (snackbarId: SnackbarKey) => (
             <DismissButton snackbarId={snackbarId} />
         ),
-        ...options,
+        ...(typeof options === "object" && { ...options }),
     });
 };
 

@@ -6,7 +6,7 @@ import apiService from "@/services/api";
 interface Response<T> {
     data: T | undefined;
     isLoading: boolean;
-    mutate: KeyedMutator<T>;
+    mutate: KeyedMutator<T | undefined>;
 }
 
 interface Options {
@@ -29,12 +29,15 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
         shouldFetch = true,
         withPagination = false,
     } = options || {};
+
     const t = useTranslations("api");
 
-    const { data, mutate, isLoading } = useSWR(
-        shouldFetch ? url : null,
-        () => {
-            return apiService.getRequest<T>(url, {
+    const fetcher = async (url: string | null): Promise<T | undefined> => {
+        if (!url) return undefined;
+
+        try {
+            const data = await apiService.getRequest<T>(url, {
+                withPagination,
                 notificationOptions: {
                     localeKey,
                     itemName,
@@ -42,9 +45,17 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
                     t,
                     action,
                 },
-                withPagination,
             });
-        },
+            return data as T;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            throw error;
+        }
+    };
+
+    const { data, mutate, isLoading } = useSWR<T | undefined>(
+        shouldFetch ? url : null,
+        fetcher,
         { keepPreviousData }
     );
 

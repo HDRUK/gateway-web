@@ -35,14 +35,17 @@ import {
 import { requiresSecretKey } from "@/utils/integrations";
 
 const EditIntegrationForm = () => {
-    const { teamId, intId } = useParams();
+    const params = useParams<{
+        teamId: string;
+        intId: string;
+    }>();
 
     const { data: integration } = useGet<Integration>(
-        `${apis.teamsV1Url}/${teamId}/federations/${intId}`,
-        { shouldFetch: !!teamId || !!intId }
+        `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
+        { shouldFetch: !!params?.teamId || !!params?.intId }
     );
 
-    const { team } = useGetTeam(teamId as string);
+    const { team } = useGetTeam(params?.teamId as string);
 
     const {
         control,
@@ -60,8 +63,8 @@ const EditIntegrationForm = () => {
     });
 
     const { runStatus, setTestedConfig, runResponse, handleRun } =
-        useRunFederation<IntegrationForm>({
-            teamId,
+        useRunFederation({
+            teamId: params?.teamId || "",
             integration,
             control,
             reset,
@@ -98,9 +101,9 @@ const EditIntegrationForm = () => {
     });
 
     const updateIntegration = usePut<IntegrationPayload>(
-        `${apis.teamsV1Url}/${teamId}/federations`,
+        `${apis.teamsV1Url}/${params?.teamId}/federations`,
         {
-            shouldFetch: !!teamId,
+            shouldFetch: !!params?.teamId,
             itemName: "Integration",
         }
     );

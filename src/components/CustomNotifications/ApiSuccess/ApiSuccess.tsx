@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 
 interface ApiSuccessProps extends CustomContentProps {
     id: string;
-    showDismissButton: boolean;
+    showDismissButton?: boolean;
     action: ReactNode;
     message: string;
 }

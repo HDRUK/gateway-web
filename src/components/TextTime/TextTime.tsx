@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { MenuItem, Select, Stack } from "@mui/material";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import { hourOptions, minuteOptions } from "./TextTime.utils";
 
-export interface TextTimeProps {
+export interface TextTimeProps<T extends FieldValues> {
     timeZoneLabel?: string;
-    name: { minute: string; hour: string };
+    name: { minute: Path<T>; hour: Path<T> };
     info?: string;
     extraInfo?: string;
     required?: boolean;
@@ -15,10 +15,10 @@ export interface TextTimeProps {
     hourProps?: { disabled?: boolean };
     minProps?: { disabled?: boolean };
     horizontalForm: boolean;
-    control: Control;
+    control: Control<T>;
 }
 
-const TextTime = (props: TextTimeProps) => {
+const TextTime = <T extends FieldValues>(props: TextTimeProps<T>) => {
     const {
         timeZoneLabel = "UTC",
         control,

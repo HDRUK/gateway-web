@@ -70,7 +70,10 @@ const FilterPanel = ({
     }, [selectedFilters]);
 
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
-    const { control, setValue } = useForm({
+    const { control, setValue } = useForm<{
+        [FILTER_PUBLISHER_NAME]: string;
+        [FILTER_DATA_USE_TITLES]: string;
+    }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
