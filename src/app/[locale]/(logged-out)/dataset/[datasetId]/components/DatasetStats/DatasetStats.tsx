@@ -1,11 +1,11 @@
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import BoxContainer from "@/components/BoxContainer";
 import DatasetStatCard from "@/components/DatasetStatCard";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
-const DatasetStats = async () => {
-    const t = await getTranslations(TRANSLATION_PATH);
+const DatasetStats = () => {
+    const t = useTranslations(TRANSLATION_PATH);
 
     const TEMP_POPULATION_STAT = {
         title: t("populationTitle"),

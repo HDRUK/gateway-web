@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -6,8 +6,8 @@ import { DownloadIcon } from "@/consts/icons";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
-const ActionBar = async () => {
-    const t = await getTranslations(TRANSLATION_PATH);
+const ActionBar = () => {
+    const t = useTranslations(TRANSLATION_PATH);
 
     return (
         <Box

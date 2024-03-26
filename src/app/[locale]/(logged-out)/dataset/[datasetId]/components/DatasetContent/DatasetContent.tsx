@@ -1,12 +1,12 @@
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
 
 const TRANSLATION_PATH = "pages.dataset";
 
-const DatasetContent = async () => {
-    const t = await getTranslations(TRANSLATION_PATH);
+const DatasetContent = () => {
+    const t = useTranslations(TRANSLATION_PATH);
 
     return (
         <BoxContainer
