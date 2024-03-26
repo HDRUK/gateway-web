@@ -353,6 +353,21 @@
                     }
                 }
             }
+        },
+        "dataset": {
+            "datasetDetails": "Dataset details",
+            "datasetPublications": "Publications about this dataset",
+            "components": {
+                "ActionBar": {
+                    "contact": "Contact data provider",
+                    "submitApplication": "Submit an application",
+                    "downloadMetadata": "Download metadata"
+                },
+                "DatasetStats": {
+                    "populationTitle": "Population Size",
+                    "populationUnit": "People"
+                }
+            }
         }
     },
     "components": {
