@@ -5,15 +5,20 @@ import { SwitchProps } from "@/components/Switch/Switch";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 
-export interface SwitchInlineProps<T extends FieldValues>
-    extends SwitchProps<T> {
+export interface SwitchInlineProps<TFieldValues extends FieldValues, TName>
+    extends SwitchProps<TFieldValues, TName> {
     extraInfo?: string;
     label?: string;
-    control: Control<T>;
-    name: Path<T>;
+    control: Control<TFieldValues>;
+    name: TName;
 }
 
-const SwitchInline = <T extends FieldValues>(props: SwitchInlineProps<T>) => {
+const SwitchInline = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>(
+    props: SwitchInlineProps<TFieldValues, TName>
+) => {
     const { label, extraInfo, ...rest } = props;
 
     return (

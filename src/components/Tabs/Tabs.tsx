@@ -33,7 +33,7 @@ export interface TabProps {
     paramName?: string;
     renderTabContent?: boolean;
     persistParams?: boolean;
-    handleChange: (e: SyntheticEvent, value: string) => void;
+    handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
 const CustomLink = forwardRef<
@@ -42,16 +42,16 @@ const CustomLink = forwardRef<
 >((props, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
-
+    const { persist, ...rest } = props;
     return (
         <Link
             ref={ref}
             passHref
-            {...props}
+            {...rest}
             href={{
                 pathname,
                 query:
-                    searchParams?.entries() && props.persist
+                    searchParams?.entries() && persist
                         ? {
                               ...Object.fromEntries(searchParams?.entries()),
                               [props.param]: props.href,

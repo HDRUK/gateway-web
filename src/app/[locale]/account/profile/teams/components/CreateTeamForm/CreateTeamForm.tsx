@@ -76,7 +76,7 @@ const CreateIntegrationForm = () => {
         itemName: "Team",
     });
 
-    const editTeam = usePatch<TeamForm & { id?: number }>(apis.teamsV1Url);
+    const editTeam = usePatch<TeamForm>(apis.teamsV1Url);
 
     const submitForm = async (formData: TeamForm) => {
         if (!params?.teamId) {

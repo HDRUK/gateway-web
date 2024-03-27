@@ -12,14 +12,16 @@ describe("CheckboxGroup", () => {
         ];
 
         const Component = (props: { [key: string]: unknown }) => {
-            const { control } = useForm({
-                defaultValues: {
-                    colors: {
-                        red: true,
-                        blue: true,
+            const { control } = useForm<{ colors: { [key: string]: boolean } }>(
+                {
+                    defaultValues: {
+                        colors: {
+                            red: true,
+                            blue: true,
+                        },
                     },
-                },
-            });
+                }
+            );
 
             return (
                 <CheckboxGroup

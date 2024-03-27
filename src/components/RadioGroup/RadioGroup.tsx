@@ -11,9 +11,9 @@ import Radio from "@mui/material/Radio";
 import MuiRadioGroup from "@mui/material/RadioGroup";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
-export interface RadioGroupProps<T extends FieldValues> {
+export interface RadioGroupProps<TFieldValues extends FieldValues, TName> {
     label: string;
-    name: Path<T>;
+    name: TName;
     info?: string;
     extraInfo?: string;
     required?: boolean;
@@ -23,12 +23,15 @@ export interface RadioGroupProps<T extends FieldValues> {
     value?: unknown;
     onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
     radios: { value: string; label: string }[];
-    control: Control<T>;
+    control: Control<TFieldValues>;
     radioSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const RadioGroup = <T extends FieldValues>({
+const RadioGroup = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     formControlSx,
     radioSx = {},
@@ -42,7 +45,7 @@ const RadioGroup = <T extends FieldValues>({
     required = false,
     isRow = false,
     ...rest
-}: RadioGroupProps<T>) => {
+}: RadioGroupProps<TFieldValues, TName>) => {
     const {
         fieldState: { error },
     } = useController({

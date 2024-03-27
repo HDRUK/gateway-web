@@ -12,7 +12,7 @@ type Story = StoryObj<typeof ScrollContent>;
 
 export const Default: Story = {
     args: {
-        content:
+        children:
             "\n<p>This month we are pleased to share improvements to the usability of the search results page. Plus, we release our data use register widget.</p>\n",
     },
 };

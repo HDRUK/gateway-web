@@ -29,16 +29,28 @@ export type buttonColourType =
     | "error"
     | "info"
     | "warning"
-    | "grey";
+    | "greyCustom";
 
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
         link: true;
     }
 }
+declare module "@mui/material/styles" {
+    interface Palette {
+        warningCustom: Palette["primary"];
+        greyCustom: Palette["primary"];
+    }
+
+    interface PaletteOptions {
+        warningCustom?: PaletteOptions["primary"];
+        greyCustom?: PaletteOptions["primary"];
+    }
+}
+
 declare module "@mui/material/Button" {
     interface ButtonPropsColorOverrides {
-        grey: true;
+        greyCustom: true;
     }
 }
 declare module "@mui/material/Switch" {
@@ -48,7 +60,7 @@ declare module "@mui/material/Switch" {
 }
 declare module "@mui/material/Chip" {
     interface ChipPropsColorOverrides {
-        warningAmber: true;
+        warningCustom: true;
     }
 }
 
@@ -120,18 +132,17 @@ const palette = {
     success: {
         main: colors.green700,
     },
-    errorBackground: {
-        main: colors.red50,
-    },
-    errorBorder: {
-        main: colors.red700,
-    },
-    grey: {
+    greyCustom: {
         main: colors.grey400,
+        light: "#E9DB5D",
+        dark: "#A29415",
         contrastText: colors.grey800,
     },
     background: { default: "#f6f7f8" },
-    warningAmber: {
+    warningCustom: {
+        main: colors.amber500,
+        light: "#E9DB5D",
+        dark: "#A29415",
         contrastText: "#000",
     },
 };
@@ -226,15 +237,15 @@ const theme = createTheme({
         MuiButton: {
             variants: [
                 {
-                    props: { color: "grey" },
+                    props: { color: "greyCustom" },
                     style: {
                         color: colors.grey800,
-                        borderColor: palette.grey.main,
+                        borderColor: palette.greyCustom.main,
                         "&:active": {
-                            background: palette.grey.main,
+                            background: palette.greyCustom.main,
                         },
                         "&:hover": {
-                            background: palette.grey.main,
+                            background: palette.greyCustom.main,
                         },
                     },
                 },
@@ -577,7 +588,7 @@ const theme = createTheme({
         MuiChip: {
             variants: [
                 {
-                    props: { color: "warningAmber" },
+                    props: { color: "warningCustom" },
                     style: {
                         background: colors.amber500,
                     },

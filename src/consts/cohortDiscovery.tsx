@@ -3,7 +3,7 @@ const statusMapping = {
     REJECTED: "warning",
     PENDING: "primary",
     BANNED: "error",
-    SUSPENDED: "warningAmber",
+    SUSPENDED: "warningCustom",
     EXPIRED: "default",
 };
 const COHORT_DISCOVERY_EXPIRY_WARNING_DAYS = 166;

@@ -18,21 +18,20 @@ const errorNotification = ({
     props,
 }: ErrorNotificationProps) => {
     const { t, ...notificationProps } = props;
-    const { errors, message } = error || {};
 
     const title = get(messages, `api.common.error.status.${status}`)
         ? t(`common.error.status.${status}`)
         : "There has been an error";
 
     const messageTransformed =
-        message ||
+        error?.message ||
         t(`common.error.${method}.message`, {
             item: props.itemName || "item",
         });
 
     notificationService.apiError(messageTransformed, {
         title,
-        errors,
+        errors: error?.errors,
         ...notificationProps,
     });
 };

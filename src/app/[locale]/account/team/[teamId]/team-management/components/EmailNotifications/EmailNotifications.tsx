@@ -84,7 +84,7 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
             team_email:
                 team_notification_emails.length > 0
                     ? team_notification_emails[0]
-                    : null,
+                    : "",
             profile_email: getPreferredEmail(user),
         };
 

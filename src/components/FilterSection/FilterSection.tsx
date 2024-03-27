@@ -1,7 +1,13 @@
 "use client";
 
 import { CSSProperties, useMemo } from "react";
-import { Control, useController } from "react-hook-form";
+import {
+    Control,
+    FieldValues,
+    Path,
+    UseFormSetValue,
+    useController,
+} from "react-hook-form";
 import { List, AutoSizer } from "react-virtualized";
 import { cloneDeep, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
@@ -13,19 +19,25 @@ import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 
-interface FilterSectionProps {
+interface FilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
-    control: Control;
-    filterSection: string;
+    control: Control<TFieldValues>;
+    filterSection: TName;
     noFilterLabel?: string;
     placeholder?: string;
     checkboxValues: { [key: string]: boolean };
     counts?: CountType;
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
-    setValue: (name: string, value: string | number) => void;
+    setValue: (
+        name: keyof TFieldValues,
+        value: UseFormSetValue<TFieldValues>
+    ) => void;
     resetFilterSection: () => void;
 }
-const FilterSection = ({
+const FilterSection = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     filterItem,
     filterSection,
     control,
@@ -36,7 +48,7 @@ const FilterSection = ({
     handleCheckboxChange,
     setValue,
     resetFilterSection,
-}: FilterSectionProps) => {
+}: FilterSectionProps<TFieldValues, TName>) => {
     const t = useTranslations("components.FilterSection");
     const { field } = useController({
         control,

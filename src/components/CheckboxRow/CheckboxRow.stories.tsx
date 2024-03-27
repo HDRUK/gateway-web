@@ -21,10 +21,7 @@ export default meta;
 type Story = StoryObj<typeof Form>;
 
 export type FormData = {
-    first: string;
-    second: boolean;
-    third: string;
-    fourth: string;
+    [key: string]: string;
 };
 
 const validationSchema = yup
@@ -37,7 +34,7 @@ const WrapperComponent = () => {
     const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
-            second: false,
+            second: "",
             third: "",
             fourth: "",
         },

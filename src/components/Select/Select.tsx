@@ -18,7 +18,7 @@ export interface SelectOptionsType {
     icon?: IconType;
 }
 
-export interface SelectProps<T extends FieldValues> {
+export interface SelectProps<TFieldValues extends FieldValues, TName> {
     label: string;
     info?: string;
     extraInfo?: string;
@@ -29,8 +29,8 @@ export interface SelectProps<T extends FieldValues> {
     multiple?: boolean;
     horizontalForm?: boolean;
     icon?: IconType;
-    name: Path<T>;
-    control: Control<T>;
+    name: TName;
+    control: Control<TFieldValues>;
     required?: boolean;
     hasCheckbox?: boolean;
     formControlSx?: SxProps;
@@ -50,7 +50,10 @@ const renderValue = (
     return options.find(option => option.value === selected)?.label;
 };
 
-const Select = <T extends FieldValues>({
+const Select = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     info = "",
     extraInfo,
@@ -67,7 +70,7 @@ const Select = <T extends FieldValues>({
     disabled = false,
     invertListItem = false,
     ...rest
-}: SelectProps<T>) => {
+}: SelectProps<TFieldValues, TName>) => {
     const {
         field: { ref, ...fieldProps },
         fieldState: { error },

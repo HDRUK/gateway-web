@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Team } from "@/interfaces/Team";
 import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
@@ -18,9 +18,11 @@ interface getColumnsProps {
     permissions: { [key: string]: boolean };
     handleEdit: (id: number) => void;
     handleDelete: (id: number, teamName: string) => void;
-    setQuestionBankStatus: (status: "true" | "false") => void;
+    setQuestionBankStatus: (status: string) => void;
     questionBankStatus?: "true" | "false";
 }
+
+const columnHelper = createColumnHelper<Team>();
 
 const getColumns = ({
     setSort,
@@ -33,7 +35,7 @@ const getColumns = ({
     questionBankStatus,
 }: getColumnsProps): ColumnDef<Team>[] => {
     return [
-        {
+        columnHelper.display({
             id: "updated_at",
             header: () => (
                 <Box
@@ -53,9 +55,10 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            accessorFn: row => `${formatDate(row.updated_at)}`,
-        },
-        {
+            cell: ({ row: { original } }) =>
+                `${formatDate(original.updated_at)}`,
+        }),
+        columnHelper.display({
             id: "name",
             header: () => (
                 <Box
@@ -75,9 +78,10 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            accessorFn: row => `${capitalise(row.member_of)} > ${row.name}`,
-        },
-        {
+            cell: ({ row: { original } }) =>
+                `${capitalise(original.member_of)} > ${original.name}`,
+        }),
+        columnHelper.display({
             id: "teamManagers",
             header: () => (
                 <Box sx={{ p: 0 }} textAlign="left">
@@ -89,8 +93,8 @@ const getColumns = ({
                 const admins = getTeamAdmins(original.users);
                 return <ShowMoreTooltip items={admins} />;
             },
-        },
-        {
+        }),
+        columnHelper.display({
             id: "questionBank",
             header: () => (
                 <Box
@@ -102,7 +106,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     {translations.questionBank}
-                    <FilterPopover<"true" | "false">
+                    <FilterPopover
                         name="is_question_bank"
                         radios={[
                             { value: "", label: translations.all },
@@ -122,10 +126,10 @@ const getColumns = ({
                     <TickCrossIcon isTrue={original.is_question_bank} />
                 </div>
             ),
-        },
+        }),
         ...(permissions["custodians.update"]
             ? [
-                  {
+                  columnHelper.display({
                       id: "actions",
                       header: () => (
                           <Box sx={{ p: 0 }} textAlign="left">
@@ -154,7 +158,7 @@ const getColumns = ({
                               />
                           </div>
                       ),
-                  },
+                  }),
               ]
             : []),
     ];

@@ -12,6 +12,9 @@ export default { component: useDialog };
 
 const CustomDialog = () => {
     const { hideDialog, store } = useDialog();
+    const { dialogProps } = store as unknown as {
+        dialogProps: { foo: string };
+    };
     const { register, handleSubmit } = useForm();
 
     const onFormSubmit = (data: unknown) => {
@@ -36,8 +39,7 @@ const CustomDialog = () => {
                 }}>
                 <MuiDialogContent>
                     <p>
-                        Prop from where dialog was invoked:{" "}
-                        {store.dialogProps?.foo}
+                        Prop from where dialog was invoked: {dialogProps?.foo}
                     </p>
                     <TextField
                         placeholder="Firstname"

@@ -1,3 +1,4 @@
+import { SearchCategory } from "@/interfaces/Search";
 import { generateFilterV1 } from "@/mocks/data";
 import {
     formatBucketCounts,
@@ -67,12 +68,14 @@ describe("Filter utils", () => {
                 publisherName: ["one"],
                 geographicLocation: [],
                 dataUseTitles: [],
+                organisationName: [],
+                datasetTitles: [],
                 dateRange: [],
                 query: "diabetes",
                 sort: "desc",
                 page: "",
                 per_page: "",
-                type: "datasets",
+                type: SearchCategory.DATASETS,
             };
 
             const response = pickOnlyFilters("datasets", query);

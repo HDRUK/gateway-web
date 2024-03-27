@@ -1,11 +1,8 @@
-import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Dayjs } from "dayjs";
 import Button from "@/components/Button";
-import Form from "@/components/Form";
-import DatePickerControlled, {
-    DatePickerControlledProps,
-} from "./DatePickerControlled";
+import DatePickerControlled from "./DatePickerControlled";
 
 const meta: Meta<typeof DatePickerControlled> = {
     component: DatePickerControlled,
@@ -17,31 +14,22 @@ export default meta;
 
 type Story = StoryObj<typeof DatePickerControlled>;
 
-const WrapperComponent = (props: DatePickerControlledProps) => {
-    const { control, handleSubmit } = useForm({
-        defaultValues: {
-            colour: "2020-01-01",
-        },
-    });
-
-    const onSubmit = (data: { [key: string]: string }) => {
-        console.log("Submitted data: ", data);
-    };
-
+const WrapperComponent = () => {
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Stack alignItems="start">
-                <DatePickerControlled control={control} {...props} />
-                <Button type="submit">Submit</Button>
-            </Stack>
-        </Form>
+        <Stack alignItems="start">
+            <DatePickerControlled
+                name="Date"
+                label="Dates"
+                onChange={(newValue: Dayjs | null) =>
+                    console.log("Updated data: ", newValue)
+                }
+            />
+            <Button type="submit">Submit</Button>
+        </Stack>
     );
 };
 
 export const Default: Story = {
-    args: {
-        name: "Date",
-        label: "Dates",
-    },
-    render: props => <WrapperComponent {...props} />,
+    args: {},
+    render: () => <WrapperComponent />,
 };

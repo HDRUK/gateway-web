@@ -46,7 +46,15 @@ const useRunFederation = ({
 
     const fieldsToWatch = useWatch({
         control,
-        name: watchFederationKeys,
+        name: [
+            "auth_type",
+            "auth_secret_key",
+            "endpoint_baseurl",
+            "endpoint_datasets",
+            "endpoint_dataset",
+            "run_time_hour",
+            "notifications",
+        ],
         defaultValue: undefined,
     });
 

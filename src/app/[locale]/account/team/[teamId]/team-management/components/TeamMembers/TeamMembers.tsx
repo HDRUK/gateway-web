@@ -49,9 +49,7 @@ const TeamMembers = ({
     const [tableRows, setTableRows] = useState<User[]>([]);
     const [shouldSubmit, setShouldSubmit] = useState<boolean>(false);
 
-    const updateTeamRoles = usePatch<RolesPayload[]>(
-        `${apis.teamsV1Url}/${teamId}`
-    );
+    const updateTeamRoles = usePatch<RolesPayload[]>(`${apis.teamsV1Url}/56`);
 
     const { showBar, hideBar } = useActionBar();
 

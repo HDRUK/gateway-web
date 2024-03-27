@@ -1,4 +1,4 @@
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { FormControl, FormControlLabel, SxProps } from "@mui/material";
 import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
 import FormError from "@/components/FormError";
@@ -6,18 +6,24 @@ import Box from "../Box";
 import StyledCheckbox from "../StyledCheckbox";
 import Typography from "../Typography";
 
-export interface CheckboxProps extends MuiCheckboxProps {
+export interface CheckboxProps<TFieldValues extends FieldValues, TName>
+    extends Omit<MuiCheckboxProps, "name"> {
     label?: string;
-    name: string;
+    name: TName;
     size?: "small" | "medium" | "large";
     fullWidth?: boolean;
-    control: Control;
+    control: Control<TFieldValues>;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
     count?: number;
 }
 
-const Checkbox = (props: CheckboxProps) => {
+const Checkbox = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>(
+    props: CheckboxProps<TFieldValues, TName>
+) => {
     const {
         fullWidth = true,
         label = "",

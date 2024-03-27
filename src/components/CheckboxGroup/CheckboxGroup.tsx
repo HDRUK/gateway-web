@@ -7,10 +7,10 @@ import BoxContainer from "@/components/BoxContainer";
 import Checkbox from "@/components/Checkbox";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
-export interface CheckboxGroupProps<T extends FieldValues>
-    extends MuiCheckboxProps {
+export interface CheckboxGroupProps<TFieldValues extends FieldValues, TName>
+    extends Omit<MuiCheckboxProps, "name"> {
     label: string;
-    name: Path<T>;
+    name: TName;
     direction?: "row" | "column";
     nColumns?: number;
     horizontalForm?: boolean;
@@ -19,12 +19,15 @@ export interface CheckboxGroupProps<T extends FieldValues>
     limit?: number;
     spacing?: number;
     checkboxes: { value: string; label: string; count?: number }[];
-    control: Control<T>;
+    control: Control<TFieldValues>;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const CheckboxGroup = <T extends FieldValues>({
+const CheckboxGroup = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     name,
     checkboxes,
@@ -40,7 +43,7 @@ const CheckboxGroup = <T extends FieldValues>({
     checkboxSx,
     formControlSx,
     ...rest
-}: CheckboxGroupProps<T>) => {
+}: CheckboxGroupProps<TFieldValues, TName>) => {
     const {
         field,
         fieldState: { error },
