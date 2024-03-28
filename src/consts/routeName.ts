@@ -8,6 +8,7 @@ export enum RouteName {
     COHORT_DISCOVERY_REQUEST = "cohort-discovery-request",
     CREATE = "create",
     DATA_ACCESS_REQUESTS = "data-access-requests",
+    DATASET_ITEM = "dataset",
     DATA_USES = "data-uses",
     DATASETS = "datasets",
     DUPLICATE = "duplicate",
