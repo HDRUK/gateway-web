@@ -12,7 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof FilterSection>;
 const WrapperComponent = () => {
-    const { setValue, control } = useForm<{ course: string }>({
+    const { setValue, control } = useForm<{ [key: string]: string }>({
         defaultValues: { course: "" },
     });
 

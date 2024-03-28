@@ -10,14 +10,14 @@ import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import { CancelIcon } from "@/consts/icons";
 
-export interface TextFieldBaseProps<T extends FieldValues> {
+export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     label: string;
     placeholder?: string;
     info?: string;
     extraInfo?: string;
     icon?: IconType;
-    setValue?: (name: string, value: string | number) => void;
-    name: Path<T>;
+    setValue?: (name: keyof TFieldValues, value: unknown) => void;
+    name: TName;
     multiline?: boolean;
     horizontalForm?: boolean;
     rows?: number;
@@ -25,13 +25,18 @@ export interface TextFieldBaseProps<T extends FieldValues> {
     disabled?: boolean;
     fullWidth?: boolean;
     showClearButton?: boolean;
-    control: Control<T>;
+    control: Control<TFieldValues>;
     required?: boolean;
     formControlSx?: SxProps;
     css?: SerializedStyles;
 }
 
-const TextFieldBase = <T extends FieldValues>(props: TextFieldBaseProps<T>) => {
+const TextFieldBase = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>(
+    props: TextFieldBaseProps<TFieldValues, TName>
+) => {
     const {
         horizontalForm = false,
         label,

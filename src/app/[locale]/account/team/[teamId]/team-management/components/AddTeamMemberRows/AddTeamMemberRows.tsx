@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Control, FieldArrayWithId } from "react-hook-form";
+import { Control, FieldArrayWithId, FieldValues } from "react-hook-form";
 import { IconButton } from "@mui/material";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import Box from "@/components/Box";
@@ -11,21 +11,21 @@ import {
 } from "@/config/forms/addTeamMember";
 import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 
-interface AddTeamMemberRowsProps {
+interface AddTeamMemberRowsProps<TFieldValues extends FieldValues> {
     fields: FieldArrayWithId<AddTeamMember, "userAndRoles", "id">[];
-    control: Control;
+    control: Control<TFieldValues>;
     userOptions: SelectOptionsType[];
     remove: (fieldId: number) => void;
     append: (newRow: UserAndRoles) => void;
 }
 
-const AddTeamMemberRows = ({
+const AddTeamMemberRows = <TFieldValues extends FieldValues>({
     fields,
     control,
     userOptions,
     remove,
     append,
-}: AddTeamMemberRowsProps) => {
+}: AddTeamMemberRowsProps<TFieldValues>) => {
     const roleOptionsFiltered = useMemo(() => {
         return getRoleOptions();
     }, []);

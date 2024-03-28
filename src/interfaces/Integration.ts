@@ -12,6 +12,7 @@ interface Integration {
     endpoint_datasets: string;
     endpoint_dataset: string;
     run_time_hour: number;
+    created_at: string;
     run_time_minute: string;
     enabled: boolean;
     tested: boolean;

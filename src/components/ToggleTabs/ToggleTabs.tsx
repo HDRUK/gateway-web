@@ -30,7 +30,7 @@ const ToggleTabs = <T,>({ buttons, selected }: ToggleTabsProps<T>) => {
                             disableRipple>
                             <Icon sx={{ fill: "black" }} />
                             <Typography
-                                color="grey"
+                                color="greyCustom"
                                 sx={{ ml: "3px", textTransform: "capitalize" }}>
                                 {label}
                             </Typography>

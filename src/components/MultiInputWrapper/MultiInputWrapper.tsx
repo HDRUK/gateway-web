@@ -1,21 +1,27 @@
 "use client";
 
 import { Fragment } from "react";
-import { Control, FieldValues } from "react-hook-form";
+import { Control, FieldValues, Path } from "react-hook-form";
 import { Box } from "@mui/material";
 import { FormField } from "@/interfaces/FormField";
 import InputWrapper from "@/components/InputWrapper";
 
-export interface MultiInputWrapperProps<T extends FieldValues> {
-    fields: FormField[];
-    control: Control<T>;
+export interface MultiInputWrapperProps<
+    TFieldValues extends FieldValues,
+    TName
+> {
+    fields: FormField<TName>[];
+    control: Control<TFieldValues>;
 }
 
-const MultiInputWrapper = <T extends FieldValues>({
+const MultiInputWrapper = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     fields,
     control,
-}: MultiInputWrapperProps<T>) => {
-    const renderField = (field: FormField) => {
+}: MultiInputWrapperProps<TFieldValues, TName>) => {
+    const renderField = (field: FormField<TName>) => {
         if (field.component) {
             return (
                 <InputWrapper key={field.name} control={control} {...field} />
@@ -26,7 +32,7 @@ const MultiInputWrapper = <T extends FieldValues>({
                 <>
                     {field.label}
                     <Box
-                        key={field.name}
+                        key={field.name as string}
                         sx={{
                             display: "flex",
                             alignItems: "center",
@@ -34,7 +40,7 @@ const MultiInputWrapper = <T extends FieldValues>({
                             my: 1,
                         }}>
                         {field.fields?.map(subField => (
-                            <Fragment key={subField.name}>
+                            <Fragment key={subField.name as string}>
                                 {subField.label}
                                 <InputWrapper
                                     formControlSx={{
@@ -57,7 +63,7 @@ const MultiInputWrapper = <T extends FieldValues>({
 
     return (
         <Box sx={{ p: 0 }}>
-            {fields.map((field: FormField) => (
+            {fields.map((field: FormField<TName>) => (
                 <Box
                     key={field.name}
                     sx={{

@@ -4,18 +4,24 @@ import { Stack, Typography, FormControl, SxProps } from "@mui/material";
 import MuiSwitch, { SwitchProps as MuiSwitchProps } from "@mui/material/Switch";
 import Tooltip from "@/components/Tooltip";
 
-export interface SwitchProps<T extends FieldValues> extends MuiSwitchProps {
+export interface SwitchProps<TFieldValues extends FieldValues, TName>
+    extends Omit<MuiSwitchProps, "name"> {
     checkedLabel?: string;
     unCheckedLabel?: string;
-    name: Path<T>;
+    name: TName;
     title?: string;
     disabled?: boolean;
-    control: Control<T>;
+    control: Control<TFieldValues>;
     switchSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const Switch = <T extends FieldValues>(props: SwitchProps<T>) => {
+const Switch = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>(
+    props: SwitchProps<TFieldValues, TName>
+) => {
     const {
         unCheckedLabel,
         checkedLabel,

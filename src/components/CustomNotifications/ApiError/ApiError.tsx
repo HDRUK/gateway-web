@@ -10,7 +10,7 @@ interface ApiErrorProps extends CustomContentProps {
     action: ReactNode;
     title: string;
     message: string;
-    errors: { title: string; message: string }[];
+    errors?: { message: string }[];
 }
 
 const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(

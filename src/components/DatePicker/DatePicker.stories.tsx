@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import DatePicker, { DatePickerProps } from "./DatePicker";
+import DatePicker from "./DatePicker";
 
 const meta: Meta<typeof DatePicker> = {
     component: DatePicker,
@@ -15,10 +15,10 @@ export default meta;
 
 type Story = StoryObj<typeof DatePicker>;
 
-const WrapperComponent = (props: DatePickerProps) => {
-    const { control, handleSubmit } = useForm({
+const WrapperComponent = () => {
+    const { control, handleSubmit } = useForm<{ date: string }>({
         defaultValues: {
-            colour: "2020-01-01",
+            date: "2020-01-01",
         },
     });
 
@@ -29,7 +29,7 @@ const WrapperComponent = (props: DatePickerProps) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack alignItems="start">
-                <DatePicker control={control} {...props} />
+                <DatePicker control={control} name="date" label="Dates" />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>
@@ -37,9 +37,5 @@ const WrapperComponent = (props: DatePickerProps) => {
 };
 
 export const Default: Story = {
-    args: {
-        name: "Date",
-        label: "Dates",
-    },
-    render: props => <WrapperComponent {...props} />,
+    render: () => <WrapperComponent />,
 };

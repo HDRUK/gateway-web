@@ -17,6 +17,9 @@ describe("ApplicationList", () => {
                 pagination: {
                     lastPage: 2,
                     total: 3,
+                    from: 0,
+                    to: 3,
+                    currentPage: 1,
                 },
             })
         );

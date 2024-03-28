@@ -1,5 +1,5 @@
 import React, { ElementType } from "react";
-import { FieldValues } from "react-hook-form";
+import { Control, FieldPath, FieldValues } from "react-hook-form";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import Autocomplete from "@/components/Autocomplete";
 import Checkbox from "@/components/Checkbox";
@@ -20,26 +20,33 @@ import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
 
-type InputType<T extends FieldValues> =
-    | TextFieldBaseProps<T>
-    | SelectProps<T>
-    | TextAreaProps<T>
-    | CheckboxRowProps
-    | CheckboxProps;
+type InputType<TFieldValues extends FieldValues, TName> =
+    | TextFieldBaseProps<TFieldValues, TName>
+    | SelectProps<TFieldValues, TName>
+    | TextAreaProps<TFieldValues, TName>
+    | CheckboxRowProps<TFieldValues, TName>
+    | CheckboxProps<TFieldValues, TName>;
 
-export interface InputWrapperProps {
+export interface InputWrapperProps<TFieldValues extends FieldValues, TName> {
     horizontalForm?: boolean;
     component: ComponentTypes;
+    control: Control<TFieldValues>;
+    name: TName;
 }
 
-export type InputWrapperCombinedProps<T extends FieldValues> =
-    InputWrapperProps & InputType<T>;
+export type InputWrapperCombinedProps<
+    TFieldValues extends FieldValues,
+    TName
+> = InputWrapperProps<TFieldValues, TName> & InputType<TFieldValues, TName>;
 
-function InputWrapper<T extends FieldValues>({
+function InputWrapper<
+    TFieldValues extends FieldValues = FieldValues,
+    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+>({
     component,
     control,
     ...props
-}: InputWrapperCombinedProps<T>) {
+}: InputWrapperCombinedProps<TFieldValues, TName>) {
     const inputs = {
         Autocomplete,
         Switch,

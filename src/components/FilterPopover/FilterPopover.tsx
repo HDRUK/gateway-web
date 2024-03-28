@@ -5,24 +5,24 @@ import Box from "@/components/Box";
 import RadioGroup from "@/components/RadioGroup";
 import { FilterAltIcon, FilterAltOffIcon } from "@/consts/icons";
 
-interface FilterPopoverProps<T> {
+interface FilterPopoverProps {
     setFilter: (filter: string) => void;
-    filter?: Partial<T>;
+    filter?: string;
     radios: { label: string; value: string }[];
     name: string;
 }
 
-interface FilterCheckboxesProps<T> extends FilterPopoverProps<T> {
+interface FilterCheckboxesProps extends FilterPopoverProps {
     handleClose: () => void;
 }
 
-const FilterCheckboxes = <T extends string>({
+const FilterCheckboxes = ({
     filter,
     setFilter,
     radios,
     name,
     handleClose,
-}: FilterCheckboxesProps<T>) => {
+}: FilterCheckboxesProps) => {
     const { control } = useForm({
         defaultValues: filter ? { [name]: filter } : ({} as FieldValues),
     });
@@ -54,12 +54,12 @@ const FilterCheckboxes = <T extends string>({
     );
 };
 
-const FilterPopover = <T extends string>({
+const FilterPopover = ({
     filter,
     setFilter,
     name,
     radios,
-}: FilterPopoverProps<T>) => {
+}: FilterPopoverProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {

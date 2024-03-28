@@ -14,21 +14,31 @@ export default meta;
 type Story = StoryObj<typeof Autocomplete>;
 
 const colors = [
-    { id: "red", label: "Red" },
-    { id: "blue", label: "Blue" },
-    { id: "yellow", label: "Yellow" },
+    { value: "red", label: "Red" },
+    { value: "blue", label: "Blue" },
+    { value: "yellow", label: "Yellow" },
 ];
 
-const WrapperComponent = (props: Omit<AutocompleteProps, "control">) => {
-    const { control } = useForm();
+const WrapperComponent = (
+    props: Omit<
+        AutocompleteProps<{ [key: string]: string }>,
+        "control" | "name" | "label"
+    >
+) => {
+    const { control } = useForm<{ fieldName: string }>();
 
-    return <Autocomplete control={control} {...props} />;
+    return (
+        <Autocomplete
+            control={control}
+            label="Select an option"
+            name="fieldName"
+            {...props}
+        />
+    );
 };
 
 export const Default: Story = {
     args: {
-        label: "Select an option",
-        name: "colors",
         options: colors,
     },
     render: props => <WrapperComponent {...props} />,

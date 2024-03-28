@@ -9,7 +9,13 @@ import { fireEvent, renderHook, screen, waitFor } from "@/utils/testUtils";
 describe("useDialog", () => {
     const SimpleDialog = () => {
         const { store } = useDialog();
-        const { dialogProps } = store;
+        const { dialogProps } = store as unknown as {
+            dialogProps: {
+                onCancel: () => null;
+                onSuccess: (val: string) => null;
+                foo: string;
+            };
+        };
         return (
             <Dialog onClose={dialogProps?.onCancel} title="Dialog title">
                 <MuiDialogContent>

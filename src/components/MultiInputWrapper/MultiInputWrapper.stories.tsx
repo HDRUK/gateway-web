@@ -62,9 +62,7 @@ const WrapperComponent = () => {
         },
     ];
 
-    return (
-        <MultiInputWrapper<FormData> control={control} fields={formFields} />
-    );
+    return <MultiInputWrapper control={control} fields={formFields} />;
 };
 
 export const Default: Story = {

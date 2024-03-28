@@ -42,9 +42,9 @@ const apiSuccess = (
     options?: OptionsWithExtraProps<VariantType>
 ) => {
     return notification(message, "apiSuccess", {
-        action: (snackbarId: SnackbarKey) => {
-            <DismissButton snackbarId={snackbarId} />;
-        },
+        action: (snackbarId: SnackbarKey) => (
+            <DismissButton snackbarId={snackbarId} />
+        ),
         ...(typeof options === "object" && { ...options }),
     });
 };
@@ -62,9 +62,6 @@ const apiError = (
 ) => {
     return notification(message, "apiError", {
         persist: true,
-        action: (snackbarId: SnackbarKey) => (
-            <DismissButton snackbarId={snackbarId} />
-        ),
         ...(typeof options === "object" && { ...options }),
     });
 };

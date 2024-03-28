@@ -1,15 +1,21 @@
 "use client";
 
 /* eslint-disable react/prop-types */
-
-/** @jsxImportSource @emotion/react */
 import ModalButtons from "@/components/ModalButtons";
 import useActionBar from "@/hooks/useActionBar";
-import * as styles from "./ActionBar.styles";
+import { ModalButtonProps } from "../ModalButtons/ModalButtons";
+import { ButtonWrapper, Wrapper } from "./ActionBar.styles";
+
+interface ProviderProps extends ModalButtonProps {
+    component: React.ComponentType<unknown>;
+}
 
 const ActionBar = () => {
     const { store } = useActionBar();
-    const { props, name } = store;
+    const { props, name } = store as {
+        name: string;
+        props: ProviderProps;
+    };
     const {
         component,
         confirmText,
@@ -17,19 +23,23 @@ const ActionBar = () => {
         cancelText,
         onCancel,
         onSuccess,
+        tertiaryButton,
         formId,
+        showCancel,
         ...rest
     } = props;
 
     if (!name) return null;
 
-    const Component = component as React.ComponentType;
+    const Component = component;
 
     return (
-        <div css={styles.root(!!component)}>
+        <Wrapper hasComponent={!!component}>
             {component && <Component {...rest} />}
-            <div css={styles.ButtonWrapper}>
+            <ButtonWrapper>
                 <ModalButtons
+                    tertiaryButton={tertiaryButton}
+                    showCancel={showCancel}
                     formId={formId}
                     onSuccess={onSuccess}
                     onCancel={onCancel}
@@ -37,8 +47,8 @@ const ActionBar = () => {
                     cancelText={cancelText}
                     confirmType={confirmType}
                 />
-            </div>
-        </div>
+            </ButtonWrapper>
+        </Wrapper>
     );
 };
 

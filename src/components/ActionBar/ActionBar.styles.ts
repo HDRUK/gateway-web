@@ -1,7 +1,7 @@
-import { css } from "@emotion/react";
+import { styled } from "@mui/material";
 
-export const root = (hasComponent: boolean) =>
-    css({
+export const Wrapper = styled("div")<{ hasComponent: boolean }>(
+    ({ hasComponent }) => ({
         display: "flex",
         background: "white",
         padding: 20,
@@ -15,10 +15,11 @@ export const root = (hasComponent: boolean) =>
             justifyContent: hasComponent ? "space-between" : "end",
             flexDirection: "row",
         },
-    });
+    })
+);
 
-export const ButtonWrapper = css({
+export const ButtonWrapper = styled("div")(() => ({
     display: "inline-flex",
     flexWrap: "wrap",
     gap: "12px",
-});
+}));
