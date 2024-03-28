@@ -3,6 +3,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import NavigationEvents from "@/components/NavigationEvents";
+import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import { sourceSans3 } from "@/config/fonts";
 import ActionBarProvider from "@/providers/ActionBarProvider";
@@ -44,6 +45,7 @@ export default function RootLayout({
                                             fontFamily:
                                                 sourceSans3.style.fontFamily,
                                         }}>
+                                        <SupportPopOut />
                                         {children}
                                         <Footer />
                                     </div>

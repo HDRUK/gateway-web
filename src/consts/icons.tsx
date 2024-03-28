@@ -36,6 +36,7 @@ import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateChe
 import InfoIcon from "@mui/icons-material/Info";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
@@ -54,6 +55,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 export * from "./customIcons";
 
 export {
+    OpenInNewIcon,
     ArrowForward,
     AppsIcon,
     FilterAltOffIcon,

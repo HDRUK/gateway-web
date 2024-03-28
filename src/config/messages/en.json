@@ -371,6 +371,13 @@
         }
     },
     "components": {
+        "SupportPopOut": {
+            "buttonText": "Need support",
+            "giveFeedback": "Give feedback",
+            "reportBug": "Report bug",
+            "requestSupport": "Request support",
+            "visitSupportCentre": "Visit Support Centre"
+        },
         "ShowMore": {
             "showLess": "...show less",
             "showMore": "...show more"
