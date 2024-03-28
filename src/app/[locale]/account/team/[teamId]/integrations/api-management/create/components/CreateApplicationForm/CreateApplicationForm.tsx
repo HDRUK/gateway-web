@@ -70,12 +70,12 @@ const CreateApplicationForm = () => {
             team_id: parseInt(`${params?.teamId}`, 10),
             ...formData,
         };
-        const response = await createApplication(payload);
+        const newId = await createApplication(payload);
 
         /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
         setTimeout(() => {
             push(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${response.id}/${RouteName.PERMISSIONS}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${newId}/${RouteName.PERMISSIONS}`
             );
         });
     };

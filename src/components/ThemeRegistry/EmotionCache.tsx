@@ -7,6 +7,7 @@ import type {
     Options as OptionsOfCreateCache,
 } from "@emotion/cache";
 import { CacheProvider as DefaultCacheProvider } from "@emotion/react";
+import { JSX as EmotionJSX } from "@emotion/react/jsx-runtime";
 import { useServerInsertedHTML } from "next/navigation";
 
 export type NextAppDirEmotionCacheProviderProps = {
@@ -16,7 +17,7 @@ export type NextAppDirEmotionCacheProviderProps = {
     CacheProvider?: (props: {
         value: EmotionCache;
         children: React.ReactNode;
-    }) => React.JSX.Element | null;
+    }) => EmotionJSX.Element | null;
     children: React.ReactNode;
 };
 

@@ -50,7 +50,10 @@ const ApplicationPermissions = ({
     >(undefined);
 
     const { push } = useRouter();
-    const { apiId, teamId } = useParams();
+    const params = useParams<{
+        teamId: string;
+        apiId: string;
+    }>();
     const t = useTranslations(TRANSLATION_PATH);
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
@@ -135,7 +138,7 @@ const ApplicationPermissions = ({
                 /* setTimout required to prevent useUnsavedChanges hook firing before formState updates */
                 setTimeout(() => {
                     push(
-                        `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
+                        `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
                     );
                 }, 500);
             }
@@ -146,7 +149,7 @@ const ApplicationPermissions = ({
             mutate,
             permissions,
             push,
-            teamId,
+            params?.teamId,
             updateApplication,
         ]
     );
@@ -229,7 +232,7 @@ const ApplicationPermissions = ({
                             marginBottom: "10px",
                         }}>
                         <Link
-                            href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${apiId}`}
+                            href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${params?.apiId}`}
                             passHref>
                             <Button color="secondary" variant="outlined">
                                 Back
