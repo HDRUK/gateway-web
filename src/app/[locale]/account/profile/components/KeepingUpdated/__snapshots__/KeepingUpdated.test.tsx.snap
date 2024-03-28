@@ -31,7 +31,7 @@ exports[`KeepingUpdated should render content 1`] = `
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-1mbnhdb-MuiFormControlLabel-root"
         >
           <span
-            class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-uh39g8-MuiButtonBase-root-MuiCheckbox-root"
+            class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-1kn6ueq-MuiButtonBase-root-MuiCheckbox-root"
           >
             <input
               class="PrivateSwitchBase-input mui-style-1m9pwf3"

@@ -1,5 +1,6 @@
 "use client";
 
+import { isValidElement } from "react";
 import { createTheme } from "@mui/material/styles";
 
 const buttonLinkStyle = {
@@ -191,29 +192,33 @@ const theme = createTheme({
         MuiButtonBase: {
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => {
-                    return {
-                        "&.MuiMenuItem-root:hover": {
-                            ...(ownerState.children?.props?.invertListItem && {
-                                background: _theme.palette.primary.dark,
-                            }),
-                        },
-                        "&.MuiMenuItem-root.Mui-selected": {
-                            ...(ownerState.children?.props?.invertListItem && {
-                                background: _theme.palette.primary.dark,
-                            }),
-                        },
-                        "&.MuiMenuItem-root.Mui-selected:hover": {
-                            ...(ownerState.children?.props?.invertListItem && {
-                                background: _theme.palette.primary.dark,
-                            }),
-                        },
-                        "&.MuiTab-root": {
-                            textTransform: "initial",
-                        },
-                        "&.MuiTab-root.Mui-selected": {
-                            color: colors.grey900,
-                        },
-                    };
+                    if (isValidElement(ownerState.children)) {
+                        const ownerStateProps = ownerState.children.props;
+                        return {
+                            "&.MuiMenuItem-root:hover": {
+                                ...(ownerStateProps?.invertListItem && {
+                                    background: _theme.palette.primary.dark,
+                                }),
+                            },
+                            "&.MuiMenuItem-root.Mui-selected": {
+                                ...(ownerStateProps?.invertListItem && {
+                                    background: _theme.palette.primary.dark,
+                                }),
+                            },
+                            "&.MuiMenuItem-root.Mui-selected:hover": {
+                                ...(ownerStateProps?.invertListItem && {
+                                    background: _theme.palette.primary.dark,
+                                }),
+                            },
+                            "&.MuiTab-root": {
+                                textTransform: "initial",
+                            },
+                            "&.MuiTab-root.Mui-selected": {
+                                color: colors.grey900,
+                            },
+                        };
+                    }
+                    return {};
                 },
             },
         },
