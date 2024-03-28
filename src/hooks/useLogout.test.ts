@@ -21,6 +21,7 @@ describe("useLogout", () => {
             expect(getRequest).toBeCalledWith(apis.logoutInternalUrl, {
                 notificationOptions: {
                     errorNotificationsOn: false,
+                    t: expect.any(Function),
                 },
             });
             expect(mockRouter).toMatchObject({

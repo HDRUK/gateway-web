@@ -83,8 +83,10 @@ describe("Filter utils", () => {
             expect(response).toEqual({
                 filters: {
                     datasets: {
+                        datasetTitles: [],
                         publisherName: ["one"],
                         geographicLocation: [],
+                        organisationName: [],
                         dataUseTitles: [],
                         dateRange: [],
                     },
