@@ -65,7 +65,12 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("geographicCoverageTitle"),
-            stat: `${get(data, "metadata.metadata.coverage.spatial")}`,
+            stat: (
+                get(
+                    data,
+                    "metadata.metadata.coverage.spatial"
+                ) as unknown as string
+            ).split(","),
             iconSrc: "/images/dataset/map.svg",
         },
         {
