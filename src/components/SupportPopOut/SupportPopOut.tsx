@@ -18,10 +18,10 @@ const SupportPopOut = () => {
     const t = useTranslations("components.SupportPopOut");
 
     const handleClick = useCallback(
-        () => (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event: React.MouseEvent<HTMLButtonElement>) => {
             setAnchorEl(event.currentTarget);
         },
-        []
+        [setAnchorEl]
     );
 
     const handleClose = () => {
@@ -81,7 +81,7 @@ const SupportPopOut = () => {
                 <div>
                     <SupportList>
                         {links.map(link => (
-                            <li>
+                            <li key={link.label}>
                                 <Link
                                     passHref
                                     href={link.href}
