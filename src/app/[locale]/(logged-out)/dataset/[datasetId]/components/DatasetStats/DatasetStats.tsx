@@ -5,30 +5,11 @@ import BoxContainer from "@/components/BoxContainer";
 import DatasetStatCard, {
     DatasetStatCardProps,
 } from "@/components/DatasetStatCard/DatasetStatCard";
+import { parseLeadTime } from "@/utils/dataset";
 import { getYear } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
-const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
 const UNDEFINED_VALUE = "undefined";
-
-const parseLeadTime = (leadTimeString: string) => {
-    if (!leadTimeString) {
-        return [];
-    }
-
-    const matchedUnit = LEAD_TIME_UNITS.find(unit =>
-        leadTimeString.endsWith(unit)
-    );
-
-    if (matchedUnit) {
-        const time = leadTimeString
-            .substring(0, leadTimeString.length - matchedUnit.length)
-            .trim();
-        return [time, matchedUnit];
-    }
-
-    return [leadTimeString];
-};
 
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);

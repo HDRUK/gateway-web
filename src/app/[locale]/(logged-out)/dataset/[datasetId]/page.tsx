@@ -1,14 +1,14 @@
-import { get, pick } from "lodash";
+import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
-import datasetFields from "@/config/dataset/displayFields";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DatasetActiveLinks from "./components/DatasetActiveLinks";
 import DatasetContent from "./components/DatasetContent";
 import DatasetStats from "./components/DatasetStats";
+import { datasetFields } from "./config";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Dataset",
@@ -38,7 +38,7 @@ export default async function DatasetItemPage({
     const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
 
     const populatedSections = datasetFields.filter(section =>
-        section.fields.some(field => get(datasetVersion, field.path))
+        section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
 
     const activeLinkList = populatedSections.map(section => {
