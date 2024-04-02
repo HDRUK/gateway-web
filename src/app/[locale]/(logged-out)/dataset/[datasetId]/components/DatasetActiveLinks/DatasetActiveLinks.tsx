@@ -10,7 +10,7 @@ import Typography from "@/components/Typography";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActiveLinks";
 
-const DatasetContent = ({
+const DatasetActiveLinks = ({
     activeLinkList,
 }: {
     activeLinkList: {
@@ -66,4 +66,4 @@ const DatasetContent = ({
     );
 };
 
-export default DatasetContent;
+export default DatasetActiveLinks;
