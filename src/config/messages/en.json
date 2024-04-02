@@ -363,6 +363,9 @@
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata"
                 },
+                "ActiveLinks": {
+                    "bookmarks": "Bookmarks"
+                },
                 "DatasetStats": {
                     "populationTitle": "Population Size",
                     "populationUnit": "People",

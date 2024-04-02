@@ -139,7 +139,7 @@ const palette = {
     },
     greyCustom: {
         main: colors.grey400,
-        light: "#E9DB5D",
+        light: "#E2E2E2",
         dark: "#A29415",
         contrastText: colors.grey800,
     },
