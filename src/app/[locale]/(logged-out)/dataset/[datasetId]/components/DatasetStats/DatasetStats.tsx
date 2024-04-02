@@ -33,7 +33,7 @@ const parseLeadTime = (leadTimeString: string) => {
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const datasetStats: DatasetStatCardProps[] = [
+    const formattedStats: DatasetStatCardProps[] = [
         {
             title: t("populationTitle"),
             stat: get(
@@ -70,7 +70,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                     data,
                     "metadata.metadata.coverage.spatial"
                 ) as unknown as string
-            ).split(","),
+            )?.split(","),
             iconSrc: "/images/dataset/map.svg",
         },
         {
@@ -108,7 +108,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                     tablet: 2,
                 },
             }}>
-            {datasetStats.map(
+            {formattedStats.map(
                 datasetStat =>
                     !isEmpty(datasetStat.stat) &&
                     datasetStat.stat !== UNDEFINED_VALUE && (
