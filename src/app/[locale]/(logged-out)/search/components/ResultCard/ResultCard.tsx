@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -20,11 +21,11 @@ const ResultCard = ({ result }: ResultCardProps) => {
     const metadata = get(result, "metadata.metadata");
     const { _id: datasetId } = result;
 
-    if (!metadata) return null;
-
-    const handleClickItem = () => {
+    const handleClickItem = useCallback(() => {
         router.push(`/${RouteName.DATASET_ITEM}/${datasetId}`);
-    };
+    }, [datasetId, router]);
+
+    if (!metadata) return null;
 
     return (
         <>

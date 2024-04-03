@@ -9,7 +9,6 @@ import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Chip from "@/components/Chip";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
@@ -23,6 +22,11 @@ import {
     Observation,
     observationTableColumns,
 } from "../../config";
+import {
+    DatasetFieldItem,
+    DatasetFieldWrapper,
+    ObservationTableWrapper,
+} from "./DatasetContent.styles";
 
 const TRANSLATION_PATH = "pages.dataset";
 const DATE_FORMAT = "DD/MM/YYYY";
@@ -52,14 +56,9 @@ const DatasetContent = ({
     const path = usePathname();
 
     const renderObservationsTable = (rows?: Observation[]) => (
-        <Box
-            sx={{
-                p: 0,
-                border: "1px solid lightgray",
-                overflowX: "scroll",
-            }}>
+        <ObservationTableWrapper>
             <Table<Observation> columns={getColumns()} rows={rows || []} />
-        </Box>
+        </ObservationTableWrapper>
     );
 
     const renderDatasetField = (type: FieldType, value: string) => {
@@ -73,22 +72,9 @@ const DatasetContent = ({
                 const tagList = splitStringList(value);
 
                 return (
-                    <Box
-                        sx={{
-                            p: 0,
-                            gap: 1,
-                            display: "flex",
-                            flexWrap: "wrap",
-                        }}>
+                    <DatasetFieldWrapper>
                         {tagList.map(tag => (
-                            <Chip
-                                sx={{
-                                    textOverflow: "ellipsis",
-                                    maxWidth: 200,
-                                    overflow: "hidden",
-                                    whiteSpace: "nowrap",
-                                    marginBottom: "4px",
-                                }}
+                            <DatasetFieldItem
                                 color="success"
                                 size="small"
                                 label={tag}
@@ -101,7 +87,7 @@ const DatasetContent = ({
                                 }
                             />
                         ))}
-                    </Box>
+                    </DatasetFieldWrapper>
                 );
             }
             case FieldType.LINK:

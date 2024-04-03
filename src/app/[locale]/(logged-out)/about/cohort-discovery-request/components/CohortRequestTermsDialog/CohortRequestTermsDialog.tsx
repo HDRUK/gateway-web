@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InView } from "react-intersection-observer";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -72,14 +72,14 @@ const CohortRequestTermsDialog = () => {
         handleSuccess();
     };
 
-    const handleScroll = (id: number) => {
+    const handleScroll = useCallback((id: number) => {
         setNavClicked(id);
         const section = document.querySelector(`#anchor${id}`);
         if (section) {
             section.scrollIntoView({ behavior: "smooth", block: "start" });
             setActiveItem(id);
         }
-    };
+    }, []);
 
     return (
         <Dialog title="" maxWidth="laptop">
