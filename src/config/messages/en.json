@@ -363,9 +363,16 @@
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata"
                 },
+                "ActiveLinks": {
+                    "bookmarks": "Bookmarks"
+                },
                 "DatasetStats": {
                     "populationTitle": "Population Size",
-                    "populationUnit": "People"
+                    "populationUnit": "People",
+                    "yearTitle": "Years",
+                    "associatedTissuesTitle": "Associated Tissues",
+                    "geographicCoverageTitle": "Geographic coverage",
+                    "leadTimeTitle": "Lead time"
                 }
             }
         }

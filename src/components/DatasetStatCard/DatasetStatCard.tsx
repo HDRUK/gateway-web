@@ -11,12 +11,12 @@ import {
     Title,
 } from "./DatasetStatCard.styles";
 
-interface DatasetStatCardProps {
+export interface DatasetStatCardProps {
     title: string;
     stat: string | string[];
-    largeStatText: boolean;
+    largeStatText?: boolean;
     iconSrc: string;
-    unit: string;
+    unit?: string;
     helperText?: string;
 }
 
@@ -29,10 +29,7 @@ const DatasetStatCard = ({
     helperText,
 }: DatasetStatCardProps) => {
     return (
-        <StatCard
-            sx={{
-                width: 195,
-            }}>
+        <StatCard>
             <Title>
                 <Typography fontSize={16} sx={{ mb: 0, pt: 1, pb: 1 }}>
                     {title}
@@ -57,7 +54,7 @@ const DatasetStatCard = ({
                             {stat}
                         </Typography>
                     )}
-                    <Typography sx={{ pb: 1 }}>{unit}</Typography>
+                    {unit && <Typography sx={{ pb: 1 }}>{unit}</Typography>}
                 </StatWrapper>
 
                 {iconSrc && (
