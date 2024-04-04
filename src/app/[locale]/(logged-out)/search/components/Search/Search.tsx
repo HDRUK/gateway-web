@@ -13,6 +13,7 @@ import {
     SearchResult,
     SearchResultDataUse,
     SearchResultDataset,
+    SearchResultPublication,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -49,6 +50,7 @@ import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardDataUse from "../ResultCardDataUse";
+import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 
@@ -209,6 +211,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             content: "",
         },
         {
+            label: t("publications"),
+            value: SearchCategory.PUBLICATIONS,
+            content: "",
+        },
+        {
             label: t("tools"),
             value: SearchCategory.TOOLS,
             content: "",
@@ -260,6 +267,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
                 return <ResultCard result={result as SearchResultDataset} />;
+            case SearchCategory.PUBLICATIONS:
+                return (
+                    <ResultCardPublication
+                        result={result as SearchResultPublication}
+                    />
+                );
             default:
                 return (
                     <ResultCardDataUse result={result as SearchResultDataUse} />
