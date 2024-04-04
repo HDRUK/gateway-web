@@ -59,6 +59,7 @@ const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
     dur: "dataUseRegister",
+    publications: "paper",
 };
 
 enum ViewType {

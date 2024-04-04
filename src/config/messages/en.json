@@ -314,6 +314,10 @@
                             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
+                        },
+                        "paper": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
                     }
                 },
