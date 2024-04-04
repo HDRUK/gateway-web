@@ -26,6 +26,7 @@ export interface Aggregations {
 
 export interface SearchPaginationType<T> extends PaginationType<T> {
     aggregations: Aggregations;
+    path: string;
 }
 
 export interface SearchResultDataset {

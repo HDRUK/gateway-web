@@ -172,6 +172,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         {
             keepPreviousData: true,
             withPagination: true,
+            shouldFetch:
+                queryParams.type !== SearchCategory.PUBLICATIONS ||
+                !!(
+                    queryParams.type === SearchCategory.PUBLICATIONS &&
+                    !!queryParams.query
+                ),
         }
     );
 
@@ -429,11 +435,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 justifyContent: "space-between",
                                 alignItems: "center",
                             }}>
-                            <ShowingXofX
-                                to={data?.to}
-                                from={data?.from}
-                                total={data?.total}
-                            />
+                            {data?.path?.includes(queryParams.type) && (
+                                <ShowingXofX
+                                    to={data?.to}
+                                    from={data?.from}
+                                    total={data?.total}
+                                />
+                            )}
                             {queryParams.type === SearchCategory.DATASETS && (
                                 <ToggleTabs<ViewType>
                                     selected={resultsView}
@@ -451,44 +459,46 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 </Typography>
                             </Paper>
                         )}
-                        {!isSearching && !!data?.list.length && (
-                            <>
-                                {resultsView === ViewType.LIST && (
-                                    <List
-                                        sx={{
-                                            width: "100%",
-                                            bgcolor: "background.paper",
-                                            mb: 2,
-                                            pb: 2,
-                                        }}>
-                                        {data?.list.map(result =>
-                                            renderResultCard(result)
-                                        )}
-                                    </List>
-                                )}
-                                {resultsView === ViewType.TABLE && (
-                                    <ResultsTable
-                                        results={
-                                            data?.list as SearchResultDataset[]
+                        {!isSearching &&
+                            !!data?.list.length &&
+                            data?.path?.includes(queryParams.type) && (
+                                <>
+                                    {resultsView === ViewType.LIST && (
+                                        <List
+                                            sx={{
+                                                width: "100%",
+                                                bgcolor: "background.paper",
+                                                mb: 2,
+                                                pb: 2,
+                                            }}>
+                                            {data?.list.map(result =>
+                                                renderResultCard(result)
+                                            )}
+                                        </List>
+                                    )}
+                                    {resultsView === ViewType.TABLE && (
+                                        <ResultsTable
+                                            results={
+                                                data?.list as SearchResultDataset[]
+                                            }
+                                        />
+                                    )}
+                                    <Pagination
+                                        isLoading={isSearching}
+                                        page={parseInt(queryParams.page, 10)}
+                                        count={data?.lastPage}
+                                        onChange={(
+                                            e: React.ChangeEvent<unknown>,
+                                            page: number
+                                        ) =>
+                                            setQueryParams({
+                                                ...queryParams,
+                                                page: page.toString(),
+                                            })
                                         }
                                     />
-                                )}
-                                <Pagination
-                                    isLoading={isSearching}
-                                    page={parseInt(queryParams.page, 10)}
-                                    count={data?.lastPage}
-                                    onChange={(
-                                        e: React.ChangeEvent<unknown>,
-                                        page: number
-                                    ) =>
-                                        setQueryParams({
-                                            ...queryParams,
-                                            page: page.toString(),
-                                        })
-                                    }
-                                />
-                            </>
-                        )}
+                                </>
+                            )}
                     </Box>
                 </Box>
             </BoxContainer>

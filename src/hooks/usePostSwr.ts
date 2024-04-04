@@ -35,11 +35,12 @@ const usePostSwr = <T>(
         successNotificationsOn = false,
         errorNotificationsOn,
         withPagination = false,
+        shouldFetch = true,
     } = options || {};
     const t = useTranslations("api");
 
     const { data, error, mutate, isLoading } = useSWR<T>(
-        [url, formData],
+        shouldFetch ? [url, formData] : null,
         () => {
             return apiService.postRequest<T>(url, formData, {
                 notificationOptions: {
