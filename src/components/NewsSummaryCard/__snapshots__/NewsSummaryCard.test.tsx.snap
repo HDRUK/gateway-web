@@ -35,7 +35,7 @@ exports[`NewsSummaryCard should render component 1`] = `
           <wbr />
         </div>
       </div>
-      <p
+      <div
         class="MuiTypography-root MuiTypography-body2 mui-style-qd21mq-MuiTypography-root"
       >
         <div
@@ -44,7 +44,7 @@ exports[`NewsSummaryCard should render component 1`] = `
           Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
           <wbr />
         </div>
-      </p>
+      </div>
     </div>
     <div
       class="MuiCardActions-root MuiCardActions-spacing mui-style-1t6e9jv-MuiCardActions-root"

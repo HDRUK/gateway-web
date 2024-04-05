@@ -8,7 +8,7 @@ exports[`GradientBoxes should render title 1`] = `
     <div
       class="MuiBox-root mui-style-11g3ui6"
     >
-      <h2
+      <div
         class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
       >
         <div
@@ -17,8 +17,8 @@ exports[`GradientBoxes should render title 1`] = `
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           <wbr />
         </div>
-      </h2>
-      <p
+      </div>
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
       >
         <div
@@ -27,12 +27,12 @@ exports[`GradientBoxes should render title 1`] = `
           Vestibulum ultrices purus sit amet cursus gravida. Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
           <wbr />
         </div>
-      </p>
+      </div>
     </div>
     <div
       class="MuiBox-root mui-style-11g3ui6"
     >
-      <h2
+      <div
         class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
       >
         <div
@@ -41,8 +41,8 @@ exports[`GradientBoxes should render title 1`] = `
           Vestibulum ultrices purus sit amet cursus gravida. 
           <wbr />
         </div>
-      </h2>
-      <p
+      </div>
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
       >
         <div
@@ -51,12 +51,12 @@ exports[`GradientBoxes should render title 1`] = `
           Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
           <wbr />
         </div>
-      </p>
+      </div>
     </div>
     <div
       class="MuiBox-root mui-style-11g3ui6"
     >
-      <h2
+      <div
         class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
       >
         <div
@@ -65,8 +65,8 @@ exports[`GradientBoxes should render title 1`] = `
           Aenean luctus feugiat eros at laoreet.
           <wbr />
         </div>
-      </h2>
-      <p
+      </div>
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
       >
         <div
@@ -75,7 +75,7 @@ exports[`GradientBoxes should render title 1`] = `
           Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
           <wbr />
         </div>
-      </p>
+      </div>
     </div>
   </div>
 </div>
