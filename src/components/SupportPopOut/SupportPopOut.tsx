@@ -19,9 +19,13 @@ const SupportPopOut = () => {
 
     const handleClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
-            setAnchorEl(event.currentTarget);
+            if (anchorEl) {
+                setAnchorEl(null);
+            } else {
+                setAnchorEl(event.currentTarget);
+            }
         },
-        [setAnchorEl]
+        [anchorEl]
     );
 
     const handleClose = () => {

@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useTranslations } from "next-intl";
 import { CMSPostResponse, NewsPost } from "@/interfaces/Cms";
 import Box from "@/components/Box";
@@ -36,6 +35,7 @@ const NewsSection = ({ posts }: CMSPostResponse<NewsPost>) => {
                         headline={headline}
                         date={date}
                         url={link.url}
+                        key={`${date}-${link}`}
                     />
                 )
             )}
