@@ -13,6 +13,7 @@ import {
     SearchResult,
     SearchResultDataUse,
     SearchResultDataset,
+    SearchResultPublication,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -49,6 +50,7 @@ import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardDataUse from "../ResultCardDataUse";
+import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 
@@ -57,6 +59,7 @@ const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
     dur: "dataUseRegister",
+    publications: "paper",
 };
 
 enum ViewType {
@@ -169,6 +172,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         {
             keepPreviousData: true,
             withPagination: true,
+            shouldFetch:
+                queryParams.type !== SearchCategory.PUBLICATIONS ||
+                !!(
+                    queryParams.type === SearchCategory.PUBLICATIONS &&
+                    !!queryParams.query
+                ),
         }
     );
 
@@ -206,6 +215,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         {
             label: t("collections"),
             value: SearchCategory.COLLECTIONS,
+            content: "",
+        },
+        {
+            label: t("publications"),
+            value: SearchCategory.PUBLICATIONS,
             content: "",
         },
         {
@@ -260,6 +274,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
                 return <ResultCard result={result as SearchResultDataset} />;
+            case SearchCategory.PUBLICATIONS:
+                return (
+                    <ResultCardPublication
+                        result={result as SearchResultPublication}
+                    />
+                );
             default:
                 return (
                     <ResultCardDataUse result={result as SearchResultDataUse} />
@@ -415,11 +435,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 justifyContent: "space-between",
                                 alignItems: "center",
                             }}>
-                            <ShowingXofX
-                                to={data?.to}
-                                from={data?.from}
-                                total={data?.total}
-                            />
+                            {data?.path?.includes(queryParams.type) && (
+                                <ShowingXofX
+                                    to={data?.to}
+                                    from={data?.from}
+                                    total={data?.total}
+                                />
+                            )}
                             {queryParams.type === SearchCategory.DATASETS && (
                                 <ToggleTabs<ViewType>
                                     selected={resultsView}
@@ -437,44 +459,46 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 </Typography>
                             </Paper>
                         )}
-                        {!isSearching && !!data?.list.length && (
-                            <>
-                                {resultsView === ViewType.LIST && (
-                                    <List
-                                        sx={{
-                                            width: "100%",
-                                            bgcolor: "background.paper",
-                                            mb: 2,
-                                            pb: 2,
-                                        }}>
-                                        {data?.list.map(result =>
-                                            renderResultCard(result)
-                                        )}
-                                    </List>
-                                )}
-                                {resultsView === ViewType.TABLE && (
-                                    <ResultsTable
-                                        results={
-                                            data?.list as SearchResultDataset[]
+                        {!isSearching &&
+                            !!data?.list.length &&
+                            data?.path?.includes(queryParams.type) && (
+                                <>
+                                    {resultsView === ViewType.LIST && (
+                                        <List
+                                            sx={{
+                                                width: "100%",
+                                                bgcolor: "background.paper",
+                                                mb: 2,
+                                                pb: 2,
+                                            }}>
+                                            {data?.list.map(result =>
+                                                renderResultCard(result)
+                                            )}
+                                        </List>
+                                    )}
+                                    {resultsView === ViewType.TABLE && (
+                                        <ResultsTable
+                                            results={
+                                                data?.list as SearchResultDataset[]
+                                            }
+                                        />
+                                    )}
+                                    <Pagination
+                                        isLoading={isSearching}
+                                        page={parseInt(queryParams.page, 10)}
+                                        count={data?.lastPage}
+                                        onChange={(
+                                            e: React.ChangeEvent<unknown>,
+                                            page: number
+                                        ) =>
+                                            setQueryParams({
+                                                ...queryParams,
+                                                page: page.toString(),
+                                            })
                                         }
                                     />
-                                )}
-                                <Pagination
-                                    isLoading={isSearching}
-                                    page={parseInt(queryParams.page, 10)}
-                                    count={data?.lastPage}
-                                    onChange={(
-                                        e: React.ChangeEvent<unknown>,
-                                        page: number
-                                    ) =>
-                                        setQueryParams({
-                                            ...queryParams,
-                                            page: page.toString(),
-                                        })
-                                    }
-                                />
-                            </>
-                        )}
+                                </>
+                            )}
                     </Box>
                 </Box>
             </BoxContainer>

@@ -26,6 +26,7 @@ export interface Aggregations {
 
 export interface SearchPaginationType<T> extends PaginationType<T> {
     aggregations: Aggregations;
+    path: string;
 }
 
 export interface SearchResultDataset {
@@ -55,7 +56,19 @@ export interface SearchResultDataUse {
     _id: string;
 }
 
-export type SearchResult = SearchResultDataset | SearchResultDataUse;
+export interface SearchResultPublication {
+    _id: string;
+    abstract?: string;
+    paper_title: string;
+    authors?: string;
+    journal_name?: string;
+    year_of_publication?: string;
+}
+
+export type SearchResult =
+    | SearchResultDataset
+    | SearchResultDataUse
+    | SearchResultPublication;
 
 export interface SearchForm {
     query: string;

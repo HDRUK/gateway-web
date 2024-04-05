@@ -280,6 +280,7 @@
             "dataUse": "Data Use",
             "tools": "Software / Tools",
             "collections": "Collections",
+            "publications": "Publications",
             "searchExplainer": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
@@ -313,6 +314,10 @@
                             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
+                        },
+                        "paper": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
                     }
                 },
@@ -331,6 +336,10 @@
                     "dataCustodian": "Data Custodian",
                     "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
                     "showAll": "Quick view"
+                },
+                "ResultCardPublication": {
+                    "published": "Published",
+                    "notAvailable": "Not available"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
