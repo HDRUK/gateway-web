@@ -336,7 +336,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         }
                         variant="text"
                         startIcon={<DownloadIcon />}
-                        disabled={isDownloading}>
+                        disabled={isDownloading || !data?.list?.length}>
                         {t("downloadResults")}
                     </Button>
                 </Box>
