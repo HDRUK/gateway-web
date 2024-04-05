@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Button, CardActions } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -55,7 +54,7 @@ const NewsSummaryCard = ({
                     textAlign="left">
                     <EllipsisLineLimit maxLine={2} text={headline} />
                 </Typography>
-                <Typography variant="body2" textAlign="left">
+                <Typography variant="body2" textAlign="left" component="div">
                     <EllipsisLineLimit maxLine={4} text={summary} />
                 </Typography>
             </CardContent>
