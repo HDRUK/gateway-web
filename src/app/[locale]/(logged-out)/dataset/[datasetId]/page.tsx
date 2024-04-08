@@ -74,12 +74,21 @@ export default async function DatasetItemPage({
                             flexDirection: "column",
                             gap: 2,
                         }}>
-                        <Box sx={{ p: 0, gap: 2 }}>
-                            <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
-                                {datasetVersion.metadata.metadata.summary.title}
-                            </Typography>
-                            <DatasetStats data={datasetStats} />
-                        </Box>
+                        {datasetStats && (
+                            <Box sx={{ p: 0, gap: 2 }}>
+                                <Typography
+                                    variant="h2"
+                                    sx={{ pt: 0.5, pb: 0.5 }}>
+                                    {
+                                        datasetVersion.metadata.metadata.summary
+                                            .title
+                                    }
+                                </Typography>
+                                <div>
+                                    <DatasetStats data={datasetStats} />
+                                </div>
+                            </Box>
+                        )}
                         <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}

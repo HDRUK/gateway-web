@@ -85,6 +85,7 @@ const DatasetContent = ({
                                         }=&query=${encodeURIComponent(tag)}`
                                     )
                                 }
+                                key={tag}
                             />
                         ))}
                     </DatasetFieldWrapper>
@@ -98,7 +99,9 @@ const DatasetContent = ({
                 );
             case FieldType.LIST: {
                 const list = splitStringList(value);
-                return list.map(item => <Typography>{item}</Typography>);
+                return list.map(item => (
+                    <Typography key={item}>{item}</Typography>
+                ));
             }
             default:
                 return <Typography>{value}</Typography>;
@@ -125,7 +128,7 @@ const DatasetContent = ({
                 <Paper sx={{ borderRadius: 2, p: 2 }}>
                     {populatedSections.map((section, index) => (
                         <InView
-                            key={section.sectionName}
+                            key={`${section.sectionName}_inview`}
                             id={`anchor${index + 1}`}
                             threshold={1}
                             as="div"
@@ -138,7 +141,7 @@ const DatasetContent = ({
                                 }
                             }}>
                             <Box
-                                key={section.sectionName}
+                                key={`${section.sectionName}_wrap`}
                                 id={`anchor${index + 1}`}
                                 sx={{
                                     "&:not(:last-of-type)": {
@@ -172,7 +175,8 @@ const DatasetContent = ({
                                                       sx={{
                                                           p: 0,
                                                           pb: 2,
-                                                      }}>
+                                                      }}
+                                                      key={value}>
                                                       {renderDatasetField(
                                                           field.type,
                                                           value
@@ -192,7 +196,8 @@ const DatasetContent = ({
                                                       "&:not(:last-of-type)": {
                                                           mb: 2,
                                                       },
-                                                  }}>
+                                                  }}
+                                                  key={field.label}>
                                                   <Box
                                                       sx={{
                                                           gridColumn: {
