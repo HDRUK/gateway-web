@@ -8,7 +8,7 @@ import Paper from "@/components/Paper";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
-import { getDateRange } from "@/utils/search";
+import { getDateRange, getPopulationSize } from "@/utils/search";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
@@ -17,7 +17,6 @@ interface ResultTableProps {
 const CONFORMS_TO_PATH =
     "metadata.metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.metadata.summary.publisher.publisherName";
-const POPULATION_SIZE_PATH = "metadata.metadata.observations.0.measuredValue";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
@@ -67,7 +66,10 @@ const getColumns = ({
         id: "populationSize",
         cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
-                {get(original, POPULATION_SIZE_PATH)}
+                {getPopulationSize(
+                    original?.metadata?.metadata,
+                    translations.populationSizeNotReported
+                )}
             </div>
         ),
         header: () => (
@@ -149,6 +151,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
         metaDataLabel: t("title.label"),
         populationSizeLabel: t("populationSize.label"),
         populationSizeTooltip: t("populationSize.tooltip"),
+        populationSizeNotReported: t("populationSize.notReported"),
         dateRangePublisherLabel: t("dateRangePublisher.label"),
         dateRangePublisherTooltip: t("dateRangePublisher.tooltip"),
         dataStandardLabel: t("dataStandard.label"),

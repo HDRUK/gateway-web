@@ -20,7 +20,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                 <Box
                     key={item.title}
                     sx={{
-                        maxWidth,
+                        maxWidth: { tablet: maxWidth },
                         flex: 1,
                         mb: { mobile: 2, tablet: 0 },
                         p: 3,
@@ -31,6 +31,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                         fontSize={{ mobile: 20, desktop: 28 }}
                         m={0}
                         variant="h2"
+                        component="div"
                         color="white">
                         <EllipsisLineLimit maxLine={1} text={item.title} />
                     </Typography>
@@ -38,7 +39,8 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                         sx={{ display: { mobile: "none", desktop: "block" } }}
                         fontSize={16}
                         m={0}
-                        color="white">
+                        color="white"
+                        component="div">
                         <EllipsisLineLimit maxLine={4} text={item.text} />
                     </Typography>
                 </Box>

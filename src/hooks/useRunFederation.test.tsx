@@ -7,7 +7,7 @@ import { postFederationsTestV1 } from "@/mocks/handlers/integration";
 import { server } from "@/mocks/server";
 
 describe("useRunFederation", () => {
-    const teamId = teamV1.id;
+    const teamId = teamV1.id.toString();
 
     it("should return the `NOT_RUN` status on first load when `tested` is false", async () => {
         const mockIntegration = { ...integrationV1, tested: false };

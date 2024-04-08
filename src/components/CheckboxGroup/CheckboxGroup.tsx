@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { SxProps } from "@mui/material";
 import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
 import Box from "@/components/Box";
@@ -7,9 +7,10 @@ import BoxContainer from "@/components/BoxContainer";
 import Checkbox from "@/components/Checkbox";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
-export interface CheckboxGroupProps extends MuiCheckboxProps {
+export interface CheckboxGroupProps<TFieldValues extends FieldValues, TName>
+    extends Omit<MuiCheckboxProps, "name"> {
     label: string;
-    name: string;
+    name: TName;
     direction?: "row" | "column";
     nColumns?: number;
     horizontalForm?: boolean;
@@ -18,12 +19,15 @@ export interface CheckboxGroupProps extends MuiCheckboxProps {
     limit?: number;
     spacing?: number;
     checkboxes: { value: string; label: string; count?: number }[];
-    control: Control;
+    control: Control<TFieldValues>;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const CheckboxGroup = ({
+const CheckboxGroup = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     name,
     checkboxes,
@@ -39,7 +43,7 @@ const CheckboxGroup = ({
     checkboxSx,
     formControlSx,
     ...rest
-}: CheckboxGroupProps) => {
+}: CheckboxGroupProps<TFieldValues, TName>) => {
     const {
         field,
         fieldState: { error },

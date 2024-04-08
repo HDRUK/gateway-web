@@ -67,9 +67,7 @@ export default function TeamManagement({
                             display: "flex",
                             justifyContent: "center",
                         }}>
-                        {permissions[
-                            "fe.account.team_management.member.add"
-                        ] && (
+                        {permissions["team-members.create"] && (
                             <Button
                                 onClick={() =>
                                     showDialog(AddTeamMemberDialog, {

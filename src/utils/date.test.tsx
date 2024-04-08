@@ -1,4 +1,4 @@
-import { formatDate, differenceInDays } from "./date";
+import { formatDate, differenceInDays, yearToDayJsDate } from "./date";
 
 describe("Date utils", () => {
     it("should return default formatted date", async () => {
@@ -23,5 +23,11 @@ describe("Date utils", () => {
 
     it("should calculate the difference in days between two dates", async () => {
         expect(differenceInDays("2022-01-10", "2022-01-01")).toBe(9);
+    });
+
+    it("should return full date for a year", async () => {
+        expect(yearToDayJsDate("2022").format()).toEqual(
+            "2022-01-01T00:00:00+00:00"
+        );
     });
 });

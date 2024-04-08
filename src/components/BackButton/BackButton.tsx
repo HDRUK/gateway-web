@@ -1,11 +1,13 @@
 "use client";
 
+import { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 
 interface BackButtonProps {
     label: string;
+    style?: CSSProperties;
 }
 
 const BackButton = ({ label, ...rest }: BackButtonProps) => {

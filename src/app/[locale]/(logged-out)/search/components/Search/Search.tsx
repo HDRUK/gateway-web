@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { Box, List, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -13,6 +13,7 @@ import {
     SearchResult,
     SearchResultDataUse,
     SearchResultDataset,
+    SearchResultPublication,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -28,20 +29,28 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
+    FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_ORGANISATION_NAME,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
     SORT_FIELD,
+    TYPE_FIELD,
+    sortByOptionsDataUse,
+    sortByOptionsDataset,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
-import { pickOnlyFilters } from "@/utils/filters";
+import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
+import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardDataUse from "../ResultCardDataUse";
+import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 
@@ -49,7 +58,8 @@ const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
-    dur: "dataUse",
+    dur: "dataUseRegister",
+    publications: "paper",
 };
 
 enum ViewType {
@@ -69,20 +79,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return searchParams?.get(paramName)?.toString();
     };
 
-    const getParamArray = (paramName: string) => {
-        return searchParams
-            ?.get(paramName)
-            ?.split(",")
-            .filter(filter => !!filter);
+    const getParamArray = (paramName: string, allowEmptyStrings?: boolean) => {
+        const param = searchParams?.get(paramName)?.split(",");
+        return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
-
-    const searchType = getParamString(TYPE_PARAM) || SearchCategory.DATASETS;
-
-    useEffect(() => {
-        if (resultsView !== ViewType.LIST && searchType !== "datasets") {
-            setResultsView(ViewType.LIST);
-        }
-    }, [searchType, resultsView]);
 
     const updateQueryString = useCallback(
         (name: string, value: string) => {
@@ -98,17 +98,38 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
+        page: "1",
+        per_page: "25",
+        type:
+            (getParamString(TYPE_FIELD) as SearchCategory) ||
+            SearchCategory.DATASETS,
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
-        page: "1",
-        per_page: "25",
+        [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
+        [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
+        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
     });
 
-    const { handleDownload } = useSearch(searchType, resultsView, queryParams);
+    const { handleDownload } = useSearch(
+        queryParams.type,
+        resultsView,
+        queryParams
+    );
+
+    useEffect(() => {
+        if (
+            resultsView !== ViewType.LIST &&
+            queryParams.type !== SearchCategory.DATASETS
+        ) {
+            setResultsView(ViewType.LIST);
+        }
+    }, [queryParams.type, resultsView]);
 
     const updatePath = (key: string, value: string) => {
-        router.push(`${pathname}?${updateQueryString(key, value)}`);
+        router.push(`${pathname}?${updateQueryString(key, value)}`, {
+            scroll: false,
+        });
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
@@ -118,6 +139,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const onSortChange = async (selectedValue: string) => {
+        if (selectedValue === queryParams.sort) return;
+
         setQueryParams({
             ...queryParams,
             sort: selectedValue,
@@ -126,9 +149,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(SORT_FIELD, selectedValue);
     };
 
+    const selectedFilters = useMemo(
+        () => getAllSelectedFilters(queryParams),
+        [queryParams]
+    );
+
     const resetQueryInput = () => {
         setQueryParams({ ...queryParams, query: "" });
-
         updatePath(QUERY_FIELD, "");
     };
 
@@ -137,14 +164,20 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
+        `${apis.searchV1Url}/${queryParams.type}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
-            ...pickOnlyFilters(FILTER_CATEGORY[searchType], queryParams),
+            ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
         },
         {
             keepPreviousData: true,
             withPagination: true,
+            shouldFetch:
+                queryParams.type !== SearchCategory.PUBLICATIONS ||
+                !!(
+                    queryParams.type === SearchCategory.PUBLICATIONS &&
+                    !!queryParams.query
+                ),
         }
     );
 
@@ -152,6 +185,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Reset query param state when tab is changed
+    const resetQueryParamState = (selectedType: SearchCategory) => {
+        setQueryParams({
+            ...queryParams,
+            sort: searchFormConfig.defaultValues.sort,
+            type: selectedType,
+            [FILTER_DATA_USE_TITLES]: undefined,
+            [FILTER_PUBLISHER_NAME]: undefined,
+            [FILTER_GEOGRAPHIC_LOCATION]: undefined,
+            [FILTER_DATE_RANGE]: undefined,
+            [FILTER_ORGANISATION_NAME]: undefined,
+            [FILTER_DATA_SET_TITLES]: undefined,
+        });
+    };
 
     const categoryTabs = [
         {
@@ -170,11 +218,36 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             content: "",
         },
         {
+            label: t("publications"),
+            value: SearchCategory.PUBLICATIONS,
+            content: "",
+        },
+        {
             label: t("tools"),
             value: SearchCategory.TOOLS,
             content: "",
         },
     ];
+
+    const removeFilter = (
+        filterType: keyof SearchQueryParams,
+        removedFilter: string
+    ) => {
+        const filterToUpdate = queryParams[filterType];
+
+        if (!Array.isArray(filterToUpdate)) return;
+
+        let filtered;
+
+        if (filterType === FILTER_DATE_RANGE) {
+            filtered = filterToUpdate.map(f => (f === removedFilter ? "" : f));
+        } else {
+            filtered = filterToUpdate.filter(f => f !== removedFilter);
+        }
+
+        setQueryParams({ ...queryParams, [filterType]: filtered });
+        updatePath(filterType, filtered.join(","));
+    };
 
     const toggleButtons = [
         {
@@ -198,9 +271,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const renderResultCard = (result: SearchResult) => {
-        switch (searchType) {
-            case "datasets":
+        switch (queryParams.type) {
+            case SearchCategory.DATASETS:
                 return <ResultCard result={result as SearchResultDataset} />;
+            case SearchCategory.PUBLICATIONS:
+                return (
+                    <ResultCardPublication
+                        result={result as SearchResultPublication}
+                    />
+                );
             default:
                 return (
                     <ResultCardDataUse result={result as SearchResultDataUse} />
@@ -208,11 +287,26 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    const getSortOptions = () => {
+        switch (queryParams.type) {
+            case SearchCategory.DATA_USE:
+                return sortByOptionsDataUse;
+            default:
+                return sortByOptionsDataset;
+        }
+    };
+
     return (
-        <>
+        <Box
+            display={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+            }}>
             <Box
                 sx={{
                     backgroundColor: "white",
+                    width: "100%",
                     paddingRight: 6,
                     paddingLeft: 6,
                     display: "flex",
@@ -231,29 +325,46 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             <Box
                 sx={{
                     p: 0,
-                    justifyContent: "flex-end",
+                    justifyContent: "space-between",
                     display: "flex",
                     alignItems: "center",
                     padding: "1em",
+                    width: "100%",
+                    maxWidth: 1440,
                 }}
                 textAlign="left">
-                <Box sx={{ p: 0, mr: "1em" }}>
-                    <Sort
-                        sortName={SORT_FIELD}
-                        defaultValue={queryParams.sort}
-                        submitAction={onSortChange}
+                <Box sx={{ flex: 1, p: 0 }}>
+                    <FilterChips
+                        label={t("filtersApplied")}
+                        selectedFilters={selectedFilters}
+                        handleDelete={removeFilter}
                     />
                 </Box>
+                <Box sx={{ display: "flex" }}>
+                    <Box sx={{ p: 0, mr: "1em" }}>
+                        <Sort
+                            sortName={SORT_FIELD}
+                            defaultValue={queryParams.sort}
+                            submitAction={onSortChange}
+                            sortOptions={getSortOptions()}
+                        />
+                    </Box>
 
-                <Button
-                    onClick={() => !isDownloading && downloadSearchResults()}
-                    variant="text"
-                    startIcon={<DownloadIcon />}
-                    disabled={isDownloading}>
-                    {t("downloadResults")}
-                </Button>
+                    <Button
+                        onClick={() =>
+                            !isDownloading && downloadSearchResults()
+                        }
+                        variant="text"
+                        startIcon={<DownloadIcon />}
+                        disabled={isDownloading || !data?.list?.length}>
+                        {t("downloadResults")}
+                    </Button>
+                </Box>
             </Box>
-            <Box>
+            <Box
+                sx={{
+                    width: "100%",
+                }}>
                 <Tabs
                     centered
                     tabs={categoryTabs}
@@ -267,10 +378,14 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     variant={TabVariant.LARGE}
                     paramName={TYPE_PARAM}
                     persistParams={false}
+                    handleChange={(_, value) =>
+                        resetQueryParamState(value as SearchCategory)
+                    }
                 />
             </Box>
             <BoxContainer
                 sx={{
+                    width: "100%",
                     gridTemplateColumns: {
                         mobile: "repeat(1, 1fr)",
                         tablet: "repeat(7, 1fr)",
@@ -285,14 +400,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         gridColumn: { tablet: "span 2", laptop: "span 2" },
                     }}>
                     <FilterPanel
-                        filterCategory={FILTER_CATEGORY[searchType]}
+                        selectedFilters={selectedFilters}
+                        filterCategory={FILTER_CATEGORY[queryParams.type]}
                         filterSourceData={filters}
                         setFilterQueryParams={(
                             filterValues: string[],
                             filterName: string
                         ) => {
                             // url requires string format, ie "one, two, three"
-                            updatePath(filterName, filterValues.join(", "));
+                            updatePath(filterName, filterValues.join(","));
 
                             // api requires string[] format, ie ["one", "two", "three"]
                             setQueryParams({
@@ -319,12 +435,14 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 justifyContent: "space-between",
                                 alignItems: "center",
                             }}>
-                            <ShowingXofX
-                                to={data?.to}
-                                from={data?.from}
-                                total={data?.total}
-                            />
-                            {searchType === "datasets" && (
+                            {data?.path?.includes(queryParams.type) && (
+                                <ShowingXofX
+                                    to={data?.to}
+                                    from={data?.from}
+                                    total={data?.total}
+                                />
+                            )}
+                            {queryParams.type === SearchCategory.DATASETS && (
                                 <ToggleTabs<ViewType>
                                     selected={resultsView}
                                     buttons={toggleButtons}
@@ -341,48 +459,50 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 </Typography>
                             </Paper>
                         )}
-                        {!isSearching && !!data?.list.length && (
-                            <>
-                                {resultsView === ViewType.LIST && (
-                                    <List
-                                        sx={{
-                                            width: "100%",
-                                            bgcolor: "background.paper",
-                                            mb: 2,
-                                            pb: 2,
-                                        }}>
-                                        {data?.list.map(result =>
-                                            renderResultCard(result)
-                                        )}
-                                    </List>
-                                )}
-                                {resultsView === ViewType.TABLE && (
-                                    <ResultsTable
-                                        results={
-                                            data?.list as SearchResultDataset[]
+                        {!isSearching &&
+                            !!data?.list.length &&
+                            data?.path?.includes(queryParams.type) && (
+                                <>
+                                    {resultsView === ViewType.LIST && (
+                                        <List
+                                            sx={{
+                                                width: "100%",
+                                                bgcolor: "background.paper",
+                                                mb: 2,
+                                                pb: 2,
+                                            }}>
+                                            {data?.list.map(result =>
+                                                renderResultCard(result)
+                                            )}
+                                        </List>
+                                    )}
+                                    {resultsView === ViewType.TABLE && (
+                                        <ResultsTable
+                                            results={
+                                                data?.list as SearchResultDataset[]
+                                            }
+                                        />
+                                    )}
+                                    <Pagination
+                                        isLoading={isSearching}
+                                        page={parseInt(queryParams.page, 10)}
+                                        count={data?.lastPage}
+                                        onChange={(
+                                            e: React.ChangeEvent<unknown>,
+                                            page: number
+                                        ) =>
+                                            setQueryParams({
+                                                ...queryParams,
+                                                page: page.toString(),
+                                            })
                                         }
                                     />
-                                )}
-                                <Pagination
-                                    isLoading={isSearching}
-                                    page={parseInt(queryParams.page, 10)}
-                                    count={data?.lastPage}
-                                    onChange={(
-                                        e: React.ChangeEvent<unknown>,
-                                        page: number
-                                    ) =>
-                                        setQueryParams({
-                                            ...queryParams,
-                                            page: page.toString(),
-                                        })
-                                    }
-                                />
-                            </>
-                        )}
+                                </>
+                            )}
                     </Box>
                 </Box>
             </BoxContainer>
-        </>
+        </Box>
     );
 };
 

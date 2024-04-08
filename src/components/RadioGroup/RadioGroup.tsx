@@ -1,12 +1,19 @@
-import { Control, Controller, useController } from "react-hook-form";
+import { ChangeEvent } from "react";
+import {
+    Control,
+    Controller,
+    FieldValues,
+    Path,
+    useController,
+} from "react-hook-form";
 import { FormControlLabel, SxProps } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import MuiRadioGroup from "@mui/material/RadioGroup";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
-export interface RadioGroupProps {
+export interface RadioGroupProps<TFieldValues extends FieldValues, TName> {
     label: string;
-    name: string;
+    name: TName;
     info?: string;
     extraInfo?: string;
     required?: boolean;
@@ -14,14 +21,17 @@ export interface RadioGroupProps {
     horizontalForm?: boolean;
     isRow?: boolean;
     value?: unknown;
-    onChange?: (event: React.MouseEvent<HTMLElement>, value: never) => void;
+    onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
     radios: { value: string; label: string }[];
-    control: Control;
+    control: Control<TFieldValues>;
     radioSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const RadioGroup = ({
+const RadioGroup = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     formControlSx,
     radioSx = {},
@@ -35,7 +45,7 @@ const RadioGroup = ({
     required = false,
     isRow = false,
     ...rest
-}: RadioGroupProps) => {
+}: RadioGroupProps<TFieldValues, TName>) => {
     const {
         fieldState: { error },
     } = useController({

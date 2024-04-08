@@ -160,7 +160,7 @@ const EditApplicationForm = ({
                 sx={{
                     padding: 2,
                 }}>
-                <DeleteApplication control={control} />
+                <DeleteApplication />
             </Paper>
         </>
     );

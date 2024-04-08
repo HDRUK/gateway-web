@@ -11,6 +11,7 @@ interface TooltipIconProps {
     size?: "medium" | "small" | "inherit" | "large";
     boxSx?: SxProps;
     buttonSx?: SxProps;
+    invertColor?: boolean;
 }
 
 const TooltipIcon = ({
@@ -20,6 +21,7 @@ const TooltipIcon = ({
     size = "medium",
     boxSx,
     buttonSx,
+    invertColor,
 }: TooltipIconProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -44,7 +46,13 @@ const TooltipIcon = ({
                 sx={{ ...buttonSx }}
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}>
-                {icon || <InfoIcon color="primary" fontSize={size} />}
+                {icon || (
+                    <InfoIcon
+                        color={!invertColor ? "primary" : "inherit"}
+                        sx={{ color: `${invertColor && "#E9ECF4"}` }}
+                        fontSize={size}
+                    />
+                )}
             </IconButton>
             <Popover
                 id="tooltip"

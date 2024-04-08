@@ -44,7 +44,7 @@ const WrapperComponent = () => {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = (data: unknown) => console.log(data);
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>

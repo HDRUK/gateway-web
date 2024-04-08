@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import TextTime, { TextTimeProps } from "./TextTime";
+import TextTime from "./TextTime";
 
 const meta: Meta<typeof TextTime> = {
     component: TextTime,
@@ -15,10 +15,14 @@ export default meta;
 
 type Story = StoryObj<typeof TextTime>;
 
-const WrapperComponent = (props: TextTimeProps) => {
-    const { control, handleSubmit } = useForm({
+const WrapperComponent = () => {
+    const { control, handleSubmit } = useForm<{
+        selectedHour: string;
+        selectedMinute: string;
+    }>({
         defaultValues: {
-            selectTime: "",
+            selectedHour: "",
+            selectedMinute: "",
         },
     });
 
@@ -29,7 +33,11 @@ const WrapperComponent = (props: TextTimeProps) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack alignItems="start">
-                <TextTime control={control} {...props} />
+                <TextTime
+                    control={control}
+                    name={{ hour: "selectedHour", minute: "selectedMinute" }}
+                    label="Select Time"
+                />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>
@@ -37,9 +45,5 @@ const WrapperComponent = (props: TextTimeProps) => {
 };
 
 export const Default: Story = {
-    args: {
-        name: { hour: "selectedHour", minute: "selectedMinute" },
-        label: "Select Time",
-    },
-    render: props => <WrapperComponent {...props} />,
+    render: () => <WrapperComponent />,
 };

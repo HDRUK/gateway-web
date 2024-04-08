@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import type { Meta, StoryObj } from "@storybook/react";
 import * as yup from "yup";
+import { inputComponents } from "@/config/forms";
 import MultiInputWrapper from "./MultiInputWrapper";
 
 const meta: Meta<typeof MultiInputWrapper> = {
@@ -39,10 +40,26 @@ const WrapperComponent = () => {
     });
 
     const formFields = [
-        { name: "first", label: "First in Form", component: "TextField" },
-        { name: "second", label: "Second in Form", component: "TextField" },
-        { name: "third", label: "Third in Form", component: "Autocomplete" },
-        { name: "forth", label: "Forth in Form", component: "CheckboxRow" },
+        {
+            name: "first",
+            label: "First in Form",
+            component: inputComponents.TextField,
+        },
+        {
+            name: "second",
+            label: "Second in Form",
+            component: inputComponents.TextField,
+        },
+        {
+            name: "third",
+            label: "Third in Form",
+            component: inputComponents.Autocomplete,
+        },
+        {
+            name: "forth",
+            label: "Forth in Form",
+            component: inputComponents.CheckboxRow,
+        },
     ];
 
     return <MultiInputWrapper control={control} fields={formFields} />;

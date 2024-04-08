@@ -1,7 +1,7 @@
 "use client";
 
 /** @jsxImportSource @emotion/react */
-import { ElementType, ReactNode, forwardRef } from "react";
+import { ElementType, ReactNode, SyntheticEvent, forwardRef } from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
@@ -33,24 +33,25 @@ export interface TabProps {
     paramName?: string;
     renderTabContent?: boolean;
     persistParams?: boolean;
+    handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
 const CustomLink = forwardRef<
-    HTMLAnchorElement & { param: string; persistParams: boolean },
-    { href: string; children: ReactNode; param: string; persistParams: boolean }
+    HTMLAnchorElement & { param: string; persist: boolean },
+    { href: string; children: ReactNode; param: string; persist: boolean }
 >((props, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
-
+    const { persist, ...rest } = props;
     return (
         <Link
             ref={ref}
             passHref
-            {...props}
+            {...rest}
             href={{
                 pathname,
                 query:
-                    searchParams?.entries() && props.persistParams
+                    searchParams?.entries() && persist
                         ? {
                               ...Object.fromEntries(searchParams?.entries()),
                               [props.param]: props.href,
@@ -74,6 +75,7 @@ const Tabs = ({
     paramName = "tab",
     renderTabContent = true,
     persistParams = true,
+    handleChange,
 }: TabProps) => {
     const searchParams = useSearchParams();
     const currentTab = searchParams?.get(paramName);
@@ -92,7 +94,8 @@ const Tabs = ({
                     }}>
                     <MuiTabList
                         sx={{ mb: variant === TabVariant.STANDARD ? 1 : 0 }}
-                        centered={centered}>
+                        centered={centered}
+                        onChange={handleChange}>
                         {tabs.map(tab => (
                             <MuiTab<ElementType>
                                 component={CustomLink}
@@ -107,7 +110,7 @@ const Tabs = ({
                                     tabsStyle.tab
                                 }
                                 param={paramName}
-                                persistParams={persistParams}
+                                persist={persistParams}
                             />
                         ))}
                     </MuiTabList>

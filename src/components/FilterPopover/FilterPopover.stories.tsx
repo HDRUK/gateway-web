@@ -16,13 +16,11 @@ const radios = [
     { label: "Other", value: "OTHER" },
 ];
 
-type radioType = "ALL" | "OTHER";
-
 const WrapperComponent = () => {
-    const [filter, setFilter] = useState<radioType>("ALL");
+    const [filter, setFilter] = useState<string>("ALL");
 
     return (
-        <FilterPopover<radioType>
+        <FilterPopover
             name="filter_status"
             radios={radios}
             setFilter={setFilter}

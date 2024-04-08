@@ -1,10 +1,10 @@
 import { ComponentTypes } from "./ComponentTypes";
 
-interface FormField {
+interface FormField<TName> {
     label: string;
-    name: string;
+    name: TName;
     component: ComponentTypes;
-    fields?: FormField;
+    fields?: FormField<TName>[];
 }
 
 export type { FormField };

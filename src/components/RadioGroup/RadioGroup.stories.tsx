@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import RadioGroup, { RadioGroupProps } from "./RadioGroup";
+import RadioGroup from "./RadioGroup";
 
 const meta: Meta<typeof RadioGroup> = {
     component: RadioGroup,
@@ -15,8 +15,10 @@ export default meta;
 
 type Story = StoryObj<typeof RadioGroup>;
 
-const WrapperComponent = (props: RadioGroupProps) => {
-    const { control, handleSubmit } = useForm({
+const WrapperComponent = (
+    props: JSX.IntrinsicAttributes & RadioGroupProps<FieldValues>
+) => {
+    const { control, handleSubmit } = useForm<{ colour: string }>({
         defaultValues: {
             colour: "red",
         },

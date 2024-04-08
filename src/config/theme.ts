@@ -1,5 +1,6 @@
 "use client";
 
+import { ReactElement } from "react";
 import { createTheme } from "@mui/material/styles";
 
 const buttonLinkStyle = {
@@ -29,16 +30,32 @@ export type buttonColourType =
     | "error"
     | "info"
     | "warning"
-    | "grey";
+    | "yellowCustom"
+    | "greyCustom";
 
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
         link: true;
     }
 }
+declare module "@mui/material/styles" {
+    interface Palette {
+        warningCustom: Palette["primary"];
+        greyCustom: Palette["primary"];
+        yellowCustom: Palette["primary"];
+    }
+
+    interface PaletteOptions {
+        warningCustom?: PaletteOptions["primary"];
+        greyCustom?: PaletteOptions["primary"];
+        yellowCustom?: PaletteOptions["primary"];
+    }
+}
+
 declare module "@mui/material/Button" {
     interface ButtonPropsColorOverrides {
-        grey: true;
+        greyCustom: true;
+        yellowCustom: true;
     }
 }
 declare module "@mui/material/Switch" {
@@ -48,7 +65,7 @@ declare module "@mui/material/Switch" {
 }
 declare module "@mui/material/Chip" {
     interface ChipPropsColorOverrides {
-        warningAmber: true;
+        warningCustom: true;
     }
 }
 
@@ -83,6 +100,7 @@ export const colors = {
     black: "#000",
     orange: "#FE9A2D",
     green400: "#3DB28C",
+    green700: "#2c8267",
     amber500: "#ffc107",
     grey: "#F6F7F8",
     grey100: "#F6F7F8",
@@ -100,9 +118,11 @@ export const colors = {
     red900: "#C02531",
     purple100: "#C6CEE5",
     purple200: "#A2AED3",
+    purple400: "#6275B3",
     purple500: "#475da7",
     purple700: "#384B91",
     darkGreen50: "#DEF0F0",
+    yellow400: "#F4E751",
 };
 
 const palette = {
@@ -115,18 +135,26 @@ const palette = {
     error: {
         main: colors.red700,
     },
-    errorBackground: {
-        main: colors.red50,
+    success: {
+        main: colors.green700,
     },
-    errorBorder: {
-        main: colors.red700,
-    },
-    grey: {
+    greyCustom: {
         main: colors.grey400,
+        light: "#E2E2E2",
+        dark: "#A29415",
+        contrastText: colors.grey800,
+    },
+    yellowCustom: {
+        main: colors.yellow400,
+        light: "#E9DB5D",
+        dark: "#A29415",
         contrastText: colors.grey800,
     },
     background: { default: "#f6f7f8" },
-    warningAmber: {
+    warningCustom: {
+        main: colors.amber500,
+        light: "#E9DB5D",
+        dark: "#A29415",
         contrastText: "#000",
     },
 };
@@ -164,19 +192,23 @@ const theme = createTheme({
         MuiButtonBase: {
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => {
+                    const ownerStateProps = (
+                        ownerState?.children as ReactElement
+                    )?.props;
+
                     return {
                         "&.MuiMenuItem-root:hover": {
-                            ...(ownerState.children?.props?.invertListItem && {
+                            ...(ownerStateProps?.invertListItem && {
                                 background: _theme.palette.primary.dark,
                             }),
                         },
                         "&.MuiMenuItem-root.Mui-selected": {
-                            ...(ownerState.children?.props?.invertListItem && {
+                            ...(ownerStateProps?.invertListItem && {
                                 background: _theme.palette.primary.dark,
                             }),
                         },
                         "&.MuiMenuItem-root.Mui-selected:hover": {
-                            ...(ownerState.children?.props?.invertListItem && {
+                            ...(ownerStateProps?.invertListItem && {
                                 background: _theme.palette.primary.dark,
                             }),
                         },
@@ -221,15 +253,28 @@ const theme = createTheme({
         MuiButton: {
             variants: [
                 {
-                    props: { color: "grey" },
+                    props: { color: "greyCustom" },
                     style: {
                         color: colors.grey800,
-                        borderColor: palette.grey.main,
+                        borderColor: palette.greyCustom.main,
                         "&:active": {
-                            background: palette.grey.main,
+                            background: palette.greyCustom.main,
                         },
                         "&:hover": {
-                            background: palette.grey.main,
+                            background: palette.greyCustom.main,
+                        },
+                    },
+                },
+                {
+                    props: { color: "yellowCustom" },
+                    style: {
+                        color: colors.grey800,
+                        borderColor: palette.greyCustom.main,
+                        "&:active": {
+                            background: palette.yellowCustom.main,
+                        },
+                        "&:hover": {
+                            background: palette.yellowCustom.main,
                         },
                     },
                 },
@@ -427,7 +472,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 0,
-                    boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+                    boxShadow: "none",
                 },
             },
         },
@@ -572,7 +617,7 @@ const theme = createTheme({
         MuiChip: {
             variants: [
                 {
-                    props: { color: "warningAmber" },
+                    props: { color: "warningCustom" },
                     style: {
                         background: colors.amber500,
                     },

@@ -2,7 +2,7 @@
 
 exports[`EllipsisCharacterLimit should render component 1`] = `
 <div>
-  <div
+  <span
     aria-label="Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar"
     class=""
     data-mui-internal-clone-element="true"
@@ -12,6 +12,6 @@ exports[`EllipsisCharacterLimit should render component 1`] = `
         Cras ut sem eu ligula tincidunt aliquet. Lorem ips...
       </span>
     </span>
-  </div>
+  </span>
 </div>
 `;

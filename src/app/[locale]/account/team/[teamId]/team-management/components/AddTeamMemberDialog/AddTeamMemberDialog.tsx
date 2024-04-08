@@ -31,7 +31,10 @@ const limit = pLimit(1);
 const AddTeamMemberDialog = () => {
     const { hideDialog, store } = useDialog();
     const { dialogProps } = store as unknown as {
-        dialogProps: { teamId: string };
+        dialogProps: {
+            teamId: string;
+            onSuccess: (userIds: number[]) => void;
+        };
     };
 
     const t = useTranslations("modules");
@@ -80,7 +83,7 @@ const AddTeamMemberDialog = () => {
         if (typeof dialogProps?.onSuccess === "function") {
             /* send userIds back to parent component to be able to list new Team Members at the top */
             dialogProps.onSuccess(
-                userAndRoles.map(userAndRole => userAndRole.userId)
+                userAndRoles.map(userAndRole => userAndRole.userId as number)
             );
         }
     };

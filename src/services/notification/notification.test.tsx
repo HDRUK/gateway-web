@@ -10,12 +10,11 @@ describe("Notification Service", () => {
     it("should call correct props for `apiError` notification", () => {
         notificationService.apiError("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
-            action: expect.any(Function),
             anchorOrigin: {
                 horizontal: "right",
                 vertical: "top",
             },
-            persist: "true",
+            persist: true,
             variant: "apiError",
         });
     });

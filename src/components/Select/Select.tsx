@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Control, useController } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import {
     OutlinedInput,
     Select as MuiSelect,
@@ -18,7 +18,7 @@ export interface SelectOptionsType {
     icon?: IconType;
 }
 
-export interface SelectProps {
+export interface SelectProps<TFieldValues extends FieldValues, TName> {
     label: string;
     info?: string;
     extraInfo?: string;
@@ -29,8 +29,8 @@ export interface SelectProps {
     multiple?: boolean;
     horizontalForm?: boolean;
     icon?: IconType;
-    name: string;
-    control: Control;
+    name: TName;
+    control: Control<TFieldValues>;
     required?: boolean;
     hasCheckbox?: boolean;
     formControlSx?: SxProps;
@@ -50,7 +50,10 @@ const renderValue = (
     return options.find(option => option.value === selected)?.label;
 };
 
-const Select = ({
+const Select = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     info = "",
     extraInfo,
@@ -67,7 +70,7 @@ const Select = ({
     disabled = false,
     invertListItem = false,
     ...rest
-}: SelectProps) => {
+}: SelectProps<TFieldValues, TName>) => {
     const {
         field: { ref, ...fieldProps },
         fieldState: { error },

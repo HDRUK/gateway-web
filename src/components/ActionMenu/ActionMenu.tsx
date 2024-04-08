@@ -54,7 +54,7 @@ interface ActionMenuProps {
 }
 export default function ActionMenu({
     actions,
-    buttonColor = "grey",
+    buttonColor = "greyCustom",
     label = "Actions",
 }: ActionMenuProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

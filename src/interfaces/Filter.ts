@@ -46,6 +46,11 @@ export type FilterKey =
     | "organisationSector"
     | "fundersAndSponsors";
 
+export type DateRange = {
+    minYear: string;
+    maxYear: string;
+};
+
 export interface Bucket {
     doc_count: number;
     key: string;

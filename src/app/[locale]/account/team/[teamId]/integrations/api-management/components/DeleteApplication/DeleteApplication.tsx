@@ -1,19 +1,8 @@
-/* eslint-disable */
-
-/**
- ** TODO: RE-ENABLE LINTING WHEN WORKING ON FEATURE
- */
-
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import { Control } from "react-hook-form";
 
-interface DeleteApplicationProps {
-    control: Control;
-}
-
-const DeleteApplication = ({ control }: DeleteApplicationProps) => {
+const DeleteApplication = () => {
     return (
         <Box sx={{ padding: 0, display: "flex", alignItems: "center", gap: 2 }}>
             <Box sx={{ flex: 1, p: 0 }}>
@@ -28,8 +17,7 @@ const DeleteApplication = ({ control }: DeleteApplicationProps) => {
                     p: 0,
                     display: "flex",
                     justifyContent: "end",
-                }}
-            >
+                }}>
                 <Button type="submit" variant="outlined" color="secondary">
                     Delete App
                 </Button>

@@ -4,7 +4,7 @@ import { render } from "@/utils/testUtils";
 
 describe("SocialProviders", () => {
     const Component = () => {
-        const { control, getValues } = useForm({
+        const { getValues } = useForm<{ provider: string }>({
             defaultValues: {
                 provider: "google",
             },
@@ -14,7 +14,6 @@ describe("SocialProviders", () => {
                 label="Your preferred sign in method"
                 name="provider"
                 getValues={getValues}
-                control={control}
             />
         );
     };

@@ -20,7 +20,7 @@ interface FormInputWrapperProps {
     required?: boolean;
     limit?: number;
     children: ReactNode;
-    error?: FieldError | (FieldError | undefined)[];
+    error?: FieldError | FieldError[];
 }
 
 const FormInputWrapper = ({

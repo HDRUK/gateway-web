@@ -24,7 +24,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
           class="MuiBox-root mui-style-e42i7k"
         >
           <div
-            class="mui-style-1upwm2o-HTMLContent"
+            class="mui-style-xl0kid"
           >
             <h2>
               About Cohort Discovery
@@ -69,7 +69,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
           class="MuiBox-root mui-style-e42i7k"
         >
           <div
-            class="mui-style-1upwm2o-HTMLContent"
+            class="mui-style-xl0kid"
           >
             <p>
               <iframe
@@ -96,7 +96,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
         class="MuiBox-root mui-style-1hvbzpf"
       >
         <div
-          class="mui-style-1upwm2o-HTMLContent"
+          class="mui-style-xl0kid"
         >
           <h3>
             How you can request access to Cohort Discovery

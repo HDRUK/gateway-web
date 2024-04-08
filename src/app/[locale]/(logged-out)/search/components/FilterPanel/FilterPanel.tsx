@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -14,6 +14,7 @@ import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import {
     FILTER_DATA_USE_TITLES,
+    FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_PUBLISHER_NAME,
     filtersList,
@@ -23,17 +24,24 @@ import {
     groupByType,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
+import DateRangeFilter from "../DateRangeFilter";
 
-const TRANSLATION_PATH = "pages.search.components.FilterPanel";
+const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
+
+type DefaultValues = {
+    [key: string]: { [key: string]: boolean };
+};
 
 const FilterPanel = ({
     filterCategory,
     filterSourceData,
+    selectedFilters,
     setFilterQueryParams,
     aggregations,
 }: {
     filterCategory: string;
+    selectedFilters: { [filter: string]: string[] | undefined };
     filterSourceData: Filter[];
     setFilterQueryParams: (
         filterValues: string[],
@@ -41,30 +49,34 @@ const FilterPanel = ({
     ) => void;
     aggregations?: Aggregations;
 }) => {
-    const t = useTranslations(TRANSLATION_PATH);
-    const searchParams = useSearchParams();
+    const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
 
     // filterValues controls the selected values of each filter
-    const [filterValues, setFilterValues] = useState<{
-        [key: string]: { [key: string]: boolean };
-    }>({
-        [FILTER_PUBLISHER_NAME]: transformQueryFiltersToForm(
-            searchParams?.get(FILTER_PUBLISHER_NAME)
-        ),
-        [FILTER_DATA_USE_TITLES]: transformQueryFiltersToForm(
-            searchParams?.get(FILTER_DATA_USE_TITLES)
-        ),
-        [FILTER_GEOGRAPHIC_LOCATION]: transformQueryFiltersToForm(
-            searchParams?.get(FILTER_GEOGRAPHIC_LOCATION)
-        ),
+    const [filterValues, setFilterValues] = useState<DefaultValues>({
+        [FILTER_PUBLISHER_NAME]: {},
+        [FILTER_DATA_USE_TITLES]: {},
+        [FILTER_GEOGRAPHIC_LOCATION]: {},
+        [FILTER_DATE_RANGE]: {},
     });
 
+    useEffect(() => {
+        const defaultValues: DefaultValues = {};
+        filtersList.forEach(filterName => {
+            defaultValues[filterName] = transformQueryFiltersToForm(
+                selectedFilters[filterName]
+            );
+        });
+        setFilterValues(defaultValues);
+    }, [selectedFilters]);
+
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
-    const { control, setValue } = useForm({
+    const { control, setValue } = useForm<{
+        [FILTER_PUBLISHER_NAME]: string;
+        [FILTER_DATA_USE_TITLES]: string;
+    }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
-            [FILTER_GEOGRAPHIC_LOCATION]: "",
         },
     });
 
@@ -110,6 +122,26 @@ const FilterPanel = ({
         setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
     };
 
+    const handleUpdateDateRange = (dateRange: DateRange) => {
+        setFilterValues({
+            ...filterValues,
+            [FILTER_DATE_RANGE]: transformQueryFiltersToForm(
+                Object.values(dateRange)
+            ),
+        });
+
+        setFilterQueryParams(Object.values(dateRange), FILTER_DATE_RANGE);
+    };
+
+    const resetFilterSection = (filterSection: string) => {
+        setFilterValues({
+            ...filterValues,
+            [filterSection]: {},
+        });
+
+        setFilterQueryParams([], filterSection);
+    };
+
     const renderFilterContent = (filterItem: {
         label: string;
         value: string;
@@ -124,11 +156,19 @@ const FilterPanel = ({
                         <MapUK
                             handleUpdate={handleUpdateMap}
                             counts={formatBucketCounts(
-                                aggregations?.geographicLocation.buckets
+                                aggregations?.geographicLocation?.buckets
                             )}
                             overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
                         />
                     </Box>
+                );
+            case FILTER_DATE_RANGE:
+                return (
+                    <DateRangeFilter
+                        aggregations={aggregations}
+                        selectedFilters={selectedFilters}
+                        handleUpdate={handleUpdateDateRange}
+                    />
                 );
             default:
                 return (
@@ -141,6 +181,10 @@ const FilterPanel = ({
                         setValue={setValue}
                         control={control}
                         filterItem={filterItem}
+                        resetFilterSection={() => resetFilterSection(label)}
+                        counts={formatBucketCounts(
+                            get(aggregations, label)?.buckets
+                        )}
                     />
                 );
         }

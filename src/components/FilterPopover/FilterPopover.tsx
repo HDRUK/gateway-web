@@ -1,33 +1,33 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import { IconButton, Popover } from "@mui/material";
 import Box from "@/components/Box";
 import RadioGroup from "@/components/RadioGroup";
 import { FilterAltIcon, FilterAltOffIcon } from "@/consts/icons";
 
-interface FilterPopoverProps<T> {
-    setFilter: (filter: Partial<T>) => void;
-    filter?: Partial<T>;
+interface FilterPopoverProps {
+    setFilter: (filter: string) => void;
+    filter?: string;
     radios: { label: string; value: string }[];
     name: string;
 }
 
-interface FilterCheckboxesProps<T> extends FilterPopoverProps<T> {
+interface FilterCheckboxesProps extends FilterPopoverProps {
     handleClose: () => void;
 }
 
-const FilterCheckboxes = <T extends string>({
+const FilterCheckboxes = ({
     filter,
     setFilter,
     radios,
     name,
     handleClose,
-}: FilterCheckboxesProps<T>) => {
+}: FilterCheckboxesProps) => {
     const { control } = useForm({
         defaultValues: filter ? { [name]: filter } : ({} as FieldValues),
     });
 
-    const handleChange = (value: Partial<T>) => {
+    const handleChange = (value: string) => {
         setFilter(value);
         handleClose();
     };
@@ -41,8 +41,8 @@ const FilterCheckboxes = <T extends string>({
                 <RadioGroup
                     radios={radios}
                     onChange={(
-                        _event: React.MouseEvent<HTMLElement>,
-                        value: Partial<T>
+                        _event: ChangeEvent<HTMLInputElement>,
+                        value: string
                     ) => handleChange(value)}
                     label=""
                     name={name}
@@ -54,12 +54,12 @@ const FilterCheckboxes = <T extends string>({
     );
 };
 
-const FilterPopover = <T extends string>({
+const FilterPopover = ({
     filter,
     setFilter,
     name,
     radios,
-}: FilterPopoverProps<T>) => {
+}: FilterPopoverProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {

@@ -57,7 +57,7 @@ interface getIntegrationProps {
 
 const getIntegrationV1 = ({
     data = integrationV1,
-    teamId = teamV1.id,
+    teamId = teamV1.id.toString(),
     status = 200,
 }: getIntegrationProps) => {
     return rest.get(

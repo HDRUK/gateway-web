@@ -1,35 +1,54 @@
 "use client";
 
 import { CSSProperties, useMemo } from "react";
-import { Control, useController } from "react-hook-form";
+import {
+    Control,
+    FieldValues,
+    Path,
+    UseFormSetValue,
+    useController,
+} from "react-hook-form";
 import { List, AutoSizer } from "react-virtualized";
+import { cloneDeep, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
+import { CountType } from "@/interfaces/Search";
+import CheckboxControlled from "@/components/CheckboxControlled";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
-import CheckboxControlled from "../CheckboxControlled";
+import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 
-interface FilterSectionProps {
+interface FilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
-    control: Control;
-    filterSection: string;
+    control: Control<TFieldValues>;
+    filterSection: TName;
     noFilterLabel?: string;
     placeholder?: string;
     checkboxValues: { [key: string]: boolean };
+    counts?: CountType;
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
-    setValue: (name: string, value: string | number) => void;
+    setValue: (
+        name: keyof TFieldValues,
+        value: UseFormSetValue<TFieldValues>
+    ) => void;
+    resetFilterSection: () => void;
 }
-const FilterSection = ({
+const FilterSection = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     filterItem,
     filterSection,
     control,
     checkboxValues,
-    handleCheckboxChange,
     noFilterLabel,
     placeholder,
+    counts = {},
+    handleCheckboxChange,
     setValue,
-}: FilterSectionProps) => {
+    resetFilterSection,
+}: FilterSectionProps<TFieldValues, TName>) => {
     const t = useTranslations("components.FilterSection");
     const { field } = useController({
         control,
@@ -55,21 +74,32 @@ const FilterSection = ({
         index: number;
         key: string;
         style: CSSProperties;
-    }) => (
-        <div key={key} style={style}>
-            <CheckboxControlled
-                {...checkboxes[index]}
-                formControlSx={{ pl: 1, pr: 1 }}
-                checked={checkboxValues[checkboxes[index].label]}
-                name={checkboxes[index].label}
-                onChange={(event, value) =>
-                    handleCheckboxChange({
-                        [event.target.name]: value,
-                    })
-                }
-            />
-        </div>
-    );
+    }) => {
+        const formattedRow = cloneDeep(checkboxes[index]);
+        formattedRow.count = !isEmpty(counts)
+            ? counts[checkboxes[index].label] || 0
+            : checkboxes[index].count;
+
+        return (
+            <div key={key} style={style}>
+                <CheckboxControlled
+                    {...formattedRow}
+                    formControlSx={{ pl: 1, pr: 1 }}
+                    checked={
+                        (checkboxValues &&
+                            checkboxValues[checkboxes[index].label]) ||
+                        false
+                    }
+                    name={checkboxes[index].label}
+                    onChange={(event, value) =>
+                        handleCheckboxChange({
+                            [event.target.name]: value,
+                        })
+                    }
+                />
+            </div>
+        );
+    };
 
     return (
         <>
@@ -103,6 +133,10 @@ const FilterSection = ({
                     }}
                 </AutoSizer>
             </div>
+            <ClearFilterButton
+                checkboxValues={checkboxValues}
+                resetFilterSection={resetFilterSection}
+            />
         </>
     );
 };

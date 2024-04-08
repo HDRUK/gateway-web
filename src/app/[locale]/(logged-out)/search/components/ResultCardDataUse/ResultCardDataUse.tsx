@@ -7,10 +7,13 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import DataUseDetailsDialog from "@/modules/DataUseDetailsDialog";
+import useDialog from "@/hooks/useDialog";
 import {
     ResultButtonWrap,
     ResultRow,
     ResultRowCategory,
+    ResultTitle,
 } from "./ResultCardDataUse.styles";
 
 interface ResultCardProps {
@@ -19,10 +22,13 @@ interface ResultCardProps {
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";
 const TOOLTIP_SUFFIX = "Tooltip";
-const CHARACTER_LIMIT = 150;
+const CHARACTER_LIMIT = 50;
 
 const ResultCardDataUse = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { showDialog } = useDialog();
+
+    const leadOrgNames = result?.organisationName?.split(",");
 
     const missingDataComponent = (
         <Typography
@@ -33,6 +39,10 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
         </Typography>
     );
 
+    const handleShowAll = () => {
+        showDialog(DataUseDetailsDialog, { result });
+    };
+
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
@@ -40,16 +50,33 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                     disableTypography
                     sx={{ padding: 2, paddingBottom: 1, m: 0 }}
                     primary={
-                        <Link
-                            href="/#"
-                            fontSize={16}
-                            fontWeight={600}
-                            marginBottom={2}>
-                            <EllipsisLineLimit
-                                text={result.projectTitle || ""}
-                                showToolTip
-                            />
-                        </Link>
+                        <ResultTitle>
+                            <Link
+                                href="/#"
+                                fontSize={16}
+                                fontWeight={600}
+                                marginBottom={2}>
+                                <EllipsisLineLimit
+                                    text={result.projectTitle || ""}
+                                    showToolTip
+                                />
+                            </Link>
+                            {((!!result.datasetTitles?.length &&
+                                result.datasetTitles?.length > 1) ||
+                                leadOrgNames?.length > 1) && (
+                                <Button
+                                    onClick={handleShowAll}
+                                    size="small"
+                                    variant="outlined"
+                                    color="secondary"
+                                    style={{
+                                        flexShrink: 0,
+                                        alignSelf: "flex-start",
+                                    }}>
+                                    {t("showAll")}
+                                </Button>
+                            )}
+                        </ResultTitle>
                     }
                     primaryTypographyProps={{
                         color: "primary",
@@ -69,12 +96,17 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                     />
                                 </ResultRowCategory>
 
-                                <Typography
-                                    sx={{
-                                        fontWeight: 500,
-                                    }}>
-                                    {result.organisationName}
-                                </Typography>
+                                {(!!leadOrgNames && (
+                                    <Typography
+                                        sx={{
+                                            fontWeight: 500,
+                                        }}>
+                                        {leadOrgNames[0]}
+                                        {leadOrgNames.length > 1 &&
+                                            `,... (${leadOrgNames.length})`}
+                                    </Typography>
+                                )) ||
+                                    missingDataComponent}
                             </ResultRow>
 
                             <ResultRow>
@@ -86,22 +118,27 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                 </ResultRowCategory>
 
                                 {(!!result.datasetTitles?.length && (
-                                    <ResultButtonWrap>
-                                        <EllipsisCharacterLimit
-                                            text={result.datasetTitles[0] || ""}
-                                            isButton
-                                            characterLimit={CHARACTER_LIMIT}
-                                        />
-
-                                        {result.datasetTitles.length > 1 && (
-                                            <Button
-                                                size="small"
-                                                variant="outlined"
-                                                color="secondary">
-                                                {t("showAll")}
-                                            </Button>
+                                    <>
+                                        <ResultButtonWrap>
+                                            <EllipsisCharacterLimit
+                                                text={
+                                                    result.datasetTitles[0] ||
+                                                    ""
+                                                }
+                                                isButton
+                                                characterLimit={CHARACTER_LIMIT}
+                                            />
+                                        </ResultButtonWrap>
+                                        {result.datasetTitles?.length > 1 && (
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: 500,
+                                                    ml: 1,
+                                                }}>
+                                                ({result.datasetTitles?.length})
+                                            </Typography>
                                         )}
-                                    </ResultButtonWrap>
+                                    </>
                                 )) ||
                                     missingDataComponent}
                             </ResultRow>
@@ -115,19 +152,18 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                         label={t("dataCustodian")}
                                     />
                                 </ResultRowCategory>
-                                {(!!result?.team?.name &&
-                                    result.datasetTitles[0] && (
-                                        <Typography
-                                            sx={{
-                                                fontWeight: 500,
-                                            }}>
-                                            {`${result.team?.member_of} > `}
-                                            <EllipsisCharacterLimit
-                                                text={result.team.name}
-                                                characterLimit={CHARACTER_LIMIT}
-                                            />
-                                        </Typography>
-                                    )) ||
+                                {(!!result?.team?.name && (
+                                    <Typography
+                                        sx={{
+                                            fontWeight: 500,
+                                        }}>
+                                        {`${result.team?.member_of} > `}
+                                        <EllipsisCharacterLimit
+                                            text={result.team.name}
+                                            characterLimit={CHARACTER_LIMIT}
+                                        />
+                                    </Typography>
+                                )) ||
                                     missingDataComponent}
                             </ResultRow>
                         </>

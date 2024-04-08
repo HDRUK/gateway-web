@@ -1,18 +1,27 @@
 "use client";
 
 import { Fragment } from "react";
-import { Control } from "react-hook-form";
+import { Control, FieldValues, Path } from "react-hook-form";
 import { Box } from "@mui/material";
 import { FormField } from "@/interfaces/FormField";
 import InputWrapper from "@/components/InputWrapper";
 
-export interface MultiInputWrapperProps {
-    fields: FormField;
-    control: Control;
+export interface MultiInputWrapperProps<
+    TFieldValues extends FieldValues,
+    TName
+> {
+    fields: FormField<TName>[];
+    control: Control<TFieldValues>;
 }
 
-const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
-    const renderField = (field: FormField) => {
+const MultiInputWrapper = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
+    fields,
+    control,
+}: MultiInputWrapperProps<TFieldValues, TName>) => {
+    const renderField = (field: FormField<TName>) => {
         if (field.component) {
             return (
                 <InputWrapper key={field.name} control={control} {...field} />
@@ -23,15 +32,15 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
                 <>
                     {field.label}
                     <Box
-                        key={field.name}
+                        key={field.name as string}
                         sx={{
                             display: "flex",
                             alignItems: "center",
                             py: 1,
                             my: 1,
                         }}>
-                        {field.fields.map(subField => (
-                            <Fragment key={subField.name}>
+                        {field.fields?.map(subField => (
+                            <Fragment key={subField.name as string}>
                                 {subField.label}
                                 <InputWrapper
                                     formControlSx={{
@@ -54,7 +63,7 @@ const MultiInputWrapper = ({ fields, control }: MultiInputWrapperProps) => {
 
     return (
         <Box sx={{ p: 0 }}>
-            {fields.map((field: FieldProps) => (
+            {fields.map((field: FormField<TName>) => (
                 <Box
                     key={field.name}
                     sx={{

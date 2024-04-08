@@ -1,22 +1,22 @@
-import { Control } from "react-hook-form";
+import { Control, FieldValues } from "react-hook-form";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
 import { InputWrapperCombinedProps } from "@/components/InputWrapper/InputWrapper";
 import { colors } from "@/config/theme";
 
-interface InputSectionWrapperProps {
+interface InputSectionWrapperProps<TFieldValues extends FieldValues> {
     sections: {
         id: number;
         title?: string;
-        fields: Omit<InputWrapperCombinedProps, "control">[];
+        fields: Omit<InputWrapperCombinedProps<FieldValues>, "control">[];
     }[];
-    control: Control;
+    control: Control<TFieldValues>;
 }
 
-const InputSectionWrapper = ({
+const InputSectionWrapper = <TFieldValues extends FieldValues = FieldValues>({
     sections,
     control,
-}: InputSectionWrapperProps) => {
+}: InputSectionWrapperProps<TFieldValues>) => {
     return (
         <>
             {sections.map(section => (

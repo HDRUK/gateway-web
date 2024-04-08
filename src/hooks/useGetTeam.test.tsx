@@ -4,7 +4,7 @@ import { teamV1 } from "@/mocks/data/team";
 
 describe("useGetTeam", () => {
     it("should return initial response", async () => {
-        const { result } = renderHook(() => useGetTeam(teamV1.id));
+        const { result } = renderHook(() => useGetTeam(teamV1.id.toString()));
 
         await waitFor(() => {
             expect(result.current).toEqual({
@@ -16,7 +16,7 @@ describe("useGetTeam", () => {
         });
     });
     it("should return the loaded team", async () => {
-        const { result } = renderHook(() => useGetTeam(teamV1.id));
+        const { result } = renderHook(() => useGetTeam(teamV1.id.toString()));
         await waitFor(() => {
             expect(result.current).toEqual({
                 error: undefined,

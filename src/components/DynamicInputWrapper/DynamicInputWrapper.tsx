@@ -11,7 +11,7 @@ import Typography from "../Typography";
 interface InputSectionWrapperProps {
     name?: string;
     control: Control;
-    level: string | { [key: string]: unknown };
+    level: string | { [key: string]: string };
 }
 
 /* todo: Interim component to render dynamic fields */
@@ -24,7 +24,10 @@ const DynamicInputWrapper = ({
         return (
             <>
                 {Object.keys(level).map(key => {
-                    if (typeof (level as Metadata)[key] === "string") {
+                    if (
+                        typeof level === "object" &&
+                        typeof level[key as keyof Metadata] === "string"
+                    ) {
                         return (
                             <InputWrapper
                                 label={capitalise(splitCamelcase(key))}
@@ -36,7 +39,10 @@ const DynamicInputWrapper = ({
                             />
                         );
                     }
-                    if (isPlainObject((level as Metadata)[key])) {
+                    if (
+                        typeof level === "object" &&
+                        isPlainObject(level[key])
+                    ) {
                         return (
                             <Box
                                 key={name ? `${name}.${key}` : key}
@@ -49,7 +55,7 @@ const DynamicInputWrapper = ({
                                 </Typography>
                                 <DynamicInputWrapper
                                     name={name ? `${name}.${key}` : key}
-                                    level={(level as Metadata)[key]}
+                                    level={level[key]}
                                     {...rest}
                                 />
                             </Box>

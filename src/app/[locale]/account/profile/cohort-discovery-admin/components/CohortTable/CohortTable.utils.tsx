@@ -19,7 +19,7 @@ import { capitalise } from "@/utils/general";
 interface getColumnsProps {
     sort: { key: string; direction: string };
     setSort: (sort: { key: string; direction: string }) => void;
-    setRequestStatus: (status: CohortRequestStatus) => void;
+    setRequestStatus: (status: string) => void;
     requestStatus?: CohortRequestStatus;
 }
 
@@ -154,7 +154,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Status
-                    <FilterPopover<CohortRequestStatus>
+                    <FilterPopover
                         name="request_status"
                         radios={statusRadios}
                         setFilter={setRequestStatus}
