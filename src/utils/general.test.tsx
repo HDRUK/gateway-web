@@ -3,6 +3,7 @@ import {
     splitCamelcase,
     getTrimmedpathname,
     extractSubdomain,
+    convertToCamelCase,
 } from "./general";
 
 describe("General utils", () => {
@@ -19,5 +20,8 @@ describe("General utils", () => {
         expect(extractSubdomain("https://api.foo.bar.baz.uk/api/v1")).toEqual(
             ".foo.bar.baz.uk"
         );
+    });
+    it("should convert path string to camelcase", async () => {
+        expect(convertToCamelCase("text_string")).toBe("textString");
     });
 });
