@@ -29,6 +29,8 @@ const apis = {
     datasetsV1Url: `${apiV1Url}/datasets`,
     datasetsV1UrlIP: `${apiV1IPUrl}/datasets`,
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
+    dataUseV1Url: `${apiV1Url}/dur`,
+    dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
