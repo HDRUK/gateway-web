@@ -387,9 +387,6 @@
         },
         "dataUse": {
             "components": {
-                "ActiveLinks": {
-                    "bookmarks": "Bookmarks"
-                },
                 "DataUseContent": {
                     "general": "General",
                     "safePeople": "Safe People",
@@ -504,6 +501,9 @@
                 "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
                 "confirmButton": "Back to homepage"
             }
+        },
+        "ActiveListSidebar": {
+            "bookmarks": "Bookmarks"
         },
         "dialogs": {
             "ProvidersDialog": {
