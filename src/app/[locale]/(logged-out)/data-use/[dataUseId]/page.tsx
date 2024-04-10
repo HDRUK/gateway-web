@@ -40,6 +40,7 @@ export default async function DataUseItemPage({
 
     return (
         <BoxContainer
+            id="anchor1"
             sx={{
                 gridTemplateColumns: {
                     mobile: "repeat(1, 1fr)",
