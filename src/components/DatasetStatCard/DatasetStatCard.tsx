@@ -45,7 +45,8 @@ const DatasetStatCard = ({
                         stat.map(item => (
                             <Typography
                                 fontSize={16}
-                                sx={{ alignSelf: "flex-start" }}>
+                                sx={{ alignSelf: "flex-start" }}
+                                key={`${stat}_${item}`}>
                                 {item}
                             </Typography>
                         ))
