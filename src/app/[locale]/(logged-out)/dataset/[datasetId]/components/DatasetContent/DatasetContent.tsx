@@ -80,9 +80,9 @@ const DatasetContent = ({
                                 label={tag}
                                 onClick={() =>
                                     router.push(
-                                        `/${RouteName.SEARCH}?type-${
+                                        `/${RouteName.SEARCH}?type=${
                                             SearchCategory.DATASETS
-                                        }=&query=${encodeURIComponent(tag)}`
+                                        }&query=${encodeURIComponent(tag)}`
                                     )
                                 }
                                 key={tag}

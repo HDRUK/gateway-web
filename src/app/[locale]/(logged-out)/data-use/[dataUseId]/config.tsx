@@ -1,6 +1,7 @@
 export enum FieldType {
     TEXT = "text",
-    LIST = "list",
+    LIST_TEXT = "list",
+    LIST_LINK = "list-link",
     DATE = "date",
     LINK = "link",
     TAG = "tag",
@@ -32,7 +33,7 @@ const dataUseFields: DataUseSection[] = [
         fields: [
             {
                 path: "organisation_name",
-                type: FieldType.TEXT,
+                type: FieldType.LINK,
             },
             {
                 path: "organisation_id",
@@ -78,7 +79,7 @@ const dataUseFields: DataUseSection[] = [
             },
             {
                 path: "request_category_type",
-                type: FieldType.LINK,
+                type: FieldType.TEXT,
             },
             {
                 path: "technical_summary",
@@ -111,7 +112,7 @@ const dataUseFields: DataUseSection[] = [
             },
             {
                 path: "non_gateway_datasets",
-                type: FieldType.TAG,
+                type: FieldType.LIST_TEXT,
             },
             {
                 path: "data_sensitivity_level",
@@ -162,17 +163,14 @@ const dataUseFields: DataUseSection[] = [
                 path: "privacy_enhancements",
                 type: FieldType.TEXT,
             },
+        ],
+    },
+    {
+        sectionName: "safeOutput",
+        fields: [
             {
                 path: "non_gateway_outputs",
-                type: FieldType.LINK,
-            },
-            {
-                path: "gateway_outputs_tools",
-                type: FieldType.LINK,
-            },
-            {
-                path: "gateway_outputs_papers",
-                type: FieldType.LINK,
+                type: FieldType.LIST_LINK,
             },
         ],
     },
