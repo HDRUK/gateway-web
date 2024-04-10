@@ -9,14 +9,14 @@ import {
     ActiveLinkWrapper,
     BookmarkText,
     Wrapper,
-} from "./DatasetActiveLinks.styles";
+} from "./ActiveListSidebar.styles";
 
-const TRANSLATION_PATH = "pages.dataset.components.ActiveLinks";
+const TRANSLATION_PATH = "modules.ActiveListSidebar";
 
-const DatasetActiveLinks = ({
-    activeLinkList,
+const ActiveListSidebar = ({
+    items,
 }: {
-    activeLinkList: {
+    items: {
         label: string;
     }[];
 }) => {
@@ -49,7 +49,7 @@ const DatasetActiveLinks = ({
             <BookmarkText>{t("bookmarks")}</BookmarkText>
             <ActiveLinkWrapper>
                 <ActiveList
-                    items={activeLinkList}
+                    items={items}
                     handleClick={handleScroll}
                     activeItem={activeItem}
                 />
@@ -58,4 +58,4 @@ const DatasetActiveLinks = ({
     );
 };
 
-export default DatasetActiveLinks;
+export default ActiveListSidebar;

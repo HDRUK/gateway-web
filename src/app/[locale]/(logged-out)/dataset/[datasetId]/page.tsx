@@ -3,9 +3,9 @@ import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
+import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
-import DatasetActiveLinks from "./components/DatasetActiveLinks";
 import DatasetContent from "./components/DatasetContent";
 import DatasetStats from "./components/DatasetStats";
 import { datasetFields } from "./config";
@@ -59,7 +59,7 @@ export default async function DatasetItemPage({
                     bgcolor: "white",
                     p: 0,
                 }}>
-                <DatasetActiveLinks activeLinkList={activeLinkList} />
+                <ActiveListSidebar items={activeLinkList} />
             </Box>
             <Box
                 sx={{

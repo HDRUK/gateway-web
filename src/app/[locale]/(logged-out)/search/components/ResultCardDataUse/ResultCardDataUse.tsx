@@ -9,6 +9,7 @@ import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import DataUseDetailsDialog from "@/modules/DataUseDetailsDialog";
 import useDialog from "@/hooks/useDialog";
+import { RouteName } from "@/consts/routeName";
 import {
     ResultButtonWrap,
     ResultRow,
@@ -43,6 +44,9 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
         showDialog(DataUseDetailsDialog, { result });
     };
 
+    // eslint-disable-next-line no-underscore-dangle
+    const resultId = result._id;
+
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
@@ -52,7 +56,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                     primary={
                         <ResultTitle>
                             <Link
-                                href="/#"
+                                href={`${RouteName.DATA_USE}/${resultId}`}
                                 fontSize={16}
                                 fontWeight={600}
                                 marginBottom={2}>
