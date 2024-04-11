@@ -2,9 +2,7 @@ import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
-import DatasetContent from "./components/DatasetContent";
 import { datasetFields } from "./config";
 
 export const metadata = {
@@ -44,9 +42,9 @@ export default async function DatasetItemPage({
     );
     console.log("populatedSections - ", populatedSections);
 
-    const activeLinkList = populatedSections.map(section => {
-        return { label: section.sectionName };
-    });
+    // const activeLinkList = populatedSections.map(section => {
+    //     return { label: section.sectionName };
+    // });
 
     return (
         <BoxContainer
@@ -62,7 +60,7 @@ export default async function DatasetItemPage({
                     bgcolor: "white",
                     p: 0,
                 }}>
-                <ActiveListSidebar items={activeLinkList} />
+                {/* <ActiveListSidebar items={activeLinkList} /> */}
             </Box>
             <Box
                 sx={{
@@ -92,10 +90,10 @@ export default async function DatasetItemPage({
                                 </div>
                             </Box>
                         )} */}
-                        <DatasetContent
+                        {/* <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
-                        />
+                        /> */}
                     </Box>
                 </>
             </Box>
