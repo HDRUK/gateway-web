@@ -5,6 +5,7 @@ import BoxContainer from "@/components/BoxContainer";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
+import DatasetContent from "./components/DatasetContent";
 import { datasetFields } from "./config";
 
 export const metadata = {
@@ -92,10 +93,10 @@ export default async function DatasetItemPage({
                                 </div>
                             </Box>
                         )} */}
-                        {/* <DatasetContent
+                        <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
-                        /> */}
+                        />
                     </Box>
                 </>
             </Box>
