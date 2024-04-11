@@ -6,20 +6,30 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import Typography from "@/components/Typography";
+import { RouteName } from "@/consts/routeName";
+import { splitStringList } from "@/utils/dataset";
+import { formatDate } from "@/utils/date";
 import {
     DatasetSection,
+    FieldType,
     Observation,
     observationTableColumns,
 } from "../../config";
-import { ObservationTableWrapper } from "./DatasetContent.styles";
+import {
+    DatasetFieldItem,
+    DatasetFieldWrapper,
+    ObservationTableWrapper,
+} from "./DatasetContent.styles";
 
 const TRANSLATION_PATH = "pages.dataset";
-// const DATE_FORMAT = "DD/MM/YYYY";
+const DATE_FORMAT = "DD/MM/YYYY";
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -34,6 +44,12 @@ const getColumns = () =>
         })
     );
 
+const renderObservationsTable = (rows?: Observation[]) => (
+    <ObservationTableWrapper>
+        <Table<Observation> columns={getColumns()} rows={rows || []} />
+    </ObservationTableWrapper>
+);
+
 const DatasetContent = ({
     data,
     populatedSections,
@@ -47,58 +63,52 @@ const DatasetContent = ({
 
     console.log(data, populatedSections);
 
-    const renderObservationsTable = (rows?: Observation[]) => (
-        <ObservationTableWrapper>
-            <Table<Observation> columns={getColumns()} rows={rows || []} />
-        </ObservationTableWrapper>
-    );
+    const renderDatasetField = (type: FieldType, value: string) => {
+        switch (type) {
+            case FieldType.DATE: {
+                return (
+                    <Typography>{formatDate(value, DATE_FORMAT)}</Typography>
+                );
+            }
+            case FieldType.TAG: {
+                const tagList = splitStringList(value);
 
-    // const renderDatasetField = (type: FieldType, value: string) => {
-    //     switch (type) {
-    //         case FieldType.DATE: {
-    //             return (
-    //                 <Typography>{formatDate(value, DATE_FORMAT)}</Typography>
-    //             );
-    //         }
-    //         case FieldType.TAG: {
-    //             const tagList = splitStringList(value);
-
-    //             return (
-    //                 <DatasetFieldWrapper>
-    //                     {tagList.map(tag => (
-    //                         <DatasetFieldItem
-    //                             color="success"
-    //                             size="small"
-    //                             label={tag}
-    //                             onClick={() =>
-    //                                 router.push(
-    //                                     `/${RouteName.SEARCH}?type=${
-    //                                         SearchCategory.DATASETS
-    //                                     }&query=${encodeURIComponent(tag)}`
-    //                                 )
-    //                             }
-    //                             key={tag}
-    //                         />
-    //                     ))}
-    //                 </DatasetFieldWrapper>
-    //             );
-    //         }
-    //         case FieldType.LINK:
-    //             return (
-    //                 <Link href={value} target="_blank">
-    //                     {value}
-    //                 </Link>
-    //             );
-    //         case FieldType.LIST: {
-    //             const list = splitStringList(value);
-    //             return list.map(item => (
-    //                 <Typography key={item}>{item}</Typography>
-    //             ));
-    //         }
-    //         default:
-    //             return <Typography>{value}</Typography>;
-    //     }
-    // };
+                return (
+                    <DatasetFieldWrapper>
+                        {tagList.map(tag => (
+                            <DatasetFieldItem
+                                color="success"
+                                size="small"
+                                label={tag}
+                                onClick={() =>
+                                    router.push(
+                                        `/${RouteName.SEARCH}?type=${
+                                            SearchCategory.DATASETS
+                                        }&query=${encodeURIComponent(tag)}`
+                                    )
+                                }
+                                key={tag}
+                            />
+                        ))}
+                    </DatasetFieldWrapper>
+                );
+            }
+            case FieldType.LINK:
+                return (
+                    <Link href={value} target="_blank">
+                        {value}
+                    </Link>
+                );
+            case FieldType.LIST: {
+                const list = splitStringList(value);
+                return list.map(item => (
+                    <Typography key={item}>{item}</Typography>
+                ));
+            }
+            default:
+                return <Typography>{value}</Typography>;
+        }
+    };
 
     return (
         <BoxContainer
@@ -163,21 +173,21 @@ const DatasetContent = ({
                                               return null;
                                           }
 
-                                          //   if (!field.label) {
-                                          //       return (
-                                          //           <Box
-                                          //               sx={{
-                                          //                   p: 0,
-                                          //                   pb: 2,
-                                          //               }}
-                                          //               key={value}>
-                                          //               {renderDatasetField(
-                                          //                   field.type,
-                                          //                   value
-                                          //               )}
-                                          //           </Box>
-                                          //       );
-                                          //   }
+                                          if (!field.label) {
+                                              return (
+                                                  <Box
+                                                      sx={{
+                                                          p: 0,
+                                                          pb: 2,
+                                                      }}
+                                                      key={value}>
+                                                      {renderDatasetField(
+                                                          field.type,
+                                                          value
+                                                      )}
+                                                  </Box>
+                                              );
+                                          }
 
                                           return (
                                               <BoxContainer
