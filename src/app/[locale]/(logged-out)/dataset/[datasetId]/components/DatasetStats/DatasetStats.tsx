@@ -5,7 +5,7 @@ import BoxContainer from "@/components/BoxContainer";
 import DatasetStatCard, {
     DatasetStatCardProps,
 } from "@/components/DatasetStatCard/DatasetStatCard";
-import { parseLeadTime } from "@/utils/dataset";
+import { parseLeadTime, splitStringList } from "@/utils/dataset";
 import { getYear } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
@@ -13,6 +13,10 @@ const UNDEFINED_VALUE = "undefined";
 
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    console.log(
+        get(data, "metadata.metadata.coverage.spatial") as unknown as string
+    );
 
     const formattedStats: DatasetStatCardProps[] = [
         {
@@ -46,12 +50,16 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("geographicCoverageTitle"),
-            stat: (
-                get(
-                    data,
-                    "metadata.metadata.coverage.spatial"
-                ) as unknown as string
-            )?.split(","),
+            stat: Array.from(
+                new Set(
+                    splitStringList(
+                        get(
+                            data,
+                            "metadata.metadata.coverage.spatial"
+                        ) as unknown as string
+                    )
+                )
+            ),
             iconSrc: "/images/dataset/map.svg",
         },
         {

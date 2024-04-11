@@ -104,13 +104,6 @@ const DatasetContent = ({
                 ));
             }
             default:
-                if (value.includes("http")) {
-                    return (
-                        <Link href={value} target="_blank">
-                            {value}
-                        </Link>
-                    );
-                }
                 return <Typography>{value}</Typography>;
         }
     };

@@ -110,7 +110,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.accessibility.access.accessRights",
-                type: FieldType.TEXT,
+                type: FieldType.LINK,
                 label: "Access Rights",
             },
             {
@@ -120,7 +120,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.accessRequestCost",
-                type: FieldType.TEXT,
+                type: FieldType.LINK,
                 label: "Organisation Access Request Cost",
             },
             {
