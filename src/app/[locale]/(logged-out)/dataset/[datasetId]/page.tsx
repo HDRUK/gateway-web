@@ -2,12 +2,9 @@ import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
-import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
-import DatasetStats from "./components/DatasetStats";
 import { datasetFields } from "./config";
 
 export const metadata = {
@@ -73,14 +70,14 @@ export default async function DatasetItemPage({
                     p: 0,
                 }}>
                 <>
-                    <ActionBar />
+                    {/* <ActionBar /> */}
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             gap: 2,
                         }}>
-                        {datasetStats && (
+                        {/* {datasetStats && (
                             <Box sx={{ p: 0, gap: 2 }}>
                                 <Typography
                                     variant="h2"
@@ -94,7 +91,7 @@ export default async function DatasetItemPage({
                                     <DatasetStats data={datasetStats} />
                                 </div>
                             </Box>
-                        )}
+                        )} */}
                         <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
