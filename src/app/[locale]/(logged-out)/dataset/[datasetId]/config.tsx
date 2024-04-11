@@ -98,7 +98,7 @@ const datasetFields: DatasetSection[] = [
                 label: "Dataset Version",
             },
             {
-                path: "metadata.metadata.accessibility.usage.resourceCreator",
+                path: "metadata.metadata.accessibility.usage.resourceCreator.name",
                 type: FieldType.TEXT,
                 label: "Citation Requirements",
             },
