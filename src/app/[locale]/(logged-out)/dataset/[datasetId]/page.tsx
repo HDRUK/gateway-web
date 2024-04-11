@@ -39,11 +39,7 @@ export default async function DatasetItemPage({
     const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
 
     const populatedSections = datasetFields.filter(section =>
-        section.fields.some(
-            field =>
-                !isEmpty(get(datasetVersion, field.path)) ||
-                get(datasetVersion, field.path) === "null"
-        )
+        section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
 
     const activeLinkList = populatedSections.map(section => {

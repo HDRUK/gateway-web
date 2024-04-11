@@ -101,7 +101,8 @@ const DataUseContent = ({
             }
             default:
                 console.log(val, path, typeof val);
-                return <Typography>{val}</Typography>;
+                return <p>TEST</p>;
+            // return <Typography>{val}</Typography>;
         }
     };
 
