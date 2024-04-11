@@ -20,16 +20,12 @@ async function get<T>(
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
 
-    console.log("res", res);
-
     if (!res.ok) {
-        console.log("res", res);
         // This will activate the closest `error.js` Error Boundary
         throw new Error("Failed to fetch data");
     }
 
     const { data } = await res.json();
-    console.log("api-data", data);
 
     return data;
 }
@@ -88,7 +84,6 @@ async function getDataset(
     cookieStore: ReadonlyRequestCookies,
     datasetId: string
 ): Promise<Dataset> {
-    console.log("getDatasetUrl", `${apis.datasetsV1UrlIP}/${datasetId}`);
     return await get<Dataset>(
         cookieStore,
         `${apis.datasetsV1UrlIP}/${datasetId}`
