@@ -61,8 +61,6 @@ const DatasetContent = ({
     const router = useRouter();
     const path = usePathname();
 
-    console.log(data, populatedSections);
-
     const renderDatasetField = (type: FieldType, value: string) => {
         switch (type) {
             case FieldType.DATE: {
@@ -106,6 +104,13 @@ const DatasetContent = ({
                 ));
             }
             default:
+                if (value.includes("http")) {
+                    return (
+                        <Link href={value} target="_blank">
+                            {value}
+                        </Link>
+                    );
+                }
                 return <Typography>{value}</Typography>;
         }
     };
@@ -186,7 +191,6 @@ const DatasetContent = ({
                                                   </Box>
                                               );
                                           }
-                                          console.log(value, field.path);
                                           return (
                                               <BoxContainer
                                                   sx={{
