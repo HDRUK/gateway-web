@@ -1,5 +1,7 @@
+import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import { getDataset } from "@/utils/api";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Dataset",
@@ -22,13 +24,13 @@ export default async function DatasetItemPage({
 }) {
     const { datasetId } = params;
 
-    // const cookieStore = cookies();
-    // const data = await getDataset(cookieStore, datasetId);
+    const cookieStore = cookies();
+    const data = await getDataset(cookieStore, datasetId);
 
     console.log("datasetId - ", datasetId, DATASET_STAT_PATHS);
 
-    // const datasetVersion = data?.versions?.[0];
-    // console.log("datasetVersion - ", datasetVersion);
+    const datasetVersion = data?.versions?.[0];
+    console.log("datasetVersion - ", datasetVersion);
 
     // const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
     // console.log("datasetStats - ", datasetStats);
