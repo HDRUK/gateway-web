@@ -106,9 +106,10 @@ const DatasetContent = ({
                 ));
             }
             default:
-                console.log(value);
-                // return <p>TEST</p>;
-                return <Typography>{value}</Typography>;
+                console.log(value, typeof value);
+
+                return <p>TEST</p>;
+            // return <Typography>{value}</Typography>;
         }
     };
 
