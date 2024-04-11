@@ -145,7 +145,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.dataController",
-                type: FieldType.TEXT,
+                type: FieldType.LIST,
                 label: "Data Controller",
             },
             {

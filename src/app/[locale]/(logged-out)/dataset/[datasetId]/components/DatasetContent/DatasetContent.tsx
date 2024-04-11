@@ -2,7 +2,7 @@
 
 import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get } from "lodash";
+import { get, isArray } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -100,15 +100,15 @@ const DatasetContent = ({
                     </Link>
                 );
             case FieldType.LIST: {
-                const list = splitStringList(value);
+                const list = isArray(value) ? splitStringList(value) : [value];
                 return list.map(item => (
                     <Typography key={item}>{item}</Typography>
                 ));
             }
             default:
                 console.log(value);
-                return <p>TEST</p>;
-            // return <Typography>{value}</Typography>;
+                // return <p>TEST</p>;
+                return <Typography>{value}</Typography>;
         }
     };
 
@@ -169,8 +169,6 @@ const DatasetContent = ({
                                     : section.fields.map(field => {
                                           const value = get(data, field.path);
 
-                                          console.log(value, field.path);
-
                                           if (!value) {
                                               return null;
                                           }
@@ -190,7 +188,7 @@ const DatasetContent = ({
                                                   </Box>
                                               );
                                           }
-
+                                          console.log(value, field.path);
                                           return (
                                               <BoxContainer
                                                   sx={{
