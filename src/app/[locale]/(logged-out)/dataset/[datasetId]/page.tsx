@@ -34,12 +34,18 @@ export default async function DatasetItemPage({
     const cookieStore = cookies();
     const data = await getDataset(cookieStore, datasetId);
 
+    console.log("data - ", data);
+
     const datasetVersion = data?.versions?.[0];
+    console.log("datasetVersion - ", datasetVersion);
+
     const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
+    console.log("datasetStats - ", datasetStats);
 
     const populatedSections = datasetFields.filter(section =>
         section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
+    console.log("populatedSections - ", populatedSections);
 
     const activeLinkList = populatedSections.map(section => {
         return { label: section.sectionName };
