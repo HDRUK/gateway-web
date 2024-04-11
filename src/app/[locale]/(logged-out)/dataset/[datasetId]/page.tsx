@@ -4,6 +4,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
+import ActionBar from "./components/ActionBar";
 import { datasetFields } from "./config";
 
 export const metadata = {
@@ -69,7 +70,7 @@ export default async function DatasetItemPage({
                     p: 0,
                 }}>
                 <>
-                    {/* <ActionBar /> */}
+                    <ActionBar />
                     <Box
                         sx={{
                             display: "flex",
