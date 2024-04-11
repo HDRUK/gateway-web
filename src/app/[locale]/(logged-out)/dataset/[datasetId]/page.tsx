@@ -1,7 +1,9 @@
+import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { getDataset } from "@/utils/api";
+import { datasetFields } from "./config";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Dataset",
@@ -32,13 +34,13 @@ export default async function DatasetItemPage({
     const datasetVersion = data?.versions?.[0];
     console.log("datasetVersion - ", datasetVersion);
 
-    // const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
-    // console.log("datasetStats - ", datasetStats);
+    const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
+    console.log("datasetStats - ", datasetStats);
 
-    // const populatedSections = datasetFields.filter(section =>
-    //     section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
-    // );
-    // console.log("populatedSections - ", populatedSections);
+    const populatedSections = datasetFields.filter(section =>
+        section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
+    );
+    console.log("populatedSections - ", populatedSections);
 
     // const activeLinkList = populatedSections.map(section => {
     //     return { label: section.sectionName };
