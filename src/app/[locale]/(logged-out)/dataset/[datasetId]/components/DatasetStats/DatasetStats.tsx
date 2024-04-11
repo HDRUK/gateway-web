@@ -1,3 +1,5 @@
+"use-client";
+
 import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -14,10 +16,6 @@ const UNDEFINED_VALUE = "undefined";
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    console.log(
-        get(data, "metadata.metadata.coverage.spatial") as unknown as string
-    );
-
     const formattedStats: DatasetStatCardProps[] = [
         {
             title: t("populationTitle"),
@@ -31,12 +29,27 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("yearTitle"),
-            stat: `${getYear(
-                get(data, "metadata.metadata.provenance.temporal.startDate") ||
-                    ""
-            )} - ${getYear(
-                get(data, "metadata.metadata.provenance.temporal.endDate") || ""
-            )}`,
+            stat: `${
+                get(data, "metadata.metadata.provenance.temporal.startDate")
+                    ? getYear(
+                          get(
+                              data,
+                              "metadata.metadata.provenance.temporal.startDate"
+                          ) || ""
+                      )
+                    : ""
+            } 
+            ${
+                get(data, "metadata.metadata.provenance.temporal.endDate")
+                    ? ` - ${getYear(
+                          get(
+                              data,
+                              "metadata.metadata.provenance.temporal.endDate"
+                          ) || ""
+                      )}`
+                    : ""
+            }        
+         `,
             iconSrc: "/images/dataset/calendar.svg",
             largeStatText: true,
         },
