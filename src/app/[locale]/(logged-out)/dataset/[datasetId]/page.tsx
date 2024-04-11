@@ -42,7 +42,11 @@ export default async function DatasetItemPage({
     // console.log("datasetStats - ", datasetStats);
 
     const populatedSections = datasetFields.filter(section =>
-        section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
+        section.fields.some(
+            field =>
+                !isEmpty(get(datasetVersion, field.path)) ||
+                get(datasetVersion, field.path) === "null"
+        )
     );
     // console.log("populatedSections - ", populatedSections);
 
@@ -94,10 +98,10 @@ export default async function DatasetItemPage({
                                 </div>
                             </Box>
                         )}
-                        {/* <DatasetContent
+                        <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
-                        /> */}
+                        />
                     </Box>
                 </>
             </Box>

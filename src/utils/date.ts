@@ -16,6 +16,7 @@ const differenceInDays = (date1: string | Date, date2: string | Date) => {
     return convertedDate1.diff(convertedDate2, "day");
 };
 const getYear = (date: string | Date) => {
+    console.log(date);
     return getDayjs(date).year();
 };
 
