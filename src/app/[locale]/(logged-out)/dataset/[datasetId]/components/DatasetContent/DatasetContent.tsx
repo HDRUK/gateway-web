@@ -106,7 +106,9 @@ const DatasetContent = ({
                 ));
             }
             default:
-                return <Typography>{value}</Typography>;
+                console.log(value);
+                return <p>TEST</p>;
+            // return <Typography>{value}</Typography>;
         }
     };
 
@@ -211,7 +213,7 @@ const DatasetContent = ({
                                                       }}>
                                                       {field.label}
                                                   </Box>
-                                                  {/* <Box
+                                                  <Box
                                                       sx={{
                                                           gridColumn: {
                                                               desktop: "span 2",
@@ -222,7 +224,7 @@ const DatasetContent = ({
                                                           field.type,
                                                           value
                                                       )}
-                                                  </Box> */}
+                                                  </Box>
                                               </BoxContainer>
                                           );
                                       })}
