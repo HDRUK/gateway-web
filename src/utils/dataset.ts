@@ -20,6 +20,9 @@ const parseLeadTime = (leadTimeString: string) => {
 };
 
 const splitStringList = (inputString: string) =>
-    inputString.split(",").map(item => item.replace(/;/g, "").trim());
+    inputString
+        .replace(";,;", ",")
+        .split(",")
+        .map(item => item.replace(/;/g, "").trim());
 
 export { parseLeadTime, splitStringList };

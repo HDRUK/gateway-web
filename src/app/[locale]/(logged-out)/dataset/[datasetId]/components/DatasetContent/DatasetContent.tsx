@@ -2,7 +2,7 @@
 
 import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get, isArray } from "lodash";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -100,15 +100,12 @@ const DatasetContent = ({
                     </Link>
                 );
             case FieldType.LIST: {
-                const list = isArray(value) ? splitStringList(value) : [value];
+                const list = Array.from(new Set(splitStringList(value)));
                 return list.map(item => (
                     <Typography key={item}>{item}</Typography>
                 ));
             }
             default:
-                console.log(value, typeof value);
-
-                // return <p>TEST</p>;
                 return <Typography>{value}</Typography>;
         }
     };
