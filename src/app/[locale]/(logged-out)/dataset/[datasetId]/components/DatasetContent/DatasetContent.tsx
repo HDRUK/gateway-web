@@ -157,6 +157,8 @@ const DatasetContent = ({
                                     : section.fields.map(field => {
                                           const value = get(data, field.path);
 
+                                          console.log(value, field.path);
+
                                           if (!value) {
                                               return null;
                                           }
