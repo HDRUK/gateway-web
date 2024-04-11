@@ -1,12 +1,15 @@
-import { get } from "lodash";
+import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
-import { DatasetStatCardProps } from "@/components/DatasetStatCard/DatasetStatCard";
+import BoxContainer from "@/components/BoxContainer";
+import DatasetStatCard, {
+    DatasetStatCardProps,
+} from "@/components/DatasetStatCard/DatasetStatCard";
 import { parseLeadTime } from "@/utils/dataset";
 import { getYear } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
-// const UNDEFINED_VALUE = "undefined";
+const UNDEFINED_VALUE = "undefined";
 
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -73,36 +76,33 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
     ];
 
-    console.log(formattedStats);
-
     return (
-        <p>TEST</p>
-        // <BoxContainer
-        //     sx={{
-        //         gridTemplateColumns: {
-        //             mobile: "repeat(1, 1fr)",
-        //             tablet: "repeat(2, 1fr)",
-        //             desktop: "repeat(5, 1fr)",
-        //         },
-        //         gap: {
-        //             mobile: 1,
-        //             tablet: 2,
-        //         },
-        //     }}>
-        //     {formattedStats.map(
-        //         datasetStat =>
-        //             !isEmpty(datasetStat.stat) &&
-        //             datasetStat.stat !== UNDEFINED_VALUE && (
-        //                 <DatasetStatCard
-        //                     title={datasetStat.title}
-        //                     stat={datasetStat.stat}
-        //                     largeStatText={!!datasetStat.largeStatText}
-        //                     unit={datasetStat.unit}
-        //                     iconSrc={datasetStat.iconSrc}
-        //                 />
-        //             )
-        //     )}
-        // </BoxContainer>
+        <BoxContainer
+            sx={{
+                gridTemplateColumns: {
+                    mobile: "repeat(1, 1fr)",
+                    tablet: "repeat(2, 1fr)",
+                    desktop: "repeat(5, 1fr)",
+                },
+                gap: {
+                    mobile: 1,
+                    tablet: 2,
+                },
+            }}>
+            {formattedStats.map(
+                datasetStat =>
+                    !isEmpty(datasetStat.stat) &&
+                    datasetStat.stat !== UNDEFINED_VALUE && (
+                        <DatasetStatCard
+                            title={datasetStat.title}
+                            stat={datasetStat.stat}
+                            largeStatText={!!datasetStat.largeStatText}
+                            unit={datasetStat.unit}
+                            iconSrc={datasetStat.iconSrc}
+                        />
+                    )
+            )}
+        </BoxContainer>
     );
 };
 
