@@ -150,7 +150,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.dataProcessor",
-                type: FieldType.TEXT,
+                type: FieldType.LIST,
                 label: "Data Processor",
             },
         ],

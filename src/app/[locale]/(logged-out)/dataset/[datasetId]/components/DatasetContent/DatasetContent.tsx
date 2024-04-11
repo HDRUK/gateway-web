@@ -108,8 +108,8 @@ const DatasetContent = ({
             default:
                 console.log(value, typeof value);
 
-                return <p>TEST</p>;
-            // return <Typography>{value}</Typography>;
+                // return <p>TEST</p>;
+                return <Typography>{value}</Typography>;
         }
     };
 
