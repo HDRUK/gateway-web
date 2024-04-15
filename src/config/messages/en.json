@@ -282,6 +282,7 @@
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainer": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
+            "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
             "downloadResults": "Download results",
