@@ -338,6 +338,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         label={t("filtersApplied")}
                         selectedFilters={selectedFilters}
                         handleDelete={removeFilter}
+                        filterCategory={FILTER_CATEGORY[queryParams.type]}
                     />
                 </Box>
                 <Box sx={{ display: "flex" }}>

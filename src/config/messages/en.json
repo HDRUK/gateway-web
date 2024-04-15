@@ -294,6 +294,7 @@
                 },
                 "FilterPanel": {
                     "clearFilter": "Clear filter",
+                    "filter": "Filter",
                     "filters": {
                         "dataset": {
                             "populationSize": "Population size",
