@@ -1,3 +1,5 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
