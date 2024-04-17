@@ -6,7 +6,7 @@ exports[`GradientBoxes should render title 1`] = `
     class="MuiBox-root mui-style-1y4d2m4"
   >
     <div
-      class="MuiBox-root mui-style-11g3ui6"
+      class="MuiBox-root mui-style-lrlde"
     >
       <div
         class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
@@ -30,7 +30,7 @@ exports[`GradientBoxes should render title 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-11g3ui6"
+      class="MuiBox-root mui-style-lrlde"
     >
       <div
         class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
@@ -54,7 +54,7 @@ exports[`GradientBoxes should render title 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-11g3ui6"
+      class="MuiBox-root mui-style-lrlde"
     >
       <div
         class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"

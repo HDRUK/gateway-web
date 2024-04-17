@@ -22,7 +22,7 @@ exports[`SelectedMenuItem should render component with icon 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-1na7feu-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-1qm8lh4-MuiSvgIcon-root"
       data-testid="AccountCircleIcon"
       focusable="false"
       viewBox="0 0 24 24"
@@ -62,7 +62,7 @@ exports[`SelectedMenuItem should render component with right position icon 1`] =
   >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-fdrruv-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-1gtcdgg-MuiSvgIcon-root"
       data-testid="AccountCircleIcon"
       focusable="false"
       viewBox="0 0 24 24"
