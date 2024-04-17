@@ -127,7 +127,7 @@ export const colors = {
 
 const palette = {
     primary: {
-        main: "#475DA7",
+        main: colors.purple500,
     },
     secondary: {
         main: colors.green400,
@@ -140,7 +140,7 @@ const palette = {
     },
     greyCustom: {
         main: colors.grey400,
-        light: "#E2E2E2",
+        light: colors.grey300,
         dark: "#A29415",
         contrastText: colors.grey800,
     },
@@ -150,12 +150,12 @@ const palette = {
         dark: "#A29415",
         contrastText: colors.grey800,
     },
-    background: { default: "#f6f7f8" },
+    background: { default: colors.grey },
     warningCustom: {
         main: colors.amber500,
         light: "#E9DB5D",
         dark: "#A29415",
-        contrastText: "#000",
+        contrastText: colors.black,
     },
 };
 

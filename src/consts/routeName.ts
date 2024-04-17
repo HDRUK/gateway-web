@@ -16,6 +16,7 @@ export enum RouteName {
     EDIT_FORM = "edit-form",
     EN = "en",
     HELP = "help",
+    HOW_TO_SEARCH = "how-to-search",
     INTEGRATION = "integration",
     INTEGRATIONS = "integrations",
     LIST = "list",

@@ -53,6 +53,7 @@ import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
+import { ActionBar } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
@@ -322,17 +323,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     queryName={QUERY_FIELD}
                 />
             </Box>
-            <Box
-                sx={{
-                    p: 0,
-                    justifyContent: "space-between",
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "1em",
-                    width: "100%",
-                    maxWidth: 1440,
-                }}
-                textAlign="left">
+            <ActionBar>
                 <Box sx={{ flex: 1, p: 0 }}>
                     <FilterChips
                         label={t("filtersApplied")}
@@ -361,7 +352,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         {t("downloadResults")}
                     </Button>
                 </Box>
-            </Box>
+            </ActionBar>
             <Box
                 sx={{
                     width: "100%",

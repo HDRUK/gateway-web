@@ -1,8 +1,11 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import { DownloadIcon } from "@/consts/icons";
+import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
@@ -10,14 +13,7 @@ const ActionBar = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "100%",
-            }}
-            style={{ boxShadow: "1px 1px 3px 0px #00000017" }}>
+        <ActionBarWrapper>
             <BackButton label="Back to search results" style={{ margin: 0 }} />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
@@ -31,7 +27,7 @@ const ActionBar = () => {
                     {t("downloadMetadata")}
                 </Button>
             </Box>
-        </Box>
+        </ActionBarWrapper>
     );
 };
 

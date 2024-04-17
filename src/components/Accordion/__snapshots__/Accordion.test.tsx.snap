@@ -21,7 +21,7 @@ exports[`Accordion should render component 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-9nxk4h-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-8lel2y-MuiSvgIcon-root"
           data-testid="SortAscIconIcon"
           fill="none"
           focusable="false"
