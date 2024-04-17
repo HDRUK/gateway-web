@@ -1,4 +1,9 @@
+import { isEmpty } from "lodash";
+import { getYear } from "./date";
+
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
+const UNDEFINED_VALUE = "undefined";
+const NULL_VALUE = "null";
 
 const parseLeadTime = (leadTimeString: string) => {
     if (!leadTimeString) {
@@ -22,4 +27,17 @@ const parseLeadTime = (leadTimeString: string) => {
 const splitStringList = (inputString: string) =>
     inputString.split(",").map(item => item.replace(/;/g, "").trim());
 
-export { parseLeadTime, splitStringList };
+const hasValidValue = (val: string | string[]) =>
+    !isEmpty(val) && val !== UNDEFINED_VALUE && val !== NULL_VALUE;
+
+const formatYearStat = (startYear?: string, endYear?: string) => {
+    const hasStartYear = startYear && hasValidValue(startYear);
+    const hasEndYear = endYear && hasValidValue(endYear);
+    const dividerChar = hasStartYear && hasEndYear ? " - " : "";
+
+    return `${hasStartYear ? getYear(startYear) : ""}${dividerChar}${
+        hasEndYear ? getYear(endYear) : ""
+    }`;
+};
+
+export { parseLeadTime, splitStringList, hasValidValue, formatYearStat };
