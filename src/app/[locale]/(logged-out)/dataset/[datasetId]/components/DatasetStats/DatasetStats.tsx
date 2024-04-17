@@ -1,5 +1,3 @@
-"use client";
-
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -17,8 +15,9 @@ import {
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
-    console.log(data);
     const t = useTranslations(TRANSLATION_PATH);
+
+    const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
 
     const formattedStats: DatasetStatCardProps[] = [
         {
@@ -50,16 +49,9 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("geographicCoverageTitle"),
-            stat: Array.from(
-                new Set(
-                    splitStringList(
-                        get(
-                            data,
-                            "metadata.metadata.coverage.spatial"
-                        ) as unknown as string
-                    )
-                )
-            ),
+            stat: spatialCoverage
+                ? Array.from(new Set(splitStringList(spatialCoverage)))
+                : "",
             iconSrc: "/images/dataset/map.svg",
         },
         {
