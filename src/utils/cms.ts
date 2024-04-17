@@ -17,6 +17,10 @@ import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes"
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
 
+const DEFAULT_OPTIONS = {
+    next: { revalidate: 10 },
+};
+
 async function fetchCMS(
     query = "",
     options: {
@@ -45,9 +49,7 @@ async function fetchCMS(
 const getReleaseNotes = async () => {
     const data: CMSPostResponse<ReleaseNode> = await fetchCMS(
         GetReleaseNotesQuery,
-        {
-            next: { revalidate: 10 },
-        }
+        DEFAULT_OPTIONS
     );
     return data.posts.edges || null;
 };
@@ -55,9 +57,7 @@ const getReleaseNotes = async () => {
 const getMissionAndPurposes = async () => {
     const data: CMSPostResponse<MissionAndPurposesNode> = await fetchCMS(
         GetMissionAndPurposesQuery,
-        {
-            next: { revalidate: 10 },
-        }
+        DEFAULT_OPTIONS
     );
     return data?.posts?.edges || null;
 };
@@ -65,18 +65,17 @@ const getMissionAndPurposes = async () => {
 const getCohortDiscovery = async () => {
     const data: CMSPageResponse<PageTemplatePromo> = await fetchCMS(
         GetCohortDiscoveryQuery,
-        {
-            next: { revalidate: 10 },
-        }
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
 };
 
 const getHomePage = async () => {
-    const data: PageTemplateHome = await fetchCMS(GetHomePageQuery, {
-        next: { revalidate: 10 },
-    });
+    const data: PageTemplateHome = await fetchCMS(
+        GetHomePageQuery,
+        DEFAULT_OPTIONS
+    );
 
     return data || null;
 };
@@ -84,9 +83,7 @@ const getHomePage = async () => {
 const getTermsAndConditions = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
         GetTermsAndConditionsQuery,
-        {
-            next: { revalidate: 10 },
-        }
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -95,9 +92,7 @@ const getTermsAndConditions = async () => {
 const getCohortTermsAndConditions = async () => {
     const data: CMSPageResponse<PageTemplateRepeat> = await fetchCMS(
         GetCohortTermsAndConditionsQuery,
-        {
-            next: { revalidate: 10 },
-        }
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -106,9 +101,7 @@ const getCohortTermsAndConditions = async () => {
 const getHowToSearchPage = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
         GetHowToSearchQuery,
-        {
-            next: { revalidate: 10 },
-        }
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
