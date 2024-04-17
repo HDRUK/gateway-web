@@ -1,6 +1,7 @@
+import BackButton from "@/components/BackButton";
+import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import Banner from "@/modules/Banner";
 import { getHowToSearchPage } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
@@ -14,11 +15,9 @@ const HowToSearchPage = async () => {
 
     return (
         <>
-            <Banner
-                title={cmsPage.title}
-                // src="/images/banners/release-notes.png"
-            />
+            <Banner title={cmsPage.title} />
             <Container sx={{ padding: 10 }} className="wpStyles">
+                <BackButton label="Back to search" />
                 {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
             </Container>
         </>

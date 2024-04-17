@@ -4,7 +4,7 @@ import Typography from "@/components/Typography";
 export interface BannerProps {
     title: string;
     subTitle?: string;
-    src: string;
+    src?: string;
 }
 
 const Banner = ({ title, subTitle, src }: BannerProps) => {
@@ -18,6 +18,8 @@ const Banner = ({ title, subTitle, src }: BannerProps) => {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "200px",
+                background:
+                    "linear-gradient(97.46deg, #46AF93 4.05%, #475DA7 100%)",
             }}>
             <div
                 style={{
@@ -34,7 +36,14 @@ const Banner = ({ title, subTitle, src }: BannerProps) => {
                 <Typography style={{ fontSize: 40 }}>{title}</Typography>
                 {subTitle && <Typography>{subTitle}</Typography>}
             </div>
-            <Image style={{ objectFit: "cover" }} fill src={src} alt={title} />
+            {src && (
+                <Image
+                    style={{ objectFit: "cover" }}
+                    fill
+                    src={src}
+                    alt={title}
+                />
+            )}
         </div>
     );
 };
