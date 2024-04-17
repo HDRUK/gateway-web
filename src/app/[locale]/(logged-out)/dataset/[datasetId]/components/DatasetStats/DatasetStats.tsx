@@ -1,3 +1,5 @@
+"use client";
+
 import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -12,6 +14,7 @@ const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 const UNDEFINED_VALUE = "undefined";
 
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
+    console.log(data);
     const t = useTranslations(TRANSLATION_PATH);
 
     const formattedStats: DatasetStatCardProps[] = [
