@@ -13,3 +13,39 @@
     float: right;
     margin: 0.5em 0 0.5em 1em;
 }
+
+.wpStyles hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #d0d3d4;
+    margin: 2em 0;
+    padding: 0;
+    width: 50%;
+}
+
+.wpStyles .wp-block-table {
+    margin: 2em 0;
+}
+
+.wpStyles table {
+    width: 100%;
+}
+
+.wpStyles th {
+    border: 0;
+    background: #eeeeee;
+    padding: 1em;
+    text-align: left;
+}
+
+.wpStyles td:first-of-type {
+    background: #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+    padding: 1em;
+}
+
+.wpStyles td {
+    border-bottom: 1px solid #eeeeee;
+    padding: 1em;
+}
