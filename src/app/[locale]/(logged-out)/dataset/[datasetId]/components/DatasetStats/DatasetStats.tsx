@@ -1,18 +1,23 @@
-import { get, isEmpty } from "lodash";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
 import BoxContainer from "@/components/BoxContainer";
 import DatasetStatCard, {
     DatasetStatCardProps,
 } from "@/components/DatasetStatCard/DatasetStatCard";
-import { parseLeadTime, splitStringList } from "@/utils/dataset";
-import { getYear } from "@/utils/date";
+import {
+    formatYearStat,
+    hasValidValue,
+    parseLeadTime,
+    splitStringList,
+} from "@/utils/dataset";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
-const UNDEFINED_VALUE = "undefined";
 
 const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
 
     const formattedStats: DatasetStatCardProps[] = [
         {
@@ -27,12 +32,10 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("yearTitle"),
-            stat: `${getYear(
-                get(data, "metadata.metadata.provenance.temporal.startDate") ||
-                    ""
-            )} - ${getYear(
-                get(data, "metadata.metadata.provenance.temporal.endDate") || ""
-            )}`,
+            stat: formatYearStat(
+                get(data, "metadata.metadata.provenance.temporal.startDate"),
+                get(data, "metadata.metadata.provenance.temporal.endDate")
+            ),
             iconSrc: "/images/dataset/calendar.svg",
             largeStatText: true,
         },
@@ -46,16 +49,9 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("geographicCoverageTitle"),
-            stat: Array.from(
-                new Set(
-                    splitStringList(
-                        get(
-                            data,
-                            "metadata.metadata.coverage.spatial"
-                        ) as unknown as string
-                    )
-                )
-            ),
+            stat: spatialCoverage
+                ? Array.from(new Set(splitStringList(spatialCoverage)))
+                : "",
             iconSrc: "/images/dataset/map.svg",
         },
         {
@@ -95,8 +91,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             }}>
             {formattedStats.map(
                 datasetStat =>
-                    !isEmpty(datasetStat.stat) &&
-                    datasetStat.stat !== UNDEFINED_VALUE && (
+                    hasValidValue(datasetStat.stat) && (
                         <DatasetStatCard
                             title={datasetStat.title}
                             stat={datasetStat.stat}
