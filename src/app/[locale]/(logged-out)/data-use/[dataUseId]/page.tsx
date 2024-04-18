@@ -5,7 +5,6 @@ import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
-import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataUse } from "@/utils/api";
 import DataUseContent from "./components/DataUseContent";
 import { dataUseFields } from "./config";
@@ -32,11 +31,11 @@ export default async function DataUseItemPage({
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );
 
-    const activeLinkList = populatedSections.map(section => {
-        return {
-            label: t(section.sectionName),
-        };
-    });
+    // const activeLinkList = populatedSections.map(section => {
+    //     return {
+    //         label: t(section.sectionName),
+    //     };
+    // });
 
     return (
         <BoxContainer
@@ -53,7 +52,7 @@ export default async function DataUseItemPage({
                     bgcolor: "white",
                     p: 0,
                 }}>
-                <ActiveListSidebar items={activeLinkList} />
+                {/* <ActiveListSidebar items={activeLinkList} /> */}
             </Box>
             <Box
                 sx={{
