@@ -78,7 +78,7 @@ export default async function DataUseItemPage({
                         }}>
                         <Box sx={{ p: 0, gap: 2 }}>
                             <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
-                                {data.project_title}
+                                {data?.project_title}
                             </Typography>
                         </Box>
                         {/* <DataUseContent
