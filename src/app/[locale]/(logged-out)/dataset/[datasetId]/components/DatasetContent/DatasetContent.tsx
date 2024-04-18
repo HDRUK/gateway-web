@@ -61,8 +61,6 @@ const DatasetContent = ({
     const router = useRouter();
     const path = usePathname();
 
-    console.log(data);
-
     const renderDatasetField = (type: FieldType, value: string) => {
         switch (type) {
             case FieldType.DATE: {

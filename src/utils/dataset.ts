@@ -30,7 +30,7 @@ const splitStringList = (inputString: string) => {
             .split(",")
             ?.map(item => item.replace(/;/g, "").trim());
     } catch (err) {
-        return inputString;
+        return [inputString];
     }
 };
 
