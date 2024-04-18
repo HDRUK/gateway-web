@@ -22,6 +22,9 @@ describe("Dataset utils", () => {
         it("should split string list", async () => {
             expect(splitStringList("ONE,TWO")).toEqual(["ONE", "TWO"]);
         });
+        it("should return value if no comma found", async () => {
+            expect(splitStringList("ONE")).toEqual(["ONE"]);
+        });
     });
 
     describe("hasValidValue", () => {

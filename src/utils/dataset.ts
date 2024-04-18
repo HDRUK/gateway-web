@@ -24,8 +24,15 @@ const parseLeadTime = (leadTimeString: string) => {
     return [leadTimeString];
 };
 
-const splitStringList = (inputString: string) =>
-    inputString.split(",").map(item => item.replace(/;/g, "").trim());
+const splitStringList = (inputString: string) => {
+    try {
+        return inputString
+            .split(",")
+            ?.map(item => item.replace(/;/g, "").trim());
+    } catch (err) {
+        return inputString;
+    }
+};
 
 const hasValidValue = (val: string | string[]) =>
     !isEmpty(val) && val !== UNDEFINED_VALUE && val !== NULL_VALUE;
