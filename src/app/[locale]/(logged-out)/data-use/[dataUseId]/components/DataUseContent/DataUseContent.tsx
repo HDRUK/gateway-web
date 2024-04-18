@@ -32,6 +32,7 @@ const DataUseContent = ({
     data: DataUse;
     populatedSections: DataUseSection[];
 }) => {
+    console.log(data);
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
     const path = usePathname();
