@@ -1,4 +1,3 @@
-import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
@@ -6,8 +5,6 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
 import { getDataUse } from "@/utils/api";
-import DataUseContent from "./components/DataUseContent";
-import { dataUseFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataUse";
 
@@ -27,9 +24,9 @@ export default async function DataUseItemPage({
     const cookieStore = cookies();
     const data = await getDataUse(cookieStore, dataUseId);
 
-    const populatedSections = dataUseFields.filter(section =>
-        section.fields.some(field => !isEmpty(get(data, field.path)))
-    );
+    // const populatedSections = dataUseFields.filter(section =>
+    //     section.fields.some(field => !isEmpty(get(data, field.path)))
+    // );
 
     // const activeLinkList = populatedSections.map(section => {
     //     return {
@@ -84,10 +81,10 @@ export default async function DataUseItemPage({
                                 {data.project_title}
                             </Typography>
                         </Box>
-                        <DataUseContent
+                        {/* <DataUseContent
                             data={data}
                             populatedSections={populatedSections}
-                        />
+                        /> */}
                     </Box>
                 </>
             </Box>
