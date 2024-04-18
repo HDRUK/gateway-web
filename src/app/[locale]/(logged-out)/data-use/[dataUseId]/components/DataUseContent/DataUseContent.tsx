@@ -1,29 +1,18 @@
 "use client";
 
-import { InView } from "react-intersection-observer";
-import { get, isEmpty } from "lodash";
-import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
-import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
-import { SearchCategory } from "@/interfaces/Search";
+// import { useTranslations } from "next-intl";
+// import { usePathname, useRouter } from "next/navigation";
+import { DataUse } from "@/interfaces/DataUse";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
-import Link from "@/components/Link";
 import Paper from "@/components/Paper";
-import TooltipIcon from "@/components/TooltipIcon";
-import Typography from "@/components/Typography";
-import { RouteName } from "@/consts/routeName";
-import { formatDate } from "@/utils/date";
-import { convertToCamelCase } from "@/utils/general";
-import { DataUseSection, FieldType } from "../../config";
-import { DatasetFieldWrapper, ListContainer } from "./DataUseContent.styles";
+import { DataUseSection } from "../../config";
 
-const TRANSLATION_PATH = "pages.dataUse";
-const DATE_FORMAT = "DD/MM/YYYY";
-const TOOLTIP_SUFFIX = "Tooltip";
-const DATASETS = "datasets";
-const NON_GATEWAY_DATASETS = "non_gateway_datasets";
+// const TRANSLATION_PATH = "pages.dataUse";
+// const DATE_FORMAT = "DD/MM/YYYY";
+// const TOOLTIP_SUFFIX = "Tooltip";
+// const DATASETS = "datasets";
+// const NON_GATEWAY_DATASETS = "non_gateway_datasets";
 
 const DataUseContent = ({
     data,
@@ -32,99 +21,99 @@ const DataUseContent = ({
     data: DataUse;
     populatedSections: DataUseSection[];
 }) => {
-    console.log(data);
-    const t = useTranslations(TRANSLATION_PATH);
-    const router = useRouter();
-    const path = usePathname();
+    console.log(data, populatedSections);
+    // const t = useTranslations(TRANSLATION_PATH);
+    // const router = useRouter();
+    // const path = usePathname();
 
-    const renderDataUseField = (
-        path: string,
-        type: FieldType,
-        value: string | string[] | DatasetWithTitle[]
-    ) => {
-        let linkHref: string;
-        const val = value as string;
+    // const renderDataUseField = (
+    //     path: string,
+    //     type: FieldType,
+    //     value: string | string[] | DatasetWithTitle[]
+    // ) => {
+    //     let linkHref: string;
+    //     const val = value as string;
 
-        switch (type) {
-            case FieldType.DATE: {
-                return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
-            }
-            case FieldType.TAG: {
-                return (
-                    <DatasetFieldWrapper>
-                        {(value as DatasetWithTitle[])?.map(dataset => (
-                            <EllipsisCharacterLimit
-                                key={dataset.id}
-                                text={dataset.shortTitle}
-                                characterLimit={50}
-                                isButton
-                                action={() =>
-                                    router.push(
-                                        `/${RouteName.DATASET_ITEM}/${dataset.id}`
-                                    )
-                                }
-                            />
-                        ))}
-                    </DatasetFieldWrapper>
-                );
-            }
-            case FieldType.LINK:
-                switch (path) {
-                    case "organisation_name":
-                        linkHref = `/${RouteName.SEARCH}?type=${
-                            SearchCategory.DATA_USE
-                        }&organisationName=${encodeURIComponent(val)}`;
-                        break;
-                    default:
-                        linkHref = val;
-                }
+    //     switch (type) {
+    //         case FieldType.DATE: {
+    //             return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
+    //         }
+    //         case FieldType.TAG: {
+    //             return (
+    //                 <DatasetFieldWrapper>
+    //                     {(value as DatasetWithTitle[])?.map(dataset => (
+    //                         <EllipsisCharacterLimit
+    //                             key={dataset.id}
+    //                             text={dataset.shortTitle}
+    //                             characterLimit={50}
+    //                             isButton
+    //                             action={() =>
+    //                                 router.push(
+    //                                     `/${RouteName.DATASET_ITEM}/${dataset.id}`
+    //                                 )
+    //                             }
+    //                         />
+    //                     ))}
+    //                 </DatasetFieldWrapper>
+    //             );
+    //         }
+    //         case FieldType.LINK:
+    //             switch (path) {
+    //                 case "organisation_name":
+    //                     linkHref = `/${RouteName.SEARCH}?type=${
+    //                         SearchCategory.DATA_USE
+    //                     }&organisationName=${encodeURIComponent(val)}`;
+    //                     break;
+    //                 default:
+    //                     linkHref = val;
+    //             }
 
-                return <Link href={linkHref}>{val}</Link>;
-            case FieldType.LIST_TEXT: {
-                return (
-                    <ListContainer>
-                        {(value as string[])?.map(item => (
-                            <Typography key={item}>{item}</Typography>
-                        ))}
-                    </ListContainer>
-                );
-            }
-            case FieldType.LIST_LINK: {
-                return (
-                    <ListContainer>
-                        {(value as string[])?.map(item => (
-                            <Link key={item} href={item} target="_blank">
-                                {item}
-                            </Link>
-                        ))}
-                    </ListContainer>
-                );
-            }
-            default:
-                return <Typography>{val}</Typography>;
-        }
-    };
+    //             return <Link href={linkHref}>{val}</Link>;
+    //         case FieldType.LIST_TEXT: {
+    //             return (
+    //                 <ListContainer>
+    //                     {(value as string[])?.map(item => (
+    //                         <Typography key={item}>{item}</Typography>
+    //                     ))}
+    //                 </ListContainer>
+    //             );
+    //         }
+    //         case FieldType.LIST_LINK: {
+    //             return (
+    //                 <ListContainer>
+    //                     {(value as string[])?.map(item => (
+    //                         <Link key={item} href={item} target="_blank">
+    //                             {item}
+    //                         </Link>
+    //                     ))}
+    //                 </ListContainer>
+    //             );
+    //         }
+    //         default:
+    //             return <Typography>{val}</Typography>;
+    //     }
+    // };
 
-    const renderDatasetsField = (
-        path: string,
-        type: FieldType,
-        datasetValue: DatasetWithTitle[]
-    ) => {
-        const nonGatewayDatasetValue = get(data, NON_GATEWAY_DATASETS);
+    // const renderDatasetsField = (
+    //     path: string,
+    //     type: FieldType,
+    //     datasetValue: DatasetWithTitle[]
+    // ) => {
+    //     const nonGatewayDatasetValue = get(data, NON_GATEWAY_DATASETS);
 
-        return (
-            <ListContainer key={path}>
-                {!isEmpty(datasetValue) &&
-                    renderDataUseField(path, type, datasetValue)}
-                {!isEmpty(nonGatewayDatasetValue) &&
-                    renderDataUseField(
-                        NON_GATEWAY_DATASETS,
-                        FieldType.LIST_TEXT,
-                        nonGatewayDatasetValue
-                    )}
-            </ListContainer>
-        );
-    };
+    //     return (
+    //         <ListContainer key={path}>
+    //             {!isEmpty(datasetValue) &&
+    //                 renderDataUseField(path, type, datasetValue)}
+    //             {!isEmpty(nonGatewayDatasetValue) &&
+    //                 renderDataUseField(
+    //                     NON_GATEWAY_DATASETS,
+    //                     FieldType.LIST_TEXT,
+    //                     nonGatewayDatasetValue
+    //                 )}
+    //         </ListContainer>
+    //     );
+    // };
 
     return (
         <BoxContainer
@@ -144,7 +133,7 @@ const DataUseContent = ({
                     p: 0,
                 }}>
                 <Paper sx={{ borderRadius: 2, p: 2 }}>
-                    {populatedSections
+                    {/* {populatedSections
                         .filter(section => section.sectionName !== "general")
                         .map((section, index) => (
                             <InView
@@ -257,7 +246,8 @@ const DataUseContent = ({
                                     })}
                                 </Box>
                             </InView>
-                        ))}
+                        ))} */}
+                    <p>TEST</p>
                 </Paper>
             </Box>
         </BoxContainer>
