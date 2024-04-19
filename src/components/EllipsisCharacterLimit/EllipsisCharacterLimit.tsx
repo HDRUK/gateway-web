@@ -7,6 +7,7 @@ interface EllipsisCharacterLimitProps {
     text: string;
     characterLimit?: number;
     isButton?: boolean;
+    action?: () => void;
 }
 
 const tooltipWrapper = (text: string) => (children: ReactNode) => {
@@ -17,14 +18,19 @@ const tooltipWrapper = (text: string) => (children: ReactNode) => {
     );
 };
 
-const buttonWrapper = () => (children: ReactNode) => {
-    return <Button size="small">{children}</Button>;
+const buttonWrapper = (action?: () => void) => (children: ReactNode) => {
+    return (
+        <Button size="small" onClick={action}>
+            {children}
+        </Button>
+    );
 };
 
 const EllipsisCharacterLimit = ({
     text,
     characterLimit = 50,
     isButton = false,
+    action,
 }: EllipsisCharacterLimitProps) => {
     const formattedText =
         text.length > characterLimit
@@ -34,7 +40,7 @@ const EllipsisCharacterLimit = ({
     return (
         <ConditionalWrapper
             requiresWrapper={isButton}
-            wrapper={buttonWrapper()}>
+            wrapper={buttonWrapper(action)}>
             <ConditionalWrapper
                 requiresWrapper={text.length > characterLimit}
                 wrapper={tooltipWrapper(text)}>

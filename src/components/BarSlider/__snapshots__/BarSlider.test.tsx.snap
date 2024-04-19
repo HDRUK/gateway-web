@@ -10,7 +10,7 @@ exports[`BarSlider should render component 1`] = `
     />
   </div>
   <span
-    class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall mui-style-1qrmgoc-MuiSlider-root"
+    class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall mui-style-1ngp44n-MuiSlider-root"
   >
     <span
       class="MuiSlider-rail mui-style-14pt78w-MuiSlider-rail"

@@ -98,7 +98,7 @@ const datasetFields: DatasetSection[] = [
                 label: "Dataset Version",
             },
             {
-                path: "metadata.metadata.accessibility.usage.resourceCreator",
+                path: "metadata.metadata.accessibility.usage.resourceCreator.name",
                 type: FieldType.TEXT,
                 label: "Citation Requirements",
             },
@@ -110,7 +110,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.accessibility.access.accessRights",
-                type: FieldType.TEXT,
+                type: FieldType.LINK,
                 label: "Access Rights",
             },
             {
@@ -120,7 +120,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.accessRequestCost",
-                type: FieldType.TEXT,
+                type: FieldType.LINK,
                 label: "Organisation Access Request Cost",
             },
             {
@@ -145,12 +145,12 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.dataController",
-                type: FieldType.TEXT,
+                type: FieldType.LIST,
                 label: "Data Controller",
             },
             {
                 path: "metadata.metadata.accessibility.access.dataProcessor",
-                type: FieldType.TEXT,
+                type: FieldType.LIST,
                 label: "Data Processor",
             },
         ],

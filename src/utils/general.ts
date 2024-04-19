@@ -2,6 +2,9 @@ const capitalise = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
+const convertToCamelCase = (inputString: string) =>
+    inputString.replace(/_([a-z])/g, (_match, group) => group.toUpperCase());
+
 const splitCamelcase = (str: string) => {
     return str.replace(/([a-z])([A-Z])/g, "$1 $2");
 };
@@ -28,4 +31,10 @@ function extractSubdomain(url: string) {
     }
 }
 
-export { capitalise, splitCamelcase, extractSubdomain, getTrimmedpathname };
+export {
+    capitalise,
+    convertToCamelCase,
+    splitCamelcase,
+    extractSubdomain,
+    getTrimmedpathname,
+};

@@ -53,6 +53,7 @@ import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
+import { ActionBar } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const TYPE_PARAM = "type";
@@ -296,6 +297,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    const getExplainerText = () => {
+        switch (queryParams.type) {
+            case SearchCategory.PUBLICATIONS:
+                return t("searchExplainerPublications");
+            case SearchCategory.DATA_USE:
+                return t("searchExplainerDataUse");
+            case SearchCategory.COLLECTIONS:
+                return t("searchExplainerCollections");
+            case SearchCategory.TOOLS:
+                return t("searchExplainerTools");
+            default:
+                return t("searchExplainerDatasets");
+        }
+    };
+
     return (
         <Box
             display={{
@@ -314,7 +330,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 }}>
                 <SearchBar
                     defaultValue={queryParams.query}
-                    explainerText={t("searchExplainer")}
+                    explainerText={getExplainerText()}
                     resetAction={() => resetQueryInput()}
                     isDisabled={!queryParams.query}
                     submitAction={onQuerySubmit}
@@ -322,22 +338,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     queryName={QUERY_FIELD}
                 />
             </Box>
-            <Box
-                sx={{
-                    p: 0,
-                    justifyContent: "space-between",
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "1em",
-                    width: "100%",
-                    maxWidth: 1440,
-                }}
-                textAlign="left">
+            <ActionBar>
                 <Box sx={{ flex: 1, p: 0 }}>
                     <FilterChips
                         label={t("filtersApplied")}
                         selectedFilters={selectedFilters}
                         handleDelete={removeFilter}
+                        filterCategory={FILTER_CATEGORY[queryParams.type]}
                     />
                 </Box>
                 <Box sx={{ display: "flex" }}>
@@ -360,7 +367,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         {t("downloadResults")}
                     </Button>
                 </Box>
-            </Box>
+            </ActionBar>
             <Box
                 sx={{
                     width: "100%",

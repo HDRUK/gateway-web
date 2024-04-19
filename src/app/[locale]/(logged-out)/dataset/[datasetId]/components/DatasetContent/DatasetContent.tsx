@@ -44,6 +44,12 @@ const getColumns = () =>
         })
     );
 
+const renderObservationsTable = (rows?: Observation[]) => (
+    <ObservationTableWrapper>
+        <Table<Observation> columns={getColumns()} rows={rows || []} />
+    </ObservationTableWrapper>
+);
+
 const DatasetContent = ({
     data,
     populatedSections,
@@ -54,12 +60,6 @@ const DatasetContent = ({
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
     const path = usePathname();
-
-    const renderObservationsTable = (rows?: Observation[]) => (
-        <ObservationTableWrapper>
-            <Table<Observation> columns={getColumns()} rows={rows || []} />
-        </ObservationTableWrapper>
-    );
 
     const renderDatasetField = (type: FieldType, value: string) => {
         switch (type) {
@@ -80,9 +80,9 @@ const DatasetContent = ({
                                 label={tag}
                                 onClick={() =>
                                     router.push(
-                                        `/${RouteName.SEARCH}?type-${
+                                        `/${RouteName.SEARCH}?type=${
                                             SearchCategory.DATASETS
-                                        }=&query=${encodeURIComponent(tag)}`
+                                        }&query=${encodeURIComponent(tag)}`
                                     )
                                 }
                                 key={tag}
@@ -98,7 +98,7 @@ const DatasetContent = ({
                     </Link>
                 );
             case FieldType.LIST: {
-                const list = splitStringList(value);
+                const list = Array.from(new Set(splitStringList(value)));
                 return list.map(item => (
                     <Typography key={item}>{item}</Typography>
                 ));

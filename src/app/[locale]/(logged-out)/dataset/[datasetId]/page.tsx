@@ -3,9 +3,9 @@ import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
+import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
-import DatasetActiveLinks from "./components/DatasetActiveLinks";
 import DatasetContent from "./components/DatasetContent";
 import DatasetStats from "./components/DatasetStats";
 import { datasetFields } from "./config";
@@ -35,6 +35,7 @@ export default async function DatasetItemPage({
     const data = await getDataset(cookieStore, datasetId);
 
     const datasetVersion = data?.versions?.[0];
+
     const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
 
     const populatedSections = datasetFields.filter(section =>
@@ -59,7 +60,7 @@ export default async function DatasetItemPage({
                     bgcolor: "white",
                     p: 0,
                 }}>
-                <DatasetActiveLinks activeLinkList={activeLinkList} />
+                <ActiveListSidebar items={activeLinkList} />
             </Box>
             <Box
                 sx={{

@@ -30,6 +30,7 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import HelpIcon from "@mui/icons-material/Help";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
@@ -76,6 +77,7 @@ export {
     BackupIcon,
     AdminPanelSettingsIcon,
     SupervisorAccountIcon,
+    HelpIcon,
     HelpOutlineIcon,
     MenuIcon,
     CancelIcon,

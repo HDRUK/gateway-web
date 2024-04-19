@@ -2,6 +2,7 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
+import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { Team } from "@/interfaces/Team";
@@ -89,4 +90,24 @@ async function getDataset(
     );
 }
 
-export { getFilters, getUser, getTeam, getApplication, getCohort, getDataset };
+async function getDataUse(
+    cookieStore: ReadonlyRequestCookies,
+    dataUseId: string
+): Promise<DataUse> {
+    const dataUse = await get<DataUse[]>(
+        cookieStore,
+        `${apis.dataUseV1UrlIP}/${dataUseId}`
+    );
+
+    return dataUse?.[0];
+}
+
+export {
+    getFilters,
+    getUser,
+    getTeam,
+    getApplication,
+    getCohort,
+    getDataset,
+    getDataUse,
+};

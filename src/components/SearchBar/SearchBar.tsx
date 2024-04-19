@@ -1,10 +1,16 @@
-/** @jsxImportSource @emotion/react */
 import { FieldValues, useForm } from "react-hook-form";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { colors } from "@/config/theme";
-import { CloseIcon, SearchIcon } from "@/consts/icons";
-import TextField from "../TextField";
-import { searchBarStyle } from "./SearchBar.styles";
+import { IconButton } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { CloseIcon, HelpIcon, SearchIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
+import {
+    ExplainerLink,
+    ExplainerText,
+    FormWrapper,
+    InputWrapper,
+    SearchForm,
+    SearchInput,
+} from "./SearchBar.styles";
 
 interface SearchBarProps {
     explainerText?: string;
@@ -20,6 +26,8 @@ export const TEST_ID_RESET_BUTTON = "reset-btn";
 
 const SEARCH_ICON_SIZE = "48px";
 const CROSS_ICON_SIZE = "60px";
+const HELP_ICON_SIZE = "12px";
+const TRANSLATION_PATH = "pages.search";
 
 const SearchBar = ({
     explainerText,
@@ -30,16 +38,15 @@ const SearchBar = ({
     queryName,
     queryPlaceholder,
 }: SearchBarProps) => {
-    const theme = useTheme();
+    const t = useTranslations(TRANSLATION_PATH);
+
     const { control, handleSubmit, reset } = useForm({
         defaultValues: { [queryName]: defaultValue },
     });
+
     return (
-        <Box css={searchBarStyle.formWrapper} data-testid={TEST_ID_WRAPPER}>
-            <Box
-                onSubmit={handleSubmit(submitAction)}
-                component="form"
-                css={searchBarStyle.form(theme)}>
+        <FormWrapper data-testid={TEST_ID_WRAPPER}>
+            <SearchForm onSubmit={handleSubmit(submitAction)}>
                 <SearchIcon
                     color="primary"
                     sx={{
@@ -47,15 +54,14 @@ const SearchBar = ({
                         width: SEARCH_ICON_SIZE,
                     }}
                 />
-                <Box css={searchBarStyle.inputWrapper}>
-                    <TextField
+                <InputWrapper>
+                    <SearchInput
                         control={control}
                         name={queryName}
                         placeholder={queryPlaceholder}
                         label=""
-                        css={searchBarStyle.input}
                     />
-                </Box>
+                </InputWrapper>
                 <IconButton
                     aria-label="search"
                     onClick={() => {
@@ -68,16 +74,23 @@ const SearchBar = ({
                         sx={{ height: CROSS_ICON_SIZE, width: CROSS_ICON_SIZE }}
                     />
                 </IconButton>
-            </Box>
+            </SearchForm>
 
             {explainerText && (
-                <Typography
-                    css={searchBarStyle.explainerText}
-                    color={colors.grey600}>
+                <ExplainerText>
                     {explainerText}
-                </Typography>
+                    <ExplainerLink href={`/${RouteName.HOW_TO_SEARCH}`}>
+                        {t("howToSearch")}
+                        <HelpIcon
+                            sx={{
+                                height: HELP_ICON_SIZE,
+                                width: HELP_ICON_SIZE,
+                            }}
+                        />
+                    </ExplainerLink>
+                </ExplainerText>
             )}
-        </Box>
+        </FormWrapper>
     );
 };
 
