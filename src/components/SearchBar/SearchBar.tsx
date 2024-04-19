@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { CloseIcon, SearchIcon } from "@/consts/icons";
+import { CloseIcon, HelpIcon, SearchIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ExplainerLink,
@@ -26,6 +26,7 @@ export const TEST_ID_RESET_BUTTON = "reset-btn";
 
 const SEARCH_ICON_SIZE = "48px";
 const CROSS_ICON_SIZE = "60px";
+const HELP_ICON_SIZE = "12px";
 const TRANSLATION_PATH = "pages.search";
 
 const SearchBar = ({
@@ -80,6 +81,12 @@ const SearchBar = ({
                     {explainerText}
                     <ExplainerLink href={`/${RouteName.HOW_TO_SEARCH}`}>
                         {t("howToSearch")}
+                        <HelpIcon
+                            sx={{
+                                height: HELP_ICON_SIZE,
+                                width: HELP_ICON_SIZE,
+                            }}
+                        />
                     </ExplainerLink>
                 </ExplainerText>
             )}

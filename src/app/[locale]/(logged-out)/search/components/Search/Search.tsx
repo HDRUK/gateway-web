@@ -297,6 +297,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    const getExplainerText = () => {
+        switch (queryParams.type) {
+            case SearchCategory.PUBLICATIONS:
+                return t("searchExplainerPublications");
+            case SearchCategory.DATA_USE:
+                return t("searchExplainerDataUse");
+            case SearchCategory.COLLECTIONS:
+                return t("searchExplainerCollections");
+            case SearchCategory.TOOLS:
+                return t("searchExplainerTools");
+            default:
+                return t("searchExplainerDatasets");
+        }
+    };
+
     return (
         <Box
             display={{
@@ -315,7 +330,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 }}>
                 <SearchBar
                     defaultValue={queryParams.query}
-                    explainerText={t("searchExplainer")}
+                    explainerText={getExplainerText()}
                     resetAction={() => resetQueryInput()}
                     isDisabled={!queryParams.query}
                     submitAction={onQuerySubmit}
