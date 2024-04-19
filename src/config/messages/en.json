@@ -281,7 +281,7 @@
             "tools": "Software / Tools",
             "collections": "Collections",
             "publications": "Publications",
-            "searchExplainer": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
+            "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchExplainerDataUse": "Search by lead organisation, data custodian",
             "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data provider name",
             "searchExplainerCollections": "Search by collection name",

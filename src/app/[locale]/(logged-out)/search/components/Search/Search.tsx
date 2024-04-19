@@ -308,7 +308,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
             default:
-                return t("searchExplainer");
+                return t("searchExplainerDatasets");
         }
     };
 
