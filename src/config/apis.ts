@@ -4,6 +4,8 @@ const apiV1IPUrl =
         ? process.env.NEXT_PUBLIC_API_V1_IP_URL
         : process.env.NEXT_PUBLIC_API_V1_URL;
 
+const questionBankUrl = "http://127.0.0.1:3333";
+
 const apis = {
     apiV1Url,
     apiV1IPUrl,
@@ -35,6 +37,7 @@ const apis = {
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    questionBankUrl: `${questionBankUrl}`,
 };
 
 export default apis;
