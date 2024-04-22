@@ -58,11 +58,11 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
         const formData = isDuplicate
             ? {
                   ...omit(
-                      dataset?.latest_metadata.metadata.metadata,
+                      dataset?.versions[0].metadata.metadata,
                       "summary.title"
                   ),
               }
-            : { ...dataset?.latest_metadata.metadata.metadata };
+            : { ...dataset?.versions[0].metadata.metadata };
         reset(formData);
     }, [reset, dataset, isDuplicate]);
 
@@ -73,7 +73,7 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
     const submitForm = async (formData: Metadata) => {
         if (isDuplicate) {
             const newId = await createDataset({
-                ...omit(dataset, ["id", "latest_metadata"]),
+                ...omit(dataset, ["id", "versions"]),
                 status: "DRAFT",
                 metadata: { metadata: formData },
             });
@@ -85,9 +85,9 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
         } else {
             // todo: To be implemented as part of the edit task
             const updatePayload = {
-                ...omit(dataset, ["latest_metadata"]),
+                ...omit(dataset, ["versions"]),
                 metadata: {
-                    ...dataset?.latest_metadata.metadata,
+                    ...dataset?.versions[0].metadata,
                     metadata: formData,
                 },
             };
@@ -107,7 +107,7 @@ const EditDataset = ({ isDuplicate = false }: EditDatasetProps) => {
                 }}>
                 <DynamicInputWrapper
                     control={control}
-                    level={get(dataset, "latest_metadata.metadata.metadata")}
+                    level={get(dataset, "versions[0].metadata.metadata")}
                 />
             </Paper>
             <Paper

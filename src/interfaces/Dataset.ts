@@ -61,12 +61,12 @@ interface Dataset {
     user_id: number;
     status: DatasetStatus;
     pid: string | null;
-    latest_metadata: VersionItem;
+    versions: VersionItem[];
     updated: string;
     create_origin: "FMA" | "MANUAL" | "API";
 }
 
-interface NewDataset extends Omit<Dataset, "latest_metadata" | "id"> {
+interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 

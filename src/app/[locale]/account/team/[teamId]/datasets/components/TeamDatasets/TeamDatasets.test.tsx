@@ -30,17 +30,17 @@ describe("TeamDatasets", () => {
 
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.metadata.metadata.summary.title}`
+                    `${mockDatasets[0].versions[0].metadata.metadata.summary.title}`
                 )
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.version}`
+                    `${mockDatasets[0].versions[0].version}`
                 )
             ).toBeInTheDocument();
 
@@ -92,19 +92,19 @@ describe("TeamDatasets", () => {
 
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
 
             expect(
                 within(datasetCards[1]).getByText(
-                    `${mockDatasets[1].latest_metadata.metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[1].versions[0].metadata.metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
 
             expect(
                 within(datasetCards[2]).getByText(
-                    `${mockDatasets[2].latest_metadata.metadata.metadata.summary.publisher.name}`
+                    `${mockDatasets[2].versions[0].metadata.metadata.summary.publisher.name}`
                 )
             ).toBeInTheDocument();
         });

@@ -6,11 +6,13 @@ import EditDataset from "./EditDataset";
 mockRouter.query = { teamId: "1", datasetId: `${datasetV1.id}` };
 
 describe("EditDataset", () => {
-    const {
-        metadata: {
-            metadata: { summary },
+    const [
+        {
+            metadata: {
+                metadata: { summary },
+            },
         },
-    } = datasetV1.latest_metadata;
+    ] = datasetV1.versions;
 
     it("should render dataset without title populated", async () => {
         render(<EditDataset isDuplicate />);
