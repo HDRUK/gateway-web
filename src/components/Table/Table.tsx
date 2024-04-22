@@ -105,6 +105,14 @@ const Table = <T,>({
         },
     });
 
+    const hasFooterContent = !!table
+        .getFooterGroups()
+        .map(group =>
+            group.headers.map(header => header.column.columnDef.footer)
+        )
+        .flat()
+        .filter(Boolean).length;
+
     return (
         <table css={styles.table}>
             <thead>
@@ -149,22 +157,24 @@ const Table = <T,>({
                     </tr>
                 ))}
             </tbody>
-            <tfoot>
-                {table.getFooterGroups().map(footerGroup => (
-                    <tr key={footerGroup.id}>
-                        {footerGroup.headers.map(header => (
-                            <th key={header.id}>
-                                {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                          header.column.columnDef.footer,
-                                          header.getContext()
-                                      )}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </tfoot>
+            {hasFooterContent && (
+                <tfoot>
+                    {table.getFooterGroups().map(footerGroup => (
+                        <tr key={footerGroup.id}>
+                            {footerGroup.headers.map(header => (
+                                <th key={header.id}>
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                              header.column.columnDef.footer,
+                                              header.getContext()
+                                          )}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </tfoot>
+            )}
         </table>
     );
 };

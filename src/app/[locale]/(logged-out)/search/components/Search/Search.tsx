@@ -14,6 +14,7 @@ import {
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
+    ViewType,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -40,6 +41,7 @@ import searchFormConfig, {
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
+    VIEW_FIELD,
     sortByOptionsDataUse,
     sortByOptionsDataset,
 } from "@/config/forms/search";
@@ -56,20 +58,13 @@ import Sort from "../Sort";
 import { ActionBar } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
-const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
     dur: "dataUseRegister",
     publications: "paper",
 };
 
-enum ViewType {
-    TABLE = "table",
-    LIST = "list",
-}
-
 const Search = ({ filters }: { filters: Filter[] }) => {
-    const [resultsView, setResultsView] = useState(ViewType.TABLE);
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -84,6 +79,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         const param = searchParams?.get(paramName)?.split(",");
         return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
+
+    const [resultsView, setResultsView] = useState(
+        getParamString(VIEW_FIELD) || ViewType.TABLE
+    );
 
     const updateQueryString = useCallback(
         (name: string, value: string) => {
@@ -250,18 +249,23 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(filterType, filtered.join(","));
     };
 
+    const handleChangeView = (viewType: ViewType) => {
+        setResultsView(viewType);
+        updatePath(VIEW_FIELD, viewType);
+    };
+
     const toggleButtons = [
         {
             icon: AppsIcon,
             value: ViewType.TABLE,
             label: t("components.Search.toggleLabelTable"),
-            onClick: () => setResultsView(ViewType.TABLE),
+            onClick: () => handleChangeView(ViewType.TABLE),
         },
         {
             icon: ViewListIcon,
             value: ViewType.LIST,
             label: t("components.Search.toggleLabelList"),
-            onClick: () => setResultsView(ViewType.LIST),
+            onClick: () => handleChangeView(ViewType.LIST),
         },
     ];
 
@@ -383,7 +387,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}
                     rootBoxSx={{ padding: 0 }}
                     variant={TabVariant.LARGE}
-                    paramName={TYPE_PARAM}
+                    paramName={TYPE_FIELD}
                     persistParams={false}
                     handleChange={(_, value) =>
                         resetQueryParamState(value as SearchCategory)
@@ -451,7 +455,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             )}
                             {queryParams.type === SearchCategory.DATASETS && (
                                 <ToggleTabs<ViewType>
-                                    selected={resultsView}
+                                    selected={resultsView as ViewType}
                                     buttons={toggleButtons}
                                 />
                             )}
