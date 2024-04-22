@@ -85,6 +85,11 @@ export enum SearchCategory {
     DATA_ANALYSIS = "dataAnalysis",
 }
 
+export enum ViewType {
+    TABLE = "table",
+    LIST = "list",
+}
+
 export interface SearchQueryParams {
     query: string | undefined;
     sort: string | undefined;
