@@ -1,12 +1,17 @@
 "use client";
 
-import ReactFlow, { Node, Edge, ConnectionLineType } from "reactflow";
+import ReactFlow, {
+    Node,
+    Edge,
+    ConnectionLineType,
+    ReactFlowProps,
+} from "reactflow";
 import "reactflow/dist/style.css";
 import CircleNode from "./CircleNode";
 import MindMapEdge from "./MindMapEdge";
 import RectangleNode from "./RectangleNode";
 
-export interface MindMapProps {
+export interface MindMapProps extends ReactFlowProps {
     rootNode: Node;
     outerNodes: Node[];
     initialEdges: Edge[];
@@ -18,6 +23,7 @@ const MindMap = ({
     outerNodes,
     initialEdges,
     connectionLineStyle,
+    ...rest
 }: MindMapProps) => {
     const nodeTypes = { circle: CircleNode, rect: RectangleNode };
 
@@ -31,20 +37,22 @@ const MindMap = ({
         style: connectionLineStyle,
     };
 
+    const proOptions = { hideAttribution: true };
+
     return (
-        <div style={{ width: "100vw", height: "100vh" }}>
-            <ReactFlow
-                nodes={initialNodes}
-                edges={initialEdges}
-                nodeTypes={nodeTypes}
-                edgeTypes={edgeTypes}
-                connectionLineStyle={connectionLineStyle}
-                defaultEdgeOptions={defaultEdgeOptions}
-                connectionLineType={ConnectionLineType.Straight}
-                nodeOrigin={[0.5, 0.5]}
-                fitView
-            />
-        </div>
+        <ReactFlow
+            nodes={initialNodes}
+            edges={initialEdges}
+            nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
+            connectionLineStyle={connectionLineStyle}
+            defaultEdgeOptions={defaultEdgeOptions}
+            connectionLineType={ConnectionLineType.Straight}
+            nodeOrigin={[0.5, 0.5]}
+            proOptions={proOptions}
+            fitView
+            {...rest}
+        />
     );
 };
 
