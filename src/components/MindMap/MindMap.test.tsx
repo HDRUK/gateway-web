@@ -1,27 +1,48 @@
-import Accordion from "@/components/Accordion";
+import { Position } from "reactflow";
+import MindMap from "@/components/MindMap";
 import { render, screen } from "@/utils/testUtils";
 
-describe("Accordion", () => {
-    const heading = "Accordion Summary";
-    const contents = "Detail Contents";
-
+describe("MindMap", () => {
     it("should render component", async () => {
-        const wrapper = render(
-            <Accordion heading={heading} contents={contents} />
+        const connectionLineStyle = { stroke: "black", strokeWidth: 3 };
+        const rootNode = {
+            id: "root",
+            type: "circle",
+            position: { x: 0, y: 0 },
+            data: { id: 0, label: "Test Map" },
+        };
+
+        const outerNodes = [
+            {
+                id: `node-0`,
+                type: "rect",
+                position: { x: 100, y: 100 },
+                data: {
+                    id: 0,
+                    label: "my node",
+                    position: Position.Left,
+                    color: "red",
+                },
+            },
+        ];
+
+        const initialEdges = [
+            {
+                id: `e1-0`,
+                source: "root",
+                target: `node-0`,
+            },
+        ];
+
+        render(
+            <MindMap
+                rootNode={rootNode}
+                outerNodes={outerNodes}
+                initialEdges={initialEdges}
+                connectionLineStyle={connectionLineStyle}
+            />
         );
 
-        expect(wrapper.container).toMatchSnapshot();
-    });
-
-    it("displays the accordion summary correctly", () => {
-        render(<Accordion heading={heading} contents={contents} />);
-
-        expect(screen.getByText(heading)).toBeInTheDocument();
-    });
-
-    it("displays the detail contents correctly", () => {
-        render(<Accordion heading={heading} contents={contents} />);
-
-        expect(screen.getByText(contents)).toBeInTheDocument();
+        expect(screen.queryByText("my node")).toBeInTheDocument();
     });
 });
