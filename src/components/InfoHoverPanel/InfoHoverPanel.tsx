@@ -58,7 +58,7 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                                 background: "white",
                                 borderColor: "white",
                                 borderRadius: { mobile: 2, tablet: 3 },
-                                p: { mobile: 1, tablet: "24px 18px" },
+                                p: { mobile: 1, tablet: "24px 15px" },
                                 fontSize: { mobile: 14, tablet: 19 },
                             }}
                             variant="outlined">
