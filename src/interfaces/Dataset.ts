@@ -40,8 +40,8 @@ interface Metadata {
     };
     provenance: {
         temporal: {
-            startDate: string;
-            endDate: string;
+            startDate: string | undefined;
+            endDate: string | undefined;
         };
     };
     linkage: {
