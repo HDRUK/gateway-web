@@ -14,6 +14,7 @@ import {
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
+    SearchResultTool,
     ViewType,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
@@ -53,6 +54,7 @@ import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
+import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar } from "./Search.styles";
@@ -285,6 +287,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         result={result as SearchResultPublication}
                     />
                 );
+            case SearchCategory.TOOLS:
+                return <ResultCardTool result={result as SearchResultTool} />;
             default:
                 return (
                     <ResultCardDataUse result={result as SearchResultDataUse} />

@@ -65,10 +65,20 @@ export interface SearchResultPublication {
     year_of_publication?: string;
 }
 
+export interface SearchResultTool {
+    _id: string;
+    _source: {
+        description: string;
+        name: string;
+        tags?: string[];
+    };
+}
+
 export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
-    | SearchResultPublication;
+    | SearchResultPublication
+    | SearchResultTool;
 
 export interface SearchForm {
     query: string;

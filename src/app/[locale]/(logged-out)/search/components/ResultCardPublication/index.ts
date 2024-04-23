@@ -1,3 +1,3 @@
-import ResultCard from "./ResultCardPublication";
+import ResultCardPublication from "./ResultCardPublication";
 
-export default ResultCard;
+export default ResultCardPublication;
