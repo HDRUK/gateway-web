@@ -31,6 +31,9 @@ export const tabsStyle = {
                 maxWidth: "220px",
                 minHeight: "40px",
                 padding: "6px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
 
                 "&:focus, &:hover": {
                     background: colors.green400,

@@ -38,6 +38,8 @@ async function fetchCMS(
         ...options,
     });
 
+    console.log(res);
+
     const json = await res.json();
     if (json.errors) {
         console.error(json.errors);
