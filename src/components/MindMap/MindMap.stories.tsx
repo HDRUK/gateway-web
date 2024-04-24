@@ -5,7 +5,7 @@ import {
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
-import MindMap from "./MindMap";
+import MindMap, { MindMapProps } from "./MindMap";
 
 const meta: Meta<typeof MindMap> = {
     component: MindMap,
@@ -16,19 +16,22 @@ export default meta;
 
 type Story = StoryObj<typeof MindMap>;
 
-const WrapperComponent = () => {
+const WrapperComponent = (props: MindMapProps) => {
     return (
-        <div>
-            <MindMap
-                rootNode={rootNode}
-                outerNodes={outerNodes}
-                initialEdges={initialEdges}
-                connectionLineStyle={connectionLineStyle}
-            />
+        <div style={{ height: "350px" }}>
+            <MindMap {...props} />
         </div>
     );
 };
 
 export const Single: Story = {
-    render: () => <WrapperComponent />,
+    render: () => (
+        <WrapperComponent
+            rootNode={rootNode}
+            outerNodes={outerNodes}
+            initialEdges={initialEdges}
+            connectionLineStyle={connectionLineStyle}
+            fitView
+        />
+    ),
 };
