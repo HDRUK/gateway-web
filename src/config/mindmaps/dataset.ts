@@ -6,35 +6,35 @@ const centerY = 0;
 const outerNodeValues = [
     {
         name: "tools",
-        label: "View associated data analysis scripts/software",
+        label: undefined,
         href: "/search?type=tools",
     },
     {
         name: "dur",
-        label: "Research projects/ Data Use",
+        label: undefined,
         href: "/search?type=dur",
     },
     {
         name: "linkages",
-        label: "See which datasets are linkable",
+        label: undefined,
         /* to-do: section does not exist on the landing page yet */
     },
     {
         name: "collections",
-        label: "Explore associated Collections",
+        label: undefined,
         href: "/search?type=collections",
     },
     {
         name: "synthetic",
-        label: "Access synthetic data",
+        label: undefined,
     },
 ];
 
 const rootNode = {
-    id: "root",
+    id: "node-root",
     type: "circle",
     position: { x: centerX, y: centerY },
-    data: { id: 0, label: "Data custodian link" },
+    data: { id: 0, name: "root", label: undefined },
 };
 
 const outerNodes = outerNodeValues.map((node, index) =>
@@ -43,7 +43,7 @@ const outerNodes = outerNodeValues.map((node, index) =>
 
 const initialEdges = outerNodeValues.map((node, index) => ({
     id: `e1-${index}`,
-    source: "root",
+    source: "node-root",
     target: `node-${node.name}`,
 }));
 

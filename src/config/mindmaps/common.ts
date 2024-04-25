@@ -3,7 +3,7 @@ import theme from "@/config/theme";
 
 export interface NodeValue {
     name: string;
-    label: string;
+    label?: string;
     href?: string;
 }
 
@@ -35,7 +35,7 @@ export const nodeValueToRectNode = (
 
     // correct for the length of the text box
     // rough guess that the length is 2.5 as long as the number of characters in the label
-    let correctionX = 2.5 * node.label.length;
+    let correctionX = node.label ? 2.5 * node.label.length : 80;
     let color = theme.palette.secondary.main;
     if (angleRad > Math.PI) {
         // need to subtract this if it's on the left side of the inner node
@@ -57,6 +57,7 @@ export const nodeValueToRectNode = (
         position: { x, y },
         data: {
             id: index,
+            name: node.name,
             label: node.label,
             position,
             color,

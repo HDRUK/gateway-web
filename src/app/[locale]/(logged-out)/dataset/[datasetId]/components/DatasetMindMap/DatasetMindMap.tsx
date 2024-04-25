@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -12,6 +13,8 @@ import {
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
+
+const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 
 interface DatasetMindMapProps extends MindMapProps {
     data: VersionItem;
@@ -26,6 +29,18 @@ const DatasetMindMap = ({
     zoomOnDoubleClick = false,
     ...rest
 }: DatasetMindMapProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
+    const hydratedRootNode = useMemo(() => {
+        return {
+            ...rootNode,
+            data: {
+                ...rootNode.data,
+                label: t(rootNode.data.name),
+            },
+        };
+    }, [data]);
+
     const hydratedOuterNodes = useMemo(
         () =>
             outerNodes.map(node => {
@@ -45,6 +60,7 @@ const DatasetMindMap = ({
                     ...node,
                     data: {
                         ...node.data,
+                        label: t(node.data.name),
                         href,
                     },
                 };
@@ -77,7 +93,7 @@ const DatasetMindMap = ({
                         zoomOnPinch={zoomOnPinch}
                         zoomOnDoubleClick={zoomOnDoubleClick}
                         {...rest}
-                        rootNode={rootNode}
+                        rootNode={hydratedRootNode}
                         outerNodes={hydratedOuterNodes}
                         initialEdges={initialEdges}
                         connectionLineStyle={connectionLineStyle}
