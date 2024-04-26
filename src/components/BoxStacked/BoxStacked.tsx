@@ -3,7 +3,7 @@
 import { HTMLAttributes } from "react";
 import { Box, BoxProps, css, styled } from "@mui/material";
 
-type BoxStackedProps = HTMLAttributes<HTMLDivElement> & BoxProps;
+export type BoxStackedProps = HTMLAttributes<HTMLDivElement> & BoxProps;
 
 const StyledBoxStacked = styled(Box)(
     ({ theme }) => css`
