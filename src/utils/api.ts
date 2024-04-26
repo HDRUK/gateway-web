@@ -16,13 +16,9 @@ async function get<T>(
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
-    console.log("****** URL", url);
-
     const res = await fetch(`${url}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
-
-    console.log("****** RESPONSE", res);
 
     if (!res.ok) {
         // This will activate the closest `error.js` Error Boundary
