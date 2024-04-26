@@ -11,6 +11,7 @@ import {
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultCollection,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
@@ -51,6 +52,7 @@ import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
+import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsTable from "../ResultsTable";
@@ -62,6 +64,7 @@ const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
     dur: "dataUseRegister",
     publications: "paper",
+    collections: "collection",
 };
 
 const Search = ({ filters }: { filters: Filter[] }) => {
@@ -285,6 +288,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         result={result as SearchResultPublication}
                     />
                 );
+            case SearchCategory.COLLECTIONS:
+                return (
+                    <ResultCardCollection
+                        result={result as SearchResultCollection}
+                    />
+                );
             default:
                 return (
                     <ResultCardDataUse result={result as SearchResultDataUse} />
@@ -474,19 +483,39 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             !!data?.list.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
-                                    {resultsView === ViewType.LIST && (
-                                        <List
-                                            sx={{
-                                                width: "100%",
-                                                bgcolor: "background.paper",
-                                                mb: 2,
-                                                pb: 2,
-                                            }}>
-                                            {data?.list.map(result =>
-                                                renderResultCard(result)
-                                            )}
-                                        </List>
-                                    )}
+                                    {resultsView === ViewType.LIST &&
+                                        queryParams.type !==
+                                            SearchCategory.COLLECTIONS && (
+                                            <List
+                                                sx={{
+                                                    width: "100%",
+                                                    bgcolor: "background.paper",
+                                                    mb: 2,
+                                                    pb: 2,
+                                                }}>
+                                                {data?.list.map(result =>
+                                                    renderResultCard(result)
+                                                )}
+                                            </List>
+                                        )}
+                                    {resultsView === ViewType.LIST &&
+                                        queryParams.type ===
+                                            SearchCategory.COLLECTIONS && (
+                                            <BoxContainer
+                                                sx={{
+                                                    gridTemplateColumns: {
+                                                        mobile: "repeat(1, 1fr)",
+                                                        desktop:
+                                                            "repeat(3, 1fr)",
+                                                    },
+                                                    gap: 2,
+                                                    mb: 2,
+                                                }}>
+                                                {data?.list.map(result =>
+                                                    renderResultCard(result)
+                                                )}
+                                            </BoxContainer>
+                                        )}
                                     {resultsView === ViewType.TABLE && (
                                         <ResultsTable
                                             results={

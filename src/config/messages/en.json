@@ -324,6 +324,12 @@
                         "paper": {
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
+                        },
+                        "collection": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                         }
                     }
                 },

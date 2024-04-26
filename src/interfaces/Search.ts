@@ -65,10 +65,25 @@ export interface SearchResultPublication {
     year_of_publication?: string;
 }
 
+export interface SearchResultCollection {
+    _id: string;
+    _explanation: string[];
+    _score: number;
+    _source: {
+        name: string;
+        datasetAbstracts: string[];
+        datasetTitles: string[];
+        description: string;
+        keywords: string[];
+        publisherName: string;
+    };
+}
+
 export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
-    | SearchResultPublication;
+    | SearchResultPublication
+    | SearchResultCollection;
 
 export interface SearchForm {
     query: string;
