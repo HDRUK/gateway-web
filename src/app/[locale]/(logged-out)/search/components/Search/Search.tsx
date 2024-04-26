@@ -291,6 +291,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             case SearchCategory.COLLECTIONS:
                 return (
                     <ResultCardCollection
+                        imgUrl="/sample.collections.thumbnail.jpg"
                         result={result as SearchResultCollection}
                     />
                 );
