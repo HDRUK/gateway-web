@@ -27,8 +27,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
         showDialog(ToolDetailsDialog, { result });
     };
 
-    /* eslint no-underscore-dangle: 0 */
-    const { name, description } = result._source; // todo: update
+    const { name, description } = result; // todo: update with keywords
 
     return (
         <>

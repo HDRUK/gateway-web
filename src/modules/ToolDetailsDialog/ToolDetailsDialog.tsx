@@ -14,9 +14,8 @@ const TRANSLATION_PATH = "modules.dialogs.ToolDetailsDialog";
 const ToolDetailsDialog = ({ result }: ToolDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    /* eslint no-underscore-dangle: 0 */
-    const title = result._source.name;
-    const { description } = result._source;
+    const title = result.name;
+    const { description } = result.description;
 
     return (
         <Dialog title={title}>

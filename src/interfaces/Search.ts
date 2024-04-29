@@ -67,12 +67,10 @@ export interface SearchResultPublication {
 
 export interface SearchResultTool {
     _id: string;
-    _source: {
-        // needs to be fixed when BE is fixed
-        description: string;
-        name: string;
-        tags?: string[];
-    };
+    name: string;
+    // needs to be fixed when BE is fixed
+    description: string;
+    tags?: string[];
 }
 
 export type SearchResult =
