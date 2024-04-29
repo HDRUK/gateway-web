@@ -63,6 +63,8 @@ export interface SearchResultPublication {
     authors?: string;
     journal_name?: string;
     year_of_publication?: string;
+    full_text_url: string;
+    url: string;
 }
 
 export type SearchResult =
