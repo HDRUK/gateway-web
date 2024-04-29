@@ -5,6 +5,7 @@ import {
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
+    FILTER_PUBLICATION_DATE,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -102,6 +103,7 @@ export interface SearchQueryParams {
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
+    [FILTER_PUBLICATION_DATE]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };

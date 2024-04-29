@@ -35,6 +35,7 @@ import {
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_ORGANISATION_NAME,
+    FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
 import searchFormConfig, {
@@ -109,6 +110,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
+        [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
     });
 
     const { handleDownload } = useSearch(
@@ -198,6 +200,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,
             [FILTER_DATA_SET_TITLES]: undefined,
+            [FILTER_PUBLICATION_DATE]: undefined,
         });
     };
 
@@ -239,7 +242,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
         let filtered;
 
-        if (filterType === FILTER_DATE_RANGE) {
+        if (
+            filterType === FILTER_DATE_RANGE ||
+            filterType === FILTER_PUBLICATION_DATE
+        ) {
             filtered = filterToUpdate.map(f => (f === removedFilter ? "" : f));
         } else {
             filtered = filterToUpdate.filter(f => f !== removedFilter);

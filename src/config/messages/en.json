@@ -323,7 +323,9 @@
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
-                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "publicationDate": "Publication date range",
+                            "publicationDateTooltip": "The range of years during which results were published"
                         }
                     }
                 },
