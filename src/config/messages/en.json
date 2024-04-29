@@ -348,7 +348,8 @@
                     "notAvailable": "Not available"
                 },
                 "ResultCardTool": {
-                    "notAvailable": "Not available"
+                    "notAvailable": "Not available",
+                    "showAll": "Quick view"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
@@ -559,6 +560,11 @@
                 "datasets": "Datasets",
                 "leadApplicantOrganisation": "Lead applicant organisation",
                 "dataCustodian": "Data Custodian"
+            },
+            "ToolDetailsDialog": {
+                "description": "Description",
+                "keywords": "Key words",
+                "team": "Team/Author"
             }
         }
     }

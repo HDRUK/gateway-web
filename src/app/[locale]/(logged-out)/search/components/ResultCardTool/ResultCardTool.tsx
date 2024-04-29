@@ -1,7 +1,10 @@
 import { Divider, ListItem, ListItemButton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultTool } from "@/interfaces/Search";
+import Button from "@/components/Button";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
+import ToolDetailsDialog from "@/modules/ToolDetailsDialog";
+import useDialog from "@/hooks/useDialog";
 import {
     ToolWrapper,
     ToolTitle,
@@ -17,6 +20,12 @@ const TRANSLATION_PATH = "pages.search.components.ResultCardTool";
 
 const ResultCardTool = ({ result }: ResultCardToolProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    const { showDialog } = useDialog();
+
+    const handleShowAll = () => {
+        showDialog(ToolDetailsDialog, { result });
+    };
 
     /* eslint no-underscore-dangle: 0 */
     const { name, description } = result._source; // todo: update
@@ -36,6 +45,19 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                                         maxLine={1}
                                     />
                                 </ToolTitle>
+                                {description && (
+                                    <Button
+                                        onClick={handleShowAll}
+                                        size="small"
+                                        variant="outlined"
+                                        color="secondary"
+                                        style={{
+                                            flexShrink: 0,
+                                            alignSelf: "flex-start",
+                                        }}>
+                                        {t("showAll")}
+                                    </Button>
+                                )}
                             </ToolTitleWrapper>
                         }
                         secondary={
