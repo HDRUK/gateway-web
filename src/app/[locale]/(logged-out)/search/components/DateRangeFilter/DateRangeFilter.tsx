@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 import { DateRange } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
 import DatePickerControlled from "@/components/DatePickerControlled";
-import { FILTER_DATE_RANGE } from "@/config/forms/filters";
 import { SearchIcon } from "@/consts/icons";
 import { yearToDayJsDate } from "@/utils/date";
 import { DateFilterWrapper, DateError } from "./DateRangeFilter.styles";
@@ -20,6 +19,7 @@ interface DateRangeFilterProps {
     aggregations?: Aggregations;
     selectedFilters: { [filter: string]: string[] | undefined };
     handleUpdate: (dateRange: DateRange) => void;
+    filterName: string;
 }
 
 const filterToDateRangeState = (filterVals: string[] | undefined) => {
@@ -33,6 +33,7 @@ const DateRangeFilter = ({
     aggregations,
     selectedFilters,
     handleUpdate,
+    filterName,
 }: DateRangeFilterProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -46,14 +47,14 @@ const DateRangeFilter = ({
 
     useEffect(() => {
         setDateRange(
-            selectedFilters[FILTER_DATE_RANGE]
-                ? filterToDateRangeState(selectedFilters[FILTER_DATE_RANGE])
+            selectedFilters[filterName]
+                ? filterToDateRangeState(selectedFilters[filterName])
                 : {
                       [MIN_YEAR_FIELD]: "",
                       [MAX_YEAR_FIELD]: "",
                   }
         );
-    }, [selectedFilters]);
+    }, [filterName, selectedFilters]);
 
     const updateDateRange = (type: string, newDate: Dayjs | null) => {
         setDateRange({
