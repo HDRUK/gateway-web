@@ -86,7 +86,7 @@ const FilterPanel = ({
         );
     }, [filterCategory, filterSourceData]);
 
-    const [minimised, setMinimised] = useState<string[]>([]);
+    const [maximised, setMaximised] = useState<string[]>([]);
 
     const updateCheckboxes = (
         updatedCheckbox: { [key: string]: boolean },
@@ -202,7 +202,7 @@ const FilterPanel = ({
                             background: "transparent",
                             boxShadow: "none",
                         }}
-                        expanded={!minimised.includes(label)}
+                        expanded={maximised.includes(label)}
                         heading={
                             <Tooltip
                                 key={label}
@@ -214,10 +214,10 @@ const FilterPanel = ({
                             </Tooltip>
                         }
                         onChange={() =>
-                            setMinimised(
-                                minimised.includes(label)
-                                    ? minimised.filter(e => e !== label)
-                                    : [...minimised, label]
+                            setMaximised(
+                                maximised.includes(label)
+                                    ? maximised.filter(e => e !== label)
+                                    : [...maximised, label]
                             )
                         }
                         contents={renderFilterContent(filterItem)}
