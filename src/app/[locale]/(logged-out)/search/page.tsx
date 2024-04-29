@@ -15,12 +15,3 @@ const SearchPage = async () => {
 };
 
 export default SearchPage;
-
-// 3992
-// 3995
-// 3993
-
-// There's an issue with _source in payload, am
-
-// 3990
-// 3991
