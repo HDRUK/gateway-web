@@ -66,17 +66,7 @@ export interface SearchResultPublication {
 }
 
 export interface SearchResultCollection {
-    _id: string;
-    _explanation: string[];
-    _score: number;
-    _source: {
-        name: string;
-        datasetAbstracts: string[];
-        datasetTitles: string[];
-        description: string;
-        keywords: string[];
-        publisherName: string;
-    };
+    name: string;
 }
 
 export type SearchResult =

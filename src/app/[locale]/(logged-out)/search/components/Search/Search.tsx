@@ -326,6 +326,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    console.log("data?.list", data?.list);
+
     return (
         <Box
             display={{
