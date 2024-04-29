@@ -278,7 +278,7 @@
         "search": {
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
-            "tools": "Analysis, tools & software blahhhh",
+            "tools": "Analysis, tools & software",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
