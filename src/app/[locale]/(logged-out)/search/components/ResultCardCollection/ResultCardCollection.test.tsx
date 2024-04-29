@@ -10,7 +10,7 @@ describe("ResultCardCollection", () => {
 
         expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
             // eslint-disable-next-line no-underscore-dangle
-            mockResult._source.name
+            mockResult.name
         );
     });
 });

@@ -42,7 +42,7 @@ const ResultCollectionCard = ({
                     role="heading"
                     aria-level={3}
                     // eslint-disable-next-line no-underscore-dangle
-                    label={result._source.name}
+                    label={result.name}
                     size="small"
                     sx={{
                         backgroundColor: grey["600"],
