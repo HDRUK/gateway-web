@@ -388,6 +388,14 @@
                     "associatedTissuesTitle": "Associated Tissues",
                     "geographicCoverageTitle": "Geographic coverage",
                     "leadTimeTitle": "Lead time"
+                },
+                "DatasetMindMap": {
+                    "tools": "View associated data analysis scripts/software",
+                    "dur": "Research projects/ Data Use",
+                    "linkages": "See which datasets are linkable",
+                    "collections": "Explore associated Collections",
+                    "synthetic": "Access synthetic data",
+                    "root": "Data custodian link"
                 }
             }
         },
