@@ -2,13 +2,14 @@
 
 import { v4 as uuidv4 } from "uuid";
 import Container from "@/components/Container";
+import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import useGet from "@/hooks/useGet";
 import { Task } from "../components";
 import BoardSectionList from "../components/BoardSectionList";
 
 const TestPage = () => {
-    const team_id = 69;
+    const team_id = 10;
 
     const { data: templateQuestions, isLoading } = useGet(
         `http://localhost:3003/dar-templates?team_id=${team_id}`,
@@ -21,7 +22,11 @@ const TestPage = () => {
     );
 
     if (isLoading || isLoadingQB) {
-        return <></>;
+        return (
+            <>
+                <Loading />
+            </>
+        );
     }
 
     const initalTemplateQuestions: Task[] =
@@ -30,7 +35,9 @@ const TestPage = () => {
                 //id: uuidv4(),
                 id: q.question_id,
                 title: `${q.question_id}) ${q.latest_version.title}`,
-                description: q.latest_version.guidance,
+                description: q.guidance
+                    ? q.guidance
+                    : q.latest_version.guidance,
                 status: "Selected Questions",
             };
         }) || [];

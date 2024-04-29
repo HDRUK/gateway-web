@@ -17,8 +17,11 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import Grid from "@mui/material/Grid";
+import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Paper from "@/components/Paper";
+import Typography from "@/components/Typography";
 import { findBoardSectionContainer, initializeBoard } from "../utils/board";
 import { getTaskById } from "../utils/tasks";
 import BoardSection from "./BoardSection";
@@ -136,6 +139,13 @@ const BoardSectionList = ({ tasks }: { tasks: Task[] }) => {
 
     const task = activeTaskId ? getTaskById(tasks, activeTaskId) : null;
 
+    const handleSaveChanges = () => {
+        const questionsInTemplate = boardSections["Selected Questions"].map(
+            s => s.id
+        );
+        console.log(questionsInTemplate);
+    };
+
     return (
         <DndContext
             sensors={sensors}
@@ -143,8 +153,10 @@ const BoardSectionList = ({ tasks }: { tasks: Task[] }) => {
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}>
-            <Container maxWidth={false} sx={{ height: "1000px" }}>
-                <h2> Edit a template </h2>
+            <Container
+                maxWidth={false}
+                sx={{ minHeight: "1000px", p: 1, m: 1 }}>
+                <Typography variant={"h2"}> Edit a template </Typography>
                 <Container
                     maxWidth={false}
                     sx={{
@@ -156,7 +168,7 @@ const BoardSectionList = ({ tasks }: { tasks: Task[] }) => {
                     }}>
                     <Paper sx={{ mx: 1, px: 2 }}>
                         {" "}
-                        <h2> Sections </h2>
+                        <Typography variant={"h2"}> Sections </Typography>
                     </Paper>
 
                     <Paper sx={{ mx: 1, px: 2 }}>
@@ -184,34 +196,21 @@ const BoardSectionList = ({ tasks }: { tasks: Task[] }) => {
                 <DragOverlay dropAnimation={dropAnimation}>
                     {task ? <TaskItem task={task} /> : null}
                 </DragOverlay>
+
+                <Paper sx={{ m: 2, p: 2, mb: 5 }}>
+                    <Box
+                        sx={{
+                            p: 0,
+                            display: "flex",
+                            justifyContent: "end",
+                        }}>
+                        <Button onClick={handleSaveChanges} type="submit">
+                            Save changes
+                        </Button>
+                    </Box>
+                </Paper>
             </Container>
         </DndContext>
-    );
-
-    return (
-        <Container>
-            <DndContext
-                sensors={sensors}
-                collisionDetection={closestCorners}
-                onDragStart={handleDragStart}
-                onDragOver={handleDragOver}
-                onDragEnd={handleDragEnd}>
-                <Grid container spacing={4}>
-                    {Object.keys(boardSections).map(boardSectionKey => (
-                        <Grid item xs={4} key={boardSectionKey}>
-                            <BoardSection
-                                id={boardSectionKey}
-                                title={boardSectionKey}
-                                tasks={boardSections[boardSectionKey]}
-                            />
-                        </Grid>
-                    ))}
-                    <DragOverlay dropAnimation={dropAnimation}>
-                        {task ? <TaskItem task={task} /> : null}
-                    </DragOverlay>
-                </Grid>
-            </DndContext>
-        </Container>
     );
 };
 

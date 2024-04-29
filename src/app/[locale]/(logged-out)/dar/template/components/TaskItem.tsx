@@ -10,7 +10,7 @@ type TaskItemProps = {
 
 const TaskItem = ({ task }: TaskItemProps) => {
     return (
-        <Card sx={{ border: 1, borderColor: "black" }}>
+        <Card sx={{ border: 1, borderColor: "lightgrey", borderRadius: 2 }}>
             <CardContent>
                 <Box
                     sx={{
@@ -21,9 +21,19 @@ const TaskItem = ({ task }: TaskItemProps) => {
                         justifyContent: "space-between",
                         alignItems: "center",
                     }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {task.title}
-                    </Typography>
+                    <Box sx={{ p: 0, m: 0, gap: 1 }}>
+                        <Typography
+                            gutterBottom
+                            variant="h4"
+                            component="div"
+                            sx={{ mb: 1 }}>
+                            <b> {task.title} </b>
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {task.description}
+                        </Typography>
+                    </Box>
+
                     <DragIndicatorIcon fontSize="medium" color="primary" />
                 </Box>
             </CardContent>
