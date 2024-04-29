@@ -9,13 +9,13 @@ import {
     ToolDescription,
 } from "./ResultCardTool.styles";
 
-interface ResultCardPublicationProps {
+interface ResultCardToolProps {
     result: SearchResultTool;
 }
 
-const TRANSLATION_PATH = "pages.search.components.ResultCardPublication";
+const TRANSLATION_PATH = "pages.search.components.ResultCardTool";
 
-const ResultCardTool = ({ result }: ResultCardPublicationProps) => {
+const ResultCardTool = ({ result }: ResultCardToolProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     /* eslint no-underscore-dangle: 0 */

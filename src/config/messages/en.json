@@ -347,6 +347,9 @@
                     "published": "Published",
                     "notAvailable": "Not available"
                 },
+                "ResultCardTool": {
+                    "notAvailable": "Not available"
+                },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
                     "populationSize": {
