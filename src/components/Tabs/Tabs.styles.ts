@@ -23,11 +23,11 @@ export const tabsStyle = {
             "&.MuiTab-root": {
                 flex: 1,
                 borderRadius: "20px 20px 0px 0px",
-                fontSize: "1.3vw",
+                fontSize: "1.0vw",
                 marginTop: "3px",
                 boxShadow: "1px -1px 3px 0px #2626261A",
                 backgroundColor: colors.white,
-                maxWidth: "220px",
+                maxWidth: "250px",
                 minHeight: "40px",
                 padding: "6px",
 

@@ -14,8 +14,7 @@ const TRANSLATION_PATH = "modules.dialogs.ToolDetailsDialog";
 const ToolDetailsDialog = ({ result }: ToolDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const title = result.name;
-    const { description } = result.description;
+    const { name: title, description } = result;
 
     return (
         <Dialog title={title}>
