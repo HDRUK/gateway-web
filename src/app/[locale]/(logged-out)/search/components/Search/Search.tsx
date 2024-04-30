@@ -282,18 +282,29 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const renderResultCard = (result: SearchResult) => {
+        const { _id: resultId } = result;
+
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
-                return <ResultCard result={result as SearchResultDataset} />;
+                return (
+                    <ResultCard
+                        result={result as SearchResultDataset}
+                        key={resultId}
+                    />
+                );
             case SearchCategory.PUBLICATIONS:
                 return (
                     <ResultCardPublication
                         result={result as SearchResultPublication}
+                        key={resultId}
                     />
                 );
             default:
                 return (
-                    <ResultCardDataUse result={result as SearchResultDataUse} />
+                    <ResultCardDataUse
+                        result={result as SearchResultDataUse}
+                        key={resultId}
+                    />
                 );
         }
     };
