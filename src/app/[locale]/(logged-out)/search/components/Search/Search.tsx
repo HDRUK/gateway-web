@@ -69,6 +69,7 @@ const FILTER_CATEGORY: { [key: string]: string } = {
 };
 
 const Search = ({ filters }: { filters: Filter[] }) => {
+    console.log(filters);
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
