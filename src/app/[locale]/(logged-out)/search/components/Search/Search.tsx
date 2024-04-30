@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, List, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -11,6 +11,7 @@ import {
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultCollection,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
@@ -49,14 +50,16 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
+import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
+import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
+import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar } from "./Search.styles";
@@ -66,6 +69,7 @@ const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
     dur: "dataUseRegister",
     publications: "paper",
+    collections: "collection",
 };
 
 const Search = ({ filters }: { filters: Filter[] }) => {
@@ -302,6 +306,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         key={resultId}
                     />
                 );
+            case SearchCategory.COLLECTIONS:
+                return (
+                    <ResultCardCollection
+                        imgUrl="/sample.collections.thumbnail.jpg"
+                        result={result as SearchResultCollection}
+                    />
+                );
             case SearchCategory.TOOLS:
                 return <ResultCardTool result={result as SearchResultTool} />;
             default:
@@ -312,6 +323,25 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     />
                 );
         }
+    };
+
+    const renderResults = () => {
+        if (resultsView === ViewType.TABLE) {
+            return (
+                <ResultsTable results={data?.list as SearchResultDataset[]} />
+            );
+        }
+
+        return (
+            <ResultsList
+                variant={
+                    queryParams.type === SearchCategory.COLLECTIONS
+                        ? "tiled"
+                        : "list"
+                }>
+                {data?.list.map(result => renderResultCard(result))}
+            </ResultsList>
+        );
     };
 
     const getSortOptions = () => {
@@ -498,26 +528,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             !!data?.list.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
-                                    {resultsView === ViewType.LIST && (
-                                        <List
-                                            sx={{
-                                                width: "100%",
-                                                bgcolor: "background.paper",
-                                                mb: 2,
-                                                pb: 2,
-                                            }}>
-                                            {data?.list.map(result =>
-                                                renderResultCard(result)
-                                            )}
-                                        </List>
-                                    )}
-                                    {resultsView === ViewType.TABLE && (
-                                        <ResultsTable
-                                            results={
-                                                data?.list as SearchResultDataset[]
-                                            }
-                                        />
-                                    )}
+                                    {renderResults()}
                                     <Pagination
                                         isLoading={isSearching}
                                         page={parseInt(queryParams.page, 10)}

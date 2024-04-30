@@ -326,6 +326,12 @@
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published"
+                        },
+                        "collection": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                         }
                     }
                 },

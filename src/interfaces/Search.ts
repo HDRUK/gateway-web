@@ -84,10 +84,15 @@ export interface SearchResultTool {
     category?: string;
 }
 
+export interface SearchResultCollection {
+    name: string;
+}
+
 export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
     | SearchResultPublication
+    | SearchResultCollection
     | SearchResultTool;
 
 export interface SearchForm {
