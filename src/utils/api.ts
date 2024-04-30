@@ -2,6 +2,7 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
+import { Collection } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
@@ -102,6 +103,18 @@ async function getDataUse(
     return dataUse?.[0];
 }
 
+async function getCollection(
+    cookieStore: ReadonlyRequestCookies,
+    collectionId: string
+): Promise<Collection> {
+    const collection = await get<Collection>(
+        cookieStore,
+        `${apis.collectionsV1UrlIP}/${collectionId}`
+    );
+
+    return collection;
+}
+
 export {
     getFilters,
     getUser,
@@ -110,4 +123,5 @@ export {
     getCohort,
     getDataset,
     getDataUse,
+    getCollection,
 };

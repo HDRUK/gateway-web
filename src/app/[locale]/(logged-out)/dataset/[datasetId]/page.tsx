@@ -1,9 +1,9 @@
 import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import LayoutDataItemPage from "@/modules/LayoutDataItemPage";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
@@ -47,26 +47,9 @@ export default async function DatasetItemPage({
     });
 
     return (
-        <BoxContainer
-            sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
-                },
-            }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    bgcolor: "white",
-                    p: 0,
-                }}>
-                <ActiveListSidebar items={activeLinkList} />
-            </Box>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 3", laptop: "span 4" },
-                    p: 0,
-                }}>
+        <LayoutDataItemPage
+            navigation={<ActiveListSidebar items={activeLinkList} />}
+            body={
                 <>
                     <ActionBar />
                     <Box
@@ -96,7 +79,7 @@ export default async function DatasetItemPage({
                         />
                     </Box>
                 </>
-            </Box>
-        </BoxContainer>
+            }
+        />
     );
 }

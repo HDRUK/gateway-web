@@ -1,4 +1,5 @@
 import { isEmpty } from "lodash";
+import { VersionItem } from "@/interfaces/Dataset";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -47,4 +48,13 @@ const formatYearStat = (startYear?: string, endYear?: string) => {
     }`;
 };
 
-export { parseLeadTime, splitStringList, hasValidValue, formatYearStat };
+const getLatestVersion = (versions: VersionItem[]) =>
+    versions[versions.length - 1];
+
+export {
+    formatYearStat,
+    getLatestVersion,
+    hasValidValue,
+    parseLeadTime,
+    splitStringList,
+};

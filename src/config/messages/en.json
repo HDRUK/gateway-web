@@ -375,6 +375,26 @@
                 }
             }
         },
+        "collection": {
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Collections search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Data use ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis scripts and software ({ length })"
+                }
+            }
+        },
         "dataset": {
             "datasetDetails": "Dataset details",
             "datasetPublications": "Publications about this dataset",

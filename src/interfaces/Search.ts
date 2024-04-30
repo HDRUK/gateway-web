@@ -67,6 +67,7 @@ export interface SearchResultPublication {
 
 export interface SearchResultCollection {
     name: string;
+    _id: string;
 }
 
 export type SearchResult =
