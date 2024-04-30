@@ -16,8 +16,6 @@ const ToolDetailsDialog = ({ result }: ToolDetailsDialogProps) => {
 
     const { name: title, description } = result;
 
-    console.log(result);
-
     return (
         <Dialog title={title}>
             <MuiDialogContent>
