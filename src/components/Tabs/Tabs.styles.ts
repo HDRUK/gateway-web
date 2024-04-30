@@ -20,11 +20,12 @@ export const tabsStyle = {
                 color: colors.white,
                 boxShadow: "inherit",
             },
+
             "&.MuiTab-root": {
                 flex: 1,
                 borderRadius: "20px 20px 0px 0px",
                 fontSize: "20px",
-                marginTop: "3px",
+                marginTop: "2px",
                 boxShadow: "1px -1px 3px 0px #2626261A",
                 backgroundColor: colors.white,
                 maxWidth: "250px",
