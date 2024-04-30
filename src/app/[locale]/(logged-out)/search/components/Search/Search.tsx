@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, List, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -47,7 +47,7 @@ import searchFormConfig, {
     sortByOptionsDataset,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
+import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
@@ -55,6 +55,7 @@ import ResultCard from "../ResultCard";
 import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
+import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar } from "./Search.styles";
@@ -302,6 +303,25 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    const renderResults = () => {
+        if (resultsView === ViewType.TABLE) {
+            return (
+                <ResultsTable results={data?.list as SearchResultDataset[]} />
+            );
+        }
+
+        return (
+            <ResultsList
+                variant={
+                    queryParams.type === SearchCategory.COLLECTIONS
+                        ? "tiled"
+                        : "list"
+                }>
+                {data?.list.map(result => renderResultCard(result))}
+            </ResultsList>
+        );
+    };
+
     const getSortOptions = () => {
         switch (queryParams.type) {
             case SearchCategory.DATA_USE:
@@ -484,46 +504,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             !!data?.list.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
-                                    {resultsView === ViewType.LIST &&
-                                        queryParams.type !==
-                                            SearchCategory.COLLECTIONS && (
-                                            <List
-                                                sx={{
-                                                    width: "100%",
-                                                    bgcolor: "background.paper",
-                                                    mb: 2,
-                                                    pb: 2,
-                                                }}>
-                                                {data?.list.map(result =>
-                                                    renderResultCard(result)
-                                                )}
-                                            </List>
-                                        )}
-                                    {resultsView === ViewType.LIST &&
-                                        queryParams.type ===
-                                            SearchCategory.COLLECTIONS && (
-                                            <BoxContainer
-                                                sx={{
-                                                    gridTemplateColumns: {
-                                                        mobile: "repeat(1, 1fr)",
-                                                        desktop:
-                                                            "repeat(3, 1fr)",
-                                                    },
-                                                    gap: 2,
-                                                    mb: 2,
-                                                }}>
-                                                {data?.list.map(result =>
-                                                    renderResultCard(result)
-                                                )}
-                                            </BoxContainer>
-                                        )}
-                                    {resultsView === ViewType.TABLE && (
-                                        <ResultsTable
-                                            results={
-                                                data?.list as SearchResultDataset[]
-                                            }
-                                        />
-                                    )}
+                                    {renderResults()}
                                     <Pagination
                                         isLoading={isSearching}
                                         page={parseInt(queryParams.page, 10)}
