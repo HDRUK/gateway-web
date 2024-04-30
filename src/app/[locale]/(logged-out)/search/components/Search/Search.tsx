@@ -38,6 +38,7 @@ import {
     FILTER_ORGANISATION_NAME,
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
+    FILTER_SECTOR,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
@@ -114,6 +115,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
+        [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
     });
 
     const { handleDownload } = useSearch(
@@ -204,6 +206,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_ORGANISATION_NAME]: undefined,
             [FILTER_DATA_SET_TITLES]: undefined,
             [FILTER_PUBLICATION_DATE]: undefined,
+            [FILTER_SECTOR]: undefined,
         });
     };
 

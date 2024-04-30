@@ -18,6 +18,7 @@ import {
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
+    FILTER_SECTOR,
     filtersList,
 } from "@/config/forms/filters";
 import {
@@ -59,6 +60,7 @@ const FilterPanel = ({
         [FILTER_GEOGRAPHIC_LOCATION]: {},
         [FILTER_DATE_RANGE]: {},
         [FILTER_PUBLICATION_DATE]: {},
+        [FILTER_SECTOR]: {},
     });
 
     useEffect(() => {
@@ -75,10 +77,12 @@ const FilterPanel = ({
     const { control, setValue } = useForm<{
         [FILTER_PUBLISHER_NAME]: string;
         [FILTER_DATA_USE_TITLES]: string;
+        [FILTER_SECTOR]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
+            [FILTER_SECTOR]: "",
         },
     });
 

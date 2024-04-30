@@ -6,6 +6,7 @@ import {
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
     FILTER_PUBLICATION_DATE,
+    FILTER_SECTOR,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -19,6 +20,9 @@ export interface Aggregations {
         buckets: Bucket[];
     };
     [FILTER_PUBLISHER_NAME]: {
+        buckets: Bucket[];
+    };
+    [FILTER_SECTOR]: {
         buckets: Bucket[];
     };
     startDate: { value_as_string: string };
@@ -123,6 +127,7 @@ export interface SearchQueryParams {
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
     [FILTER_PUBLICATION_DATE]: string[] | undefined;
+    [FILTER_SECTOR]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };
