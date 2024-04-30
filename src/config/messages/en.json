@@ -278,7 +278,7 @@
         "search": {
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
-            "tools": "Software / Tools",
+            "tools": "Analysis, tools & software",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
@@ -323,7 +323,9 @@
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
-                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "publicationDate": "Publication date range",
+                            "publicationDateTooltip": "The range of years during which results were published"
                         },
                         "collection": {
                             "datasetTitles": "Dataset",
@@ -352,6 +354,10 @@
                 "ResultCardPublication": {
                     "published": "Published",
                     "notAvailable": "Not available"
+                },
+                "ResultCardTool": {
+                    "notAvailable": "Not available",
+                    "showAll": "Quick view"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
@@ -394,6 +400,14 @@
                     "associatedTissuesTitle": "Associated Tissues",
                     "geographicCoverageTitle": "Geographic coverage",
                     "leadTimeTitle": "Lead time"
+                },
+                "DatasetMindMap": {
+                    "tools": "View associated data analysis scripts/software",
+                    "dur": "Research projects/ Data Use",
+                    "linkages": "See which datasets are linkable",
+                    "collections": "Explore associated Collections",
+                    "synthetic": "Access synthetic data",
+                    "root": "Data custodian link"
                 }
             }
         },
@@ -554,6 +568,11 @@
                 "datasets": "Datasets",
                 "leadApplicantOrganisation": "Lead applicant organisation",
                 "dataCustodian": "Data Custodian"
+            },
+            "ToolDetailsDialog": {
+                "description": "Description",
+                "keywords": "Keywords",
+                "team": "Team/Author"
             }
         }
     }

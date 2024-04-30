@@ -15,6 +15,7 @@ import {
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
+    SearchResultTool,
     ViewType,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
@@ -36,6 +37,7 @@ import {
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_ORGANISATION_NAME,
+    FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
 } from "@/config/forms/filters";
 import searchFormConfig, {
@@ -45,6 +47,7 @@ import searchFormConfig, {
     VIEW_FIELD,
     sortByOptionsDataUse,
     sortByOptionsDataset,
+    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
@@ -56,6 +59,7 @@ import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultsList from "../ResultsList";
+import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar } from "./Search.styles";
@@ -113,6 +117,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
+        [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
     });
 
     const { handleDownload } = useSearch(
@@ -168,7 +173,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             query: queryParams.query,
             ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
@@ -202,6 +207,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,
             [FILTER_DATA_SET_TITLES]: undefined,
+            [FILTER_PUBLICATION_DATE]: undefined,
         });
     };
 
@@ -243,7 +249,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
         let filtered;
 
-        if (filterType === FILTER_DATE_RANGE) {
+        if (
+            filterType === FILTER_DATE_RANGE ||
+            filterType === FILTER_PUBLICATION_DATE
+        ) {
             filtered = filterToUpdate.map(f => (f === removedFilter ? "" : f));
         } else {
             filtered = filterToUpdate.filter(f => f !== removedFilter);
@@ -280,13 +289,21 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const renderResultCard = (result: SearchResult) => {
+        const { _id: resultId } = result;
+
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
-                return <ResultCard result={result as SearchResultDataset} />;
+                return (
+                    <ResultCard
+                        result={result as SearchResultDataset}
+                        key={resultId}
+                    />
+                );
             case SearchCategory.PUBLICATIONS:
                 return (
                     <ResultCardPublication
                         result={result as SearchResultPublication}
+                        key={resultId}
                     />
                 );
             case SearchCategory.COLLECTIONS:
@@ -296,9 +313,14 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         result={result as SearchResultCollection}
                     />
                 );
+            case SearchCategory.TOOLS:
+                return <ResultCardTool result={result as SearchResultTool} />;
             default:
                 return (
-                    <ResultCardDataUse result={result as SearchResultDataUse} />
+                    <ResultCardDataUse
+                        result={result as SearchResultDataUse}
+                        key={resultId}
+                    />
                 );
         }
     };
@@ -326,6 +348,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         switch (queryParams.type) {
             case SearchCategory.DATA_USE:
                 return sortByOptionsDataUse;
+            case SearchCategory.TOOLS:
+                return sortByOptionsTool;
             default:
                 return sortByOptionsDataset;
         }
