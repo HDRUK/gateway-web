@@ -68,18 +68,17 @@ export interface SearchResultPublication {
 export interface SearchResultTool {
     _id: string;
     name: string;
-    // needs to be fixed when BE is fixed
     description: string;
-    tags?: string[];
     created_at: string;
-    uploader: string;
+    tags?: string[];
+    uploader?: string;
     team_name?: string;
-    type_category: string[];
-    license?: string | null;
-    programming_language: string[];
-    programming_package: string[];
-    datasets: string[];
-    category: string;
+    type_category?: string[];
+    license?: string;
+    programming_language?: string[];
+    programming_package?: string[];
+    datasets?: string[];
+    category?: string;
 }
 
 export type SearchResult =
