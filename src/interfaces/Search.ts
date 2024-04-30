@@ -68,10 +68,27 @@ export interface SearchResultPublication {
     url: string;
 }
 
+export interface SearchResultTool {
+    _id: string;
+    name: string;
+    description: string;
+    created_at: string;
+    tags?: string[];
+    uploader?: string;
+    team_name?: string;
+    type_category?: string[];
+    license?: string;
+    programming_language?: string[];
+    programming_package?: string[];
+    datasets?: string[];
+    category?: string;
+}
+
 export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
-    | SearchResultPublication;
+    | SearchResultPublication
+    | SearchResultTool;
 
 export interface SearchForm {
     query: string;

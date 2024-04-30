@@ -278,7 +278,7 @@
         "search": {
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
-            "tools": "Software / Tools",
+            "tools": "Analysis, tools & software",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
@@ -348,6 +348,10 @@
                 "ResultCardPublication": {
                     "published": "Published",
                     "notAvailable": "Not available"
+                },
+                "ResultCardTool": {
+                    "notAvailable": "Not available",
+                    "showAll": "Quick view"
                 },
                 "ResultsTable": {
                     "title": { "label": "Metadata title" },
@@ -558,6 +562,11 @@
                 "datasets": "Datasets",
                 "leadApplicantOrganisation": "Lead applicant organisation",
                 "dataCustodian": "Data Custodian"
+            },
+            "ToolDetailsDialog": {
+                "description": "Description",
+                "keywords": "Keywords",
+                "team": "Team/Author"
             }
         }
     }
