@@ -15,7 +15,7 @@ export const sortByOptionsDataset = [
         value: "title:asc",
     },
     {
-        label: "Sort Alphabetically by Title (Z-A)",
+        label: "Sort Alphabetically By Title (Z-A)",
         value: "title:desc",
     },
     {
@@ -38,7 +38,7 @@ export const sortByOptionsDataUse = [
         value: "projectTitle:asc",
     },
     {
-        label: "Sort Alphabetically by Project Title (Z-A)",
+        label: "Sort Alphabetically By Project Title (Z-A)",
         value: "projectTitle:desc",
     },
     {
@@ -57,11 +57,11 @@ export const sortByOptionsTool = [
         value: "score:desc",
     },
     {
-        label: "Sort Alphabetically By Project Title (A-Z)",
+        label: "Sort Alphabetically By Name (A-Z)",
         value: "name:asc",
     },
     {
-        label: "Sort Alphabetically by Project Title (Z-A)",
+        label: "Sort Alphabetically By Name (Z-A)",
         value: "name:desc",
     },
     {

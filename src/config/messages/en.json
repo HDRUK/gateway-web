@@ -563,7 +563,7 @@
             },
             "ToolDetailsDialog": {
                 "description": "Description",
-                "keywords": "Key words",
+                "keywords": "Keywords",
                 "team": "Team/Author"
             }
         }
