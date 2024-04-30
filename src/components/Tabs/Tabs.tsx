@@ -111,7 +111,6 @@ const Tabs = ({
                                 }
                                 param={paramName}
                                 persist={persistParams}
-                                wrapped={false}
                             />
                         ))}
                     </MuiTabList>
