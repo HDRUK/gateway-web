@@ -41,12 +41,12 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
-                <ListItemButton component="a" onClick={handleClickItem}>
+                <ListItemButton>
                     <ToolWrapper
                         disableTypography
                         primary={
                             <ToolTitleWrapper>
-                                <ToolTitle>
+                                <ToolTitle onClick={handleClickItem}>
                                     <EllipsisLineLimit
                                         text={name || ""}
                                         showToolTip

@@ -45,6 +45,7 @@ import searchFormConfig, {
     VIEW_FIELD,
     sortByOptionsDataUse,
     sortByOptionsDataset,
+    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
@@ -300,6 +301,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         switch (queryParams.type) {
             case SearchCategory.DATA_USE:
                 return sortByOptionsDataUse;
+            case SearchCategory.TOOLS:
+                return sortByOptionsTool;
             default:
                 return sortByOptionsDataset;
         }

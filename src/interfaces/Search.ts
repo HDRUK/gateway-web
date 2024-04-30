@@ -71,6 +71,15 @@ export interface SearchResultTool {
     // needs to be fixed when BE is fixed
     description: string;
     tags?: string[];
+    created_at: string;
+    uploader: string;
+    team_name?: string;
+    type_category: string[];
+    license?: string | null;
+    programming_language: string[];
+    programming_package: string[];
+    datasets: string[];
+    category: string;
 }
 
 export type SearchResult =
