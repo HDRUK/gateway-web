@@ -6,30 +6,45 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import { ChevronThinIcon } from "@/consts/icons";
 
-export interface AccordionProps extends Omit<MuiAccordionProps, "children"> {
+export interface AccordionProps
+    extends Omit<MuiAccordionProps, "children" | "variant"> {
     heading: string | ReactNode;
     contents: string | ReactNode;
-    transparent?: boolean;
+    variant?: "underline" | "plain";
 }
 
 const Accordion = ({
     heading,
     contents,
-    transparent,
+    variant = "underline",
     sx,
     ...rest
 }: AccordionProps) => {
     return (
         <MuiAccordion
             sx={{
-                ...(transparent && {
+                background: "transparent",
+                boxShadow: "none",
+                "&.MuiAccordion-root.Mui-disabled": {
                     background: "transparent",
-                    boxShadow: "none",
-                    "&.MuiAccordion-root.Mui-disabled": {
-                        background: "transparent",
+                },
+                ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                },
+                ...(variant === "underline" && {
+                    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+                    "&:first-of-type, &:last-of-type": {
+                        borderRadius: 0,
+                    },
+                }),
+                ...(variant === "plain" && {
+                    ".MuiAccordionSummary-content": {
+                        marginTop: 1,
+                        marginBottom: 1,
                     },
                     ".MuiAccordionSummary-root": {
-                        padding: 0,
+                        minHeight: "auto",
                     },
                 }),
                 ...sx,

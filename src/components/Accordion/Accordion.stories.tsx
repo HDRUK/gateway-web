@@ -46,3 +46,15 @@ export const Single: Story = {
 export const Group: Story = {
     render: () => <WrapperComponent />,
 };
+
+export const Plain: Story = {
+    args: {
+        variant: "plain",
+    },
+};
+
+export const Underline: Story = {
+    args: {
+        variant: "underline",
+    },
+};
