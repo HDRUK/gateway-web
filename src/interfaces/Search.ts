@@ -92,7 +92,7 @@ export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
     | SearchResultPublication
-    | SearchResultCollection;
+    | SearchResultCollection
     | SearchResultTool;
 
 export interface SearchForm {
