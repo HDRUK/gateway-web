@@ -508,13 +508,14 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     <>
                                         {data?.path?.includes(
                                             queryParams.type
-                                        ) && (
-                                            <ShowingXofX
-                                                to={data?.to}
-                                                from={data?.from}
-                                                total={data?.total}
-                                            />
-                                        )}
+                                        ) &&
+                                            !!data?.elastic_total && (
+                                                <ShowingXofX
+                                                    to={data?.to}
+                                                    from={data?.from}
+                                                    total={data?.total}
+                                                />
+                                            )}
                                         {data && data.elastic_total > 100 && (
                                             <ResultLimitText>
                                                 {t("resultLimit")}
