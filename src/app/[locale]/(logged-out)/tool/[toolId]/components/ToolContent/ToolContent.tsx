@@ -4,17 +4,14 @@ import { InView } from "react-intersection-observer";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
-import { Tag } from "@/interfaces/Tag";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
 import { ToolSection, FieldType } from "../../config";
-import { ToolFieldWrapper } from "./ToolContent.styles";
 
 const TRANSLATION_PATH = "pages.tool";
 const DATE_FORMAT = "DD/MM/YYYY";
@@ -41,19 +38,6 @@ const ToolContent = ({
         switch (type) {
             case FieldType.DATE: {
                 return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
-            }
-            case FieldType.TAG: {
-                return (
-                    <ToolFieldWrapper>
-                        {(value as unknown as Tag[])?.map(tag => (
-                            <EllipsisCharacterLimit
-                                key={tag.id}
-                                text={tag.type}
-                                characterLimit={50}
-                            />
-                        ))}
-                    </ToolFieldWrapper>
-                );
             }
             default:
                 return <Typography>{val}</Typography>;
