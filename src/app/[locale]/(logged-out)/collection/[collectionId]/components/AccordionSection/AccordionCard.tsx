@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-import { CardContent, Paper } from "@mui/material";
+import { CardContent, Paper, PaperProps } from "@mui/material";
 
-export interface AccordionCardProps {
-    children: ReactNode;
-}
+export type AccordionCardProps = PaperProps;
 
-export default function AccordionCard({ children }: AccordionCardProps) {
+export default function AccordionCard({
+    children,
+    ...restProps
+}: AccordionCardProps) {
     return (
-        <Paper elevation={0}>
+        <Paper elevation={0} {...restProps}>
             <CardContent
                 sx={{
                     gap: 2,

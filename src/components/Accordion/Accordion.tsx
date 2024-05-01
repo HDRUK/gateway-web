@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Typography } from "@mui/material";
 import MuiAccordion, {
     AccordionProps as MuiAccordionProps,
 } from "@mui/material/Accordion";
@@ -16,9 +17,9 @@ export interface AccordionProps
 const Accordion = ({
     heading,
     contents,
-    variant = "underline",
+    variant = "plain",
     sx,
-    ...rest
+    ...restProps
 }: AccordionProps) => {
     return (
         <MuiAccordion
@@ -49,12 +50,12 @@ const Accordion = ({
                 }),
                 ...sx,
             }}
-            {...rest}>
+            {...restProps}>
             <MuiAccordionSummary
                 expandIcon={
                     <ChevronThinIcon fontSize="medium" color="primary" />
                 }>
-                {heading}
+                <Typography variant="h3">{heading}</Typography>
             </MuiAccordionSummary>
             <MuiAccordionDetails>{contents}</MuiAccordionDetails>
         </MuiAccordion>

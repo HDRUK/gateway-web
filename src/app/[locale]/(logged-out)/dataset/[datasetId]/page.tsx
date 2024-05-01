@@ -1,9 +1,9 @@
 import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
+import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import LayoutDataItemPage from "@/modules/LayoutDataItemPage";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";

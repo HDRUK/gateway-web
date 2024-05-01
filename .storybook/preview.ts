@@ -1,9 +1,9 @@
+import React from "react";
 import type { Preview } from "@storybook/react";
-
-import { withMuiTheme } from "./withMuiTheme.decorator";
-import { withDialog } from "./withDialog.decorator";
 import { withActionBar } from "./withActionBar.decorator";
+import { withDialog } from "./withDialog.decorator";
 import { withIntl } from "./withIntl.decorator";
+import { withMuiTheme } from "./withMuiTheme.decorator";
 
 const preview: Preview = {
     globals: {
@@ -26,7 +26,6 @@ const preview: Preview = {
                 order: ["*", "Playground", "*"],
             },
         },
-        parameters: {},
     },
 };
 

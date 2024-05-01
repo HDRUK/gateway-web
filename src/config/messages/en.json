@@ -376,6 +376,7 @@
             }
         },
         "collection": {
+            "introTitle": "Description",
             "components": {
                 "ActionBar": {
                     "label": "Back to Collections search results"
@@ -488,7 +489,12 @@
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
-            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software"
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to search results"
+                }
+            }
         }
     },
     "components": {
