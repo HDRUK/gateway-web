@@ -32,9 +32,13 @@ export interface Aggregations {
 export interface SearchPaginationType<T> extends PaginationType<T> {
     aggregations: Aggregations;
     path: string;
+    elastic_total: number;
+}
+interface SearchResultBase {
+    _id: string;
 }
 
-export interface SearchResultDataset {
+export interface SearchResultDataset extends SearchResultBase {
     highlight: {
         abstract: string;
         description: string;
@@ -42,10 +46,9 @@ export interface SearchResultDataset {
     metadata: {
         metadata: Metadata;
     };
-    _id: string;
 }
 
-export interface SearchResultDataUse {
+export interface SearchResultDataUse extends SearchResultBase {
     highlight: {
         abstract: string;
         description: string;
@@ -58,11 +61,9 @@ export interface SearchResultDataUse {
     organisationName: string;
     publisher: string;
     datasetTitles: string[];
-    _id: string;
 }
 
-export interface SearchResultPublication {
-    _id: string;
+export interface SearchResultPublication extends SearchResultBase {
     abstract?: string;
     paper_title: string;
     authors?: string;
@@ -72,8 +73,7 @@ export interface SearchResultPublication {
     url: string;
 }
 
-export interface SearchResultTool {
-    _id: string;
+export interface SearchResultTool extends SearchResultBase {
     name: string;
     description: string;
     created_at: string;
@@ -88,7 +88,7 @@ export interface SearchResultTool {
     category?: string;
 }
 
-export interface SearchResultCollection {
+export interface SearchResultCollection extends SearchResultBase {
     name: string;
 }
 

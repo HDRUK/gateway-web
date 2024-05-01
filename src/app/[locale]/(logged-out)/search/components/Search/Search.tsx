@@ -63,7 +63,7 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
-import { ActionBar } from "./Search.styles";
+import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const FILTER_CATEGORY: { [key: string]: string } = {
@@ -497,26 +497,42 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             flexDirection: "column",
                             m: 2,
                         }}>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}>
-                            {data?.path?.includes(queryParams.type) && (
-                                <ShowingXofX
-                                    to={data?.to}
-                                    from={data?.from}
-                                    total={data?.total}
-                                />
-                            )}
-                            {queryParams.type === SearchCategory.DATASETS && (
-                                <ToggleTabs<ViewType>
-                                    selected={resultsView as ViewType}
-                                    buttons={toggleButtons}
-                                />
-                            )}
-                        </Box>
+                        {!isSearching && (
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}>
+                                <Box sx={{ display: "flex" }}>
+                                    <>
+                                        {data?.path?.includes(
+                                            queryParams.type
+                                        ) &&
+                                            !!data?.elastic_total && (
+                                                <ShowingXofX
+                                                    to={data?.to}
+                                                    from={data?.from}
+                                                    total={data?.total}
+                                                />
+                                            )}
+                                        {data && data.elastic_total > 100 && (
+                                            <ResultLimitText>
+                                                {t("resultLimit")}
+                                            </ResultLimitText>
+                                        )}
+                                    </>
+                                </Box>
+
+                                {queryParams.type ===
+                                    SearchCategory.DATASETS && (
+                                    <ToggleTabs<ViewType>
+                                        selected={resultsView as ViewType}
+                                        buttons={toggleButtons}
+                                    />
+                                )}
+                            </Box>
+                        )}
 
                         {isSearching && <Loading />}
 
