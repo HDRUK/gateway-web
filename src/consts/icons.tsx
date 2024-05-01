@@ -36,6 +36,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 import InfoIcon from "@mui/icons-material/Info";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import LaunchIcon from "@mui/icons-material/Launch";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -110,4 +111,5 @@ export {
     WarningIcon,
     CircleIcon,
     ViewListIcon,
+    LaunchIcon,
 };

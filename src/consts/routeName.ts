@@ -10,6 +10,7 @@ export enum RouteName {
     DATA_ACCESS_REQUESTS = "data-access-requests",
     DATASET_ITEM = "dataset",
     COLLECTION = "collection",
+    TOOL_ITEM = "tools", // todo: update when tool landing page exists
     DATA_USE = "data-use",
     DATA_USES = "data-uses",
     DATASETS = "datasets",

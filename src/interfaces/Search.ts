@@ -5,6 +5,8 @@ import {
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
+    FILTER_PUBLICATION_DATE,
+    FILTER_SECTOR,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -20,6 +22,9 @@ export interface Aggregations {
     [FILTER_PUBLISHER_NAME]: {
         buckets: Bucket[];
     };
+    [FILTER_SECTOR]: {
+        buckets: Bucket[];
+    };
     startDate: { value_as_string: string };
     endDate: { value_as_string: string };
 }
@@ -27,9 +32,13 @@ export interface Aggregations {
 export interface SearchPaginationType<T> extends PaginationType<T> {
     aggregations: Aggregations;
     path: string;
+    elastic_total: number;
+}
+interface SearchResultBase {
+    _id: string;
 }
 
-export interface SearchResultDataset {
+export interface SearchResultDataset extends SearchResultBase {
     highlight: {
         abstract: string;
         description: string;
@@ -37,10 +46,9 @@ export interface SearchResultDataset {
     metadata: {
         metadata: Metadata;
     };
-    _id: string;
 }
 
-export interface SearchResultDataUse {
+export interface SearchResultDataUse extends SearchResultBase {
     highlight: {
         abstract: string;
         description: string;
@@ -53,19 +61,34 @@ export interface SearchResultDataUse {
     organisationName: string;
     publisher: string;
     datasetTitles: string[];
-    _id: string;
 }
 
-export interface SearchResultPublication {
-    _id: string;
+export interface SearchResultPublication extends SearchResultBase {
     abstract?: string;
     paper_title: string;
     authors?: string;
     journal_name?: string;
     year_of_publication?: string;
+    full_text_url: string;
+    url: string;
 }
 
-export interface SearchResultCollection {
+export interface SearchResultTool extends SearchResultBase {
+    name: string;
+    description: string;
+    created_at: string;
+    tags?: string[];
+    uploader?: string;
+    team_name?: string;
+    type_category?: string[];
+    license?: string;
+    programming_language?: string[];
+    programming_package?: string[];
+    datasets?: string[];
+    category?: string;
+}
+
+export interface SearchResultCollection extends SearchResultBase {
     name: string;
     _id: string;
 }
@@ -74,7 +97,8 @@ export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
     | SearchResultPublication
-    | SearchResultCollection;
+    | SearchResultCollection
+    | SearchResultTool;
 
 export interface SearchForm {
     query: string;
@@ -108,6 +132,8 @@ export interface SearchQueryParams {
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
+    [FILTER_PUBLICATION_DATE]: string[] | undefined;
+    [FILTER_SECTOR]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };

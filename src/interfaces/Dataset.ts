@@ -46,6 +46,21 @@ interface Metadata {
             endDate: string | undefined;
         };
     };
+    linkage: {
+        associatedMedia: string;
+        isReferenceIn: string;
+        tools: string[];
+        datasetLinkage: {
+            isDerivedFrom: string;
+            isPartOf: string;
+            linkedDatasets: string[];
+            isMemberOf: string;
+        };
+        investigations: string[];
+        isGeneratedUsing: string;
+        dataUses: string[];
+        syntheticDataWebLink: string;
+    };
 }
 interface VersionItem {
     id: number;
