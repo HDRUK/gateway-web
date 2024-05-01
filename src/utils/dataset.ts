@@ -48,8 +48,7 @@ const formatYearStat = (startYear?: string, endYear?: string) => {
     }`;
 };
 
-const getLatestVersion = (versions: VersionItem[]) =>
-    versions[versions.length - 1];
+const getLatestVersion = (versions: VersionItem[]) => versions[0];
 
 export {
     formatYearStat,

@@ -26,7 +26,7 @@ const ResultCollectionCard = ({
             <Box
                 component={Link}
                 // eslint-disable-next-line no-underscore-dangle
-                href={`${RouteName.COLLECTION}/${result._id}`}
+                href={`${RouteName.COLLECTION_ITEM}/${result._id}`}
                 sx={{
                     color: "white",
                     px: 3,

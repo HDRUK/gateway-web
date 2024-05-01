@@ -9,8 +9,8 @@ export enum RouteName {
     CREATE = "create",
     DATA_ACCESS_REQUESTS = "data-access-requests",
     DATASET_ITEM = "dataset",
-    COLLECTION = "collection",
-    DATA_USE = "data-use",
+    COLLECTION_ITEM = "collection",
+    DATA_USE_ITEM = "data-use",
     DATA_USES = "data-uses",
     DATASETS = "datasets",
     DUPLICATE = "duplicate",
@@ -29,6 +29,6 @@ export enum RouteName {
     TEAM_MANAGEMENT = "team-management",
     WORKFLOWS = "workflows",
     TERMS = "terms-and-conditions",
-    TOOL = "tool",
+    TOOL_ITEM = "tool",
     PUBLICATION = "publication",
 }

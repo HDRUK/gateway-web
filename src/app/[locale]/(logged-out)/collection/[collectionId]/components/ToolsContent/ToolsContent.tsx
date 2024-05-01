@@ -15,7 +15,7 @@ export interface PublicationsContentProps {
     anchorIndex: number;
 }
 
-export default function DatasetContent({
+export default function ToolsContent({
     tools,
     anchorIndex,
 }: PublicationsContentProps) {

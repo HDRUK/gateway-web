@@ -43,7 +43,7 @@ export default function DatausesContent({
                 contents={datauses.map(
                     ({ project_title, organisation_name, id }) => (
                         <>
-                            <Link href={`/${RouteName.DATA_USE}/${id}`}>
+                            <Link href={`/${RouteName.DATA_USE_ITEM}/${id}`}>
                                 {project_title}
                             </Link>
                             <div>{organisation_name}</div>
