@@ -1,8 +1,7 @@
-import { useRef, useState, useEffect, ReactNode } from "react";
-import { Button } from "@mui/material";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import getNodeDimensions from "get-node-dimensions";
 import { useTranslations } from "next-intl";
-import { ArrowDropDownIcon } from "@/consts/icons";
+import ShowMoreButton from "./ShowMoreButton";
 
 interface ShowMoreProps {
     children: ReactNode;
@@ -31,22 +30,11 @@ const ShowMore = ({ children, maxHeight }: ShowMoreProps) => {
                 {children}
             </div>
             {needsMoreButton && (
-                <Button
-                    style={{ whiteSpace: "nowrap" }}
-                    size="small"
-                    onClick={() => setShowAll(previous => !previous)}
-                    endIcon={
-                        <ArrowDropDownIcon
-                            fontSize="large"
-                            sx={{
-                                transform: `rotate(${showAll ? 180 : 0}deg)`,
-                            }}
-                            color="primary"
-                        />
-                    }
-                    variant="link">
+                <ShowMoreButton
+                    onClick={() => setShowAll(showAll => !showAll)}
+                    open={showAll}>
                     {showAll ? t("showLess") : t("showMore")}
-                </Button>
+                </ShowMoreButton>
             )}
             <div ref={myRef} style={{ display: "none" }}>
                 {children}

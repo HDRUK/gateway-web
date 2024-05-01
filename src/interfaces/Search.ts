@@ -90,6 +90,7 @@ export interface SearchResultTool extends SearchResultBase {
 
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
+    _id: string;
 }
 
 export type SearchResult =

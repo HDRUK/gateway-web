@@ -384,6 +384,27 @@
                 }
             }
         },
+        "collection": {
+            "introTitle": "Description",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Collections search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Data use ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis scripts and software ({ length })"
+                }
+            }
+        },
         "dataset": {
             "datasetDetails": "Dataset details",
             "datasetPublications": "Publications about this dataset",
@@ -485,7 +506,12 @@
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
-            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software"
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to search results"
+                }
+            }
         }
     },
     "components": {

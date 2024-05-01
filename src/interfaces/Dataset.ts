@@ -1,3 +1,5 @@
+import { Publication } from "./Publication";
+
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
 interface Metadata {
@@ -68,6 +70,7 @@ interface VersionItem {
     dataset_id: number;
     metadata: { metadata: Metadata; gwdmVersion: string };
     version: number;
+    publications: Publication[];
 }
 
 interface Dataset {
@@ -85,4 +88,4 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
-export type { NewDataset, Dataset, DatasetStatus, VersionItem, Metadata };
+export type { Dataset, DatasetStatus, Metadata, NewDataset, VersionItem };

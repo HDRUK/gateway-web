@@ -56,7 +56,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                     primary={
                         <ResultTitle>
                             <Link
-                                href={`${RouteName.DATA_USE}/${resultId}`}
+                                href={`${RouteName.DATA_USE_ITEM}/${resultId}`}
                                 fontSize={16}
                                 fontWeight={600}
                                 marginBottom={2}>
