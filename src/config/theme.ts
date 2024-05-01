@@ -446,10 +446,12 @@ const theme = createTheme({
                         minHeight: "48px",
                     },
                 },
-                content: {
-                    "&.Mui-expanded": {
-                        margin: 0,
-                    },
+                content: ({ theme: _theme }) => {
+                    return {
+                        "&.Mui-expanded": {
+                            margin: `${_theme.spacing(1.5)} 0`,
+                        },
+                    };
                 },
             },
         },

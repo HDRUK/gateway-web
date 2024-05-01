@@ -7,6 +7,7 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
+import DatasetMindMap from "./components/DatasetMindMap";
 import DatasetStats from "./components/DatasetStats";
 import { datasetFields } from "./config";
 
@@ -73,6 +74,9 @@ export default async function DatasetItemPage({
                                 </div>
                             </Box>
                         )}
+
+                        <DatasetMindMap data={datasetVersion} />
+
                         <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
