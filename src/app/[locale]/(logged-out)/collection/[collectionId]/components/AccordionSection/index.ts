@@ -3,4 +3,4 @@ import AccordionSection from "./AccordionSection";
 
 export default AccordionSection;
 
-export { AccordionSection, AccordionCard };
+export { AccordionCard };
