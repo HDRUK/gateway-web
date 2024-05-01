@@ -289,6 +289,7 @@
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
+            "resultLimit": "There are more than 100 results. We recommend refining your search.",
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
