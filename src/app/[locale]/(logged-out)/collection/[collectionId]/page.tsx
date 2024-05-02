@@ -62,25 +62,19 @@ export default async function CollectionItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    {collection.name && (
-                        <PageBanner backgroundImageUrl="/images/collections/banner.jpeg">
-                            {toTitleCase(collection.name)}
-                        </PageBanner>
-                    )}
+                    <PageBanner backgroundImageUrl="/images/collections/banner.jpeg">
+                        {toTitleCase(collection.name)}
+                    </PageBanner>
                     <Box sx={{ px: 6, py: 3 }}>
                         <Box sx={{ mb: 3 }}>
                             <ActionBar />
                         </Box>
-                        {collection.description && (
-                            <Box sx={{ mb: 3 }}>
-                                <Typography variant="h3" sx={{ mb: 1 }}>
-                                    {t("introTitle")}
-                                </Typography>
-                                <Typography>
-                                    {collection.description}
-                                </Typography>
-                            </Box>
-                        )}
+                        <Box sx={{ mb: 3 }}>
+                            <Typography variant="h3" sx={{ mb: 1 }}>
+                                {t("introTitle")}
+                            </Typography>
+                            <Typography>{collection.description}</Typography>
+                        </Box>
                         <Box>
                             <DatasetsContent
                                 datasets={datasets}

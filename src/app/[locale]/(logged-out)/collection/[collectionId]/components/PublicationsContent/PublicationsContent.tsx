@@ -22,6 +22,8 @@ export default function DatasetContent({
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
 
+    console.log("publications", publications);
+
     return (
         <InView
             id={`anchor${anchorIndex}`}
