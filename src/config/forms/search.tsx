@@ -4,6 +4,7 @@ export const QUERY_FIELD = "query";
 export const SORT_FIELD = "sort";
 export const TYPE_FIELD = "type";
 export const VIEW_FIELD = "view";
+export const SOURCE_GAT = "GAT";
 
 export const sortByOptionsDataset = [
     {
@@ -78,6 +79,7 @@ const searchFormConfig = {
     defaultValues: {
         sort: "score:desc",
         query: "",
+        source: SOURCE_GAT,
     },
     query: {
         name: QUERY_FIELD,

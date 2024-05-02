@@ -125,6 +125,7 @@ export interface SearchQueryParams {
     page: string;
     per_page: string;
     type: SearchCategory;
+    source: string | undefined;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
     [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
