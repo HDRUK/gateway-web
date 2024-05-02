@@ -1,7 +1,8 @@
 "use client";
 
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { FormControlLabel, RadioGroup } from "@mui/material";
 import { BucketCheckbox } from "@/interfaces/Filter";
+import StyledRadio from "@/components/StyledRadio";
 
 interface FilterSectionRadioProps {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
@@ -21,11 +22,11 @@ const FilterSectionRadio = ({
                 name={`controlled-radio-${filterItem}`}
                 onChange={(_event, value) => handleRadioChange(value)}
                 value={value}>
-                {buckets.map(checkbox => (
+                {buckets.map(radio => (
                     <FormControlLabel
-                        value={checkbox.value}
-                        control={<Radio />}
-                        label={checkbox.label}
+                        value={radio.value}
+                        control={<StyledRadio />}
+                        label={radio.label}
                     />
                 ))}
             </RadioGroup>
