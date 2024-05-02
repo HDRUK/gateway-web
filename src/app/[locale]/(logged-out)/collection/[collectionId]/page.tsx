@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PageBanner from "@/components/PageBanner";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { getCollection, getDataset } from "@/utils/api";
+import { getCollection } from "@/utils/api";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
 import { collectionSections } from "./config";
@@ -26,11 +26,11 @@ export default async function CollectionItemPage({
     const t = await getTranslations(TRANSLATION_PATH);
     const collection = await getCollection(cookieStore, collectionId);
 
-    const datasets = await Promise.all(
-        collection.datasets.map(({ id }) =>
-            getDataset(cookieStore, id.toString())
-        )
-    );
+    // const datasets = await Promise.all(
+    //     collection.datasets.map(({ id }) =>
+    //         getDataset(cookieStore, id.toString())
+    //     )
+    // );
 
     // const datasetsLatestVersions = datasets.map(({ versions }) =>
     //     getLatestVersion(versions)
@@ -46,7 +46,7 @@ export default async function CollectionItemPage({
         return { label };
     });
 
-    console.log(datasets);
+    console.log(collection);
 
     return (
         <LayoutDataItemPage
