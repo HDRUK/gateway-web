@@ -72,6 +72,7 @@ const FILTER_CATEGORY: { [key: string]: string } = {
     publications: "paper",
     collections: "collection",
 };
+const STATIC_FILTER_SOURCE = "source";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
     const [isDownloading, setIsDownloading] = useState(false);
@@ -112,6 +113,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
             SearchCategory.DATASETS,
+        source:
+            getParamString(STATIC_FILTER_SOURCE) ||
+            searchFormConfig.defaultValues.source,
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
@@ -175,7 +179,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
+            queryParams.per_page
+        }&page=${queryParams.page}&sort=${queryParams.sort}${
+            queryParams.type === SearchCategory.PUBLICATIONS &&
+            `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+        }`,
         {
             query: queryParams.query,
             ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
@@ -485,6 +494,17 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             });
                         }}
                         aggregations={data?.aggregations}
+                        updateStaticFilter={(
+                            filterName: string,
+                            value: string
+                        ) => {
+                            setQueryParams({
+                                ...queryParams,
+                                [filterName]: value,
+                            });
+                            updatePath(filterName, value);
+                        }}
+                        getParamString={getParamString}
                     />
                 </Box>
                 <Box

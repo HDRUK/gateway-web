@@ -9,6 +9,7 @@ import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
+import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
 import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
@@ -21,6 +22,7 @@ import {
     FILTER_SECTOR,
     filtersList,
 } from "@/config/forms/filters";
+import { SOURCE_GAT } from "@/config/forms/search";
 import {
     formatBucketCounts,
     groupByType,
@@ -30,6 +32,22 @@ import DateRangeFilter from "../DateRangeFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
+const FILTER_CATEGORY_PUBLICATIONS = "paper";
+const STATIC_FILTER_SOURCE = "source";
+const STATIC_FILTER_SOURCE_OBJECT = {
+    buckets: [
+        {
+            value: "FED",
+            label: "Search Europe PMC",
+        },
+        {
+            value: "GAT",
+            label: "Search Gateway",
+        },
+    ],
+    label: STATIC_FILTER_SOURCE,
+    value: "",
+};
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
@@ -41,6 +59,8 @@ const FilterPanel = ({
     selectedFilters,
     setFilterQueryParams,
     aggregations,
+    updateStaticFilter,
+    getParamString,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
@@ -50,6 +70,8 @@ const FilterPanel = ({
         filterSection: string
     ) => void;
     aggregations?: Aggregations;
+    updateStaticFilter: (filterSection: string, value: string) => void;
+    getParamString: (paramName: string) => string | null;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
 
@@ -62,6 +84,14 @@ const FilterPanel = ({
         [FILTER_PUBLICATION_DATE]: {},
         [FILTER_SECTOR]: {},
     });
+
+    const [staticFilterValues, setStaticFilterValues] = useState<DefaultValues>(
+        {
+            [STATIC_FILTER_SOURCE]: {
+                [getParamString(STATIC_FILTER_SOURCE) || SOURCE_GAT]: true,
+            },
+        }
+    );
 
     useEffect(() => {
         const defaultValues: DefaultValues = {};
@@ -87,9 +117,17 @@ const FilterPanel = ({
     });
 
     const filterItems = useMemo(() => {
-        return groupByType(filterSourceData, filterCategory).filter(
-            filterItem => filtersList.includes(filterItem.label)
-        );
+        const formattedFilters = groupByType(
+            filterSourceData,
+            filterCategory
+        ).filter(filterItem => filtersList.includes(filterItem.label));
+
+        // Manually add any static filters not returned from the filters api
+        if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
+            formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
+        }
+
+        return formattedFilters;
     }, [filterCategory, filterSourceData]);
 
     const [maximised, setMaximised] = useState<string[]>([]);
@@ -130,7 +168,7 @@ const FilterPanel = ({
 
     const handleUpdateDateRange = (dateRange: DateRange) => {
         const dateFilterName =
-            filterCategory === "paper"
+            filterCategory === FILTER_CATEGORY_PUBLICATIONS
                 ? FILTER_PUBLICATION_DATE
                 : FILTER_DATE_RANGE;
 
@@ -161,6 +199,24 @@ const FilterPanel = ({
         const { label } = filterItem;
 
         switch (label) {
+            case STATIC_FILTER_SOURCE:
+                return (
+                    <FilterSectionRadio
+                        filterItem={filterItem}
+                        handleRadioChange={value => {
+                            setStaticFilterValues({
+                                ...staticFilterValues,
+                                [label]: { [value]: true },
+                            });
+                            updateStaticFilter(label, value);
+                        }}
+                        value={
+                            Object.keys(
+                                staticFilterValues[STATIC_FILTER_SOURCE]
+                            )[0]
+                        }
+                    />
+                );
             case FILTER_GEOGRAPHIC_LOCATION:
                 return (
                     <Box style={{ display: "flex", justifyContent: "center" }}>

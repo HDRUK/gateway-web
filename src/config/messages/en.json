@@ -328,7 +328,9 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
-                            "publicationDateTooltip": "The range of years during which results were published"
+                            "publicationDateTooltip": "The range of years during which results were published",
+                            "source": "Source",
+                            "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
                         "collection": {
                             "datasetTitles": "Dataset",
