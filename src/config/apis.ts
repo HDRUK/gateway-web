@@ -31,11 +31,13 @@ const apis = {
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
-    toolV1UrlIP: `${apiV1IPUrl}/tools`,
+    toolsV1UrlIP: `${apiV1IPUrl}/tools`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    collectionsV1Url: `${apiV1Url}/collections`,
+    collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
 };
 
 export default apis;

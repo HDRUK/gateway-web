@@ -1,4 +1,4 @@
-import Box from "@/components/Box";
+import Typography from "@/components/Typography";
 
 interface ShowingXofXProps {
     from?: number;
@@ -8,9 +8,9 @@ interface ShowingXofXProps {
 
 const ShowingXofX = ({ from, to, total }: ShowingXofXProps) => {
     return (
-        <Box sx={{ p: 0, mb: 1 }}>
+        <Typography sx={{ p: 0, mb: 1 }}>
             Showing {from || 0}-{to || 0} of {total || 0}
-        </Box>
+        </Typography>
     );
 };
 

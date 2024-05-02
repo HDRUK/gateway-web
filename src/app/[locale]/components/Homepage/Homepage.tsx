@@ -43,7 +43,7 @@ const services = [
     },
     {
         id: SearchCategory.COLLECTIONS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/welcome-image.png",
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {

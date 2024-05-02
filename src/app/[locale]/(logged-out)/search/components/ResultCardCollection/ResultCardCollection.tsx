@@ -1,9 +1,10 @@
-import { Box, ChipProps } from "@mui/material";
+import { Box, ChipProps, Link } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { SearchResultCollection } from "@/interfaces/Search";
 import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
 import Chip from "@/components/Chip";
+import { RouteName } from "@/consts/routeName";
 
 interface ResultCardProps {
     result: SearchResultCollection;
@@ -23,6 +24,9 @@ const ResultCollectionCard = ({
             sx={{ aspectRatio: "2.1 / 1", minHeight: "130px" }}
             {...boxStackedProps}>
             <Box
+                component={Link}
+                // eslint-disable-next-line no-underscore-dangle
+                href={`${RouteName.COLLECTION_ITEM}/${result._id}`}
                 sx={{
                     color: "white",
                     px: 3,
@@ -41,7 +45,6 @@ const ResultCollectionCard = ({
                 <Chip
                     role="heading"
                     aria-level={3}
-                    // eslint-disable-next-line no-underscore-dangle
                     label={result.name}
                     size="small"
                     sx={{

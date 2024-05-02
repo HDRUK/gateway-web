@@ -289,6 +289,7 @@
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
+            "resultLimit": "There are more than 100 results. We recommend refining your search.",
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
@@ -380,6 +381,27 @@
                         "label": "Data publisher",
                         "tooltip": "Individual or organisation publishing metadata on the Gateway"
                     }
+                }
+            }
+        },
+        "collection": {
+            "introTitle": "Description",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Collections search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Data use ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis scripts and software ({ length })"
                 }
             }
         },
