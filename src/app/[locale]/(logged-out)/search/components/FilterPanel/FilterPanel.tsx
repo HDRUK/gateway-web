@@ -203,7 +203,7 @@ const FilterPanel = ({
                 return (
                     <FilterSectionRadio
                         filterItem={filterItem}
-                        handleCheckboxChange={value => {
+                        handleRadioChange={value => {
                             setStaticFilterValues({
                                 ...staticFilterValues,
                                 [label]: { [value]: true },
