@@ -17,7 +17,7 @@ export interface AccordionProps
 const Accordion = ({
     heading,
     contents,
-    variant = "plain",
+    variant = "underline",
     sx,
     ...restProps
 }: AccordionProps) => {
@@ -29,10 +29,6 @@ const Accordion = ({
                 "&.MuiAccordion-root.Mui-disabled": {
                     background: "transparent",
                 },
-                ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                },
                 ...(variant === "underline" && {
                     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
                     "&:first-of-type, &:last-of-type": {
@@ -40,6 +36,13 @@ const Accordion = ({
                     },
                 }),
                 ...(variant === "plain" && {
+                    ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                    },
+                    "&.MuiAccordion-root:before": {
+                        height: 0,
+                    },
                     ".MuiAccordionSummary-content": {
                         marginTop: 1,
                         marginBottom: 1,
@@ -55,7 +58,7 @@ const Accordion = ({
                 expandIcon={
                     <ChevronThinIcon fontSize="medium" color="primary" />
                 }>
-                <Typography variant="h3">{heading}</Typography>
+                {heading}
             </MuiAccordionSummary>
             <MuiAccordionDetails>{contents}</MuiAccordionDetails>
         </MuiAccordion>

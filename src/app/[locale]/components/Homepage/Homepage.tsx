@@ -238,14 +238,68 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             <Box
                 sx={{
                     p: 0,
-                    minHeight: 520,
-                    background: `linear-gradient(170deg, #fff 50%, ${theme.palette.secondary.main}  calc(50% + 1px))`,
-                }}
-                textAlign="center"
-            />
+                    minHeight: 625,
+                    display: "flex",
+                    alignItems: "center",
+                    position: "relative",
+                    justifyContent: "center",
+                    color: "#fff",
+                    backgroundColor: "#fff",
+                    zIndex: 1,
+                }}>
+                <Box
+                    sx={{
+                        backgroundColor: theme.palette.secondary.main,
+                        content: "''",
+                        position: "absolute",
+                        bottom: "0",
+                        top: "-350px",
+                        left: "-110px",
+                        right: "-110px",
+                        transform: "rotate(170deg) translateX(-100%)",
+                        transformOrigin: "bottom left",
+                        height: "530px",
+                    }}
+                />
+                <Box
+                    sx={{
+                        position: "relative",
+                        marginTop: "8%",
+                        [theme.breakpoints.between(810, 1280)]: {
+                            marginTop: "6%",
+                        },
+                        [theme.breakpoints.between(1280, 1440)]: {
+                            marginTop: "4%",
+                        },
+                        [theme.breakpoints.between(1440, 1920)]: {
+                            marginTop: "0",
+                        },
+                        [theme.breakpoints.up(1920)]: {
+                            marginTop: "-4%",
+                        },
+                    }}>
+                    <Typography variant="h2" fontSize="40px">
+                        Sign up for the monthly Gateway Newsletter
+                    </Typography>
+                    <Typography
+                        sx={{
+                            fontSize: "20px",
+                            mb: 2,
+                        }}>
+                        Be the first to know about all the latest Gateway
+                        updates and events.
+                    </Typography>
+                    <Button sx={{ height: "60px", width: "100px" }}>
+                        <Typography fontSize="20px">Join</Typography>
+                    </Button>
+                </Box>
+            </Box>
             <Box
                 sx={{
                     background: "white",
+                    position: "relative",
+                    zIndex: 1,
+                    marginTop: "-70px",
                 }}>
                 <Container
                     sx={{
@@ -274,6 +328,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     <LogoSlider logos={logosFormatted} />
                 </Container>
             </Box>
+            <Box
+                sx={{
+                    position: "relative",
+                    zIndex: 0,
+                    height: "65px",
+                    width: "100%",
+                    backgroundColor: "#fff",
+                }}
+            />
         </>
     );
 };
