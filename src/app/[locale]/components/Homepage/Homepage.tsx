@@ -18,6 +18,7 @@ import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
+import NewsletterSignup from "../NewsletterSignup";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
@@ -235,71 +236,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     </TeamWrapper>
                 </Container>
             </Box>
-            <Box
-                sx={{
-                    p: 0,
-                    minHeight: 625,
-                    display: "flex",
-                    alignItems: "center",
-                    position: "relative",
-                    justifyContent: "center",
-                    color: "#fff",
-                    backgroundColor: "#fff",
-                    zIndex: 1,
-                }}>
-                <Box
-                    sx={{
-                        backgroundColor: theme.palette.secondary.main,
-                        content: "''",
-                        position: "absolute",
-                        bottom: "0",
-                        top: "-350px",
-                        left: "-110px",
-                        right: "-110px",
-                        transform: "rotate(170deg) translateX(-100%)",
-                        transformOrigin: "bottom left",
-                        height: "530px",
-                    }}
-                />
-                <Box
-                    sx={{
-                        position: "relative",
-                        marginTop: "8%",
-                        [theme.breakpoints.between(810, 1280)]: {
-                            marginTop: "6%",
-                        },
-                        [theme.breakpoints.between(1280, 1440)]: {
-                            marginTop: "4%",
-                        },
-                        [theme.breakpoints.between(1440, 1920)]: {
-                            marginTop: "0",
-                        },
-                        [theme.breakpoints.up(1920)]: {
-                            marginTop: "-4%",
-                        },
-                    }}>
-                    <Typography variant="h2" fontSize="40px">
-                        Sign up for the monthly Gateway Newsletter
-                    </Typography>
-                    <Typography
-                        sx={{
-                            fontSize: "20px",
-                            mb: 2,
-                        }}>
-                        Be the first to know about all the latest Gateway
-                        updates and events.
-                    </Typography>
-                    <Button sx={{ height: "60px", width: "100px" }}>
-                        <Typography fontSize="20px">Join</Typography>
-                    </Button>
-                </Box>
-            </Box>
+            <NewsletterSignup />
             <Box
                 sx={{
                     background: "white",
                     position: "relative",
                     zIndex: 1,
-                    marginTop: "-70px",
+                    [theme.breakpoints.up(810)]: {
+                        marginTop: "-70px",
+                    },
                 }}>
                 <Container
                     sx={{
@@ -330,11 +275,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             </Box>
             <Box
                 sx={{
-                    position: "relative",
-                    zIndex: 0,
-                    height: "65px",
-                    width: "100%",
-                    backgroundColor: "#fff",
+                    display: "none",
+                    [theme.breakpoints.up(810)]: {
+                        position: "relative",
+                        zIndex: 0,
+                        height: "65px",
+                        width: "100%",
+                        backgroundColor: "#fff",
+                        display: "block",
+                    },
                 }}
             />
         </>
