@@ -506,12 +506,23 @@
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
-            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
-            "components": {
-                "ActionBar": {
-                    "label": "Back to search results"
-                }
-            }
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software"
+        },
+        "tool": {
+            "backText": "Back to search results",
+            "description": "Description",
+            "resultsInsights": "Results/Insights",
+            "details": "Details",
+            "lastUpdated": "Last Updated",
+            "lastUpdatedTooltip": "When the metadata for this entity was last updated",
+            "url": "URL",
+            "urlTooltip": "URL to access the resource",
+            "license": "License",
+            "licenseTooltip": "The type of software licence for this entity, if applicable",
+            "toolCategory": "Tool Category",
+            "keywords": "Keywords",
+            "domain": "Domain",
+            "notAvailable": "Not specified"
         }
     },
     "components": {

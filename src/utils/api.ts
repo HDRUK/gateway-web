@@ -7,6 +7,7 @@ import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { Team } from "@/interfaces/Team";
+import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { getUserFromToken } from "@/utils/cookies";
@@ -103,6 +104,15 @@ async function getDataUse(
     return dataUse?.[0];
 }
 
+async function getTool(
+    cookieStore: ReadonlyRequestCookies,
+    toolId: string
+): Promise<Tool> {
+    const tool = await get<Tool>(cookieStore, `${apis.toolsV1UrlIP}/${toolId}`);
+
+    return tool;
+}
+
 async function getCollection(
     cookieStore: ReadonlyRequestCookies,
     collectionId: string
@@ -123,5 +133,6 @@ export {
     getCohort,
     getDataset,
     getDataUse,
+    getTool,
     getCollection,
 };
