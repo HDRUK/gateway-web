@@ -1,7 +1,9 @@
 "use client";
 
+import { ReactNode } from "react";
 import { Typography } from "@mui/material";
 import Button from "@/components/Button";
+import Link from "@/components/Link";
 import theme from "@/config/theme";
 import {
     StyledNewsletterSignup,
@@ -9,7 +11,20 @@ import {
     StyledNewsletterSignupCta,
 } from "./NewsletterSignup.styles";
 
-export default function NewsletterSignup() {
+interface NewsletterSignupProps {
+    title: ReactNode;
+    description: ReactNode;
+    link: {
+        url: string;
+        title: string;
+    };
+}
+
+export default function NewsletterSignup({
+    title,
+    description,
+    link,
+}: NewsletterSignupProps) {
     return (
         <StyledNewsletterSignup>
             <StyledNewsletterSignupBackground />
@@ -22,7 +37,7 @@ export default function NewsletterSignup() {
                             fontSize: "40px",
                         },
                     }}>
-                    Sign up for the monthly Gateway Newsletter
+                    {title}
                 </Typography>
                 <Typography
                     sx={{
@@ -32,18 +47,22 @@ export default function NewsletterSignup() {
                             fontSize: "20px",
                         },
                     }}>
-                    Be the first to know about all the latest Gateway updates
-                    and events.
+                    {description}
                 </Typography>
-                <Button
+                <Link
+                    component={Button}
+                    href={link.url}
+                    title={link.title}
+                    target="_blank"
                     sx={{
+                        color: "#fff",
                         [theme.breakpoints.up(810)]: {
                             height: "60px",
-                            minWidth: "100px",
+                            minWidth: "149px",
                         },
                     }}>
                     <Typography fontSize="20px">Join</Typography>
-                </Button>
+                </Link>
             </StyledNewsletterSignupCta>
         </StyledNewsletterSignup>
     );

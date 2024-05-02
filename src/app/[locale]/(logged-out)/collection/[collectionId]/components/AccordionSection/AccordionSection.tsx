@@ -26,7 +26,7 @@ export default function AccordionSection({
     return (
         <Accordion
             {...restProps}
-            variant="plain"
+            noIndent
             elevation={0}
             heading={<Typography variant="h3">{heading}</Typography>}
             contents={

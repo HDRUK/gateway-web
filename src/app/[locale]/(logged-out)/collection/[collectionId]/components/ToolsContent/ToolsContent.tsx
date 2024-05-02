@@ -41,7 +41,7 @@ export default function ToolsContent({
                     length: tools.length,
                 })}
                 contents={tools.map(({ name, id }) => (
-                    <Link href={`/${RouteName.TOOL}/${id}`}>{name}</Link>
+                    <Link href={`/${RouteName.TOOL_ITEM}/${id}`}>{name}</Link>
                 ))}
             />
         </InView>

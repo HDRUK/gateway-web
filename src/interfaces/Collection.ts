@@ -11,11 +11,9 @@ interface Collection {
     id: string;
     enabled: boolean;
     public: number;
-    counter: number;
     create_at: string;
     updated_at: string;
     deleted_at: string;
-    team_id: number;
     keywords: string[];
     datasets: Dataset[];
     team: Team;
@@ -23,6 +21,8 @@ interface Collection {
     applications: Application[];
     dur: DataUse[];
     tools: Tool[];
+    counter?: number;
+    team_id?: number;
 }
 
 export type { Collection };

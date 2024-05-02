@@ -7,6 +7,7 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PageBanner from "@/components/PageBanner";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getCollection, getDataset } from "@/utils/api";
+import { removeEmpty } from "@/utils/array";
 import { getLatestVersion } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
@@ -43,11 +44,14 @@ export default async function CollectionItemPage({
         getLatestVersion(versions)
     );
 
-    const publications = datasetsLatestVersions
-        .reduce((item: Publication[], datasetVersion: VersionItem) => {
-            return item.concat(datasetVersion.publications);
-        }, [])
-        .filter(item => !!item);
+    const publications = removeEmpty(
+        datasetsLatestVersions.reduce(
+            (item: Publication[], datasetVersion: VersionItem) => {
+                return item.concat(datasetVersion.publications);
+            },
+            []
+        )
+    );
 
     const activeLinkList = collectionSections.map(({ sectionName: label }) => {
         return { label };
@@ -58,19 +62,25 @@ export default async function CollectionItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <PageBanner backgroundImageUrl="/images/collections/banner.jpeg">
-                        {toTitleCase(collection.name)}
-                    </PageBanner>
+                    {collection.name && (
+                        <PageBanner backgroundImageUrl="/images/collections/banner.jpeg">
+                            {toTitleCase(collection.name)}
+                        </PageBanner>
+                    )}
                     <Box sx={{ px: 6, py: 3 }}>
                         <Box sx={{ mb: 3 }}>
                             <ActionBar />
                         </Box>
-                        <Box sx={{ mb: 3 }}>
-                            <Typography variant="h3" sx={{ mb: 1 }}>
-                                {t("introTitle")}
-                            </Typography>
-                            <Typography>{collection.description}</Typography>
-                        </Box>
+                        {collection.description && (
+                            <Box sx={{ mb: 3 }}>
+                                <Typography variant="h3" sx={{ mb: 1 }}>
+                                    {t("introTitle")}
+                                </Typography>
+                                <Typography>
+                                    {collection.description}
+                                </Typography>
+                            </Box>
+                        )}
                         <Box>
                             <DatasetsContent
                                 datasets={datasets}

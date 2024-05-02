@@ -31,8 +31,8 @@ export const StyledNewsletterSignupBackground = styled("div")(({ theme }) => ({
         height: "400px",
     },
     [theme.breakpoints.up(1920)]: {
-        height: "455px",
-        top: "-200px",
+        height: "350px",
+        top: "-90px",
     },
 }));
 

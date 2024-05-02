@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { Typography } from "@mui/material";
 import MuiAccordion, {
     AccordionProps as MuiAccordionProps,
 } from "@mui/material/Accordion";
@@ -12,12 +11,14 @@ export interface AccordionProps
     heading: string | ReactNode;
     contents: string | ReactNode;
     variant?: "underline" | "plain";
+    noIndent?: boolean;
 }
 
 const Accordion = ({
     heading,
     contents,
-    variant = "underline",
+    variant = "plain",
+    noIndent,
     sx,
     ...restProps
 }: AccordionProps) => {
@@ -26,6 +27,12 @@ const Accordion = ({
             sx={{
                 background: "transparent",
                 boxShadow: "none",
+                ...(noIndent && {
+                    ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                    },
+                }),
                 "&.MuiAccordion-root.Mui-disabled": {
                     background: "transparent",
                 },
@@ -36,10 +43,6 @@ const Accordion = ({
                     },
                 }),
                 ...(variant === "plain" && {
-                    ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
-                        paddingLeft: 0,
-                        paddingRight: 0,
-                    },
                     "&.MuiAccordion-root:before": {
                         height: 0,
                     },

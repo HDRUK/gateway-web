@@ -106,6 +106,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             gatewayVideoHeader,
             logos,
             newsHeader,
+            newsletterSignupHeader,
+            newsletterSignupDescription,
+            newsletterSignupLink,
         },
     } = page.template;
 
@@ -236,7 +239,11 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     </TeamWrapper>
                 </Container>
             </Box>
-            <NewsletterSignup />
+            <NewsletterSignup
+                title={newsletterSignupHeader}
+                description={newsletterSignupDescription}
+                link={newsletterSignupLink}
+            />
             <Box
                 sx={{
                     background: "white",
