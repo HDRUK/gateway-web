@@ -29,10 +29,6 @@ const Accordion = ({
                 "&.MuiAccordion-root.Mui-disabled": {
                     background: "transparent",
                 },
-                ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                },
                 ...(variant === "underline" && {
                     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
                     "&:first-of-type, &:last-of-type": {
