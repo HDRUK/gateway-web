@@ -1,7 +1,7 @@
 "use client";
 
 import { InView } from "react-intersection-observer";
-import { get, isEmpty } from "lodash";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
@@ -11,11 +11,9 @@ import BoxContainer from "@/components/BoxContainer";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
-import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
-import { convertToCamelCase } from "@/utils/general";
 import { DataUseSection, FieldType } from "../../config";
 import { DatasetFieldWrapper, ListContainer } from "./DataUseContent.styles";
 
@@ -176,7 +174,7 @@ const DataUseContent = ({
                                         {t(section.sectionName)}
                                     </Typography>
 
-                                    {section.fields.map(field => {
+                                    {/* {section.fields.map(field => {
                                         const isPopulatedDatasetsField =
                                             field.path === DATASETS &&
                                             (!isEmpty(get(data, field.path)) ||
@@ -255,7 +253,7 @@ const DataUseContent = ({
                                                 </Box>
                                             </BoxContainer>
                                         );
-                                    })}
+                                    })} */}
                                 </Box>
                             </InView>
                         ))}
