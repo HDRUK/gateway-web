@@ -10,10 +10,6 @@ import { getCollection, getDataset } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
-import DatasetsContent from "./components/DatasetsContent";
-import DatausesContent from "./components/DatausesContent";
-import PublicationsContent from "./components/PublicationsContent";
-import ToolsContent from "./components/ToolsContent";
 import { collectionSections } from "./config";
 
 export const metadata = {
@@ -53,6 +49,8 @@ export default async function CollectionItemPage({
         return { label };
     });
 
+    console.log(datasets, datasetsLatestVersions, publications);
+
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
@@ -71,7 +69,7 @@ export default async function CollectionItemPage({
                             </Typography>
                             <Typography>{collection.description}</Typography>
                         </Box>
-                        <Box>
+                        {/* <Box>
                             <DatasetsContent
                                 datasets={datasets}
                                 anchorIndex={1}
@@ -91,7 +89,7 @@ export default async function CollectionItemPage({
                                 publications={publications}
                                 anchorIndex={4}
                             />
-                        </Box>
+                        </Box> */}
                     </Box>
                 </>
             }

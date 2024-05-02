@@ -7,7 +7,6 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataUse } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
-import DataUseContent from "./components/DataUseContent";
 import { dataUseFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataUse";
@@ -38,6 +37,7 @@ export default async function DataUseItemPage({
         };
     });
 
+    console.log(data);
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
@@ -55,10 +55,10 @@ export default async function DataUseItemPage({
                             sx={{ pt: 0.5, pb: 0.5, m: 0 }}>
                             {data.project_title}
                         </Typography>
-                        <DataUseContent
+                        {/* <DataUseContent
                             data={data}
                             populatedSections={populatedSections}
-                        />
+                        /> */}
                     </Box>
                 </>
             }
