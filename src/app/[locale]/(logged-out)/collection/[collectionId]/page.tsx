@@ -1,13 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import { VersionItem } from "@/interfaces/Dataset";
-import { Publication } from "@/interfaces/Publication";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PageBanner from "@/components/PageBanner";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getCollection, getDataset } from "@/utils/api";
-import { getLatestVersion } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
 import { collectionSections } from "./config";
@@ -35,21 +32,21 @@ export default async function CollectionItemPage({
         )
     );
 
-    const datasetsLatestVersions = datasets.map(({ versions }) =>
-        getLatestVersion(versions)
-    );
+    // const datasetsLatestVersions = datasets.map(({ versions }) =>
+    //     getLatestVersion(versions)
+    // );
 
-    const publications = datasetsLatestVersions
-        .reduce((item: Publication[], datasetVersion: VersionItem) => {
-            return item.concat(datasetVersion.publications);
-        }, [])
-        .filter(item => !!item);
+    // const publications = datasetsLatestVersions
+    //     .reduce((item: Publication[], datasetVersion: VersionItem) => {
+    //         return item.concat(datasetVersion.publications);
+    //     }, [])
+    //     .filter(item => !!item);
 
     const activeLinkList = collectionSections.map(({ sectionName: label }) => {
         return { label };
     });
 
-    console.log(datasets, datasetsLatestVersions, publications);
+    console.log(datasets);
 
     return (
         <LayoutDataItemPage
