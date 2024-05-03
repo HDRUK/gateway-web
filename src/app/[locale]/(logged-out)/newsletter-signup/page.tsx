@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Box } from "@mui/material";
+import { HUBSPOT_FORM_CREATE } from "@/config/forms/hubspot";
 
 export default function SignupNewsletter() {
     useEffect(() => {
@@ -12,8 +13,7 @@ export default function SignupNewsletter() {
         script.addEventListener("load", () => {
             if (window.hbspt) {
                 window.hbspt.forms.create({
-                    region: "na1",
-                    portalId: "8405644",
+                    ...HUBSPOT_FORM_CREATE,
                     formId: "224019f7-2d09-4bfa-885b-12cd7822c292",
                     target: "#newsletterSignupForm",
                 });
