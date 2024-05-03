@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { Typography } from "@mui/material";
 import MuiAccordion, {
     AccordionProps as MuiAccordionProps,
 } from "@mui/material/Accordion";
@@ -12,12 +11,14 @@ export interface AccordionProps
     heading: string | ReactNode;
     contents: string | ReactNode;
     variant?: "underline" | "plain";
+    noIndent?: boolean;
 }
 
 const Accordion = ({
     heading,
     contents,
-    variant = "plain",
+    variant = "underline",
+    noIndent,
     sx,
     ...restProps
 }: AccordionProps) => {
@@ -26,12 +27,14 @@ const Accordion = ({
             sx={{
                 background: "transparent",
                 boxShadow: "none",
+                ...(noIndent && {
+                    ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                    },
+                }),
                 "&.MuiAccordion-root.Mui-disabled": {
                     background: "transparent",
-                },
-                ".MuiAccordionSummary-root, .MuiAccordionDetails-root": {
-                    paddingLeft: 0,
-                    paddingRight: 0,
                 },
                 ...(variant === "underline" && {
                     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -40,6 +43,9 @@ const Accordion = ({
                     },
                 }),
                 ...(variant === "plain" && {
+                    "&.MuiAccordion-root:before": {
+                        height: 0,
+                    },
                     ".MuiAccordionSummary-content": {
                         marginTop: 1,
                         marginBottom: 1,
@@ -55,7 +61,7 @@ const Accordion = ({
                 expandIcon={
                     <ChevronThinIcon fontSize="medium" color="primary" />
                 }>
-                <Typography variant="h3">{heading}</Typography>
+                {heading}
             </MuiAccordionSummary>
             <MuiAccordionDetails>{contents}</MuiAccordionDetails>
         </MuiAccordion>

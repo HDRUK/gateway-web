@@ -3,7 +3,7 @@
 exports[`Accordion should render component 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1tvsxsy-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1edk2g9-MuiPaper-root-MuiAccordion-root"
   >
     <div
       aria-expanded="false"
@@ -14,11 +14,7 @@ exports[`Accordion should render component 1`] = `
       <div
         class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-c1i83b-MuiAccordionSummary-content"
       >
-        <h3
-          class="MuiTypography-root MuiTypography-h3 mui-style-1b6etww-MuiTypography-root"
-        >
-          Accordion Summary
-        </h3>
+        Accordion Summary
       </div>
       <div
         class="MuiAccordionSummary-expandIconWrapper mui-style-yw020d-MuiAccordionSummary-expandIconWrapper"

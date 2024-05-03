@@ -7,6 +7,7 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PageBanner from "@/components/PageBanner";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getCollection, getDataset } from "@/utils/api";
+import { removeEmpty } from "@/utils/array";
 import { getLatestVersion } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
@@ -43,11 +44,14 @@ export default async function CollectionItemPage({
         getLatestVersion(versions)
     );
 
-    const publications = datasetsLatestVersions
-        .reduce((item: Publication[], datasetVersion: VersionItem) => {
-            return item.concat(datasetVersion.publications);
-        }, [])
-        .filter(item => !!item);
+    const publications = removeEmpty(
+        datasetsLatestVersions.reduce(
+            (item: Publication[], datasetVersion: VersionItem) => {
+                return item.concat(datasetVersion.publications);
+            },
+            []
+        )
+    );
 
     const activeLinkList = collectionSections.map(({ sectionName: label }) => {
         return { label };
