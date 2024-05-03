@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
+import { ReactFlowProps } from "reactflow";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import MindMap, { MindMapProps } from "@/components/MindMap/MindMap";
+import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
 import {
     rootNode,
@@ -16,7 +17,7 @@ import {
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 
-interface DatasetMindMapProps extends MindMapProps {
+interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
 }
 
@@ -39,7 +40,7 @@ const DatasetMindMap = ({
                 label: t(rootNode.data.name),
             },
         };
-    }, [data]);
+    }, [data, t]);
 
     const hydratedOuterNodes = useMemo(
         () =>

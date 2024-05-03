@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
@@ -36,9 +37,10 @@ const ToolContent = ({
         const val = value as string;
 
         switch (type) {
-            case FieldType.DATE: {
+            case FieldType.DATE:
                 return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
-            }
+            case FieldType.LINK:
+                return <Link href={val}>{val}</Link>;
             default:
                 return <Typography>{val}</Typography>;
         }
