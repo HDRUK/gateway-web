@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Box } from "@mui/material";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
@@ -8,9 +9,17 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
     return (
-        <div style={{ width: "100%" }}>
+        <div
+            style={{
+                width: "100%",
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+            }}>
             <Header />
-            <main>{children}</main>
+            <Box component="main" sx={{ flexGrow: 1 }}>
+                {children}
+            </Box>
             <Footer />
         </div>
     );
