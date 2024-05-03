@@ -17,7 +17,7 @@ export interface AccordionProps
 const Accordion = ({
     heading,
     contents,
-    variant = "plain",
+    variant = "underline",
     noIndent,
     sx,
     ...restProps
