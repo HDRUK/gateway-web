@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import Header from "@/components/Header";
 
 export default async function LoggedInLayout({
@@ -8,7 +9,9 @@ export default async function LoggedInLayout({
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <Box component="main" sx={{ flexGrow: 1 }}>
+                {children}
+            </Box>
         </>
     );
 }
