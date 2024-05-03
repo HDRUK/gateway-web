@@ -108,7 +108,6 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             newsHeader,
             newsletterSignupHeader,
             newsletterSignupDescription,
-            newsletterSignupLink,
         },
     } = page.template;
 
@@ -242,7 +241,6 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             <NewsletterSignup
                 title={newsletterSignupHeader}
                 description={newsletterSignupDescription}
-                link={newsletterSignupLink}
             />
             <Box
                 sx={{

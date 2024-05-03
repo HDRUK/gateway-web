@@ -79,7 +79,6 @@ interface PageTemplateHome {
                 }[];
                 newsletterSignupHeader: string;
                 newsletterSignupDescription: string;
-                newsletterSignupLink: string;
             };
             meetTheTeam: {
                 sectionName: string;

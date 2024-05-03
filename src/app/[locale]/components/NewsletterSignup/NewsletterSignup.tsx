@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 import {
     StyledNewsletterSignup,
     StyledNewsletterSignupBackground,
@@ -14,16 +15,11 @@ import {
 interface NewsletterSignupProps {
     title: ReactNode;
     description: ReactNode;
-    link: {
-        url: string;
-        title: string;
-    };
 }
 
 export default function NewsletterSignup({
     title,
     description,
-    link,
 }: NewsletterSignupProps) {
     return (
         <StyledNewsletterSignup>
@@ -51,9 +47,8 @@ export default function NewsletterSignup({
                 </Typography>
                 <Link
                     component={Button}
-                    href={link.url}
-                    title={link.title}
-                    target="_blank"
+                    href={RouteName.NEWSLETTER_SIGNUP}
+                    title="Sign up for newsletter"
                     sx={{
                         color: "#fff",
                         [theme.breakpoints.up(810)]: {

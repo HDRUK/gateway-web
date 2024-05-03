@@ -25,10 +25,6 @@ query GetHomePageQuery {
             }
             newsletterSignupHeader
             newsletterSignupDescription
-            newsletterSignupLink {
-              url
-              title
-            }
           }
         }
         meetTheTeam {
