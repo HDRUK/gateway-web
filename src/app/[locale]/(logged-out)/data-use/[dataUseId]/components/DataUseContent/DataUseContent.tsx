@@ -67,18 +67,6 @@ const DataUseContent = ({
                     </DatasetFieldWrapper>
                 );
             }
-            case FieldType.LINK:
-                switch (path) {
-                    case "organisation_name":
-                        linkHref = `/${RouteName.SEARCH}?type=${
-                            SearchCategory.DATA_USE
-                        }&organisationName=${encodeURIComponent(val)}`;
-                        break;
-                    default:
-                        linkHref = val;
-                }
-
-                return <Link href={linkHref}>{val}</Link>;
             case FieldType.LIST_TEXT: {
                 return (
                     <ListContainer>
