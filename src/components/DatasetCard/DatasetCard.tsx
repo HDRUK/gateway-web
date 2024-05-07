@@ -21,7 +21,7 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
-    const latestMetadata = get(dataset, "versions[0]");
+    const latestMetadata = get(dataset, "latest_metadata");
 
     if (!latestMetadata) return null;
 
