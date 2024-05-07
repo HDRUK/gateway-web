@@ -12,6 +12,7 @@ import {
     SearchQueryParams,
     SearchResult,
     SearchResultCollection,
+    SearchResultDataProvider,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
@@ -57,6 +58,7 @@ import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardCollection from "../ResultCardCollection";
+import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
@@ -245,6 +247,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             content: "",
         },
         {
+            label: t("dataProviders"),
+            value: SearchCategory.DATA_PROVIDERS,
+            content: "",
+        },
+        {
             label: t("tools"),
             value: SearchCategory.TOOLS,
             content: "",
@@ -321,8 +328,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             case SearchCategory.COLLECTIONS:
                 return (
                     <ResultCardCollection
-                        imgUrl="/sample.collections.thumbnail.jpg"
+                        imgUrl="/images/collections/sample.thumbnail.jpg"
                         result={result as SearchResultCollection}
+                    />
+                );
+            case SearchCategory.DATA_PROVIDERS:
+                return (
+                    <ResultCardDataProvider
+                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
+                        result={result as SearchResultDataProvider}
                     />
                 );
             case SearchCategory.TOOLS:
@@ -347,7 +361,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return (
             <ResultsList
                 variant={
-                    queryParams.type === SearchCategory.COLLECTIONS
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    SearchCategory.DATA_PROVIDERS
                         ? "tiled"
                         : "list"
                 }>
@@ -375,6 +390,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 return t("searchExplainerDataUse");
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
+            case SearchCategory.DATA_PROVIDERS:
+                return t("searchExplainerDataProviders");
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
             default:

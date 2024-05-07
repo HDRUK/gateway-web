@@ -93,6 +93,11 @@ export interface SearchResultCollection extends SearchResultBase {
     _id: string;
 }
 
+export interface SearchResultDataProvider extends SearchResultBase {
+    name: string;
+    _id: string;
+}
+
 export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
@@ -107,7 +112,7 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
-    DATA_PROVIDERS = "dataProviders",
+    DATA_PROVIDERS = "data-providers",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",
