@@ -5,7 +5,6 @@ import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
-import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
@@ -41,7 +40,6 @@ const DataUseContent = ({
         type: FieldType,
         value: string | string[] | DatasetWithTitle[]
     ) => {
-        let linkHref: string;
         const val = value as string;
 
         switch (type) {
