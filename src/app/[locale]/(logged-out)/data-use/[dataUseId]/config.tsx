@@ -3,7 +3,6 @@ export enum FieldType {
     LIST_TEXT = "list",
     LIST_LINK = "list-link",
     DATE = "date",
-    LINK = "link",
     TAG = "tag",
 }
 interface DataUseField {
@@ -33,7 +32,7 @@ const dataUseFields: DataUseSection[] = [
         fields: [
             {
                 path: "organisation_name",
-                type: FieldType.LINK,
+                type: FieldType.TEXT,
             },
             {
                 path: "organisation_id",
