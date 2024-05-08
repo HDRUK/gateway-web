@@ -8,6 +8,7 @@ import {
     SchemaOutlinedIcon,
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
+    QuestionAnswerIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -35,6 +36,24 @@ const getProfileNav = (permissions: {
                       icon: <DescriptionOutlinedIcon />,
                       label: "Cohort Discovery Admin",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
+                  },
+              ]
+            : []),
+        ...(permissions["dar-config.update"] // correct?
+            ? [
+                  {
+                      icon: <QuestionAnswerIcon />,
+                      label: "DAR Admin",
+                      subItems: [
+                          ...(permissions["dar-config.update"]
+                              ? [
+                                    {
+                                        label: "Question Bank Management",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
+                                    },
+                                ]
+                              : []),
+                      ],
                   },
               ]
             : []),
