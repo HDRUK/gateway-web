@@ -1,22 +1,12 @@
+import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
 import Card from "@/components/Card";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
 
-interface Question {
-    id: number;
-    created_at: string;
-    user_name: string;
-    version: number;
-    question_json: string;
-    locked: number;
-    required: number;
-    section_id: number;
-}
-
 interface QuestionCardProps {
-    data: Question | undefined;
+    data: QuestionBankQuestion | undefined;
 }
 
 const QuestionListItem = ({ data }: QuestionCardProps) => {
