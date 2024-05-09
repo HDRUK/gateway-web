@@ -441,6 +441,7 @@
             "components": {
                 "ActionBar": {
                     "contact": "Contact data provider",
+                    "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata"
                 },
