@@ -1,15 +1,24 @@
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
+import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import Card from "@/components/Card";
+import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
+import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
 
 interface QuestionCardProps {
     data: QuestionBankQuestion | undefined;
+    actions: {
+        icon: IconType;
+        href?: string;
+        action?: (id: number) => void;
+        label: string;
+    }[];
 }
 
-const QuestionBankListItem = ({ data }: QuestionCardProps) => {
+const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
     if (data === undefined) return null;
 
     const question = data.question_json;
@@ -56,6 +65,18 @@ const QuestionBankListItem = ({ data }: QuestionCardProps) => {
                         <Chip label="Locked" color="error" />
                     )}
                 </Box>
+
+                <Box
+                    sx={{
+                        m: 0.2,
+                        display: "flex",
+                        justifyContent: "end",
+                        p: 0,
+                        borderLeft: `solid 1px ${colors.grey600}`,
+                    }}>
+                    <CardActions actions={actions} id={data.id} />
+                </Box>
+
                 <Box
                     sx={{
                         display: "grid",

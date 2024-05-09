@@ -107,6 +107,18 @@
                     "qbManagement": {
                         "title": "Question Bank Management",
                         "text": "Use this made to list and manage all available questions currently in the question bank for DAR templates",
+                        "edit": {
+                            "label": "Edit",
+                            "description": "Edit the question bank question"
+                        },
+                        "archive": {
+                            "label": "Archive",
+                            "description": "Archive the question bank question"
+                        },
+                        "unarchive": {
+                            "label": "Unarchive",
+                            "description": "Unarchive the question bank question"
+                        },
                         "create": {
                             "label": "Create",
                             "description": "Create a new question for the DAR Question Bank"

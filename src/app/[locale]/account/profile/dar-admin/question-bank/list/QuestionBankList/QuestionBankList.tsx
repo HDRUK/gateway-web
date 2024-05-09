@@ -14,6 +14,7 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import QuestionListItem from "../QuestionBankListItem/QuestionBankListItem";
 
 const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement`;
@@ -27,6 +28,32 @@ const QuestionBankList = () => {
         category: "mandatory",
         status: "live",
     });
+    const tab = searchParams?.get("tab");
+
+    const showArchiveButton = tab !== "ARCHIVED";
+
+    const actions = [
+        {
+            href: `/to-be-implemented`,
+            icon: EditIcon,
+            label: t("edit.label"),
+        },
+        ...(showArchiveButton
+            ? [
+                  {
+                      href: `/to-be-implemented`,
+                      icon: ArchiveIcon,
+                      label: t("archive.label"),
+                  },
+              ]
+            : [
+                  {
+                      href: `/to-be-implemented`,
+                      icon: UnarchiveIcon,
+                      label: t("unarchive.label"),
+                  },
+              ]),
+    ];
 
     useEffect(() => {
         const getStatusFromTab = (tab: string) => {
@@ -34,7 +61,7 @@ const QuestionBankList = () => {
                 case tab === "ARCHIVED":
                     return "archived";
                 default:
-                    return "live";
+                    return "-archived";
             }
         };
 
@@ -43,7 +70,7 @@ const QuestionBankList = () => {
                 case tab === "CUSTOM":
                     return "custom";
                 default:
-                    return "mandatory";
+                    return "-custom";
             }
         };
 
@@ -91,7 +118,11 @@ const QuestionBankList = () => {
                     </Box>
                 </Box>
                 {list?.map(question => (
-                    <QuestionListItem key={question?.id} data={question} />
+                    <QuestionListItem
+                        key={question?.id}
+                        data={question}
+                        actions={actions}
+                    />
                 ))}{" "}
             </>
         ),
