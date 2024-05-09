@@ -9,13 +9,14 @@ interface QuestionCardProps {
     data: QuestionBankQuestion | undefined;
 }
 
-const QuestionListItem = ({ data }: QuestionCardProps) => {
+const QuestionBankListItem = ({ data }: QuestionCardProps) => {
     if (data === undefined) return null;
 
-    const question = JSON.parse(data.question_json);
+    const question = data.question_json;
+
     const title = question?.title;
     const guidance = question?.guidance;
-    const component = question?.field.component;
+    const component = question?.field?.component;
     if (!title) return null;
 
     return (
@@ -76,4 +77,4 @@ const QuestionListItem = ({ data }: QuestionCardProps) => {
     );
 };
 
-export default QuestionListItem;
+export default QuestionBankListItem;

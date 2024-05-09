@@ -39,7 +39,7 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-        ...(permissions["dar-config.update"] // correct?
+        ...(permissions["dar-config.update"] // this will need fixing/updating
             ? [
                   {
                       icon: <QuestionAnswerIcon />,

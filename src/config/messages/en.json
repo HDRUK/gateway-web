@@ -106,6 +106,7 @@
                     "text": "Find and manage Question Bank questions for DAR (Data Access Request) templates and applications",
                     "qbManagement": {
                         "title": "Question Bank Management",
+                        "text": "Use this made to list and manage all available questions currently in the question bank for DAR templates",
                         "create": {
                             "label": "Create",
                             "description": "Create a new question for the DAR Question Bank"
