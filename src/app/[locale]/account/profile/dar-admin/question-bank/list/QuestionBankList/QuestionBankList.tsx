@@ -7,6 +7,8 @@ import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
+import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
@@ -135,6 +137,9 @@ const QuestionBankList = () => {
                     <Box sx={{ paddingBottom: 2 }}>
                         <Typography variant="h2">{t("title")}</Typography>
                         <Typography>{t("text")}</Typography>
+                        <Link href="/to-be-implemented">
+                            <Button> {t("create.label")} </Button>
+                        </Link>
                     </Box>
                 </BoxContainer>
             </Paper>
