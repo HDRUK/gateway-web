@@ -14,7 +14,7 @@ const ActionBar = () => {
 
     return (
         <ActionBarWrapper>
-            <BackButton label="Back to search results" style={{ margin: 0 }} />
+            <BackButton label={t("label")} style={{ margin: 0 }} />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
                 <Button disabled>{t("contact")}</Button>
