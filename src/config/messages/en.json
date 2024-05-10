@@ -101,6 +101,34 @@
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
                 },
+                "darAdmin": {
+                    "title": "Data Access Request Admin",
+                    "text": "Find and manage Question Bank questions for DAR (Data Access Request) templates and applications",
+                    "qbManagement": {
+                        "title": "Question Bank Management",
+                        "text": "Use this page to list and manage all available questions currently in the question bank for DAR templates",
+                        "edit": {
+                            "label": "Edit",
+                            "description": "Edit the question bank question"
+                        },
+                        "archive": {
+                            "label": "Archive",
+                            "description": "Archive the question bank question"
+                        },
+                        "unarchive": {
+                            "label": "Unarchive",
+                            "description": "Unarchive the question bank question"
+                        },
+                        "create": {
+                            "label": "Create",
+                            "description": "Create a new question for the DAR Question Bank"
+                        },
+                        "manage": {
+                            "label": "Manage",
+                            "description": "Edit, Update, or Delete existing questions in the Question Bank"
+                        }
+                    }
+                },
                 "teams": {
                     "title": "Teams",
                     "text": "Onboard and manage data provider teams on the Gateway",
@@ -413,6 +441,7 @@
             "components": {
                 "ActionBar": {
                     "contact": "Contact data provider",
+                    "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata"
                 },
@@ -508,7 +537,14 @@
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
-            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software"
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "components": {
+                "ActionBar": {
+                    "downloadDataUse": "Download data use register content",
+                    "label": "Back to Data Uses search results",
+                    "downloadStarted": "Your download has started"
+                }
+            }
         },
         "tool": {
             "backText": "Back to search results",
