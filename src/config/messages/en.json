@@ -101,6 +101,34 @@
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
                 },
+                "darAdmin": {
+                    "title": "Data Access Request Admin",
+                    "text": "Find and manage Question Bank questions for DAR (Data Access Request) templates and applications",
+                    "qbManagement": {
+                        "title": "Question Bank Management",
+                        "text": "Use this page to list and manage all available questions currently in the question bank for DAR templates",
+                        "edit": {
+                            "label": "Edit",
+                            "description": "Edit the question bank question"
+                        },
+                        "archive": {
+                            "label": "Archive",
+                            "description": "Archive the question bank question"
+                        },
+                        "unarchive": {
+                            "label": "Unarchive",
+                            "description": "Unarchive the question bank question"
+                        },
+                        "create": {
+                            "label": "Create",
+                            "description": "Create a new question for the DAR Question Bank"
+                        },
+                        "manage": {
+                            "label": "Manage",
+                            "description": "Edit, Update, or Delete existing questions in the Question Bank"
+                        }
+                    }
+                },
                 "teams": {
                     "title": "Teams",
                     "text": "Onboard and manage data provider teams on the Gateway",
