@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormLegend should render legend item 1`] = `
+exports[`FormLegend should render legend 1`] = `
 <div>
   <div
     class="MuiBox-root mui-style-157bfsg"
