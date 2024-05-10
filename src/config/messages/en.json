@@ -537,7 +537,14 @@
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
-            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software"
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "components": {
+                "ActionBar": {
+                    "downloadDataUse": "Download data use register content",
+                    "label": "Back to Data Uses search results",
+                    "downloadStarted": "Your download has started"
+                }
+            }
         },
         "tool": {
             "backText": "Back to search results",
