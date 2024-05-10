@@ -321,6 +321,7 @@
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
+            "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",

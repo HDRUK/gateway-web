@@ -554,6 +554,44 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             </Box>
                         )}
 
+                        {!isSearching &&
+                            !queryParams.query &&
+                            queryParams.type ===
+                                SearchCategory.PUBLICATIONS && 
+                                (!data?.list.length || !data?.path?.includes(queryParams.type) ) && (
+                                <Paper sx={{ textAlign: "left", p: 3 }}>
+                                    <Typography
+                                        variant="h2"
+                                        style={{ fontWeight: "bolder" }}
+                                        sx={{
+                                            pb: 4,
+                                            borderBottom: 1,
+                                            borderColor: "greyCustom.light",
+                                        }}>
+                                        {t("publicationWelcomeHeader")}
+                                    </Typography>
+                                    <Typography variant="h3">
+                                        <p>
+                                            To start your search, enter a
+                                            keyword at the top and select the
+                                            search source on the left then hit
+                                            enter or return.
+                                        </p>
+                                        <p>
+                                            Gateway assets are linked to make it
+                                            easier to find relevant resources
+                                            for your work.
+                                        </p>
+                                        <p>
+                                            Search Gateway for publications with
+                                            curated linkages to explore related
+                                            resources, like publications about a
+                                            dataset or publications that have
+                                            used a dataset.
+                                        </p>
+                                    </Typography>
+                                </Paper>
+                            )}
                         {isSearching && <Loading />}
 
                         {!isSearching && !data?.list.length && (
