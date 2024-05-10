@@ -556,9 +556,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
                         {!isSearching &&
                             !queryParams.query &&
-                            queryParams.type ===
-                                SearchCategory.PUBLICATIONS && 
-                                (!data?.list.length || !data?.path?.includes(queryParams.type) ) && (
+                            queryParams.type === SearchCategory.PUBLICATIONS &&
+                            (!data?.list.length ||
+                                !data?.path?.includes(queryParams.type)) && (
                                 <Paper sx={{ textAlign: "left", p: 3 }}>
                                     <Typography
                                         variant="h2"
