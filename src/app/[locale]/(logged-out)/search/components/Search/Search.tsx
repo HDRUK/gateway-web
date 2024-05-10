@@ -594,13 +594,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             )}
                         {isSearching && <Loading />}
 
-                        {!isSearching && !data?.list.length && (
-                            <Paper sx={{ textAlign: "center", p: 5 }}>
-                                <Typography variant="h3">
-                                    {t("noResults")}
-                                </Typography>
-                            </Paper>
-                        )}
+                        {!isSearching &&
+                            !data?.list.length &&
+                            (queryParams.query ||
+                                !(
+                                    queryParams.type ===
+                                    SearchCategory.PUBLICATIONS
+                                )) && (
+                                <Paper sx={{ textAlign: "center", p: 5 }}>
+                                    <Typography variant="h3">
+                                        {t("noResults")}
+                                    </Typography>
+                                </Paper>
+                            )}
                         {!isSearching &&
                             !!data?.list.length &&
                             data?.path?.includes(queryParams.type) && (
