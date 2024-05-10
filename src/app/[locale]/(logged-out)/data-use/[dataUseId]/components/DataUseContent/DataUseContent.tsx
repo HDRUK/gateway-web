@@ -5,7 +5,6 @@ import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
-import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
@@ -41,7 +40,6 @@ const DataUseContent = ({
         type: FieldType,
         value: string | string[] | DatasetWithTitle[]
     ) => {
-        let linkHref: string;
         const val = value as string;
 
         switch (type) {
@@ -67,18 +65,6 @@ const DataUseContent = ({
                     </DatasetFieldWrapper>
                 );
             }
-            case FieldType.LINK:
-                switch (path) {
-                    case "organisation_name":
-                        linkHref = `/${RouteName.SEARCH}?type=${
-                            SearchCategory.DATA_USE
-                        }&organisationName=${encodeURIComponent(val)}`;
-                        break;
-                    default:
-                        linkHref = val;
-                }
-
-                return <Link href={linkHref}>{val}</Link>;
             case FieldType.LIST_TEXT: {
                 return (
                     <ListContainer>
