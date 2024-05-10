@@ -34,8 +34,8 @@ const ActionBar = () => {
 
         if (csvData) {
             csvData.filename = `dur_${params.dataUseId}.csv`;
-            downloadCSV(csvData as CsvExport);
             notificationService.apiSuccess(t("downloadStarted"));
+            downloadCSV(csvData as CsvExport);
         }
     };
 
