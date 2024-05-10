@@ -12,6 +12,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import BackupIcon from "@mui/icons-material/Backup";
 import CancelIcon from "@mui/icons-material/Cancel";
+import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -39,6 +40,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import LaunchIcon from "@mui/icons-material/Launch";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
@@ -112,4 +114,6 @@ export {
     CircleIcon,
     ViewListIcon,
     LaunchIcon,
+    CheckIcon,
+    PriorityHighIcon,
 };

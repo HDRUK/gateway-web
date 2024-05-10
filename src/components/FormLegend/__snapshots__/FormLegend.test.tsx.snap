@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormLegend should render legend item 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-157bfsg"
+  >
+    <div
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-74jemj-MuiButtonBase-root-MuiListItemButton-root"
+      role="button"
+      tabindex="0"
+    >
+      <span
+        class="mui-style-17j08xr"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
+          data-testid="CheckIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+          />
+        </svg>
+      </span>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-1t8ylhr-MuiTypography-root"
+      >
+        ITEM1
+      </p>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </div>
+  </div>
+</div>
+`;
