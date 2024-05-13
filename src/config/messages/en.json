@@ -322,6 +322,9 @@
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
+            "publicationWelcomeText1": "To start your search, enter a keyword at the top and select the search source on the left then hit enter or return.",
+            "publicationWelcomeText2": "Gateway assets are linked to make it easier to find relevant resources for your work.",
+            "publicationWelcomeText3": "Search Gateway for publications with curated linkages to explore related resources, like publications about a dataset or publications that have used a dataset.",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
