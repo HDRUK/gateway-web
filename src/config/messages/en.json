@@ -313,7 +313,9 @@
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
                             "dateRange": "Date range",
-                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan"
+                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data custodian",
@@ -323,7 +325,9 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
@@ -337,7 +341,23 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data provider",
-                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                        },
+                        "dataProvider": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "geographicLocation": "Geographical coverage",
+                            "geographicLocationTooltip": "The geographical area covered by the dataset"
+                        },
+                        "tool": {
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
+                            "license": "License",
+                            "licenseTooltip": "License",
+                            "category": "Category",
+                            "categoryTooltip": "Category"
                         }
                     }
                 },

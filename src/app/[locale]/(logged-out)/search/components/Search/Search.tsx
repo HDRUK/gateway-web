@@ -33,6 +33,7 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
@@ -73,6 +74,8 @@ const FILTER_CATEGORY: { [key: string]: string } = {
     dur: "dataUseRegister",
     publications: "paper",
     collections: "collection",
+    data_providers: "dataProvider",
+    tools: "tool",
 };
 const STATIC_FILTER_SOURCE = "source";
 
@@ -106,6 +109,12 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [searchParams]
     );
 
+    console.log(
+        "getParamString(QUERY_FIELD)",
+        QUERY_FIELD,
+        getParamString(QUERY_FIELD)
+    );
+
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
@@ -126,7 +135,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
+        [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
     });
+
+    console.log("queryParams", queryParams);
 
     const { handleDownload } = useSearch(
         queryParams.type,
@@ -176,6 +188,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(QUERY_FIELD, "");
     };
 
+    console.log({
+        query: queryParams.query,
+        ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
+    });
+
     const {
         data,
         isLoading: isSearching,
@@ -222,6 +239,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_DATA_SET_TITLES]: undefined,
             [FILTER_PUBLICATION_DATE]: undefined,
             [FILTER_SECTOR]: undefined,
+            [FILTER_DATA_PROVIDER]: undefined,
         });
     };
 
@@ -398,6 +416,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 return t("searchExplainerDatasets");
         }
     };
+
+    console.log(
+        "FILTER_CATEGORY[queryParams.type]",
+        FILTER_CATEGORY[queryParams.type]
+    );
 
     return (
         <Box

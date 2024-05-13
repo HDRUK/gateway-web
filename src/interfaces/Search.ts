@@ -7,6 +7,7 @@ import {
     FILTER_DATA_SET_TITLES,
     FILTER_PUBLICATION_DATE,
     FILTER_SECTOR,
+    FILTER_DATA_PROVIDER,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -112,7 +113,7 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
-    DATA_PROVIDERS = "data-providers",
+    DATA_PROVIDERS = "data_providers",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",
@@ -140,6 +141,7 @@ export interface SearchQueryParams {
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
     [FILTER_PUBLICATION_DATE]: string[] | undefined;
     [FILTER_SECTOR]: string[] | undefined;
+    [FILTER_DATA_PROVIDER]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };
