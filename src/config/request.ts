@@ -1,0 +1,3 @@
+const FILTERS_PER_PAGE = 50;
+
+export { FILTERS_PER_PAGE };

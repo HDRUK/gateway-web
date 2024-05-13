@@ -12,6 +12,7 @@ import {
     SearchQueryParams,
     SearchResult,
     SearchResultCollection,
+    SearchResultDataProvider,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
@@ -32,6 +33,7 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
@@ -57,6 +59,7 @@ import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
 import ResultCardCollection from "../ResultCardCollection";
+import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
@@ -71,6 +74,8 @@ const FILTER_CATEGORY: { [key: string]: string } = {
     dur: "dataUseRegister",
     publications: "paper",
     collections: "collection",
+    data_providers: "dataProvider",
+    tools: "tool",
 };
 const STATIC_FILTER_SOURCE = "source";
 
@@ -124,6 +129,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
+        [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
     });
 
     const { handleDownload } = useSearch(
@@ -220,6 +226,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_DATA_SET_TITLES]: undefined,
             [FILTER_PUBLICATION_DATE]: undefined,
             [FILTER_SECTOR]: undefined,
+            [FILTER_DATA_PROVIDER]: undefined,
         });
     };
 
@@ -242,6 +249,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         {
             label: t("publications"),
             value: SearchCategory.PUBLICATIONS,
+            content: "",
+        },
+        {
+            label: t("dataProviders"),
+            value: SearchCategory.DATA_PROVIDERS,
             content: "",
         },
         {
@@ -321,8 +333,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             case SearchCategory.COLLECTIONS:
                 return (
                     <ResultCardCollection
-                        imgUrl="/sample.collections.thumbnail.jpg"
+                        imgUrl="/images/collections/sample.thumbnail.jpg"
                         result={result as SearchResultCollection}
+                    />
+                );
+            case SearchCategory.DATA_PROVIDERS:
+                return (
+                    <ResultCardDataProvider
+                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
+                        result={result as SearchResultDataProvider}
                     />
                 );
             case SearchCategory.TOOLS:
@@ -347,7 +366,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         return (
             <ResultsList
                 variant={
-                    queryParams.type === SearchCategory.COLLECTIONS
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    SearchCategory.DATA_PROVIDERS
                         ? "tiled"
                         : "list"
                 }>
@@ -375,6 +395,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 return t("searchExplainerDataUse");
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
+            case SearchCategory.DATA_PROVIDERS:
+                return t("searchExplainerDataProviders");
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
             default:

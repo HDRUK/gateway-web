@@ -307,6 +307,7 @@
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
             "tools": "Analysis, tools & software",
+            "dataProviders": "Data providers",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
@@ -314,6 +315,7 @@
             "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data provider name",
             "searchExplainerCollections": "Search by collection name",
             "searchExplainerTools": "Search by name, programming language",
+            "searchExplainerDataProviders": "Enter your search term here",
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
@@ -340,7 +342,9 @@
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
                             "dateRange": "Date range",
-                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan"
+                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data custodian",
@@ -350,7 +354,9 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
@@ -364,7 +370,23 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data provider",
-                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                        },
+                        "dataProvider": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "geographicLocation": "Geographical coverage",
+                            "geographicLocationTooltip": "The geographical area covered by the dataset"
+                        },
+                        "tool": {
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
+                            "license": "License",
+                            "licenseTooltip": "License",
+                            "category": "Category",
+                            "categoryTooltip": "Category"
                         }
                     }
                 },
@@ -421,7 +443,7 @@
                     "label": "Back to Collections search results"
                 },
                 "DatasetsContent": {
-                    "heading": "Datasets ({ length })",
+                    "heading": "Datasets / Tissues ({ length })",
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
@@ -431,7 +453,7 @@
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis scripts and software ({ length })"
+                    "heading": "Analysis, scripts and software ({ length })"
                 }
             }
         },
