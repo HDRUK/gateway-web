@@ -12,7 +12,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import { tabsStyle } from "./Tabs.styles";
 
-interface Tab {
+export interface Tab {
     label: string;
     value: string;
     content: ReactNode;
@@ -21,6 +21,7 @@ interface Tab {
 export enum TabVariant {
     STANDARD = "standard",
     LARGE = "large",
+    SLIM = "slim",
 }
 
 export interface TabProps {
