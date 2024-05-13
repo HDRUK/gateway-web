@@ -594,6 +594,14 @@
         "ProtectedRoute": {
             "title": "Protected route",
             "text": "You must be logged in to view this content"
+        },
+        "FormBanner": {
+            "downloadExample": "Download example",
+            "makeActive": "Make active",
+            "saveDraft": "Save as draft",
+            "completion": "Completion",
+            "requiredFields": "required fields",
+            "optionalFields": "optional fields"
         }
     },
     "modules": {
