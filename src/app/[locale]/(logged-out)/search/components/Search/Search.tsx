@@ -403,6 +403,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 return t("searchExplainerDatasets");
         }
     };
+    const showPublicationWelcomeMessage =
+        !isSearching &&
+        !queryParams.query &&
+        queryParams.type === SearchCategory.PUBLICATIONS &&
+        (!data?.list.length || !data?.path?.includes(queryParams.type));
 
     return (
         <Box
@@ -576,15 +581,44 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             </Box>
                         )}
 
-                        {isSearching && <Loading />}
-
-                        {!isSearching && !data?.list.length && (
-                            <Paper sx={{ textAlign: "center", p: 5 }}>
+                        {showPublicationWelcomeMessage && (
+                            <Paper sx={{ textAlign: "left", p: 3 }}>
+                                <Typography
+                                    variant="h2"
+                                    style={{ fontWeight: "bolder" }}
+                                    sx={{
+                                        pb: 4,
+                                        borderBottom: 1,
+                                        borderColor: "greyCustom.light",
+                                    }}>
+                                    {t("publicationWelcomeHeader")}
+                                </Typography>
                                 <Typography variant="h3">
-                                    {t("noResults")}
+                                    {t("publicationWelcomeText1")}
+                                </Typography>
+                                <Typography variant="h3">
+                                    {t("publicationWelcomeText2")}
+                                </Typography>
+                                <Typography variant="h3">
+                                    {t("publicationWelcomeText3")}
                                 </Typography>
                             </Paper>
                         )}
+                        {isSearching && <Loading />}
+
+                        {!isSearching &&
+                            !data?.list.length &&
+                            (queryParams.query ||
+                                !(
+                                    queryParams.type ===
+                                    SearchCategory.PUBLICATIONS
+                                )) && (
+                                <Paper sx={{ textAlign: "center", p: 5 }}>
+                                    <Typography variant="h3">
+                                        {t("noResults")}
+                                    </Typography>
+                                </Paper>
+                            )}
                         {!isSearching &&
                             !!data?.list.length &&
                             data?.path?.includes(queryParams.type) && (
