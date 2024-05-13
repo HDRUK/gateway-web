@@ -1,12 +1,14 @@
 import { render, screen } from "@/utils/testUtils";
-import { generateCollectionV1 } from "@/mocks/data/collections/v1";
-import ResultCardCollection from "./ResultCardCollection";
+import { generateDataProviderV1 } from "@/mocks/data/dataProviders/v1";
+import ResultCardDataProvider from "./ResultCardDataProvider";
 
-describe("ResultCardCollection", () => {
+describe("ResultCardDataProvider", () => {
     it("should render the name of the collection", async () => {
-        const mockResult = generateCollectionV1();
+        const mockResult = generateDataProviderV1();
 
-        render(<ResultCardCollection result={mockResult} />);
+        render(
+            <ResultCardDataProvider imgUrl="/sample.jpg" result={mockResult} />
+        );
 
         expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
             mockResult.name
