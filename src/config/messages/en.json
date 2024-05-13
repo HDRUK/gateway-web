@@ -101,6 +101,34 @@
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
                 },
+                "darAdmin": {
+                    "title": "Data Access Request Admin",
+                    "text": "Find and manage Question Bank questions for DAR (Data Access Request) templates and applications",
+                    "qbManagement": {
+                        "title": "Question Bank Management",
+                        "text": "Use this page to list and manage all available questions currently in the question bank for DAR templates",
+                        "edit": {
+                            "label": "Edit",
+                            "description": "Edit the question bank question"
+                        },
+                        "archive": {
+                            "label": "Archive",
+                            "description": "Archive the question bank question"
+                        },
+                        "unarchive": {
+                            "label": "Unarchive",
+                            "description": "Unarchive the question bank question"
+                        },
+                        "create": {
+                            "label": "Create",
+                            "description": "Create a new question for the DAR Question Bank"
+                        },
+                        "manage": {
+                            "label": "Manage",
+                            "description": "Edit, Update, or Delete existing questions in the Question Bank"
+                        }
+                    }
+                },
                 "teams": {
                     "title": "Teams",
                     "text": "Onboard and manage data provider teams on the Gateway",
@@ -279,6 +307,7 @@
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
             "tools": "Analysis, tools & software",
+            "dataProviders": "Data providers",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
@@ -286,6 +315,7 @@
             "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data provider name",
             "searchExplainerCollections": "Search by collection name",
             "searchExplainerTools": "Search by name, programming language",
+            "searchExplainerDataProviders": "Enter your search term here",
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
@@ -293,6 +323,10 @@
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
+            "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
+            "publicationWelcomeText1": "To start your search, enter a keyword at the top and select the search source on the left then hit enter or return.",
+            "publicationWelcomeText2": "Gateway assets are linked to make it easier to find relevant resources for your work.",
+            "publicationWelcomeText3": "Search Gateway for publications with curated linkages to explore related resources, like publications about a dataset or publications that have used a dataset.",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -312,7 +346,9 @@
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
                             "dateRange": "Date range",
-                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan"
+                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data custodian",
@@ -322,7 +358,9 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
@@ -336,7 +374,23 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data provider",
-                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                        },
+                        "dataProvider": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "geographicLocation": "Geographical coverage",
+                            "geographicLocationTooltip": "The geographical area covered by the dataset"
+                        },
+                        "tool": {
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
+                            "license": "License",
+                            "licenseTooltip": "License",
+                            "category": "Category",
+                            "categoryTooltip": "Category"
                         }
                     }
                 },
@@ -393,7 +447,7 @@
                     "label": "Back to Collections search results"
                 },
                 "DatasetsContent": {
-                    "heading": "Datasets ({ length })",
+                    "heading": "Datasets / Tissues ({ length })",
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
@@ -403,7 +457,7 @@
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis scripts and software ({ length })"
+                    "heading": "Analysis, scripts and software ({ length })"
                 }
             }
         },
@@ -413,6 +467,7 @@
             "components": {
                 "ActionBar": {
                     "contact": "Contact data provider",
+                    "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata"
                 },
@@ -508,7 +563,14 @@
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
-            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software"
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "components": {
+                "ActionBar": {
+                    "downloadDataUse": "Download data use register content",
+                    "label": "Back to Data Uses search results",
+                    "downloadStarted": "Your download has started"
+                }
+            }
         },
         "tool": {
             "backText": "Back to search results",

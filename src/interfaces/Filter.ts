@@ -5,7 +5,8 @@ export type FilterType =
     | "course"
     | "project"
     | "paper"
-    | "dataUseRegister";
+    | "dataUseRegister"
+    | "dataProvider";
 
 export type FilterKey =
     | "phenotype"
