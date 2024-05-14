@@ -74,14 +74,15 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
         }
     );
 
-    const section_id = data?.section_id;
-    const required = data?.required;
-    const allow_guidance_override = data?.allow_guidance_override;
-    const force_required = data?.force_required;
-    const question = data?.question_json;
-    const title = question?.title;
-    const guidance = question?.guidance;
-    const field = question?.field;
+    const {
+        section_id,
+        required,
+        allow_guidance_override,
+        force_required,
+        question_json: question,
+    } = data ?? {};
+
+    const { title, guidance, field } = question ?? {};
 
     const hydratedFormFields = useMemo(
         () =>
