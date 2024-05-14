@@ -28,6 +28,13 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
     const component = question?.field?.component;
     if (!title) return null;
 
+    const hydratedActions = actions.map(action => {
+        return {
+            ...action,
+            disabled: !!data.locked,
+        };
+    });
+
     return (
         <Card
             variant="outlined"
@@ -35,63 +42,62 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    p: 0,
                 }}>
-                <Typography
-                    component="span"
-                    sx={{
-                        fontWeight: "bold",
-                        padding: "10px",
-                        fontSize: 14,
-                    }}>
-                    <Chip
-                        variant="outlined"
-                        label={component}
-                        color="primary"
-                        sx={{ mx: 2 }}
-                    />
-                    {title}
-                </Typography>
-
-                <Box
-                    sx={{
-                        m: 0.2,
-                        display: "flex",
-                        justifyContent: "end",
-                    }}>
-                    {!data.locked ? (
-                        <Chip label="Available" color="success" />
-                    ) : (
-                        <Chip label="Locked" color="error" />
-                    )}
-                </Box>
-
-                <Box
-                    sx={{
-                        m: 0.2,
-                        display: "flex",
-                        justifyContent: "end",
-                        p: 0,
-                        borderLeft: `solid 1px ${colors.grey600}`,
-                    }}>
-                    <CardActions actions={actions} id={data.id} />
-                </Box>
-
                 <Box
                     sx={{
                         display: "grid",
-                        gridTemplateRows: "repeat(2, 1fr)",
-                        gridColumn: "span 3",
+                        gridTemplateColumns: "repeat(2, 1fr)",
                     }}>
                     <Typography
+                        component="span"
                         sx={{
-                            color: "#868E96",
+                            fontWeight: "bold",
+                            padding: "10px",
+                            fontSize: 14,
                         }}>
-                        {`Question ID - ${data.id}   Version - ${
-                            data.version
-                        }   Created - ${formatDate(data.created_at)}`}
+                        <Chip
+                            variant="outlined"
+                            label={component}
+                            color="primary"
+                            sx={{ mx: 2 }}
+                        />
+                        {title}
                     </Typography>
-                    <Typography component="span">{guidance}</Typography>
+
+                    <Box
+                        sx={{
+                            m: 0.2,
+                            display: "flex",
+                            justifyContent: "end",
+                        }}>
+                        {!data.locked ? (
+                            <Chip label="Available" color="success" />
+                        ) : (
+                            <Chip label="Locked" color="error" />
+                        )}
+                    </Box>
+
+                    <Box
+                        sx={{
+                            display: "grid",
+                            gridTemplateRows: "repeat(2, 1fr)",
+                            gridColumn: "span 3",
+                        }}>
+                        <Typography
+                            sx={{
+                                color: "#868E96",
+                            }}>
+                            {`Question ID - ${data.id}   Version - ${
+                                data.version
+                            }   Created - ${formatDate(data.created_at)}`}
+                        </Typography>
+                        <Typography component="span">{guidance}</Typography>
+                    </Box>
+                </Box>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                    <CardActions actions={hydratedActions} id={data.id} />
                 </Box>
             </Box>
         </Card>

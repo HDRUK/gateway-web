@@ -14,7 +14,7 @@ export const generateQuestionBankQuestion = () => {
         required: faker.datatype.number({ min: 0, max: 1 }),
         version: faker.datatype.number(),
         question_json: {
-            title: faker.lorem.text(),
+            title: faker.lorem.word(),
             guidance: faker.lorem.paragraph(),
             field: {
                 component: "TextArea",

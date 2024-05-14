@@ -7,7 +7,7 @@ interface FormHydration {
     title: string;
     guidance: string;
     field: {
-        component: string;
+        component: "TextArea" | "Select";
         options?: Option[];
         variant?: string;
         name?: string;

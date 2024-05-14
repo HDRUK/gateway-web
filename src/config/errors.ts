@@ -23,6 +23,11 @@ export const errors: { [char: number]: Error } = {
         message: "You are forbidden to access this page.",
         icon: RemoveCircleIcon,
     },
+    423: {
+        statusMessage: "Locked",
+        message: "This page is currently locked.",
+        icon: RemoveCircleIcon,
+    },
 };
 
 export type AllowedErrors = keyof typeof errors;
