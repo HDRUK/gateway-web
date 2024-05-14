@@ -10,6 +10,7 @@ import { Team } from "@/interfaces/Team";
 import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
 import config from "@/config/config";
+import { FILTERS_PER_PAGE } from "@/config/request";
 import { getUserFromToken } from "@/utils/cookies";
 
 async function get<T>(
@@ -35,7 +36,10 @@ async function get<T>(
 async function getFilters(
     cookieStore: ReadonlyRequestCookies
 ): Promise<Filter[]> {
-    return get<Filter[]>(cookieStore, apis.filtersV1UrlIP);
+    return get<Filter[]>(
+        cookieStore,
+        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`
+    );
 }
 
 async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {

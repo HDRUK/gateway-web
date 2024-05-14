@@ -1,6 +1,6 @@
 import MuiChip, { ChipProps as MuiChipProps } from "@mui/material/Chip";
 
-interface ChipProps extends MuiChipProps {
+export interface ChipProps extends MuiChipProps {
     label: string;
 }
 
