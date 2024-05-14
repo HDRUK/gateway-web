@@ -51,7 +51,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                         gridTemplateColumns: "repeat(2, 1fr)",
                     }}>
                     <Typography
-                        component="span"
+                        component="div"
                         sx={{
                             fontWeight: "bold",
                             padding: "10px",

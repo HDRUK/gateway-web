@@ -16,8 +16,8 @@ const Header = () => {
             <BoxContainer sx={{ gap: 0, mb: 1 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2"> {t("title")} </Typography>
-                        <Typography> {t("text")} </Typography>
+                        <Typography variant="h2">{t("title")}</Typography>
+                        <Typography>{t("text")}</Typography>
                     </Box>
                 </Paper>
             </BoxContainer>
