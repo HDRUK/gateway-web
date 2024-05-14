@@ -68,19 +68,25 @@ const CreateQuestion = () => {
         });
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
+        const {
+            settings: { mandatory, allow_guidance_override, force_required },
+            type,
+            guidance,
+            title,
+            section_id,
+        } = formData;
+
         const payload = {
-            required: formData.settings.mandatory ? 1 : 0,
-            allow_guidance_override: formData.settings.allow_guidance_override
-                ? 1
-                : 0,
-            force_required: formData.settings.force_required ? 1 : 0,
+            required: mandatory ? 1 : 0,
+            allow_guidance_override: allow_guidance_override ? 1 : 0,
+            force_required: force_required ? 1 : 0,
             field: {
                 // this will need updating at a future point
-                component: formData.type,
+                component: type,
             },
-            guidance: formData.guidance,
-            title: formData.title,
-            section_id: formData.section_id,
+            guidance,
+            title,
+            section_id,
         };
 
         createQuestion(payload).then(() => {
