@@ -22,6 +22,7 @@ interface HttpOptions extends MutatorOptions {
     errorNotificationsOn?: boolean;
     itemName?: string;
     query?: string;
+    subPath?: string;
     action?: ReactNode;
 }
 
