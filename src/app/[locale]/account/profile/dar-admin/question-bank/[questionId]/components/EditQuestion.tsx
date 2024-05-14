@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
@@ -33,8 +33,13 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
 
-    const { data } = useGet<QuestionBankQuestion>(
-        `${apis.questionBankV1Url}/questions/${questionId}`
+    const [isLocked, setIsLocked] = useState(false);
+
+    const { data, isLoading } = useGet<QuestionBankQuestion>(
+        `${apis.questionBankV1Url}/questions/${questionId}`,
+        {
+            keepPreviousData: false,
+        }
     );
 
     // use patch to lock/unlock the question while editing
@@ -48,10 +53,15 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
     });
 
     useEffect(() => {
-        if (data && !data.locked) {
-            lockQuestion(questionId, {});
+        if (!isLoading) {
+            if (!data?.locked) {
+                lockQuestion(questionId, {});
+            } else {
+                console.log(data);
+                setIsLocked(true);
+            }
         }
-    }, [data]);
+    }, [isLoading]);
 
     const { data: sectionData } = useGet<QuestionBankSection[]>(
         `${apis.questionBankV1Url}/sections`
@@ -141,8 +151,6 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             );
         });
     };
-
-    const isLocked = data && data?.locked;
 
     if (isLocked) {
         return <ErrorDisplay variant={423} />;
