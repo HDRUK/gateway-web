@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
@@ -10,14 +11,17 @@ const Header = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
-        <BoxContainer sx={{ gap: 0, mb: 1 }}>
-            <Paper>
-                <Box sx={{ bgcolor: "white", mb: 0 }}>
-                    <Typography variant="h2"> {t("title")} </Typography>
-                    <Typography> {t("text")} </Typography>
-                </Box>
-            </Paper>
-        </BoxContainer>
+        <>
+            <BackButton label={t("back")} />
+            <BoxContainer sx={{ gap: 0, mb: 1 }}>
+                <Paper>
+                    <Box sx={{ bgcolor: "white", mb: 0 }}>
+                        <Typography variant="h2"> {t("title")} </Typography>
+                        <Typography> {t("text")} </Typography>
+                    </Box>
+                </Paper>
+            </BoxContainer>
+        </>
     );
 };
 export default Header;

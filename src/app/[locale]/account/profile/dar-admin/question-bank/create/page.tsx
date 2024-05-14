@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
@@ -15,7 +14,6 @@ const QuestionBankCreatePage = async () => {
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["dar-config.update"]}>
-            <BackButton label="Back to Question Bank list page" />
             <Header />
             <CreateQuestion />
         </ProtectedAccountRoute>
