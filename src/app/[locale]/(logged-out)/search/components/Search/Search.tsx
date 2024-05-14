@@ -367,7 +367,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    SearchCategory.DATA_PROVIDERS
+                    queryParams.type === SearchCategory.DATA_PROVIDERS
                         ? "tiled"
                         : "list"
                 }>
