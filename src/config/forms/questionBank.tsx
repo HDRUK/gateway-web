@@ -19,6 +19,7 @@ const formFields = [
         label: "Section",
         name: "section_id",
         component: inputComponents.Select,
+        required: true,
         options: [],
     },
     {
@@ -28,6 +29,7 @@ const formFields = [
         name: "title",
         placeholder: "Enter the title of your question",
         label: "Question Title",
+        required: true,
     },
     {
         label: "Question Type",
@@ -47,6 +49,7 @@ const formFields = [
         name: "guidance",
         placeholder: "Enter the guidance for your question",
         label: "Default Guidance",
+        required: true,
     },
     {
         label: "Question Settings",
@@ -72,10 +75,10 @@ const formFields = [
 ];
 
 const validationSchema = yup.object({
-    section: yup.string().label("Section"),
-    title: yup.string().label("Title"),
-    guidance: yup.string().label("Guidance"),
-    type: yup.string().label("Type"),
+    section_id: yup.string().required().label("Section"),
+    title: yup.string().required().label("Title"),
+    guidance: yup.string().required().label("Guidance"),
+    type: yup.string().required().label("Type"),
     settings: yup.object().shape({
         mandatory: yup.boolean().label("Mandatory"),
         allow_guidance_override: yup.boolean().label("Allow Guidance Override"),

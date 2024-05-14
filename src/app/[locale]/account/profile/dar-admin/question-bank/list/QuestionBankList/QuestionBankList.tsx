@@ -138,7 +138,8 @@ const QuestionBankList = () => {
                     <Box sx={{ paddingBottom: 2 }}>
                         <Typography variant="h2">{t("title")}</Typography>
                         <Typography>{t("text")}</Typography>
-                        <Link href="/to-be-implemented">
+                        <Link
+                            href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.CREATE}`}>
                             <Button> {t("create.label")} </Button>
                         </Link>
                     </Box>
