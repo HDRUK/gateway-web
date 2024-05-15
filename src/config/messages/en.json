@@ -283,7 +283,7 @@
             "feasibility": {
                 "label": "Feasibility Analysis",
                 "title": "Feasibility Analysis Tool",
-                "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of female with asthma."
+                "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
                 "label": "Data Providers",
@@ -293,7 +293,7 @@
             "collections": {
                 "label": "Collections",
                 "title": "Collections",
-                "text": "Discover research resources: datasets, analysis scripts, software, data uses, and publication grouped together by domain, disease, theme or organisation"
+                "text": "Discover research resources: datasets, analysis scripts, software, data uses, and publications grouped together by domain, disease, theme or organisation"
             },
             "phenotypes": {
                 "label": "Phenotypes",
@@ -318,7 +318,7 @@
             "courses": {
                 "label": "Courses",
                 "title": "Courses",
-                "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to show case your personal development"
+                "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
             }
         },
         "search": {
