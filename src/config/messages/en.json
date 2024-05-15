@@ -170,6 +170,12 @@
                         "text": "Update and duplicate this dataset."
                     },
                     "components": {
+                        "CreateDataset": {
+                            "guidance": "Guidance",
+                            "next": "Next",
+                            "previous": "Previous",
+                            "submit": "Submit"
+                        },
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"

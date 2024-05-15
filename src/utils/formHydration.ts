@@ -1,6 +1,11 @@
-import { FieldValues, UseFormGetValues } from "react-hook-form";
+import {
+    FieldValues,
+    UseFormClearErrors,
+    UseFormGetValues,
+    UseFormTrigger,
+} from "react-hook-form";
 import { FormHydration } from "@/interfaces/FormHydration";
-import { LegendStatus } from "@/interfaces/FormLegend";
+import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 
 const formGetAllSectionFields = (
     schemaFields: FormHydration[],
@@ -61,9 +66,90 @@ const formGetSectionStatus = (
     return LegendStatus.INVALID;
 };
 
+const formValidateSection = async (
+    schemaFields: FormHydration[],
+    section: string,
+    trigger: UseFormTrigger<FieldValues>
+) => {
+    const fields = schemaFields
+        .filter(schemaField => !schemaField.field.hidden)
+        .filter(({ location }) => location.startsWith(section))
+        .map(field => field.title);
+
+    return await trigger(fields, { shouldFocus: false });
+};
+
+const formIsSectionActive = (section: string, activeSectionName: string) =>
+    section === activeSectionName;
+
+const hasVisibleFieldsForLocation = (schema, location: string): boolean => {
+    const fieldsForLocation = schema.schema_fields.filter(field =>
+        field.location.startsWith(location)
+    );
+
+    return !fieldsForLocation.every(field => field.field.hidden);
+};
+
+const formGenerateLegendItems = async (
+    formSections: string[],
+    activeSectionName: string,
+    shouldValidate: boolean,
+    schemaFields: FormHydration[],
+    clearErrors: UseFormClearErrors<FieldValues>,
+    getValues: UseFormGetValues<FieldValues>,
+    trigger: UseFormTrigger<FieldValues>
+) => {
+    const legendItems: LegendItem[] = await Promise.all(
+        formSections.map(async section => {
+            const sectionIsValid = shouldValidate
+                ? await formValidateSection(schemaFields, section, trigger)
+                : false;
+
+            // Reset form error state
+            clearErrors();
+
+            // Get status of section
+            const getSectionStatus = formGetSectionStatus(
+                formIsSectionActive(section, activeSectionName),
+                sectionIsValid,
+                schemaFields,
+                section,
+                getValues
+            );
+
+            return {
+                name: section,
+                status: getSectionStatus,
+            };
+        })
+    );
+
+    return legendItems;
+};
+
+const isFirstSection = (currentSectionIndex: number) =>
+    currentSectionIndex === 0;
+
+const isLastSection = (formSections: string[], currentSectionIndex: number) =>
+    formSections.length - 1 <= currentSectionIndex;
+
+const getFirstLocationValues = schema => {
+    const locationSet = new Set<string>(
+        schema.schema_fields.map(({ location }) => location.split(".")[0])
+    );
+
+    return Array.from(locationSet);
+};
+
 export {
     formGetAllSectionFields,
     formGetSectionStatus,
     formSectionHasAllEmptyFields,
     formSectionHasEmptyOptionalFields,
+    formGenerateLegendItems,
+    formValidateSection,
+    isLastSection,
+    isFirstSection,
+    getFirstLocationValues,
+    hasVisibleFieldsForLocation,
 };
