@@ -25,7 +25,7 @@ interface Metadata {
             dataController: string;
             dataProcessor: string;
             accessRights: string;
-            accessService: string;
+            accessServiceCategory: string;
             accessRequestCost: string;
         };
         usage: {

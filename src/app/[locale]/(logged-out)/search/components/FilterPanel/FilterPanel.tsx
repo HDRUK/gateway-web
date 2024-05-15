@@ -110,11 +110,13 @@ const FilterPanel = ({
         [FILTER_PUBLISHER_NAME]: string;
         [FILTER_DATA_USE_TITLES]: string;
         [FILTER_SECTOR]: string;
+        [FILTER_ACCESS_SERVICE]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
+            [FILTER_ACCESS_SERVICE]: "",
         },
     });
 

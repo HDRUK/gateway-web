@@ -27,6 +27,9 @@ export interface Aggregations {
     [FILTER_SECTOR]: {
         buckets: Bucket[];
     };
+    [FILTER_ACCESS_SERVICE]: {
+        buckets: Bucket[];
+    }
     startDate: { value_as_string: string };
     endDate: { value_as_string: string };
 }
