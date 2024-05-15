@@ -38,13 +38,13 @@ const services = [
         href: "/about/cohort-discovery",
     },
     {
-        id: SearchCategory.DATA_PROVIDERS,
+        id: "dataProviders",
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
-        image: "/images/welcome-image.png",
+        image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
