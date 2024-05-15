@@ -298,7 +298,7 @@
             "phenotypes": {
                 "label": "Phenotypes",
                 "title": "Phenotype Library",
-                "text": "Find re-usable Phenotype algorithms tools: search and deposit human and machine-readable phenotyping algorithms for UK electronic health records"
+                "text": "Find reusable phenotype algorithms: Search and deposit human and machine readable phenotype algorithms"
             },
             "diseaseAtlas": {
                 "label": "Disease Atlas",
