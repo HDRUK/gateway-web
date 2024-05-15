@@ -201,14 +201,14 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
             />
 
             <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ flex: 1 }}>
+                    <FormLegend
+                        items={legendItems}
+                        handleClickItem={handleLegendClick}
+                    />
+                </div>
                 <div style={{ flex: 2 }}>
                     <Form onSubmit={handleSubmit(tempSubmit)}>
-                        <Paper>
-                            <FormLegend
-                                items={legendItems}
-                                handleClickItem={handleLegendClick}
-                            />
-                        </Paper>
                         <Paper
                             sx={{
                                 marginTop: "10px",
