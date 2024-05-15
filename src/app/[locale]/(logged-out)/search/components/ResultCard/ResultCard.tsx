@@ -49,7 +49,7 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                         color: "black",
                                         mb: 1.5,
                                     }}>
-                                    {metadata.summary.publisher.publisherName}
+                                    {metadata.summary.publisher.name}
                                 </Typography>
                                 <Typography
                                     sx={{ mb: 1.5 }}
