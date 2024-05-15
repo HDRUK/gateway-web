@@ -293,7 +293,7 @@
             "collections": {
                 "label": "Collections",
                 "title": "Collections",
-                "text": "Discover research resources: datasets, analysis scrips, software, data uses, and publication grouped together by domain, disease, theme or organisation"
+                "text": "Discover research resources: datasets, analysis scripts, software, data uses, and publication grouped together by domain, disease, theme or organisation"
             },
             "phenotypes": {
                 "label": "Phenotypes",
