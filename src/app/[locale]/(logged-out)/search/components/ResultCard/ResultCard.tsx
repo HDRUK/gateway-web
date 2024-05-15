@@ -18,7 +18,7 @@ const TRANSLATION_PATH = "pages.search.components.ResultCard";
 const ResultCard = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
-    const metadata = get(result, "metadata.metadata");
+    const metadata = get(result, "metadata");
     const { _id: datasetId } = result;
 
     const handleClickItem = useCallback(() => {
