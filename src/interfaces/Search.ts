@@ -29,7 +29,7 @@ export interface Aggregations {
     };
     [FILTER_ACCESS_SERVICE]: {
         buckets: Bucket[];
-    }
+    };
     startDate: { value_as_string: string };
     endDate: { value_as_string: string };
 }
