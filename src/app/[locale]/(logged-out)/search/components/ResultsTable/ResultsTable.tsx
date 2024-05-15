@@ -16,8 +16,7 @@ interface ResultTableProps {
     results: SearchResultDataset[];
 }
 
-const CONFORMS_TO_PATH =
-    "metadata.accessibility.formatAndStandards.conformsTo";
+const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
