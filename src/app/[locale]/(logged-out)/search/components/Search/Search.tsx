@@ -188,8 +188,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
             queryParams.per_page
         }&page=${queryParams.page}&sort=${queryParams.sort}${
-            queryParams.type === SearchCategory.PUBLICATIONS &&
-            `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+            queryParams.type === SearchCategory.PUBLICATIONS ?
+            `&${STATIC_FILTER_SOURCE}=${queryParams.source}` : ``
         }`,
         {
             query: queryParams.query,
