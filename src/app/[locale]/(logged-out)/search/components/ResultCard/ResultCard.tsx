@@ -73,7 +73,8 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                     color="text.gray"
                                     dangerouslySetInnerHTML={{
                                         __html: text_to_display,
-                                    }} />
+                                    }}
+                                />
                                 <Box
                                     sx={{
                                         p: 0,
