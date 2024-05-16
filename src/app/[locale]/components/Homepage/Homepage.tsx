@@ -64,9 +64,9 @@ const services = [
     },
 
     {
-        id: SearchCategory.DATA_ANALYSIS,
+        id: SearchCategory.TOOLS,
         image: "/images/homepage/welcome-image.png",
-        href: `/search?type=${SearchCategory.DATA_ANALYSIS}`,
+        href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: "courses",

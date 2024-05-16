@@ -120,7 +120,6 @@ export enum SearchCategory {
     DATA_USE = "dur",
     TOOLS = "tools",
     PUBLICATIONS = "publications",
-    DATA_ANALYSIS = "dataAnalysis",
 }
 
 export enum ViewType {
