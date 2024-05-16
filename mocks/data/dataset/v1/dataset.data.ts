@@ -1,11 +1,11 @@
 import { faker } from "@faker-js/faker";
 import {
     Dataset,
-    Highlight,
     Metadata,
     MetadataMax,
     VersionItem,
 } from "@/interfaces/Dataset";
+import { Highlight } from "@/interfaces/HighlightDataset";
 
 const generateDatasetMetadataV1 = (): MetadataMax => {
     return {

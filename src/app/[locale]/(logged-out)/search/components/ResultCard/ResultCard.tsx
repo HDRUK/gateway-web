@@ -31,12 +31,11 @@ const ResultCard = ({ result }: ResultCardProps) => {
 
     // If available, display the first of the highlights from the abstract, or failing that from the description.
     // Fallback is the (un-highlighted) abstract.
-    const text_to_display =
-        highlight?.abstract !== undefined
-            ? highlight.abstract[0]
-            : highlight?.description !== undefined
-            ? highlight.description[0]
-            : metadata.summary.abstract;
+    const formattedText = highlight?.abstract
+        ? highlight.abstract[0]
+        : highlight?.description
+        ? highlight.description[0]
+        : metadata.summary.abstract;
 
     return (
         <>
@@ -72,7 +71,7 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                     variant="body2"
                                     color="text.gray"
                                     dangerouslySetInnerHTML={{
-                                        __html: text_to_display,
+                                        __html: formattedText,
                                     }}
                                 />
                                 <Box
