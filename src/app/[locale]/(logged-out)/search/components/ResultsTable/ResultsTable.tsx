@@ -16,9 +16,8 @@ interface ResultTableProps {
     results: SearchResultDataset[];
 }
 
-const CONFORMS_TO_PATH =
-    "metadata.metadata.accessibility.formatAndStandards.conformsTo";
-const PUBLISHER_NAME_PATH = "metadata.metadata.summary.publisher.publisherName";
+const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
+const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
@@ -62,7 +61,7 @@ const getColumns = ({
                 <Link href={linkHref}>
                     <EllipsisLineLimit
                         showToolTip
-                        text={get(original, "metadata.metadata.summary.title")}
+                        text={get(original, "metadata.summary.title")}
                     />
                 </Link>
             );
@@ -76,7 +75,7 @@ const getColumns = ({
         cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
                 {getPopulationSize(
-                    original?.metadata?.metadata,
+                    original?.metadata,
                     translations.populationSizeNotReported
                 )}
             </div>
@@ -95,7 +94,7 @@ const getColumns = ({
         id: "dateRange",
         cell: info => (
             <div style={{ textAlign: "center" }}>
-                {getDateRange(info.row.original.metadata?.metadata)}
+                {getDateRange(info.row.original?.metadata)}
             </div>
         ),
         header: () => (

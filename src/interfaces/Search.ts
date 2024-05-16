@@ -48,9 +48,7 @@ export interface SearchResultDataset extends SearchResultBase {
         abstract: string;
         description: string;
     };
-    metadata: {
-        metadata: Metadata;
-    };
+    metadata: Metadata;
 }
 
 export interface SearchResultDataUse extends SearchResultBase {

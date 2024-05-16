@@ -18,7 +18,7 @@ const TRANSLATION_PATH = "pages.search.components.ResultCard";
 const ResultCard = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
-    const metadata = get(result, "metadata.metadata");
+    const metadata = get(result, "metadata");
     const { _id: datasetId } = result;
 
     const handleClickItem = useCallback(() => {
@@ -49,7 +49,11 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                         color: "black",
                                         mb: 1.5,
                                     }}>
-                                    {metadata.summary.publisher.publisherName}
+                                    {metadata.summary.publisher.name !==
+                                    undefined
+                                        ? metadata.summary.publisher.name
+                                        : metadata.summary.publisher
+                                              .publisherName}
                                 </Typography>
                                 <Typography
                                     sx={{ mb: 1.5 }}
