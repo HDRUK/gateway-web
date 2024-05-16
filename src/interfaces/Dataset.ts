@@ -62,13 +62,18 @@ interface Metadata {
         syntheticDataWebLink: string;
     };
 }
+
+interface MetadataMax {
+    metadata: Metadata; 
+    gwdmVersion: string;
+}
 interface VersionItem {
     id: number;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
     dataset_id: number;
-    metadata: { metadata: Metadata; gwdmVersion: string };
+    metadata: MetadataMax;
     version: number;
     publications: Publication[];
 }
@@ -88,4 +93,4 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
-export type { Dataset, DatasetStatus, Metadata, NewDataset, VersionItem };
+export type { Dataset, DatasetStatus, Metadata, MetadataMax, NewDataset, VersionItem };

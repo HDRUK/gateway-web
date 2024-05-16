@@ -1,13 +1,13 @@
 import { faker } from "@faker-js/faker";
-import { Dataset, Metadata, VersionItem } from "@/interfaces/Dataset";
+import { Dataset, Metadata, MetadataMax, VersionItem } from "@/interfaces/Dataset";
 
-const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
+const generateDatasetMetadataV1 = (): { metadata: MetadataMax } => {
     return {
         metadata: {
             summary: {
                 title: faker.datatype.string(),
                 publisher: {
-                    name: faker.datatype.string(),
+                    publisherName: faker.datatype.string(),
                 },
                 abstract: faker.datatype.string(),
                 contactPoint: faker.datatype.string(),
@@ -35,7 +35,7 @@ const generateDatasetMetadataMiniV1 = (): { metadata: Metadata } => {
         summary: {
             title: faker.datatype.string(),
             publisher: {
-                name: faker.datatype.string(),
+                publisherName: faker.datatype.string(),
             },
             abstract: faker.datatype.string(),
             contactPoint: faker.datatype.string(),
@@ -56,7 +56,7 @@ const generateDatasetMetadataMiniV1 = (): { metadata: Metadata } => {
     };
 };
 
-const generateDatasetMetadataV1p1 = (): { metadata: Metadata } => {
+const generateDatasetMetadataV1p1 = (): { metadata: MetadataMax } => {
     return {
         metadata: {
             summary: {

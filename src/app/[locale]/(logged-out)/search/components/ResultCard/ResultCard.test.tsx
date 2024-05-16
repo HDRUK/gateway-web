@@ -26,7 +26,7 @@ describe("ResultCard", () => {
             screen.getByText(mockResult.summary.abstract)
         ).toBeInTheDocument();
         expect(
-            screen.getByText(mockResult.summary.publisher.name)
+            screen.getByText(mockResult.summary.publisher.publisherName)
         ).toBeInTheDocument();
         expect(
             screen.getByText(mockResult.summary.shortTitle)

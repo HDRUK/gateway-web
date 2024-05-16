@@ -4,7 +4,7 @@ import { generateDatasetV1 } from "@/mocks/data/dataset";
 import { getDatasetsV1 } from "@/mocks/handlers/datasets";
 import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
-
+import { log, error } from "console";
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 window.scrollTo = jest.fn();
 
@@ -23,7 +23,7 @@ describe("TeamDatasets", () => {
         ];
         server.use(getDatasetsV1(mockDatasets));
         render(<TeamDatasets permissions={{}} />);
-
+        log(mockDatasets[0].versions[0].metadata);
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
             expect(datasetCards).toHaveLength(3);
@@ -89,7 +89,9 @@ describe("TeamDatasets", () => {
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
             expect(datasetCards).toHaveLength(3);
-
+            log(mockDatasets[0].versions[0].metadata);
+            log(mockDatasets[1].versions[0].metadata);
+            log(mockDatasets[2].versions[0].metadata);
             expect(
                 within(datasetCards[0]).getByText(
                     `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`

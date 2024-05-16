@@ -1,5 +1,5 @@
 import { get } from "lodash";
-import { Dataset } from "@/interfaces/Dataset";
+import { NewDataset } from "@/interfaces/Dataset";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
@@ -11,7 +11,7 @@ import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 
 interface DatasetCardProps {
-    dataset: Dataset;
+    dataset: NewDataset;
     actions: {
         icon: IconType;
         href?: string;
