@@ -8,6 +8,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowForward from "@mui/icons-material/ArrowForward";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import BackupIcon from "@mui/icons-material/Backup";
@@ -76,6 +77,7 @@ export {
     CheckCircleTwoToneIcon,
     CheckCircleIcon,
     ArrowBackIosNewIcon,
+    ArrowForwardIosIcon,
     ArrowRightIcon,
     ArrowLeftIcon,
     AccountCircleIcon,

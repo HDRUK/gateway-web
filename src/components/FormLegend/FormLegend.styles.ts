@@ -2,6 +2,10 @@ import { styled } from "@mui/material";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 
+interface WrapperProps {
+    offsetTop: string;
+}
+
 interface ProgressIconProps {
     iconColour: string;
 }
@@ -9,9 +13,9 @@ interface ProgressIconProps {
 const ICON_SIZE = "18px";
 const SVG_SIZE = "13px";
 
-export const Wrapper = styled(Box)(() => ({
+export const Wrapper = styled(Box)<WrapperProps>(({ offsetTop }) => ({
     position: "sticky",
-    top: 0,
+    top: offsetTop,
     padding: 0,
 }));
 

@@ -4,11 +4,13 @@ import { ListItemButton } from "@mui/material";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { colors } from "@/config/theme";
 import { CloseIcon, CheckIcon, PriorityHighIcon } from "@/consts/icons";
+import { capitalise, splitCamelcase } from "@/utils/general";
 import Typography from "../Typography";
 import { Wrapper, LegendIcon } from "./FormLegend.styles";
 
 interface FormLegendProps {
     items: LegendItem[];
+    offsetTop?: string;
     handleClickItem?: (itemIndex: number) => void;
 }
 
@@ -40,8 +42,8 @@ const getBackgroundColour = (status: LegendStatus) => {
     }
 };
 
-const FormLegend = ({ items, handleClickItem }: FormLegendProps) => (
-    <Wrapper>
+const FormLegend = ({ items, offsetTop, handleClickItem }: FormLegendProps) => (
+    <Wrapper offsetTop={offsetTop || "initial"}>
         {items.map((item, index) => (
             <ListItemButton
                 key={item.name}
@@ -49,7 +51,7 @@ const FormLegend = ({ items, handleClickItem }: FormLegendProps) => (
                 <LegendIcon iconColour={getBackgroundColour(item.status)}>
                     {getIcon(item.status)}
                 </LegendIcon>
-                <Typography>{item.name}</Typography>
+                <Typography>{capitalise(splitCamelcase(item.name))}</Typography>
             </ListItemButton>
         ))}
     </Wrapper>

@@ -8,15 +8,18 @@ import { buildYup } from "schema-to-yup";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
+import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import FormBanner from "@/components/FormBanner";
+import { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { inputComponents } from "@/config/forms";
 import theme from "@/config/theme";
+import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import {
     ACCOUNT,
     COMPONENTS,
@@ -31,6 +34,7 @@ import {
     isFirstSection,
     isLastSection,
 } from "@/utils/formHydration";
+import { capitalise, splitCamelcase } from "@/utils/general";
 import formSchema from "./config/form.json";
 
 interface CreateDatasetProps {
@@ -60,10 +64,6 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
     );
 
     const schemaFields: FormHydration[] = formSchema.schema_fields;
-
-    const tempSubmit = (formData: unknown) => {
-        console.log(formData);
-    };
 
     const generateValidationRules = schema => {
         const validationRules: SchemaValidation = {};
@@ -146,6 +146,24 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
         setSelectedFormSection(formSections[clickedIndex]);
     };
 
+    const [navbarHeight, setNavbarHeight] = useState<string>();
+
+    // Handle form legend top offset
+    useEffect(() => {
+        const handleResize = () => {
+            const navbar = document.getElementById(NAVBAR_ID);
+            setNavbarHeight(`${navbar?.offsetHeight}px`);
+        };
+
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     const renderFormHydrationField = ({
         label,
         name,
@@ -189,6 +207,12 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
             />
         );
     };
+
+    // TODO - form submission
+    const formSubmit = (formData: unknown) => {
+        console.log(formData);
+    };
+
     return (
         <>
             <FormBanner
@@ -201,21 +225,30 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
             />
 
             <div style={{ display: "flex", flexDirection: "row" }}>
-                <div style={{ flex: 1 }}>
+                <div
+                    style={{
+                        flex: 1,
+                        padding: theme.spacing(1),
+                    }}>
                     <FormLegend
                         items={legendItems}
                         handleClickItem={handleLegendClick}
+                        offsetTop={navbarHeight}
                     />
                 </div>
                 <div style={{ flex: 2 }}>
-                    <Form onSubmit={handleSubmit(tempSubmit)}>
+                    <Form onSubmit={handleSubmit(formSubmit)}>
                         <Paper
                             sx={{
                                 marginTop: "10px",
                                 marginBottom: "10px",
                                 padding: 2,
                             }}>
-                            <h1>{selectedFormSection}</h1>
+                            <Typography variant="h2">
+                                {capitalise(
+                                    splitCamelcase(selectedFormSection)
+                                )}
+                            </Typography>
 
                             <div>
                                 {selectedFormSection &&
@@ -238,47 +271,88 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
                                         })}
                             </div>
                         </Paper>
-                        <Paper
-                            sx={{
-                                display: "flex",
-                                justifyContent: "end",
-                                marginBottom: "10px",
-                                padding: 2,
-                            }}>
-                            <Button
-                                onClick={() =>
-                                    setSelectedFormSection(
-                                        formSections[currentSectionIndex - 1]
-                                    )
-                                }
-                                disabled={isFirstSection(currentSectionIndex)}>
-                                {t("previous")}
-                            </Button>
-
-                            <Button
-                                onClick={() =>
-                                    setSelectedFormSection(
-                                        formSections[currentSectionIndex + 1]
-                                    )
-                                }
-                                disabled={isLastSection(
-                                    formSections,
-                                    currentSectionIndex
-                                )}>
-                                {t("next")}
-                            </Button>
-                            <Button type="submit">{t("submit")}</Button>
-                        </Paper>
                     </Form>
                 </div>
-                <div
+                <Paper
                     style={{
                         flex: 1,
                         alignItems: "center",
                         padding: theme.spacing(2),
+                        margin: theme.spacing(1.25),
                     }}>
                     <Typography variant="h2">{t("guidance")}</Typography>
-                </div>
+                </Paper>
+            </div>
+
+            <div
+                style={{ padding: theme.spacing(1), margin: theme.spacing(2) }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                    }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            flex: 1,
+                            justifyContent: "center",
+                        }}>
+                        <Button
+                            onClick={() =>
+                                setSelectedFormSection(
+                                    formSections[currentSectionIndex - 1]
+                                )
+                            }
+                            disabled={isFirstSection(currentSectionIndex)}
+                            variant="text"
+                            startIcon={<ArrowBackIosNewIcon />}>
+                            {t("previous")}
+                        </Button>
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            flex: 1,
+                            justifyContent: "center",
+                        }}>
+                        <Button
+                            type="submit"
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() =>
+                                setSelectedFormSection(
+                                    formSections[currentSectionIndex + 1]
+                                )
+                            }
+                            disabled={isLastSection(
+                                formSections,
+                                currentSectionIndex
+                            )}>
+                            {t("skip")}
+                        </Button>
+                    </div>
+
+                    <div
+                        style={{
+                            display: "flex",
+                            flex: 1,
+                            justifyContent: "center",
+                        }}>
+                        <Button
+                            onClick={() =>
+                                setSelectedFormSection(
+                                    formSections[currentSectionIndex + 1]
+                                )
+                            }
+                            disabled={isLastSection(
+                                formSections,
+                                currentSectionIndex
+                            )}
+                            endIcon={<ArrowForwardIosIcon />}>
+                            {t("next")}
+                        </Button>
+                    </div>
+                </Box>
             </div>
         </>
     );

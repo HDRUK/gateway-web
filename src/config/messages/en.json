@@ -174,7 +174,7 @@
                             "guidance": "Guidance",
                             "next": "Next",
                             "previous": "Previous",
-                            "submit": "Submit"
+                            "skip": "Skip this step"
                         },
                         "EditDataset": {
                             "editButton": "Update",

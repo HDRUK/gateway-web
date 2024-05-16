@@ -19,6 +19,7 @@ interface FormBannerProps {
 }
 
 const TRANSLATION_PATH = "components.FormBanner";
+export const NAVBAR_ID = "form-navbar";
 
 const FormBanner = ({
     tabItems,
@@ -31,7 +32,7 @@ const FormBanner = ({
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
-        <Wrapper>
+        <Wrapper id={NAVBAR_ID}>
             <Paper sx={{ m: 0 }}>
                 <Tabs
                     variant={TabVariant.SLIM}
