@@ -12,6 +12,7 @@ interface CardActionsProps {
         href?: string;
         action?: (id: number) => void;
         label: string;
+        disabled?: boolean;
     }[];
 }
 
@@ -24,24 +25,26 @@ const linkWrapper =
 const CardActions = ({ actions, id }: CardActionsProps) => {
     return (
         <>
-            {actions.map(({ icon: Icon, href, label, action }) => (
+            {actions.map(({ icon: Icon, href, label, disabled, action }) => (
                 <Tooltip key={label} placement="left" title={label}>
                     <ConditionalWrapper
-                        requiresWrapper={!!href}
+                        requiresWrapper={!!href && !disabled}
                         wrapper={linkWrapper({
                             href,
                             id,
                         })}>
                         <IconButton
-                            {...(action && {
-                                onClick: () => {
-                                    action(id);
-                                },
-                            })}
+                            {...(action &&
+                                !disabled && {
+                                    onClick: () => {
+                                        action(id);
+                                    },
+                                })}
                             disableRipple
                             size="large"
+                            disabled={disabled}
                             aria-label={label}>
-                            <Icon color="primary" />
+                            <Icon color={disabled ? "disabled" : "primary"} />
                         </IconButton>
                     </ConditionalWrapper>
                 </Tooltip>

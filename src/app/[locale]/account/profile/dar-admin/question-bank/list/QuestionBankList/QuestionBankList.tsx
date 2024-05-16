@@ -17,6 +17,7 @@ import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 import QuestionListItem from "../QuestionBankListItem/QuestionBankListItem";
 
 const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement`;
@@ -36,7 +37,7 @@ const QuestionBankList = () => {
 
     const actions = [
         {
-            href: `/to-be-implemented`,
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
             icon: EditIcon,
             label: t("edit.label"),
         },
@@ -137,7 +138,8 @@ const QuestionBankList = () => {
                     <Box sx={{ paddingBottom: 2 }}>
                         <Typography variant="h2">{t("title")}</Typography>
                         <Typography>{t("text")}</Typography>
-                        <Link href="/to-be-implemented">
+                        <Link
+                            href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.CREATE}`}>
                             <Button> {t("create.label")} </Button>
                         </Link>
                     </Box>

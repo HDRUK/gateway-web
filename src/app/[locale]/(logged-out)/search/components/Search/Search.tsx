@@ -42,6 +42,7 @@ import {
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
+    FILTER_ACCESS_SERVICE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
@@ -130,6 +131,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
         [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
+        [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
     });
 
     const { handleDownload } = useSearch(
@@ -188,8 +190,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
             queryParams.per_page
         }&page=${queryParams.page}&sort=${queryParams.sort}${
-            queryParams.type === SearchCategory.PUBLICATIONS &&
-            `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+            queryParams.type === SearchCategory.PUBLICATIONS
+                ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+                : ``
         }`,
         {
             query: queryParams.query,
@@ -227,6 +230,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_PUBLICATION_DATE]: undefined,
             [FILTER_SECTOR]: undefined,
             [FILTER_DATA_PROVIDER]: undefined,
+            [FILTER_ACCESS_SERVICE]: undefined,
         });
     };
 
@@ -367,7 +371,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    SearchCategory.DATA_PROVIDERS
+                    queryParams.type === SearchCategory.DATA_PROVIDERS
                         ? "tiled"
                         : "list"
                 }>
