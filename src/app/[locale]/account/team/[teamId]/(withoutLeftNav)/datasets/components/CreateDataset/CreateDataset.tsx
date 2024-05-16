@@ -37,10 +37,6 @@ import {
 import { capitalise, splitCamelcase } from "@/utils/general";
 import formSchema from "./config/form.json";
 
-interface CreateDatasetProps {
-    test?: boolean;
-}
-
 interface FieldValidation {
     [key: string]: unknown;
 }
@@ -49,19 +45,19 @@ interface SchemaValidation {
     [key: string]: FieldValidation;
 }
 
-const TAB_LIST = [
-    { label: "Online Form", value: "FORM" },
-    { label: "Upload File", value: "UPLOAD" },
-].map(tabItem => ({
-    label: `${tabItem.label} `,
-    value: tabItem.value,
-    content: null,
-}));
-
-const CreateDataset = ({ test }: CreateDatasetProps) => {
+const CreateDataset = () => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
+
+    const bannerTabList = [
+        { label: t("onlineForm"), value: "FORM" },
+        { label: t("uploadFile"), value: "UPLOAD" },
+    ].map(tabItem => ({
+        label: tabItem.label,
+        value: tabItem.value,
+        content: null,
+    }));
 
     const schemaFields: FormHydration[] = formSchema.schema_fields;
 
@@ -216,7 +212,7 @@ const CreateDataset = ({ test }: CreateDatasetProps) => {
     return (
         <>
             <FormBanner
-                tabItems={TAB_LIST}
+                tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={() => console.log("MAKE ACTIVE")}
                 saveAsDraftAction={() => console.log("SAVE AS DRAFT")}

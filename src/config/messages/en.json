@@ -174,7 +174,9 @@
                             "guidance": "Guidance",
                             "next": "Next",
                             "previous": "Previous",
-                            "skip": "Skip this step"
+                            "skip": "Skip this step",
+                            "onlineForm": "Online Form",
+                            "uploadFile": "Upload File"
                         },
                         "EditDataset": {
                             "editButton": "Update",
