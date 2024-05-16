@@ -64,7 +64,7 @@ interface Metadata {
 }
 
 interface MetadataMax {
-    metadata: Metadata; 
+    metadata: Metadata;
     gwdmVersion: string;
 }
 interface VersionItem {
@@ -93,4 +93,11 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
-export type { Dataset, DatasetStatus, Metadata, MetadataMax, NewDataset, VersionItem };
+export type {
+    Dataset,
+    DatasetStatus,
+    Metadata,
+    MetadataMax,
+    NewDataset,
+    VersionItem,
+};
