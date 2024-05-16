@@ -42,6 +42,7 @@ import {
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
+    FILTER_ACCESS_SERVICE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
@@ -130,6 +131,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
         [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
+        [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
     });
 
     const { handleDownload } = useSearch(
@@ -228,6 +230,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_PUBLICATION_DATE]: undefined,
             [FILTER_SECTOR]: undefined,
             [FILTER_DATA_PROVIDER]: undefined,
+            [FILTER_ACCESS_SERVICE]: undefined,
         });
     };
 

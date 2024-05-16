@@ -366,7 +366,9 @@
                             "dateRange": "Date range",
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
                             "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
+                            "accessService": "Access service",
+                            "accessServiceTooltip": "The method through which a researcher accesses the dataset"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data custodian",

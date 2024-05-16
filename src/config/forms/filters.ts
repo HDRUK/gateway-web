@@ -10,6 +10,7 @@ export const FILTER_SECTOR = "sector";
 export const FILTER_DATA_PROVIDER = "dataProvider";
 export const FILTER_CATEGORY = "category";
 export const FILTER_LICENSE = "license";
+export const FILTER_ACCESS_SERVICE = "accessService";
 
 export const filtersList = [
     FILTER_PUBLISHER_NAME,
@@ -24,4 +25,5 @@ export const filtersList = [
     FILTER_PROGRAMMING_LANGUAGE,
     FILTER_CATEGORY,
     FILTER_LICENSE,
+    FILTER_ACCESS_SERVICE,
 ];

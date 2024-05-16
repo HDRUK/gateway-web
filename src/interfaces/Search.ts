@@ -8,6 +8,7 @@ import {
     FILTER_PUBLICATION_DATE,
     FILTER_SECTOR,
     FILTER_DATA_PROVIDER,
+    FILTER_ACCESS_SERVICE,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -24,6 +25,9 @@ export interface Aggregations {
         buckets: Bucket[];
     };
     [FILTER_SECTOR]: {
+        buckets: Bucket[];
+    };
+    [FILTER_ACCESS_SERVICE]: {
         buckets: Bucket[];
     };
     startDate: { value_as_string: string };
@@ -142,6 +146,7 @@ export interface SearchQueryParams {
     [FILTER_PUBLICATION_DATE]: string[] | undefined;
     [FILTER_SECTOR]: string[] | undefined;
     [FILTER_DATA_PROVIDER]: string[] | undefined;
+    [FILTER_ACCESS_SERVICE]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };
