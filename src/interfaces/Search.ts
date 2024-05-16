@@ -45,8 +45,8 @@ interface SearchResultBase {
 
 export interface SearchResultDataset extends SearchResultBase {
     highlight: {
-        abstract: string;
-        description: string;
+        abstract: string[];
+        description: string[];
     };
     metadata: Metadata;
 }

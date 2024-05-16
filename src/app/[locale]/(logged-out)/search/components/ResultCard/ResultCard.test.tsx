@@ -1,15 +1,16 @@
 import { formatDate } from "@/utils/date";
 import { render, screen } from "@/utils/testUtils";
-import { generateDatasetMetadataMiniV1 } from "@/mocks/data/dataset";
+import { generateDatasetHighlightsV1, generateDatasetMetadataMiniV1 } from "@/mocks/data/dataset";
 import ResultCard from "./ResultCard";
 
 describe("ResultCard", () => {
     const mockResult = generateDatasetMetadataMiniV1();
+    const mockHighlight = generateDatasetHighlightsV1();
     it("should render with all data", async () => {
         render(
             <ResultCard
                 result={{
-                    highlight: { abstract: "string", description: "string" },
+                    highlight: mockHighlight,
                     metadata: mockResult,
                     _id: "1",
                 }}
@@ -23,7 +24,7 @@ describe("ResultCard", () => {
         )}-${formatDate(mockResult.provenance.temporal.endDate || "", "YYYY")}`;
 
         expect(
-            screen.getByText(mockResult.summary.abstract)
+            screen.getByText(mockHighlight.abstract[0])
         ).toBeInTheDocument();
         expect(
             screen.getByText(mockResult.summary.publisher.publisherName)

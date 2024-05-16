@@ -93,9 +93,15 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
+interface Highlight {
+    abstract?: string[];
+    description?: string[];
+}
+
 export type {
     Dataset,
     DatasetStatus,
+    Highlight,
     Metadata,
     MetadataMax,
     NewDataset,

@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Dataset, Metadata, MetadataMax, VersionItem } from "@/interfaces/Dataset";
+import { Dataset, Highlight, Metadata, MetadataMax, VersionItem } from "@/interfaces/Dataset";
 
 const generateDatasetMetadataV1 = (): { metadata: MetadataMax } => {
     return {
@@ -101,6 +101,19 @@ const generateDatasetV1 = (version = "1.0", data = {}): Dataset => {
     };
 };
 
+const generateDatasetHighlightsV1 = (): Highlight => {
+    return {
+        abstract: [
+            faker.datatype.string(),
+            faker.datatype.string()
+        ],
+        description: [
+            faker.datatype.string(),
+            faker.datatype.string()
+        ]
+    };
+};
+
 const datasetVersionV1 = generateDatasetVersionV1("1.0");
 const datasetVersionV1p1 = generateDatasetVersionV1("1.1");
 const datasetV1 = generateDatasetV1("1.0");
@@ -114,6 +127,7 @@ const datasetsV1p1 = Array.from({ length: 3 }).map(() =>
 
 export {
     generateDatasetV1,
+    generateDatasetHighlightsV1,
     generateDatasetMetadataV1,
     generateDatasetMetadataMiniV1,
     generateDatasetVersionV1,
