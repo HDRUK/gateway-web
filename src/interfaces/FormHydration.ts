@@ -8,22 +8,22 @@ export interface FormHydrationField {
     options?: Option[];
     variant?: string;
     name: string;
-    label?: string;
+    label?: string | null;
     limit?: number;
     required?: boolean;
     hidden?: boolean;
-    placeholder?: string;
+    placeholder?: string | null;
     showClearButton?: boolean;
 }
 
 interface FormHydration {
     title: string;
-    description?: string;
+    description?: string | null;
     guidance?: string;
     is_array_form: boolean;
     location: string;
     field: FormHydrationField;
-    fields?: FormHydrationField[];
+    validation: unknown;
 }
 
 export type { FormHydration };

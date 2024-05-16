@@ -870,10 +870,6 @@
                     {
                         "label": "OTHER",
                         "value": "OTHER"
-                    },
-                    {
-                        "label": null,
-                        "value": null
                     }
                 ],
                 "name": "Followup",
@@ -896,8 +892,7 @@
                                 "> 10 YEARS",
                                 "UNKNOWN",
                                 "CONTINUOUS",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ],
                             "enum_titles": [
                                 "0 - 6 MONTHS",
@@ -906,8 +901,7 @@
                                 "> 10 YEARS",
                                 "UNKNOWN",
                                 "CONTINUOUS",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ]
                         }
                     }
@@ -1265,8 +1259,7 @@
                                     "ADMINISTRATIVE",
                                     "FINANCIAL",
                                     "STATUTORY",
-                                    "OTHER",
-                                    null
+                                    "OTHER"
                                 ],
                                 "enum_titles": [
                                     "STUDY",
@@ -1277,8 +1270,7 @@
                                     "ADMINISTRATIVE",
                                     "FINANCIAL",
                                     "STATUTORY",
-                                    "OTHER",
-                                    null
+                                    "OTHER"
                                 ]
                             }
                         }
@@ -1524,10 +1516,6 @@
                     {
                         "label": "OTHER",
                         "value": "OTHER"
-                    },
-                    {
-                        "label": null,
-                        "value": null
                     }
                 ],
                 "name": "Time Lag",
@@ -1553,8 +1541,7 @@
                                 "VARIABLE",
                                 "NO TIMELAG",
                                 "NOT APPLICABLE",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ],
                             "enum_titles": [
                                 "LESS 1 WEEK",
@@ -1566,8 +1553,7 @@
                                 "VARIABLE",
                                 "NO TIMELAG",
                                 "NOT APPLICABLE",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ]
                         }
                     }
@@ -1638,10 +1624,6 @@
                     {
                         "label": "OTHER",
                         "value": "OTHER"
-                    },
-                    {
-                        "label": null,
-                        "value": null
                     }
                 ],
                 "name": "Publishing Frequency",
@@ -1671,8 +1653,7 @@
                                 "WEEKLY",
                                 "SEMIWEEKLY",
                                 "DAILY",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ],
                             "enum_titles": [
                                 "STATIC",
@@ -1688,8 +1669,7 @@
                                 "WEEKLY",
                                 "SEMIWEEKLY",
                                 "DAILY",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ]
                         }
                     }
@@ -1988,10 +1968,6 @@
                     {
                         "label": "OTHER",
                         "value": "OTHER"
-                    },
-                    {
-                        "label": null,
-                        "value": null
                     }
                 ],
                 "name": "Access Request Duration",
@@ -2016,8 +1992,7 @@
                                 "MORE 6 MONTHS",
                                 "VARIABLE",
                                 "NOT APPLICABLE",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ],
                             "enum_titles": [
                                 "LESS 1 WEEK",
@@ -2028,8 +2003,7 @@
                                 "MORE 6 MONTHS",
                                 "VARIABLE",
                                 "NOT APPLICABLE",
-                                "OTHER",
-                                null
+                                "OTHER"
                             ]
                         }
                     }

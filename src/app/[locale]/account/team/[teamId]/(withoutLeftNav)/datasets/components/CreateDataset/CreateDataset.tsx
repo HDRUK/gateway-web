@@ -35,6 +35,7 @@ import {
     isLastSection,
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
+import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import formSchema from "./config/form.json";
 
 interface FieldValidation {
@@ -61,10 +62,10 @@ const CreateDataset = () => {
 
     const schemaFields: FormHydration[] = formSchema.schema_fields;
 
-    const generateValidationRules = schema => {
+    const generateValidationRules = (schemaFields: FormHydration[]) => {
         const validationRules: SchemaValidation = {};
 
-        schema.schema_fields.forEach(fieldTest => {
+        schemaFields.forEach(fieldTest => {
             const { title, validation, field } = fieldTest;
 
             if (validation?.schema && !field.hidden) {
@@ -83,22 +84,21 @@ const CreateDataset = () => {
 
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
 
-    const genSchemaTest = {
+    const generatedYupValidation = {
         title: "Metadata form",
-        description: "Test form",
         type: "object",
-        properties: generateValidationRules(formSchema),
+        properties: generateValidationRules(schemaFields),
     };
 
-    const yupSchema = buildYup(genSchemaTest);
+    const yupSchema = buildYup(generatedYupValidation);
 
     const { control, handleSubmit, clearErrors, trigger, getValues } = useForm({
         mode: "onTouched",
         resolver: yupResolver(yupSchema),
     });
 
-    const formSections = getFirstLocationValues(formSchema).filter(location =>
-        hasVisibleFieldsForLocation(formSchema, location)
+    const formSections = getFirstLocationValues(schemaFields).filter(location =>
+        hasVisibleFieldsForLocation(schemaFields, location)
     );
 
     const currentSectionIndex = selectedFormSection
@@ -109,16 +109,16 @@ const CreateDataset = () => {
 
     // When form loaded - select first form section with displayed fields
     useEffect(() => {
-        const getFirstNonHiddenSection = schema => {
-            const nonHiddenField = schema.schema_fields.find(field =>
-                hasVisibleFieldsForLocation(schema, field.location)
+        const getFirstNonHiddenSection = (schemaFields: FormHydration[]) => {
+            const nonHiddenField = schemaFields.find(field =>
+                hasVisibleFieldsForLocation(schemaFields, field.location)
             );
             return nonHiddenField && nonHiddenField.location.split(".")[0];
         };
 
-        const initialSection = getFirstNonHiddenSection(formSchema);
+        const initialSection = getFirstNonHiddenSection(schemaFields) || "";
         setSelectedFormSection(initialSection);
-    }, []);
+    }, [schemaFields]);
 
     useEffect(() => {
         const createLegendItems = async () => {
@@ -161,7 +161,6 @@ const CreateDataset = () => {
     }, []);
 
     const renderFormHydrationField = ({
-        label,
         name,
         required,
         component,
@@ -220,9 +219,9 @@ const CreateDataset = () => {
                 optionalPercentage={0}
             />
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-                <div
-                    style={{
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+                <Box
+                    sx={{
                         flex: 1,
                         padding: theme.spacing(1),
                     }}>
@@ -231,8 +230,8 @@ const CreateDataset = () => {
                         handleClickItem={handleLegendClick}
                         offsetTop={navbarHeight}
                     />
-                </div>
-                <div style={{ flex: 2 }}>
+                </Box>
+                <Box sx={{ flex: 2, p: 0 }}>
                     <Form onSubmit={handleSubmit(formSubmit)}>
                         <Paper
                             sx={{
@@ -246,7 +245,7 @@ const CreateDataset = () => {
                                 )}
                             </Typography>
 
-                            <div>
+                            <Box sx={{ p: 0 }}>
                                 {selectedFormSection &&
                                     schemaFields
                                         .filter(
@@ -265,10 +264,10 @@ const CreateDataset = () => {
                                                 field
                                             );
                                         })}
-                            </div>
+                            </Box>
                         </Paper>
                     </Form>
-                </div>
+                </Box>
                 <Paper
                     style={{
                         flex: 1,
@@ -278,20 +277,11 @@ const CreateDataset = () => {
                     }}>
                     <Typography variant="h2">{t("guidance")}</Typography>
                 </Paper>
-            </div>
+            </Box>
 
-            <div
-                style={{ padding: theme.spacing(1), margin: theme.spacing(2) }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                    }}>
-                    <div
-                        style={{
-                            display: "flex",
-                            flex: 1,
-                            justifyContent: "center",
-                        }}>
+            <Box sx={{ padding: theme.spacing(1), margin: theme.spacing(2) }}>
+                <FormFooter>
+                    <FormFooterItem>
                         <Button
                             onClick={() =>
                                 setSelectedFormSection(
@@ -303,14 +293,9 @@ const CreateDataset = () => {
                             startIcon={<ArrowBackIosNewIcon />}>
                             {t("previous")}
                         </Button>
-                    </div>
+                    </FormFooterItem>
 
-                    <div
-                        style={{
-                            display: "flex",
-                            flex: 1,
-                            justifyContent: "center",
-                        }}>
+                    <FormFooterItem>
                         <Button
                             type="submit"
                             variant="outlined"
@@ -326,14 +311,9 @@ const CreateDataset = () => {
                             )}>
                             {t("skip")}
                         </Button>
-                    </div>
+                    </FormFooterItem>
 
-                    <div
-                        style={{
-                            display: "flex",
-                            flex: 1,
-                            justifyContent: "center",
-                        }}>
+                    <FormFooterItem>
                         <Button
                             onClick={() =>
                                 setSelectedFormSection(
@@ -347,9 +327,9 @@ const CreateDataset = () => {
                             endIcon={<ArrowForwardIosIcon />}>
                             {t("next")}
                         </Button>
-                    </div>
-                </Box>
-            </div>
+                    </FormFooterItem>
+                </FormFooter>
+            </Box>
         </>
     );
 };

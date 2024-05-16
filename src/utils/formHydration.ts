@@ -82,8 +82,11 @@ const formValidateSection = async (
 const formIsSectionActive = (section: string, activeSectionName: string) =>
     section === activeSectionName;
 
-const hasVisibleFieldsForLocation = (schema, location: string): boolean => {
-    const fieldsForLocation = schema.schema_fields.filter(field =>
+const hasVisibleFieldsForLocation = (
+    schemaFields: FormHydration[],
+    location: string
+): boolean => {
+    const fieldsForLocation = schemaFields.filter(field =>
         field.location.startsWith(location)
     );
 
@@ -133,9 +136,9 @@ const isFirstSection = (currentSectionIndex: number) =>
 const isLastSection = (formSections: string[], currentSectionIndex: number) =>
     formSections.length - 1 <= currentSectionIndex;
 
-const getFirstLocationValues = schema => {
+const getFirstLocationValues = (schemaFields: FormHydration[]) => {
     const locationSet = new Set<string>(
-        schema.schema_fields.map(({ location }) => location.split(".")[0])
+        schemaFields.map(({ location }) => location.split(".")[0])
     );
 
     return Array.from(locationSet);

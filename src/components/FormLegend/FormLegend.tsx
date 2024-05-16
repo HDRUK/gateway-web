@@ -43,7 +43,9 @@ const getBackgroundColour = (status: LegendStatus) => {
 };
 
 const FormLegend = ({ items, offsetTop, handleClickItem }: FormLegendProps) => (
-    <Wrapper offsetTop={offsetTop || "initial"}>
+    <Wrapper
+        offsetTop={offsetTop || "initial"}
+        sx={{ justifyContent: "center" }}>
         {items.map((item, index) => (
             <ListItemButton
                 key={item.name}
