@@ -31,11 +31,10 @@ const ResultCard = ({ result }: ResultCardProps) => {
 
     // If available, display the first of the highlights from the abstract, or failing that from the description.
     // Fallback is the (un-highlighted) abstract.
-    const formattedText = highlight?.abstract
-        ? highlight.abstract[0]
-        : highlight?.description
-        ? highlight.description[0]
-        : metadata.summary.abstract;
+    const formattedText =
+        highlight?.abstract?.[0] ??
+        highlight?.description?.[0] ??
+        metadata.summary.abstract;
 
     return (
         <>
