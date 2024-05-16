@@ -1,6 +1,9 @@
 import { formatDate } from "@/utils/date";
 import { render, screen } from "@/utils/testUtils";
-import { generateDatasetHighlightsV1, generateDatasetMetadataMiniV1 } from "@/mocks/data/dataset";
+import {
+    generateDatasetHighlightsV1,
+    generateDatasetMetadataMiniV1,
+} from "@/mocks/data/dataset";
 import ResultCard from "./ResultCard";
 
 describe("ResultCard", () => {
@@ -23,9 +26,7 @@ describe("ResultCard", () => {
             "YYYY"
         )}-${formatDate(mockResult.provenance.temporal.endDate || "", "YYYY")}`;
 
-        expect(
-            screen.getByText(mockHighlight.abstract[0])
-        ).toBeInTheDocument();
+        expect(screen.getByText(mockHighlight.abstract[0])).toBeInTheDocument();
         expect(
             screen.getByText(mockResult.summary.publisher.publisherName)
         ).toBeInTheDocument();

@@ -9,6 +9,7 @@ import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight } from "./ResultCard.styles";
+
 interface ResultCardProps {
     result: SearchResultDataset;
 }
@@ -28,7 +29,7 @@ const ResultCard = ({ result }: ResultCardProps) => {
 
     if (!metadata) return null;
 
-    // If available, display the first of the highlights from the abstract, or failing that from the description. 
+    // If available, display the first of the highlights from the abstract, or failing that from the description.
     // Fallback is the (un-highlighted) abstract.
     const text_to_display =
         highlight?.abstract !== undefined
@@ -70,8 +71,9 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                     component="div"
                                     variant="body2"
                                     color="text.gray"
-                                    dangerouslySetInnerHTML={{ __html: text_to_display}}>
-                                </Highlight>
+                                    dangerouslySetInnerHTML={{
+                                        __html: text_to_display,
+                                    }}></Highlight>
                                 <Box
                                     sx={{
                                         p: 0,
