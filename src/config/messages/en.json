@@ -318,7 +318,7 @@
                 "title": "Publications",
                 "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
             },
-            "dataAnalysis": {
+            "tools": {
                 "label": "Data Analysis Scripts / Software",
                 "title": "Data Analysis Scripts / Software",
                 "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
