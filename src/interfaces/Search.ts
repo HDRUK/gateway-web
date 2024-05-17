@@ -12,6 +12,7 @@ import {
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
+import { Highlight } from "./HighlightDataset";
 import { PaginationType } from "./Pagination";
 
 export interface Aggregations {
@@ -44,10 +45,7 @@ interface SearchResultBase {
 }
 
 export interface SearchResultDataset extends SearchResultBase {
-    highlight: {
-        abstract: string;
-        description: string;
-    };
+    highlight: Highlight;
     metadata: Metadata;
 }
 
