@@ -597,10 +597,18 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     }}>
                                     {t("publicationWelcomeHeader")}
                                 </Typography>
-                                <Typography variant="h3">
+                                <Typography
+                                    variant="h3"
+                                    sx={{
+                                        pb: 3,
+                                    }}>
                                     {t("publicationWelcomeText1")}
                                 </Typography>
-                                <Typography variant="h3">
+                                <Typography
+                                    variant="h3"
+                                    sx={{
+                                        pb: 3,
+                                    }}>
                                     {t("publicationWelcomeText2")}
                                 </Typography>
                                 <Typography variant="h3">
