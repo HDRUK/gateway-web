@@ -186,6 +186,14 @@
                         "text": "Update and duplicate this dataset."
                     },
                     "components": {
+                        "CreateDataset": {
+                            "guidance": "Guidance",
+                            "next": "Next",
+                            "previous": "Previous",
+                            "skip": "Skip this step",
+                            "onlineForm": "Online Form",
+                            "uploadFile": "Upload File"
+                        },
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
