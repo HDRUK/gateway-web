@@ -192,7 +192,10 @@
                             "previous": "Previous",
                             "skip": "Skip this step",
                             "onlineForm": "Online Form",
-                            "uploadFile": "Upload File"
+                            "uploadFile": "Upload File",
+                            "welcomeMessage": "Welcome to dataset metadata on-boarding.",
+                            "legendIntro": "You will see a legend to help you as you on-board your dataset metadata.",
+                            "progressLegend": "Progress legend:"
                         },
                         "EditDataset": {
                             "editButton": "Update",
