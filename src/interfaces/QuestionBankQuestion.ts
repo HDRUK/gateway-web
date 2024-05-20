@@ -16,8 +16,12 @@ interface QuestionBankCreateQuestionAdmin {
     required: number;
     allow_guidance_override: number;
     force_required: number;
-    field: {
-        component: string;
+    default: number;
+    user_id?: number;
+    question_json: {
+        field: {
+            component: string;
+        };
     };
     guidance: string;
     title: string;
