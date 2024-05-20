@@ -1,12 +1,13 @@
 import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
+import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
+import DatasetMindMap from "./components/DatasetMindMap";
 import DatasetStats from "./components/DatasetStats";
 import { datasetFields } from "./config";
 
@@ -47,26 +48,9 @@ export default async function DatasetItemPage({
     });
 
     return (
-        <BoxContainer
-            sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
-                },
-            }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    bgcolor: "white",
-                    p: 0,
-                }}>
-                <ActiveListSidebar items={activeLinkList} />
-            </Box>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 3", laptop: "span 4" },
-                    p: 0,
-                }}>
+        <LayoutDataItemPage
+            navigation={<ActiveListSidebar items={activeLinkList} />}
+            body={
                 <>
                     <ActionBar />
                     <Box
@@ -90,13 +74,16 @@ export default async function DatasetItemPage({
                                 </div>
                             </Box>
                         )}
+
+                        <DatasetMindMap data={datasetVersion} />
+
                         <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
                         />
                     </Box>
                 </>
-            </Box>
-        </BoxContainer>
+            }
+        />
     );
 }

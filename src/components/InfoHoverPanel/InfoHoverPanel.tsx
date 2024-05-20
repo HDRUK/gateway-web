@@ -19,14 +19,16 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
         id: string;
         image: string;
         href: string;
-    }>(items[0]);
+    } | null>();
 
     return (
         <Box>
             <TitlePanel
-                image={selected.image}
-                text={t(`${selected.id}.text`)}
-                title={t(`${selected.id}.title`)}
+                image={selected ? selected?.image : items[0].image}
+                text={selected ? t(`${selected?.id}.text`) : t("welcomeText")}
+                title={
+                    selected ? t(`${selected?.id}.title`) : t("welcomeTitle")
+                }
                 sx={{ mt: "2rem" }}
             />
             <Box sx={{ p: 0, display: { mobile: "none", desktop: "block" } }}>
@@ -58,7 +60,7 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
                                 background: "white",
                                 borderColor: "white",
                                 borderRadius: { mobile: 2, tablet: 3 },
-                                p: { mobile: 1, tablet: "24px 18px" },
+                                p: { mobile: 1, tablet: "24px 15px" },
                                 fontSize: { mobile: 14, tablet: 19 },
                             }}
                             variant="outlined">

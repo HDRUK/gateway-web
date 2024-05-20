@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import { Filter } from "@/interfaces/Filter";
 import apis from "@/config/apis";
+import { FILTERS_PER_PAGE } from "@/config/request";
 import { filtersV1, filterV1 } from "@/mocks/data";
 import { errorResponseV1 } from "@/mocks/data/api/v1";
 
@@ -9,17 +10,20 @@ interface GetResponse {
 }
 
 const getFiltersV1 = (data = filtersV1, status = 200) => {
-    return rest.get(apis.filtersV1Url, (req, res, ctx) => {
-        if (status !== 200) {
-            return res(
-                ctx.status(status),
-                ctx.json({
-                    message: `Request failed with status code ${status}`,
-                })
-            );
+    return rest.get(
+        `${apis.filtersV1Url}?perPage=${FILTERS_PER_PAGE}`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json({
+                        message: `Request failed with status code ${status}`,
+                    })
+                );
+            }
+            return res(ctx.status(status), ctx.json<GetResponse>({ data }));
         }
-        return res(ctx.status(status), ctx.json<GetResponse>({ data }));
-    });
+    );
 };
 
 interface PostResponse {

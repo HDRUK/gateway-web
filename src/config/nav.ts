@@ -4,7 +4,7 @@ const navItems = [
         subItems: [
             {
                 label: "Datasets",
-                href: "/search?type-datasets",
+                href: "/search?type=datasets",
             },
             {
                 label: "Cohort discovery",

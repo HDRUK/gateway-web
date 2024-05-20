@@ -2,12 +2,15 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
+import { Collection } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { Team } from "@/interfaces/Team";
+import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
 import config from "@/config/config";
+import { FILTERS_PER_PAGE } from "@/config/request";
 import { getUserFromToken } from "@/utils/cookies";
 
 async function get<T>(
@@ -33,7 +36,10 @@ async function get<T>(
 async function getFilters(
     cookieStore: ReadonlyRequestCookies
 ): Promise<Filter[]> {
-    return get<Filter[]>(cookieStore, apis.filtersV1UrlIP);
+    return get<Filter[]>(
+        cookieStore,
+        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`
+    );
 }
 
 async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
@@ -102,6 +108,27 @@ async function getDataUse(
     return dataUse?.[0];
 }
 
+async function getTool(
+    cookieStore: ReadonlyRequestCookies,
+    toolId: string
+): Promise<Tool> {
+    const tool = await get<Tool>(cookieStore, `${apis.toolsV1UrlIP}/${toolId}`);
+
+    return tool;
+}
+
+async function getCollection(
+    cookieStore: ReadonlyRequestCookies,
+    collectionId: string
+): Promise<Collection> {
+    const collection = await get<Collection>(
+        cookieStore,
+        `${apis.collectionsV1UrlIP}/${collectionId}`
+    );
+
+    return collection;
+}
+
 export {
     getFilters,
     getUser,
@@ -110,4 +137,6 @@ export {
     getCohort,
     getDataset,
     getDataUse,
+    getTool,
+    getCollection,
 };

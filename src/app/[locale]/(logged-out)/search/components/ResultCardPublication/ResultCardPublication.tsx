@@ -1,8 +1,9 @@
-import { Divider, ListItem, ListItemButton } from "@mui/material";
+import { Divider, ListItem } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultPublication } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import ShowMore from "@/components/ShowMore";
+import { OpenInNewIcon } from "@/consts/icons";
 import {
     PublicationAbstract,
     PublicationText,
@@ -27,22 +28,27 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
         journal_name,
         paper_title,
         year_of_publication,
+        full_text_url,
+        url,
     } = result;
 
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
-                <ListItemButton component="a">
+                <ListItem component="div">
                     <PublicationWrapper
                         disableTypography
                         primary={
                             <PublicationTitleWrapper>
-                                <PublicationTitle>
+                                <PublicationTitle
+                                    href={full_text_url || url || ""}
+                                    target="_blank">
                                     <EllipsisLineLimit
                                         text={paper_title || ""}
                                         showToolTip
                                         maxLine={1}
                                     />
+                                    <OpenInNewIcon sx={{ ml: 2 }} />
                                 </PublicationTitle>
                                 <PublicationYear>
                                     {t("published")}:{" "}
@@ -70,7 +76,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                             </>
                         }
                     />
-                </ListItemButton>
+                </ListItem>
             </ListItem>
             <Divider component="li" />
         </>

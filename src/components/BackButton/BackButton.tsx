@@ -7,17 +7,25 @@ import { ArrowBackIosNewIcon } from "@/consts/icons";
 
 interface BackButtonProps {
     label: string;
+    onClick?: () => void;
     style?: CSSProperties;
 }
 
-const BackButton = ({ label, ...rest }: BackButtonProps) => {
+const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
     const router = useRouter();
+
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        }
+        router.back();
+    };
 
     return (
         <Button
             sx={{ marginBottom: 2 }}
             variant="link"
-            onClick={() => router.back()}
+            onClick={handleClick}
             startIcon={<ArrowBackIosNewIcon />}
             {...rest}>
             {label}

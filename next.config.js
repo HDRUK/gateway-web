@@ -8,6 +8,7 @@ const nextConfig = withNextIntl({
     env: {
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
+        API_VERSION: process.env.NEXT_PUBLIC_API_VERSION,
     },
     images: {
         remotePatterns: [
