@@ -6,6 +6,7 @@ import { Collection } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
+import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Team } from "@/interfaces/Team";
 import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
@@ -129,6 +130,17 @@ async function getCollection(
     return collection;
 }
 
+async function getFormHydration(
+    cookieStore: ReadonlyRequestCookies,
+    schemaName: string,
+    schemaVersion: string
+): Promise<FormHydrationSchema> {
+    return get<FormHydrationSchema>(
+        cookieStore,
+        `${apis.formHydrationV1UrlIP}?name=${schemaName}&version=${schemaVersion}`
+    );
+}
+
 export {
     getFilters,
     getUser,
@@ -139,4 +151,5 @@ export {
     getDataUse,
     getTool,
     getCollection,
+    getFormHydration,
 };
