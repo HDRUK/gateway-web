@@ -35,7 +35,7 @@ const CreateQuestion = () => {
     );
 
     const createQuestion = usePost<QuestionBankCreateQuestionAdmin>(
-        `${apis.questionBankV1Url}/questions/admin`,
+        `${apis.questionBankV1Url}/questions`,
         {
             itemName: "Question Bank",
         }
@@ -78,11 +78,14 @@ const CreateQuestion = () => {
 
         const payload = {
             required: mandatory ? 1 : 0,
+            default: 1, // this will need to be updated in the future
             allow_guidance_override: allow_guidance_override ? 1 : 0,
             force_required: force_required ? 1 : 0,
-            field: {
-                // this will need updating at a future point
-                component: type,
+            question_json: {
+                field: {
+                    // this will need updating at a future point
+                    component: type,
+                },
             },
             guidance,
             title,
