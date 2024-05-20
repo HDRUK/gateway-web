@@ -44,6 +44,9 @@ export default function RootLayout({
                                             width: "100%",
                                             fontFamily:
                                                 sourceSans3.style.fontFamily,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            minHeight: "100vh",
                                         }}>
                                         <SupportPopOut />
                                         {children}

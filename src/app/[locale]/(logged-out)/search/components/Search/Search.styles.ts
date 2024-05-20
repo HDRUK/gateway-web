@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Typography, styled } from "@mui/material";
 import Box from "@/components/Box";
 
 export const ActionBar = styled(Box)(({ theme }) => ({
@@ -13,4 +13,9 @@ export const ActionBar = styled(Box)(({ theme }) => ({
     [theme.breakpoints.down("tablet")]: {
         flexDirection: "column",
     },
+}));
+
+export const ResultLimitText = styled(Typography)(({ theme }) => ({
+    marginLeft: theme.spacing(1),
+    fontWeight: 500,
 }));

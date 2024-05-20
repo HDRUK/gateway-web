@@ -23,6 +23,8 @@ query GetHomePageQuery {
                 }
               }
             }
+            newsletterSignupHeader
+            newsletterSignupDescription
           }
         }
         meetTheTeam {

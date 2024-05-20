@@ -18,6 +18,7 @@ import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
+import NewsletterSignup from "../NewsletterSignup";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
@@ -37,7 +38,7 @@ const services = [
         href: "/about/cohort-discovery",
     },
     {
-        id: SearchCategory.DATA_PROVIDERS,
+        id: "dataProviders",
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
@@ -63,9 +64,9 @@ const services = [
     },
 
     {
-        id: SearchCategory.DATA_ANALYSIS,
+        id: SearchCategory.TOOLS,
         image: "/images/homepage/welcome-image.png",
-        href: `/search?type=${SearchCategory.DATA_ANALYSIS}`,
+        href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: "courses",
@@ -105,6 +106,8 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             gatewayVideoHeader,
             logos,
             newsHeader,
+            newsletterSignupHeader,
+            newsletterSignupDescription,
         },
     } = page.template;
 
@@ -235,17 +238,18 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     </TeamWrapper>
                 </Container>
             </Box>
-            <Box
-                sx={{
-                    p: 0,
-                    minHeight: 520,
-                    background: `linear-gradient(170deg, #fff 50%, ${theme.palette.secondary.main}  calc(50% + 1px))`,
-                }}
-                textAlign="center"
+            <NewsletterSignup
+                title={newsletterSignupHeader}
+                description={newsletterSignupDescription}
             />
             <Box
                 sx={{
                     background: "white",
+                    position: "relative",
+                    zIndex: 1,
+                    [theme.breakpoints.up(810)]: {
+                        marginTop: "-70px",
+                    },
                 }}>
                 <Container
                     sx={{
@@ -274,6 +278,19 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     <LogoSlider logos={logosFormatted} />
                 </Container>
             </Box>
+            <Box
+                sx={{
+                    display: "none",
+                    [theme.breakpoints.up(810)]: {
+                        position: "relative",
+                        zIndex: 0,
+                        height: "65px",
+                        width: "100%",
+                        backgroundColor: "#fff",
+                        display: "block",
+                    },
+                }}
+            />
         </>
     );
 };

@@ -5,6 +5,7 @@ export const PAGES = "pages";
 export const COHORT_DISCOVERY_ADMIN = "cohortDiscoveryAdmin";
 export const COHORT_DISCOVERY_REQUEST = "cohortDiscoveryRequest";
 export const COHORT_DISCOVERY_REQUEST_SENT_DIALOG = "CohortRequestSentDialog";
+export const DAR_ADMIN = "darAdmin";
 export const OUR_MISSION_AND_PURPOSE = "ourMissionAndPurpose";
 export const HOME = "home";
 export const TEAM = "team";

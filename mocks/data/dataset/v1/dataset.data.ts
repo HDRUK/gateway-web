@@ -1,7 +1,13 @@
 import { faker } from "@faker-js/faker";
-import { Dataset, Metadata, VersionItem } from "@/interfaces/Dataset";
+import {
+    Dataset,
+    Metadata,
+    MetadataMax,
+    VersionItem,
+} from "@/interfaces/Dataset";
+import { Highlight } from "@/interfaces/HighlightDataset";
 
-const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
+const generateDatasetMetadataV1 = (): MetadataMax => {
     return {
         metadata: {
             summary: {
@@ -30,7 +36,33 @@ const generateDatasetMetadataV1 = (): { metadata: Metadata } => {
     };
 };
 
-const generateDatasetMetadataV1p1 = (): { metadata: Metadata } => {
+const generateDatasetMetadataMiniV1 = (): Metadata => {
+    return {
+        summary: {
+            title: faker.datatype.string(),
+            publisher: {
+                publisherName: faker.datatype.string(),
+            },
+            abstract: faker.datatype.string(),
+            contactPoint: faker.datatype.string(),
+            controlledKeywords: faker.datatype.string(),
+            datasetType: faker.datatype.string(),
+            description: faker.datatype.string(),
+            doiName: faker.datatype.string(),
+            keywords: faker.datatype.string(),
+            shortTitle: faker.datatype.string(),
+            populationSize: faker.datatype.number(),
+        },
+        provenance: {
+            temporal: {
+                startDate: faker.date.past().toString(),
+                endDate: faker.date.past().toString(),
+            },
+        },
+    };
+};
+
+const generateDatasetMetadataV1p1 = (): MetadataMax => {
     return {
         metadata: {
             summary: {
@@ -75,6 +107,13 @@ const generateDatasetV1 = (version = "1.0", data = {}): Dataset => {
     };
 };
 
+const generateDatasetHighlightsV1 = (): Highlight => {
+    return {
+        abstract: [faker.datatype.string(), faker.datatype.string()],
+        description: [faker.datatype.string(), faker.datatype.string()],
+    };
+};
+
 const datasetVersionV1 = generateDatasetVersionV1("1.0");
 const datasetVersionV1p1 = generateDatasetVersionV1("1.1");
 const datasetV1 = generateDatasetV1("1.0");
@@ -88,7 +127,9 @@ const datasetsV1p1 = Array.from({ length: 3 }).map(() =>
 
 export {
     generateDatasetV1,
+    generateDatasetHighlightsV1,
     generateDatasetMetadataV1,
+    generateDatasetMetadataMiniV1,
     generateDatasetVersionV1,
     datasetsV1,
     datasetsV1p1,

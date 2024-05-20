@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, List, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -11,9 +11,13 @@ import {
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultCollection,
+    SearchResultDataProvider,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
+    SearchResultTool,
+    ViewType,
 } from "@/interfaces/Search";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -29,47 +33,54 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_ORGANISATION_NAME,
+    FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
+    FILTER_SECTOR,
+    FILTER_ACCESS_SERVICE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
+    VIEW_FIELD,
     sortByOptionsDataUse,
     sortByOptionsDataset,
+    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { AppsIcon, ViewListIcon, DownloadIcon } from "@/consts/icons";
+import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
+import ResultCardCollection from "../ResultCardCollection";
+import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
+import ResultCardTool from "../ResultCardTool/ResultCardTool";
+import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
-import { ActionBar } from "./Search.styles";
+import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
-const TYPE_PARAM = "type";
 const FILTER_CATEGORY: { [key: string]: string } = {
     datasets: "dataset",
     dur: "dataUseRegister",
     publications: "paper",
+    collections: "collection",
+    data_providers: "dataProvider",
+    tools: "tool",
 };
-
-enum ViewType {
-    TABLE = "table",
-    LIST = "list",
-}
+const STATIC_FILTER_SOURCE = "source";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
-    const [resultsView, setResultsView] = useState(ViewType.TABLE);
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -84,6 +95,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         const param = searchParams?.get(paramName)?.split(",");
         return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
+
+    const [resultsView, setResultsView] = useState(
+        getParamString(VIEW_FIELD) || ViewType.TABLE
+    );
 
     const updateQueryString = useCallback(
         (name: string, value: string) => {
@@ -104,12 +119,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
             SearchCategory.DATASETS,
+        source:
+            getParamString(STATIC_FILTER_SOURCE) ||
+            searchFormConfig.defaultValues.source,
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
+        [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
+        [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
+        [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
+        [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
     });
 
     const { handleDownload } = useSearch(
@@ -165,7 +187,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
+            queryParams.per_page
+        }&page=${queryParams.page}&sort=${queryParams.sort}${
+            queryParams.type === SearchCategory.PUBLICATIONS
+                ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+                : ``
+        }`,
         {
             query: queryParams.query,
             ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
@@ -199,6 +227,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,
             [FILTER_DATA_SET_TITLES]: undefined,
+            [FILTER_PUBLICATION_DATE]: undefined,
+            [FILTER_SECTOR]: undefined,
+            [FILTER_DATA_PROVIDER]: undefined,
+            [FILTER_ACCESS_SERVICE]: undefined,
         });
     };
 
@@ -224,6 +256,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             content: "",
         },
         {
+            label: t("dataProviders"),
+            value: SearchCategory.DATA_PROVIDERS,
+            content: "",
+        },
+        {
             label: t("tools"),
             value: SearchCategory.TOOLS,
             content: "",
@@ -240,7 +277,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
         let filtered;
 
-        if (filterType === FILTER_DATE_RANGE) {
+        if (
+            filterType === FILTER_DATE_RANGE ||
+            filterType === FILTER_PUBLICATION_DATE
+        ) {
             filtered = filterToUpdate.map(f => (f === removedFilter ? "" : f));
         } else {
             filtered = filterToUpdate.filter(f => f !== removedFilter);
@@ -250,18 +290,23 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(filterType, filtered.join(","));
     };
 
+    const handleChangeView = (viewType: ViewType) => {
+        setResultsView(viewType);
+        updatePath(VIEW_FIELD, viewType);
+    };
+
     const toggleButtons = [
         {
             icon: AppsIcon,
             value: ViewType.TABLE,
             label: t("components.Search.toggleLabelTable"),
-            onClick: () => setResultsView(ViewType.TABLE),
+            onClick: () => handleChangeView(ViewType.TABLE),
         },
         {
             icon: ViewListIcon,
             value: ViewType.LIST,
             label: t("components.Search.toggleLabelList"),
-            onClick: () => setResultsView(ViewType.LIST),
+            onClick: () => handleChangeView(ViewType.LIST),
         },
     ];
 
@@ -272,30 +317,101 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const renderResultCard = (result: SearchResult) => {
+        const { _id: resultId } = result;
+
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
-                return <ResultCard result={result as SearchResultDataset} />;
+                return (
+                    <ResultCard
+                        result={result as SearchResultDataset}
+                        key={resultId}
+                    />
+                );
             case SearchCategory.PUBLICATIONS:
                 return (
                     <ResultCardPublication
                         result={result as SearchResultPublication}
+                        key={resultId}
                     />
                 );
+            case SearchCategory.COLLECTIONS:
+                return (
+                    <ResultCardCollection
+                        imgUrl="/images/collections/sample.thumbnail.jpg"
+                        result={result as SearchResultCollection}
+                    />
+                );
+            case SearchCategory.DATA_PROVIDERS:
+                return (
+                    <ResultCardDataProvider
+                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
+                        result={result as SearchResultDataProvider}
+                    />
+                );
+            case SearchCategory.TOOLS:
+                return <ResultCardTool result={result as SearchResultTool} />;
             default:
                 return (
-                    <ResultCardDataUse result={result as SearchResultDataUse} />
+                    <ResultCardDataUse
+                        result={result as SearchResultDataUse}
+                        key={resultId}
+                    />
                 );
         }
+    };
+
+    const renderResults = () => {
+        if (resultsView === ViewType.TABLE) {
+            return (
+                <ResultsTable results={data?.list as SearchResultDataset[]} />
+            );
+        }
+
+        return (
+            <ResultsList
+                variant={
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    queryParams.type === SearchCategory.DATA_PROVIDERS
+                        ? "tiled"
+                        : "list"
+                }>
+                {data?.list.map(result => renderResultCard(result))}
+            </ResultsList>
+        );
     };
 
     const getSortOptions = () => {
         switch (queryParams.type) {
             case SearchCategory.DATA_USE:
                 return sortByOptionsDataUse;
+            case SearchCategory.TOOLS:
+                return sortByOptionsTool;
             default:
                 return sortByOptionsDataset;
         }
     };
+
+    const getExplainerText = () => {
+        switch (queryParams.type) {
+            case SearchCategory.PUBLICATIONS:
+                return t("searchExplainerPublications");
+            case SearchCategory.DATA_USE:
+                return t("searchExplainerDataUse");
+            case SearchCategory.COLLECTIONS:
+                return t("searchExplainerCollections");
+            case SearchCategory.DATA_PROVIDERS:
+                return t("searchExplainerDataProviders");
+            case SearchCategory.TOOLS:
+                return t("searchExplainerTools");
+            default:
+                return t("searchExplainerDatasets");
+        }
+    };
+    const showPublicationWelcomeMessage =
+        !isSearching &&
+        !queryParams.query &&
+        queryParams.type === SearchCategory.PUBLICATIONS &&
+        (!data?.list.length || !data?.path?.includes(queryParams.type));
 
     return (
         <Box
@@ -315,7 +431,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 }}>
                 <SearchBar
                     defaultValue={queryParams.query}
-                    explainerText={t("searchExplainer")}
+                    explainerText={getExplainerText()}
                     resetAction={() => resetQueryInput()}
                     isDisabled={!queryParams.query}
                     submitAction={onQuerySubmit}
@@ -368,7 +484,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}
                     rootBoxSx={{ padding: 0 }}
                     variant={TabVariant.LARGE}
-                    paramName={TYPE_PARAM}
+                    paramName={TYPE_FIELD}
                     persistParams={false}
                     handleChange={(_, value) =>
                         resetQueryParamState(value as SearchCategory)
@@ -409,6 +525,17 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             });
                         }}
                         aggregations={data?.aggregations}
+                        updateStaticFilter={(
+                            filterName: string,
+                            value: string
+                        ) => {
+                            setQueryParams({
+                                ...queryParams,
+                                [filterName]: value,
+                            });
+                            updatePath(filterName, value);
+                        }}
+                        getParamString={getParamString}
                     />
                 </Box>
                 <Box
@@ -421,60 +548,94 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             flexDirection: "column",
                             m: 2,
                         }}>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}>
-                            {data?.path?.includes(queryParams.type) && (
-                                <ShowingXofX
-                                    to={data?.to}
-                                    from={data?.from}
-                                    total={data?.total}
-                                />
-                            )}
-                            {queryParams.type === SearchCategory.DATASETS && (
-                                <ToggleTabs<ViewType>
-                                    selected={resultsView}
-                                    buttons={toggleButtons}
-                                />
-                            )}
-                        </Box>
+                        {!isSearching && (
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                }}>
+                                <Box sx={{ display: "flex" }}>
+                                    <>
+                                        {data?.path?.includes(
+                                            queryParams.type
+                                        ) &&
+                                            !!data?.elastic_total && (
+                                                <ShowingXofX
+                                                    to={data?.to}
+                                                    from={data?.from}
+                                                    total={data?.total}
+                                                />
+                                            )}
+                                        {data && data.elastic_total > 100 && (
+                                            <ResultLimitText>
+                                                {t("resultLimit")}
+                                            </ResultLimitText>
+                                        )}
+                                    </>
+                                </Box>
 
-                        {isSearching && <Loading />}
+                                {queryParams.type ===
+                                    SearchCategory.DATASETS && (
+                                    <ToggleTabs<ViewType>
+                                        selected={resultsView as ViewType}
+                                        buttons={toggleButtons}
+                                    />
+                                )}
+                            </Box>
+                        )}
 
-                        {!isSearching && !data?.list.length && (
-                            <Paper sx={{ textAlign: "center", p: 5 }}>
+                        {showPublicationWelcomeMessage && (
+                            <Paper sx={{ textAlign: "left", p: 3 }}>
+                                <Typography
+                                    variant="h2"
+                                    style={{ fontWeight: "bolder" }}
+                                    sx={{
+                                        pb: 4,
+                                        borderBottom: 1,
+                                        borderColor: "greyCustom.light",
+                                    }}>
+                                    {t("publicationWelcomeHeader")}
+                                </Typography>
+                                <Typography
+                                    variant="h3"
+                                    sx={{
+                                        pb: 3,
+                                    }}>
+                                    {t("publicationWelcomeText1")}
+                                </Typography>
+                                <Typography
+                                    variant="h3"
+                                    sx={{
+                                        pb: 3,
+                                    }}>
+                                    {t("publicationWelcomeText2")}
+                                </Typography>
                                 <Typography variant="h3">
-                                    {t("noResults")}
+                                    {t("publicationWelcomeText3")}
                                 </Typography>
                             </Paper>
                         )}
+                        {isSearching && <Loading />}
+
+                        {!isSearching &&
+                            !data?.list.length &&
+                            (queryParams.query ||
+                                !(
+                                    queryParams.type ===
+                                    SearchCategory.PUBLICATIONS
+                                )) && (
+                                <Paper sx={{ textAlign: "center", p: 5 }}>
+                                    <Typography variant="h3">
+                                        {t("noResults")}
+                                    </Typography>
+                                </Paper>
+                            )}
                         {!isSearching &&
                             !!data?.list.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
-                                    {resultsView === ViewType.LIST && (
-                                        <List
-                                            sx={{
-                                                width: "100%",
-                                                bgcolor: "background.paper",
-                                                mb: 2,
-                                                pb: 2,
-                                            }}>
-                                            {data?.list.map(result =>
-                                                renderResultCard(result)
-                                            )}
-                                        </List>
-                                    )}
-                                    {resultsView === ViewType.TABLE && (
-                                        <ResultsTable
-                                            results={
-                                                data?.list as SearchResultDataset[]
-                                            }
-                                        />
-                                    )}
+                                    {renderResults()}
                                     <Pagination
                                         isLoading={isSearching}
                                         page={parseInt(queryParams.page, 10)}

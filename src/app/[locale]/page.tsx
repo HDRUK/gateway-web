@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Box } from "@mui/material";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import { getHomePage } from "@/utils/cms";
@@ -15,9 +16,9 @@ export default async function HomePage() {
                     "linear-gradient(97deg, #46AF93 4.05%, #475DA7 100%)",
             }}>
             <Header isHome />
-            <main>
+            <Box component="main" sx={{ overflowX: "hidden" }}>
                 <Homepage cmsContent={cmsContent} />
-            </main>
+            </Box>
         </Container>
     );
 }

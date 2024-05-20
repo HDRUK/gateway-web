@@ -4,19 +4,20 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
+import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
+import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
 }
 
-const CONFORMS_TO_PATH =
-    "metadata.metadata.accessibility.formatAndStandards.conformsTo";
-const PUBLISHER_NAME_PATH = "metadata.metadata.summary.publisher.publisherName";
+const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
+const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
@@ -52,12 +53,19 @@ const getColumns = ({
     }),
     columnHelper.display({
         id: "title",
-        cell: ({ row: { original } }) => (
-            <EllipsisLineLimit
-                showToolTip
-                text={get(original, "metadata.metadata.summary.title")}
-            />
-        ),
+        cell: ({ row: { original } }) => {
+            const { _id: datasetId } = original;
+            const linkHref = `/${RouteName.DATASET_ITEM}/${datasetId}`;
+
+            return (
+                <Link href={linkHref}>
+                    <EllipsisLineLimit
+                        showToolTip
+                        text={get(original, "metadata.summary.title")}
+                    />
+                </Link>
+            );
+        },
         meta: { isPinned: true, hasPinnedBorder: true },
         header: () => <span>{translations.metaDataLabel}</span>,
         size: 240,
@@ -67,7 +75,7 @@ const getColumns = ({
         cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
                 {getPopulationSize(
-                    original?.metadata?.metadata,
+                    original?.metadata,
                     translations.populationSizeNotReported
                 )}
             </div>
@@ -86,7 +94,7 @@ const getColumns = ({
         id: "dateRange",
         cell: info => (
             <div style={{ textAlign: "center" }}>
-                {getDateRange(info.row.original.metadata?.metadata)}
+                {getDateRange(info.row.original?.metadata)}
             </div>
         ),
         header: () => (
@@ -171,7 +179,11 @@ const ResultTable = ({ results }: ResultTableProps) => {
                 mb: 4,
             }}>
             <Table<SearchResultDataset>
-                columns={getColumns({ handleSelect, selected, translations })}
+                columns={getColumns({
+                    handleSelect,
+                    selected,
+                    translations,
+                })}
                 rows={results}
             />
         </Paper>

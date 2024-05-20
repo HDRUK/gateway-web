@@ -1,8 +1,11 @@
-const apiV1Url = process.env.NEXT_PUBLIC_API_V1_URL;
+const apiVersion = process.env.NEXT_PUBLIC_API_VERSION || "v1";
+const apiV1Url = `${process.env.NEXT_PUBLIC_API_V1_URL}/${apiVersion}`;
 const apiV1IPUrl =
     process.env.NODE_ENV === "development"
-        ? process.env.NEXT_PUBLIC_API_V1_IP_URL
-        : process.env.NEXT_PUBLIC_API_V1_URL;
+        ? `${process.env.NEXT_PUBLIC_API_V1_IP_URL}/${apiVersion}`
+        : `${process.env.NEXT_PUBLIC_API_V1_URL}/${apiVersion}`;
+
+const apiServiceUrl = `${process.env.NEXT_PUBLIC_API_V1_URL}/services`;
 
 const apis = {
     apiV1Url,
@@ -31,10 +34,15 @@ const apis = {
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
+    dataUseExportV1Url: `${apiV1Url}/dur/export`,
+    toolsV1UrlIP: `${apiV1IPUrl}/tools`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    collectionsV1Url: `${apiV1Url}/collections`,
+    collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
+    questionBankV1Url: `${apiServiceUrl}/quba`,
 };
 
 export default apis;

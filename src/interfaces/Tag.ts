@@ -8,6 +8,10 @@ interface Tag {
     id: number;
     type: TagTypes;
     updated_at: string;
+    pivot?: {
+        tool_id: number;
+        tag_id: number;
+    };
 }
 
 export type { Tag };

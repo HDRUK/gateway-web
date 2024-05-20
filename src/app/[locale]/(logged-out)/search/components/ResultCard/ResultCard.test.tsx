@@ -1,40 +1,37 @@
 import { formatDate } from "@/utils/date";
 import { render, screen } from "@/utils/testUtils";
-import { generateDatasetMetadataV1 } from "@/mocks/data/dataset";
+import {
+    generateDatasetHighlightsV1,
+    generateDatasetMetadataMiniV1,
+} from "@/mocks/data/dataset";
 import ResultCard from "./ResultCard";
 
 describe("ResultCard", () => {
-    const mockResult = generateDatasetMetadataV1();
+    const mockResult = generateDatasetMetadataMiniV1();
+    const mockHighlight = generateDatasetHighlightsV1();
     it("should render with all data", async () => {
         render(
             <ResultCard
                 result={{
-                    highlight: { abstract: "string", description: "string" },
+                    highlight: mockHighlight,
                     metadata: mockResult,
                     _id: "1",
                 }}
             />
         );
 
-        const populationSize = `Dataset population size: ${mockResult.metadata.summary.populationSize?.toLocaleString()}`;
+        const populationSize = `Dataset population size: ${mockResult.summary.populationSize?.toLocaleString()}`;
         const formattedDate = `Date range: ${formatDate(
-            mockResult.metadata.provenance.temporal.startDate || "",
+            mockResult.provenance.temporal.startDate || "",
             "YYYY"
-        )}-${formatDate(
-            mockResult.metadata.provenance.temporal.endDate || "",
-            "YYYY"
-        )}`;
+        )}-${formatDate(mockResult.provenance.temporal.endDate || "", "YYYY")}`;
 
+        expect(screen.getByText(mockHighlight.abstract[0])).toBeInTheDocument();
         expect(
-            screen.getByText(mockResult.metadata.summary.abstract)
+            screen.getByText(mockResult.summary.publisher.publisherName)
         ).toBeInTheDocument();
         expect(
-            screen.getByText(
-                mockResult.metadata.summary.publisher.publisherName
-            )
-        ).toBeInTheDocument();
-        expect(
-            screen.getByText(mockResult.metadata.summary.shortTitle)
+            screen.getByText(mockResult.summary.shortTitle)
         ).toBeInTheDocument();
         expect(
             screen.getByText(populationSize, { exact: false })
@@ -44,15 +41,13 @@ describe("ResultCard", () => {
         ).toBeInTheDocument();
     });
     it("should render n/a when no date", async () => {
-        const mockResult = generateDatasetMetadataV1();
+        const mockResult = generateDatasetMetadataMiniV1();
         const mockWithoutData = {
-            metadata: {
-                ...mockResult.metadata,
-                provenance: {
-                    temporal: {
-                        endDate: undefined,
-                        startDate: undefined,
-                    },
+            ...mockResult,
+            provenance: {
+                temporal: {
+                    endDate: undefined,
+                    startDate: undefined,
                 },
             },
         };
@@ -68,14 +63,12 @@ describe("ResultCard", () => {
         expect(screen.getByText(`Date range: n/a`)).toBeInTheDocument();
     });
     it("should render `not reported` when no population", async () => {
-        const mockResult = generateDatasetMetadataV1();
+        const mockResult = generateDatasetMetadataMiniV1();
         const mockWithoutData = {
-            metadata: {
-                ...mockResult.metadata,
-                summary: {
-                    ...mockResult.metadata.summary,
-                    populationSize: null,
-                },
+            ...mockResult,
+            summary: {
+                ...mockResult.summary,
+                populationSize: null,
             },
         };
         render(

@@ -8,6 +8,7 @@ const usePatch = <T>(url: string, options?: HttpOptions) => {
         itemName,
         action,
         query,
+        subPath,
         successNotificationsOn = true,
         errorNotificationsOn = true,
     } = options || {};
@@ -15,8 +16,9 @@ const usePatch = <T>(url: string, options?: HttpOptions) => {
 
     return async (id: string | number, payload: T) => {
         const queryString = query ? `?${query}` : "";
+        const subPathString = subPath ? `/${subPath}` : "";
         return await apiService.patchRequest(
-            `${url}/${id}${queryString}`,
+            `${url}/${id}${subPathString}${queryString}`,
             payload,
             {
                 notificationOptions: {

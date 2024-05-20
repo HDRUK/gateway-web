@@ -77,6 +77,8 @@ interface PageTemplateHome {
                     websiteAddress: string;
                     imageLocation: { node: { mediaItemUrl: string } };
                 }[];
+                newsletterSignupHeader: string;
+                newsletterSignupDescription: string;
             };
             meetTheTeam: {
                 sectionName: string;

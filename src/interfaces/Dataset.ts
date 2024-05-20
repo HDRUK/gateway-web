@@ -1,3 +1,5 @@
+import { Publication } from "./Publication";
+
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 
 interface Metadata {
@@ -44,6 +46,26 @@ interface Metadata {
             endDate: string | undefined;
         };
     };
+    linkage: {
+        associatedMedia: string;
+        isReferenceIn: string;
+        tools: string[];
+        datasetLinkage: {
+            isDerivedFrom: string;
+            isPartOf: string;
+            linkedDatasets: string[];
+            isMemberOf: string;
+        };
+        investigations: string[];
+        isGeneratedUsing: string;
+        dataUses: string[];
+        syntheticDataWebLink: string;
+    };
+}
+
+interface MetadataMax {
+    metadata: Metadata;
+    gwdmVersion: string;
 }
 interface VersionItem {
     id: number;
@@ -51,8 +73,9 @@ interface VersionItem {
     updated_at: string;
     deleted_at: string | null;
     dataset_id: number;
-    metadata: { metadata: Metadata; gwdmVersion: string };
+    metadata: MetadataMax;
     version: number;
+    publications: Publication[];
 }
 
 interface Dataset {
@@ -70,4 +93,11 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
-export type { NewDataset, Dataset, DatasetStatus, VersionItem, Metadata };
+export type {
+    Dataset,
+    DatasetStatus,
+    Metadata,
+    MetadataMax,
+    NewDataset,
+    VersionItem,
+};

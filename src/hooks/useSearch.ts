@@ -42,8 +42,8 @@ const useSearch = (
                 filename,
             };
 
-            downloadCSV(formattedCSV as CsvExport);
             notificationService.apiSuccess(t("downloadStarted"));
+            downloadCSV(formattedCSV as CsvExport);
         }
     };
 

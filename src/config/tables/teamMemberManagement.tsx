@@ -1,12 +1,7 @@
 /* eslint-disable */
 import { useMemo } from "react";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import {
-    AccessorFn,
-    RowData,
-    Table,
-    createColumnHelper,
-} from "@tanstack/react-table";
+import { Table, createColumnHelper } from "@tanstack/react-table";
 import { IconType } from "@/interfaces/Ui";
 import { User } from "@/interfaces/User";
 import TooltipIcon from "@/components/TooltipIcon";
@@ -20,7 +15,7 @@ import {
     ROLE_CUSTODIAN_TEAM_ADMIN,
     rolesMeta,
 } from "@/consts/roles";
-import TableActionCell from "@/app/[locale]/account/team/[teamId]/team-management/components/TableActionCell";
+import TableActionCell from "@/app/[locale]/account/team/[teamId]/(withLeftNav)/team-management/components/TableActionCell";
 
 interface CheckboxesCellProps {
     row: { original: User; index: number };
