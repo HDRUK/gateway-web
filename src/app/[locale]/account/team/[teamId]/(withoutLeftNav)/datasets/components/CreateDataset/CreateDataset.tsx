@@ -46,7 +46,6 @@ interface CreateDatasetProps {
 }
 
 const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
-    console.log(formJSON);
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );

@@ -11,8 +11,8 @@ export const metadata = {
     description: "",
 };
 
-const SCHEMA_NAME = "HDR";
-const SCHEMA_VERSION = "2.2.1";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDR";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
 
 export default async function CreateDatasetPage({
     params,
