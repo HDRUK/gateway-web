@@ -6,13 +6,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { buildYup } from "schema-to-yup";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import {
+    FormHydration,
+    FormHydrationField,
+    FormHydrationSchema,
+    FormHydrationValidation,
+} from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import FormBanner from "@/components/FormBanner";
-import { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
+import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
@@ -36,17 +40,12 @@ import {
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
-import formSchema from "./config/form.json";
 
-interface FieldValidation {
-    [key: string]: unknown;
+interface CreateDatasetProps {
+    formJSON: FormHydrationSchema;
 }
 
-interface SchemaValidation {
-    [key: string]: FieldValidation;
-}
-
-const CreateDataset = () => {
+const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -60,34 +59,30 @@ const CreateDataset = () => {
         content: null,
     }));
 
-    const schemaFields: FormHydration[] = formSchema.schema_fields;
+    const schemaFields = formJSON.schema_fields;
 
-    const generateValidationRules = (schemaFields: FormHydration[]) => {
-        const validationRules: SchemaValidation = {};
+    const generateValidationRules = (
+        validationFields: FormHydrationValidation[]
+    ) => {
+        const transformedObject: Record<
+            string,
+            Omit<FormHydrationValidation, "title">
+        > = {};
 
-        schemaFields.forEach(fieldTest => {
-            const { title, validation, field } = fieldTest;
-
-            if (validation?.schema && !field.hidden) {
-                const { schema: fieldValidation } = validation;
-
-                const validationProps = fieldValidation.properties.field;
-
-                if (fieldValidation && validationProps) {
-                    validationRules[title] = validationProps;
-                }
-            }
+        validationFields.forEach(field => {
+            const { title, ...rest } = field;
+            transformedObject[title] = rest;
         });
 
-        return validationRules;
+        return transformedObject;
     };
 
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
 
-    const generatedYupValidation = {
+    const generatedYupValidation = formJSON?.validation && {
         title: "Metadata form",
         type: "object",
-        properties: generateValidationRules(schemaFields),
+        properties: generateValidationRules(formJSON.validation),
     };
 
     const yupSchema = buildYup(generatedYupValidation);
@@ -292,24 +287,6 @@ const CreateDataset = () => {
                             variant="text"
                             startIcon={<ArrowBackIosNewIcon />}>
                             {t("previous")}
-                        </Button>
-                    </FormFooterItem>
-
-                    <FormFooterItem>
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                            color="secondary"
-                            onClick={() =>
-                                setSelectedFormSection(
-                                    formSections[currentSectionIndex + 1]
-                                )
-                            }
-                            disabled={isLastSection(
-                                formSections,
-                                currentSectionIndex
-                            )}>
-                            {t("skip")}
                         </Button>
                     </FormFooterItem>
 
