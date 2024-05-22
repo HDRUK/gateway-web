@@ -39,11 +39,14 @@ import {
     isLastSection,
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
+import IntroScreen from "../IntroScreen/IntroScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
 }
+
+const INITIAL_FORM_SECTION = "Home";
 
 const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
     const t = useTranslations(
@@ -92,8 +95,10 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
         resolver: yupResolver(yupSchema),
     });
 
-    const formSections = getFirstLocationValues(schemaFields).filter(location =>
-        hasVisibleFieldsForLocation(schemaFields, location)
+    const formSections = [INITIAL_FORM_SECTION].concat(
+        getFirstLocationValues(schemaFields).filter(location =>
+            hasVisibleFieldsForLocation(schemaFields, location)
+        )
     );
 
     const currentSectionIndex = selectedFormSection
@@ -112,7 +117,7 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
         };
 
         const initialSection = getFirstNonHiddenSection(schemaFields) || "";
-        setSelectedFormSection(initialSection);
+        setSelectedFormSection(INITIAL_FORM_SECTION || initialSection);
     }, [schemaFields]);
 
     useEffect(() => {
@@ -134,7 +139,7 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
     }, [selectedFormSection]);
 
     const handleLegendClick = (clickedIndex: number) => {
-        setSelectedFormSection(formSections[clickedIndex]);
+        setSelectedFormSection(formSections[clickedIndex + 1]);
     };
 
     const [navbarHeight, setNavbarHeight] = useState<string>();
@@ -214,65 +219,71 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
                 optionalPercentage={0}
             />
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
-                <Box
-                    sx={{
-                        flex: 1,
-                        padding: theme.spacing(1),
-                    }}>
-                    <FormLegend
-                        items={legendItems}
-                        handleClickItem={handleLegendClick}
-                        offsetTop={navbarHeight}
-                    />
-                </Box>
-                <Box sx={{ flex: 2, p: 0 }}>
-                    <Form onSubmit={handleSubmit(formSubmit)}>
-                        <Paper
-                            sx={{
-                                marginTop: "10px",
-                                marginBottom: "10px",
-                                padding: 2,
-                            }}>
-                            <Typography variant="h2">
-                                {capitalise(
-                                    splitCamelcase(selectedFormSection)
-                                )}
-                            </Typography>
+            {currentSectionIndex === 0 && <IntroScreen />}
 
-                            <Box sx={{ p: 0 }}>
-                                {selectedFormSection &&
-                                    schemaFields
-                                        .filter(
-                                            schemaField =>
-                                                !schemaField.field.hidden
-                                        )
-                                        .filter(({ location }) =>
-                                            location.startsWith(
-                                                selectedFormSection
+            {currentSectionIndex > 0 && (
+                <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+                    <Box
+                        sx={{
+                            flex: 1,
+                            padding: theme.spacing(1),
+                        }}>
+                        <FormLegend
+                            items={legendItems.filter(
+                                item => item.name !== INITIAL_FORM_SECTION
+                            )}
+                            handleClickItem={handleLegendClick}
+                            offsetTop={navbarHeight}
+                        />
+                    </Box>
+                    <Box sx={{ flex: 2, p: 0 }}>
+                        <Form onSubmit={handleSubmit(formSubmit)}>
+                            <Paper
+                                sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    padding: 2,
+                                }}>
+                                <Typography variant="h2">
+                                    {capitalise(
+                                        splitCamelcase(selectedFormSection)
+                                    )}
+                                </Typography>
+
+                                <Box sx={{ p: 0 }}>
+                                    {selectedFormSection &&
+                                        schemaFields
+                                            .filter(
+                                                schemaField =>
+                                                    !schemaField.field.hidden
                                             )
-                                        )
-                                        .map(fieldParent => {
-                                            const { field } = fieldParent;
+                                            .filter(({ location }) =>
+                                                location.startsWith(
+                                                    selectedFormSection
+                                                )
+                                            )
+                                            .map(fieldParent => {
+                                                const { field } = fieldParent;
 
-                                            return renderFormHydrationField(
-                                                field
-                                            );
-                                        })}
-                            </Box>
-                        </Paper>
-                    </Form>
+                                                return renderFormHydrationField(
+                                                    field
+                                                );
+                                            })}
+                                </Box>
+                            </Paper>
+                        </Form>
+                    </Box>
+                    <Paper
+                        style={{
+                            flex: 1,
+                            alignItems: "center",
+                            padding: theme.spacing(2),
+                            margin: theme.spacing(1.25),
+                        }}>
+                        <Typography variant="h2">{t("guidance")}</Typography>
+                    </Paper>
                 </Box>
-                <Paper
-                    style={{
-                        flex: 1,
-                        alignItems: "center",
-                        padding: theme.spacing(2),
-                        margin: theme.spacing(1.25),
-                    }}>
-                    <Typography variant="h2">{t("guidance")}</Typography>
-                </Paper>
-            </Box>
+            )}
 
             <Box sx={{ padding: theme.spacing(1), margin: theme.spacing(2) }}>
                 <FormFooter>
