@@ -1,14 +1,13 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DragIndicatorIcon } from "@/consts/icons";
 
-type SortableTaskItemProps = {
+type SortableItemProps = {
     children: React.ReactNode;
     id: string;
 };
 
-const SortableTaskItem = ({ children, id }: SortableTaskItemProps) => {
+const SortableItem = ({ children, id }: SortableItemProps) => {
     const {
         attributes,
         listeners,
@@ -31,4 +30,4 @@ const SortableTaskItem = ({ children, id }: SortableTaskItemProps) => {
     );
 };
 
-export default SortableTaskItem;
+export default SortableItem;

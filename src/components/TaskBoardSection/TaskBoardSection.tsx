@@ -8,19 +8,27 @@ import Typography from "@mui/material/Typography";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
 import Paper from "@/components/Paper";
+import SortableItem from "@/components/SortableItem";
 import { colors } from "@/config/theme";
-import SortableTaskItem from "./SortableTaskItem";
-import TaskItem from "./TaskItem";
-import { Task } from "./index";
 
-type BoardSectionProps = {
+interface TaskBoardItem {
+    id: string;
+    content: React.ReactNode;
+}
+
+export type TaskBoardSectionProps = {
     id: string;
     title: string;
     description: string;
-    tasks: Task[];
+    tasks: TaskBoardItem[];
 };
 
-const BoardSection = ({ id, title, description, tasks }: BoardSectionProps) => {
+const TaskBoardSection = ({
+    id,
+    title,
+    description,
+    tasks,
+}: TaskBoardSectionProps) => {
     const { setNodeRef } = useDroppable({
         id,
     });
@@ -45,9 +53,9 @@ const BoardSection = ({ id, title, description, tasks }: BoardSectionProps) => {
                                     m: 0,
                                     mb: 2,
                                 }}>
-                                <SortableTaskItem id={task.id}>
-                                    <TaskItem task={task} />
-                                </SortableTaskItem>
+                                <SortableItem id={task.id}>
+                                    {task.content}
+                                </SortableItem>
                             </Box>
                         ))}
                     </div>
@@ -57,4 +65,4 @@ const BoardSection = ({ id, title, description, tasks }: BoardSectionProps) => {
     );
 };
 
-export default BoardSection;
+export default TaskBoardSection;

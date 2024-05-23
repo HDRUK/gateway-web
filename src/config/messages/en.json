@@ -267,6 +267,19 @@
                             }
                         }
                     }
+                },
+                "dar": {
+                    "template": {
+                        "title": "DAR Template Management",
+                        "create": {
+                            "description": "Create a new DAR template",
+                            "label": "Create"
+                        },
+                        "manage": {
+                            "description": "Manage DAR templates",
+                            "label": "Manage"
+                        }
+                    }
                 }
             },
             "title": "My account"
