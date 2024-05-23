@@ -25,8 +25,8 @@ export default function DatasetContent({
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const datasetsLatestVersions = datasets.map(({ versions }) =>
-        getLatestVersion(versions)
+    const datasetsLatestVersions = datasets.map(dataset =>
+        getLatestVersion(dataset)
     );
 
     return (

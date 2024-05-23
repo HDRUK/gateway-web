@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash";
-import { VersionItem } from "@/interfaces/Dataset";
+import { Dataset } from "@/interfaces/Dataset";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -48,7 +48,9 @@ const formatYearStat = (startYear?: string, endYear?: string) => {
     }`;
 };
 
-const getLatestVersion = (versions: VersionItem[]) => versions[0];
+const getLatestVersion = (dataset: Dataset) => {
+    return dataset?.latest_metadata || dataset.versions[0];
+};
 
 export {
     formatYearStat,
