@@ -87,7 +87,7 @@ interface Dataset {
     versions: VersionItem[];
     updated: string;
     create_origin: "FMA" | "MANUAL" | "API";
-    latest_metadata: VersionItem;
+    latest_metadata?: VersionItem;
 }
 
 interface NewDataset extends Omit<Dataset, "versions" | "id"> {
