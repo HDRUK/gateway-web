@@ -13,6 +13,7 @@ import { colors } from "@/config/theme";
 
 interface TaskBoardItem {
     id: string;
+    anchored?: boolean;
     content: React.ReactNode;
 }
 

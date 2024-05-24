@@ -24,6 +24,7 @@ const WrapperComponent = () => {
                 tasks: [
                     {
                         id: "101",
+                        anchored: true,
                         content: (
                             <Paper>
                                 <Box> {"First Item Board 1"}</Box>

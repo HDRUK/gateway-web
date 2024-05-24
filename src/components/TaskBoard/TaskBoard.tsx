@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import React, {
+    useState,
+    useMemo,
+    useEffect,
+    Dispatch,
+    SetStateAction,
+} from "react";
 import {
     useSensors,
     useSensor,
@@ -35,24 +41,29 @@ import apis from "@/config/apis";
 interface TaskBoardProps {
     boardSections: TaskBoardSectionProps[];
     setBoardSections: Dispatch<SetStateAction<TaskBoardSectionProps[]>>;
-    //handleDragOver
+    anchoredErrorCallback?: () => void;
 }
 
-const TaskBoard = ({ boardSections, setBoardSections }: TaskBoardProps) => {
-    /*
-    const updateTemplateQuestions = usePatch(
-        `${apis.darasV1Url}/dar-templates`,
-        {
-            itemName: "Update Template",
-            query: `section_id=${sectionId}`,
-        }
-    );*/
-
-    //useEffect(() => {
-    //    setBoardSections(initializeBoard(tasks));
-    //}, [tasks]);
-
+const TaskBoard = ({
+    boardSections,
+    setBoardSections,
+    anchoredErrorCallback = () => console.error("cannot move"),
+}: TaskBoardProps) => {
     const [activeTaskId, setActiveTaskId] = useState<null | string>(null);
+
+    const dropAnimation: DropAnimation = {
+        ...defaultDropAnimation,
+    };
+
+    const activeTask = useMemo(
+        () =>
+            activeTaskId
+                ? boardSections
+                      .flatMap(section => section.tasks)
+                      .find(task => task.id === activeTaskId)
+                : null,
+        [activeTaskId, boardSections]
+    );
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -101,13 +112,10 @@ const TaskBoard = ({ boardSections, setBoardSections }: TaskBoardProps) => {
             return;
         }
 
-        /*if (task.force_required) {
-            notificationService.error(
-                "Cannot remove question from the selected questions, it is forced to be required",
-                { persist: false }
-            );
+        if (activeTask?.anchored) {
+            anchoredErrorCallback();
             return;
-        }*/
+        }
 
         setBoardSections(prevBoardSections => {
             // Copy the previous board sections to avoid direct mutations
@@ -122,7 +130,9 @@ const TaskBoard = ({ boardSections, setBoardSections }: TaskBoardProps) => {
             const newActiveSection = {
                 ...prevBoardSections[activeSectionIndex],
             };
-            const newOverSection = { ...prevBoardSections[overSectionIndex] };
+            const newOverSection = {
+                ...prevBoardSections[overSectionIndex],
+            };
 
             // Copy the tasks arrays to avoid direct mutations
             newActiveSection.tasks = [...newActiveSection.tasks];
@@ -194,16 +204,6 @@ const TaskBoard = ({ boardSections, setBoardSections }: TaskBoardProps) => {
         }
     };
 
-    const dropAnimation: DropAnimation = {
-        ...defaultDropAnimation,
-    };
-
-    const task = activeTaskId
-        ? boardSections
-              .flatMap(section => section.tasks)
-              .find(task => task.id === activeTaskId)
-        : null;
-
     /*
     const handleSaveChanges = () => {
         const selectedQuestionIds = boardSections["Selected Questions"].map(
@@ -259,7 +259,7 @@ const TaskBoard = ({ boardSections, setBoardSections }: TaskBoardProps) => {
                 ))}
 
                 <DragOverlay dropAnimation={dropAnimation}>
-                    {task ? task.content : null}
+                    {activeTask ? activeTask.content : null}
                 </DragOverlay>
             </Container>
 
