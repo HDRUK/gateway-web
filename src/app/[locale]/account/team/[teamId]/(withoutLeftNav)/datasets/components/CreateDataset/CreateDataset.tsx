@@ -29,6 +29,7 @@ import {
 } from "@/consts/translation";
 import {
     formGenerateLegendItems,
+    formGetFieldsCompletedCount,
     formatValidationItems,
     getFirstLocationValues,
     hasVisibleFieldsForLocation,
@@ -97,10 +98,11 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
 
     const yupSchema = buildYup(generatedYupValidation);
 
-    const { control, handleSubmit, clearErrors, trigger, getValues } = useForm({
-        mode: "onTouched",
-        resolver: yupResolver(yupSchema),
-    });
+    const { control, handleSubmit, watch, clearErrors, trigger, getValues } =
+        useForm({
+            mode: "onTouched",
+            resolver: yupResolver(yupSchema),
+        });
 
     const formSections = [INITIAL_FORM_SECTION].concat(
         getFirstLocationValues(schemaFields).filter(location =>
@@ -172,6 +174,20 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
         console.log(formData);
     };
 
+    const [optionalPercentage, setOptionalPercentage] = useState(0);
+    const [requiredPercentage, setRequiredPercentage] = useState(0);
+
+    const watchAll = watch();
+
+    useEffect(() => {
+        setOptionalPercentage(
+            formGetFieldsCompletedCount(schemaFields, getValues, true)
+        );
+        setRequiredPercentage(
+            formGetFieldsCompletedCount(schemaFields, getValues, false)
+        );
+    }, [getValues, schemaFields, watchAll]);
+
     return (
         <>
             <FormBanner
@@ -179,8 +195,8 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={() => console.log("MAKE ACTIVE")}
                 saveAsDraftAction={() => console.log("SAVE AS DRAFT")}
-                completionPercentage={20}
-                optionalPercentage={0}
+                completionPercentage={requiredPercentage}
+                optionalPercentage={optionalPercentage}
             />
 
             {currentSectionIndex === 0 && <IntroScreen />}
