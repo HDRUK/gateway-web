@@ -43,7 +43,6 @@ export const useUnsavedChanges = ({
     );
 
     useEffect(() => {
-        console.log("helloooo");
         if (!nextRouterPath) return;
         showModal({
             invertCloseIconBehaviour: true,
