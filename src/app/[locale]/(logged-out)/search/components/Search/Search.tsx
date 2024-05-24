@@ -134,7 +134,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
         [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
         [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
-        [FILTER_PROGRAMMING_LANGUAGE]: getParamArray(FILTER_PROGRAMMING_LANGUAGE),
+        [FILTER_PROGRAMMING_LANGUAGE]: getParamArray(
+            FILTER_PROGRAMMING_LANGUAGE
+        ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
     });
 
@@ -191,8 +193,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${queryParams.per_page
-        }&page=${queryParams.page}&sort=${queryParams.sort}${queryParams.type === SearchCategory.PUBLICATIONS
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
+            queryParams.per_page
+        }&page=${queryParams.page}&sort=${queryParams.sort}${
+            queryParams.type === SearchCategory.PUBLICATIONS
             ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
             : ``
         }`,
@@ -375,7 +379,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                        queryParams.type === SearchCategory.DATA_PROVIDERS
+                    queryParams.type === SearchCategory.DATA_PROVIDERS
                         ? "tiled"
                         : "list"
                 }>
@@ -581,9 +585,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
                                 {queryParams.type ===
                                     SearchCategory.DATASETS && (
-                                        <ToggleTabs<ViewType>
-                                            selected={resultsView as ViewType}
-                                            buttons={toggleButtons}
+                                    <ToggleTabs<ViewType>
+                                        selected={resultsView as ViewType}
+                                        buttons={toggleButtons}
                                         />
                                     )}
                             </Box>
