@@ -194,7 +194,10 @@
                             "uploadFile": "Upload File",
                             "welcomeMessage": "Welcome to dataset metadata on-boarding.",
                             "legendIntro": "You will see a legend to help you as you on-board your dataset metadata.",
-                            "progressLegend": "Progress legend:"
+                            "progressLegend": "Progress legend:",
+                            "remove": "Remove",
+                            "add": "Add another",
+                            "submit": "Submit"
                         },
                         "EditDataset": {
                             "editButton": "Update",

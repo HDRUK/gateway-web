@@ -5,10 +5,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { buildYup } from "schema-to-yup";
-import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import {
     FormHydration,
-    FormHydrationField,
     FormHydrationSchema,
     FormHydrationValidation,
 } from "@/interfaces/FormHydration";
@@ -18,10 +16,8 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
-import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { inputComponents } from "@/config/forms";
 import theme from "@/config/theme";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import {
@@ -33,14 +29,17 @@ import {
 } from "@/consts/translation";
 import {
     formGenerateLegendItems,
+    formatValidationItems,
     getFirstLocationValues,
     hasVisibleFieldsForLocation,
     isFirstSection,
     isLastSection,
+    renderFormHydrationField,
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen/IntroScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
+import FormFieldArray from "./FormFieldArray";
 
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
@@ -73,8 +72,16 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
         > = {};
 
         validationFields.forEach(field => {
-            const { title, ...rest } = field;
-            transformedObject[title] = rest;
+            const { title, items, ...rest } = field;
+
+            if (items && Array.isArray(items)) {
+                transformedObject[title] = {
+                    ...rest,
+                    items: formatValidationItems(items),
+                };
+            } else {
+                transformedObject[title] = rest;
+            }
         });
 
         return transformedObject;
@@ -160,49 +167,6 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
         };
     }, []);
 
-    const renderFormHydrationField = ({
-        name,
-        required,
-        component,
-        placeholder,
-        ...rest
-    }: FormHydrationField) => {
-        const componentType = inputComponents[component as ComponentTypes];
-
-        return (
-            <InputWrapper
-                {...rest}
-                label={name || ""}
-                name={name}
-                key={name}
-                placeholder={placeholder || ""}
-                component={componentType}
-                required={required}
-                control={control}
-                showClearButton={false}
-                canCreate={component === "Autocomplete"}
-                selectOnFocus={component === "Autocomplete"}
-                clearOnBlur={component === "Autocomplete"}
-                handleHomeEndKeys={component === "Autocomplete"}
-                multiple={component === "Autocomplete"}
-                isOptionEqualToValue={(
-                    option: {
-                        value: string | number;
-                        label: string;
-                    },
-                    value: string | number
-                ) => option.value === value}
-                getChipLabel={(
-                    options: {
-                        value: string | number;
-                        label: string;
-                    }[],
-                    value: unknown
-                ) => options.find(option => option.value === value)?.label}
-            />
-        );
-    };
-
     // TODO - form submission
     const formSubmit = (formData: unknown) => {
         console.log(formData);
@@ -255,7 +219,7 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
                                         schemaFields
                                             .filter(
                                                 schemaField =>
-                                                    !schemaField.field.hidden
+                                                    !schemaField.field?.hidden
                                             )
                                             .filter(({ location }) =>
                                                 location.startsWith(
@@ -263,10 +227,23 @@ const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
                                                 )
                                             )
                                             .map(fieldParent => {
-                                                const { field } = fieldParent;
+                                                const { field, fields } =
+                                                    fieldParent;
 
-                                                return renderFormHydrationField(
-                                                    field
+                                                return fields?.length ? (
+                                                    <FormFieldArray
+                                                        control={control}
+                                                        schemaFields={fields}
+                                                        fieldParent={
+                                                            fieldParent
+                                                        }
+                                                    />
+                                                ) : (
+                                                    field &&
+                                                        renderFormHydrationField(
+                                                            field,
+                                                            control
+                                                        )
                                                 );
                                             })}
                                 </Box>
