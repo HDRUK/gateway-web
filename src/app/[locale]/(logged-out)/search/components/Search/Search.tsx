@@ -191,12 +191,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
-            queryParams.per_page
-        }&page=${queryParams.page}&sort=${queryParams.sort}${
-            queryParams.type === SearchCategory.PUBLICATIONS
-                ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
-                : ``
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${queryParams.per_page
+        }&page=${queryParams.page}&sort=${queryParams.sort}${queryParams.type === SearchCategory.PUBLICATIONS
+            ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+            : ``
         }`,
         {
             query: queryParams.query,
@@ -377,7 +375,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    queryParams.type === SearchCategory.DATA_PROVIDERS
+                        queryParams.type === SearchCategory.DATA_PROVIDERS
                         ? "tiled"
                         : "list"
                 }>
@@ -583,11 +581,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
                                 {queryParams.type ===
                                     SearchCategory.DATASETS && (
-                                    <ToggleTabs<ViewType>
-                                        selected={resultsView as ViewType}
-                                        buttons={toggleButtons}
-                                    />
-                                )}
+                                        <ToggleTabs<ViewType>
+                                            selected={resultsView as ViewType}
+                                            buttons={toggleButtons}
+                                        />
+                                    )}
                             </Box>
                         )}
 
