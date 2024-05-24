@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-    useState,
-    useMemo,
-    useEffect,
-    Dispatch,
-    SetStateAction,
-} from "react";
+import React, { useState, useMemo, Dispatch, SetStateAction } from "react";
 import {
     useSensors,
     useSensor,
@@ -22,21 +16,10 @@ import {
     defaultDropAnimation,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
-import Box from "@/components/Box";
-import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Paper from "@/components/Paper";
 import TaskBoardSection from "@/components/TaskBoardSection";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
-import Typography from "@/components/Typography";
-import usePatch from "@/hooks/usePatch";
-import notificationService from "@/services/notification";
-import apis from "@/config/apis";
-
-//import { findBoardSectionContainer, initializeBoard } from "../utils/board";
-//import { getTaskById } from "../utils/tasks";
-//import QuestionItem from "./QuestionItem";
-//import { BoardSections as BoardSectionsType, QuestionCard } from "./index";
 
 interface TaskBoardProps {
     boardSections: TaskBoardSectionProps[];
@@ -84,7 +67,7 @@ const TaskBoard = ({
         boardSections: TaskBoardSectionProps[],
         id: string
     ) => {
-        //note: this code could be nasty if a task.id and board.id were shared
+        // note: this code could be nasty if a task.id and board.id were shared
         //      ok, ignore this for now
         if (boardSections.flatMap(section => section.id).includes(id)) {
             return boardSections.find(section => section.id === id);
@@ -203,32 +186,6 @@ const TaskBoard = ({
             });
         }
     };
-
-    /*
-    const handleSaveChanges = () => {
-        const selectedQuestionIds = boardSections["Selected Questions"].map(
-            s => s.id
-        );
-        const tasksInSection = tasks
-            .filter(t => selectedQuestionIds.includes(t.id))
-            .sort(
-                (a, b) =>
-                    selectedQuestionIds.indexOf(a.id) -
-                    selectedQuestionIds.indexOf(b.id)
-            );
-        tasks = tasks.map(task => {
-            let status = "";
-            if (selectedQuestionIds.includes(task.id)) {
-                status = "Selected Questions";
-            } else {
-                status = "Question Bank";
-            }
-            return { ...task, status: status };
-        });
-        const payload = { questions: tasksInSection };
-        updateTemplateQuestions(templateId, payload);
-        console.log(tasks);
-    };*/
 
     return (
         <DndContext
