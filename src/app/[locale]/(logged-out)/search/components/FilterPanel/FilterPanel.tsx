@@ -21,6 +21,8 @@ import {
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
     FILTER_ACCESS_SERVICE,
+    FILTER_PROGRAMMING_LANGUAGE,
+    FILTER_TYPE_CATEGORY,
     filtersList,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
@@ -84,6 +86,8 @@ const FilterPanel = ({
         [FILTER_DATE_RANGE]: {},
         [FILTER_PUBLICATION_DATE]: {},
         [FILTER_ACCESS_SERVICE]: {},
+        [FILTER_PROGRAMMING_LANGUAGE]: {},
+        [FILTER_TYPE_CATEGORY]: {},
         [FILTER_SECTOR]: {},
     });
 
@@ -111,6 +115,8 @@ const FilterPanel = ({
         [FILTER_DATA_USE_TITLES]: string;
         [FILTER_SECTOR]: string;
         [FILTER_ACCESS_SERVICE]: string;
+        [FILTER_PROGRAMMING_LANGUAGE]: string;
+        [FILTER_TYPE_CATEGORY]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
