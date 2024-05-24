@@ -197,8 +197,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             queryParams.per_page
         }&page=${queryParams.page}&sort=${queryParams.sort}${
             queryParams.type === SearchCategory.PUBLICATIONS
-            ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
-            : ``
+                ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+                : ``
         }`,
         {
             query: queryParams.query,
@@ -588,8 +588,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     <ToggleTabs<ViewType>
                                         selected={resultsView as ViewType}
                                         buttons={toggleButtons}
-                                        />
-                                    )}
+                                    />
+                                )}
                             </Box>
                         )}
 
