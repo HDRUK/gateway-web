@@ -174,16 +174,15 @@ const TaskBoard = ({
                             activeIndex,
                             overIndex
                         ).map(task => {
-                            if (task.id === active.id && task.task?.boardId) {
-                                return {
-                                    ...task,
-                                    task: {
-                                        ...task.task,
-                                        boardId: activeSection.id,
-                                    },
-                                };
+                            const newTask = { ...task };
+
+                            if (
+                                task.id === active.id &&
+                                newTask.task?.boardId
+                            ) {
+                                newTask.task.boardId = activeSection.id;
                             }
-                            return task;
+                            return newTask;
                         });
 
                         return {
