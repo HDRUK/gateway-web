@@ -23,14 +23,19 @@ const DarTemplatePage = () => {
     });
 
     const handleCreateTemplate = () => {
-        //note: hardcoding the user_id for the template for now
-        //      when we update permissions, and permission forwarding from the gateway api
-        //      then well be able to add user_id to the payload
-        //note: may be able to get it from the JWT token on the FE
-        //note: may not need it
+        /*
+        note: 
+            - hardcoding the user_id for the template for now
+               when we update permissions, and permission forwarding from the gateway api
+               then well be able to add user_id to the payload
+            - may be able to get it from the JWT token on the FE
+                - may not need it
+            - update hardcoding of user_id: "1" in the future!
+              this will be possible when the service is authorised
+        */
         const payload = {
             team_id: teamId,
-            user_id: "1", //update in the future
+            user_id: "1",
         };
         createNewTemplate(payload).then(res => {
             const { id: templateId } = res;
@@ -58,7 +63,7 @@ const DarTemplatePage = () => {
                 />
                 <ImageMediaCard
                     img=""
-                    href={`/to-be-implemented`}
+                    href="/to-be-implemented"
                     description={t("manage.description")}
                     buttonText={t("manage.label")}
                 />
