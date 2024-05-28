@@ -152,9 +152,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                                 disabled={!allowEdit}
                                 onClick={() => handleEdit()}>
                                 <EditIcon
-                                    sx={{
-                                        color: allowEdit ? "primary" : "grey",
-                                    }}
+                                    color={allowEdit ? "primary" : "grey"}
                                 />
                             </IconButton>
 
