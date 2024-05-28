@@ -57,7 +57,7 @@ const FormLegend = ({
                 <>
                     <ListItemButton
                         sx={{ marginLeft: `${level * 16}px` }}
-                        key={item.name}
+                        key={`${item.name}`}
                         onClick={() =>
                             handleClickItem &&
                             (item.id

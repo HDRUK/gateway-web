@@ -109,7 +109,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const makeTask = (
         q: QuestionBankQuestion | (QuestionBankQuestion & DarHasQuestion),
-        selected: boolean,
+        boardId: string,
         index: number
     ): DarQuestion => {
         const isExtendedQuestion = (
@@ -124,11 +124,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
         return {
             id: q.id,
+            boardId,
             order: extended ? q.order : index,
-            selected,
             title: `${q.id}) ${q.question_json.title} `,
             guidance:
-                extended && q.allow_guidance_override
+                extended && q.allow_guidance_override && q.guidance
                     ? q.guidance
                     : q.question_json.guidance || "",
             original_guidance: q.question_json.guidance || "",
@@ -162,10 +162,14 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                         ...qbQuestion,
                         ...templateQuestion,
                     };
-                    return makeTask(question, selected, index);
+                    const boardId = selected
+                        ? "selectQuestions"
+                        : "questionBank";
+
+                    return makeTask(question, boardId, index);
                 }) || []
         );
-    }, [sectionId, qbQuestions, template]);
+    }, [sectionId, qbQuestions, template, isLoading]);
 
     const initialSelectBoard = useMemo(
         () => ({
@@ -173,7 +177,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             title: "Selected Questions",
             description: "Currently selected questions for your DAR template.",
             tasks: tasks
-                .filter(t => t.selected)
+                .filter(t => t.boardId === "selectQuestions")
                 .sort((a, b) => a.order - b.order)
                 .map(t => ({
                     id: t.id,
@@ -182,7 +186,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                     content: <QuestionItem task={t} setTasks={setTasks} />,
                 })),
         }),
-        [tasks]
+        [tasks, isLoading]
     );
 
     const initalQuestionBankBoard = useMemo(
@@ -192,23 +196,29 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                 "Other available questions you can add from the question bank.",
             title: "Question Bank",
             tasks: tasks
-                .filter(t => !t.selected)
+                .filter(t => t.boardId === "questionBank")
                 .sort((a, b) => a.order - b.order)
                 .map(t => {
                     return {
                         id: t.id,
                         anchored: false,
                         task: t,
-                        content: <QuestionItem task={t} setTasks={setTasks} />,
+                        content: (
+                            <QuestionItem
+                                key={t.id}
+                                task={t}
+                                setTasks={setTasks}
+                            />
+                        ),
                     };
                 }),
         }),
-        [tasks]
+        [tasks, isLoading]
     );
 
     useEffect(() => {
         setBoardSections([initialSelectBoard, initalQuestionBankBoard]);
-    }, [initialSelectBoard, initalQuestionBankBoard]);
+    }, [initialSelectBoard, initalQuestionBankBoard, isLoading]);
 
     useEffect(() => {
         if (isLoading) return;
@@ -225,7 +235,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
         const anyTaskChanged = currentTasks.some(t => t.task.hasChanged);
         setHasChanges(!tasksAreUnchanged || anyTaskChanged);
-    }, [boardSections]);
+    }, [boardSections, isLoading]);
 
     const handleSaveChanges = () => {
         // first board is the select board

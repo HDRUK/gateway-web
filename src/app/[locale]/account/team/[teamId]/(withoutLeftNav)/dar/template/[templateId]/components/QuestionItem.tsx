@@ -29,7 +29,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         setCurrentTask(task);
     }, [task]);
 
-    const { control, getValues, setValue } = useForm({
+    const { control, getValues, setValue, handleSubmit } = useForm({
         defaultValues: {
             guidance: currentTask.guidance,
             required: currentTask.required,
@@ -39,6 +39,22 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     const allow_edit_required = currentTask.force_required === 0;
     const allow_edit_guidance = currentTask.allow_guidance_override === 1;
     const allowEdit = allow_edit_required || allow_edit_guidance;
+
+    const onSuccess = async () => {
+        const guidance = getValues("guidance");
+        const required = getValues("required");
+
+        const updatedTask = {
+            ...task,
+            guidance,
+            required,
+            hasChanged: true,
+        };
+
+        setTasks(prevTasks =>
+            prevTasks.map(t => (t.id === updatedTask.id ? updatedTask : t))
+        );
+    };
 
     const handleEdit = () => {
         const resetGuidance = () => {
@@ -96,23 +112,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                     />
                 </Box>
             ),
-            onSuccess: async () => {
-                const guidance = getValues("guidance");
-                const required = getValues("required");
-
-                const updatedTask = {
-                    ...task,
-                    guidance,
-                    required,
-                    hasChanged: true,
-                };
-
-                setTasks(prevTasks =>
-                    prevTasks.map(t =>
-                        t.id === updatedTask.id ? updatedTask : t
-                    )
-                );
-            },
+            onSuccess: handleSubmit(onSuccess),
         });
     };
 

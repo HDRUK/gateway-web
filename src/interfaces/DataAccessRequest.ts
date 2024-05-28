@@ -1,7 +1,7 @@
 interface DarQuestion {
-    id: number;
+    id: number | string;
+    boardId: number | string;
     order: number;
-    selected: boolean;
     title: string;
     guidance: string;
     original_guidance: string;

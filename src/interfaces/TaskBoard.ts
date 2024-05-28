@@ -1,6 +1,7 @@
 interface TaskItem {
     /* eslint-disable @typescript-eslint/no-explicit-any */
     id: string | number;
+    boardId: string | number;
     [key: string]: any;
 }
 
