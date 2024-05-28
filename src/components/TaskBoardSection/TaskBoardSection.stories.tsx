@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import TaskBoardSection from "@/components/TaskBoardSection";
-import { TaskBoardSectionProps } from "./TaskBoardSection";
 
 /** Mui documentation: https://mui.com/material-ui/react-tabs */
 
@@ -20,7 +19,7 @@ const WrapperComponent = () => {
             id: "101",
             content: (
                 <Paper>
-                    <Box> {"First Item"}</Box>
+                    <Box> First Item </Box>
                 </Paper>
             ),
         },
@@ -28,7 +27,7 @@ const WrapperComponent = () => {
             id: "102",
             content: (
                 <Paper>
-                    <Box> {"Second Item"}</Box>
+                    <Box> Second Item </Box>
                 </Paper>
             ),
         },
@@ -37,8 +36,8 @@ const WrapperComponent = () => {
     return (
         <TaskBoardSection
             id="1"
-            title={"my title"}
-            description={"my description"}
+            title="my title"
+            description="my description"
             tasks={tasks}
         />
     );

@@ -27,7 +27,7 @@ const WrapperComponent = () => {
                         anchored: true,
                         content: (
                             <Paper>
-                                <Box> {"First Item Board 1"}</Box>
+                                <Box> First Item Board 1 </Box>
                             </Paper>
                         ),
                     },
@@ -35,7 +35,7 @@ const WrapperComponent = () => {
                         id: "102",
                         content: (
                             <Paper>
-                                <Box> {"Second Item Board 1"}</Box>
+                                <Box> Second Item Board 1</Box>
                             </Paper>
                         ),
                     },
@@ -50,7 +50,7 @@ const WrapperComponent = () => {
                         id: "111",
                         content: (
                             <Paper>
-                                <Box> {"First Item Board 2"}</Box>
+                                <Box> First Item Board 2</Box>
                             </Paper>
                         ),
                     },
@@ -58,7 +58,7 @@ const WrapperComponent = () => {
                         id: "112",
                         content: (
                             <Paper>
-                                <Box> {"Second Item Board 2"}</Box>
+                                <Box> Second Item Board 2</Box>
                             </Paper>
                         ),
                     },
@@ -66,7 +66,7 @@ const WrapperComponent = () => {
                         id: "113",
                         content: (
                             <Paper>
-                                <Box> {"Third Item Board 3"}</Box>
+                                <Box> Third Item Board 3</Box>
                             </Paper>
                         ),
                     },

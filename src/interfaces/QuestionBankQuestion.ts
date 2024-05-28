@@ -42,8 +42,6 @@ interface QuestionBankQuestion {
     section_id: number;
     user_id: number;
     team_id: number;
-    order?: number;
-    guidance?: string;
 }
 
 export type {

@@ -8,7 +8,7 @@ interface TaskBoardItem {
     id: string | number;
     anchored?: boolean;
     content: React.ReactNode;
-    task: TaskItem;
+    task?: TaskItem;
 }
 
 export type { TaskBoardItem, TaskItem };
