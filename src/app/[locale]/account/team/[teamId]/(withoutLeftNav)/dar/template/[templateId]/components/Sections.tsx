@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
+import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
 import FormLegend from "@/components/FormLegend";
@@ -10,7 +11,7 @@ import theme from "@/config/theme";
 
 interface Props {
     sectionId: number;
-    sections: any[];
+    sections: QuestionBankSection[];
     handleLegendClick?: (itemIndex: number) => void;
 }
 
@@ -18,10 +19,10 @@ const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {
     const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
 
     useEffect(() => {
-        const findSubSections = s =>
+        const findSubSections = (s: QuestionBankSection) =>
             sections?.filter(sub => sub.sub_section === s.name);
 
-        const buildMenu = s => {
+        const buildMenu = (s: QuestionBankSection) => {
             return {
                 id: s.id,
                 name: s.name,

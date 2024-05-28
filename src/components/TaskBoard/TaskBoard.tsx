@@ -205,8 +205,9 @@ const TaskBoard = ({
                     pt: 2,
                 }}>
                 {boardSections.map(section => (
-                    <Paper sx={{ mx: 1, px: 2 }}>
+                    <Paper key={section.id} sx={{ mx: 1, px: 2 }}>
                         <TaskBoardSection
+                            key={section.id}
                             id={section.id}
                             title={section.title}
                             description={section.description}
@@ -219,21 +220,6 @@ const TaskBoard = ({
                     {activeTask ? activeTask.content : null}
                 </DragOverlay>
             </Container>
-
-            {/*
-            <Paper sx={{ m: 2, p: 2, mb: 5 }}>
-                <Box
-                    sx={{
-                        p: 0,
-                        display: "flex",
-                        justifyContent: "end",
-                    }}>
-                    <Button onClick={handleSaveChanges} type="submit">
-                        Save changes
-                    </Button>
-                </Box>
-            </Paper>
-                */}
         </DndContext>
     );
 };

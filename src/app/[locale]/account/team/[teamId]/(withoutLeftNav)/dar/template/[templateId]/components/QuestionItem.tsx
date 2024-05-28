@@ -1,36 +1,24 @@
-import {
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-    Dispatch,
-    SetStateAction,
-} from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
-import { Card, CardContent } from "@mui/material";
-import { IconButton } from "@mui/material";
+import { Card, CardContent, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { DarQuestion } from "@/interfaces/DataAccessRequest";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import RadioGroup from "@/components/RadioGroup";
 import TextArea from "@/components/TextArea";
 import TooltipIcon from "@/components/TooltipIcon";
-import ChangesActionBar from "@/modules/ChangesActionBar";
-import useActionBar from "@/hooks/useActionBar";
 import useModal from "@/hooks/useModal";
-//import from "@/hooks/useP"
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import {
     DragIndicatorIcon,
     EditIcon,
     LockIcon,
     RestartAltIcon,
 } from "@/consts/icons";
-import { QuestionCard } from ".";
 
 type QuestionItemProps = {
-    task: QuestionCard;
-    setTasks: Dispatch<SetStateAction<QuestionCard[]>>;
+    task: DarQuestion;
+    setTasks: Dispatch<SetStateAction<DarQuestion[]>>;
 };
 
 const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
@@ -41,7 +29,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         setCurrentTask(task);
     }, [task]);
 
-    const { control, getValues, setValue, formState } = useForm({
+    const { control, getValues, setValue } = useForm({
         defaultValues: {
             guidance: currentTask.guidance,
             required: currentTask.required,
@@ -52,7 +40,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     const allow_edit_guidance = currentTask.allow_guidance_override === 1;
     const allowEdit = allow_edit_required || allow_edit_guidance;
 
-    const handleEdit = (id: number) => {
+    const handleEdit = () => {
         const resetGuidance = () => {
             setValue("guidance", currentTask.original_guidance);
         };
@@ -162,9 +150,11 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             <IconButton
                                 sx={{ p: 0, m: 0 }}
                                 disabled={!allowEdit}
-                                onClick={() => handleEdit(currentTask.id)}>
+                                onClick={() => handleEdit()}>
                                 <EditIcon
-                                    color={allowEdit ? "primary" : "grey"}
+                                    sx={{
+                                        color: allowEdit ? "primary" : "grey",
+                                    }}
                                 />
                             </IconButton>
 
@@ -187,9 +177,9 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
             </CardContent>
             {!allow_edit_required && (
                 <TooltipIcon
-                    content={<div>{"required question"}</div>}
+                    content={<div>required question</div>}
                     icon={<LockIcon sx={{ color: "red" }} />}
-                    label={""}
+                    label=""
                 />
             )}
         </Card>

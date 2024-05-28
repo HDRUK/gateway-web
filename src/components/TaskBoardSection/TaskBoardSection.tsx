@@ -5,17 +5,12 @@ import {
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import Typography from "@mui/material/Typography";
+import { TaskBoardItem } from "@/interfaces/TaskBoard";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
 import Paper from "@/components/Paper";
 import SortableItem from "@/components/SortableItem";
 import { colors } from "@/config/theme";
-
-interface TaskBoardItem {
-    id: string;
-    anchored?: boolean;
-    content: React.ReactNode;
-}
 
 export type TaskBoardSectionProps = {
     id: string;
@@ -37,7 +32,7 @@ const TaskBoardSection = ({
     return (
         <Container sx={{ pb: 2 }}>
             <Box>
-                <Typography variant={"h2"}> {title}</Typography>
+                <Typography variant="h2"> {title}</Typography>
                 <Typography> {description}</Typography>
             </Box>
             <Paper sx={{ p: 1, backgroundColor: colors.grey100, border: 0 }}>

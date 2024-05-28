@@ -1,9 +1,14 @@
 "use client";
 
-import { useEffect, useState, useMemo, useRef } from "react";
-import { cornersOfRectangle } from "@dnd-kit/core/dist/utilities/algorithms/helpers";
-import { sign } from "crypto";
-import { String } from "lodash";
+import { useEffect, useState, useMemo } from "react";
+import {
+    DarQuestion,
+    DarHasQuestion,
+    DarTemplate,
+} from "@/interfaces/DataAccessRequest";
+import { PaginationType } from "@/interfaces/Pagination";
+import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
+import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
@@ -17,26 +22,23 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import QuestionItem from "../components/QuestionItem";
-import Sections from "../components/Sections";
+import QuestionItem from "./QuestionItem";
+import Sections from "./Sections";
 
 interface EditTemplateProps {
     templateId: string;
 }
 
 const EditTemplate = ({ templateId }: EditTemplateProps) => {
-    const isInitialMount = useRef(true);
-
-    const { data: sections, isLoading: isLoadingSections } = useGet<any[]>(
-        `${apis.questionBankV1Url}/sections`,
-        { keepPreviousData: true }
-    );
+    const { data: sections, isLoading: isLoadingSections } = useGet<
+        QuestionBankSection[]
+    >(`${apis.questionBankV1Url}/sections`, { keepPreviousData: true });
 
     const {
         data: template,
         isLoading: isLoadingQuestions,
         mutate: mutateTemplate,
-    } = useGet(`${apis.darasV1Url}/dar-templates/${templateId}`, {
+    } = useGet<DarTemplate>(`${apis.darasV1Url}/dar-templates/${templateId}`, {
         keepPreviousData: true,
     });
 
@@ -44,9 +46,12 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         data: qbQuestions,
         isLoading: isLoadingQB,
         mutate: mutateQuestions,
-    } = useGet(`${apis.questionBankV1Url}/questions`, {
-        keepPreviousData: true,
-    });
+    } = useGet<PaginationType<QuestionBankQuestion>>(
+        `${apis.questionBankV1Url}/questions`,
+        {
+            keepPreviousData: true,
+        }
+    );
 
     const isLoading = isLoadingQuestions || isLoadingQB || isLoadingSections;
 
@@ -92,30 +97,48 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         }
     };
 
-    const [currentSection, setCurrentSection] = useState();
+    const [currentSection, setCurrentSection] = useState<QuestionBankSection>();
 
     useEffect(() => {
         const section = sections?.filter(s => s.id === sectionId)[0];
-        setCurrentSection(section);
+        if (section) {
+            setCurrentSection(section);
+        }
     }, [sections, sectionId]);
 
-    const makeTask = (q, selected, index) => ({
-        id: q.id,
-        order: q.order ? q.order : index,
-        selected: selected,
-        title: `${q.id}) ${q.question_json.title} `,
-        guidance:
-            q.guidance && q.allow_guidance_override
-                ? q.guidance
-                : q.question_json.guidance,
-        original_guidance: q.question_json.guidance,
-        required: q.required,
-        force_required: q.force_required,
-        allow_guidance_override: q.allow_guidance_override,
-        hasChanged: false,
-    });
+    const makeTask = (
+        q: QuestionBankQuestion | (QuestionBankQuestion & DarHasQuestion),
+        selected: boolean,
+        index: number
+    ): DarQuestion => {
+        const isExtendedQuestion = (
+            q: QuestionBankQuestion | (QuestionBankQuestion & DarHasQuestion)
+        ): q is QuestionBankQuestion & DarHasQuestion => {
+            return (
+                (q as QuestionBankQuestion & DarHasQuestion).order !== undefined
+            );
+        };
 
-    const [tasks, setTasks] = useState([]);
+        const extended = isExtendedQuestion(q);
+
+        return {
+            id: q.id,
+            order: extended ? q.order : index,
+            selected,
+            title: `${q.id}) ${q.question_json.title} `,
+            guidance:
+                extended && q.allow_guidance_override
+                    ? q.guidance
+                    : q.question_json.guidance || "",
+            original_guidance: q.question_json.guidance || "",
+            required: q.required,
+            force_required: q.force_required,
+            allow_guidance_override: q.allow_guidance_override,
+            hasChanged: false,
+        };
+    };
+
+    const [tasks, setTasks] = useState<DarQuestion[]>([]);
     useEffect(() => {
         if (isLoading) return;
 
@@ -125,21 +148,21 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             qbQuestions?.list
                 ?.filter(q => q.section_id === sectionId)
                 ?.map((qbQuestion, index) => {
-                    const selected = templateQuestionIds.includes(
-                        qbQuestion.id
-                    );
+                    const selected =
+                        templateQuestionIds?.includes(qbQuestion.id) ?? false;
                     let templateQuestion;
                     if (selected) {
                         templateQuestion = template?.questions.find(
-                            tq => tq.question_id == qbQuestion.id
+                            tq => tq.question_id === qbQuestion.id
                         );
                     }
+                    // stitch together the qbQuestion and DarTemplateHasQuestion
                     const question = {
                         ...qbQuestion,
                         ...templateQuestion,
                     };
                     return makeTask(question, selected, index);
-                })
+                }) || []
         );
     }, [sectionId, qbQuestions, template]);
 
@@ -191,7 +214,8 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         const currentTasks = boardSections[0].tasks;
         const initialTasks = initialSelectBoard.tasks;
 
-        //check if the selected tasks and their order have changed
+        // check if the selected tasks and their order have changed
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         const tasksAreUnchanged =
             initialTasks.length === currentTasks.length &&
             initialTasks.every((value: any, index: number) => {
@@ -204,10 +228,9 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
     }, [boardSections]);
 
     const handleSaveChanges = () => {
-        //first board is the select board
+        // first board is the select board
         const tasksInSection = boardSections[0].tasks.map(t => t.task);
         const payload = { questions: tasksInSection };
-        console.log(payload);
         updateTemplateQuestions(templateId, payload).then(() =>
             mutateQuestions().then(() =>
                 mutateTemplate().then(() => setHasChanges(false))
@@ -216,16 +239,12 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
     };
 
     if (isLoading) {
-        return (
-            <>
-                <Loading />
-            </>
-        );
+        return <Loading />;
     }
 
     return (
         <Container maxWidth={false} sx={{ minHeight: "1000px", p: 1, m: 1 }}>
-            <Typography variant={"h2"}> Edit a template </Typography>
+            <Typography variant="h2"> Edit a template </Typography>
             <Container
                 maxWidth={false}
                 sx={{
@@ -237,11 +256,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                 <Sections
                     handleLegendClick={handleChangeSection}
                     sectionId={sectionId}
-                    sections={sections}
+                    sections={sections || []}
                 />
                 <Container maxWidth={false}>
                     <Paper sx={{ p: 2 }}>
-                        <Typography variant={"h2"}>
+                        <Typography variant="h2">
                             {currentSection?.name}{" "}
                         </Typography>
                     </Paper>
