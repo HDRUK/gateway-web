@@ -5,19 +5,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { buildYup } from "schema-to-yup";
-import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import {
+    FormHydration,
+    FormHydrationSchema,
+    FormHydrationValidation,
+} from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import FormBanner from "@/components/FormBanner";
-import { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
+import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
-import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { inputComponents } from "@/config/forms";
 import theme from "@/config/theme";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import {
@@ -29,24 +29,25 @@ import {
 } from "@/consts/translation";
 import {
     formGenerateLegendItems,
+    formatValidationItems,
     getFirstLocationValues,
     hasVisibleFieldsForLocation,
     isFirstSection,
     isLastSection,
+    renderFormHydrationField,
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
+import IntroScreen from "../IntroScreen/IntroScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
-import formSchema from "./config/form.json";
+import FormFieldArray from "./FormFieldArray";
 
-interface FieldValidation {
-    [key: string]: unknown;
+interface CreateDatasetProps {
+    formJSON: FormHydrationSchema;
 }
 
-interface SchemaValidation {
-    [key: string]: FieldValidation;
-}
+const INITIAL_FORM_SECTION = "Home";
 
-const CreateDataset = () => {
+const CreateDataset = ({ formJSON }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -60,34 +61,38 @@ const CreateDataset = () => {
         content: null,
     }));
 
-    const schemaFields: FormHydration[] = formSchema.schema_fields;
+    const schemaFields = formJSON.schema_fields;
 
-    const generateValidationRules = (schemaFields: FormHydration[]) => {
-        const validationRules: SchemaValidation = {};
+    const generateValidationRules = (
+        validationFields: FormHydrationValidation[]
+    ) => {
+        const transformedObject: Record<
+            string,
+            Omit<FormHydrationValidation, "title">
+        > = {};
 
-        schemaFields.forEach(fieldTest => {
-            const { title, validation, field } = fieldTest;
+        validationFields.forEach(field => {
+            const { title, items, ...rest } = field;
 
-            if (validation?.schema && !field.hidden) {
-                const { schema: fieldValidation } = validation;
-
-                const validationProps = fieldValidation.properties.field;
-
-                if (fieldValidation && validationProps) {
-                    validationRules[title] = validationProps;
-                }
+            if (items && Array.isArray(items)) {
+                transformedObject[title] = {
+                    ...rest,
+                    items: formatValidationItems(items),
+                };
+            } else {
+                transformedObject[title] = rest;
             }
         });
 
-        return validationRules;
+        return transformedObject;
     };
 
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
 
-    const generatedYupValidation = {
+    const generatedYupValidation = formJSON?.validation && {
         title: "Metadata form",
         type: "object",
-        properties: generateValidationRules(schemaFields),
+        properties: generateValidationRules(formJSON.validation),
     };
 
     const yupSchema = buildYup(generatedYupValidation);
@@ -97,8 +102,10 @@ const CreateDataset = () => {
         resolver: yupResolver(yupSchema),
     });
 
-    const formSections = getFirstLocationValues(schemaFields).filter(location =>
-        hasVisibleFieldsForLocation(schemaFields, location)
+    const formSections = [INITIAL_FORM_SECTION].concat(
+        getFirstLocationValues(schemaFields).filter(location =>
+            hasVisibleFieldsForLocation(schemaFields, location)
+        )
     );
 
     const currentSectionIndex = selectedFormSection
@@ -117,7 +124,7 @@ const CreateDataset = () => {
         };
 
         const initialSection = getFirstNonHiddenSection(schemaFields) || "";
-        setSelectedFormSection(initialSection);
+        setSelectedFormSection(INITIAL_FORM_SECTION || initialSection);
     }, [schemaFields]);
 
     useEffect(() => {
@@ -139,7 +146,7 @@ const CreateDataset = () => {
     }, [selectedFormSection]);
 
     const handleLegendClick = (clickedIndex: number) => {
-        setSelectedFormSection(formSections[clickedIndex]);
+        setSelectedFormSection(formSections[clickedIndex + 1]);
     };
 
     const [navbarHeight, setNavbarHeight] = useState<string>();
@@ -160,49 +167,6 @@ const CreateDataset = () => {
         };
     }, []);
 
-    const renderFormHydrationField = ({
-        name,
-        required,
-        component,
-        placeholder,
-        ...rest
-    }: FormHydrationField) => {
-        const componentType = inputComponents[component as ComponentTypes];
-
-        return (
-            <InputWrapper
-                {...rest}
-                label={name || ""}
-                name={name}
-                key={name}
-                placeholder={placeholder || ""}
-                component={componentType}
-                required={required}
-                control={control}
-                showClearButton={false}
-                canCreate={component === "Autocomplete"}
-                selectOnFocus={component === "Autocomplete"}
-                clearOnBlur={component === "Autocomplete"}
-                handleHomeEndKeys={component === "Autocomplete"}
-                multiple={component === "Autocomplete"}
-                isOptionEqualToValue={(
-                    option: {
-                        value: string | number;
-                        label: string;
-                    },
-                    value: string | number
-                ) => option.value === value}
-                getChipLabel={(
-                    options: {
-                        value: string | number;
-                        label: string;
-                    }[],
-                    value: unknown
-                ) => options.find(option => option.value === value)?.label}
-            />
-        );
-    };
-
     // TODO - form submission
     const formSubmit = (formData: unknown) => {
         console.log(formData);
@@ -219,65 +183,84 @@ const CreateDataset = () => {
                 optionalPercentage={0}
             />
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
-                <Box
-                    sx={{
-                        flex: 1,
-                        padding: theme.spacing(1),
-                    }}>
-                    <FormLegend
-                        items={legendItems}
-                        handleClickItem={handleLegendClick}
-                        offsetTop={navbarHeight}
-                    />
-                </Box>
-                <Box sx={{ flex: 2, p: 0 }}>
-                    <Form onSubmit={handleSubmit(formSubmit)}>
-                        <Paper
-                            sx={{
-                                marginTop: "10px",
-                                marginBottom: "10px",
-                                padding: 2,
-                            }}>
-                            <Typography variant="h2">
-                                {capitalise(
-                                    splitCamelcase(selectedFormSection)
-                                )}
-                            </Typography>
+            {currentSectionIndex === 0 && <IntroScreen />}
 
-                            <Box sx={{ p: 0 }}>
-                                {selectedFormSection &&
-                                    schemaFields
-                                        .filter(
-                                            schemaField =>
-                                                !schemaField.field.hidden
-                                        )
-                                        .filter(({ location }) =>
-                                            location.startsWith(
-                                                selectedFormSection
+            {currentSectionIndex > 0 && (
+                <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+                    <Box
+                        sx={{
+                            flex: 1,
+                            padding: theme.spacing(1),
+                        }}>
+                        <FormLegend
+                            items={legendItems.filter(
+                                item => item.name !== INITIAL_FORM_SECTION
+                            )}
+                            handleClickItem={handleLegendClick}
+                            offsetTop={navbarHeight}
+                        />
+                    </Box>
+                    <Box sx={{ flex: 2, p: 0 }}>
+                        <Form onSubmit={handleSubmit(formSubmit)}>
+                            <Paper
+                                sx={{
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    padding: 2,
+                                }}>
+                                <Typography variant="h2">
+                                    {capitalise(
+                                        splitCamelcase(selectedFormSection)
+                                    )}
+                                </Typography>
+
+                                <Box sx={{ p: 0 }}>
+                                    {selectedFormSection &&
+                                        schemaFields
+                                            .filter(
+                                                schemaField =>
+                                                    !schemaField.field?.hidden
                                             )
-                                        )
-                                        .map(fieldParent => {
-                                            const { field } = fieldParent;
+                                            .filter(({ location }) =>
+                                                location.startsWith(
+                                                    selectedFormSection
+                                                )
+                                            )
+                                            .map(fieldParent => {
+                                                const { field, fields } =
+                                                    fieldParent;
 
-                                            return renderFormHydrationField(
-                                                field
-                                            );
-                                        })}
-                            </Box>
-                        </Paper>
-                    </Form>
+                                                return fields?.length ? (
+                                                    <FormFieldArray
+                                                        control={control}
+                                                        schemaFields={fields}
+                                                        fieldParent={
+                                                            fieldParent
+                                                        }
+                                                    />
+                                                ) : (
+                                                    field &&
+                                                        renderFormHydrationField(
+                                                            field,
+                                                            control
+                                                        )
+                                                );
+                                            })}
+                                </Box>
+                            </Paper>
+                        </Form>
+                    </Box>
+                    <Paper
+                        style={{
+                            flex: 1,
+                            alignItems: "center",
+                            padding: theme.spacing(2),
+                            margin: theme.spacing(1.25),
+                        }}>
+                        <Typography variant="h2">{t("guidance")}</Typography>
+                    </Paper>
                 </Box>
-                <Paper
-                    style={{
-                        flex: 1,
-                        alignItems: "center",
-                        padding: theme.spacing(2),
-                        margin: theme.spacing(1.25),
-                    }}>
-                    <Typography variant="h2">{t("guidance")}</Typography>
-                </Paper>
-            </Box>
+            )}
 
             <Box sx={{ padding: theme.spacing(1), margin: theme.spacing(2) }}>
                 <FormFooter>
@@ -292,24 +275,6 @@ const CreateDataset = () => {
                             variant="text"
                             startIcon={<ArrowBackIosNewIcon />}>
                             {t("previous")}
-                        </Button>
-                    </FormFooterItem>
-
-                    <FormFooterItem>
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                            color="secondary"
-                            onClick={() =>
-                                setSelectedFormSection(
-                                    formSections[currentSectionIndex + 1]
-                                )
-                            }
-                            disabled={isLastSection(
-                                formSections,
-                                currentSectionIndex
-                            )}>
-                            {t("skip")}
                         </Button>
                     </FormFooterItem>
 
