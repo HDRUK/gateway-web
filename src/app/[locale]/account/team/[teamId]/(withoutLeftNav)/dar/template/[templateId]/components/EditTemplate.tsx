@@ -9,6 +9,7 @@ import {
 import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
+import { TaskItem } from "@/interfaces/TaskBoard";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
@@ -215,10 +216,9 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         const initialTasks = initialSelectBoard.tasks;
 
         // check if the selected tasks and their order have changed
-        /* eslint-disable @typescript-eslint/no-explicit-any */
         const tasksAreUnchanged =
             initialTasks.length === currentTasks.length &&
-            initialTasks.every((value: any, index: number) => {
+            initialTasks.every((value: TaskItem, index: number) => {
                 const currentTask = currentTasks[index];
                 return value.id === currentTask.id;
             });
