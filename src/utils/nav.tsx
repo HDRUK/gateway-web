@@ -110,8 +110,8 @@ const getTeamNav = (
                           ...(permissions["dar-form.update"]
                               ? [
                                     {
-                                        label: "Edit Form",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.EDIT_FORM}`,
+                                        label: "Manage Templates",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
                                     },
                                 ]
                               : []),

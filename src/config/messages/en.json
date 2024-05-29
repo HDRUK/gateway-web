@@ -172,7 +172,7 @@
             "team": {
                 "dataAccessRequests": {
                     "applications": { "title": "Applications" },
-                    "editForm": { "title": "Edit Form" },
+                    "manageTemplates": { "title": "Manage Templates" },
                     "workflows": { "title": "Workflows" }
                 },
                 "dataUses": {
