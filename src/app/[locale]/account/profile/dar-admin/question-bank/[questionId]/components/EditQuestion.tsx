@@ -87,23 +87,23 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
 
     const { title, guidance, field } = question ?? {};
 
-    const hydratedFormFields = useMemo(
-        () =>
-            questionFormFields.map(field => {
-                if (field.name === "section_id") {
-                    return {
-                        ...field,
-                        options:
-                            sectionData?.map(section => ({
-                                value: section.id,
-                                label: section.name,
-                            })) || [],
-                    };
-                }
-                return field;
-            }),
-        [sectionData]
-    );
+    const getFormFields = () => {
+        return questionFormFields.map(field => {
+            if (field.name === "section_id") {
+                return {
+                    ...field,
+                    options:
+                        sectionData?.map(section => ({
+                            value: section.id,
+                            label: section.name,
+                        })) || [],
+                };
+            }
+            return field;
+        });
+    };
+
+    const hydratedFormFields = useMemo(() => getFormFields(), [sectionData]);
 
     const defaultValues = useMemo(() => questionDefaultValues, []);
 

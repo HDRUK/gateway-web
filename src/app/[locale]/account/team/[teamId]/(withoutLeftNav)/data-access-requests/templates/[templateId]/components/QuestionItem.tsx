@@ -121,7 +121,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         <Card
             sx={{
                 border: 1,
-                borderColor: !allow_edit_required ? "red" : "lightgrey",
+                borderColor: !allowEditRequired ? "red" : "lightgrey",
                 borderRadius: 2,
             }}>
             <CardContent sx={{ p: 0, m: 0, alignItems: "center" }}>

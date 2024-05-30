@@ -31,6 +31,9 @@ import Sections from "./Sections";
 
 const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
 
+const SELECTED_BOARD_ID = "selectedQuestions";
+const QB_BOARD_ID = "questionBank";
+
 interface EditTemplateProps {
     templateId: string;
 }
@@ -171,9 +174,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                         ...qbQuestion,
                         ...templateQuestion,
                     };
-                    const boardId = selected
-                        ? "selectQuestions"
-                        : "questionBank";
+                    const boardId = selected ? SELECTED_BOARD_ID : QB_BOARD_ID;
 
                     return makeTask(question, boardId, index);
                 }) || []
@@ -182,11 +183,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const initialSelectBoard = useMemo(
         () => ({
-            id: "selectedQuestions",
+            id: SELECTED_BOARD_ID,
             title: t("selectedQuestions.title"),
             description: t("selectedQuestions.description"),
             tasks: tasks
-                .filter(t => t.boardId === "selectQuestions")
+                .filter(t => t.boardId === SELECTED_BOARD_ID)
                 .sort((a, b) => a.order - b.order)
                 .map(t => ({
                     id: t.id,
@@ -200,11 +201,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const initalQuestionBankBoard = useMemo(
         () => ({
-            id: "questionBank",
+            id: QB_BOARD_ID,
             title: t("questionBank.title"),
             description: t("questionBank.description"),
             tasks: tasks
-                .filter(t => t.boardId === "questionBank")
+                .filter(t => t.boardId === QB_BOARD_ID)
                 .sort((a, b) => a.order - b.order)
                 .map(t => {
                     return {
@@ -289,7 +290,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                 tasks.length > 0 ? (
                     <PreviewTemplate
                         questions={tasks
-                            .filter(t => t.boardId === "selectQuestions")
+                            .filter(t => t.boardId === SELECTED_BOARD_ID)
                             .sort((a, b) => a.order - b.order)}
                     />
                 ) : (
