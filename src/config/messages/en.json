@@ -272,6 +272,31 @@
                             }
                         }
                     }
+                },
+                "dar": {
+                    "template": {
+                        "title": "DAR Template Management",
+                        "create": {
+                            "description": "Create a new DAR template",
+                            "label": "Create"
+                        },
+                        "manage": {
+                            "description": "Manage DAR templates",
+                            "label": "Manage"
+                        },
+                        "edit": {
+                            "title": "Edit a template",
+                            "save": "Save Changes",
+                            "selectedQuestions": {
+                                "title": "Selected Questions",
+                                "description": "Currently selected questions for your DAR template."
+                            },
+                            "questionBank": {
+                                "title": "Question Bank",
+                                "description": "Other available questions you can add from the question bank."
+                            }
+                        }
+                    }
                 }
             },
             "title": "My account"

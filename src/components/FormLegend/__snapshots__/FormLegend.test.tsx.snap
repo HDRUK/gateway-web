@@ -7,7 +7,7 @@ exports[`FormLegend should render legend 1`] = `
     offsettop="initial"
   >
     <div
-      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-74jemj-MuiButtonBase-root-MuiListItemButton-root"
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-1hhp30x-MuiButtonBase-root-MuiListItemButton-root"
       role="button"
       tabindex="0"
     >

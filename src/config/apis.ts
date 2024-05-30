@@ -43,6 +43,7 @@ const apis = {
     collectionsV1Url: `${apiV1Url}/collections`,
     collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
     questionBankV1Url: `${apiServiceUrl}/quba`,
+    darasV1Url: `${apiServiceUrl}/daras`,
     formHydrationV1Url: `${apiV1Url}/form_hydration`,
     formHydrationV1UrlIP: `${apiV1IPUrl}/form_hydration`,
 };

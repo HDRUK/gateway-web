@@ -8,7 +8,8 @@ import Link from "@/components/Link";
 
 interface ImageMediaCardProps {
     img: string;
-    href: string;
+    href?: string;
+    onClick?: () => void;
     description?: string;
     buttonText: string;
 }
@@ -18,6 +19,7 @@ const ImageMediaCard = ({
     img,
     buttonText,
     href,
+    onClick,
 }: ImageMediaCardProps) => {
     return (
         <Card
@@ -42,13 +44,19 @@ const ImageMediaCard = ({
                 </CardContent>
             )}
             <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <Link
-                    sx={{ width: "100%" }}
-                    underline="none"
-                    href={href}
-                    passHref>
-                    <Button sx={{ width: "100%" }}>{buttonText}</Button>
-                </Link>
+                {href ? (
+                    <Link
+                        sx={{ width: "100%" }}
+                        underline="none"
+                        href={href}
+                        passHref>
+                        <Button sx={{ width: "100%" }}>{buttonText}</Button>
+                    </Link>
+                ) : (
+                    <Button onClick={onClick} sx={{ width: "100%" }}>
+                        {buttonText}
+                    </Button>
+                )}
             </CardActions>
         </Card>
     );
