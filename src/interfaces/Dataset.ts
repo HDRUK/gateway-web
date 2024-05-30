@@ -16,6 +16,7 @@ interface Metadata {
         populationSize: number | null;
         publisher: {
             publisherName: string;
+            name?: string;
         };
     };
     accessibility: {
