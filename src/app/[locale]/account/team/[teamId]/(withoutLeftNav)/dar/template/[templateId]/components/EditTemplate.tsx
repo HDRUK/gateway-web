@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import {
     DarQuestion,
     DarHasQuestion,
@@ -26,11 +27,15 @@ import apis from "@/config/apis";
 import QuestionItem from "./QuestionItem";
 import Sections from "./Sections";
 
+const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
+
 interface EditTemplateProps {
     templateId: string;
 }
 
 const EditTemplate = ({ templateId }: EditTemplateProps) => {
+    const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
+
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
     >(`${apis.questionBankV1Url}/sections`, { keepPreviousData: true });
@@ -173,9 +178,9 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const initialSelectBoard = useMemo(
         () => ({
-            id: "selectQuestions",
-            title: "Selected Questions",
-            description: "Currently selected questions for your DAR template.",
+            id: "selectedQuestions",
+            title: t("selectedQuestions.title"),
+            description: t("selectedQuestions.description"),
             tasks: tasks
                 .filter(t => t.boardId === "selectQuestions")
                 .sort((a, b) => a.order - b.order)
@@ -192,9 +197,8 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
     const initalQuestionBankBoard = useMemo(
         () => ({
             id: "questionBank",
-            description:
-                "Other available questions you can add from the question bank.",
-            title: "Question Bank",
+            title: t("questionBank.title"),
+            description: t("questionBank.description"),
             tasks: tasks
                 .filter(t => t.boardId === "questionBank")
                 .sort((a, b) => a.order - b.order)
@@ -254,7 +258,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     return (
         <Container maxWidth={false} sx={{ minHeight: "1000px", p: 1, m: 1 }}>
-            <Typography variant="h2"> Edit a template </Typography>
+            <Typography variant="h2"> {t("title")} </Typography>
             <Container
                 maxWidth={false}
                 sx={{
@@ -287,7 +291,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                                 justifyContent: "end",
                             }}>
                             <Button onClick={handleSaveChanges} type="submit">
-                                Save changes
+                                {t("save")}
                             </Button>
                         </Box>
                     </Paper>

@@ -32,8 +32,8 @@ const TaskBoardSection = ({
     return (
         <Container sx={{ pb: 2 }}>
             <Box>
-                <Typography variant="h2"> {title}</Typography>
-                <Typography> {description}</Typography>
+                <Typography variant="h2">{title}</Typography>
+                <Typography>{description}</Typography>
             </Box>
             <Paper sx={{ p: 1, backgroundColor: colors.grey100, border: 0 }}>
                 <SortableContext
