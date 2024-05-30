@@ -30,7 +30,7 @@ interface TaskBoardProps {
 const TaskBoard = ({
     boardSections,
     setBoardSections,
-    anchoredErrorCallback = () => console.error("cannot move"),
+    anchoredErrorCallback,
 }: TaskBoardProps) => {
     const [activeTaskId, setActiveTaskId] = useState<null | string>(null);
 
@@ -95,7 +95,7 @@ const TaskBoard = ({
             return;
         }
 
-        if (activeTask?.anchored) {
+        if (activeTask?.anchored && anchoredErrorCallback) {
             anchoredErrorCallback();
             return;
         }
