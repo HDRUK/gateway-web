@@ -9,6 +9,7 @@ interface DarQuestion {
     force_required: number;
     allow_guidance_override?: number;
     hasChanged: boolean;
+    component: string;
 }
 
 interface DarHasQuestion {

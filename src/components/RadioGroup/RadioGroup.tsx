@@ -69,7 +69,7 @@ const RadioGroup = <
                 name={name}
                 render={({ field }) => (
                     <MuiRadioGroup row={isRow} {...field} {...rest}>
-                        {radios.map(({ value, label: radioLabel }) => {
+                        {radios?.map(({ value, label: radioLabel }) => {
                             return (
                                 <FormControlLabel
                                     key={value}

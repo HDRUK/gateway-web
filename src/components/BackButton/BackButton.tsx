@@ -17,8 +17,9 @@ const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
     const handleClick = () => {
         if (onClick) {
             onClick();
+        } else {
+            router.back();
         }
-        router.back();
     };
 
     return (

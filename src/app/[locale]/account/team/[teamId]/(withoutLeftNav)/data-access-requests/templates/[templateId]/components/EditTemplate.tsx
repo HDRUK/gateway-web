@@ -15,6 +15,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import Tabs from "@/components/Tabs";
 import TaskBoard from "@/components/TaskBoard";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 import Typography from "@/components/Typography";
@@ -23,6 +24,7 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import PreviewTemplate from "./PreviewTemplate";
 import QuestionItem from "./QuestionItem";
 import Sections from "./Sections";
 
@@ -126,12 +128,13 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             id: q.id,
             boardId,
             order: extended ? q.order : index,
-            title: `${q.id}) ${q.question_json.title} `,
+            title: `${q.question_json.title}`,
             guidance:
                 extended && q.allow_guidance_override && q.guidance
                     ? q.guidance
                     : q.question_json.guidance || "",
             original_guidance: q.question_json.guidance || "",
+            component: q.question_json?.field?.component || "",
             required: q.required,
             force_required: q.force_required,
             allow_guidance_override: q.allow_guidance_override,
@@ -248,6 +251,44 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         );
     };
 
+    const tabsList = tasks.length > 0 && [
+        {
+            label: "Select Questions",
+            value: "select",
+            content: tasks.length > 0 && (
+                <>
+                    <TaskBoard
+                        boardSections={boardSections}
+                        setBoardSections={setBoardSections}
+                        anchoredErrorCallback={anchoredErrorCallback}
+                    />
+                    <Paper sx={{ m: 2, p: 2, mb: 5 }}>
+                        <Box
+                            sx={{
+                                p: 0,
+                                display: "flex",
+                                justifyContent: "end",
+                            }}>
+                            <Button onClick={handleSaveChanges} type="submit">
+                                Save changes
+                            </Button>
+                        </Box>
+                    </Paper>
+                </>
+            ),
+        },
+        {
+            label: "Preview",
+            value: "preview",
+            content:
+                qbQuestions?.list?.length > 0 ? (
+                    <PreviewTemplate questions={qbQuestions?.list} />
+                ) : (
+                    <Loading />
+                ),
+        },
+    ];
+
     if (isLoading) {
         return <Loading />;
     }
@@ -271,26 +312,19 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                 <Container maxWidth={false}>
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h2">
-                            {currentSection?.name}{" "}
+                            {currentSection?.name}
                         </Typography>
+
+                        <Typography>{currentSection?.description}</Typography>
                     </Paper>
-                    <TaskBoard
-                        boardSections={boardSections}
-                        setBoardSections={setBoardSections}
-                        anchoredErrorCallback={anchoredErrorCallback}
-                    />
-                    <Paper sx={{ m: 2, p: 2, mb: 5 }}>
-                        <Box
-                            sx={{
-                                p: 0,
-                                display: "flex",
-                                justifyContent: "end",
-                            }}>
-                            <Button onClick={handleSaveChanges} type="submit">
-                                Save changes
-                            </Button>
-                        </Box>
-                    </Paper>
+                    {tabsList && (
+                        <Tabs
+                            centered
+                            tabs={tabsList}
+                            tabBoxSx={{ padding: 0 }}
+                            rootBoxSx={{ padding: 0 }}
+                        />
+                    )}
                 </Container>
             </Container>
         </Container>

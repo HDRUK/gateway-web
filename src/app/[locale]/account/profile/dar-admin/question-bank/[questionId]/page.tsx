@@ -15,6 +15,7 @@ const QuestionBankEditPage = async ({
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = await getPermissions(user.roles);
+
     return (
         <ProtectedAccountRoute
             permissions={permissions}

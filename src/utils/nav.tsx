@@ -91,6 +91,14 @@ const getTeamNav = (
                       icon: <GroupsOutlinedIcon />,
                       label: "Data Access Requests",
                       subItems: [
+                          ...(permissions["dar-form.update"]
+                              ? [
+                                    {
+                                        label: "Manage Templates",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
+                                    },
+                                ]
+                              : []),
                           ...(permissions["dar.read.assigned"]
                               ? [
                                     {
@@ -104,14 +112,6 @@ const getTeamNav = (
                                     {
                                         label: "Workflows",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.WORKFLOWS}`,
-                                    },
-                                ]
-                              : []),
-                          ...(permissions["dar-form.update"]
-                              ? [
-                                    {
-                                        label: "Manage Templates",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
                                     },
                                 ]
                               : []),

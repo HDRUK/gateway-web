@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { DarQuestion } from "@/interfaces/DataAccessRequest";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Chip from "@/components/Chip";
 import RadioGroup from "@/components/RadioGroup";
 import TextArea from "@/components/TextArea";
 import TooltipIcon from "@/components/TooltipIcon";
@@ -120,7 +121,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         <Card
             sx={{
                 border: 1,
-                borderColor: "lightgrey",
+                borderColor: !allow_edit_required ? "red" : "lightgrey",
                 borderRadius: 2,
             }}>
             <CardContent sx={{ p: 0, m: 0, alignItems: "center" }}>
@@ -140,6 +141,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             sx={{ mb: 1 }}>
                             <b> {currentTask.title} </b>
                         </Typography>
+
                         <Box
                             sx={{
                                 p: 0,
@@ -163,7 +165,6 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             />
                         </Box>
                     </Box>
-
                     <Typography
                         sx={{ p: 1 }}
                         gutterBottom
@@ -171,12 +172,20 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                         component="div">
                         {currentTask.guidance}
                     </Typography>
+                    <Typography>
+                        <Chip
+                            variant="outlined"
+                            label={currentTask.component}
+                            color="primary"
+                            sx={{ mx: 2 }}
+                        />
+                    </Typography>
                 </Box>
             </CardContent>
-            {!allow_edit_required && (
+            {getValues("required") === 1 && (
                 <TooltipIcon
-                    content={<div>required question</div>}
-                    icon={<LockIcon sx={{ color: "red" }} />}
+                    content={<div>forced required question</div>}
+                    icon={<LockIcon sx={{ color: "grey" }} />}
                     label=""
                 />
             )}

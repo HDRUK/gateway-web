@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
@@ -16,6 +17,7 @@ import ErrorDisplay from "@/components/ErrorDisplay";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
+import Tabs from "@/components/Tabs";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePut from "@/hooks/usePut";
@@ -26,6 +28,7 @@ import {
     questionValidationSchema,
 } from "@/config/forms/questionBank";
 import { RouteName } from "@/consts/routeName";
+import { renderFormHydrationField } from "@/utils/formHydration";
 
 const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement.updatePage`;
 
@@ -157,33 +160,65 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
         return <ErrorDisplay variant={423} />;
     }
 
+    const tabsList = [
+        {
+            label: "Edit",
+            value: "edit",
+            content: (
+                <Form onSubmit={handleSubmit(submitForm)}>
+                    <Paper
+                        sx={{
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            padding: 2,
+                        }}>
+                        {hydratedFormFields.map(field => (
+                            <InputWrapper
+                                key={field.name}
+                                control={control}
+                                setValue={setValue}
+                                {...field}
+                            />
+                        ))}
+                    </Paper>
+                    <Paper
+                        sx={{
+                            display: "flex",
+                            justifyContent: "end",
+                            marginBottom: "10px",
+                            padding: 2,
+                        }}>
+                        <Button type="submit">{t("save")}</Button>
+                    </Paper>
+                </Form>
+            ),
+        },
+        {
+            label: "Preview",
+            value: "preview",
+            content: question?.field && (
+                <Paper
+                    sx={{
+                        marginTop: "10px",
+                        marginBottom: "10px",
+                        padding: 2,
+                    }}>
+                    <Typography> {question.guidance} </Typography>
+                    {renderFormHydrationField(question.field, control, "name")}
+                </Paper>
+            ),
+        },
+    ];
+
+    console.log(question?.field);
+
     return (
-        <Form onSubmit={handleSubmit(submitForm)}>
-            <Paper
-                sx={{
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    padding: 2,
-                }}>
-                {hydratedFormFields.map(field => (
-                    <InputWrapper
-                        key={field.name}
-                        control={control}
-                        setValue={setValue}
-                        {...field}
-                    />
-                ))}
-            </Paper>
-            <Paper
-                sx={{
-                    display: "flex",
-                    justifyContent: "end",
-                    marginBottom: "10px",
-                    padding: 2,
-                }}>
-                <Button type="submit">{t("save")}</Button>
-            </Paper>
-        </Form>
+        <Tabs
+            centered
+            tabs={tabsList}
+            tabBoxSx={{ padding: 0 }}
+            rootBoxSx={{ padding: 0 }}
+        />
     );
 };
 export default EditQuestion;
