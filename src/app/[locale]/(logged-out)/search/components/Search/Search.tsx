@@ -134,6 +134,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
         [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
         [FILTER_POPULATION_SIZE]: getParamArray(FILTER_POPULATION_SIZE),
+        [FILTER_PROGRAMMING_LANGUAGE]: getParamArray(
+            FILTER_PROGRAMMING_LANGUAGE
+        ),
+        [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
     });
 
     const { handleDownload } = useSearch(
@@ -234,6 +238,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_DATA_PROVIDER]: undefined,
             [FILTER_ACCESS_SERVICE]: undefined,
             [FILTER_POPULATION_SIZE]: undefined,
+            [FILTER_PROGRAMMING_LANGUAGE]: undefined,
+            [FILTER_TYPE_CATEGORY]: undefined,
         });
     };
 

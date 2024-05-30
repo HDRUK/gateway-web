@@ -41,6 +41,66 @@ const formSectionHasAllEmptyFields = (
     );
 };
 
+const formGetFieldsCompletedCount = (
+    schemaFields: FormHydration[],
+    getValues: UseFormGetValues<FieldValues>,
+    optionalFieldsOnly: boolean
+) => {
+    let fieldCount = 0;
+    let fieldsWithValue = 0;
+
+    // Filter out hidden fields and any array fields
+    const allFields = schemaFields
+        .filter(
+            schemaField =>
+                !schemaField.field?.hidden &&
+                (optionalFieldsOnly
+                    ? !schemaField.field?.required
+                    : schemaField.field?.required) &&
+                !schemaField?.is_array_form
+        )
+        .map(field => field.title);
+
+    fieldCount += allFields.length;
+
+    const fieldValues = getValues(allFields);
+
+    if (allFields && fieldValues) {
+        fieldsWithValue += fieldValues.filter(value => value).length;
+    }
+
+    const arrayFields = schemaFields.filter(
+        schemaField => schemaField?.is_array_form
+    );
+
+    // Handle field array counts
+    arrayFields.forEach(array => {
+        const arrayEntries = getValues(array.title);
+        const arraySubFields = array.fields
+            ?.filter(field =>
+                optionalFieldsOnly
+                    ? !field.field?.required
+                    : field.field?.required
+            )
+            ?.map(field => field.title);
+
+        if (arrayEntries && arraySubFields) {
+            fieldCount += arraySubFields.length * arrayEntries.length;
+            fieldsWithValue += arrayEntries.reduce(
+                (totalCount: number, obj) => {
+                    return (
+                        totalCount +
+                        arraySubFields.filter(field => obj[field]).length
+                    );
+                },
+                0
+            );
+        }
+    });
+
+    return Math.round((fieldsWithValue / fieldCount) * 100);
+};
+
 const formSectionHasEmptyOptionalFields = (
     schemaFields: FormHydration[],
     section: string,
@@ -113,7 +173,7 @@ const hasVisibleFieldsForLocation = (
     const fieldsForLocation = schemaFields
         .filter(field => field.location)
         .filter(field => field.location.startsWith(location))
-        .every(field => !field?.field?.hidden);
+        .some(field => !field?.field?.hidden);
     return fieldsForLocation;
 };
 
@@ -232,4 +292,5 @@ export {
     hasVisibleFieldsForLocation,
     renderFormHydrationField,
     formatValidationItems,
+    formGetFieldsCompletedCount,
 };

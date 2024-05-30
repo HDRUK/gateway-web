@@ -421,10 +421,16 @@
                         "tool": {
                             "dataProvider": "Data Provider",
                             "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
-                            "license": "License",
-                            "licenseTooltip": "License",
+                            "license": "Licensing",
+                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary. (Read more)",
                             "category": "Category",
-                            "categoryTooltip": "Category"
+                            "categoryTooltip": "Category",
+                            "programmingLanguages": "Programming language",
+                            "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
+                            "typeCategory": "Tool type",
+                            "typeCategoryTooltip": "Programming language used in developing an analysis script or software",
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
                     }
                 },

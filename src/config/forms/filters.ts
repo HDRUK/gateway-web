@@ -5,13 +5,14 @@ export const FILTER_DATE_RANGE = "dateRange";
 export const FILTER_ORGANISATION_NAME = "organisationName";
 export const FILTER_DATA_SET_TITLES = "datasetTitles";
 export const FILTER_PUBLICATION_DATE = "publicationDate";
-export const FILTER_PROGRAMMING_LANGUAGE = "sector";
+export const FILTER_PROGRAMMING_LANGUAGE = "programmingLanguages";
 export const FILTER_SECTOR = "sector";
 export const FILTER_DATA_PROVIDER = "dataProvider";
 export const FILTER_CATEGORY = "category";
 export const FILTER_LICENSE = "license";
 export const FILTER_ACCESS_SERVICE = "accessService";
 export const FILTER_POPULATION_SIZE = "populationSize";
+export const FILTER_TYPE_CATEGORY = "typeCategory";
 
 export const filtersList = [
     FILTER_PUBLISHER_NAME,
@@ -28,4 +29,5 @@ export const filtersList = [
     FILTER_LICENSE,
     FILTER_ACCESS_SERVICE,
     FILTER_POPULATION_SIZE,
+    FILTER_TYPE_CATEGORY,
 ];
