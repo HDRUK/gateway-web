@@ -88,11 +88,11 @@ const PopulationFilter = ({
                 leftStartPoint={leftIndex}
                 rightStartPoint={rightIndex}
                 step={1}
-                data={formattedData || []}
+                data={formattedData}
                 ariaLabel="Dataset Population"
                 height={132}
                 handleRangeChange={newRange => {
-                    const [lowerRange, upperRange] = newRange;
+                    const [lowerRange, upperRange] = newRange as number[];
 
                     const lowerRangeValue =
                         lowerRange !== upperRange
@@ -116,8 +116,8 @@ const PopulationFilter = ({
                 <Typography>{formattedData?.[0].xValue?.[0]}</Typography>
                 <Typography>
                     {formattedData?.[
-                        formattedData?.length - 1
-                    ].xValue?.[1]?.toLocaleString()}
+                        formattedData.length - 1
+                    ]?.xValue?.[1]?.toLocaleString()}
                     +
                 </Typography>
             </Box>

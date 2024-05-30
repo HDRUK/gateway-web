@@ -8,7 +8,7 @@ import { scaleBand, scaleLinear } from "@visx/scale";
 import { Bar } from "@visx/shape";
 import theme from "@/config/theme";
 
-type dataType = { yValue: number; xValue: number[] };
+export type dataType = { yValue: number; xValue: (number | undefined)[] };
 
 interface BarsProps {
     width: number;
