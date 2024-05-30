@@ -4,7 +4,6 @@ export interface Option {
 }
 
 export interface FormHydrationField {
-    title: string;
     component?: string;
     options?: Option[];
     variant?: string;
