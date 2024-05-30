@@ -203,14 +203,12 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
                         marginBottom: "10px",
                         padding: 2,
                     }}>
-                    <Typography> {question.guidance} </Typography>
+                    <Typography> {question.title} </Typography>
                     {renderFormHydrationField(question.field, control, "name")}
                 </Paper>
             ),
         },
     ];
-
-    console.log(question?.field);
 
     return (
         <Tabs

@@ -134,6 +134,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                     ? q.guidance
                     : q.question_json.guidance || "",
             original_guidance: q.question_json.guidance || "",
+            question_json: q.question_json,
             component: q.question_json?.field?.component || "",
             required: q.required,
             force_required: q.force_required,
@@ -281,8 +282,12 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             label: "Preview",
             value: "preview",
             content:
-                qbQuestions?.list?.length > 0 ? (
-                    <PreviewTemplate questions={qbQuestions?.list} />
+                tasks.length > 0 ? (
+                    <PreviewTemplate
+                        questions={tasks
+                            .filter(t => t.boardId === "selectQuestions")
+                            .sort((a, b) => a.order - b.order)}
+                    />
                 ) : (
                     <Loading />
                 ),

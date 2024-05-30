@@ -1,13 +1,14 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
+import { DarQuestion } from "@/interfaces/DataAccessRequest";
+import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { renderFormHydrationField } from "@/utils/formHydration";
 
 interface PreviewTemplateProps {
-    questions: QuestionBankQuestion[];
+    questions: DarQuestion[];
 }
 
 const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
@@ -21,15 +22,16 @@ const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
                 padding: 2,
             }}>
             {questions.map(question => {
-                // if (question) return;
-                console.log(question);
+                const hydration = question.question_json;
+                if (!hydration.field) return <Loading />;
+
                 return (
                     <>
-                        <Typography> {question?.task?.guidance} </Typography>
+                        <Typography> {hydration.title} </Typography>
                         {renderFormHydrationField(
-                            question.task.field,
+                            hydration.field,
                             control,
-                            "name"
+                            hydration.title
                         )}
                     </>
                 );

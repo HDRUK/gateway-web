@@ -173,7 +173,7 @@ const TaskBoard = ({
                             section.tasks,
                             activeIndex,
                             overIndex
-                        ).map(task => {
+                        ).map((task, index) => {
                             const newTask = { ...task };
 
                             if (
@@ -182,6 +182,11 @@ const TaskBoard = ({
                             ) {
                                 newTask.task.boardId = activeSection.id;
                             }
+
+                            if (newTask.task) {
+                                newTask.task.order = index + 1;
+                            }
+
                             return newTask;
                         });
 
