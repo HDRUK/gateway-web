@@ -36,9 +36,9 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         },
     });
 
-    const allow_edit_required = currentTask.force_required === 0;
-    const allow_edit_guidance = currentTask.allow_guidance_override === 1;
-    const allowEdit = allow_edit_required || allow_edit_guidance;
+    const allowEditRequired = currentTask.force_required === 0;
+    const allowEditGuidance = currentTask.allow_guidance_override === 1;
+    const allowEdit = allowEditRequired || allowEditGuidance;
 
     const onSuccess = async () => {
         const guidance = getValues("guidance");
@@ -79,7 +79,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             p: 0,
                         }}>
                         <TextArea
-                            disabled={!allow_edit_guidance}
+                            disabled={!allowEditGuidance}
                             label="Guidance"
                             name="guidance"
                             control={control}
@@ -101,7 +101,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
 
                     <RadioGroup
                         isRow
-                        disabled={!allow_edit_required}
+                        disabled={!allowEditRequired}
                         name="required"
                         label="Required"
                         control={control}
@@ -173,7 +173,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                     </Typography>
                 </Box>
             </CardContent>
-            {!allow_edit_required && (
+            {!allowEditRequired && (
                 <TooltipIcon
                     content={<div>required question</div>}
                     icon={<LockIcon sx={{ color: "red" }} />}
