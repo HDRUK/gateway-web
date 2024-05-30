@@ -145,7 +145,7 @@ const BarSliderContainer = ({
     };
 
     const valueLabelFormat = (value: number) => {
-        const [_low, high] = data[value - 1]?.xValue || [1, 1];
+        const [, high] = data[value - 1]?.xValue || [1, 1];
         return high;
     };
     return (
