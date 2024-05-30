@@ -55,6 +55,8 @@ export type DateRange = {
 export interface Bucket {
     doc_count: number;
     key: string;
+    to?: number;
+    from?: number;
 }
 
 export interface BucketCheckbox {

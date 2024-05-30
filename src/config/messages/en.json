@@ -369,6 +369,7 @@
                     "filters": {
                         "dataset": {
                             "populationSize": "Population size",
+                            "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
                             "publisherName": "Data provider",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
@@ -430,6 +431,9 @@
                 "DateRangeFilter": {
                     "to": "to",
                     "minYearErrorMessage": "Please enter a valid starting year"
+                },
+                "PopulationFilter": {
+                    "includeUnreported": "Include {unreportedCount} datasets where population is not reported"
                 },
                 "ResultCard": {
                     "populationSizeNotReported": "not reported",
