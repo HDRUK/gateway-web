@@ -11,6 +11,7 @@ export const FILTER_DATA_PROVIDER = "dataProvider";
 export const FILTER_CATEGORY = "category";
 export const FILTER_LICENSE = "license";
 export const FILTER_ACCESS_SERVICE = "accessService";
+export const FILTER_POPULATION_SIZE = "populationSize";
 export const FILTER_TYPE_CATEGORY = "typeCategory";
 
 export const filtersList = [
@@ -27,5 +28,6 @@ export const filtersList = [
     FILTER_CATEGORY,
     FILTER_LICENSE,
     FILTER_ACCESS_SERVICE,
+    FILTER_POPULATION_SIZE,
     FILTER_TYPE_CATEGORY,
 ];
