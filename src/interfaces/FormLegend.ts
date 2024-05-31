@@ -9,4 +9,6 @@ export enum LegendStatus {
 export type LegendItem = {
     name: string;
     status: LegendStatus;
+    subItems?: LegendItem[];
+    id?: number;
 };

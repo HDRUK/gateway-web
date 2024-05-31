@@ -12,10 +12,10 @@ const TextField = <
     return (
         <TextFieldBase
             control={control}
-            {...props}
             multiline={false}
             rows={undefined}
             limit={undefined}
+            {...props}
         />
     );
 };

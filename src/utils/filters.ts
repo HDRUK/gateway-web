@@ -2,6 +2,7 @@ import { pick } from "lodash";
 import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import { filtersList } from "@/config/forms/filters";
+import { INCLUDE_UNREPORTED } from "@/consts/filters";
 
 const groupByType = (
     data: Filter[],
@@ -57,9 +58,32 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
         return {};
     }
 
+    const formattedFilterQueries =
+        type === "dataset"
+            ? {
+                  ...filterQueries,
+                  populationSize: {
+                      from: !Number.isNaN(
+                          Number(filterQueries?.populationSize?.[0])
+                      )
+                          ? filterQueries?.populationSize?.[0]
+                          : undefined,
+                      to: !Number.isNaN(
+                          Number(filterQueries?.populationSize?.[1])
+                      )
+                          ? filterQueries?.populationSize?.[1]
+                          : undefined,
+                      includeUnreported:
+                          !!filterQueries?.populationSize?.includes(
+                              INCLUDE_UNREPORTED
+                          ),
+                  },
+              }
+            : filterQueries;
+
     return {
         filters: {
-            [type]: filterQueries,
+            [type]: formattedFilterQueries,
         },
     };
 };

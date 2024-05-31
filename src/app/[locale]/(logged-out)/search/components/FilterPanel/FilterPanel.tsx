@@ -21,15 +21,20 @@ import {
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
     FILTER_ACCESS_SERVICE,
+    FILTER_PROGRAMMING_LANGUAGE,
+    FILTER_TYPE_CATEGORY,
     filtersList,
+    FILTER_POPULATION_SIZE,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
+import { INCLUDE_UNREPORTED } from "@/consts/filters";
 import {
     formatBucketCounts,
     groupByType,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
 import DateRangeFilter from "../DateRangeFilter";
+import PopulationFilter from "../PopulationFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
@@ -84,6 +89,8 @@ const FilterPanel = ({
         [FILTER_DATE_RANGE]: {},
         [FILTER_PUBLICATION_DATE]: {},
         [FILTER_ACCESS_SERVICE]: {},
+        [FILTER_PROGRAMMING_LANGUAGE]: {},
+        [FILTER_TYPE_CATEGORY]: {},
         [FILTER_SECTOR]: {},
     });
 
@@ -111,6 +118,8 @@ const FilterPanel = ({
         [FILTER_DATA_USE_TITLES]: string;
         [FILTER_SECTOR]: string;
         [FILTER_ACCESS_SERVICE]: string;
+        [FILTER_PROGRAMMING_LANGUAGE]: string;
+        [FILTER_TYPE_CATEGORY]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
@@ -186,6 +195,35 @@ const FilterPanel = ({
         setFilterQueryParams(Object.values(dateRange), dateFilterName);
     };
 
+    const handleUpdatePopulationSize = (
+        populationSize?: number[],
+        includeUnreported?: boolean
+    ) => {
+        const formattedPopulationSize =
+            (populationSize &&
+                populationSize.map(number => number.toString())) ||
+            Object.keys(filterValues.populationSize);
+
+        const completePopulationFilter =
+            includeUnreported &&
+            !Object.keys(filterValues.populationSize).includes(
+                INCLUDE_UNREPORTED
+            )
+                ? formattedPopulationSize.concat(INCLUDE_UNREPORTED)
+                : formattedPopulationSize.filter(
+                      item => item !== INCLUDE_UNREPORTED
+                  );
+
+        setFilterValues({
+            ...filterValues,
+            [FILTER_POPULATION_SIZE]: transformQueryFiltersToForm(
+                completePopulationFilter
+            ),
+        });
+
+        setFilterQueryParams(completePopulationFilter, FILTER_POPULATION_SIZE);
+    };
+
     const resetFilterSection = (filterSection: string) => {
         setFilterValues({
             ...filterValues,
@@ -249,6 +287,14 @@ const FilterPanel = ({
                         selectedFilters={selectedFilters}
                         handleUpdate={handleUpdateDateRange}
                         filterName={FILTER_PUBLICATION_DATE}
+                    />
+                );
+            case FILTER_POPULATION_SIZE:
+                return (
+                    <PopulationFilter
+                        aggregations={aggregations}
+                        selectedFilters={selectedFilters}
+                        handleUpdate={handleUpdatePopulationSize}
                     />
                 );
             default:

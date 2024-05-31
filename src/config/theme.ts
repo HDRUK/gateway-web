@@ -491,6 +491,11 @@ const theme = createTheme({
                 root: {
                     fontSize: "0.875rem",
                 },
+                h1: ({ theme: _theme }) => ({
+                    fontSize: "2rem",
+                    fontWeight: 600,
+                    marginBottom: _theme.spacing(2),
+                }),
                 h2: {
                     fontSize: "1.3rem",
                     fontWeight: 400,

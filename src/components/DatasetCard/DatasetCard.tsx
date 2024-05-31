@@ -7,6 +7,7 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { nonManualDatasetCardActions } from "@/consts/actions";
+import { getLatestVersion } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 
@@ -21,7 +22,7 @@ interface DatasetCardProps {
 }
 
 const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
-    const latestMetadata = get(dataset, "versions[0]");
+    const latestMetadata = getLatestVersion(dataset);
 
     if (!latestMetadata) return null;
 

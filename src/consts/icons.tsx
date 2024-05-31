@@ -25,6 +25,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import DownloadIcon from "@mui/icons-material/Download";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -40,12 +41,14 @@ import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateChe
 import InfoIcon from "@mui/icons-material/Info";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import LaunchIcon from "@mui/icons-material/Launch";
+import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -122,4 +125,7 @@ export {
     PriorityHighIcon,
     DocumentScannerIcon,
     QuestionAnswerIcon,
+    DragIndicatorIcon,
+    LockIcon,
+    RestartAltIcon,
 };

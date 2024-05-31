@@ -1,4 +1,4 @@
-interface Option {
+export interface Option {
     label: string;
     value: string;
 }
@@ -16,14 +16,38 @@ export interface FormHydrationField {
     showClearButton?: boolean;
 }
 
+export interface FormHydrationItems {
+    type: string;
+    properties: FormHydrationField[];
+}
+
+export interface FormHydrationValidation {
+    title: string;
+    type: string;
+    required: boolean;
+    min?: number;
+    max?: number;
+    pattern?: string;
+    format?: string;
+    enum_titles?: string[];
+    enum?: string[];
+    of?: FormHydrationValidation;
+    items?: FormHydrationItems;
+}
+
 interface FormHydration {
     title: string;
     description?: string | null;
     guidance?: string;
     is_array_form: boolean;
     location: string;
-    field: FormHydrationField;
-    validation: unknown;
+    field?: FormHydrationField;
+    fields?: FormHydration[];
 }
 
-export type { FormHydration };
+interface FormHydrationSchema {
+    schema_fields: FormHydration[];
+    validation: FormHydrationValidation[];
+}
+
+export type { FormHydration, FormHydrationSchema };

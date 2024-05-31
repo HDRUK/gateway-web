@@ -8,6 +8,7 @@ export interface ModalButtonProps {
     onCancel?: (props: unknown) => void;
     confirmText?: string;
     showCancel?: boolean;
+    showConfirm?: boolean;
     formId?: string;
     cancelText?: string;
     confirmType?: ConfirmType;
@@ -18,6 +19,7 @@ const ModalButtons = ({
     onSuccess,
     onCancel,
     showCancel = true,
+    showConfirm = true,
     cancelText = "Cancel",
     formId,
     confirmText = "Confirm",
@@ -69,21 +71,22 @@ const ModalButtons = ({
                         {tertiaryButton.buttonText}
                     </Button>
                 )}
-                {confirmType === "submit" ? (
-                    <Button
-                        {...(formId && { form: formId })}
-                        key="confirm"
-                        type="submit">
-                        {confirmText}
-                    </Button>
-                ) : (
-                    <Button
-                        key="confirm"
-                        type={confirmType}
-                        onClick={handleSuccess}>
-                        {confirmText}
-                    </Button>
-                )}
+                {showConfirm &&
+                    (confirmType === "submit" ? (
+                        <Button
+                            {...(formId && { form: formId })}
+                            key="confirm"
+                            type="submit">
+                            {confirmText}
+                        </Button>
+                    ) : (
+                        <Button
+                            key="confirm"
+                            type={confirmType}
+                            onClick={handleSuccess}>
+                            {confirmText}
+                        </Button>
+                    ))}
             </Box>
         </>
     );

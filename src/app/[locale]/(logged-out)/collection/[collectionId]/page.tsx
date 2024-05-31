@@ -40,8 +40,8 @@ export default async function CollectionItemPage({
         )
     );
 
-    const datasetsLatestVersions = datasets.map(({ versions }) =>
-        getLatestVersion(versions)
+    const datasetsLatestVersions = datasets.map(dataset =>
+        getLatestVersion(dataset)
     );
 
     const publications = removeEmpty(
