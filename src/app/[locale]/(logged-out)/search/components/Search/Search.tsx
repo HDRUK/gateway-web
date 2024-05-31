@@ -44,6 +44,8 @@ import {
     FILTER_SECTOR,
     FILTER_ACCESS_SERVICE,
     FILTER_POPULATION_SIZE,
+    FILTER_TYPE_CATEGORY,
+    FILTER_PROGRAMMING_LANGUAGE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
