@@ -253,20 +253,6 @@ const renderFormHydrationField = (
             clearOnBlur={component === "Autocomplete"}
             handleHomeEndKeys={component === "Autocomplete"}
             multiple={component === "Autocomplete"}
-            isOptionEqualToValue={(
-                option: {
-                    value: string | number;
-                    label: string;
-                },
-                value: string | number
-            ) => option.value === value}
-            getChipLabel={(
-                options: {
-                    value: string | number;
-                    label: string;
-                }[],
-                value: unknown
-            ) => options.find(option => option.value === value)?.label}
         />
     );
 };
