@@ -186,6 +186,9 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             id: SELECTED_BOARD_ID,
             title: t("selectedQuestions.title"),
             description: t("selectedQuestions.description"),
+            sx: {
+                //border: "1px solid darkgreen"
+            },
             tasks: tasks
                 .filter(t => t.boardId === SELECTED_BOARD_ID)
                 .sort((a, b) => a.order - b.order)

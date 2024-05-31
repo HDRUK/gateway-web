@@ -4,10 +4,10 @@ import {
     SortableContext,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { TaskBoardItem } from "@/interfaces/TaskBoard";
 import Box from "@/components/Box";
-import Container from "@/components/Container";
 import Paper from "@/components/Paper";
 import SortableItem from "@/components/SortableItem";
 import { colors } from "@/config/theme";
@@ -16,6 +16,7 @@ export type TaskBoardSectionProps = {
     id: string;
     title: string;
     description: string;
+    sx?: SxProps;
     tasks: TaskBoardItem[];
 };
 
@@ -24,13 +25,19 @@ const TaskBoardSection = ({
     title,
     description,
     tasks,
+    sx,
 }: TaskBoardSectionProps) => {
     const { setNodeRef } = useDroppable({
         id,
     });
 
+    const sxContainer = {
+        p: 2,
+        ...sx,
+    };
+
     return (
-        <Container sx={{ pb: 2 }}>
+        <Paper sx={sxContainer}>
             <Box>
                 <Typography variant="h2">{title}</Typography>
                 <Typography>{description}</Typography>
@@ -57,7 +64,7 @@ const TaskBoardSection = ({
                     </div>
                 </SortableContext>
             </Paper>
-        </Container>
+        </Paper>
     );
 };
 

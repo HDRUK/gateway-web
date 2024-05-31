@@ -42,14 +42,15 @@ const formFields = [
         isRow: true,
         required: true,
     },
-    /* {
+    {
         label: "Options",
         name: "type_options",
-        component: inputComponents.Select,
+        component: inputComponents.SelectMultipleOptions,
+        options: [],
         isRow: true,
         disabled: true,
         hidden: true,
-    }, */
+    },
     {
         component: inputComponents.TextArea,
         showClearButton: true,

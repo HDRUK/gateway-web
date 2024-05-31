@@ -60,7 +60,6 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             if (!data?.locked) {
                 lockQuestion(questionId, {});
             } else {
-                console.log(data);
                 setIsLocked(true);
             }
         }
@@ -87,31 +86,56 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
 
     const { title, guidance, field } = question ?? {};
 
-    const getFormFields = () => {
-        return questionFormFields.map(field => {
-            if (field.name === "section_id") {
-                return {
-                    ...field,
-                    options:
-                        sectionData?.map(section => ({
-                            value: section.id,
-                            label: section.name,
-                        })) || [],
-                };
-            }
-            return field;
-        });
-    };
-
-    const hydratedFormFields = useMemo(() => getFormFields(), [sectionData]);
-
     const defaultValues = useMemo(() => questionDefaultValues, []);
 
-    const { control, handleSubmit, setValue, reset } =
+    const { control, handleSubmit, setValue, getValues, reset, watch } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
         });
+
+    const [options, setOptions] = useState([]);
+
+    const getFormFields = () => {
+        return questionFormFields
+            .map(field => {
+                if (field.name === "type_options") {
+                    const type = getValues("type");
+                    if (type !== "CheckboxGroup" && type !== "RadioGroup") {
+                        return undefined;
+                    }
+
+                    const _options = question?.field.checkboxes ||
+                        question?.field.radios || [{ label: "", value: "" }];
+
+                    return {
+                        ...field,
+                        setOptions: setOptions,
+                        options: _options,
+                    };
+                }
+
+                if (field.name === "section_id") {
+                    return {
+                        ...field,
+                        options:
+                            sectionData?.map(section => ({
+                                value: section.id,
+                                label: section.name,
+                            })) || [],
+                    };
+                }
+                return field;
+            })
+            .filter(field => field !== undefined);
+    };
+
+    const allFields = watch();
+
+    const hydratedFormFields = useMemo(
+        () => getFormFields(),
+        [sectionData, data, allFields]
+    );
 
     useEffect(() => {
         const section = sectionData?.filter(s => s.id === section_id)[0];

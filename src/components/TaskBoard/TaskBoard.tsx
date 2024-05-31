@@ -176,6 +176,8 @@ const TaskBoard = ({
                         ).map((task, index) => {
                             const newTask = { ...task };
 
+                            console.log(newTask.task?.boardId);
+
                             if (
                                 task.id === active.id &&
                                 newTask.task?.boardId
@@ -221,15 +223,12 @@ const TaskBoard = ({
                     pt: 2,
                 }}>
                 {boardSections.map(section => (
-                    <Paper key={section.id} sx={{ mx: 1, px: 2 }}>
-                        <TaskBoardSection
-                            key={section.id}
-                            id={section.id}
-                            title={section.title}
-                            description={section.description}
-                            tasks={section.tasks}
-                        />
-                    </Paper>
+
+                    <TaskBoardSection
+                        key={section.id}
+                        {...section}
+                    />
+
                 ))}
 
                 <DragOverlay dropAnimation={dropAnimation}>

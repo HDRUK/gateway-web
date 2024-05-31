@@ -54,6 +54,7 @@ const TextFieldBase = <
         name,
         setValue,
         showClearButton = false,
+        formControlSx,
         ...inputProps
     } = props;
 
@@ -83,7 +84,8 @@ const TextFieldBase = <
             error={error}
             value={fieldProps.value}
             disabled={disabled}
-            required={required}>
+            required={required}
+            formControlSx={formControlSx}>
             <OutlinedInput
                 fullWidth={fullWidth}
                 size="small"

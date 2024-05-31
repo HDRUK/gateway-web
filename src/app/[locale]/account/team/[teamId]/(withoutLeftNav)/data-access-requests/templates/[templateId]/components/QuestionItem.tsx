@@ -1,4 +1,4 @@
-import { useEffect, useState, Dispatch, SetStateAction } from "react";
+import { useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -37,9 +37,18 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         },
     });
 
-    const allowEditRequired = currentTask.force_required === 0;
-    const allowEditGuidance = currentTask.allow_guidance_override === 1;
-    const allowEdit = allowEditRequired || allowEditGuidance;
+    const allowEditRequired = useMemo(
+        () => currentTask.force_required === 0,
+        [currentTask]
+    );
+    const allowEditGuidance = useMemo(
+        () => currentTask.allow_guidance_override === 1,
+        [currentTask]
+    );
+    const allowEdit = useMemo(
+        () => allowEditRequired || allowEditGuidance,
+        [allowEditRequired, allowEditGuidance]
+    );
 
     const onSuccess = async () => {
         const guidance = getValues("guidance");
@@ -48,7 +57,10 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         const updatedTask = {
             ...task,
             guidance,
-            required,
+            required:
+                typeof required === "string"
+                    ? parseInt(required, 10)
+                    : required,
             hasChanged: true,
         };
 
@@ -117,6 +129,8 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         });
     };
 
+    const showLock = useMemo(() => currentTask.required === 1, [currentTask]);
+
     return (
         <Card
             sx={{
@@ -182,7 +196,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                     </Typography>
                 </Box>
             </CardContent>
-            {getValues("required") === 1 && (
+            {showLock && (
                 <TooltipIcon
                     content={<div>forced required question</div>}
                     icon={<LockIcon sx={{ color: "grey" }} />}
