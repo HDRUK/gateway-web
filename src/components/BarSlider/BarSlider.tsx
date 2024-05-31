@@ -124,12 +124,12 @@ const BarSliderContainer = ({
 }: BarSliderContainerProps) => {
     const [selected, setSelected] = React.useState<number[]>([
         leftStartPoint,
-        rightStartPoint || data.length,
+        rightStartPoint || data?.length,
     ]);
 
     useEffect(() => {
-        setSelected([leftStartPoint, rightStartPoint || data.length]);
-    }, [data.length, leftStartPoint, rightStartPoint]);
+        setSelected([leftStartPoint, rightStartPoint || data?.length]);
+    }, [data?.length, leftStartPoint, rightStartPoint]);
 
     const onChange = (_e: Event, newValue: number[] | number) => {
         setSelected(newValue as number[]);
@@ -170,7 +170,7 @@ const BarSliderContainer = ({
                 getAriaLabel={() => ariaLabel || ""}
                 value={selected}
                 size={sliderSize}
-                max={data.length}
+                max={data?.length}
                 onChange={onChange}
                 valueLabelDisplay="auto"
                 valueLabelFormat={valueLabelFormat}
