@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IconButton } from "@mui/material";
 import MuiDialog, { DialogProps } from "@mui/material/Dialog";
 import MuiDialogActions from "@mui/material/DialogActions";
@@ -16,6 +16,7 @@ export interface ModalProps {
     confirmText?: string;
     cancelText?: string;
     showCancel?: boolean;
+    showConfirm?: boolean;
     title?: string;
     invertCloseIconBehaviour?: boolean;
     styleProps?: DialogProps;
@@ -35,6 +36,7 @@ const Modal = () => {
         confirmText,
         cancelText,
         showCancel = true,
+        showConfirm = true,
         tertiaryButton,
         invertCloseIconBehaviour,
         title,
@@ -81,6 +83,7 @@ const Modal = () => {
                 }}>
                 <ModalButtons
                     showCancel={showCancel}
+                    showConfirm={showConfirm}
                     tertiaryButton={tertiaryButton}
                     onSuccess={onSuccess}
                     onCancel={onCancel}

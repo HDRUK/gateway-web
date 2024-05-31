@@ -60,6 +60,15 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.summary.keywords",
+                type: FieldType.TEXT,
+            },
+        ],
+    },
+    {
+        sectionName: "Structural Metadata",
+        fields: [
+            {
+                path: "metadata.metadata.structuralMetadata",
                 type: FieldType.TAG,
             },
         ],

@@ -26,6 +26,7 @@ const ActionBar = () => {
         tertiaryButton,
         formId,
         showCancel,
+        showConfirm,
         ...rest
     } = props;
 
@@ -40,6 +41,7 @@ const ActionBar = () => {
                 <ModalButtons
                     tertiaryButton={tertiaryButton}
                     showCancel={showCancel}
+                    showConfirm={showConfirm}
                     formId={formId}
                     onSuccess={onSuccess}
                     onCancel={onCancel}
