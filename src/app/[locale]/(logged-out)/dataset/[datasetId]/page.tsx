@@ -75,7 +75,10 @@ export default async function DatasetItemPage({
                             </Box>
                         )}
 
-                        <DatasetMindMap data={datasetVersion} />
+                        <DatasetMindMap
+                            data={datasetVersion}
+                            populatedSections={populatedSections}
+                        />
 
                         <DatasetContent
                             data={datasetVersion}

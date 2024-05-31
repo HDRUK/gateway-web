@@ -552,7 +552,8 @@
                     "linkages": "See which datasets are linkable",
                     "collections": "Explore associated Collections",
                     "synthetic": "Access synthetic data",
-                    "root": "Data custodian link"
+                    "root": "Data custodian link",
+                    "structuralMetadata": "Review data variables"
                 }
             }
         },
