@@ -394,6 +394,7 @@
                     "filters": {
                         "dataset": {
                             "populationSize": "Population size",
+                            "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
                             "publisherName": "Data provider",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
@@ -461,6 +462,9 @@
                 "DateRangeFilter": {
                     "to": "to",
                     "minYearErrorMessage": "Please enter a valid starting year"
+                },
+                "PopulationFilter": {
+                    "includeUnreported": "Include {unreportedCount} datasets where population is not reported"
                 },
                 "ResultCard": {
                     "populationSizeNotReported": "not reported",
@@ -552,7 +556,8 @@
                     "linkages": "See which datasets are linkable",
                     "collections": "Explore associated Collections",
                     "synthetic": "Access synthetic data",
-                    "root": "Data custodian link"
+                    "root": "Data custodian link",
+                    "structuralMetadata": "Review data variables"
                 }
             }
         },

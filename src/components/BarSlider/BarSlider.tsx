@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Slider from "@mui/material/Slider";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
@@ -8,7 +8,7 @@ import { scaleBand, scaleLinear } from "@visx/scale";
 import { Bar } from "@visx/shape";
 import theme from "@/config/theme";
 
-type dataType = { yValue: number; xValue: number[] };
+export type dataType = { yValue: number; xValue: (number | undefined)[] };
 
 interface BarsProps {
     width: number;
@@ -56,7 +56,10 @@ const BarSlider = ({
 
     const getIsInRange = (d: dataType) => {
         const [lowerRange, upperRange] = selected;
-        return d.xValue[0] >= lowerRange && d.xValue[1] <= upperRange;
+        const lowerRangeValue = data[lowerRange]?.xValue[0];
+        const upperRangeValue = data[upperRange - 1]?.xValue[1];
+
+        return d.xValue[0] >= lowerRangeValue && d.xValue[1] <= upperRangeValue;
     };
 
     const getBarData = (d: dataType) => {
@@ -121,8 +124,12 @@ const BarSliderContainer = ({
 }: BarSliderContainerProps) => {
     const [selected, setSelected] = React.useState<number[]>([
         leftStartPoint,
-        rightStartPoint || Math.max(...data.map(d => d.xValue[1])),
+        rightStartPoint || data?.length,
     ]);
+
+    useEffect(() => {
+        setSelected([leftStartPoint, rightStartPoint || data?.length]);
+    }, [data?.length, leftStartPoint, rightStartPoint]);
 
     const onChange = (_e: Event, newValue: number[] | number) => {
         setSelected(newValue as number[]);
@@ -137,9 +144,18 @@ const BarSliderContainer = ({
         }
     };
 
+    const valueLabelFormat = (value: number) => {
+        const [, high] = data[value - 1]?.xValue || [1, 1];
+        return high;
+    };
+
+    if (!data) {
+        return null;
+    }
+
     return (
         <>
-            <div style={{ height }}>
+            <div style={{ height, marginBottom: "-13px" }}>
                 <ParentSize>
                     {({ width, height }) => (
                         <BarSlider
@@ -153,15 +169,16 @@ const BarSliderContainer = ({
                 </ParentSize>
             </div>
             <Slider
-                sx={{ top: "-13px" }}
+                sx={{ marginBottom: "-13px" }}
                 step={step}
                 marks
                 getAriaLabel={() => ariaLabel || ""}
                 value={selected}
                 size={sliderSize}
-                max={Math.max(...data.map(d => d.xValue[1]))}
+                max={data?.length}
                 onChange={onChange}
                 valueLabelDisplay="auto"
+                valueLabelFormat={valueLabelFormat}
                 getAriaValueText={valuetext}
             />
         </>

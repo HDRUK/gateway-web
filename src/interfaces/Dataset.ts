@@ -16,6 +16,7 @@ interface Metadata {
         populationSize: number | null;
         publisher: {
             publisherName: string;
+            name?: string;
         };
     };
     accessibility: {
@@ -94,6 +95,26 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
+interface StructuralMetadataValue {
+    name: string;
+    frequency: number;
+    description: string | null;
+}
+
+interface StructuralMetadataColumn {
+    name: string;
+    description: string;
+    dataType: string;
+    sensitive: boolean;
+    values: StructuralMetadataValue[];
+}
+
+interface StructuralMetadata {
+    name: string;
+    description: string;
+    columns: StructuralMetadataColumn[];
+}
+
 export type {
     Dataset,
     DatasetStatus,
@@ -101,4 +122,6 @@ export type {
     MetadataMax,
     NewDataset,
     VersionItem,
+    StructuralMetadata,
+    StructuralMetadataColumn,
 };
