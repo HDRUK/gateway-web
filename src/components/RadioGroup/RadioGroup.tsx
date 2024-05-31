@@ -22,7 +22,7 @@ export interface RadioGroupProps<TFieldValues extends FieldValues, TName> {
     isRow?: boolean;
     value?: unknown;
     onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
-    radios: { value: string; label: string }[];
+    radios: { value: string | number; label: string }[];
     control: Control<TFieldValues>;
     radioSx?: SxProps;
     formControlSx?: SxProps;

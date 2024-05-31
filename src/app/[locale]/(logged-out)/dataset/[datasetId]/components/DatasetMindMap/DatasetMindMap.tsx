@@ -14,15 +14,18 @@ import {
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
+import { DatasetSection } from "../../config";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 
 interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
+    populatedSections: DatasetSection[];
 }
 
 const DatasetMindMap = ({
     data,
+    populatedSections,
     panOnDrag = false,
     panOnScroll = false,
     zoomOnScroll = false,
@@ -46,6 +49,7 @@ const DatasetMindMap = ({
         () =>
             outerNodes.map(node => {
                 let href = null;
+                let action = null;
                 const title = data.metadata.metadata.summary.shortTitle;
 
                 if (node.id === "node-synthetic") {
@@ -57,12 +61,29 @@ const DatasetMindMap = ({
                 ) {
                     href = `${node.data.href}&query=${title}`;
                 }
+
+                if (node.data.href?.includes("scrollTo:")) {
+                    const sectionIndex = populatedSections.findIndex(section =>
+                        node.data.href?.includes(section.sectionName)
+                    );
+
+                    href = null;
+                    action = () =>
+                        document
+                            ?.querySelector(`#anchor${sectionIndex}`)
+                            ?.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                            });
+                }
+
                 return {
                     ...node,
                     data: {
                         ...node.data,
                         label: t(node.data.name),
                         href,
+                        action,
                     },
                 };
             }),

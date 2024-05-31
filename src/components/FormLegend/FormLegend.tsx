@@ -11,6 +11,7 @@ import { Wrapper, LegendIcon } from "./FormLegend.styles";
 interface FormLegendProps {
     items: LegendItem[];
     offsetTop?: string;
+    level?: number;
     handleClickItem?: (itemIndex: number) => void;
 }
 
@@ -42,21 +43,46 @@ const getBackgroundColour = (status: LegendStatus) => {
     }
 };
 
-const FormLegend = ({ items, offsetTop, handleClickItem }: FormLegendProps) => (
-    <Wrapper
-        offsetTop={offsetTop || "initial"}
-        sx={{ justifyContent: "center" }}>
-        {items.map((item, index) => (
-            <ListItemButton
-                key={item.name}
-                onClick={() => handleClickItem && handleClickItem(index)}>
-                <LegendIcon iconColour={getBackgroundColour(item.status)}>
-                    {getIcon(item.status)}
-                </LegendIcon>
-                <Typography>{capitalise(splitCamelcase(item.name))}</Typography>
-            </ListItemButton>
-        ))}
-    </Wrapper>
-);
+const FormLegend = ({
+    items,
+    offsetTop,
+    level = 1,
+    handleClickItem,
+}: FormLegendProps) => {
+    return (
+        <Wrapper
+            offsetTop={offsetTop || "initial"}
+            sx={{ justifyContent: "center" }}>
+            {items.map((item, index) => (
+                <>
+                    <ListItemButton
+                        sx={{ marginLeft: `${level * 16}px` }}
+                        key={`${item.name}`}
+                        onClick={() =>
+                            handleClickItem &&
+                            (item.id
+                                ? handleClickItem(item.id)
+                                : handleClickItem(index))
+                        }>
+                        <LegendIcon
+                            iconColour={getBackgroundColour(item.status)}>
+                            {getIcon(item.status)}
+                        </LegendIcon>
+                        <Typography>
+                            {capitalise(splitCamelcase(item.name))}
+                        </Typography>
+                    </ListItemButton>
+                    {item.subItems && (
+                        <FormLegend
+                            items={item.subItems}
+                            level={level + 1}
+                            handleClickItem={handleClickItem}
+                        />
+                    )}
+                </>
+            ))}
+        </Wrapper>
+    );
+};
 
 export default FormLegend;

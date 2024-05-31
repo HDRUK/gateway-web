@@ -29,6 +29,7 @@ export const LegendIcon = styled("span")<ProgressIconProps>(
         backgroundColor: iconColour,
         borderRadius: "50%",
         marginRight: "10px",
+        flexShrink: 0,
 
         "& svg": {
             color: "white",
