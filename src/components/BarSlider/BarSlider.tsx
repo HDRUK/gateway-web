@@ -148,6 +148,11 @@ const BarSliderContainer = ({
         const [, high] = data[value - 1]?.xValue || [1, 1];
         return high;
     };
+
+    if (!data) {
+        return null;
+    }
+
     return (
         <>
             <div style={{ height, marginBottom: "-13px" }}>
