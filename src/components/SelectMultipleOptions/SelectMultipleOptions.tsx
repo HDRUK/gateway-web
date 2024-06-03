@@ -25,7 +25,7 @@ const SelectMultipleOptions = ({
         setOptions(prevOptions => {
             const newOption = {
                 label: "",
-                value: "",
+                value: `new-option-${prevOptions.length + 1}`,
             };
 
             return [...prevOptions, newOption];
@@ -41,6 +41,7 @@ const SelectMultipleOptions = ({
         <BoxContainer sx={containerSx}>
             {options.map((option, index) => (
                 <Box
+                    key={option.value}
                     sx={{
                         display: "flex",
                         flexDirection: "row",
@@ -51,6 +52,7 @@ const SelectMultipleOptions = ({
                         m: 0,
                     }}>
                     <SelectMultipleOption
+                        key={option.value}
                         id={index}
                         option={option}
                         setOptions={setOptions}

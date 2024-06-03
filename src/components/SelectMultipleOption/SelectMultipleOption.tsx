@@ -48,6 +48,7 @@ const SelectMultipleOption = ({
                 px: 1,
             }}>
             <TextField
+                data-testid={`input-${option.value}`}
                 formControlSx={{
                     marginBottom: 0,
                 }}
