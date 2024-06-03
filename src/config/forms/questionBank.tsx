@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
+import { colors } from "@/config/theme";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
@@ -13,6 +14,15 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
         force_required: false,
     },
 };
+
+const supportedComponents = [
+    inputComponents.TextArea,
+    inputComponents.TextField,
+    inputComponents.RadioGroup,
+    inputComponents.CheckboxGroup,
+    inputComponents.SwitchInline,
+    inputComponents.DatePicker,
+];
 
 const formFields = [
     {
@@ -35,7 +45,7 @@ const formFields = [
         label: "Question Type",
         name: "type",
         component: inputComponents.RadioGroup,
-        radios: Object.values(inputComponents).map(value => ({
+        radios: Object.values(supportedComponents).map(value => ({
             label: value,
             value,
         })),
@@ -47,9 +57,11 @@ const formFields = [
         name: "type_options",
         component: inputComponents.SelectMultipleOptions,
         options: [],
-        isRow: true,
-        disabled: true,
-        hidden: true,
+        containerSx: {
+            p: 2,
+            my: 2,
+            backgroundColor: colors.purple100,
+        },
     },
     {
         component: inputComponents.TextArea,

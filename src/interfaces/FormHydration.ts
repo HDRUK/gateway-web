@@ -1,11 +1,10 @@
-export interface Option {
-    label: string;
-    value: string;
-}
+import { Option } from "./Option";
 
 export interface FormHydrationField {
     component?: string;
     options?: Option[];
+    checkboxes?: Option[];
+    radios?: Option[];
     variant?: string;
     name: string;
     label?: string | null;
@@ -40,8 +39,8 @@ interface FormHydration {
     title: string;
     description?: string | null;
     guidance?: string;
-    is_array_form: boolean;
-    location: string;
+    is_array_form?: boolean;
+    location?: string;
     field?: FormHydrationField;
     fields?: FormHydration[];
 }

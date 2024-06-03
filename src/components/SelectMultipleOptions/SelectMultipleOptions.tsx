@@ -1,23 +1,25 @@
 import { Dispatch, SetStateAction } from "react";
+import { SxProps } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import { Option } from "@/interfaces/Option";
 import SelectMultipleOption from "@/components/SelectMultipleOption";
 import { AddIcon, RemoveIcon } from "@/consts/icons";
 import Box from "../Box";
 import BoxContainer from "../BoxContainer";
 
-interface Option {
-    label: string;
-    value: string | number;
-}
-
 interface SelectMultipleOptionProps {
     options: Option[];
     setOptions: Dispatch<SetStateAction<Option[]>>;
+    containerSx?: SxProps;
 }
 
 const SelectMultipleOptions = ({
     options,
     setOptions,
+    containerSx = {
+        p: 2,
+        m: 0,
+    },
 }: SelectMultipleOptionProps) => {
     const handleAdd = () =>
         setOptions(prevOptions => {
@@ -36,11 +38,7 @@ const SelectMultipleOptions = ({
     };
 
     return (
-        <BoxContainer
-            sx={{
-                p: 2,
-                m: 0,
-            }}>
+        <BoxContainer sx={containerSx}>
             {options.map((option, index) => (
                 <Box
                     sx={{
@@ -52,23 +50,29 @@ const SelectMultipleOptions = ({
                         p: 0,
                         m: 0,
                     }}>
-                    <SelectMultipleOption option={option} />
+                    <SelectMultipleOption
+                        id={index}
+                        option={option}
+                        setOptions={setOptions}
+                    />
                     <Box sx={{ p: 0, m: 0 }}>
                         <IconButton
                             size="large"
                             edge="start"
-                            onClick={
-                                index === options.length - 1
-                                    ? handleAdd
-                                    : () => handleRemove(index)
-                            }>
-                            {index === options.length - 1 ? (
-                                <AddIcon />
-                            ) : (
-                                <RemoveIcon />
-                            )}
+                            onClick={() => handleRemove(index)}>
+                            <RemoveIcon />
                         </IconButton>
                     </Box>
+                    {index === options.length - 1 && (
+                        <Box sx={{ p: 0, m: 0 }}>
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                onClick={handleAdd}>
+                                <AddIcon />
+                            </IconButton>
+                        </Box>
+                    )}
                 </Box>
             ))}
         </BoxContainer>

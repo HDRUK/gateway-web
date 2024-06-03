@@ -6,6 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { FormHydration } from "@/interfaces/FormHydration";
+import { Option } from "@/interfaces/Option";
 import {
     QuestionBankQuestion,
     QuestionBankQuestionForm,
@@ -20,8 +22,8 @@ import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
-import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
+import { inputComponents } from "@/config/forms";
 import {
     questionFormFields,
     questionDefaultValues,
@@ -69,8 +71,8 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
         `${apis.questionBankV1Url}/sections`
     );
 
-    const updateQuestion = usePut<QuestionBankCreateQuestionAdmin>(
-        `${apis.questionBankV1Url}/questions/admin`,
+    const updateQuestion = usePatch<QuestionBankCreateQuestionAdmin>(
+        `${apis.questionBankV1Url}/questions`,
         {
             itemName: "Question Bank",
         }
@@ -94,7 +96,34 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             resolver: yupResolver(questionValidationSchema),
         });
 
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState<Option[]>([]);
+
+    const allFields = watch();
+
+    useEffect(() => {
+        if (!question?.field) return;
+        const options = question?.field?.checkboxes ||
+            question?.field?.radios || [{ label: "", value: "" }];
+        setOptions(options);
+    }, [question]);
+
+    const currentFormHydration = useMemo(
+        () => ({
+            ...question,
+            title: allFields.title || "",
+            field: {
+                ...question?.field,
+                component: inputComponents[allFields.type],
+                radios:
+                    allFields.type === "RadioGroup" &&
+                    options.filter(o => o.label),
+                checkboxes:
+                    allFields.type === "CheckboxGroup" &&
+                    options.filter(o => o.label),
+            },
+        }),
+        [allFields]
+    );
 
     const getFormFields = () => {
         return questionFormFields
@@ -105,13 +134,10 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
                         return undefined;
                     }
 
-                    const _options = question?.field.checkboxes ||
-                        question?.field.radios || [{ label: "", value: "" }];
-
                     return {
                         ...field,
-                        setOptions: setOptions,
-                        options: _options,
+                        setOptions,
+                        options,
                     };
                 }
 
@@ -129,8 +155,6 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             })
             .filter(field => field !== undefined);
     };
-
-    const allFields = watch();
 
     const hydratedFormFields = useMemo(
         () => getFormFields(),
@@ -164,6 +188,8 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             field: {
                 // this will need updating at a future point
                 component: formData.type,
+                radios: formData.type === "RadioGroup" && options,
+                checkboxes: formData.type === "CheckboxGroup" && options,
             },
             guidance: formData.guidance,
             title: formData.title,
@@ -227,8 +253,13 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
                         marginBottom: "10px",
                         padding: 2,
                     }}>
-                    <Typography> {question.title} </Typography>
-                    {renderFormHydrationField(question.field, control, "name")}
+                    <Typography> {currentFormHydration?.title} </Typography>
+                    {currentFormHydration?.field &&
+                        renderFormHydrationField(
+                            currentFormHydration.field,
+                            control,
+                            "name"
+                        )}
                 </Paper>
             ),
         },

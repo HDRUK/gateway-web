@@ -25,19 +25,14 @@ const TaskBoardSection = ({
     title,
     description,
     tasks,
-    sx,
+    sx = { p: 2 },
 }: TaskBoardSectionProps) => {
     const { setNodeRef } = useDroppable({
         id,
     });
 
-    const sxContainer = {
-        p: 2,
-        ...sx,
-    };
-
     return (
-        <Paper sx={sxContainer}>
+        <Paper sx={sx}>
             <Box>
                 <Typography variant="h2">{title}</Typography>
                 <Typography>{description}</Typography>

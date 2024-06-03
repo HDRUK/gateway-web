@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import type { Meta, StoryObj } from "@storybook/react";
 import * as yup from "yup";
+import { Option } from "@/interfaces/Option";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import SelectMultipleOptions from "./SelectMultipleOptions";
@@ -37,17 +38,13 @@ const WrapperComponent = () => {
 
     const onSubmit = data => console.log(data);
 
-    const [options, setOptions] = useState([
+    const [options, setOptions] = useState<Option[]>([
         { label: "Option 1", value: "option1" },
     ]);
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <SelectMultipleOptions
-                options={options}
-                setOptions={setOptions}
-                control={control}
-            />
+            <SelectMultipleOptions options={options} setOptions={setOptions} />
 
             <Button type="submit">Submit</Button>
         </Form>
