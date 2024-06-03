@@ -1,7 +1,6 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { FormHydration } from "./FormHydration";
 
-
 interface QuestionBankQuestionForm {
     section_id: number;
     guidance: string;

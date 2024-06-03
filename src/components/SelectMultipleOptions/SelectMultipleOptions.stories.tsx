@@ -29,7 +29,7 @@ const validationSchema = yup
     .required();
 
 const WrapperComponent = () => {
-    const { handleSubmit, control } = useForm<FormData>({
+    const { handleSubmit } = useForm<FormData>({
         defaultValues: {
             first: "",
         },

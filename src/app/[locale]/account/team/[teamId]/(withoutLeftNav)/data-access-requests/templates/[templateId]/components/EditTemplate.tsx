@@ -169,7 +169,6 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                             tq => tq.question_id === qbQuestion.id
                         );
                     }
-                    // stitch together the qbQuestion and DarTemplateHasQuestion
                     const question = {
                         ...qbQuestion,
                         ...templateQuestion,
@@ -186,9 +185,6 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             id: SELECTED_BOARD_ID,
             title: t("selectedQuestions.title"),
             description: t("selectedQuestions.description"),
-            sx: {
-                //border: "1px solid darkgreen"
-            },
             tasks: tasks
                 .filter(t => t.boardId === SELECTED_BOARD_ID)
                 .sort((a, b) => a.order - b.order)

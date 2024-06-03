@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { SxProps } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Option } from "@/interfaces/Option";

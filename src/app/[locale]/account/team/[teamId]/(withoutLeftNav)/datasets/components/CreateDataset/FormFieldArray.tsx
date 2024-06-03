@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { Control, useFieldArray } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { FormHydration, Option } from "@/interfaces/FormHydration";
+import { FormHydration } from "@/interfaces/FormHydration";
+import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import theme from "@/config/theme";

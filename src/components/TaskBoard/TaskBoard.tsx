@@ -17,7 +17,6 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import Container from "@/components/Container";
-import Paper from "@/components/Paper";
 import TaskBoardSection from "@/components/TaskBoardSection";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 

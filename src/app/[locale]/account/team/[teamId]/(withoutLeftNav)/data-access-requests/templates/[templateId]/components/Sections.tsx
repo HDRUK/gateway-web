@@ -19,7 +19,6 @@ const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {
     const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
 
     useEffect(() => {
-
         const findSubSections = (s: QuestionBankSection) =>
             sections?.filter(sub => sub.parent_section === s.id);
 

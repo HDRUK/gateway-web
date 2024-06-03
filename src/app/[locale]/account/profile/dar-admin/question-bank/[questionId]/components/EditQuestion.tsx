@@ -203,11 +203,7 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             // locked: 0, - consider functionality for unlocking here?
         };
 
-        updateQuestion(questionId, payload).then(res => {
-            console.log(payload);
-            console.log(questionId);
-            console.log(res);
-            return;
+        updateQuestion(questionId, payload).then(() => {
             // consider functionality in BE? question should be unlocked when updated?
             unlockQuestion(questionId, {});
             router.push(
