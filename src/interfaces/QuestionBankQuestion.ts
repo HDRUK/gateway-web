@@ -1,9 +1,11 @@
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { FormHydration } from "./FormHydration";
+
 
 interface QuestionBankQuestionForm {
     section_id: number;
     guidance: string;
-    type: string;
+    type: ComponentTypes;
     title: string;
     settings: {
         mandatory: boolean;

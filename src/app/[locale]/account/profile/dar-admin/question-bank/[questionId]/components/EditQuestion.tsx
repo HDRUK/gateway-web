@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
 import {
     QuestionBankQuestion,
@@ -115,10 +114,10 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
                 ...question?.field,
                 component: inputComponents[allFields.type],
                 radios:
-                    allFields.type === "RadioGroup" &&
+                    allFields.type === inputComponents.RadioGroup &&
                     options.filter(o => o.label),
                 checkboxes:
-                    allFields.type === "CheckboxGroup" &&
+                    allFields.type === inputComponents.CheckboxGroup &&
                     options.filter(o => o.label),
             },
         }),
