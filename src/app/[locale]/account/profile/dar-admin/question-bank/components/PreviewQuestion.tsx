@@ -22,7 +22,11 @@ const PreviewQuestion = ({ question, control }: PreviewQuestionProps) => {
             }}>
             <Typography> {question?.title} </Typography>
             {question?.field &&
-                renderFormHydrationField(question.field, control, "name")}
+                renderFormHydrationField(
+                    question.field,
+                    control,
+                    question.title
+                )}
         </Paper>
     );
 };
