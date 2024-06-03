@@ -123,7 +123,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             questionFormFields
                 .map(field => {
                     if (field.name === "type_options") {
-                        const type = getValues("type");
+                        const { type } = allFields;
                         if (!componentsWithOptions.includes(type)) {
                             return undefined;
                         }
