@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { Option } from "@/interfaces/Option";
 import {
     QuestionBankQuestionForm,
     QuestionBankCreateQuestionAdmin,
@@ -17,10 +18,12 @@ import Paper from "@/components/Paper";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { inputComponents } from "@/config/forms";
 import {
     questionFormFields,
     questionDefaultValues,
     questionValidationSchema,
+    componentsWithOptions,
 } from "@/config/forms/questionBank";
 import { RouteName } from "@/consts/routeName";
 
@@ -41,9 +44,36 @@ const CreateQuestion = () => {
         }
     );
 
-    const hydratedFormFields = useMemo(
-        () =>
-            questionFormFields.map(field => {
+    const defaultValues = useMemo(() => questionDefaultValues, []);
+
+    const { control, handleSubmit, setValue, getValues, watch } =
+        useForm<QuestionBankQuestionForm>({
+            defaultValues,
+            resolver: yupResolver(questionValidationSchema),
+        });
+
+    const allFields = watch();
+
+    const [options, setOptions] = useState<Option[]>([
+        { label: "", value: "new-option-1" },
+    ]);
+
+    const getFormFields = () => {
+        return questionFormFields
+            .map(field => {
+                if (field.name === "type_options") {
+                    const type = getValues("type");
+                    if (!componentsWithOptions.includes(type)) {
+                        return undefined;
+                    }
+
+                    return {
+                        ...field,
+                        setOptions,
+                        options,
+                    };
+                }
+
                 if (field.name === "section_id") {
                     return {
                         ...field,
@@ -55,17 +85,14 @@ const CreateQuestion = () => {
                     };
                 }
                 return field;
-            }),
-        [sectionData]
+            })
+            .filter(field => field !== undefined);
+    };
+
+    const hydratedFormFields = useMemo(
+        () => getFormFields(),
+        [sectionData, allFields]
     );
-
-    const defaultValues = useMemo(() => questionDefaultValues, []);
-
-    const { control, handleSubmit, setValue } =
-        useForm<QuestionBankQuestionForm>({
-            defaultValues,
-            resolver: yupResolver(questionValidationSchema),
-        });
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         const {
@@ -81,12 +108,14 @@ const CreateQuestion = () => {
             default: 1, // this will need to be updated in the future
             allow_guidance_override: allow_guidance_override ? 1 : 0,
             force_required: force_required ? 1 : 0,
-            question_json: {
-                field: {
-                    // this will need updating at a future point
-                    component: type,
-                },
+            field: {
+                // this will need updating at a future point
+                component: type,
+                radios: formData.type === inputComponents.RadioGroup && options,
+                checkboxes:
+                    formData.type === inputComponents.CheckboxGroup && options,
             },
+
             guidance,
             title,
             section_id,
@@ -109,7 +138,7 @@ const CreateQuestion = () => {
                 }}>
                 {hydratedFormFields.map(field => (
                     <InputWrapper
-                        key={field.name}
+                        key={field?.name}
                         control={control}
                         setValue={setValue}
                         {...field}

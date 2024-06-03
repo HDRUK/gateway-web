@@ -7,7 +7,7 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
     section_id: 1,
     title: "",
     guidance: "",
-    type: "",
+    type: inputComponents.TextField,
     settings: {
         mandatory: false,
         allow_guidance_override: false,
@@ -22,6 +22,11 @@ const supportedComponents = [
     inputComponents.CheckboxGroup,
     inputComponents.SwitchInline,
     inputComponents.DatePicker,
+];
+
+const componentsWithOptions = [
+    inputComponents.RadioGroup,
+    inputComponents.CheckboxGroup,
 ];
 
 const formFields = [
@@ -111,4 +116,6 @@ export {
     defaultValues as questionDefaultValues,
     formFields as questionFormFields,
     validationSchema as questionValidationSchema,
+    supportedComponents as questionBankSupportedComponents,
+    componentsWithOptions,
 };

@@ -22,7 +22,7 @@ const SelectMultipleOption = ({
         reset(option);
     }, [reset, option]);
 
-    const debouncedLabel = useDebounce(watch("label") || option.label, 500);
+    const debouncedLabel = useDebounce(watch("label") || option.label, 100, 1);
 
     useEffect(() => {
         setOptions(prevOptions =>

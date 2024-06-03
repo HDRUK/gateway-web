@@ -27,6 +27,7 @@ import {
     questionFormFields,
     questionDefaultValues,
     questionValidationSchema,
+    componentsWithOptions,
 } from "@/config/forms/questionBank";
 import { RouteName } from "@/consts/routeName";
 import { renderFormHydrationField } from "@/utils/formHydration";
@@ -102,7 +103,7 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
     useEffect(() => {
         if (!question?.field) return;
         const options = question?.field?.checkboxes ||
-            question?.field?.radios || [{ label: "", value: "" }];
+            question?.field?.radios || [{ label: "", value: "new-option-1" }];
         setOptions(options);
     }, [question]);
 
@@ -129,7 +130,7 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             .map(field => {
                 if (field.name === "type_options") {
                     const type = getValues("type");
-                    if (type !== "CheckboxGroup" && type !== "RadioGroup") {
+                    if (!componentsWithOptions.includes(type)) {
                         return undefined;
                     }
 
@@ -167,7 +168,9 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             section_id: section?.id || 1,
             title: title || "",
             guidance: guidance || "",
-            type: field?.component || "",
+            type: field?.component
+                ? inputComponents[field.component]
+                : inputComponents.TextField,
             settings: {
                 mandatory: !!required,
                 allow_guidance_override: !!allow_guidance_override,
@@ -187,8 +190,12 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             field: {
                 // this will need updating at a future point
                 component: formData.type,
-                radios: formData.type === "RadioGroup" && options,
-                checkboxes: formData.type === "CheckboxGroup" && options,
+                ...(formData.type === inputComponents.CheckboxGroup && {
+                    checkboxes: options.filter(o => o.label),
+                }),
+                ...(formData.type === inputComponents.RadioGroup && {
+                    radios: options.filter(o => o.label),
+                }),
             },
             guidance: formData.guidance,
             title: formData.title,
@@ -196,7 +203,11 @@ const EditQuestion = ({ questionId }: { questionId: string }) => {
             // locked: 0, - consider functionality for unlocking here?
         };
 
-        updateQuestion(questionId, payload).then(() => {
+        updateQuestion(questionId, payload).then(res => {
+            console.log(payload);
+            console.log(questionId);
+            console.log(res);
+            return;
             // consider functionality in BE? question should be unlocked when updated?
             unlockQuestion(questionId, {});
             router.push(
