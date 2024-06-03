@@ -4,17 +4,14 @@ import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { Option } from "@/interfaces/Option";
 import {
     QuestionBankQuestion,
     QuestionBankQuestionForm,
-    QuestionBankCreateQuestionAdmin,
+    QuestionBankCreateUpdateQuestion,
 } from "@/interfaces/QuestionBankQuestion";
-import { QuestionBankCreateUpdateQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Button from "@/components/Button";
-import ErrorDisplay from "@/components/ErrorDisplay";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
@@ -28,7 +25,6 @@ import {
     questionValidationSchema,
     componentsWithOptions,
 } from "@/config/forms/questionBank";
-import { RouteName } from "@/consts/routeName";
 import PreviewQuestion from "./PreviewQuestion";
 
 interface EditQuestionProps {
@@ -119,7 +115,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             section_id: formData.section_id,
             // locked: 0, - consider functionality for unlocking here?
         };
-        onSubmit(payload); //, questionId);
+        onSubmit(payload);
     };
 
     const hydratedFormFields = useMemo(
