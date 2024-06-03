@@ -45,7 +45,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         `${apis.questionBankV1Url}/sections`
     );
 
-    const { control, handleSubmit, setValue, getValues, reset, watch } =
+    const { control, handleSubmit, setValue, reset, watch } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
