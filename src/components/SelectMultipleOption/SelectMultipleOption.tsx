@@ -1,4 +1,4 @@
-import { useEffect, Dispatch, SetStateAction } from "react";
+import { useEffect, Dispatch, SetStateAction, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Option } from "@/interfaces/Option";
 import useDebounce from "@/hooks/useDebounce";
@@ -22,17 +22,17 @@ const SelectMultipleOption = ({
         reset(option);
     }, [reset, option]);
 
-    const debouncedValue = useDebounce(watch("label") || option.label, 500);
+    const debouncedLabel = useDebounce(watch("label") || option.label, 500);
 
     useEffect(() => {
         setOptions(prevOptions =>
             prevOptions.map((prevOption, index) =>
                 index === id
-                    ? { value: debouncedValue, label: debouncedValue }
+                    ? { value: option.value, label: debouncedLabel }
                     : prevOption
             )
         );
-    }, [debouncedValue]);
+    }, [debouncedLabel]);
 
     return (
         <Box

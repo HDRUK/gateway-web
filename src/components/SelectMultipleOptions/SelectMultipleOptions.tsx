@@ -57,6 +57,7 @@ const SelectMultipleOptions = ({
                     />
                     <Box sx={{ p: 0, m: 0 }}>
                         <IconButton
+                            data-testid={`remove-${option.value}`}
                             size="large"
                             edge="start"
                             onClick={() => handleRemove(index)}>
@@ -66,6 +67,7 @@ const SelectMultipleOptions = ({
                     {index === options.length - 1 && (
                         <Box sx={{ p: 0, m: 0 }}>
                             <IconButton
+                                data-testid={`add-after-${option.value}`}
                                 size="large"
                                 edge="start"
                                 onClick={handleAdd}>
