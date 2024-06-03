@@ -3,8 +3,8 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import BackButton from "./components/BackButton";
-import EditQuestion from "./components/EditQuestion";
 import Header from "./components/Header";
+import EditQuestion from "./components/UpdateQuestion";
 
 const QuestionBankEditPage = async ({
     params,

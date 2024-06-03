@@ -110,7 +110,6 @@
                             "text": "This is a page for updating a question",
                             "section": "Section",
                             "guidance": "Guidance",
-                            "save": "Save Changes",
                             "back": "Back to Question Bank list page"
                         },
                         "createPage": {
@@ -118,9 +117,9 @@
                             "text": "This is a page for create a question",
                             "section": "Section",
                             "guidance": "Guidance",
-                            "save": "Save Changes",
                             "back": "Back to Question Bank list page"
                         },
+                        "save": "Save Changes",
                         "title": "Question Bank Management",
                         "text": "Use this page to list and manage all available questions currently in the question bank for DAR templates",
                         "edit": {
