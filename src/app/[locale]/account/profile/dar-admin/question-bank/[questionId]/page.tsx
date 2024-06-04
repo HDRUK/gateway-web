@@ -4,7 +4,7 @@ import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import BackButton from "./components/BackButton";
 import Header from "./components/Header";
-import EditQuestion from "./components/UpdateQuestion";
+import UpdateQuestion from "./components/UpdateQuestion";
 
 const QuestionBankEditPage = async ({
     params,
@@ -22,7 +22,7 @@ const QuestionBankEditPage = async ({
             pagePermissions={["dar-config.update"]}>
             <BackButton questionId={questionId} />
             <Header />
-            <EditQuestion questionId={questionId} />
+            <UpdateQuestion questionId={questionId} />
         </ProtectedAccountRoute>
     );
 };
