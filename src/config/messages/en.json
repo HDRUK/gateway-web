@@ -507,7 +507,7 @@
                     },
                     "accessService": {
                         "label": "Access service",
-                        "tooltip": "The data access services that are available for a data"
+                        "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
                         "label": "Feasibility analysis",
