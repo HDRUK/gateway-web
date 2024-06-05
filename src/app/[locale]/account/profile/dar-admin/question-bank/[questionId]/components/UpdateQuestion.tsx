@@ -37,11 +37,6 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
         successNotificationsOn: false,
     });
 
-    const unlockQuestion = usePatch(`${apis.questionBankV1Url}/questions`, {
-        subPath: "unlock",
-        successNotificationsOn: false,
-    });
-
     useEffect(() => {
         if (!isLoading) {
             if (!data?.locked) {
@@ -54,8 +49,6 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
 
     const onSubmit = async (payload: QuestionBankCreateUpdateQuestion) =>
         updateQuestion(questionId, payload).then(() => {
-            // consider functionality in BE? question should be unlocked when updated?
-            unlockQuestion(questionId, {});
             router.push(
                 `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.LIST}`
             );
