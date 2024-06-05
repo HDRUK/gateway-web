@@ -16,8 +16,7 @@ const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
     return (
         <Paper
             sx={{
-                marginTop: "10px",
-                marginBottom: "10px",
+                my: 2,
                 padding: 2,
             }}>
             {questions.map(question => {
