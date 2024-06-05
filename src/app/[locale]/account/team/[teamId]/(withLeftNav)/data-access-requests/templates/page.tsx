@@ -39,7 +39,7 @@ const DarTemplatePage = () => {
         };
         createNewTemplate(payload).then(res => {
             const { id: templateId } = res;
-            const redirectUrl = `${RouteName.DAR_TEMPLATE}/${templateId}/${RouteName.EDIT}`;
+            const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}/${RouteName.EDIT}`;
             router.push(redirectUrl);
         });
     };

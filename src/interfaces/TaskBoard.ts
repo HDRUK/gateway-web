@@ -2,6 +2,7 @@ interface TaskItem {
     /* eslint-disable @typescript-eslint/no-explicit-any */
     id: string | number;
     boardId: string | number;
+    order: number;
     [key: string]: any;
 }
 

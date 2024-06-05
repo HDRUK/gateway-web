@@ -4,6 +4,7 @@ export interface QuestionBankSection {
     updated_at: string;
     deleted_at: string | null;
     name: string;
-    sub_section: string | null;
+    description: string | null;
+    parent_section: number | null;
     order: number;
 }

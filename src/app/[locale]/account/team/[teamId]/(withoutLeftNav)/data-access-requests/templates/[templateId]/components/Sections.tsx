@@ -20,7 +20,7 @@ const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {
 
     useEffect(() => {
         const findSubSections = (s: QuestionBankSection) =>
-            sections?.filter(sub => sub.sub_section === s.name);
+            sections?.filter(sub => sub.parent_section === s.id);
 
         const buildMenu = (s: QuestionBankSection) => {
             return {
@@ -42,7 +42,7 @@ const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {
         };
         const data =
             sections
-                ?.filter(s => s.sub_section === null)
+                ?.filter(s => s.parent_section === null)
                 .map(s => buildMenu(s)) || [];
 
         setLegendItems(data);
