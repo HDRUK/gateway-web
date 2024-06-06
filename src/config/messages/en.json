@@ -500,9 +500,25 @@
                         "label": "Data standard",
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
-                    "dataPublisher": {
-                        "label": "Data publisher",
-                        "tooltip": "Individual or organisation publishing metadata on the Gateway"
+                    "dataProvider": {
+                        "label": "Data provider",
+                        "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
+                    },
+                    "accessService": {
+                        "label": "Access service",
+                        "tooltip": "Method for accessing the dataset, if access request is approved"
+                    },
+                    "cohortDiscovery": {
+                        "label": "Feasibility analysis",
+                        "tooltip": "Indicates if frequency count accessible in HDR UK feasibility analysis tool"
+                    },
+                    "containsTissue": {
+                        "label": "Tissue sample availability",
+                        "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data provider"
+                    },
+                    "hasTechnicalMetadata": {
+                        "label": "Structural metadata",
+                        "tooltip": "Descriptions and details about the tables and columns within a dataset"
                     }
                 }
             }
