@@ -9,6 +9,7 @@ import Paper from "@/components/Paper";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
+import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 
@@ -18,6 +19,11 @@ interface ResultTableProps {
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
+const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
+const ACCESS_SERVICE_PATH =
+    "metadata.accessibility.access.accessServiceCategory";
+const CONTAINS_TISSUE_PATH = "metadata.additional.containsTissue";
+const STRUCTURAL_METADATA_PATH = "metadata.additional.hasTechnicalMetadata";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
@@ -51,6 +57,7 @@ const getColumns = ({
         header: () => null,
         size: 43,
     }),
+
     columnHelper.display({
         id: "title",
         cell: ({ row: { original } }) => {
@@ -70,6 +77,28 @@ const getColumns = ({
         header: () => <span>{translations.metaDataLabel}</span>,
         size: 240,
     }),
+
+    columnHelper.display({
+        id: "dataProvider",
+        cell: ({ row: { original } }) => (
+            <div style={{ textAlign: "center" }}>
+                <EllipsisLineLimit
+                    showToolTip
+                    text={get(original, PUBLISHER_NAME_PATH)}
+                />
+            </div>
+        ),
+        header: () => (
+            <TooltipIcon
+                buttonSx={{ p: 0 }}
+                label={translations.dataProviderLabel}
+                size="small"
+                content={translations.dataProviderTooltip}
+            />
+        ),
+        size: 120,
+    }),
+
     columnHelper.display({
         id: "populationSize",
         cell: ({ row: { original } }) => (
@@ -90,6 +119,7 @@ const getColumns = ({
         ),
         size: 120,
     }),
+
     columnHelper.display({
         id: "dateRange",
         cell: info => (
@@ -107,6 +137,25 @@ const getColumns = ({
         ),
         size: 120,
     }),
+
+    columnHelper.display({
+        id: "accessService",
+        cell: ({ row: { original } }) => (
+            <div style={{ textAlign: "center" }}>
+                {get(original, ACCESS_SERVICE_PATH)}
+            </div>
+        ),
+        header: () => (
+            <TooltipIcon
+                buttonSx={{ p: 0 }}
+                label={translations.accessServiceLabel}
+                size="small"
+                content={translations.accessServiceTooltip}
+            />
+        ),
+        size: 120,
+    }),
+
     columnHelper.display({
         id: "conformsTo",
         cell: ({ row: { original } }) => (
@@ -124,22 +173,65 @@ const getColumns = ({
         ),
         size: 120,
     }),
+
     columnHelper.display({
-        id: "publisherName",
-        cell: ({ row: { original } }) => (
-            <div style={{ textAlign: "center" }}>
-                <EllipsisLineLimit
-                    showToolTip
-                    text={get(original, PUBLISHER_NAME_PATH)}
-                />
-            </div>
-        ),
+        id: "cohortDiscovery",
+        cell: ({ row: { original } }) => {
+            const isCohortDiscovery = get(original, COHORT_DISCOVERY_PATH);
+            return (
+                <div style={{ textAlign: "center" }}>
+                    {isCohortDiscovery ? <CheckIcon color="primary" /> : "-"}
+                </div>
+            );
+        },
         header: () => (
             <TooltipIcon
                 buttonSx={{ p: 0 }}
-                label={translations.dataPublisherLabel}
+                label={translations.cohortDiscoveryLabel}
                 size="small"
-                content={translations.dataPublisherTooltip}
+                content={translations.cohortDiscoveryTooltip}
+            />
+        ),
+        size: 120,
+    }),
+
+    columnHelper.display({
+        id: "containsTissue",
+        cell: ({ row: { original } }) => {
+            const containsTissue = get(original, CONTAINS_TISSUE_PATH);
+            return (
+                <div style={{ textAlign: "center" }}>
+                    {containsTissue ? <CheckIcon color="primary" /> : "-"}
+                </div>
+            );
+        },
+        header: () => (
+            <TooltipIcon
+                buttonSx={{ p: 0 }}
+                label={translations.containsTissueLabel}
+                size="small"
+                content={translations.containsTissueTooltip}
+            />
+        ),
+        size: 120,
+    }),
+
+    columnHelper.display({
+        id: "hasTechnicalMetadata",
+        cell: ({ row: { original } }) => {
+            const containsTissue = get(original, STRUCTURAL_METADATA_PATH);
+            return (
+                <div style={{ textAlign: "center" }}>
+                    {containsTissue ? <CheckIcon color="primary" /> : "-"}
+                </div>
+            );
+        },
+        header: () => (
+            <TooltipIcon
+                buttonSx={{ p: 0 }}
+                label={translations.hasTechnicalMetadataLabel}
+                size="small"
+                content={translations.hasTechnicalMetadataTooltip}
             />
         ),
         size: 120,
@@ -164,8 +256,16 @@ const ResultTable = ({ results }: ResultTableProps) => {
         dateRangePublisherTooltip: t("dateRangePublisher.tooltip"),
         dataStandardLabel: t("dataStandard.label"),
         dataStandardTooltip: t("dataStandard.tooltip"),
-        dataPublisherLabel: t("dataPublisher.label"),
-        dataPublisherTooltip: t("dataPublisher.tooltip"),
+        dataProviderLabel: t("dataProvider.label"),
+        dataProviderTooltip: t("dataProvider.tooltip"),
+        accessServiceLabel: t("accessService.label"),
+        accessServiceTooltip: t("accessService.tooltip"),
+        cohortDiscoveryLabel: t("cohortDiscovery.label"),
+        cohortDiscoveryTooltip: t("cohortDiscovery.tooltip"),
+        containsTissueLabel: t("containsTissue.label"),
+        containsTissueTooltip: t("containsTissue.tooltip"),
+        hasTechnicalMetadataLabel: t("hasTechnicalMetadata.label"),
+        hasTechnicalMetadataTooltip: t("hasTechnicalMetadata.tooltip"),
     };
 
     return (
