@@ -25,6 +25,7 @@ import {
     FILTER_TYPE_CATEGORY,
     filtersList,
     FILTER_POPULATION_SIZE,
+    FILTER_CONTAINS_TISSUE,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -34,6 +35,7 @@ import {
     transformQueryFiltersToForm,
 } from "@/utils/filters";
 import DateRangeFilter from "../DateRangeFilter";
+import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
 import PopulationFilter from "../PopulationFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
@@ -319,38 +321,69 @@ const FilterPanel = ({
 
     return (
         <>
-            {filterItems.map(filterItem => {
-                const { label } = filterItem;
+            {filterItems
+                .sort((item1, item2) =>
+                    item1.label === FILTER_CONTAINS_TISSUE
+                        ? -1
+                        : item2.label === FILTER_CONTAINS_TISSUE
+                        ? 1
+                        : 0
+                )
+                .map(filterItem => {
+                    const { label } = filterItem;
 
-                return (
-                    <Accordion
-                        key={label}
-                        sx={{
-                            background: "transparent",
-                            boxShadow: "none",
-                        }}
-                        expanded={maximised.includes(label)}
-                        heading={
-                            <Tooltip
-                                key={label}
-                                placement="right"
-                                title={t(`${label}${TOOLTIP_SUFFIX}`)}>
-                                <Typography fontWeight="400" fontSize="20px">
-                                    {t(label)}
-                                </Typography>
-                            </Tooltip>
-                        }
-                        onChange={() =>
-                            setMaximised(
-                                maximised.includes(label)
-                                    ? maximised.filter(e => e !== label)
-                                    : [...maximised, label]
-                            )
-                        }
-                        contents={renderFilterContent(filterItem)}
-                    />
-                );
-            })}
+                    if (filterItem.label === FILTER_CONTAINS_TISSUE) {
+                        return (
+                            <FilterSectionInlineSwitch
+                                filterCategory={filterCategory}
+                                filterItem={filterItem}
+                                selectedFilters={selectedFilters}
+                                handleRadioChange={(
+                                    event: React.ChangeEvent<HTMLInputElement>
+                                ) =>
+                                    updateCheckboxes(
+                                        {
+                                            [filterItem.label]:
+                                                event.target.checked,
+                                        },
+                                        label
+                                    )
+                                }
+                            />
+                        );
+                    }
+
+                    return (
+                        <Accordion
+                            key={label}
+                            sx={{
+                                background: "transparent",
+                                boxShadow: "none",
+                            }}
+                            expanded={maximised.includes(label)}
+                            heading={
+                                <Tooltip
+                                    key={label}
+                                    placement="right"
+                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                    <Typography
+                                        fontWeight="400"
+                                        fontSize="20px">
+                                        {t(label)}
+                                    </Typography>
+                                </Tooltip>
+                            }
+                            onChange={() =>
+                                setMaximised(
+                                    maximised.includes(label)
+                                        ? maximised.filter(e => e !== label)
+                                        : [...maximised, label]
+                                )
+                            }
+                            contents={renderFilterContent(filterItem)}
+                        />
+                    );
+                })}
         </>
     );
 };

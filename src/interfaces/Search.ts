@@ -12,6 +12,7 @@ import {
     FILTER_POPULATION_SIZE,
     FILTER_PROGRAMMING_LANGUAGE,
     FILTER_TYPE_CATEGORY,
+    FILTER_CONTAINS_TISSUE,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -157,6 +158,7 @@ export interface SearchQueryParams {
     [FILTER_POPULATION_SIZE]: string[] | undefined;
     [FILTER_PROGRAMMING_LANGUAGE]: string[] | undefined;
     [FILTER_TYPE_CATEGORY]: string[] | undefined;
+    [FILTER_CONTAINS_TISSUE]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };
