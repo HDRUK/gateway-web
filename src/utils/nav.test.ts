@@ -74,12 +74,12 @@ describe("Nav utils", () => {
             expect(darItem?.subItems).toBeDefined();
 
             const editFormItem = darItem?.subItems?.find(
-                item => item.label === "Edit Form"
+                item => item.label === "Manage Templates"
             );
 
             expect(editFormItem).toBeDefined();
             expect(editFormItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.EDIT_FORM}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`
             );
         });
 

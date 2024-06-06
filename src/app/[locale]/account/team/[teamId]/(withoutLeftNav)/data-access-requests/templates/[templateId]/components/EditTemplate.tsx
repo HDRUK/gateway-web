@@ -16,6 +16,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import Tabs from "@/components/Tabs";
 import TaskBoard from "@/components/TaskBoard";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 import Typography from "@/components/Typography";
@@ -24,10 +25,14 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import PreviewTemplate from "./PreviewTemplate";
 import QuestionItem from "./QuestionItem";
 import Sections from "./Sections";
 
 const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
+
+const SELECTED_BOARD_ID = "selectedQuestions";
+const QB_BOARD_ID = "questionBank";
 
 interface EditTemplateProps {
     templateId: string;
@@ -131,12 +136,14 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
             id: q.id,
             boardId,
             order: extended ? q.order : index,
-            title: `${q.id}) ${q.question_json.title} `,
+            title: `${q.question_json.title}`,
             guidance:
                 extended && q.allow_guidance_override && q.guidance
                     ? q.guidance
                     : q.question_json.guidance || "",
             original_guidance: q.question_json.guidance || "",
+            question_json: q.question_json,
+            component: q.question_json?.field?.component || "",
             required: q.required,
             force_required: q.force_required,
             allow_guidance_override: q.allow_guidance_override,
@@ -162,14 +169,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                             tq => tq.question_id === qbQuestion.id
                         );
                     }
-                    // stitch together the qbQuestion and DarTemplateHasQuestion
                     const question = {
                         ...qbQuestion,
                         ...templateQuestion,
                     };
-                    const boardId = selected
-                        ? "selectQuestions"
-                        : "questionBank";
+                    const boardId = selected ? SELECTED_BOARD_ID : QB_BOARD_ID;
 
                     return makeTask(question, boardId, index);
                 }) || []
@@ -178,11 +182,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const initialSelectBoard = useMemo(
         () => ({
-            id: "selectedQuestions",
+            id: SELECTED_BOARD_ID,
             title: t("selectedQuestions.title"),
             description: t("selectedQuestions.description"),
             tasks: tasks
-                .filter(t => t.boardId === "selectQuestions")
+                .filter(t => t.boardId === SELECTED_BOARD_ID)
                 .sort((a, b) => a.order - b.order)
                 .map(t => ({
                     id: t.id,
@@ -196,11 +200,11 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const initalQuestionBankBoard = useMemo(
         () => ({
-            id: "questionBank",
+            id: QB_BOARD_ID,
             title: t("questionBank.title"),
             description: t("questionBank.description"),
             tasks: tasks
-                .filter(t => t.boardId === "questionBank")
+                .filter(t => t.boardId === QB_BOARD_ID)
                 .sort((a, b) => a.order - b.order)
                 .map(t => {
                     return {
@@ -252,6 +256,48 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         );
     };
 
+    const tabsList = tasks.length > 0 && [
+        {
+            label: "Select Questions",
+            value: "select",
+            content: tasks.length > 0 && (
+                <>
+                    <TaskBoard
+                        boardSections={boardSections}
+                        setBoardSections={setBoardSections}
+                        anchoredErrorCallback={anchoredErrorCallback}
+                    />
+                    <Paper sx={{ m: 2, p: 2, mb: 5 }}>
+                        <Box
+                            sx={{
+                                p: 0,
+                                display: "flex",
+                                justifyContent: "end",
+                            }}>
+                            <Button onClick={handleSaveChanges} type="submit">
+                                {t("save")}
+                            </Button>
+                        </Box>
+                    </Paper>
+                </>
+            ),
+        },
+        {
+            label: "Preview",
+            value: "preview",
+            content:
+                tasks.length > 0 ? (
+                    <PreviewTemplate
+                        questions={tasks
+                            .filter(t => t.boardId === SELECTED_BOARD_ID)
+                            .sort((a, b) => a.order - b.order)}
+                    />
+                ) : (
+                    <Loading />
+                ),
+        },
+    ];
+
     if (isLoading) {
         return <Loading />;
     }
@@ -275,26 +321,19 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                 <Container maxWidth={false}>
                     <Paper sx={{ p: 2 }}>
                         <Typography variant="h2">
-                            {currentSection?.name}{" "}
+                            {currentSection?.name}
                         </Typography>
+
+                        <Typography>{currentSection?.description}</Typography>
                     </Paper>
-                    <TaskBoard
-                        boardSections={boardSections}
-                        setBoardSections={setBoardSections}
-                        anchoredErrorCallback={anchoredErrorCallback}
-                    />
-                    <Paper sx={{ m: 2, p: 2, mb: 5 }}>
-                        <Box
-                            sx={{
-                                p: 0,
-                                display: "flex",
-                                justifyContent: "end",
-                            }}>
-                            <Button onClick={handleSaveChanges} type="submit">
-                                {t("save")}
-                            </Button>
-                        </Box>
-                    </Paper>
+                    {tabsList && (
+                        <Tabs
+                            centered
+                            tabs={tabsList}
+                            tabBoxSx={{ padding: 0 }}
+                            rootBoxSx={{ padding: 0 }}
+                        />
+                    )}
                 </Container>
             </Container>
         </Container>

@@ -47,7 +47,7 @@ const renderValue = (
             .map(option => option.label)
             .join(", ");
     }
-    return options.find(option => option.value === selected)?.label;
+    return options?.find(option => option.value === selected)?.label;
 };
 
 const Select = <

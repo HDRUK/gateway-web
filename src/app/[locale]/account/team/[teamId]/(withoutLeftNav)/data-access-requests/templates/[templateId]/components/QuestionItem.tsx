@@ -1,10 +1,11 @@
-import { useEffect, useState, Dispatch, SetStateAction } from "react";
+import { useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { DarQuestion } from "@/interfaces/DataAccessRequest";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Chip from "@/components/Chip";
 import RadioGroup from "@/components/RadioGroup";
 import TextArea from "@/components/TextArea";
 import TooltipIcon from "@/components/TooltipIcon";
@@ -36,9 +37,18 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         },
     });
 
-    const allowEditRequired = currentTask.force_required === 0;
-    const allowEditGuidance = currentTask.allow_guidance_override === 1;
-    const allowEdit = allowEditRequired || allowEditGuidance;
+    const allowEditRequired = useMemo(
+        () => currentTask.force_required === 0,
+        [currentTask]
+    );
+    const allowEditGuidance = useMemo(
+        () => currentTask.allow_guidance_override === 1,
+        [currentTask]
+    );
+    const allowEdit = useMemo(
+        () => allowEditRequired || allowEditGuidance,
+        [allowEditRequired, allowEditGuidance]
+    );
 
     const onSuccess = async () => {
         const guidance = getValues("guidance");
@@ -47,7 +57,10 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         const updatedTask = {
             ...task,
             guidance,
-            required,
+            required:
+                typeof required === "string"
+                    ? parseInt(required, 10)
+                    : required,
             hasChanged: true,
         };
 
@@ -116,11 +129,13 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         });
     };
 
+    const showLock = useMemo(() => currentTask.required === 1, [currentTask]);
+
     return (
         <Card
             sx={{
                 border: 1,
-                borderColor: "lightgrey",
+                borderColor: !allowEditRequired ? "red" : "lightgrey",
                 borderRadius: 2,
             }}>
             <CardContent sx={{ p: 0, m: 0, alignItems: "center" }}>
@@ -140,6 +155,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             sx={{ mb: 1 }}>
                             <b> {currentTask.title} </b>
                         </Typography>
+
                         <Box
                             sx={{
                                 p: 0,
@@ -163,7 +179,6 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             />
                         </Box>
                     </Box>
-
                     <Typography
                         sx={{ p: 1 }}
                         gutterBottom
@@ -171,12 +186,20 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                         component="div">
                         {currentTask.guidance}
                     </Typography>
+                    <Typography>
+                        <Chip
+                            variant="outlined"
+                            label={currentTask.component}
+                            color="primary"
+                            sx={{ mx: 2 }}
+                        />
+                    </Typography>
                 </Box>
             </CardContent>
-            {!allowEditRequired && (
+            {showLock && (
                 <TooltipIcon
-                    content={<div>required question</div>}
-                    icon={<LockIcon sx={{ color: "red" }} />}
+                    content={<div>forced required question</div>}
+                    icon={<LockIcon sx={{ color: "grey" }} />}
                     label=""
                 />
             )}

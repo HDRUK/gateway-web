@@ -17,7 +17,6 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
 import Container from "@/components/Container";
-import Paper from "@/components/Paper";
 import TaskBoardSection from "@/components/TaskBoardSection";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 
@@ -173,7 +172,7 @@ const TaskBoard = ({
                             section.tasks,
                             activeIndex,
                             overIndex
-                        ).map(task => {
+                        ).map((task, index) => {
                             const newTask = { ...task };
 
                             if (
@@ -182,6 +181,11 @@ const TaskBoard = ({
                             ) {
                                 newTask.task.boardId = activeSection.id;
                             }
+
+                            if (newTask.task) {
+                                newTask.task.order = index + 1;
+                            }
+
                             return newTask;
                         });
 
@@ -216,15 +220,7 @@ const TaskBoard = ({
                     pt: 2,
                 }}>
                 {boardSections.map(section => (
-                    <Paper key={section.id} sx={{ mx: 1, px: 2 }}>
-                        <TaskBoardSection
-                            key={section.id}
-                            id={section.id}
-                            title={section.title}
-                            description={section.description}
-                            tasks={section.tasks}
-                        />
-                    </Paper>
+                    <TaskBoardSection key={section.id} {...section} />
                 ))}
 
                 <DragOverlay dropAnimation={dropAnimation}>
