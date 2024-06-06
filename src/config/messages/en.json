@@ -406,7 +406,9 @@
                             "dataProvider": "Data Provider",
                             "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
                             "accessService": "Access service",
-                            "accessServiceTooltip": "The method through which a researcher accesses the dataset"
+                            "accessServiceTooltip": "The method through which a researcher accesses the dataset",
+                            "containsTissue": "Datasets with tissues",
+                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data custodian",

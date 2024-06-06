@@ -46,6 +46,7 @@ import {
     FILTER_POPULATION_SIZE,
     FILTER_TYPE_CATEGORY,
     FILTER_PROGRAMMING_LANGUAGE,
+    FILTER_CONTAINS_TISSUE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
@@ -140,6 +141,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             FILTER_PROGRAMMING_LANGUAGE
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
+        [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
     });
 
     const { handleDownload } = useSearch(
@@ -242,6 +244,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_POPULATION_SIZE]: undefined,
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
+            [FILTER_CONTAINS_TISSUE]: undefined,
         });
     };
 
