@@ -197,7 +197,12 @@
                             "progressLegend": "Progress legend:",
                             "remove": "Remove",
                             "add": "Add another",
-                            "submit": "Submit"
+                            "submit": "Submit",
+                            "submissionInvalid": "Not quite done",
+                            "submissionInvalidText": "There are some missing fields that are required in order to upload this metadata. Please refer to the progress bar on the left for whch fields are incomplete",
+                            "submissionValid": "Thank you",
+                            "submissionValidText": "",
+                            "makeActive": "Make active"
                         },
                         "EditDataset": {
                             "editButton": "Update",

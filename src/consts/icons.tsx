@@ -17,6 +17,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import CircleIcon from "@mui/icons-material/Circle";
 import CloseIcon from "@mui/icons-material/Close";
@@ -61,6 +62,7 @@ import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import WarningIcon from "@mui/icons-material/Warning";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 export * from "./customIcons";
 
@@ -118,6 +120,7 @@ export {
     RemoveCircleIcon,
     DownloadIcon,
     WarningIcon,
+    WarningRoundedIcon,
     CircleIcon,
     ViewListIcon,
     LaunchIcon,
@@ -128,4 +131,5 @@ export {
     DragIndicatorIcon,
     LockIcon,
     RestartAltIcon,
+    CheckCircleRoundedIcon,
 };
