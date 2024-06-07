@@ -366,11 +366,23 @@ const FilterPanel = ({
                                 <Tooltip
                                     key={label}
                                     placement="right"
-                                    title={label === FILTER_LICENSE
-                                        ? t.rich(`${label}${TOOLTIP_SUFFIX}`, {
-                                            TooltipLink: (chunks) => <a href={t("licenseTooltipURL")}>{chunks}</a>
-                                        })
-                                        : t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                    title={
+                                        label === FILTER_LICENSE
+                                            ? t.rich(
+                                                  `${label}${TOOLTIP_SUFFIX}`,
+                                                  {
+                                                      TooltipLink: chunks => (
+                                                          <a
+                                                              href={t(
+                                                                  "licenseTooltipURL"
+                                                              )}>
+                                                              {chunks}
+                                                          </a>
+                                                      ),
+                                                  }
+                                              )
+                                            : t(`${label}${TOOLTIP_SUFFIX}`)
+                                    }>
                                     <Typography
                                         fontWeight="400"
                                         fontSize="20px">
