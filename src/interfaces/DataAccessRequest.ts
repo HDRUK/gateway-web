@@ -1,3 +1,5 @@
+import { FormHydration } from "@/interfaces/FormHydration";
+
 interface DarQuestion {
     id: number | string;
     boardId: number | string;
@@ -9,6 +11,8 @@ interface DarQuestion {
     force_required: number;
     allow_guidance_override?: number;
     hasChanged: boolean;
+    component: string;
+    question_json: FormHydration;
 }
 
 interface DarHasQuestion {

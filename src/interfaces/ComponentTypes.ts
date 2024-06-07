@@ -11,6 +11,7 @@ type ComponentTypes =
     | "Select"
     | "TextTime"
     | "TextArea"
-    | "DatePicker";
+    | "DatePicker"
+    | "SelectMultipleOptions";
 
 export type { ComponentTypes };
