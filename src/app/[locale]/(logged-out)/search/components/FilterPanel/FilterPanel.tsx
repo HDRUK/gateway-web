@@ -26,6 +26,7 @@ import {
     filtersList,
     FILTER_POPULATION_SIZE,
     FILTER_CONTAINS_TISSUE,
+    FILTER_LICENSE,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -365,7 +366,11 @@ const FilterPanel = ({
                                 <Tooltip
                                     key={label}
                                     placement="right"
-                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                    title={label === FILTER_LICENSE
+                                        ? t.rich(`${label}${TOOLTIP_SUFFIX}`, {
+                                            TooltipLink: (chunks) => <a href={t("licenseTooltipURL")}>{chunks}</a>
+                                        })
+                                        : t(`${label}${TOOLTIP_SUFFIX}`)}>
                                     <Typography
                                         fontWeight="400"
                                         fontSize="20px">
