@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { set } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { buildYup } from "schema-to-yup";
@@ -46,6 +45,7 @@ import {
     hasVisibleFieldsForLocation,
     isFirstSection,
     isLastSection,
+    mapFormFieldsForSubmission,
     renderFormHydrationField,
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
@@ -199,38 +199,12 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     }, []);
 
     const postForm = async (formData: Metadata) => {
-        console.log("here", formData, schemaFields);
+        setIsSaving(true);
 
-        const transformObject = (data, mappings) => {
-            // Create a dictionary to map titles to locations
-            const titleToLocation = {};
-            mappings.forEach(mapping => {
-                titleToLocation[mapping.title] = mapping.location;
-            });
-
-            // Transform the data object
-            const transformedObject = {};
-            for (const key in data) {
-                if (titleToLocation[key]) {
-                    transformedObject[titleToLocation[key]] = data[key];
-                }
-            }
-
-            const nestedObj = {};
-
-            // eslint-disable-next-line no-restricted-syntax
-            for (const key in transformedObject) {
-                set(nestedObj, key, transformedObject[key]);
-            }
-
-            return nestedObj;
-        };
-
-        const mappedFormData: Metadata = transformObject(
+        const mappedFormData: Partial<Metadata> = mapFormFieldsForSubmission(
             formData,
             schemaFields
         );
-        console.log(mappedFormData);
 
         const formPayload = {
             team_id: teamId,
@@ -239,169 +213,27 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             pid: null,
             updated: "",
             create_origin: "MANUAL" as CreateOrigin,
-            label: "ABC DATASET",
-            short_description: "lorem ipsum assaasdas as 1",
+            label: "",
+            short_description: "",
             metadata: {
                 metadata: {
                     identifier:
                         "https://web.www.healthdatagateway.org/3935e2fd-0c30-4f56-8388-45a02e0499b4",
                     version: "0.6.8",
-                    issued: "2020-08-10T00:00:00.000Z",
-                    modified: "2020-08-10T00:00:00.000Z",
+                    issued: new Date().toString(),
+                    modified: new Date().toString(),
                     revisions: [],
-
-                    summary: {
-                        ...mappedFormData.summary,
-                        // title: "Bridge file: Hospital Episode Statistics to Diagnostic Imaging Dataset",
-                        // abstract:
-                        //     "Linked Data Set - Hospital Episode Statistics to Diagnostic Imaging Data Set",
-                        publisher: {
-                            identifier: "https://5f86cd34980f41c6f02261f4",
-                            name: "NHS DIGITAL",
-                            logo: "",
-                            description: "",
-                            contactPoint: null,
-                            memberOf: "ALLIANCE",
-                        },
-                        // contactPoint: "enquiries@nhsdigital.nhs.uk",
-                        keywords: null,
-                        alternateIdentifiers: null,
-                        doiName: "",
-                    },
-
-                    documentation: {
-                        // ...mappedFormData.documentation,
-                        description:
-                            "Linked Data Set - Hospital Episode Statistics to Diagnostic Imaging Data Set",
-                        associatedMedia: null,
-                        isPartOf: null,
-                    },
-                    coverage: {
-                        spatial: "United Kingdom,England",
-                        typicalAgeRange: "",
-                        physicalSampleAvailability: null,
-                        followup: "",
-                        pathway: "",
-                    },
-                    provenance: {
-                        origin: {
-                            purpose: null,
-                            source: null,
-                            collectionSituation: null,
-                        },
-                        temporal: {
-                            accrualPeriodicity: "MONTHLY",
-                            distributionReleaseDate: null,
-                            startDate: "2007-01-04",
-                            endDate: null,
-                            timeLag: null,
-                        },
-                    },
-                    accessibility: {
-                        usage: {
-                            dataUseLimitation: null,
-                            dataUseRequirements: null,
-                            resourceCreator: null,
-                            investigations: null,
-                            isReferencedBy: null,
-                        },
-                        access: {
-                            accessRights:
-                                "https://digital.nhs.uk/binaries/content/assets/website-assets/services/dars/nhs_digital_approved_edition_2_dsa_demo.pdf",
-                            accessService: null,
-                            accessRequestCost: null,
-                            deliveryLeadTime: null,
-                            jurisdiction: "GB-ENG",
-                            dataProcessor: null,
-                            dataController: null,
-                        },
-                        formatAndStandards: {
-                            vocabularyEncodingScheme: null,
-                            conformsTo: null,
-                            language: null,
-                            format: null,
-                        },
-                    },
-                    enrichmentAndLinkage: {
-                        qualifiedRelation: null,
-                        derivation: null,
-                        tools: null,
-                    },
-                    observations: [],
-                    structuralMetadata: [
-                        {
-                            name: "All Available Fields",
-                            description: null,
-                            elements: [
-                                {
-                                    name: "All Available Fields",
-                                    description: "All Available Fields",
-                                    dataType: "String",
-                                    sensitive: false,
-                                },
-                            ],
-                        },
-                        {
-                            name: "General fields",
-                            description: null,
-                            elements: [
-                                {
-                                    name: "MATCH_RANK",
-                                    description: null,
-                                    dataType: "Character",
-                                    sensitive: false,
-                                },
-                            ],
-                        },
-                        {
-                            name: "General fields",
-                            description: null,
-                            elements: [
-                                {
-                                    name: "HES_DIDS_VERSION",
-                                    description: null,
-                                    dataType: "Character",
-                                    sensitive: false,
-                                },
-                            ],
-                        },
-                        {
-                            name: "General fields",
-                            description: null,
-                            elements: [
-                                {
-                                    name: "SUBMISSIONDATAID",
-                                    description: null,
-                                    dataType: "Character",
-                                    sensitive: false,
-                                },
-                            ],
-                        },
-                        {
-                            name: "General fields",
-                            description: null,
-                            elements: [
-                                {
-                                    name: "ENCRYPTED_HESID",
-                                    description: null,
-                                    dataType: "Character",
-                                    sensitive: false,
-                                },
-                            ],
-                        },
-                    ],
+                    ...mappedFormData,
                 },
             },
         };
 
-        console.log(formPayload);
-
-        setIsSaving(true);
-
         try {
-            const postTest = await createDataset(formPayload);
+            const formPostRequest = await createDataset(
+                formPayload as NewDataset
+            );
 
-            if (postTest) {
+            if (formPostRequest) {
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
                 );

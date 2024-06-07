@@ -5,7 +5,9 @@ import {
     UseFormGetValues,
     UseFormTrigger,
 } from "react-hook-form";
+import { set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
+import { Metadata } from "@/interfaces/Dataset";
 import {
     FormHydration,
     FormHydrationField,
@@ -279,6 +281,40 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
     ),
 });
 
+const mapFormFieldsForSubmission = (
+    formData: Metadata,
+    schemaFields: FormHydration[]
+) => {
+    // Create a dictionary to map titles to locations using reduce
+    const mappedSchemaFields = schemaFields.reduce(
+        (acc: { [key: string]: string }, { title, location }) => {
+            acc[title] = location;
+            return acc;
+        },
+        {}
+    );
+
+    // Transform the data object using Object.entries and reduce
+    const transformedObject = Object.entries(formData).reduce(
+        (acc: { [key: string]: string }, [key, value]) => {
+            if (mappedSchemaFields[key]) {
+                acc[mappedSchemaFields[key]] = value;
+            }
+            return acc;
+        },
+        {}
+    );
+
+    // Use a utility function to set nested properties
+    const formattedFormData = {};
+
+    Object.entries(transformedObject).forEach(([key, value]) => {
+        set(formattedFormData, key, value);
+    });
+
+    return formattedFormData;
+};
+
 export {
     formGetAllSectionFields,
     formGetSectionStatus,
@@ -293,4 +329,5 @@ export {
     renderFormHydrationField,
     formatValidationItems,
     formGetFieldsCompletedCount,
+    mapFormFieldsForSubmission,
 };
