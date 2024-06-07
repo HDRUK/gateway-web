@@ -197,6 +197,11 @@
                             "remove": "Remove",
                             "add": "Add another",
                             "submit": "Submit",
+                            "submissionInvalid": "Not quite done",
+                            "submissionInvalidText": "There are some missing fields that are required in order to upload this metadata. Please refer to the progress bar on the left for which fields are incomplete",
+                            "submissionValid": "Thank you",
+                            "submissionValidText": "",
+                            "makeActive": "Make active",
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
                             "checkboxes": {

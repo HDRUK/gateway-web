@@ -1,6 +1,7 @@
 import { Publication } from "./Publication";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
+type CreateOrigin = "FMA" | "MANUAL" | "API";
 
 interface Metadata {
     summary: {
@@ -87,7 +88,7 @@ interface Dataset {
     pid: string | null;
     versions: VersionItem[];
     updated: string;
-    create_origin: "FMA" | "MANUAL" | "API";
+    create_origin: CreateOrigin;
     latest_metadata?: VersionItem;
 }
 
@@ -124,4 +125,5 @@ export type {
     VersionItem,
     StructuralMetadata,
     StructuralMetadataColumn,
+    CreateOrigin,
 };
