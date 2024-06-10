@@ -85,6 +85,7 @@ const FILTER_CATEGORY: { [key: string]: string } = {
 const STATIC_FILTER_SOURCE = "source";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
+    console.log("SEARCH");
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -191,6 +192,17 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         setQueryParams({ ...queryParams, query: "" });
         updatePath(QUERY_FIELD, "");
     };
+
+    console.log(
+        "**************",
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
+            queryParams.per_page
+        }&page=${queryParams.page}&sort=${queryParams.sort}${
+            queryParams.type === SearchCategory.PUBLICATIONS
+                ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
+                : ``
+        }`
+    );
 
     const {
         data,

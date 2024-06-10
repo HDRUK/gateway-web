@@ -1,7 +1,7 @@
 "use client";
 
-// import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { ModalProps } from "@/components/Modal/Modal";
 import useModal from "./useModal";
 
@@ -26,49 +26,55 @@ export const useUnsavedChanges = ({
     } = modalProps || {};
 
     const { showModal } = useModal();
-    // const router = useRouter();
+    const router = useRouter();
     const [nextRouterPath, setNextRouterPath] = useState<string>("");
 
-    const onRouteChangeStart = useCallback(
-        (nextPath: string) => {
-            if (!shouldConfirmLeave) {
-                return;
-            }
-
-            setNextRouterPath(nextPath);
-
-            throw Error("cancelRouteChange");
-        },
-        [shouldConfirmLeave]
-    );
-
     useEffect(() => {
-        if (!nextRouterPath) return;
-        showModal({
-            invertCloseIconBehaviour: true,
-            onCancel: () => {
-                // router.events.off("routeChangeStart", onRouteChangeStart);
+        const handleBrowserNavigation = (e: Event) => {
+            e.preventDefault();
+        };
 
-                setNextRouterPath("");
-                if (typeof onCancel === "function") {
-                    onCancel();
-                }
+        const handleNavigation = (url: string) => {
+            router.events.emit("routeChangeError");
 
-                if (nextRouterPath) {
-                    // router.push(nextRouterPath);
-                }
-            },
-            onSuccess: () => {
-                setNextRouterPath("");
-                if (typeof onSuccess === "function") {
-                    onSuccess();
-                }
-            },
-            confirmText,
-            cancelText,
-            title,
-            content,
-        });
+            setNextRouterPath(url);
+
+            showModal({
+                onCancel: () => {
+                    window.removeEventListener(
+                        "beforeunload",
+                        handleBrowserNavigation
+                    );
+                    router.events.off("beforeHistoryChange", handleNavigation);
+
+                    setNextRouterPath("");
+                    onCancel?.();
+                },
+                onSuccess: () => {
+                    setNextRouterPath("");
+                    onSuccess?.();
+                },
+                confirmText,
+                cancelText,
+                title,
+                content,
+            });
+        };
+
+        if (shouldConfirmLeave) {
+            window.addEventListener("beforeunload", handleBrowserNavigation);
+            router.events.on("beforeHistoryChange", handleNavigation);
+        }
+
+        return () => {
+            if (shouldConfirmLeave) {
+                window.removeEventListener(
+                    "beforeunload",
+                    handleBrowserNavigation
+                );
+                router.events.off("beforeHistoryChange", handleNavigation);
+            }
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         cancelText,
@@ -76,14 +82,7 @@ export const useUnsavedChanges = ({
         content,
         nextRouterPath,
         onCancel,
-        onRouteChangeStart,
         onSuccess,
         title,
     ]);
-
-    // useEffect(() => {
-    //     router.events.on("routeChangeStart", onRouteChangeStart);
-
-    //     return () => router.events.off("routeChangeStart", onRouteChangeStart);
-    // }, [router, onRouteChangeStart]);
 };

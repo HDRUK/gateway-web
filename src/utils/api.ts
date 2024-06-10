@@ -37,6 +37,11 @@ async function get<T>(
 async function getFilters(
     cookieStore: ReadonlyRequestCookies
 ): Promise<Filter[]> {
+    console.log(
+        "`${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`",
+        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
+        process.env.NODE_ENV
+    );
     return get<Filter[]>(
         cookieStore,
         `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`
