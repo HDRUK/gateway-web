@@ -67,7 +67,12 @@ const TooltipTitle = (label: string, t) => {
     return label === FILTER_LICENSE
         ? t.rich(`${label}${TOOLTIP_SUFFIX}`, {
               TooltipLink: (chunks: string) => (
-                  <a href={t(`${label}${TOOLTIP_SUFFIX}${TOOLTIP_TITLE_LINK_SUFFIX}`)}>{chunks}</a>
+                  <a
+                      href={t(
+                          `${label}${TOOLTIP_SUFFIX}${TOOLTIP_TITLE_LINK_SUFFIX}`
+                      )}>
+                      {chunks}
+                  </a>
               ),
           })
         : t(`${label}${TOOLTIP_SUFFIX}`);
