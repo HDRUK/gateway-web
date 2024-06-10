@@ -436,24 +436,20 @@
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
                             "dateRange": "Date range",
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
-                            "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
                             "accessService": "Access service",
                             "accessServiceTooltip": "The method through which a researcher accesses the dataset",
                             "containsTissue": "Datasets with tissues",
                             "containsTissueTooltip": "Restrict your search result to datasets with tissue sample"
                         },
                         "dataUseRegister": {
-                            "publisherName": "Data custodian",
-                            "publisherNameTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "organisationName": "Lead applicant organisation",
                             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
-                            "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
@@ -467,9 +463,7 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data provider",
-                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
-                            "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                         },
                         "dataProvider": {
                             "datasetTitles": "Dataset",
