@@ -449,7 +449,7 @@
                             "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
                             "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary. <TooltipLink>(Read more)</TooltipLink>",
-                            "licenseTooltipURL": "https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://publications.europa.eu/resource/authority/licence",
+                            "licenseTooltipLink": "https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://publications.europa.eu/resource/authority/licence",
                             "category": "Category",
                             "categoryTooltip": "Category",
                             "programmingLanguages": "Programming language",

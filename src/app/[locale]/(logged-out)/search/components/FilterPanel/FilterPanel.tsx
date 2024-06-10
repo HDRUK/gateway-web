@@ -41,6 +41,7 @@ import PopulationFilter from "../PopulationFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
+const TOOLTIP_TITLE_LINK_SUFFIX = "Link";
 const FILTER_CATEGORY_PUBLICATIONS = "paper";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
@@ -60,6 +61,16 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
+};
+
+const TooltipTitle = (label: string, t) => {
+    return label === FILTER_LICENSE
+        ? t.rich(`${label}${TOOLTIP_SUFFIX}`, {
+              TooltipLink: (chunks: string) => (
+                  <a href={t(`${label}${TOOLTIP_SUFFIX}${TOOLTIP_TITLE_LINK_SUFFIX}`)}>{chunks}</a>
+              ),
+          })
+        : t(`${label}${TOOLTIP_SUFFIX}`);
 };
 
 const FilterPanel = ({
@@ -366,23 +377,7 @@ const FilterPanel = ({
                                 <Tooltip
                                     key={label}
                                     placement="right"
-                                    title={
-                                        label === FILTER_LICENSE
-                                            ? t.rich(
-                                                  `${label}${TOOLTIP_SUFFIX}`,
-                                                  {
-                                                      TooltipLink: chunks => (
-                                                          <a
-                                                              href={t(
-                                                                  "licenseTooltipURL"
-                                                              )}>
-                                                              {chunks}
-                                                          </a>
-                                                      ),
-                                                  }
-                                              )
-                                            : t(`${label}${TOOLTIP_SUFFIX}`)
-                                    }>
+                                    title={TooltipTitle(label, t)}>
                                     <Typography
                                         fontWeight="400"
                                         fontSize="20px">
