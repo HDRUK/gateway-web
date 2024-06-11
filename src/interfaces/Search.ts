@@ -133,6 +133,17 @@ export enum SearchCategory {
     PUBLICATIONS = "publications",
 }
 
+export interface SavedSearchPayload {
+    name: string;
+    search_term: string;
+    sort_order: string;
+    filters: {
+        id: number;
+        terms: string[];
+    }[];
+    enabled: boolean;
+}
+
 export enum ViewType {
     TABLE = "table",
     LIST = "list",

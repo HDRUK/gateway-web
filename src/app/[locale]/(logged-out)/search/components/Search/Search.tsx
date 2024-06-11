@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import {
+    SavedSearchPayload,
     SearchCategory,
     SearchPaginationType,
     SearchQueryParams,
@@ -29,6 +30,13 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import ProvidersDialog from "@/modules/ProvidersDialog";
+import SaveSearchDialog, {
+    SaveSearchValues,
+} from "@/modules/SaveSearchDialog.tsx";
+import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
+import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
@@ -60,6 +68,7 @@ import searchFormConfig, {
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
+import { getAllParams } from "@/utils/search";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
@@ -85,11 +94,14 @@ const FILTER_CATEGORY: { [key: string]: string } = {
 const STATIC_FILTER_SOURCE = "source";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
+    const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
+    const [isSaveSearchLoading, setIsSaveSearchLoading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
+    const { isLoggedIn } = useAuth();
 
     const getParamString = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
@@ -150,6 +162,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         queryParams
     );
 
+    const allSearchParams = getAllParams(searchParams);
+
+    const hasNotSearched = () => {
+        const keys = Object.keys(allSearchParams);
+        return keys.length === 1 && keys[0] === "type";
+    };
+
     useEffect(() => {
         if (
             resultsView !== ViewType.LIST &&
@@ -192,6 +211,23 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(QUERY_FIELD, "");
     };
 
+    const getSaveSearchFilters = () => {
+        const typeFilters = filters.filter(
+            filter => FILTER_CATEGORY[queryParams.type] === filter.type
+        );
+
+        return typeFilters
+            .map(({ id, keys }) => {
+                const terms = queryParams[keys as keyof SearchQueryParams];
+
+                return {
+                    id,
+                    terms: typeof terms === "string" ? [terms] : terms,
+                };
+            })
+            .filter(({ terms }) => !!terms);
+    };
+
     const {
         data,
         isLoading: isSearching,
@@ -220,10 +256,18 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     );
 
+    const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
+
     useEffect(() => {
         mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // useEffect(() => {
+    //     if (saveSearchData) {
+    //         hideDialog();
+    //     }
+    // }, [!!saveSearchData]);
 
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
@@ -405,6 +449,39 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    const handleSaveSubmit = ({ name }: SaveSearchValues) => {
+        setIsSaveSearchLoading(true);
+
+        saveSearchQuery({
+            search_term: queryParams.query || "",
+            sort_order: queryParams.sort || "",
+            name,
+            search_endpoint: queryParams.type,
+            filters: getSaveSearchFilters(),
+            enabled: true,
+        })
+            .then(response => {
+                if (response) hideDialog();
+            })
+            .finally(() => {
+                setIsSaveSearchLoading(false);
+            });
+    };
+
+    const handleSaveClick = useCallback(() => {
+        // if (isLoggedIn) {
+        showDialog(() => (
+            <SaveSearchDialog
+                onSubmit={handleSaveSubmit}
+                onCancel={() => hideDialog()}
+                isLoading={!isSaveSearchLoading}
+            />
+        ));
+        // } else {
+        //     showDialog(ProvidersDialog);
+        // }
+    }, [isLoggedIn]);
+
     const getExplainerText = () => {
         switch (queryParams.type) {
             case SearchCategory.PUBLICATIONS:
@@ -462,8 +539,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         filterCategory={FILTER_CATEGORY[queryParams.type]}
                     />
                 </Box>
-                <Box sx={{ display: "flex" }}>
-                    <Box sx={{ p: 0, mr: "1em" }}>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                    <Box sx={{ p: 0 }}>
                         <Sort
                             sortName={SORT_FIELD}
                             defaultValue={queryParams.sort}
@@ -471,7 +548,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             sortOptions={getSortOptions()}
                         />
                     </Box>
-
                     <Button
                         onClick={() =>
                             !isDownloading && downloadSearchResults()
@@ -480,6 +556,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         startIcon={<DownloadIcon />}
                         disabled={isDownloading || !data?.list?.length}>
                         {t("downloadResults")}
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        disabled={hasNotSearched()}
+                        onClick={handleSaveClick}>
+                        Save search
                     </Button>
                 </Box>
             </ActionBar>
