@@ -39,8 +39,6 @@ const usePostSwr = <T>(
     } = options || {};
     const t = useTranslations("api");
 
-    console.log("formData", formData);
-
     const { data, error, mutate, isLoading } = useSWR<T>(
         shouldFetch ? [url, formData] : null,
         () => {
