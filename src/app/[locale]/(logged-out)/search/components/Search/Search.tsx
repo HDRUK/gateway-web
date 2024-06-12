@@ -30,7 +30,6 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
-import ProvidersDialog from "@/modules/ProvidersDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
@@ -41,20 +40,20 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_ACCESS_SERVICE,
+    FILTER_CONTAINS_TISSUE,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_ORGANISATION_NAME,
+    FILTER_POPULATION_SIZE,
+    FILTER_PROGRAMMING_LANGUAGE,
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
-    FILTER_ACCESS_SERVICE,
-    FILTER_POPULATION_SIZE,
     FILTER_TYPE_CATEGORY,
-    FILTER_PROGRAMMING_LANGUAGE,
-    FILTER_CONTAINS_TISSUE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
@@ -96,7 +95,6 @@ const STATIC_FILTER_SOURCE = "source";
 const Search = ({ filters }: { filters: Filter[] }) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
-    const [isSaveSearchLoading, setIsSaveSearchLoading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -262,12 +260,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // useEffect(() => {
-    //     if (saveSearchData) {
-    //         hideDialog();
-    //     }
-    // }, [!!saveSearchData]);
 
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
@@ -450,8 +442,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const handleSaveSubmit = ({ name }: SaveSearchValues) => {
-        setIsSaveSearchLoading(true);
-
         saveSearchQuery({
             search_term: queryParams.query || "",
             sort_order: queryParams.sort || "",
@@ -459,28 +449,23 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             search_endpoint: queryParams.type,
             filters: getSaveSearchFilters(),
             enabled: true,
-        })
-            .then(response => {
-                if (response) hideDialog();
-            })
-            .finally(() => {
-                setIsSaveSearchLoading(false);
-            });
+        }).then(response => {
+            if (response) hideDialog();
+        });
     };
 
-    const handleSaveClick = useCallback(() => {
+    const handleSaveClick = () => {
         // if (isLoggedIn) {
         showDialog(() => (
             <SaveSearchDialog
                 onSubmit={handleSaveSubmit}
                 onCancel={() => hideDialog()}
-                isLoading={!isSaveSearchLoading}
             />
         ));
         // } else {
         //     showDialog(ProvidersDialog);
         // }
-    }, [isLoggedIn]);
+    };
 
     const getExplainerText = () => {
         switch (queryParams.type) {

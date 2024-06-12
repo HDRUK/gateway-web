@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CircularProgress } from "@mui/material";
@@ -18,16 +19,12 @@ const TRANSLATION_PATH = "modules.dialogs.SaveSearch";
 
 export interface SaveSearchDialogProps {
     onCancel: () => void;
-    onSubmit: () => void;
-    isLoading?: boolean;
+    onSubmit: (values: SaveSearchValues) => void;
 }
 
-const SaveSearchDialog = ({
-    onCancel,
-    onSubmit,
-    isLoading,
-}: SaveSearchDialogProps) => {
+const SaveSearchDialog = ({ onCancel, onSubmit }: SaveSearchDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validationSchema = yup.object({
         name: yup.string().required(t("nameRequired")),
@@ -41,9 +38,17 @@ const SaveSearchDialog = ({
         },
     });
 
+    const handleSaveQuerySubmit = async (values: SaveSearchValues) => {
+        setIsLoading(true);
+
+        await onSubmit(values);
+
+        setIsLoading(false);
+    };
+
     return (
         <Dialog title={t("name")} showCloseButton={false}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleSaveQuerySubmit)}>
                 <MuiDialogContent>
                     <InputWrapper
                         component="TextField"
