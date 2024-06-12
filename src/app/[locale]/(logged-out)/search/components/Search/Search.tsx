@@ -30,6 +30,7 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
@@ -455,16 +456,16 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     };
 
     const handleSaveClick = () => {
-        // if (isLoggedIn) {
-        showDialog(() => (
-            <SaveSearchDialog
-                onSubmit={handleSaveSubmit}
-                onCancel={() => hideDialog()}
-            />
-        ));
-        // } else {
-        //     showDialog(ProvidersDialog);
-        // }
+        if (isLoggedIn) {
+            showDialog(() => (
+                <SaveSearchDialog
+                    onSubmit={handleSaveSubmit}
+                    onCancel={() => hideDialog()}
+                />
+            ));
+        } else {
+            showDialog(ProvidersDialog);
+        }
     };
 
     const getExplainerText = () => {
