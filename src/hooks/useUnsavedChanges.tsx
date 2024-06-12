@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { ModalProps } from "@/components/Modal/Modal";
 import useModal from "./useModal";
 
 export interface UnsavedChangesDialogProps {
     shouldConfirmLeave: boolean;
-    onLeave?: (url: string) => void;
-    onStay?: () => void;
+    onCancel?: (url: string) => void;
+    onSuccess?: (url: string) => void;
     modalProps?: ModalProps;
 }
 
 export const useUnsavedChanges = ({
-    onLeave,
-    onStay,
+    onCancel,
+    onSuccess,
     shouldConfirmLeave,
     modalProps,
 }: UnsavedChangesDialogProps): void => {
@@ -23,16 +24,20 @@ export const useUnsavedChanges = ({
         title = "Are you sure you want to exit?",
         content = "Changes are not automatically saved.",
     } = modalProps || {};
-
+    const router = useRouter();
     const { showModal } = useModal();
 
     const handleShowModal = (href: string) => {
         showModal({
             onCancel: () => {
-                onLeave?.(href);
+                if (onCancel) {
+                    onCancel(href);
+                } else {
+                    router.push(href);
+                }
             },
             onSuccess: () => {
-                onStay?.();
+                onSuccess?.(href);
             },
             confirmText,
             cancelText,
