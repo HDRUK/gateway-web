@@ -1,20 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { ModalProps } from "@/components/Modal/Modal";
 import useModal from "./useModal";
 
 export interface UnsavedChangesDialogProps {
     shouldConfirmLeave: boolean;
-    onCancel?: () => void;
-    onSuccess?: () => void;
+    onLeave?: (url: string) => void;
+    onStay?: () => void;
     modalProps?: ModalProps;
 }
 
 export const useUnsavedChanges = ({
-    onCancel,
-    onSuccess,
+    onLeave,
+    onStay,
     shouldConfirmLeave,
     modalProps,
 }: UnsavedChangesDialogProps): void => {
@@ -26,63 +25,47 @@ export const useUnsavedChanges = ({
     } = modalProps || {};
 
     const { showModal } = useModal();
-    const router = useRouter();
-    const [nextRouterPath, setNextRouterPath] = useState<string>("");
+
+    const handleShowModal = (href: string) => {
+        showModal({
+            onCancel: () => {
+                onLeave?.(href);
+            },
+            onSuccess: () => {
+                onStay?.();
+            },
+            confirmText,
+            cancelText,
+            title,
+            content,
+        });
+    };
 
     useEffect(() => {
-        const handleBrowserNavigation = (e: Event) => {
+        const handleNavigation = (e: MouseEvent) => {
             e.preventDefault();
-        };
 
-        const handleNavigation = (url: string) => {
-            router.events.emit("routeChangeError");
+            const href = (e.target as HTMLAnchorElement)
+                ?.closest("a")
+                ?.getAttribute("href");
 
-            setNextRouterPath(url);
-
-            showModal({
-                onCancel: () => {
-                    window.removeEventListener(
-                        "beforeunload",
-                        handleBrowserNavigation
-                    );
-                    router.events.off("beforeHistoryChange", handleNavigation);
-
-                    setNextRouterPath("");
-                    onCancel?.();
-                },
-                onSuccess: () => {
-                    setNextRouterPath("");
-                    onSuccess?.();
-                },
-                confirmText,
-                cancelText,
-                title,
-                content,
-            });
+            if (href) handleShowModal(href);
         };
 
         if (shouldConfirmLeave) {
-            window.addEventListener("beforeunload", handleBrowserNavigation);
-            router.events.on("beforeHistoryChange", handleNavigation);
+            document.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", handleNavigation);
+            });
         }
 
         return () => {
             if (shouldConfirmLeave) {
-                window.removeEventListener(
-                    "beforeunload",
-                    handleBrowserNavigation
-                );
-                router.events.off("beforeHistoryChange", handleNavigation);
+                document.querySelectorAll("a").forEach(link => {
+                    link.removeEventListener("click", handleNavigation);
+                });
             }
         };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        cancelText,
-        confirmText,
-        content,
-        nextRouterPath,
-        onCancel,
-        onSuccess,
-        title,
-    ]);
+    }, [shouldConfirmLeave]);
 };
