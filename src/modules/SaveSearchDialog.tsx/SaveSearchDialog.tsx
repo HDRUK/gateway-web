@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CircularProgress } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
@@ -9,7 +8,6 @@ import * as yup from "yup";
 import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
 
 export interface SaveSearchValues {
     name: string;
