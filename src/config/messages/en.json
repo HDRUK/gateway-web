@@ -1,0 +1,775 @@
+{
+    "api": {
+        "common": {
+            "success": {
+                "put": {
+                    "message": "{item} successfully updated"
+                },
+                "post": {
+                    "message": "{item} successfully created"
+                },
+                "delete": {
+                    "message": "{item} successfully deleted"
+                },
+                "patch": {
+                    "message": "{item} successfully updated"
+                }
+            },
+            "error": {
+                "status": {
+                    "400": "Invalid argument",
+                    "401": "Unauthorised request",
+                    "403": "Permission denied",
+                    "404": "Resource not found",
+                    "500": "There has been a server error"
+                },
+                "put": {
+                    "message": "There has been a problem updating {item}"
+                },
+                "patch": {
+                    "message": "There has been a problem updating {item}"
+                },
+                "post": {
+                    "message": "There has been a problem creating {item}"
+                },
+                "delete": {
+                    "message": "There has been a problem deleting {item}"
+                },
+                "get": {
+                    "message": "There has been a problem fetching {item}"
+                }
+            }
+        },
+        "filter": {
+            "success": {
+                "delete": {
+                    "message": "This is a custom DELETE success message for 'filter'"
+                }
+            }
+        },
+        "archiveDataset": {
+            "success": {
+                "delete": {
+                    "message": "You have archived 1 dataset and can now find the dataset metadata in the Archived tab. The dataset will no longer show up in search results"
+                }
+            }
+        },
+        "applicationPermission": {
+            "success": {
+                "put": {
+                    "message": "API created and enabled"
+                }
+            }
+        },
+        "duplicateDataset": {
+            "success": {
+                "post": {
+                    "message": "Dataset successfully duplicated"
+                }
+            }
+        }
+    },
+    "common": {
+        "companyNameShort": "HDR UK",
+        "companyNameLong": "Health Data Research UK",
+        "submit": "Submit",
+        "logout": "Logout",
+        "publish": "Publish",
+        "cancel": "Cancel",
+        "update": "Update",
+        "questionBank": "Question Bank",
+        "disabled": "Disabled",
+        "enabled": "Enabled",
+        "all": "All"
+    },
+    "pages": {
+        "about": {
+            "ourMissionAndPurpose": {
+                "noData": "Nothing to see here"
+            },
+            "cohortDiscoveryRequest": {
+                "title": "Cohort Discovery Registration",
+                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.",
+                "terms": "You can review your terms and conditions <terms>here</terms>"
+            }
+        },
+        "account": {
+            "profile": {
+                "title": "Your profile",
+                "text": "Use this form to register an account and update your account on the Gateway",
+                "cohortDiscoveryAdmin": {
+                    "title": "Cohort Discovery Admin",
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                },
+                "darAdmin": {
+                    "title": "Data Access Request Admin",
+                    "text": "Find and manage Question Bank questions for DAR (Data Access Request) templates and applications",
+                    "qbManagement": {
+                        "updatePage": {
+                            "title": "Update a question",
+                            "text": "This is a page for updating a question",
+                            "section": "Section",
+                            "guidance": "Guidance",
+                            "back": "Back to Question Bank list page"
+                        },
+                        "createPage": {
+                            "title": "Create a question",
+                            "text": "This is a page for create a question",
+                            "section": "Section",
+                            "guidance": "Guidance",
+                            "back": "Back to Question Bank list page"
+                        },
+                        "save": "Save Changes",
+                        "title": "Question Bank Management",
+                        "text": "Use this page to list and manage all available questions currently in the question bank for DAR templates",
+                        "edit": {
+                            "label": "Edit",
+                            "description": "Edit the question bank question"
+                        },
+                        "archive": {
+                            "label": "Archive",
+                            "description": "Archive the question bank question"
+                        },
+                        "unarchive": {
+                            "label": "Unarchive",
+                            "description": "Unarchive the question bank question"
+                        },
+                        "create": {
+                            "label": "Create",
+                            "description": "Create a new question for the DAR Question Bank"
+                        },
+                        "manage": {
+                            "label": "Manage",
+                            "description": "Edit, Update, or Delete existing questions in the Question Bank"
+                        }
+                    }
+                },
+                "teams": {
+                    "title": "Teams",
+                    "text": "Onboard and manage data provider teams on the Gateway",
+                    "addTeamButton": "Add a new team",
+                    "components": {
+                        "TeamsList": {
+                            "lastUpdated": "Last Updated",
+                            "dataProvider": "Data Provider",
+                            "teamAdmins": "Team admin(s)",
+                            "questionBank": "Question Bank",
+                            "action": "Action"
+                        }
+                    },
+                    "create": {
+                        "backButton": "Back to Teams list",
+                        "title": "Add Team’s details",
+                        "text": "Add details of the data publisher team you want to create on the Gateway"
+                    },
+                    "edit": {
+                        "title": "Edit Team details",
+                        "text": "Edit the details of this data provider team on the Gateway"
+                    }
+                }
+            },
+            "team": {
+                "dataAccessRequests": {
+                    "applications": { "title": "Applications" },
+                    "manageTemplates": { "title": "Manage Templates" },
+                    "workflows": { "title": "Workflows" }
+                },
+                "dataUses": {
+                    "title": "Data Uses"
+                },
+                "datasets": {
+                    "title": "Datasets",
+                    "text": "View, add, edit, archive and check the status of your datasets.",
+                    "duplicate": {
+                        "title": "Duplicate dataset",
+                        "text": "Update and duplicate this dataset."
+                    },
+                    "components": {
+                        "CreateDataset": {
+                            "guidance": "Guidance",
+                            "next": "Next",
+                            "previous": "Previous",
+                            "onlineForm": "Online Form",
+                            "uploadFile": "Upload File",
+                            "welcomeMessage": "Welcome to dataset metadata on-boarding.",
+                            "legendIntro": "You will see a legend to help you as you on-board your dataset metadata.",
+                            "progressLegend": "Progress legend:",
+                            "remove": "Remove",
+                            "add": "Add another",
+                            "submit": "Submit"
+                        },
+                        "EditDataset": {
+                            "editButton": "Update",
+                            "duplicateButton": "Duplicate"
+                        },
+                        "DatasetTab": {
+                            "downloadButton": "Download dataset information as .csv"
+                        },
+                        "TeamDatasets": {
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive this dataset",
+                                    "content": "Select whether you would like to move this dataset to Active (this will make your dataset available within search results) or Draft (where you can edit the dataset metadata before making it available within search results).",
+                                    "label": "Unarchive dataset"
+                                },
+                                "edit": {
+                                    "label": "Edit dataset metadata"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate dataset metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive dataset metadata so it is no longer live on the Gateway"
+                                }
+                            }
+                        }
+                    }
+                },
+                "help": {
+                    "title": "Help"
+                },
+                "teamManagement": {
+                    "components": {
+                        "TeamMembers": {
+                            "lastRoleAdminMessage": "All team members must have at least one role. If you would like to remove a team member, the 'remove team member' button can be found in the 'Actions' column.",
+                            "lastRoleMessage": "All team members must have at least one role. Please contact your team admin to remove a team member.",
+                            "noPermission": "You do not have permission to edit this",
+                            "deleteLastMember": "You are unable to delete the last member of a team. Please raise an enquiry.",
+                            "deleteYourself": "You are unable to delete yourself. Please contact your team admin.",
+                            "columns": {
+                                "name": "Name",
+                                "actions": "Actions",
+                                "team": "Team",
+                                "dar": "Data Access Requests",
+                                "metadata": "Metadata"
+                            }
+                        }
+                    }
+                },
+                "integration": {
+                    "create": {
+                        "title": "Integration",
+                        "text": "Input and edit the authentication information for the Gateway system to use for the integration.",
+                        "helper": "Entities created via an FMA integration can only be managed (updated or deleted/archived) via the FMA integration. Entities created via another method (manual, API integration) cannot be managed via the FMA integration."
+                    }
+                },
+                "integrations": {
+                    "apiManagement": {
+                        "howTo": "How to setup and manage integrations",
+                        "cannotCreate": "HDR UK cannot create application registrations on behalf of users",
+                        "create": {
+                            "title": "API management",
+                            "text": "Use this form to create, update and manage your api on the Gateway"
+                        },
+                        "manage": {
+                            "permissions": {
+                                "title": "Permissions",
+                                "intro": "Use this form to assign the right level of scope and permission for the application to manage integration and connect securely to the Gateway. Your application will only be able to synchronize data within its assigned scope and permission. Application permissions is the responsibility of your publisher team",
+                                "helper": "Entities created via an API integration can only be managed (updated or deleted/archived) via the API integration. Entities created via another method (manual, federated integration) cannot be managed via the API integration."
+                            }
+                        }
+                    }
+                },
+                "dar": {
+                    "template": {
+                        "title": "DAR Template Management",
+                        "create": {
+                            "description": "Create a new DAR template",
+                            "label": "Create"
+                        },
+                        "manage": {
+                            "description": "Manage DAR templates",
+                            "label": "Manage"
+                        },
+                        "edit": {
+                            "title": "Edit a template",
+                            "save": "Save Changes",
+                            "selectedQuestions": {
+                                "title": "Selected Questions",
+                                "description": "Currently selected questions for your DAR template."
+                            },
+                            "questionBank": {
+                                "title": "Question Bank",
+                                "description": "Other available questions you can add from the question bank."
+                            }
+                        }
+                    }
+                }
+            },
+            "title": "My account"
+        },
+        "home": {
+            "flashyText": "Explore the different functionalities of the Gateway",
+            "touchDevice": "Explore the different functionalities of the Gateway",
+            "seeNow": "See now",
+            "newsCardButtonText": "Read more",
+            "welcomeTitle": "Welcome to The Gateway",
+            "welcomeText": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond",
+            "datasets": {
+                "label": "Datasets / Tissues",
+                "title": "Datasets / Tissues",
+                "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+            },
+            "dur": {
+                "label": "Data Uses / Research projects",
+                "title": "Data Uses / Research projects",
+                "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
+            },
+            "feasibility": {
+                "label": "Feasibility Analysis",
+                "title": "Feasibility Analysis Tool",
+                "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
+            },
+            "dataProviders": {
+                "label": "Data Providers",
+                "title": "Data Providers",
+                "text": "Discover Gateway metadata providers. Search and filter resources by data providers and find out how to contact them"
+            },
+            "collections": {
+                "label": "Collections",
+                "title": "Collections",
+                "text": "Discover research resources: datasets, analysis scripts, software, data uses, and publications grouped together by domain, disease, theme or organisation"
+            },
+            "phenotypes": {
+                "label": "Phenotypes",
+                "title": "Phenotype Library",
+                "text": "Find reusable phenotype algorithms: Search and deposit human and machine readable phenotype algorithms"
+            },
+            "diseaseAtlas": {
+                "label": "Disease Atlas",
+                "title": "Disease Atlas",
+                "text": "The Disease Atlas is under development and is testing systematic approaches to understanding diseases across the NHS"
+            },
+            "publications": {
+                "label": "Publications",
+                "title": "Publications",
+                "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
+            },
+            "tools": {
+                "label": "Data Analysis Scripts / Software",
+                "title": "Data Analysis Scripts / Software",
+                "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
+            },
+            "courses": {
+                "label": "Courses",
+                "title": "Courses",
+                "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
+            }
+        },
+        "search": {
+            "datasets": "Datasets / Tissues",
+            "dataUse": "Data Use",
+            "tools": "Analysis, tools & software",
+            "dataProviders": "Data providers",
+            "collections": "Collections",
+            "publications": "Publications",
+            "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
+            "searchExplainerDataUse": "Search by lead organisation, data custodian",
+            "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data provider name",
+            "searchExplainerCollections": "Search by collection name",
+            "searchExplainerTools": "Search by name, programming language",
+            "searchExplainerDataProviders": "Enter your search term here",
+            "howToSearch": "How to search the Gateway",
+            "searchPlaceholder": "Enter your search term",
+            "noResults": "No Results Found",
+            "resultLimit": "There are more than 100 results. We recommend refining your search.",
+            "downloadResults": "Download results",
+            "downloadStarted": "Your download has started",
+            "filtersApplied": "Filter(s) applied",
+            "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
+            "publicationWelcomeText1": "To start your search, enter a keyword at the top and select the search source on the left then hit enter or return.",
+            "publicationWelcomeText2": "Gateway assets are linked to make it easier to find relevant resources for your work.",
+            "publicationWelcomeText3": "Search Gateway for publications with curated linkages to explore related resources, like publications about a dataset or publications that have used a dataset.",
+            "components": {
+                "Search": {
+                    "toggleLabelTable": "Table",
+                    "toggleLabelList": "List"
+                },
+                "FilterPanel": {
+                    "clearFilter": "Clear filter",
+                    "filter": "Filter",
+                    "filters": {
+                        "dataset": {
+                            "populationSize": "Population size",
+                            "populationSizeTooltip": "Reported dataset population size in terms of number of people",
+                            "datasetPopulation": "Dataset Population",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "dataUseTitles": "Data use title",
+                            "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
+                            "geographicLocation": "Geographical coverage",
+                            "geographicLocationTooltip": "The geographical area covered by the dataset",
+                            "dateRange": "Date range",
+                            "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
+                            "accessService": "Access service",
+                            "accessServiceTooltip": "The method through which a researcher accesses the dataset"
+                        },
+                        "dataUseRegister": {
+                            "publisherName": "Data custodian",
+                            "publisherNameTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
+                            "organisationName": "Lead applicant organisation",
+                            "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "sector": "Organisation sector",
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                        },
+                        "paper": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "publicationDate": "Publication date range",
+                            "publicationDateTooltip": "The range of years during which results were published",
+                            "source": "Source",
+                            "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
+                        },
+                        "collection": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                        },
+                        "dataProvider": {
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "geographicLocation": "Geographical coverage",
+                            "geographicLocationTooltip": "The geographical area covered by the dataset"
+                        },
+                        "tool": {
+                            "dataProvider": "Data Provider",
+                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
+                            "license": "Licensing",
+                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary. (Read more)",
+                            "category": "Category",
+                            "categoryTooltip": "Category",
+                            "programmingLanguages": "Programming language",
+                            "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
+                            "typeCategory": "Tool type",
+                            "typeCategoryTooltip": "Programming language used in developing an analysis script or software",
+                            "datasetTitles": "Dataset",
+                            "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
+                        }
+                    }
+                },
+                "DateRangeFilter": {
+                    "to": "to",
+                    "minYearErrorMessage": "Please enter a valid starting year"
+                },
+                "PopulationFilter": {
+                    "includeUnreported": "Include {unreportedCount} datasets where population is not reported"
+                },
+                "ResultCard": {
+                    "populationSizeNotReported": "not reported",
+                    "populationSize": "Dataset population size",
+                    "dateLabel": "Date range",
+                    "leadOrganisation": "Lead organisation",
+                    "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
+                    "datasets": "Datasets",
+                    "datasetsTooltip": "The name of the dataset(s) being accessed",
+                    "dataCustodian": "Data Custodian",
+                    "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
+                    "showAll": "Quick view"
+                },
+                "ResultCardPublication": {
+                    "published": "Published",
+                    "notAvailable": "Not available"
+                },
+                "ResultCardTool": {
+                    "notAvailable": "Not available",
+                    "showAll": "Quick view"
+                },
+                "ResultsTable": {
+                    "title": { "label": "Metadata title" },
+                    "populationSize": {
+                        "notReported": "Not reported",
+                        "label": "Population Size",
+                        "tooltip": "Population size associated with the population type in the dataset"
+                    },
+                    "dateRangePublisher": {
+                        "label": "Date range",
+                        "tooltip": "Start and end of the time period that the dataset provides coverage for"
+                    },
+                    "dataStandard": {
+                        "label": "Data standard",
+                        "tooltip": "Data models standards that the dataset has been stored in or transformed to"
+                    },
+                    "dataProvider": {
+                        "label": "Data provider",
+                        "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
+                    },
+                    "accessService": {
+                        "label": "Access service",
+                        "tooltip": "Method for accessing the dataset, if access request is approved"
+                    },
+                    "cohortDiscovery": {
+                        "label": "Feasibility analysis",
+                        "tooltip": "Indicates if frequency count accessible in HDR UK feasibility analysis tool"
+                    },
+                    "containsTissue": {
+                        "label": "Tissue sample availability",
+                        "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data provider"
+                    },
+                    "hasTechnicalMetadata": {
+                        "label": "Structural metadata",
+                        "tooltip": "Descriptions and details about the tables and columns within a dataset"
+                    }
+                }
+            }
+        },
+        "collection": {
+            "introTitle": "Description",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Collections search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets / Tissues ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Data use ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis, scripts and software ({ length })"
+                }
+            }
+        },
+        "dataset": {
+            "datasetDetails": "Dataset details",
+            "datasetPublications": "Publications about this dataset",
+            "components": {
+                "ActionBar": {
+                    "contact": "Contact data provider",
+                    "label": "Back to search results",
+                    "submitApplication": "Submit an application",
+                    "downloadMetadata": "Download metadata"
+                },
+                "ActiveLinks": {
+                    "bookmarks": "Bookmarks"
+                },
+                "DatasetStats": {
+                    "populationTitle": "Population Size",
+                    "populationUnit": "People",
+                    "yearTitle": "Years",
+                    "associatedTissuesTitle": "Associated Tissues",
+                    "geographicCoverageTitle": "Geographic coverage",
+                    "leadTimeTitle": "Lead time"
+                },
+                "DatasetMindMap": {
+                    "tools": "View associated data analysis scripts/software",
+                    "dur": "Research projects/ Data Use",
+                    "linkages": "See which datasets are linkable",
+                    "collections": "Explore associated Collections",
+                    "synthetic": "Access synthetic data",
+                    "root": "Data custodian link",
+                    "structuralMetadata": "Review data variables"
+                }
+            }
+        },
+        "dataUse": {
+            "backText": "Back to search results",
+            "general": "General",
+            "safePeople": "Safe People",
+            "safeProjects": "Safe Projects",
+            "safeData": "Safe Data",
+            "safeSetting": "Safe Setting",
+            "safeOutput": "Safe Outputs",
+            "projectIdText": "Project ID",
+            "projectIdTextTooltip": "A unique identifier for the project assigned by the Data Custodian",
+            "organisationName": "Organisation name",
+            "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
+            "organisationId": "Organisation ID",
+            "organisationIdTooltip": "A unique identifier for an organisation",
+            "organisationSector": "Organisation sector",
+            "organisationSectorTooltip": "The type of organisation that has signed a contract to access the data",
+            "nonGatewayApplicants": "Applicant name(s)",
+            "nonGatewayApplicantsTooltip": "The lead applicant or applicants named on the project",
+            "fundersAndSponsors": "Funders/ Sponsors",
+            "fundersAndSponsorsTooltip": "The name of any funders or sponsors involved in the project",
+            "accreditedResearcherStatus": "DEA accredited researcher?",
+            "accreditedResearcherStatusTooltip": "Specifies whether the lead appplicant(s) are accredited under the Digital Economy Act 2017 (DEA) as defined by the ONS Research Code of Practice and Accreditation criteria",
+            "sublicenceArrangements": "Sub-licence arrangements (if any)?",
+            "sublicenceArrangementsTooltip": "Whether there are any permissions for the applicant to share the data beyond the named parties",
+            "projectTitle": "Project title",
+            "projectTitleTooltip": "The title of the project/research study/request",
+            "laySummary": "Lay summary",
+            "laySummaryTooltip": "A concise and clear description of the project in language that is understandable to the general public",
+            "publicBenefitStatement": "Public benefit statement",
+            "publicBenefitStatementTooltip": "A description of the anticipated outcomes, or impact of project on the general public",
+            "requestCategoryType": "Request category type",
+            "requestCategoryTypeTooltip": "The category of study the project falls into",
+            "technicalSummary": "Technical summary",
+            "technicalSummaryTooltip": "A summary of the proposed research, in a manner that is suitable for a specialist reader",
+            "otherApprovalCommittees": "Other approval committees",
+            "otherApprovalCommitteesTooltip": "Other decision-making bodies who have also authorised the project",
+            "projectStartDate": "Project start date",
+            "projectStartDateTooltip": "The date the project is scheduled to start or actual start date",
+            "projectEndDate": "Project end date",
+            "projectEndDateTooltip": "The date the project is scheduled to finish or actual end date",
+            "latestApprovalDate": "Latest approval date",
+            "latestApprovalDateTooltip": "The last date the data access request for this project was approved by a data custodian",
+            "datasets": "Dataset(s) name",
+            "datasetsTooltip": "The name of the dataset(s) being accessed",
+            "dataSensitivityLevel": "Data sensitivity level",
+            "dataSensitivityLevelTooltip": "The level of identifiability of the data being accessed, as defined by Understanding Patient Data",
+            "legalBasisForDataArticle6": "Legal basis for provision of data under Article 6",
+            "legalBasisForDataArticle6Tooltip": "The lawful basis for processing are set out in Article 6 of the GDPR",
+            "legalBasisForDataArticle9": "Lawful conditions for provision of data under Article 9",
+            "legalBasisForDataArticle9Tooltip": "The lawful basis for processing are set out in Article 9 of the GDPR",
+            "dutyOfConfidentiality": "Common Law Duty of Confidentiality",
+            "dutyOfConfidentialityTooltip": "Whether confidential information is being disclosed, and if so, the legal basis for use of identifiable data",
+            "nationalDataOptout": "National data opt-out applied?",
+            "nationalDataOptoutTooltip": "Specifies whether opt-out of individual confidential patient information (for secondary use) has been applied to the data prior to release",
+            "requestFrequency": "Request frequency",
+            "requestFrequencyTooltip": "Whether this a 'one-off' data request, or recurring provision over a specific time period",
+            "datasetLinkageDescription": "For linked datasets, specify how the linkage will take place",
+            "datasetLinkageDescriptionTooltip": "If the applicant(s) intends for the datasets to be linked with any additional datasets, information on the organisations undertaking linkages and how the linkage will take place (including risks/mitigations)",
+            "confidentialDataDescription": "Description of the confidential data being used",
+            "confidentialDataDescriptionTooltip": "A description of the specific patient identifiable fields that have been included in the dataset(s) being accessed",
+            "accessDate": "Release/Access date",
+            "accessDateTooltip": "The date the data access was granted and active research started",
+            "accessType": "Access type",
+            "accessTypeTooltip": "Whether the data is accessed within a Trusted Research Environment (TRE) or via the traditional data release model",
+            "privacyEnhancements": "How has data been processed to enhance privacy?",
+            "privacyEnhancementsTooltip": "Description of the tools or software used to reduce level of identifiable data being shared",
+            "nonGatewayOutputs": "Link to research outputs",
+            "nonGatewayOutputsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "gatewayOutputsTools": "Link to research outputs",
+            "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "gatewayOutputsPapers": "Link to research outputs",
+            "gatewayOutputsPapersTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "components": {
+                "ActionBar": {
+                    "downloadDataUse": "Download data use register content",
+                    "label": "Back to Data Uses search results",
+                    "downloadStarted": "Your download has started"
+                }
+            }
+        },
+        "tool": {
+            "backText": "Back to search results",
+            "description": "Description",
+            "resultsInsights": "Results/Insights",
+            "details": "Details",
+            "lastUpdated": "Last Updated",
+            "lastUpdatedTooltip": "When the metadata for this entity was last updated",
+            "url": "URL",
+            "urlTooltip": "URL to access the resource",
+            "license": "License",
+            "licenseTooltip": "The type of software licence for this entity, if applicable",
+            "toolCategory": "Tool Category",
+            "keywords": "Keywords",
+            "domain": "Domain",
+            "notAvailable": "Not specified"
+        }
+    },
+    "components": {
+        "SupportPopOut": {
+            "buttonText": "Need support",
+            "giveFeedback": "Give feedback",
+            "reportBug": "Report bug",
+            "requestSupport": "Request support",
+            "visitSupportCentre": "Visit Support Centre"
+        },
+        "ShowMore": {
+            "showLess": "...show less",
+            "showMore": "...show more"
+        },
+        "FilterSection": {
+            "placeholder": "I'm looking for...",
+            "noFilters": "No filters available"
+        },
+        "Footer": {
+            "text": "HDR UK {year}. All rights reserved."
+        },
+        "DesktopNav": {
+            "labels": {
+                "myAccount": "My Account",
+                "signIn": "Sign in"
+            }
+        },
+        "Loading": {
+            "text": "Loading"
+        },
+        "ProtectedRoute": {
+            "title": "Protected route",
+            "text": "You must be logged in to view this content"
+        },
+        "FormBanner": {
+            "downloadExample": "Download example",
+            "makeActive": "Make active",
+            "saveDraft": "Save as draft",
+            "completion": "Completion",
+            "requiredFields": "required fields",
+            "optionalFields": "optional fields"
+        }
+    },
+    "modules": {
+        "modals": {
+            "CohortRequestSent": {
+                "title": "Request Sent!",
+                "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
+                "confirmButton": "Back to homepage"
+            }
+        },
+        "ActiveListSidebar": {
+            "bookmarks": "Bookmarks"
+        },
+        "dialogs": {
+            "ProvidersDialog": {
+                "title": "Sign in or create an account",
+                "signIn": "Sign in with username",
+                "socialProviders": {
+                    "azure": "Azure",
+                    "linkedIn": "LinkedIn",
+                    "google": "Google"
+                }
+            },
+            "SignInDialog": {
+                "title": "Sign in",
+                "button": "Sign in"
+            },
+            "AddTeamMemberDialog": {
+                "title": "Add members to your team",
+                "confirmButton": "Add member(s)",
+                "cancelButton": "Cancel"
+            },
+            "DeleteTeamMemberDialog": {
+                "title": "Are you sure you want to remove %%USER_NAME%%?",
+                "confirmButton": "Remove",
+                "cancelButton": "Cancel"
+            },
+            "DeleteTeamDialog": {
+                "title": "Delete a Team",
+                "message": "Are you sure you want to delete {TEAM_NAME}?",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "CohortRequestTerms": {
+                "confirmButton": "Accept Terms & Conditions",
+                "discardButton": "Discard",
+                "acceptTerms": "I have read the Terms and Conditions"
+            },
+            "DataUseDetailsDialog": {
+                "datasets": "Datasets",
+                "leadApplicantOrganisation": "Lead applicant organisation",
+                "dataCustodian": "Data Custodian"
+            },
+            "ToolDetailsDialog": {
+                "description": "Description",
+                "keywords": "Keywords",
+                "team": "Team/Author"
+            }
+        }
+    }
+}

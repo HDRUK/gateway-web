@@ -1,21 +1,24 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import SelectComponent from "@/components/Select";
-import { useForm } from "react-hook-form";
 import React from "react";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
+import Button from "@/components/Button";
 import Form from "@/components/Form";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import BackupIcon from "@mui/icons-material/Backup";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import Button from "../Button/Button";
+import LabelAndDescription from "@/components/LabelAndDescription";
+import SelectComponent from "@/components/Select";
+import {
+    AccountCircleIcon,
+    AdminPanelSettingsIcon,
+    BackupIcon,
+    SupervisorAccountIcon,
+} from "@/consts/icons";
 
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/Select",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -31,6 +34,8 @@ export type FormData = {
     sixth: string;
     seventh: string;
     eighth: string[];
+    ninth: string[];
+    tenth: string;
 };
 
 const validationSchema = yup
@@ -39,8 +44,8 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
-    const { handleSubmit, setValue, control } = useForm<FormData>({
+const WrapperComponent = () => {
+    const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
@@ -50,6 +55,8 @@ const DummyComponent = () => {
             sixth: "",
             seventh: "",
             eighth: [],
+            ninth: [],
+            tenth: "",
         },
         resolver: yupResolver(validationSchema),
     });
@@ -68,6 +75,48 @@ const DummyComponent = () => {
         { label: "Green", value: 2, icon: SupervisorAccountIcon },
         { label: "Blue", value: 3, icon: AdminPanelSettingsIcon },
         { label: "Yellow", value: 4, icon: AdminPanelSettingsIcon },
+    ];
+    const optionsWithLabelComponent = [
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Red"
+                    description="Strawberries are red"
+                />
+            ),
+            label: "Red",
+            value: 1,
+        },
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Green"
+                    description="Apples are green"
+                />
+            ),
+            label: "Green",
+            value: 2,
+        },
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Blue"
+                    description="Whales are blue"
+                />
+            ),
+            label: "Blue",
+            value: 3,
+        },
+        {
+            labelComponent: (
+                <LabelAndDescription
+                    label="Yellow"
+                    description="Bananas are yellow"
+                />
+            ),
+            label: "Yellow",
+            value: 4,
+        },
     ];
 
     return (
@@ -93,14 +142,12 @@ const DummyComponent = () => {
                     icon={AccountCircleIcon}
                     options={options}
                     name="third"
-                    setValue={setValue}
                 />
                 <SelectComponent
                     label="with different icons"
                     control={control}
                     options={optionsWithIcons}
                     name="fourth"
-                    setValue={setValue}
                 />
                 <SelectComponent
                     label="with icon right"
@@ -132,12 +179,26 @@ const DummyComponent = () => {
                     control={control}
                     name="eighth"
                 />
+                <SelectComponent
+                    label="multiple with checkbox"
+                    multiple
+                    hasCheckbox
+                    options={options}
+                    control={control}
+                    name="ninth"
+                />
+                <SelectComponent
+                    label="with label/description component"
+                    options={optionsWithLabelComponent}
+                    control={control}
+                    name="tenth"
+                />
                 <Button type="submit">Submit</Button>
             </Stack>
         </Form>
     );
 };
 
-export const Select: Story = {
-    render: () => <DummyComponent />,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
 };

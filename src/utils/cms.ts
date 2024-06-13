@@ -1,30 +1,118 @@
+import {
+    CMSPageResponse,
+    CMSPostResponse,
+    PageTemplateDefault,
+    PageTemplateHome,
+    PageTemplatePromo,
+    PageTemplateRepeat,
+} from "@/interfaces/Cms";
+import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
+import { ReleaseNode } from "@/interfaces/Releases";
 import apis from "@/config/apis";
+import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
+import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
+import { GetHomePageQuery } from "@/config/queries/homePage";
+import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
+import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
-import { ReleaseNotesResponse } from "@/interfaces/Releases";
-import { postRequest } from "@/services/api/post";
+import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
 
-const fetchFromCMS = async <T>(
-    query = "",
-    { variables }: Record<string, unknown> = {}
-): Promise<T> => {
-    return await postRequest<T>(
-        apis.wordPressApiUrl || "",
-        {
-            query,
-            variables,
-        },
-        {
-            notificationOptions: {
-                successNotificationsOn: false,
-                errorNotificationsOn: false,
-            },
-        }
-    );
+const DEFAULT_OPTIONS = {
+    next: { revalidate: 10 },
 };
 
+async function fetchCMS(
+    query = "",
+    options: {
+        next?: Record<string, unknown>;
+    } = {}
+) {
+    const headers = { "Content-Type": "application/json" };
+
+    const res = await fetch(apis.wordPressApiUrl, {
+        headers,
+        method: "POST",
+        body: JSON.stringify({
+            query,
+        }),
+        ...options,
+    });
+
+    const json = await res.json();
+    if (json.errors) {
+        console.error(json.errors);
+        throw new Error("Failed to fetch API");
+    }
+    return json.data;
+}
+
 const getReleaseNotes = async () => {
-    const data = await fetchFromCMS<ReleaseNotesResponse>(GetReleaseNotesQuery);
+    const data: CMSPostResponse<ReleaseNode> = await fetchCMS(
+        GetReleaseNotesQuery,
+        DEFAULT_OPTIONS
+    );
+    return data.posts.edges || null;
+};
+
+const getMissionAndPurposes = async () => {
+    const data: CMSPostResponse<MissionAndPurposesNode> = await fetchCMS(
+        GetMissionAndPurposesQuery,
+        DEFAULT_OPTIONS
+    );
     return data?.posts?.edges || null;
 };
 
-export { fetchFromCMS, getReleaseNotes };
+const getCohortDiscovery = async () => {
+    const data: CMSPageResponse<PageTemplatePromo> = await fetchCMS(
+        GetCohortDiscoveryQuery,
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getHomePage = async () => {
+    const data: PageTemplateHome = await fetchCMS(
+        GetHomePageQuery,
+        DEFAULT_OPTIONS
+    );
+
+    return data || null;
+};
+
+const getTermsAndConditions = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetTermsAndConditionsQuery,
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getCohortTermsAndConditions = async () => {
+    const data: CMSPageResponse<PageTemplateRepeat> = await fetchCMS(
+        GetCohortTermsAndConditionsQuery,
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getHowToSearchPage = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetHowToSearchQuery,
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+export {
+    getCohortTermsAndConditions,
+    getReleaseNotes,
+    getMissionAndPurposes,
+    getCohortDiscovery,
+    getTermsAndConditions,
+    getHomePage,
+    getHowToSearchPage,
+};

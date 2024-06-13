@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollContent should render component 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-19z13qv-ScrollContent"
+    content="
+<p>This month we are pleased to share improvements to the usability of the search results page. Plus, we release our data use register widget.</p>
+"
+  />
+</div>
+`;

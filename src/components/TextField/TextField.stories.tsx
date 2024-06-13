@@ -1,17 +1,18 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import TextFieldComponent from "@/components/TextField";
-import { useForm } from "react-hook-form";
 import React from "react";
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
-import { Stack } from "@mui/material";
-import Form from "@/components/Form";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../Button/Button";
+import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import TextFieldComponent from "@/components/TextField";
+import { AddAPhotoIcon } from "@/consts/icons";
 
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/TextField",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -19,12 +20,7 @@ export default meta;
 type Story = StoryObj<typeof Form>;
 
 export type FormData = {
-    first: string;
-    second: string;
-    third: string;
-    fourth: string;
-    fifth: string;
-    sixth: string;
+    [key: string]: string;
 };
 
 const validationSchema = yup
@@ -33,8 +29,8 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
-    const { handleSubmit, setValue, control } = useForm<FormData>({
+const WrapperComponent = () => {
+    const { handleSubmit, control, setValue } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
@@ -46,7 +42,7 @@ const DummyComponent = () => {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = (data: unknown) => console.log(data);
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -73,12 +69,12 @@ const DummyComponent = () => {
                     label="with clear button"
                     control={control}
                     name="fourth"
-                    showClearButton
                     setValue={setValue}
+                    showClearButton
                 />
                 <TextFieldComponent
                     label="with icon"
-                    icon={AddAPhoto}
+                    icon={AddAPhotoIcon}
                     control={control}
                     name="fifth"
                 />
@@ -94,6 +90,6 @@ const DummyComponent = () => {
     );
 };
 
-export const TextField: Story = {
-    render: () => <DummyComponent />,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
 };

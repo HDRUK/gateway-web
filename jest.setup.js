@@ -1,27 +1,42 @@
 import "@testing-library/jest-dom/extend-expect";
-
 import { server } from "./mocks/server";
 
-// mock useRouter
-jest.mock("next/router", () => ({
-    useRouter: jest.fn(),
+const nextRouterMock = require("next-router-mock");
+
+require("jest-fetch-mock").enableMocks();
+
+jest.mock("next/router", () => nextRouterMock);
+
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
 }));
 
-jest.mock("react-i18next", () => ({
-    // this mock makes sure any components using the translate hook can use it without a warning being shown
-    useTranslation: () => {
-        return {
-            t: str => str,
-            i18n: {
-                changeLanguage: () => new Promise(() => {}),
-            },
-        };
-    },
-    initReactI18next: {
-        type: "3rdParty",
-        init: () => {},
-    },
-}));
+jest.mock("next/navigation", () => {
+    const { useRouter } = nextRouterMock;
+    const usePathname = () => {
+        const router = useRouter();
+        return router.pathname;
+    };
+
+    const useSearchParams = () => {
+        const router = useRouter();
+        return new URLSearchParams(router.query);
+    };
+
+    const useParams = () => {
+        const router = useRouter();
+        return router.query;
+    };
+
+    return {
+        useRouter,
+        usePathname,
+        useSearchParams,
+        useParams,
+    };
+});
 
 beforeAll(() => {
     server.listen();

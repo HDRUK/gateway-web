@@ -1,20 +1,30 @@
+import Button from "@/components/Button";
 import useDialog from "@/hooks/useDialog";
-import Button from "../Button";
+import Box from "../Box";
 
+type ConfirmType = "button" | "submit" | undefined;
 export interface ModalButtonProps {
     onSuccess?: (props: unknown) => void;
     onCancel?: (props: unknown) => void;
     confirmText?: string;
+    showCancel?: boolean;
+    showConfirm?: boolean;
+    formId?: string;
     cancelText?: string;
-    confirmType?: "button" | "submit";
+    confirmType?: ConfirmType;
+    tertiaryButton?: { onAction: (props: unknown) => void; buttonText: string };
 }
 
 const ModalButtons = ({
     onSuccess,
     onCancel,
-    cancelText,
-    confirmText,
-    confirmType,
+    showCancel = true,
+    showConfirm = true,
+    cancelText = "Cancel",
+    formId,
+    confirmText = "Confirm",
+    confirmType = "button" as ConfirmType,
+    tertiaryButton,
 }: ModalButtonProps) => {
     const { hideDialog: hideModal } = useDialog();
 
@@ -32,37 +42,54 @@ const ModalButtons = ({
         hideModal();
     };
 
+    const handleTertiary = (props: unknown) => {
+        if (typeof tertiaryButton?.onAction === "function") {
+            tertiaryButton.onAction(props);
+        }
+        hideModal();
+    };
+
     return (
         <>
-            <Button
-                key="cancel"
-                variant="outlined"
-                color="secondary"
-                onClick={handleCancel}>
-                {cancelText}
-            </Button>
-            {confirmType === "submit" ? (
-                <Button key="confirm" type="submit">
-                    {confirmText}
-                </Button>
-            ) : (
+            {showCancel && (
                 <Button
-                    key="confirm"
-                    type={confirmType}
-                    onClick={handleSuccess}>
-                    {confirmText}
+                    key="cancel"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleCancel}>
+                    {cancelText}
                 </Button>
             )}
+            <Box
+                sx={{
+                    p: 0,
+                    gap: 2,
+                    display: "flex",
+                }}>
+                {tertiaryButton && (
+                    <Button color="inherit" onClick={handleTertiary}>
+                        {tertiaryButton.buttonText}
+                    </Button>
+                )}
+                {showConfirm &&
+                    (confirmType === "submit" ? (
+                        <Button
+                            {...(formId && { form: formId })}
+                            key="confirm"
+                            type="submit">
+                            {confirmText}
+                        </Button>
+                    ) : (
+                        <Button
+                            key="confirm"
+                            type={confirmType}
+                            onClick={handleSuccess}>
+                            {confirmText}
+                        </Button>
+                    ))}
+            </Box>
         </>
     );
-};
-
-ModalButtons.defaultProps = {
-    cancelText: "Cancel",
-    confirmText: "Confirm",
-    confirmType: "button",
-    onSuccess: () => null,
-    onCancel: () => null,
 };
 
 export default ModalButtons;

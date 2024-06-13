@@ -1,38 +1,21 @@
-import type { Meta } from "@storybook/react";
-import TabsComponent from "@/components/Tabs";
 import React, { useState } from "react";
-import { TabProps } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import Box from "@/components/Box";
+import Tabs from "@/components/Tabs";
+import { TabProps, TabVariant } from "./Tabs";
 
-const meta: Meta<typeof TabsComponent> = {
-    component: TabsComponent,
+/** Mui documentation: https://mui.com/material-ui/react-tabs */
+
+const meta: Meta<typeof Tabs> = {
+    component: Tabs,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
-const tabs = [
-    {
-        label: "2023",
-        value: "2023",
-        content: <div>2023 content</div>,
-    },
-    {
-        label: "2022",
-        value: "2022",
-        content: <div>2022 content</div>,
-    },
-    {
-        label: "2021",
-        value: "2021",
-        content: <div>2021 content</div>,
-    },
-    {
-        label: "2020",
-        value: "2020",
-        content: <div>2020 content</div>,
-    },
-];
-
-const DummyComponent = (props: TabProps) => {
+const WrapperComponent = (
+    args: Partial<TabProps & { value: string; onChange: void }>
+) => {
     const [selectedTab, setSelectedTab] = useState("2023");
 
     const handleTabChange = (tab: string) => {
@@ -40,18 +23,27 @@ const DummyComponent = (props: TabProps) => {
     };
 
     return (
-        <TabsComponent
+        <Tabs
+            tabs={["2023", "2022", "2021", "2020"].map(tab => ({
+                label: tab,
+                value: tab,
+                content: <Box sx={{ padding: 2 }}>{tab} content</Box>,
+            }))}
             centered
-            tabs={tabs}
-            {...props}
             value={selectedTab}
             onChange={handleTabChange}
+            {...args}
         />
     );
 };
 
-export const Tabs = (args: TabProps) => <DummyComponent {...args} />;
+type Story = StoryObj<typeof Tabs>;
 
-Tabs.args = {
-    tabs,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
+};
+
+export const Large: Story = {
+    args: { variant: TabVariant.LARGE, renderTabContent: false },
+    render: args => <WrapperComponent {...args} />,
 };

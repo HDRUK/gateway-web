@@ -1,14 +1,27 @@
-import NextLink from "next/link";
-import MuiLink from "@mui/material/Link";
 import { LinkProps as MuiLinkProps } from "@mui/material";
+import MuiLink from "@mui/material/Link";
+import NextLink from "next/link";
 
 interface LinkProps extends MuiLinkProps {
     href: string;
+    passHref?: boolean;
+    prefetch?: boolean;
 }
 
-const Link = ({ href, children, variant, ...props }: LinkProps) => {
+const Link = ({
+    href,
+    passHref = false,
+    children,
+    variant,
+    ...props
+}: LinkProps) => {
     return (
-        <MuiLink href={href} component={NextLink} variant={variant} {...props}>
+        <MuiLink
+            href={href}
+            passHref={passHref}
+            component={NextLink}
+            variant={variant}
+            {...props}>
             {children}
         </MuiLink>
     );

@@ -1,17 +1,20 @@
-import Button from "@/components/Button";
-import { TextField } from "@mui/material";
-import MuiDialogContent from "@mui/material/DialogContent";
-import Dialog from "@/components/Dialog";
 import { useForm } from "react-hook-form";
+import { TextField } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
-import ModalButtons from "@/components/ModalButtons";
+import MuiDialogContent from "@mui/material/DialogContent";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
+import Dialog from "@/components/Dialog";
+import ModalButtons from "@/components/ModalButtons";
 import useDialog from "./useDialog";
 
 export default { component: useDialog };
 
 const CustomDialog = () => {
     const { hideDialog, store } = useDialog();
+    const { dialogProps } = store as unknown as {
+        dialogProps: { foo: string };
+    };
     const { register, handleSubmit } = useForm();
 
     const onFormSubmit = (data: unknown) => {
@@ -36,8 +39,7 @@ const CustomDialog = () => {
                 }}>
                 <MuiDialogContent>
                     <p>
-                        Prop from where dialog was invoked:{" "}
-                        {store.dialogProps?.foo}
+                        Prop from where dialog was invoked: {dialogProps?.foo}
                     </p>
                     <TextField
                         placeholder="Firstname"

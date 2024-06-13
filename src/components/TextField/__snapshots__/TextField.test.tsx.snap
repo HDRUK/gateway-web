@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextField should render icon 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-36997s"
+  >
+    <div
+      class="MuiBox-root mui-style-old1by"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body2 mui-style-1ipuxxz-MuiTypography-root-Label"
+      >
+        <label
+          for="fieldName"
+        >
+          This is a label
+        </label>
+      </p>
+    </div>
+    <div
+      class="MuiBox-root mui-style-ve6emg"
+    >
+      <div
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1az8f5z-MuiInputBase-root-MuiOutlinedInput-root"
+      >
+        <div
+          class="MuiInputAdornment-root MuiInputAdornment-positionStart mui-style-ittuaa-MuiInputAdornment-root"
+        >
+          <span
+            class="notranslate"
+          >
+            ​
+          </span>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-1w5vzi1-MuiSvgIcon-root"
+            data-testid="AddAPhotoIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M3 4V1h2v3h3v2H5v3H3V6H0V4h3zm3 6V7h3V4h7l1.83 2H21c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V10h3zm7 9c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-3.2-5c0 1.77 1.43 3.2 3.2 3.2s3.2-1.43 3.2-3.2-1.43-3.2-3.2-3.2-3.2 1.43-3.2 3.2z"
+            />
+          </svg>
+        </div>
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart mui-style-1deaec7-MuiInputBase-input-MuiOutlinedInput-input"
+          name="fieldName"
+          type="text"
+          value=""
+        />
+        <fieldset
+          aria-hidden="true"
+          class="MuiOutlinedInput-notchedOutline mui-style-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            class="mui-style-ihdtdm"
+          >
+            <span
+              class="notranslate"
+            >
+              ​
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+`;

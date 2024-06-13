@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KeyValueList should render component 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-old1by"
+  >
+    <div
+      class="MuiBox-root mui-style-8hlr3i"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
+      >
+        one
+        :
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
+      >
+        1
+      </p>
+    </div>
+    <div
+      class="MuiBox-root mui-style-8hlr3i"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
+      >
+        two
+        :
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
+      >
+        2
+      </p>
+    </div>
+    <div
+      class="MuiBox-root mui-style-8hlr3i"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
+      >
+        three
+        :
+      </p>
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
+      >
+        3
+      </p>
+    </div>
+  </div>
+</div>
+`;

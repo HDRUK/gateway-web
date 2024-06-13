@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmailNotificationDescriptions should render component 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-1csm1dx"
+  >
+    <div
+      class="MuiBox-root mui-style-v1crop"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+        >
+          Team admins
+        </span>
+         
+        receive notifications for;
+      </p>
+      <ul
+        style="padding-left: 15px; margin: 0px;"
+      >
+        <li>
+          New publisher team set up
+        </li>
+        <li>
+          Automated metadata onboarding (If applicable to team)
+        </li>
+      </ul>
+    </div>
+    <div
+      class="MuiBox-root mui-style-v1crop"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+        >
+          Data access request managers
+        </span>
+         
+        receive notifications for;
+      </p>
+      <ul
+        style="padding-left: 15px; margin: 0px;"
+      >
+        <li>
+          DAR decision, workflow updates, form submission
+        </li>
+        <li>
+          DAR approval/rejection
+        </li>
+      </ul>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium mui-style-7xarjn-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Show more
+        <span
+          class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+    <div
+      class="MuiBox-root mui-style-v1crop"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+        >
+          Metadata managers
+        </span>
+         
+        receive notifications for;
+      </p>
+      <ul
+        style="padding-left: 15px; margin: 0px;"
+      >
+        <li>
+          Automated metadata onboarding (If applicable to team)
+        </li>
+        <li>
+          Date set live and archive (manual onboarding only)
+        </li>
+      </ul>
+    </div>
+    <div
+      class="MuiBox-root mui-style-v1crop"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+        >
+          Data access request reviewers
+        </span>
+         
+        receive notifications for;
+      </p>
+      <ul
+        style="padding-left: 15px; margin: 0px;"
+      >
+        <li>
+          DAR workflow (As required)
+        </li>
+      </ul>
+    </div>
+    <div
+      class="MuiBox-root mui-style-v1crop"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+        >
+          Metadata editors
+        </span>
+         
+        receive notifications for;
+      </p>
+      <ul
+        style="padding-left: 15px; margin: 0px;"
+      >
+        <li>
+          Date set live and archive (manual onboarding only)
+        </li>
+      </ul>
+    </div>
+    <div
+      class="MuiBox-root mui-style-v1crop"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+      >
+        <span
+          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+        >
+          Developers
+        </span>
+         
+        receive notifications for;
+      </p>
+      <ul
+        style="padding-left: 15px; margin: 0px;"
+      >
+        <li>
+          Automated metadata onboarding (If applicable to team)
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

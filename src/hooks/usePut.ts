@@ -1,56 +1,28 @@
-import { useSWRConfig } from "swr";
-import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
-import {
-    ThrowPaginationError,
-    putMutateData,
-    putOptimisticData,
-} from "@/utils/api";
-import useGet from "./useGet";
+import apiService from "@/services/api";
 
-const usePut = <T extends { id?: number }>(
-    url: string,
-    options?: HttpOptions
-) => {
-    const { mutate } = useSWRConfig();
-    const { data } = useGet(options?.paginationKey || url);
-    const { t, i18n } = useTranslation("api");
+const usePut = <T>(url: string, options?: HttpOptions) => {
     const {
         localeKey,
         itemName,
         action,
-        successNotificationsOn,
-        errorNotificationsOn,
-        ...mutatorOptions
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
     } = options || {};
+    const t = useTranslations("api");
 
-    ThrowPaginationError(options);
-
-    return (payload: T) => {
-        mutate(
-            options?.paginationKey || url,
-            async () => {
-                await apiService.putRequest(`${url}/${payload.id}`, payload, {
-                    notificationOptions: {
-                        localeKey,
-                        itemName,
-                        successNotificationsOn,
-                        errorNotificationsOn,
-                        t,
-                        i18n,
-                        action,
-                    },
-                });
-                return putMutateData({ options, data, payload });
+    return async (id: string | number, payload: T) => {
+        return await apiService.putRequest(`${url}/${id}`, payload, {
+            notificationOptions: {
+                localeKey,
+                itemName,
+                successNotificationsOn,
+                errorNotificationsOn,
+                t,
+                action,
             },
-            {
-                // data to immediately update the client cache
-                optimisticData: putOptimisticData({ options, data, payload }),
-                rollbackOnError: true,
-                ...mutatorOptions,
-            }
-        );
+        });
     };
 };
 

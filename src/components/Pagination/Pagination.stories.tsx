@@ -1,17 +1,20 @@
-import { Typography } from "@mui/material";
-import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import Typography from "@/components/Typography";
 import Pagination from "./Pagination";
+
+/** Mui documentation: https://mui.com/material-ui/react-pagination / */
 
 const meta: Meta<typeof Pagination> = {
     component: Pagination,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Pagination>;
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const [pageNumber, setPageNumber] = useState(1);
 
     const changeHandler = (_: unknown, page: number) => {
@@ -32,6 +35,6 @@ const DummyComponent = () => {
     );
 };
 
-export const PaginationComponent: Story = {
-    render: () => <DummyComponent />,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
 };

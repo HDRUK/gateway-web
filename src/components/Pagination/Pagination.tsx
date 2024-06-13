@@ -1,31 +1,33 @@
+import { Box } from "@mui/material";
 import MuiPagination, {
     PaginationProps as MuiPaginationProps,
 } from "@mui/material/Pagination";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import PaginationItem from "@mui/material/PaginationItem";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/consts/icons";
 
 interface PaginationProps extends MuiPaginationProps {
     isLoading?: boolean;
 }
 
-const Pagination = ({ isLoading, ...rest }: PaginationProps) => {
+const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
     if (isLoading) return null;
     return (
-        <MuiPagination
-            renderItem={item => (
-                <PaginationItem
-                    slots={{ previous: ArrowLeftIcon, next: ArrowRightIcon }}
-                    {...item}
-                />
-            )}
-            {...rest}
-        />
+        <Box sx={{ p: 0, display: "flex", justifyContent: "center" }}>
+            <MuiPagination
+                renderItem={item => (
+                    <PaginationItem
+                        data-testid="pagination-item"
+                        slots={{
+                            previous: ArrowLeftIcon,
+                            next: ArrowRightIcon,
+                        }}
+                        {...item}
+                    />
+                )}
+                {...rest}
+            />
+        </Box>
     );
-};
-
-Pagination.defaultProps = {
-    isLoading: false,
 };
 
 export default Pagination;

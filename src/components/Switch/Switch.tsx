@@ -1,24 +1,35 @@
 /** @jsxImportSource @emotion/react */
-
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { Stack, Typography, FormControl, SxProps } from "@mui/material";
 import MuiSwitch, { SwitchProps as MuiSwitchProps } from "@mui/material/Switch";
-import { Control, useController } from "react-hook-form";
+import Tooltip from "@/components/Tooltip";
 
-export interface SwitchProps extends MuiSwitchProps {
-    checkedLabel: string;
-    unCheckedLabel: string;
-    name: string;
-    control: Control;
+export interface SwitchProps<TFieldValues extends FieldValues, TName>
+    extends Omit<MuiSwitchProps, "name"> {
+    checkedLabel?: string;
+    unCheckedLabel?: string;
+    name: TName;
+    title?: string;
+    disabled?: boolean;
+    control: Control<TFieldValues>;
     switchSx?: SxProps;
     formControlSx?: SxProps;
 }
 
-const Switch = (props: SwitchProps) => {
+const Switch = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>(
+    props: SwitchProps<TFieldValues, TName>
+) => {
     const {
         unCheckedLabel,
         checkedLabel,
         control,
         name,
+        title,
+        size = "large",
+        disabled = false,
         formControlSx,
         switchSx,
         ...rest
@@ -31,6 +42,7 @@ const Switch = (props: SwitchProps) => {
         name,
         control,
     });
+
     return (
         <FormControl
             fullWidth
@@ -38,21 +50,22 @@ const Switch = (props: SwitchProps) => {
             error={!!error}>
             <Stack direction="row" spacing={1} alignItems="center">
                 <Typography>{unCheckedLabel}</Typography>
-                <MuiSwitch
-                    disableRipple
-                    {...rest}
-                    {...fieldProps}
-                    inputRef={ref}
-                    sx={{ ...switchSx }}
-                />
+                <Tooltip title={title} variant="formTitle">
+                    <MuiSwitch
+                        size={size}
+                        disableRipple
+                        {...rest}
+                        {...fieldProps}
+                        disabled={disabled}
+                        checked={fieldProps.value}
+                        inputRef={ref}
+                        sx={{ ...switchSx }}
+                    />
+                </Tooltip>
                 <Typography>{checkedLabel}</Typography>
             </Stack>
         </FormControl>
     );
-};
-Switch.defaultProps = {
-    switchSx: {},
-    formControlSx: {},
 };
 
 export default Switch;

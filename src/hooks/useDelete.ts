@@ -1,44 +1,20 @@
-import { useSWRConfig } from "swr";
-import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
-import {
-    ThrowPaginationError,
-    deleteMutateData,
-    deleteOptimisticData,
-} from "@/utils/api";
+import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
-import useGet from "./useGet";
+import apiService from "@/services/api";
 
 const useDelete = (url: string, options?: HttpOptions) => {
-    const { mutate } = useSWRConfig();
-    const { data } = useGet(options?.paginationKey || url);
-    const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, action, ...mutatorOptions } = options || {};
+    const t = useTranslations("api");
+    const { localeKey, itemName, action } = options || {};
 
-    ThrowPaginationError(options);
-
-    return (id: number) => {
-        mutate(
-            options?.paginationKey || url,
-            async () => {
-                await apiService.deleteRequest(`${url}/${id}`, {
-                    notificationOptions: {
-                        localeKey,
-                        itemName,
-                        t,
-                        i18n,
-                        action,
-                    },
-                });
-                return deleteMutateData({ options, data, id });
+    return async (id: number | string) => {
+        return await apiService.deleteRequest(`${url}/${id}`, {
+            notificationOptions: {
+                localeKey,
+                itemName,
+                t,
+                action,
             },
-            {
-                // data to immediately update the client cache
-                optimisticData: deleteOptimisticData({ options, data, id }),
-                rollbackOnError: true,
-                ...mutatorOptions,
-            }
-        );
+        });
     };
 };
 

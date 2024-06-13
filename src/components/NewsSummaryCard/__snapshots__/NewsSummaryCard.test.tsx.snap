@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsSummaryCard should render component 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-x9r5gr-MuiPaper-root-MuiCard-root"
+  >
+    <img
+      alt="Image alt text"
+      class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img mui-style-o69gx8-MuiCardMedia-root"
+      height="140"
+      src="/images/account/teams/integrations/create.jpg"
+    />
+    <div
+      class="mui-style-pkenty"
+    >
+      <div>
+        Jan
+      </div>
+      <div>
+         
+        01
+      </div>
+    </div>
+    <div
+      class="MuiCardContent-root mui-style-46bh2p-MuiCardContent-root"
+    >
+      <div
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-96vc0a-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          This is a headline
+          <wbr />
+        </div>
+      </div>
+      <div
+        class="MuiTypography-root MuiTypography-body2 mui-style-qd21mq-MuiTypography-root"
+      >
+        <div
+          class="LinesEllipsis  "
+        >
+          Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
+          <wbr />
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiCardActions-root MuiCardActions-spacing mui-style-1t6e9jv-MuiCardActions-root"
+    >
+      <a
+        color="primary"
+        href="https://www.healthdatagateway.org/"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-1b2oehb-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Read more
+          <span
+            class="MuiButton-endIcon MuiButton-iconSizeMedium mui-style-1gnd1fd-MuiButton-endIcon"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-1hd79o3-MuiSvgIcon-root"
+              data-testid="ArrowForwardIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </span>
+          <span
+            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+`;

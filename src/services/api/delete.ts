@@ -1,35 +1,60 @@
-import http from "@/utils/http";
 import { RequestOptions } from "@/interfaces/Api";
 import { errorNotification, successNotification } from "./utils";
 
-const deleteRequest = async (url: string, options: RequestOptions) => {
-    const { axiosOptions = {}, notificationOptions } = options;
+const deleteRequest = async <T>(
+    url: string,
+    options: RequestOptions
+): Promise<T | null> => {
+    const { notificationOptions } = options;
     const {
         successNotificationsOn = true,
         errorNotificationsOn = true,
         ...props
     } = notificationOptions;
 
-    return http
-        .delete(url, axiosOptions)
-        .then(res => {
+    try {
+        const response = await fetch(url, {
+            method: "DELETE",
+            credentials: "include",
+        });
+
+        if (response.ok) {
+            const json = await response.json();
+
             if (successNotificationsOn) {
                 successNotification({
                     method: "delete",
                     props,
                 });
             }
-            return res.data;
-        })
-        .catch(error => {
+
+            return json.data;
+        }
+
+        if (!response.ok) {
+            const error = await response.json();
             if (errorNotificationsOn) {
                 errorNotification({
-                    errorResponse: error.response,
+                    status: response.status,
+                    error: { ...error },
                     props,
                     method: "delete",
                 });
             }
-        });
+        }
+    } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+            console.error(error);
+        }
+
+        if (errorNotificationsOn) {
+            errorNotification({
+                props,
+                method: "delete",
+            });
+        }
+    }
+    return null;
 };
 
-export { deleteRequest };
+export default deleteRequest;

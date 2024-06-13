@@ -1,18 +1,17 @@
+import { Role } from "@/interfaces/Role";
+
 interface User {
     id: number;
     firstname: string;
     lastname: string;
+    preferred_email: string;
     name: string;
     email: string;
-    sector_id: string;
+    secondary_email: string;
+    provider: string;
+    providerId: number;
+    roles: Role[];
     organisation: string;
-    bio: string;
-    domain: string;
-    link: string;
-    orcid: string;
-    terms: boolean;
-    contact_news: boolean;
-    contact_feedback: boolean;
 }
 
 export type { User };

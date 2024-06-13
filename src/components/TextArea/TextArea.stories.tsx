@@ -1,16 +1,17 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import TextAreaComponent from "@/components/TextArea";
-import { useForm } from "react-hook-form";
 import React from "react";
-import { Stack } from "@mui/material";
-import Form from "@/components/Form";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../Button/Button";
+import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
+import Button from "@/components/Button";
+import Form from "@/components/Form";
+import TextAreaComponent from "@/components/TextArea";
 
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/TextArea",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -31,8 +32,8 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
-    const { handleSubmit, getValues, control } = useForm<FormData>({
+const WrapperComponent = () => {
+    const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
             second: "",
@@ -43,13 +44,12 @@ const DummyComponent = () => {
         resolver: yupResolver(validationSchema),
     });
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = (data: unknown) => console.log(data);
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
                 <TextAreaComponent
-                    getValues={getValues}
                     limit={150}
                     label="with character limit"
                     control={control}
@@ -86,5 +86,5 @@ const DummyComponent = () => {
 };
 
 export const TextArea: Story = {
-    render: () => <DummyComponent />,
+    render: () => <WrapperComponent />,
 };

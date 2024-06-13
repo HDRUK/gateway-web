@@ -1,8 +1,7 @@
-import apis from "@/config/apis";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserFromToken } from "@/utils/cookies";
-import http from "@/utils/http";
+import apis from "@/config/apis";
 import config from "@/config/config";
+import { getUserFromToken } from "@/utils/cookies";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -13,24 +12,46 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             return;
         }
 
-        const { data: user } = await http.get(
-            `${apis.usersV1UrlIP}/${authUser?.id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${req.cookies[config.JWT_COOKIE]}`,
-                },
-                withCredentials: false,
-            }
-        );
+        try {
+            const response = await fetch(
+                `${apis.usersV1UrlIP}/${authUser?.id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${
+                            req.cookies[config.JWT_COOKIE]
+                        }`,
+                    },
+                }
+            );
 
-        res.status(200).json({
-            data: { isLoggedIn: true, user: user.data },
-        });
-    } catch (e: unknown) {
-        const message = e instanceof Error ? e.message : String(e);
-        res.status(404).send({
-            title: "We have not been able to fetch your profile",
-            message,
-        });
+            const json = await response.json();
+
+            res.status(200).json({
+                data: { isLoggedIn: true, user: json.data },
+            });
+        } catch (error) {
+            throw new Error("We have been unable to log you in");
+        }
+    } catch (error) {
+        const err = error as {
+            response: {
+                status: number;
+                data?: { message: string };
+            };
+            stack: unknown;
+            message: string;
+        };
+        if (err?.response) {
+            res.status(err.response.status).send({
+                title: "We have not been able to fetch your profile",
+                message: err.response.data?.message,
+            });
+        } else {
+            res.status(500).send({
+                title: "We have not been able to fetch your profile",
+                message: err.message,
+                stack: err.stack,
+            });
+        }
     }
 }

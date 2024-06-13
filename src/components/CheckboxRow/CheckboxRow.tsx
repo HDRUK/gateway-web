@@ -1,13 +1,20 @@
+import { FieldValues, Path } from "react-hook-form";
 import Box from "@/components/Box";
-import Checkbox from "@/components/Checkbox";
-import { Typography } from "@mui/material";
-import { CheckboxProps } from "../Checkbox/Checkbox";
+import Checkbox, { CheckboxProps } from "@/components/Checkbox/Checkbox";
+import Typography from "@/components/Typography";
 
-export interface CheckboxRowProps extends CheckboxProps {
+export interface CheckboxRowProps<TFieldValues extends FieldValues, TName>
+    extends CheckboxProps<TFieldValues, TName> {
     title: string;
 }
 
-const CheckboxRow = ({ title, ...rest }: CheckboxRowProps) => {
+const CheckboxRow = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
+    title,
+    ...rest
+}: CheckboxRowProps<FieldValues, TName>) => {
     return (
         <Box
             sx={{

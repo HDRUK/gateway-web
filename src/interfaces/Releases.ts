@@ -8,8 +8,4 @@ interface ReleaseNode {
     node: Release;
 }
 
-interface ReleaseNotesResponse {
-    posts: { edges: ReleaseNode[] };
-}
-
-export type { ReleaseNode, Release, ReleaseNotesResponse };
+export type { ReleaseNode, Release };

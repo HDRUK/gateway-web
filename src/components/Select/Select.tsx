@@ -1,39 +1,44 @@
-/** @jsxImportSource @emotion/react */
-
+import { ReactNode } from "react";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import {
-    FormControl,
-    FormHelperText,
     OutlinedInput,
     Select as MuiSelect,
     MenuItem,
+    SxProps,
 } from "@mui/material";
-
-import { Control, useController } from "react-hook-form";
 import { IconType } from "@/interfaces/Ui";
-import { colors } from "@/config/theme";
-import Label from "../Label";
-import MenuItemContent from "../SelectMenuItem/SelectMenuItem";
+import FormInputWrapper from "@/components/FormInputWrapper";
+import SelectMenuItem from "@/components/SelectMenuItem";
 
 type ValueType = string | number;
-type OptionsType = { value: ValueType; label: string; icon?: IconType }[];
+export interface SelectOptionsType {
+    value: ValueType;
+    label: string;
+    labelComponent?: ReactNode;
+    icon?: IconType;
+}
 
-export interface SelectProps {
+export interface SelectProps<TFieldValues extends FieldValues, TName> {
     label: string;
     info?: string;
+    extraInfo?: string;
     iconRight?: boolean;
     disabled?: boolean;
     invertListItem?: boolean;
-    options: OptionsType;
+    options: SelectOptionsType[];
     multiple?: boolean;
+    horizontalForm?: boolean;
     icon?: IconType;
-    name: string;
-    control: Control;
+    name: TName;
+    control: Control<TFieldValues>;
     required?: boolean;
+    hasCheckbox?: boolean;
+    formControlSx?: SxProps;
 }
 
 const renderValue = (
     selected: ValueType | ValueType[],
-    options: OptionsType,
+    options: SelectOptionsType[],
     multiple: boolean
 ) => {
     if (multiple && Array.isArray(selected)) {
@@ -42,24 +47,30 @@ const renderValue = (
             .map(option => option.label)
             .join(", ");
     }
-    return options.find(option => option.value === selected)?.label;
+    return options?.find(option => option.value === selected)?.label;
 };
 
-const Select = (props: SelectProps) => {
-    const {
-        label,
-        info,
-        icon,
-        iconRight,
-        options,
-        control,
-        name,
-        required,
-        multiple,
-        disabled,
-        invertListItem,
-    } = props;
-
+const Select = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
+    label,
+    info = "",
+    extraInfo,
+    icon,
+    horizontalForm,
+    options,
+    control,
+    name,
+    hasCheckbox,
+    formControlSx,
+    required = false,
+    multiple = false,
+    iconRight = false,
+    disabled = false,
+    invertListItem = false,
+    ...rest
+}: SelectProps<TFieldValues, TName>) => {
     const {
         field: { ref, ...fieldProps },
         fieldState: { error },
@@ -69,28 +80,18 @@ const Select = (props: SelectProps) => {
     });
 
     return (
-        <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
-            <Label
-                required={required}
-                htmlFor="outlined-adornment-amount"
-                label={label}
-                sx={{
-                    ...(disabled && {
-                        color: colors.grey600,
-                    }),
-                }}
-            />
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                        color: colors.grey700,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
-
+        <FormInputWrapper
+            name={name}
+            label={label}
+            horizontalForm={horizontalForm}
+            info={info}
+            extraInfo={extraInfo}
+            error={error}
+            disabled={disabled}
+            required={required}
+            formControlSx={formControlSx}>
             <MuiSelect
+                fullWidth
                 size="small"
                 multiple={multiple}
                 sx={{ fontSize: 14 }}
@@ -102,8 +103,9 @@ const Select = (props: SelectProps) => {
                     renderValue(selected, options, !!multiple)
                 }
                 {...fieldProps}
-                value={fieldProps.value ?? ""}>
-                {options.map(option => (
+                value={fieldProps.value ?? ""}
+                {...rest}>
+                {options?.map(option => (
                     <MenuItem
                         color="secondary"
                         sx={{
@@ -114,33 +116,22 @@ const Select = (props: SelectProps) => {
                         }}
                         key={option.value}
                         value={option.value}>
-                        <MenuItemContent
+                        <SelectMenuItem
+                            multiple={multiple}
+                            itemValue={option.value}
+                            value={fieldProps.value}
+                            hasCheckbox={hasCheckbox}
                             iconRight={iconRight}
                             icon={icon || option.icon}
                             label={option.label}
+                            labelComponent={option.labelComponent}
                             invertListItem={invertListItem}
                         />
                     </MenuItem>
                 ))}
             </MuiSelect>
-            {error && (
-                <FormHelperText sx={{ fontSize: 14 }} error>
-                    {error.message}
-                </FormHelperText>
-            )}
-        </FormControl>
+        </FormInputWrapper>
     );
-};
-
-Select.defaultProps = {
-    info: "",
-    icon: undefined,
-
-    required: false,
-    multiple: false,
-    iconRight: false,
-    disabled: false,
-    invertListItem: false,
 };
 
 export default Select;

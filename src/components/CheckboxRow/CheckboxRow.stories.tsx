@@ -1,16 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import CheckboxRowComponent from "@/components/CheckboxRow";
-import { Stack } from "@mui/material";
-import Form from "@/components/Form";
-import { useForm } from "react-hook-form";
 import React from "react";
-import * as yup from "yup";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Button from "../Button/Button";
+import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as yup from "yup";
+import Button from "@/components/Button";
+import CheckboxRow from "@/components/CheckboxRow";
+import Form from "@/components/Form";
+
+/** Mui documentation: https://mui.com/material-ui/react-checkbox */
 
 const meta: Meta<typeof Form> = {
     component: Form,
     title: "Forms/CheckboxRow",
+    tags: ["autodocs"],
 };
 
 export default meta;
@@ -18,10 +21,7 @@ export default meta;
 type Story = StoryObj<typeof Form>;
 
 export type FormData = {
-    first: string;
-    second: boolean;
-    third: string;
-    fourth: string;
+    [key: string]: string;
 };
 
 const validationSchema = yup
@@ -30,11 +30,11 @@ const validationSchema = yup
     })
     .required();
 
-const DummyComponent = () => {
+const WrapperComponent = () => {
     const { handleSubmit, control } = useForm<FormData>({
         defaultValues: {
             first: "",
-            second: false,
+            second: "",
             third: "",
             fourth: "",
         },
@@ -46,27 +46,27 @@ const DummyComponent = () => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 400 }}>
-                <CheckboxRowComponent
+                <CheckboxRow
                     label="Simple Checkbox"
                     control={control}
                     name="first"
                     title="Title"
                 />
-                <CheckboxRowComponent
+                <CheckboxRow
                     label="Required Checkbox"
                     required
                     control={control}
                     name="second"
                     title="Title"
                 />
-                <CheckboxRowComponent
+                <CheckboxRow
                     label="Disabled Checkbox"
                     disabled
                     control={control}
                     name="third"
                     title="Title"
                 />
-                <CheckboxRowComponent
+                <CheckboxRow
                     label="indeterminate Checkbox"
                     indeterminate
                     control={control}
@@ -79,6 +79,6 @@ const DummyComponent = () => {
     );
 };
 
-export const CheckboxRow: Story = {
-    render: () => <DummyComponent />,
+export const Default: Story = {
+    render: () => <WrapperComponent />,
 };

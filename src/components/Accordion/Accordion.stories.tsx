@@ -1,72 +1,62 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import Accordion, { AccordionProps } from "./Accordion";
+import type { Meta, StoryObj } from "@storybook/react";
+import Accordion from "./Accordion";
 
 const meta: Meta<typeof Accordion> = {
     component: Accordion,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Accordion>;
 
-const DummyComponent = () => {
-    const [expanded, setExpanded] = useState<string | false>(false);
-    const accordionData = [
-        {
-            id: "panel1",
-            heading: "Accordion 1",
-            details: "Accordion 1 details",
-        },
-        {
-            id: "panel2",
-            heading: "Accordion 2",
-            details: "Accordion 2 details",
-        },
-        {
-            id: "panel3",
-            heading: "Accordion 3",
-            details: "Accordion 3 details",
-        },
-    ];
+const WrapperComponent = () => {
+    const [expanded, setExpanded] = useState<number | null>(null);
 
-    const handleChange = (isExpanded: boolean, panel: string) => {
-        setExpanded(isExpanded ? panel : false);
+    const handleChange = (isExpanded: boolean, panel: number) => {
+        setExpanded(isExpanded ? panel : null);
     };
 
     return (
         <div>
-            {accordionData.map(
-                (accordion: {
-                    id: string;
-                    heading: string;
-                    details: string;
-                }) => (
-                    <Accordion
-                        expanded={expanded === accordion.id}
-                        heading={accordion.heading}
-                        contents={accordion.details}
-                        onChange={(event, isExpanded) =>
-                            handleChange(isExpanded, accordion.id)
-                        }
-                    />
-                )
-            )}
+            {Array.from({ length: 3 }).map((e, index: number) => (
+                <Accordion
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    expanded={expanded === index}
+                    heading={`Heading ${index}`}
+                    contents={`Content ${index}`}
+                    onChange={(event, isExpanded) =>
+                        handleChange(isExpanded, index)
+                    }
+                />
+            ))}
         </div>
     );
 };
 
-const Heading = () => <div>React Element as Heading</div>;
-const Content = () => <div>React Element as Content</div>;
-
-export const SimpleAccordion: Story = {
-    render: (props: AccordionProps) => <Accordion {...props} />,
+export const Single: Story = {
+    args: {
+        heading: <div>This is a Heading</div>,
+        contents: <div>This is contents</div>,
+    },
 };
 
-export const AccordionGroup: Story = {
-    render: () => <DummyComponent />,
+export const Group: Story = {
+    render: () => <WrapperComponent />,
 };
 
-export const ReactElementAccordion: Story = {
-    render: () => <Accordion heading={<Heading />} contents={<Content />} />,
+export const Plain: Story = {
+    args: {
+        variant: "plain",
+        heading: <div>This is a Heading</div>,
+    },
+};
+
+export const Underline: Story = {
+    args: {
+        variant: "underline",
+        heading: <div>This is a Heading</div>,
+    },
 };

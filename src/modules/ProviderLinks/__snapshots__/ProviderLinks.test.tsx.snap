@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProviderLinks should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-1uxy81i"
+  >
+    <a
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone mui-style-1gt6w6d-MuiTypography-root-MuiLink-root"
+      href="http://localhost:8000/api/v1/auth/google"
+    >
+      <div
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="Google"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        Google
+      </div>
+    </a>
+    <a
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone mui-style-1gt6w6d-MuiTypography-root-MuiLink-root"
+      href="http://localhost:8000/api/v1/auth/linkedin"
+    >
+      <div
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="LinkedIn"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        LinkedIn
+      </div>
+    </a>
+    <a
+      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone mui-style-1gt6w6d-MuiTypography-root-MuiLink-root"
+      href="http://localhost:8000/api/v1/auth/azure"
+    >
+      <div
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="Azure"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        Azure
+      </div>
+    </a>
+  </div>
+</div>
+`;

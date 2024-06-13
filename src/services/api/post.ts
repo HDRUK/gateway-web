@@ -1,39 +1,83 @@
-import http from "@/utils/http";
 import { RequestOptions } from "@/interfaces/Api";
 import { errorNotification, successNotification } from "./utils";
 
-const postRequest = async <T>(
+const postFetch = async <T>(
     url: string,
     data: unknown,
     options: RequestOptions
-): Promise<T> => {
-    const { axiosOptions = {}, notificationOptions } = options;
+): Promise<T | string | null> => {
+    const { withPagination, notificationOptions } = options;
     const {
         successNotificationsOn = true,
         errorNotificationsOn = true,
         ...props
     } = notificationOptions;
 
-    return await http
-        .post(url, data, axiosOptions)
-        .then(res => {
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify(data),
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
             if (successNotificationsOn) {
                 successNotification({
                     method: "post",
                     props,
                 });
             }
-            return res.data?.data || res;
-        })
-        .catch(error => {
+
+            const contentType = response.headers.get("content-type");
+
+            if (contentType?.includes("text")) {
+                const text = await response.text();
+                return text;
+            }
+
+            const json = await response.json();
+
+            if (!withPagination) return json.data;
+
+            const { data, current_page, last_page, next_page_url, ...rest } =
+                json;
+
+            return {
+                list: data,
+                currentPage: current_page,
+                lastPage: last_page,
+                nextPageUrl: next_page_url,
+                ...rest,
+            };
+        }
+
+        if (!response.ok) {
+            const error = await response.json();
             if (errorNotificationsOn) {
                 errorNotification({
-                    errorResponse: error.response,
+                    status: response.status,
+                    error: { ...error },
                     props,
                     method: "post",
                 });
             }
-        });
+        }
+    } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+            console.error(error);
+        }
+
+        if (errorNotificationsOn) {
+            errorNotification({
+                props,
+                method: "post",
+            });
+        }
+    }
+    return null;
 };
 
-export { postRequest };
+export default postFetch;

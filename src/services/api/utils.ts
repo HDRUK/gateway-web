@@ -1,55 +1,56 @@
+import { get } from "lodash";
 import { NotificationOptions } from "@/interfaces/Api";
-import { AxiosResponse } from "axios";
 import { Error } from "@/interfaces/Error";
-import notificationService from "../notification";
+import notificationService from "@/services/notification";
+import messages from "@/config/messages/en.json";
 
 interface ErrorNotificationProps {
     props: NotificationOptions;
-    errorResponse: AxiosResponse<Error>;
-    method: "delete" | "post" | "put" | "get";
+    status?: number;
+    error?: Error;
+    method: "delete" | "post" | "put" | "get" | "patch";
 }
 
 const errorNotification = ({
-    errorResponse,
+    error,
     method,
+    status,
     props,
 }: ErrorNotificationProps) => {
-    const { t, i18n, ...notificationProps } = props;
-    const { data, status } = errorResponse || {};
+    const { t, ...notificationProps } = props;
 
-    const fallbackTitle = i18n.exists(`api:common.error.status.${status}`)
-        ? t(`api:common.error.status.${status}`)
+    const title = get(messages, `api.common.error.status.${status}`)
+        ? t(`common.error.status.${status}`)
         : "There has been an error";
 
-    const title = data?.title || fallbackTitle;
-    const message =
-        data?.message ||
-        t(`api:common.error.${method}.message`, {
-            item: props.itemName || "Item",
+    const messageTransformed =
+        error?.message ||
+        t(`common.error.${method}.message`, {
+            item: props.itemName || "item",
         });
 
-    notificationService.apiError(message, {
+    notificationService.apiError(messageTransformed, {
         title,
-        message,
-        errors: data?.errors,
+        errors: error?.errors,
         ...notificationProps,
     });
 };
 
 interface SuccessNotificationProps {
     props: NotificationOptions;
-    method: "delete" | "post" | "put";
+    method: "delete" | "post" | "put" | "patch";
 }
 
 const successNotification = ({ props, method }: SuccessNotificationProps) => {
-    const { t, i18n, ...notificationProps } = props;
-    const customMessage = `api:${props.localeKey}.success.${method}.message`;
-    const shouldOverideMessage = i18n.exists(customMessage);
+    const { t, ...notificationProps } = props;
 
-    const message = shouldOverideMessage
-        ? t(customMessage)
-        : t(`api:common.success.${method}.message`, {
-              item: props.itemName || "Item",
+    const message = get(
+        messages,
+        `api.${props.localeKey}.success.${method}.message`
+    )
+        ? t(`${props.localeKey}.success.${method}.message`)
+        : t(`common.success.${method}.message`, {
+              item: props.itemName || "item",
           });
 
     notificationService.apiSuccess(message, { ...notificationProps });

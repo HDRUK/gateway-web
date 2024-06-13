@@ -1,15 +1,17 @@
+import { ReactNode } from "react";
+import { Breakpoint, IconButton, SxProps } from "@mui/material";
 import MuiDialog, { DialogProps as MuiDialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
-import React, { ReactNode } from "react";
 import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { CloseIcon } from "@/consts/icons";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 
 export interface DialogProps {
     children: ReactNode;
     onClose?: (props: unknown) => void;
     title: string;
+    maxWidth?: false | Breakpoint;
+    titleSx?: SxProps;
     showCloseButton?: boolean;
     styleProps?: MuiDialogProps;
 }
@@ -18,8 +20,10 @@ const Dialog = ({
     title,
     styleProps,
     children,
-    showCloseButton,
+    titleSx,
+    showCloseButton = true,
     onClose,
+    maxWidth = "tablet",
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
@@ -31,7 +35,7 @@ const Dialog = ({
     };
 
     const props: MuiDialogProps = {
-        maxWidth: "tablet",
+        maxWidth,
         fullWidth: true,
         open: true,
         ...styleProps,
@@ -53,16 +57,14 @@ const Dialog = ({
                     <CloseIcon />
                 </IconButton>
             )}
-            <MuiDialogTitle>{title}</MuiDialogTitle>
+            {title && (
+                <MuiDialogTitle sx={{ ...titleSx, pr: 6 }}>
+                    {title}
+                </MuiDialogTitle>
+            )}
             {children}
         </MuiDialog>
     );
-};
-
-Dialog.defaultProps = {
-    showCloseButton: true,
-    styleProps: {},
-    onClose: () => null,
 };
 
 export default Dialog;

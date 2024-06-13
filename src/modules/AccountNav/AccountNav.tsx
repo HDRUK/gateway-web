@@ -1,86 +1,75 @@
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Link from "@/components/Link";
+"use client";
+
+import { useState } from "react";
+import { Box, Skeleton } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
+import InitialsBadge from "@/components/InitialsBadge";
+import MenuDropdown from "@/components/MenuDropdown";
+import ProvidersDialog from "@/modules/ProvidersDialog";
+import useAccountMenu from "@/hooks/useAccountMenu";
+import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
 
-const links = [
-    { label: "Profile", href: "/account/profile" },
-    { label: "Team 1", href: "/account/team/team-1" },
-];
-
-interface AccountNavProps {
-    onCloseMenu: () => void;
-    onLogout: () => void;
-    anchorElement: null | HTMLElement;
-}
-
-const AccountNav = ({
-    anchorElement,
-    onCloseMenu,
-    onLogout,
-}: AccountNavProps) => {
-    const handleCloseUserMenu = () => {
-        if (typeof onCloseMenu === "function") {
-            onCloseMenu();
-        }
+const AccountNav = () => {
+    const { showDialog } = useDialog();
+    const t = useTranslations("components");
+    const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
+        null
+    );
+    const { isLoggedIn, user, isLoading } = useAuth();
+    const accountLinks = useAccountMenu();
+    const handleOpenNav = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElement(event.currentTarget);
     };
 
-    const handleLogout = () => {
-        if (typeof onLogout === "function") {
-            onLogout();
-        }
-    };
+    if (isLoading) {
+        return (
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                <Skeleton variant="circular" width={36} height={36} />
+                <Skeleton variant="rectangular" width={80} height={20} />
+            </Box>
+        );
+    }
+
+    if (isLoggedIn) {
+        return (
+            <>
+                <Box sx={{ display: "flex" }}>
+                    <InitialsBadge fullName={user?.name} />
+                    <Button
+                        disableRipple
+                        sx={{
+                            marginLeft: "5px",
+                            color: "white",
+                        }}
+                        variant="text"
+                        onClick={handleOpenNav}>
+                        {user?.firstname}
+                    </Button>
+                </Box>
+                <MenuDropdown
+                    anchorElement={anchorElement}
+                    handleClose={() => {
+                        setAnchorElement(null);
+                    }}
+                    menuItems={accountLinks}
+                />
+            </>
+        );
+    }
 
     return (
-        <Menu
-            PaperProps={{
-                elevation: 0,
-                sx: {
-                    overflow: "visible",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                    },
-                    "&:before": {
-                        content: '""',
-                        display: "block",
-                        position: "absolute",
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: "background.paper",
-                        transform: "translateY(-50%) rotate(45deg)",
-                        zIndex: 0,
-                    },
-                },
+        <Button
+            size="small"
+            variant="outlined"
+            color="secondary"
+            sx={{
+                color: "white",
             }}
-            id="account-nav"
-            anchorEl={anchorElement}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            onClose={handleCloseUserMenu}
-            open={Boolean(anchorElement)}>
-            {links.map(link => (
-                <Link key={link.label} underline="hover" href={link.href}>
-                    <MenuItem
-                        sx={{ width: 220 }}
-                        key={link.label}
-                        LinkComponent={Link}
-                        onClick={handleCloseUserMenu}>
-                        {link.label}
-                    </MenuItem>
-                </Link>
-            ))}
-            <Button variant="link">
-                <MenuItem sx={{ width: 220 }} onClick={handleLogout}>
-                    Logout
-                </MenuItem>
-            </Button>
-        </Menu>
+            onClick={() => showDialog(ProvidersDialog)}>
+            {t("DesktopNav.labels.signIn")}
+        </Button>
     );
 };
 

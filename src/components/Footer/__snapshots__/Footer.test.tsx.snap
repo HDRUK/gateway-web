@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should render component 1`] = `
+<div>
+  <div
+    class="mui-style-1z0r648"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-xwsd6o-MuiContainer-root"
+    >
+      <img
+        alt="HDRUK logo"
+        data-nimg="1"
+        decoding="async"
+        height="130"
+        loading="lazy"
+        src="/_next/image?url=%2Fimg.jpg&w=384&q=75"
+        srcset="/_next/image?url=%2Fimg.jpg&w=256&q=75 1x, /_next/image?url=%2Fimg.jpg&w=384&q=75 2x"
+        style="color: transparent;"
+        width="130"
+      />
+      <ul
+        class="mui-style-1v2o5lg"
+      >
+        <li>
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+            href="https://www.hdruk.ac.uk/"
+          >
+            HDR UK
+          </a>
+        </li>
+        <li>
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+            href=""
+          >
+            About
+          </a>
+        </li>
+        <li>
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+            href=""
+          >
+            Contact us
+          </a>
+        </li>
+        <li>
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+            href="https://twitter.com/HDR_UK"
+          >
+            <span
+              class="mui-style-172hjuw"
+            >
+              <img
+                alt="Twitter logo"
+                data-nimg="1"
+                decoding="async"
+                height="17"
+                loading="lazy"
+                src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+                srcset="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+                style="color: transparent;"
+                width="17"
+              />
+              <span>
+                Twitter
+              </span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+            href="https://www.linkedin.com/company/healthdataresearchuk/"
+          >
+            <span
+              class="mui-style-172hjuw"
+            >
+              <img
+                alt="LinkedIn logo"
+                data-nimg="1"
+                decoding="async"
+                height="17"
+                loading="lazy"
+                src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+                srcset="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+                style="color: transparent;"
+                width="17"
+              />
+              <span>
+                LinkedIn
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div
+        class="mui-style-vrpanz"
+      >
+        ©
+        HDR UK 2024. All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>
+`;

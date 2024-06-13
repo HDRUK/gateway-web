@@ -1,20 +1,16 @@
-import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
 import React, { ReactNode, useCallback } from "react";
-import {
-    CardActions,
-    CardContent,
-    CardHeader,
-} from "@mui/material";
+import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
-import Button from "../../Button";
+import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
+import Button from "@/components/Button";
 
 interface ApiErrorProps extends CustomContentProps {
     id: string;
-    showDismissButton: boolean;
+    showDismissButton?: boolean;
     action: ReactNode;
     title: string;
     message: string;
-    errors: { title: string; message: string }[];
+    errors?: { message: string }[];
 }
 
 const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(

@@ -1,9 +1,16 @@
-import { useTranslation } from "next-i18next";
+import { CircularProgress } from "@mui/material";
+import Box from "@/components/Box";
 
-const Loading = () => {
-    const { t } = useTranslation("components");
+interface LoadingProps {
+    size?: number;
+}
 
-    return <div>{t("Loading.text")}</div>;
+const Loading = ({ size = 48 }: LoadingProps) => {
+    return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress size={size} color="secondary" />
+        </Box>
+    );
 };
 
 export default Loading;

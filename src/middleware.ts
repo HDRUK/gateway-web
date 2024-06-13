@@ -1,19 +1,30 @@
-import { getUserFromToken } from "@/utils/cookies";
+import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
-import conf from "@/config/config";
 import type { NextRequest } from "next/server";
+import conf from "@/config/config";
+import { getUserFromToken } from "@/utils/cookies";
+import { RouteName } from "./consts/routeName";
 
-export function middleware(req: NextRequest) {
-    const token = req.cookies.get(conf.JWT_COOKIE)?.value;
+export function middleware(request: NextRequest) {
+    const token = request.cookies.get(conf.JWT_COOKIE)?.value;
     const authUser = getUserFromToken(token);
 
-    if (!authUser) {
-        return NextResponse.redirect(new URL("/", req.url));
+    if (
+        request.nextUrl.pathname.startsWith(
+            `/${RouteName.EN}/${RouteName.ACCOUNT}/`
+        ) &&
+        !authUser
+    ) {
+        return NextResponse.redirect(new URL("/", request.url));
     }
-
-    return NextResponse.next();
+    const handleI18nRouting = createIntlMiddleware({
+        locales: ["en"],
+        defaultLocale: "en",
+    });
+    const response = handleI18nRouting(request);
+    return response;
 }
 
 export const config = {
-    matcher: "/account/:path*",
+    matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };

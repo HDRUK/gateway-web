@@ -1,8 +1,5 @@
 /** @jsxImportSource @emotion/react */
-
-import { useTheme } from "@emotion/react";
 import { useMemo } from "react";
-
 import * as styles from "./InitialsBadge.styles";
 
 interface InitialsBadgeProps {
@@ -19,24 +16,20 @@ const getInitials = (fullName: string) => {
     return `${firstLetter.toUpperCase()}${lastLetter.toUpperCase()}`;
 };
 
-const InitialsBadge = ({ fullName, initials }: InitialsBadgeProps) => {
-    const theme = useTheme();
-
+const InitialsBadge = ({
+    fullName = "",
+    initials = "",
+}: InitialsBadgeProps) => {
     const generatedInitials = useMemo(() => {
         if (!fullName) return "";
         return getInitials(fullName);
     }, [fullName]);
 
     return (
-        <div css={styles.badge(theme)}>
+        <div css={styles.badge}>
             <div css={styles.initials}>{initials || generatedInitials}</div>
         </div>
     );
-};
-
-InitialsBadge.defaultProps = {
-    fullName: "",
-    initials: "",
 };
 
 export default InitialsBadge;

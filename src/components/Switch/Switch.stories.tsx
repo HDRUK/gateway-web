@@ -1,57 +1,47 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Form from "@/components/Form";
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
 import Switch from "./Switch";
-import Button from "../Button/Button";
 
-const meta: Meta<typeof Form> = {
-    component: Form,
+/** Mui documentation: https://mui.com/material-ui/react-switch */
+
+const meta: Meta<typeof Switch> = {
+    component: Switch,
     title: "Forms/Switch",
+    tags: ["autodocs"],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Form>;
+type Story = StoryObj<typeof Switch>;
 
 export type FormData = {
     first: string;
-    second: boolean;
 };
 
-const validationSchema = yup
-    .object({
-        second: yup.boolean().required().oneOf([true]),
-    })
-    .required();
-
-const switchLabels = {
-    checkedLabel: "On",
-    unCheckedLabel: "Off",
+const WrapperComponent = (args: { [key: string]: unknown }) => {
+    const { control } = useForm<FormData>({});
+    return <Switch {...args} control={control} name="first" />;
 };
 
-const DummyComp = () => {
-    const { handleSubmit, control } = useForm<FormData>({
-        defaultValues: {
-            first: "",
-            second: false,
-        },
-        resolver: yupResolver(validationSchema),
-    });
-    const onSubmit = (data: unknown) => console.log(data);
-    return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2} sx={{ marginBottom: 4, maxWidth: 240 }}>
-                <Switch {...switchLabels} control={control} name="first" />
-                <Switch {...switchLabels} control={control} name="second" />
-                <Button type="submit">Submit</Button>
-            </Stack>
-        </Form>
-    );
+export const Default: Story = {
+    args: {
+        checkedLabel: "On",
+        unCheckedLabel: "Off",
+    },
+    render: args => <WrapperComponent {...args} />,
 };
 
-export const SwitchComponent: Story = {
-    render: () => <DummyComp />,
+export const Size: Story = {
+    args: {
+        checkedLabel: "On",
+        unCheckedLabel: "Off",
+    },
+    render: args => (
+        <Stack maxWidth={300}>
+            <WrapperComponent {...args} size="small" />
+            <WrapperComponent {...args} size="medium" />
+            <WrapperComponent {...args} size="large" />
+        </Stack>
+    ),
 };

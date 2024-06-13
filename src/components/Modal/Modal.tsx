@@ -1,22 +1,26 @@
+import { ReactNode } from "react";
+import { IconButton } from "@mui/material";
 import MuiDialog, { DialogProps } from "@mui/material/Dialog";
-import MuiDialogTitle from "@mui/material/DialogTitle";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
-import React, { ReactNode } from "react";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import ModalButtons from "@/components/ModalButtons";
 import useDialog from "@/hooks/useDialog";
-import { GlobalDialogContextProps } from "@/providers/Dialog/DialogProvider";
-import { IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import ModalButtons from "../ModalButtons";
+import { CloseIcon } from "@/consts/icons";
+import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 
 export interface ModalProps {
-    content: ReactNode;
+    content?: ReactNode;
     onSuccess?: () => void;
     onCancel?: () => void;
     confirmText?: string;
     cancelText?: string;
-    title: string;
+    showCancel?: boolean;
+    showConfirm?: boolean;
+    title?: string;
+    invertCloseIconBehaviour?: boolean;
     styleProps?: DialogProps;
+    tertiaryButton?: { onAction: (props: unknown) => void; buttonText: string };
 }
 
 const Modal = () => {
@@ -31,13 +35,20 @@ const Modal = () => {
         onCancel,
         confirmText,
         cancelText,
+        showCancel = true,
+        showConfirm = true,
+        tertiaryButton,
+        invertCloseIconBehaviour,
         title,
         styleProps = {},
     } = dialogProps as unknown as ModalProps;
 
-    const handleCancel = () => {
-        if (typeof onCancel === "function") {
+    const handleClose = () => {
+        if (typeof onCancel === "function" && !invertCloseIconBehaviour) {
             onCancel();
+        }
+        if (typeof onSuccess === "function" && invertCloseIconBehaviour) {
+            onSuccess();
         }
         hideModal();
     };
@@ -50,11 +61,11 @@ const Modal = () => {
     };
 
     return (
-        <MuiDialog {...props} onClose={handleCancel}>
+        <MuiDialog {...props} onClose={handleClose}>
             <IconButton
                 data-testid="modal-close-icon"
                 aria-label="close"
-                onClick={handleCancel}
+                onClick={handleClose}
                 sx={{
                     position: "absolute",
                     right: 8,
@@ -65,8 +76,15 @@ const Modal = () => {
             </IconButton>
             <MuiDialogTitle>{title}</MuiDialogTitle>
             <MuiDialogContent>{content}</MuiDialogContent>
-            <MuiDialogActions>
+            <MuiDialogActions
+                sx={{
+                    justifyContent: showCancel ? "space-between" : "center",
+                    p: 2,
+                }}>
                 <ModalButtons
+                    showCancel={showCancel}
+                    showConfirm={showConfirm}
+                    tertiaryButton={tertiaryButton}
                     onSuccess={onSuccess}
                     onCancel={onCancel}
                     cancelText={cancelText}

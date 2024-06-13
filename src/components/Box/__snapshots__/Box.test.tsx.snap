@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Box should render component 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-19midj6"
+  >
+    Box content
+  </div>
+</div>
+`;

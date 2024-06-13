@@ -1,110 +1,155 @@
-import { HttpOptions, PaginationResponse } from "@/interfaces/Api";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { Application } from "@/interfaces/Application";
+import { AuthUser } from "@/interfaces/AuthUser";
+import { CohortRequest } from "@/interfaces/CohortRequest";
+import { Collection } from "@/interfaces/Collection";
+import { DataUse } from "@/interfaces/DataUse";
+import { Dataset } from "@/interfaces/Dataset";
+import { Filter } from "@/interfaces/Filter";
+import { FormHydrationSchema } from "@/interfaces/FormHydration";
+import { Team } from "@/interfaces/Team";
+import { Tool } from "@/interfaces/Tool";
+import apis from "@/config/apis";
+import config from "@/config/config";
+import { FILTERS_PER_PAGE } from "@/config/request";
+import { getUserFromToken } from "@/utils/cookies";
 
-interface FnProps {
-    options: HttpOptions | undefined;
-    data: unknown;
-    id: string | number;
-    payload: {
-        [key: string]: unknown;
+async function get<T>(
+    cookieStore: ReadonlyRequestCookies,
+    url: string
+): Promise<T> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+
+    const res = await fetch(`${url}`, {
+        headers: { Authorization: `Bearer ${jwt?.value}` },
+    });
+
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+    }
+
+    const { data } = await res.json();
+
+    return data;
+}
+
+async function getFilters(
+    cookieStore: ReadonlyRequestCookies
+): Promise<Filter[]> {
+    return get<Filter[]>(
+        cookieStore,
+        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`
+    );
+}
+
+async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+    const authUser = getUserFromToken(jwt?.value);
+    return get<AuthUser>(cookieStore, `${apis.usersV1UrlIP}/${authUser?.id}`);
+}
+
+async function getApplication(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string
+): Promise<Application> {
+    return get<Application>(
+        cookieStore,
+        `${apis.applicationsV1UrlIP}/${applicationId}`
+    );
+}
+
+async function getCohort(
+    cookieStore: ReadonlyRequestCookies,
+    cohortId: string
+): Promise<CohortRequest> {
+    return get<CohortRequest>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/${cohortId}`
+    );
+}
+
+async function getTeam(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<Team> {
+    const team = await get<Team>(cookieStore, `${apis.teamsV1UrlIP}/${teamId}`);
+
+    return {
+        ...team,
+        users: team?.users.map(user => ({
+            ...user,
+            roles: user.roles.filter(
+                // Remove global "hdruk" roles from team users
+                role => !role.name.startsWith("hdruk")
+            ),
+        })),
     };
 }
 
-const deleteOptimisticData = ({
-    options = {},
-    data,
-    id,
-}: Pick<FnProps, "options" | "data" | "id">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list.filter(
-                item => item.id !== id
-            ),
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
+async function getDataset(
+    cookieStore: ReadonlyRequestCookies,
+    datasetId: string
+): Promise<Dataset> {
+    return await get<Dataset>(
+        cookieStore,
+        `${apis.datasetsV1UrlIP}/${datasetId}`
+    );
+}
 
-    return Array.isArray(data) ? data.filter(item => item.id !== id) : {};
-};
+async function getDataUse(
+    cookieStore: ReadonlyRequestCookies,
+    dataUseId: string
+): Promise<DataUse> {
+    const dataUse = await get<DataUse[]>(
+        cookieStore,
+        `${apis.dataUseV1UrlIP}/${dataUseId}`
+    );
 
-const deleteMutateData = ({
-    options = {},
-    data,
-    id,
-}: Pick<FnProps, "options" | "data" | "id">) => {
-    return deleteOptimisticData({ options, data, id });
-};
+    return dataUse?.[0];
+}
 
-const postOptimisticData = ({
-    options = {},
-    data,
-    payload,
-}: Pick<FnProps, "options" | "data" | "payload">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list || [],
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
-    return Array.isArray(data) ? [...data, { ...payload }] : { ...payload };
-};
+async function getTool(
+    cookieStore: ReadonlyRequestCookies,
+    toolId: string
+): Promise<Tool> {
+    const tool = await get<Tool>(cookieStore, `${apis.toolsV1UrlIP}/${toolId}`);
 
-const postMutateData = ({ options = {}, data, payload, id }: FnProps) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list || [],
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
+    return tool;
+}
 
-    return Array.isArray(data)
-        ? [...data, { ...payload, id }]
-        : { ...payload, id };
-};
+async function getCollection(
+    cookieStore: ReadonlyRequestCookies,
+    collectionId: string
+): Promise<Collection> {
+    const collection = await get<Collection>(
+        cookieStore,
+        `${apis.collectionsV1UrlIP}/${collectionId}`
+    );
 
-const putOptimisticData = ({
-    options = {},
-    data,
-    payload,
-}: Pick<FnProps, "options" | "data" | "payload">) => {
-    if (options?.withPagination) {
-        return {
-            list: (data as PaginationResponse)?.list.map(item =>
-                item.id === payload.id ? payload : item
-            ),
-            lastPage: (data as PaginationResponse)?.lastPage,
-        };
-    }
+    return collection;
+}
 
-    return Array.isArray(data)
-        ? data.map(item => (item.id === payload.id ? payload : item))
-        : payload;
-};
-
-const putMutateData = ({
-    options = {},
-    data,
-    payload,
-}: Pick<FnProps, "options" | "data" | "payload">) => {
-    return putOptimisticData({ options, data, payload });
-};
-
-const ThrowPaginationError = (options: HttpOptions | undefined) => {
-    if (
-        (options?.withPagination && !options?.paginationKey) ||
-        (options?.paginationKey && !options?.withPagination)
-    ) {
-        throw Error(
-            "You must provide both paginationKey and withPagination=true"
-        );
-    }
-};
+async function getFormHydration(
+    cookieStore: ReadonlyRequestCookies,
+    schemaName: string,
+    schemaVersion: string
+): Promise<FormHydrationSchema> {
+    return get<FormHydrationSchema>(
+        cookieStore,
+        `${apis.formHydrationV1UrlIP}?name=${schemaName}&version=${schemaVersion}`
+    );
+}
 
 export {
-    deleteOptimisticData,
-    deleteMutateData,
-    ThrowPaginationError,
-    postOptimisticData,
-    postMutateData,
-    putOptimisticData,
-    putMutateData,
+    getFilters,
+    getUser,
+    getTeam,
+    getApplication,
+    getCohort,
+    getDataset,
+    getDataUse,
+    getTool,
+    getCollection,
+    getFormHydration,
 };

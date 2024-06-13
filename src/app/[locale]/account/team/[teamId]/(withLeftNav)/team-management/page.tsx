@@ -1,0 +1,25 @@
+import { cookies } from "next/headers";
+import { getTeam, getUser } from "@/utils/api";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
+import TeamManagement from "./components/TeamManagement";
+
+export const metadata = {
+    title: "Health Data Research Innovation Gateway - My Account - Team Management",
+    description: "",
+};
+
+export default async function TeamManagementPage({
+    params,
+}: {
+    params: { teamId: string };
+}) {
+    const { teamId } = params;
+    const cookieStore = cookies();
+    const user = await getUser(cookieStore);
+    const team = await getTeam(cookieStore, teamId);
+    const teamUser = getTeamUser(team?.users, user?.id);
+    const permissions = getPermissions(user.roles, teamUser?.roles);
+
+    return <TeamManagement permissions={permissions} team={team} />;
+}

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KeepingUpdated should render content 1`] = `
+<div>
+  <div
+    class="MuiBox-root mui-style-old1by"
+  >
+    <hr
+      class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
+    />
+    <p
+      class="MuiTypography-root MuiTypography-body1 mui-style-jbmzyj-MuiTypography-root"
+    >
+      Keeping you updated
+    </p>
+    <hr
+      class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
+    />
+    <div
+      class="MuiBox-root mui-style-106jpu6"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 mui-style-12uetcm-MuiTypography-root"
+      >
+        Feedback
+      </p>
+      <div
+        class="MuiFormControl-root MuiFormControl-fullWidth mui-style-2dhluk-MuiFormControl-root"
+      >
+        <label
+          class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-1mbnhdb-MuiFormControlLabel-root"
+        >
+          <span
+            class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-uh39g8-MuiButtonBase-root-MuiCheckbox-root"
+          >
+            <input
+              class="PrivateSwitchBase-input mui-style-1m9pwf3"
+              data-indeterminate="false"
+              name="contact_feedback"
+              type="checkbox"
+            />
+            <span
+              class="mui-style-f6vn6k"
+              font-size="medium"
+            />
+          </span>
+          <span
+            class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-1t8ylhr-MuiTypography-root"
+          >
+            I am happy to be contacted to share and give feedback on my experience with the Gateway
+          </span>
+        </label>
+      </div>
+    </div>
+    <hr
+      class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
+    />
+    <p
+      class="MuiTypography-root MuiTypography-body1 mui-style-1deuww1-MuiTypography-root"
+    >
+      As a user of the Gateway we take the privacy and security of your personal data seriously. Our privacy policy aims to give you information on how Health Data Research UK collects and processes your personal data through your use of this Gateway, including any data you may provide by emailing us.
+    </p>
+  </div>
+</div>
+`;

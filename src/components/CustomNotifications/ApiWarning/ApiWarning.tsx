@@ -1,18 +1,13 @@
-import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
 import React, { ReactNode, useCallback } from "react";
-import {
-    CardActions,
-    CardContent,
-    CardHeader,
-} from "@mui/material";
+import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
-import Button from "../../Button";
+import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
+import Button from "@/components/Button";
 
 interface ApiWarningProps extends CustomContentProps {
     id: string;
-    showDismissButton: boolean;
+    showDismissButton?: boolean;
     action: ReactNode;
-    title: string;
     message: string;
 }
 
@@ -40,9 +35,7 @@ const ApiWarning = React.forwardRef<HTMLDivElement, ApiWarningProps>(
                         }}
                         titleTypographyProps={{ fontSize: "18px" }}
                     />
-                    <CardContent>
-                        { message }
-                    </CardContent>
+                    <CardContent>{message}</CardContent>
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (
                             <Button

@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -37,3 +38,8 @@ next-env.d.ts
 
 # Tilt config
 tiltconf.json
+
+.vscode/
+
+# logs
+build-storybook.log

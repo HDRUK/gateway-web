@@ -1,42 +1,65 @@
-import useSWR, { KeyedMutator } from "swr";
-import { Error } from "@/interfaces/Error";
-import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
 import { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import useSWR, { KeyedMutator } from "swr";
+import apiService from "@/services/api";
 
 interface Response<T> {
     data: T | undefined;
-    error: Error | undefined;
     isLoading: boolean;
-    mutate: KeyedMutator<T>;
+    mutate: KeyedMutator<T | undefined>;
 }
 
 interface Options {
     localeKey?: string;
     withPagination?: boolean;
+    shouldFetch?: boolean;
+    keepPreviousData?: boolean;
+    errorNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
 }
 
-const useGet = <T>(url: string, options?: Options): Response<T> => {
-    const { t, i18n } = useTranslation("api");
-    const { localeKey, itemName, action } = options || {};
+const useGet = <T>(url: string | null, options?: Options): Response<T> => {
+    const {
+        localeKey,
+        itemName,
+        action,
+        keepPreviousData = false,
+        errorNotificationsOn,
+        shouldFetch = true,
+        withPagination = false,
+    } = options || {};
 
-    const { data, error, mutate, isLoading } = useSWR<T>(url, () => {
-        return apiService.getRequest(url, {
-            notificationOptions: {
-                localeKey,
-                itemName,
-                t,
-                i18n,
-                action,
-            },
-            withPagination: options?.withPagination,
-        });
-    });
+    const t = useTranslations("api");
+
+    const fetcher = async (url: string | null): Promise<T | undefined> => {
+        if (!url) return undefined;
+
+        try {
+            const data = await apiService.getRequest<T>(url, {
+                withPagination,
+                notificationOptions: {
+                    localeKey,
+                    itemName,
+                    errorNotificationsOn,
+                    t,
+                    action,
+                },
+            });
+            return data as T;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            throw error;
+        }
+    };
+
+    const { data, mutate, isLoading } = useSWR<T | undefined>(
+        shouldFetch ? url : null,
+        fetcher,
+        { keepPreviousData }
+    );
 
     return {
-        error,
         isLoading,
         data,
         mutate,

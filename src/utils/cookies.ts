@@ -1,5 +1,5 @@
-import { User } from "@/interfaces/User";
 import jwtDecode from "jwt-decode";
+import { User } from "@/interfaces/User";
 
 interface AuthToken {
     user: User;

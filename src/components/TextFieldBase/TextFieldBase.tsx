@@ -1,58 +1,60 @@
-/** @jsxImportSource @emotion/react */
-
+import { Control, FieldValues, Path, useController } from "react-hook-form";
+import { SerializedStyles } from "@emotion/react";
 import {
-    FormControl,
-    FormHelperText,
     InputAdornment,
     OutlinedInput,
     IconButton,
-    SvgIconTypeMap,
+    SxProps,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Cancel";
+import { IconType } from "@/interfaces/Ui";
+import FormInputWrapper from "@/components/FormInputWrapper";
+import { CancelIcon } from "@/consts/icons";
 
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { Control, useController } from "react-hook-form";
-import { useMemo } from "react";
-import { colors } from "@/config/theme";
-import Label from "../Label";
-import CharacterLimit from "../CharacterLimit";
-
-export interface TextFieldBaseProps {
+export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     label: string;
     placeholder?: string;
     info?: string;
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-        muiName: string;
-    };
-    getValues?: (name: string) => unknown;
-    setValue?: (name: string, value: string | number) => void;
-    name: string;
+    extraInfo?: string;
+    icon?: IconType;
+    setValue?: (name: keyof TFieldValues, value: unknown) => void;
+    name: TName;
     multiline?: boolean;
+    horizontalForm?: boolean;
     rows?: number;
     limit?: number;
     disabled?: boolean;
+    fullWidth?: boolean;
     showClearButton?: boolean;
-    control: Control;
+    control: Control<TFieldValues>;
     required?: boolean;
+    formControlSx?: SxProps;
+    css?: SerializedStyles;
 }
 
-const TextFieldBase = (props: TextFieldBaseProps) => {
+const TextFieldBase = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>(
+    props: TextFieldBaseProps<TFieldValues, TName>
+) => {
     const {
+        horizontalForm = false,
         label,
-        disabled,
+        fullWidth = true,
+        disabled = false,
         placeholder,
         info,
+        extraInfo,
         icon,
-        required,
+        required = false,
         limit,
         rows,
-        multiline,
+        multiline = false,
         control,
         name,
         setValue,
-        getValues,
-        showClearButton,
+        showClearButton = false,
+        formControlSx,
         ...inputProps
     } = props;
 
@@ -70,45 +72,22 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
             "You must pass `setValue` if you would like to show the clear button"
         );
     }
-    if (limit && getValues === undefined) {
-        throw Error(
-            "You must pass `getValues` if you would like to show the character count"
-        );
-    }
-
-    const characterCount = useMemo(() => {
-        if (typeof getValues !== "function") return 0;
-
-        const field = getValues(fieldProps.name);
-
-        if (!field || typeof field !== "string") return 0;
-
-        return field.length;
-    }, [fieldProps, getValues]);
 
     return (
-        <FormControl fullWidth sx={{ m: 0, mb: 2 }}>
-            <Label
-                required={required}
-                htmlFor="outlined-adornment-amount"
-                label={label}
-                sx={{
-                    ...(disabled && {
-                        color: colors.grey600,
-                    }),
-                }}
-            />
-            {info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                        color: colors.grey700,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
-            {limit && <CharacterLimit count={characterCount} limit={limit} />}
+        <FormInputWrapper
+            label={label}
+            name={name}
+            horizontalForm={horizontalForm}
+            info={info}
+            extraInfo={extraInfo}
+            limit={limit}
+            error={error}
+            value={fieldProps.value}
+            disabled={disabled}
+            required={required}
+            formControlSx={formControlSx}>
             <OutlinedInput
+                fullWidth={fullWidth}
                 size="small"
                 disabled={disabled}
                 multiline={multiline}
@@ -135,7 +114,7 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                                     }
                                 }}
                                 edge="end">
-                                <CloseIcon color="disabled" fontSize="small" />
+                                <CancelIcon color="disabled" fontSize="small" />
                             </IconButton>
                         </InputAdornment>
                     ),
@@ -146,28 +125,8 @@ const TextFieldBase = (props: TextFieldBaseProps) => {
                 value={fieldProps.value ?? ""}
                 {...inputProps}
             />
-
-            {error && (
-                <FormHelperText sx={{ fontSize: 14 }} error>
-                    {error.message}
-                </FormHelperText>
-            )}
-        </FormControl>
+        </FormInputWrapper>
     );
-};
-
-TextFieldBase.defaultProps = {
-    placeholder: "",
-    info: "",
-    disabled: false,
-    required: false,
-    multiline: false,
-    rows: undefined,
-    icon: undefined,
-    setValue: undefined,
-    getValues: undefined,
-    showClearButton: false,
-    limit: undefined,
 };
 
 export default TextFieldBase;

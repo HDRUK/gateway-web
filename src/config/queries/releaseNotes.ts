@@ -1,6 +1,6 @@
 const GetReleaseNotesQuery = `
   query GetReleaseNotes {
-    posts(where:{categoryName: "release-notes"}) {
+    posts(where:{categoryName: "releaseNotes"}) {
       edges {
         node {
           title

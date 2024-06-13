@@ -1,5 +1,7 @@
 const nextJest = require("next/jest");
 
+process.env.TZ = "UTC";
+
 const createJestConfig = nextJest({
     dir: "./",
 });
@@ -12,6 +14,7 @@ const customJestConfig = {
         "^@/services/(.*)$": "<rootDir>/src/services/$1",
         "^@/images/(.*)$": "<rootDir>/src/images/$1",
         "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",
+        "^@/consts/(.*)$": "<rootDir>/src/consts/$1",
         "^@/config/(.*)$": "<rootDir>/src/config/$1",
         "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
         "^@/modules/(.*)$": "<rootDir>/src/modules/$1",
@@ -24,10 +27,10 @@ const customJestConfig = {
         "<rootDir>/node_modules/",
         "<rootDir>/coverage",
         "<rootDir>/dist",
-        "<rootDir>/__tests__/testUtils.tsx",
+        "<rootDir>/src/utils/testUtils.tsx",
     ],
     coveragePathIgnorePatterns: [
-        "<rootDir>/__tests__/testUtils.tsx",
+        "<rootDir>/src/utils/testUtils.tsx",
         "<rootDir>/node_modules",
         "<rootDir>/mocks",
         "<rootDir>/src/config",

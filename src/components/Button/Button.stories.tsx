@@ -1,19 +1,26 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Stack from "@mui/material/Stack";
 import React from "react";
-import Button, { ButtonProps } from "./Button";
+import Stack from "@mui/material/Stack";
+import type { Meta, StoryObj } from "@storybook/react";
+import Button from "./Button";
+
+/**
+ * Mui documentation:
+ * https://mui.com/material-ui/react-button/
+ */
 
 const meta: Meta<typeof Button> = {
     component: Button,
+    tags: ["autodocs"],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Playground = (args: ButtonProps) => <Button {...args} />;
-Playground.args = {
-    children: "I'm a button",
+export const Default: Story = {
+    args: {
+        children: "I'm a button",
+    },
 };
 
 export const Color: Story = {

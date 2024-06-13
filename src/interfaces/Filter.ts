@@ -5,7 +5,8 @@ export type FilterType =
     | "course"
     | "project"
     | "paper"
-    | "dataUseRegister";
+    | "dataUseRegister"
+    | "dataProvider";
 
 export type FilterKey =
     | "phenotype"
@@ -46,12 +47,31 @@ export type FilterKey =
     | "organisationSector"
     | "fundersAndSponsors";
 
+export type DateRange = {
+    minYear: string;
+    maxYear: string;
+};
+
+export interface Bucket {
+    doc_count: number;
+    key: string;
+    to?: number;
+    from?: number;
+}
+
+export interface BucketCheckbox {
+    value: string;
+    label: string;
+    count?: number;
+}
+
 interface Filter {
     id: number;
     keys: FilterKey;
     enabled: boolean;
     type: FilterType;
     value: string;
+    buckets: Bucket[];
 }
 
 export type { Filter };

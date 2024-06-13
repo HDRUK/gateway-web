@@ -1,13 +1,15 @@
-import SocialProviders from "@/modules/profile/SocialProviders";
 import * as yup from "yup";
+import { GATEWAY_TERMS_URL } from "@/config/hrefs";
+import { REGEX_ALPHA_ONLY, REGEX_ORCID } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues = {
     firstname: "",
     lastname: "",
     email: "",
-    sector_id: "",
-    provider: "",
+    secondary_email: "",
+    preferred_email: "primary",
+    sector_id: 1,
     contact_news: false,
     contact_feedback: false,
     organisation: "",
@@ -20,12 +22,48 @@ const defaultValues = {
 
 const validationSchema = yup
     .object({
-        firstname: yup.string().required().label("First name"),
-        lastname: yup.string().required().label("Last name"),
-        email: yup.string().email().required().label("Primary email"),
-        sector_id: yup.number().required().label("Sector"),
+        firstname: yup
+            .string()
+            .required()
+            .matches(
+                REGEX_ALPHA_ONLY,
+                "First name should have alphabetic characters only"
+            )
+            .label("First name"),
+        lastname: yup
+            .string()
+            .required()
+            .matches(
+                REGEX_ALPHA_ONLY,
+                "Last name should have alphabetic characters only"
+            )
+            .label("Last name"),
+        secondary_email: yup
+            .string()
+            .email()
+            .transform(value => {
+                return value === "" ? null : value;
+            })
+            .label("Secondary email")
+            .nullable(),
+        sector_id: yup
+            .number()
+            .moreThan(1, "You must select a sector")
+            .required()
+            .label("Sector"),
         bio: yup.string().max(500).label("Bio"),
-        terms: yup.boolean().required().oneOf([true]),
+        orcid: yup
+            .string()
+            .matches(
+                REGEX_ORCID,
+                "ORCID iD must be of format https://orcid.org/xxxx-xxxx-xxxx-xxxx"
+            )
+
+            .label("ORCID iD"),
+        terms: yup
+            .boolean()
+            .required()
+            .oneOf([true], "Accept Terms & Conditions is required"),
         contact_news: yup.boolean(),
         contact_feedback: yup.boolean(),
     })
@@ -45,16 +83,28 @@ const formFields = [
         required: true,
     },
     {
-        label: "Primary email",
-        info: "Please enter your primary email address as this will be used for all contact from Health Data Research no matter how you choose to sign in",
+        label: "SSO email",
         name: "email",
         component: inputComponents.TextField,
         required: true,
+        readOnly: true,
     },
     {
-        label: "Your preferred sign in method",
-        customComponent: SocialProviders,
-        name: "provider",
+        label: "Secondary email",
+        info: "Enter a secondary email address if you want contact from Health Data Research to an alternative address",
+        name: "secondary_email",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Notification setting",
+        info: "Select your preferred notification email address",
+        name: "preferred_email",
+        component: inputComponents.RadioGroup,
+        radios: [
+            { label: "SSO email", value: "primary" },
+            { label: "Secondary email", value: "secondary" },
+        ],
+        required: true,
     },
     {
         label: "Sector",
@@ -79,7 +129,7 @@ const formFields = [
     },
     {
         label: "Domain",
-        info: "Add any keywords that describe your organisation and role. E.g. clinician, epilepsy",
+        info: "Add any keywords that describe your organisation and role e.g. clinician, epilepsy",
         name: "domain",
         component: inputComponents.TextField,
     },
@@ -90,12 +140,19 @@ const formFields = [
         component: inputComponents.TextField,
     },
     {
-        label: "ORCID",
+        label: "ORCID iD",
         name: "orcid",
         component: inputComponents.TextField,
     },
     {
-        label: "I agree to the HDRUK Terms and Conditions",
+        label: (
+            <span>
+                I agree to the HDRUK{" "}
+                <a target="_blank" href={GATEWAY_TERMS_URL} rel="noreferrer">
+                    Terms and Conditions
+                </a>
+            </span>
+        ),
         name: "terms",
         component: inputComponents.Checkbox,
         required: true,

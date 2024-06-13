@@ -1,41 +1,77 @@
-import http from "@/utils/http";
 import { RequestOptions } from "@/interfaces/Api";
 import { errorNotification } from "./utils";
 
 const getRequest = async <T>(
     url: string,
     options: RequestOptions
-): Promise<T> => {
-    const { withPagination, axiosOptions = {}, notificationOptions } = options;
+): Promise<T | unknown> => {
+    const { withPagination, notificationOptions } = options;
     const { errorNotificationsOn = true, ...props } = notificationOptions;
 
-    return await http
-        .get(url, axiosOptions)
-        .then(res => {
-            if (!withPagination) return res.data?.data;
+    try {
+        const response = await fetch(url, { credentials: "include" });
 
-            const {
-                data: list,
-                last_page: lastPage,
-                next_page_url: nextPageUrl,
-                ...rest
-            } = res.data || {};
+        if (response.ok) {
+            const contentType = response.headers.get("Content-Type");
+
+            if (contentType && contentType.includes("text/csv")) {
+                const text = await response.text();
+                const disposition = response.headers.get("Content-Disposition");
+
+                let filename = "download.csv";
+                if (disposition) {
+                    const match = disposition.match(/filename="(.*?)"/);
+                    if (match && match[1]) {
+                        [, filename] = match;
+                    }
+                }
+                return {
+                    content: text,
+                    type: "text/csv",
+                    filename,
+                };
+            }
+
+            const json = await response.json();
+
+            if (!withPagination) return json.data;
+
+            const { data, current_page, last_page, next_page_url, ...rest } =
+                json;
+
             return {
-                list,
-                lastPage,
-                nextPageUrl,
+                list: data,
+                currentPage: current_page,
+                lastPage: last_page,
+                nextPageUrl: next_page_url,
                 ...rest,
             };
-        })
-        .catch(error => {
+        }
+
+        if (!response.ok) {
+            const error = await response.json();
             if (errorNotificationsOn) {
                 errorNotification({
-                    errorResponse: error.response,
+                    status: response.status,
+                    error: { ...error },
                     props,
                     method: "get",
                 });
             }
-        });
+        }
+    } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+            console.error(error);
+        }
+
+        if (errorNotificationsOn) {
+            errorNotification({
+                props,
+                method: "get",
+            });
+        }
+    }
+    return null;
 };
 
-export { getRequest };
+export default getRequest;

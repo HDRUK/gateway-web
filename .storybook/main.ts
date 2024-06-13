@@ -1,13 +1,22 @@
 import type { StorybookConfig } from "@storybook/nextjs";
+
 const path = require("path");
 
 const config: StorybookConfig = {
-    stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+    staticDirs: ["../public"],
+    stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-interactions",
     ],
+    babel: async () => {
+        return {
+            presets: [
+                ["next/babel", { "preset-react": { runtime: "automatic" } }],
+            ],
+        };
+    },
     framework: {
         name: "@storybook/nextjs",
         options: {},
@@ -42,13 +51,15 @@ const config: StorybookConfig = {
                 "@/components": path.resolve(__dirname, "../src/components"),
                 "@/modules": path.resolve(__dirname, "../src/modules"),
                 "@/providers": path.resolve(__dirname, "../src/providers"),
+                "@/mocks": path.resolve(__dirname, "../mocks"),
                 "@/services": path.resolve(__dirname, "../src/services"),
                 "@/config": path.resolve(__dirname, "../src/config"),
                 "@/pages": path.resolve(__dirname, "../src/pages"),
                 "@/utils": path.resolve(__dirname, "../src/utils"),
+                "@/consts": path.resolve(__dirname, "../src/consts"),
+                fs: path.resolve(__dirname, "fsMock.js"),
             };
         }
-
         return config;
     },
 };

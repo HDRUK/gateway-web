@@ -1,0 +1,12 @@
+const REGEX_ALPHA_ONLY = /^[aA-zZ\s]+$/;
+const REGEX_NUMERIC_ONLY = /^[0-9]*$/;
+const REGEX_ORCID =
+    /^https:\/\/orcid.org\/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]{1}$/;
+const REGEX_ALPHA_NUMERIC_ONLY = /^[A-Za-z0-9]*$/;
+
+export {
+    REGEX_ALPHA_ONLY,
+    REGEX_NUMERIC_ONLY,
+    REGEX_ALPHA_NUMERIC_ONLY,
+    REGEX_ORCID,
+};

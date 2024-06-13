@@ -1,56 +1,28 @@
-import { useSWRConfig } from "swr";
-import apiService from "@/services/api";
-import { useTranslation } from "next-i18next";
+import { useTranslations } from "next-intl";
 import { HttpOptions } from "@/interfaces/Api";
-import {
-    ThrowPaginationError,
-    postMutateData,
-    postOptimisticData,
-} from "@/utils/api";
+import apiService from "@/services/api";
 
 const usePost = <T>(url: string, options?: HttpOptions) => {
-    const { mutate } = useSWRConfig();
-    const { t, i18n } = useTranslation("api");
+    const t = useTranslations("api");
     const {
         localeKey,
         itemName,
         action,
-        successNotificationsOn,
-        errorNotificationsOn,
-        data = {},
-        ...mutatorOptions
+        successNotificationsOn = true,
+        errorNotificationsOn = true,
     } = options || {};
 
-    ThrowPaginationError(options);
-
-    return (payload: Omit<T, "id">) => {
-        mutate(
-            options?.paginationKey || url,
-            async () => {
-                const id: string | number = await apiService.postRequest(
-                    url,
-                    payload,
-                    {
-                        notificationOptions: {
-                            localeKey,
-                            itemName,
-                            successNotificationsOn,
-                            errorNotificationsOn,
-                            t,
-                            i18n,
-                            action,
-                        },
-                    }
-                );
-                return postMutateData({ options, data, payload, id });
+    return async (payload: T) => {
+        return await apiService.postRequest<T>(url, payload, {
+            notificationOptions: {
+                localeKey,
+                itemName,
+                successNotificationsOn,
+                errorNotificationsOn,
+                t,
+                action,
             },
-            {
-                // data to immediately update the client cache
-                optimisticData: postOptimisticData({ options, data, payload }),
-                rollbackOnError: true,
-                ...mutatorOptions,
-            }
-        );
+        });
     };
 };
 

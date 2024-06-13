@@ -43,6 +43,10 @@ module.exports = {
         "plugin:storybook/recommended",
     ],
     rules: {
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["off"],
+        "security/detect-object-injection": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
         "react/no-unknown-property": ["error", { ignore: ["css"] }],
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "error",
@@ -72,6 +76,8 @@ module.exports = {
                 aspects: ["invalidHref", "preferButton"],
             },
         ],
+        camelcase: "off",
+        "react/require-default-props": "off",
         "no-nested-ternary": "off",
         "import/prefer-default-export": "off",
         "react/function-component-definition": [
@@ -93,5 +99,17 @@ module.exports = {
             },
         ],
         "no-undef": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                devDependencies: [
+                    "**/*.test.ts",
+                    "**/*.test.tsx",
+                    "jest.config.js",
+                    "jest.setup.js",
+                    "**/testUtils.tsx",
+                ],
+            },
+        ],
     },
 };
