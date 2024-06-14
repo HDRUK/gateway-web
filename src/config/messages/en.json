@@ -756,6 +756,13 @@
             "bookmarks": "Bookmarks"
         },
         "dialogs": {
+            "SaveSearch": {
+                "name": "Name your search query",
+                "nameRequired": "A search query title is required",
+                "cancelButton": "Cancel",
+                "saveQueryButton": "Save query",
+                "nameLabel": "Enter a title to remember this search query"
+            },
             "ProvidersDialog": {
                 "title": "Sign in or create an account",
                 "signIn": "Sign in with username",

@@ -1,4 +1,5 @@
 import { get } from "lodash";
+import { ReadonlyURLSearchParams } from "next/navigation";
 import { Metadata } from "@/interfaces/Dataset";
 import { formatDate } from "./date";
 
@@ -23,4 +24,14 @@ const getPopulationSize = (
         : notReportedLabel;
 };
 
-export { getDateRange, getPopulationSize };
+const getAllParams = (searchParams: ReadonlyURLSearchParams | null) => {
+    const params: { [key: string]: string } = {};
+
+    Array.from(searchParams?.entries() || []).forEach(([key, value]) => {
+        params[key] = value;
+    });
+
+    return params;
+};
+
+export { getDateRange, getPopulationSize, getAllParams };
