@@ -32,10 +32,12 @@ import DataListItem from "./components/DataListItem";
 import DeleteAction from "./components/DeleteAction";
 
 const TRANSLATION_PATH = "pages.saved_searches";
+const TRANSLATION_PATH_SEARCH = "pages.search";
 
 const SavedSearches = () => {
     const { isLoading } = useAuth();
     const t = useTranslations(TRANSLATION_PATH);
+    const tSearch = useTranslations(TRANSLATION_PATH_SEARCH);
 
     const { showModal, hideModal } = useModal();
 
@@ -147,7 +149,9 @@ const SavedSearches = () => {
                                                                 "labels.entityType"
                                                             )}
                                                             secondary={toTitleCase(
-                                                                search_endpoint
+                                                                tSearch(
+                                                                    search_endpoint
+                                                                )
                                                             )}
                                                         />
                                                         <DataListItem

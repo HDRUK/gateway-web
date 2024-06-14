@@ -160,6 +160,8 @@ export interface SavedSearchWithPivot {
     sort_order: string;
     filters: SavedSearchFilterWithPivot[];
     enabled: boolean;
+    updated_at: string;
+    created_at: string;
 }
 
 export enum ViewType {
