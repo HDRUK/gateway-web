@@ -391,6 +391,34 @@
                 "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
             }
         },
+        "saved_searches": {
+            "title": "Saved searches",
+            "text": "Use this page to display saved search results and manage your saved searches.",
+            "labels": {
+                "entityType": "Entity type",
+                "terms": "Term(s)",
+                "filters": "Filter(s)"
+            },
+            "dateSaved": "Date saved: {date}",
+            "deleteModal": {
+                "title": "Are you sure you want to delete {name}?",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "noData": "None",
+            "common": {
+                "success": {
+                    "delete": {
+                        "message": "Your saved search was deleted successfully"
+                    }
+                },
+                "error": {
+                    "status": {
+                        "500": "There was an error when trying to delete your saved search"
+                    }
+                }
+            }
+        },
         "search": {
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",

@@ -67,8 +67,9 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
+import { FILTER_TYPE_MAPPING } from "@/consts/search";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
-import { getAllParams } from "@/utils/search";
+import { getAllParams, getSaveSearchFilters } from "@/utils/search";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
@@ -83,14 +84,6 @@ import Sort from "../Sort";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
-const FILTER_CATEGORY: { [key: string]: string } = {
-    datasets: "dataset",
-    dur: "dataUseRegister",
-    publications: "paper",
-    collections: "collection",
-    data_providers: "dataProvider",
-    tools: "tool",
-};
 const STATIC_FILTER_SOURCE = "source";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
@@ -164,7 +157,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const allSearchParams = getAllParams(searchParams);
 
     const hasNotSearched = () => {
-        const keys = Object.keys(allSearchParams);
+        const keys = Object.keys(allSearchParams).filter(
+            (key: string) => allSearchParams[key] !== ""
+        );
         return keys.length === 1 && keys[0] === "type";
     };
 
@@ -210,23 +205,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         updatePath(QUERY_FIELD, "");
     };
 
-    const getSaveSearchFilters = () => {
-        const typeFilters = filters.filter(
-            filter => FILTER_CATEGORY[queryParams.type] === filter.type
-        );
-
-        return typeFilters
-            .map(({ id, keys }) => {
-                const terms = queryParams[keys as keyof SearchQueryParams];
-
-                return {
-                    id,
-                    terms: typeof terms === "string" ? [terms] : terms,
-                };
-            })
-            .filter(({ terms }) => !!terms);
-    };
-
     const {
         data,
         isLoading: isSearching,
@@ -241,7 +219,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }`,
         {
             query: queryParams.query,
-            ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
+            ...pickOnlyFilters(
+                FILTER_TYPE_MAPPING[queryParams.type],
+                queryParams
+            ),
         },
         {
             keepPreviousData: true,
@@ -448,7 +429,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             sort_order: queryParams.sort || "",
             name,
             search_endpoint: queryParams.type,
-            filters: getSaveSearchFilters(),
+            filters: getSaveSearchFilters(filters, queryParams),
             enabled: true,
         }).then(response => {
             if (response) hideDialog();
@@ -522,7 +503,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         label={t("filtersApplied")}
                         selectedFilters={selectedFilters}
                         handleDelete={removeFilter}
-                        filterCategory={FILTER_CATEGORY[queryParams.type]}
+                        filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
                     />
                 </Box>
                 <Box sx={{ display: "flex", gap: 2 }}>
@@ -592,7 +573,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}>
                     <FilterPanel
                         selectedFilters={selectedFilters}
-                        filterCategory={FILTER_CATEGORY[queryParams.type]}
+                        filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
                         filterSourceData={filters}
                         setFilterQueryParams={(
                             filterValues: string[],
