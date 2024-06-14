@@ -1,7 +1,11 @@
 import { Box } from "@mui/material";
 import { DeleteForeverIcon } from "@/consts/icons";
 
-export default function DeleteAction({ onDelete, id }) {
+interface DeleteActionProps {
+    onDelete: () => void;
+}
+
+export default function DeleteAction({ onDelete }: DeleteActionProps) {
     return (
         <Box
             sx={{
@@ -14,8 +18,11 @@ export default function DeleteAction({ onDelete, id }) {
             }}>
             <DeleteForeverIcon
                 color="primary"
-                onClick={() => onDelete(id)}
+                onClick={onDelete}
                 role="button"
+                sx={{
+                    cursor: "pointer",
+                }}
             />
         </Box>
     );

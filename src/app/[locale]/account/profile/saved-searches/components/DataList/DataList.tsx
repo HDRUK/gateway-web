@@ -1,6 +1,8 @@
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 
-export default function DataList({ children, ...restProps }) {
+type DataListProps = BoxProps;
+
+export default function DataList({ children, ...restProps }: DataListProps) {
     return (
         <Box
             {...restProps}

@@ -394,6 +394,18 @@
         "saved_searches": {
             "title": "Saved searches",
             "text": "Use this page to display saved search results and manage your saved searches.",
+            "labels": {
+                "entityType": "Entity type",
+                "terms": "Term(s)",
+                "filters": "Filter(s)"
+            },
+            "dateSaved": "Date saved: {date}",
+            "deleteModal": {
+                "title": "Are you sure you want to delete {name}?",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "noData": "None",
             "common": {
                 "success": {
                     "delete": {
