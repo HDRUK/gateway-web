@@ -117,10 +117,10 @@ const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
 };
 
 export {
-    isQueryEmpty,
+    formatBucketCounts,
     getAllSelectedFilters,
     groupByType,
-    transformQueryFiltersToForm,
-    formatBucketCounts,
+    isQueryEmpty,
     pickOnlyFilters,
+    transformQueryFiltersToForm,
 };

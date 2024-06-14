@@ -39,4 +39,5 @@ export enum RouteName {
     TERMS = "terms-and-conditions",
     PUBLICATION = "publication",
     NEWSLETTER_SIGNUP = "newsletter-signup",
+    SAVED_SEARCHES = "saved-searches",
 }

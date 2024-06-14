@@ -1,6 +1,13 @@
 import { get } from "lodash";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { Metadata } from "@/interfaces/Dataset";
+import { Filter } from "@/interfaces/Filter";
+import {
+    SavedSearchFilterWithPivot,
+    SearchQueryParams,
+} from "@/interfaces/Search";
+import { RouteName } from "@/consts/routeName";
+import { FILTER_TYPE_MAPPING } from "@/consts/search";
 import { formatDate } from "./date";
 
 const getDateRange = (metadata: Metadata) => {
@@ -34,4 +41,59 @@ const getAllParams = (searchParams: ReadonlyURLSearchParams | null) => {
     return params;
 };
 
-export { getDateRange, getPopulationSize, getAllParams };
+const getFiltersFromSaveSearch = (filters: SavedSearchFilterWithPivot[]) => {
+    return filters.reduce((accumulator, currentValue) => {
+        const {
+            keys,
+            pivot: { terms },
+        } = currentValue;
+
+        return {
+            ...accumulator,
+            [keys]: JSON.parse(terms),
+        };
+    }, {});
+};
+
+const getSaveSearchFilters = (
+    filters: Filter[],
+    queryParams: SearchQueryParams
+) => {
+    const typeFilters = filters.filter(
+        filter => FILTER_TYPE_MAPPING[queryParams.type] === filter.type
+    );
+
+    return typeFilters
+        .map(({ id, keys }) => {
+            const terms = queryParams[keys as keyof SearchQueryParams];
+
+            return {
+                id,
+                terms: typeof terms === "string" ? [terms] : terms,
+            };
+        })
+        .filter(({ terms }) => !!terms);
+};
+
+const getUrlFromSearchParams = (
+    type: string,
+    filters: { [key: string]: string[] },
+    sort: string
+) => {
+    const params: string[] = [];
+
+    Object.keys(filters).forEach((key: string) => {
+        params.push(`${key}=${filters[key].join(",")}`);
+    });
+
+    return `/${RouteName.SEARCH}?type=${type}&${params.join("&")}&sort=${sort}`;
+};
+
+export {
+    getAllParams,
+    getDateRange,
+    getFiltersFromSaveSearch,
+    getPopulationSize,
+    getSaveSearchFilters,
+    getUrlFromSearchParams,
+};

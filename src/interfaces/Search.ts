@@ -144,6 +144,24 @@ export interface SavedSearchPayload {
     enabled: boolean;
 }
 
+export interface SavedSearchFilterWithPivot {
+    id: number;
+    keys: string;
+    pivot: {
+        terms: string;
+    };
+}
+
+export interface SavedSearchWithPivot {
+    id: number;
+    name: string;
+    search_endpoint: string;
+    search_term: string;
+    sort_order: string;
+    filters: SavedSearchFilterWithPivot[];
+    enabled: boolean;
+}
+
 export enum ViewType {
     TABLE = "table",
     LIST = "list",
