@@ -58,6 +58,38 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     label: STATIC_FILTER_SOURCE,
     value: "",
 };
+const FILTER_ORDERING: { [key: string]: { [key: string]: number } } = {
+    dataset: {
+        containsTissue: 1,
+        dataUseTitles: 2,
+        dateRange: 3,
+        populationSize: 4,
+        geographicLocation: 5,
+        accessService: 6,
+        publisherName: 7,
+    },
+    dataUseRegister: {
+        datasetTitles: 1,
+        publisherName: 2,
+        sector: 3,
+        organisationName: 4,
+    },
+    collection: {
+        publisherName: 1,
+        datasetTitles: 2,
+    },
+    paper: {
+        source: 1,
+        publicationDate: 2,
+        datasetTitles: 3,
+    },
+    tool: {
+        typeCategory: 1,
+        datasetTitles: 2,
+        programmingLanguages: 3,
+        license: 4,
+    },
+};
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
@@ -345,6 +377,14 @@ const FilterPanel = ({
                         : item2.label === FILTER_CONTAINS_TISSUE
                         ? 1
                         : 0
+                )
+                .sort((item1, item2) =>
+                    FILTER_ORDERING[filterCategory]?.[item1.label]
+                        ? FILTER_ORDERING[filterCategory]?.[item2.label]
+                            ? FILTER_ORDERING[filterCategory][item1.label] -
+                              FILTER_ORDERING[filterCategory][item2.label]
+                            : -1
+                        : 1
                 )
                 .map(filterItem => {
                     const { label } = filterItem;
