@@ -157,7 +157,9 @@ const Search = ({ filters }: { filters: Filter[] }) => {
     const allSearchParams = getAllParams(searchParams);
 
     const hasNotSearched = () => {
-        const keys = Object.keys(allSearchParams);
+        const keys = Object.keys(allSearchParams).filter(
+            (key: string) => allSearchParams[key] !== ""
+        );
         return keys.length === 1 && keys[0] === "type";
     };
 
