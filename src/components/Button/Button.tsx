@@ -1,4 +1,5 @@
 import React, { ComponentPropsWithoutRef } from "react";
+import { CircularProgress } from "@mui/material";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
 type ButtonBaseProps = Pick<
@@ -13,11 +14,15 @@ type ButtonBaseProps = Pick<
     | "startIcon"
     | "endIcon"
 >;
-export type ButtonProps = ButtonBaseProps & ComponentPropsWithoutRef<"button">;
+export type ButtonProps = ButtonBaseProps &
+    ComponentPropsWithoutRef<"button"> & {
+        isLoading?: boolean;
+    };
 
 const Button: React.FC<ButtonProps> = ({
     color = "primary",
     variant = "contained",
+    isLoading,
     children,
     ...rest
 }) => {
@@ -31,6 +36,9 @@ const Button: React.FC<ButtonProps> = ({
             }}
             {...rest}>
             {children}
+            {isLoading && (
+                <CircularProgress size={14} color="inherit" sx={{ ml: 1 }} />
+            )}
         </MuiButton>
     );
 };

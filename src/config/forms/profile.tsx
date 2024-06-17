@@ -54,10 +54,11 @@ const validationSchema = yup
         bio: yup.string().max(500).label("Bio"),
         orcid: yup
             .string()
-            .matches(
-                REGEX_ORCID,
-                "ORCID iD must be of format https://orcid.org/xxxx-xxxx-xxxx-xxxx"
-            )
+            .matches(REGEX_ORCID, {
+                message:
+                    "ORCID iD must be of format https://orcid.org/xxxx-xxxx-xxxx-xxxx",
+                excludeEmptyString: true,
+            })
 
             .label("ORCID iD"),
         terms: yup

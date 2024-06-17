@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import {
+    SavedSearchPayload,
     SearchCategory,
     SearchPaginationType,
     SearchQueryParams,
@@ -29,23 +30,31 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import ProvidersDialog from "@/modules/ProvidersDialog";
+import SaveSearchDialog, {
+    SaveSearchValues,
+} from "@/modules/SaveSearchDialog.tsx";
+import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
+import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
 import {
+    FILTER_ACCESS_SERVICE,
+    FILTER_CONTAINS_TISSUE,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_ORGANISATION_NAME,
+    FILTER_POPULATION_SIZE,
+    FILTER_PROGRAMMING_LANGUAGE,
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
-    FILTER_ACCESS_SERVICE,
-    FILTER_POPULATION_SIZE,
     FILTER_TYPE_CATEGORY,
-    FILTER_PROGRAMMING_LANGUAGE,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     QUERY_FIELD,
@@ -58,7 +67,9 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
+import { FILTER_TYPE_MAPPING } from "@/consts/search";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
+import { getAllParams, getSaveSearchFilters } from "@/utils/search";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
@@ -73,22 +84,16 @@ import Sort from "../Sort";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
-const FILTER_CATEGORY: { [key: string]: string } = {
-    datasets: "dataset",
-    dur: "dataUseRegister",
-    publications: "paper",
-    collections: "collection",
-    data_providers: "dataProvider",
-    tools: "tool",
-};
 const STATIC_FILTER_SOURCE = "source";
 
 const Search = ({ filters }: { filters: Filter[] }) => {
+    const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
+    const { isLoggedIn } = useAuth();
 
     const getParamString = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
@@ -140,6 +145,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             FILTER_PROGRAMMING_LANGUAGE
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
+        [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
     });
 
     const { handleDownload } = useSearch(
@@ -147,6 +153,15 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         resultsView,
         queryParams
     );
+
+    const allSearchParams = getAllParams(searchParams);
+
+    const hasNotSearched = () => {
+        const keys = Object.keys(allSearchParams).filter(
+            (key: string) => allSearchParams[key] !== ""
+        );
+        return keys.length === 1 && keys[0] === "type";
+    };
 
     useEffect(() => {
         if (
@@ -204,7 +219,10 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }`,
         {
             query: queryParams.query,
-            ...pickOnlyFilters(FILTER_CATEGORY[queryParams.type], queryParams),
+            ...pickOnlyFilters(
+                FILTER_TYPE_MAPPING[queryParams.type],
+                queryParams
+            ),
         },
         {
             keepPreviousData: true,
@@ -217,6 +235,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 ),
         }
     );
+
+    const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
 
     useEffect(() => {
         mutate();
@@ -242,6 +262,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_POPULATION_SIZE]: undefined,
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
+            [FILTER_CONTAINS_TISSUE]: undefined,
         });
     };
 
@@ -402,6 +423,32 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     };
 
+    const handleSaveSubmit = ({ name }: SaveSearchValues) => {
+        saveSearchQuery({
+            search_term: queryParams.query || "",
+            sort_order: queryParams.sort || "",
+            name,
+            search_endpoint: queryParams.type,
+            filters: getSaveSearchFilters(filters, queryParams),
+            enabled: true,
+        }).then(response => {
+            if (response) hideDialog();
+        });
+    };
+
+    const handleSaveClick = () => {
+        if (isLoggedIn) {
+            showDialog(() => (
+                <SaveSearchDialog
+                    onSubmit={handleSaveSubmit}
+                    onCancel={() => hideDialog()}
+                />
+            ));
+        } else {
+            showDialog(ProvidersDialog);
+        }
+    };
+
     const getExplainerText = () => {
         switch (queryParams.type) {
             case SearchCategory.PUBLICATIONS:
@@ -456,11 +503,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         label={t("filtersApplied")}
                         selectedFilters={selectedFilters}
                         handleDelete={removeFilter}
-                        filterCategory={FILTER_CATEGORY[queryParams.type]}
+                        filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
                     />
                 </Box>
-                <Box sx={{ display: "flex" }}>
-                    <Box sx={{ p: 0, mr: "1em" }}>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                    <Box sx={{ p: 0 }}>
                         <Sort
                             sortName={SORT_FIELD}
                             defaultValue={queryParams.sort}
@@ -468,7 +515,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                             sortOptions={getSortOptions()}
                         />
                     </Box>
-
                     <Button
                         onClick={() =>
                             !isDownloading && downloadSearchResults()
@@ -477,6 +523,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         startIcon={<DownloadIcon />}
                         disabled={isDownloading || !data?.list?.length}>
                         {t("downloadResults")}
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        disabled={hasNotSearched()}
+                        onClick={handleSaveClick}>
+                        Save search
                     </Button>
                 </Box>
             </ActionBar>
@@ -520,7 +573,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     }}>
                     <FilterPanel
                         selectedFilters={selectedFilters}
-                        filterCategory={FILTER_CATEGORY[queryParams.type]}
+                        filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
                         filterSourceData={filters}
                         setFilterQueryParams={(
                             filterValues: string[],

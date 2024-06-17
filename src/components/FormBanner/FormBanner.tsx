@@ -13,6 +13,7 @@ interface FormBannerProps {
     tabItems: Tab[];
     completionPercentage?: number;
     optionalPercentage?: number;
+    actionButtonsEnabled?: boolean;
     downloadAction: () => void;
     makeActiveAction: () => void;
     saveAsDraftAction: () => void;
@@ -25,6 +26,7 @@ const FormBanner = ({
     tabItems,
     completionPercentage = 0,
     optionalPercentage = 0,
+    actionButtonsEnabled = true,
     downloadAction,
     makeActiveAction,
     saveAsDraftAction,
@@ -57,14 +59,16 @@ const FormBanner = ({
                     <Button
                         data-testid="btn-make-active"
                         variant="text"
-                        onClick={makeActiveAction}>
+                        onClick={makeActiveAction}
+                        disabled={!actionButtonsEnabled}>
                         {t("makeActive")}
                     </Button>
                     |
                     <Button
                         data-testid="btn-save-draft"
                         variant="text"
-                        onClick={saveAsDraftAction}>
+                        onClick={saveAsDraftAction}
+                        disabled={!actionButtonsEnabled}>
                         {t("saveDraft")}
                     </Button>
                 </Column>

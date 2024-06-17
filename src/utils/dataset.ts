@@ -49,7 +49,7 @@ const formatYearStat = (startYear?: string, endYear?: string) => {
 };
 
 const getLatestVersion = (dataset: Dataset) => {
-    return dataset?.latest_metadata || dataset.versions[0];
+    return dataset?.latest_metadata || dataset?.versions?.[0];
 };
 
 export {
