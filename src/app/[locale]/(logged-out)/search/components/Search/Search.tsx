@@ -689,7 +689,6 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                         ),
                                     })}
                                 </Typography>
-
                                 <Typography variant="h3">
                                     {t.rich("publicationWelcomeText4", {
                                         // eslint-disable-next-line react/no-unstable-nested-components
