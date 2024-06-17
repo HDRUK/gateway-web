@@ -83,6 +83,11 @@
         "all": "All"
     },
     "pages": {
+        "releases": {
+            "noResults": "There are no releases for {year}",
+            "description1": "The Gateway requires a significant volume of design and development work to deliver our vision and ambition. To achieve this our teams are continually working on the Gateway and deliver major software releases approximately every 4 weeks.",
+            "description2": "On this page we explain what new developments we are currently working on and list the major releases made since the Gateway was released in its current format in June 2020. Clicking on an entry provides further detail about the functionality that the particular release delivered."
+        },
         "about": {
             "ourMissionAndPurpose": {
                 "noData": "Nothing to see here"
