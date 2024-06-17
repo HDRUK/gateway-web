@@ -58,37 +58,37 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     label: STATIC_FILTER_SOURCE,
     value: "",
 };
-const FILTER_ORDERING: { [key: string]: { [key: string]: number } } = {
-    dataset: {
-        containsTissue: 1,
-        dataUseTitles: 2,
-        dateRange: 3,
-        populationSize: 4,
-        geographicLocation: 5,
-        accessService: 6,
-        publisherName: 7,
-    },
-    dataUseRegister: {
-        datasetTitles: 1,
-        publisherName: 2,
-        sector: 3,
-        organisationName: 4,
-    },
-    collection: {
-        publisherName: 1,
-        datasetTitles: 2,
-    },
-    paper: {
-        source: 1,
-        publicationDate: 2,
-        datasetTitles: 3,
-    },
-    tool: {
-        typeCategory: 1,
-        datasetTitles: 2,
-        programmingLanguages: 3,
-        license: 4,
-    },
+const FILTER_ORDERING: { [key: string]: Array<string> } = {
+    dataset: [
+        'containsTissue',
+        'dataUseTitles',
+        'dateRange',
+        'populationSize',
+        'geographicLocation',
+        'accessService',
+        'publisherName',
+    ],
+    dataUseRegister: [
+        'datasetTitles',
+        'publisherName',
+        'sector',
+        'organisationName',
+    ],
+    collection: [
+        'publisherName',
+        'datasetTitles',
+    ],
+    paper: [
+        'source',
+        'publicationDate',
+        'datasetTitles',
+    ],
+    tool: [
+        'typeCategory',
+        'datasetTitles',
+        'programmingLanguages',
+        'license',
+    ],
 };
 
 type DefaultValues = {
@@ -284,6 +284,28 @@ const FilterPanel = ({
         setFilterQueryParams([], filterSection);
     };
 
+    const getFilterSortOrder = (itemA: {
+        label: string;
+        value: string;
+        buckets: BucketCheckbox[];
+    }, itemB: {
+        label: string;
+        value: string;
+        buckets: BucketCheckbox[];
+    }) => {
+        const ordering = FILTER_ORDERING[filterCategory];
+        const item1 = ordering?.indexOf(itemA.label);
+        const item2 = ordering?.indexOf(itemB.label);
+      
+        if(item1 && item2) {
+          return item1 - item2
+        } else if(item1 && !item2) {
+          return 1;
+        }
+      
+        return -1;
+      }
+
     const renderFilterContent = (filterItem: {
         label: string;
         value: string;
@@ -378,14 +400,7 @@ const FilterPanel = ({
                         ? 1
                         : 0
                 )
-                .sort((item1, item2) =>
-                    FILTER_ORDERING[filterCategory]?.[item1.label]
-                        ? FILTER_ORDERING[filterCategory]?.[item2.label]
-                            ? FILTER_ORDERING[filterCategory][item1.label] -
-                              FILTER_ORDERING[filterCategory][item2.label]
-                            : -1
-                        : 1
-                )
+                .sort(getFilterSortOrder)
                 .map(filterItem => {
                     const { label } = filterItem;
 
