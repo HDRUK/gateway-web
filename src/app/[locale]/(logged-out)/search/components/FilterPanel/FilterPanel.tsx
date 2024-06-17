@@ -290,7 +290,8 @@ const FilterPanel = ({
 
         if (item1 && item2) {
             return item1 - item2;
-        } else if (item1 && !item2) {
+        }
+        if (item1 && !item2) {
             return 1;
         }
 
