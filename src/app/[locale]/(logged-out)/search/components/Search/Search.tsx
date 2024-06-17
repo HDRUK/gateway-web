@@ -665,6 +665,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     {t.rich("publicationWelcomeText1", {
                                         // eslint-disable-next-line react/no-unstable-nested-components
                                         list: chunks => <ul>{chunks}</ul>,
+                                        // eslint-disable-next-line react/no-unstable-nested-components
                                         item: chunks => <li>{chunks}</li>,
                                     })}
                                 </Typography>
