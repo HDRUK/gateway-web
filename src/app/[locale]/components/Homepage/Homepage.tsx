@@ -52,11 +52,11 @@ const services = [
         image: "/images/homepage/welcome-image.png",
         href: "https://phenotypes.healthdatagateway.org/",
     },
-    {
-        id: "diseaseAtlas",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
-    },
+    // {
+    //     id: "diseaseAtlas",
+    //     image: "/images/homepage/welcome-image.png",
+    //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
+    // },
     {
         id: SearchCategory.PUBLICATIONS,
         image: "/images/homepage/welcome-image.png",

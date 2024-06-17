@@ -1,14 +1,14 @@
 "use client";
 
-// import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { ModalProps } from "@/components/Modal/Modal";
 import useModal from "./useModal";
 
 export interface UnsavedChangesDialogProps {
     shouldConfirmLeave: boolean;
-    onCancel?: () => void;
-    onSuccess?: () => void;
+    onCancel?: (url: string) => void;
+    onSuccess?: (url: string) => void;
     modalProps?: ModalProps;
 }
 
@@ -24,66 +24,53 @@ export const useUnsavedChanges = ({
         title = "Are you sure you want to exit?",
         content = "Changes are not automatically saved.",
     } = modalProps || {};
-
+    const router = useRouter();
     const { showModal } = useModal();
-    // const router = useRouter();
-    const [nextRouterPath, setNextRouterPath] = useState<string>("");
 
-    const onRouteChangeStart = useCallback(
-        (nextPath: string) => {
-            if (!shouldConfirmLeave) {
-                return;
-            }
-
-            setNextRouterPath(nextPath);
-
-            throw Error("cancelRouteChange");
-        },
-        [shouldConfirmLeave]
-    );
-
-    useEffect(() => {
-        if (!nextRouterPath) return;
+    const handleShowModal = (href: string) => {
         showModal({
-            invertCloseIconBehaviour: true,
             onCancel: () => {
-                // router.events.off("routeChangeStart", onRouteChangeStart);
-
-                setNextRouterPath("");
-                if (typeof onCancel === "function") {
-                    onCancel();
-                }
-
-                if (nextRouterPath) {
-                    // router.push(nextRouterPath);
+                if (onCancel) {
+                    onCancel(href);
+                } else {
+                    router.push(href);
                 }
             },
             onSuccess: () => {
-                setNextRouterPath("");
-                if (typeof onSuccess === "function") {
-                    onSuccess();
-                }
+                onSuccess?.(href);
             },
             confirmText,
             cancelText,
             title,
             content,
         });
+    };
+
+    useEffect(() => {
+        const handleNavigation = (e: MouseEvent) => {
+            e.preventDefault();
+
+            const href = (e.target as HTMLAnchorElement)
+                ?.closest("a")
+                ?.getAttribute("href");
+
+            if (href) handleShowModal(href);
+        };
+
+        if (shouldConfirmLeave) {
+            document.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", handleNavigation);
+            });
+        }
+
+        return () => {
+            if (shouldConfirmLeave) {
+                document.querySelectorAll("a").forEach(link => {
+                    link.removeEventListener("click", handleNavigation);
+                });
+            }
+        };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        cancelText,
-        confirmText,
-        content,
-        nextRouterPath,
-        onCancel,
-        onRouteChangeStart,
-        onSuccess,
-        title,
-    ]);
-
-    // useEffect(() => {
-    //     router.events.on("routeChangeStart", onRouteChangeStart);
-
-    //     return () => router.events.off("routeChangeStart", onRouteChangeStart);
-    // }, [router, onRouteChangeStart]);
+    }, [shouldConfirmLeave]);
 };

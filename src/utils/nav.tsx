@@ -1,3 +1,4 @@
+import SearchIcon from "@mui/icons-material/Search";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     DescriptionOutlinedIcon,
@@ -20,6 +21,11 @@ const getProfileNav = (permissions: {
             icon: <FolderSharedOutlinedIcon />,
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
+        },
+        {
+            icon: <SearchIcon />,
+            label: "Saved searches",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
         ...(permissions["custodians.read"]
             ? [

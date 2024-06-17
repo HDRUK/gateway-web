@@ -59,7 +59,7 @@ const DatasetMindMap = ({
                         node.id
                     )
                 ) {
-                    href = `${node.data.href}&query=${title}`;
+                    href = `${node.data.href}&datasetTitles=${title}`;
                 }
 
                 if (node.data.href?.includes("scrollTo:")) {

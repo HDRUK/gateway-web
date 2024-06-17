@@ -83,6 +83,11 @@
         "all": "All"
     },
     "pages": {
+        "releases": {
+            "noResults": "There are no releases for {year}",
+            "description1": "The Gateway requires a significant volume of design and development work to deliver our vision and ambition. To achieve this our teams are continually working on the Gateway and deliver major software releases approximately every 4 weeks.",
+            "description2": "On this page we explain what new developments we are currently working on and list the major releases made since the Gateway was released in its current format in June 2020. Clicking on an entry provides further detail about the functionality that the particular release delivered."
+        },
         "about": {
             "ourMissionAndPurpose": {
                 "noData": "Nothing to see here"
@@ -196,7 +201,40 @@
                             "progressLegend": "Progress legend:",
                             "remove": "Remove",
                             "add": "Add another",
-                            "submit": "Submit"
+                            "submit": "Submit",
+                            "submissionInvalid": "Not quite done",
+                            "submissionInvalidText": "There are some missing fields that are required in order to upload this metadata. Please refer to the progress bar on the left for which fields are incomplete",
+                            "submissionValid": "Thank you",
+                            "submissionValidText": "",
+                            "makeActive": "Make active",
+                            "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
+                            "selectAll": "Select all that apply",
+                            "checkboxes": {
+                                "healthAndDisease": "Health and disease",
+                                "healthAndDiseaseTooltip": "Includes any data related to mental health, cardiovascular, cancer, rare diseases, metabolic and endocrine, neurological, reproductive, maternity and neonatology, respiratory, immunity, musculoskeletal, vision, renal and urogenital, oral and gastrointestinal, cognitive function or hearing.",
+                                "treatmentsInterventions": "Treatments/Interventions",
+                                "treatmentsInterventionsTooltip": "Includes any data related to treatment or interventions related to vaccines or which are preventative or therapeutic in nature.",
+                                "measurementsTests": "Measurements/Tests",
+                                "measurementsTestsTooltip": "Includes any data related to laboratory or other diagnostics.",
+                                "imagingTypes": "Imaging types",
+                                "imagingTypesTooltip": "Includes any data related to CT, MRI, PET, x-ray, ultrasound or pathology imaging.",
+                                "imagingAreaOfTheBody": "Imaging area of the body",
+                                "imagingAreaOfTheBodyTooltip": "Indicates whether the dataset relates to head, chest, arm abdomen or leg imaging.",
+                                "omics": "Omics",
+                                "omicsTooltip": "Includes any data related to proteomics, transcriptomics, epigenomics, metabolomics, multiomics, metagenomics or genomics.",
+                                "socioeconomic": "Socioeconomic",
+                                "socioeconomicTooltip": "Includes any data related to education, crime and justice, ethnicity, housing, labour, ageing, economics, marital status, social support, deprivation, religion, occupation, finances or family circumstances.",
+                                "lifestyle": "Lifestyle",
+                                "lifestyleTooltip": "Includes any data related to smoking, physical activity, dietary habits or alcohol.",
+                                "registry": "Registry",
+                                "registryTooltip": "Includes any data related to disease registries for research, national disease registries, audits, or birth and deaths records.",
+                                "environmentAndEnergy": "Environment and energy",
+                                "environmentAndEnergyTooltip": "Includes any data related to the monitoring or study of environmental or energy factors or events.",
+                                "informationAndCommunication": "Information and communication",
+                                "informationAndCommunicationTooltip": "Includes any data related to the study or application of information and communication.",
+                                "politics": "Politics",
+                                "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
+                            }
                         },
                         "EditDataset": {
                             "editButton": "Update",
@@ -358,6 +396,34 @@
                 "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
             }
         },
+        "saved_searches": {
+            "title": "Saved searches",
+            "text": "Use this page to display saved search results and manage your saved searches.",
+            "labels": {
+                "entityType": "Entity type",
+                "terms": "Term(s)",
+                "filters": "Filter(s)"
+            },
+            "dateSaved": "Date saved: {date}",
+            "deleteModal": {
+                "title": "Are you sure you want to delete {name}?",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "noData": "None",
+            "common": {
+                "success": {
+                    "delete": {
+                        "message": "Your saved search was deleted successfully"
+                    }
+                },
+                "error": {
+                    "status": {
+                        "500": "There was an error when trying to delete your saved search"
+                    }
+                }
+            }
+        },
         "search": {
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
@@ -403,22 +469,20 @@
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
                             "dateRange": "Date range",
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
-                            "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
                             "accessService": "Access service",
-                            "accessServiceTooltip": "The method through which a researcher accesses the dataset"
+                            "accessServiceTooltip": "The method through which a researcher accesses the dataset",
+                            "containsTissue": "Datasets with tissues",
+                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample"
                         },
                         "dataUseRegister": {
-                            "publisherName": "Data custodian",
-                            "publisherNameTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
+                            "publisherName": "Data provider",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "organisationName": "Lead applicant organisation",
                             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
-                            "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
@@ -432,9 +496,7 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data provider",
-                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
-                            "dataProvider": "Data Provider",
-                            "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                         },
                         "dataProvider": {
                             "datasetTitles": "Dataset",
@@ -446,7 +508,8 @@
                             "dataProvider": "Data Provider",
                             "dataProviderTooltip": "The name of the Data Provider (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
-                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary. (Read more)",
+                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary. <TooltipLink>(Read more)</TooltipLink>",
+                            "licenseTooltipLink": "https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://publications.europa.eu/resource/authority/licence",
                             "category": "Category",
                             "categoryTooltip": "Category",
                             "programmingLanguages": "Programming language",
@@ -726,6 +789,13 @@
             "bookmarks": "Bookmarks"
         },
         "dialogs": {
+            "SaveSearch": {
+                "name": "Name your search query",
+                "nameRequired": "A search query title is required",
+                "cancelButton": "Cancel",
+                "saveQueryButton": "Save query",
+                "nameLabel": "Enter a title to remember this search query"
+            },
             "ProvidersDialog": {
                 "title": "Sign in or create an account",
                 "signIn": "Sign in with username",

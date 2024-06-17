@@ -1,5 +1,7 @@
+import { faker } from "@faker-js/faker";
+import { ReadonlyURLSearchParams } from "next/navigation";
 import { generateDatasetMetadataV1 } from "@/mocks/data/dataset";
-import { getDateRange, getPopulationSize } from "./search";
+import { getAllParams, getDateRange, getPopulationSize } from "./search";
 
 describe("Search utils", () => {
     describe("getDateRange", () => {
@@ -116,6 +118,18 @@ describe("Search utils", () => {
                 notReported
             );
             expect(response).toBe("22,340");
+        });
+    });
+    describe("getAllParams", () => {
+        it("should return the correct object", async () => {
+            const searchTerm = faker.random.alpha();
+            const params = new URLSearchParams();
+
+            params.append("search_term", searchTerm);
+
+            expect(getAllParams(params as ReadonlyURLSearchParams)).toEqual({
+                search_term: searchTerm,
+            });
         });
     });
 });
