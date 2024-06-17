@@ -63,8 +63,6 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
         });
     }, [allReleases, expanded]);
 
-    console.log(generatedReleases);
-
     return (
         <Tabs
             centered
