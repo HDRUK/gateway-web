@@ -440,9 +440,10 @@
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
-            "publicationWelcomeText1": "To start your search, enter a keyword at the top and select the search source on the left then hit enter or return.",
-            "publicationWelcomeText2": "Gateway assets are linked to make it easier to find relevant resources for your work.",
-            "publicationWelcomeText3": "Search Gateway for publications with curated linkages to explore related resources, like publications about a dataset or publications that have used a dataset.",
+            "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
+            "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data provider.",
+            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway searches the publication method field, improving the relevance of results returned. This provides additional functionality specific to datasets within the Gateway than direct use of the Europe PMC website allows.",
+            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the Keyword(s) of interest or the name of a dataset in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
