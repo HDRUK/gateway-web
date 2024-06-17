@@ -58,6 +58,26 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     label: STATIC_FILTER_SOURCE,
     value: "",
 };
+const FILTER_ORDERING: { [key: string]: Array<string> } = {
+    dataset: [
+        "containsTissue",
+        "dataUseTitles",
+        "dateRange",
+        "populationSize",
+        "geographicLocation",
+        "accessService",
+        "publisherName",
+    ],
+    dataUseRegister: [
+        "datasetTitles",
+        "publisherName",
+        "sector",
+        "organisationName",
+    ],
+    collection: ["publisherName", "datasetTitles"],
+    paper: ["source", "publicationDate", "datasetTitles"],
+    tool: ["typeCategory", "datasetTitles", "programmingLanguages", "license"],
+};
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
@@ -252,6 +272,32 @@ const FilterPanel = ({
         setFilterQueryParams([], filterSection);
     };
 
+    const getFilterSortOrder = (
+        itemA: {
+            label: string;
+            value: string;
+            buckets: BucketCheckbox[];
+        },
+        itemB: {
+            label: string;
+            value: string;
+            buckets: BucketCheckbox[];
+        }
+    ) => {
+        const ordering = FILTER_ORDERING[filterCategory];
+        const item1 = ordering?.indexOf(itemA.label);
+        const item2 = ordering?.indexOf(itemB.label);
+
+        if (item1 && item2) {
+            return item1 - item2;
+        }
+        if (item1 && !item2) {
+            return 1;
+        }
+
+        return -1;
+    };
+
     const renderFilterContent = (filterItem: {
         label: string;
         value: string;
@@ -346,6 +392,7 @@ const FilterPanel = ({
                         ? 1
                         : 0
                 )
+                .sort(getFilterSortOrder)
                 .map(filterItem => {
                     const { label } = filterItem;
 
