@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { ReleaseNode } from "@/interfaces/Releases";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -8,39 +9,17 @@ import HTMLContent from "@/components/HTMLContent";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import { getReleaseByYear } from "@/utils/releaseNotes";
+import IntroContent from "../IntroContent";
 
 interface ReleaseTabProps {
     allReleases: ReleaseNode[];
 }
 
-const IntroContent = () => (
-    <Box
-        sx={{
-            bgcolor: "transparent",
-            padding: {
-                mobile: "20px 40px",
-                tablet: "40px 100px 20px",
-                desktop: "40px 120px 20px",
-            },
-        }}>
-        <p>
-            The Gateway requires a significant volume of design and development
-            work to deliver our vision and ambition. To achieve this our teams
-            are continually working on the Gateway and deliver major software
-            releases approximately every 4 weeks.
-        </p>
-        <p>
-            On this page we explain what new developments we are currently
-            working on and list the major releases made since the Gateway was
-            released in its current format in June 2020. Clicking on an entry
-            provides further detail about the functionality that the particular
-            release delivered.
-        </p>
-    </Box>
-);
+const TRANSLATIONS_NAMESPACE_RELEASES = "pages.releases";
 
 const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
     const [expanded, setExpanded] = useState<string | null>(null);
+    const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
 
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : null);
@@ -56,7 +35,11 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                 content: (
                     <div>
                         {!releases.length && (
-                            <p>There are no releases for {year}</p>
+                            <Box component="p" sx={{ px: 2 }}>
+                                {t("noResults", {
+                                    year,
+                                })}
+                            </Box>
                         )}
                         {releases.map(release => (
                             <Accordion
@@ -79,6 +62,8 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
             return hydratedReleases;
         });
     }, [allReleases, expanded]);
+
+    console.log(generatedReleases);
 
     return (
         <Tabs
