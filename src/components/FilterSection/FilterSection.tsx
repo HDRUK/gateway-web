@@ -27,6 +27,7 @@ interface FilterSectionProps<TFieldValues extends FieldValues, TName> {
     placeholder?: string;
     checkboxValues: { [key: string]: boolean };
     counts?: CountType;
+    countsDisabled: boolean;
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
     setValue: (
         name: keyof TFieldValues,
@@ -45,6 +46,7 @@ const FilterSection = <
     noFilterLabel,
     placeholder,
     counts = {},
+    countsDisabled,
     handleCheckboxChange,
     setValue,
     resetFilterSection,
@@ -76,7 +78,9 @@ const FilterSection = <
         style: CSSProperties;
     }) => {
         const formattedRow = cloneDeep(checkboxes[index]);
-        formattedRow.count = !isEmpty(counts)
+        formattedRow.count = countsDisabled
+            ? undefined
+            : !isEmpty(counts)
             ? counts[checkboxes[index].label] || 0
             : checkboxes[index].count;
 
