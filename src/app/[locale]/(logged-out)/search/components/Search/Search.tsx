@@ -48,6 +48,7 @@ import {
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
     FILTER_POPULATION_SIZE,
     FILTER_PROGRAMMING_LANGUAGE,
@@ -146,6 +147,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
         [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
+        [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
     });
 
     const { handleDownload } = useSearch(
@@ -263,6 +265,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
             [FILTER_CONTAINS_TISSUE]: undefined,
+            [FILTER_MATERIAL_TYPE]: undefined,
         });
     };
 

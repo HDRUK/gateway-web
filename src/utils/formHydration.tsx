@@ -240,8 +240,7 @@ const renderFormHydrationField = (
     const componentType = inputComponents[component as ComponentTypes];
 
     return (
-        <InputWrapper
-            label={name || ""}
+        <InputWrapper           
             name={nameOverride || name}
             key={name}
             placeholder={placeholder || ""}
@@ -269,6 +268,7 @@ const renderFormHydrationField = (
                 value: unknown
             ) => options.find(option => option.value === value)?.label}
             {...rest}
+            label={name || ""}
         />
     );
 };

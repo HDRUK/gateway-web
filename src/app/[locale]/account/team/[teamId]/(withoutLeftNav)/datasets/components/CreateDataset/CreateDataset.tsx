@@ -151,7 +151,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             const nonHiddenField = schemaFields.find(field =>
                 hasVisibleFieldsForLocation(schemaFields, field.location)
             );
-            return nonHiddenField && nonHiddenField.location.split(".")[0];
+            return nonHiddenField && nonHiddenField?.location?.split(".")[0];
         };
 
         const initialSection = getFirstNonHiddenSection(schemaFields) || "";
@@ -296,7 +296,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                         }}>
                         <FormLegend
                             items={legendItems.filter(
-                                item =>
+                                (item: LegendItem) =>
                                     item.name !== INITIAL_FORM_SECTION &&
                                     item.name !== SUBMISSON_FORM_SECTION
                             )}
@@ -332,7 +332,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                                                 ?.hidden
                                                     )
                                                     .filter(({ location }) =>
-                                                        location.startsWith(
+                                                        location?.startsWith(
                                                             selectedFormSection
                                                         )
                                                     )

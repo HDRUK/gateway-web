@@ -472,7 +472,9 @@
                             "accessService": "Access service",
                             "accessServiceTooltip": "The method through which a researcher accesses the dataset",
                             "containsTissue": "Datasets with tissues",
-                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample"
+                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
+                            "tissueSampleAvailability": "Material type",
+                            "tissueSampleAvailabilityTooltip": "Physical samples associated with the dataset"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data provider",
