@@ -11,7 +11,7 @@ import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
 import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
-import Tooltip from "@/components/Tooltip";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import {
     FILTER_DATA_USE_TITLES,
@@ -444,14 +444,27 @@ const FilterPanel = ({
                         }}
                         expanded={maximised.includes(label)}
                         heading={
-                            <Tooltip
-                                key={label}
-                                placement="right"
-                                title={TooltipTitle(label, t)}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    p: 0,
+                                    m: 0,
+                                    flexDirection: "row",
+                                    alignContent: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                    pr: 3.25,
+                                }}>
                                 <Typography fontWeight="400" fontSize="20px">
                                     {t(label)}
                                 </Typography>
-                            </Tooltip>
+                                <TooltipIcon
+                                    content={TooltipTitle(label, t)}
+                                    label=""
+                                    buttonSx={{ p: 0 }}
+                                    size="small"
+                                />
+                            </Box>
                         }
                         onChange={() =>
                             setMaximised(
