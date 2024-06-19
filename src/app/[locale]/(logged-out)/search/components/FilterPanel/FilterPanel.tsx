@@ -377,6 +377,10 @@ const FilterPanel = ({
                         counts={formatBucketCounts(
                             get(aggregations, label)?.buckets
                         )}
+                        countsDisabled={
+                            filterCategory === FILTER_CATEGORY_PUBLICATIONS &&
+                            (staticFilterValues.source?.FED || false)
+                        }
                     />
                 );
         }
