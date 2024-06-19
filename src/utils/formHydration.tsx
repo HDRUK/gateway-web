@@ -241,7 +241,6 @@ const renderFormHydrationField = (
 
     return (
         <InputWrapper
-            label={name || ""}
             name={nameOverride || name}
             key={name}
             placeholder={placeholder || ""}
@@ -269,6 +268,7 @@ const renderFormHydrationField = (
                 value: unknown
             ) => options.find(option => option.value === value)?.label}
             {...rest}
+            label={name || ""}
         />
     );
 };

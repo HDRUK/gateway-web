@@ -110,6 +110,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         []
     );
 
+    const [isDraft, setIsDraft] = useState<boolean>(false);
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
@@ -118,9 +119,11 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             formJSON?.validation && {
                 title: "Metadata form",
                 type: "object",
-                properties: generateValidationRules(formJSON.validation),
+                properties: !isDraft
+                    ? generateValidationRules(formJSON.validation)
+                    : {},
             },
-        [formJSON.validation, generateValidationRules]
+        [formJSON.validation, generateValidationRules, isDraft]
     );
 
     const yupSchema = buildYup(generatedYupValidation);
@@ -209,7 +212,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         const formPayload = {
             team_id: teamId,
             user_id: userId,
-            status: "ACTIVE" as DatasetStatus,
+            status: isDraft
+                ? ("DRAFT" as DatasetStatus)
+                : ("ACTIVE" as DatasetStatus),
             pid: null,
             updated: "",
             create_origin: "MANUAL" as CreateOrigin,
@@ -249,15 +254,33 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         postForm(formData);
     };
 
-    const handleMakeActive = async () => {
-        const formIsValid = await trigger();
-
-        if (formIsValid) {
-            handleSubmit(formSubmit)();
+    const handleFormSubmission = async (isDraft: boolean) => {
+        if (!isDraft) {
+            const formIsValid = await trigger();
+            if (formIsValid) {
+                handleSubmit(formSubmit)();
+            } else {
+                setSelectedFormSection(formSections[formSections.length - 1]);
+            }
         } else {
-            setSelectedFormSection(formSections[formSections.length - 1]);
+            handleSubmit(formSubmit)();
         }
     };
+
+    const handleMakeActive = async () => {
+        setIsDraft(false);
+        handleFormSubmission(false);
+    };
+
+    const handleSaveDraft = async () => {
+        setIsDraft(true);
+        handleFormSubmission(true);
+    };
+
+    // Handle submission after draft toggle
+    useEffect(() => {
+        handleFormSubmission(isDraft);
+    }, [isDraft]);
 
     const [optionalPercentage, setOptionalPercentage] = useState(0);
     const [requiredPercentage, setRequiredPercentage] = useState(0);
@@ -279,7 +302,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
-                saveAsDraftAction={() => console.log("SAVE AS DRAFT")}
+                saveAsDraftAction={handleSaveDraft}
                 completionPercentage={requiredPercentage}
                 optionalPercentage={optionalPercentage}
                 actionButtonsEnabled={!isSaving}
