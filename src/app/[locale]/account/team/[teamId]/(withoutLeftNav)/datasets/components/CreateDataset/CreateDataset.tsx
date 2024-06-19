@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { buildYup } from "schema-to-yup";
@@ -112,6 +113,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
+    const [guidanceText, setGuidanceText] = useState<string>();
 
     const generatedYupValidation = useMemo(
         () =>
@@ -273,6 +275,23 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         );
     }, [getValues, schemaFields, watchAll]);
 
+    const updateGuidanceText = (fieldName: string, fieldArrayName?: string) => {
+        if (fieldArrayName) {
+            setGuidanceText(
+                formJSON.schema_fields
+                    .find(field => field.title === fieldArrayName)
+                    ?.fields?.find(field => field.title === fieldName)
+                    ?.guidance?.replaceAll("\\n", "\n")
+            );
+        } else {
+            setGuidanceText(
+                formJSON.schema_fields
+                    .find(field => field.title === fieldName)
+                    ?.guidance?.replaceAll("\\n", "\n")
+            );
+        }
+    };
+
     return (
         <>
             <FormBanner
@@ -353,12 +372,17 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                                                 fieldParent={
                                                                     fieldParent
                                                                 }
+                                                                setSelectedField={
+                                                                    updateGuidanceText
+                                                                }
                                                             />
                                                         ) : (
                                                             field &&
                                                                 renderFormHydrationField(
                                                                     field,
-                                                                    control
+                                                                    control,
+                                                                    undefined,
+                                                                    updateGuidanceText
                                                                 )
                                                         );
                                                     })}
@@ -376,6 +400,10 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                 <Typography variant="h2">
                                     {t("guidance")}
                                 </Typography>
+
+                                {guidanceText && (
+                                    <Markdown>{guidanceText}</Markdown>
+                                )}
                             </Paper>
                         </>
                     ) : (
