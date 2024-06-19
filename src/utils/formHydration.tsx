@@ -235,7 +235,8 @@ const getFirstLocationValues = (schemaFields: FormHydration[]) => {
 const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
-    nameOverride?: string
+    nameOverride?: string,
+    setActiveField?: (fieldName: string) => void
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
 
@@ -269,6 +270,7 @@ const renderFormHydrationField = (
                 value: unknown
             ) => options.find(option => option.value === value)?.label}
             {...rest}
+            onFocus={() => setActiveField && setActiveField(name)}
         />
     );
 };
