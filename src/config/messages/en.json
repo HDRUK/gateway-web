@@ -738,6 +738,9 @@
         }
     },
     "components": {
+        "TeamModal": {
+            "descriptionTitle": "Description"
+        },
         "SupportPopOut": {
             "buttonText": "Need support",
             "giveFeedback": "Give feedback",
