@@ -1,13 +1,13 @@
 const GetMeetTheTeamQuery = `
 query GetMeetTheTeam {
-  posts {
+  posts(where: {name: "meet-the-team"}) {
     edges {
       node {
         title
         id
         meetTheTeamRepeater {
           summaryText
-          teamlist {
+          teamList {
             info
             name
             jobTitle

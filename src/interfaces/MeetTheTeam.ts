@@ -15,7 +15,7 @@ interface MeetTheTeam {
     id: string;
     meetTheTeamRepeater: {
         summaryText: string;
-        teamlist: TeamMember[];
+        teamList: TeamMember[];
     };
 }
 

@@ -28,7 +28,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
         setActiveTeamMember(undefined);
     };
 
-    const content = meetTheTeamRepeater.teamlist.map(teamMember => {
+    const content = meetTheTeamRepeater.teamList?.map(teamMember => {
         const { name, jobTitle, image } = teamMember;
         return (
             <Grid

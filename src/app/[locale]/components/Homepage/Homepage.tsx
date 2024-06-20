@@ -4,6 +4,7 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -16,6 +17,8 @@ import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
+import { Routes } from "@/consts/routes";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
@@ -229,11 +232,16 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 }}>
                                 {meetTheTeam.intro}
                             </Typography>
-                            <Button
-                                variant="text"
-                                endIcon={<ArrowForward color="primary" />}>
-                                {t("seeNow")}
-                            </Button>
+                            <Link
+                                href={RouteName.MEET_THE_TEAM}
+                                color="primary"
+                                passHref>
+                                <Button
+                                    variant="text"
+                                    endIcon={<ArrowForward color="primary" />}>
+                                    {t("seeNow")}
+                                </Button>
+                            </Link>
                         </TeamContent>
                     </TeamWrapper>
                 </Container>
