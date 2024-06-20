@@ -2,7 +2,7 @@ import { getMeetTheTeam } from "@/utils/cms";
 import TeamMembers from "./components/TeamMembers";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Our mission and purpose",
+    title: "Health Data Research Innovation Gateway - About - Meet the team",
     description: "",
 };
 

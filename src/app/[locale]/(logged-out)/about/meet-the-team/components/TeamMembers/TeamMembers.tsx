@@ -10,11 +10,6 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import TeamModal from "../TeamModal";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Meet the team",
-    description: "",
-};
-
 interface TeamMembersProps {
     data: MeetTheTeamNode;
 }
