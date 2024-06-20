@@ -2,14 +2,14 @@ import { styled } from "@mui/material";
 import Container from "@/components/Container";
 import Link from "@/components/Link";
 
-export const FooterWrapper = styled("div")({
+export const FooterWrapper = styled("div")(({ theme }) => ({
     fontSize: "14px",
-    backgroundColor: "#29235c",
     ul: {
         listStyleType: "none",
         paddingLeft: 0,
     },
-});
+    background: `linear-gradient(97deg, #46AF93 4.05%, ${theme.palette.primary.main} 100%)`,
+}));
 
 export const FooterContainer = styled(Container)(({ theme }) => ({
     color: "white",
