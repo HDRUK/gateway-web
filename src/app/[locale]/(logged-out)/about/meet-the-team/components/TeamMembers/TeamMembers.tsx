@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { MeetTheTeamNode, TeamMember } from "@/interfaces/MeetTheTeam";
+import BackButton from "@/components/BackButton";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import TeamModal from "../TeamModal";
@@ -16,9 +19,13 @@ interface TeamMembersProps {
     data: MeetTheTeamNode;
 }
 
+const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS = "pages.about";
+
 export default function TeamMembers({ data }: TeamMembersProps) {
     const { meetTheTeamRepeater, title } = data.node;
     const [activeTeamMember, setActiveTeamMember] = useState<TeamMember>();
+    const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MEMBERS);
+    const router = useRouter();
 
     const handleTeamMemberClick = (teamMember: TeamMember) => {
         setActiveTeamMember(teamMember);
@@ -28,8 +35,13 @@ export default function TeamMembers({ data }: TeamMembersProps) {
         setActiveTeamMember(undefined);
     };
 
+    const handleBackClick = () => {
+        router.push("/");
+    };
+
     const content = meetTheTeamRepeater.teamList?.map(teamMember => {
         const { name, jobTitle, image } = teamMember;
+
         return (
             <Grid
                 item
@@ -68,7 +80,11 @@ export default function TeamMembers({ data }: TeamMembersProps) {
     return (
         <>
             <Banner title={title} />
-            <Container sx={{ background: "white", padding: 10 }}>
+            <Container sx={{ background: "white", px: 10, py: 3 }}>
+                <BackButton
+                    label={t("backToHomepage")}
+                    onClick={handleBackClick}
+                />
                 <Typography sx={{ mb: 4 }}>
                     {meetTheTeamRepeater.summaryText}
                 </Typography>

@@ -96,7 +96,8 @@
                 "title": "Cohort Discovery Registration",
                 "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.",
                 "terms": "You can review your terms and conditions <terms>here</terms>"
-            }
+            },
+            "backToHomepage": "Back to homepage"
         },
         "account": {
             "profile": {
