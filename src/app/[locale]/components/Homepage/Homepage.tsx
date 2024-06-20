@@ -18,7 +18,6 @@ import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { Routes } from "@/consts/routes";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
