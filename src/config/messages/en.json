@@ -753,7 +753,12 @@
             "noFilters": "No filters available"
         },
         "Footer": {
-            "text": "HDR UK {year}. All rights reserved."
+            "copyright": "HDR UK {year}. All rights reserved.",
+            "visitHDRUKSite": "Visit the HDR UK Site",
+            "termsConditions": "Terms and conditions",
+            "privacyPolicy": "Privacy policy",
+            "cookieNotice": "Cookie notice",
+            "apiDocs": "API docs"
         },
         "DesktopNav": {
             "labels": {
