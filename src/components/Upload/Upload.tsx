@@ -55,8 +55,7 @@ const Upload = (props: UploadProps) => {
 
     return (
         <FormControl
-            fullWidth
-            sx={{ m: 0, mb: 2, ...formControlSx }}
+            sx={{ m: 0, mb: 2, ...formControlSx, display: "inline" }}
             error={!!error}>
             <FormControlLabel
                 control={
