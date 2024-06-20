@@ -11,7 +11,7 @@ import Container from "@/components/Container";
 import TeamModal from "../TeamModal";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Our mission and purpose",
+    title: "Health Data Research Innovation Gateway - About - Meet the team",
     description: "",
 };
 
