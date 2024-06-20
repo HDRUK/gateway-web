@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should render component 1`] = `
+<div>
+  <div
+    class="mui-style-7ip1ev"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-1h1viwr-MuiContainer-root"
+    >
+      <div
+        class="MuiBox-root mui-style-0"
+      >
+        <img
+          alt="HDRUK logo"
+          data-nimg="1"
+          decoding="async"
+          height="130"
+          loading="lazy"
+          src="/_next/image?url=%2Fimg.jpg&w=384&q=75"
+          srcset="/_next/image?url=%2Fimg.jpg&w=256&q=75 1x, /_next/image?url=%2Fimg.jpg&w=384&q=75 2x"
+          style="color: transparent;"
+          width="130"
+        />
+        <ul
+          class="mui-style-r36ijg"
+        >
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://x.com/HDR_UK"
+            >
+              <span
+                class="mui-style-172hjuw"
+              >
+                <img
+                  alt="Twitter logo"
+                  data-nimg="1"
+                  decoding="async"
+                  height="17"
+                  loading="lazy"
+                  src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+                  srcset="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+                  style="color: transparent;"
+                  width="17"
+                />
+                <span>
+                  Twitter
+                </span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://www.linkedin.com/company/hdruk/mycompany/"
+            >
+              <span
+                class="mui-style-172hjuw"
+              >
+                <img
+                  alt="LinkedIn logo"
+                  data-nimg="1"
+                  decoding="async"
+                  height="17"
+                  loading="lazy"
+                  src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+                  srcset="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+                  style="color: transparent;"
+                  width="17"
+                />
+                <span>
+                  LinkedIn
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <div
+          class="mui-style-vrpanz"
+        >
+          ©
+          HDR UK 2024. All rights reserved.
+        </div>
+      </div>
+      <ul
+        class="mui-style-63817c"
+      >
+        <ul
+          class="mui-style-1hdbc19"
+        >
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://www.hdruk.ac.uk/"
+            >
+              Visit the HDR UK Site
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://www.healthdatagateway.org/about/terms-and-conditions"
+            >
+              Terms and conditions
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://www.healthdatagateway.org/about/privacy-policy"
+            >
+              Privacy policy
+            </a>
+          </li>
+        </ul>
+        <ul
+          class="mui-style-1hdbc19"
+        >
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://www.healthdatagateway.org/about/cookie-notice"
+            >
+              Cookie notice
+            </a>
+          </li>
+          <li>
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+              href="https://api.www.healthdatagateway.org/api-docs/?_gl=1*1pz4jlx*_ga*MTcwOTYwOTYxMy4xNjc3MjgyNjU2*_ga_GJ2NS0NB4W*MTcxNzA2NTg0MC40NTYuMS4xNzE3MDY1ODUxLjQ5LjAuMA.."
+            >
+              API docs
+            </a>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
