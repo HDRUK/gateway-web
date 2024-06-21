@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { MeetTheTeamNode, TeamMember } from "@/interfaces/MeetTheTeam";
@@ -51,22 +52,36 @@ export default function TeamMembers({ data }: TeamMembersProps) {
                     role="button"
                     onClick={() => handleTeamMemberClick(teamMember)}
                     sx={{
-                        display: "flex",
-                        flexDirection: "column",
                         cursor: "pointer",
+                        position: "relative",
+                        display: "inline-block",
+                        width: "fit-content",
+                        "&:hover:before": {
+                            background: grey["100"],
+                            content: '""',
+                            position: "absolute",
+                            top: "-8px",
+                            left: "-8px",
+                            bottom: "-8px",
+                            right: "-8px",
+                            boxShadow: 3,
+                            borderRadius: 1,
+                        },
                     }}>
-                    {image && (
-                        <Box
-                            component="img"
-                            src={image.node.sourceUrl}
-                            alt={image.node.altText}
-                            sx={{
-                                mb: 2,
-                            }}
-                        />
-                    )}
-                    <Typography variant="h3">{name}</Typography>
-                    <Typography sx={{ mb: 0 }}>{jobTitle}</Typography>
+                    <Box sx={{ position: "relative", zIndex: 1 }}>
+                        {image && (
+                            <Box
+                                component="img"
+                                src={image.node.sourceUrl}
+                                alt={image.node.altText}
+                                sx={{
+                                    mb: 2,
+                                }}
+                            />
+                        )}
+                        <Typography variant="h3">{name}</Typography>
+                        <Typography sx={{ mb: 0 }}>{jobTitle}</Typography>
+                    </Box>
                 </Box>
             </Grid>
         );
