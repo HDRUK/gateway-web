@@ -32,6 +32,7 @@ export enum RouteName {
     PERMISSIONS = "permissions",
     PROFILE = "profile",
     SEARCH = "search",
+    SUPPORT = "support",
     TEAM = "team",
     TEAMS = "teams",
     TEAM_MANAGEMENT = "team-management",
