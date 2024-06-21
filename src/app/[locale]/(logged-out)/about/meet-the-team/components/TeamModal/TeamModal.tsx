@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { TeamMember } from "@/interfaces/MeetTheTeam";
 import useModal from "@/hooks/useModal";
 
@@ -10,8 +11,11 @@ interface TeamModalProps {
     onCancel: () => void;
 }
 
+const TRANSLATIONS_NAMESPACE_TEAM_MODAL = "components.TeamModal";
+
 export default function TeamModal({ onCancel, teamMember }: TeamModalProps) {
     const { showModal } = useModal();
+    const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MODAL);
 
     useEffect(() => {
         showModal({
@@ -28,7 +32,9 @@ export default function TeamModal({ onCancel, teamMember }: TeamModalProps) {
                         <Typography variant="h4" sx={{ mb: 2 }}>
                             {teamMember.jobTitle}
                         </Typography>
-                        <Typography variant="subtitle2">Description</Typography>
+                        <Typography variant="subtitle2">
+                            {t("descriptionTitle")}
+                        </Typography>
                         <Typography>{teamMember.info}</Typography>
                     </div>
                 </Box>

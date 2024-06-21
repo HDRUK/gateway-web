@@ -746,6 +746,9 @@
             "content": "The quickest way to get your issue solved is through the links above, but if you aren’t able to find a solution then contact us here:",
             "contactButton": "Contact support"
         },
+        "TeamModal": {
+            "descriptionTitle": "Description"
+        },
         "SupportPopOut": {
             "buttonText": "Visit Support Centre",
             "giveFeedback": "Give feedback",
