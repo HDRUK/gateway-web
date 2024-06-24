@@ -300,7 +300,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             clearErrors();
         }
 
-        handleFormSubmission(isDraft);
+        if (isDraft) {
+            handleFormSubmission(isDraft);
+        }
     }, [isDraft, clearErrors]);
 
     const [optionalPercentage, setOptionalPercentage] = useState(0);
