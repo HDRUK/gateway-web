@@ -10,12 +10,20 @@ export default function FeatureCard({
     sx,
     icon,
     children,
+    onClick,
     ...restProps
 }: FeatureCarProps) {
     const theme = useTheme();
 
     return (
-        <Card sx={{ textAlign: "center", ...sx }} {...restProps}>
+        <Card
+            sx={{
+                textAlign: "center",
+                ...(onClick && { cursor: "pointer" }),
+                ...sx,
+            }}
+            onClick={onClick}
+            {...restProps}>
             <Box
                 sx={{
                     color: "primary.main",
