@@ -62,6 +62,8 @@ interface CreateDatasetProps {
 
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
 
 const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const t = useTranslations(
@@ -69,10 +71,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     );
 
     const { push } = useRouter();
-
-    const createDataset = usePost<NewDataset>(apis.datasetsV1Url, {
-        itemName: "Dataset",
-    });
 
     const bannerTabList = [
         { label: t("onlineForm"), value: "FORM" },
@@ -110,9 +108,17 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         []
     );
 
-    const [isDraft, setIsDraft] = useState<boolean>(false);
+    const [isDraft, setIsDraft] = useState<boolean>();
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
+
+    const postDatasetUrl = isDraft
+        ? `${apis.datasetsV1Url}?input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`
+        : apis.datasetsV1Url;
+
+    const createDataset = usePost<NewDataset>(postDatasetUrl, {
+        itemName: "Dataset",
+    });
 
     const generatedYupValidation = useMemo(
         () =>
@@ -147,6 +153,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         : 0;
 
     const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
+    const [submissionRequested, setSubmissionRequested] =
+        useState<boolean>(false);
 
     // When form loaded - select first form section with displayed fields
     useEffect(() => {
@@ -170,14 +178,15 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 schemaFields,
                 clearErrors,
                 getValues,
-                trigger
+                trigger,
+                submissionRequested
             );
             setLegendItems(items);
         };
 
         createLegendItems();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFormSection]);
+    }, [selectedFormSection, isDraft]);
 
     const handleLegendClick = (clickedIndex: number) => {
         setSelectedFormSection(formSections[clickedIndex + 1]);
@@ -268,6 +277,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     };
 
     const handleMakeActive = async () => {
+        setSubmissionRequested(true);
         setIsDraft(false);
         handleFormSubmission(false);
     };
@@ -279,8 +289,16 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
     // Handle submission after draft toggle
     useEffect(() => {
-        handleFormSubmission(isDraft);
-    }, [isDraft]);
+        if (isDraft === undefined) {
+            setIsDraft(false);
+            return;
+        }
+
+        if (!isDraft) {
+            clearErrors();
+        }
+        isDraft && handleFormSubmission(isDraft);
+    }, [isDraft, clearErrors]);
 
     const [optionalPercentage, setOptionalPercentage] = useState(0);
     const [requiredPercentage, setRequiredPercentage] = useState(0);
