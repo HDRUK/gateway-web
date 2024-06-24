@@ -200,7 +200,9 @@ const formGenerateLegendItems = async (
                 : false;
 
             // Reset form error state
-            !submissionRequested && clearErrors();
+            if (!submissionRequested) {
+                clearErrors();
+            }
 
             // Get status of section
             const getSectionStatus = formGetSectionStatus(
