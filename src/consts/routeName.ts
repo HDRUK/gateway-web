@@ -42,4 +42,10 @@ export enum RouteName {
     NEWSLETTER_SIGNUP = "newsletter-signup",
     SAVED_SEARCHES = "saved-searches",
     MEET_THE_TEAM = "about/meet-the-team",
+    SUPPORT_TEAM_MANAGEMENT = "support/team-management",
+    SUPPORT_COHORT_DISCOVERY = "support/cohort-discovery",
+    SUPPORT_SCHEMA = "support/gateway-schema",
+    SUPPORT_DUR = "support/data-use-register",
+    SUPPORT_DAR = "support/data-access-request",
+    SUPPORT_TOOLS = "support/tools",
 }

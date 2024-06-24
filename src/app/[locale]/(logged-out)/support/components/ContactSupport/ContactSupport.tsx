@@ -12,7 +12,7 @@ export default function MeetTheTeam() {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_CONTACT_SUPPORT);
 
     return (
-        <Box sx={{ textAlign: "center", mt: 20 }}>
+        <Box sx={{ textAlign: "center" }}>
             <Typography variant="h1" sx={{ mb: 1 }}>
                 {t("title")}
             </Typography>

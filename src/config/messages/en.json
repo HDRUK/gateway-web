@@ -84,7 +84,24 @@
     },
     "pages": {
         "support": {
-            "title": "Support centre"
+            "title": "Support centre",
+            "backToSupport": "Back to Support Centre",
+            "gatewaySchemaTitle": "Gateway Schema",
+            "teamManagementTitle": "Team Management",
+            "toolsTitle": "Analysis script, software and publication",
+            "searchTitle": "Search",
+            "metadataOnboardingTitle": "Metadata Onboarding (Private app & Federation)",
+            "durTitle": "Data Use Register",
+            "darTitle": "Data Access Request",
+            "cohortDiscoveryTitle": "Cohort Discovery",
+            "gatewaySchemaDescription": "Find out what we have in our schema and support we offer here.",
+            "teamManagementDescription": "Help with the team management and how to perform certain actions and what permissions you are assigned.",
+            "toolsDescription": "What are Tools and Papers on the Gateway? How are they created and how can you use them? Get help with Tools and papers.",
+            "searchDescription": "Learn how to search entities on the Gateway.",
+            "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
+            "durDescription": "Learn About Data Use Registers.",
+            "darDescription": "Learn about Data Access Request forms and process.",
+            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery."
         },
         "releases": {
             "noResults": "There are no releases for {year}",
