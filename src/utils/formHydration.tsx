@@ -274,9 +274,9 @@ const renderFormHydrationField = (
                 }[],
                 value: unknown
             ) => options.find(option => option.value === value)?.label}
+            onFocus={() => setActiveField && setActiveField(name)}
             {...rest}
             label={name || ""}
-            onFocus={() => setActiveField && setActiveField(name)}
         />
     );
 };
