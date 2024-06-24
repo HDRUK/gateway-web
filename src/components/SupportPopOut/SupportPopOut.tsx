@@ -11,6 +11,7 @@ import {
     CUSTOMER_PORTAL_SUPPORT_URL,
 } from "@/config/hrefs";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { RouteName } from "@/consts/routeName";
 import { SupportButton, SupportList } from "./SupportPopOut.styles";
 
 const SupportPopOut = () => {
@@ -42,7 +43,7 @@ const SupportPopOut = () => {
     const links = [
         {
             label: t("visitSupportCentre"),
-            href: "/about/contact-us",
+            href: `/${RouteName.SUPPORT}`,
             isExternal: false,
         },
         {

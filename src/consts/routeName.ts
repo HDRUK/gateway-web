@@ -32,6 +32,7 @@ export enum RouteName {
     PERMISSIONS = "permissions",
     PROFILE = "profile",
     SEARCH = "search",
+    SUPPORT = "support",
     TEAM = "team",
     TEAMS = "teams",
     TEAM_MANAGEMENT = "team-management",
@@ -40,4 +41,5 @@ export enum RouteName {
     PUBLICATION = "publication",
     NEWSLETTER_SIGNUP = "newsletter-signup",
     SAVED_SEARCHES = "saved-searches",
+    MEET_THE_TEAM = "about/meet-the-team",
 }
