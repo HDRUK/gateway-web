@@ -661,12 +661,13 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     }}>
                                     {t("publicationWelcomeHeader")}
                                 </Typography>
-                                <Typography
-                                    variant="h3"
-                                    sx={{
-                                        pb: 3,
-                                    }}>
-                                    {t("publicationWelcomeText1")}
+                                <Typography variant="h3">
+                                    {t.rich("publicationWelcomeText1", {
+                                        // eslint-disable-next-line react/no-unstable-nested-components
+                                        list: chunks => <ul>{chunks}</ul>,
+                                        // eslint-disable-next-line react/no-unstable-nested-components
+                                        item: chunks => <li>{chunks}</li>,
+                                    })}
                                 </Typography>
                                 <Typography
                                     variant="h3"
@@ -675,8 +676,25 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                     }}>
                                     {t("publicationWelcomeText2")}
                                 </Typography>
+                                <Typography
+                                    variant="h3"
+                                    sx={{
+                                        pb: 3,
+                                    }}>
+                                    {t.rich("publicationWelcomeText3", {
+                                        // eslint-disable-next-line react/no-unstable-nested-components
+                                        link: chunks => (
+                                            <a href="https://europepmc.org/">
+                                                {chunks}
+                                            </a>
+                                        ),
+                                    })}
+                                </Typography>
                                 <Typography variant="h3">
-                                    {t("publicationWelcomeText3")}
+                                    {t.rich("publicationWelcomeText4", {
+                                        // eslint-disable-next-line react/no-unstable-nested-components
+                                        bold: chunks => <b>{chunks}</b>,
+                                    })}
                                 </Typography>
                             </Paper>
                         )}
