@@ -28,6 +28,7 @@ import StructuralMetadataAccordion from "../StructuralMetadataAccordion";
 import {
     DatasetFieldItem,
     DatasetFieldWrapper,
+    ListContainer,
     ObservationTableWrapper,
 } from "./DatasetContent.styles";
 
@@ -107,8 +108,21 @@ const DatasetContent = ({
                     <Typography key={item}>{item}</Typography>
                 ));
             }
+            case FieldType.LINK_LIST: {
+                const list = Array.from(new Set(splitStringList(value)));
+                return (
+                    <ListContainer>
+                        {list.map(item => (
+                            <Link href={item} target="_blank">
+                                {item}
+                            </Link>
+                        ))}
+                    </ListContainer>
+                );
+            }
+
             default:
-                return <Typography>{value}</Typography>;
+                return <Typography>{value.replaceAll(";,;", ", ")}</Typography>;
         }
     };
 
@@ -248,6 +262,7 @@ const DatasetContent = ({
                                                             desktop: "span 2",
                                                         },
                                                         p: 0,
+                                                        wordWrap: "break-word",
                                                     }}>
                                                     {renderDatasetField(
                                                         field.type,
