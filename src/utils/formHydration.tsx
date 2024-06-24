@@ -132,12 +132,16 @@ const formGetSectionStatus = (
     isSectionValid: boolean,
     schemaFields: FormHydration[],
     section: string,
-    getValues: UseFormGetValues<FieldValues>
+    getValues: UseFormGetValues<FieldValues>,
+    submissionRequested: boolean
 ) => {
     if (isSectionActive) {
         return LegendStatus.ACTIVE;
     }
-    if (formSectionHasAllEmptyFields(schemaFields, section, getValues)) {
+    if (
+        !submissionRequested &&
+        formSectionHasAllEmptyFields(schemaFields, section, getValues)
+    ) {
         return LegendStatus.UNTOUCHED;
     }
     if (!isSectionValid) {
@@ -186,7 +190,8 @@ const formGenerateLegendItems = async (
     schemaFields: FormHydration[],
     clearErrors: UseFormClearErrors<FieldValues>,
     getValues: UseFormGetValues<FieldValues>,
-    trigger: UseFormTrigger<FieldValues>
+    trigger: UseFormTrigger<FieldValues>,
+    submissionRequested: boolean
 ) => {
     const legendItems: LegendItem[] = await Promise.all(
         formSections.map(async section => {
@@ -195,7 +200,9 @@ const formGenerateLegendItems = async (
                 : false;
 
             // Reset form error state
-            clearErrors();
+            if (!submissionRequested) {
+                clearErrors();
+            }
 
             // Get status of section
             const getSectionStatus = formGetSectionStatus(
@@ -203,7 +210,8 @@ const formGenerateLegendItems = async (
                 sectionIsValid,
                 schemaFields,
                 section,
-                getValues
+                getValues,
+                submissionRequested
             );
 
             return {
@@ -242,7 +250,6 @@ const renderFormHydrationField = (
 
     return (
         <InputWrapper
-            label={name || ""}
             name={nameOverride || name}
             key={name}
             placeholder={placeholder || ""}
@@ -269,8 +276,9 @@ const renderFormHydrationField = (
                 }[],
                 value: unknown
             ) => options.find(option => option.value === value)?.label}
-            {...rest}
             onFocus={() => setActiveField && setActiveField(name)}
+            {...rest}
+            label={name || ""}
         />
     );
 };
