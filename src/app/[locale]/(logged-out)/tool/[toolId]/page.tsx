@@ -4,10 +4,16 @@ import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getTool } from "@/utils/api";
+import ActionBar from "./components/ActionBar";
 import ToolContent from "./components/ToolContent";
+import DatasetsContent from "./components/DatasetsContent";
+import DatausesContent from "./components/DatausesContent";
+import PublicationsContent from "./components/PublicationsContent";
+import CollectionsContent from "./components/CollectionsContent";
 import { toolFields } from "./config";
 
 const TRANSLATION_PATH = "pages.tool";
@@ -39,59 +45,45 @@ export default async function ToolPage({
     });
 
     return (
-        <BoxContainer
-            id="anchor1"
-            sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
-                },
-            }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    bgcolor: "white",
-                    p: 0,
-                }}>
-                <ActiveListSidebar items={activeLinkList} />
-            </Box>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 3", laptop: "span 4" },
-                    p: 0,
-                }}>
+        <LayoutDataItemPage
+            navigation={<ActiveListSidebar items={activeLinkList} />}
+            body={
                 <>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%",
-                        }}
-                        style={{ boxShadow: "1px 1px 3px 0px #00000017" }}>
-                        <BackButton
-                            label={t("backText")}
-                            style={{ margin: 0 }}
-                        />
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 2,
-                        }}>
-                        <Box sx={{ p: 0, gap: 2 }}>
+                    <ActionBar />
+                    <Box sx={{ px: 6, py: 3 }}>
+                        {/* <Box sx={{ p: 0, gap: 2 }}> */}
                             <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
                                 {data.name}
                             </Typography>
-                        </Box>
-                        <ToolContent
-                            data={data}
-                            populatedSections={populatedSections}
-                        />
+                        {/* </Box> */}
+                        {/* <Box> */}
+                            
+                            <ToolContent
+                                data={data}
+                                anchorIndex={1}
+                                populatedSections={populatedSections}
+                            />
+
+                            <DatasetsContent
+                                dataset_versions={data.dataset_versions}
+                                anchorIndex={2}
+                            />
+                            <DatausesContent
+                                datauses={data.durs}
+                                anchorIndex={3}
+                            />
+                            <PublicationsContent
+                                publications={data.publications}
+                                anchorIndex={4}
+                            />
+                            <CollectionsContent
+                                collections={data.collections}
+                                anchorIndex={5}
+                            />
+                        {/* </Box> */}
                     </Box>
                 </>
-            </Box>
-        </BoxContainer>
+            }
+        />
     );
 }

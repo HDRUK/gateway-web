@@ -1,3 +1,6 @@
+import { Collection } from "./Collection";
+import { VersionItem } from "./Dataset";
+import { DataUse } from "./DataUse";
 import { Publication } from "./Publication";
 import { Tag } from "./Tag";
 
@@ -24,4 +27,7 @@ export interface Tool {
     programming_packages: string[];
     type_category?: string[]; // may need updating?
     publications: Publication[];
+    dataset_versions: VersionItem[];
+    durs: DataUse[];
+    collections: Collection[];
 }
