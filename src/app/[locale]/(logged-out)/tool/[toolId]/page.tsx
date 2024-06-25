@@ -60,25 +60,24 @@ export default async function ToolPage({
                             
                             <ToolContent
                                 data={data}
-                                anchorIndex={1}
                                 populatedSections={populatedSections}
                             />
 
                             <DatasetsContent
                                 dataset_versions={data.dataset_versions}
-                                anchorIndex={2}
+                                anchorIndex={1}
                             />
                             <DatausesContent
                                 datauses={data.durs}
-                                anchorIndex={3}
+                                anchorIndex={2}
                             />
                             <PublicationsContent
                                 publications={data.publications}
-                                anchorIndex={4}
+                                anchorIndex={3}
                             />
                             <CollectionsContent
                                 collections={data.collections}
-                                anchorIndex={5}
+                                anchorIndex={4}
                             />
                         {/* </Box> */}
                     </Box>
