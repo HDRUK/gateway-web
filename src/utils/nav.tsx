@@ -10,7 +10,14 @@ import {
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
     QuestionAnswerIcon,
+    CohortDiscoveryIcon,
 } from "@/consts/icons";
+import {
+    ROLE_CUSTODIAN_DAR_MANAGER,
+    ROLE_CUSTODIAN_TEAM_ADMIN,
+    ROLE_HDRUK_ADMIN,
+    ROLE_HDRUK_DAR,
+} from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
 
 const getProfileNav = (permissions: {
@@ -72,6 +79,12 @@ const getTeamNav = (
     },
     teamId: string | undefined
 ): LeftNavItem[] => {
+    console.log([
+        permissions[ROLE_CUSTODIAN_DAR_MANAGER],
+        permissions[ROLE_CUSTODIAN_TEAM_ADMIN],
+        permissions[ROLE_HDRUK_ADMIN],
+        permissions[ROLE_HDRUK_DAR],
+    ]);
     return [
         {
             icon: <SettingsOutlinedIcon />,
@@ -164,6 +177,26 @@ const getTeamNav = (
                                 ]
                               : []),
                       ],
+                  },
+              ]
+            : []),
+        ...([
+            permissions["dur.read"],
+            permissions["dur.write"],
+            permissions["dur.update"],
+            permissions["dur.delete"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: (
+                          <CohortDiscoveryIcon
+                              sx={{
+                                  fill: "rgba(0, 0, 0, 0.54)",
+                              }}
+                          />
+                      ),
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
                   },
               ]
             : []),

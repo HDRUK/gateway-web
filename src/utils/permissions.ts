@@ -35,4 +35,15 @@ const getPermissions = (
     return permissionObj;
 };
 
-export { getPermissions };
+const hasPermissions = (
+    permissions: { [key: string]: boolean },
+    pagePermissions: string[]
+) => {
+    const userPermissions = Object.keys(permissions).filter(
+        p => permissions[p] === true
+    );
+
+    return userPermissions.some(p => pagePermissions?.includes(p));
+};
+
+export { getPermissions, hasPermissions };
