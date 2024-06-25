@@ -2,7 +2,7 @@ import { Application } from "./Application";
 import { DataUse } from "./DataUse";
 import { Dataset } from "./Dataset";
 import { Team } from "./Team";
-import { Tool } from "./Tool";
+import type { Tool } from "./Tool";
 import { User } from "./User";
 
 interface Collection {
