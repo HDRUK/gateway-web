@@ -79,12 +79,8 @@ const getTeamNav = (
     },
     teamId: string | undefined
 ): LeftNavItem[] => {
-    console.log([
-        permissions[ROLE_CUSTODIAN_DAR_MANAGER],
-        permissions[ROLE_CUSTODIAN_TEAM_ADMIN],
-        permissions[ROLE_HDRUK_ADMIN],
-        permissions[ROLE_HDRUK_DAR],
-    ]);
+    console.log("permissions", permissions);
+
     return [
         {
             icon: <SettingsOutlinedIcon />,
@@ -138,15 +134,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["dur.read"]
-            ? [
-                  {
-                      icon: <SchemaOutlinedIcon />,
-                      label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
-                  },
-              ]
-            : []),
+
         ...([
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -188,13 +176,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: (
-                          <CohortDiscoveryIcon
-                              sx={{
-                                  fill: "rgba(0, 0, 0, 0.54)",
-                              }}
-                          />
-                      ),
+                      icon: <SchemaOutlinedIcon />,
                       label: "Data Uses",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
                   },

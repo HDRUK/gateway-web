@@ -44,6 +44,10 @@ export default function DataUsesListCard({
         cursor: "default",
     };
 
+    const enabledButtonStyles = {
+        cursor: "pointer",
+    };
+
     return (
         <ListItem
             secondaryAction={
@@ -58,7 +62,9 @@ export default function DataUsesListCard({
                         })}
                         role="button"
                         onClick={() => onEdit(id)}
-                        sx={isEdit ? disabledButtonStyles : {}}
+                        sx={
+                            !isEdit ? disabledButtonStyles : enabledButtonStyles
+                        }
                     />
                     <ContentCopyIcon
                         titleAccess={t("copyButtonLabel", {
@@ -66,15 +72,23 @@ export default function DataUsesListCard({
                         })}
                         role="button"
                         onClick={() => onCopy(id)}
-                        sx={isCreate ? disabledButtonStyles : {}}
+                        sx={
+                            !isCreate
+                                ? disabledButtonStyles
+                                : enabledButtonStyles
+                        }
                     />
                     <ArchiveIcon
-                        titleAccess={t("copyButtonLabel", {
+                        titleAccess={t("archiveButtonLabel", {
                             title,
                         })}
                         role="button"
                         onClick={() => onArchive(id)}
-                        sx={isArchive ? disabledButtonStyles : {}}
+                        sx={
+                            !isArchive
+                                ? disabledButtonStyles
+                                : enabledButtonStyles
+                        }
                     />
                 </ListItemActions>
             }
