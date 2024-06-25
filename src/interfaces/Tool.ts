@@ -1,6 +1,6 @@
 import { Collection } from "./Collection";
-import { VersionItem } from "./Dataset";
 import { DataUse } from "./DataUse";
+import { VersionItem } from "./Dataset";
 import { Publication } from "./Publication";
 import { Tag } from "./Tag";
 
