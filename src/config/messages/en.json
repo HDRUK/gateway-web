@@ -637,7 +637,8 @@
                     "contact": "Contact data provider",
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
-                    "downloadMetadata": "Download metadata"
+                    "downloadMetadata": "Download metadata",
+                    "downloadStarted": "Your download has started"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
