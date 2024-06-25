@@ -1,9 +1,7 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
@@ -19,7 +17,7 @@ import { toolFields } from "./config";
 const TRANSLATION_PATH = "pages.tool";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Use",
+    title: "Health Data Research Innovation Gateway - Tool",
     description: "",
 };
 
