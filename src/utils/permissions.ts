@@ -43,8 +43,6 @@ const hasPermissions = (
         p => permissions[p] === true
     );
 
-    console.log("userPermissions", userPermissions);
-
     return userPermissions.some(p => pagePermissions?.includes(p));
 };
 

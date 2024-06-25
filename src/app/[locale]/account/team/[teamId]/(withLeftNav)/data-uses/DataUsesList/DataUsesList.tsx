@@ -39,13 +39,21 @@ export default function DataUsesList({
 
     // Do query here based on changing tabValue
 
-    const handleEditClick = () => {};
+    const handleEditClick = () => {
+        console.log("Editting");
+    };
 
-    const handleCopyClick = () => {};
+    const handleCopyClick = () => {
+        console.log("Copying");
+    };
 
-    const handleArchiveClick = () => {};
+    const handleArchiveClick = () => {
+        console.log("Archiving");
+    };
 
-    const handleAdd = () => {};
+    const handleAdd = () => {
+        console.log("Uploading");
+    };
 
     const handleTabChanged = (
         _: SyntheticEvent<Element, Event>,
