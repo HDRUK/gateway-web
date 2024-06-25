@@ -25,11 +25,8 @@ export default function DatasetContent({
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
 
-    console.log(dataset_versions);
     const datasetsLatestVersions = getLatestVersions(dataset_versions);
-    console.log('datasetsLatestVersions');
-    console.log(datasetsLatestVersions);
-    console.log('end datasetsLatestVersions');
+    
     return (
         <InView
             id={`anchor${anchorIndex}`}

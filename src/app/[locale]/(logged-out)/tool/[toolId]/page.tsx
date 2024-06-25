@@ -9,11 +9,11 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getTool } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
-import ToolContent from "./components/ToolContent";
+import CollectionsContent from "./components/CollectionsContent";
 import DatasetsContent from "./components/DatasetsContent";
 import DatausesContent from "./components/DatausesContent";
 import PublicationsContent from "./components/PublicationsContent";
-import CollectionsContent from "./components/CollectionsContent";
+import ToolContent from "./components/ToolContent";
 import { toolFields } from "./config";
 
 const TRANSLATION_PATH = "pages.tool";
@@ -51,35 +51,26 @@ export default async function ToolPage({
                 <>
                     <ActionBar />
                     <Box sx={{ px: 6, py: 3 }}>
-                        {/* <Box sx={{ p: 0, gap: 2 }}> */}
-                            <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
-                                {data.name}
-                            </Typography>
-                        {/* </Box> */}
-                        {/* <Box> */}
-                            
-                            <ToolContent
-                                data={data}
-                                populatedSections={populatedSections}
-                            />
-
-                            <DatasetsContent
-                                dataset_versions={data.dataset_versions}
-                                anchorIndex={1}
-                            />
-                            <DatausesContent
-                                datauses={data.durs}
-                                anchorIndex={2}
-                            />
-                            <PublicationsContent
-                                publications={data.publications}
-                                anchorIndex={3}
-                            />
-                            <CollectionsContent
-                                collections={data.collections}
-                                anchorIndex={4}
-                            />
-                        {/* </Box> */}
+                        <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
+                            {data.name}
+                        </Typography>
+                        <ToolContent
+                            data={data}
+                            populatedSections={populatedSections}
+                        />
+                        <DatasetsContent
+                            dataset_versions={data.dataset_versions}
+                            anchorIndex={1}
+                        />
+                        <DatausesContent datauses={data.durs} anchorIndex={2} />
+                        <PublicationsContent
+                            publications={data.publications}
+                            anchorIndex={3}
+                        />
+                        <CollectionsContent
+                            collections={data.collections}
+                            anchorIndex={4}
+                        />
                     </Box>
                 </>
             }

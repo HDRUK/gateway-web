@@ -40,16 +40,14 @@ export default function CollectionsContent({
                 heading={t("heading", {
                     length: collections.length,
                 })}
-                contents={collections.map(
-                    ({ name, description, id }) => (
-                        <>
-                            <Link href={`/${RouteName.DATA_USE_ITEM}/${id}`}>
-                                {name}
-                            </Link>
-                            <div>{description}</div>
-                        </>
-                    )
-                )}
+                contents={collections.map(({ name, description, id }) => (
+                    <>
+                        <Link href={`/${RouteName.DATA_USE_ITEM}/${id}`}>
+                            {name}
+                        </Link>
+                        <div>{description}</div>
+                    </>
+                ))}
             />
         </InView>
     );
