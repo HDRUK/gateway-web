@@ -236,14 +236,13 @@ const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
     nameOverride?: string,
-    labelOverride?: string,
     setActiveField?: (fieldName: string) => void
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
 
     return (
         <InputWrapper
-            label={labelOverride || name || ""}
+            label={name || ""}
             name={nameOverride || name}
             key={name}
             placeholder={placeholder || ""}

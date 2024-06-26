@@ -9,8 +9,6 @@ const getRequest = async <T>(
     const { errorNotificationsOn = true, ...props } = notificationOptions;
 
     try {
-        console.log("hi from getRequest");
-        console.log(url);
         const response = await fetch(url, { credentials: "include" });
 
         if (response.ok) {
