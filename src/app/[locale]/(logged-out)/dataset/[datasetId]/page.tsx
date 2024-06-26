@@ -65,8 +65,8 @@ export default async function DatasetItemPage({
                                     variant="h2"
                                     sx={{ pt: 0.5, pb: 0.5 }}>
                                     {
-                                        datasetVersion.metadata.metadata.summary
-                                            .title
+                                        datasetVersion.metadata?.metadata
+                                            ?.summary?.title
                                     }
                                 </Typography>
                                 <div>
@@ -79,8 +79,8 @@ export default async function DatasetItemPage({
                             data={datasetVersion}
                             populatedSections={populatedSections}
                             hasStructuralMetadata={
-                                !!datasetVersion.metadata.metadata
-                                    .structuralMetadata.length
+                                !!datasetVersion.metadata?.metadata
+                                    ?.structuralMetadata?.length
                             }
                         />
 
