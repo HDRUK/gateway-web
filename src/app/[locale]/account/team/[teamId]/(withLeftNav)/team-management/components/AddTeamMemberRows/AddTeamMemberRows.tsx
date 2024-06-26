@@ -15,6 +15,7 @@ interface AddTeamMemberRowsProps<TFieldValues extends FieldValues> {
     fields: FieldArrayWithId<AddTeamMember, "userAndRoles", "id">[];
     control: Control<TFieldValues>;
     userOptions: SelectOptionsType[];
+    userPermissions: { [key: string]: boolean };
     remove: (fieldId: number) => void;
     append: (newRow: UserAndRoles) => void;
 }
@@ -23,12 +24,15 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
     fields,
     control,
     userOptions,
+    userPermissions,
     remove,
     append,
 }: AddTeamMemberRowsProps<TFieldValues>) => {
     const roleOptionsFiltered = useMemo(() => {
-        return getRoleOptions();
-    }, []);
+        return getRoleOptions().filter(role =>
+            role.permissions?.every(permission => userPermissions[permission])
+        );
+    }, [userPermissions]);
 
     const [userField, memberField] = addTeamMemberFormFields;
     return (

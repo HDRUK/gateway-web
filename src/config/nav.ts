@@ -1,3 +1,5 @@
+import { RouteName } from "@/consts/routeName";
+
 const navItems = [
     {
         label: "Explore",
@@ -22,6 +24,10 @@ const navItems = [
             {
                 label: "Terms and conditions",
                 href: "/terms-and-conditions",
+            },
+            {
+                label: "Meet the team",
+                href: `/${RouteName.MEET_THE_TEAM}`,
             },
         ],
     },

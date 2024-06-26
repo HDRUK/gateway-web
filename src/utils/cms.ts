@@ -6,6 +6,7 @@ import {
     PageTemplatePromo,
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
+import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { ReleaseNode } from "@/interfaces/Releases";
 import apis from "@/config/apis";
@@ -13,6 +14,7 @@ import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
+import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
@@ -39,6 +41,7 @@ async function fetchCMS(
     });
 
     const json = await res.json();
+
     if (json.errors) {
         console.error(json.errors);
         throw new Error("Failed to fetch API");
@@ -59,6 +62,15 @@ const getMissionAndPurposes = async () => {
         GetMissionAndPurposesQuery,
         DEFAULT_OPTIONS
     );
+    return data?.posts?.edges || null;
+};
+
+const getMeetTheTeam = async () => {
+    const data: CMSPostResponse<MeetTheTeamNode> = await fetchCMS(
+        GetMeetTheTeamQuery,
+        DEFAULT_OPTIONS
+    );
+
     return data?.posts?.edges || null;
 };
 
@@ -115,4 +127,5 @@ export {
     getTermsAndConditions,
     getHomePage,
     getHowToSearchPage,
+    getMeetTheTeam,
 };

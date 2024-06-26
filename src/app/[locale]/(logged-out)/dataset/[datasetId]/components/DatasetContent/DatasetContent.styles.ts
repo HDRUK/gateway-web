@@ -22,3 +22,10 @@ export const DatasetFieldItem = styled(Chip)(() => ({
     whiteSpace: "nowrap",
     marginBottom: "4px",
 }));
+
+export const ListContainer = styled("div")(({ theme }) => ({
+    padding: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(1),
+}));

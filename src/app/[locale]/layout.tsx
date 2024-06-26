@@ -1,4 +1,4 @@
-import { Suspense, ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";

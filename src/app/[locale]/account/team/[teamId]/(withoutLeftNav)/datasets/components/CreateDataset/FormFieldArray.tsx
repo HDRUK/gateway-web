@@ -26,6 +26,7 @@ interface CreateDatasetProps {
     control: Control<FormValues>;
     schemaFields: FormHydration[];
     fieldParent: FormHydration;
+    setSelectedField?: (fieldName: string, fieldArrayName: string) => void;
 }
 
 const ID = "id";
@@ -34,6 +35,7 @@ const FormFieldArray = ({
     control,
     schemaFields,
     fieldParent,
+    setSelectedField,
 }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
@@ -72,7 +74,13 @@ const FormFieldArray = ({
                                         renderFormHydrationField(
                                             testField,
                                             control,
-                                            `${fieldParent.title}.${index}.${testField.name}`
+                                            `${fieldParent.title}.${index}.${testField.name}`,
+                                            (fieldTest: string) =>
+                                                setSelectedField &&
+                                                setSelectedField(
+                                                    fieldTest,
+                                                    fieldParent.title
+                                                )
                                         )}
                                 </React.Fragment>
                             );
