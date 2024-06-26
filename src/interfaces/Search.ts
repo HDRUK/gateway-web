@@ -104,6 +104,7 @@ export interface SearchResultTool extends SearchResultBase {
 
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
+    image_link: string;
     _id: string;
 }
 
