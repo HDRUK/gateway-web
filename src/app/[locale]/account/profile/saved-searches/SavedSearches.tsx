@@ -14,6 +14,8 @@ import { flatten } from "lodash";
 import { useTranslations } from "next-intl";
 import useSWRMutation from "swr/mutation";
 import { SavedSearchWithPivot } from "@/interfaces/Search";
+import { DataList, DataListItem } from "@/components/DataList";
+import ListItemActions from "@/components/ListItemActions";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import useAuth from "@/hooks/useAuth";
@@ -27,8 +29,6 @@ import {
     getUrlFromSearchParams,
 } from "@/utils/search";
 import { toTitleCase } from "@/utils/string";
-import DataList from "./components/DataList";
-import DataListItem from "./components/DataListItem";
 import DeleteAction from "./components/DeleteAction";
 
 const TRANSLATION_PATH = "pages.saved_searches";
@@ -118,11 +118,16 @@ const SavedSearches = () => {
                             <>
                                 <ListItem
                                     secondaryAction={
-                                        <DeleteAction
-                                            onDelete={() =>
-                                                handleDeleteSavedSearch(data)
-                                            }
-                                        />
+                                        <ListItemActions
+                                            sx={{ height: "45px" }}>
+                                            <DeleteAction
+                                                onDelete={() =>
+                                                    handleDeleteSavedSearch(
+                                                        data
+                                                    )
+                                                }
+                                            />
+                                        </ListItemActions>
                                     }
                                     sx={{ p: 0 }}
                                     alignItems="flex-start">

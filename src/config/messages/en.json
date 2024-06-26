@@ -201,7 +201,15 @@
                     "workflows": { "title": "Workflows" }
                 },
                 "dataUses": {
-                    "title": "Data Uses"
+                    "title": "Data Uses",
+                    "description": "View, add, edit, archive and check the status of your data uses.",
+                    "uploadButton": "+ Upload",
+                    "active": "Active ({count})",
+                    "draft": "Draft ({count})",
+                    "archived": "Archived ({count})",
+                    "editButtonLabel": "Edit {title}",
+                    "copyButtonLabel": "Copy {title}",
+                    "archiveButtonLabel": "Archive {title}"
                 },
                 "datasets": {
                     "title": "Datasets",
