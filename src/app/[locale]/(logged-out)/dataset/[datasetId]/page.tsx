@@ -78,6 +78,10 @@ export default async function DatasetItemPage({
                         <DatasetMindMap
                             data={datasetVersion}
                             populatedSections={populatedSections}
+                            hasStructuralMetadata={
+                                !!datasetVersion.metadata.metadata
+                                    .structuralMetadata.length
+                            }
                         />
 
                         <DatasetContent
