@@ -53,12 +53,13 @@ const getLatestVersion = (dataset: Dataset) => {
 };
 
 const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
-    // Given an array of VersionItems, returnonly the entries which are the latest version of their respective datasets
+    // Given an array of VersionItems, return only the entries which are the latest version of their respective datasets
     const groupedByDatasetID = dataset_versions.reduce<VersionItem[]>(
         (r, o) => {
-            r[o.dataset_id] =
-                r[o.dataset_id] && r[o.dataset_id].version > o.version
-                    ? r[o.dataset_id]
+            const s = r;
+            s[o.dataset_id] =
+                s[o.dataset_id] && s[o.dataset_id].version > o.version
+                    ? s[o.dataset_id]
                     : o;
 
             return r;
