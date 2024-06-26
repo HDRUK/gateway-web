@@ -1,6 +1,8 @@
 import MuiCard, { CardProps as MuiCardProps } from "@mui/material/Card";
 
-const Card = (props: MuiCardProps) => {
+export type CardProps = MuiCardProps;
+
+const Card = (props: CardProps) => {
     return <MuiCard {...props} />;
 };
 

@@ -13,6 +13,7 @@ import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import ModalButtons from "@/components/ModalButtons";
+import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
@@ -23,12 +24,15 @@ import {
     addTeamMemberDefaultValues,
     addTeamMemberValidationSchema,
 } from "@/config/forms/addTeamMember";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 import AddTeamMemberRows from "../AddTeamMemberRows";
 import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 
 const limit = pLimit(1);
 
 const AddTeamMemberDialog = () => {
+    const { user } = useAuth();
     const { hideDialog, store } = useDialog();
     const { dialogProps } = store as unknown as {
         dialogProps: {
@@ -51,6 +55,9 @@ const AddTeamMemberDialog = () => {
     const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
 
     const { team } = useGetTeam(dialogProps.teamId);
+
+    const teamUser = team && user && getTeamUser(team?.users, user?.id);
+    const permissions = getPermissions(user?.roles, teamUser?.roles);
 
     const userOptions = useMemo(() => {
         if (!team) return [];
@@ -105,6 +112,7 @@ const AddTeamMemberDialog = () => {
                         remove={remove}
                         control={control}
                         userOptions={userOptions}
+                        userPermissions={permissions}
                     />
                 </MuiDialogContent>
                 <MuiDialogActions>
