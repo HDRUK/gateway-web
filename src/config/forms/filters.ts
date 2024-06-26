@@ -14,7 +14,7 @@ export const FILTER_ACCESS_SERVICE = "accessService";
 export const FILTER_POPULATION_SIZE = "populationSize";
 export const FILTER_TYPE_CATEGORY = "typeCategory";
 export const FILTER_CONTAINS_TISSUE = "containsTissue";
-export const FILTER_MATERIAL_TYPE = "tissueSampleAvailability";
+export const FILTER_MATERIAL_TYPE = "sampleAvailability";
 
 export const filtersList = [
     FILTER_PUBLISHER_NAME,
