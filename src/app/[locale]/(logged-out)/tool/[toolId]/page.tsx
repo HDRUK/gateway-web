@@ -5,7 +5,6 @@ import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { connectionLineStyle } from "@/config/mindmaps/dataset";
 import { getTool } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import CollectionsContent from "./components/CollectionsContent";

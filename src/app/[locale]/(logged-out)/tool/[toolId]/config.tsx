@@ -84,5 +84,6 @@ const accordions = [
         sectionName: "collections",
         fields: [],
     },
-]
+];
+
 export { toolFields, accordions };
