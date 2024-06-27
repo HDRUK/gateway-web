@@ -5,6 +5,7 @@ import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { connectionLineStyle } from "@/config/mindmaps/dataset";
 import { getTool } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import CollectionsContent from "./components/CollectionsContent";
@@ -13,7 +14,6 @@ import DatausesContent from "./components/DatausesContent";
 import PublicationsContent from "./components/PublicationsContent";
 import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
-import { connectionLineStyle } from "@/config/mindmaps/dataset";
 
 const TRANSLATION_PATH = "pages.tool";
 
@@ -59,16 +59,19 @@ export default async function ToolPage({
                         />
                         <DatasetsContent
                             dataset_versions={data.dataset_versions}
-                            anchorIndex={populatedSections.length+1}
+                            anchorIndex={populatedSections.length + 1}
                         />
-                        <DatausesContent datauses={data.durs} anchorIndex={populatedSections.length+2} />
+                        <DatausesContent
+                            datauses={data.durs}
+                            anchorIndex={populatedSections.length + 2}
+                        />
                         <PublicationsContent
                             publications={data.publications}
-                            anchorIndex={populatedSections.length+3}
+                            anchorIndex={populatedSections.length + 3}
                         />
                         <CollectionsContent
                             collections={data.collections}
-                            anchorIndex={populatedSections.length+4}
+                            anchorIndex={populatedSections.length + 4}
                         />
                     </Box>
                 </>
