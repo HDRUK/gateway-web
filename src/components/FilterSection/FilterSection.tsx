@@ -60,6 +60,7 @@ const FilterSection = <
     const checkboxes = useMemo(() => {
         return filterItem.buckets.filter(bucket =>
             bucket?.label
+                .toString()
                 ?.toLowerCase()
                 ?.includes(field.value?.toLowerCase() || "")
         );

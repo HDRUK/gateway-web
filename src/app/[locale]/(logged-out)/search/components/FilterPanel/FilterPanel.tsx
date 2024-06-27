@@ -402,6 +402,13 @@ const FilterPanel = ({
         }
     };
 
+    // Clear Material Type filter when Tissues toggled off
+    useEffect(() => {
+        if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
+            setFilterQueryParams([], FILTER_MATERIAL_TYPE);
+        }
+    }, [selectedFilters[FILTER_CONTAINS_TISSUE]]);
+
     return (
         <>
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
