@@ -212,12 +212,6 @@
                     "archiveButtonLabel": "Archive {title}"
                 },
                 "datasets": {
-                    "title": "Datasets",
-                    "text": "View, add, edit, archive and check the status of your datasets.",
-                    "duplicate": {
-                        "title": "Duplicate dataset",
-                        "text": "Update and duplicate this dataset."
-                    },
                     "components": {
                         "CreateDataset": {
                             "guidance": "Guidance",
@@ -273,6 +267,13 @@
                             "downloadButton": "Download dataset information as .csv"
                         },
                         "TeamDatasets": {
+                            "title": "Datasets",
+                            "text": "View, add, edit, archive and check the status of your datasets.",
+                            "create": "Add new dataset",
+                            "duplicate": {
+                                "title": "Duplicate dataset",
+                                "text": "Update and duplicate this dataset."
+                            },
                             "actions": {
                                 "unarchive": {
                                     "buttonText": "Make Active",
@@ -883,6 +884,11 @@
                 "description": "Description",
                 "keywords": "Keywords",
                 "team": "Team/Author"
+            },
+            "AddDatasetDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input metadata",
+                "uploadButton": "Upload a file of metadata"
             }
         }
     }

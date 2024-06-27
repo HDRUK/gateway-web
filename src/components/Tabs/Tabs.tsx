@@ -90,8 +90,8 @@ const Tabs = ({
                     css={variant === TabVariant.LARGE && tabsStyle.tabList}
                     sx={{
                         paddingBottom: 0,
-                        ...tabBoxSx,
                         background: "none",
+                        ...tabBoxSx,
                     }}>
                     <MuiTabList
                         sx={{ mb: variant === TabVariant.STANDARD ? 1 : 0 }}
