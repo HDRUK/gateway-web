@@ -23,6 +23,7 @@ interface Collection {
     tools: Tool[];
     counter?: number;
     team_id?: number;
+    image_link: string;
 }
 
 export type { Collection };
