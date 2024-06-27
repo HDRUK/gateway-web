@@ -12,7 +12,8 @@ import DatasetsContent from "./components/DatasetsContent";
 import DatausesContent from "./components/DatausesContent";
 import PublicationsContent from "./components/PublicationsContent";
 import ToolContent from "./components/ToolContent";
-import { toolFields } from "./config";
+import { toolFields, accordions } from "./config";
+import { connectionLineStyle } from "@/config/mindmaps/dataset";
 
 const TRANSLATION_PATH = "pages.tool";
 
@@ -36,7 +37,7 @@ export default async function ToolPage({
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );
 
-    const activeLinkList = populatedSections.map(section => {
+    const activeLinkList = populatedSections.concat(accordions).map(section => {
         return {
             label: t(section.sectionName),
         };
@@ -58,16 +59,16 @@ export default async function ToolPage({
                         />
                         <DatasetsContent
                             dataset_versions={data.dataset_versions}
-                            anchorIndex={1}
+                            anchorIndex={populatedSections.length+1}
                         />
-                        <DatausesContent datauses={data.durs} anchorIndex={2} />
+                        <DatausesContent datauses={data.durs} anchorIndex={populatedSections.length+2} />
                         <PublicationsContent
                             publications={data.publications}
-                            anchorIndex={3}
+                            anchorIndex={populatedSections.length+3}
                         />
                         <CollectionsContent
                             collections={data.collections}
-                            anchorIndex={4}
+                            anchorIndex={populatedSections.length+4}
                         />
                     </Box>
                 </>

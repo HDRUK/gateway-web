@@ -67,20 +67,20 @@ const ToolContent = ({
                     {populatedSections.map((section, index) => (
                         <InView
                             key={`${section.sectionName}_inview`}
-                            id={`anchor${index + 2}`}
+                            id={`anchor${index + 1}`}
                             threshold={1}
                             as="div"
                             onChange={inView => {
                                 if (inView && path) {
                                     router.replace(
-                                        `${path}?section=${index + 2}`,
+                                        `${path}?section=${index + 1}`,
                                         { scroll: false }
                                     );
                                 }
                             }}>
                             <Box
                                 key={`${section.sectionName}_wrap`}
-                                id={`anchor${index + 2}`}
+                                id={`anchor${index + 1}`}
                                 sx={{
                                     "&:not(:last-of-type)": {
                                         borderBottom: 1,

@@ -733,6 +733,10 @@
             "keywords": "Keywords",
             "domain": "Domain",
             "notAvailable": "Not specified",
+            "datasets": "Related datasets",
+            "dataUses": "Related data uses",
+            "publications": "Related publications",
+            "collections": "Related collections",
             "components": {
                 "ActionBar": {
                     "label": "Back to Tools search results"
