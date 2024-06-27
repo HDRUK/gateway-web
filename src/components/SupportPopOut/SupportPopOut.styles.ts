@@ -9,9 +9,9 @@ export const SupportList = styled("ul")(() => ({
 
 export const SupportButton = styled(Button)(() => ({
     height: 40,
-    width: 140,
+    width: 160,
     position: "fixed",
-    right: -50,
+    right: -60,
     top: 500,
     transform: "rotate(90deg)",
     borderRadius: 4,

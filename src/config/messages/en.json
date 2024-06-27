@@ -83,6 +83,26 @@
         "all": "All"
     },
     "pages": {
+        "support": {
+            "title": "Support centre",
+            "backToSupport": "Back to Support Centre",
+            "gatewaySchemaTitle": "Gateway Schema",
+            "teamManagementTitle": "Team Management",
+            "toolsTitle": "Analysis script, software and publication",
+            "searchTitle": "Search",
+            "metadataOnboardingTitle": "Metadata Onboarding (Private app & Federation)",
+            "durTitle": "Data Use Register",
+            "darTitle": "Data Access Request",
+            "cohortDiscoveryTitle": "Cohort Discovery",
+            "gatewaySchemaDescription": "Find out what we have in our schema and support we offer here.",
+            "teamManagementDescription": "Help with the team management and how to perform certain actions and what permissions you are assigned.",
+            "toolsDescription": "What are Tools and Papers on the Gateway? How are they created and how can you use them? Get help with Tools and papers.",
+            "searchDescription": "Learn how to search entities on the Gateway.",
+            "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
+            "durDescription": "Learn About Data Use Registers.",
+            "darDescription": "Learn about Data Access Request forms and process.",
+            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery."
+        },
         "releases": {
             "noResults": "There are no releases for {year}",
             "description1": "The Gateway requires a significant volume of design and development work to deliver our vision and ambition. To achieve this our teams are continually working on the Gateway and deliver major software releases approximately every 4 weeks.",
@@ -96,7 +116,8 @@
                 "title": "Cohort Discovery Registration",
                 "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.",
                 "terms": "You can review your terms and conditions <terms>here</terms>"
-            }
+            },
+            "backToHomepage": "Back to homepage"
         },
         "account": {
             "profile": {
@@ -180,15 +201,17 @@
                     "workflows": { "title": "Workflows" }
                 },
                 "dataUses": {
-                    "title": "Data Uses"
+                    "title": "Data Uses",
+                    "description": "View, add, edit, archive and check the status of your data uses.",
+                    "uploadButton": "+ Upload",
+                    "active": "Active ({count})",
+                    "draft": "Draft ({count})",
+                    "archived": "Archived ({count})",
+                    "editButtonLabel": "Edit {title}",
+                    "copyButtonLabel": "Copy {title}",
+                    "archiveButtonLabel": "Archive {title}"
                 },
                 "datasets": {
-                    "title": "Datasets",
-                    "text": "View, add, edit, archive and check the status of your datasets.",
-                    "duplicate": {
-                        "title": "Duplicate dataset",
-                        "text": "Update and duplicate this dataset."
-                    },
                     "components": {
                         "CreateDataset": {
                             "guidance": "Guidance",
@@ -196,8 +219,8 @@
                             "previous": "Previous",
                             "onlineForm": "Online Form",
                             "uploadFile": "Upload File",
-                            "welcomeMessage": "Welcome to dataset metadata on-boarding.",
-                            "legendIntro": "You will see a legend to help you as you on-board your dataset metadata.",
+                            "welcomeMessage": "Welcome to dataset metadata on-boarding",
+                            "legendIntro": "You will see a legend to help you as you on-board your dataset metadata",
                             "progressLegend": "Progress legend:",
                             "remove": "Remove",
                             "add": "Add another",
@@ -244,6 +267,13 @@
                             "downloadButton": "Download dataset information as .csv"
                         },
                         "TeamDatasets": {
+                            "title": "Datasets",
+                            "text": "View, add, edit, archive and check the status of your datasets.",
+                            "create": "Add new dataset",
+                            "duplicate": {
+                                "title": "Duplicate dataset",
+                                "text": "Update and duplicate this dataset."
+                            },
                             "actions": {
                                 "unarchive": {
                                     "buttonText": "Make Active",
@@ -445,9 +475,10 @@
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
-            "publicationWelcomeText1": "To start your search, enter a keyword at the top and select the search source on the left then hit enter or return.",
-            "publicationWelcomeText2": "Gateway assets are linked to make it easier to find relevant resources for your work.",
-            "publicationWelcomeText3": "Search Gateway for publications with curated linkages to explore related resources, like publications about a dataset or publications that have used a dataset.",
+            "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
+            "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data provider.",
+            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' field to improve the relevance of results returned.",
+            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the Keyword(s) of interest or the name of a dataset in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -617,7 +648,8 @@
                     "contact": "Contact data provider",
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
-                    "downloadMetadata": "Download metadata"
+                    "downloadMetadata": "Download metadata",
+                    "downloadStarted": "Your download has started"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
@@ -739,8 +771,16 @@
         }
     },
     "components": {
+        "ContactSupport": {
+            "title": "Still can’t find what you’re looking for?",
+            "content": "The quickest way to get your issue solved is through the links above, but if you aren’t able to find a solution then contact us here:",
+            "contactButton": "Contact support"
+        },
+        "TeamModal": {
+            "descriptionTitle": "Description"
+        },
         "SupportPopOut": {
-            "buttonText": "Need support",
+            "buttonText": "Visit Support Centre",
             "giveFeedback": "Give feedback",
             "reportBug": "Report bug",
             "requestSupport": "Request support",
@@ -755,7 +795,12 @@
             "noFilters": "No filters available"
         },
         "Footer": {
-            "text": "HDR UK {year}. All rights reserved."
+            "copyright": "HDR UK {year}. All rights reserved.",
+            "visitHDRUKSite": "Visit the HDR UK Site",
+            "termsConditions": "Terms and conditions",
+            "privacyPolicy": "Privacy policy",
+            "cookieNotice": "Cookie notice",
+            "apiDocs": "API docs"
         },
         "DesktopNav": {
             "labels": {
@@ -841,6 +886,11 @@
                 "description": "Description",
                 "keywords": "Keywords",
                 "team": "Team/Author"
+            },
+            "AddDatasetDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input metadata",
+                "uploadButton": "Upload a file of metadata"
             }
         }
     }

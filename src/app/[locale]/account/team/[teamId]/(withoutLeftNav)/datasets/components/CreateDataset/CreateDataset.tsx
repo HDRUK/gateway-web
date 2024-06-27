@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { buildYup } from "schema-to-yup";
@@ -62,6 +63,8 @@ interface CreateDatasetProps {
 
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
 
 const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const t = useTranslations(
@@ -69,10 +72,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     );
 
     const { push } = useRouter();
-
-    const createDataset = usePost<NewDataset>(apis.datasetsV1Url, {
-        itemName: "Dataset",
-    });
 
     const bannerTabList = [
         { label: t("onlineForm"), value: "FORM" },
@@ -110,17 +109,29 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         []
     );
 
+    const [isDraft, setIsDraft] = useState<boolean>();
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
+    const [guidanceText, setGuidanceText] = useState<string>();
+
+    const postDatasetUrl = isDraft
+        ? `${apis.datasetsV1Url}?input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`
+        : apis.datasetsV1Url;
+
+    const createDataset = usePost<NewDataset>(postDatasetUrl, {
+        itemName: "Dataset",
+    });
 
     const generatedYupValidation = useMemo(
         () =>
             formJSON?.validation && {
                 title: "Metadata form",
                 type: "object",
-                properties: generateValidationRules(formJSON.validation),
+                properties: !isDraft
+                    ? generateValidationRules(formJSON.validation)
+                    : {},
             },
-        [formJSON.validation, generateValidationRules]
+        [formJSON.validation, generateValidationRules, isDraft]
     );
 
     const yupSchema = buildYup(generatedYupValidation);
@@ -144,6 +155,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         : 0;
 
     const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
+    const [submissionRequested, setSubmissionRequested] =
+        useState<boolean>(false);
 
     // When form loaded - select first form section with displayed fields
     useEffect(() => {
@@ -167,14 +180,15 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 schemaFields,
                 clearErrors,
                 getValues,
-                trigger
+                trigger,
+                submissionRequested
             );
             setLegendItems(items);
         };
 
         createLegendItems();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFormSection]);
+    }, [selectedFormSection, isDraft]);
 
     const handleLegendClick = (clickedIndex: number) => {
         setSelectedFormSection(formSections[clickedIndex + 1]);
@@ -209,7 +223,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         const formPayload = {
             team_id: teamId,
             user_id: userId,
-            status: "ACTIVE" as DatasetStatus,
+            status: isDraft
+                ? ("DRAFT" as DatasetStatus)
+                : ("ACTIVE" as DatasetStatus),
             pid: null,
             updated: "",
             create_origin: "MANUAL" as CreateOrigin,
@@ -249,15 +265,45 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         postForm(formData);
     };
 
-    const handleMakeActive = async () => {
-        const formIsValid = await trigger();
-
-        if (formIsValid) {
-            handleSubmit(formSubmit)();
+    const handleFormSubmission = async (isDraft: boolean) => {
+        if (!isDraft) {
+            const formIsValid = await trigger();
+            if (formIsValid) {
+                handleSubmit(formSubmit)();
+            } else {
+                setSelectedFormSection(formSections[formSections.length - 1]);
+            }
         } else {
-            setSelectedFormSection(formSections[formSections.length - 1]);
+            handleSubmit(formSubmit)();
         }
     };
+
+    const handleMakeActive = async () => {
+        setSubmissionRequested(true);
+        setIsDraft(false);
+        handleFormSubmission(false);
+    };
+
+    const handleSaveDraft = async () => {
+        setIsDraft(true);
+        handleFormSubmission(true);
+    };
+
+    // Handle submission after draft toggle
+    useEffect(() => {
+        if (isDraft === undefined) {
+            setIsDraft(false);
+            return;
+        }
+
+        if (!isDraft) {
+            clearErrors();
+        }
+
+        if (isDraft) {
+            handleFormSubmission(isDraft);
+        }
+    }, [isDraft, clearErrors]);
 
     const [optionalPercentage, setOptionalPercentage] = useState(0);
     const [requiredPercentage, setRequiredPercentage] = useState(0);
@@ -273,13 +319,30 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         );
     }, [getValues, schemaFields, watchAll]);
 
+    const updateGuidanceText = (fieldName: string, fieldArrayName?: string) => {
+        if (fieldArrayName) {
+            setGuidanceText(
+                formJSON.schema_fields
+                    .find(field => field.title === fieldArrayName)
+                    ?.fields?.find(field => field.title === fieldName)
+                    ?.guidance?.replaceAll("\\n", "\n")
+            );
+        } else {
+            setGuidanceText(
+                formJSON.schema_fields
+                    .find(field => field.title === fieldName)
+                    ?.guidance?.replaceAll("\\n", "\n")
+            );
+        }
+    };
+
     return (
         <>
             <FormBanner
                 tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
-                saveAsDraftAction={() => console.log("SAVE AS DRAFT")}
+                saveAsDraftAction={handleSaveDraft}
                 completionPercentage={requiredPercentage}
                 optionalPercentage={optionalPercentage}
                 actionButtonsEnabled={!isSaving}
@@ -353,12 +416,17 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                                                 fieldParent={
                                                                     fieldParent
                                                                 }
+                                                                setSelectedField={
+                                                                    updateGuidanceText
+                                                                }
                                                             />
                                                         ) : (
                                                             field &&
                                                                 renderFormHydrationField(
                                                                     field,
-                                                                    control
+                                                                    control,
+                                                                    undefined,
+                                                                    updateGuidanceText
                                                                 )
                                                         );
                                                     })}
@@ -376,6 +444,10 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                 <Typography variant="h2">
                                     {t("guidance")}
                                 </Typography>
+
+                                {guidanceText && (
+                                    <Markdown>{guidanceText}</Markdown>
+                                )}
                             </Paper>
                         </>
                     ) : (

@@ -6,10 +6,10 @@ import {
     GroupsIcon,
     GroupsOutlinedIcon,
     HelpOutlineOutlinedIcon,
+    QuestionAnswerIcon,
     SchemaOutlinedIcon,
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
-    QuestionAnswerIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -125,15 +125,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["dur.read"]
-            ? [
-                  {
-                      icon: <SchemaOutlinedIcon />,
-                      label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
-                  },
-              ]
-            : []),
+
         ...([
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -167,6 +159,20 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...([
+            permissions["dur.read"],
+            permissions["dur.write"],
+            permissions["dur.update"],
+            permissions["dur.delete"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <SchemaOutlinedIcon />,
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
+                  },
+              ]
+            : []),
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
@@ -175,4 +181,4 @@ const getTeamNav = (
     ];
 };
 
-export { getTeamNav, getProfileNav };
+export { getProfileNav, getTeamNav };
