@@ -432,7 +432,7 @@ const FilterPanel = ({
                     filterItem.label === FILTER_MATERIAL_TYPE &&
                     !get(selectedFilters, FILTER_CONTAINS_TISSUE)?.length
                 ) {
-                    return;
+                    return null;
                 }
 
                 return (
