@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import {
+    CUSTOMER_PORTAL_RAISE_SUPPORT_URL,
     CUSTOMER_PORTAL_REPORT_BUG_URL,
     CUSTOMER_PORTAL_SUPPORT_URL,
 } from "@/config/hrefs";
@@ -58,7 +59,7 @@ const SupportPopOut = () => {
         },
         {
             label: t("requestSupport"),
-            href: CUSTOMER_PORTAL_SUPPORT_URL,
+            href: CUSTOMER_PORTAL_RAISE_SUPPORT_URL,
             isExternal: true,
         },
     ];
