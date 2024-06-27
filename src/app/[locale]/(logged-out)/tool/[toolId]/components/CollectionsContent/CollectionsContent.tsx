@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Collection } from "@/interfaces/Collection";
 import { RouteName } from "@/consts/routeName";
-import CardStacked from "../CardStacked/CardStacked";
 import AccordionSection from "../AccordionSection";
+import CardStacked from "../CardStacked/CardStacked";
 
 const TRANSLATION_PATH = "pages.tool.components.CollectionsContent";
 
