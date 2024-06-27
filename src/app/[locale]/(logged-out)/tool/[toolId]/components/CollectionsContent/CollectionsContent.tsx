@@ -1,7 +1,6 @@
 "use client";
 
 import { InView } from "react-intersection-observer";
-import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Collection } from "@/interfaces/Collection";
@@ -41,7 +40,7 @@ export default function CollectionsContent({
                 heading={t("heading", {
                     length: collections.length,
                 })}
-                contents={collections.map(({ name, description, id }) => (
+                contents={collections.map(({ name, id }) => (
                     <CardStacked
                         href={`${RouteName.COLLECTION_ITEM}/${id}`}
                         title={name}
