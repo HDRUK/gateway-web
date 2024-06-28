@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { grey } from "@mui/material/colors";
 import Link from "next/link";
 import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
