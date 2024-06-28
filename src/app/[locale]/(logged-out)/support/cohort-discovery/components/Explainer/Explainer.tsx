@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { Box, Divider, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 

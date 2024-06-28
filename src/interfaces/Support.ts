@@ -6,13 +6,13 @@ interface SupportCohortDiscoveryPageFAQs {
 interface SupportCohortDiscoveryPage {
     title: string;
     supportCohortDiscovery: {
-        documentation: string;
-        explainer: {
+        documentation?: string;
+        explainer?: {
             node: {
                 sourceUrl: string;
             };
         };
-        faqs: SupportCohortDiscoveryPageFAQs[];
+        faqs?: SupportCohortDiscoveryPageFAQs[];
     };
 }
 
