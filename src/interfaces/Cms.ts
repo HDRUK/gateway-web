@@ -1,6 +1,11 @@
 interface CMSPostResponse<T> {
+    post: T;
+}
+
+interface CMSPostsResponse<T> {
     posts: { edges: T[] };
 }
+
 interface CMSPagesResponse<T> {
     pages: { nodes: T[] };
 }
@@ -33,6 +38,11 @@ interface PageTemplatePromo {
         };
     };
     ctaOverrideComponent?: React.ReactElement;
+}
+
+interface SupportNode {
+    id: string;
+    title: string;
 }
 
 interface NewsPost {
@@ -113,6 +123,11 @@ interface PageTemplateRepeat {
     };
 }
 
+interface ContentPageQueryOptions {
+    id: string;
+    idType?: "URI" | "ID" | "DATABASE_ID";
+}
+
 export type {
     PageTemplateRepeat,
     PageTemplateDefault,
@@ -124,4 +139,7 @@ export type {
     CMSPagesResponse,
     CtaLink,
     NewsPost,
+    SupportNode,
+    ContentPageQueryOptions,
+    CMSPostsResponse,
 };

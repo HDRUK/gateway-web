@@ -101,7 +101,17 @@
             "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
             "durDescription": "Learn About Data Use Registers.",
             "darDescription": "Learn about Data Access Request forms and process.",
-            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery."
+            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery.",
+            "documentation": {
+                "title": "Documentation"
+            },
+            "explainer": {
+                "unsupportedVideo": "Your browser does not support the video element",
+                "title": "Explainer"
+            },
+            "faqs": {
+                "title": "FAQs"
+            }
         },
         "releases": {
             "noResults": "There are no releases for {year}",
