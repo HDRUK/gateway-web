@@ -87,11 +87,11 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                           FILTER_CONTAINS_TISSUE
                       ),
                   ],
-                  [FILTER_MATERIAL_TYPE]: !!filterQueries?.[
+                  [FILTER_MATERIAL_TYPE]: !filterQueries?.[
                       FILTER_CONTAINS_TISSUE
                   ]?.includes(FILTER_CONTAINS_TISSUE)
-                      ? filterQueries[FILTER_MATERIAL_TYPE]
-                      : [],
+                      ? []
+                      : filterQueries[FILTER_MATERIAL_TYPE],
               }
             : filterQueries;
 
