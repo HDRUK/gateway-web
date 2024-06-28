@@ -752,7 +752,6 @@
             }
         },
         "tool": {
-            "backText": "Back to search results",
             "description": "Description",
             "resultsInsights": "Results/Insights",
             "details": "Details",
@@ -765,7 +764,29 @@
             "toolCategory": "Tool Category",
             "keywords": "Keywords",
             "domain": "Domain",
-            "notAvailable": "Not specified"
+            "notAvailable": "Not specified",
+            "datasets": "Related datasets",
+            "dataUses": "Related data uses",
+            "publications": "Related publications",
+            "collections": "Related collections",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Tools search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications related to this analysis, tool or software ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections which include this analysis, tool or software ({ length })"
+                }
+            }
         }
     },
     "components": {
