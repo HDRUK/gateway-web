@@ -11,7 +11,7 @@ import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
 import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
-import Tooltip from "@/components/Tooltip";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import {
     FILTER_DATA_USE_TITLES,
@@ -27,6 +27,9 @@ import {
     FILTER_POPULATION_SIZE,
     FILTER_CONTAINS_TISSUE,
     FILTER_LICENSE,
+    FILTER_MATERIAL_TYPE,
+    FILTER_ORGANISATION_NAME,
+    FILTER_DATA_SET_TITLES,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -60,23 +63,33 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 };
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
-        "containsTissue",
-        "dataUseTitles",
-        "dateRange",
-        "populationSize",
-        "geographicLocation",
-        "accessService",
-        "publisherName",
+        FILTER_CONTAINS_TISSUE,
+        FILTER_MATERIAL_TYPE,
+        FILTER_DATA_USE_TITLES,
+        FILTER_DATE_RANGE,
+        FILTER_POPULATION_SIZE,
+        FILTER_GEOGRAPHIC_LOCATION,
+        FILTER_ACCESS_SERVICE,
+        FILTER_PUBLISHER_NAME,
     ],
     dataUseRegister: [
-        "datasetTitles",
-        "publisherName",
-        "sector",
-        "organisationName",
+        FILTER_DATA_SET_TITLES,
+        FILTER_PUBLISHER_NAME,
+        FILTER_SECTOR,
+        FILTER_ORGANISATION_NAME,
     ],
-    collection: ["publisherName", "datasetTitles"],
-    paper: ["source", "publicationDate", "datasetTitles"],
-    tool: ["typeCategory", "datasetTitles", "programmingLanguages", "license"],
+    collection: [FILTER_PUBLISHER_NAME, FILTER_DATA_SET_TITLES],
+    paper: [
+        STATIC_FILTER_SOURCE,
+        FILTER_PUBLICATION_DATE,
+        FILTER_DATA_SET_TITLES,
+    ],
+    tool: [
+        FILTER_TYPE_CATEGORY,
+        FILTER_DATA_SET_TITLES,
+        FILTER_PROGRAMMING_LANGUAGE,
+        FILTER_LICENSE,
+    ],
 };
 
 type DefaultValues = {
@@ -131,6 +144,7 @@ const FilterPanel = ({
         [FILTER_PROGRAMMING_LANGUAGE]: {},
         [FILTER_TYPE_CATEGORY]: {},
         [FILTER_SECTOR]: {},
+        [FILTER_MATERIAL_TYPE]: {},
     });
 
     const [staticFilterValues, setStaticFilterValues] = useState<DefaultValues>(
@@ -159,12 +173,14 @@ const FilterPanel = ({
         [FILTER_ACCESS_SERVICE]: string;
         [FILTER_PROGRAMMING_LANGUAGE]: string;
         [FILTER_TYPE_CATEGORY]: string;
+        [FILTER_MATERIAL_TYPE]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
             [FILTER_ACCESS_SERVICE]: "",
+            [FILTER_MATERIAL_TYPE]: "",
         },
     });
 
@@ -386,72 +402,88 @@ const FilterPanel = ({
         }
     };
 
+    // Clear Material Type filter when Tissues toggled off
+    useEffect(() => {
+        if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
+            setFilterQueryParams([], FILTER_MATERIAL_TYPE);
+        }
+    }, [selectedFilters[FILTER_CONTAINS_TISSUE]]);
+
     return (
         <>
-            {filterItems
-                .sort((item1, item2) =>
-                    item1.label === FILTER_CONTAINS_TISSUE
-                        ? -1
-                        : item2.label === FILTER_CONTAINS_TISSUE
-                        ? 1
-                        : 0
-                )
-                .sort(getFilterSortOrder)
-                .map(filterItem => {
-                    const { label } = filterItem;
+            {filterItems.sort(getFilterSortOrder).map(filterItem => {
+                const { label } = filterItem;
 
-                    if (filterItem.label === FILTER_CONTAINS_TISSUE) {
-                        return (
-                            <FilterSectionInlineSwitch
-                                filterCategory={filterCategory}
-                                filterItem={filterItem}
-                                selectedFilters={selectedFilters}
-                                handleRadioChange={(
-                                    event: React.ChangeEvent<HTMLInputElement>
-                                ) =>
-                                    updateCheckboxes(
-                                        {
-                                            [filterItem.label]:
-                                                event.target.checked,
-                                        },
-                                        label
-                                    )
-                                }
-                            />
-                        );
-                    }
-
+                if (filterItem.label === FILTER_CONTAINS_TISSUE) {
                     return (
-                        <Accordion
-                            key={label}
-                            sx={{
-                                background: "transparent",
-                                boxShadow: "none",
-                            }}
-                            expanded={maximised.includes(label)}
-                            heading={
-                                <Tooltip
-                                    key={label}
-                                    placement="right"
-                                    title={TooltipTitle(label, t)}>
-                                    <Typography
-                                        fontWeight="400"
-                                        fontSize="20px">
-                                        {t(label)}
-                                    </Typography>
-                                </Tooltip>
-                            }
-                            onChange={() =>
-                                setMaximised(
-                                    maximised.includes(label)
-                                        ? maximised.filter(e => e !== label)
-                                        : [...maximised, label]
+                        <FilterSectionInlineSwitch
+                            filterCategory={filterCategory}
+                            filterItem={filterItem}
+                            selectedFilters={selectedFilters}
+                            handleRadioChange={(
+                                event: React.ChangeEvent<HTMLInputElement>
+                            ) =>
+                                updateCheckboxes(
+                                    {
+                                        [filterItem.label]:
+                                            event.target.checked,
+                                    },
+                                    label
                                 )
                             }
-                            contents={renderFilterContent(filterItem)}
                         />
                     );
-                })}
+                }
+
+                if (
+                    filterItem.label === FILTER_MATERIAL_TYPE &&
+                    !get(selectedFilters, FILTER_CONTAINS_TISSUE)?.length
+                ) {
+                    return null;
+                }
+
+                return (
+                    <Accordion
+                        key={label}
+                        sx={{
+                            background: "transparent",
+                            boxShadow: "none",
+                        }}
+                        expanded={maximised.includes(label)}
+                        heading={
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    p: 0,
+                                    m: 0,
+                                    flexDirection: "row",
+                                    alignContent: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                    pr: 3.25,
+                                }}>
+                                <Typography fontWeight="400" fontSize={20}>
+                                    {t(label)}
+                                </Typography>
+                                <TooltipIcon
+                                    content={TooltipTitle(label, t)}
+                                    label=""
+                                    buttonSx={{ p: 0 }}
+                                    size="small"
+                                />
+                            </Box>
+                        }
+                        onChange={() =>
+                            setMaximised(
+                                maximised.includes(label)
+                                    ? maximised.filter(e => e !== label)
+                                    : [...maximised, label]
+                            )
+                        }
+                        contents={renderFilterContent(filterItem)}
+                    />
+                );
+            })}
         </>
     );
 };
