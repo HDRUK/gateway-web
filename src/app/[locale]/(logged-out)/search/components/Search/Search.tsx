@@ -164,7 +164,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         );
         return keys.length === 1 && keys[0] === "type";
     };
-    console.log(filters);
+
     useEffect(() => {
         if (
             resultsView !== ViewType.LIST &&

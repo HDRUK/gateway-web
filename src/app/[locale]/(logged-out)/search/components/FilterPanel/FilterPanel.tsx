@@ -462,7 +462,7 @@ const FilterPanel = ({
                                     width: "100%",
                                     pr: 3.25,
                                 }}>
-                                <Typography fontWeight="400" fontSize="20px">
+                                <Typography fontWeight="400" fontSize={20}>
                                     {t(label)}
                                 </Typography>
                                 <TooltipIcon
