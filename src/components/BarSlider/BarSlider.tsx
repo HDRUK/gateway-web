@@ -33,6 +33,8 @@ const BarSlider = ({
     const xMax = width;
     const yMax = height;
 
+    const emptyPopulationDocCount = data?.every(data => data.yValue === 0);
+
     // scales, memoize for performance
     const xScale = useMemo(
         () =>
@@ -84,7 +86,7 @@ const BarSlider = ({
                             y={barY}
                             opacity={isInRange ? 1 : 0.5}
                             width={barWidth}
-                            height={barHeight}
+                            height={emptyPopulationDocCount ? 0 : barHeight}
                             fill={theme.palette.primary.main}
                             onClick={() => {
                                 if (typeof handleEvent === "function") {
