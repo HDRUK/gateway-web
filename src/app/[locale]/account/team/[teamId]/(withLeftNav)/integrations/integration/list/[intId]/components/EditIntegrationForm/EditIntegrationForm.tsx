@@ -51,7 +51,7 @@ const EditIntegrationForm = () => {
 
     const { team } = useGetTeam(params?.teamId as string);
 
-    const isEditing = params?.intId ? true : false;
+    const isEditing = params.intId ? true : false;
 
     const {
         control,
@@ -131,17 +131,19 @@ const EditIntegrationForm = () => {
         const runTimeHour = parseInt(payload.run_time_hour, 10);
 
         if (!isEditing) {
-            await createIntegration({
+            const createIntegrationResponse = await createIntegration({
                 ...integrationDefaultValues,
                 ...payload,
                 run_time_hour: runTimeHour,
             });
 
-            setTimeout(() => {
-                push(
-                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
-                );
-            });
+            if (createIntegrationResponse) {
+                setTimeout(() => {
+                    push(
+                        `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
+                    );
+                });
+            }
         } else {
             const updatedPayload = {
                 ...payload,
@@ -185,7 +187,7 @@ const EditIntegrationForm = () => {
                         (field.name === "auth_secret_key" &&
                             requiresSecretKey(auth_type!))
                 ),
-        [team, auth_type]
+        [team, auth_type, isEditing]
     );
 
     return (
