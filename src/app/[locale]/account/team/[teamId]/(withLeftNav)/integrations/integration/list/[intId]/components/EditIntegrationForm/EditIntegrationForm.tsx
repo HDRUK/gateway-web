@@ -51,7 +51,7 @@ const EditIntegrationForm = () => {
 
     const { team } = useGetTeam(params?.teamId as string);
 
-    const isEditing = params.intId ? true : false;
+    const isEditing = params?.intId;
 
     const {
         control,
