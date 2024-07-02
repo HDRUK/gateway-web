@@ -1,5 +1,12 @@
+import { getContentPageQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
 
-export default function TeamManagement() {
-    return <SupportPage title="Team Management" />;
+export const URI = "/support/team-management";
+
+export default async function TeamManagement() {
+    const data = await getContentPageQuery("GetContentPageQuery", {
+        id: URI,
+    });
+
+    return <SupportPage title={data?.title} content={data?.content} />;
 }

@@ -21,10 +21,14 @@ export default function TeamModal({ onCancel, teamMember }: TeamModalProps) {
         showModal({
             content: (
                 <Box sx={{ display: "flex", gap: 2 }}>
-                    <img
-                        src={teamMember.image.node.sourceUrl}
-                        alt={teamMember.image.node.altText}
-                    />
+                    <div>
+                        <Box
+                            component="img"
+                            src={teamMember.image.node.sourceUrl}
+                            alt={teamMember.image.node.altText}
+                            sx={{ width: "200px" }}
+                        />
+                    </div>
                     <div>
                         <Typography variant="h3" sx={{ mb: 2 }}>
                             {teamMember.name}

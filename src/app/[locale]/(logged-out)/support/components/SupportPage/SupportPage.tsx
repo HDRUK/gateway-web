@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
@@ -14,10 +14,15 @@ const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.support";
 
 interface SupportPageProps {
     title: string;
-    description?: ReactNode;
+    content?: string;
+    children?: ReactNode;
 }
 
-export default function SupportPage({ title, description }: SupportPageProps) {
+export default function SupportPage({
+    title,
+    content,
+    children,
+}: SupportPageProps) {
     const router = useRouter();
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
 
@@ -35,8 +40,12 @@ export default function SupportPage({ title, description }: SupportPageProps) {
                 />
                 <header>
                     <Typography variant="h2">{title}</Typography>
-                    {description && <Typography>{description}</Typography>}
                 </header>
+                <Divider sx={{ mb: 2 }} />
+                {content && (
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                )}
+                {children}
                 <Box sx={{ mt: 5 }}>
                     <ContactSupport />
                 </Box>

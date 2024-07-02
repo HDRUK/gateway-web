@@ -1,6 +1,11 @@
 interface CMSPostResponse<T> {
+    post: T;
+}
+
+interface CMSPostsResponse<T> {
     posts: { edges: T[] };
 }
+
 interface CMSPagesResponse<T> {
     pages: { nodes: T[] };
 }
@@ -113,6 +118,11 @@ interface PageTemplateRepeat {
     };
 }
 
+interface ContentPageQueryOptions {
+    id: string;
+    idType?: "URI" | "ID" | "DATABASE_ID";
+}
+
 export type {
     PageTemplateRepeat,
     PageTemplateDefault,
@@ -124,4 +134,6 @@ export type {
     CMSPagesResponse,
     CtaLink,
     NewsPost,
+    ContentPageQueryOptions,
+    CMSPostsResponse,
 };

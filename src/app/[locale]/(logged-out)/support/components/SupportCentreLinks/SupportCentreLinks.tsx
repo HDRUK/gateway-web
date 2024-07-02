@@ -14,12 +14,8 @@ import {
     FeatureCardHeading,
 } from "@/components/FeatureCard";
 import { SUPPORT_METADATA_ONBOARDING_URL } from "@/consts/application";
-import {
-    CohortDiscoveryIcon,
-    DatabaseIcon,
-    SendIcon,
-    TeamIcon,
-} from "@/consts/customIcons";
+import { DatabaseIcon, SendIcon, TeamIcon } from "@/consts/customIcons";
+import { SchemaOutlinedIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import ContactSupport from "../ContactSupport";
 
@@ -34,7 +30,7 @@ export default function MeetTheTeam() {
             heading: t("cohortDiscoveryTitle"),
             body: t("cohortDiscoveryDescription"),
             link: RouteName.SUPPORT_COHORT_DISCOVERY,
-            icon: <CohortDiscoveryIcon />,
+            icon: <SchemaOutlinedIcon />,
         },
         {
             heading: t("darTitle"),
