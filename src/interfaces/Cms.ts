@@ -40,11 +40,6 @@ interface PageTemplatePromo {
     ctaOverrideComponent?: React.ReactElement;
 }
 
-interface SupportNode {
-    id: string;
-    title: string;
-}
-
 interface NewsPost {
     node: {
         id: string;
@@ -139,7 +134,6 @@ export type {
     CMSPagesResponse,
     CtaLink,
     NewsPost,
-    SupportNode,
     ContentPageQueryOptions,
     CMSPostsResponse,
 };

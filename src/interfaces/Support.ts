@@ -1,3 +1,8 @@
+interface SupportPage {
+    id: string;
+    title: string;
+}
+
 interface SupportCohortDiscoveryPageFAQs {
     question: string;
     answer: string;
@@ -16,4 +21,8 @@ interface SupportCohortDiscoveryPage {
     };
 }
 
-export type { SupportCohortDiscoveryPage, SupportCohortDiscoveryPageFAQs };
+export type {
+    SupportCohortDiscoveryPage,
+    SupportCohortDiscoveryPageFAQs,
+    SupportPage,
+};

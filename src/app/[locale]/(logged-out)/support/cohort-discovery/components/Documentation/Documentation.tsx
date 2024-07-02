@@ -7,7 +7,7 @@ interface DocumentationProps {
 
 const TRANSLATION_NAMESPACE = "pages.support";
 
-export default function FAQs({ content }: DocumentationProps) {
+export default function Documentation({ content }: DocumentationProps) {
     const t = useTranslations(TRANSLATION_NAMESPACE);
 
     return (
