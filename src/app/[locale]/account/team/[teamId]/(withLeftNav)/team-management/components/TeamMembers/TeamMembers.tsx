@@ -208,6 +208,7 @@ const TeamMembers = ({
             </Paper>
         );
 
+    console.log(tableRows);
     return (
         <Paper>
             <Table<User>

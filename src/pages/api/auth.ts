@@ -23,6 +23,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                     },
                 }
             );
+            console.log(`${apis.usersV1UrlIP}/${authUser?.id}`);
+            console.log(authUser);
 
             const json = await response.json();
 
