@@ -8,7 +8,7 @@ import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import CreateIntegrationForm from "./components/CreateIntegrationForm";
+import CreateIntegrationForm from "../list/[intId]/components/EditIntegrationForm";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Integrations - Integration",
