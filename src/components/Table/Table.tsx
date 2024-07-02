@@ -74,7 +74,6 @@ const Table = <T,>({
     defaultColumn,
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
-
     const table = useReactTable({
         data: rows,
         columns,
