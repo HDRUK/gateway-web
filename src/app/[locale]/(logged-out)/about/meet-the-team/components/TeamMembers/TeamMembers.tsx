@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -39,14 +39,11 @@ export default function TeamMembers({ data }: TeamMembersProps) {
         const { name, jobTitle, image } = teamMember;
 
         return (
-            <Grid
-                item
+            <Box
                 component="li"
-                mobile={12}
-                tablet={4}
-                desktop={3}
                 sx={{
-                    "> div > img": { maxWidth: "250px", width: "100%" },
+                    width: "200px",
+                    minWidth: "150px",
                 }}>
                 <Box
                     role="button"
@@ -55,7 +52,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
                         cursor: "pointer",
                         position: "relative",
                         display: "inline-block",
-                        width: "fit-content",
+                        width: "100%",
                         "&:hover:before": {
                             background: grey["100"],
                             content: '""',
@@ -68,22 +65,29 @@ export default function TeamMembers({ data }: TeamMembersProps) {
                             borderRadius: 1,
                         },
                     }}>
-                    <Box sx={{ position: "relative", zIndex: 1 }}>
+                    <Box
+                        sx={{
+                            position: "relative",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                            zIndex: 1,
+                        }}>
                         {image && (
                             <Box
                                 component="img"
                                 src={image.node.sourceUrl}
                                 alt={image.node.altText}
-                                sx={{
-                                    mb: 2,
-                                }}
+                                sx={{ width: "100%", maxWidth: "200px" }}
                             />
                         )}
-                        <Typography variant="h3">{name}</Typography>
-                        <Typography sx={{ mb: 0 }}>{jobTitle}</Typography>
+                        <div>
+                            <Typography variant="h3">{name}</Typography>
+                            <Typography sx={{ mb: 0 }}>{jobTitle}</Typography>
+                        </div>
                     </Box>
                 </Box>
-            </Grid>
+            </Box>
         );
     });
 
@@ -98,14 +102,17 @@ export default function TeamMembers({ data }: TeamMembersProps) {
                 <Typography sx={{ mb: 4 }}>
                     {meetTheTeamRepeater.summaryText}
                 </Typography>
-                <Grid
+                <Box
                     component="ul"
-                    container
-                    columnSpacing={4}
-                    rowSpacing={4}
-                    sx={{ listStyleType: "none", p: 0 }}>
+                    sx={{
+                        listStyleType: "none",
+                        p: 0,
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: 8,
+                    }}>
                     {content}
-                </Grid>
+                </Box>
                 {activeTeamMember && (
                     <TeamModal
                         teamMember={activeTeamMember}
