@@ -245,6 +245,32 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const [initialCategory, setInitialCategory] = useState<string>();
+    const [initialQuery, setInitialQuery] = useState<string>();
+
+    useEffect(() => {
+        if (!initialCategory) {
+            setInitialCategory(queryParams.type);
+        }
+
+        if (!initialQuery) {
+            setInitialQuery(queryParams.query);
+        }
+    }, [initialCategory, initialQuery, queryParams.type, queryParams.query]);
+
+    // Fire search request when publications query is entered for the first time
+    useEffect(() => {
+        if (initialCategory !== SearchCategory.PUBLICATIONS || initialQuery) {
+            return;
+        }
+
+        if (queryParams.type !== SearchCategory.PUBLICATIONS) {
+            mutate();
+        } else if (!!queryParams.query && !initialQuery) {
+            mutate();
+        }
+    }, [queryParams.query, queryParams.type, initialCategory, initialQuery]);
+
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
         setQueryParams({
@@ -471,7 +497,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         !isSearching &&
         !queryParams.query &&
         queryParams.type === SearchCategory.PUBLICATIONS &&
-        (!data?.list.length || !data?.path?.includes(queryParams.type));
+        (!data?.list?.length || !data?.path?.includes(queryParams.type));
 
     return (
         <Box
@@ -703,7 +729,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         {isSearching && <Loading />}
 
                         {!isSearching &&
-                            !data?.list.length &&
+                            !data?.list?.length &&
                             (queryParams.query ||
                                 !(
                                     queryParams.type ===
@@ -716,7 +742,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 </Paper>
                             )}
                         {!isSearching &&
-                            !!data?.list.length &&
+                            !!data?.list?.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
                                     {renderResults()}
