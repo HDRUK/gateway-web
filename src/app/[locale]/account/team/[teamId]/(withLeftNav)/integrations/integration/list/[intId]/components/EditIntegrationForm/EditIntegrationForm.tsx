@@ -4,7 +4,7 @@ import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { pick } from "lodash";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Federation } from "@/interfaces/Federation";
 import {
     Integration,
@@ -21,6 +21,7 @@ import Switch from "@/components/Switch";
 import Tooltip from "@/components/Tooltip";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
+import usePost from "@/hooks/usePost";
 import usePut from "@/hooks/usePut";
 import useRunFederation, {
     watchFederationKeys,
@@ -30,11 +31,14 @@ import apis from "@/config/apis";
 import {
     integrationDefaultValues,
     integrationEditFormFields,
+    integrationFormFields,
     integrationValidationSchema,
 } from "@/config/forms/integration";
+import { RouteName } from "@/consts/routeName";
 import { requiresSecretKey } from "@/utils/integrations";
 
 const EditIntegrationForm = () => {
+    const { push } = useRouter();
     const params = useParams<{
         teamId: string;
         intId: string;
@@ -42,10 +46,12 @@ const EditIntegrationForm = () => {
 
     const { data: integration } = useGet<Integration>(
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
-        { shouldFetch: !!params?.teamId || !!params?.intId }
+        { shouldFetch: !!params?.teamId && !!params?.intId }
     );
 
     const { team } = useGetTeam(params?.teamId as string);
+
+    const isEditing = params?.intId ? true : false;
 
     const {
         control,
@@ -65,7 +71,12 @@ const EditIntegrationForm = () => {
     const { runStatus, setTestedConfig, runResponse, handleRun } =
         useRunFederation({
             teamId: params?.teamId || "",
-            integration,
+            integration: integration || {
+                ...integrationDefaultValues,
+                ...getValues(),
+                run_time_hour: parseInt(getValues("run_time_hour"), 10),
+                notifications: [],
+            },
             control,
             reset,
             getValues,
@@ -100,6 +111,14 @@ const EditIntegrationForm = () => {
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
+    const createIntegration = usePost<IntegrationPayload>(
+        `${apis.teamsV1Url}/${params?.teamId}/federations`,
+        {
+            shouldFetch: !!params?.teamId,
+            itemName: "Integration",
+        }
+    );
+
     const updateIntegration = usePut<IntegrationPayload>(
         `${apis.teamsV1Url}/${params?.teamId}/federations`,
         {
@@ -109,11 +128,27 @@ const EditIntegrationForm = () => {
     );
 
     const submitForm = async (payload: IntegrationForm) => {
-        const updatedPayload = {
-            ...payload,
-            run_time_hour: parseInt(payload.run_time_hour, 10),
-        };
-        await updateIntegration(payload.id, updatedPayload);
+        const runTimeHour = parseInt(payload.run_time_hour, 10);
+
+        if (!isEditing) {
+            await createIntegration({
+                ...integrationDefaultValues,
+                ...payload,
+                run_time_hour: runTimeHour,
+            });
+
+            setTimeout(() => {
+                push(
+                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
+                );
+            });
+        } else {
+            const updatedPayload = {
+                ...payload,
+                run_time_hour: runTimeHour,
+            };
+            await updateIntegration(payload.id, updatedPayload);
+        }
     };
 
     const tested = watch("tested");
@@ -128,7 +163,7 @@ const EditIntegrationForm = () => {
 
     const hydratedFormFields = useMemo(
         () =>
-            integrationEditFormFields
+            (isEditing ? integrationEditFormFields : integrationFormFields)
                 .map(field => {
                     /* populate 'notifications' with team members */
                     if (field.name === "notifications") {
@@ -202,14 +237,12 @@ const EditIntegrationForm = () => {
                         </Box>
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
-                        {integration && (
-                            <RunFederationTest
-                                status={runStatus}
-                                runResponse={runResponse}
-                                isEnabled={formState.isValid}
-                                onRun={handleRun}
-                            />
-                        )}
+                        <RunFederationTest
+                            status={runStatus}
+                            runResponse={runResponse}
+                            isEnabled={formState.isValid}
+                            onRun={handleRun}
+                        />
                     </Box>
                 </Box>
             </Box>
