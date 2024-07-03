@@ -15,10 +15,11 @@ const useAccountMenu = () => {
     return useMemo(() => {
         const teams = (user?.teams || [])
             .map(team => ({
+                name: team.name,
                 label: `${team.member_of} > ${team.name}`,
                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
             }))
-            .sort((a, b) => a.label.localeCompare(b.label));
+            .sort((a, b) => a.name.localeCompare(b.name));
 
         return [
             {
