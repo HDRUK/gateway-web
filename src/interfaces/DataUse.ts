@@ -1,4 +1,6 @@
 import { Dataset } from "./Dataset";
+import { Team } from "./Team";
+import { User } from "./User";
 
 export type DatasetWithTitle = Dataset & { shortTitle: string };
 
@@ -42,4 +44,7 @@ export interface DataUse {
     datasets: DatasetWithTitle[];
     applicant_id: number;
     status: string;
+    team_id: number;
+    team: Team;
+    user: User;
 }
