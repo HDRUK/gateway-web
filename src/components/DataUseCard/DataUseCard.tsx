@@ -1,3 +1,4 @@
+import { Link } from "@mui/material";
 import { get } from "lodash";
 import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
@@ -9,6 +10,7 @@ import { colors } from "@/config/theme";
 import { getLatestVersion } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
+import { RouteName } from "@/consts/routeName";
 
 interface DataUseCardProps {
     dataUse: DataUse;
@@ -31,20 +33,33 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
     //     metadata: { metadata, gwdmVersion },
     // } = latestMetadata;
 
-    const title = dataUse["project_title"];
-    const providerName = "";
-    const applicantName = dataUse["applicant_id"]; // TODO id->name
+    const title = dataUse.project_title;
+    const providerName = dataUse.team.name;
+    const applicantName = dataUse.user.name;
 
-
-
+    console.log(dataUse);
     // console.log(dataUse["datasets"]);
-    let datasetNames = "";
-    dataUse["datasets"].forEach(dataset => {
-        datasetNames = datasetNames.concat(", " + dataset["shortTitle"])
+    let datasetNames: JSX.Element[] = [];
+    dataUse.datasets.forEach((dataset, idx) => {
+        // don't add a comma to the last element
+        datasetNames.push(
+            <span>
+                <Link href="https://example.com">{dataset.shortTitle}</Link>
+                {idx + 1 < dataUse.datasets.length && ", "}
+            </span>
+        );
     });
+
+    console.log(datasetNames);
+    // let datasetLinks: JSX.Element = (
+    //     <Box>{datasetNames.map((datasetLink, idx) =>
+    //         [idx > 0 && ", ",
+    //         datasetLink]
+    //         )}</Box>
+    // );
+    // console.log(datasetLinks);
     // console.log(datasetNames);
 
-    
     // const datasets = dataUse["datasets"]; //
     // const publisherName = get(
     //     metadata,
