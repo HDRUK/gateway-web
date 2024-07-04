@@ -227,20 +227,20 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
         {
             label: capitalise(DataStatus.ACTIVE),
             value: DataStatus.ACTIVE,
-            dsCount: countActive ?? 0,
+            duCount: countActive ?? 0,
         },
         {
             label: capitalise(DataStatus.DRAFT),
             value: DataStatus.DRAFT,
-            dsCount: countDraft ?? 0,
+            duCount: countDraft ?? 0,
         },
         {
             label: capitalise(DataStatus.ARCHIVED),
             value: DataStatus.ARCHIVED,
-            dsCount: countArchived ?? 0,
+            duCount: countArchived ?? 0,
         },
     ].map(tabItem => ({
-        label: `${tabItem.label} (${tabItem.dsCount})`,
+        label: `${tabItem.label} (${tabItem.duCount})`,
         value: tabItem.value,
         content: (
             <DataUseTab
