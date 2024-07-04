@@ -40,4 +40,6 @@ export interface DataUse {
     request_frequency: string;
     access_type: string;
     datasets: DatasetWithTitle[];
+    applicant_id: number;
+    status: string;
 }
