@@ -43,7 +43,9 @@ const linkWrapper =
 
         return (
             <Link
-                href={`${href}/${id}${searchParams ? `?${searchParams}` : ""}`}>
+                href={`${href}/${id}${
+                    searchParams.size ? `?${searchParams}` : ""
+                }`}>
                 {children}
             </Link>
         );
