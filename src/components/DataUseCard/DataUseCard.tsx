@@ -87,7 +87,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                         display: "grid",
                         gridTemplateColumns: {
                             mobile: "repeat(1, 1fr)",
-                            tablet: "repeat(1, 2fr 1fr)",
+                            tablet: "repeat(1, 1fr)",
                         },
                         gap: 2,
                         pb: 1,
