@@ -5,6 +5,7 @@ import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import Typography from "@/components/Typography";
 import theme from "@/config/theme";
 import { AddIcon } from "@/consts/icons";
 import {
@@ -57,6 +58,9 @@ const FormFieldArray = ({
 
     return (
         <>
+            <Typography sx={{ mb: 1 }}>
+                {fieldParent.title.replace(" Array", "")}
+            </Typography>
             {fields.map((field, index) => (
                 <Box key={field.id} sx={{ mb: theme.spacing(3) }}>
                     {Object.entries(field)

@@ -257,7 +257,8 @@
                                 "informationAndCommunicationTooltip": "Includes any data related to the study or application of information and communication.",
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
-                            }
+                            },
+                            "errorLoading": "An error occured while loading the Dataset"
                         },
                         "EditDataset": {
                             "editButton": "Update",
