@@ -25,12 +25,7 @@ import {
 } from "@/config/forms/dataUseAccountSearch";
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
-import {
-    AddIcon,
-    ArchiveIcon,
-    EditIcon,
-    UnarchiveIcon,
-} from "@/consts/icons";
+import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,

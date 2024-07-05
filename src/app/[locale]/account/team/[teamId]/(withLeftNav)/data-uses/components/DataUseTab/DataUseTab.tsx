@@ -1,5 +1,4 @@
 import { Control } from "react-hook-form";
-import { useTranslations } from "next-intl";
 import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
@@ -14,13 +13,6 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/dataUseAccountSearch";
-import {
-    PAGES,
-    ACCOUNT,
-    TEAM,
-    DATA_USES,
-    COMPONENTS,
-} from "@/consts/translation";
 
 interface DataUseTabProps {
     list?: DataUse[];
@@ -56,7 +48,6 @@ const DataUseTab = ({
     setValue,
     isLoading,
 }: DataUseTabProps) => {
-
     return (
         <Box sx={{ p: 0 }}>
             <BoxContainer
@@ -95,7 +86,6 @@ const DataUseTab = ({
                     alignItems: "center",
                 }}>
                 <ShowingXofX from={from} to={to} total={total} />
-
             </Box>
 
             {(list || [])
