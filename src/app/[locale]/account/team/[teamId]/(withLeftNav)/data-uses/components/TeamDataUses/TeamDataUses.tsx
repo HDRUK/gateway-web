@@ -76,7 +76,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
         status: "ACTIVE",
         page: "1",
         sort: `${dataUseSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
-        title: "",
+        project_title: "",
     });
 
     const { control, watch, setValue } = useForm({
@@ -110,7 +110,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            title: filterTitleDebounced,
+            project_title: filterTitleDebounced,
             page: "1",
         }));
     }, [filterTitleDebounced]);

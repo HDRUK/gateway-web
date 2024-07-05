@@ -28,7 +28,7 @@ const searchFilter = {
     showClearButton: true,
     variant: "outlined",
     name: "searchTitle",
-    placeholder: "Search titles",
+    placeholder: "Search project titles",
     label: "",
 };
 
