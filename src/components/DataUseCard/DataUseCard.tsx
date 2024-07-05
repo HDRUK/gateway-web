@@ -27,7 +27,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
     const providerName = dataUse.team.name;
     // const applicantName = dataUse.user.name; // This is not the correct field to use, and so is commented out for now.
 
-    let datasetNames: JSX.Element[] = [];
+    const datasetNames: JSX.Element[] = [];
     dataUse.datasets.forEach((dataset, idx) => {
         // don't add a comma to the last element
         datasetNames.push(
@@ -80,7 +80,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                                 {
                                     key: "Last activity",
                                     value: formatDate(
-                                        dataUse["updated_at"],
+                                        dataUse.updated_at,
                                         "DD MMMM YYYY HH:mm"
                                     ),
                                 },

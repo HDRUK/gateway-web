@@ -28,7 +28,6 @@ import { DataStatus } from "@/consts/application";
 import {
     AddIcon,
     ArchiveIcon,
-    ContentCopyIcon,
     EditIcon,
     UnarchiveIcon,
 } from "@/consts/icons";

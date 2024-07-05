@@ -1,17 +1,14 @@
 import { Control } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DataUseCard from "@/components/DataUseCard";
-import DownloadCSV from "@/components/DownloadCSV";
 import InputWrapper from "@/components/InputWrapper";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
-import apis from "@/config/apis";
 import {
     searchFilter,
     sortField,
@@ -59,11 +56,6 @@ const DataUseTab = ({
     setValue,
     isLoading,
 }: DataUseTabProps) => {
-    const params = useParams<{ teamId: string }>();
-
-    const t = useTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}.DataUseTab`
-    );
 
     return (
         <Box sx={{ p: 0 }}>
