@@ -272,6 +272,20 @@ const renderFormHydrationField = (
                 },
                 value: string | number
             ) => option.value === value}
+            getChipLabel={(
+                options: {
+                    value: string | number;
+                    label: string;
+                }[],
+                selectedOption: {
+                    value: string | number;
+                    label: string;
+                }
+            ) =>
+                options.find(option => option === selectedOption)?.label ||
+                selectedOption?.value ||
+                selectedOption
+            }
             onFocus={() => setActiveField && setActiveField(name)}
             {...rest}
             label={name || ""}
