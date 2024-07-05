@@ -9,6 +9,7 @@ import { MeetTheTeamNode, TeamMember } from "@/interfaces/MeetTheTeam";
 import BackButton from "@/components/BackButton";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
+import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import TeamModal from "../TeamModal";
 
 interface TeamMembersProps {
@@ -83,7 +84,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
                         )}
                         <div>
                             <Typography variant="h3">{name}</Typography>
-                            <Typography sx={{ mb: 0 }}>{jobTitle}</Typography>
+                            <EllipsisLineLimit text={jobTitle} maxLine={4} />
                         </div>
                     </Box>
                 </Box>
