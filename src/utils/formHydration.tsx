@@ -317,13 +317,9 @@ const mapFormFieldsForSubmission = (
             { title, location, is_array_form, fields }
         ) => {
             if (is_array_form) {
-                fields?.map(
-                    field =>
-                        (acc[field.title] = getLastSplitPart(
-                            field.location!,
-                            "."
-                        ))
-                );
+                fields?.forEach(field => {
+                    acc[field.title] = getLastSplitPart(field.location!, ".");
+                });
             }
 
             acc[title] = location || "";
@@ -340,15 +336,17 @@ const mapFormFieldsForSubmission = (
         (acc: { [key: string]: string }, [key, value]) => {
             if (mappedSchemaFields[key]) {
                 if (parentField(key)?.is_array_form) {
-                    value.map((entry: { [x: string]: string }, index: any) => {
-                        const arrayLocation = parentField(key)?.location;
+                    value.forEach(
+                        (entry: { [x: string]: string }, index: number) => {
+                            const arrayLocation = parentField(key)?.location;
 
-                        for (let key in entry) {
-                            acc[
-                                `${arrayLocation}.${index}.${mappedSchemaFields[key]}`
-                            ] = entry[key];
+                            Object.keys(entry).forEach(entryKey => {
+                                acc[
+                                    `${arrayLocation}.${index}.${mappedSchemaFields[entryKey]}`
+                                ] = entry[entryKey];
+                            });
                         }
-                    });
+                    );
                 } else {
                     acc[mappedSchemaFields[key]] = value;
                 }
@@ -372,13 +370,13 @@ const mapExistingDatasetToFormFields = (
     schema: FormHydration[],
     metadata: Metadata
 ) => {
-    let values = {};
+    const values = {};
 
     // Function to recursively traverse the schema
     function traverseSchema(
         schema: FormHydration[] | FormHydration,
         currentPath?: string
-    ) {
+    ): void {
         if (isArray(schema)) {
             schema.forEach(item => {
                 traverseSchema(item, currentPath);
@@ -400,9 +398,9 @@ const mapExistingDatasetToFormFields = (
 
                         // Map fields of each item in the array
                         schema?.fields?.forEach(fieldSchema => {
-                            let fieldLocation =
+                            const fieldLocation =
                                 fieldSchema?.location?.split(".");
-                            let requiredLocation =
+                            const requiredLocation =
                                 fieldLocation?.[fieldLocation.length - 1];
 
                             const defaultValue = get(
@@ -431,7 +429,11 @@ const mapExistingDatasetToFormFields = (
                                 return set(values, title, []);
                             }
 
-                            set(itemValues, fieldSchema.title, defaultValue);
+                            return set(
+                                itemValues,
+                                fieldSchema.title,
+                                defaultValue
+                            );
                         });
                         return itemValues;
                     });
@@ -446,17 +448,15 @@ const mapExistingDatasetToFormFields = (
                     defaultValue &&
                     field?.component === inputComponents.DatePicker
                 ) {
-                    return set(values, title, dayjs(defaultValue));
-                }
-
-                if (
+                    set(values, title, dayjs(defaultValue));
+                } else if (
                     field?.component === inputComponents.Autocomplete &&
                     !isArray(defaultValue)
                 ) {
-                    return set(values, title, []);
+                    set(values, title, []);
+                } else {
+                    set(values, title, defaultValue);
                 }
-
-                set(values, title, defaultValue);
             }
 
             // Recursively traverse nested fields

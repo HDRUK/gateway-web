@@ -7,7 +7,7 @@ import Typography from "@/components/Typography";
 import { getFormHydration, getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import EditDataset from "../../datasets/components/CreateDataset";
+import EditDataset from "../components/CreateDataset";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Dataset",

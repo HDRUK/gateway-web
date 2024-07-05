@@ -107,6 +107,17 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const [hasError, setHasError] = useState<boolean>();
     const [existingFormData, setExistingFormData] = useState<Metadata>();
 
+    const bannerTabList = [
+        { label: t("onlineForm"), value: "FORM" },
+        { label: t("uploadFile"), value: "UPLOAD" },
+    ].map(tabItem => ({
+        label: tabItem.label,
+        value: tabItem.value,
+        content: null,
+    }));
+
+    const schemaFields = formJSON.schema_fields;
+
     useEffect(() => {
         if (isLoading || existingFormData || !isEditing) {
             return;
@@ -130,17 +141,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
         setExistingFormData(mappedFormData);
     }, [dataset, existingFormData, isLoading]);
-
-    const bannerTabList = [
-        { label: t("onlineForm"), value: "FORM" },
-        { label: t("uploadFile"), value: "UPLOAD" },
-    ].map(tabItem => ({
-        label: tabItem.label,
-        value: tabItem.value,
-        content: null,
-    }));
-
-    const schemaFields = formJSON.schema_fields;
 
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
