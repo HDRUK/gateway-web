@@ -566,6 +566,8 @@
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
+                            "publicationType": "Publication type",
+                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
