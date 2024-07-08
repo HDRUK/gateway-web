@@ -19,7 +19,8 @@ interface TeamMembersProps {
 const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS = "pages.about";
 
 export default function TeamMembers({ data }: TeamMembersProps) {
-    const { meetTheTeamRepeater, title } = data.node;
+    console.log(data);
+    const { meetTheTeamRepeater, title } = data?.node;
     const [activeTeamMember, setActiveTeamMember] = useState<TeamMember>();
     const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MEMBERS);
     const router = useRouter();
@@ -36,7 +37,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
         router.push("/");
     };
 
-    const content = meetTheTeamRepeater.teamList?.map(teamMember => {
+    const content = meetTheTeamRepeater?.teamList?.map(teamMember => {
         const { name, jobTitle, image } = teamMember;
 
         return (
@@ -91,6 +92,10 @@ export default function TeamMembers({ data }: TeamMembersProps) {
             </Box>
         );
     });
+
+    if (!data?.node) {
+        return <p>ERROR</p>;
+    }
 
     return (
         <>
