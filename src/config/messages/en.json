@@ -303,26 +303,6 @@
                                     "label": "Archive dataset metadata so it is no longer live on the Gateway"
                                 }
                             }
-                        },
-                        "TeamTools": {
-                            "title": "Analysis script, tools and software",
-                            "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
-                            "create": "Add new",
-                            "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
-                                },
-                                "edit": {
-                                    "label": "Edit analysis script, tool or software metadata"
-                                },
-                                "archive": {
-                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
-                                }
-                            }
                         }
                     }
                 },
@@ -343,6 +323,30 @@
                                 "team": "Team",
                                 "dar": "Data Access Requests",
                                 "metadata": "Metadata"
+                            }
+                        }
+                    }
+                },
+                "tools": {
+                    "components": {
+                        "TeamTools": {
+                            "title": "Analysis script, tools and software",
+                            "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
+                            "create": "Add new",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit analysis script, tool or software metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
+                                }
                             }
                         }
                     }

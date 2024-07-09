@@ -1,3 +1,4 @@
+import { DataStatus } from "@/consts/application";
 import { Collection } from "./Collection";
 import { DataUse } from "./DataUse";
 import { VersionItem } from "./Dataset";
@@ -30,4 +31,6 @@ export interface Tool {
     dataset_versions: VersionItem[];
     durs: DataUse[];
     collections: Collection[];
+    status: DataStatus;
+    user_name: string;
 }
