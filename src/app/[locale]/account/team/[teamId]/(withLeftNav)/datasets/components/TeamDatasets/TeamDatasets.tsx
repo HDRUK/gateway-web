@@ -179,7 +179,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         ...(permissions["datasets.create"]
             ? [
                   {
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
                       icon: ContentCopyIcon,
                       label: t("actions.duplicate.label"),
                   },
