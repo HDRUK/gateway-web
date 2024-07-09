@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import { Control } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
@@ -21,8 +21,6 @@ import {
     TEAM,
     COMPONENTS,
 } from "@/consts/translation";
-
-const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}.DataUseTab`;
 
 interface DataUseTabProps {
     list?: DataUse[];
@@ -58,7 +56,9 @@ const DataUseTab = ({
     setValue,
     isLoading,
 }: DataUseTabProps) => {
-    const t = useTranslations(TRANSLATION_PATH);
+    const t = useTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}.DataUseTab`
+    );
 
     return (
         <Box sx={{ p: 0 }}>

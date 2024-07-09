@@ -296,7 +296,8 @@
                             "duplicateButton": "Duplicate"
                         },
                         "DatasetTab": {
-                            "downloadButton": "Download dataset information as .csv"
+                            "downloadButton": "Download dataset information as .csv",
+                            "noDatasets": "No {status} datasets found on the Gateway for your team."
                         },
                         "TeamDatasets": {
                             "title": "Datasets",
