@@ -1,17 +1,19 @@
 import { cookies } from "next/headers";
+import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import TeamDataUses from "./components/TeamDataUses";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Data Uses",
+    title: "Health Data Research Innovation Gateway - My Account - Data Use",
     description: "",
 };
 
-export default async function TeamDataUsesPage({
+export default async function TeamDataUsePage({
     params,
 }: {
     params: { teamId: string };
@@ -26,9 +28,13 @@ export default async function TeamDataUsesPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["dur.read"]}>
+            pagePermissions={["dur.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
-                <TeamDataUses permissions={permissions} teamId={teamId} />
+                <Paper>
+                    <Box sx={{ bgcolor: "white", mb: 0 }}>
+                        <Typography variant="h2">Data Use</Typography>
+                    </Box>
+                </Paper>
             </BoxContainer>
         </ProtectedAccountRoute>
     );

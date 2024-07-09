@@ -1,32 +1,29 @@
 import { Control } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { Dataset } from "@/interfaces/Dataset";
+import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import DatasetCard from "@/components/DatasetCard";
-import DownloadCSV from "@/components/DownloadCSV";
+import DataUseCard from "@/components/DataUseCard";
 import InputWrapper from "@/components/InputWrapper";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
-import apis from "@/config/apis";
 import {
     searchFilter,
     sortField,
     toggleDirection,
-} from "@/config/forms/datasetAccountSearch";
+} from "@/config/forms/dataUseAccountSearch";
 import {
-    PAGES,
     ACCOUNT,
+    DATA_USES,
+    PAGES,
     TEAM,
-    DATASETS,
     COMPONENTS,
 } from "@/consts/translation";
 
-interface DatasetTabProps {
-    list?: Dataset[];
+interface DataUseTabProps {
+    list?: DataUse[];
     actions: {
         icon: IconType;
         href?: string;
@@ -45,7 +42,7 @@ interface DatasetTabProps {
     isLoading: boolean;
 }
 
-const DatasetTab = ({
+const DataUseTab = ({
     actions,
     list,
     label,
@@ -58,11 +55,9 @@ const DatasetTab = ({
     control,
     setValue,
     isLoading,
-}: DatasetTabProps) => {
-    const params = useParams<{ teamId: string }>();
-
+}: DataUseTabProps) => {
     const t = useTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.DatasetTab`
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}.DataUseTab`
     );
 
     return (
@@ -103,24 +98,20 @@ const DatasetTab = ({
                     alignItems: "center",
                 }}>
                 <ShowingXofX from={from} to={to} total={total} />
-                <DownloadCSV
-                    buttonText={t("downloadButton")}
-                    apiPath={`${apis.datasetsExportV1Url}?team_id=${params?.teamId}`}
-                />
             </Box>
 
             {(list || [])
-                .map(dataset => (
-                    <DatasetCard
+                .map(dataUse => (
+                    <DataUseCard
                         actions={actions}
-                        key={dataset.id}
-                        dataset={dataset}
+                        key={dataUse.id}
+                        dataUse={dataUse}
                     />
                 ))
-                .filter(dataset => !!dataset)}
+                .filter(dataUse => !!dataUse)}
             {list?.length === 0 && (
                 <Paper sx={{ p: 2, mb: 2 }}>
-                    {t("noDatasets", { status: label.toLowerCase() })}
+                    {t("noDataUses", { status: label.toLowerCase() })}
                 </Paper>
             )}
             <Pagination
@@ -135,4 +126,4 @@ const DatasetTab = ({
     );
 };
 
-export default DatasetTab;
+export default DataUseTab;
