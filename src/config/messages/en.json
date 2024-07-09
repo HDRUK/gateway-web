@@ -217,14 +217,10 @@
                     "title": "Data Uses",
                     "description": "View, add, edit, archive and check the status of your data uses.",
                     "uploadButton": "+ Upload",
-                    "active": "Active ({count})",
-                    "draft": "Draft ({count})",
-                    "archived": "Archived ({count})",
-                    "editButtonLabel": "Edit {title}",
-                    "copyButtonLabel": "Copy {title}",
-                    "archiveButtonLabel": "Archive {title}",
                     "components": {
-                        "DataUseTab": {},
+                        "DataUseTab": {
+                            "noDataUses": "No {status} data uses found on the Gateway for your team."
+                        },
                         "TeamDataUses": {
                             "create": "Add Data Use",
                             "text": "View, add, edit, archive and check the status of your data uses.",

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Control } from "react-hook-form";
 import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
@@ -13,6 +14,15 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/dataUseAccountSearch";
+import {
+    ACCOUNT,
+    DATA_USES,
+    PAGES,
+    TEAM,
+    COMPONENTS,
+} from "@/consts/translation";
+
+const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}.DataUseTab`;
 
 interface DataUseTabProps {
     list?: DataUse[];
@@ -48,6 +58,8 @@ const DataUseTab = ({
     setValue,
     isLoading,
 }: DataUseTabProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     return (
         <Box sx={{ p: 0 }}>
             <BoxContainer
@@ -99,8 +111,7 @@ const DataUseTab = ({
                 .filter(dataUse => !!dataUse)}
             {list?.length === 0 && (
                 <Paper sx={{ p: 2, mb: 2 }}>
-                    No {label.toLowerCase()} data uses found on the Gateway for
-                    your team.
+                    {t("noDataUses", { status: label.toLowerCase() })}
                 </Paper>
             )}
             <Pagination
