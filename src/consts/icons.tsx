@@ -35,6 +35,7 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
 import HelpIcon from "@mui/icons-material/Help";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -132,4 +133,5 @@ export {
     LockIcon,
     RestartAltIcon,
     CheckCircleRoundedIcon,
+    HandymanOutlinedIcon,
 };

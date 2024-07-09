@@ -35,6 +35,7 @@ const apis = {
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
     dataUseExportV1Url: `${apiV1Url}/dur/export`,
+    toolsV1Url: `${apiV1Url}/tools`,
     toolsV1UrlIP: `${apiV1IPUrl}/tools`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
