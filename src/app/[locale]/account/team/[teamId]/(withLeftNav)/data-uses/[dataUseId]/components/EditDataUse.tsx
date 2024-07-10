@@ -172,46 +172,43 @@ const EditDataUse = () => {
             <Box>
                 {dataUseFormFields.map(section => {
                     return (
-                        <>
-                            <Accordion
-                                key={section.sectionName}
-                                sx={{
-                                    ".MuiAccordionSummary-root": {
-                                        background: colors.purple400,
-                                        color: colors.white,
-                                    },
-                                    ".MuiSvgIcon-root.MuiSvgIcon-colorPrimary":
-                                        {
-                                            color: colors.white,
-                                        },
-                                }}
-                                heading={
-                                    <Typography variant="h4" sx={{ m: 0 }}>
-                                        {section.sectionName}
-                                    </Typography>
-                                }
-                                contents={section.fields.map(field => (
-                                    <Box
-                                        sx={{
-                                            p: 0,
-                                            gridColumn: "span 3",
-                                        }}>
-                                        <InputWrapper
-                                            key={field.name}
-                                            control={control}
-                                            {...field}
-                                            {...(field.component ===
-                                                inputComponents.Autocomplete && {
-                                                options:
-                                                    field.name === "keywords"
-                                                        ? keywordOptions
-                                                        : [],
-                                            })}
-                                        />
-                                    </Box>
-                                ))}
-                            />
-                        </>
+                        <Accordion
+                            key={section.sectionName}
+                            sx={{
+                                ".MuiAccordionSummary-root": {
+                                    background: colors.purple400,
+                                    color: colors.white,
+                                },
+                                ".MuiSvgIcon-root.MuiSvgIcon-colorPrimary": {
+                                    color: colors.white,
+                                },
+                            }}
+                            heading={
+                                <Typography variant="h4" sx={{ m: 0 }}>
+                                    {section.sectionName}
+                                </Typography>
+                            }
+                            contents={section.fields.map(field => (
+                                <Box
+                                    sx={{
+                                        p: 0,
+                                        gridColumn: "span 3",
+                                    }}>
+                                    <InputWrapper
+                                        key={field.name}
+                                        control={control}
+                                        {...field}
+                                        {...(field.component ===
+                                            inputComponents.Autocomplete && {
+                                            options:
+                                                field.name === "keywords"
+                                                    ? keywordOptions
+                                                    : [],
+                                        })}
+                                    />
+                                </Box>
+                            ))}
+                        />
                     );
                 })}
             </Box>
