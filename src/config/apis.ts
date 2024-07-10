@@ -47,6 +47,7 @@ const apis = {
     darasV1Url: `${apiServiceUrl}/daras`,
     formHydrationV1Url: `${apiV1Url}/form_hydration`,
     formHydrationV1UrlIP: `${apiV1IPUrl}/form_hydration`,
+    keywordsV1Url: `${apiV1Url}/keywords`,
 };
 
 export default apis;

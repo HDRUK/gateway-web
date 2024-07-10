@@ -1,11 +1,12 @@
+import { Dayjs } from "dayjs";
 import { Dataset } from "./Dataset";
 
 export type DatasetWithTitle = Dataset & { shortTitle: string };
 
 export interface DataUse {
     id: number;
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date | Dayjs | string;
+    updated_at: Date | Dayjs | string;
     non_gateway_datasets: string[];
     non_gateway_applicants: string[];
     funders_and_sponsors: string[];
@@ -18,15 +19,15 @@ export interface DataUse {
     organisation_name: string;
     organisation_sector: string;
     lay_summary: string;
-    technical_summary: string;
-    latest_approval_date: Date;
+    technical_summary: string | null;
+    latest_approval_date: Date | Dayjs | string | null;
     manual_upload: boolean;
     sublicence_arrangements: string;
     public_benefit_statement: string;
     data_sensitivity_level: string;
-    project_start_date: Date;
-    project_end_date: Date;
-    access_date: Date;
+    project_start_date: Date | Dayjs | string | null;
+    project_end_date: Date | Dayjs | string | null;
+    access_date: Date | Dayjs | string | null;
     accredited_researcher_status: string;
     confidential_data_description: string;
     dataset_linkage_description: string;
@@ -39,5 +40,6 @@ export interface DataUse {
     request_category_type: string;
     request_frequency: string;
     access_type: string;
-    datasets: DatasetWithTitle[];
+    datasets: DatasetWithTitle[] | string[];
+    keywords: Keyword[] | string[];
 }

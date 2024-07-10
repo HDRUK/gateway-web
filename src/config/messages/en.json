@@ -273,6 +273,10 @@
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
+                        "EditDataUse": {
+                            "submit": "Save",
+                            "cancel": "Cancel"
+                        },
                         "DatasetTab": {
                             "downloadButton": "Download dataset information as .csv"
                         },
