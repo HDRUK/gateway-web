@@ -7,13 +7,14 @@ import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import EditDataUse from "./components";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Data Use",
+    title: "Health Data Research Innovation Gateway - My Account - Data Use Edit",
     description: "",
 };
 
-export default async function TeamDataUsePage({
+export default async function DataUseEditPage({
     params,
 }: {
     params: { teamId: string };
@@ -32,8 +33,9 @@ export default async function TeamDataUsePage({
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2">Data Use</Typography>
+                        <Typography variant="h2">Edit a data use</Typography>
                     </Box>
+                    <EditDataUse />
                 </Paper>
             </BoxContainer>
         </ProtectedAccountRoute>

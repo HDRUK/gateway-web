@@ -40,7 +40,7 @@ const EditDataUse = () => {
 
     const params = useParams<{
         teamId: string;
-        datauseId: string;
+        dataUseId: string;
     }>();
     const { push } = useRouter();
 
@@ -49,7 +49,7 @@ const EditDataUse = () => {
     );
 
     const { data } = useGet<DataUse[]>(
-        `${apis.dataUseV1Url}/${params?.datauseId}`
+        `${apis.dataUseV1Url}/${params?.dataUseId}`
     );
 
     const existingDataUse = useMemo(() => data?.[0], [data]);
@@ -138,7 +138,7 @@ const EditDataUse = () => {
             edited
         );
 
-        const response = await editDataUse(params!.datauseId, formUpdates);
+        const response = await editDataUse(params!.dataUseId, formUpdates);
 
         if (response) {
             push(
