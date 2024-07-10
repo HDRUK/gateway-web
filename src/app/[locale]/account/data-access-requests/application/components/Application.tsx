@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
 import Markdown from "markdown-to-jsx";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { DarApplicationQuestion } from "@/interfaces/DataAccessRequest";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
@@ -17,10 +19,15 @@ import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { renderFormHydrationField } from "@/utils/formHydration";
 
-const DEFAULT_GUIDANCE = "Please click on a question to display guidance";
+const EDIT_TEMPLATE_TRANSLATION_PATH =
+    "pages.account.team.dar.application.create";
 
 const Application = () => {
-    const [guidanceText, setGuidanceText] = useState<string>(DEFAULT_GUIDANCE);
+    const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
+
+    const [guidanceText, setGuidanceText] = useState<string>(
+        t("defaultGuidance")
+    );
     const searchParams = useSearchParams();
     const team_ids = searchParams?.get("team_ids");
 
@@ -122,56 +129,72 @@ const Application = () => {
             });
     };
 
-    return (
-        <Container
-            maxWidth={false}
-            sx={{
-                display: "grid",
-                gridTemplateColumns: "2fr 5fr 3fr",
-                gap: 0,
-                pt: 2,
-            }}>
-            <Box sx={{ flex: 3, p: 0 }}>
-                <Sections
-                    containerSx={{
-                        padding: theme.spacing(2),
-                        px: 0,
-                        margin: theme.spacing(1.25),
-                        position: "sticky",
-                        top: theme.spacing(1.25),
-                        overflowY: "auto",
-                        maxHeight: "100vh",
-                    }}
-                    handleLegendClick={handleChangeSection}
-                    sectionId={sectionId}
-                    sections={parentSections || []}
-                />
-            </Box>
+    const handleSaveChanges = () => {};
 
-            <Box sx={{ flex: 2, p: 0 }}>
-                <Paper
+    return (
+        <Container maxWidth={false}>
+            <Container
+                maxWidth={false}
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: "2fr 5fr 3fr",
+                    gap: 0,
+                    pt: 2,
+                }}>
+                <Box sx={{ flex: 3, p: 0 }}>
+                    <Sections
+                        containerSx={{
+                            padding: theme.spacing(2),
+                            px: 0,
+                            margin: theme.spacing(1.25),
+                            position: "sticky",
+                            top: theme.spacing(1.25),
+                            overflowY: "auto",
+                            maxHeight: "100vh",
+                        }}
+                        handleLegendClick={handleChangeSection}
+                        sectionId={sectionId}
+                        sections={parentSections || []}
+                    />
+                </Box>
+
+                <Box sx={{ flex: 2, p: 0 }}>
+                    <Paper
+                        sx={{
+                            my: theme.spacing(1.25),
+                            padding: theme.spacing(2),
+                        }}>
+                        {filteredData && renderQuestions(filteredData)}
+                    </Paper>
+                </Box>
+                <Box sx={{ flex: 1, p: 0 }}>
+                    <Paper
+                        style={{
+                            alignItems: "center",
+                            padding: theme.spacing(2),
+                            margin: theme.spacing(1.25),
+                            position: "sticky",
+                            top: theme.spacing(1.25),
+                            overflowY: "auto",
+                            maxHeight: "100vh",
+                        }}>
+                        <Typography variant="h2">Guidance</Typography>
+                        {guidanceText && <Markdown>{guidanceText}</Markdown>}
+                    </Paper>
+                </Box>
+            </Container>
+            <Paper sx={{ m: 2, p: 2, mb: 5 }}>
+                <Box
                     sx={{
-                        my: theme.spacing(1.25),
-                        padding: theme.spacing(2),
+                        p: 0,
+                        display: "flex",
+                        justifyContent: "end",
                     }}>
-                    {filteredData && renderQuestions(filteredData)}
-                </Paper>
-            </Box>
-            <Box sx={{ flex: 1, p: 0 }}>
-                <Paper
-                    style={{
-                        alignItems: "center",
-                        padding: theme.spacing(2),
-                        margin: theme.spacing(1.25),
-                        position: "sticky",
-                        top: theme.spacing(1.25),
-                        overflowY: "auto",
-                        maxHeight: "100vh",
-                    }}>
-                    <Typography variant="h2">Guidance</Typography>
-                    {guidanceText && <Markdown>{guidanceText}</Markdown>}
-                </Paper>
-            </Box>
+                    <Button onClick={handleSaveChanges} type="submit">
+                        {t("save")}
+                    </Button>
+                </Box>
+            </Paper>
         </Container>
     );
 };
