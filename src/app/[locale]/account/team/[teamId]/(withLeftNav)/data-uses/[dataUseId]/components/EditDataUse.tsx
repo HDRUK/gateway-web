@@ -106,7 +106,10 @@ const EditDataUse = () => {
     ): Partial<T> => {
         return Object.keys(original).reduce((changes, key) => {
             if (!isEqual(original[key as keyof T], updated[key as keyof T])) {
-                changes[key as keyof T] = updated[key as keyof T];
+                return {
+                    ...changes,
+                    [key]: updated[key as keyof T],
+                };
             }
             return changes;
         }, {} as Partial<T>);
