@@ -1,4 +1,4 @@
-import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import { FormHydration } from "@/interfaces/FormHydration";
 
 interface DarQuestion {
     id: number | string;
