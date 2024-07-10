@@ -16,6 +16,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import Sections from "@/components/Sections";
 import Tabs from "@/components/Tabs";
 import TaskBoard from "@/components/TaskBoard";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
@@ -27,7 +28,6 @@ import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import PreviewTemplate from "./PreviewTemplate";
 import QuestionItem from "./QuestionItem";
-import Sections from "./Sections";
 
 const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
 

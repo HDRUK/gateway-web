@@ -1,4 +1,4 @@
-import { FormHydration } from "@/interfaces/FormHydration";
+import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
 
 interface DarQuestion {
     id: number | string;
@@ -38,4 +38,18 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
-export type { DarTemplate, DarQuestion, DarHasQuestion };
+interface DarApplicationQuestion {
+    field: FormHydrationField;
+    guidance: string;
+    order: number;
+    required: boolean;
+    section_id: number;
+    title: string;
+}
+
+export type {
+    DarTemplate,
+    DarQuestion,
+    DarHasQuestion,
+    DarApplicationQuestion,
+};
