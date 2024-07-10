@@ -5,8 +5,11 @@ import { useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import { DarApplicationQuestion } from "@/interfaces/DataAccessRequest";
+import {
+    DarApplication,
+    DarApplicationQuestion,
+    DarApplicationAnswer,
+} from "@/interfaces/DataAccessRequest";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -14,7 +17,8 @@ import Container from "@/components/Container";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
-import useGet from "@/hooks/useGet";
+import useAuth from "@/hooks/useAuth";
+import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { renderFormHydrationField } from "@/utils/formHydration";
@@ -22,30 +26,35 @@ import { renderFormHydrationField } from "@/utils/formHydration";
 const EDIT_TEMPLATE_TRANSLATION_PATH =
     "pages.account.team.dar.application.create";
 
-const Application = () => {
+interface ApplicationSectionProps {
+    applicationId: number;
+    data: DarApplication;
+    userAnswers: DarApplicationAnswer[];
+    sections: QuestionBankSection[];
+}
+
+const ApplicationSection = ({
+    applicationId,
+    data,
+    userAnswers,
+    sections,
+}: ApplicationSectionProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
+    const { user } = useAuth();
 
     const [guidanceText, setGuidanceText] = useState<string>(
         t("defaultGuidance")
     );
-    const searchParams = useSearchParams();
-    const team_ids = searchParams?.get("team_ids");
 
     const [sectionId, setSectionId] = useState(1);
     const handleChangeSection = (sectionId: number) => {
         setSectionId(sectionId);
     };
 
-    const { data: sections } = useGet<QuestionBankSection[]>(
-        `${apis.questionBankV1Url}/sections`,
-        { keepPreviousData: true }
-    );
-
-    const queryString = team_ids ? `?team_ids=${team_ids}` : "";
-    const { data } = useGet<DarApplicationQuestion[]>(
-        `${apis.darasV1Url}/dar-applications${queryString}`,
+    const updateAnswers = usePost(
+        `${apis.darasV1Url}/dar-applications/${applicationId}/answers?user_id=${user?.id}`,
         {
-            itemName: "DAR Application",
+            itemName: "Application answers",
         }
     );
 
@@ -53,11 +62,23 @@ const Application = () => {
     const getSection = (id: number) => sections?.find(s => s.id === id);
     const getParentSection = (id: number) => getSection(id)?.parent_section;
 
-    const { control } = useForm();
+    const questions = data?.questions;
+
+    const defaultValues = userAnswers?.reduce((acc, a) => {
+        const key = questions?.find(q => q.question_id === a.question_id)
+            ?.latest_version.title;
+
+        acc[key] = a.answer;
+        return acc;
+    }, {});
+
+    const { control, handleSubmit } = useForm({
+        defaultValues,
+    });
 
     const updateGuidanceText = (fieldName: string) => {
-        const guidance = data
-            ?.find(question => question.title === fieldName)
+        const guidance = questions
+            ?.find(question => question.latest_version.title === fieldName)
             ?.guidance?.replaceAll("\\n", "\n");
         if (guidance) {
             setGuidanceText(guidance);
@@ -65,10 +86,10 @@ const Application = () => {
     };
 
     const clearGuidanceText = () => {
-        setGuidanceText(DEFAULT_GUIDANCE);
+        setGuidanceText(t("defaultGuidance"));
     };
 
-    const filteredData = data?.filter(
+    const filteredData = questions?.filter(
         d => getParentSection(d.section_id) === sectionId
     );
 
@@ -76,11 +97,11 @@ const Application = () => {
         const processedSections = new Set();
         return filteredData
             ?.map(q => ({
-                ...q,
+                section_id: q.section_id,
                 field: {
-                    ...q.field,
+                    ...q.latest_version.field,
                     required: q.required,
-                    name: q.title,
+                    name: q.latest_version.title,
                 },
             }))
             ?.map(question => {
@@ -129,7 +150,21 @@ const Application = () => {
             });
     };
 
-    const handleSaveChanges = () => {};
+    const handleSaveChanges = async formData => {
+        const answers = Object.keys(formData)
+            .map(key => {
+                const question_id = questions?.find(
+                    q => q.latest_version.title === key
+                )?.question_id;
+                return { question_id, answer: formData[key] };
+            })
+            .filter(a => a.answer !== undefined);
+
+        const payload = {
+            answers,
+        };
+        await updateAnswers(payload);
+    };
 
     return (
         <Container maxWidth={false}>
@@ -190,7 +225,9 @@ const Application = () => {
                         display: "flex",
                         justifyContent: "end",
                     }}>
-                    <Button onClick={handleSaveChanges} type="submit">
+                    <Button
+                        onClick={handleSubmit(handleSaveChanges)}
+                        type="submit">
                         {t("save")}
                     </Button>
                 </Box>
@@ -199,4 +236,4 @@ const Application = () => {
     );
 };
 
-export default Application;
+export default ApplicationSection;

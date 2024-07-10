@@ -39,12 +39,27 @@ interface DarTemplate {
 }
 
 interface DarApplicationQuestion {
-    field: FormHydrationField;
+    appliciation_id: number;
+    question_id: number;
     guidance: string;
     order: number;
     required: boolean;
-    section_id: number;
     title: string;
+    section_id: number;
+    latest_version: FormHydration;
+}
+
+interface DarApplicationAnswer {
+    application_id: number;
+    question_id: number;
+    contributor_id: number;
+    answer: string;
+}
+
+interface DarApplication {
+    id: number;
+    questions: DarApplicationQuestion[];
+    submission_status: string;
 }
 
 export type {
@@ -52,4 +67,6 @@ export type {
     DarQuestion,
     DarHasQuestion,
     DarApplicationQuestion,
+    DarApplicationAnswer,
+    DarApplication,
 };
