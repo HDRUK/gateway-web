@@ -171,63 +171,70 @@ const EditDataUse = () => {
     }, [keywords]);
 
     return (
-        <Form onSubmit={handleSubmit(submitForm)}>
-            <Box>
-                {dataUseFormFields.map(section => {
-                    return (
-                        <Accordion
-                            key={section.sectionName}
-                            sx={{
-                                ".MuiAccordionSummary-root": {
-                                    background: colors.purple400,
-                                    color: colors.white,
-                                },
-                                ".MuiSvgIcon-root.MuiSvgIcon-colorPrimary": {
-                                    color: colors.white,
-                                },
-                            }}
-                            heading={
-                                <Typography variant="h4" sx={{ m: 0 }}>
-                                    {section.sectionName}
-                                </Typography>
-                            }
-                            contents={section.fields.map(field => (
-                                <Box
-                                    sx={{
-                                        p: 0,
-                                        gridColumn: "span 3",
-                                    }}>
-                                    <InputWrapper
-                                        key={field.name}
-                                        control={control}
-                                        {...field}
-                                        {...(field.component ===
-                                            inputComponents.Autocomplete && {
-                                            options:
-                                                field.name === "keywords"
-                                                    ? keywordOptions
-                                                    : [],
-                                        })}
-                                    />
-                                </Box>
-                            ))}
-                        />
-                    );
-                })}
+        <>
+            <Box sx={{ bgcolor: "white", mb: 0 }}>
+                <Typography variant="h2">{t("editDataUse")}</Typography>
             </Box>
 
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    gap: 2,
-                }}>
-                <Button type="submit">{t("submit")}</Button>
-                <Button variant="text" onClick={handleCancel}>
-                    {t("cancel")}
-                </Button>
-            </Box>
-        </Form>
+            <Form onSubmit={handleSubmit(submitForm)}>
+                <Box>
+                    {dataUseFormFields.map(section => {
+                        return (
+                            <Accordion
+                                key={section.sectionName}
+                                sx={{
+                                    ".MuiAccordionSummary-root": {
+                                        background: colors.purple400,
+                                        color: colors.white,
+                                    },
+                                    ".MuiSvgIcon-root.MuiSvgIcon-colorPrimary":
+                                        {
+                                            color: colors.white,
+                                        },
+                                }}
+                                heading={
+                                    <Typography variant="h4" sx={{ m: 0 }}>
+                                        {section.sectionName}
+                                    </Typography>
+                                }
+                                contents={section.fields.map(field => (
+                                    <Box
+                                        sx={{
+                                            p: 0,
+                                            gridColumn: "span 3",
+                                        }}>
+                                        <InputWrapper
+                                            key={field.name}
+                                            control={control}
+                                            {...field}
+                                            {...(field.component ===
+                                                inputComponents.Autocomplete && {
+                                                options:
+                                                    field.name === "keywords"
+                                                        ? keywordOptions
+                                                        : [],
+                                            })}
+                                        />
+                                    </Box>
+                                ))}
+                            />
+                        );
+                    })}
+                </Box>
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        gap: 2,
+                    }}>
+                    <Button type="submit">{t("submit")}</Button>
+                    <Button variant="text" onClick={handleCancel}>
+                        {t("cancel")}
+                    </Button>
+                </Box>
+            </Form>
+        </>
     );
 };
 

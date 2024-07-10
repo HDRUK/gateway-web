@@ -307,6 +307,7 @@
                             "duplicateButton": "Duplicate"
                         },
                         "EditDataUse": {
+                            "editDataUse": "Edit a data use",
                             "submit": "Save",
                             "cancel": "Cancel"
                         },

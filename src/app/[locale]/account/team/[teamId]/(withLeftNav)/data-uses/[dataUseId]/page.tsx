@@ -1,9 +1,7 @@
 import { cookies } from "next/headers";
-import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -32,9 +30,6 @@ export default async function DataUseEditPage({
             pagePermissions={["dur.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
-                    <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2">Edit a data use</Typography>
-                    </Box>
                     <EditDataUse />
                 </Paper>
             </BoxContainer>
