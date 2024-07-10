@@ -5,7 +5,7 @@ const defaultValues = {
     organisation_name: "",
     organisation_id: "",
     organisation_sector: "",
-    applicant_id: "",
+    applicant_id: undefined,
     funders_and_sponsors: [],
     sublicence_arrangements: "",
     accredited_researcher_status: "",

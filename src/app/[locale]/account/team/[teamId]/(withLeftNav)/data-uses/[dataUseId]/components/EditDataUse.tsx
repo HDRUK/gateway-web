@@ -9,6 +9,7 @@ import { isEqual } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
+import { Keyword } from "@/interfaces/Keyword";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
