@@ -306,6 +306,11 @@
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
+                        "EditDataUse": {
+                            "editDataUse": "Edit a data use",
+                            "submit": "Save",
+                            "cancel": "Cancel"
+                        },
                         "DatasetTab": {
                             "downloadButton": "Download dataset information as .csv",
                             "noDatasets": "No {status} datasets found on the Gateway for your team."

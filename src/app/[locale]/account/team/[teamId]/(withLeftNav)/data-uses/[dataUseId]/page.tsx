@@ -1,19 +1,18 @@
 import { cookies } from "next/headers";
-import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import EditDataUse from "./components";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Data Use",
+    title: "Health Data Research Innovation Gateway - My Account - Data Use Edit",
     description: "",
 };
 
-export default async function TeamDataUsePage({
+export default async function DataUseEditPage({
     params,
 }: {
     params: { teamId: string };
@@ -31,9 +30,7 @@ export default async function TeamDataUsePage({
             pagePermissions={["dur.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
-                    <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2">Data Use</Typography>
-                    </Box>
+                    <EditDataUse />
                 </Paper>
             </BoxContainer>
         </ProtectedAccountRoute>
