@@ -100,13 +100,16 @@ const EditDataUse = () => {
         itemName: "Application",
     });
 
-    const getChangedFields = (original: DataUse, updated: DataUse) => {
+    const getChangedFields = <T extends DataUse>(
+        original: T,
+        updated: T
+    ): Partial<T> => {
         return Object.keys(original).reduce((changes, key) => {
-            if (!isEqual(original[key], updated[key])) {
-                changes[key] = updated[key];
+            if (!isEqual(original[key as keyof T], updated[key as keyof T])) {
+                changes[key as keyof T] = updated[key as keyof T];
             }
             return changes;
-        }, {});
+        }, {} as Partial<T>);
     };
 
     const submitForm = async (formData: DataUse) => {
