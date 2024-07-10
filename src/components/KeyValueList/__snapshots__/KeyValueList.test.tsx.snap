@@ -6,10 +6,10 @@ exports[`KeyValueList should render component 1`] = `
     class="MuiBox-root mui-style-old1by"
   >
     <div
-      class="MuiBox-root mui-style-8hlr3i"
+      class="MuiBox-root mui-style-idaxv"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1i3lhm4-MuiTypography-root"
       >
         one
         :
@@ -21,10 +21,10 @@ exports[`KeyValueList should render component 1`] = `
       </p>
     </div>
     <div
-      class="MuiBox-root mui-style-8hlr3i"
+      class="MuiBox-root mui-style-idaxv"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1i3lhm4-MuiTypography-root"
       >
         two
         :
@@ -36,10 +36,10 @@ exports[`KeyValueList should render component 1`] = `
       </p>
     </div>
     <div
-      class="MuiBox-root mui-style-8hlr3i"
+      class="MuiBox-root mui-style-idaxv"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lup2e6-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1i3lhm4-MuiTypography-root"
       >
         three
         :

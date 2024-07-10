@@ -21,7 +21,6 @@ export enum RouteName {
     DATA_USE_ITEM = "data-use",
     DATA_USES = "data-uses",
     DATASETS = "datasets",
-    DUPLICATE = "duplicate",
     EDIT_FORM = "edit-form",
     EN = "en",
     HELP = "help",

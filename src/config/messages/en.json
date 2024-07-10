@@ -54,6 +54,13 @@
                 }
             }
         },
+        "archiveDataUse": {
+            "success": {
+                "delete": {
+                    "message": "You have archived 1 data use and can now find the data use in the Archived tab. The data use will no longer show up in search results"
+                }
+            }
+        },
         "applicationPermission": {
             "success": {
                 "put": {
@@ -206,20 +213,45 @@
             },
             "team": {
                 "dataAccessRequests": {
-                    "applications": { "title": "Applications" },
-                    "manageTemplates": { "title": "Manage Templates" },
-                    "workflows": { "title": "Workflows" }
+                    "applications": {
+                        "title": "Applications"
+                    },
+                    "manageTemplates": {
+                        "title": "Manage Templates"
+                    },
+                    "workflows": {
+                        "title": "Workflows"
+                    }
                 },
                 "dataUses": {
                     "title": "Data Uses",
                     "description": "View, add, edit, archive and check the status of your data uses.",
                     "uploadButton": "+ Upload",
-                    "active": "Active ({count})",
-                    "draft": "Draft ({count})",
-                    "archived": "Archived ({count})",
-                    "editButtonLabel": "Edit {title}",
-                    "copyButtonLabel": "Copy {title}",
-                    "archiveButtonLabel": "Archive {title}"
+                    "components": {
+                        "DataUseTab": {
+                            "noDataUses": "No {status} data uses found on the Gateway for your team."
+                        },
+                        "TeamDataUses": {
+                            "create": "Add Data Use",
+                            "text": "View, add, edit, archive and check the status of your data uses.",
+                            "title": "Data Use",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive this data use",
+                                    "content": "Select whether you would like to move this data use to Active (this will make your data use available within search results) or Draft (where you can edit the data use before making it available within search results).",
+                                    "label": "Unarchive data use"
+                                },
+                                "edit": {
+                                    "label": "Edit data use"
+                                },
+                                "archive": {
+                                    "label": "Archive data use so it is no longer live on the Gateway"
+                                }
+                            }
+                        }
+                    }
                 },
                 "datasets": {
                     "components": {
@@ -267,7 +299,8 @@
                                 "informationAndCommunicationTooltip": "Includes any data related to the study or application of information and communication.",
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
-                            }
+                            },
+                            "errorLoading": "An error occured while loading the Dataset"
                         },
                         "EditDataset": {
                             "editButton": "Update",
@@ -278,7 +311,8 @@
                             "cancel": "Cancel"
                         },
                         "DatasetTab": {
-                            "downloadButton": "Download dataset information as .csv"
+                            "downloadButton": "Download dataset information as .csv",
+                            "noDatasets": "No {status} datasets found on the Gateway for your team."
                         },
                         "TeamDatasets": {
                             "title": "Datasets",
@@ -326,6 +360,30 @@
                                 "team": "Team",
                                 "dar": "Data Access Requests",
                                 "metadata": "Metadata"
+                            }
+                        }
+                    }
+                },
+                "tools": {
+                    "components": {
+                        "TeamTools": {
+                            "title": "Analysis script, tools and software",
+                            "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
+                            "create": "Add new",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit analysis script, tool or software metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
+                                }
                             }
                         }
                     }
@@ -536,6 +594,8 @@
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
+                            "publicationType": "Publication type",
+                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -596,7 +656,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
-                    "title": { "label": "Metadata title" },
+                    "title": {
+                        "label": "Metadata title"
+                    },
                     "populationSize": {
                         "notReported": "Not reported",
                         "label": "Population Size",
@@ -926,6 +988,11 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
+            },
+            "AddDataUseDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input data use",
+                "uploadButton": "Upload a file of data use"
             }
         }
     }

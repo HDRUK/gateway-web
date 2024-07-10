@@ -5,6 +5,7 @@ import {
     FolderSharedOutlinedIcon,
     GroupsIcon,
     GroupsOutlinedIcon,
+    HandymanOutlinedIcon,
     HelpOutlineOutlinedIcon,
     QuestionAnswerIcon,
     SchemaOutlinedIcon,
@@ -22,6 +23,15 @@ const getProfileNav = (permissions: {
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis script, tools and software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
         {
             icon: <SearchIcon />,
             label: "Saved searches",
@@ -84,6 +94,15 @@ const getTeamNav = (
                       icon: <StorageOutlinedIcon />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis script, tools and software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
                   },
               ]
             : []),

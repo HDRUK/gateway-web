@@ -29,7 +29,7 @@ export default async function DataUseEditPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["datasets.update"]}>
+            pagePermissions={["dur.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>

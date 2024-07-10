@@ -6,6 +6,7 @@ import {
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
     FILTER_PUBLICATION_DATE,
+    FILTER_PUBLICATION_TYPE,
     FILTER_SECTOR,
     FILTER_DATA_PROVIDER,
     FILTER_ACCESS_SERVICE,
@@ -46,6 +47,9 @@ export interface Aggregations {
         buckets: Bucket[];
     };
     [FILTER_MATERIAL_TYPE]: {
+        buckets: Bucket[];
+    };
+    [FILTER_PUBLICATION_TYPE]: {
         buckets: Bucket[];
     };
     startDate: { value_as_string: string };
@@ -188,6 +192,7 @@ export interface SearchQueryParams {
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
     [FILTER_PUBLICATION_DATE]: string[] | undefined;
+    [FILTER_PUBLICATION_TYPE]: string[] | undefined;
     [FILTER_SECTOR]: string[] | undefined;
     [FILTER_DATA_PROVIDER]: string[] | undefined;
     [FILTER_ACCESS_SERVICE]: string[] | undefined;

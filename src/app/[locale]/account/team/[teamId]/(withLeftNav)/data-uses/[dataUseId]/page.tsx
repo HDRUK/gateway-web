@@ -7,14 +7,13 @@ import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import EditDataset from "../components/EditDataset";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Dataset",
+    title: "Health Data Research Innovation Gateway - My Account - Data Use",
     description: "",
 };
 
-export default async function TeamDatasetPage({
+export default async function TeamDataUsePage({
     params,
 }: {
     params: { teamId: string };
@@ -29,14 +28,13 @@ export default async function TeamDatasetPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["datasets.update"]}>
+            pagePermissions={["dur.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2">Dataset</Typography>
+                        <Typography variant="h2">Data Use</Typography>
                     </Box>
                 </Paper>
-                <EditDataset />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

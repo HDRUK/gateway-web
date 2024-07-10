@@ -1,5 +1,7 @@
 import { Dayjs } from "dayjs";
 import { Dataset } from "./Dataset";
+import { Team } from "./Team";
+import { User } from "./User";
 
 export type DatasetWithTitle = Dataset & { shortTitle: string };
 
@@ -42,4 +44,9 @@ export interface DataUse {
     access_type: string;
     datasets: DatasetWithTitle[] | string[];
     keywords: Keyword[] | string[];
+    applicant_id: number;
+    status: string;
+    team_id: number;
+    team: Team;
+    user: User;
 }

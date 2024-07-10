@@ -1,30 +1,23 @@
-import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
-import {
-    ACCOUNT,
-    DATASETS,
-    DUPLICATE,
-    PAGES,
-    TEAM,
-    TEXT,
-    TITLE,
-} from "@/consts/translation";
-import { getTeam, getUser } from "@/utils/api";
+import { getFormHydration, getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import EditDataset from "../../components/EditDataset";
+import EditDataset from "../components/CreateDataset";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Datasets",
+    title: "Health Data Research Innovation Gateway - My Account - Dataset",
     description: "",
 };
 
-export default async function TeamDatasetsPage({
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+
+export default async function TeamDatasetPage({
     params,
 }: {
     params: { teamId: string };
@@ -36,22 +29,27 @@ export default async function TeamDatasetsPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    const t = await getTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${DUPLICATE}`
+    const formJSON = await getFormHydration(
+        cookieStore,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
     );
 
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["datasets.create"]}>
+            pagePermissions={["datasets.update"]}>
             <BoxContainer sx={{ gap: 0 }}>
                 <Paper>
                     <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2">{t(TITLE)}</Typography>
-                        <Typography>{t(TEXT)}</Typography>
+                        <Typography variant="h2">Dataset</Typography>
                     </Box>
                 </Paper>
-                <EditDataset isDuplicate />
+                <EditDataset
+                    formJSON={formJSON}
+                    teamId={Number(teamId)}
+                    userId={user?.id}
+                />
             </BoxContainer>
         </ProtectedAccountRoute>
     );
