@@ -1,24 +1,24 @@
 import { inputComponents } from ".";
 
 const defaultValues = {
-    sortField: "updated",
+    sortField: "updated_at",
     searchTitle: "",
 };
 
 const sortByOptions = [
     {
-        label: "Sort By Date of Last Update",
-        value: "updated",
+        label: "Sort By Date of Last Activity",
+        value: "updated_at",
         initialDirection: "desc",
     },
     {
         label: "Sort By Date of Creation",
-        value: "created",
+        value: "created_at",
         initialDirection: "desc",
     },
     {
-        label: "Sort By Title",
-        value: "metadata.summary.title",
+        label: "Sort by Title",
+        value: "name",
         initialDirection: "asc",
     },
 ];
@@ -50,6 +50,6 @@ export {
     toggleDirection,
     sortField,
     searchFilter,
-    defaultValues as datasetSearchDefaultValues,
+    defaultValues as searchDefaultValues,
     sortByOptions,
 };
