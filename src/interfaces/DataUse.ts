@@ -1,5 +1,6 @@
 import { Dayjs } from "dayjs";
 import { Dataset } from "./Dataset";
+import { Keyword } from "./Keyword";
 import { Team } from "./Team";
 import { User } from "./User";
 
