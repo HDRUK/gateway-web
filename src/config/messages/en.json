@@ -414,6 +414,12 @@
                     }
                 },
                 "dar": {
+                    "application": {
+                        "create":{
+                            "save": "Save Changes",
+                            "defaultGuidance": "Please click on a question to display guidance"
+                        }
+                    },
                     "template": {
                         "title": "DAR Template Management",
                         "create": {
