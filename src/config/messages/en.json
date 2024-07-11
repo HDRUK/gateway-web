@@ -306,6 +306,11 @@
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
+                        "EditDataUse": {
+                            "editDataUse": "Edit a data use",
+                            "submit": "Save",
+                            "cancel": "Cancel"
+                        },
                         "DatasetTab": {
                             "downloadButton": "Download dataset information as .csv",
                             "noDatasets": "No {status} datasets found on the Gateway for your team."
@@ -356,6 +361,30 @@
                                 "team": "Team",
                                 "dar": "Data Access Requests",
                                 "metadata": "Metadata"
+                            }
+                        }
+                    }
+                },
+                "tools": {
+                    "components": {
+                        "TeamTools": {
+                            "title": "Analysis script, tools and software",
+                            "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
+                            "create": "Add new",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit analysis script, tool or software metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
+                                }
                             }
                         }
                     }
@@ -566,6 +595,8 @@
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
+                            "publicationType": "Publication type",
+                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
