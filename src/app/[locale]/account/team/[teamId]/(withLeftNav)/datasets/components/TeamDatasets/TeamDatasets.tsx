@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
+import Box from "@/components/Box";
+import Button from "@/components/Button";
+import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
+import Typography from "@/components/Typography";
+import AddDatasetDialog from "@/modules/AddDatasetDialog";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -17,7 +23,10 @@ import {
     datasetSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/datasetAccountSearch";
+import { colors } from "@/config/theme";
+import { DataStatus } from "@/consts/application";
 import {
+    AddIcon,
     ArchiveIcon,
     ContentCopyIcon,
     EditIcon,
@@ -30,7 +39,10 @@ import {
     PAGES,
     TEAM,
     COMPONENTS,
+    TITLE,
+    TEXT,
 } from "@/consts/translation";
+import { capitalise } from "@/utils/general";
 import DatasetTab from "../DatasetTab";
 
 interface CountStatus {
@@ -41,13 +53,15 @@ interface CountStatus {
 
 interface TeamDatasetsProps {
     permissions: { [key: string]: boolean };
+    teamId: string;
 }
 
-const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
-    const t = useTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.TeamDatasets`
-    );
+const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.TeamDatasets`;
+
+const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
+    const { showDialog } = useDialog();
     const searchParams = useSearchParams();
     const params = useParams<{ teamId: string }>();
     const tab = searchParams?.get("tab");
@@ -144,9 +158,13 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
     }, [queryParams.page]);
 
     const showArchiveButton =
-        tab !== "ARCHIVED" && permissions["datasets.delete"];
+        tab !== DataStatus.ARCHIVED && permissions["datasets.delete"];
     const showUnarchiveButton =
-        tab === "ARCHIVED" && permissions["datasets.update"];
+        tab === DataStatus.ARCHIVED && permissions["datasets.update"];
+    const showAddNewButton = useMemo(
+        () => permissions["datasets.create"],
+        [permissions]
+    );
 
     const actions = [
         ...(permissions["datasets.update"]
@@ -161,7 +179,7 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
         ...(permissions["datasets.create"]
             ? [
                   {
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.DUPLICATE}`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
                       icon: ContentCopyIcon,
                       label: t("actions.duplicate.label"),
                   },
@@ -175,7 +193,7 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
                               tertiaryButton: {
                                   onAction: async () => {
                                       await unArchiveDataset(id, {
-                                          status: "ACTIVE",
+                                          status: DataStatus.ACTIVE,
                                       });
                                       mutateDatasets();
                                       mutateCount();
@@ -184,7 +202,7 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
                               },
                               onSuccess: async () => {
                                   await unArchiveDataset(id, {
-                                      status: "DRAFT",
+                                      status: DataStatus.DRAFT,
                                   });
                                   mutateDatasets();
                                   mutateCount();
@@ -215,9 +233,21 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
     ];
 
     const tabsList = [
-        { label: "Active", value: "ACTIVE", dsCount: countActive ?? 0 },
-        { label: "Draft", value: "DRAFT", dsCount: countDraft ?? 0 },
-        { label: "Archived", value: "ARCHIVED", dsCount: countArchived ?? 0 },
+        {
+            label: capitalise(DataStatus.ACTIVE),
+            value: DataStatus.ACTIVE,
+            dsCount: countActive ?? 0,
+        },
+        {
+            label: capitalise(DataStatus.DRAFT),
+            value: DataStatus.DRAFT,
+            dsCount: countDraft ?? 0,
+        },
+        {
+            label: capitalise(DataStatus.ARCHIVED),
+            value: DataStatus.ARCHIVED,
+            dsCount: countArchived ?? 0,
+        },
     ].map(tabItem => ({
         label: `${tabItem.label} (${tabItem.dsCount})`,
         value: tabItem.value,
@@ -231,7 +261,10 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
                 list={data?.list}
                 currentPage={parseInt(queryParams.page, 10)}
                 setCurrentPage={page =>
-                    setQueryParams({ ...queryParams, page: page.toString() })
+                    setQueryParams({
+                        ...queryParams,
+                        page: page.toString(),
+                    })
                 }
                 isLoading={isLoading}
                 actions={actions}
@@ -239,13 +272,40 @@ const TeamDatasets = ({ permissions }: TeamDatasetsProps) => {
         ),
     }));
 
+    const handleAdd = () => {
+        showDialog(AddDatasetDialog, { teamId });
+    };
+
     return (
-        <Tabs
-            centered
-            tabs={tabsList}
-            tabBoxSx={{ padding: 0 }}
-            rootBoxSx={{ padding: 0 }}
-        />
+        <>
+            <Paper>
+                <Box
+                    sx={{
+                        bgcolor: "white",
+                        p: 2,
+                        display: "flex",
+                        alignItems: "center",
+                    }}>
+                    <Box sx={{ flexGrow: 1, p: 0 }}>
+                        <Typography variant="h2">{t(TITLE)}</Typography>
+                        <Typography>{t(TEXT)}</Typography>
+                    </Box>
+
+                    {showAddNewButton && (
+                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                            {t("create")}
+                        </Button>
+                    )}
+                </Box>
+            </Paper>
+
+            <Tabs
+                centered
+                tabs={tabsList}
+                tabBoxSx={{ padding: 0, background: colors.white }}
+                rootBoxSx={{ padding: 0 }}
+            />
+        </>
     );
 };
 

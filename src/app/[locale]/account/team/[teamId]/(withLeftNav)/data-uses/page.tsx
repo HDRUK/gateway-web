@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
+import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
-import { getPermissions, hasPermissions } from "@/utils/permissions";
+import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import DataUsesList from "./DataUsesList";
+import TeamDataUses from "./components/TeamDataUses";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Data Uses",
@@ -25,17 +26,10 @@ export default async function TeamDataUsesPage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={[
-                "dur.read",
-                "dur.create",
-                "dur.update",
-                "dur.delete",
-            ]}>
-            <DataUsesList
-                isCreate={hasPermissions(permissions, ["dur.create"])}
-                isEdit={hasPermissions(permissions, ["dur.update"])}
-                isArchive={hasPermissions(permissions, ["dur.delete"])}
-            />
+            pagePermissions={["dur.read"]}>
+            <BoxContainer sx={{ gap: 0 }}>
+                <TeamDataUses permissions={permissions} teamId={teamId} />
+            </BoxContainer>
         </ProtectedAccountRoute>
     );
 }

@@ -1,6 +1,8 @@
+/* eslint-disable default-param-last */
 import {
     CMSPageResponse,
-    CMSPostResponse,
+    CMSPostsResponse,
+    ContentPageQueryOptions,
     PageTemplateDefault,
     PageTemplateHome,
     PageTemplatePromo,
@@ -9,9 +11,12 @@ import {
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { ReleaseNode } from "@/interfaces/Releases";
+import { SupportCohortDiscoveryPage } from "@/interfaces/Support";
 import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
+import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
+import { GetContentPageQuery } from "@/config/queries/contentPage";
 import { GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
 import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
@@ -23,11 +28,30 @@ const DEFAULT_OPTIONS = {
     next: { revalidate: 10 },
 };
 
+function textResponseToJson(response: string) {
+    let output = "";
+
+    response.split("").forEach((_, i) => {
+        if (response.charCodeAt(i) <= 127) {
+            output += response.charAt(i);
+        }
+    });
+
+    output = output.replace(/\n|\r|\t/g, "");
+    output = output.replace(
+        /^.*(\{"data":\{"(posts|pages|page|post)":.*\[\]\}\}\}).*$/,
+        "$1"
+    );
+
+    return JSON.parse(output);
+}
+
 async function fetchCMS(
     query = "",
     options: {
         next?: Record<string, unknown>;
-    } = {}
+    } = {},
+    acfClean?: boolean
 ) {
     const headers = { "Content-Type": "application/json" };
 
@@ -40,17 +64,19 @@ async function fetchCMS(
         ...options,
     });
 
-    const json = await res.json();
+    if (acfClean) {
+        const response = await res.text();
 
-    if (json.errors) {
-        console.error(json.errors);
-        throw new Error("Failed to fetch API");
+        return textResponseToJson(response).data;
     }
-    return json.data;
+
+    const response = await res.json();
+
+    return response.data;
 }
 
 const getReleaseNotes = async () => {
-    const data: CMSPostResponse<ReleaseNode> = await fetchCMS(
+    const data: CMSPostsResponse<ReleaseNode> = await fetchCMS(
         GetReleaseNotesQuery,
         DEFAULT_OPTIONS
     );
@@ -58,7 +84,7 @@ const getReleaseNotes = async () => {
 };
 
 const getMissionAndPurposes = async () => {
-    const data: CMSPostResponse<MissionAndPurposesNode> = await fetchCMS(
+    const data: CMSPostsResponse<MissionAndPurposesNode> = await fetchCMS(
         GetMissionAndPurposesQuery,
         DEFAULT_OPTIONS
     );
@@ -66,12 +92,35 @@ const getMissionAndPurposes = async () => {
 };
 
 const getMeetTheTeam = async () => {
-    const data: CMSPostResponse<MeetTheTeamNode> = await fetchCMS(
+    const data: CMSPostsResponse<MeetTheTeamNode> = await fetchCMS(
         GetMeetTheTeamQuery,
-        DEFAULT_OPTIONS
+        DEFAULT_OPTIONS,
+        true
     );
 
     return data?.posts?.edges || null;
+};
+
+const getContentPageQuery = async (
+    queryName: string,
+    queryOptions: ContentPageQueryOptions
+) => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery(queryName, queryOptions),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getCohortDiscoverySupportPageQuery = async () => {
+    const data: CMSPageResponse<SupportCohortDiscoveryPage> = await fetchCMS(
+        GetCohortDiscoverySupportPageQuery,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.page || null;
 };
 
 const getCohortDiscovery = async () => {
@@ -120,12 +169,14 @@ const getHowToSearchPage = async () => {
 };
 
 export {
-    getCohortTermsAndConditions,
-    getReleaseNotes,
-    getMissionAndPurposes,
     getCohortDiscovery,
-    getTermsAndConditions,
+    getCohortDiscoverySupportPageQuery,
+    getCohortTermsAndConditions,
+    getContentPageQuery,
     getHomePage,
     getHowToSearchPage,
     getMeetTheTeam,
+    getMissionAndPurposes,
+    getReleaseNotes,
+    getTermsAndConditions,
 };

@@ -44,12 +44,10 @@ const PopulationFilter = ({
 
         return (
             populationSizeBuckets &&
-            populationSizeBuckets
-                ?.filter(bucket => bucket.doc_count)
-                ?.map(bucket => ({
-                    xValue: [bucket?.from, bucket?.to],
-                    yValue: bucket.doc_count,
-                }))
+            populationSizeBuckets?.map(bucket => ({
+                xValue: [bucket.from, bucket.to],
+                yValue: bucket.doc_count,
+            }))
         );
     }, [aggregations?.populationSize?.buckets]);
 

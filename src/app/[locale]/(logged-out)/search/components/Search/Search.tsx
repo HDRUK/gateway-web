@@ -48,10 +48,12 @@ import {
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
+    FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
     FILTER_POPULATION_SIZE,
     FILTER_PROGRAMMING_LANGUAGE,
     FILTER_PUBLICATION_DATE,
+    FILTER_PUBLICATION_TYPE,
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
     FILTER_TYPE_CATEGORY,
@@ -137,6 +139,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
+        [FILTER_PUBLICATION_TYPE]: getParamArray(FILTER_PUBLICATION_TYPE),
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
         [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
         [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
@@ -146,6 +149,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
         [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
+        [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
     });
 
     const { handleDownload } = useSearch(
@@ -243,6 +247,32 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const [initialCategory, setInitialCategory] = useState<string>();
+    const [initialQuery, setInitialQuery] = useState<string>();
+
+    useEffect(() => {
+        if (!initialCategory) {
+            setInitialCategory(queryParams.type);
+        }
+
+        if (!initialQuery) {
+            setInitialQuery(queryParams.query);
+        }
+    }, [initialCategory, initialQuery, queryParams.type, queryParams.query]);
+
+    // Fire search request when publications query is entered for the first time
+    useEffect(() => {
+        if (initialCategory !== SearchCategory.PUBLICATIONS || initialQuery) {
+            return;
+        }
+
+        if (queryParams.type !== SearchCategory.PUBLICATIONS) {
+            mutate();
+        } else if (!!queryParams.query && !initialQuery) {
+            mutate();
+        }
+    }, [queryParams.query, queryParams.type, initialCategory, initialQuery]);
+
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
         setQueryParams({
@@ -256,6 +286,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_ORGANISATION_NAME]: undefined,
             [FILTER_DATA_SET_TITLES]: undefined,
             [FILTER_PUBLICATION_DATE]: undefined,
+            [FILTER_PUBLICATION_TYPE]: undefined,
             [FILTER_SECTOR]: undefined,
             [FILTER_DATA_PROVIDER]: undefined,
             [FILTER_ACCESS_SERVICE]: undefined,
@@ -263,6 +294,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
             [FILTER_CONTAINS_TISSUE]: undefined,
+            [FILTER_MATERIAL_TYPE]: undefined,
         });
     };
 
@@ -468,7 +500,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         !isSearching &&
         !queryParams.query &&
         queryParams.type === SearchCategory.PUBLICATIONS &&
-        (!data?.list.length || !data?.path?.includes(queryParams.type));
+        (!data?.list?.length || !data?.path?.includes(queryParams.type));
 
     return (
         <Box
@@ -700,7 +732,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                         {isSearching && <Loading />}
 
                         {!isSearching &&
-                            !data?.list.length &&
+                            !data?.list?.length &&
                             (queryParams.query ||
                                 !(
                                     queryParams.type ===
@@ -713,7 +745,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                                 </Paper>
                             )}
                         {!isSearching &&
-                            !!data?.list.length &&
+                            !!data?.list?.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
                                     {renderResults()}

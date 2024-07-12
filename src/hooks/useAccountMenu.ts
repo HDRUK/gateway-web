@@ -13,10 +13,12 @@ const useAccountMenu = () => {
     const logout = useLogout();
 
     return useMemo(() => {
-        const teams = (user?.teams || []).map(team => ({
-            label: team.name,
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
-        }));
+        const teams = (user?.teams || [])
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(team => ({
+                label: `${team.member_of} > ${team.name}`,
+                href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
+            }));
 
         return [
             {

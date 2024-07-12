@@ -67,4 +67,23 @@ const toolFields: ToolSection[] = [
     },
 ];
 
-export { toolFields };
+const accordions = [
+    {
+        sectionName: "datasets",
+        fields: [],
+    },
+    {
+        sectionName: "dataUses",
+        fields: [],
+    },
+    {
+        sectionName: "publications",
+        fields: [],
+    },
+    {
+        sectionName: "collections",
+        fields: [],
+    },
+];
+
+export { toolFields, accordions };

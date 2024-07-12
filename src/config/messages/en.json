@@ -54,6 +54,13 @@
                 }
             }
         },
+        "archiveDataUse": {
+            "success": {
+                "delete": {
+                    "message": "You have archived 1 data use and can now find the data use in the Archived tab. The data use will no longer show up in search results"
+                }
+            }
+        },
         "applicationPermission": {
             "success": {
                 "put": {
@@ -101,7 +108,17 @@
             "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
             "durDescription": "Learn About Data Use Registers.",
             "darDescription": "Learn about Data Access Request forms and process.",
-            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery."
+            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery.",
+            "documentation": {
+                "title": "Documentation"
+            },
+            "explainer": {
+                "unsupportedVideo": "Your browser does not support the video element",
+                "title": "Explainer"
+            },
+            "faqs": {
+                "title": "FAQs"
+            }
         },
         "releases": {
             "noResults": "There are no releases for {year}",
@@ -196,28 +213,47 @@
             },
             "team": {
                 "dataAccessRequests": {
-                    "applications": { "title": "Applications" },
-                    "manageTemplates": { "title": "Manage Templates" },
-                    "workflows": { "title": "Workflows" }
+                    "applications": {
+                        "title": "Applications"
+                    },
+                    "manageTemplates": {
+                        "title": "Manage Templates"
+                    },
+                    "workflows": {
+                        "title": "Workflows"
+                    }
                 },
                 "dataUses": {
                     "title": "Data Uses",
                     "description": "View, add, edit, archive and check the status of your data uses.",
                     "uploadButton": "+ Upload",
-                    "active": "Active ({count})",
-                    "draft": "Draft ({count})",
-                    "archived": "Archived ({count})",
-                    "editButtonLabel": "Edit {title}",
-                    "copyButtonLabel": "Copy {title}",
-                    "archiveButtonLabel": "Archive {title}"
+                    "components": {
+                        "DataUseTab": {
+                            "noDataUses": "No {status} data uses found on the Gateway for your team."
+                        },
+                        "TeamDataUses": {
+                            "create": "Add Data Use",
+                            "text": "View, add, edit, archive and check the status of your data uses.",
+                            "title": "Data Use",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive this data use",
+                                    "content": "Select whether you would like to move this data use to Active (this will make your data use available within search results) or Draft (where you can edit the data use before making it available within search results).",
+                                    "label": "Unarchive data use"
+                                },
+                                "edit": {
+                                    "label": "Edit data use"
+                                },
+                                "archive": {
+                                    "label": "Archive data use so it is no longer live on the Gateway"
+                                }
+                            }
+                        }
+                    }
                 },
                 "datasets": {
-                    "title": "Datasets",
-                    "text": "View, add, edit, archive and check the status of your datasets.",
-                    "duplicate": {
-                        "title": "Duplicate dataset",
-                        "text": "Update and duplicate this dataset."
-                    },
                     "components": {
                         "CreateDataset": {
                             "guidance": "Guidance",
@@ -263,16 +299,30 @@
                                 "informationAndCommunicationTooltip": "Includes any data related to the study or application of information and communication.",
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
-                            }
+                            },
+                            "errorLoading": "An error occured while loading the Dataset"
                         },
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
+                        "EditDataUse": {
+                            "editDataUse": "Edit a data use",
+                            "submit": "Save",
+                            "cancel": "Cancel"
+                        },
                         "DatasetTab": {
-                            "downloadButton": "Download dataset information as .csv"
+                            "downloadButton": "Download dataset information as .csv",
+                            "noDatasets": "No {status} datasets found on the Gateway for your team."
                         },
                         "TeamDatasets": {
+                            "title": "Datasets",
+                            "text": "View, add, edit, archive and check the status of your datasets.",
+                            "create": "Add new dataset",
+                            "duplicate": {
+                                "title": "Duplicate dataset",
+                                "text": "Update and duplicate this dataset."
+                            },
                             "actions": {
                                 "unarchive": {
                                     "buttonText": "Make Active",
@@ -315,6 +365,30 @@
                         }
                     }
                 },
+                "tools": {
+                    "components": {
+                        "TeamTools": {
+                            "title": "Analysis script, tools and software",
+                            "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
+                            "create": "Add new",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit analysis script, tool or software metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
+                                }
+                            }
+                        }
+                    }
+                },
                 "integration": {
                     "create": {
                         "title": "Integration",
@@ -340,6 +414,12 @@
                     }
                 },
                 "dar": {
+                    "application": {
+                        "create":{
+                            "save": "Save Changes",
+                            "defaultGuidance": "Please click on a question to display guidance"
+                        }
+                    },
                     "template": {
                         "title": "DAR Template Management",
                         "create": {
@@ -502,7 +582,9 @@
                             "accessService": "Access service",
                             "accessServiceTooltip": "The method through which a researcher accesses the dataset",
                             "containsTissue": "Datasets with tissues",
-                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample"
+                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
+                            "sampleAvailability": "Material type",
+                            "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data provider",
@@ -519,6 +601,8 @@
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
+                            "publicationType": "Publication type",
+                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -579,7 +663,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
-                    "title": { "label": "Metadata title" },
+                    "title": {
+                        "label": "Metadata title"
+                    },
                     "populationSize": {
                         "notReported": "Not reported",
                         "label": "Population Size",
@@ -751,7 +837,6 @@
             }
         },
         "tool": {
-            "backText": "Back to search results",
             "description": "Description",
             "resultsInsights": "Results/Insights",
             "details": "Details",
@@ -764,7 +849,29 @@
             "toolCategory": "Tool Category",
             "keywords": "Keywords",
             "domain": "Domain",
-            "notAvailable": "Not specified"
+            "notAvailable": "Not specified",
+            "datasets": "Related datasets",
+            "dataUses": "Related data uses",
+            "publications": "Related publications",
+            "collections": "Related collections",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Tools search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications related to this analysis, tool or software ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections which include this analysis, tool or software ({ length })"
+                }
+            }
         }
     },
     "components": {
@@ -883,6 +990,16 @@
                 "description": "Description",
                 "keywords": "Keywords",
                 "team": "Team/Author"
+            },
+            "AddDatasetDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input metadata",
+                "uploadButton": "Upload a file of metadata"
+            },
+            "AddDataUseDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input data use",
+                "uploadButton": "Upload a file of data use"
             }
         }
     }
