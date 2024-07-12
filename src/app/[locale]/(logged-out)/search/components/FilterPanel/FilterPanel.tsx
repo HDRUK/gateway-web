@@ -14,6 +14,7 @@ import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import {
+    FILTER_DATA_TYPE,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
@@ -64,6 +65,7 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 };
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
+        FILTER_DATA_TYPE,
         FILTER_CONTAINS_TISSUE,
         FILTER_MATERIAL_TYPE,
         FILTER_DATA_USE_TITLES,
