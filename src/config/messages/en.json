@@ -537,7 +537,7 @@
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
             "tools": "Analysis, tools & software",
-            "dataProviders": "Data providers",
+            "dataProviders": "Data custodians",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
