@@ -571,6 +571,8 @@
                             "populationSize": "Population size",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
+                            "dataType": "Data type",
+                            "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data provider",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "dataUseTitles": "Data use title",
@@ -615,6 +617,8 @@
                         "dataProvider": {
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "dataType": "Data type",
+                            "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset"
                         },
@@ -680,7 +684,7 @@
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
                     "dataProvider": {
-                        "label": "Data provider",
+                        "label": "Data custodian",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
                     "accessService": {
