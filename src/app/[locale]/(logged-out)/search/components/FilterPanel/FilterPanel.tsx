@@ -67,10 +67,10 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_CONTAINS_TISSUE,
         FILTER_MATERIAL_TYPE,
         FILTER_DATA_USE_TITLES,
+        FILTER_ACCESS_SERVICE,
         FILTER_DATE_RANGE,
         FILTER_POPULATION_SIZE,
         FILTER_GEOGRAPHIC_LOCATION,
-        FILTER_ACCESS_SERVICE,
         FILTER_PUBLISHER_NAME,
     ],
     dataUseRegister: [
