@@ -38,4 +38,35 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
-export type { DarTemplate, DarQuestion, DarHasQuestion };
+interface DarApplicationQuestion {
+    appliciation_id: number;
+    question_id: number;
+    guidance: string;
+    order: number;
+    required: boolean;
+    title: string;
+    section_id: number;
+    latest_version: FormHydration;
+}
+
+interface DarApplicationAnswer {
+    application_id: number;
+    question_id: number;
+    contributor_id: number;
+    answer: string;
+}
+
+interface DarApplication {
+    id: number;
+    questions: DarApplicationQuestion[];
+    submission_status: string;
+}
+
+export type {
+    DarTemplate,
+    DarQuestion,
+    DarHasQuestion,
+    DarApplicationQuestion,
+    DarApplicationAnswer,
+    DarApplication,
+};

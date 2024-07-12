@@ -11,10 +11,15 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
     return (
         <Box sx={{ p: 0 }}>
             {rows.map(row => (
-                <Box key={row.key} sx={{ display: "flex", p: 0 }}>
+                <Box
+                    key={row.key}
+                    sx={{
+                        display: "grid",
+                        gridTemplateColumns: "130px 1fr",
+                        p: 0,
+                    }}>
                     <Typography
                         sx={{
-                            width: 130,
                             color: colors.grey500,
                             fontSize: 13,
                         }}>

@@ -22,6 +22,7 @@ import {
 import { getCohortRequestsV1 } from "./cohortRequest";
 import { getCMSReleaseV1 } from "./cms";
 import { getDatasetV1, getDatasetsV1 } from "./datasets";
+import { getDataUses } from "./dataUses";
 
 export const handlers = [
     getUserV1(),
@@ -43,4 +44,5 @@ export const handlers = [
     getCMSReleaseV1(),
     getDatasetV1(),
     getDatasetsV1(),
+    getDataUses(),
 ];

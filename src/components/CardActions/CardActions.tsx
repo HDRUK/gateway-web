@@ -3,26 +3,55 @@ import { IconButton } from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
 import Link from "@/components/Link";
 import Tooltip from "@/components/Tooltip";
+import { DataStatus } from "@/consts/application";
 import ConditionalWrapper from "../ConditionalWrapper";
 
 interface CardActionsProps {
     id: number;
+    status?: string;
     actions: {
         icon: IconType;
         href?: string;
         action?: (id: number) => void;
-        label: string;
         disabled?: boolean;
+        label: string;
     }[];
 }
 
 const linkWrapper =
-    ({ href, id }: { href?: string; id: number }) =>
+    ({
+        href,
+        id,
+        status,
+        label,
+    }: {
+        href?: string;
+        id: number;
+        status?: string;
+        label: string;
+    }) =>
     (children: ReactNode) => {
-        return <Link href={`${href}/${id}`}>{children}</Link>;
+        const searchParams = new URLSearchParams();
+
+        if (status === DataStatus.DRAFT) {
+            searchParams.set("status", status);
+        }
+
+        if (label.toLowerCase().includes("duplicate")) {
+            searchParams.set("duplicate", "true");
+        }
+
+        return (
+            <Link
+                href={`${href}/${id}${
+                    searchParams.size ? `?${searchParams}` : ""
+                }`}>
+                {children}
+            </Link>
+        );
     };
 
-const CardActions = ({ actions, id }: CardActionsProps) => {
+const CardActions = ({ actions, id, status }: CardActionsProps) => {
     return (
         <>
             {actions.map(({ icon: Icon, href, label, disabled, action }) => (
@@ -32,6 +61,8 @@ const CardActions = ({ actions, id }: CardActionsProps) => {
                         wrapper={linkWrapper({
                             href,
                             id,
+                            status,
+                            label,
                         })}>
                         <IconButton
                             {...(action &&

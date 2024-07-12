@@ -120,8 +120,7 @@ const DatasetTab = ({
                 .filter(dataset => !!dataset)}
             {list?.length === 0 && (
                 <Paper sx={{ p: 2, mb: 2 }}>
-                    No {label.toLowerCase()} datasets found on the Gateway for
-                    your team.
+                    {t("noDatasets", { status: label.toLowerCase() })}
                 </Paper>
             )}
             <Pagination
