@@ -1,13 +1,13 @@
+import { useForm } from "react-hook-form";
+import { useParams, useRouter } from "next/navigation";
+import { Application, ApplicationForm } from "@/interfaces/Application";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import Typography from "@/components/Typography";
-import { Application, ApplicationForm } from "@/interfaces/Application";
 import Form from "@/components/Form";
+import Typography from "@/components/Typography";
 import useDelete from "@/hooks/useDelete";
 import apis from "@/config/apis";
-import { useParams, useRouter } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
-import { useForm } from "react-hook-form";
 
 const DeleteApplication = ({ application }: { application: Application }) => {
     const { push } = useRouter();
