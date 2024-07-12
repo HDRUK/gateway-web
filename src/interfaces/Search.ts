@@ -25,7 +25,7 @@ import { PaginationType } from "./Pagination";
 export interface Aggregations {
     [FILTER_DATA_TYPE]: {
         buckets: Bucket[];
-    }
+    };
     [FILTER_DATA_USE_TITLES]: {
         buckets: Bucket[];
     };
