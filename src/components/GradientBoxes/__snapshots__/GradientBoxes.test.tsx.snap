@@ -6,20 +6,32 @@ exports[`GradientBoxes should render title 1`] = `
     class="MuiBox-root mui-style-1y4d2m4"
   >
     <div
-      class="MuiBox-root mui-style-lrlde"
+      class="MuiBox-root mui-style-uiqv5c"
     >
-      <div
-        class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-14c3g9b-MuiTypography-root-MuiLink-root"
+        href="href"
+        target="_self"
       >
         <div
-          class="LinesEllipsis  "
+          class="MuiTypography-root MuiTypography-h2 mui-style-1d67flu-MuiTypography-root"
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          <wbr />
         </div>
-      </div>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
+          data-testid="ArrowForwardIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+          />
+        </svg>
+      </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-niilw3-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -30,20 +42,32 @@ exports[`GradientBoxes should render title 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-lrlde"
+      class="MuiBox-root mui-style-uiqv5c"
     >
-      <div
-        class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-14c3g9b-MuiTypography-root-MuiLink-root"
+        href="href"
+        target="_self"
       >
         <div
-          class="LinesEllipsis  "
+          class="MuiTypography-root MuiTypography-h2 mui-style-1d67flu-MuiTypography-root"
         >
           Vestibulum ultrices purus sit amet cursus gravida. 
-          <wbr />
         </div>
-      </div>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
+          data-testid="ArrowForwardIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+          />
+        </svg>
+      </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-niilw3-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -54,20 +78,32 @@ exports[`GradientBoxes should render title 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-lrlde"
+      class="MuiBox-root mui-style-uiqv5c"
     >
-      <div
-        class="MuiTypography-root MuiTypography-h2 mui-style-thbin-MuiTypography-root"
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-14c3g9b-MuiTypography-root-MuiLink-root"
+        href="href"
+        target="_self"
       >
         <div
-          class="LinesEllipsis  "
+          class="MuiTypography-root MuiTypography-h2 mui-style-1d67flu-MuiTypography-root"
         >
           Aenean luctus feugiat eros at laoreet.
-          <wbr />
         </div>
-      </div>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
+          data-testid="ArrowForwardIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+          />
+        </svg>
+      </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-oxov68-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-niilw3-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
