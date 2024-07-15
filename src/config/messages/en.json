@@ -415,7 +415,7 @@
                 },
                 "dar": {
                     "application": {
-                        "create":{
+                        "create": {
                             "save": "Save Changes",
                             "defaultGuidance": "Please click on a question to display guidance"
                         }
@@ -470,8 +470,8 @@
                 "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
-                "label": "Data Providers",
-                "title": "Data Providers",
+                "label": "Data Custodians",
+                "title": "Data Custodians",
                 "text": "Discover Gateway metadata providers. Search and filter resources by data providers and find out how to contact them"
             },
             "collections": {
@@ -488,6 +488,11 @@
                 "label": "Disease Atlas",
                 "title": "Disease Atlas",
                 "text": "The Disease Atlas is under development and is testing systematic approaches to understanding diseases across the NHS"
+            },
+            "dataCustodianNetworks": {
+                "label": "Data Custodian Networks",
+                "title": "Data Custodian Networks",
+                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
             },
             "publications": {
                 "label": "Publications",
