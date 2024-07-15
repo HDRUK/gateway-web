@@ -5,6 +5,7 @@ import {
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
+    FILTER_DATA_TYPE,
     FILTER_PUBLICATION_DATE,
     FILTER_PUBLICATION_TYPE,
     FILTER_SECTOR,
@@ -22,6 +23,9 @@ import { Highlight } from "./HighlightDataset";
 import { PaginationType } from "./Pagination";
 
 export interface Aggregations {
+    [FILTER_DATA_TYPE]: {
+        buckets: Bucket[];
+    };
     [FILTER_DATA_USE_TITLES]: {
         buckets: Bucket[];
     };
@@ -191,6 +195,7 @@ export interface SearchQueryParams {
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
+    [FILTER_DATA_TYPE]: string[] | undefined;
     [FILTER_PUBLICATION_DATE]: string[] | undefined;
     [FILTER_PUBLICATION_TYPE]: string[] | undefined;
     [FILTER_SECTOR]: string[] | undefined;
