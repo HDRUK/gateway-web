@@ -40,9 +40,24 @@ const services = [
         href: "/about/cohort-discovery",
     },
     {
+        id: SearchCategory.TOOLS,
+        image: "/images/homepage/welcome-image.png",
+        href: `/search?type=${SearchCategory.TOOLS}`,
+    },
+    {
+        id: SearchCategory.PUBLICATIONS,
+        image: "/images/homepage/welcome-image.png",
+        href: `/search?type=${SearchCategory.PUBLICATIONS}`,
+    },
+    {
         id: "dataProviders",
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
+    },
+    {
+        id: "dataCustodianNetworks",
+        image: "/images/homepage/welcome-image.png",
+        href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
@@ -59,17 +74,6 @@ const services = [
     //     image: "/images/homepage/welcome-image.png",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
-    {
-        id: SearchCategory.PUBLICATIONS,
-        image: "/images/homepage/welcome-image.png",
-        href: `/search?type=${SearchCategory.PUBLICATIONS}`,
-    },
-
-    {
-        id: SearchCategory.TOOLS,
-        image: "/images/homepage/welcome-image.png",
-        href: `/search?type=${SearchCategory.TOOLS}`,
-    },
     {
         id: "courses",
         image: "/images/homepage/welcome-image.png",
