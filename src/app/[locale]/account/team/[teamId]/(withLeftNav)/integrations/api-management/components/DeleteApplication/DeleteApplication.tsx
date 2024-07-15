@@ -1,7 +1,6 @@
 import { useParams, useRouter } from "next/navigation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import Form from "@/components/Form";
 import Typography from "@/components/Typography";
 import useDelete from "@/hooks/useDelete";
 import apis from "@/config/apis";
@@ -14,9 +13,9 @@ const DeleteApplication = ({ applicationId }: { applicationId: number }) => {
     const deleteApplicationApi = useDelete(apis.applicationsV1Url);
     const deleteApplication = async () => {
         await deleteApplicationApi(applicationId).then(
-          push(
-            `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
-          )
+            push(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
+            )
         );
     };
 
