@@ -415,7 +415,7 @@
                 },
                 "dar": {
                     "application": {
-                        "create":{
+                        "create": {
                             "save": "Save Changes",
                             "defaultGuidance": "Please click on a question to display guidance"
                         }
@@ -503,6 +503,16 @@
                 "label": "Courses",
                 "title": "Courses",
                 "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
+            },
+            "helpLinks": {
+                "item1": {
+                    "title": "Support Centre",
+                    "text": "Find out more about Gateway features and learn how to use them via the Support Centre. You can also submit feedback via the Support Centre to help improve the Gateway."
+                },
+                "item2": {
+                    "title": "Community",
+                    "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
+                }
             }
         },
         "saved_searches": {
