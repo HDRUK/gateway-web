@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import { Filter } from "@/interfaces/Filter";
+import { PaginationType } from "@/interfaces/Pagination";
 import apis from "@/config/apis";
 import { FILTERS_PER_PAGE } from "@/config/request";
 import { filtersV1, filterV1 } from "@/mocks/data";
@@ -11,13 +12,27 @@ interface GetResponse {
 
 const getFiltersV1 = (data = filtersV1, status = 200) => {
     return rest.get(
-        `${apis.filtersV1Url}?perPage=${FILTERS_PER_PAGE}`,
+        `${apis.filtersV1Url}`,
         (req, res, ctx) => {
+            const url = new URL(req.url);
             if (status !== 200) {
                 return res(
                     ctx.status(status),
                     ctx.json({
                         message: `Request failed with status code ${status}`,
+                    })
+                );
+            }
+            if (url.searchParams.get("perPage")) {
+                return res(
+                    ctx.status(status),
+                    ctx.json<PaginationType<GetResponse>>({
+                        lastPage: 5,
+                        to: 5,
+                        from: 1,
+                        currentPage: 1,
+                        total: 25,
+                        list: data,
                     })
                 );
             }
