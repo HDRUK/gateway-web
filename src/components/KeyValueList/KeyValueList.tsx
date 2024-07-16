@@ -25,7 +25,9 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
                         }}>
                         {row.key}:
                     </Typography>
-                    <Typography sx={{ fontSize: 13 }}>{row.value}</Typography>
+                    <Typography component="div" sx={{ fontSize: 13 }}>
+                        {row.value}
+                    </Typography>
                 </Box>
             ))}
         </Box>

@@ -41,6 +41,9 @@ const generateDataUse = (data = {}): DataUse => {
         datasets: Array.from({ length: 3 }).map(() => generateDatasetWithTitleV1("1.1")),
         team: generateTeam(),
         project_title: faker.lorem.sentence(5),
+        non_gateway_applicants: Array.from({ length: 3}).map(() =>
+            faker.name.fullName()
+        ),
         ...data,
     };
 };
