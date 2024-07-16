@@ -64,7 +64,7 @@
         "applicationPermission": {
             "success": {
                 "put": {
-                    "message": "API created and enabled"
+                    "message": "Private app created and enabled"
                 }
             }
         },
@@ -399,16 +399,16 @@
                 "integrations": {
                     "apiManagement": {
                         "howTo": "How to setup and manage integrations",
-                        "cannotCreate": "HDR UK cannot create application registrations on behalf of users",
+                        "cannotCreate": "Please note that HDR UK cannot create Private Apps on behalf of users.",
                         "create": {
-                            "title": "API management",
-                            "text": "Use this form to create, update and manage your api on the Gateway"
+                            "title": "Private apps",
+                            "text": " Use this form to create your Private App on the Gateway"
                         },
                         "manage": {
                             "permissions": {
                                 "title": "Permissions",
-                                "intro": "Use this form to assign the right level of scope and permission for the application to manage integration and connect securely to the Gateway. Your application will only be able to synchronize data within its assigned scope and permission. Application permissions is the responsibility of your publisher team",
-                                "helper": "Entities created via an API integration can only be managed (updated or deleted/archived) via the API integration. Entities created via another method (manual, federated integration) cannot be managed via the API integration."
+                                "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
+                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App."
                             }
                         }
                     }

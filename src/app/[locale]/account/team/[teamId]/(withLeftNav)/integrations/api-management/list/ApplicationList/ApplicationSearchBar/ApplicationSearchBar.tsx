@@ -64,7 +64,7 @@ const ApplicationSearchBar = ({
         <Paper>
             <BoxContainer>
                 <Box sx={{ paddingBottom: 0 }}>
-                    <Typography variant="h2">Application List</Typography>
+                    <Typography variant="h2">Private App List</Typography>
                 </Box>
                 <Box sx={{ paddingTop: 0 }}>
                     {searchApiFormFields.map(field => (

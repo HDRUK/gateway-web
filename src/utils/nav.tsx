@@ -158,7 +158,7 @@ const getTeamNav = (
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "API management",
+                                        label: "Private Apps",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
