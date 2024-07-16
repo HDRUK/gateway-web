@@ -25,7 +25,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
     const params = useParams<{ locale: string }>();
     const title = dataUse.project_title;
     const providerName = dataUse.team.name;
-    const applicantNames = dataUse.non_gateway_applicants.join(', ');
+    const applicantNames = dataUse.non_gateway_applicants.join(", ");
 
     const datasetNames: JSX.Element[] = [];
     dataUse.datasets.forEach((dataset, idx) => {
