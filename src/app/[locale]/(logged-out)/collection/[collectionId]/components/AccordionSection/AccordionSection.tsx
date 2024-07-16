@@ -21,7 +21,7 @@ export default function AccordionSection({
     const limitItems = contents.slice(0, limitRows);
     const remainingItems = contents.slice(limitRows, contents.length);
     const [showAll, setShowAll] = useState(false);
-    const t = useTranslations('components.ShowMore');
+    const t = useTranslations("components.ShowMore");
 
     return (
         <Accordion
