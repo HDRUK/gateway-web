@@ -25,7 +25,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
     const params = useParams<{ locale: string }>();
     const title = dataUse.project_title;
     const providerName = dataUse.team.name;
-    // const applicantName = dataUse.user.name; // This is not the correct field to use, and so is commented out for now.
+    const applicantNames = dataUse.non_gateway_applicants.join(', ');
 
     const datasetNames: JSX.Element[] = [];
     dataUse.datasets.forEach((dataset, idx) => {
@@ -66,13 +66,13 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                         <KeyValueList
                             rows={[
                                 {
-                                    key: "Data Providers",
+                                    key: "Data Custodian",
                                     value: providerName,
                                 },
-                                // { TODO: reinstate this when BE is ready to provide applicant names
-                                //     key: "Applicant name(s)",
-                                //     value: applicantName,
-                                // },
+                                {
+                                    key: "Applicant name(s)",
+                                    value: applicantNames,
+                                },
                                 {
                                     key: "Datasets",
                                     value: datasetNames,
