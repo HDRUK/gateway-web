@@ -77,7 +77,7 @@ const services = [
     {
         id: "courses",
         image: "/images/homepage/welcome-image.png",
-        href: "https://www.hdruk.ac.uk/study-and-train/train/learn-with-hdr-uk-futures/",
+        href: "https://hdruklearn.org/",
     },
 ];
 
