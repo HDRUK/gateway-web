@@ -4,8 +4,8 @@ import { DataUse } from "@/interfaces/DataUse";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
-import ShowMore from "@/components/ShowMore";
 import Paper from "@/components/Paper";
+import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
@@ -76,7 +76,11 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                                 },
                                 {
                                     key: "Datasets",
-                                    value: <ShowMore maxHeight={18}>{datasetNames}</ShowMore>,
+                                    value: (
+                                        <ShowMore maxHeight={18}>
+                                            {datasetNames}
+                                        </ShowMore>
+                                    ),
                                 },
                                 {
                                     key: "Last activity",
