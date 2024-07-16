@@ -8,47 +8,47 @@ exports[`KeyValueList should render component 1`] = `
     <div
       class="MuiBox-root mui-style-idaxv"
     >
-      <p
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-1i3lhm4-MuiTypography-root"
       >
         one
         :
-      </p>
-      <p
+      </div>
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
       >
         1
-      </p>
+      </div>
     </div>
     <div
       class="MuiBox-root mui-style-idaxv"
     >
-      <p
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-1i3lhm4-MuiTypography-root"
       >
         two
         :
-      </p>
-      <p
+      </div>
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
       >
         2
-      </p>
+      </div>
     </div>
     <div
       class="MuiBox-root mui-style-idaxv"
     >
-      <p
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-1i3lhm4-MuiTypography-root"
       >
         three
         :
-      </p>
-      <p
+      </div>
+      <div
         class="MuiTypography-root MuiTypography-body1 mui-style-ztesez-MuiTypography-root"
       >
         3
-      </p>
+      </div>
     </div>
   </div>
 </div>
