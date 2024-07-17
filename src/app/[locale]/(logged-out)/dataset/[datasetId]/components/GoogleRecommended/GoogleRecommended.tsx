@@ -12,7 +12,7 @@ const GoogleRecommended = ({ metadata }: GoogleRecommendedProps) => {
     const linkedDataJson = get(metadata, METADATA_PATH);
 
     return (
-        <Script type="application/ld+json" strategy="lazyOnload">
+        <Script type="application/ld+json" strategy="lazyOnload" id="ld-json">
             {JSON.stringify(linkedDataJson)}
         </Script>
     );
