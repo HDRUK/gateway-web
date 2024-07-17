@@ -168,6 +168,102 @@ const getHowToSearchPage = async () => {
     return data?.page || null;
 };
 
+const getWorkWithUs = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getWorkWithUs", {
+          id: "work-with-us",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getDevelopmentCommunity = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getDevelopmentCommunityQuery", {
+          id: "development-community",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getResearchersInnovators = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getResearchersInnovatorsQuery", {
+            id: "researchers-innovators",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getDataCustodians = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getDataCustodiansQuery", {
+          id: "data-custodians",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getPatientsAndPublic = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getPatientsAndPublicQuery", {
+          id: "patients-and-public",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getGlossary = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getGlossaryQuery", {
+          id: "glossary",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getTutorials = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getTutorialsQuery", {
+          id: "tutorials",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getGettingStarted = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+      GetContentPageQuery("getGettingStartedQuery", {
+          id: "data-custodian-getting-started",
+          idType: "URI",
+      }),
+      DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -179,4 +275,12 @@ export {
     getMissionAndPurposes,
     getReleaseNotes,
     getTermsAndConditions,
+    getWorkWithUs,
+    getDevelopmentCommunity,
+    getResearchersInnovators,
+    getDataCustodians,
+    getPatientsAndPublic,
+    getGlossary,
+    getTutorials,
+    getGettingStarted
 };
