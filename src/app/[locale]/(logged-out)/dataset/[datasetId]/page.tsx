@@ -47,7 +47,9 @@ export default async function DatasetItemPage({
             "SchemaOrg",
             "GoogleRecommended"
         );
-    } catch (_e) {}
+    } catch (_e) {
+        // Intentionally left empty
+    }
 
     const datasetVersion = data?.versions?.[0];
 
