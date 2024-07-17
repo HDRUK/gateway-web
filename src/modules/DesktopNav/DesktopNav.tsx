@@ -1,11 +1,11 @@
 import { Fragment, useState } from "react";
 import { Box } from "@mui/material";
+import { Divider } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import navItems from "@/config/nav";
 import { ExpandMoreIcon } from "@/consts/icons";
-import { Divider } from '@mui/material';
 
 function DesktopNav() {
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
@@ -32,11 +32,16 @@ function DesktopNav() {
                 ml: 4,
             }}>
             {navItems.map(item => {
-              if (item.divider) {
-                return (<Fragment key={item.label}>
-                 <Divider orientation="vertical" sx={{bgcolor: "white", ml: 2, mr: 2 }}/>
-              </Fragment>)
-              }
+                if (item.divider) {
+                    return (
+                        <Fragment key={item.label}>
+                            <Divider
+                                orientation="vertical"
+                                sx={{ bgcolor: "white", ml: 2, mr: 2 }}
+                            />
+                        </Fragment>
+                    );
+                }
                 return item.subItems ? (
                     <Fragment key={item.label}>
                         <Button
