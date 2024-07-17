@@ -1,15 +1,28 @@
 "use client";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { FileExport } from "@/interfaces/FileExport";
+import { User } from "@/interfaces/User";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import Form from "@/components/Form";
+import InputWrapper from "@/components/InputWrapper";
 import useGet from "@/hooks/useGet";
+import useSidebar from "@/hooks/useSidebar";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import {
+    generalEnquiryFormFields,
+    generalEnquiryValidationSchema,
+    generalEnquiryDefaultValues,
+} from "@/config/forms/generalEnquiry";
 import { DownloadIcon } from "@/consts/icons";
 import { downloadFile } from "@/utils/download";
 import { ActionBarWrapper } from "./ActionBar.styles";
@@ -51,12 +64,110 @@ const ActionBar = () => {
         setIsDownloading(false);
     };
 
+    const { showSidebar } = useSidebar();
+
+    const { setValue, control, handleSubmit, reset, formState, watch } =
+        useForm<User>({
+            mode: "onTouched",
+            resolver: yupResolver(generalEnquiryValidationSchema),
+            defaultValues: {
+                ...generalEnquiryDefaultValues,
+                // ...user,
+            },
+        });
+
+    const submitForm = (formData: User) => {
+        console.log("SUBMIT GENERAL ENQURIY", formData);
+    };
+
     return (
         <ActionBarWrapper>
             <BackButton label={t("label")} style={{ margin: 0 }} />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
-                <Button disabled>{t("contact")}</Button>
+                <Button
+                    onClick={() =>
+                        showSidebar({
+                            title: "Messages",
+                            content: (
+                                <>
+                                    <BoxContainer
+                                        sx={{
+                                            gridTemplateColumns: {
+                                                tablet: "repeat(6, 1fr)",
+                                            },
+                                            gap: {
+                                                mobile: 1,
+                                                tablet: 2,
+                                            },
+                                            p: 0,
+                                        }}>
+                                        <Box
+                                            sx={{
+                                                gridColumn: {
+                                                    tablet: "span 2",
+                                                    laptop: "span 2",
+                                                },
+                                            }}>
+                                            <p>TODO - MESAGE LIST</p>
+                                        </Box>
+                                        <Box
+                                            sx={{
+                                                gridColumn: {
+                                                    tablet: "span 4",
+                                                    laptop: "span 4",
+                                                },
+                                            }}>
+                                            <Typography variant="h1">
+                                                TFL {">"} GRGR
+                                            </Typography>
+                                            <Typography>
+                                                Your message will be sent to the
+                                                selected Data Custodian(s) in
+                                                seperate enquiry threads. When a
+                                                Data Custodian replies you will
+                                                receive an email via the Health
+                                                Data Gateway. To reply to Data
+                                                Custodian via the same Gateway
+                                                messaging service, use
+                                                reply/reply all on your email
+                                                client.
+                                            </Typography>
+
+                                            <Form
+                                                sx={{ mt: 3 }}
+                                                onSubmit={handleSubmit(
+                                                    submitForm
+                                                )}>
+                                                {generalEnquiryFormFields.map(
+                                                    field => (
+                                                        <InputWrapper
+                                                            key={field.name}
+                                                            control={control}
+                                                            {...field}
+                                                        />
+                                                    )
+                                                )}
+
+                                                <Box
+                                                    sx={{
+                                                        p: 0,
+                                                        display: "flex",
+                                                        justifyContent: "end",
+                                                    }}>
+                                                    <Button type="submit">
+                                                        Save changes
+                                                    </Button>
+                                                </Box>
+                                            </Form>
+                                        </Box>
+                                    </BoxContainer>
+                                </>
+                            ),
+                        })
+                    }>
+                    {t("contact")}
+                </Button>
 
                 <Button variant="outlined" color="secondary" disabled>
                     {t("submitApplication")}
