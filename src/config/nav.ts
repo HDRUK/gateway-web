@@ -126,6 +126,11 @@ const navItems = [
             },
         ],
     },
+    {
+        label: "",
+        divider: true,
+        href: "",
+    },
     // TODO: Verticle line here
     {
         label: "Data Custodian Area",
