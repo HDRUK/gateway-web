@@ -5,11 +5,11 @@ import AccordionSection from "./AccordionSection";
 describe("AccordionSection", () => {
     it("expands when showing more", () => {
         const mockContents = [
-            <Button>Card 1</Button>,
-            <Button>Card 2</Button>,
-            <Button>Card 3</Button>,
-            <Button>Card 4</Button>,
-            <Button>Card 5</Button>,
+            <Button key="card1">Card 1</Button>,
+            <Button key="card2">Card 2</Button>,
+            <Button key="card3">Card 3</Button>,
+            <Button key="card4">Card 4</Button>,
+            <Button key="card5">Card 5</Button>,
         ];
 
         render(
@@ -29,9 +29,9 @@ describe("AccordionSection", () => {
 
     it("expands when showing more", () => {
         const mockContents = [
-            <Button>Card 1</Button>,
-            <Button>Card 2</Button>,
-            <Button>Card 3</Button>,
+            <Button key="card1">Card 1</Button>,
+            <Button key="card2">Card 2</Button>,
+            <Button key="card3">Card 3</Button>,
         ];
 
         render(

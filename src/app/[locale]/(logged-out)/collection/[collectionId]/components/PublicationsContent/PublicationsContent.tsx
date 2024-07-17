@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -41,7 +42,7 @@ export default function DatasetContent({
                 })}
                 contents={publications.map(
                     ({ paper_title, authors, url, year_of_publication }) => (
-                        <>
+                        <Fragment key={`publication_${paper_title}`}>
                             <Link component="a" href={url} target="_blank">
                                 {paper_title}
                             </Link>
@@ -49,7 +50,7 @@ export default function DatasetContent({
                             {year_of_publication && (
                                 <div>{year_of_publication}</div>
                             )}
-                        </>
+                        </Fragment>
                     )
                 )}
             />
