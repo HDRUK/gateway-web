@@ -5,21 +5,21 @@ import { getPatientsAndPublic } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
 export const metadata = {
-  title: "Health Data Research Innovation Gateway - Patients and Public",
-  description: "",
+    title: "Health Data Research Innovation Gateway - Patients and Public",
+    description: "",
 };
 
 const DevelopmentCommunityPage = async () => {
-  const cmsPage = await getPatientsAndPublic();
+    const cmsPage = await getPatientsAndPublic();
 
-  return (
-    <>
-      <Banner title={cmsPage.title} />
-      <Container sx={{ padding: 10 }} className="wpStyles">
-        {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <Banner title={cmsPage.title} />
+            <Container sx={{ padding: 10 }} className="wpStyles">
+                {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
+            </Container>
+        </>
+    );
 };
 
 export default DevelopmentCommunityPage;

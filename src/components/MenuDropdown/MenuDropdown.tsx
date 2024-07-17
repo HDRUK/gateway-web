@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Divider } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import { colors } from "@/config/theme";

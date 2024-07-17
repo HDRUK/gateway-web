@@ -170,11 +170,11 @@ const getHowToSearchPage = async () => {
 
 const getWorkWithUs = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getWorkWithUs", {
-          id: "work-with-us",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getWorkWithUs", {
+            id: "work-with-us",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -182,11 +182,11 @@ const getWorkWithUs = async () => {
 
 const getDevelopmentCommunity = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getDevelopmentCommunityQuery", {
-          id: "development-community",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getDevelopmentCommunityQuery", {
+            id: "development-community",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -206,11 +206,11 @@ const getResearchersInnovators = async () => {
 
 const getDataCustodians = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getDataCustodiansQuery", {
-          id: "data-custodians",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getDataCustodiansQuery", {
+            id: "data-custodians",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -218,11 +218,11 @@ const getDataCustodians = async () => {
 
 const getPatientsAndPublic = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getPatientsAndPublicQuery", {
-          id: "patients-and-public",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getPatientsAndPublicQuery", {
+            id: "patients-and-public",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -230,11 +230,11 @@ const getPatientsAndPublic = async () => {
 
 const getGlossary = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getGlossaryQuery", {
-          id: "glossary",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getGlossaryQuery", {
+            id: "glossary",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -242,11 +242,11 @@ const getGlossary = async () => {
 
 const getTutorials = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getTutorialsQuery", {
-          id: "tutorials",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getTutorialsQuery", {
+            id: "tutorials",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -254,11 +254,11 @@ const getTutorials = async () => {
 
 const getGettingStarted = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-      GetContentPageQuery("getGettingStartedQuery", {
-          id: "data-custodian-getting-started",
-          idType: "URI",
-      }),
-      DEFAULT_OPTIONS
+        GetContentPageQuery("getGettingStartedQuery", {
+            id: "data-custodian-getting-started",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
     );
 
     return data?.page || null;
@@ -282,5 +282,5 @@ export {
     getPatientsAndPublic,
     getGlossary,
     getTutorials,
-    getGettingStarted
+    getGettingStarted,
 };

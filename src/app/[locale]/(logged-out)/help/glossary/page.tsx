@@ -5,21 +5,21 @@ import { getGlossary } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
 export const metadata = {
-  title: "Health Data Research Innovation Gateway - Glossary",
-  description: "",
+    title: "Health Data Research Innovation Gateway - Glossary",
+    description: "",
 };
 
 const GlossaryPage = async () => {
-  const cmsPage = await getGlossary();
+    const cmsPage = await getGlossary();
 
-  return (
-    <>
-      <Banner title={cmsPage.title} />
-      <Container sx={{ padding: 10 }} className="wpStyles">
-        {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
-      </Container>
-    </>
-  );
+    return (
+        <>
+            <Banner title={cmsPage.title} />
+            <Container sx={{ padding: 10 }} className="wpStyles">
+                {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
+            </Container>
+        </>
+    );
 };
 
 export default GlossaryPage;
