@@ -402,7 +402,7 @@
                         "cannotCreate": "Please note that HDR UK cannot create Private Apps on behalf of users.",
                         "create": {
                             "title": "Private apps",
-                            "text": " Use this form to create your Private App on the Gateway"
+                            "text": "Use this form to create your Private App on the Gateway"
                         },
                         "manage": {
                             "permissions": {
