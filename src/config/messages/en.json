@@ -64,7 +64,7 @@
         "applicationPermission": {
             "success": {
                 "put": {
-                    "message": "Private app created and enabled"
+                    "message": "Private App created and enabled"
                 }
             }
         },
