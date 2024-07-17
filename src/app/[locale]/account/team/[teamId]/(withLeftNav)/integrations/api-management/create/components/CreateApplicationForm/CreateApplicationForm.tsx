@@ -104,7 +104,7 @@ const CreateApplicationForm = () => {
                         onClick={() => reset(applicationDefaultValues)}
                         color="secondary"
                         variant="outlined">
-                        Clear Form
+                        Clear form
                     </Button>
                     <Button type="submit">Save &amp; Continue</Button>
                 </Box>
