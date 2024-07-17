@@ -40,12 +40,12 @@ export default function AccordionSection({
                             },
                             gap: 2,
                         }}>
-                        {limitItems.map(content => (
-                            <AccordionCard>{content}</AccordionCard>
+                        {limitItems.map((content, id) => (
+                            <AccordionCard key={id}>{content}</AccordionCard>
                         ))}
                         {showAll &&
-                            remainingItems.map(content => (
-                                <AccordionCard>{content}</AccordionCard>
+                            remainingItems.map((content, id) => (
+                                <AccordionCard key={'rem'+id.toString()}>{content}</AccordionCard>
                             ))}
                     </BoxContainer>
                     {!!remainingItems.length && (
