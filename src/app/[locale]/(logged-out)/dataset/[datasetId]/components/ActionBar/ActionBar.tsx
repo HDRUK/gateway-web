@@ -29,12 +29,14 @@ const ActionBar = () => {
         content: string;
         filename: string;
         type: string;
-    }>(`${apis.datasetsExportV1Url}/?dataset_id=${params.datasetId}`);
+    }>(`${apis.datasetsExportV1Url}/?dataset_id=${params?.datasetId}`, {
+        shouldFetch: isDownloading,
+    });
 
     const handleDownload = async () => {
         const csvData = {
             ...datasetCsv,
-            filename: `dataset_${params.datasetId}.csv`,
+            filename: `dataset_${params?.datasetId}.csv`,
         };
 
         if (csvData) {
