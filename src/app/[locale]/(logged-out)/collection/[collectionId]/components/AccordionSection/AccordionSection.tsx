@@ -45,7 +45,9 @@ export default function AccordionSection({
                         ))}
                         {showAll &&
                             remainingItems.map((content, id) => (
-                                <AccordionCard key={'rem'+id.toString()}>{content}</AccordionCard>
+                                <AccordionCard key={"rem" + id.toString()}>
+                                    {content}
+                                </AccordionCard>
                             ))}
                     </BoxContainer>
                     {!!remainingItems.length && (
