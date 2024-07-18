@@ -597,7 +597,7 @@
                             "dateRange": "Date range",
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
                             "accessService": "Access service",
-                            "accessServiceTooltip": "The method through which a researcher accesses the dataset",
+                            "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
                             "containsTissue": "Datasets with tissues",
                             "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
                             "sampleAvailability": "Material type",
