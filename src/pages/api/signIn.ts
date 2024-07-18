@@ -21,6 +21,10 @@ export default async function signIn(
 
         const json = await response.json();
 
+        if (!json?.access_token) {
+            res.status(500).json({ data: { message: "failed", ok: false } });
+        }
+
         const cookie = serialize(config.JWT_COOKIE, json?.access_token, {
             httpOnly: true,
             path: "/",
@@ -31,8 +35,8 @@ export default async function signIn(
 
         res.setHeader("Set-Cookie", cookie);
 
-        res.status(200).json({ message: "success" });
+        res.status(200).json({ data: { message: "success", ok: true } });
     } catch (error) {
-        console.error(error);
+        res.status(500).json({ data: { message: "failed", ok: false } });
     }
 }
