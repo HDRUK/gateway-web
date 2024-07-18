@@ -68,7 +68,7 @@ const CohortRequestTermsDialog = () => {
     };
 
     const onFormSubmit = async () => {
-        await submitRequest({ details: "required" });
+        await submitRequest({ details: "required", accept_declaration: true });
         handleSuccess();
     };
 
