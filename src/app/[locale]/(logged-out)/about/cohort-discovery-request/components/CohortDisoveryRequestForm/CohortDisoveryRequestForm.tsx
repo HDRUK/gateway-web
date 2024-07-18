@@ -65,7 +65,7 @@ const CohortDisoveryRequestForm = ({
                 <Box sx={{ p: 4, pt: 3 }}>
                     <Typography>
                         {t(`${COHORT_TRANSLATION_PATH}.userDeclaration`)}
-                        <Typography component={"span"} color={colors.red600}>
+                        <Typography component="span" color={colors.red600}>
                             *
                         </Typography>
                     </Typography>
@@ -77,7 +77,7 @@ const CohortDisoveryRequestForm = ({
                     <Typography sx={{ mb: 1 }}>
                         {t(`${COHORT_TRANSLATION_PATH}.statementIntro`)}
                     </Typography>
-                    <Typography component={"div"}>
+                    <Typography component="div">
                         {t.rich(`${COHORT_TRANSLATION_PATH}.statement1`, {
                             // eslint-disable-next-line react/no-unstable-nested-components
                             list: chunks => <ol>{chunks}</ol>,
@@ -85,7 +85,7 @@ const CohortDisoveryRequestForm = ({
                             item: chunks => <li>{chunks}</li>,
                         })}
                     </Typography>
-                    <Typography component={"div"}>
+                    <Typography component="div">
                         {t.rich(`${COHORT_TRANSLATION_PATH}.statement2`, {
                             // eslint-disable-next-line react/no-unstable-nested-components
                             list: chunks => <ol>{chunks}</ol>,
