@@ -1,19 +1,79 @@
+import { RouteName } from "@/consts/routeName";
+
 const navItems = [
     {
-        label: "Explore",
+        label: "Search",
         subItems: [
             {
-                label: "Datasets",
+                label: "Datasets/Tissues",
                 href: "/search?type=datasets",
             },
             {
-                label: "Cohort discovery",
+                label: "Data Uses",
+                href: "/search?type=dur",
+            },
+            {
+                label: "Collections/Networks",
+                href: "/search?type=collections",
+            },
+            {
+                label: "Publications",
+                href: "/search?type=publications",
+            },
+            {
+                label: "Data Custodians",
+                href: "/search?type=data_provider_colls",
+            },
+            {
+                label: "Analysis scripts & software",
+                href: "/search?type=tools",
+            },
+            {
+                label: "Cohort Discovery Tool",
                 href: "/about/cohort-discovery",
             },
         ],
     },
     {
-        label: "About us",
+        label: "Community",
+        subItems: [
+            {
+                label: "Technology ecosystem",
+                href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/technology-ecosystem/",
+            },
+            {
+                label: "Gateway development community",
+                href: "/community/gateway-development-community",
+            },
+            {
+                label: "Our principles for development",
+                href: "https://www.hdruk.ac.uk/about-us/policies/development-principles/",
+            },
+            {
+                label: "Technical commitment",
+                href: "https://www.hdruk.ac.uk/study-and-train/about-the-training-team/vision-and-strategy/the-technician-commitment/",
+            },
+            {
+                label: "DARE UK",
+                href: "https://dareuk.org.uk/",
+            },
+        ],
+    },
+    {
+        label: "News",
+        subItems: [
+            {
+                label: "Gateway releases",
+                href: "/news/releases",
+            },
+            {
+                label: "Newsletter",
+                href: "/newsletter-signup",
+            },
+        ],
+    },
+    {
+        label: "About",
         subItems: [
             {
                 label: "Our mission and purpose",
@@ -23,9 +83,76 @@ const navItems = [
                 label: "Terms and conditions",
                 href: "/terms-and-conditions",
             },
+            {
+                label: "For Researchers and Innovators",
+                href: "/about/researchers-innovators",
+            },
+            {
+                label: "For the Development Community",
+                href: "/about/development-community",
+            },
+            {
+                label: "For Data Custodians",
+                href: "/about/data-custodians",
+            },
+            {
+                label: "For Patients and Public",
+                href: "/about/patients-and-public",
+            },
+            {
+                label: "The Gateway Team",
+                href: `/${RouteName.MEET_THE_TEAM}`,
+            },
         ],
     },
-    { label: "Releases", href: "/about/releases" },
+    {
+        label: "Help",
+        subItems: [
+            {
+                label: "Glossary",
+                href: "/help/glossary",
+            },
+            {
+                label: "Support Centre",
+                href: "/help/support-centre",
+            },
+            {
+                label: "Tutorials",
+                href: "/help/tutorials",
+            },
+            {
+                label: "Contact Us",
+                href: "/help/contact-us",
+            },
+        ],
+    },
+    {
+        label: "",
+        divider: true,
+        href: "",
+    },
+    // TODO: Verticle line here
+    {
+        label: "Data Custodian Area",
+        subItems: [
+            {
+                label: "Getting started on the Gateway",
+                href: "/data/getting-started",
+            },
+            {
+                label: "Integrations",
+                href: "https://hdruk.github.io/gateway-2-integrations-testing/",
+            },
+            {
+                label: "Metadata onboarding",
+                href: "https://hdruk.github.io/gateway-2-integrations-testing/creating-metadata/",
+            },
+            {
+                label: "The Alliance",
+                href: "https://ukhealthdata.org/",
+            },
+        ],
+    },
 ];
 
 export default navItems;

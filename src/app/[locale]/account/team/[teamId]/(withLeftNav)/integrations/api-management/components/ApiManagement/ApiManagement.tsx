@@ -40,14 +40,14 @@ const ApiManagement = () => {
                 <ImageMediaCard
                     img="/images/account/teams/api-management/create.jpg"
                     href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}`}
-                    description="Create API-keys and link to the Gateway"
-                    buttonText="Create API-Key"
+                    description="Create authentication keys and link to the Gateway"
+                    buttonText="Create Private App"
                 />
                 <ImageMediaCard
                     img="/images/account/teams/api-management/manage.jpg"
                     href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`}
-                    description="Manage your linked APIs"
-                    buttonText="Manage API"
+                    description="Manage your Private Apps"
+                    buttonText="Manage Private Apps"
                 />
             </Box>
             <Typography sx={{ fontSize: "20px" }}>

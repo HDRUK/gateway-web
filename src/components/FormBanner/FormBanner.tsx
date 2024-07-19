@@ -2,6 +2,7 @@
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { colors } from "@/config/theme";
 import { DownloadIcon } from "@/consts/icons";
 import Button from "../Button";
 import Paper from "../Paper";
@@ -60,7 +61,12 @@ const FormBanner = ({
                         data-testid="btn-make-active"
                         variant="text"
                         onClick={makeActiveAction}
-                        disabled={!actionButtonsEnabled}>
+                        disabled={!actionButtonsEnabled}
+                        sx={{
+                            "&.Mui-disabled": {
+                                color: colors.grey500,
+                            },
+                        }}>
                         {t("makeActive")}
                     </Button>
                     |
@@ -68,7 +74,12 @@ const FormBanner = ({
                         data-testid="btn-save-draft"
                         variant="text"
                         onClick={saveAsDraftAction}
-                        disabled={!actionButtonsEnabled}>
+                        disabled={!actionButtonsEnabled}
+                        sx={{
+                            "&.Mui-disabled": {
+                                color: colors.grey500,
+                            },
+                        }}>
                         {t("saveDraft")}
                     </Button>
                 </Column>

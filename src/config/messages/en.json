@@ -54,10 +54,17 @@
                 }
             }
         },
+        "archiveDataUse": {
+            "success": {
+                "delete": {
+                    "message": "You have archived 1 data use and can now find the data use in the Archived tab. The data use will no longer show up in search results"
+                }
+            }
+        },
         "applicationPermission": {
             "success": {
                 "put": {
-                    "message": "API created and enabled"
+                    "message": "Private App created and enabled"
                 }
             }
         },
@@ -83,6 +90,36 @@
         "all": "All"
     },
     "pages": {
+        "support": {
+            "title": "Support centre",
+            "backToSupport": "Back to Support Centre",
+            "gatewaySchemaTitle": "Gateway Schema",
+            "teamManagementTitle": "Team Management",
+            "toolsTitle": "Analysis script, software and publication",
+            "searchTitle": "Search",
+            "metadataOnboardingTitle": "Metadata Onboarding (Private app & Federation)",
+            "durTitle": "Data Use Register",
+            "darTitle": "Data Access Request",
+            "cohortDiscoveryTitle": "Cohort Discovery",
+            "gatewaySchemaDescription": "Find out what we have in our schema and support we offer here.",
+            "teamManagementDescription": "Help with the team management and how to perform certain actions and what permissions you are assigned.",
+            "toolsDescription": "What are Tools and Papers on the Gateway? How are they created and how can you use them? Get help with Tools and papers.",
+            "searchDescription": "Learn how to search entities on the Gateway.",
+            "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
+            "durDescription": "Learn About Data Use Registers.",
+            "darDescription": "Learn about Data Access Request forms and process.",
+            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery.",
+            "documentation": {
+                "title": "Documentation"
+            },
+            "explainer": {
+                "unsupportedVideo": "Your browser does not support the video element",
+                "title": "Explainer"
+            },
+            "faqs": {
+                "title": "FAQs"
+            }
+        },
         "releases": {
             "noResults": "There are no releases for {year}",
             "description1": "The Gateway requires a significant volume of design and development work to deliver our vision and ambition. To achieve this our teams are continually working on the Gateway and deliver major software releases approximately every 4 weeks.",
@@ -96,7 +133,8 @@
                 "title": "Cohort Discovery Registration",
                 "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.",
                 "terms": "You can review your terms and conditions <terms>here</terms>"
-            }
+            },
+            "backToHomepage": "Back to homepage"
         },
         "account": {
             "profile": {
@@ -175,20 +213,47 @@
             },
             "team": {
                 "dataAccessRequests": {
-                    "applications": { "title": "Applications" },
-                    "manageTemplates": { "title": "Manage Templates" },
-                    "workflows": { "title": "Workflows" }
+                    "applications": {
+                        "title": "Applications"
+                    },
+                    "manageTemplates": {
+                        "title": "Manage Templates"
+                    },
+                    "workflows": {
+                        "title": "Workflows"
+                    }
                 },
                 "dataUses": {
-                    "title": "Data Uses"
+                    "title": "Data Uses",
+                    "description": "View, add, edit, archive and check the status of your data uses.",
+                    "uploadButton": "+ Upload",
+                    "components": {
+                        "DataUseTab": {
+                            "noDataUses": "No {status} data uses found on the Gateway for your team."
+                        },
+                        "TeamDataUses": {
+                            "create": "Add Data Use",
+                            "text": "View, add, edit, archive and check the status of your data uses.",
+                            "title": "Data Use",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive this data use",
+                                    "content": "Select whether you would like to move this data use to Active (this will make your data use available within search results) or Draft (where you can edit the data use before making it available within search results).",
+                                    "label": "Unarchive data use"
+                                },
+                                "edit": {
+                                    "label": "Edit data use"
+                                },
+                                "archive": {
+                                    "label": "Archive data use so it is no longer live on the Gateway"
+                                }
+                            }
+                        }
+                    }
                 },
                 "datasets": {
-                    "title": "Datasets",
-                    "text": "View, add, edit, archive and check the status of your datasets.",
-                    "duplicate": {
-                        "title": "Duplicate dataset",
-                        "text": "Update and duplicate this dataset."
-                    },
                     "components": {
                         "CreateDataset": {
                             "guidance": "Guidance",
@@ -196,8 +261,8 @@
                             "previous": "Previous",
                             "onlineForm": "Online Form",
                             "uploadFile": "Upload File",
-                            "welcomeMessage": "Welcome to dataset metadata on-boarding.",
-                            "legendIntro": "You will see a legend to help you as you on-board your dataset metadata.",
+                            "welcomeMessage": "Welcome to dataset metadata on-boarding",
+                            "legendIntro": "You will see a legend to help you as you on-board your dataset metadata",
                             "progressLegend": "Progress legend:",
                             "remove": "Remove",
                             "add": "Add another",
@@ -234,16 +299,30 @@
                                 "informationAndCommunicationTooltip": "Includes any data related to the study or application of information and communication.",
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
-                            }
+                            },
+                            "errorLoading": "An error occured while loading the Dataset"
                         },
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
+                        "EditDataUse": {
+                            "editDataUse": "Edit a data use",
+                            "submit": "Save",
+                            "cancel": "Cancel"
+                        },
                         "DatasetTab": {
-                            "downloadButton": "Download dataset information as .csv"
+                            "downloadButton": "Download dataset information as .csv",
+                            "noDatasets": "No {status} datasets found on the Gateway for your team."
                         },
                         "TeamDatasets": {
+                            "title": "Datasets",
+                            "text": "View, add, edit, archive and check the status of your datasets.",
+                            "create": "Add new dataset",
+                            "duplicate": {
+                                "title": "Duplicate dataset",
+                                "text": "Update and duplicate this dataset."
+                            },
                             "actions": {
                                 "unarchive": {
                                     "buttonText": "Make Active",
@@ -286,6 +365,30 @@
                         }
                     }
                 },
+                "tools": {
+                    "components": {
+                        "TeamTools": {
+                            "title": "Analysis script, tools and software",
+                            "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
+                            "create": "Add new",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit analysis script, tool or software metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
+                                }
+                            }
+                        }
+                    }
+                },
                 "integration": {
                     "create": {
                         "title": "Integration",
@@ -296,21 +399,27 @@
                 "integrations": {
                     "apiManagement": {
                         "howTo": "How to setup and manage integrations",
-                        "cannotCreate": "HDR UK cannot create application registrations on behalf of users",
+                        "cannotCreate": "Please note that HDR UK cannot create Private Apps on behalf of users.",
                         "create": {
-                            "title": "API management",
-                            "text": "Use this form to create, update and manage your api on the Gateway"
+                            "title": "Private apps",
+                            "text": "Use this form to create your Private App on the Gateway"
                         },
                         "manage": {
                             "permissions": {
                                 "title": "Permissions",
-                                "intro": "Use this form to assign the right level of scope and permission for the application to manage integration and connect securely to the Gateway. Your application will only be able to synchronize data within its assigned scope and permission. Application permissions is the responsibility of your publisher team",
-                                "helper": "Entities created via an API integration can only be managed (updated or deleted/archived) via the API integration. Entities created via another method (manual, federated integration) cannot be managed via the API integration."
+                                "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
+                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App."
                             }
                         }
                     }
                 },
                 "dar": {
+                    "application": {
+                        "create": {
+                            "save": "Save Changes",
+                            "defaultGuidance": "Please click on a question to display guidance"
+                        }
+                    },
                     "template": {
                         "title": "DAR Template Management",
                         "create": {
@@ -361,8 +470,8 @@
                 "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
-                "label": "Data Providers",
-                "title": "Data Providers",
+                "label": "Data Custodians",
+                "title": "Data Custodians",
                 "text": "Discover Gateway metadata providers. Search and filter resources by data providers and find out how to contact them"
             },
             "collections": {
@@ -380,6 +489,11 @@
                 "title": "Disease Atlas",
                 "text": "The Disease Atlas is under development and is testing systematic approaches to understanding diseases across the NHS"
             },
+            "dataCustodianNetworks": {
+                "label": "Data Custodian Networks",
+                "title": "Data Custodian Networks",
+                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
+            },
             "publications": {
                 "label": "Publications",
                 "title": "Publications",
@@ -394,6 +508,16 @@
                 "label": "Courses",
                 "title": "Courses",
                 "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
+            },
+            "helpLinks": {
+                "item1": {
+                    "title": "Support Centre",
+                    "text": "Find out more about Gateway features and learn how to use them via the Support Centre. You can also submit feedback via the Support Centre to help improve the Gateway."
+                },
+                "item2": {
+                    "title": "Community",
+                    "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
+                }
             }
         },
         "saved_searches": {
@@ -428,7 +552,7 @@
             "datasets": "Datasets / Tissues",
             "dataUse": "Data Use",
             "tools": "Analysis, tools & software",
-            "dataProviders": "Data providers",
+            "dataProviders": "Data custodians",
             "collections": "Collections",
             "publications": "Publications",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
@@ -445,9 +569,10 @@
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
-            "publicationWelcomeText1": "To start your search, enter a keyword at the top and select the search source on the left then hit enter or return.",
-            "publicationWelcomeText2": "Gateway assets are linked to make it easier to find relevant resources for your work.",
-            "publicationWelcomeText3": "Search Gateway for publications with curated linkages to explore related resources, like publications about a dataset or publications that have used a dataset.",
+            "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
+            "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data provider.",
+            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' field to improve the relevance of results returned.",
+            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the Keyword(s) of interest or the name of a dataset in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -461,6 +586,8 @@
                             "populationSize": "Population size",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
+                            "dataType": "Data type",
+                            "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data provider",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "dataUseTitles": "Data use title",
@@ -470,9 +597,11 @@
                             "dateRange": "Date range",
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
                             "accessService": "Access service",
-                            "accessServiceTooltip": "The method through which a researcher accesses the dataset",
+                            "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
                             "containsTissue": "Datasets with tissues",
-                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample"
+                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
+                            "sampleAvailability": "Material type",
+                            "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data provider",
@@ -489,6 +618,8 @@
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
+                            "publicationType": "Publication type",
+                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -501,6 +632,8 @@
                         "dataProvider": {
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
+                            "dataType": "Data type",
+                            "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset"
                         },
@@ -549,7 +682,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
-                    "title": { "label": "Metadata title" },
+                    "title": {
+                        "label": "Metadata title"
+                    },
                     "populationSize": {
                         "notReported": "Not reported",
                         "label": "Population Size",
@@ -564,7 +699,7 @@
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
                     "dataProvider": {
-                        "label": "Data provider",
+                        "label": "Data custodian",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
                     "accessService": {
@@ -615,7 +750,8 @@
                     "contact": "Contact data provider",
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
-                    "downloadMetadata": "Download metadata"
+                    "downloadMetadata": "Download metadata",
+                    "downloadStarted": "Your download has started"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
@@ -720,7 +856,6 @@
             }
         },
         "tool": {
-            "backText": "Back to search results",
             "description": "Description",
             "resultsInsights": "Results/Insights",
             "details": "Details",
@@ -733,12 +868,42 @@
             "toolCategory": "Tool Category",
             "keywords": "Keywords",
             "domain": "Domain",
-            "notAvailable": "Not specified"
+            "notAvailable": "Not specified",
+            "datasets": "Related datasets",
+            "dataUses": "Related data uses",
+            "publications": "Related publications",
+            "collections": "Related collections",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Tools search results"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications related to this analysis, tool or software ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections which include this analysis, tool or software ({ length })"
+                }
+            }
         }
     },
     "components": {
+        "ContactSupport": {
+            "title": "Still can’t find what you’re looking for?",
+            "content": "The quickest way to get your issue solved is through the links above, but if you aren’t able to find a solution then contact us here:",
+            "contactButton": "Contact support"
+        },
+        "TeamModal": {
+            "descriptionTitle": "Description"
+        },
         "SupportPopOut": {
-            "buttonText": "Need support",
+            "buttonText": "Visit Support Centre",
             "giveFeedback": "Give feedback",
             "reportBug": "Report bug",
             "requestSupport": "Request support",
@@ -844,6 +1009,16 @@
                 "description": "Description",
                 "keywords": "Keywords",
                 "team": "Team/Author"
+            },
+            "AddDatasetDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input metadata",
+                "uploadButton": "Upload a file of metadata"
+            },
+            "AddDataUseDialog": {
+                "title": "I would like to...",
+                "manualButton": "Manually input data use",
+                "uploadButton": "Upload a file of data use"
             }
         }
     }

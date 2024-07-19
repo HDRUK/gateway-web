@@ -4,7 +4,7 @@ import CardStacked from "../CardStacked/CardStacked";
 
 interface ResultCardProps {
     result: SearchResultCollection;
-    imgUrl: string;
+    imgUrl?: string;
 }
 
 const ResultCollectionCard = ({ result, imgUrl }: ResultCardProps) => {
@@ -13,7 +13,7 @@ const ResultCollectionCard = ({ result, imgUrl }: ResultCardProps) => {
             // eslint-disable-next-line no-underscore-dangle
             href={`${RouteName.COLLECTION_ITEM}/${result._id}`}
             title={result.name}
-            imgUrl={imgUrl}
+            imgUrl={result?.image_link || imgUrl || ""}
         />
     );
 };

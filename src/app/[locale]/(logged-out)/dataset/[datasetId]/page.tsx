@@ -1,14 +1,17 @@
 import { get, isEmpty, pick } from "lodash";
 import { cookies } from "next/headers";
+import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
+import { getLatestVersion } from "@/utils/dataset";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
 import DatasetMindMap from "./components/DatasetMindMap";
 import DatasetStats from "./components/DatasetStats";
+import GoogleRecommended from "./components/GoogleRecommended";
 import { datasetFields } from "./config";
 
 export const metadata = {
@@ -34,6 +37,19 @@ export default async function DatasetItemPage({
 
     const cookieStore = cookies();
     const data = await getDataset(cookieStore, datasetId);
+
+    let googleRecommendedDataset: Dataset | undefined;
+
+    try {
+        googleRecommendedDataset = await getDataset(
+            cookieStore,
+            datasetId,
+            "SchemaOrg",
+            "GoogleRecommended"
+        );
+    } catch (_e) {
+        // Intentionally left empty
+    }
 
     const datasetVersion = data?.versions?.[0];
 
@@ -65,8 +81,8 @@ export default async function DatasetItemPage({
                                     variant="h2"
                                     sx={{ pt: 0.5, pb: 0.5 }}>
                                     {
-                                        datasetVersion.metadata.metadata.summary
-                                            .title
+                                        datasetVersion.metadata?.metadata
+                                            ?.summary?.title
                                     }
                                 </Typography>
                                 <div>
@@ -78,12 +94,24 @@ export default async function DatasetItemPage({
                         <DatasetMindMap
                             data={datasetVersion}
                             populatedSections={populatedSections}
+                            hasStructuralMetadata={
+                                !!datasetVersion.metadata?.metadata
+                                    ?.structuralMetadata?.length
+                            }
                         />
 
                         <DatasetContent
                             data={datasetVersion}
                             populatedSections={populatedSections}
                         />
+
+                        {googleRecommendedDataset && (
+                            <GoogleRecommended
+                                metadata={getLatestVersion(
+                                    googleRecommendedDataset
+                                )}
+                            />
+                        )}
                     </Box>
                 </>
             }

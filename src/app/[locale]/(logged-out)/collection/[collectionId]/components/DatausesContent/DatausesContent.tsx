@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -42,12 +43,12 @@ export default function DatausesContent({
                 })}
                 contents={datauses.map(
                     ({ project_title, organisation_name, id }) => (
-                        <>
+                        <Fragment key={`dataUse_${id}`}>
                             <Link href={`/${RouteName.DATA_USE_ITEM}/${id}`}>
                                 {project_title}
                             </Link>
                             <div>{organisation_name}</div>
-                        </>
+                        </Fragment>
                     )
                 )}
             />

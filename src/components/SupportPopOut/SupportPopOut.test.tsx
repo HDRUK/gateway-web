@@ -6,12 +6,12 @@ describe("SupportPopOut", () => {
     it("should open support panel ", async () => {
         render(<SupportPopOut />);
 
-        const button = screen.getByText("Need support");
+        const button = screen.getAllByText("Visit Support Centre")[0];
         fireEvent.click(button);
 
         await waitFor(() => {
             expect(
-                screen.getByText("Visit Support Centre")
+                screen.getAllByText("Visit Support Centre")[1]
             ).toBeInTheDocument();
             expect(screen.getByText("Give feedback")).toBeInTheDocument();
             expect(screen.getByText("Report bug")).toBeInTheDocument();

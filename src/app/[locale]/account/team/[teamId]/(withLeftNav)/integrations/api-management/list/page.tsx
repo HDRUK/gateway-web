@@ -27,7 +27,7 @@ export default async function TeamApplicationsPage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["applications.read"]}>
-            <BackButton label="Back to API Management" />
+            <BackButton label="Back" />
             <ApplicationList />
         </ProtectedAccountRoute>
     );

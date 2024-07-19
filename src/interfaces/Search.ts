@@ -5,7 +5,9 @@ import {
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
+    FILTER_DATA_TYPE,
     FILTER_PUBLICATION_DATE,
+    FILTER_PUBLICATION_TYPE,
     FILTER_SECTOR,
     FILTER_DATA_PROVIDER,
     FILTER_ACCESS_SERVICE,
@@ -13,6 +15,7 @@ import {
     FILTER_PROGRAMMING_LANGUAGE,
     FILTER_TYPE_CATEGORY,
     FILTER_CONTAINS_TISSUE,
+    FILTER_MATERIAL_TYPE,
 } from "@/config/forms/filters";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
@@ -20,6 +23,9 @@ import { Highlight } from "./HighlightDataset";
 import { PaginationType } from "./Pagination";
 
 export interface Aggregations {
+    [FILTER_DATA_TYPE]: {
+        buckets: Bucket[];
+    };
     [FILTER_DATA_USE_TITLES]: {
         buckets: Bucket[];
     };
@@ -42,6 +48,12 @@ export interface Aggregations {
         buckets: Bucket[];
     };
     [FILTER_TYPE_CATEGORY]: {
+        buckets: Bucket[];
+    };
+    [FILTER_MATERIAL_TYPE]: {
+        buckets: Bucket[];
+    };
+    [FILTER_PUBLICATION_TYPE]: {
         buckets: Bucket[];
     };
     startDate: { value_as_string: string };
@@ -104,6 +116,7 @@ export interface SearchResultTool extends SearchResultBase {
 
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
+    image_link: string;
     _id: string;
 }
 
@@ -182,7 +195,9 @@ export interface SearchQueryParams {
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
     [FILTER_DATA_SET_TITLES]: string[] | undefined;
+    [FILTER_DATA_TYPE]: string[] | undefined;
     [FILTER_PUBLICATION_DATE]: string[] | undefined;
+    [FILTER_PUBLICATION_TYPE]: string[] | undefined;
     [FILTER_SECTOR]: string[] | undefined;
     [FILTER_DATA_PROVIDER]: string[] | undefined;
     [FILTER_ACCESS_SERVICE]: string[] | undefined;
@@ -190,6 +205,7 @@ export interface SearchQueryParams {
     [FILTER_PROGRAMMING_LANGUAGE]: string[] | undefined;
     [FILTER_TYPE_CATEGORY]: string[] | undefined;
     [FILTER_CONTAINS_TISSUE]: string[] | undefined;
+    [FILTER_MATERIAL_TYPE]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };

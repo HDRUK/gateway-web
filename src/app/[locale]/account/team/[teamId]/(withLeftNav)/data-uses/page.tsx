@@ -1,13 +1,10 @@
-import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import Box from "@/components/Box";
-import Paper from "@/components/Paper";
+import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import Typography from "@/components/Typography";
-import { ACCOUNT, DATA_USES, PAGES, TEAM, TITLE } from "@/consts/translation";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import TeamDataUses from "./components/TeamDataUses";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Data Uses",
@@ -26,17 +23,13 @@ export default async function TeamDataUsesPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    const t = await getTranslations(`${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}`);
-
     return (
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["dur.read"]}>
-            <Paper>
-                <Box>
-                    <Typography variant="h2">{t(TITLE)}</Typography>
-                </Box>
-            </Paper>
+            <BoxContainer sx={{ gap: 0 }}>
+                <TeamDataUses permissions={permissions} teamId={teamId} />
+            </BoxContainer>
         </ProtectedAccountRoute>
     );
 }

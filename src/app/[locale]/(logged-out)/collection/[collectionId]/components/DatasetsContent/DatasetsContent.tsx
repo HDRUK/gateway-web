@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -61,7 +62,7 @@ export default function DatasetContent({
                         },
                         index: number
                     ) => (
-                        <>
+                        <Fragment key={`dataset_${datasets[index].id}`}>
                             <Link
                                 href={`/${RouteName.DATASET_ITEM}/${datasets[index].id}`}>
                                 {shortTitle}
@@ -74,7 +75,7 @@ export default function DatasetContent({
                                 </div>
                             )}
                             <div>{toTitleCase(datasetType)}</div>
-                        </>
+                        </Fragment>
                     )
                 )}
             />

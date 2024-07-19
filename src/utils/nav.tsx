@@ -5,11 +5,12 @@ import {
     FolderSharedOutlinedIcon,
     GroupsIcon,
     GroupsOutlinedIcon,
+    HandymanOutlinedIcon,
     HelpOutlineOutlinedIcon,
+    QuestionAnswerIcon,
     SchemaOutlinedIcon,
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
-    QuestionAnswerIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -22,6 +23,15 @@ const getProfileNav = (permissions: {
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis script, tools and software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
         {
             icon: <SearchIcon />,
             label: "Saved searches",
@@ -87,6 +97,15 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis script, tools and software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
         ...([
             permissions["dar.read.assigned"],
             permissions["workflows.read"],
@@ -125,15 +144,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["dur.read"]
-            ? [
-                  {
-                      icon: <SchemaOutlinedIcon />,
-                      label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
-                  },
-              ]
-            : []),
+
         ...([
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -147,7 +158,7 @@ const getTeamNav = (
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "API management",
+                                        label: "Private Apps",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
@@ -167,6 +178,20 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...([
+            permissions["dur.read"],
+            permissions["dur.write"],
+            permissions["dur.update"],
+            permissions["dur.delete"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <SchemaOutlinedIcon />,
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
+                  },
+              ]
+            : []),
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
@@ -175,4 +200,4 @@ const getTeamNav = (
     ];
 };
 
-export { getTeamNav, getProfileNav };
+export { getProfileNav, getTeamNav };

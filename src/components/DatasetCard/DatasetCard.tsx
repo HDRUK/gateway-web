@@ -109,6 +109,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                 : nonManualDatasetCardActions
                         }
                         id={dataset.id}
+                        status={dataset.status}
                     />
                 </Box>
             </Box>

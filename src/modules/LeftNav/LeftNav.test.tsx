@@ -52,7 +52,7 @@ describe("LeftNav", () => {
             within(buttons[1]).getByText("Integrations")
         ).toBeInTheDocument();
         expect(
-            within(buttons[2]).getByText("API management")
+            within(buttons[2]).getByText("Private Apps")
         ).toBeInTheDocument();
         expect(within(buttons[3]).getByText("Integration")).toBeInTheDocument();
         expect(within(buttons[4]).getByText("Help")).toBeInTheDocument();

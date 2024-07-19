@@ -10,6 +10,7 @@ interface MenuDropdownProps {
         href?: string;
         action?: () => void;
         subItems?: { label: string; href: string }[];
+        divider?: boolean;
     }[];
     handleClose: () => void;
 }

@@ -29,7 +29,7 @@ export default async function TeamApiEditCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["applications.update"]}>
-            <BackButton label="Back to API Management" />
+            <BackButton label="Back" />
             <EditApplicationForm application={application} isTabView={false} />
         </ProtectedAccountRoute>
     );

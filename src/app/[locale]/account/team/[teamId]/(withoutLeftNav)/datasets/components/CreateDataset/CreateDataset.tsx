@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { get, omit } from "lodash";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { buildYup } from "schema-to-yup";
 import {
     CreateOrigin,
+    Dataset,
     DatasetStatus,
     Metadata,
     NewDataset,
@@ -24,11 +26,15 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
+import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
+import { DataStatus } from "@/consts/application";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -39,6 +45,7 @@ import {
     TEAM,
 } from "@/consts/translation";
 import {
+    mapExistingDatasetToFormFields,
     formGenerateLegendItems,
     formGetFieldsCompletedCount,
     formatValidationItems,
@@ -63,17 +70,42 @@ interface CreateDatasetProps {
 
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
 
 const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
 
+    const params = useParams<{
+        teamId: string;
+        datasetId: string;
+    }>();
+
+    const searchParams = useSearchParams();
+
+    const [isDraft, setIsDraft] = useState<boolean>(
+        searchParams?.get("status") === DataStatus.DRAFT
+    );
+
+    const isDuplicate = searchParams?.get("duplicate");
+
+    const [draftToggled, setDraftToggled] = useState<boolean>();
+
+    const isEditing = params?.datasetId;
+
     const { push } = useRouter();
 
-    const createDataset = usePost<NewDataset>(apis.datasetsV1Url, {
-        itemName: "Dataset",
-    });
+    const { data: dataset, isLoading } = useGet<Dataset>(
+        isDraft
+            ? `${apis.datasetsV1Url}/${params?.datasetId}`
+            : `${apis.datasetsV1Url}/${params?.datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
+        { shouldFetch: !!params?.teamId && !!params?.datasetId }
+    );
+
+    const [hasError, setHasError] = useState<boolean>();
+    const [existingFormData, setExistingFormData] = useState<Metadata>();
 
     const bannerTabList = [
         { label: t("onlineForm"), value: "FORM" },
@@ -85,6 +117,30 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     }));
 
     const schemaFields = formJSON.schema_fields;
+
+    useEffect(() => {
+        if (isLoading || existingFormData || !isEditing) {
+            return;
+        }
+
+        if (!dataset) {
+            setHasError(true);
+            return;
+        }
+
+        let latestMetadata = get(dataset, "versions[0].metadata.metadata");
+
+        if (isDuplicate) {
+            latestMetadata = omit(latestMetadata, "summary.title");
+        }
+
+        const mappedFormData = mapExistingDatasetToFormFields(
+            schemaFields,
+            latestMetadata
+        );
+
+        setExistingFormData(mappedFormData);
+    }, [dataset, existingFormData, isLoading]);
 
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
@@ -115,23 +171,56 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [guidanceText, setGuidanceText] = useState<string>();
 
+    const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
+    const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
+
+    const createDataset = usePost<NewDataset>(
+        `${postDatasetUrl}?${datasetVersionQuery}`,
+        {
+            itemName: "Dataset",
+        }
+    );
+
+    const updateDataset = usePatch<NewDataset>(apis.datasetsV1Url, {
+        itemName: "Dataset",
+        query: datasetVersionQuery,
+    });
+
     const generatedYupValidation = useMemo(
         () =>
             formJSON?.validation && {
                 title: "Metadata form",
                 type: "object",
-                properties: generateValidationRules(formJSON.validation),
+                properties: !isDraft
+                    ? generateValidationRules(formJSON.validation)
+                    : {},
             },
-        [formJSON.validation, generateValidationRules]
+        [formJSON.validation, generateValidationRules, isDraft]
     );
 
     const yupSchema = buildYup(generatedYupValidation);
 
-    const { control, handleSubmit, watch, clearErrors, trigger, getValues } =
-        useForm({
-            mode: "onTouched",
-            resolver: yupResolver(yupSchema),
-        });
+    const {
+        control,
+        handleSubmit,
+        watch,
+        clearErrors,
+        trigger,
+        getValues,
+        reset,
+    } = useForm({
+        mode: "onTouched",
+        resolver: yupResolver(yupSchema),
+        defaultValues: existingFormData,
+    });
+
+    useEffect(() => {
+        if (!existingFormData) {
+            return;
+        }
+
+        reset(existingFormData);
+    }, [existingFormData]);
 
     const formSections = [INITIAL_FORM_SECTION]
         .concat(
@@ -146,18 +235,22 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         : 0;
 
     const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
+    const [submissionRequested, setSubmissionRequested] =
+        useState<boolean>(false);
 
     // When form loaded - select first form section with displayed fields
     useEffect(() => {
         const getFirstNonHiddenSection = (schemaFields: FormHydration[]) => {
             const nonHiddenField = schemaFields.find(field =>
-                hasVisibleFieldsForLocation(schemaFields, field.location)
+                hasVisibleFieldsForLocation(schemaFields, field.location!)
             );
-            return nonHiddenField && nonHiddenField.location.split(".")[0];
+            return nonHiddenField && nonHiddenField?.location?.split(".")[0];
         };
 
         const initialSection = getFirstNonHiddenSection(schemaFields) || "";
-        setSelectedFormSection(INITIAL_FORM_SECTION || initialSection);
+        setSelectedFormSection(
+            (!isEditing && INITIAL_FORM_SECTION) || initialSection
+        );
     }, [schemaFields]);
 
     useEffect(() => {
@@ -169,26 +262,29 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 schemaFields,
                 clearErrors,
                 getValues,
-                trigger
+                trigger,
+                submissionRequested
             );
             setLegendItems(items);
         };
 
         createLegendItems();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFormSection]);
+    }, [selectedFormSection, isDraft, existingFormData]);
 
     const handleLegendClick = (clickedIndex: number) => {
         setSelectedFormSection(formSections[clickedIndex + 1]);
     };
 
-    const [navbarHeight, setNavbarHeight] = useState<string>();
+    const [navbarHeight, setNavbarHeight] = useState<string>("0");
 
     // Handle form legend top offset
     useEffect(() => {
         const handleResize = () => {
             const navbar = document.getElementById(NAVBAR_ID);
-            setNavbarHeight(`${navbar?.offsetHeight}px`);
+            if (navbar) {
+                setNavbarHeight(`${navbar?.offsetHeight}px`);
+            }
         };
 
         handleResize();
@@ -198,7 +294,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [isLoading]);
 
     const postForm = async (formData: Metadata) => {
         setIsSaving(true);
@@ -208,34 +304,54 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             schemaFields
         );
 
-        const formPayload = {
-            team_id: teamId,
-            user_id: userId,
-            status: "ACTIVE" as DatasetStatus,
-            pid: null,
-            updated: "",
-            create_origin: "MANUAL" as CreateOrigin,
-            label: "",
-            short_description: "",
-            metadata: {
-                metadata: {
-                    identifier:
-                        "https://web.www.healthdatagateway.org/3935e2fd-0c30-4f56-8388-45a02e0499b4",
-                    version: "0.6.8",
-                    issued: new Date().toString(),
-                    modified: new Date().toString(),
-                    revisions: [],
-                    ...mappedFormData,
-                },
-            },
-        };
+        const formPayload = isEditing
+            ? {
+                  ...omit(dataset, ["versions"]),
+                  status: isDraft
+                      ? ("DRAFT" as DatasetStatus)
+                      : ("ACTIVE" as DatasetStatus),
+                  metadata: {
+                      ...dataset?.versions[0].metadata,
+                      metadata: mappedFormData,
+                  },
+              }
+            : isDuplicate
+            ? {
+                  ...omit(dataset, ["id", "versions"]),
+                  status: isDraft
+                      ? ("DRAFT" as DatasetStatus)
+                      : ("ACTIVE" as DatasetStatus),
+                  metadata: {
+                      ...dataset?.versions[0].metadata,
+                      metadata: mappedFormData,
+                  },
+              }
+            : {
+                  team_id: teamId,
+                  user_id: userId,
+                  status: isDraft
+                      ? ("DRAFT" as DatasetStatus)
+                      : ("ACTIVE" as DatasetStatus),
+                  create_origin: "MANUAL" as CreateOrigin,
+                  metadata: {
+                      metadata: {
+                          issued: new Date().toString(),
+                          modified: new Date().toString(),
+                          revisions: [],
+                          ...mappedFormData,
+                      },
+                  },
+              };
 
         try {
-            const formPostRequest = await createDataset(
-                formPayload as NewDataset
-            );
+            const formPostRequest = isEditing
+                ? await updateDataset(
+                      params.datasetId,
+                      formPayload as NewDataset
+                  )
+                : await createDataset(formPayload as NewDataset);
 
-            if (formPostRequest) {
+            if (formPostRequest !== null) {
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
                 );
@@ -251,15 +367,46 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         postForm(formData);
     };
 
-    const handleMakeActive = async () => {
-        const formIsValid = await trigger();
-
-        if (formIsValid) {
-            handleSubmit(formSubmit)();
+    const handleFormSubmission = async (isDraft: boolean) => {
+        if (!isDraft) {
+            const formIsValid = await trigger();
+            if (formIsValid) {
+                handleSubmit(formSubmit)();
+            } else {
+                setSelectedFormSection(formSections[formSections.length - 1]);
+            }
         } else {
-            setSelectedFormSection(formSections[formSections.length - 1]);
+            handleSubmit(formSubmit)();
         }
     };
+
+    const handleMakeActive = async () => {
+        setSubmissionRequested(true);
+        setIsDraft(false);
+        handleFormSubmission(false);
+    };
+
+    const handleSaveDraft = async () => {
+        setDraftToggled(true);
+        setIsDraft(true);
+        handleFormSubmission(true);
+    };
+
+    // Handle submission after draft toggle
+    useEffect(() => {
+        if (isDraft === undefined) {
+            setIsDraft(false);
+            return;
+        }
+
+        if (!isDraft) {
+            clearErrors();
+        }
+
+        if (isDraft && draftToggled) {
+            handleFormSubmission(isDraft);
+        }
+    }, [isDraft, clearErrors, draftToggled]);
 
     const [optionalPercentage, setOptionalPercentage] = useState(0);
     const [requiredPercentage, setRequiredPercentage] = useState(0);
@@ -292,13 +439,25 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         }
     };
 
+    if (isEditing && isLoading) {
+        return <Loading />;
+    }
+
+    if (hasError) {
+        return (
+            <Box>
+                <Typography variant="h2">{t("errorLoading")}</Typography>;
+            </Box>
+        );
+    }
+
     return (
         <>
             <FormBanner
                 tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
-                saveAsDraftAction={() => console.log("SAVE AS DRAFT")}
+                saveAsDraftAction={handleSaveDraft}
                 completionPercentage={requiredPercentage}
                 optionalPercentage={optionalPercentage}
                 actionButtonsEnabled={!isSaving}
@@ -315,7 +474,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                         }}>
                         <FormLegend
                             items={legendItems.filter(
-                                item =>
+                                (item: LegendItem) =>
                                     item.name !== INITIAL_FORM_SECTION &&
                                     item.name !== SUBMISSON_FORM_SECTION
                             )}
@@ -351,7 +510,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                                                 ?.hidden
                                                     )
                                                     .filter(({ location }) =>
-                                                        location.startsWith(
+                                                        location?.startsWith(
                                                             selectedFormSection
                                                         )
                                                     )
@@ -396,6 +555,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                     alignItems: "center",
                                     padding: theme.spacing(2),
                                     margin: theme.spacing(1.25),
+                                    wordBreak: "break-word",
                                 }}>
                                 <Typography variant="h2">
                                     {t("guidance")}

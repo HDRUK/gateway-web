@@ -51,7 +51,9 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             resolver: yupResolver(questionValidationSchema),
         });
 
-    const [options, setOptions] = useState<Option[]>([]);
+    const [options, setOptions] = useState<Option[]>([
+        { label: "", value: "new-option-1" },
+    ]);
 
     const allFields = watch();
 
@@ -67,9 +69,10 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
 
     useEffect(() => {
         if (!field) return;
-        const options = field?.checkboxes ||
-            field?.radios || [{ label: "", value: "new-option-1" }];
-        setOptions(options);
+        const options = field?.checkboxes || field?.radios;
+        if (options) {
+            setOptions(options);
+        }
     }, [field]);
 
     useEffect(() => {
