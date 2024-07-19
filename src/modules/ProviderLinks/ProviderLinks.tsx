@@ -1,21 +1,26 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Box from "@/components/Box";
-import Link from "@/components/Link";
+import Button from "@/components/Button";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 
 interface LinkItem {
     label: string;
-    href: string;
+    href?: string;
     image: string;
 }
 
-const ProviderLinks = () => {
+interface ProviderLinksProps {
+    showInstituion: () => void;
+}
+
+const ProviderLinks = ({ showInstituion }: ProviderLinksProps) => {
     const t = useTranslations("modules");
     const pathname = usePathname();
+    const { push } = useRouter();
 
     let redirectPath = "";
 
@@ -32,9 +37,13 @@ const ProviderLinks = () => {
             image: "google-logo.png",
         },
         {
+            label: t("dialogs.ProvidersDialog.socialProviders.openAthens"),
+            image: "openathens-logo.png",
+        },
+        {
             label: t("dialogs.ProvidersDialog.socialProviders.linkedIn"),
-            href: `${apis.authLinkedinV1Url}${redirectPath}`,
             image: "linkedIn-logo.png",
+            href: `${apis.authLinkedinV1Url}${redirectPath}`,
         },
         {
             label: t("dialogs.ProvidersDialog.socialProviders.azure"),
@@ -56,31 +65,41 @@ const ProviderLinks = () => {
                 marginTop: 3,
                 marginBottom: 3,
             }}>
-            {providerLinks.map(link => (
-                <Link
-                    href={link.href}
-                    key={link.image}
-                    prefetch={false}
-                    underline="none"
-                    sx={{ color: colors.grey700 }}>
-                    <Box
+            {providerLinks.map(link => {
+                return (
+                    <Button
+                        key={link.image}
+                        onClick={() =>
+                            link.href ? push(link.href) : showInstituion()
+                        }
                         sx={{
-                            border: `solid 1px ${colors.grey400}`,
-                            borderRadius: "4px",
-                            padding: "7px",
-                            display: "flex",
-                            gap: 2,
-                        }}>
-                        <Image
-                            src={`/images/logos/${link.image}`}
-                            alt={link.label}
-                            width="20"
-                            height="20"
-                        />
-                        Sign in with {link.label}
-                    </Box>
-                </Link>
-            ))}
+                            p: 0,
+                            color: colors.grey700,
+                            display: "block",
+                            lineHeight: "inherit",
+                            fontWeight: "inherit",
+                        }}
+                        variant="text">
+                        <Box
+                            component="span"
+                            sx={{
+                                border: `solid 1px ${colors.grey400}`,
+                                borderRadius: "4px",
+                                padding: "7px",
+                                display: "flex",
+                                gap: 2,
+                            }}>
+                            <Image
+                                src={`/images/logos/${link.image}`}
+                                alt={link.label}
+                                width="20"
+                                height="20"
+                            />
+                            Sign in with {link.label}
+                        </Box>
+                    </Button>
+                );
+            })}
         </Box>
     );
 };

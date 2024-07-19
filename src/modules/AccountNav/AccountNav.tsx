@@ -6,13 +6,12 @@ import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
 import InitialsBadge from "@/components/InitialsBadge";
 import MenuDropdown from "@/components/MenuDropdown";
-import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 
 const AccountNav = () => {
-    const { showDialog } = useDialog();
+    const { showDialog, showProvidersDialog } = useDialog();
     const t = useTranslations("components");
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -67,7 +66,7 @@ const AccountNav = () => {
             sx={{
                 color: "white",
             }}
-            onClick={() => showDialog(ProvidersDialog)}>
+            onClick={() => showProvidersDialog()}>
             {t("DesktopNav.labels.signIn")}
         </Button>
     );

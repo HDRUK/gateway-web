@@ -972,7 +972,8 @@
                 "socialProviders": {
                     "azure": "Azure",
                     "linkedIn": "LinkedIn",
-                    "google": "Google"
+                    "google": "Google",
+                    "openAthens": "institution"
                 }
             },
             "SignInDialog": {

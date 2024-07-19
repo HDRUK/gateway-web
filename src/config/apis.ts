@@ -17,6 +17,7 @@ const apis = {
     usersV1UrlIP: `${apiV1IPUrl}/users`,
     authGoogleV1Url: `${apiV1Url}/auth/google`,
     authLinkedinV1Url: `${apiV1Url}/auth/linkedin`,
+    authOpenAthensV1Url: `${apiV1Url}/auth/openathens`,
     authAzureV1Url: `${apiV1Url}/auth/azure`,
     cohortRequestsV1Url: `${apiV1Url}/cohort_requests`,
     cohortRequestsV1UrlIP: `${apiV1IPUrl}/cohort_requests`,
