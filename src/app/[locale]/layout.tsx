@@ -1,5 +1,5 @@
 import { ReactNode, Suspense } from "react";
-import { GoogleTagManager } from "@next/third-parties/google";
+// import { GoogleTagManager } from "@next/third-parties/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
@@ -34,7 +34,7 @@ export default function RootLayout({
 
     return (
         <html lang={locale}>
-            {gtmId && <GoogleTagManager gtmId={gtmId} />}
+            {/* {gtmId && <GoogleTagManager gtmId={gtmId} />} */}
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <SWRProvider>
