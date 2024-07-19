@@ -3,13 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
 import { SignIn } from "@/interfaces/SignIn";
-import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import useSignInDialog from "./useSignInDialog";
 
 const useSignIn = () => {
-    const { hideDialog } = useDialog();
+    const { hideDialog } = useSignInDialog();
     const router = useRouter();
     const { mutate } = useSWRConfig();
 

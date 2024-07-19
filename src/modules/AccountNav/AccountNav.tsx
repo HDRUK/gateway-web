@@ -8,11 +8,10 @@ import InitialsBadge from "@/components/InitialsBadge";
 import MenuDropdown from "@/components/MenuDropdown";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
-import useDialog from "@/hooks/useDialog";
-import ProvidersDialog from "../ProvidersDialog";
+import useSignInDialog from "@/hooks/useSignInDialog";
 
 const AccountNav = () => {
-    const { showDialog } = useDialog();
+    const { showDialog } = useSignInDialog();
     const t = useTranslations("components");
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -67,7 +66,7 @@ const AccountNav = () => {
             sx={{
                 color: "white",
             }}
-            onClick={() => showDialog(ProvidersDialog)}>
+            onClick={() => showDialog()}>
             {t("DesktopNav.labels.signIn")}
         </Button>
     );

@@ -1,15 +1,17 @@
 import { ReactNode, Suspense } from "react";
-// import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import { sourceSans3 } from "@/config/fonts";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
+import SignInProvider from "@/providers/SignInProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
 
 export const metadata = {
@@ -30,11 +32,11 @@ export default function RootLayout({
     if (!locales.includes(locale)) notFound();
 
     const messages = useMessages();
-    // const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+    const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
     return (
         <html lang={locale}>
-            {/* {gtmId && <GoogleTagManager gtmId={gtmId} />} */}
+            {gtmId && <GoogleTagManager gtmId={gtmId} />}
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <SWRProvider>
@@ -42,19 +44,23 @@ export default function RootLayout({
                             <DialogProvider>
                                 <ActionBarProvider>
                                     <SnackbarProvider />
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            fontFamily:
-                                                sourceSans3.style.fontFamily,
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            minHeight: "100vh",
-                                        }}>
-                                        <SupportPopOut />
-                                        {children}
-                                        <Footer />
-                                    </div>
+                                    <SignInProvider>
+                                        <ProvidersDialog />
+                                        <div
+                                            style={{
+                                                width: "100%",
+                                                fontFamily:
+                                                    sourceSans3.style
+                                                        .fontFamily,
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                minHeight: "100vh",
+                                            }}>
+                                            <SupportPopOut />
+                                            {children}
+                                            <Footer />
+                                        </div>
+                                    </SignInProvider>
                                     <Suspense fallback={null}>
                                         <NavigationEvents />
                                     </Suspense>
