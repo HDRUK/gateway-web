@@ -1,16 +1,17 @@
-import React from "react";
 import ProviderLinks from "@/modules/ProviderLinks";
 import { render, screen } from "@/utils/testUtils";
 
 describe("ProviderLinks", () => {
     it("should match snapshot", async () => {
-        const wrapper = render(<ProviderLinks />);
+        const wrapper = render(
+            <ProviderLinks showInstituion={() => console.log("test")} />
+        );
 
         expect(wrapper.container).toMatchSnapshot();
     });
 
     it("should render component", async () => {
-        render(<ProviderLinks />);
+        render(<ProviderLinks showInstituion={() => console.log("test")} />);
 
         expect(screen.getByAltText("Azure")).toBeInTheDocument();
         expect(screen.getByAltText("LinkedIn")).toBeInTheDocument();
