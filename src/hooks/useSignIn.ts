@@ -26,10 +26,7 @@ const useSignIn = () => {
                 router.push("/account");
                 mutate(apis.authInternalUrl);
             } else {
-                notificationService.apiError("Failed to sign in"),
-                    {
-                        persist: false,
-                    };
+                notificationService.apiError("Failed to sign in");
             }
         });
     };

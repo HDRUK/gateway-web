@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useMemo, ReactNode } from "react";
-import ProvidersDialog from "@/modules/ProvidersDialog";
 
 type dialogComponentType = React.ElementType | null;
 export type dialogPropsType = { [key: string]: unknown };
@@ -16,22 +15,22 @@ export interface GlobalDialogContextProps {
         dialogComponent: dialogComponentType;
         dialogProps?: dialogPropsType;
     };
-    test: boolean;
-    showProvidersDialog: () => void;
-    hideProvidersDialog: () => void;
+    // test: boolean;
+    // showProvidersDialog: () => void;
+    // hideProvidersDialog: () => void;
 }
 
 const initalState: GlobalDialogContextProps = {
     showDialog: () => null,
     hideDialog: () => null,
-    test: false,
+    // test: false,
     store: {
         dialogComponent: null,
         dialogProps: {},
     },
 
-    showProvidersDialog: () => null,
-    hideProvidersDialog: () => null,
+    // showProvidersDialog: () => null,
+    // hideProvidersDialog: () => null,
 };
 
 export const GlobalDialogContext = createContext(initalState);
@@ -46,7 +45,7 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
         dialogProps?: dialogPropsType;
     }>({ dialogComponent: null, dialogProps: {} });
 
-    const [test, setTest] = React.useState<boolean>(true);
+    // const [test, setTest] = React.useState<boolean>(true);
 
     const renderComponent = () => {
         if (!store.dialogComponent) return null;
@@ -63,7 +62,7 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
     const value = useMemo(
         () => ({
             store,
-            test,
+            // test,
             showDialog: (
                 dialogComponent: dialogComponentType,
                 dialogProps?: dialogPropsType
@@ -80,20 +79,19 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
                 });
             },
 
-            showProvidersDialog: () => {
-                setTest(false);
-            },
-            hideProvidersDialog: () => {
-                setTest(true);
-            },
+            // showProvidersDialog: () => {
+            //     setTest(false);
+            // },
+            // hideProvidersDialog: () => {
+            //     setTest(true);
+            // },
         }),
-        [store, test]
+        [store]
     );
 
     return (
         <GlobalDialogContext.Provider value={value}>
             {renderComponent()}
-            <ProvidersDialog />
             {children}
         </GlobalDialogContext.Provider>
     );

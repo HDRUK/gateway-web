@@ -30,7 +30,7 @@ export default function RootLayout({
     if (!locales.includes(locale)) notFound();
 
     const messages = useMessages();
-    const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+    // const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
     return (
         <html lang={locale}>
