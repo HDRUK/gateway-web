@@ -41,7 +41,7 @@ export default function PublicationContent({
                     length: publications.length,
                 })}
                 contents={publications.map(
-                    ({ paper_title, authors, url, publication_type }) => (
+                    ({ paper_title, authors, url }) => (
                         <Fragment key={`publication_${paper_title}`}>
                             <Link component="a" href={url} target="_blank">
                                 {paper_title}
