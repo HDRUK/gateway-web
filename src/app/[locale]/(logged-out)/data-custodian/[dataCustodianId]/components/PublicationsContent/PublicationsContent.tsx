@@ -6,6 +6,7 @@ import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Publication } from "@/interfaces/Publication";
+import { RouteName } from "@/consts/routeName";
 import AccordionSection from "../AccordionSection";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.PublicationsContent";
@@ -42,9 +43,7 @@ export default function PublicationContent({
                 })}
                 contents={publications.map(({ paper_title, authors, url }) => (
                     <Fragment key={`publication_${paper_title}`}>
-                        <Link component="a" href={url} target="_blank">
-                            {paper_title}
-                        </Link>
+                        <Link href={url}>{paper_title}</Link>
                         {authors && <div>{authors}</div>}
                         {true && (
                             <Typography color="GrayText">
