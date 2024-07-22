@@ -743,39 +743,36 @@
             }
         },
         "dataCustodian": {
-            "description": "Description",
-            "resultsInsights": "Results/Insights",
-            "details": "Details",
-            "lastUpdated": "Last Updated",
-            "lastUpdatedTooltip": "When the metadata for this entity was last updated",
-            "url": "URL",
-            "urlTooltip": "URL to access the resource",
-            "license": "License",
-            "licenseTooltip": "The type of software licence for this entity, if applicable",
-            "toolCategory": "Tool Category",
-            "keywords": "Keywords",
-            "domain": "Domain",
-            "notAvailable": "Not specified",
-            "datasets": "Related datasets",
-            "dataUses": "Related data uses",
-            "publications": "Related publications",
-            "collections": "Related collections",
+            "introduction": "Introduction",
+            "collections": "Collections",
+            "datasets": "Datasets",
+            "dataUses": "Data uses",
+            "publications": "Publications",
+            "tools": "Tools",
+            "serviceOfferings": "Service offerings",
             "components": {
                 "ActionBar": {
-                    "label": "Back to Tools search results"
+                    "label": "Back",
+                    "enquire": "Make an enquiry"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections ({ length })"
                 },
                 "DatasetsContent": {
-                    "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
+                    "heading": "Datasets ({ length })",
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
-                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                    "heading": "Data uses ({ length })"
                 },
                 "PublicationsContent": {
-                    "heading": "Publications related to this analysis, tool or software ({ length })"
+                    "heading": "Publications ({ length })"
                 },
-                "CollectionsContent": {
-                    "heading": "Collections which include this analysis, tool or software ({ length })"
+                "ToolsContent": {
+                    "heading": "Analysis scripts, tools and software ({ length })"
+                },
+                "ServiceOfferingsContent": {
+                    "heading": "Service offerings ({ length })"
                 }
             }
         },

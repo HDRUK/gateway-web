@@ -7,7 +7,7 @@ import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
-import { Team } from "@/interfaces/Team";
+import { Team, TeamSummary } from "@/interfaces/Team";
 import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
 import config from "@/config/config";
@@ -87,6 +87,16 @@ async function getTeam(
     };
 }
 
+async function getTeamSummary(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/summary`
+    );
+}
+
 async function getDataset(
     cookieStore: ReadonlyRequestCookies,
     datasetId: string,
@@ -156,6 +166,7 @@ export {
     getFilters,
     getUser,
     getTeam,
+    getTeamSummary,
     getApplication,
     getCohort,
     getDataset,

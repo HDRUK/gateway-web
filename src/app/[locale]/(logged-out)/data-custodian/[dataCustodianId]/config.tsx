@@ -23,48 +23,11 @@ const dataCustodianFields: DataCustodianSection[] = [
         sectionName: "introduction",
         fields: [
             {
-                path: "Introduction",
+                path: "introduction",
                 type: FieldType.TEXT,
             },
         ],
     },
-    // {
-    //     sectionName: "resultsInsights",
-    //     fields: [
-    //         {
-    //             path: "description", // what is this suppose to be?
-    //             type: FieldType.TEXT,
-    //             hideTooltip: true,
-    //         },
-    //     ],
-    // },
-    // {
-    //     sectionName: "details",
-    //     fields: [
-    //         {
-    //             path: "url",
-    //             type: FieldType.LINK,
-    //             hideTooltip: false,
-    //             label: "url",
-    //         },
-    //         {
-    //             path: "license",
-    //             type: FieldType.TEXT,
-    //             hideTooltip: false,
-    //             label: "license",
-    //         },
-    //         {
-    //             path: "updated_at",
-    //             type: FieldType.TEXT,
-    //             hideTooltip: false,
-    //             label: "lastUpdated",
-    //         },
-    //         // missing - uploaders or use associated authors?
-    //         // missing - tool category, what is that suppose to be? I see category_id returned
-    //         // missing - domain, what is this suppose to be?
-    //         // missing - keywords, what is this suppose to be? tags?
-    //     ],
-    // },
 ];
 
 const accordions = [
@@ -88,10 +51,10 @@ const accordions = [
         sectionName: "publications",
         fields: [],
     },
-    {
-        sectionName: "serviceOfferings",
-        fields: [],
-    },
+    // { TODO: Post-MVP
+    //     sectionName: "serviceOfferings",
+    //     fields: [],
+    // },
 ];
 
 export { dataCustodianFields, accordions };
