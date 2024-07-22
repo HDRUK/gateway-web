@@ -14,6 +14,7 @@ import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
 
 const oaId = process.env.NEXT_PUBLIC_OA_APP_ID;
+
 const ProvidersDialog = () => {
     const t = useTranslations("modules");
     const [institutionSelectVisible, setInstitutionSelectVisible] =
@@ -82,11 +83,13 @@ const ProvidersDialog = () => {
                     </div>
 
                     {oaId && (
-                        <Script
-                            id="open-athens-wayfinder"
-                            strategy="lazyOnload"
-                            dangerouslySetInnerHTML={{
-                                __html: `(function(w,a,y,f){
+                        <>
+                            <p>ID - {oaId}</p>
+                            <Script
+                                id="open-athens-wayfinder"
+                                strategy="lazyOnload"
+                                dangerouslySetInnerHTML={{
+                                    __html: `(function(w,a,y,f){
            w._wayfinder=w._wayfinder||function(){(w._wayfinder.q=w._wayfinder.q||[]).push(arguments)};
            p={oaDomain:'hdruk.ac.uk',oaAppId: '${oaId}'};
            w._wayfinder.settings=p;h=a.getElementsByTagName('head')[0];
@@ -94,8 +97,9 @@ const ProvidersDialog = () => {
            q=Object.keys(p).map(function(key){return key+'='+p[key]}).join('&');
            s.src=y+'v1'+f+"?"+q;h.appendChild(s);}
         )(window,document,'https://wayfinder.openathens.net/embed/','/loader.js');`,
-                            }}
-                        />
+                                }}
+                            />
+                        </>
                     )}
                 </div>
             </MuiDialogContent>
