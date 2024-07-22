@@ -11,6 +11,9 @@
                 "delete": {
                     "message": "{item} successfully deleted"
                 },
+                "archive": {
+                    "message": "{item} successfully archived"
+                },
                 "patch": {
                     "message": "{item} successfully updated"
                 }
@@ -72,6 +75,13 @@
             "success": {
                 "post": {
                     "message": "Dataset successfully duplicated"
+                }
+            }
+        },
+        "archivePublication": {
+            "success": {
+                "delete": {
+                    "message": "Publication successfully archived"
                 }
             }
         }
@@ -208,6 +218,29 @@
                     "edit": {
                         "title": "Edit Team details",
                         "text": "Edit the details of this data provider team on the Gateway"
+                    }
+                },
+                "publications":{
+                    "list":{
+                        "noPublications":"No {status} publications found on the Gateway associated with your profile.",
+                        "title": "Publications",
+                        "text": "View, add, edit and archive your publications.",
+                        "create": "Add publication",
+                        "actions":{
+                            "edit": {
+                                "label": "Edit a publication"
+                            },
+                            "archive": {
+                                "label": "Archive a publication"
+                            },
+                            "unarchive": {
+                                "label": "Unarchive publication so it is live on the Gateway",
+                                "title": "Unarchive a publication",
+                                "buttonText": "Make Active",
+                                "confirmText": "Make Draft",
+                                "content": "Select whether you would like to move this publication to Active (this will make your publication available within search results) or Draft (where you can edit the publication before making it available within search results)."
+                            }
+                        }
                     }
                 }
             },
