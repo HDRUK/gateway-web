@@ -1,9 +1,4 @@
-import { Collection } from "@/interfaces/Collection";
-import { DataUse } from "@/interfaces/DataUse";
-import { Dataset } from "@/interfaces/Dataset";
 import { Notification } from "@/interfaces/Notification";
-import { Publication } from "@/interfaces/Publication";
-import { Tool } from "@/interfaces/Tool";
 import { User } from "@/interfaces/User";
 
 interface Team {
@@ -26,17 +21,6 @@ interface Team {
     notifications: Notification[];
 }
 
-interface TeamSummary {
-    id: number;
-    name: string;
-    is_provider: boolean;
-    datasets: Dataset[];
-    durs: DataUse[];
-    tools: Tool[];
-    publications: Publication[];
-    collections: Collection[];
-}
-
 interface TeamForm
     extends Pick<
         Team,
@@ -54,4 +38,4 @@ interface TeamForm
     users: number[];
 }
 
-export type { Team, TeamSummary, TeamForm };
+export type { Team, TeamForm };
