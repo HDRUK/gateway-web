@@ -117,7 +117,7 @@ interface DataCustodianDataset {
     id: number;
     populationSize: number;
     title: string;
-    datasetType: string;    
+    datasetType: string;
 }
 
 interface NewDataset extends Omit<Dataset, "versions" | "id"> {

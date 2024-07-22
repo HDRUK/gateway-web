@@ -1,6 +1,6 @@
 import { Collection } from "@/interfaces/Collection";
-import { Dataset } from "@/interfaces/Dataset";
 import { DataUse } from "@/interfaces/DataUse";
+import { Dataset } from "@/interfaces/Dataset";
 import { Notification } from "@/interfaces/Notification";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
