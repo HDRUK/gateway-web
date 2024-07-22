@@ -28,7 +28,7 @@ export default function CardStacked({
                 component={Link}
                 href={href}
                 sx={{
-                    color: "white",
+                    color: colors.white,
                     px: 3,
                     py: 2,
                     display: "flex",
