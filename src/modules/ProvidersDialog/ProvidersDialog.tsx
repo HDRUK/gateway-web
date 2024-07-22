@@ -9,7 +9,6 @@ import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
-import useDialog from "@/hooks/useDialog";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
 
@@ -21,7 +20,7 @@ const ProvidersDialog = () => {
         useState<boolean>(false);
 
     // const { hideDialog, store } = useSignInDialog();
-    const { hideDialog } = useDialog();
+    // const { hideDialog } = useDialog();
 
     return (
         <Dialog

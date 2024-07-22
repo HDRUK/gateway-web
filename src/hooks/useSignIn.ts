@@ -6,10 +6,10 @@ import { SignIn } from "@/interfaces/SignIn";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import useSignInDialog from "./useSignInDialog";
+import useDialog from "./useDialog";
 
 const useSignIn = () => {
-    const { hideDialog } = useSignInDialog();
+    const { hideDialog } = useDialog();
     const router = useRouter();
     const { mutate } = useSWRConfig();
 
