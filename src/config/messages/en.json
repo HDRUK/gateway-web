@@ -221,8 +221,12 @@
                     }
                 },
                 "publications":{
+                    "components": {
+                        "PublicationTab": {
+                            "noPublications":"No {status} publications found on the Gateway associated with your profile."
+                        }
+                    },
                     "list":{
-                        "noPublications":"No {status} publications found on the Gateway associated with your profile.",
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",
                         "create": "Add publication",
