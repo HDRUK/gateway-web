@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} triggered deploy to DEV pipeline
 on:
     push:
         branches:
-            - "dev"
+            - "feature/testing-deploy"
 
 env:
     PROJECT_ID: "${{ secrets.PROJECT_ID }}"
@@ -22,7 +22,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
               with:
-                  ref: "dev"
+                  ref: "feature/testing-deploy"
 
             - name: Read VERSION file
               id: getversion
@@ -68,7 +68,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
               with:
-                  ref: "dev"
+                  ref: "feature/testing-deploy"
 
             - name: Google Auth
               id: auth
