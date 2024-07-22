@@ -1,6 +1,5 @@
 import { Control } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import { Publication } from "@/interfaces/Publication";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
@@ -10,14 +9,14 @@ import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import PublicationCard from "@/components/PublicationCard";
 import ShowingXofX from "@/components/ShowingXofX";
-import apis from "@/config/apis";
 import {
     searchFilter,
     sortField,
     toggleDirection,
 } from "@/config/forms/publicationAccountSearch";
 
-const TRANSLATION_PATH = "pages.account.profile.publications.list";
+const TRANSLATION_PATH =
+    "pages.account.profile.publications.components.PublicationTab";
 
 interface PublicationTabProps {
     list?: Publication[];
