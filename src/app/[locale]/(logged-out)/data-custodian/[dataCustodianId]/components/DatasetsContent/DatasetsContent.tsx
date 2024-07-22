@@ -45,8 +45,7 @@ export default function DatasetContent({
                 contents={datasets.map(
                     ({ id, title, populationSize, datasetType }) => (
                         <Fragment key={`dataset_${id}`}>
-                            <Link
-                                href={`/${RouteName.DATASET_ITEM}/${id}`}>
+                            <Link href={`/${RouteName.DATASET_ITEM}/${id}`}>
                                 {title}
                             </Link>
                             {populationSize && (

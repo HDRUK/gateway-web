@@ -48,7 +48,9 @@ export default function ToolsContent({
                             {name}
                         </Link>
                         <div>{`${user.firstname} ${user.lastname}`}</div>
-                        <Typography color="GrayText">Created - {formatDate(created_at, "DD MMMM YYYY")}</Typography>
+                        <Typography color="GrayText">
+                            Created - {formatDate(created_at, "DD MMMM YYYY")}
+                        </Typography>
                     </Fragment>
                 ))}
             />

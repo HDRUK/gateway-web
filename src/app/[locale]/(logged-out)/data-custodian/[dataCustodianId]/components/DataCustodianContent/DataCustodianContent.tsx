@@ -44,7 +44,7 @@ const DataCustodianContent = ({
                 return <Link href={val}>{val}</Link>;
             default:
                 return (
-                    <Typography component={'span'}>
+                    <Typography component={"span"}>
                         <ShowMore maxHeight={18}>{val}</ShowMore>
                     </Typography>
                 );

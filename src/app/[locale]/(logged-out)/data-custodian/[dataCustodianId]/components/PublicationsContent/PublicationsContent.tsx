@@ -47,11 +47,10 @@ export default function PublicationContent({
                                 {paper_title}
                             </Link>
                             {authors && <div>{authors}</div>}
-                            {/* {publication_type && (
-                                <div>{publication_type}</div>
-                            )} */}
-                             {true && (
-                                <Typography color="GrayText">LINK TYPE HERE - when BE supports it</Typography>
+                            {true && (
+                                <Typography color="GrayText">
+                                    LINK TYPE HERE - when BE supports it
+                                </Typography>
                             )}
                         </Fragment>
                     )
