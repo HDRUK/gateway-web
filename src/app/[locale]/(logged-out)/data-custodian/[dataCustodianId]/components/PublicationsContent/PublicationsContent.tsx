@@ -40,21 +40,19 @@ export default function PublicationContent({
                 heading={t("heading", {
                     length: publications.length,
                 })}
-                contents={publications.map(
-                    ({ paper_title, authors, url }) => (
-                        <Fragment key={`publication_${paper_title}`}>
-                            <Link component="a" href={url} target="_blank">
-                                {paper_title}
-                            </Link>
-                            {authors && <div>{authors}</div>}
-                            {true && (
-                                <Typography color="GrayText">
-                                    LINK TYPE HERE - when BE supports it
-                                </Typography>
-                            )}
-                        </Fragment>
-                    )
-                )}
+                contents={publications.map(({ paper_title, authors, url }) => (
+                    <Fragment key={`publication_${paper_title}`}>
+                        <Link component="a" href={url} target="_blank">
+                            {paper_title}
+                        </Link>
+                        {authors && <div>{authors}</div>}
+                        {true && (
+                            <Typography color="GrayText">
+                                LINK TYPE HERE - when BE supports it
+                            </Typography>
+                        )}
+                    </Fragment>
+                ))}
             />
         </InView>
     );
