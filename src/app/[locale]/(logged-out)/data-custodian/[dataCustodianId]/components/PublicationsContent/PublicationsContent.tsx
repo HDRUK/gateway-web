@@ -6,7 +6,6 @@ import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Publication } from "@/interfaces/Publication";
-import { RouteName } from "@/consts/routeName";
 import AccordionSection from "../AccordionSection";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.PublicationsContent";
