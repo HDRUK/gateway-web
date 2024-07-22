@@ -48,7 +48,7 @@ const Dialog = ({
     };
 
     return (
-        <MuiDialog {...props} onClose={handleClose}>
+        <MuiDialog {...props} onClose={handleClose} keepMounted>
             {showCloseButton && (
                 <IconButton
                     data-testid="dialog-close-icon"

@@ -6,12 +6,10 @@ import Footer from "@/components/Footer";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import ProvidersDialog from "@/modules/ProvidersDialog";
 import { sourceSans3 } from "@/config/fonts";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
-import SignInProvider from "@/providers/SignInProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
 
 export const metadata = {
@@ -44,23 +42,20 @@ export default function RootLayout({
                             <DialogProvider>
                                 <ActionBarProvider>
                                     <SnackbarProvider />
-                                    <SignInProvider>
-                                        <ProvidersDialog />
-                                        <div
-                                            style={{
-                                                width: "100%",
-                                                fontFamily:
-                                                    sourceSans3.style
-                                                        .fontFamily,
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                minHeight: "100vh",
-                                            }}>
-                                            <SupportPopOut />
-                                            {children}
-                                            <Footer />
-                                        </div>
-                                    </SignInProvider>
+                                    {/* <ProvidersDialog /> */}
+                                    <div
+                                        style={{
+                                            width: "100%",
+                                            fontFamily:
+                                                sourceSans3.style.fontFamily,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            minHeight: "100vh",
+                                        }}>
+                                        <SupportPopOut />
+                                        {children}
+                                        <Footer />
+                                    </div>
                                     <Suspense fallback={null}>
                                         <NavigationEvents />
                                     </Suspense>

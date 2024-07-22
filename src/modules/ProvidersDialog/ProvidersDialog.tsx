@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
-import useSignInDialog from "@/hooks/useSignInDialog";
+import useDialog from "@/hooks/useDialog";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
 
@@ -20,14 +20,17 @@ const ProvidersDialog = () => {
     const [institutionSelectVisible, setInstitutionSelectVisible] =
         useState<boolean>(false);
 
-    const { hideDialog, store } = useSignInDialog();
+    // const { hideDialog, store } = useSignInDialog();
+    const { hideDialog } = useDialog();
 
     return (
         <Dialog
             titleSx={{ paddingLeft: 8 }}
+            key={"testing"}
             title={t("dialogs.ProvidersDialog.title")}
-            classes={{ root: !store.isVisible ? "hideme" : "" }}
-            onClose={() => hideDialog()}>
+            // classes={{ root: !store.isVisible ? "hideme" : "" }}
+            // onClose={hideDialog}.
+        >
             <MuiDialogContent sx={{ paddingX: 8 }}>
                 {!institutionSelectVisible && (
                     <>
