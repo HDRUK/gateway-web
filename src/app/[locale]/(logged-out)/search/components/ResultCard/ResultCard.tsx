@@ -1,5 +1,12 @@
-import { useCallback } from "react";
-import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { useCallback, useState } from "react";
+import { Bookmark, BookmarkBorder } from "@mui/icons-material";
+import {
+    Button,
+    Divider,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+} from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -9,9 +16,14 @@ import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
+import MenuDropdown from "@/components/MenuDropdown";
+import Typography from "@/components/Typography";
+import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import { Highlight } from "./ResultCard.styles";
+import { Highlight, ResultTitle } from "./ResultCard.styles";
+import menuItems from "./config";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -36,6 +48,14 @@ const ResultCard = ({ result }: ResultCardProps) => {
     ) => {
         event.stopPropagation();
         showDialog(DatasetQuickViewDialog, { result });
+        
+    const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
+        null
+    );
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        setAnchorElement(event.currentTarget);
     };
 
     if (!metadata) return null;
@@ -52,7 +72,44 @@ const ResultCard = ({ result }: ResultCardProps) => {
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
                 <ListItemButton component="a" onClick={handleClickItem}>
                     <ListItemText
-                        primary={metadata.summary.shortTitle}
+                        primary={
+                            <ResultTitle>
+                                {metadata.summary.shortTitle}
+                                <div>
+                                    <Button
+                                        variant="outlined"
+                                        startIcon={
+                                            <BookmarkBorder color="secondary" />
+                                        }
+                                        sx={{ mr: 2 }}>
+                                        {t("addToLibrary")}
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        startIcon={
+                                            <SpeechBubbleIcon
+                                                sx={{ fill: "white" }}
+                                            />
+                                        }
+                                        endIcon={
+                                            <ChevronThinIcon
+                                                fontSize="medium"
+                                                style={{ color: "white" }}
+                                            />
+                                        }
+                                        onClick={handleOpenNavMenu}>
+                                        {t("actions")}
+                                    </Button>
+                                    <MenuDropdown
+                                        handleClose={() =>
+                                            setAnchorElement(null)
+                                        }
+                                        menuItems={menuItems}
+                                        anchorElement={anchorElement}
+                                    />
+                                </div>
+                            </ResultTitle>
+                        }
                         primaryTypographyProps={{
                             color: "primary",
                             fontWeight: 600,
