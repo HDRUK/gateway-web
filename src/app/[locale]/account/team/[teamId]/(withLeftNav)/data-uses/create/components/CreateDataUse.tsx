@@ -231,13 +231,11 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                             <Table sx={{ mr: 4 }}>
                                 <TableHead>
                                     <TableRow>
-                                        {DUR_TABLE_HEADERS.map(
-                                            (header, index) => (
-                                                <TableCell key={header}>
-                                                    {header}
-                                                </TableCell>
-                                            )
-                                        )}
+                                        {DUR_TABLE_HEADERS.map(header => (
+                                            <TableCell key={header}>
+                                                {header}
+                                            </TableCell>
+                                        ))}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
