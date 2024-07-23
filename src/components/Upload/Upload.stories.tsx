@@ -37,9 +37,7 @@ const WrapperComponent = () => {
                     uploadSx={{ display: "none" }}
                     acceptFileTypes=".csv"
                     onFileChange={(file: File) => console.log(file)}
-                    helperText={
-                        "Must be a .csv file, cannot exceed 10 mb per file."
-                    }
+                    helperText="Must be a .csv file, cannot exceed 10 mb per file."
                 />
                 <Button type="submit" sx={{ maxWidth: 240 }}>
                     Submit

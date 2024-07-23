@@ -1,6 +1,5 @@
 import { Control, useController } from "react-hook-form";
-import { FormControl, FormControlLabel, SxProps } from "@mui/material";
-import { Stack } from "@mui/material";
+import { FormControl, FormControlLabel, Stack, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
