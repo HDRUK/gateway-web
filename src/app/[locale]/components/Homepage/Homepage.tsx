@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useMemo, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -40,9 +40,24 @@ const services = [
         href: "/about/cohort-discovery",
     },
     {
+        id: SearchCategory.TOOLS,
+        image: "/images/homepage/welcome-image.png",
+        href: `/search?type=${SearchCategory.TOOLS}`,
+    },
+    {
+        id: SearchCategory.PUBLICATIONS,
+        image: "/images/homepage/welcome-image.png",
+        href: `/search?type=${SearchCategory.PUBLICATIONS}`,
+    },
+    {
         id: "dataProviders",
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
+    },
+    {
+        id: "dataCustodianNetworks",
+        image: "/images/homepage/welcome-image.png",
+        href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
@@ -60,35 +75,9 @@ const services = [
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
     {
-        id: SearchCategory.PUBLICATIONS,
-        image: "/images/homepage/welcome-image.png",
-        href: `/search?type=${SearchCategory.PUBLICATIONS}`,
-    },
-
-    {
-        id: SearchCategory.TOOLS,
-        image: "/images/homepage/welcome-image.png",
-        href: `/search?type=${SearchCategory.TOOLS}`,
-    },
-    {
         id: "courses",
         image: "/images/homepage/welcome-image.png",
-        href: "https://www.hdruk.ac.uk/study-and-train/train/learn-with-hdr-uk-futures/",
-    },
-];
-
-const items = [
-    {
-        title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-        text: "Vestibulum ultrices purus sit amet cursus gravida. Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.",
-    },
-    {
-        title: "Vestibulum ultrices purus sit amet cursus gravida. ",
-        text: "Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.",
-    },
-    {
-        title: "Aenean luctus feugiat eros at laoreet.",
-        text: "Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.",
+        href: "https://hdruklearn.org/",
     },
 ];
 
@@ -98,7 +87,7 @@ interface HomePageProps {
 
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
-    const [isTouchDevice, setIsTouchDevice] = React.useState<boolean>(false);
+    const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
     const {
         meetTheTeam,
@@ -113,7 +102,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         },
     } = page.template;
 
-    const logosFormatted = React.useMemo(
+    const logosFormatted = useMemo(
         () =>
             logos.map(logo => ({
                 websiteUrl: logo.websiteAddress,
@@ -123,7 +112,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         [logos]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isMobile) {
             setIsTouchDevice(true);
         }
@@ -132,6 +121,21 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const responsiveServices = isTouchDevice
         ? services.map(service => ({ ...service, text: t("touchDevice") }))
         : services;
+
+    const items = [
+        {
+            title: t("helpLinks.item1.title"),
+            text: t("helpLinks.item1.text"),
+            href: RouteName.SUPPORT,
+            externalUrl: false,
+        },
+        {
+            title: t("helpLinks.item2.title"),
+            text: t("helpLinks.item2.text"),
+            href: "https://www.hdruk.ac.uk/",
+            externalUrl: true,
+        },
+    ];
 
     return (
         <>

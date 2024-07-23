@@ -123,7 +123,7 @@ const EditApplicationForm = ({
                     marginBottom: "10px",
                     marginTop: "10px",
                 }}>
-                <Typography variant="h2">API Management</Typography>
+                <Typography variant="h2">Private Apps</Typography>
                 <Typography>
                     Use this form to create, update and manage your api on the
                     Gateway
@@ -160,7 +160,7 @@ const EditApplicationForm = ({
                 sx={{
                     padding: 2,
                 }}>
-                <DeleteApplication />
+                <DeleteApplication applicationId={application.id} />
             </Paper>
         </>
     );
