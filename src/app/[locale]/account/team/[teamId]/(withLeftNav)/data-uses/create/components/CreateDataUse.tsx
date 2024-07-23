@@ -85,7 +85,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
     const [createdDurId, setCreatedDurId] = useState<number>();
     const [hasError, setHasError] = useState<boolean>();
 
-    const { handleSubmit, control, register, watch } = useForm<UploadFormData>({
+    const { handleSubmit, control } = useForm<UploadFormData>({
         defaultValues: {
             upload: "",
         },
@@ -192,7 +192,6 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                 {!fileId && (
                     <>
                         <Upload
-                            {...register("upload")}
                             control={control}
                             label={t("upload")}
                             name="upload"
@@ -204,7 +203,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                         <Button
                             type="submit"
                             sx={{ maxWidth: 150 }}
-                            disabled={!watch("upload")}>
+                            disabled={!file}>
                             {t("uploadButtonText")}
                         </Button>
                     </>
