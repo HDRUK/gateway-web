@@ -769,13 +769,47 @@
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
-                    "heading": "Data use ({ length })"
+                    "heading": "Data uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
                     "heading": "Analysis, scripts and software ({ length })"
+                }
+            }
+        },
+        "dataCustodian": {
+            "introduction": "Introduction",
+            "collections": "Collections",
+            "datasets": "Datasets",
+            "dataUses": "Data uses",
+            "publications": "Publications",
+            "tools": "Tools",
+            "serviceOfferings": "Service offerings",
+            "components": {
+                "ActionBar": {
+                    "label": "Back",
+                    "enquire": "Make an enquiry"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections ({ length })"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Data uses ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis scripts, tools and software ({ length })"
+                },
+                "ServiceOfferingsContent": {
+                    "heading": "Service offerings ({ length })"
                 }
             }
         },
