@@ -124,10 +124,10 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
             return;
         }
 
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append("file", file);
 
-        const uploadedFileStatus = (await uploadFile(formData).catch(_e =>
+        const uploadedFileStatus = (await uploadFile(formData).catch(() =>
             handleError()
         )) as FileUpload;
 
@@ -160,7 +160,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
 
     const durValues = useMemo(() => {
         if (!durContent?.length) {
-            return;
+            return undefined;
         }
 
         return durContent[0];
@@ -225,7 +225,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
 
                     <Accordion
                         variant="plain"
-                        key={"data-use-details"}
+                        key="data-use-details"
                         sx={{ mb: 4 }}
                         heading={
                             <Table sx={{ mr: 4 }}>
@@ -233,7 +233,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                     <TableRow>
                                         {DUR_TABLE_HEADERS.map(
                                             (header, index) => (
-                                                <TableCell key={index}>
+                                                <TableCell key={header}>
                                                     {header}
                                                 </TableCell>
                                             )
