@@ -15,8 +15,16 @@ describe("ProviderLinks", () => {
             <ProviderLinks showInstituion={() => console.log("show inst")} />
         );
 
-        expect(screen.getByAltText("Azure")).toBeInTheDocument();
-        expect(screen.getByAltText("LinkedIn")).toBeInTheDocument();
-        expect(screen.getByAltText("Google")).toBeInTheDocument();
+        expect(screen.getByText("Azure", { exact: false })).toBeInTheDocument();
+        expect(
+            screen.getByText("LinkedIn", {
+                exact: false,
+            })
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText("Google", {
+                exact: false,
+            })
+        ).toBeInTheDocument();
     });
 });
