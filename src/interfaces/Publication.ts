@@ -11,6 +11,7 @@ interface Publication {
     journal_name: string;
     abstract: string;
     url: string;
+    status: string;
     pivot: {
         tool_id: number;
         publication_id: number;

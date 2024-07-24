@@ -11,6 +11,9 @@
                 "delete": {
                     "message": "{item} successfully deleted"
                 },
+                "archive": {
+                    "message": "{item} successfully archived"
+                },
                 "patch": {
                     "message": "{item} successfully updated"
                 }
@@ -74,6 +77,13 @@
                     "message": "Dataset successfully duplicated"
                 }
             }
+        },
+        "archivePublication": {
+            "success": {
+                "delete": {
+                    "message": "Publication successfully archived"
+                }
+            }
         }
     },
     "common": {
@@ -131,8 +141,14 @@
             },
             "cohortDiscoveryRequest": {
                 "title": "Cohort Discovery Registration",
-                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address and role description.",
-                "terms": "You can review your terms and conditions <terms>here</terms>"
+                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, Orcid id and role description.",
+                "userDeclaration": "User Declaration",
+                "userDeclarationAdditional": "All users of the Cohort Discovery are required to accept the declaration below.",
+                "statementIntro": "I confirm that my use of the tool will be for the sole purpose of understanding the size of populations relevant to a particular research question and that any resulting study or clinical trial will be for public benefit as defined by the National Data Guardian.",
+                "statement1": "I acknowledge that:<list><item>Any subsequent access to the data for research purposes (including publications) willbe subject to the relevant data access processes of the data custodian(s).</item><item>Some data custodians do not allow results from queries on their data to be visible to commercial organisations and the tool will not show results from queries run by commercial users in these cases.</item></list>",
+                "statement2": "I will not:<list><item>Share, publish or communicate the results or findings from the tool in any way, with the exception of sharing results with collaborators working on a research study or clinical trial and in support of an application for research funding for an eligible research study or clinical trial.</item><item>Use the results for marketing or policy development.</item></list>",
+                "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
+                "checkboxLabel": "I have read and agree to the user declaration"
             },
             "backToHomepage": "Back to homepage"
         },
@@ -208,6 +224,33 @@
                     "edit": {
                         "title": "Edit Team details",
                         "text": "Edit the details of this data provider team on the Gateway"
+                    }
+                },
+                "publications":{
+                    "components": {
+                        "PublicationTab": {
+                            "noPublications":"No {status} publications found on the Gateway associated with your profile."
+                        }
+                    },
+                    "list":{
+                        "title": "Publications",
+                        "text": "View, add, edit and archive your publications.",
+                        "create": "Add publication",
+                        "actions":{
+                            "edit": {
+                                "label": "Edit a publication"
+                            },
+                            "archive": {
+                                "label": "Archive a publication"
+                            },
+                            "unarchive": {
+                                "label": "Unarchive publication so it is live on the Gateway",
+                                "title": "Unarchive a publication",
+                                "buttonText": "Make Active",
+                                "confirmText": "Make Draft",
+                                "content": "Select whether you would like to move this publication to Active (this will make your publication available within search results) or Draft (where you can edit the publication before making it available within search results)."
+                            }
+                        }
                     }
                 }
             },
@@ -732,13 +775,47 @@
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
-                    "heading": "Data use ({ length })"
+                    "heading": "Data uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
                     "heading": "Analysis, scripts and software ({ length })"
+                }
+            }
+        },
+        "dataCustodian": {
+            "introduction": "Introduction",
+            "collections": "Collections",
+            "datasets": "Datasets",
+            "dataUses": "Data uses",
+            "publications": "Publications",
+            "tools": "Tools",
+            "serviceOfferings": "Service offerings",
+            "components": {
+                "ActionBar": {
+                    "label": "Back",
+                    "enquire": "Make an enquiry"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections ({ length })"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets ({ length })",
+                    "populationSize": "Dataset population size: { length }"
+                },
+                "DatausesContent": {
+                    "heading": "Data uses ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis scripts, tools and software ({ length })"
+                },
+                "ServiceOfferingsContent": {
+                    "heading": "Service offerings ({ length })"
                 }
             }
         },
