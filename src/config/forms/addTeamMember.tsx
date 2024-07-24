@@ -21,6 +21,7 @@ const getRoleOptions = () => {
                     description="Can add or remove team members, and edit their roles."
                 />
             ),
+            permissions: ["team-members.update", "roles.dev.update"],
             value: ROLE_CUSTODIAN_TEAM_ADMIN,
         },
 
@@ -32,6 +33,7 @@ const getRoleOptions = () => {
                     description="Can develop, sample copy to be updated."
                 />
             ),
+            permissions: ["team-members.update", "roles.cta.update"],
             value: ROLE_CUSTODIAN_DEVELOPER,
         },
 
@@ -43,6 +45,7 @@ const getRoleOptions = () => {
                     description="Can create and edit dataset metadata, and edit team roles related to dataset metadata."
                 />
             ),
+            permissions: ["team-members.update", "roles.mdm.update"],
             value: ROLE_CUSTODIAN_METADATA_MANAGER,
         },
 
@@ -54,6 +57,7 @@ const getRoleOptions = () => {
                     description="Can create and edit dataset metadata."
                 />
             ),
+            permissions: ["team-members.update", "roles.mde.update"],
             value: ROLE_CUSTODIAN_METADATA_EDITOR,
         },
 
@@ -65,6 +69,7 @@ const getRoleOptions = () => {
                     description="Can review data access request applications, assign workflows to other team members, and edit team roles related to data access requests."
                 />
             ),
+            permissions: ["team-members.update", "roles.dar-m.update"],
             value: ROLE_CUSTODIAN_DAR_MANAGER,
         },
 
@@ -76,6 +81,7 @@ const getRoleOptions = () => {
                     description="Can review sections of data access request applications that have been assigned to them through workflows."
                 />
             ),
+            permissions: ["team-members.update", "roles.dar-r.update"],
             value: ROLE_CUSTODIAN_DAR_REVIEWER,
         },
     ];

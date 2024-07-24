@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import ErrorDisplay from "@/components/ErrorDisplay";
+import { hasPermissions } from "@/utils/permissions";
 
 interface ProtectedAccountRouteProps {
     permissions: { [key: string]: boolean };
@@ -12,14 +13,8 @@ const ProtectedAccountRoute = ({
     pagePermissions,
     children,
 }: ProtectedAccountRouteProps) => {
-    const userPermissions = Object.keys(permissions).filter(
-        p => permissions[p] === true
-    );
-
     // check if any of the users permissions are in any of the routes permissions
-    const userHasPermission = userPermissions.some(p =>
-        pagePermissions?.includes(p)
-    );
+    const userHasPermission = hasPermissions(permissions, pagePermissions);
 
     if (!userHasPermission) {
         return <ErrorDisplay variant={401} />;

@@ -11,13 +11,15 @@ import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
 import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
-import Tooltip from "@/components/Tooltip";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import {
+    FILTER_DATA_TYPE,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_PUBLICATION_DATE,
+    FILTER_PUBLICATION_TYPE,
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
     FILTER_ACCESS_SERVICE,
@@ -25,6 +27,11 @@ import {
     FILTER_TYPE_CATEGORY,
     filtersList,
     FILTER_POPULATION_SIZE,
+    FILTER_CONTAINS_TISSUE,
+    FILTER_LICENSE,
+    FILTER_MATERIAL_TYPE,
+    FILTER_ORGANISATION_NAME,
+    FILTER_DATA_SET_TITLES,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -34,10 +41,12 @@ import {
     transformQueryFiltersToForm,
 } from "@/utils/filters";
 import DateRangeFilter from "../DateRangeFilter";
+import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
 import PopulationFilter from "../PopulationFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
+const TOOLTIP_TITLE_LINK_SUFFIX = "Link";
 const FILTER_CATEGORY_PUBLICATIONS = "paper";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
@@ -54,9 +63,56 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     label: STATIC_FILTER_SOURCE,
     value: "",
 };
+const FILTER_ORDERING: { [key: string]: Array<string> } = {
+    dataset: [
+        FILTER_DATA_TYPE,
+        FILTER_CONTAINS_TISSUE,
+        FILTER_MATERIAL_TYPE,
+        FILTER_DATA_USE_TITLES,
+        FILTER_ACCESS_SERVICE,
+        FILTER_DATE_RANGE,
+        FILTER_POPULATION_SIZE,
+        FILTER_GEOGRAPHIC_LOCATION,
+        FILTER_PUBLISHER_NAME,
+    ],
+    dataUseRegister: [
+        FILTER_DATA_SET_TITLES,
+        FILTER_PUBLISHER_NAME,
+        FILTER_SECTOR,
+        FILTER_ORGANISATION_NAME,
+    ],
+    collection: [FILTER_PUBLISHER_NAME, FILTER_DATA_SET_TITLES],
+    paper: [
+        STATIC_FILTER_SOURCE,
+        FILTER_PUBLICATION_TYPE,
+        FILTER_PUBLICATION_DATE,
+        FILTER_DATA_SET_TITLES,
+    ],
+    tool: [
+        FILTER_TYPE_CATEGORY,
+        FILTER_DATA_SET_TITLES,
+        FILTER_PROGRAMMING_LANGUAGE,
+        FILTER_LICENSE,
+    ],
+};
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
+};
+
+const TooltipTitle = (label: string, t) => {
+    return label === FILTER_LICENSE
+        ? t.rich(`${label}${TOOLTIP_SUFFIX}`, {
+              TooltipLink: (chunks: string) => (
+                  <a
+                      href={t(
+                          `${label}${TOOLTIP_SUFFIX}${TOOLTIP_TITLE_LINK_SUFFIX}`
+                      )}>
+                      {chunks}
+                  </a>
+              ),
+          })
+        : t(`${label}${TOOLTIP_SUFFIX}`);
 };
 
 const FilterPanel = ({
@@ -88,10 +144,12 @@ const FilterPanel = ({
         [FILTER_GEOGRAPHIC_LOCATION]: {},
         [FILTER_DATE_RANGE]: {},
         [FILTER_PUBLICATION_DATE]: {},
+        [FILTER_PUBLICATION_TYPE]: {},
         [FILTER_ACCESS_SERVICE]: {},
         [FILTER_PROGRAMMING_LANGUAGE]: {},
         [FILTER_TYPE_CATEGORY]: {},
         [FILTER_SECTOR]: {},
+        [FILTER_MATERIAL_TYPE]: {},
     });
 
     const [staticFilterValues, setStaticFilterValues] = useState<DefaultValues>(
@@ -120,12 +178,14 @@ const FilterPanel = ({
         [FILTER_ACCESS_SERVICE]: string;
         [FILTER_PROGRAMMING_LANGUAGE]: string;
         [FILTER_TYPE_CATEGORY]: string;
+        [FILTER_MATERIAL_TYPE]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
             [FILTER_ACCESS_SERVICE]: "",
+            [FILTER_MATERIAL_TYPE]: "",
         },
     });
 
@@ -233,6 +293,32 @@ const FilterPanel = ({
         setFilterQueryParams([], filterSection);
     };
 
+    const getFilterSortOrder = (
+        itemA: {
+            label: string;
+            value: string;
+            buckets: BucketCheckbox[];
+        },
+        itemB: {
+            label: string;
+            value: string;
+            buckets: BucketCheckbox[];
+        }
+    ) => {
+        const ordering = FILTER_ORDERING[filterCategory];
+        const item1 = ordering?.indexOf(itemA.label);
+        const item2 = ordering?.indexOf(itemB.label);
+
+        if (item1 && item2) {
+            return item1 - item2;
+        }
+        if (item1 && !item2) {
+            return 1;
+        }
+
+        return -1;
+    };
+
     const renderFilterContent = (filterItem: {
         label: string;
         value: string;
@@ -312,15 +398,55 @@ const FilterPanel = ({
                         counts={formatBucketCounts(
                             get(aggregations, label)?.buckets
                         )}
+                        countsDisabled={
+                            filterCategory === FILTER_CATEGORY_PUBLICATIONS &&
+                            (staticFilterValues.source?.FED || false)
+                        }
                     />
                 );
         }
     };
 
+    // Clear Material Type filter when Tissues toggled off
+    useEffect(() => {
+        if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
+            setFilterQueryParams([], FILTER_MATERIAL_TYPE);
+        }
+    }, [selectedFilters[FILTER_CONTAINS_TISSUE]]);
+
     return (
         <>
-            {filterItems.map(filterItem => {
+            {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
+
+                if (filterItem.label === FILTER_CONTAINS_TISSUE) {
+                    return (
+                        <FilterSectionInlineSwitch
+                            key={filterItem.label}
+                            filterCategory={filterCategory}
+                            filterItem={filterItem}
+                            selectedFilters={selectedFilters}
+                            handleRadioChange={(
+                                event: React.ChangeEvent<HTMLInputElement>
+                            ) =>
+                                updateCheckboxes(
+                                    {
+                                        [filterItem.label]:
+                                            event.target.checked,
+                                    },
+                                    label
+                                )
+                            }
+                        />
+                    );
+                }
+
+                if (
+                    filterItem.label === FILTER_MATERIAL_TYPE &&
+                    !get(selectedFilters, FILTER_CONTAINS_TISSUE)?.length
+                ) {
+                    return null;
+                }
 
                 return (
                     <Accordion
@@ -331,14 +457,27 @@ const FilterPanel = ({
                         }}
                         expanded={maximised.includes(label)}
                         heading={
-                            <Tooltip
-                                key={label}
-                                placement="right"
-                                title={t(`${label}${TOOLTIP_SUFFIX}`)}>
-                                <Typography fontWeight="400" fontSize="20px">
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    p: 0,
+                                    m: 0,
+                                    flexDirection: "row",
+                                    alignContent: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                    pr: 3.25,
+                                }}>
+                                <Typography fontWeight="400" fontSize={20}>
                                     {t(label)}
                                 </Typography>
-                            </Tooltip>
+                                <TooltipIcon
+                                    content={TooltipTitle(label, t)}
+                                    label=""
+                                    buttonSx={{ p: 0 }}
+                                    size="small"
+                                />
+                            </Box>
                         }
                         onChange={() =>
                             setMaximised(

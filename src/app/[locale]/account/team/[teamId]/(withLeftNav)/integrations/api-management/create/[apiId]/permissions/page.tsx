@@ -29,7 +29,7 @@ export default async function TeamApiPermissionsPage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["applications.update"]}>
-            <BackButton label="Back to API Creation" />
+            <BackButton label="Back" />
             <ApplicationPermissions application={application} />
         </ProtectedAccountRoute>
     );

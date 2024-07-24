@@ -35,17 +35,23 @@ const apis = {
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
     dataUseExportV1Url: `${apiV1Url}/dur/export`,
+    publicationsV1Url: `${apiV1Url}/publications`,
+    publicationsV1UrlIP: `${apiV1IPUrl}/publications`,
+    toolsV1Url: `${apiV1Url}/tools`,
     toolsV1UrlIP: `${apiV1IPUrl}/tools`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    saveSearchesV1Url: `${apiV1Url}/saved_searches`,
     collectionsV1Url: `${apiV1Url}/collections`,
     collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
     questionBankV1Url: `${apiServiceUrl}/quba`,
     darasV1Url: `${apiServiceUrl}/daras`,
     formHydrationV1Url: `${apiV1Url}/form_hydration`,
     formHydrationV1UrlIP: `${apiV1IPUrl}/form_hydration`,
+    keywordsV1Url: `${apiV1Url}/keywords`,
+    categoriesV1Url: `${apiV1Url}/categories`,
 };
 
 export default apis;

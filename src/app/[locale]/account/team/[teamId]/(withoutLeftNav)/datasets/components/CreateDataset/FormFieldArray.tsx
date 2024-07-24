@@ -5,6 +5,7 @@ import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import Typography from "@/components/Typography";
 import theme from "@/config/theme";
 import { AddIcon } from "@/consts/icons";
 import {
@@ -26,6 +27,7 @@ interface CreateDatasetProps {
     control: Control<FormValues>;
     schemaFields: FormHydration[];
     fieldParent: FormHydration;
+    setSelectedField?: (fieldName: string, fieldArrayName: string) => void;
 }
 
 const ID = "id";
@@ -34,6 +36,7 @@ const FormFieldArray = ({
     control,
     schemaFields,
     fieldParent,
+    setSelectedField,
 }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
@@ -55,6 +58,9 @@ const FormFieldArray = ({
 
     return (
         <>
+            <Typography sx={{ mb: 1 }}>
+                {fieldParent.title.replace(" Array", "")}
+            </Typography>
             {fields.map((field, index) => (
                 <Box key={field.id} sx={{ mb: theme.spacing(3) }}>
                     {Object.entries(field)
@@ -72,7 +78,13 @@ const FormFieldArray = ({
                                         renderFormHydrationField(
                                             testField,
                                             control,
-                                            `${fieldParent.title}.${index}.${testField.name}`
+                                            `${fieldParent.title}.${index}.${testField.name}`,
+                                            (fieldTest: string) =>
+                                                setSelectedField &&
+                                                setSelectedField(
+                                                    fieldTest,
+                                                    fieldParent.title
+                                                )
                                         )}
                                 </React.Fragment>
                             );

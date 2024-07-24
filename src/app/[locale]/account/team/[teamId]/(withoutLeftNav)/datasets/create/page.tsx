@@ -11,7 +11,7 @@ export const metadata = {
     description: "",
 };
 
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDR";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
 
 export default async function CreateDatasetPage({
@@ -37,7 +37,11 @@ export default async function CreateDatasetPage({
             permissions={permissions}
             pagePermissions={["datasets.create"]}>
             <BoxContainer sx={{ mt: "14px" }}>
-                <CreateDataset formJSON={formJSON} />
+                <CreateDataset
+                    formJSON={formJSON}
+                    teamId={Number(teamId)}
+                    userId={user?.id}
+                />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

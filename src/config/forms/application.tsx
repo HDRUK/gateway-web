@@ -33,7 +33,7 @@ const validationSchema = yup
 
 const formFields = [
     {
-        label: "Public API name",
+        label: "Private App name",
         name: "name",
         component: inputComponents.TextField,
         required: true,
@@ -41,7 +41,7 @@ const formFields = [
     {
         label: "Description",
         name: "description",
-        info: "Please provide a short description of the app you want to create",
+        info: "Please provide a short description of the App",
         component: inputComponents.TextArea,
         limit: 300,
         required: true,
@@ -63,7 +63,7 @@ const formFields = [
             value: unknown
         ) => options.find(option => option.value === value)?.label,
         component: inputComponents.Autocomplete,
-        info: "Email address for people who should receive notifications related to integration. Use ‘tab’ or ‘enter’ to add another email address if adding more than one",
+        info: "Identify which team members should receive notifications related to this Private App. Select from the drop-down list.",
     },
 ];
 

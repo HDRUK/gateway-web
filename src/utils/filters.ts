@@ -1,7 +1,11 @@
 import { pick } from "lodash";
 import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
-import { filtersList } from "@/config/forms/filters";
+import {
+    FILTER_CONTAINS_TISSUE,
+    FILTER_MATERIAL_TYPE,
+    filtersList,
+} from "@/config/forms/filters";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
 
 const groupByType = (
@@ -78,6 +82,16 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                               INCLUDE_UNREPORTED
                           ),
                   },
+                  [FILTER_CONTAINS_TISSUE]: [
+                      !!filterQueries?.[FILTER_CONTAINS_TISSUE]?.includes(
+                          FILTER_CONTAINS_TISSUE
+                      ),
+                  ],
+                  [FILTER_MATERIAL_TYPE]: !filterQueries?.[
+                      FILTER_CONTAINS_TISSUE
+                  ]?.includes(FILTER_CONTAINS_TISSUE)
+                      ? []
+                      : filterQueries[FILTER_MATERIAL_TYPE],
               }
             : filterQueries;
 
@@ -112,10 +126,10 @@ const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
 };
 
 export {
-    isQueryEmpty,
+    formatBucketCounts,
     getAllSelectedFilters,
     groupByType,
-    transformQueryFiltersToForm,
-    formatBucketCounts,
+    isQueryEmpty,
     pickOnlyFilters,
+    transformQueryFiltersToForm,
 };

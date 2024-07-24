@@ -4,6 +4,7 @@ export enum FieldType {
     DATE = "date",
     LINK = "link",
     TAG = "tag",
+    LINK_LIST = "link-list",
 }
 interface DatasetField {
     path: string;
@@ -45,7 +46,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.original_metadata.documentation.associatedMedia",
-                type: FieldType.LINK,
+                type: FieldType.LINK_LIST,
                 label: "Associated Media",
             },
             {
@@ -119,7 +120,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.accessibility.access.accessRights",
-                type: FieldType.LINK,
+                type: FieldType.LINK_LIST,
                 label: "Access Rights",
             },
             {
@@ -129,7 +130,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.accessRequestCost",
-                type: FieldType.LINK,
+                type: FieldType.LINK_LIST,
                 label: "Organisation Access Request Cost",
             },
             {

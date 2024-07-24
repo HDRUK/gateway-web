@@ -11,15 +11,18 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import CircleIcon from "@mui/icons-material/Circle";
 import CloseIcon from "@mui/icons-material/Close";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -34,6 +37,7 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
 import HelpIcon from "@mui/icons-material/Help";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -61,6 +65,7 @@ import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import WarningIcon from "@mui/icons-material/Warning";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 export * from "./customIcons";
 
@@ -118,6 +123,7 @@ export {
     RemoveCircleIcon,
     DownloadIcon,
     WarningIcon,
+    WarningRoundedIcon,
     CircleIcon,
     ViewListIcon,
     LaunchIcon,
@@ -128,4 +134,8 @@ export {
     DragIndicatorIcon,
     LockIcon,
     RestartAltIcon,
+    CheckCircleRoundedIcon,
+    HandymanOutlinedIcon,
+    CloudUploadIcon,
+    ArticleIcon,
 };

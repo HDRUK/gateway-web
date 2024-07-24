@@ -11,6 +11,8 @@ const buttonLinkStyle = {
     },
 };
 
+export const DISABLED_OPACITY = 0.4;
+
 export type colourType =
     | "inherit"
     | "action"

@@ -1,19 +1,23 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
+import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getTool } from "@/utils/api";
+import ActionBar from "./components/ActionBar";
+import CollectionsContent from "./components/CollectionsContent";
+import DatasetsContent from "./components/DatasetsContent";
+import DatausesContent from "./components/DatausesContent";
+import PublicationsContent from "./components/PublicationsContent";
 import ToolContent from "./components/ToolContent";
-import { toolFields } from "./config";
+import { toolFields, accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.tool";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Use",
+    title: "Health Data Research Innovation Gateway - Tool",
     description: "",
 };
 
@@ -32,66 +36,45 @@ export default async function ToolPage({
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );
 
-    const activeLinkList = populatedSections.map(section => {
+    const activeLinkList = populatedSections.concat(accordions).map(section => {
         return {
             label: t(section.sectionName),
         };
     });
 
     return (
-        <BoxContainer
-            id="anchor1"
-            sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
-                },
-            }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
-                    bgcolor: "white",
-                    p: 0,
-                }}>
-                <ActiveListSidebar items={activeLinkList} />
-            </Box>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 3", laptop: "span 4" },
-                    p: 0,
-                }}>
+        <LayoutDataItemPage
+            navigation={<ActiveListSidebar items={activeLinkList} />}
+            body={
                 <>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%",
-                        }}
-                        style={{ boxShadow: "1px 1px 3px 0px #00000017" }}>
-                        <BackButton
-                            label={t("backText")}
-                            style={{ margin: 0 }}
-                        />
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 2,
-                        }}>
-                        <Box sx={{ p: 0, gap: 2 }}>
-                            <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
-                                {data.name}
-                            </Typography>
-                        </Box>
+                    <ActionBar />
+                    <Box sx={{ px: 6, py: 3 }}>
+                        <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
+                            {data.name}
+                        </Typography>
                         <ToolContent
                             data={data}
                             populatedSections={populatedSections}
                         />
+                        <DatasetsContent
+                            dataset_versions={data.dataset_versions}
+                            anchorIndex={populatedSections.length + 1}
+                        />
+                        <DatausesContent
+                            datauses={data.durs}
+                            anchorIndex={populatedSections.length + 2}
+                        />
+                        <PublicationsContent
+                            publications={data.publications}
+                            anchorIndex={populatedSections.length + 3}
+                        />
+                        <CollectionsContent
+                            collections={data.collections}
+                            anchorIndex={populatedSections.length + 4}
+                        />
                     </Box>
                 </>
-            </Box>
-        </BoxContainer>
+            }
+        />
     );
 }

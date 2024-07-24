@@ -5,7 +5,10 @@ import {
     UseFormGetValues,
     UseFormTrigger,
 } from "react-hook-form";
+import dayjs from "dayjs";
+import { get, isArray, isObject, set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
+import { Metadata } from "@/interfaces/Dataset";
 import {
     FormHydration,
     FormHydrationField,
@@ -14,6 +17,7 @@ import {
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import InputWrapper from "@/components/InputWrapper";
 import { inputComponents } from "@/config/forms";
+import { getLastSplitPart } from "./string";
 
 type FormValues = Record<string, unknown>;
 
@@ -87,7 +91,7 @@ const formGetFieldsCompletedCount = (
         if (arrayEntries && arraySubFields) {
             fieldCount += arraySubFields.length * arrayEntries.length;
             fieldsWithValue += arrayEntries.reduce(
-                (totalCount: number, obj) => {
+                (totalCount: number, obj: { [x: string]: unknown }) => {
                     return (
                         totalCount +
                         arraySubFields.filter(field => obj[field]).length
@@ -130,12 +134,16 @@ const formGetSectionStatus = (
     isSectionValid: boolean,
     schemaFields: FormHydration[],
     section: string,
-    getValues: UseFormGetValues<FieldValues>
+    getValues: UseFormGetValues<FieldValues>,
+    submissionRequested: boolean
 ) => {
     if (isSectionActive) {
         return LegendStatus.ACTIVE;
     }
-    if (formSectionHasAllEmptyFields(schemaFields, section, getValues)) {
+    if (
+        !submissionRequested &&
+        formSectionHasAllEmptyFields(schemaFields, section, getValues)
+    ) {
         return LegendStatus.UNTOUCHED;
     }
     if (!isSectionValid) {
@@ -172,7 +180,7 @@ const hasVisibleFieldsForLocation = (
 ): boolean => {
     const fieldsForLocation = schemaFields
         .filter(field => field.location)
-        .filter(field => field.location.startsWith(location))
+        .filter(field => field.location?.startsWith(location))
         .some(field => !field?.field?.hidden);
     return fieldsForLocation;
 };
@@ -184,7 +192,8 @@ const formGenerateLegendItems = async (
     schemaFields: FormHydration[],
     clearErrors: UseFormClearErrors<FieldValues>,
     getValues: UseFormGetValues<FieldValues>,
-    trigger: UseFormTrigger<FieldValues>
+    trigger: UseFormTrigger<FieldValues>,
+    submissionRequested: boolean
 ) => {
     const legendItems: LegendItem[] = await Promise.all(
         formSections.map(async section => {
@@ -193,7 +202,9 @@ const formGenerateLegendItems = async (
                 : false;
 
             // Reset form error state
-            clearErrors();
+            if (!submissionRequested) {
+                clearErrors();
+            }
 
             // Get status of section
             const getSectionStatus = formGetSectionStatus(
@@ -201,7 +212,8 @@ const formGenerateLegendItems = async (
                 sectionIsValid,
                 schemaFields,
                 section,
-                getValues
+                getValues,
+                submissionRequested
             );
 
             return {
@@ -233,13 +245,15 @@ const getFirstLocationValues = (schemaFields: FormHydration[]) => {
 const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
-    nameOverride?: string
+    nameOverride?: string,
+    setActiveField?: (fieldName: string) => void,
+    unsetActiveField?: () => void
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
+    const { options } = rest;
 
     return (
         <InputWrapper
-            label={name || ""}
             name={nameOverride || name}
             key={name}
             placeholder={placeholder || ""}
@@ -247,7 +261,7 @@ const renderFormHydrationField = (
             required={required}
             control={control}
             showClearButton={false}
-            canCreate={component === "Autocomplete"}
+            canCreate={component === "Autocomplete" && !options?.length}
             selectOnFocus={component === "Autocomplete"}
             clearOnBlur={component === "Autocomplete"}
             handleHomeEndKeys={component === "Autocomplete"}
@@ -264,20 +278,201 @@ const renderFormHydrationField = (
                     value: string | number;
                     label: string;
                 }[],
-                value: unknown
-            ) => options.find(option => option.value === value)?.label}
+                selectedOption: {
+                    value: string | number;
+                    label: string;
+                }
+            ) =>
+                options.find(option => option === selectedOption)?.label ||
+                selectedOption?.value ||
+                selectedOption
+            }
+            onFocus={() => setActiveField && setActiveField(name)}
+            onBlur={() => unsetActiveField && unsetActiveField()}
             {...rest}
+            label={name || ""}
         />
     );
 };
 
 const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
     type: "object",
-    properties: items.reduce(
-        (acc, { title, ...rest }) => ({ ...acc, [title as string]: rest }),
-        []
-    ),
+    properties: items
+        .filter(item => item !== null)
+        .reduce(
+            (acc, { title, ...rest }) => ({
+                ...acc,
+                [title as string]: rest,
+            }),
+            []
+        ),
 });
+
+const mapFormFieldsForSubmission = (
+    formData: Metadata,
+    schemaFields: FormHydration[]
+) => {
+    // Create a dictionary to map titles to locations using reduce
+    const mappedSchemaFields = schemaFields.reduce(
+        (
+            acc: { [key: string]: string },
+            { title, location, is_array_form, fields }
+        ) => {
+            if (is_array_form) {
+                fields?.forEach(field => {
+                    acc[field.title] = getLastSplitPart(field.location!, ".");
+                });
+            }
+
+            acc[title] = location || "";
+            return acc;
+        },
+        {}
+    );
+
+    const parentField = (title: string) =>
+        schemaFields.find(field => field.title === title);
+
+    // Transform the data object using Object.entries and reduce
+    const transformedObject = Object.entries(formData).reduce(
+        (acc: { [key: string]: string }, [key, value]) => {
+            if (mappedSchemaFields[key]) {
+                if (parentField(key)?.is_array_form) {
+                    value.forEach(
+                        (entry: { [x: string]: string }, index: number) => {
+                            const arrayLocation = parentField(key)?.location;
+
+                            Object.keys(entry).forEach(entryKey => {
+                                acc[
+                                    `${arrayLocation}.${index}.${mappedSchemaFields[entryKey]}`
+                                ] = entry[entryKey];
+                            });
+                        }
+                    );
+                } else {
+                    acc[mappedSchemaFields[key]] = value;
+                }
+            }
+            return acc;
+        },
+        {}
+    );
+
+    // Use a utility function to set nested properties
+    const formattedFormData = {};
+
+    Object.entries(transformedObject).forEach(([key, value]) => {
+        set(formattedFormData, key, value);
+    });
+
+    return formattedFormData;
+};
+
+const mapExistingDatasetToFormFields = (
+    schema: FormHydration[],
+    metadata: Metadata
+) => {
+    const values = {};
+
+    // Function to recursively traverse the schema
+    function traverseSchema(
+        schema: FormHydration[] | FormHydration,
+        currentPath?: string
+    ): void {
+        if (isArray(schema)) {
+            schema.forEach(item => {
+                traverseSchema(item, currentPath);
+            });
+        } else if (isObject(schema)) {
+            // If schema is an object with a field location
+            const { location, is_array_form, field, title } = schema;
+            const fullPath = currentPath
+                ? `${currentPath}.${location}`
+                : location || "";
+
+            if (is_array_form) {
+                // Handle array form case
+                const defaultValue = get(metadata, fullPath, []);
+
+                if (isArray(defaultValue)) {
+                    const test = defaultValue.map((item, index) => {
+                        const itemValues = {};
+
+                        // Map fields of each item in the array
+                        schema?.fields?.forEach(fieldSchema => {
+                            const fieldLocation =
+                                fieldSchema?.location?.split(".");
+                            const requiredLocation =
+                                fieldLocation?.[fieldLocation.length - 1];
+
+                            const defaultValue = get(
+                                metadata,
+                                `${fullPath}.${index}.${requiredLocation}`,
+                                null
+                            );
+
+                            const { field } = fieldSchema;
+                            if (
+                                defaultValue &&
+                                field?.component === inputComponents.DatePicker
+                            ) {
+                                return set(
+                                    itemValues,
+                                    fieldSchema.title,
+                                    dayjs(defaultValue)
+                                );
+                            }
+
+                            if (
+                                field?.component ===
+                                    inputComponents.Autocomplete &&
+                                !isArray(defaultValue)
+                            ) {
+                                return set(values, title, []);
+                            }
+
+                            return set(
+                                itemValues,
+                                fieldSchema.title,
+                                defaultValue
+                            );
+                        });
+                        return itemValues;
+                    });
+
+                    set(values, title, test);
+                }
+            } else {
+                // Handle non-array form case
+                const defaultValue = get(metadata, fullPath);
+
+                if (
+                    defaultValue &&
+                    field?.component === inputComponents.DatePicker
+                ) {
+                    set(values, title, dayjs(defaultValue));
+                } else if (
+                    field?.component === inputComponents.Autocomplete &&
+                    !isArray(defaultValue)
+                ) {
+                    set(values, title, []);
+                } else {
+                    set(values, title, defaultValue);
+                }
+            }
+
+            // Recursively traverse nested fields
+            if (schema.fields) {
+                traverseSchema(schema.fields, fullPath);
+            }
+        }
+    }
+
+    // Start traversal from the root of the schema
+    traverseSchema(schema);
+
+    return values as Metadata;
+};
 
 export {
     formGetAllSectionFields,
@@ -293,4 +488,6 @@ export {
     renderFormHydrationField,
     formatValidationItems,
     formGetFieldsCompletedCount,
+    mapFormFieldsForSubmission,
+    mapExistingDatasetToFormFields,
 };

@@ -1,14 +1,18 @@
+import SearchIcon from "@mui/icons-material/Search";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     DescriptionOutlinedIcon,
     FolderSharedOutlinedIcon,
     GroupsIcon,
     GroupsOutlinedIcon,
+    HandymanOutlinedIcon,
     HelpOutlineOutlinedIcon,
+    QuestionAnswerIcon,
     SchemaOutlinedIcon,
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
-    QuestionAnswerIcon,
+    CloudUploadIcon,
+    ArticleIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -20,6 +24,29 @@ const getProfileNav = (permissions: {
             icon: <FolderSharedOutlinedIcon />,
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
+        },
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis script, tools and software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["papers.read"]
+            ? [
+                  {
+                      icon: <ArticleIcon />,
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
+                  },
+              ]
+            : []),
+        {
+            icon: <SearchIcon />,
+            label: "Saved searches",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
         ...(permissions["custodians.read"]
             ? [
@@ -81,6 +108,15 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis script, tools and software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
         ...([
             permissions["dar.read.assigned"],
             permissions["workflows.read"],
@@ -119,15 +155,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["dur.read"]
-            ? [
-                  {
-                      icon: <SchemaOutlinedIcon />,
-                      label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
-                  },
-              ]
-            : []),
+
         ...([
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -135,13 +163,13 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <DescriptionOutlinedIcon />,
+                      icon: <CloudUploadIcon />,
                       label: "Integrations",
                       subItems: [
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "API management",
+                                        label: "Private Apps",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
@@ -161,6 +189,20 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...([
+            permissions["dur.read"],
+            permissions["dur.write"],
+            permissions["dur.update"],
+            permissions["dur.delete"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <SchemaOutlinedIcon />,
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
+                  },
+              ]
+            : []),
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
@@ -169,4 +211,4 @@ const getTeamNav = (
     ];
 };
 
-export { getTeamNav, getProfileNav };
+export { getProfileNav, getTeamNav };

@@ -8,6 +8,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Team } from "@/interfaces/Team";
+import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
 import config from "@/config/config";
@@ -87,13 +88,34 @@ async function getTeam(
     };
 }
 
+async function getTeamSummary(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/summary`
+    );
+}
+
 async function getDataset(
     cookieStore: ReadonlyRequestCookies,
-    datasetId: string
+    datasetId: string,
+    schemaModel?: string,
+    schemaVersion?: string
 ): Promise<Dataset> {
+    const baseUrl = `${apis.datasetsV1UrlIP}/${datasetId}`;
+    const params = new URLSearchParams();
+
+    if (schemaModel && schemaVersion) {
+        params.append("schema_model", schemaModel);
+        params.append("schemaVersion", schemaVersion);
+    }
+    const queryString = params.toString();
+
     return await get<Dataset>(
         cookieStore,
-        `${apis.datasetsV1UrlIP}/${datasetId}`
+        queryString ? `${baseUrl}?${queryString}` : baseUrl
     );
 }
 
@@ -145,6 +167,7 @@ export {
     getFilters,
     getUser,
     getTeam,
+    getTeamSummary,
     getApplication,
     getCohort,
     getDataset,

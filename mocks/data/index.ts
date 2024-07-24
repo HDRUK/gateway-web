@@ -2,6 +2,8 @@ export * from "./api";
 export * from "./application";
 export * from "./authTeam";
 export * from "./authUser";
+export * from "./dataset";
+export * from "./dataUse";
 export * from "./filters";
 export * from "./generic";
 export * from "./integration";

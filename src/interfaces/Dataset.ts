@@ -1,6 +1,27 @@
 import { Publication } from "./Publication";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
+type CreateOrigin = "FMA" | "MANUAL" | "API";
+
+interface StructuralMetadataValue {
+    name: string;
+    frequency: number;
+    description: string | null;
+}
+
+interface StructuralMetadataColumn {
+    name: string;
+    description: string;
+    dataType: string;
+    sensitive: boolean;
+    values: StructuralMetadataValue[];
+}
+
+interface StructuralMetadata {
+    name: string;
+    description: string;
+    columns: StructuralMetadataColumn[];
+}
 
 interface Metadata {
     summary: {
@@ -62,6 +83,7 @@ interface Metadata {
         dataUses: string[];
         syntheticDataWebLink: string;
     };
+    structuralMetadata?: StructuralMetadata[];
 }
 
 interface MetadataMax {
@@ -87,35 +109,23 @@ interface Dataset {
     pid: string | null;
     versions: VersionItem[];
     updated: string;
-    create_origin: "FMA" | "MANUAL" | "API";
+    create_origin: CreateOrigin;
     latest_metadata?: VersionItem;
+}
+
+interface DataCustodianDataset {
+    id: number;
+    populationSize: number;
+    title: string;
+    datasetType: string;
 }
 
 interface NewDataset extends Omit<Dataset, "versions" | "id"> {
     metadata: { metadata: Metadata };
 }
 
-interface StructuralMetadataValue {
-    name: string;
-    frequency: number;
-    description: string | null;
-}
-
-interface StructuralMetadataColumn {
-    name: string;
-    description: string;
-    dataType: string;
-    sensitive: boolean;
-    values: StructuralMetadataValue[];
-}
-
-interface StructuralMetadata {
-    name: string;
-    description: string;
-    columns: StructuralMetadataColumn[];
-}
-
 export type {
+    DataCustodianDataset,
     Dataset,
     DatasetStatus,
     Metadata,
@@ -124,4 +134,5 @@ export type {
     VersionItem,
     StructuralMetadata,
     StructuralMetadataColumn,
+    CreateOrigin,
 };

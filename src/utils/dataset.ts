@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash";
-import { Dataset } from "@/interfaces/Dataset";
+import { Dataset, VersionItem } from "@/interfaces/Dataset";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -49,12 +49,30 @@ const formatYearStat = (startYear?: string, endYear?: string) => {
 };
 
 const getLatestVersion = (dataset: Dataset) => {
-    return dataset?.latest_metadata || dataset.versions[0];
+    return dataset?.latest_metadata || dataset?.versions?.[0];
+};
+
+const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
+    // Given an array of VersionItems, return only the entries which are the latest version of their respective datasets
+    const groupedByDatasetID = dataset_versions.reduce<VersionItem[]>(
+        (r, o) => {
+            const s = r;
+            s[o.dataset_id] =
+                s[o.dataset_id] && s[o.dataset_id].version > o.version
+                    ? s[o.dataset_id]
+                    : o;
+
+            return r;
+        },
+        []
+    );
+    return Object.values(groupedByDatasetID);
 };
 
 export {
     formatYearStat,
     getLatestVersion,
+    getLatestVersions,
     hasValidValue,
     parseLeadTime,
     splitStringList,

@@ -45,7 +45,7 @@ export default async function TeamCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["applications.create"]}>
-            <BackButton label="Back to API Management" />
+            <BackButton label="Back" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
                     <Typography variant="h2">{t(TITLE)}</Typography>
