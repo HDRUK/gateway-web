@@ -18,7 +18,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         if (isLoggedIn) {
             push(ctaLink.url);
         } else {
-            showDialog(ProvidersDialog);
+            showDialog(ProvidersDialog, { isProvidersDialog: true });
         }
     };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useMemo, ReactNode } from "react";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 
 type dialogComponentType = React.ElementType | null;
 export type dialogPropsType = { [key: string]: unknown };
@@ -43,7 +44,7 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
 
         const DialogComponent = store.dialogComponent;
 
-        if (!DialogComponent) {
+        if (!DialogComponent || store.dialogProps?.isProvidersDialog) {
             return null;
         }
 
@@ -75,6 +76,8 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
     return (
         <GlobalDialogContext.Provider value={value}>
             {renderComponent()}
+            {/* ProvidersDialog has to remain in DOM */}
+            <ProvidersDialog open={!!store.dialogProps?.isProvidersDialog} />
             {children}
         </GlobalDialogContext.Provider>
     );
