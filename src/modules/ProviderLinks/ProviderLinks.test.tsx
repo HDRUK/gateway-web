@@ -2,13 +2,13 @@ import { render, screen } from "@/utils/testUtils";
 
 describe("ProviderLinks", () => {
     it("should match snapshot", async () => {
-        const wrapper = render(<div></div>);
+        const wrapper = render(<div />);
 
         expect(wrapper.container).toMatchSnapshot();
     });
 
     it("should render component", async () => {
-        render(<div></div>);
+        render(<div />);
 
         expect(screen.getByAltText("Azure")).toBeInTheDocument();
         expect(screen.getByAltText("LinkedIn")).toBeInTheDocument();

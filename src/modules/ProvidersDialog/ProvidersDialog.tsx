@@ -16,11 +16,7 @@ import ProviderLinks from "../ProviderLinks";
 const TRANSLATIONS_PROVIDERS_DIALOG = "modules.dialogs.ProvidersDialog";
 const oaId = process.env.NEXT_PUBLIC_OA_APP_ID;
 
-interface ProvidersDialogProps {
-    open: boolean;
-}
-
-const ProvidersDialog = ({ open }: ProvidersDialogProps) => {
+const ProvidersDialog = () => {
     const t = useTranslations(TRANSLATIONS_PROVIDERS_DIALOG);
     const [institutionSelectVisible, setInstitutionSelectVisible] =
         useState<boolean>();
@@ -35,9 +31,9 @@ const ProvidersDialog = ({ open }: ProvidersDialogProps) => {
         <Dialog
             titleSx={{ paddingLeft: 8 }}
             title={t("title")}
-            keepMounted={true}
+            keepMounted
             onClose={() => hideDialog()}
-            open={open}>
+            open={!!store?.dialogProps?.isProvidersDialog}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
                 {!institutionSelectVisible && (
                     <>
