@@ -68,7 +68,7 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
                             gridColumn: "span 3",
                         }}>
                         <Typography component="span">
-                            APP ID: {application.app_id}
+                            Private App ID: {application.app_id}
                         </Typography>
                         <Typography component="span">
                             Description: {application.description}

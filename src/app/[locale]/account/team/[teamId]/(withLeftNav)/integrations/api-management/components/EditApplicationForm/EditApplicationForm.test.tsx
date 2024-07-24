@@ -7,7 +7,7 @@ describe("EditApplicationForm", () => {
 
     it("should render component", async () => {
         render(<EditApplicationForm application={mockApplication} />);
-        expect(screen.getByText("Public API name")).toBeInTheDocument();
+        expect(screen.getByText("Private App name")).toBeInTheDocument();
         expect(screen.getByText("Description")).toBeInTheDocument();
         expect(screen.getByText("Notification Contacts")).toBeInTheDocument();
     });

@@ -11,6 +11,8 @@ import {
     SchemaOutlinedIcon,
     SettingsOutlinedIcon,
     StorageOutlinedIcon,
+    CloudUploadIcon,
+    ArticleIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -29,6 +31,15 @@ const getProfileNav = (permissions: {
                       icon: <HandymanOutlinedIcon />,
                       label: "Analysis script, tools and software",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["papers.read"]
+            ? [
+                  {
+                      icon: <ArticleIcon />,
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
                   },
               ]
             : []),
@@ -152,13 +163,13 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <DescriptionOutlinedIcon />,
+                      icon: <CloudUploadIcon />,
                       label: "Integrations",
                       subItems: [
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "API management",
+                                        label: "Private Apps",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]

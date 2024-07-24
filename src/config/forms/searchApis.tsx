@@ -18,7 +18,7 @@ const formFields = [
         label: "",
     },
     {
-        label: "App status:",
+        label: "Private App status:",
         name: "status",
         component: inputComponents.CheckboxGroup,
         horizontalForm: false,

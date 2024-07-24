@@ -38,6 +38,7 @@ export enum RouteName {
     WORKFLOWS = "workflows",
     TERMS = "terms-and-conditions",
     PUBLICATION = "publication",
+    PUBLICATIONS = "publications",
     NEWSLETTER_SIGNUP = "newsletter-signup",
     SAVED_SEARCHES = "saved-searches",
     MEET_THE_TEAM = "about/meet-the-team",

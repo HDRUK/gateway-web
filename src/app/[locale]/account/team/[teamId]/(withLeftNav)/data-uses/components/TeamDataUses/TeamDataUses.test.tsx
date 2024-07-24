@@ -37,9 +37,9 @@ describe("TeamDataUses", () => {
                 )
             ).toBeInTheDocument();
             expect(
-                within(dataUseCards[0]).getByText(
+                within(dataUseCards[0]).getAllByText(
                     `${mockDataUses[0].datasets[0].shortTitle}`
-                )
+                )[0]
             ).toBeInTheDocument();
         });
     });

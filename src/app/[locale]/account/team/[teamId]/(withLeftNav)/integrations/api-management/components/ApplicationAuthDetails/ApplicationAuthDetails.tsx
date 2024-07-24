@@ -36,8 +36,8 @@ const ApplicationAuthDetails = ({
                 }}>
                 <Typography variant="h2">Authentication credentials</Typography>
                 <Typography>
-                    These authentication credentials determine how your API
-                    interacts with HDR UK Gateway and its permissions.
+                    These authentication credentials determine how your Private
+                    App interacts with HDR UK Gateway and its permissions.
                 </Typography>
             </Paper>
 
