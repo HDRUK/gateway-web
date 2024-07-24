@@ -422,6 +422,7 @@ const FilterPanel = ({
                 if (filterItem.label === FILTER_CONTAINS_TISSUE) {
                     return (
                         <FilterSectionInlineSwitch
+                            key={filterItem.label}
                             filterCategory={filterCategory}
                             filterItem={filterItem}
                             selectedFilters={selectedFilters}
