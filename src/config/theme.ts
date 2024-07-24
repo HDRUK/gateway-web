@@ -481,15 +481,6 @@ const theme = createTheme({
                 },
             },
         },
-        MuiDialog: {
-            styleOverrides: {
-                root: {
-                    "&.hideme": {
-                        display: "none",
-                    },
-                },
-            },
-        },
         MuiDialogTitle: {
             styleOverrides: {
                 root: {

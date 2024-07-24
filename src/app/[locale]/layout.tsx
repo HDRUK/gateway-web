@@ -42,7 +42,6 @@ export default function RootLayout({
                             <DialogProvider>
                                 <ActionBarProvider>
                                     <SnackbarProvider />
-                                    {/* <ProvidersDialog /> */}
                                     <div
                                         style={{
                                             width: "100%",

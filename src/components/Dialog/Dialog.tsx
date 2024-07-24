@@ -18,6 +18,8 @@ export interface DialogProps {
     showCloseButton?: boolean;
     styleProps?: MuiDialogProps;
     classes?: Partial<DialogClasses>;
+    keepMounted?: boolean;
+    open?: boolean;
 }
 
 const Dialog = ({
@@ -29,6 +31,8 @@ const Dialog = ({
     onClose,
     maxWidth = "tablet",
     classes,
+    keepMounted,
+    open = true,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
@@ -43,7 +47,8 @@ const Dialog = ({
         maxWidth,
         fullWidth: true,
         classes,
-        open: true,
+        keepMounted,
+        open,
         ...styleProps,
     };
 

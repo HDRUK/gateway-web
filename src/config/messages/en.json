@@ -974,7 +974,8 @@
                     "linkedIn": "LinkedIn",
                     "google": "Google",
                     "openAthens": "institution"
-                }
+                },
+                "selectAnother": "Select another provider"
             },
             "SignInDialog": {
                 "title": "Sign in",

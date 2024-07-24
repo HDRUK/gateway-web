@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import Script from "next/script";
@@ -9,27 +9,35 @@ import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
+import useDialog from "@/hooks/useDialog";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
 
+const TRANSLATIONS_PROVIDERS_DIALOG = "modules.dialogs.ProvidersDialog";
 const oaId = process.env.NEXT_PUBLIC_OA_APP_ID;
 
-const ProvidersDialog = () => {
-    const t = useTranslations("modules");
-    const [institutionSelectVisible, setInstitutionSelectVisible] =
-        useState<boolean>(false);
+interface ProvidersDialogProps {
+    open: boolean;
+}
 
-    // const { hideDialog, store } = useSignInDialog();
-    // const { hideDialog } = useDialog();
+const ProvidersDialog = ({ open }: ProvidersDialogProps) => {
+    const t = useTranslations(TRANSLATIONS_PROVIDERS_DIALOG);
+    const [institutionSelectVisible, setInstitutionSelectVisible] =
+        useState<boolean>();
+
+    const { hideDialog, store } = useDialog();
+
+    useEffect(() => {
+        setInstitutionSelectVisible(false);
+    }, [store?.dialogComponent]);
 
     return (
         <Dialog
             titleSx={{ paddingLeft: 8 }}
-            key={"testing"}
-            title={t("dialogs.ProvidersDialog.title")}
-            // classes={{ root: !store.isVisible ? "hideme" : "" }}
-            // onClose={hideDialog}.
-        >
+            title={t("title")}
+            keepMounted={true}
+            onClose={() => hideDialog()}
+            open={open}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
                 {!institutionSelectVisible && (
                     <>
@@ -75,25 +83,21 @@ const ProvidersDialog = () => {
                         display: institutionSelectVisible ? "block" : "none",
                     }}>
                     <Button
-                        variant="text"
+                        variant="link"
                         onClick={() => setInstitutionSelectVisible(false)}>
-                        Select another provider
+                        {t("selectAnother")}
                     </Button>
 
                     <div id="wayfinder">
                         <Loading />
                     </div>
 
-                    <p>ID - {oaId}</p>
-
                     {oaId && (
-                        <>
-                            <p>ID - {oaId}</p>
-                            <Script
-                                id="open-athens-wayfinder"
-                                strategy="lazyOnload"
-                                dangerouslySetInnerHTML={{
-                                    __html: `(function(w,a,y,f){
+                        <Script
+                            id="open-athens-wayfinder"
+                            strategy="lazyOnload"
+                            dangerouslySetInnerHTML={{
+                                __html: `(function(w,a,y,f){
            w._wayfinder=w._wayfinder||function(){(w._wayfinder.q=w._wayfinder.q||[]).push(arguments)};
            p={oaDomain:'hdruk.ac.uk',oaAppId: '${oaId}'};
            w._wayfinder.settings=p;h=a.getElementsByTagName('head')[0];
@@ -101,9 +105,8 @@ const ProvidersDialog = () => {
            q=Object.keys(p).map(function(key){return key+'='+p[key]}).join('&');
            s.src=y+'v1'+f+"?"+q;h.appendChild(s);}
         )(window,document,'https://wayfinder.openathens.net/embed/','/loader.js');`,
-                                }}
-                            />
-                        </>
+                            }}
+                        />
                     )}
                 </div>
             </MuiDialogContent>

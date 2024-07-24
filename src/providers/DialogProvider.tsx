@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useMemo, ReactNode } from "react";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 
 type dialogComponentType = React.ElementType | null;
 export type dialogPropsType = { [key: string]: unknown };
@@ -15,22 +16,15 @@ export interface GlobalDialogContextProps {
         dialogComponent: dialogComponentType;
         dialogProps?: dialogPropsType;
     };
-    // test: boolean;
-    // showProvidersDialog: () => void;
-    // hideProvidersDialog: () => void;
 }
 
 const initalState: GlobalDialogContextProps = {
     showDialog: () => null,
     hideDialog: () => null,
-    // test: false,
     store: {
         dialogComponent: null,
         dialogProps: {},
     },
-
-    // showProvidersDialog: () => null,
-    // hideProvidersDialog: () => null,
 };
 
 export const GlobalDialogContext = createContext(initalState);
@@ -45,14 +39,12 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
         dialogProps?: dialogPropsType;
     }>({ dialogComponent: null, dialogProps: {} });
 
-    // const [test, setTest] = React.useState<boolean>(true);
-
     const renderComponent = () => {
         if (!store.dialogComponent) return null;
 
         const DialogComponent = store.dialogComponent;
 
-        if (!DialogComponent) {
+        if (!DialogComponent || store.dialogProps?.isProvidersDialog) {
             return null;
         }
 
@@ -62,7 +54,6 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
     const value = useMemo(
         () => ({
             store,
-            // test,
             showDialog: (
                 dialogComponent: dialogComponentType,
                 dialogProps?: dialogPropsType
@@ -78,13 +69,6 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
                     dialogProps: {},
                 });
             },
-
-            // showProvidersDialog: () => {
-            //     setTest(false);
-            // },
-            // hideProvidersDialog: () => {
-            //     setTest(true);
-            // },
         }),
         [store]
     );
@@ -92,6 +76,8 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
     return (
         <GlobalDialogContext.Provider value={value}>
             {renderComponent()}
+            {/* Provider modal has to remain in DOM */}
+            <ProvidersDialog open={!!store.dialogProps?.isProvidersDialog} />
             {children}
         </GlobalDialogContext.Provider>
     );
