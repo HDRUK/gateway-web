@@ -1,7 +1,12 @@
-import React from "react";
+import userEvent from "@testing-library/user-event";
+import mockRouter from "next-router-mock";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import apis from "@/config/apis";
 import { render, screen, waitFor } from "@/utils/testUtils";
+
+jest.mock("@/hooks/useAuth", () => ({
+    __esModule: true,
+    default: () => ({ isLoggedIn: true }),
+}));
 
 describe("ProvidersDialog", () => {
     it("should render component title", async () => {
@@ -19,11 +24,10 @@ describe("ProvidersDialog", () => {
             exact: false,
         });
         expect(azureButton).toBeInTheDocument();
-
-        expect(azureButton.closest("a")).toHaveAttribute(
-            "href",
-            apis.authAzureV1Url
-        );
+        userEvent.click(azureButton);
+        await waitFor(() => {
+            expect(mockRouter.route).toContain("azure");
+        });
     });
     it("should render google link", async () => {
         render(<ProvidersDialog />);
@@ -31,10 +35,10 @@ describe("ProvidersDialog", () => {
             exact: false,
         });
         expect(googleButton).toBeInTheDocument();
-        expect(googleButton.closest("a")).toHaveAttribute(
-            "href",
-            apis.authGoogleV1Url
-        );
+        userEvent.click(googleButton);
+        await waitFor(() => {
+            expect(mockRouter.route).toContain("google");
+        });
     });
     it("should render linkedIn link", async () => {
         render(<ProvidersDialog />);
@@ -42,9 +46,9 @@ describe("ProvidersDialog", () => {
             exact: false,
         });
         expect(linkedInButton).toBeInTheDocument();
-        expect(linkedInButton.closest("a")).toHaveAttribute(
-            "href",
-            apis.authLinkedinV1Url
-        );
+        userEvent.click(linkedInButton);
+        await waitFor(() => {
+            expect(mockRouter.route).toContain("linkedin");
+        });
     });
 });
