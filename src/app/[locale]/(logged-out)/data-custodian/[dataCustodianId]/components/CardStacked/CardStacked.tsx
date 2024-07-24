@@ -22,7 +22,7 @@ export default function CardStacked({
 }: CardStackedProps) {
     return (
         <BoxStacked
-            sx={{ aspectRatio: "2.1 / 1", minHeight: "130px" }}
+            sx={{ aspectRatio: "2.1 / 1", minHeight: 130 }}
             {...boxStackedProps}>
             <Box
                 component={Link}
