@@ -152,12 +152,13 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
     };
 
     const [tasks, setTasks] = useState<DarQuestion[]>([]);
+
     useEffect(() => {
         if (isLoading) return;
 
         const templateQuestionIds = template?.questions.map(q => q.question_id);
 
-        setTasks(
+        const foundTasks =
             qbQuestions?.list
                 ?.filter(q => q.section_id === sectionId)
                 ?.map((qbQuestion, index) => {
@@ -176,8 +177,8 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                     const boardId = selected ? SELECTED_BOARD_ID : QB_BOARD_ID;
 
                     return makeTask(question, boardId, index);
-                }) || []
-        );
+                }) || [];
+        setTasks(foundTasks);
     }, [sectionId, qbQuestions, template, isLoading]);
 
     const initialSelectBoard = useMemo(
@@ -241,7 +242,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                 return value.id === currentTask.id;
             });
 
-        const anyTaskChanged = currentTasks.some(t => t.task.hasChanged);
+        const anyTaskChanged = currentTasks.some(t => t.task?.hasChanged);
         setHasChanges(!tasksAreUnchanged || anyTaskChanged);
     }, [boardSections, isLoading]);
 

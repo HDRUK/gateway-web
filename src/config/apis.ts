@@ -46,7 +46,7 @@ const apis = {
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,
     collectionsV1Url: `${apiV1Url}/collections`,
     collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
-    questionBankV1Url: `${apiServiceUrl}/quba`,
+    questionBankV1Url: `${apiServiceUrl}/darq`,
     darasV1Url: `${apiServiceUrl}/daras`,
     formHydrationV1Url: `${apiV1Url}/form_hydration`,
     formHydrationV1UrlIP: `${apiV1IPUrl}/form_hydration`,
