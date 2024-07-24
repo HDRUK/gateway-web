@@ -2,6 +2,113 @@
 
 exports[`ProviderLinks should match snapshot 1`] = `
 <div>
-  <div />
+  <div
+    class="MuiBox-root mui-style-1uxy81i"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="Google"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        Google
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="institution"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        institution
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="LinkedIn"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        LinkedIn
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiBox-root mui-style-1azorbj"
+      >
+        <img
+          alt="Azure"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        Azure
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+  </div>
 </div>
 `;
