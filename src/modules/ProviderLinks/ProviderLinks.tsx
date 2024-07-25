@@ -14,10 +14,10 @@ interface LinkItem {
 }
 
 interface ProviderLinksProps {
-    showInstituion: () => void;
+    showInstitution: () => void;
 }
 
-const ProviderLinks = ({ showInstituion }: ProviderLinksProps) => {
+const ProviderLinks = ({ showInstitution }: ProviderLinksProps) => {
     const t = useTranslations("modules");
     const pathname = usePathname();
     const { push } = useRouter();
@@ -70,7 +70,7 @@ const ProviderLinks = ({ showInstituion }: ProviderLinksProps) => {
                     <Button
                         key={link.image}
                         onClick={() =>
-                            link.href ? push(link.href) : showInstituion()
+                            link.href ? push(link.href) : showInstitution()
                         }
                         sx={{
                             p: 0,

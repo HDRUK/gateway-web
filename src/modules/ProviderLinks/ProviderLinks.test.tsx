@@ -4,7 +4,7 @@ import ProviderLinks from "./ProviderLinks";
 describe("ProviderLinks", () => {
     it("should match snapshot", async () => {
         const wrapper = render(
-            <ProviderLinks showInstituion={() => console.log("show inst")} />
+            <ProviderLinks showInstitution={() => console.log("show inst")} />
         );
 
         expect(wrapper.container).toMatchSnapshot();
@@ -12,7 +12,7 @@ describe("ProviderLinks", () => {
 
     it("should render component", async () => {
         render(
-            <ProviderLinks showInstituion={() => console.log("show inst")} />
+            <ProviderLinks showInstitution={() => console.log("show inst")} />
         );
 
         expect(screen.getByAltText("Azure")).toBeInTheDocument();

@@ -54,7 +54,7 @@ const ProvidersDialog = () => {
                         />
                         <p>{t("intro2")}</p>
                         <ProviderLinks
-                            showInstituion={() =>
+                            showInstitution={() =>
                                 setInstitutionSelectVisible(true)
                             }
                         />
