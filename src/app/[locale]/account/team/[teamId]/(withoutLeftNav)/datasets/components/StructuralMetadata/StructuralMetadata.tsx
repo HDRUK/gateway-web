@@ -95,8 +95,8 @@ const StructuralMetadata = ({
     return (
         <Paper
             sx={{
-                marginTop: "10px",
-                marginBottom: "10px",
+                marginTop: 1.25,
+                marginBottom: 1.25,
                 padding: 2,
             }}>
             <Typography variant="h2">
