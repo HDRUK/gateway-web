@@ -1,5 +1,11 @@
 "use client";
 
+import {
+    ReactElement,
+    JSXElementConstructor,
+    ReactFragment,
+    ReactNode,
+} from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { range } from "lodash";
 import { useTranslations } from "next-intl";
@@ -25,6 +31,35 @@ interface StructuralMetadataProps {
 
 const columnHelper = createColumnHelper();
 
+const renderTextWrapper = (
+    text:
+        | ReactElement<string, string | JSXElementConstructor<string>>
+        | ReactFragment
+) => <Typography>{text}</Typography>;
+
+const renderBoldText = (chunks: ReactNode) => (
+    <>
+        <br />
+        <b>{chunks}</b>
+    </>
+);
+
+const renderRedText = (chunks: ReactNode) => (
+    <span
+        style={{
+            color: `${colors.red600}`,
+            fontWeight: "bold",
+        }}>
+        {chunks}
+    </span>
+);
+
+const renderTableHeader = (headerText: string) => (
+    <Typography sx={{ textAlign: "left", fontWeight: "bold" }}>
+        {headerText}
+    </Typography>
+);
+
 const StructuralMetadata = ({
     selectedFormSection,
 }: StructuralMetadataProps) => {
@@ -45,32 +80,14 @@ const StructuralMetadata = ({
         tableColumns.map(column =>
             columnHelper.display({
                 id: column.header,
-                cell: ({ row: { index } }) => (
-                    <Typography>
-                        {t.rich(`${column.path}${index + 1}`, {
-                            bold: chunks => (
-                                <>
-                                    <br />
-                                    <b>{chunks}</b>
-                                </>
-                            ),
-                            red: chunks => (
-                                <span
-                                    style={{
-                                        color: `${colors.red600}`,
-                                        fontWeight: "bold",
-                                    }}>
-                                    {chunks}
-                                </span>
-                            ),
-                        })}
-                    </Typography>
-                ),
-                header: () => (
-                    <Typography sx={{ textAlign: "left", fontWeight: "bold" }}>
-                        {column.header}
-                    </Typography>
-                ),
+                cell: ({ row: { index } }) =>
+                    renderTextWrapper(
+                        t.rich(`${column.path}${index + 1}`, {
+                            bold: chunks => renderBoldText(chunks),
+                            red: chunks => renderRedText(chunks),
+                        })
+                    ),
+                header: () => renderTableHeader(column.header),
                 size: column.path === "metadataField" ? 70 : 150,
             })
         );
