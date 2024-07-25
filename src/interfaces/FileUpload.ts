@@ -1,0 +1,14 @@
+interface FileUpload {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    filename: string;
+    file_location: string;
+    user_id: number;
+    status: string;
+    error: string | null;
+    entity_type: string | null;
+    entity_id: number | null;
+}
+
+export type { FileUpload };

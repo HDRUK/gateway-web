@@ -52,6 +52,8 @@ const apis = {
     formHydrationV1UrlIP: `${apiV1IPUrl}/form_hydration`,
     keywordsV1Url: `${apiV1Url}/keywords`,
     categoriesV1Url: `${apiV1Url}/categories`,
+    fileUploadV1Url: `${apiV1Url}/files`,
+    fileProcessedV1Url: `${apiV1Url}/files/processed`,
 };
 
 export default apis;
