@@ -11,7 +11,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       type="button"
     >
       <span
-        class="MuiBox-root mui-style-1azorbj"
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="Google"
@@ -37,7 +37,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       type="button"
     >
       <span
-        class="MuiBox-root mui-style-1azorbj"
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="institution"
@@ -63,7 +63,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       type="button"
     >
       <span
-        class="MuiBox-root mui-style-1azorbj"
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="LinkedIn"
@@ -89,7 +89,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       type="button"
     >
       <span
-        class="MuiBox-root mui-style-1azorbj"
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="Azure"
