@@ -226,17 +226,17 @@
                         "text": "Edit the details of this data provider team on the Gateway"
                     }
                 },
-                "publications":{
+                "publications": {
                     "components": {
                         "PublicationTab": {
-                            "noPublications":"No {status} publications found on the Gateway associated with your profile."
+                            "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
                     },
-                    "list":{
+                    "list": {
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",
                         "create": "Add publication",
-                        "actions":{
+                        "actions": {
                             "edit": {
                                 "label": "Edit a publication"
                             },
@@ -343,7 +343,24 @@
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
                             },
-                            "errorLoading": "An error occured while loading the Dataset"
+                            "errorLoading": "An error occured while loading the Dataset",
+                            "structuralMetadata": {
+                                "intro": "Upload a file with the description of all table and data elements that are included in the dataset. This will be rendered in tabular format for a researcher to review the dataset table(s).",
+                                "metadataFieldHeader": "Metadata field",
+                                "metadataField1": "Table name <red>*</red>",
+                                "metadataField2": "Table description",
+                                "metadataField3": "Column name <red>*</red>",
+                                "metadataField4": "Column description <red>*</red>",
+                                "metadataField5": "Data type <red>*</red>",
+                                "metadataField6": "Sensitive <red>*</red>",
+                                "completionGuidanceHeader": "Completion Guidance",
+                                "completionGuidance1": "Name of the table in the dataset. Use a fully qualified name if appropriate.",
+                                "completionGuidance2": "Description of the table in the dataset.",
+                                "completionGuidance3": "Name of the column in the table dataset.",
+                                "completionGuidance4": "Description of the column in the table dataset.",
+                                "completionGuidance5": "Type of data contained in the column.",
+                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource."
+                            }
                         },
                         "EditDataset": {
                             "editButton": "Update",
