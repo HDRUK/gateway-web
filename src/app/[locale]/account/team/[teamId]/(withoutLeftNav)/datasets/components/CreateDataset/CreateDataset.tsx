@@ -454,7 +454,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     }
 
     const isStructuralMetadataSection =
-        currentSectionIndex === formSections.length - 2;
+        formSections[currentSectionIndex] === STRUCTURAL_METADATA_FORM_SECTION;
 
     return (
         <>
