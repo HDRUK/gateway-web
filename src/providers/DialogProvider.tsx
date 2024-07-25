@@ -43,7 +43,7 @@ const DialogProvider: React.FC<GlobalDialogProps> = ({ children }) => {
 
         const DialogComponent = store.dialogComponent;
 
-        if (!DialogComponent) {
+        if (!DialogComponent || store.dialogProps?.isProvidersDialog) {
             return null;
         }
 

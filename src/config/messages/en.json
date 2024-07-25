@@ -226,17 +226,17 @@
                         "text": "Edit the details of this data provider team on the Gateway"
                     }
                 },
-                "publications":{
+                "publications": {
                     "components": {
                         "PublicationTab": {
-                            "noPublications":"No {status} publications found on the Gateway associated with your profile."
+                            "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
                     },
-                    "list":{
+                    "list": {
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",
                         "create": "Add publication",
-                        "actions":{
+                        "actions": {
                             "edit": {
                                 "label": "Edit a publication"
                             },
@@ -1049,8 +1049,13 @@
                 "socialProviders": {
                     "azure": "Azure",
                     "linkedIn": "LinkedIn",
-                    "google": "Google"
-                }
+                    "google": "Google",
+                    "openAthens": "institution"
+                },
+                "intro1": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
+                "intro2": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:",
+                "suggestAnother": "Suggest another identity provider",
+                "selectAnother": "Select another provider"
             },
             "SignInDialog": {
                 "title": "Sign in",
