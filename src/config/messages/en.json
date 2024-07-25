@@ -1052,6 +1052,9 @@
                     "google": "Google",
                     "openAthens": "institution"
                 },
+                "intro1": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
+                "intro2": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:",
+                "suggestAnother": "Suggest another identity provider",
                 "selectAnother": "Select another provider"
             },
             "SignInDialog": {

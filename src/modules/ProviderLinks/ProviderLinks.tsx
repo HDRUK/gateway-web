@@ -84,8 +84,8 @@ const ProviderLinks = ({ showInstituion }: ProviderLinksProps) => {
                             component="span"
                             sx={{
                                 border: `solid 1px ${colors.grey400}`,
-                                borderRadius: "4px",
-                                padding: "7px",
+                                borderRadius: 1,
+                                padding: 1,
                                 display: "flex",
                                 gap: 2,
                             }}>

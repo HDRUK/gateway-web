@@ -37,11 +37,7 @@ const ProvidersDialog = () => {
             <MuiDialogContent sx={{ paddingX: 8 }}>
                 {!institutionSelectVisible && (
                     <>
-                        <p>
-                            Anyone can search and view datasets, collections and
-                            other resources with or without an account. Creating
-                            an account allows you to:
-                        </p>
+                        <p>{t("intro1")}</p>
 
                         <BulletList
                             items={[
@@ -56,12 +52,7 @@ const ProvidersDialog = () => {
                                 },
                             ]}
                         />
-                        <p>
-                            You can sign in or create a Gateway account with any
-                            of the organisations below, simply click your
-                            preferred organisation and follow the on-screen
-                            instructions:
-                        </p>
+                        <p>{t("intro2")}</p>
                         <ProviderLinks
                             showInstituion={() =>
                                 setInstitutionSelectVisible(true)
@@ -69,7 +60,7 @@ const ProvidersDialog = () => {
                         />
 
                         <Link href={CUSTOMER_PORTAL_SUPPORT_URL}>
-                            Suggest another identity provider
+                            {t("suggestAnother")}
                         </Link>
                     </>
                 )}
