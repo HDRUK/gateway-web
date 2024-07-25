@@ -19,13 +19,8 @@ const postFetch = async <T>(
         const response = await fetch(url, {
             method: "POST",
             body: !isFormData ? JSON.stringify(data) : data,
-
             credentials: "include",
-            headers: !isFormData
-                ? {
-                      "Content-Type": "multipart/form-data",
-                  }
-                : {},
+            headers: !isFormData ? { "Content-Type": "application/json" } : {},
         });
 
         if (response.ok) {
