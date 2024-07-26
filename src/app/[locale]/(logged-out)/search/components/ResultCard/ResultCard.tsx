@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import {
     Button,
@@ -37,10 +37,6 @@ interface ResultCardProps {
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 
-const getLibraries = () => {
-    return useGet<Library[]>(`${apis.librariesV1Url}?perPage=1000`);
-};
-
 const ResultCard = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
@@ -48,25 +44,30 @@ const ResultCard = ({ result }: ResultCardProps) => {
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
     const { _id: datasetId } = result;
-    const libraries = getLibraries();
-    console.log("getLibraries", libraries);
+
+    const {
+        data,
+        isLoading,
+        mutate: mutateLibraries,
+    } = useGet<Library[]>(`${apis.librariesV1Url}?perPage=1000`);
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
-    if (!!libraries.data) {
-        const libraries_dataset_ids = libraries.data.map(a => a.dataset_id);
-        console.log(libraries_dataset_ids);
-        // if ( libraries_dataset_ids.includes( Number(datasetId) )) {
-        //     setLibraryToggle(true);
-        // }
-    }
-    // const isLibraryToggled =
+    useEffect(() => {
+        if (!isLoading && !!data) {
+            const libraries_dataset_ids = data.map(a => a.dataset_id);
+            console.log(libraries_dataset_ids);
+            if (libraries_dataset_ids.includes(Number(datasetId))) {
+                setLibraryToggle(true);
+            }
+        }
+    }, [isLoading, data]);
 
-    const addLibrary = usePost<NewLibrary>(`${apis.librariesV1Url}`);
+    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url);
 
-    // const deleteLibrary(id: number) => {
-    //      useDelete(`${apis.librariesV1Url}/${id}`);
-    // }
+    const deleteLibrary = useDelete(apis.librariesV1Url, {
+        itemName: `Library`,
+    });
 
     const handleClickItem = useCallback(() => {
         router.push(`/${RouteName.DATASET_ITEM}/${datasetId}`);
@@ -87,7 +88,9 @@ const ResultCard = ({ result }: ResultCardProps) => {
         setAnchorElement(event.currentTarget);
     };
 
-    const handleAddRemoveLibrary = (event: React.MouseEvent<HTMLElement>) => {
+    const handleAddRemoveLibrary = async (
+        event: React.MouseEvent<HTMLElement>
+    ) => {
         event.stopPropagation();
         if (!isLibraryToggled) {
             // call post request, await response
@@ -98,34 +101,25 @@ const ResultCard = ({ result }: ResultCardProps) => {
             addLibrary(payload).then(res => {
                 console.log(res);
                 if (res) {
+                    mutateLibraries();
                     setLibraryToggle(true);
                 }
             });
-            //if success, set toggle
-            // const success = true;
-            // if (success) {
-            //     setLibraryToggle(true);
-            // }
         } else {
             // search for libraryId by datasetId and userId.
-            // const libraries = getLibraries();
-            // const library_to_delete = libraries.data.find(
-            //     element =>
-            //         element.user_id === 1 && element.dataset_id === +datasetId
-            // );
-            // console.log(library_to_delete);
-            // const payload: NewLibrary = {
-            //     user_id: 1,
-            //     dataset_id: datasetId,
-            // };
-            // call delete request, await response
+            const library_id_to_delete = data.find(
+                element =>
+                    element.user_id === 1 && element.dataset_id === +datasetId
+            ).id;
 
-            // deleteLibrary(libraryId).then(res => {
-            //     console.log(res);
-            //     if (res) {
-            //         setLibraryToggle(true);
-            //     }
-            // });
+            console.log(library_id_to_delete);
+
+            // call delete request, await response
+            const res = await deleteLibrary(library_id_to_delete);
+
+            console.log(res);
+            mutateLibraries();
+            setLibraryToggle(false);
         }
     };
 
