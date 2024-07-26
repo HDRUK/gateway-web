@@ -25,7 +25,7 @@ const Application = ({ applicationId }: ApplicationProps) => {
     );
 
     const { data } = useGet<DarApplication>(
-        `${apis.darasV1Url}/dar-applications/${applicationId}`,
+        `${apis.darasV1Url}/applications/${applicationId}`,
         {
             itemName: "DAR Application",
         }
@@ -34,7 +34,7 @@ const Application = ({ applicationId }: ApplicationProps) => {
     // temp measure to send user.id because JWT and authorisation is not availble for DARAS yet
     const { data: userAnswers } = useGet<DarApplicationAnswer[]>(
         user
-            ? `${apis.darasV1Url}/dar-applications/${applicationId}/answers?user_id=${user?.id}`
+            ? `${apis.darasV1Url}/applications/${applicationId}/answers?user_id=${user?.id}`
             : null,
         {
             itemName: "DAR Application",
