@@ -58,6 +58,7 @@ import {
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
+import StructuralMetadata from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
@@ -70,6 +71,7 @@ interface CreateDatasetProps {
 
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
+const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
 
@@ -228,7 +230,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 hasVisibleFieldsForLocation(schemaFields, location)
             )
         )
-        .concat(SUBMISSON_FORM_SECTION);
+        .concat([STRUCTURAL_METADATA_FORM_SECTION, SUBMISSON_FORM_SECTION]);
 
     const currentSectionIndex = selectedFormSection
         ? formSections.indexOf(selectedFormSection)
@@ -451,6 +453,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         );
     }
 
+    const isStructuralMetadataSection =
+        formSections[currentSectionIndex] === STRUCTURAL_METADATA_FORM_SECTION;
+
     return (
         <>
             <FormBanner
@@ -486,68 +491,80 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                     {currentSectionIndex < formSections.length - 1 ? (
                         <>
                             <Box sx={{ flex: 2, p: 0 }}>
-                                <Form onSubmit={handleSubmit(formSubmit)}>
-                                    <Paper
-                                        sx={{
-                                            marginTop: "10px",
-                                            marginBottom: "10px",
-                                            padding: 2,
-                                        }}>
-                                        <Typography variant="h2">
-                                            {capitalise(
-                                                splitCamelcase(
-                                                    selectedFormSection
-                                                )
-                                            )}
-                                        </Typography>
+                                {isStructuralMetadataSection && (
+                                    <StructuralMetadata
+                                        selectedFormSection={
+                                            selectedFormSection
+                                        }
+                                    />
+                                )}
 
-                                        <Box sx={{ p: 0 }}>
-                                            {selectedFormSection &&
-                                                schemaFields
-                                                    .filter(
-                                                        schemaField =>
-                                                            !schemaField.field
-                                                                ?.hidden
+                                {!isStructuralMetadataSection && (
+                                    <Form onSubmit={handleSubmit(formSubmit)}>
+                                        <Paper
+                                            sx={{
+                                                marginTop: "10px",
+                                                marginBottom: "10px",
+                                                padding: 2,
+                                            }}>
+                                            <Typography variant="h2">
+                                                {capitalise(
+                                                    splitCamelcase(
+                                                        selectedFormSection
                                                     )
-                                                    .filter(({ location }) =>
-                                                        location?.startsWith(
-                                                            selectedFormSection
+                                                )}
+                                            </Typography>
+
+                                            <Box sx={{ p: 0 }}>
+                                                {selectedFormSection &&
+                                                    schemaFields
+                                                        .filter(
+                                                            schemaField =>
+                                                                !schemaField
+                                                                    .field
+                                                                    ?.hidden
                                                         )
-                                                    )
-                                                    .map(fieldParent => {
-                                                        const {
-                                                            field,
-                                                            fields,
-                                                        } = fieldParent;
-
-                                                        return fields?.length ? (
-                                                            <FormFieldArray
-                                                                control={
-                                                                    control
-                                                                }
-                                                                schemaFields={
-                                                                    fields
-                                                                }
-                                                                fieldParent={
-                                                                    fieldParent
-                                                                }
-                                                                setSelectedField={
-                                                                    updateGuidanceText
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            field &&
-                                                                renderFormHydrationField(
-                                                                    field,
-                                                                    control,
-                                                                    undefined,
-                                                                    updateGuidanceText
+                                                        .filter(
+                                                            ({ location }) =>
+                                                                location?.startsWith(
+                                                                    selectedFormSection
                                                                 )
-                                                        );
-                                                    })}
-                                        </Box>
-                                    </Paper>
-                                </Form>
+                                                        )
+                                                        .map(fieldParent => {
+                                                            const {
+                                                                field,
+                                                                fields,
+                                                            } = fieldParent;
+
+                                                            return fields?.length ? (
+                                                                <FormFieldArray
+                                                                    control={
+                                                                        control
+                                                                    }
+                                                                    schemaFields={
+                                                                        fields
+                                                                    }
+                                                                    fieldParent={
+                                                                        fieldParent
+                                                                    }
+                                                                    setSelectedField={
+                                                                        updateGuidanceText
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                field &&
+                                                                    renderFormHydrationField(
+                                                                        field,
+                                                                        control,
+                                                                        undefined,
+                                                                        updateGuidanceText
+                                                                    )
+                                                            );
+                                                        })}
+                                            </Box>
+                                        </Paper>
+                                    </Form>
+                                )}
                             </Box>
                             <Paper
                                 style={{
