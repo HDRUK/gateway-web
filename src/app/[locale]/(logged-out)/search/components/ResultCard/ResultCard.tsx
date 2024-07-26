@@ -136,7 +136,7 @@ const ResultCard = ({
                         primary={
                             <ResultTitle>
                                 {metadata.summary.shortTitle}
-                                <div>
+                                <div style={{ textAlign: "end" }}>
                                     <Button
                                         // ref={libraryRef}
                                         onClick={handleAddRemoveLibrary}
@@ -148,7 +148,7 @@ const ResultCard = ({
                                                 <BookmarkBorder color="secondary" />
                                             )
                                         }
-                                        sx={{ mr: 2 }}>
+                                        sx={{ mb: 1 }}>
                                         {isLibraryToggled
                                             ? t("removeFromLibrary")
                                             : t("addToLibrary")}
@@ -166,6 +166,7 @@ const ResultCard = ({
                                                 style={{ color: "white" }}
                                             />
                                         }
+                                        sx={{ ml: 2, mb: 1 }}
                                         onClick={handleOpenNavMenu}>
                                         {t("actions")}
                                     </Button>
