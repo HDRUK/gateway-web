@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
+import { Library } from "@/interfaces/Library";
 import {
     SavedSearchPayload,
     SearchCategory,
@@ -36,6 +37,7 @@ import SaveSearchDialog, {
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
@@ -275,6 +277,11 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         }
     }, [queryParams.query, queryParams.type, initialCategory, initialQuery]);
 
+    // Update the list of libraries
+    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
+        `${apis.librariesV1Url}?perPage=1000`
+    );
+
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
         setQueryParams({
@@ -392,6 +399,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     <ResultCard
                         result={result as SearchResultDataset}
                         key={resultId}
+                        mutateLibraries={mutateLibraries}
+                        libraryData={libraryData}
                     />
                 );
             case SearchCategory.PUBLICATIONS:

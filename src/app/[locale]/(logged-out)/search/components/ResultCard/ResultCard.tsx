@@ -10,6 +10,7 @@ import {
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -33,11 +34,17 @@ import menuItems from "./config";
 
 interface ResultCardProps {
     result: SearchResultDataset;
+    libraryData: Library[];
+    mutateLibraries: KeyedMutator<Library[]>;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 
-const ResultCard = ({ result }: ResultCardProps) => {
+const ResultCard = ({
+    result,
+    libraryData,
+    mutateLibraries,
+}: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
     const { showDialog } = useDialog();
@@ -45,23 +52,14 @@ const ResultCard = ({ result }: ResultCardProps) => {
     const highlight = get(result, "highlight");
     const { _id: datasetId } = result;
 
-    const {
-        data,
-        isLoading,
-        mutate: mutateLibraries,
-    } = useGet<Library[]>(`${apis.librariesV1Url}?perPage=1000`);
-
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
-        if (!isLoading && !!data) {
-            const libraries_dataset_ids = data.map(a => a.dataset_id);
-            console.log(libraries_dataset_ids);
-            if (libraries_dataset_ids.includes(Number(datasetId))) {
-                setLibraryToggle(true);
-            }
+        const libraries_dataset_ids = libraryData.map(a => a.dataset_id);
+        if (libraries_dataset_ids.includes(Number(datasetId))) {
+            setLibraryToggle(true);
         }
-    }, [isLoading, data]);
+    }, [libraryData]);
 
     const addLibrary = usePost<NewLibrary>(apis.librariesV1Url);
 
@@ -93,7 +91,6 @@ const ResultCard = ({ result }: ResultCardProps) => {
     ) => {
         event.stopPropagation();
         if (!isLibraryToggled) {
-            // call post request, await response
             const payload: NewLibrary = {
                 user_id: 1,
                 dataset_id: +datasetId,
@@ -106,15 +103,14 @@ const ResultCard = ({ result }: ResultCardProps) => {
                 }
             });
         } else {
-            // search for libraryId by datasetId and userId.
-            const library_id_to_delete = data.find(
+            const library_id_to_delete = libraryData.find(
                 element =>
-                    element.user_id === 1 && element.dataset_id === +datasetId
+                    element.user_id === 1 &&
+                    element.dataset_id === Number(datasetId)
             ).id;
 
             console.log(library_id_to_delete);
 
-            // call delete request, await response
             const res = await deleteLibrary(library_id_to_delete);
 
             console.log(res);
