@@ -49,7 +49,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         data: template,
         isLoading: isLoadingQuestions,
         mutate: mutateTemplate,
-    } = useGet<DarTemplate>(`${apis.darasV1Url}/dar-templates/${templateId}`, {
+    } = useGet<DarTemplate>(`${apis.darasV1Url}/templates/${templateId}`, {
         keepPreviousData: true,
     });
 
@@ -71,13 +71,10 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         []
     );
 
-    const updateTemplateQuestions = usePatch(
-        `${apis.darasV1Url}/dar-templates`,
-        {
-            itemName: "Update Template",
-            query: `section_id=${sectionId}`,
-        }
-    );
+    const updateTemplateQuestions = usePatch(`${apis.darasV1Url}/templates`, {
+        itemName: "Update Template",
+        query: `section_id=${sectionId}`,
+    });
 
     const [hasChanges, setHasChanges] = useState(false);
 
