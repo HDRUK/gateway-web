@@ -135,6 +135,10 @@ const BarSliderContainer = ({
 
     const onChange = (_e: Event, newValue: number[] | number) => {
         setSelected(newValue as number[]);
+    };
+
+    const onChangeCommitted = (_e: Event, newValue: number[] | number) => {
+        setSelected(newValue as number[]);
         if (typeof handleRangeChange === "function") {
             handleRangeChange(newValue);
         }
@@ -179,6 +183,7 @@ const BarSliderContainer = ({
                 size={sliderSize}
                 max={data?.length}
                 onChange={onChange}
+                onChangeCommitted={onChangeCommitted}
                 valueLabelDisplay="auto"
                 valueLabelFormat={valueLabelFormat}
                 getAriaValueText={valuetext}
