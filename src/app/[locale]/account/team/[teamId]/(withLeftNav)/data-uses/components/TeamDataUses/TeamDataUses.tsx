@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { DataUse } from "@/interfaces/DataUse";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
@@ -11,10 +11,8 @@ import Button from "@/components/Button";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import AddDataUseDialog from "@/modules/AddDataUseDialog";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
-import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -54,8 +52,8 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}
 
 const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const router = useRouter();
     const { showModal } = useModal();
-    const { showDialog } = useDialog();
     const searchParams = useSearchParams();
     const params = useParams<{ teamId: string }>();
     const tab = searchParams?.get("tab");
@@ -156,7 +154,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     const showUnarchiveButton =
         tab === DataStatus.ARCHIVED && permissions["dur.update"];
     const showAddNewButton = useMemo(
-        () => permissions["dur.create"],
+        () => permissions["roles.dar-m.update"],
         [permissions]
     );
 
@@ -258,7 +256,8 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     }));
 
     const handleAdd = () => {
-        showDialog(AddDataUseDialog, { teamId });
+        const DATAUSE_CREATE_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}/${RouteName.CREATE}`;
+        router.push(DATAUSE_CREATE_ROUTE);
     };
 
     return (

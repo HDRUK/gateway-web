@@ -18,7 +18,7 @@ const DarTemplatePage = () => {
     }>();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const createNewTemplate = usePost(`${apis.darasV1Url}/dar-templates`, {
+    const createNewTemplate = usePost(`${apis.darasV1Url}/templates`, {
         itemName: "DAR Template",
     });
 

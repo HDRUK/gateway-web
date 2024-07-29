@@ -14,13 +14,13 @@ const postFetch = async <T>(
     } = notificationOptions;
 
     try {
+        const isFormData = data instanceof FormData;
+
         const response = await fetch(url, {
             method: "POST",
-            body: JSON.stringify(data),
+            body: !isFormData ? JSON.stringify(data) : data,
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: !isFormData ? { "Content-Type": "application/json" } : {},
         });
 
         if (response.ok) {
