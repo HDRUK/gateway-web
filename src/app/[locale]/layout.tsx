@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import { sourceSans3 } from "@/config/fonts";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
@@ -59,6 +60,8 @@ export default function RootLayout({
                                         <NavigationEvents />
                                     </Suspense>
                                 </ActionBarProvider>
+                                {/* ProvidersDialog has to remain in DOM */}
+                                <ProvidersDialog />
                             </DialogProvider>
                         </ThemeRegistry>
                     </SWRProvider>

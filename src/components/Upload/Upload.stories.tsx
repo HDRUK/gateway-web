@@ -28,15 +28,20 @@ const WrapperComponent = () => {
     const onSubmit = (data: unknown) => console.log(data);
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2} sx={{ padding: 2, maxWidth: 240 }}>
+            <Stack spacing={0} sx={{ padding: 0 }}>
                 <Upload
                     {...register("upload")}
                     control={control}
                     label="Upload"
                     name="upload"
                     uploadSx={{ display: "none" }}
+                    acceptFileTypes=".csv"
+                    onFileChange={(file: File) => console.log(file)}
+                    helperText="Must be a .csv file, cannot exceed 10 mb per file."
                 />
-                <Button type="submit">Submit</Button>
+                <Button type="submit" sx={{ maxWidth: 240 }}>
+                    Submit
+                </Button>
             </Stack>
         </Form>
     );

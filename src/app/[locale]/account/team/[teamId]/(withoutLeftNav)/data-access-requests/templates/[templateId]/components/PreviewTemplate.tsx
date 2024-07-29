@@ -27,7 +27,7 @@ const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
                 const formField = {
                     ...hydration.field,
                     required: question.required === 1,
-                    label: title,
+                    name: title,
                     info: guidance,
                 };
 

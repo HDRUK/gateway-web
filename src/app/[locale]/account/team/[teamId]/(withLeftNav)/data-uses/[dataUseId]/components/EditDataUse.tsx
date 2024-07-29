@@ -50,7 +50,8 @@ const EditDataUse = () => {
     );
 
     const { data } = useGet<DataUse[]>(
-        `${apis.dataUseV1Url}/${params?.dataUseId}`
+        `${apis.dataUseV1Url}/${params?.dataUseId}`,
+        { shouldFetch: !!params?.dataUseId }
     );
 
     const existingDataUse = useMemo(() => data?.[0], [data]);
