@@ -1,6 +1,11 @@
 import { ReactNode } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
-import { FilterOptionsState, InputAdornment, Chip } from "@mui/material";
+import {
+    FilterOptionsState,
+    InputAdornment,
+    Chip,
+    ListItemText,
+} from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
 } from "@mui/material/Autocomplete";
@@ -180,6 +185,11 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         }}
                         size="small"
                     />
+                )}
+                renderOption={(props, item) => (
+                    <li {...props} key={item.value as string}>
+                        <ListItemText>{item.label}</ListItemText>
+                    </li>
                 )}
             />
         </FormInputWrapper>
