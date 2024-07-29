@@ -226,17 +226,17 @@
                         "text": "Edit the details of this data provider team on the Gateway"
                     }
                 },
-                "publications":{
+                "publications": {
                     "components": {
                         "PublicationTab": {
-                            "noPublications":"No {status} publications found on the Gateway associated with your profile."
+                            "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
                     },
-                    "list":{
+                    "list": {
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",
                         "create": "Add publication",
-                        "actions":{
+                        "actions": {
                             "edit": {
                                 "label": "Edit a publication"
                             },
@@ -268,6 +268,7 @@
                 },
                 "dataUses": {
                     "title": "Data Uses",
+                    "createDataUse": "Create Data Use",
                     "description": "View, add, edit, archive and check the status of your data uses.",
                     "uploadButton": "+ Upload",
                     "components": {
@@ -343,11 +344,36 @@
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
                             },
-                            "errorLoading": "An error occured while loading the Dataset"
+                            "errorLoading": "An error occured while loading the Dataset",
+                            "structuralMetadata": {
+                                "intro": "Upload a file with the description of all table and data elements that are included in the dataset. This will be rendered in tabular format for a researcher to review the dataset table(s).",
+                                "metadataFieldHeader": "Metadata field",
+                                "metadataField1": "Table name <red>*</red>",
+                                "metadataField2": "Table description",
+                                "metadataField3": "Column name <red>*</red>",
+                                "metadataField4": "Column description <red>*</red>",
+                                "metadataField5": "Data type <red>*</red>",
+                                "metadataField6": "Sensitive <red>*</red>",
+                                "completionGuidanceHeader": "Completion Guidance",
+                                "completionGuidance1": "Name of the table in the dataset. Use a fully qualified name if appropriate.",
+                                "completionGuidance2": "Description of the table in the dataset.",
+                                "completionGuidance3": "Name of the column in the table dataset.",
+                                "completionGuidance4": "Description of the column in the table dataset.",
+                                "completionGuidance5": "Type of data contained in the column.",
+                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource."
+                            }
                         },
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
+                        },
+                        "CreateDataUse": {
+                            "upload": "Upload",
+                            "uploadButtonText": "Upload",
+                            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
+                            "error": "An error has occured. Please check your file and try again",
+                            "successMessage": "Data Use successfully created",
+                            "returnButtonText": "Return to Data Uses"
                         },
                         "EditDataUse": {
                             "editDataUse": "Edit a data use",
@@ -1049,8 +1075,13 @@
                 "socialProviders": {
                     "azure": "Azure",
                     "linkedIn": "LinkedIn",
-                    "google": "Google"
-                }
+                    "google": "Google",
+                    "openAthens": "institution"
+                },
+                "intro1": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
+                "intro2": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:",
+                "suggestAnother": "Suggest another identity provider",
+                "selectAnother": "Select another provider"
             },
             "SignInDialog": {
                 "title": "Sign in",
@@ -1091,11 +1122,6 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
-            },
-            "AddDataUseDialog": {
-                "title": "I would like to...",
-                "manualButton": "Manually input data use",
-                "uploadButton": "Upload a file of data use"
             }
         }
     }

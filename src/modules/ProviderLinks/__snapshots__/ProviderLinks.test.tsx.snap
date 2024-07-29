@@ -5,12 +5,13 @@ exports[`ProviderLinks should match snapshot 1`] = `
   <div
     class="MuiBox-root mui-style-1uxy81i"
   >
-    <a
-      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone mui-style-1gt6w6d-MuiTypography-root-MuiLink-root"
-      href="http://localhost:8000/api/v1/auth/google"
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
     >
-      <div
-        class="MuiBox-root mui-style-1azorbj"
+      <span
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="Google"
@@ -25,14 +26,44 @@ exports[`ProviderLinks should match snapshot 1`] = `
         />
         Sign in with 
         Google
-      </div>
-    </a>
-    <a
-      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone mui-style-1gt6w6d-MuiTypography-root-MuiLink-root"
-      href="http://localhost:8000/api/v1/auth/linkedin"
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
     >
-      <div
-        class="MuiBox-root mui-style-1azorbj"
+      <span
+        class="MuiBox-root mui-style-16zk172"
+      >
+        <img
+          alt="institution"
+          data-nimg="1"
+          decoding="async"
+          height="20"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="20"
+        />
+        Sign in with 
+        institution
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="LinkedIn"
@@ -47,14 +78,18 @@ exports[`ProviderLinks should match snapshot 1`] = `
         />
         Sign in with 
         LinkedIn
-      </div>
-    </a>
-    <a
-      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone mui-style-1gt6w6d-MuiTypography-root-MuiLink-root"
-      href="http://localhost:8000/api/v1/auth/azure"
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-u5o0o4-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
     >
-      <div
-        class="MuiBox-root mui-style-1azorbj"
+      <span
+        class="MuiBox-root mui-style-16zk172"
       >
         <img
           alt="Azure"
@@ -69,8 +104,11 @@ exports[`ProviderLinks should match snapshot 1`] = `
         />
         Sign in with 
         Azure
-      </div>
-    </a>
+      </span>
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
   </div>
 </div>
 `;

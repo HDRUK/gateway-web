@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import { Breakpoint, IconButton, SxProps } from "@mui/material";
-import MuiDialog, { DialogProps as MuiDialogProps } from "@mui/material/Dialog";
+import MuiDialog, {
+    DialogClasses,
+    DialogProps as MuiDialogProps,
+} from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import useDialog from "@/hooks/useDialog";
 import { CloseIcon } from "@/consts/icons";
@@ -14,6 +17,9 @@ export interface DialogProps {
     titleSx?: SxProps;
     showCloseButton?: boolean;
     styleProps?: MuiDialogProps;
+    classes?: Partial<DialogClasses>;
+    keepMounted?: boolean;
+    open?: boolean;
 }
 
 const Dialog = ({
@@ -24,6 +30,9 @@ const Dialog = ({
     showCloseButton = true,
     onClose,
     maxWidth = "tablet",
+    classes,
+    keepMounted,
+    open = true,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
@@ -37,12 +46,14 @@ const Dialog = ({
     const props: MuiDialogProps = {
         maxWidth,
         fullWidth: true,
-        open: true,
+        classes,
+        keepMounted,
+        open,
         ...styleProps,
     };
 
     return (
-        <MuiDialog {...props} onClose={handleClose}>
+        <MuiDialog {...props} onClose={handleClose} keepMounted>
             {showCloseButton && (
                 <IconButton
                     data-testid="dialog-close-icon"

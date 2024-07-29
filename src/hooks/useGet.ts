@@ -17,6 +17,7 @@ interface Options {
     errorNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
+    refreshInterval?: number;
 }
 
 const useGet = <T>(url: string | null, options?: Options): Response<T> => {
@@ -28,6 +29,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
         errorNotificationsOn,
         shouldFetch = true,
         withPagination = false,
+        refreshInterval = false,
     } = options || {};
 
     const t = useTranslations("api");
@@ -56,7 +58,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
     const { data, mutate, isLoading } = useSWR<T | undefined>(
         shouldFetch ? url : null,
         fetcher,
-        { keepPreviousData }
+        { keepPreviousData, refreshInterval }
     );
 
     return {

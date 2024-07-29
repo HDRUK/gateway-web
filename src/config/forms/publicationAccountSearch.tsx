@@ -12,8 +12,8 @@ const sortByOptions = [
         initialDirection: "desc",
     },
     {
-        label: "Sort By Date of Creation",
-        value: "created_at",
+        label: "Sort By Year of Publication",
+        value: "year_of_publication",
         initialDirection: "desc",
     },
     {
@@ -28,7 +28,7 @@ const searchFilter = {
     showClearButton: true,
     variant: "outlined",
     name: "searchTitle",
-    placeholder: "Search publications",
+    placeholder: "Search publications by title",
     label: "",
 };
 

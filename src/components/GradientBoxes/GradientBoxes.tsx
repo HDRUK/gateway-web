@@ -45,7 +45,6 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                         <Typography
                             fontSize={{ mobile: 20, desktop: 28 }}
                             m={0}
-                            x
                             mr={1}
                             variant="h2"
                             component="div">

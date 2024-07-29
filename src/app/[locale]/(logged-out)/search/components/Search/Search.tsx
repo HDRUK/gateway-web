@@ -479,7 +479,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                 />
             ));
         } else {
-            showDialog(ProvidersDialog);
+            showDialog(ProvidersDialog, { isProvidersDialog: true });
         }
     };
 
