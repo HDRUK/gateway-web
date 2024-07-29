@@ -32,6 +32,7 @@ const DatasetMindMap = ({
     zoomOnScroll = false,
     zoomOnPinch = false,
     zoomOnDoubleClick = false,
+    nodesDraggable = false,
     hasStructuralMetadata,
     ...rest
 }: DatasetMindMapProps) => {
@@ -126,6 +127,7 @@ const DatasetMindMap = ({
                         zoomOnScroll={zoomOnScroll}
                         zoomOnPinch={zoomOnPinch}
                         zoomOnDoubleClick={zoomOnDoubleClick}
+                        nodesDraggable={nodesDraggable}
                         {...rest}
                         rootNode={hydratedRootNode}
                         outerNodes={hydratedOuterNodes}
