@@ -368,12 +368,12 @@
                             "duplicateButton": "Duplicate"
                         },
                         "CreateDataUse": {
-                            "upload": "Upload",
+                            "upload": "Select file",
                             "uploadButtonText": "Upload",
                             "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
                             "error": "An error has occured. Please check your file and try again",
                             "successMessage": "Data Use successfully created",
-                            "returnButtonText": "Return to Data Uses"
+                            "returnButtonText": "View Data Uses"
                         },
                         "EditDataUse": {
                             "editDataUse": "Edit a data use",

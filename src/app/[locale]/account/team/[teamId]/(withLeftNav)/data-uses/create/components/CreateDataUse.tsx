@@ -26,9 +26,9 @@ import Typography from "@/components/Typography";
 import Upload from "@/components/Upload";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { dataUseFormFields } from "@/config/forms/dataUse";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -117,6 +117,8 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
         setHasError(true);
         setFileId(undefined);
         setFile(undefined);
+
+        notificationService.apiError(fileScanStatus?.error || t("error"));
     };
 
     const onSubmit = async () => {
@@ -198,7 +200,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                             uploadSx={{ display: "none" }}
                             acceptFileTypes=".xlsx"
                             onFileChange={(file: File) => setFile(file)}
-                            helperText={t("uploadHelper")}
+                            helperText={file?.name || t("uploadHelper")}
                         />
                         <Button
                             type="submit"
@@ -210,12 +212,6 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                 )}
                 {fileId && !durContent && !hasError && <Loading />}
             </Stack>
-
-            {hasError && (
-                <Typography sx={{ mt: 2, p: 2, color: colors.red900 }}>
-                    {t("error")}
-                </Typography>
-            )}
 
             {durValues && !hasError && (
                 <Box sx={{ gap: 2 }}>
