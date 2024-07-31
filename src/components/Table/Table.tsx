@@ -110,6 +110,7 @@ const Table = <T,>({
                 {
                     id: "checkinout",
                     Header: "CheckIn/Out",
+                    // eslint-disable-next-line react/no-unstable-nested-components
                     Cell: ({ row }) => <ActionDropdown {...row} />,
                 },
                 ...columns,

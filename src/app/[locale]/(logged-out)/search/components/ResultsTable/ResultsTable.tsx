@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
