@@ -754,6 +754,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
+                    "action": {
+                        "label": "Action search result"
+                    },
                     "title": {
                         "label": "Metadata title"
                     },
