@@ -51,7 +51,7 @@ const ResultCard = ({
         if (libraries_dataset_ids.includes(Number(datasetId))) {
             setLibraryToggle(true);
         }
-    }, [libraryData]);
+    }, [libraryData, datasetId]);
 
     const addLibrary = usePost<NewLibrary>(apis.librariesV1Url);
 
