@@ -275,7 +275,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         } else if (!!queryParams.query && !initialQuery) {
             mutate();
         }
-    }, [queryParams.query, queryParams.type, initialCategory, initialQuery]);
+    }, [queryParams.query, queryParams.type, initialCategory, initialQuery, mutate]);
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
