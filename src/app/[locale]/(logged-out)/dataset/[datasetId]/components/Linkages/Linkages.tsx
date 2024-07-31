@@ -16,21 +16,28 @@ interface LinkagesProps {
 const Linkages = ({ data }: LinkagesProps) => {
     const { linked_dataset_versions } = data.versions[0];
 
-    const linkageCounts = linked_dataset_versions.reduce<
-        Record<string, number>
-    >((counts, { pivot: { linkage_type } }) => {
-        return {
-            ...counts,
-            [linkage_type]: (counts[linkage_type] || 0) + 1,
-        };
-    }, {} as Record<string, number>);
+    const linkageCounts = Object.entries(
+        linked_dataset_versions.reduce<Record<string, number>>(
+            (counts, { pivot: { linkage_type } }) => {
+                return {
+                    ...counts,
+                    [linkage_type]: (counts[linkage_type] || 0) + 1,
+                };
+            },
+            {} as Record<string, number>
+        )
+    );
 
     const t = useTranslations(TRANSLATION_PATH);
+    if (linkageCounts.length === 0) {
+        return <> </>;
+    }
+
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             <Typography variant="h2"> {t("title")} </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
-                {Object.entries(linkageCounts).map(([type, count]) => (
+                {linkageCounts.map(([type, count]) => (
                     <EllipsisCharacterLimit
                         isButton
                         text={t(type, { count })}

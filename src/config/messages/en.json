@@ -878,13 +878,15 @@
                 },
                 "Linkages":{
                     "title":"Relationships:",
+                    "noRelationships": "No relationships found",
                     "isPartOf":"Dataset is part of ({ count })",
                     "isDerivedFrom":"Datasets this derives from ({ count })",
                     "linkedDatasets":"Linkages Datasets ({ count })",
                     "isMemberOf":"Similar Datasets ({ count })"
                 },
                 "Sources":{
-                    "datasetTypes":"Dataset Types"
+                    "datasetTypes":"Dataset Types",
+                    "collectionSources":"Collection Sources"
                 }
             }
         },
