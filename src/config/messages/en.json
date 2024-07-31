@@ -877,10 +877,14 @@
                     "structuralMetadata": "Review data variables"
                 },
                 "Linkages":{
+                    "title":"Relationships:",
                     "isPartOf":"Dataset is part of ({ count })",
                     "isDerivedFrom":"Datasets this derives from ({ count })",
                     "linkedDatasets":"Linkages Datasets ({ count })",
                     "isMemberOf":"Similar Datasets ({ count })"
+                },
+                "Sources":{
+                    "datasetTypes":"Dataset Types"
                 }
             }
         },

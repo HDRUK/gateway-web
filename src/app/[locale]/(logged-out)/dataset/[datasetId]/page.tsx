@@ -15,6 +15,7 @@ import DatasetStats from "./components/DatasetStats";
 import GoogleRecommended from "./components/GoogleRecommended";
 import Linkages from "./components/Linkages";
 import Publications from "./components/Publications";
+import Sources from "./components/Sources";
 import { datasetFields } from "./config";
 
 export const metadata = {
@@ -133,6 +134,9 @@ export default async function DatasetItemPage({
                                     flexDirection: "column",
                                     gap: 2,
                                 }}>
+                                <Sources
+                                    data={datasetVersion.metadata.metadata}
+                                />
                                 <Linkages data={data} />
 
                                 <Publications />

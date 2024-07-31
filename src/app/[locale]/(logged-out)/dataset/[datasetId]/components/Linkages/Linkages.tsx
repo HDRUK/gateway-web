@@ -5,6 +5,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Paper from "@/components/Paper";
+import Typography from "@/components/Typography";
 
 const TRANSLATION_PATH = "pages.dataset.components.Linkages";
 
@@ -27,6 +28,7 @@ const Linkages = ({ data }: LinkagesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
+            <Typography variant="h2"> {t("title")} </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
                 {Object.entries(linkageCounts).map(([type, count]) => (
                     <EllipsisCharacterLimit

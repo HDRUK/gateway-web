@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { ReactFlowProps } from "reactflow";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
-import Box from "@/components/Box";
 import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
 import {
