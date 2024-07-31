@@ -83,7 +83,9 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
 
     const libraryItem = [
         {
-            label: isLibraryToggled ? "Remove from library" : "Add to Library",
+            label: isLibraryToggled
+                ? t("removeFromLibrary")
+                : t("addToLibrary"),
             icon: <BookmarkBorder color="primary" sx={{ mr: 1 }} />,
             action: handleAddRemoveLibrary,
         },

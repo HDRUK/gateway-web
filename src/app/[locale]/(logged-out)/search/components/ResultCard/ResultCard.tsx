@@ -127,7 +127,6 @@ const ResultCard = ({
                                 {metadata.summary.shortTitle}
                                 <div style={{ textAlign: "end" }}>
                                     <Button
-                                        // ref={libraryRef}
                                         onClick={handleAddRemoveLibrary}
                                         variant="outlined"
                                         startIcon={
