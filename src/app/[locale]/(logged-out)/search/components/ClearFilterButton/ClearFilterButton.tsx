@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { ClearButton } from "./ClearFilterButton.styles";
 
-const TRANSLATION_PATH = "pages.search.components.FilterPanel"; // TODO: make all such instances use constants
+const TRANSLATION_PATH = "pages.search.components.FilterPanel";
 
 const ClearFilterButton = ({
     checkboxValues,
