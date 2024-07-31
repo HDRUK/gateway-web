@@ -8,7 +8,7 @@ import {
     Column,
 } from "@tanstack/react-table";
 import { colors } from "@/config/theme";
-import ActionDropdown from "../ActionDropdown";
+import ActionDropdown from "@/app/[locale]/(logged-out)/search/components/ActionDropdown";
 import * as styles from "./Table.styles";
 
 interface OnUpdateProps {
@@ -106,7 +106,7 @@ const Table = <T,>({
                 },
             },
         },
-        hooks => {
+        (hooks: { visibleColumns: ((columns: any) => any[])[]; }) => {
             hooks.visibleColumns.push(columns => [
                 {
                     id: "checkinout",
