@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
+import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
@@ -42,6 +43,7 @@ const ResultCard = ({
     const { showDialog } = useDialog();
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
+    const { user } = useAuth();
     const { _id: datasetId } = result;
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
@@ -85,7 +87,7 @@ const ResultCard = ({
         event.stopPropagation();
         if (!isLibraryToggled) {
             const payload: NewLibrary = {
-                user_id: 1,
+                user_id: user?.id,
                 dataset_id: +datasetId,
             };
             addLibrary(payload).then(res => {
@@ -97,7 +99,7 @@ const ResultCard = ({
         } else {
             const library_id_to_delete = libraryData.find(
                 element =>
-                    element.user_id === 1 &&
+                    element.user_id === user?.id &&
                     element.dataset_id === Number(datasetId)
             ).id;
 

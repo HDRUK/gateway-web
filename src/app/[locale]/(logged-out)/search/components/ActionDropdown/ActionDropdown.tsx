@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
+import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
@@ -23,6 +24,7 @@ const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 const ActionDropdown = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { _id: datasetId } = result;
+    const { user } = useAuth();
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -58,7 +60,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         event.stopPropagation();
         if (!isLibraryToggled) {
             const payload: NewLibrary = {
-                user_id: 1,
+                user_id: user?.id,
                 dataset_id: +datasetId,
             };
             addLibrary(payload).then(res => {
@@ -70,7 +72,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         } else {
             const library_id_to_delete = libraryData.find(
                 element =>
-                    element.user_id === 1 &&
+                    element.user_id === user?.id &&
                     element.dataset_id === Number(datasetId)
             ).id;
 
