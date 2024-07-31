@@ -49,7 +49,6 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                             text={word}
                             isButton
                             characterLimit={CHARACTER_LIMIT}
-                            color="secondary"
                         />
                     ))}
                 </Box>

@@ -20,7 +20,7 @@ const tooltipWrapper = (text: string) => (children: ReactNode) => {
 };
 
 const buttonWrapper =
-    (rest = {}) =>
+    (rest: ButtonProps = {}) =>
     (children: ReactNode) => {
         return (
             <Button size="small" {...rest}>
