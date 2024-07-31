@@ -58,6 +58,7 @@ describe("ResultCard", () => {
                     metadata: mockWithoutData,
                     _id: "1",
                 }}
+                libraryData={[]}
             />
         );
         expect(screen.getByText(`Date range: n/a`)).toBeInTheDocument();
