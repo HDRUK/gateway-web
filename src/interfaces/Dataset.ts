@@ -29,6 +29,7 @@ interface Metadata {
         contactPoint: string;
         controlledKeywords: string;
         datasetType: string;
+        datasetSubType: string;
         description: string;
         doiName: string;
         keywords: string;
@@ -63,6 +64,9 @@ interface Metadata {
         };
     };
     provenance: {
+        origin: {
+            collectionSituation: string | undefined;
+        };
         temporal: {
             startDate: string | undefined;
             endDate: string | undefined;
