@@ -19,13 +19,8 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const leadOrgNames = result?.organisationName?.split(",");
 
-    const formattedTitle =
-        result.projectTitle.length > TITLE_CHARACTER_LIMIT
-            ? `${result.projectTitle.slice(0, TITLE_CHARACTER_LIMIT)}...`
-            : result.projectTitle;
-
     return (
-        <Dialog title={formattedTitle}>
+        <Dialog title={result.projectTitle} titleLimit={TITLE_CHARACTER_LIMIT}>
             <MuiDialogContent>
                 <Typography variant="h3" mb={2}>
                     {t("datasets")}

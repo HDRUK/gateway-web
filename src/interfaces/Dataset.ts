@@ -29,6 +29,7 @@ interface Metadata {
         contactPoint: string;
         controlledKeywords: string;
         datasetType: string;
+        datasetSubType: string;
         description: string;
         doiName: string;
         keywords: string;
