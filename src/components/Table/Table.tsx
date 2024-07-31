@@ -8,6 +8,7 @@ import {
     Column,
 } from "@tanstack/react-table";
 import { colors } from "@/config/theme";
+import ActionDropdown from "../ActionDropdown";
 import * as styles from "./Table.styles";
 
 interface OnUpdateProps {
@@ -110,7 +111,7 @@ const Table = <T,>({
                 {
                     id: "checkinout",
                     Header: "CheckIn/Out",
-                    // eslint-disable-next-line react/no-unstable-nested-components
+                    // eslint-disable-next-line react/no-unstable-nested-components, react/prop-types
                     Cell: ({ row }) => <ActionDropdown {...row} />,
                 },
                 ...columns,
