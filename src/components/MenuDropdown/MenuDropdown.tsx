@@ -35,14 +35,10 @@ function MenuDropdown({
         <Menu
             anchorEl={anchorElement}
             transformOrigin={
-                transformOrigin
-                    ? transformOrigin
-                    : { horizontal: "left", vertical: "top" }
+                transformOrigin || { horizontal: "left", vertical: "top" }
             }
             anchorOrigin={
-                anchorOrigin
-                    ? anchorOrigin
-                    : { horizontal: "left", vertical: "bottom" }
+                anchorOrigin || { horizontal: "left", vertical: "bottom" }
             }
             onClose={() => handleClose()}
             open={Boolean(anchorElement)}>
