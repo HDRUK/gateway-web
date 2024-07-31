@@ -1132,6 +1132,12 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
+            },
+            "DatasetQuickView": {
+                "keyWords":"Keywords",
+                "dataType":"Data type",
+                "collectionSource":"Collection source",
+                "noCollectionSource":"No collection sources found"
             }
         }
     }

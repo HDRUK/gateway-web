@@ -64,6 +64,9 @@ interface Metadata {
         };
     };
     provenance: {
+        origin: {
+            collectionSituation: string | undefined;
+        };
         temporal: {
             startDate: string | undefined;
             endDate: string | undefined;

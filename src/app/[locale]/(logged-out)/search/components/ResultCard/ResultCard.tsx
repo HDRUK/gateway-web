@@ -5,7 +5,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Typography from "@/components/Typography";
+import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
+import useDialog from "@/hooks/useDialog";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight } from "./ResultCard.styles";
@@ -19,6 +22,7 @@ const TRANSLATION_PATH = "pages.search.components.ResultCard";
 const ResultCard = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
+    const { showDialog } = useDialog();
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
     const { _id: datasetId } = result;
@@ -26,6 +30,13 @@ const ResultCard = ({ result }: ResultCardProps) => {
     const handleClickItem = useCallback(() => {
         router.push(`/${RouteName.DATASET_ITEM}/${datasetId}`);
     }, [datasetId, router]);
+
+    const handleClickQuickView = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event.stopPropagation();
+        showDialog(DatasetQuickViewDialog, { result });
+    };
 
     if (!metadata) return null;
 
@@ -94,7 +105,14 @@ const ResultCard = ({ result }: ResultCardProps) => {
                                         {t("dateLabel")}:{" "}
                                         {getDateRange(metadata)}
                                     </Typography>
-                                    <Typography> </Typography>
+                                    <Typography>
+                                        <Button
+                                            onClick={handleClickQuickView}
+                                            color="secondary"
+                                            variant="outlined">
+                                            {t("showAll")}
+                                        </Button>
+                                    </Typography>
                                 </Box>
                             </>
                         }
