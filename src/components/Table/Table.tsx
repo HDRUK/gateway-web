@@ -156,7 +156,7 @@ const Table = <T,>({
                 {table.getRowModel().rows.map(row => (
                     // eslint-disable-next-line react/prop-types
                     <tr key={row.id}>
-                        // eslint-disable-next-line react/prop-types
+                        {/* eslint-disable-next-line react/prop-types */}
                         {row.getVisibleCells().map(cell => (
                             <td
                                 css={styles.td}
