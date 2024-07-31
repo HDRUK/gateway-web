@@ -35,7 +35,6 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
             titleSx={{ paddingLeft: 8 }}
             title={result?.metadata?.summary.shortTitle}
             titleLimit={TITLE_CHARACTER_LIMIT}
-            keepMounted
             onClose={() => hideDialog()}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
                 <Typography variant="h3" mb={2}>
