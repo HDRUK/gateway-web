@@ -106,7 +106,7 @@ const Table = <T,>({
                 },
             },
         },
-        (hooks: { visibleColumns: ((columns: any) => any[])[]; }) => {
+        hooks => {
             hooks.visibleColumns.push(columns => [
                 {
                     id: "checkinout",
