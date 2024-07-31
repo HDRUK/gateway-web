@@ -12,6 +12,7 @@ import TooltipIcon from "@/components/TooltipIcon";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import ActionDropdown from "../ActionDropdown";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
@@ -39,23 +40,15 @@ const getColumns = ({
     columnHelper.display({
         id: "actions",
         meta: { isPinned: true },
-        cell: ({ row }) => {
+        cell: ({ row: { original } }) => {
             return (
                 <div style={{ textAlign: "center" }}>
-                    <StyledCheckbox
-                        checked={selected[row.id]}
-                        onChange={(_e, value) =>
-                            handleSelect({ [row.id]: value })
-                        }
-                        size="large"
-                        sx={{ p: 0 }}
-                        iconSx={{ mr: 0 }}
-                    />
+                    <ActionDropdown result={original} />
                 </div>
             );
         },
-        header: () => null,
-        size: 43,
+        header: () => <span>{translations.actionLabel}</span>,
+        size: 120,
     }),
 
     columnHelper.display({
@@ -248,6 +241,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
     };
 
     const translations = {
+        actionLabel: t("action.label"),
         metaDataLabel: t("title.label"),
         populationSizeLabel: t("populationSize.label"),
         populationSizeTooltip: t("populationSize.tooltip"),

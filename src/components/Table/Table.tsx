@@ -103,7 +103,18 @@ const Table = <T,>({
                 onUpdate(newData, { rowIndex, columnId, value });
             },
         },
-    });
+    },
+    hooks => {
+        hooks.visibleColumns.push(columns => [
+            {
+              id: "checkinout",
+              Header: "CheckIn/Out",
+              Cell: ({ row }) => <ActionDropdown {...row} />
+            },
+            ...columns
+          ]);
+        }
+    );
 
     const hasFooterContent = !!table
         .getFooterGroups()

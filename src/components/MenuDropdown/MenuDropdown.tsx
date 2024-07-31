@@ -11,20 +11,39 @@ interface MenuDropdownProps {
         action?: () => void;
         subItems?: { label: string; href: string }[];
         divider?: boolean;
+        icon?: HTMLElement;
     }[];
     handleClose: () => void;
+    transformOrigin?: null | {
+        horizontal: string;
+        vertical: string;
+    };
+    anchorOrigin?: null | {
+        horizontal: string;
+        vertical: string;
+    };
 }
 
 function MenuDropdown({
     anchorElement,
     menuItems,
     handleClose,
+    transformOrigin,
+    anchorOrigin,
 }: MenuDropdownProps) {
     return (
         <Menu
             anchorEl={anchorElement}
-            transformOrigin={{ horizontal: "left", vertical: "top" }}
-            anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+            transformOrigin={
+                transformOrigin
+                    ? transformOrigin
+                    : { horizontal: "left", vertical: "top" }
+            }
+            anchorOrigin={
+                anchorOrigin
+                    ? anchorOrigin
+                    : { horizontal: "left", vertical: "bottom" }
+            }
             onClose={() => handleClose()}
             open={Boolean(anchorElement)}>
             {menuItems.map(menuItem => {
@@ -50,6 +69,7 @@ function MenuDropdown({
                             }}
                             key={menuItem.label}
                             onClick={() => handleClose()}>
+                            {menuItem.icon ? menuItem.icon : null}
                             <Link
                                 key={menuItem.label}
                                 underline="hover"
@@ -61,6 +81,7 @@ function MenuDropdown({
                 if (menuItem.action) {
                     return (
                         <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
+                            {menuItem.icon ? menuItem.icon : null}
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
