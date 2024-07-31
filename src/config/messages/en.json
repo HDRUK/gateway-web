@@ -875,6 +875,12 @@
                     "synthetic": "Access synthetic data",
                     "root": "Data custodian link",
                     "structuralMetadata": "Review data variables"
+                },
+                "Linkages":{
+                    "isPartOf":"Dataset is part of ({ count })",
+                    "isDerivedFrom":"Datasets this derives from ({ count })",
+                    "linkedDatasets":"Linkages Datasets ({ count })",
+                    "isMemberOf":"Similar Datasets ({ count })"
                 }
             }
         },

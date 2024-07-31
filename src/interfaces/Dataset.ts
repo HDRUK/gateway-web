@@ -86,6 +86,12 @@ interface Metadata {
     structuralMetadata?: StructuralMetadata[];
 }
 
+interface LinkedDatasetVersions {
+    pivot: {
+        linkage_type: string;
+    };
+}
+
 interface MetadataMax {
     metadata: Metadata;
     gwdmVersion: string;
@@ -99,6 +105,7 @@ interface VersionItem {
     metadata: MetadataMax;
     version: number;
     publications: Publication[];
+    linked_dataset_versions: LinkedDatasetVersions[];
 }
 
 interface Dataset {
