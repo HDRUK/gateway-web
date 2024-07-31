@@ -21,7 +21,6 @@ import useDialog from "@/hooks/useDialog";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
 import useDelete from "@/hooks/useDelete";
-import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
