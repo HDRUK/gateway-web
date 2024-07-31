@@ -19,6 +19,17 @@ interface DatasetQuickViewDialogProps {
 const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
+
+    const { keywords, datasetType, datasetSubType } =
+        result?.metadata?.summary || {};
+
+    /* note: sort this out as this is returning the GWDM, rather than the schema */
+    const { collectionSituation } = result?.metadata?.provenance.origin || {};
+    /* note: quite hacky to split */
+    const formattedCollectionSource = collectionSituation
+        ?.split(";,;")
+        .join(", ");
+
     return (
         <Dialog
             titleSx={{ paddingLeft: 8 }}
@@ -32,28 +43,30 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
-                    {result?.metadata?.summary.keywords
-                        .split(";,;")
-                        .map(word => (
-                            <EllipsisCharacterLimit
-                                text={word}
-                                isButton
-                                characterLimit={CHARACTER_LIMIT}
-                                color="secondary"
-                            />
-                        ))}
+                    {keywords.split(";,;").map(word => (
+                        <EllipsisCharacterLimit
+                            key={word}
+                            text={word}
+                            isButton
+                            characterLimit={CHARACTER_LIMIT}
+                            color="secondary"
+                        />
+                    ))}
                 </Box>
 
                 <CategoryHeader variant="h3">{t("dataType")}</CategoryHeader>
-                <Typography>{result.metadata?.summary.datasetType}</Typography>
                 <Typography>
-                    {result.metadata?.summary.datasetSubType}
+                    {datasetType} {datasetSubType && `, ${datasetSubType}`}
                 </Typography>
 
-                <CategoryHeader variant="h3">{t("collections")}</CategoryHeader>
-                {result.collections.map(col => (
-                    <Typography>{col}</Typography>
-                ))}
+                <CategoryHeader variant="h3">
+                    {t("collectionSource")}
+                </CategoryHeader>
+                {formattedCollectionSource ? (
+                    <Typography>{formattedCollectionSource}</Typography>
+                ) : (
+                    <Typography> {t("noCollectionSource")} </Typography>
+                )}
             </MuiDialogContent>
         </Dialog>
     );

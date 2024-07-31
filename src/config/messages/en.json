@@ -1126,7 +1126,8 @@
             "DatasetQuickView": {
                 "keyWords":"Keywords",
                 "dataType":"Data type",
-                "collections":"Collections"
+                "collectionSource":"Collection source",
+                "noCollectionSource":"No collection sources found"
             }
         }
     }
