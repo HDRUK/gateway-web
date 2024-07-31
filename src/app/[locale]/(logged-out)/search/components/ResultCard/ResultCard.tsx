@@ -74,7 +74,7 @@ const ResultCard = ({
         null
     );
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenDropdownMenu = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
         setAnchorElement(event.currentTarget);
     };
@@ -155,7 +155,7 @@ const ResultCard = ({
                                             />
                                         }
                                         sx={{ ml: 2, mb: 1 }}
-                                        onClick={handleOpenNavMenu}>
+                                        onClick={handleOpenDropdownMenu}>
                                         {t("actions")}
                                     </Button>
                                     <MenuDropdown
