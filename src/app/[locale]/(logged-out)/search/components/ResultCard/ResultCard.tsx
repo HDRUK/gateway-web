@@ -1,7 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import {
-    Button,
     Divider,
     ListItem,
     ListItemButton,
@@ -19,7 +18,6 @@ import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
 import MenuDropdown from "@/components/MenuDropdown";
-import Typography from "@/components/Typography";
 import useDelete from "@/hooks/useDelete";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
@@ -75,6 +73,7 @@ const ResultCard = ({
     ) => {
         event.stopPropagation();
         showDialog(DatasetQuickViewDialog, { result });
+    };
         
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
