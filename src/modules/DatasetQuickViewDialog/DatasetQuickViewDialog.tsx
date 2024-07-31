@@ -30,11 +30,16 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
         ?.split(";,;")
         .join(", ");
 
+    const title = result?.metadata?.summary.shortTitle;
+    const formattedTitle =
+        title.length > TITLE_CHARACTER_LIMIT
+            ? `${title.slice(0, TITLE_CHARACTER_LIMIT)}...`
+            : title;
+
     return (
         <Dialog
             titleSx={{ paddingLeft: 8 }}
-            title={result?.metadata?.summary.shortTitle}
-            titleLimit={TITLE_CHARACTER_LIMIT}
+            title={formattedTitle}
             onClose={() => hideDialog()}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
                 <Typography variant="h3" mb={2}>

@@ -20,7 +20,6 @@ export interface DialogProps {
     classes?: Partial<DialogClasses>;
     keepMounted?: boolean;
     open?: boolean;
-    titleLimit?: number;
 }
 
 const Dialog = ({
@@ -34,7 +33,6 @@ const Dialog = ({
     classes,
     keepMounted,
     open = true,
-    titleLimit,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
@@ -54,11 +52,6 @@ const Dialog = ({
         ...styleProps,
     };
 
-    const formattedTitle =
-        titleLimit && title.length > titleLimit
-            ? `${title.slice(0, titleLimit)}...`
-            : title;
-
     return (
         <MuiDialog {...props} onClose={handleClose} keepMounted>
             {showCloseButton && (
@@ -77,7 +70,7 @@ const Dialog = ({
             )}
             {title && (
                 <MuiDialogTitle sx={{ ...titleSx, pr: 6 }}>
-                    {formattedTitle}
+                    {title}
                 </MuiDialogTitle>
             )}
             {children}
