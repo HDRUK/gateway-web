@@ -14,6 +14,7 @@ interface LinkagesProps {
 }
 
 const Linkages = ({ data }: LinkagesProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
     const { linked_dataset_versions } = data.versions[0];
 
     const linkageCounts = Object.entries(
@@ -28,7 +29,7 @@ const Linkages = ({ data }: LinkagesProps) => {
         )
     );
 
-    const t = useTranslations(TRANSLATION_PATH);
+    // dont return component if no linkages
     if (linkageCounts.length === 0) {
         return <> </>;
     }
