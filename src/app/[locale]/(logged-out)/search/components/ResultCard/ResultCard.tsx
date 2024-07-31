@@ -1,11 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
-import {
-    Divider,
-    ListItem,
-    ListItemButton,
-    ListItemText,
-} from "@mui/material";
+import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -14,11 +9,11 @@ import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
-import useDialog from "@/hooks/useDialog";
-import MenuDropdown from "@/components/MenuDropdown";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
@@ -74,7 +69,7 @@ const ResultCard = ({
         event.stopPropagation();
         showDialog(DatasetQuickViewDialog, { result });
     };
-        
+
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -94,7 +89,6 @@ const ResultCard = ({
                 dataset_id: +datasetId,
             };
             addLibrary(payload).then(res => {
-                console.log(res);
                 if (res) {
                     mutateLibraries();
                     setLibraryToggle(true);
@@ -107,11 +101,8 @@ const ResultCard = ({
                     element.dataset_id === Number(datasetId)
             ).id;
 
-            console.log(library_id_to_delete);
+            await deleteLibrary(library_id_to_delete);
 
-            const res = await deleteLibrary(library_id_to_delete);
-
-            console.log(res);
             mutateLibraries();
             setLibraryToggle(false);
         }

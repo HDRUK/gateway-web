@@ -6,7 +6,6 @@ import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
-import StyledCheckbox from "@/components/StyledCheckbox";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
 import { CheckIcon } from "@/consts/icons";
@@ -29,12 +28,8 @@ const STRUCTURAL_METADATA_PATH = "metadata.additional.hasTechnicalMetadata";
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
 const getColumns = ({
-    handleSelect,
-    selected,
     translations,
 }: {
-    handleSelect: (data: { [id: string]: boolean }) => void;
-    selected: { [id: string]: boolean };
     translations: { [id: string]: string };
 }) => [
     columnHelper.display({
@@ -233,12 +228,7 @@ const getColumns = ({
 
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
 const ResultTable = ({ results }: ResultTableProps) => {
-    const [selected, setSelected] = useState({});
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
-
-    const handleSelect = (data: { [id: string]: boolean }) => {
-        setSelected({ ...selected, ...data });
-    };
 
     const translations = {
         actionLabel: t("action.label"),
@@ -274,8 +264,6 @@ const ResultTable = ({ results }: ResultTableProps) => {
             }}>
             <Table<SearchResultDataset>
                 columns={getColumns({
-                    handleSelect,
-                    selected,
                     translations,
                 })}
                 rows={results}

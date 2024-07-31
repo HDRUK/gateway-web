@@ -62,7 +62,6 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
                 dataset_id: +datasetId,
             };
             addLibrary(payload).then(res => {
-                console.log(res);
                 if (res) {
                     mutateLibraries();
                     setLibraryToggle(true);
@@ -75,7 +74,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
                     element.dataset_id === Number(datasetId)
             ).id;
 
-            const res = await deleteLibrary(library_id_to_delete);
+            await deleteLibrary(library_id_to_delete);
 
             mutateLibraries();
             setLibraryToggle(false);
