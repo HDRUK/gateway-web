@@ -6,8 +6,10 @@ import { useTranslations } from "next-intl";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
@@ -23,6 +25,7 @@ const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 
 const ActionDropdown = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { showDialog } = useDialog();
     const { _id: datasetId } = result;
     const { isLoggedIn, user } = useAuth();
 
@@ -84,6 +87,8 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
                 mutateLibraries();
                 setLibraryToggle(false);
             }
+        } else {
+            showDialog(ProvidersDialog, { isProvidersDialog: true });
         }
     };
 
