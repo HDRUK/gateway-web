@@ -21,7 +21,6 @@ import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 import menuItems from "./config";
@@ -50,7 +49,7 @@ const ResultCard = ({
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
-        const librariesDatasetIds: Number[] = libraryData?.map(
+        const librariesDatasetIds: number[] = libraryData?.map(
             a => a.dataset_id
         );
         if (librariesDatasetIds?.includes(Number(datasetId))) {
