@@ -62,6 +62,11 @@ const AddDatasetDialog = ({
         chiptool: t("chipTool"),
     };
 
+    const [queryParams, setQueryParams] = useState({
+        status: "ACTIVE",
+        title: "",
+    });
+
     const [resourceType, setResourceType] = useState<ResourceType>(
         ResourceType.DATA_USE
     );
@@ -95,11 +100,6 @@ const AddDatasetDialog = ({
     useEffect(() => {
         setResourceType(watchAll.resourceType);
     }, [watchAll.resourceType]);
-
-    const [queryParams, setQueryParams] = useState({
-        status: "ACTIVE",
-        title: "",
-    });
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]

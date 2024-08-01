@@ -28,7 +28,7 @@ const isResourceSelected = (
     selectedResources: SelectedResources
 ) => {
     const currentResource = selectedResources[resourceType];
-    return !!currentResource.find(r => r.id == id);
+    return !!currentResource.find(r => r.id === id);
 };
 
 const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
