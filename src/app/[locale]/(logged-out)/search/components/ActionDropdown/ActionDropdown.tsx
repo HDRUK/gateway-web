@@ -47,7 +47,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
     );
 
     useEffect(() => {
-        const librariesDatasetIds: Number[] = libraryData?.map(
+        const librariesDatasetIds: number[] = libraryData?.map(
             a => a.dataset_id
         );
         if (librariesDatasetIds?.includes(Number(datasetId))) {
