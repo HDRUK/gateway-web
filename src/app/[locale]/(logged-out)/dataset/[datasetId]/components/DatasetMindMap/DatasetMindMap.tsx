@@ -4,8 +4,6 @@ import { useMemo } from "react";
 import { ReactFlowProps } from "reactflow";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
-import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
 import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
 import {
@@ -104,39 +102,21 @@ const DatasetMindMap = ({
     );
 
     return (
-        <BoxContainer
-            sx={{
-                gridTemplateColumns: {
-                    tablet: "repeat(5, 1fr)",
-                },
-                gap: {
-                    mobile: 1,
-                    tablet: 2,
-                },
-                p: 0,
-            }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 5", laptop: "span 3" },
-                    p: 0,
-                }}>
-                <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
-                    <MindMap
-                        panOnDrag={panOnDrag}
-                        panOnScroll={panOnScroll}
-                        zoomOnScroll={zoomOnScroll}
-                        zoomOnPinch={zoomOnPinch}
-                        zoomOnDoubleClick={zoomOnDoubleClick}
-                        nodesDraggable={nodesDraggable}
-                        {...rest}
-                        rootNode={hydratedRootNode}
-                        outerNodes={hydratedOuterNodes}
-                        initialEdges={initialEdges}
-                        connectionLineStyle={connectionLineStyle}
-                    />
-                </Paper>
-            </Box>
-        </BoxContainer>
+        <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
+            <MindMap
+                panOnDrag={panOnDrag}
+                panOnScroll={panOnScroll}
+                zoomOnScroll={zoomOnScroll}
+                zoomOnPinch={zoomOnPinch}
+                zoomOnDoubleClick={zoomOnDoubleClick}
+                nodesDraggable={nodesDraggable}
+                {...rest}
+                rootNode={hydratedRootNode}
+                outerNodes={hydratedOuterNodes}
+                initialEdges={initialEdges}
+                connectionLineStyle={connectionLineStyle}
+            />
+        </Paper>
     );
 };
 
