@@ -1122,6 +1122,27 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
+            },
+            "RelatedResources": {
+                "title": "Add related resources",
+                "intro": "Search for data uses, publications and other analysis scripts, tools and software to add to your entry. Resources must already be on the Gateway.",
+                "resultsShown": "results shown",
+                "selected": "selected",
+                "cancel": "Cancel",
+                "addResources": "Add resources",
+                "headerAdd": "Action",
+                "headerName": "Name",
+                "dataProvider": "Data Provider",
+                "entityType": "Entity Type",
+                "radioDataset": "Datasets",
+                "radioDatause": "Data uses",
+                "radioPublication": "Publications",
+                "radioTool": "Analysis scripts, tools & software",
+                "chipDataset": "Dataset",
+                "chipDatause": "Data use",
+                "chipPublication": "Publication",
+                "chipTool": "Analysis Scripts & Software",
+                "noResults": "No results found"
             }
         }
     }
