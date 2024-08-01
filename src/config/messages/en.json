@@ -875,6 +875,19 @@
                     "synthetic": "Access synthetic data",
                     "root": "Data custodian link",
                     "structuralMetadata": "Review data variables"
+                },
+                "Linkages":{
+                    "title":"Relationships:",
+                    "noRelationships": "No relationships found",
+                    "isPartOf":"Dataset is part of ({ count })",
+                    "isDerivedFrom":"Datasets this derives from ({ count })",
+                    "linkedDatasets":"Linkages Datasets ({ count })",
+                    "isMemberOf":"Similar Datasets ({ count })"
+                },
+                "Sources":{
+                    "datasetTypes":"Dataset Types",
+                    "collectionSources":"Collection Sources",
+                    "noCollectionSources":"No collection sources listed"
                 }
             }
         },
@@ -1122,6 +1135,12 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
+            },
+            "DatasetQuickView": {
+                "keyWords":"Keywords",
+                "dataType":"Data type",
+                "collectionSource":"Collection source",
+                "noCollectionSource":"No collection sources found"
             }
         }
     }

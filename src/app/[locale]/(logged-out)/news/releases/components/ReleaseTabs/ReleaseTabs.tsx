@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { rangeRight } from "lodash";
 import { useTranslations } from "next-intl";
 import { ReleaseNode } from "@/interfaces/Releases";
 import Accordion from "@/components/Accordion";
@@ -25,8 +26,12 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
         setExpanded(isExpanded ? panel : null);
     };
 
+    const startYear = 2021;
+    const currentYear = new Date().getFullYear();
+    const years = rangeRight(startYear, currentYear + 1).map(String);
+
     const generatedReleases = useMemo(() => {
-        return ["2024", "2023", "2022", "2021"].map(year => {
+        return years.map(year => {
             const releases = getReleaseByYear(allReleases, year);
 
             const hydratedReleases = {
