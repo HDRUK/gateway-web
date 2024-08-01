@@ -65,7 +65,7 @@ function MenuDropdown({
                             }}
                             key={menuItem.label}
                             onClick={() => handleClose()}>
-                            {menuItem.icon ? menuItem.icon : null}
+                            {menuItem.icon || null}
                             <Link
                                 key={menuItem.label}
                                 underline="hover"
@@ -77,7 +77,7 @@ function MenuDropdown({
                 if (menuItem.action) {
                     return (
                         <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
-                            {menuItem.icon ? menuItem.icon : null}
+                            {menuItem.icon || null}
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
