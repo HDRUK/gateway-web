@@ -27,7 +27,7 @@ const Sources = ({ data }: SourcesProps) => {
             <Divider sx={{ my: 1 }} />
             <Typography variant="h4">
                 <b> {`${t("collectionSources")}:`} </b>
-                {collectionSituation}
+                {collectionSituation || t("noCollectionSources")}
             </Typography>
         </Paper>
     );
