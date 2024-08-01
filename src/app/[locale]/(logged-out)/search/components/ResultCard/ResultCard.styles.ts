@@ -7,3 +7,8 @@ export const Highlight = styled(Typography)(({ theme }) => ({
         "font-style": "normal",
     },
 }));
+
+export const ResultTitle = styled("div")(() => ({
+    display: "flex",
+    justifyContent: "space-between",
+}));

@@ -740,7 +740,10 @@
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
                     "dataCustodian": "Data Custodian",
                     "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
-                    "showAll": "Quick view"
+                    "showAll": "Quick view",
+                    "actions": "Actions",
+                    "addToLibrary": "Add to library",
+                    "removeFromLibrary": "Remove from library"
                 },
                 "ResultCardPublication": {
                     "published": "Published",
@@ -751,6 +754,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
+                    "action": {
+                        "label": "Action search result"
+                    },
                     "title": {
                         "label": "Metadata title"
                     },

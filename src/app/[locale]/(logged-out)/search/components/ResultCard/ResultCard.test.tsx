@@ -17,6 +17,7 @@ describe("ResultCard", () => {
                     metadata: mockResult,
                     _id: "1",
                 }}
+                libraryData={[]}
             />
         );
 
@@ -58,6 +59,7 @@ describe("ResultCard", () => {
                     metadata: mockWithoutData,
                     _id: "1",
                 }}
+                libraryData={[]}
             />
         );
         expect(screen.getByText(`Date range: n/a`)).toBeInTheDocument();
@@ -78,6 +80,7 @@ describe("ResultCard", () => {
                     metadata: mockWithoutData,
                     _id: "1",
                 }}
+                libraryData={[]}
             />
         );
         expect(
