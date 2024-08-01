@@ -24,7 +24,7 @@ const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 const ActionDropdown = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { _id: datasetId } = result;
-    const { user } = useAuth();
+    const { isLoggedIn, user } = useAuth();
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -39,11 +39,13 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=1000`
+        `${apis.librariesV1Url}?perPage=1000`,
+        { shouldFetch: isLoggedIn }
     );
+
     useEffect(() => {
-        const libraries_dataset_ids = libraryData.map(a => a.dataset_id);
-        if (libraries_dataset_ids.includes(Number(datasetId))) {
+        const libraries_dataset_ids = libraryData?.map(a => a.dataset_id);
+        if (libraries_dataset_ids?.includes(Number(datasetId))) {
             setLibraryToggle(true);
         }
     }, [libraryData, datasetId]);
@@ -58,28 +60,30 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         event: React.MouseEvent<HTMLElement>
     ) => {
         event.stopPropagation();
-        if (!isLibraryToggled) {
-            const payload: NewLibrary = {
-                user_id: user?.id,
-                dataset_id: +datasetId,
-            };
-            addLibrary(payload).then(res => {
-                if (res) {
-                    mutateLibraries();
-                    setLibraryToggle(true);
-                }
-            });
-        } else {
-            const library_id_to_delete = libraryData.find(
-                element =>
-                    element.user_id === user?.id &&
-                    element.dataset_id === Number(datasetId)
-            ).id;
+        if (isLoggedIn) {
+            if (!isLibraryToggled) {
+                const payload: NewLibrary = {
+                    user_id: user?.id,
+                    dataset_id: +datasetId,
+                };
+                addLibrary(payload).then(res => {
+                    if (res) {
+                        mutateLibraries();
+                        setLibraryToggle(true);
+                    }
+                });
+            } else {
+                const library_id_to_delete = libraryData.find(
+                    element =>
+                        element.user_id === user?.id &&
+                        element.dataset_id === Number(datasetId)
+                ).id;
 
-            await deleteLibrary(library_id_to_delete);
+                await deleteLibrary(library_id_to_delete);
 
-            mutateLibraries();
-            setLibraryToggle(false);
+                mutateLibraries();
+                setLibraryToggle(false);
+            }
         }
     };
 
@@ -92,6 +96,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
             action: handleAddRemoveLibrary,
         },
     ];
+
     return (
         <>
             <Button

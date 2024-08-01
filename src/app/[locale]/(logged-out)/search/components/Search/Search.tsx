@@ -285,7 +285,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=1000`
+        `${apis.librariesV1Url}?perPage=1000`,
+        { shouldFetch: isLoggedIn }
     );
 
     // Reset query param state when tab is changed

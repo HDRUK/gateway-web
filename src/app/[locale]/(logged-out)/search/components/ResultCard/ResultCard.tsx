@@ -43,14 +43,14 @@ const ResultCard = ({
     const { showDialog } = useDialog();
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
-    const { user } = useAuth();
+    const { isLoggedIn, user } = useAuth();
     const { _id: datasetId } = result;
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
-        const libraries_dataset_ids = libraryData.map(a => a.dataset_id);
-        if (libraries_dataset_ids.includes(Number(datasetId))) {
+        const libraries_dataset_ids = libraryData?.map(a => a.dataset_id);
+        if (libraries_dataset_ids?.includes(Number(datasetId))) {
             setLibraryToggle(true);
         }
     }, [libraryData, datasetId]);
@@ -85,28 +85,30 @@ const ResultCard = ({
         event: React.MouseEvent<HTMLElement>
     ) => {
         event.stopPropagation();
-        if (!isLibraryToggled) {
-            const payload: NewLibrary = {
-                user_id: user?.id,
-                dataset_id: +datasetId,
-            };
-            addLibrary(payload).then(res => {
-                if (res) {
-                    mutateLibraries();
-                    setLibraryToggle(true);
-                }
-            });
-        } else {
-            const library_id_to_delete = libraryData.find(
-                element =>
-                    element.user_id === user?.id &&
-                    element.dataset_id === Number(datasetId)
-            ).id;
+        if (isLoggedIn) {
+            if (!isLibraryToggled) {
+                const payload: NewLibrary = {
+                    user_id: user?.id,
+                    dataset_id: +datasetId,
+                };
+                addLibrary(payload).then(res => {
+                    if (res) {
+                        mutateLibraries();
+                        setLibraryToggle(true);
+                    }
+                });
+            } else {
+                const library_id_to_delete = libraryData.find(
+                    element =>
+                        element.user_id === user?.id &&
+                        element.dataset_id === Number(datasetId)
+                ).id;
 
-            await deleteLibrary(library_id_to_delete);
+                await deleteLibrary(library_id_to_delete);
 
-            mutateLibraries();
-            setLibraryToggle(false);
+                mutateLibraries();
+                setLibraryToggle(false);
+            }
         }
     };
 
