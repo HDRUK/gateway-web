@@ -15,11 +15,6 @@ const outerNodeValues = [
         href: "/search?type=dur",
     },
     {
-        name: "linkages",
-        label: undefined,
-        /* to-do: section does not exist on the landing page yet */
-    },
-    {
         name: "collections",
         label: undefined,
         href: "/search?type=collections",
