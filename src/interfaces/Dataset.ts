@@ -29,6 +29,7 @@ interface Metadata {
         contactPoint: string;
         controlledKeywords: string;
         datasetType: string;
+        datasetSubType: string;
         description: string;
         doiName: string;
         keywords: string;
@@ -63,6 +64,9 @@ interface Metadata {
         };
     };
     provenance: {
+        origin: {
+            collectionSituation: string | undefined;
+        };
         temporal: {
             startDate: string | undefined;
             endDate: string | undefined;
@@ -86,6 +90,12 @@ interface Metadata {
     structuralMetadata?: StructuralMetadata[];
 }
 
+interface LinkedDatasetVersions {
+    pivot: {
+        linkage_type: string;
+    };
+}
+
 interface MetadataMax {
     metadata: Metadata;
     gwdmVersion: string;
@@ -99,6 +109,7 @@ interface VersionItem {
     metadata: MetadataMax;
     version: number;
     publications: Publication[];
+    linked_dataset_versions: LinkedDatasetVersions[];
 }
 
 interface Dataset {

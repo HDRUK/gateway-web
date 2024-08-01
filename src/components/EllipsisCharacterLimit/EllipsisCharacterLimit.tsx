@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
+import { ButtonProps } from "@mui/material/Button";
 import Button from "@/components/Button";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 import Tooltip from "@/components/Tooltip";
 
-interface EllipsisCharacterLimitProps {
+interface EllipsisCharacterLimitProps extends ButtonProps {
     text: string;
     characterLimit?: number;
     isButton?: boolean;
@@ -18,19 +19,21 @@ const tooltipWrapper = (text: string) => (children: ReactNode) => {
     );
 };
 
-const buttonWrapper = (action?: () => void) => (children: ReactNode) => {
-    return (
-        <Button size="small" onClick={action}>
-            {children}
-        </Button>
-    );
-};
+const buttonWrapper =
+    (rest: ButtonProps = {}) =>
+    (children: ReactNode) => {
+        return (
+            <Button size="small" {...rest}>
+                {children}
+            </Button>
+        );
+    };
 
 const EllipsisCharacterLimit = ({
     text,
     characterLimit = 50,
     isButton = false,
-    action,
+    ...rest
 }: EllipsisCharacterLimitProps) => {
     const formattedText =
         text.length > characterLimit
@@ -40,7 +43,7 @@ const EllipsisCharacterLimit = ({
     return (
         <ConditionalWrapper
             requiresWrapper={isButton}
-            wrapper={buttonWrapper(action)}>
+            wrapper={buttonWrapper(rest)}>
             <ConditionalWrapper
                 requiresWrapper={text.length > characterLimit}
                 wrapper={tooltipWrapper(text)}>
