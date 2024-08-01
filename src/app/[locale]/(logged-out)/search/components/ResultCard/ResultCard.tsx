@@ -32,7 +32,7 @@ interface ResultCardProps {
     mutateLibraries: KeyedMutator<Library[]>;
 }
 
-const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
+const TRANSLATION_PATH = "pages.search.components.ResultCard";
 
 const ResultCard = ({
     result,
@@ -50,8 +50,8 @@ const ResultCard = ({
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
-        const libraries_dataset_ids = libraryData?.map(a => a.dataset_id);
-        if (libraries_dataset_ids?.includes(Number(datasetId))) {
+        const librariesDatasetIds: Number[] = libraryData?.map(a => a.dataset_id);
+        if (librariesDatasetIds?.includes(Number(datasetId))) {
             setLibraryToggle(true);
         }
     }, [libraryData, datasetId]);
@@ -82,7 +82,7 @@ const ResultCard = ({
         setAnchorElement(event.currentTarget);
     };
 
-    const handleAddRemoveLibrary = async (
+    const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
         event.stopPropagation();
@@ -99,13 +99,13 @@ const ResultCard = ({
                     }
                 });
             } else {
-                const library_id_to_delete = libraryData.find(
+                const libraryIdToDelete = libraryData.find(
                     element =>
                         element.user_id === user?.id &&
                         element.dataset_id === Number(datasetId)
                 ).id;
 
-                await deleteLibrary(library_id_to_delete);
+                await deleteLibrary(libraryIdToDelete);
 
                 mutateLibraries();
                 setLibraryToggle(false);
@@ -134,7 +134,7 @@ const ResultCard = ({
                                 {metadata.summary.shortTitle}
                                 <div style={{ textAlign: "end" }}>
                                     <Button
-                                        onClick={handleAddRemoveLibrary}
+                                        onClick={handleToggleLibraryItem}
                                         variant="outlined"
                                         startIcon={
                                             isLibraryToggled ? (
