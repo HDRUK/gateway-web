@@ -300,7 +300,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                     <Button
                         onClick={() =>
                             push(
-                                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`
+                                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}?tab=DRAFT`
                             )
                         }>
                         {t("returnButtonText")}

@@ -1,5 +1,6 @@
-import React, { ElementType } from "react";
+import { ElementType } from "react";
 import { Control, FieldPath, FieldValues } from "react-hook-form";
+import { SxProps } from "@mui/material";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import Autocomplete from "@/components/Autocomplete";
 import Checkbox from "@/components/Checkbox";
@@ -33,6 +34,7 @@ export interface InputWrapperProps<TFieldValues extends FieldValues, TName> {
     component: ComponentTypes;
     control: Control<TFieldValues>;
     name: TName;
+    sx: SxProps;
 }
 
 export type InputWrapperCombinedProps<
@@ -46,6 +48,7 @@ function InputWrapper<
 >({
     component,
     control,
+    sx,
     ...props
 }: InputWrapperCombinedProps<TFieldValues, TName>) {
     const inputs = {
@@ -80,7 +83,7 @@ function InputWrapper<
         throw Error(`${component} is not a valid input component`);
     }
 
-    return <Component control={control} {...props} />;
+    return <Component control={control} sx={sx} {...props} />;
 }
 
 export default InputWrapper;
