@@ -12,6 +12,7 @@ import Button from "@/components/Button";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
@@ -109,6 +110,8 @@ const ResultCard = ({
                 mutateLibraries();
                 setLibraryToggle(false);
             }
+        } else {
+            showDialog(ProvidersDialog, { isProvidersDialog: true });
         }
     };
 
