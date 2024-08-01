@@ -109,7 +109,6 @@ export default async function DatasetItemPage({
                             <Box
                                 sx={{
                                     p: 0,
-                                    backgroundColor: "red",
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,
