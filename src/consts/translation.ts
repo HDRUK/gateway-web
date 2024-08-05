@@ -26,6 +26,7 @@ export const COMMON = "common";
 export const MODULES = "modules";
 export const DIALOGS = "dialogs";
 export const TOOLS = "tools";
+export const SEARCH = "search";
 
 // String
 export const TEXT = "text";
