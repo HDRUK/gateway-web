@@ -252,6 +252,30 @@
                             }
                         }
                     }
+                },
+                "library": {
+                    "title": "Library",
+                    "text": "The space where you can sort all your datasets and entity types",
+                    "components": {
+                        "RightPanel": {
+                            "generalEnquiries": {
+                                "title": "General Enquiry",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so)."
+                            }
+                        }
+                    },
+                    "name": {
+                        "label": "Name"
+                    },
+                    "darEnabled": {
+                        "label": "Data Access Request Enabled"
+                    },
+                    "dataCustodian": {
+                        "label": "Data Custodian"
+                    },
+                    "entityType": {
+                        "label": "Entity Type"
+                    }
                 }
             },
             "team": {
@@ -876,18 +900,18 @@
                     "root": "Data custodian link",
                     "structuralMetadata": "Review data variables"
                 },
-                "Linkages":{
-                    "title":"Relationships:",
+                "Linkages": {
+                    "title": "Relationships:",
                     "noRelationships": "No relationships found",
-                    "isPartOf":"Dataset is part of ({ count })",
-                    "isDerivedFrom":"Datasets this derives from ({ count })",
-                    "linkedDatasets":"Linkages Datasets ({ count })",
-                    "isMemberOf":"Similar Datasets ({ count })"
+                    "isPartOf": "Dataset is part of ({ count })",
+                    "isDerivedFrom": "Datasets this derives from ({ count })",
+                    "linkedDatasets": "Linkages Datasets ({ count })",
+                    "isMemberOf": "Similar Datasets ({ count })"
                 },
-                "Sources":{
-                    "datasetTypes":"Dataset Types",
-                    "collectionSources":"Collection Sources",
-                    "noCollectionSources":"No collection sources listed"
+                "Sources": {
+                    "datasetTypes": "Dataset Types",
+                    "collectionSources": "Collection Sources",
+                    "noCollectionSources": "No collection sources listed"
                 }
             }
         },
@@ -1137,10 +1161,10 @@
                 "uploadButton": "Upload a file of metadata"
             },
             "DatasetQuickView": {
-                "keyWords":"Keywords",
-                "dataType":"Data type",
-                "collectionSource":"Collection source",
-                "noCollectionSource":"No collection sources found"
+                "keyWords": "Keywords",
+                "dataType": "Data type",
+                "collectionSource": "Collection source",
+                "noCollectionSource": "No collection sources found"
             }
         }
     }
