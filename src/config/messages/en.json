@@ -368,12 +368,12 @@
                             "duplicateButton": "Duplicate"
                         },
                         "CreateDataUse": {
-                            "upload": "Upload",
+                            "upload": "Select file",
                             "uploadButtonText": "Upload",
                             "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
                             "error": "An error has occured. Please check your file and try again",
                             "successMessage": "Data Use successfully created",
-                            "returnButtonText": "Return to Data Uses"
+                            "returnButtonText": "View Data Uses"
                         },
                         "EditDataUse": {
                             "editDataUse": "Edit a data use",
@@ -740,7 +740,10 @@
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
                     "dataCustodian": "Data Custodian",
                     "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
-                    "showAll": "Quick view"
+                    "showAll": "Quick view",
+                    "actions": "Actions",
+                    "addToLibrary": "Add to library",
+                    "removeFromLibrary": "Remove from library"
                 },
                 "ResultCardPublication": {
                     "published": "Published",
@@ -751,6 +754,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
+                    "action": {
+                        "label": "Action search result"
+                    },
                     "title": {
                         "label": "Metadata title"
                     },
@@ -876,18 +882,18 @@
                     "root": "Data custodian link",
                     "structuralMetadata": "Review data variables"
                 },
-                "Linkages":{
-                    "title":"Relationships:",
+                "Linkages": {
+                    "title": "Relationships:",
                     "noRelationships": "No relationships found",
-                    "isPartOf":"Dataset is part of ({ count })",
-                    "isDerivedFrom":"Datasets this derives from ({ count })",
-                    "linkedDatasets":"Linkages Datasets ({ count })",
-                    "isMemberOf":"Similar Datasets ({ count })"
+                    "isPartOf": "Dataset is part of ({ count })",
+                    "isDerivedFrom": "Datasets this derives from ({ count })",
+                    "linkedDatasets": "Linkages Datasets ({ count })",
+                    "isMemberOf": "Similar Datasets ({ count })"
                 },
-                "Sources":{
-                    "datasetTypes":"Dataset Types",
-                    "collectionSources":"Collection Sources",
-                    "noCollectionSources":"No collection sources listed"
+                "Sources": {
+                    "datasetTypes": "Dataset Types",
+                    "collectionSources": "Collection Sources",
+                    "noCollectionSources": "No collection sources listed"
                 }
             }
         },
@@ -1136,11 +1142,32 @@
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
             },
+            "RelatedResources": {
+                "title": "Add related resources",
+                "intro": "Search for data uses, publications and other analysis scripts, tools and software to add to your entry. Resources must already be on the Gateway.",
+                "resultsShown": "results shown",
+                "selected": "selected",
+                "cancel": "Cancel",
+                "addResources": "Add resources",
+                "headerAdd": "Action",
+                "headerName": "Name",
+                "dataProvider": "Data Provider",
+                "entityType": "Entity Type",
+                "radioDataset": "Datasets",
+                "radioDatause": "Data uses",
+                "radioPublication": "Publications",
+                "radioTool": "Analysis scripts, tools & software",
+                "chipDataset": "Dataset",
+                "chipDatause": "Data use",
+                "chipPublication": "Publication",
+                "chipTool": "Analysis Scripts & Software",
+                "noResults": "No results found"
+            },
             "DatasetQuickView": {
-                "keyWords":"Keywords",
-                "dataType":"Data type",
-                "collectionSource":"Collection source",
-                "noCollectionSource":"No collection sources found"
+                "keyWords": "Keywords",
+                "dataType": "Data type",
+                "collectionSource": "Collection source",
+                "noCollectionSource": "No collection sources found"
             }
         }
     }

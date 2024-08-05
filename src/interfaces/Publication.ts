@@ -10,6 +10,7 @@ interface Publication {
     publication_type: string;
     journal_name: string;
     abstract: string;
+    full_text_url: string;
     url: string;
     status: string;
     pivot: {

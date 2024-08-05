@@ -7,9 +7,9 @@ import {
     useController,
 } from "react-hook-form";
 import { FormControlLabel, SxProps } from "@mui/material";
-import Radio from "@mui/material/Radio";
 import MuiRadioGroup from "@mui/material/RadioGroup";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import StyledRadio from "../StyledRadio";
 
 export interface RadioGroupProps<TFieldValues extends FieldValues, TName> {
     label: string;
@@ -69,17 +69,15 @@ const RadioGroup = <
                 name={name}
                 render={({ field }) => (
                     <MuiRadioGroup row={isRow} {...field} {...rest}>
-                        {radios?.map(({ value, label: radioLabel }) => {
-                            return (
-                                <FormControlLabel
-                                    key={value}
-                                    sx={radioSx}
-                                    control={<Radio disabled={disabled} />}
-                                    value={value}
-                                    label={radioLabel}
-                                />
-                            );
-                        })}
+                        {radios?.map(({ value, label: radioLabel }) => (
+                            <FormControlLabel
+                                key={value}
+                                sx={radioSx}
+                                control={<StyledRadio disabled={disabled} />}
+                                value={value}
+                                label={radioLabel}
+                            />
+                        ))}
                     </MuiRadioGroup>
                 )}
             />

@@ -8,6 +8,7 @@ import {
     Column,
 } from "@tanstack/react-table";
 import { colors } from "@/config/theme";
+import ActionDropdown from "@/app/[locale]/(logged-out)/search/components/ActionDropdown";
 import * as styles from "./Table.styles";
 
 interface OnUpdateProps {
@@ -74,36 +75,49 @@ const Table = <T,>({
     defaultColumn,
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
-    const table = useReactTable({
-        data: rows,
-        columns,
-        defaultColumn,
-        autoResetPageIndex,
-        getCoreRowModel: getCoreRowModel(),
-        meta: {
-            updateData: (
-                rowIndex: number,
-                columnId: string,
-                value: unknown
-            ) => {
-                if (typeof onUpdate !== "function") return;
+    const table = useReactTable(
+        {
+            data: rows,
+            columns,
+            defaultColumn,
+            autoResetPageIndex,
+            getCoreRowModel: getCoreRowModel(),
+            meta: {
+                updateData: (
+                    rowIndex: number,
+                    columnId: string,
+                    value: unknown
+                ) => {
+                    if (typeof onUpdate !== "function") return;
 
-                // Skip page index reset until after next rerender
-                skipAutoResetPageIndex();
+                    // Skip page index reset until after next rerender
+                    skipAutoResetPageIndex();
 
-                const newData = rows.map((row, index) => {
-                    if (index === rowIndex) {
-                        return {
-                            ...rows[rowIndex],
-                            [columnId]: value,
-                        };
-                    }
-                    return row;
-                });
-                onUpdate(newData, { rowIndex, columnId, value });
+                    const newData = rows.map((row, index) => {
+                        if (index === rowIndex) {
+                            return {
+                                ...rows[rowIndex],
+                                [columnId]: value,
+                            };
+                        }
+                        return row;
+                    });
+                    onUpdate(newData, { rowIndex, columnId, value });
+                },
             },
         },
-    });
+        hooks => {
+            hooks.visibleColumns.push(columns => [
+                {
+                    id: "checkinout",
+                    Header: "CheckIn/Out",
+                    // eslint-disable-next-line react/no-unstable-nested-components, react/prop-types
+                    Cell: ({ row }) => <ActionDropdown {...row} />,
+                },
+                ...columns,
+            ]);
+        }
+    );
 
     const hasFooterContent = !!table
         .getFooterGroups()
@@ -140,7 +154,9 @@ const Table = <T,>({
             </thead>
             <tbody>
                 {table.getRowModel().rows.map(row => (
+                    // eslint-disable-next-line react/prop-types
                     <tr key={row.id}>
+                        {/* eslint-disable-next-line react/prop-types */}
                         {row.getVisibleCells().map(cell => (
                             <td
                                 css={styles.td}
