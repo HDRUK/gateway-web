@@ -4,6 +4,7 @@ import { DataUse } from "./DataUse";
 import { VersionItem } from "./Dataset";
 import { Publication } from "./Publication";
 import { Tag } from "./Tag";
+import { Team } from "./Team";
 
 export interface Tool {
     id: number;
@@ -23,7 +24,7 @@ export interface Tool {
     contact_address: string;
     user?: string;
     tag: Tag[];
-    team?: string;
+    team?: Team;
     programming_languages: string[];
     programming_packages: string[];
     type_category?: string[]; // may need updating?

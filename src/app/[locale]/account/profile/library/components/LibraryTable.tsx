@@ -1,140 +1,39 @@
 "use client";
 
-import { useState } from "react";
-import { createColumnHelper } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import Loading from "@/components/Loading";
-import StyledCheckbox from "@/components/StyledCheckbox";
+import { LibraryListItem, Library } from "@/interfaces/Library";
 import Table from "@/components/Table";
-import TooltipIcon from "@/components/TooltipIcon";
-import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
-import { CheckIcon, DeleteForeverIcon } from "@/consts/icons";
-
-interface Library {
-    name: string;
-    darEnabled: boolean;
-    dataCustodian: string;
-    entityType: string;
-}
+import { getColumns } from "../utils";
 
 const TRANSLATION_PATH = "pages.account.profile.library";
 
-const columnHelper = createColumnHelper<Library>();
+interface SelectionData {
+    [id: string]: boolean;
+}
 
-const getColumns = ({
-    handleSelect,
+interface LibraryTableProps {
+    data: Library[];
+    selected: SelectionData;
+    handleSelect: (data: SelectionData) => void;
+    handleRemove: (id: number) => void;
+}
+
+const LibraryTable = ({
+    data,
     selected,
-    translations,
-}: {
-    handleSelect: (data: { [id: string]: boolean }) => void;
-    selected: { [id: string]: boolean };
-    translations: { [id: string]: string };
-}) => [
-    columnHelper.display({
-        id: "actions",
-        meta: { isPinned: true },
-        cell: ({ row }) => {
-            return (
-                <div style={{ textAlign: "center" }}>
-                    <StyledCheckbox
-                        checked={selected[row.id]}
-                        onChange={(_e, value) =>
-                            handleSelect({ [row.id]: value })
-                        }
-                        size="large"
-                        sx={{ p: 0 }}
-                        iconSx={{ mr: 0 }}
-                    />
-                </div>
-            );
-        },
-        header: () => null,
-        size: 43,
-    }),
-
-    columnHelper.display({
-        id: "name",
-        cell: ({
-            row: {
-                original: { name },
-            },
-        }) => <div style={{ textAlign: "center" }}>{name}</div>,
-        header: () => <span>{translations.name}</span>,
-        size: 150,
-    }),
-
-    columnHelper.display({
-        id: "darEnabled",
-        cell: ({
-            row: {
-                original: { darEnabled },
-            },
-        }) => (
-            <div style={{ textAlign: "center" }}>
-                {darEnabled && <CheckIcon color="primary" />}
-            </div>
-        ),
-        header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.darEnabled}
-                content={translations.darEnabled}
-            />
-        ),
-        size: 100,
-    }),
-
-    columnHelper.display({
-        id: "dataCustodian",
-        cell: ({
-            row: {
-                original: { dataCustodian },
-            },
-        }) => <div style={{ textAlign: "center" }}>{dataCustodian}</div>,
-        header: () => <span>{translations.dataCustodian}</span>,
-        size: 100,
-    }),
-
-    columnHelper.display({
-        id: "entityType",
-        cell: ({
-            row: {
-                original: { entityType },
-            },
-        }) => <div style={{ textAlign: "center" }}>{entityType}</div>,
-        header: () => <span>{translations.entityType}</span>,
-        size: 100,
-    }),
-
-    columnHelper.display({
-        id: "delete",
-        cell: () => {
-            return (
-                <div style={{ textAlign: "center" }}>
-                    <DeleteForeverIcon color="primary" />
-                </div>
-            );
-        },
-        header: () => null,
-        size: 43,
-    }),
-];
-const LibraryTable = ({ data, selected, setSelected }) => {
+    handleSelect,
+    handleRemove,
+}: LibraryTableProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const results = data?.map(item => ({
         id: item.id,
+        datasetId: item.dataset_id,
         name: item.dataset_name,
         darEnabled: item.data_provider_dar_enabled,
         dataCustodian: item.data_provider_name,
-        entityType: "Dataset",
+        entityType: "Dataset", // will we update in the future with other entities?
     }));
-
-    const handleSelect = (data: { [id: string]: boolean }) => {
-        setSelected({ ...selected, ...data });
-    };
 
     const translations = {
         name: t("name.label"),
@@ -144,9 +43,10 @@ const LibraryTable = ({ data, selected, setSelected }) => {
     };
 
     return (
-        <Table<Library>
+        <Table<LibraryListItem>
             columns={getColumns({
                 handleSelect,
+                handleRemove,
                 selected,
                 translations,
             })}

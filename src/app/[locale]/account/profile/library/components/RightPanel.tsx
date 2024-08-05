@@ -10,11 +10,30 @@ import { QuestionAnswerIcon } from "@/consts/icons";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
-const RightPanel = ({ selected }) => {
+interface SelectionData {
+    [id: string]: boolean;
+}
+interface RightPanelProps {
+    selected: SelectionData;
+}
+
+const RightPanel = ({ selected }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
     const handleGeneralEnquiries = () => {
-        const trueKeys = Object.keys(selected).filter(key => selected[key]);
-        console.log(trueKeys);
+        // to be implemented
+        const selectedDatasetIds = Object.keys(selected).filter(
+            key => selected[key]
+        );
+        console.log(selectedDatasetIds);
+    };
+
+    const handleFeasibilityEnquiries = () => {
+        // to be implemented
+        const selectedDatasetIds = Object.keys(selected).filter(
+            key => selected[key]
+        );
+        console.log(selectedDatasetIds);
     };
 
     return (
@@ -44,7 +63,9 @@ const RightPanel = ({ selected }) => {
                         {t("feasabilityEnquiries.title")}
                     </Typography>
                     <Typography>{t("feasabilityEnquiries.text")}</Typography>
-                    <Button sx={{ mt: 2, width: "100%" }}>
+                    <Button
+                        onClick={handleFeasibilityEnquiries}
+                        sx={{ mt: 2, width: "100%" }}>
                         <QuestionAnswerIcon sx={{ pr: 1 }} />
                         {t("feasabilityEnquiries.buttonText")}
                     </Button>

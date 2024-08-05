@@ -55,6 +55,7 @@ const apis = {
     fileUploadV1Url: `${apiV1Url}/files`,
     fileProcessedV1Url: `${apiV1Url}/files/processed`,
     librariesV1Url: `${apiV1Url}/libraries`,
+    librariesV1UrlIP: `${apiV1IPUrl}/libraries`,
 };
 
 export default apis;
