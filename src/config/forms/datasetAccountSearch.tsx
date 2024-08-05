@@ -1,3 +1,4 @@
+import { SearchIcon } from "@/consts/icons";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -30,6 +31,7 @@ const searchFilter = {
     name: "searchTitle",
     placeholder: "Search analysis script, tools and software titles",
     label: "",
+    icon: SearchIcon,
 };
 
 const sortField = {
