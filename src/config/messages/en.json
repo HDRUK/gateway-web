@@ -260,7 +260,13 @@
                         "RightPanel": {
                             "generalEnquiries": {
                                 "title": "General Enquiry",
-                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so)."
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a general enquiry"
+                            },
+                            "feasabilityEnquiries": {
+                                "title": "Feasability Enquiry",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a feasivility enquiry"
                             }
                         }
                     },

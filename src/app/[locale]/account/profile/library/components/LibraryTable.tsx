@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
+import Loading from "@/components/Loading";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
 import { CheckIcon, DeleteForeverIcon } from "@/consts/icons";
 
 interface Library {
@@ -58,7 +61,7 @@ const getColumns = ({
             },
         }) => <div style={{ textAlign: "center" }}>{name}</div>,
         header: () => <span>{translations.name}</span>,
-        size: 120,
+        size: 150,
     }),
 
     columnHelper.display({
@@ -80,7 +83,7 @@ const getColumns = ({
                 content={translations.darEnabled}
             />
         ),
-        size: 120,
+        size: 100,
     }),
 
     columnHelper.display({
@@ -91,7 +94,7 @@ const getColumns = ({
             },
         }) => <div style={{ textAlign: "center" }}>{dataCustodian}</div>,
         header: () => <span>{translations.dataCustodian}</span>,
-        size: 120,
+        size: 100,
     }),
 
     columnHelper.display({
@@ -102,7 +105,7 @@ const getColumns = ({
             },
         }) => <div style={{ textAlign: "center" }}>{entityType}</div>,
         header: () => <span>{translations.entityType}</span>,
-        size: 120,
+        size: 100,
     }),
 
     columnHelper.display({
@@ -118,18 +121,17 @@ const getColumns = ({
         size: 43,
     }),
 ];
-const LibraryTable = () => {
+const LibraryTable = ({ data, selected, setSelected }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const results = [
-        {
-            name: "Test name for a dataset",
-            darEnabled: true,
-            dataCustodian: "SAIL",
-            entityType: "Dataset",
-        },
-    ];
-    const [selected, setSelected] = useState({});
+    const results = data?.map(item => ({
+        id: item.id,
+        name: item.dataset_name,
+        darEnabled: item.data_provider_dar_enabled,
+        dataCustodian: item.data_provider_name,
+        entityType: "Dataset",
+    }));
+
     const handleSelect = (data: { [id: string]: boolean }) => {
         setSelected({ ...selected, ...data });
     };

@@ -11,7 +11,7 @@ const Header = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
-        <Paper sx={{ mb: 2 }}>
+        <Paper>
             <Box
                 sx={{
                     bgcolor: "white",
