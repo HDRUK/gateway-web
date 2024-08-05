@@ -30,7 +30,7 @@ const ActionBar = () => {
         filename: string;
         type: string;
     }>(`${apis.datasetsExportV1Url}/?dataset_id=${params?.datasetId}`, {
-        shouldFetch: isDownloading,
+        shouldFetch: !isDownloading,
     });
 
     const handleDownload = async () => {
