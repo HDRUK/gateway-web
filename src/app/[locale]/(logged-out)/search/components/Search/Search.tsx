@@ -235,6 +235,7 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         {
             keepPreviousData: true,
             withPagination: true,
+            errorNotificationsOn: false,
             shouldFetch:
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
                 !!(

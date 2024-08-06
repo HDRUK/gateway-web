@@ -116,7 +116,6 @@ function Header({ isHome = false }: HeaderProps) {
                         }}>
                         <DesktopNav />
                     </Box>
-
                     <Box
                         sx={{
                             justifySelf: "end",

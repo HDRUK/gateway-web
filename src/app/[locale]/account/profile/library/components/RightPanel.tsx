@@ -1,39 +1,53 @@
 "use client";
 
+import { useMemo } from "react";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { QuestionAnswerIcon } from "@/consts/icons";
+import theme from "@/config/theme";
+import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
-interface SelectionData {
-    [id: string]: boolean;
-}
 interface RightPanelProps {
-    selected: SelectionData;
+    selected: SelectedLibrary;
+    handleRemove: (id: string) => void;
 }
 
-const RightPanel = ({ selected }: RightPanelProps) => {
+const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    const selectedDatasetIds = useMemo(
+        () =>
+            Object.values(selected)
+                .filter(item => item.selected)
+                .map(item => item.datasetId),
+        [selected]
+    );
+
+    const selectedLibraryIds = useMemo(
+        () => Object.keys(selected).filter(key => selected[key].selected),
+        [selected]
+    );
 
     const handleGeneralEnquiries = () => {
         // to be implemented
-        const selectedDatasetIds = Object.keys(selected).filter(
-            key => selected[key]
-        );
         console.log(selectedDatasetIds);
+        console.log(selectedLibraryIds);
     };
 
     const handleFeasibilityEnquiries = () => {
         // to be implemented
-        const selectedDatasetIds = Object.keys(selected).filter(
-            key => selected[key]
-        );
         console.log(selectedDatasetIds);
+        console.log(selectedLibraryIds);
+    };
+
+    const handleMultiDelete = () => {
+        selectedLibraryIds.forEach(id => handleRemove(id));
     };
 
     return (
@@ -70,6 +84,32 @@ const RightPanel = ({ selected }: RightPanelProps) => {
                         {t("feasabilityEnquiries.buttonText")}
                     </Button>
                 </Box>
+                {selectedDatasetIds.length > 1 && (
+                    <>
+                        <Divider sx={{ my: 2 }} />
+                        <Box
+                            sx={{
+                                p: 2,
+                                m: 0,
+                                backgroundColor: theme.palette.greyCustom.main,
+                            }}>
+                            <Button
+                                color="greyCustom"
+                                variant="outlined"
+                                onClick={handleMultiDelete}
+                                sx={{
+                                    width: "100%",
+                                    backgroundColor: "greyCustom.light",
+                                }}>
+                                <DeleteForeverIcon
+                                    color="primary"
+                                    sx={{ pr: 1 }}
+                                />
+                                {t("multiDelete.label")}
+                            </Button>
+                        </Box>
+                    </>
+                )}
             </Box>
         </Paper>
     );

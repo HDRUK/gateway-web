@@ -57,10 +57,12 @@ const ResultCard = ({
         }
     }, [libraryData, datasetId]);
 
-    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url);
+    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url, {
+        itemName: `Library item`,
+    });
 
     const deleteLibrary = useDelete(apis.librariesV1Url, {
-        itemName: `Library`,
+        itemName: `Library item`,
     });
 
     const handleClickItem = useCallback(() => {
