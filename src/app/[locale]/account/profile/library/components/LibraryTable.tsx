@@ -1,21 +1,21 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { LibraryListItem, Library } from "@/interfaces/Library";
+import {
+    LibraryListItem,
+    Library,
+    SelectedLibrary,
+} from "@/interfaces/Library";
 import Table from "@/components/Table";
 import { getColumns } from "../utils";
 
 const TRANSLATION_PATH = "pages.account.profile.library";
 
-interface SelectionData {
-    [id: string]: boolean;
-}
-
 interface LibraryTableProps {
     data: Library[];
-    selected: SelectionData;
-    handleSelect: (data: SelectionData) => void;
-    handleRemove: (id: number) => void;
+    selected: SelectedLibrary;
+    handleSelect: (data: SelectedLibrary) => void;
+    handleRemove: (id: string) => void;
 }
 
 const LibraryTable = ({

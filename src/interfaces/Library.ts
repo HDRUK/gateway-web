@@ -9,6 +9,10 @@ interface Library {
     data_provider_name: string;
 }
 
+interface SelectedLibrary {
+    [id: string]: { selected: boolean; datasetId: number };
+}
+
 interface LibraryListItem {
     id: number;
     datasetId: number;
@@ -23,4 +27,4 @@ interface NewLibrary {
     dataset_id: number;
 }
 
-export type { Library, LibraryListItem, NewLibrary };
+export type { Library, LibraryListItem, SelectedLibrary, NewLibrary };

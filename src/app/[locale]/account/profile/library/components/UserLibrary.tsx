@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Library } from "@/interfaces/Library";
+import { Library, SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Loading from "@/components/Loading";
 import useDelete from "@/hooks/useDelete";
@@ -16,24 +16,23 @@ export const metadata = {
     description: "",
 };
 
-interface SelectionData {
-    [id: string]: boolean;
-}
-
 const UserLibrary = () => {
     const { data, isLoading, mutate } = useGet<Library[]>(apis.librariesV1Url);
-    const [selected, setSelected] = useState<SelectionData>({});
+    const [selected, setSelected] = useState<SelectedLibrary>({});
 
     const deleteLibrary = useDelete(apis.librariesV1Url, {
-        itemName: "Library",
+        itemName: "Library item",
     });
 
-    const handleSelect = (data: SelectionData) => {
+    const handleSelect = (data: SelectedLibrary) => {
         setSelected({ ...selected, ...data });
     };
 
-    const handleRemove = (id: number) => {
-        deleteLibrary(id).then(() => mutate());
+    const handleRemove = (id: string) => {
+        deleteLibrary(id).then(() => {
+            mutate();
+            setSelected({});
+        });
     };
 
     if (isLoading) {
@@ -58,7 +57,10 @@ const UserLibrary = () => {
                     />
                 </Box>
                 <Box sx={{ p: 0, m: 0 }}>
-                    <RightPanel selected={selected} />
+                    <RightPanel
+                        selected={selected}
+                        handleRemove={handleRemove}
+                    />
                 </Box>
             </Box>
         </>
