@@ -139,7 +139,7 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
-    DATA_PROVIDERS = "data_provider_colls",
+    DATA_PROVIDERS = "data_providers",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",

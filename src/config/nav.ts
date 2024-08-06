@@ -22,7 +22,7 @@ const navItems = [
             },
             {
                 label: "Data Custodians",
-                href: "/search?type=data_provider_colls",
+                href: "/search?type=data_providers",
             },
             {
                 label: "Analysis scripts & software",
