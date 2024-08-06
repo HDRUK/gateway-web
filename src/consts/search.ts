@@ -3,7 +3,7 @@ const FILTER_TYPE_MAPPING: { [key: string]: string } = {
     dur: "dataUseRegister",
     publications: "paper",
     collections: "collection",
-    data_provider_colls: "dataProvider",
+    data_providers: "dataProvider",
     tools: "tool",
 };
 
