@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
-import { LibraryListItem } from "@/interfaces/Library";
+import { LibraryListItem, SelectedLibrary } from "@/interfaces/Library";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import TooltipIcon from "@/components/TooltipIcon";
 import { CheckIcon, DeleteForeverIcon } from "@/consts/icons";
@@ -17,7 +17,7 @@ const getColumns = ({
         [id: string]: { selected: boolean; datasetId: number };
     }) => void;
     handleRemove: (id: string | number) => void;
-    selected: { [id: string]: { selected: boolean; datasetId: number } };
+    selected: SelectedLibrary;
     translations: { [id: string]: string };
 }) => [
     columnHelper.display({
