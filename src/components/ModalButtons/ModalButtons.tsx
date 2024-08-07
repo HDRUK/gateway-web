@@ -1,4 +1,5 @@
-import Button, { ButtonProps } from "@/components/Button";
+import Button from "@/components/Button";
+import { ButtonProps } from "@/components/Button/Button";
 import useDialog from "@/hooks/useDialog";
 import Box from "../Box";
 
