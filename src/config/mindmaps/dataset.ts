@@ -34,7 +34,12 @@ const rootNode = {
     id: "node-root",
     type: "circle",
     position: { x: centerX, y: centerY },
-    data: { id: 0, name: "root", label: undefined },
+    data: {
+        id: 0,
+        name: "root",
+        label: undefined,
+        href: "/data-custodian",
+    },
 };
 
 const outerNodes = outerNodeValues.map((node, index) =>
