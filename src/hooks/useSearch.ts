@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { CsvExport } from "@/interfaces/CsvExport";
+import { FileExport } from "@/interfaces/FileExport";
 import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
@@ -43,7 +43,7 @@ const useSearch = (
             };
 
             notificationService.apiSuccess(t("downloadStarted"));
-            downloadFile(formattedCSV as CsvExport);
+            downloadFile(formattedCSV as FileExport);
         }
     };
 

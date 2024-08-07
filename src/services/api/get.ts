@@ -34,15 +34,13 @@ const getRequest = async <T>(
                     type: CONTENT_TYPE_CSV,
                     filename,
                 };
-            } else if (
-                contentType &&
-                contentType.includes(CONTENT_TYPE_EXCEL)
-            ) {
+            }
+            if (contentType && contentType.includes(CONTENT_TYPE_EXCEL)) {
                 const filename = "download.xlsx";
                 const content = await response.blob();
 
                 return {
-                    content: content,
+                    content,
                     type: CONTENT_TYPE_EXCEL,
                     filename,
                 };
