@@ -1,3 +1,4 @@
+import { DatasetRelationship } from "@/config/forms/tool";
 import { DataStatus } from "@/consts/application";
 import { Collection } from "./Collection";
 import { DataUse } from "./DataUse";
@@ -11,27 +12,29 @@ export interface Tool {
     name: string;
     url: string;
     description: string;
-    license: string;
-    tech_stack: string;
-    user_id: number;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
+    license?: string;
+    tech_stack?: string;
+    user_id?: number;
+    enabled?: boolean;
+    created_at?: string;
+    updated_at?: string;
     deleted_at?: string;
-    category_id: number;
-    team_id: number;
+    category_id?: number;
+    team_id?: number;
     associated_authors: string;
-    contact_address: string;
+    contact_address?: string;
     user?: string;
     tag: Tag[];
     team?: Team;
-    programming_languages: string[];
-    programming_packages: string[];
-    type_category?: string[]; // may need updating?
+    programming_languages?: string[];
+    programming_packages?: string[];
+    type_category?: string[] | string; // may need updating?
     publications: Publication[];
     dataset_versions: VersionItem[];
     durs: DataUse[];
-    collections: Collection[];
-    status: DataStatus;
-    user_name: string;
+    collections?: Collection[];
+    status?: DataStatus;
+    user_name?: string;
+    tools: Tool[];
+    dataset: DatasetRelationship[];
 }

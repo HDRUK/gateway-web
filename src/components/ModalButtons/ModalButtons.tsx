@@ -51,23 +51,23 @@ const ModalButtons = ({
 
     return (
         <>
-            {showCancel && (
-                <Button
-                    key="cancel"
-                    variant="outlined"
-                    color="secondary"
-                    onClick={handleCancel}>
-                    {cancelText}
-                </Button>
-            )}
             <Box
                 sx={{
                     p: 0,
                     gap: 2,
                     display: "flex",
                 }}>
+                {showCancel && (
+                    <Button key="cancel" color="inherit" onClick={handleCancel}>
+                        {cancelText}
+                    </Button>
+                )}
+
                 {tertiaryButton && (
-                    <Button color="inherit" onClick={handleTertiary}>
+                    <Button
+                        color="secondary"
+                        variant="outlined"
+                        onClick={handleTertiary}>
                         {tertiaryButton.buttonText}
                     </Button>
                 )}

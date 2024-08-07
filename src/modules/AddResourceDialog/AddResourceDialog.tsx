@@ -39,12 +39,14 @@ const TRANSLATION_PATH = "modules.dialogs.RelatedResources";
 
 interface AddDatasetDialogProps {
     hideDatasets?: boolean;
+    hideTools?: boolean;
     defaultResources?: SelectedResources;
     setResources: (selectedResources: SelectedResources) => void;
 }
 
 const AddDatasetDialog = ({
     hideDatasets,
+    hideTools,
     defaultResources,
     setResources,
 }: AddDatasetDialogProps) => {
@@ -207,11 +209,18 @@ const AddDatasetDialog = ({
                     label="Search for:"
                     control={control}
                     radios={availableResourceTypes
-                        ?.filter(radio =>
-                            hideDatasets
-                                ? radio !== ResourceType.DATASET
-                                : radio
-                        )
+                        ?.filter(radio => {
+                            if (
+                                hideDatasets &&
+                                radio === ResourceType.DATASET
+                            ) {
+                                return false;
+                            }
+                            if (hideTools && radio === ResourceType.TOOL) {
+                                return false;
+                            }
+                            return true;
+                        })
                         .map(type => ({
                             value: type,
                             label: t(`radio${capitalise(type)}`),
@@ -235,7 +244,7 @@ const AddDatasetDialog = ({
                                     }}>
                                     <Table
                                         columns={getColumns({
-                                            handleCheckbox,
+                                            handleAction: handleCheckbox,
                                             resourceType,
                                             selectedResources,
                                             tableTranslations,
@@ -268,7 +277,11 @@ const AddDatasetDialog = ({
                     <Button onClick={() => hideDialog()} color="greyCustom">
                         {t("cancel")}
                     </Button>
-                    <Button onClick={() => setResources(selectedResources)}>
+                    <Button
+                        onClick={() => {
+                            setResources(selectedResources);
+                            hideDialog();
+                        }}>
                         {t("addResources")}
                     </Button>
                 </Box>

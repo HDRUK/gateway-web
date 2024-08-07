@@ -29,6 +29,7 @@ interface TableProps<T> {
         rows: T[],
         { rowIndex, columnId, value }: OnUpdateProps
     ) => void;
+    hideHeader?: boolean;
 }
 
 function useSkipper() {
@@ -73,6 +74,7 @@ const Table = <T,>({
     rows,
     onUpdate,
     defaultColumn,
+    hideHeader,
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
     const table = useReactTable(
@@ -105,6 +107,7 @@ const Table = <T,>({
                     onUpdate(newData, { rowIndex, columnId, value });
                 },
             },
+            hideHeader: false,
         },
         hooks => {
             hooks.visibleColumns.push(columns => [
@@ -129,29 +132,32 @@ const Table = <T,>({
 
     return (
         <table css={styles.table}>
-            <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                    <tr key={headerGroup.id}>
-                        {headerGroup.headers.map(header => (
-                            <th
-                                css={styles.th}
-                                key={header.id}
-                                style={{
-                                    ...getCommonCellStyles(header.column),
-                                }}>
-                                <div className="whitespace-nowrap">
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext()
-                                          )}
-                                </div>
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
+            {!hideHeader && (
+                <thead>
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map(header => (
+                                <th
+                                    css={styles.th}
+                                    key={header.id}
+                                    style={{
+                                        ...getCommonCellStyles(header.column),
+                                    }}>
+                                    <div className="whitespace-nowrap">
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext()
+                                              )}
+                                    </div>
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+            )}
             <tbody>
                 {table.getRowModel().rows.map(row => (
                     // eslint-disable-next-line react/prop-types
