@@ -65,6 +65,8 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         event: React.MouseEvent<HTMLElement>
     ) => {
         event.stopPropagation();
+        console.log("hiya");
+        return;
         if (isLoggedIn) {
             if (!isLibraryToggled) {
                 const payload: NewLibrary = {
