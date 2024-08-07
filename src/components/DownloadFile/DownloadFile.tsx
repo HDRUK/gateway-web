@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { CsvExport } from "@/interfaces/CsvExport";
+import { FileExport } from "@/interfaces/FileExport";
 import Button from "@/components/Button";
 import useGet from "@/hooks/useGet";
 import { DownloadIcon } from "@/consts/icons";
-import { downloadCSV } from "@/utils/download";
+import { downloadFile } from "@/utils/download";
 
-interface DownloadCSVProps {
+interface DownloadFileProps {
     apiPath: string;
     buttonText: string;
 }
 
-const DownloadCSV = ({ apiPath, buttonText }: DownloadCSVProps) => {
+const DownloadFile = ({ apiPath, buttonText }: DownloadFileProps) => {
     const [shouldFetch, setShouldFetch] = useState(false);
 
-    const download = useGet<CsvExport>(apiPath, {
+    const download = useGet<FileExport>(apiPath, {
         shouldFetch,
     });
 
@@ -21,7 +21,7 @@ const DownloadCSV = ({ apiPath, buttonText }: DownloadCSVProps) => {
         if (!shouldFetch) return;
 
         download.mutate().then(data => {
-            downloadCSV(data);
+            downloadFile(data);
             setShouldFetch(false);
         });
     }, [download, shouldFetch]);
@@ -37,4 +37,4 @@ const DownloadCSV = ({ apiPath, buttonText }: DownloadCSVProps) => {
     );
 };
 
-export default DownloadCSV;
+export default DownloadFile;

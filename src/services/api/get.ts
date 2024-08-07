@@ -1,6 +1,10 @@
 import { RequestOptions } from "@/interfaces/Api";
 import { errorNotification } from "./utils";
 
+const CONTENT_TYPE_EXCEL =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const CONTENT_TYPE_CSV = "text/csv";
+
 const getRequest = async <T>(
     url: string,
     options: RequestOptions
@@ -14,7 +18,7 @@ const getRequest = async <T>(
         if (response.ok) {
             const contentType = response.headers.get("Content-Type");
 
-            if (contentType && contentType.includes("text/csv")) {
+            if (contentType && contentType.includes(CONTENT_TYPE_CSV)) {
                 const text = await response.text();
                 const disposition = response.headers.get("Content-Disposition");
 
@@ -27,7 +31,19 @@ const getRequest = async <T>(
                 }
                 return {
                     content: text,
-                    type: "text/csv",
+                    type: CONTENT_TYPE_CSV,
+                    filename,
+                };
+            } else if (
+                contentType &&
+                contentType.includes(CONTENT_TYPE_EXCEL)
+            ) {
+                const filename = "download.xlsx";
+                const content = await response.blob();
+
+                return {
+                    content: content,
+                    type: CONTENT_TYPE_EXCEL,
                     filename,
                 };
             }
