@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookmarkBorder } from "@mui/icons-material";
+import { BookmarkBorder, Bookmark } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -101,7 +101,11 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
             label: isLibraryToggled
                 ? t("removeFromLibrary")
                 : t("addToLibrary"),
-            icon: <BookmarkBorder color="primary" sx={{ mr: 1 }} />,
+            icon: isLibraryToggled ? (
+                <Bookmark color="primary" />
+            ) : (
+                <BookmarkBorder color="primary" sx={{ mr: 1 }} />
+            ),
             action: handleToggleLibraryItem,
         },
     ];

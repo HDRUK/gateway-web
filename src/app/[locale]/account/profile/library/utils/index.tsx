@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
-import { LibraryListItem } from "@/interfaces/Library";
+import { LibraryListItem, SelectedLibrary } from "@/interfaces/Library";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import TooltipIcon from "@/components/TooltipIcon";
 import { CheckIcon, DeleteForeverIcon } from "@/consts/icons";
@@ -13,22 +13,26 @@ const getColumns = ({
     selected,
     translations,
 }: {
-    handleSelect: (data: { [id: string]: boolean }) => void;
-    handleRemove: (id: number) => void;
-    selected: { [id: string]: boolean };
+    handleSelect: (data: {
+        [id: string]: { selected: boolean; datasetId: number };
+    }) => void;
+    handleRemove: (id: string | number) => void;
+    selected: SelectedLibrary;
     translations: { [id: string]: string };
 }) => [
     columnHelper.display({
         id: "actions",
         meta: { isPinned: true },
         cell: ({ row }) => {
-            const { datasetId } = row.original;
+            const { id, datasetId } = row.original;
             return (
                 <div style={{ textAlign: "center" }}>
                     <StyledCheckbox
-                        checked={selected[datasetId]}
+                        checked={selected[id]?.selected}
                         onChange={(_e, value) =>
-                            handleSelect({ [datasetId]: value })
+                            handleSelect({
+                                [id]: { selected: value, datasetId },
+                            })
                         }
                         size="large"
                         sx={{ p: 0 }}
@@ -60,7 +64,7 @@ const getColumns = ({
             },
         }) => (
             <div style={{ textAlign: "center" }}>
-                {darEnabled && <CheckIcon color="primary" />}
+                {darEnabled ? <CheckIcon color="primary" /> : "-"}
             </div>
         ),
         header: () => (
