@@ -15,25 +15,31 @@ interface LinkItem {
 
 interface ProviderLinksProps {
     showInstitution: () => void;
+    redirectPath?: string;
 }
 
-const ProviderLinks = ({ showInstitution }: ProviderLinksProps) => {
+const ProviderLinks = ({
+    showInstitution,
+    redirectPath,
+}: ProviderLinksProps) => {
     const t = useTranslations("modules");
     const pathname = usePathname();
     const { push } = useRouter();
 
-    let redirectPath = "";
+    let effectiveRedirectPath = "";
 
     if (
         pathname?.includes(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`)
     ) {
-        redirectPath = `?redirect=/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`;
+        effectiveRedirectPath = `?redirect=/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`;
+    } else if (redirectPath) {
+        effectiveRedirectPath = `?redirect=${redirectPath}`;
     }
 
     const providerLinks: LinkItem[] = [
         {
             label: t("dialogs.ProvidersDialog.socialProviders.google"),
-            href: `${apis.authGoogleV1Url}${redirectPath}`,
+            href: `${apis.authGoogleV1Url}${effectiveRedirectPath}`,
             image: "google-logo.png",
         },
         {
@@ -43,11 +49,11 @@ const ProviderLinks = ({ showInstitution }: ProviderLinksProps) => {
         {
             label: t("dialogs.ProvidersDialog.socialProviders.linkedIn"),
             image: "linkedIn-logo.png",
-            href: `${apis.authLinkedinV1Url}${redirectPath}`,
+            href: `${apis.authLinkedinV1Url}${effectiveRedirectPath}`,
         },
         {
             label: t("dialogs.ProvidersDialog.socialProviders.azure"),
-            href: `${apis.authAzureV1Url}${redirectPath}`,
+            href: `${apis.authAzureV1Url}${effectiveRedirectPath}`,
             image: "microsoft-logo.png",
         },
     ];

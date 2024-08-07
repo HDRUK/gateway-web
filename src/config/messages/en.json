@@ -84,6 +84,16 @@
                     "message": "Publication successfully archived"
                 }
             }
+        },
+        "updateYourLibrary": {
+            "success": {
+                "delete": {
+                    "message": "Dataset removed from your Library"
+                },
+                "post": {
+                    "message": "Dataset added to your Library"
+                }
+            }
         }
     },
     "common": {
@@ -832,6 +842,7 @@
                 "useAddLibraryModal": {
                     "title": "Add dataset to your library",
                     "confirmText": "Add and go to library",
+                    "buttonContinueText": "Add to library and continue searching",
                     "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple Data Custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple Data Custodians (if the Data Custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
                 }
             }

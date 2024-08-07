@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { BookmarkBorder, Bookmark } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Button, Typography } from "@mui/material";
-import Markdown from "markdown-to-jsx";
+import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
@@ -15,6 +15,7 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import menuItems from "./config";
 import useAddLibraryModal from "./hooks/useAddLibraryModal";
@@ -28,14 +29,11 @@ const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 const ActionDropdown = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const { _id: datasetId } = result;
     const { isLoggedIn, user } = useAuth();
-
-    const { showLibraryModal } = useAddLibraryModal();
-
-    const handleClickAddLibrary = () => {
-        showLibraryModal();
-    };
+    const router = useRouter();
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -63,10 +61,46 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         }
     }, [libraryData, datasetId]);
 
-    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url);
+    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url, {
+        localeKey: "updateYourLibrary",
+    });
+
+    const onAddLibrary = () => {
+        const payload: NewLibrary = {
+            user_id: user?.id,
+            dataset_id: +datasetId,
+        };
+        return addLibrary(payload);
+    };
+
+    const onAddAndContinue = () => {
+        onAddLibrary().then(res => {
+            if (res) {
+                mutateLibraries();
+                setLibraryToggle(true);
+            }
+        });
+    };
+
+    const onAddAndRedirect = () => {
+        onAddLibrary().then(() => {
+            router.push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
+            );
+        });
+    };
+
+    const { showLibraryModal } = useAddLibraryModal({
+        onAddAndRedirect,
+        onAddAndContinue,
+    });
+
+    const handleClickAddLibrary = () => {
+        showLibraryModal();
+    };
 
     const deleteLibrary = useDelete(apis.librariesV1Url, {
-        itemName: `Library`,
+        localeKey: `updateYourLibrary`,
     });
 
     const handleToggleLibraryItem = async (
@@ -77,30 +111,28 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         if (isLoggedIn) {
             if (!isLibraryToggled) {
                 handleClickAddLibrary();
-                return;
-                const payload: NewLibrary = {
-                    user_id: user?.id,
-                    dataset_id: +datasetId,
-                };
-                addLibrary(payload).then(res => {
-                    if (res) {
-                        mutateLibraries();
-                        setLibraryToggle(true);
-                    }
-                });
+            } else {
+                const libraryIdToDelete = libraryData.find(
+                    element =>
+                        element.user_id === user?.id &&
+                        element.dataset_id === Number(datasetId)
+                ).id;
+
+                await deleteLibrary(libraryIdToDelete);
+
+                mutateLibraries();
+                setLibraryToggle(false);
             }
-            const libraryIdToDelete = libraryData.find(
-                element =>
-                    element.user_id === user?.id &&
-                    element.dataset_id === Number(datasetId)
-            ).id;
-
-            await deleteLibrary(libraryIdToDelete);
-
-            mutateLibraries();
-            setLibraryToggle(false);
         } else {
-            showDialog(ProvidersDialog, { isProvidersDialog: true });
+            let redirectPath = pathname;
+            if (searchParams) {
+                redirectPath = `${redirectPath}?${searchParams.toString()}`;
+            }
+
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+                redirectPath,
+            });
         }
     };
 
@@ -114,7 +146,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
             ) : (
                 <BookmarkBorder color="primary" sx={{ mr: 1 }} />
             ),
-            action: handleClickAddLibrary, // handleToggleLibraryItem,
+            action: handleToggleLibraryItem,
         },
     ];
 
