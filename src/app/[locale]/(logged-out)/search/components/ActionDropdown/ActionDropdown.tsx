@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { BookmarkBorder, Bookmark } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
@@ -16,6 +17,7 @@ import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import menuItems from "./config";
+import useAddLibraryModal from "./hooks/useAddLibraryModal";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -28,6 +30,12 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
     const { showDialog } = useDialog();
     const { _id: datasetId } = result;
     const { isLoggedIn, user } = useAuth();
+
+    const { showLibraryModal } = useAddLibraryModal();
+
+    const handleClickAddLibrary = () => {
+        showLibraryModal();
+    };
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -65,10 +73,11 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         event: React.MouseEvent<HTMLElement>
     ) => {
         event.stopPropagation();
-        console.log("hiya");
-        return;
+
         if (isLoggedIn) {
             if (!isLibraryToggled) {
+                handleClickAddLibrary();
+                return;
                 const payload: NewLibrary = {
                     user_id: user?.id,
                     dataset_id: +datasetId,
@@ -79,18 +88,17 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
                         setLibraryToggle(true);
                     }
                 });
-            } else {
-                const libraryIdToDelete = libraryData.find(
-                    element =>
-                        element.user_id === user?.id &&
-                        element.dataset_id === Number(datasetId)
-                ).id;
-
-                await deleteLibrary(libraryIdToDelete);
-
-                mutateLibraries();
-                setLibraryToggle(false);
             }
+            const libraryIdToDelete = libraryData.find(
+                element =>
+                    element.user_id === user?.id &&
+                    element.dataset_id === Number(datasetId)
+            ).id;
+
+            await deleteLibrary(libraryIdToDelete);
+
+            mutateLibraries();
+            setLibraryToggle(false);
         } else {
             showDialog(ProvidersDialog, { isProvidersDialog: true });
         }
@@ -106,7 +114,7 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
             ) : (
                 <BookmarkBorder color="primary" sx={{ mr: 1 }} />
             ),
-            action: handleToggleLibraryItem,
+            action: handleClickAddLibrary, // handleToggleLibraryItem,
         },
     ];
 
