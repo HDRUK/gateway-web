@@ -33,6 +33,7 @@ import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { DataStatus } from "@/consts/application";
@@ -160,7 +161,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             return;
         }
 
-        let latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        const latestMetadata = get(dataset, "versions[0].metadata.metadata");
         setStructuralMetadata(latestMetadata?.structuralMetadata);
     }, [dataset]);
 
@@ -536,7 +537,12 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                                         }
                                         datasetId={datasetId}
                                         structuralMetadata={struturalMetadata}
-                                        fileProcessedAction={refetchDataset}
+                                        fileProcessedAction={() => {
+                                            refetchDataset();
+                                            notificationService.apiSuccess(
+                                                "Your data has been successfully uploaded"
+                                            );
+                                        }}
                                     />
                                 )}
 

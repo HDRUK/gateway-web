@@ -20,7 +20,7 @@ interface UploadFileProps {
     apiPath: string;
     allowReuploading?: boolean;
     fileUploadedAction: (fileId: number) => void;
-    isUploading?: Dispatch<SetStateAction<boolean>>;
+    isUploading: Dispatch<SetStateAction<boolean>>;
 }
 
 const UploadFile = ({
@@ -65,7 +65,7 @@ const UploadFile = ({
     useEffect(() => {
         if (fileId) {
             if (fileScanStatus && fileScanStatus?.status === "PROCESSED") {
-                isUploading && isUploading(false);
+                isUploading(false);
                 setPollFileStatus(false);
 
                 if (
@@ -103,7 +103,7 @@ const UploadFile = ({
 
             setFileId(fileId);
             setPollFileStatus(true);
-            isUploading && isUploading(true);
+            isUploading(true);
         }
     };
 

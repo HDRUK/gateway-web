@@ -69,6 +69,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
     const { push } = useRouter();
 
     const [createdDurId, setCreatedDurId] = useState<number>();
+    const [isUploading, setIsUploading] = useState<boolean>(false);
 
     const { data: durContent } = useGet<DataUse[]>(
         `${apis.dataUseV1Url}/${createdDurId}`,
@@ -113,10 +114,11 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                     fileUploadedAction={(fileId: number) =>
                         setCreatedDurId(fileId)
                     }
+                    isUploading={setIsUploading}
                 />
             )}
 
-            {durValues && (
+            {durValues && !isUploading && (
                 <Box sx={{ gap: 2 }}>
                     <Typography sx={{ ml: 2, mb: 2 }} fontWeight="bold">
                         {t("successMessage")}

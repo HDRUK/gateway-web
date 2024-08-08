@@ -7,6 +7,7 @@ import {
     ReactNode,
     useState,
 } from "react";
+import { colors } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { range } from "lodash";
 import { useTranslations } from "next-intl";
@@ -19,7 +20,7 @@ import Table from "@/components/Table";
 import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import { colors as themeColors } from "@/config/theme";
 import {
     ACCOUNT,
     COMPONENTS,
@@ -56,7 +57,7 @@ const renderBoldText = (chunks: ReactNode) => (
 const renderRedText = (chunks: ReactNode) => (
     <span
         style={{
-            color: `${colors.red600}`,
+            color: `${themeColors.red600}`,
             fontWeight: "bold",
         }}>
         {chunks}
@@ -127,14 +128,26 @@ const StructuralMetadataSection = ({
                 apiPath={apis.structuralMetadataExportV1Url}
             />
 
+            <Box sx={{ p: 0, mb: 3 }}>
+                <Typography
+                    sx={{
+                        color: colors.brown[500],
+                        backgroundColor: colors.yellow[100],
+                        p: 2,
+                        mt: 1,
+                        border: `1px solid ${colors.brown[500]}`,
+                        fontWeight: 500,
+                    }}>
+                    {t("uploadSuccess")}
+                </Typography>
+            </Box>
+
             {datasetId && (
                 <UploadFile
                     apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload&dataset_id=${datasetId}`}
-                    fileUploadedAction={(fileId: number) =>
-                        fileProcessedAction()
-                    }
+                    fileUploadedAction={fileProcessedAction}
                     isUploading={setIsUploading}
-                    allowReuploading={true}
+                    allowReuploading
                 />
             )}
 
