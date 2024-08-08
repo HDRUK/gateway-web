@@ -12,7 +12,6 @@ import apis from "@/config/apis";
 const TRANSLATION_PATH = `pages.search.hooks.useAddLibraryModal`;
 
 interface AddLibraryModalProps {
-    // libraryData: Library[];
     onSuccess: () => void;
     onContinue: () => void;
 }

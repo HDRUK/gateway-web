@@ -254,7 +254,6 @@ const ResultTable = ({ results }: ResultTableProps) => {
     );
 
     const { showLibraryModal } = useAddLibraryModal({
-        // libraryData,
         onSuccess: () =>
             router.push(
                 `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
