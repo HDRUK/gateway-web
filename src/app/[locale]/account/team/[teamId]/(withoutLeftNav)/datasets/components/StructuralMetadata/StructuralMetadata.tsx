@@ -5,15 +5,19 @@ import {
     JSXElementConstructor,
     ReactFragment,
     ReactNode,
+    useState,
 } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { range } from "lodash";
 import { useTranslations } from "next-intl";
+import { StructuralMetadata } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import DownloadFile from "@/components/DownloadFile";
 import Paper from "@/components/Paper";
+import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
 import Table from "@/components/Table";
 import Typography from "@/components/Typography";
+import UploadFile from "@/components/UploadFile";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import {
@@ -29,6 +33,9 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.
 
 interface StructuralMetadataProps {
     selectedFormSection: string;
+    datasetId?: string;
+    structuralMetadata?: StructuralMetadata[];
+    fileProcessedAction: () => void;
 }
 
 const columnHelper = createColumnHelper();
@@ -62,10 +69,15 @@ const renderTableHeader = (headerText: string) => (
     </Typography>
 );
 
-const StructuralMetadata = ({
+const StructuralMetadataSection = ({
     selectedFormSection,
+    datasetId,
+    structuralMetadata,
+    fileProcessedAction,
 }: StructuralMetadataProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    const [isUploading, setIsUploading] = useState<boolean>(false);
 
     const tableColumns = [
         {
@@ -114,8 +126,27 @@ const StructuralMetadata = ({
                 buttonText={t("downloadTemplate")}
                 apiPath={apis.structuralMetadataExportV1Url}
             />
+
+            {datasetId && (
+                <UploadFile
+                    apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload&dataset_id=${datasetId}`}
+                    fileUploadedAction={(fileId: number) =>
+                        fileProcessedAction()
+                    }
+                    isUploading={setIsUploading}
+                    allowReuploading={true}
+                />
+            )}
+
+            {structuralMetadata && !isUploading && (
+                <Box sx={{ mt: 4, p: 0 }}>
+                    <StructuralMetadataAccordion
+                        metadata={structuralMetadata}
+                    />
+                </Box>
+            )}
         </Paper>
     );
 };
 
-export default StructuralMetadata;
+export default StructuralMetadataSection;

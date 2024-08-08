@@ -14,6 +14,7 @@ import {
     DatasetStatus,
     Metadata,
     NewDataset,
+    StructuralMetadata,
 } from "@/interfaces/Dataset";
 import {
     FormHydration,
@@ -58,7 +59,7 @@ import {
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
-import StructuralMetadata from "../StructuralMetadata";
+import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
@@ -97,17 +98,27 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
     const isEditing = params?.datasetId;
 
+    const [datasetId, setDatasetId] = useState<string | undefined>(
+        params?.datasetId
+    );
+
     const { push } = useRouter();
 
-    const { data: dataset, isLoading } = useGet<Dataset>(
+    const {
+        data: dataset,
+        isLoading,
+        mutate: refetchDataset,
+    } = useGet<Dataset>(
         isDraft
-            ? `${apis.datasetsV1Url}/${params?.datasetId}`
-            : `${apis.datasetsV1Url}/${params?.datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
-        { shouldFetch: !!params?.teamId && !!params?.datasetId }
+            ? `${apis.datasetsV1Url}/${datasetId}`
+            : `${apis.datasetsV1Url}/${datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
+        { shouldFetch: !!params?.teamId && !!datasetId }
     );
 
     const [hasError, setHasError] = useState<boolean>();
     const [existingFormData, setExistingFormData] = useState<Metadata>();
+    const [struturalMetadata, setStructuralMetadata] =
+        useState<StructuralMetadata[]>();
 
     const bannerTabList = [
         { label: t("onlineForm"), value: "FORM" },
@@ -144,6 +155,15 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         setExistingFormData(mappedFormData);
     }, [dataset, existingFormData, isLoading]);
 
+    useEffect(() => {
+        if (!dataset) {
+            return;
+        }
+
+        let latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        setStructuralMetadata(latestMetadata?.structuralMetadata);
+    }, [dataset]);
+
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
             const transformedObject: Record<
@@ -172,6 +192,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [guidanceText, setGuidanceText] = useState<string>();
+    const [autoSaveDraft, setAutoSaveDraft] = useState<boolean>();
 
     const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
     const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
@@ -353,12 +374,17 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                   )
                 : await createDataset(formPayload as NewDataset);
 
-            if (formPostRequest !== null) {
+            if (formPostRequest !== null && !autoSaveDraft) {
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
                 );
             } else {
                 setIsSaving(false);
+
+                if (formPostRequest && autoSaveDraft) {
+                    setDatasetId(formPostRequest as string);
+                    setAutoSaveDraft(false);
+                }
             }
         } catch (err) {
             setIsSaving(false);
@@ -441,6 +467,21 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         }
     };
 
+    const isStructuralMetadataSection =
+        selectedFormSection === STRUCTURAL_METADATA_FORM_SECTION;
+
+    // Dataset needs to be saved before adding structural metadata
+    useEffect(() => {
+        if (selectedFormSection !== STRUCTURAL_METADATA_FORM_SECTION) {
+            return;
+        }
+
+        if (!datasetId) {
+            setAutoSaveDraft(true);
+            handleSaveDraft();
+        }
+    }, [selectedFormSection, datasetId]);
+
     if (isEditing && isLoading) {
         return <Loading />;
     }
@@ -448,13 +489,10 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     if (hasError) {
         return (
             <Box>
-                <Typography variant="h2">{t("errorLoading")}</Typography>;
+                <Typography variant="h2">{t("errorLoading")}</Typography>
             </Box>
         );
     }
-
-    const isStructuralMetadataSection =
-        formSections[currentSectionIndex] === STRUCTURAL_METADATA_FORM_SECTION;
 
     return (
         <>
@@ -492,10 +530,13 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                         <>
                             <Box sx={{ flex: 2, p: 0 }}>
                                 {isStructuralMetadataSection && (
-                                    <StructuralMetadata
+                                    <StructuralMetadataSection
                                         selectedFormSection={
                                             selectedFormSection
                                         }
+                                        datasetId={datasetId}
+                                        structuralMetadata={struturalMetadata}
+                                        fileProcessedAction={refetchDataset}
                                     />
                                 )}
 
