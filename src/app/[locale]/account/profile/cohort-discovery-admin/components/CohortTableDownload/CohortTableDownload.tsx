@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Typography, Box } from "@mui/material";
 import { CohortExportForm } from "@/interfaces/CohortExport";
-import { CsvExport } from "@/interfaces/CsvExport";
+import { FileExport } from "@/interfaces/FileExport";
 import ModalForm from "@/components/ModalForm";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -13,12 +13,12 @@ import {
     cohortExportFormFields,
 } from "@/config/forms/cohortAdminExport";
 import { DownloadIcon } from "@/consts/icons";
-import { downloadCSV } from "@/utils/download";
+import { downloadFile } from "@/utils/download";
 
 const CohortTableDownload = () => {
     const [filter, setFilter] = useState<string | null>(null);
 
-    const { mutate } = useGet<CsvExport>(
+    const { mutate } = useGet<FileExport>(
         filter && `${apis.cohortRequestsV1Url}/export?${filter}`
     );
 
@@ -34,7 +34,7 @@ const CohortTableDownload = () => {
         // dont try and retrieve data and download there is no filter set
         if (!filter) return;
 
-        mutate().then(data => downloadCSV(data));
+        mutate().then(data => downloadFile(data));
     }, [filter, mutate]);
 
     const handleExport = (formData: CohortExportForm) => {
