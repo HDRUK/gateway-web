@@ -114,7 +114,7 @@ const StructuralMetadataAccordion = ({
                                     <Typography
                                         sx={{ flex: 1, color: colors.grey600 }}>
                                         {row.description}
-                                    </Typography>{" "}
+                                    </Typography>
                                     <Typography
                                         sx={{
                                             flex: 1,
