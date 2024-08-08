@@ -16,7 +16,9 @@ type GroupByResult<T> = {
     [key: string]: T[];
 };
 
-const formatMetadata = (metadata: StructuralMetadata) => {
+const formatMetadata = (
+    metadata: StructuralMetadata | StructuralMetadata[]
+) => {
     const grouped = groupBy(
         metadata,
         "name"
@@ -30,6 +32,7 @@ const formatMetadata = (metadata: StructuralMetadata) => {
                 name: column.name,
                 description: column.description,
                 dataType: column.dataType,
+                sensitive: column.sensitive ? "TRUE" : "FALSE",
             }))
         );
 
@@ -40,7 +43,7 @@ const formatMetadata = (metadata: StructuralMetadata) => {
 const StructuralMetadataAccordion = ({
     metadata,
 }: {
-    metadata: StructuralMetadata;
+    metadata: StructuralMetadata | StructuralMetadata[];
 }) => {
     const formattedMetadata = formatMetadata(metadata);
 
@@ -72,12 +75,34 @@ const StructuralMetadataAccordion = ({
                     }
                     contents={
                         <List sx={{ p: 0 }}>
+                            <ListItem
+                                key={`${item}.header`}
+                                sx={{
+                                    display: "flex",
+                                    pl: 0,
+                                    pr: 0,
+                                }}>
+                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
+                                    Column name
+                                </Typography>
+                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
+                                    Data type
+                                </Typography>
+                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
+                                    Column description
+                                </Typography>
+                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
+                                    Sensitive
+                                </Typography>
+                            </ListItem>
                             {item.rows.map((row, index) => (
                                 <ListItem
                                     key={row.name}
                                     divider={index < item.rows.length - 1}
                                     sx={{
                                         display: "flex",
+                                        pl: 0,
+                                        pr: 0,
                                     }}>
                                     <Typography sx={{ flex: 1 }}>
                                         {row.name}
@@ -89,6 +114,13 @@ const StructuralMetadataAccordion = ({
                                     <Typography
                                         sx={{ flex: 1, color: colors.grey600 }}>
                                         {row.description}
+                                    </Typography>{" "}
+                                    <Typography
+                                        sx={{
+                                            flex: 1,
+                                            color: colors.grey600,
+                                        }}>
+                                        {row.sensitive}
                                     </Typography>
                                 </ListItem>
                             ))}
