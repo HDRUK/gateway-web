@@ -109,13 +109,15 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
     return (
         <>
             {!durContent && (
-                <UploadFile
-                    apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
-                    fileUploadedAction={(fileId: number) =>
-                        setCreatedDurId(fileId)
-                    }
-                    isUploading={setIsUploading}
-                />
+                <Box sx={{ pt: 0 }}>
+                    <UploadFile
+                        apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
+                        fileUploadedAction={(fileId: number) =>
+                            setCreatedDurId(fileId)
+                        }
+                        isUploading={setIsUploading}
+                    />
+                </Box>
             )}
 
             {durValues && !isUploading && (
