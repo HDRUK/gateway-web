@@ -1104,6 +1104,12 @@
             "uploadButtonText": "Upload",
             "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
             "error": "An error has occured. Please check your file and try again"
+        },
+        "StructuralMetadataAccordion": {
+            "columnName": "Column name",
+            "columnDesc": "Column description",
+            "dataType": "Data type",
+            "sensitive": "Sensitive"
         }
     },
     "modules": {

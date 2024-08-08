@@ -23,13 +23,15 @@ interface UploadFileProps {
     isUploading: Dispatch<SetStateAction<boolean>>;
 }
 
+const TRANSLATION_PATH = "components.UploadFile";
+
 const UploadFile = ({
     apiPath,
     allowReuploading,
     fileUploadedAction,
     isUploading,
 }: UploadFileProps) => {
-    const t = useTranslations(`components.UploadFile`);
+    const t = useTranslations(TRANSLATION_PATH);
 
     const [file, setFile] = useState<File>();
     const [fileId, setFileId] = useState<number>();

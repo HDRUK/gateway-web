@@ -2,6 +2,7 @@
 
 import { List, ListItem } from "@mui/material";
 import { flatMap, groupBy, map } from "lodash";
+import { useTranslations } from "next-intl";
 import {
     StructuralMetadata,
     StructuralMetadataColumn,
@@ -40,11 +41,15 @@ const formatMetadata = (
     });
 };
 
+const TRANSLATION_PATH = "components.StructuralMetadataAccordion";
+
 const StructuralMetadataAccordion = ({
     metadata,
 }: {
     metadata: StructuralMetadata | StructuralMetadata[];
 }) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const formattedMetadata = formatMetadata(metadata);
 
     return (
@@ -83,16 +88,24 @@ const StructuralMetadataAccordion = ({
                                     pr: 0,
                                 }}>
                                 <Typography sx={{ flex: 1, fontWeight: 500 }}>
-                                    Column name
+                                    {t("columnName")}
+                                </Typography>
+                                <Typography
+                                    sx={{
+                                        flex: 1,
+                                        fontWeight: 500,
+                                    }}>
+                                    {t("dataType")}
                                 </Typography>
                                 <Typography sx={{ flex: 1, fontWeight: 500 }}>
-                                    Data type
+                                    {t("columnDesc")}
                                 </Typography>
-                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
-                                    Column description
-                                </Typography>
-                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
-                                    Sensitive
+                                <Typography
+                                    sx={{
+                                        flex: 1,
+                                        fontWeight: 500,
+                                    }}>
+                                    {t("sensitive")}
                                 </Typography>
                             </ListItem>
                             {item.rows.map((row, index) => (
