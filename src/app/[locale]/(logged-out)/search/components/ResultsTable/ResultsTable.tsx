@@ -1,15 +1,24 @@
+import { useEffect } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
+import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
+import useAuth from "@/hooks/useAuth";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import config from "@/config/config";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import ActionDropdown from "../ActionDropdown";
 
 interface ResultTableProps {
@@ -28,8 +37,12 @@ const columnHelper = createColumnHelper<SearchResultDataset>();
 
 const getColumns = ({
     translations,
+    libraryData,
+    showLibraryModal,
 }: {
     translations: { [id: string]: string };
+    libraryData: Library[];
+    showLibraryModal: (props: unknown) => void;
 }) => [
     columnHelper.display({
         id: "actions",
@@ -37,7 +50,11 @@ const getColumns = ({
         cell: ({ row: { original } }) => {
             return (
                 <div style={{ textAlign: "center" }}>
-                    <ActionDropdown result={original} />
+                    <ActionDropdown
+                        result={original}
+                        libraryData={libraryData}
+                        showLibraryModal={showLibraryModal}
+                    />
                 </div>
             );
         },
@@ -228,6 +245,36 @@ const getColumns = ({
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
 const ResultTable = ({ results }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
+    const router = useRouter();
+    const { isLoggedIn } = useAuth();
+
+    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
+        `${apis.librariesV1Url}?perPage=1000`,
+        { shouldFetch: isLoggedIn }
+    );
+
+    const { showLibraryModal } = useAddLibraryModal({
+        // libraryData,
+        onSuccess: () =>
+            router.push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
+            ),
+        onContinue: () => mutateLibraries(),
+    });
+
+    const entityActionCookie = Cookies.get(
+        config.ENTITY_ACTION_COOKIE.COOKIE_NAME
+    );
+
+    useEffect(() => {
+        if (entityActionCookie && isLoggedIn) {
+            const { datasetId } = JSON.parse(entityActionCookie);
+            showLibraryModal({ datasetId });
+            Cookies.remove(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, {
+                path: "/",
+            });
+        }
+    }, [entityActionCookie, showLibraryModal, isLoggedIn]);
 
     const translations = {
         actionLabel: t("action.label"),
@@ -264,6 +311,8 @@ const ResultTable = ({ results }: ResultTableProps) => {
             <Table<SearchResultDataset>
                 columns={getColumns({
                     translations,
+                    libraryData,
+                    showLibraryModal,
                 })}
                 rows={results}
             />

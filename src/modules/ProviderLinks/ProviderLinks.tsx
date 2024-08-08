@@ -33,7 +33,7 @@ const ProviderLinks = ({
     ) {
         effectiveRedirectPath = `?redirect=/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`;
     } else if (redirectPath) {
-        effectiveRedirectPath = `?redirect=${redirectPath}`;
+        effectiveRedirectPath = `?redirect=${encodeURIComponent(redirectPath)}`;
     }
 
     const providerLinks: LinkItem[] = [
