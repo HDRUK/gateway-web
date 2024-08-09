@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { CsvExport } from "@/interfaces/CsvExport";
+import { FileExport } from "@/interfaces/FileExport";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -11,7 +11,7 @@ import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { DownloadIcon } from "@/consts/icons";
-import { downloadCSV } from "@/utils/download";
+import { downloadFile } from "@/utils/download";
 import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataUse.components.ActionBar";
@@ -35,7 +35,7 @@ const ActionBar = () => {
         if (csvData) {
             csvData.filename = `dur_${params.dataUseId}.csv`;
             notificationService.apiSuccess(t("downloadStarted"));
-            downloadCSV(csvData as CsvExport);
+            downloadFile(csvData as FileExport);
         }
     };
 

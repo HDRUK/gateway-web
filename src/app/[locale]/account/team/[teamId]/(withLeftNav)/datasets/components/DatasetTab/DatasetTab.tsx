@@ -6,7 +6,7 @@ import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DatasetCard from "@/components/DatasetCard";
-import DownloadCSV from "@/components/DownloadCSV";
+import DownloadFile from "@/components/DownloadFile";
 import InputWrapper from "@/components/InputWrapper";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
@@ -103,7 +103,7 @@ const DatasetTab = ({
                     alignItems: "center",
                 }}>
                 <ShowingXofX from={from} to={to} total={total} />
-                <DownloadCSV
+                <DownloadFile
                     buttonText={t("downloadButton")}
                     apiPath={`${apis.datasetsExportV1Url}?team_id=${params?.teamId}`}
                 />

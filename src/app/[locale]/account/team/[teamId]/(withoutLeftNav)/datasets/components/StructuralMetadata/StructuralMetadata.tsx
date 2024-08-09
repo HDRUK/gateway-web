@@ -10,9 +10,11 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { range } from "lodash";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
+import DownloadFile from "@/components/DownloadFile";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import Typography from "@/components/Typography";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import {
     ACCOUNT,
@@ -103,10 +105,15 @@ const StructuralMetadata = ({
                 {capitalise(splitCamelcase(selectedFormSection))}
             </Typography>
 
-            <Box sx={{ p: 0, mb: 2 }}>
+            <Box sx={{ p: 0, mb: 3 }}>
                 <Typography sx={{ mb: 2 }}>{t("intro")}</Typography>
                 <Table columns={getColumns()} rows={range(0, 6)} />
             </Box>
+
+            <DownloadFile
+                buttonText={t("downloadTemplate")}
+                apiPath={apis.structuralMetadataExportV1Url}
+            />
         </Paper>
     );
 };
