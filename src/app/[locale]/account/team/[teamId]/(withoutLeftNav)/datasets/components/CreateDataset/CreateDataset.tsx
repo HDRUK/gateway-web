@@ -73,7 +73,7 @@ const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
 
 const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const t = useTranslations(
