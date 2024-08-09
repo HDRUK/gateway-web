@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { ButtonProps } from "@/components/Button/Button";
 import useDialog from "@/hooks/useDialog";
 import Box from "../Box";
 
@@ -12,7 +13,11 @@ export interface ModalButtonProps {
     formId?: string;
     cancelText?: string;
     confirmType?: ConfirmType;
-    tertiaryButton?: { onAction: (props: unknown) => void; buttonText: string };
+    tertiaryButton?: {
+        onAction: (props: unknown) => void;
+        buttonText: string;
+        buttonProps: ButtonProps;
+    };
 }
 
 const ModalButtons = ({
@@ -57,16 +62,19 @@ const ModalButtons = ({
                 display: "flex",
             }}>
             {showCancel && (
-                <Button key="cancel" color="inherit" onClick={handleCancel}>
+                <Button
+                    key="cancel"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleCancel}>
                     {cancelText}
                 </Button>
             )}
-
             {tertiaryButton && (
                 <Button
-                    color="secondary"
-                    variant="outlined"
-                    onClick={handleTertiary}>
+                    onClick={handleTertiary}
+                    color="inherit"
+                    {...tertiaryButton.buttonProps}>
                     {tertiaryButton.buttonText}
                 </Button>
             )}

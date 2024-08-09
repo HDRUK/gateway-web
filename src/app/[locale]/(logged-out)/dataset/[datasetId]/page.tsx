@@ -98,7 +98,7 @@ export default async function DatasetItemPage({
                         <BoxContainer
                             sx={{
                                 gridTemplateColumns: {
-                                    tablet: "repeat(2, 1fr)",
+                                    tablet: "2fr 1fr",
                                 },
                                 gap: {
                                     mobile: 1,
@@ -115,6 +115,7 @@ export default async function DatasetItemPage({
                                 }}>
                                 <DatasetMindMap
                                     data={datasetVersion}
+                                    teamId={data?.team_id}
                                     populatedSections={populatedSections}
                                     hasStructuralMetadata={
                                         !!datasetVersion.metadata?.metadata

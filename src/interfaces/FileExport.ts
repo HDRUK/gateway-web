@@ -1,7 +1,7 @@
-interface CsvExport {
+interface FileExport {
     content: string;
     type: string;
     filename: string;
 }
 
-export type { CsvExport };
+export type { FileExport };

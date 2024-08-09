@@ -32,6 +32,7 @@ const apis = {
     datasetsV1Url: `${apiV1Url}/datasets`,
     datasetsV1UrlIP: `${apiV1IPUrl}/datasets`,
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
+    structuralMetadataExportV1Url: `${apiV1Url}/datasets/export/mock?type=template_dataset_structural_metadata`,
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
     dataUseExportV1Url: `${apiV1Url}/dur/export`,

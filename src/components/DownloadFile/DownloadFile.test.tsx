@@ -2,18 +2,18 @@ import mockRouter from "next-router-mock";
 import apiService from "@/services/api";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import { datasetV1 } from "@/mocks/data/dataset";
-import DownloadCSV from "./DownloadCSV";
+import DownloadFile from "./DownloadFile";
 
 jest.mock("@/services/api");
 global.URL.createObjectURL = jest.fn();
 
 mockRouter.query = { teamId: `${datasetV1.id}` };
 
-describe("DownloadCSV", () => {
+describe("DownloadFile", () => {
     it("should call export api with team id", async () => {
         const buttonText = "Click here";
         const apiPath = "api/path";
-        render(<DownloadCSV buttonText={buttonText} apiPath={apiPath} />);
+        render(<DownloadFile buttonText={buttonText} apiPath={apiPath} />);
 
         (apiService.getRequest as jest.Mock).mockResolvedValue({
             content: "",

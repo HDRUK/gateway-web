@@ -84,6 +84,16 @@
                     "message": "Publication successfully archived"
                 }
             }
+        },
+        "updateYourLibrary": {
+            "success": {
+                "delete": {
+                    "message": "Dataset removed from your Library"
+                },
+                "post": {
+                    "message": "Dataset added to your Library"
+                }
+            }
         }
     },
     "common": {
@@ -252,6 +262,39 @@
                             }
                         }
                     }
+                },
+                "library": {
+                    "title": "Library",
+                    "text": "The space where you can sort all your datasets and entity types",
+                    "components": {
+                        "RightPanel": {
+                            "generalEnquiries": {
+                                "title": "General Enquiry",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a general enquiry"
+                            },
+                            "feasabilityEnquiries": {
+                                "title": "Feasability Enquiry",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a feasibility enquiry"
+                            },
+                            "multiDelete": {
+                                "label": "Multi delete"
+                            }
+                        }
+                    },
+                    "name": {
+                        "label": "Name"
+                    },
+                    "darEnabled": {
+                        "label": "Data Access Request Enabled"
+                    },
+                    "dataCustodian": {
+                        "label": "Data Custodian"
+                    },
+                    "entityType": {
+                        "label": "Entity Type"
+                    }
                 }
             },
             "team": {
@@ -360,7 +403,9 @@
                                 "completionGuidance3": "Name of the column in the table dataset.",
                                 "completionGuidance4": "Description of the column in the table dataset.",
                                 "completionGuidance5": "Type of data contained in the column.",
-                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource."
+                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
+                                "downloadTemplate": "Download data dictionary template",
+                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
                             }
                         },
                         "EditDataset": {
@@ -368,10 +413,6 @@
                             "duplicateButton": "Duplicate"
                         },
                         "CreateDataUse": {
-                            "upload": "Select file",
-                            "uploadButtonText": "Upload",
-                            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
-                            "error": "An error has occured. Please check your file and try again",
                             "successMessage": "Data Use successfully created",
                             "returnButtonText": "View Data Uses"
                         },
@@ -806,6 +847,14 @@
                         "tooltip": "Descriptions and details about the tables and columns within a dataset"
                     }
                 }
+            },
+            "hooks": {
+                "useAddLibraryModal": {
+                    "title": "Add dataset to your library",
+                    "confirmText": "Add and go to library",
+                    "buttonContinueText": "Add to library and continue searching",
+                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple Data Custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple Data Custodians (if the Data Custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
+                }
             }
         },
         "collection": {
@@ -1079,6 +1128,18 @@
             "completion": "Completion",
             "requiredFields": "required fields",
             "optionalFields": "optional fields"
+        },
+        "UploadFile": {
+            "upload": "Select file",
+            "uploadButtonText": "Upload",
+            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
+            "error": "An error has occured. Please check your file and try again"
+        },
+        "StructuralMetadataAccordion": {
+            "columnName": "Column name",
+            "columnDesc": "Column description",
+            "dataType": "Data type",
+            "sensitive": "Sensitive"
         }
     },
     "modules": {
