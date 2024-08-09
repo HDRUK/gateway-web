@@ -42,7 +42,7 @@ const getColumns = ({
 }: {
     translations: { [id: string]: string };
     libraryData: Library[];
-    showLibraryModal: (props: unknown) => void;
+    showLibraryModal: (props: { datasetId: number }) => void;
 }) => [
     columnHelper.display({
         id: "actions",

@@ -21,7 +21,7 @@ import menuItems from "./config";
 interface ResultCardProps {
     result: SearchResultDataset;
     libraryData: Library[];
-    showLibraryModal: (props: unknown) => void;
+    showLibraryModal: (props: { datasetId: number }) => void;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
