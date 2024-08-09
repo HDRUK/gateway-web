@@ -173,9 +173,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 data.every(item => typeof item === "number")
             ) {
                 return data;
-            } else {
-                return data?.map(item => item?.id);
             }
+
+            return data?.map(item => item?.id);
         };
 
         const payload: ToolPayloadSubmission = {
@@ -184,7 +184,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             team_id: +teamId,
             enabled: true,
             tag: [],
-            status: status,
+            status,
             durs: formatEntityToIdArray(formData.durs),
             publications: formatEntityToIdArray(formData.publications),
             tools: formatEntityToIdArray(formData.tools),
