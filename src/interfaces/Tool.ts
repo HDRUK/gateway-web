@@ -1,7 +1,6 @@
 import { DatasetRelationship } from "@/config/forms/tool";
 import { DataStatus } from "@/consts/application";
 import { Category } from "./Category";
-import { Collection } from "./Collection";
 import { DataUse } from "./DataUse";
 import { VersionItem } from "./Dataset";
 import { Publication } from "./Publication";
@@ -33,7 +32,6 @@ export interface Tool {
     publications: Publication[];
     dataset_versions: VersionItem[];
     durs: DataUse[];
-    collections?: Collection[];
     status?: DataStatus;
     user_name?: string;
     tools: Tool[];
@@ -56,12 +54,19 @@ export interface ToolPayload {
     associated_authors: string;
     programming_language?: number[];
     type_category?: number[];
-    publications: number[];
-    durs: number[];
+    publications: Publication[];
+    durs: DataUse[];
     status?: DataStatus;
-    tools: number[];
+    tools: Tool[];
     dataset: DatasetRelationship[];
     any_dataset?: boolean;
     tag: Tag[];
     dataset_versions: VersionItem[];
+}
+
+export interface ToolPayloadSubmission
+    extends Omit<ToolPayload, "publications" | "durs" | "tools"> {
+    publications: number[];
+    durs: number[];
+    tools: number[];
 }

@@ -12,7 +12,9 @@ import {
     SelectedResources,
 } from "@/interfaces/AddResource";
 import { Category } from "@/interfaces/Category";
-import { Tool, ToolPayload } from "@/interfaces/Tool";
+import { DataUse } from "@/interfaces/DataUse";
+import { Publication } from "@/interfaces/Publication";
+import { Tool, ToolPayload, ToolPayloadSubmission } from "@/interfaces/Tool";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -81,13 +83,16 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         }
     );
 
-    const createTool = usePost<ToolPayload>(`${apis.toolsV1Url}`, {
+    const createTool = usePost<ToolPayloadSubmission>(`${apis.toolsV1Url}`, {
         itemName: "Tool",
     });
 
-    const editTool = usePatch<Partial<ToolPayload>>(`${apis.toolsV1Url}`, {
-        itemName: "Tool",
-    });
+    const editTool = usePatch<Partial<ToolPayloadSubmission>>(
+        `${apis.toolsV1Url}`,
+        {
+            itemName: "Tool",
+        }
+    );
 
     const toolCategoryOptions = useMemo(() => {
         if (!toolCategoryData) return [];
@@ -116,12 +121,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             return;
         }
 
-        const formData: ToolPayload = {
+        const formData = {
             ...existingToolData,
-            durs: existingToolData?.durs?.map(item => item.id) || [],
-            publications:
-                existingToolData?.publications?.map(item => item.id) || [],
-            tools: existingToolData?.tools?.map(item => item.id) || [],
             dataset: defaultDatasetValue, // TODO - update this when BE returns dataset linkages correctly
             programming_language:
                 existingToolData?.programming_languages?.map(item => item.id) ||
@@ -149,7 +150,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             }
         });
 
-        reset(formData);
+        reset(formData as ToolPayload);
     }, [reset, existingToolData]);
 
     const watchAnyDataset = watch("any_dataset");
@@ -161,17 +162,30 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
     const watchAll = watch();
 
-    const onSubmit = async (formData: ToolPayload) => {
-        const payload: ToolPayload = {
+    const onSubmit = async (formData: ToolPayload, status: DataStatus) => {
+        const formatEntityToIdArray = (
+            data: DataUse[] | Publication[] | Tool[]
+        ) => {
+            if (
+                Array.isArray(data) &&
+                data.every(item => typeof item === "number")
+            ) {
+                return data;
+            } else {
+                return data?.map(item => item?.id);
+            }
+        };
+
+        const payload: ToolPayloadSubmission = {
+            ...formData,
             user_id: userId,
             team_id: +teamId,
-            ...formData,
             enabled: true,
             tag: [],
-            status: DataStatus.ACTIVE,
-            durs: formData.durs?.map(item => item.id),
-            publications: formData.publications?.map(item => item.id),
-            tools: formData.tools?.map(item => item.id),
+            status: status,
+            durs: formatEntityToIdArray(formData.durs),
+            publications: formatEntityToIdArray(formData.publications),
+            tools: formatEntityToIdArray(formData.tools),
             dataset: formData.dataset.every(
                 obj => Object.keys(obj).length === 0
             )
@@ -208,9 +222,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
     const selectedResources = useMemo(() => {
         return {
-            datause: getValues("durs") || [],
-            publication: getValues("publications") || [],
-            tool: getValues("tools") || [],
+            datause: (getValues("durs") as DataUse[]) || [],
+            publication: (getValues("publications") as Publication[]) || [],
+            tool: (getValues("tools") as Tool[]) || [],
             dataset: [],
         };
     }, [watchAll]);
@@ -221,12 +235,16 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             confirmText: t("publish"),
             tertiaryButton: {
                 onAction: async () => {
-                    handleSubmit(onSubmit)();
+                    handleSubmit(formData =>
+                        onSubmit(formData, DataStatus.DRAFT)
+                    )();
                 },
                 buttonText: t("saveDraft"),
             },
             onSuccess: () => {
-                handleSubmit(onSubmit)();
+                handleSubmit(formData =>
+                    onSubmit(formData, DataStatus.ACTIVE)
+                )();
             },
             onCancel: () => {
                 const TOOL_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`;
@@ -248,14 +266,13 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         );
 
         // Update the state with the new list of selected resources
-        const type =
-            resourceType === ResourceType.DATA_USE
-                ? "durs"
-                : resourceType === ResourceType.PUBLICATION
-                ? "publications"
-                : "tools";
-
-        setValue(type, updatedResources as typeof currentResource);
+        if (resourceType === ResourceType.DATA_USE) {
+            setValue("durs", updatedResources as DataUse[]);
+        } else if (resourceType === ResourceType.PUBLICATION) {
+            setValue("publications", updatedResources as Publication[]);
+        } else if (resourceType === ResourceType.TOOL) {
+            setValue("tools", updatedResources as Tool[]);
+        }
     };
 
     // Clear dataset when any_dataset toggled
@@ -281,7 +298,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 </Box>
             </BoxContainer>
             <BoxContainer>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form>
                     <Paper>
                         <Box>
                             {toolFormFields.map(field => {
