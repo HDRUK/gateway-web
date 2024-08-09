@@ -26,7 +26,7 @@ const defaultValues = {
 };
 
 const validationSchema = yup.object().shape({
-    url: yup.string().url().label("Github Link (optional)"),
+    url: yup.string().nullable().url().label("Github Link (optional)"),
     name: yup.string().required().label("Name of script, tool or software"),
     type_category: yup.array().of(yup.number()).required().label("Category"),
     description: yup.string().min(50).max(1500).required().label("Description"),
