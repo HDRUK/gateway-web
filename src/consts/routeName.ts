@@ -27,6 +27,7 @@ export enum RouteName {
     HOW_TO_SEARCH = "how-to-search",
     INTEGRATION = "integration",
     INTEGRATIONS = "integrations",
+    LIBRARY = "library",
     LIST = "list",
     PERMISSIONS = "permissions",
     PROFILE = "profile",

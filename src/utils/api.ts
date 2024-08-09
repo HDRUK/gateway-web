@@ -109,7 +109,7 @@ async function getDataset(
 
     if (schemaModel && schemaVersion) {
         params.append("schema_model", schemaModel);
-        params.append("schemaVersion", schemaVersion);
+        params.append("schema_version", schemaVersion);
     }
     const queryString = params.toString();
 

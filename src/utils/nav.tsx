@@ -13,6 +13,7 @@ import {
     StorageOutlinedIcon,
     CloudUploadIcon,
     ArticleIcon,
+    BookmarkBorderIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -47,6 +48,11 @@ const getProfileNav = (permissions: {
             icon: <SearchIcon />,
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
+        },
+        {
+            icon: <BookmarkBorderIcon />,
+            label: "Library",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
         },
         ...(permissions["custodians.read"]
             ? [
