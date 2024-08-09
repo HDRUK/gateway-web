@@ -118,8 +118,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                                 }
                                 setQuery(value);
                             }}
-                            options={datasetOptions}
-                            filterOptions={(x: OptionType) => x}
+                            options={isLoadingDatasets ? [] : datasetOptions}
                             name={`dataset.${index}.id`}
                             loading={isLoadingDatasets}
                             disabled={isDisabled}
