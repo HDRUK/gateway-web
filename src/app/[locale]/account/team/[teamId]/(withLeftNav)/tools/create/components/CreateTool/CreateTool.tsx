@@ -244,6 +244,10 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                     )();
                 },
                 buttonText: t("saveDraft"),
+                buttonProps: {
+                    color: "secondary",
+                    variant: "outlined",
+                },
             },
             onSuccess: () => {
                 handleSubmit(formData =>

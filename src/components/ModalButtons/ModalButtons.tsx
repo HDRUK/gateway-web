@@ -16,7 +16,7 @@ export interface ModalButtonProps {
     tertiaryButton?: {
         onAction: (props: unknown) => void;
         buttonText: string;
-        buttonProps: ButtonProps;
+        buttonProps?: ButtonProps;
     };
 }
 
@@ -62,11 +62,7 @@ const ModalButtons = ({
                 display: "flex",
             }}>
             {showCancel && (
-                <Button
-                    key="cancel"
-                    variant="outlined"
-                    color="secondary"
-                    onClick={handleCancel}>
+                <Button key="cancel" color="inherit" onClick={handleCancel}>
                     {cancelText}
                 </Button>
             )}
