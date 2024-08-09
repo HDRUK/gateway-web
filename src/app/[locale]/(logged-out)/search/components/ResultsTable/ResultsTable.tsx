@@ -267,8 +267,10 @@ const ResultTable = ({ results }: ResultTableProps) => {
 
     useEffect(() => {
         if (entityActionCookie && isLoggedIn) {
-            const { datasetId } = JSON.parse(entityActionCookie);
-            showLibraryModal({ datasetId });
+            const { datasetId, action } = JSON.parse(entityActionCookie);
+            if (action === config.ENTITY_ACTION_COOKIE.ACTION_ADD_LIBRARY) {
+                showLibraryModal({ datasetId });
+            }
             Cookies.remove(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, {
                 path: "/",
             });
