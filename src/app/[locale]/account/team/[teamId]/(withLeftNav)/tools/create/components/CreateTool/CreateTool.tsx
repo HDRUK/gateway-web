@@ -45,7 +45,7 @@ import DatasetRelationshipFields from "../DatasetRelationshipFields";
 interface ToolCreateProps {
     teamId: string;
     userId: number;
-    toolId: string;
+    toolId?: string;
 }
 
 const TRANSLATION_PATH = `pages.account.team.tools.create`;
@@ -116,18 +116,18 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             return;
         }
 
-        const formData = {
+        const formData: ToolPayload = {
             ...existingToolData,
-            durs: existingToolData?.durs,
-            publications: existingToolData?.publications,
-            tools: existingToolData?.tools,
-            dataset: defaultDatasetValue,
-            programming_language: existingToolData?.programming_languages?.map(
-                item => item.id
-            ),
-            type_category: existingToolData?.type_category?.map(
-                item => item.id
-            ),
+            durs: existingToolData?.durs?.map(item => item.id) || [],
+            publications:
+                existingToolData?.publications?.map(item => item.id) || [],
+            tools: existingToolData?.tools?.map(item => item.id) || [],
+            dataset: defaultDatasetValue, // TODO - update this when BE returns dataset linkages correctly
+            programming_language:
+                existingToolData?.programming_languages?.map(item => item.id) ||
+                [],
+            type_category:
+                existingToolData?.type_category?.map(item => item.id) || [],
         };
 
         const propertiesToDelete = [
@@ -143,9 +143,11 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         ];
 
         // Remove any legacy tool properties
-        propertiesToDelete.forEach(
-            property => delete (formData as any)[property]
-        );
+        propertiesToDelete.forEach(key => {
+            if (key in formData) {
+                delete formData[key as keyof typeof formData];
+            }
+        });
 
         reset(formData);
     }, [reset, existingToolData]);
@@ -159,7 +161,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
     const watchAll = watch();
 
-    const onSubmit = async (formData: Tool) => {
+    const onSubmit = async (formData: ToolPayload) => {
         const payload: ToolPayload = {
             user_id: userId,
             team_id: +teamId,

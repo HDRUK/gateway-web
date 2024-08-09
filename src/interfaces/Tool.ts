@@ -15,13 +15,13 @@ export interface Tool {
     description: string;
     license?: string;
     tech_stack?: string;
-    user_id?: number;
-    enabled?: boolean;
+    user_id: number;
+    enabled: boolean;
     created_at?: string;
     updated_at?: string;
     deleted_at?: string;
     category_id?: number;
-    team_id?: number;
+    team_id: number;
     associated_authors: string;
     contact_address?: string;
     user?: string;
@@ -39,6 +39,9 @@ export interface Tool {
     tools: Tool[];
     dataset: DatasetRelationship[];
     any_dataset?: boolean;
+    mongo_object_id?: string;
+    datasets?: string[];
+    mongo_id?: string;
 }
 
 export interface ToolPayload {
@@ -51,7 +54,7 @@ export interface ToolPayload {
     category_id?: number;
     team_id: number;
     associated_authors: string;
-    programming_languages?: number[];
+    programming_language?: number[];
     type_category?: number[];
     publications: number[];
     durs: number[];

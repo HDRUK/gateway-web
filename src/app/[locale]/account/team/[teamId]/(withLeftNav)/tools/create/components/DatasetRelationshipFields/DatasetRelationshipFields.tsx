@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Control, FieldArrayWithId, FieldValues } from "react-hook-form";
 import { CircularProgress, IconButton } from "@mui/material";
 import { get } from "lodash";
@@ -110,7 +110,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                             control={control}
                             setValue={(e, v) => console.log("set", e, v)}
                             onInputChange={(
-                                e: React.ChangeEvent<{}>,
+                                e: React.ChangeEvent,
                                 value: string
                             ) => {
                                 if (e?.type !== "change") {
@@ -130,7 +130,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                                     InputProps={{
                                         ...params.InputProps,
                                         endAdornment: (
-                                            <Fragment>
+                                            <>
                                                 {isLoadingDatasets ? (
                                                     <CircularProgress
                                                         color="inherit"
@@ -138,7 +138,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                                                     />
                                                 ) : null}
                                                 {params.InputProps.endAdornment}
-                                            </Fragment>
+                                            </>
                                         ),
                                     }}
                                 />

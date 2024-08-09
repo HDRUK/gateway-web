@@ -63,7 +63,7 @@ const ResourceTable = ({
                 overflowY: "scroll",
                 mt: 1,
             }}>
-            {tableData.map(({ resourceType, rows, hideHeader }, index) => (
+            {tableData.map(({ resourceType, rows, hideHeader }) => (
                 <Table
                     key={`${resourceType}_table`}
                     columns={getColumns({
