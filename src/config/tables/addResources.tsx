@@ -80,7 +80,7 @@ const getDataProvider = (
 ) => {
     const titleMap = {
         [ResourceType.DATASET]: () => get(data, DATASET_PUBLISHER_NAME),
-        [ResourceType.DATA_USE]: () => (data as DataUse).team.name,
+        [ResourceType.DATA_USE]: () => (data as DataUse)?.team?.name,
         [ResourceType.PUBLICATION]: () => EMPTY_VALUE,
         [ResourceType.TOOL]: () => (data as Tool)?.team?.name || EMPTY_VALUE,
     };

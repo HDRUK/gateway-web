@@ -12,7 +12,7 @@ import {
     SelectedResources,
 } from "@/interfaces/AddResource";
 import { Category } from "@/interfaces/Category";
-import { Tool } from "@/interfaces/Tool";
+import { Tool, ToolPayload } from "@/interfaces/Tool";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -27,6 +27,8 @@ import AddResourceDialog from "@/modules/AddResourceDialog";
 import useActionBar from "@/hooks/useActionBar";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
+import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import {
@@ -35,26 +37,57 @@ import {
     toolFormFields,
     toolValidationSchema,
 } from "@/config/forms/tool";
+import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import DatasetRelationshipFields from "../DatasetRelationshipFields";
 
 interface ToolCreateProps {
     teamId: string;
+    userId: number;
+    toolId: string;
 }
 
 const TRANSLATION_PATH = `pages.account.team.tools.create`;
 
-const CreateTool = ({ teamId }: ToolCreateProps) => {
+const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
 
+    const { handleSubmit, control, setValue, getValues, watch, reset } =
+        useForm<ToolPayload>({
+            mode: "onTouched",
+            resolver: yupResolver(toolValidationSchema),
+            defaultValues: {
+                ...toolDefaultValues,
+            },
+        });
+
     const { data: toolCategoryData } = useGet<Category[]>(
         `${apis.toolCategoriesV1Url}?perPage=200`
     );
+
+    const { data: programmingLanguageData } = useGet<Category[]>(
+        `${apis.programmingLanguagesV1Url}?perPage=200`
+    );
+
+    const { data: existingToolData } = useGet<Tool>(
+        `${apis.toolsV1Url}/${toolId}`,
+        {
+            shouldFetch: !!toolId,
+        }
+    );
+
+    const createTool = usePost<ToolPayload>(`${apis.toolsV1Url}`, {
+        itemName: "Tool",
+    });
+
+    const editTool = usePatch<Partial<ToolPayload>>(`${apis.toolsV1Url}`, {
+        itemName: "Tool",
+    });
 
     const toolCategoryOptions = useMemo(() => {
         if (!toolCategoryData) return [];
@@ -67,10 +100,6 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
         }) as OptionsType[];
     }, [toolCategoryData]);
 
-    const { data: programmingLanguageData } = useGet<Category[]>(
-        `${apis.programmingLanguagesV1Url}?perPage=200`
-    );
-
     const programmingLanguageOptions = useMemo(() => {
         if (!programmingLanguageData) return [];
 
@@ -82,15 +111,43 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
         }) as OptionsType[];
     }, [programmingLanguageData]);
 
-    const { handleSubmit, control, setValue, getValues, watch } = useForm<Tool>(
-        {
-            mode: "onTouched",
-            resolver: yupResolver(toolValidationSchema),
-            defaultValues: {
-                ...toolDefaultValues,
-            },
+    useEffect(() => {
+        if (!existingToolData) {
+            return;
         }
-    );
+
+        const formData = {
+            ...existingToolData,
+            durs: existingToolData?.durs,
+            publications: existingToolData?.publications,
+            tools: existingToolData?.tools,
+            dataset: defaultDatasetValue,
+            programming_language: existingToolData?.programming_languages?.map(
+                item => item.id
+            ),
+            type_category: existingToolData?.type_category?.map(
+                item => item.id
+            ),
+        };
+
+        const propertiesToDelete = [
+            "programming_languages",
+            "mongo_object_id",
+            "team_id",
+            "collections",
+            "license",
+            "status",
+            "datasets",
+            "user",
+            "mongo_id",
+        ];
+
+        propertiesToDelete.forEach(
+            property => delete (formData as any)[property]
+        );
+
+        reset(formData);
+    }, [reset, existingToolData]);
 
     const watchAnyDataset = watch("any_dataset");
 
@@ -102,7 +159,28 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
     const watchAll = watch();
 
     const onSubmit = async (formData: Tool) => {
-        // TODO - handle submission
+        const payload: ToolPayload = {
+            user_id: userId,
+            team_id: +teamId,
+            ...formData,
+            enabled: true,
+            tag: [],
+            status: DataStatus.ACTIVE,
+            durs: formData.durs?.map(item => item.id),
+            publications: formData.publications?.map(item => item.id),
+            tools: formData.tools?.map(item => item.id),
+            dataset: formData.dataset.every(
+                obj => Object.keys(obj).length === 0
+            )
+                ? formData.dataset
+                : [],
+        };
+
+        if (!toolId) {
+            await createTool(payload);
+        } else {
+            await editTool(toolId, payload);
+        }
     };
 
     const handleAddResource = () => {
@@ -116,7 +194,6 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
                 setValue("tools", selectedResources[ResourceType.TOOL]);
             },
             hideDatasets: true,
-            hideTools: true,
             defaultResources: {
                 datause: getValues("durs"),
                 publication: getValues("publications"),
@@ -128,9 +205,9 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
 
     const selectedResources = useMemo(() => {
         return {
-            datause: getValues("durs"),
-            publication: getValues("publications"),
-            tool: getValues("tools"),
+            datause: getValues("durs") || [],
+            publication: getValues("publications") || [],
+            tool: getValues("tools") || [],
             dataset: [],
         };
     }, [watchAll]);
@@ -141,7 +218,7 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
             confirmText: t("publish"),
             tertiaryButton: {
                 onAction: async () => {
-                    console.log("TEST");
+                    handleSubmit(onSubmit)();
                 },
                 buttonText: t("saveDraft"),
             },
@@ -215,7 +292,7 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
                                             fields={fields}
                                             append={append}
                                             remove={remove}
-                                            isDisabled={watchAnyDataset}
+                                            isDisabled={!!watchAnyDataset}
                                         />
                                     );
                                 }
@@ -263,8 +340,8 @@ const CreateTool = ({ teamId }: ToolCreateProps) => {
                                     {t("addResourceButton")}
                                 </Button>
 
-                                {!!Object.values(selectedResources).flat()
-                                    .length && (
+                                {!!Object.values(selectedResources)?.flat()
+                                    ?.length && (
                                     <ResourceTable
                                         selectedResources={selectedResources}
                                         handleRemove={handleRemoveResource}

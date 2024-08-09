@@ -1,5 +1,6 @@
 import { DatasetRelationship } from "@/config/forms/tool";
 import { DataStatus } from "@/consts/application";
+import { Category } from "./Category";
 import { Collection } from "./Collection";
 import { DataUse } from "./DataUse";
 import { VersionItem } from "./Dataset";
@@ -26,9 +27,9 @@ export interface Tool {
     user?: string;
     tag: Tag[];
     team?: Team;
-    programming_languages?: string[];
+    programming_languages?: Category[];
     programming_packages?: string[];
-    type_category?: string[] | string; // may need updating?
+    type_category?: Category[];
     publications: Publication[];
     dataset_versions: VersionItem[];
     durs: DataUse[];
@@ -37,4 +38,27 @@ export interface Tool {
     user_name?: string;
     tools: Tool[];
     dataset: DatasetRelationship[];
+    any_dataset?: boolean;
+}
+
+export interface ToolPayload {
+    id?: number;
+    name: string;
+    url: string;
+    description: string;
+    user_id: number;
+    enabled: boolean;
+    category_id?: number;
+    team_id: number;
+    associated_authors: string;
+    programming_languages?: number[];
+    type_category?: number[];
+    publications: number[];
+    durs: number[];
+    status?: DataStatus;
+    tools: number[];
+    dataset: DatasetRelationship[];
+    any_dataset?: boolean;
+    tag: Tag[];
+    dataset_versions: VersionItem[];
 }

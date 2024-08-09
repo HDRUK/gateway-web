@@ -11,12 +11,11 @@ const defaultDatasetValue = [
 const defaultValues = {
     url: "",
     name: "",
-    type_category: "",
+    type_category: [],
     description: "",
     associated_authors: "",
-    programming_language: "",
+    programming_language: [],
     keywords: [],
-    domain: [],
     any_dataset: false,
     dataset: defaultDatasetValue,
     link: "",
@@ -29,7 +28,7 @@ const defaultValues = {
 const validationSchema = yup.object().shape({
     url: yup.string().url().label("Github Link (optional)"),
     name: yup.string().required().label("Name of script, tool or software"),
-    type_category: yup.string().required().label("Category"),
+    type_category: yup.array().of(yup.number()).required().label("Category"),
     description: yup.string().min(50).max(1500).required().label("Description"),
     results: yup
         .string()
@@ -38,9 +37,12 @@ const validationSchema = yup.object().shape({
         .required()
         .label("Results / Insights"),
     associated_authors: yup.string().required().label("Authors"),
-    programming_language: yup.string().required().label("Programming language"),
+    programming_language: yup
+        .array()
+        .of(yup.number())
+        .required()
+        .label("Programming language"),
     keywords: yup.array().of(yup.string()),
-    domain: yup.array().of(yup.string()),
     any_dataset: yup.boolean(),
     dataset: yup.array().of(
         yup.object().shape({
@@ -89,6 +91,8 @@ const formFields = [
         name: "type_category",
         component: inputComponents.Select,
         required: true,
+        options: [],
+        multiple: true,
     },
     {
         label: "Description",
@@ -121,6 +125,8 @@ const formFields = [
         name: "programming_language",
         component: inputComponents.Select,
         required: true,
+        options: [],
+        multiple: true,
     },
     {
         label: "Keywords (optional)",
@@ -141,14 +147,6 @@ const formFields = [
         ),
         name: "any_dataset",
         component: inputComponents.Checkbox,
-    },
-    {
-        label: "Domain (optional)",
-        info: "Eg. Biogenomics, Nutrition, Blockchain",
-        name: "domain",
-        component: inputComponents.Autocomplete,
-        canCreate: true,
-        multiple: true,
     },
 ];
 

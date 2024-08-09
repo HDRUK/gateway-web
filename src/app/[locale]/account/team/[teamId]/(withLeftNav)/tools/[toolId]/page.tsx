@@ -5,19 +5,19 @@ import { ACCOUNT, CREATE, PAGES, TEAM, TOOLS } from "@/consts/translation";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import CreateTool from "./components/CreateTool";
+import CreateTool from "../create/components/CreateTool";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Tool Create",
+    title: "Health Data Research Innovation Gateway - My Account - Tool Edit",
     description: "",
 };
 
 export default async function ToolCreatePage({
     params,
 }: {
-    params: { teamId: string };
+    params: { teamId: string; toolId: string };
 }) {
-    const { teamId } = params;
+    const { teamId, toolId } = params;
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const team = await getTeam(cookieStore, teamId);
@@ -32,7 +32,7 @@ export default async function ToolCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["tools.create"]}>
-            <CreateTool teamId={teamId} userId={user.id} />
+            <CreateTool teamId={teamId} userId={user.id} toolId={toolId} />
         </ProtectedAccountRoute>
     );
 }
