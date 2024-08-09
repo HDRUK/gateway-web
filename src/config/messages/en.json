@@ -252,6 +252,39 @@
                             }
                         }
                     }
+                },
+                "library": {
+                    "title": "Library",
+                    "text": "The space where you can sort all your datasets and entity types",
+                    "components": {
+                        "RightPanel": {
+                            "generalEnquiries": {
+                                "title": "General Enquiry",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a general enquiry"
+                            },
+                            "feasabilityEnquiries": {
+                                "title": "Feasability Enquiry",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a feasibility enquiry"
+                            },
+                            "multiDelete": {
+                                "label": "Multi delete"
+                            }
+                        }
+                    },
+                    "name": {
+                        "label": "Name"
+                    },
+                    "darEnabled": {
+                        "label": "Data Access Request Enabled"
+                    },
+                    "dataCustodian": {
+                        "label": "Data Custodian"
+                    },
+                    "entityType": {
+                        "label": "Entity Type"
+                    }
                 }
             },
             "team": {
@@ -360,7 +393,8 @@
                                 "completionGuidance3": "Name of the column in the table dataset.",
                                 "completionGuidance4": "Description of the column in the table dataset.",
                                 "completionGuidance5": "Type of data contained in the column.",
-                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource."
+                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
+                                "downloadTemplate": "Download data dictionary template"
                             }
                         },
                         "EditDataset": {

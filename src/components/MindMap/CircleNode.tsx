@@ -6,12 +6,15 @@ import { LaunchIcon } from "@/consts/icons";
 export interface CircleNodeData {
     id: string;
     label: string;
+    href: string;
 }
 
-const CircleNode = ({ data: { id, label } }: NodeProps<CircleNodeData>) => {
+const CircleNode = ({
+    data: { id, label, href },
+}: NodeProps<CircleNodeData>) => {
     return (
         <Link
-            href="/"
+            href={href}
             underline="none"
             color="inherit"
             target="_blank"

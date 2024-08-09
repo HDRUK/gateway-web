@@ -9,7 +9,7 @@ describe("MindMap", () => {
             id: "root",
             type: "circle",
             position: { x: 0, y: 0 },
-            data: { id: 0, label: "Test Map" },
+            data: { id: 0, label: "Test Map", href: "/" },
         };
 
         const outerNodes = [
