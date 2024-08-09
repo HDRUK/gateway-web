@@ -444,7 +444,8 @@
                         "cancel": "Cancel",
                         "saveDraft": "Save as draft",
                         "publish": "Publish",
-                        "relationshipInfo": "Dataset(s) related to this analysis script, tool or software"
+                        "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
+                        "labelTag": "Analysis script, tools and software"
                     },
                     "components": {
                         "TeamTools": {

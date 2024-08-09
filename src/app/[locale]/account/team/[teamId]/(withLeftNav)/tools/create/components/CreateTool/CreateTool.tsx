@@ -142,6 +142,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             "mongo_id",
         ];
 
+        // Remove any legacy tool properties
         propertiesToDelete.forEach(
             property => delete (formData as any)[property]
         );
@@ -273,7 +274,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 <Box>
                     <Chip
                         resourceType={ResourceType.TOOL}
-                        label="ADD TEXT HERE"
+                        label={t("labelTag")}
                     />
                 </Box>
             </BoxContainer>
