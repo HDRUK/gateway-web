@@ -86,102 +86,97 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
     return (
         <>
             <Typography mb={1}>{t("relationshipInfo")}</Typography>
-            {fields.map((field, index) => {
-                return (
+            {fields.map((field, index) => (
+                <Box
+                    sx={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(12, 1fr)",
+                        p: 0,
+                        gap: 2,
+                    }}
+                    key={field.id}>
+                    <Box sx={{ p: 0, gridColumn: "span 2" }}>
+                        <InputWrapper
+                            {...relationshipField}
+                            control={control}
+                            name={`dataset.${index}.link_type`}
+                            disabled={isDisabled}
+                        />
+                    </Box>
+
+                    <Box sx={{ p: 0, gridColumn: "span 9" }}>
+                        <InputWrapper
+                            {...datasetTitleField}
+                            control={control}
+                            setValue={(e, v) => console.log("set", e, v)}
+                            onInputChange={(
+                                e: React.ChangeEvent<{}>,
+                                value: string
+                            ) => {
+                                if (e?.type !== "change") {
+                                    return;
+                                }
+                                setQuery(value);
+                            }}
+                            options={datasetOptions}
+                            filterOptions={(x: OptionType) => x}
+                            name={`dataset.${index}.id`}
+                            loading={isLoadingDatasets}
+                            disabled={isDisabled}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    label="Asynchronous"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <Fragment>
+                                                {isLoadingDatasets ? (
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20}
+                                                    />
+                                                ) : null}
+                                                {params.InputProps.endAdornment}
+                                            </Fragment>
+                                        ),
+                                    }}
+                                />
+                            )}
+                        />
+                    </Box>
+
                     <Box
                         sx={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(12, 1fr)",
                             p: 0,
-                            gap: 2,
-                        }}
-                        key={field.id}>
-                        <Box sx={{ p: 0, gridColumn: "span 2" }}>
-                            <InputWrapper
-                                {...relationshipField}
-                                control={control}
-                                name={`dataset.${index}.link_type`}
-                                disabled={isDisabled}
-                            />
-                        </Box>
-
-                        <Box sx={{ p: 0, gridColumn: "span 9" }}>
-                            <InputWrapper
-                                {...datasetTitleField}
-                                control={control}
-                                setValue={(e, v) => console.log("set", e, v)}
-                                onInputChange={(
-                                    e: React.ChangeEvent<{}>,
-                                    value: string
-                                ) => {
-                                    if (e?.type !== "change") {
-                                        return;
-                                    }
-                                    setQuery(value);
-                                }}
-                                options={datasetOptions}
-                                filterOptions={(x: OptionType) => x}
-                                name={`dataset.${index}.id`}
-                                loading={isLoadingDatasets}
-                                disabled={isDisabled}
-                                renderInput={params => (
-                                    <TextField
-                                        {...params}
-                                        label="Asynchronous"
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            endAdornment: (
-                                                <Fragment>
-                                                    {isLoadingDatasets ? (
-                                                        <CircularProgress
-                                                            color="inherit"
-                                                            size={20}
-                                                        />
-                                                    ) : null}
-                                                    {
-                                                        params.InputProps
-                                                            .endAdornment
-                                                    }
-                                                </Fragment>
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            />
-                        </Box>
-
-                        <Box
-                            sx={{
-                                p: 0,
-                                gridColumn: "span 1",
-                                display: "flex",
-                                justifyContent: "flex-end",
-                                alignItems: "flex-end",
-                            }}>
-                            {fields.length > 1 && (
-                                <IconButton
-                                    sx={{ mt: 2, mb: 2 }}
-                                    edge="start"
-                                    aria-label="Remove row"
-                                    onClick={() => remove(index)}>
-                                    <RemoveIcon />
-                                </IconButton>
-                            )}
+                            gridColumn: "span 1",
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                        }}>
+                        {fields.length > 1 && (
                             <IconButton
-                                aria-label="Add row"
                                 sx={{ mt: 2, mb: 2 }}
-                                onClick={() =>
-                                    append({
-                                        link_type: "",
-                                        id: undefined,
-                                    })
-                                }>
-                                <AddIcon />
+                                edge="start"
+                                aria-label="Remove row"
+                                onClick={() => remove(index)}>
+                                <RemoveIcon />
                             </IconButton>
-                        </Box>
+                        )}
+                        <IconButton
+                            aria-label="Add row"
+                            sx={{ mt: 2, mb: 2 }}
+                            onClick={() =>
+                                append({
+                                    link_type: "",
+                                    id: undefined,
+                                })
+                            }>
+                            <AddIcon />
+                        </IconButton>
                     </Box>
-                );
-            })}
+                </Box>
+            ))}
         </>
     );
 };

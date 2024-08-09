@@ -173,8 +173,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             dataset: formData.dataset.every(
                 obj => Object.keys(obj).length === 0
             )
-                ? formData.dataset
-                : [],
+                ? []
+                : formData.dataset,
         };
 
         if (!toolId) {
