@@ -2,6 +2,7 @@
 
 import { List, ListItem } from "@mui/material";
 import { flatMap, groupBy, map } from "lodash";
+import { useTranslations } from "next-intl";
 import {
     StructuralMetadata,
     StructuralMetadataColumn,
@@ -16,7 +17,9 @@ type GroupByResult<T> = {
     [key: string]: T[];
 };
 
-const formatMetadata = (metadata: StructuralMetadata) => {
+const formatMetadata = (
+    metadata: StructuralMetadata | StructuralMetadata[]
+) => {
     const grouped = groupBy(
         metadata,
         "name"
@@ -30,6 +33,7 @@ const formatMetadata = (metadata: StructuralMetadata) => {
                 name: column.name,
                 description: column.description,
                 dataType: column.dataType,
+                sensitive: column.sensitive ? "TRUE" : "FALSE",
             }))
         );
 
@@ -37,11 +41,15 @@ const formatMetadata = (metadata: StructuralMetadata) => {
     });
 };
 
+const TRANSLATION_PATH = "components.StructuralMetadataAccordion";
+
 const StructuralMetadataAccordion = ({
     metadata,
 }: {
-    metadata: StructuralMetadata;
+    metadata: StructuralMetadata | StructuralMetadata[];
 }) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const formattedMetadata = formatMetadata(metadata);
 
     return (
@@ -72,12 +80,42 @@ const StructuralMetadataAccordion = ({
                     }
                     contents={
                         <List sx={{ p: 0 }}>
+                            <ListItem
+                                key={`${item}.header`}
+                                sx={{
+                                    display: "flex",
+                                    pl: 0,
+                                    pr: 0,
+                                }}>
+                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
+                                    {t("columnName")}
+                                </Typography>
+                                <Typography
+                                    sx={{
+                                        flex: 1,
+                                        fontWeight: 500,
+                                    }}>
+                                    {t("dataType")}
+                                </Typography>
+                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
+                                    {t("columnDesc")}
+                                </Typography>
+                                <Typography
+                                    sx={{
+                                        flex: 1,
+                                        fontWeight: 500,
+                                    }}>
+                                    {t("sensitive")}
+                                </Typography>
+                            </ListItem>
                             {item.rows.map((row, index) => (
                                 <ListItem
                                     key={row.name}
                                     divider={index < item.rows.length - 1}
                                     sx={{
                                         display: "flex",
+                                        pl: 0,
+                                        pr: 0,
                                     }}>
                                     <Typography sx={{ flex: 1 }}>
                                         {row.name}
@@ -89,6 +127,13 @@ const StructuralMetadataAccordion = ({
                                     <Typography
                                         sx={{ flex: 1, color: colors.grey600 }}>
                                         {row.description}
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            flex: 1,
+                                            color: colors.grey600,
+                                        }}>
+                                        {row.sensitive}
                                     </Typography>
                                 </ListItem>
                             ))}

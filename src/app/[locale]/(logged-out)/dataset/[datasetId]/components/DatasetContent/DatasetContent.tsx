@@ -11,6 +11,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
+import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
 import Table from "@/components/Table";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
@@ -23,7 +24,6 @@ import {
     Observation,
     observationTableColumns,
 } from "../../config";
-import StructuralMetadataAccordion from "../StructuralMetadataAccordion";
 import {
     DatasetFieldItem,
     DatasetFieldWrapper,
