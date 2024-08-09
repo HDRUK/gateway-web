@@ -65,7 +65,7 @@ const ResourceTable = ({
             }}>
             {tableData.map(({ resourceType, rows, hideHeader }, index) => (
                 <Table
-                    key={`${resourceType}_${index}`}
+                    key={`${resourceType}_table`}
                     columns={getColumns({
                         handleAction: handleRemove,
                         resourceType,
