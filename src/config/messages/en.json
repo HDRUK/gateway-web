@@ -394,7 +394,8 @@
                                 "completionGuidance4": "Description of the column in the table dataset.",
                                 "completionGuidance5": "Type of data contained in the column.",
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
-                                "downloadTemplate": "Download data dictionary template"
+                                "downloadTemplate": "Download data dictionary template",
+                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
                             }
                         },
                         "EditDataset": {
@@ -402,10 +403,6 @@
                             "duplicateButton": "Duplicate"
                         },
                         "CreateDataUse": {
-                            "upload": "Select file",
-                            "uploadButtonText": "Upload",
-                            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
-                            "error": "An error has occured. Please check your file and try again",
                             "successMessage": "Data Use successfully created",
                             "returnButtonText": "View Data Uses"
                         },
@@ -1101,6 +1098,18 @@
             "completion": "Completion",
             "requiredFields": "required fields",
             "optionalFields": "optional fields"
+        },
+        "UploadFile": {
+            "upload": "Select file",
+            "uploadButtonText": "Upload",
+            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
+            "error": "An error has occured. Please check your file and try again"
+        },
+        "StructuralMetadataAccordion": {
+            "columnName": "Column name",
+            "columnDesc": "Column description",
+            "dataType": "Data type",
+            "sensitive": "Sensitive"
         }
     },
     "modules": {
