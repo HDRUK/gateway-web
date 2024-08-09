@@ -59,6 +59,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
     const { showBar } = useActionBar();
     const { push } = useRouter();
 
+    const TOOL_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`;
+
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<ToolPayload>({
             mode: "onTouched",
@@ -198,6 +200,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         } else {
             await editTool(toolId, payload);
         }
+
+        push(TOOL_ROUTE);
     };
 
     const handleAddResource = () => {
@@ -247,7 +251,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 )();
             },
             onCancel: () => {
-                const TOOL_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`;
                 push(TOOL_ROUTE);
             },
         });
