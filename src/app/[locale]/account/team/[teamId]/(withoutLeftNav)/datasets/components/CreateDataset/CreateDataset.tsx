@@ -31,8 +31,8 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
+import usePut from "@/hooks/usePut";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
@@ -142,7 +142,13 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             return;
         }
 
-        let latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        const metadataLocation = isDraft
+            ? "versions[0].metadata.original_metadata"
+            : "versions[0].metadata.metadata";
+
+        let latestMetadata = get(dataset, metadataLocation);
+
+        console.log(latestMetadata);
 
         if (isDuplicate) {
             latestMetadata = omit(latestMetadata, "summary.title");
@@ -205,7 +211,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         }
     );
 
-    const updateDataset = usePatch<NewDataset>(apis.datasetsV1Url, {
+    const updateDataset = usePut<NewDataset>(apis.datasetsV1Url, {
         itemName: "Dataset",
         query: datasetVersionQuery,
     });
@@ -331,9 +337,12 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         const formPayload = isEditing
             ? {
                   ...omit(dataset, ["versions"]),
+                  team_id: teamId,
+                  user_id: userId,
                   status: isDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
+                  create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
                       ...dataset?.versions[0].metadata,
                       metadata: mappedFormData,
