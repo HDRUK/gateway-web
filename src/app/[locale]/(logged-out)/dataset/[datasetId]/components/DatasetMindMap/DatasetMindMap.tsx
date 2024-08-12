@@ -21,12 +21,14 @@ interface DatasetMindMapProps extends ReactFlowProps {
     teamId: number;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
+    linkageCounts: { [key: string]: number };
 }
 
 const DatasetMindMap = ({
     data,
     teamId,
     populatedSections,
+    linkageCounts,
     panOnDrag = false,
     panOnScroll = false,
     zoomOnScroll = false,
@@ -62,11 +64,21 @@ const DatasetMindMap = ({
                     if (node.id === "node-synthetic") {
                         href =
                             data.metadata.metadata.linkage.syntheticDataWebLink;
+                        if (!href) {
+                            return undefined;
+                        }
                     } else if (
-                        ["node-collections", "node-dur", "node-tools"].includes(
-                            node.id
-                        )
+                        [
+                            "node-collections",
+                            "node-durs",
+                            "node-tools",
+                        ].includes(node.id)
                     ) {
+                        const entityName = node.id.replace("node-", "");
+                        const entityCount = linkageCounts[entityName];
+                        if (!entityCount) {
+                            return undefined;
+                        }
                         href = `${node.data.href}&datasetTitles=${title}`;
                     }
 
@@ -105,6 +117,8 @@ const DatasetMindMap = ({
                 .filter(item => !!item),
         [data]
     );
+
+    console.log(hydratedOuterNodes);
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
