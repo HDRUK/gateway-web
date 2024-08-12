@@ -148,8 +148,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
         let latestMetadata = get(dataset, metadataLocation);
 
-        console.log(latestMetadata);
-
         if (isDuplicate) {
             latestMetadata = omit(latestMetadata, "summary.title");
         }
