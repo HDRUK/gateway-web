@@ -10,7 +10,7 @@ const outerNodeValues = [
         href: "/search?type=tools",
     },
     {
-        name: "dur",
+        name: "durs",
         label: undefined,
         href: "/search?type=dur",
     },
