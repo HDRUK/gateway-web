@@ -118,8 +118,6 @@ const DatasetMindMap = ({
         [data]
     );
 
-    console.log(hydratedOuterNodes);
-
     return (
         <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
             <MindMap
