@@ -347,6 +347,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       : ("ACTIVE" as DatasetStatus),
                   create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
                       metadata: mappedFormData,
                   },
@@ -358,6 +360,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
                       metadata: mappedFormData,
                   },
@@ -370,6 +374,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       : ("ACTIVE" as DatasetStatus),
                   create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       metadata: {
                           issued: new Date().toString(),
                           modified: new Date().toString(),
