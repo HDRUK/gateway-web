@@ -63,6 +63,13 @@ export default async function DatasetItemPage({
         section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
 
+    const linkageCounts = {
+        tools: data?.tools_count,
+        publications: data?.publications_count,
+        durs: data?.durs_count,
+        collections: data?.collections_count,
+    };
+
     const activeLinkList = populatedSections.map(section => {
         return { label: section.sectionName };
     });
@@ -117,6 +124,7 @@ export default async function DatasetItemPage({
                                     data={datasetVersion}
                                     teamId={data?.team_id}
                                     populatedSections={populatedSections}
+                                    linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
                                         !!datasetVersion.metadata?.metadata
                                             ?.structuralMetadata?.length

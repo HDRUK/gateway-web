@@ -27,6 +27,8 @@ const ProvidersDialog = () => {
         setInstitutionSelectVisible(false);
     }, [store?.dialogComponent]);
 
+    const redirectPath = store.dialogProps?.redirectPath || "";
+
     return (
         <Dialog
             titleSx={{ paddingLeft: 8 }}
@@ -57,6 +59,7 @@ const ProvidersDialog = () => {
                             showInstitution={() =>
                                 setInstitutionSelectVisible(true)
                             }
+                            redirectPath={redirectPath as string}
                         />
 
                         <Link href={CUSTOMER_PORTAL_SUPPORT_URL}>
