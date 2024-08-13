@@ -138,7 +138,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const schemaFields = formJSON.schema_fields;
 
     useEffect(() => {
-        if (isLoading || existingFormData || !isEditing) {
+        if (isLoading || !isEditing) {
             return;
         }
 
@@ -161,7 +161,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         );
 
         setExistingFormData(mappedFormData);
-    }, [dataset, existingFormData, isLoading]);
+    }, [dataset, isLoading]);
 
     useEffect(() => {
         if (!dataset) {
@@ -249,9 +249,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
     useEffect(() => {
         if (!existingFormData) {
+            reset({});
             return;
         }
-
         reset(existingFormData);
     }, [existingFormData]);
 
@@ -387,6 +387,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 : await createDataset(formPayload as NewDataset);
 
             if (formPostRequest !== null && !autoSaveDraft) {
+                reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
                 );
@@ -404,6 +405,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     };
 
     const formSubmit = (formData: Metadata) => {
+        console.log("submitting form");
         postForm(formData);
     };
 
