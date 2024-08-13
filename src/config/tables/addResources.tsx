@@ -87,14 +87,15 @@ const getDataProvider = (
 };
 
 const getColumns = ({
-    handleAction,
+    handleAddResource,
+    handleRemoveResource,
     resourceType,
     selectedResources,
     tableTranslations,
     isAddingResource = true,
 }: {
-    handleAction: (
-        isSelected: boolean,
+    handleAddResource?: (isSelected: boolean, data: ResourceDataType) => void;
+    handleRemoveResource?: (
         data: ResourceDataType,
         resourceType: ResourceType
     ) => void;
@@ -119,10 +120,10 @@ const getColumns = ({
                                 selectedResources
                             )}
                             onChange={(_e, value) =>
-                                handleAction(
+                                handleAddResource &&
+                                handleAddResource(
                                     value,
-                                    rowData as ResourceDataType,
-                                    resourceType
+                                    rowData as ResourceDataType
                                 )
                             }
                             size="large"
@@ -131,7 +132,8 @@ const getColumns = ({
                 ) : (
                     <IconButton
                         onClick={() =>
-                            handleAction(true, rowData, resourceType)
+                            handleRemoveResource &&
+                            handleRemoveResource(rowData, resourceType)
                         }
                         color="primary">
                         <DeleteForeverIcon />

@@ -261,7 +261,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
     }, []);
 
     const handleRemoveResource = (
-        _isSelected: boolean,
         data: ResourceDataType,
         resourceType: ResourceType
     ) => {

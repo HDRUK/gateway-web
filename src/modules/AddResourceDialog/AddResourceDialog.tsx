@@ -244,7 +244,7 @@ const AddDatasetDialog = ({
                                     }}>
                                     <Table
                                         columns={getColumns({
-                                            handleAction: handleCheckbox,
+                                            handleAddResource: handleCheckbox,
                                             resourceType,
                                             selectedResources,
                                             tableTranslations,

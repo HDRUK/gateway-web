@@ -14,11 +14,7 @@ const TRANSLATION_PATH = "modules.dialogs.RelatedResources";
 
 interface AddDatasetDialogProps {
     selectedResources: SelectedResources;
-    handleRemove: (
-        isSelected: boolean,
-        data: ResourceDataType,
-        resourceType: ResourceType
-    ) => void;
+    handleRemove: (data: ResourceDataType, resourceType: ResourceType) => void;
 }
 
 const ResourceTable = ({
@@ -67,7 +63,7 @@ const ResourceTable = ({
                 <Table
                     key={`${resourceType}_table`}
                     columns={getColumns({
-                        handleAction: handleRemove,
+                        handleRemoveResource: handleRemove,
                         resourceType,
                         selectedResources,
                         tableTranslations,
