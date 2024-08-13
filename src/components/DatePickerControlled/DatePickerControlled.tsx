@@ -6,6 +6,7 @@ import {
 } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Dayjs } from "dayjs";
+import "dayjs/locale/en-gb";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface DatePickerControlledProps
