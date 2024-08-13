@@ -2,32 +2,41 @@ import { useEffect, useState } from "react";
 import { BookmarkBorder, Bookmark } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button } from "@mui/material";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
-import { Library, NewLibrary } from "@/interfaces/Library";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
-import useGet from "@/hooks/useGet";
-import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import menuItems from "./config";
 
 interface ResultCardProps {
     result: SearchResultDataset;
+    libraryData: Library[];
+    showLibraryModal: (props: { datasetId: number }) => void;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
 
-const ActionDropdown = ({ result }: ResultCardProps) => {
+const ActionDropdown = ({
+    result,
+    libraryData,
+    showLibraryModal,
+}: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
-    const { _id: datasetId } = result;
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
+    const { _id: datasetId } = result;
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -41,10 +50,6 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     // Update the list of libraries
-    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=1000`,
-        { shouldFetch: isLoggedIn }
-    );
 
     useEffect(() => {
         const librariesDatasetIds: number[] = libraryData?.map(
@@ -55,28 +60,22 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
         }
     }, [libraryData, datasetId]);
 
-    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url);
+    const handleClickAddLibrary = () => {
+        showLibraryModal({ datasetId });
+    };
 
     const deleteLibrary = useDelete(apis.librariesV1Url, {
-        itemName: `Library`,
+        localeKey: `updateYourLibrary`,
     });
 
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
         event.stopPropagation();
+
         if (isLoggedIn) {
             if (!isLibraryToggled) {
-                const payload: NewLibrary = {
-                    user_id: user?.id,
-                    dataset_id: +datasetId,
-                };
-                addLibrary(payload).then(res => {
-                    if (res) {
-                        mutateLibraries();
-                        setLibraryToggle(true);
-                    }
-                });
+                handleClickAddLibrary();
             } else {
                 const libraryIdToDelete = libraryData.find(
                     element =>
@@ -84,13 +83,27 @@ const ActionDropdown = ({ result }: ResultCardProps) => {
                         element.dataset_id === Number(datasetId)
                 ).id;
 
-                await deleteLibrary(libraryIdToDelete);
-
-                mutateLibraries();
+                await deleteLibrary(libraryIdToDelete).then(() =>
+                    setAnchorElement(null)
+                );
                 setLibraryToggle(false);
             }
         } else {
-            showDialog(ProvidersDialog, { isProvidersDialog: true });
+            let redirectPath = pathname;
+            if (searchParams) {
+                redirectPath = `${redirectPath}?${searchParams.toString()}`;
+            }
+
+            const action = config.ENTITY_ACTION_COOKIE.ACTION_ADD_LIBRARY;
+            const cookieValue = JSON.stringify({ action, datasetId });
+            Cookies.set(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, cookieValue, {
+                path: "/",
+            });
+
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+                redirectPath,
+            });
         }
     };
 

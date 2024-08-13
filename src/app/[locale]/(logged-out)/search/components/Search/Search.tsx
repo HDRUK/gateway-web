@@ -91,7 +91,11 @@ import { ActionBar, ResultLimitText } from "./Search.styles";
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
 
-const Search = ({ filters }: { filters: Filter[] }) => {
+interface SearchProps {
+    filters: Filter[];
+}
+
+const Search = ({ filters }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
