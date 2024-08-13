@@ -4,6 +4,7 @@ import Link from "next/link";
 import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
 import Chip, { ChipProps } from "@/components/Chip";
+import { colors } from "@/config/theme";
 
 export interface CardStackedProps {
     href: string;
@@ -28,13 +29,13 @@ export default function CardStacked({
                 component={Link}
                 href={href}
                 sx={{
-                    color: "white",
+                    color: colors.white,
                     px: 3,
                     py: 2,
                     display: "flex",
                     alignItems: "flex-end",
                     backgroundImage: `url(${imgUrl})`,
-                    backgroundColor: "black",
+                    backgroundColor: colors.white,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
@@ -45,8 +46,8 @@ export default function CardStacked({
                     size="small"
                     label={title}
                     sx={{
-                        backgroundColor: grey["600"],
-                        color: "#fff",
+                        backgroundColor: colors.grey600,
+                        color: colors.white,
                         maxWidth: "220px",
                     }}
                     {...chipProps}
