@@ -122,6 +122,10 @@ interface Dataset {
     updated: string;
     create_origin: CreateOrigin;
     latest_metadata?: VersionItem;
+    durs_count: number;
+    publications_count: number;
+    tools_count: number;
+    collections_count: number;
 }
 
 interface DataCustodianDataset {

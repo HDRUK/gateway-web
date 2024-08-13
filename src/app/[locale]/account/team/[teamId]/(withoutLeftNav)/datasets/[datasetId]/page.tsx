@@ -14,8 +14,8 @@ export const metadata = {
     description: "",
 };
 
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+const SCHEMA_NAME = "HDRUK";
+const SCHEMA_VERSION = "3.0.0";
 
 export default async function TeamDatasetPage({
     params,
