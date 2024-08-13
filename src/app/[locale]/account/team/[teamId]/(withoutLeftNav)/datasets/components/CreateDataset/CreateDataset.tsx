@@ -411,7 +411,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     };
 
     const formSubmit = (formData: Metadata) => {
-        console.log("submitting form");
         postForm(formData);
     };
 
