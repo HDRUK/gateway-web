@@ -60,6 +60,9 @@ const ModalButtons = ({
                 p: 0,
                 gap: 2,
                 display: "flex",
+                width: !showCancel && tertiaryButton ? "100%" : undefined,
+                justifyContent:
+                    !showCancel && tertiaryButton ? "space-between" : undefined,
             }}>
             {showCancel && (
                 <Button key="cancel" color="inherit" onClick={handleCancel}>
