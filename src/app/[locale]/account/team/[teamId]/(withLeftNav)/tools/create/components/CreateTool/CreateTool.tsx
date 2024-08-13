@@ -289,6 +289,61 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         }
     }, [watchAnyDataset]);
 
+    const hydratedFormFields = useMemo(
+        () =>
+            toolFormFields.map(field => {
+                if (field.label === "DATASET_RELATIONSHIP_COMPONENT") {
+                    return (
+                        <DatasetRelationshipFields
+                            key={field.label}
+                            control={control}
+                            fields={fields}
+                            append={append}
+                            remove={remove}
+                            isDisabled={!!watchAnyDataset}
+                        />
+                    );
+                }
+
+                // Determine options based on the field name
+                const getOptions = () => {
+                    switch (field.name) {
+                        case "type_category":
+                            return toolCategoryOptions;
+                        case "programming_language":
+                            return programmingLanguageOptions;
+                        default:
+                            return field.options || [];
+                    }
+                };
+
+                // Define component props conditionally
+                const componentOptionProps =
+                    field.component === inputComponents.Autocomplete ||
+                    field.component === inputComponents.Select
+                        ? {
+                              options: getOptions(),
+                          }
+                        : {};
+
+                return (
+                    <InputWrapper
+                        key={field.name}
+                        control={control}
+                        sx={{ mt: 1 }}
+                        {...field}
+                        {...componentOptionProps}
+                    />
+                );
+            }),
+        [
+            programmingLanguageOptions,
+            toolCategoryOptions,
+            fields,
+            watchAnyDataset,
+        ]
+    );
+
     return (
         <>
             <BoxContainer
@@ -307,45 +362,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             <BoxContainer>
                 <Form>
                     <Paper>
-                        <Box>
-                            {toolFormFields.map(field => {
-                                if (
-                                    field.label ===
-                                    "DATASET_RELATIONSHIP_COMPONENT"
-                                ) {
-                                    return (
-                                        <DatasetRelationshipFields
-                                            control={control}
-                                            fields={fields}
-                                            append={append}
-                                            remove={remove}
-                                            isDisabled={!!watchAnyDataset}
-                                        />
-                                    );
-                                }
-
-                                return (
-                                    <InputWrapper
-                                        key={field.name}
-                                        control={control}
-                                        sx={{ mt: 1 }}
-                                        {...field}
-                                        {...((field.component ===
-                                            inputComponents.Autocomplete ||
-                                            field.component ===
-                                                inputComponents.Select) && {
-                                            options:
-                                                field.name === "type_category"
-                                                    ? toolCategoryOptions
-                                                    : field.name ===
-                                                      "programming_language"
-                                                    ? programmingLanguageOptions
-                                                    : field.options || [],
-                                        })}
-                                    />
-                                );
-                            })}
-                        </Box>
+                        <Box>{hydratedFormFields.map(field => field)}</Box>
                     </Paper>
 
                     {/* ADD RESOURCES */}

@@ -2,14 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Control, FieldArrayWithId, FieldValues } from "react-hook-form";
-import { CircularProgress, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { Dataset } from "@/interfaces/Dataset";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
-import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
@@ -108,7 +107,6 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                         <InputWrapper
                             {...datasetTitleField}
                             control={control}
-                            setValue={(e, v) => console.log("set", e, v)}
                             onInputChange={(
                                 e: React.ChangeEvent,
                                 value: string
@@ -123,26 +121,6 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                             name={`dataset.${index}.id`}
                             loading={isLoadingDatasets}
                             disabled={isDisabled}
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    label="Asynchronous"
-                                    InputProps={{
-                                        ...params.InputProps,
-                                        endAdornment: (
-                                            <>
-                                                {isLoadingDatasets ? (
-                                                    <CircularProgress
-                                                        color="inherit"
-                                                        size={20}
-                                                    />
-                                                ) : null}
-                                                {params.InputProps.endAdornment}
-                                            </>
-                                        ),
-                                    }}
-                                />
-                            )}
                         />
                     </Box>
 
@@ -159,13 +137,15 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                                 sx={{ mt: 2, mb: 2 }}
                                 edge="start"
                                 aria-label="Remove row"
-                                onClick={() => remove(index)}>
+                                onClick={() => remove(index)}
+                                disabled={isDisabled}>
                                 <RemoveIcon />
                             </IconButton>
                         )}
                         <IconButton
                             aria-label="Add row"
                             sx={{ mt: 2, mb: 2 }}
+                            disabled={isDisabled}
                             onClick={() =>
                                 append({
                                     link_type: "",

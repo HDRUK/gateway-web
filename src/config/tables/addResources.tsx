@@ -14,12 +14,10 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import Typography from "@/components/Typography";
+import { PUBLISHER_NAME_LOCATION, TITLE_LOCATION } from "@/consts/dataset";
 import { DeleteForeverIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
-const DATASET_TITLE = "latest_metadata.metadata.metadata.summary.title";
-const DATASET_PUBLISHER_NAME =
-    "latest_metadata.metadata.metadata.summary.publisher.publisherName";
 const EMPTY_VALUE = "-";
 
 const columnHelper = createColumnHelper<ResourceDataType>();
@@ -48,7 +46,7 @@ const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
         [ResourceType.DATASET]: () =>
             getLink(
                 `/${RouteName.DATASET_ITEM}/${data.id}`,
-                get(data, DATASET_TITLE)
+                get(data, TITLE_LOCATION)
             ),
         [ResourceType.DATA_USE]: () =>
             getLink(
@@ -79,7 +77,7 @@ const getDataProvider = (
     resourceType: ResourceType
 ) => {
     const titleMap = {
-        [ResourceType.DATASET]: () => get(data, DATASET_PUBLISHER_NAME),
+        [ResourceType.DATASET]: () => get(data, PUBLISHER_NAME_LOCATION),
         [ResourceType.DATA_USE]: () => (data as DataUse)?.team?.name,
         [ResourceType.PUBLICATION]: () => EMPTY_VALUE,
         [ResourceType.TOOL]: () => (data as Tool)?.team?.name || EMPTY_VALUE,
