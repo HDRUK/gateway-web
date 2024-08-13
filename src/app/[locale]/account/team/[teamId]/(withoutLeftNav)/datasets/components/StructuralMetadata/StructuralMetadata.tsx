@@ -107,6 +107,8 @@ const StructuralMetadataSection = ({
             })
         );
 
+    // console.log(structuralMetadata);
+
     return (
         <Paper
             sx={{

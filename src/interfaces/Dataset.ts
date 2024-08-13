@@ -23,6 +23,11 @@ interface StructuralMetadata {
     columns: StructuralMetadataColumn[];
 }
 
+interface StructuralMetadataPublicSchema {
+    tables: StructuralMetadata[];
+    syntheticDataWebLink: string[];
+}
+
 interface Metadata {
     summary: {
         abstract: string;
@@ -149,5 +154,6 @@ export type {
     VersionItem,
     StructuralMetadata,
     StructuralMetadataColumn,
+    StructuralMetadataPublicSchema,
     CreateOrigin,
 };

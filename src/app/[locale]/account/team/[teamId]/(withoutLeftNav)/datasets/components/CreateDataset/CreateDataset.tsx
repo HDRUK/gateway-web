@@ -75,7 +75,12 @@ const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+
+const getMetadata = (isDraft: boolean) =>
+    isDraft
+        ? "versions[0].metadata.original_metadata"
+        : "versions[0].metadata.metadata";
 
 const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const t = useTranslations(
@@ -142,9 +147,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             return;
         }
 
-        const metadataLocation = isDraft
-            ? "versions[0].metadata.original_metadata"
-            : "versions[0].metadata.metadata";
+        const metadataLocation = getMetadata(isDraft);
 
         let latestMetadata = get(dataset, metadataLocation);
 
@@ -165,7 +168,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             return;
         }
 
-        const latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        const metadataLocation = getMetadata(isDraft);
+
+        const latestMetadata = get(dataset, metadataLocation);
         setStructuralMetadata(latestMetadata?.structuralMetadata);
     }, [dataset]);
 
@@ -373,7 +378,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       },
                   },
               };
-
         try {
             const formPostRequest = isEditing
                 ? await updateDataset(
