@@ -936,7 +936,7 @@
                 },
                 "DatasetMindMap": {
                     "tools": "View associated data analysis scripts/software",
-                    "dur": "Research projects/ Data Use",
+                    "durs": "Research projects/ Data Use",
                     "linkages": "See which datasets are linkable",
                     "collections": "Explore associated Collections",
                     "synthetic": "Access synthetic data",

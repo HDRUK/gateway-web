@@ -23,6 +23,11 @@ interface StructuralMetadata {
     columns: StructuralMetadataColumn[];
 }
 
+interface StructuralMetadataPublicSchema {
+    tables: StructuralMetadata[];
+    syntheticDataWebLink: string[];
+}
+
 interface Metadata {
     summary: {
         abstract: string;
@@ -122,6 +127,10 @@ interface Dataset {
     updated: string;
     create_origin: CreateOrigin;
     latest_metadata?: VersionItem;
+    durs_count: number;
+    publications_count: number;
+    tools_count: number;
+    collections_count: number;
 }
 
 interface DataCustodianDataset {
@@ -145,5 +154,6 @@ export type {
     VersionItem,
     StructuralMetadata,
     StructuralMetadataColumn,
+    StructuralMetadataPublicSchema,
     CreateOrigin,
 };

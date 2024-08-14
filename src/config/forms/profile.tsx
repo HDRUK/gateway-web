@@ -48,8 +48,7 @@ const validationSchema = yup
             .nullable(),
         sector_id: yup
             .number()
-            .moreThan(1, "You must select a sector")
-            .required()
+            .required("You must select a sector")
             .label("Sector"),
         bio: yup.string().max(500).nullable().label("Bio"),
         orcid: yup
