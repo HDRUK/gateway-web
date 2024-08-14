@@ -27,10 +27,7 @@ const useSearch = (
     const handleDownload = async () => {
         const csvData = await submitPostRequest({
             query: queryParams.query,
-            ...pickOnlyFilters(
-                FILTER_TYPE_MAPPING[searchType],
-                queryParams
-            ),
+            ...pickOnlyFilters(FILTER_TYPE_MAPPING[searchType], queryParams),
             download: true,
             download_type: downloadType,
         });
