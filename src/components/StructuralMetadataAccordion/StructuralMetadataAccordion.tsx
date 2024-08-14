@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import {
     StructuralMetadata,
     StructuralMetadataColumn,
+    StructuralMetadataPublicSchema,
 } from "@/interfaces/Dataset";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -26,6 +27,10 @@ const formatMetadata = (
     ) as unknown as GroupByResult<StructuralMetadata>;
 
     return map(grouped, (items, name) => {
+        if (!items || items.length === 0) {
+            return undefined;
+        }
+
         const { description } = items[0];
 
         const rows = flatMap(items, item =>
@@ -46,12 +51,38 @@ const TRANSLATION_PATH = "components.StructuralMetadataAccordion";
 const StructuralMetadataAccordion = ({
     metadata,
 }: {
-    metadata: StructuralMetadata | StructuralMetadata[];
+    metadata:
+        | StructuralMetadata
+        | StructuralMetadata[]
+        | StructuralMetadataPublicSchema;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const formattedMetadata = formatMetadata(metadata);
+    const isPublicSchema = (
+        metadata:
+            | StructuralMetadata
+            | StructuralMetadata[]
+            | StructuralMetadataPublicSchema
+    ): metadata is StructuralMetadataPublicSchema => {
+        return (
+            (metadata as StructuralMetadataPublicSchema).tables !== undefined
+        );
+    };
 
+    let tableData;
+    if (isPublicSchema(metadata)) {
+        tableData = metadata.tables;
+    } else if (Array.isArray(metadata)) {
+        tableData = metadata;
+    } else {
+        tableData = [metadata];
+    }
+
+    if (tableData.length === 0) {
+        return null;
+    }
+
+    const formattedMetadata = formatMetadata(tableData);
     return (
         <>
             {formattedMetadata.map(item => (

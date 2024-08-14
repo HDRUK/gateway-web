@@ -31,8 +31,8 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
+import usePut from "@/hooks/usePut";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
@@ -75,7 +75,12 @@ const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+
+const getMetadata = (isDraft: boolean) =>
+    isDraft
+        ? "versions[0].metadata.original_metadata"
+        : "versions[0].metadata.metadata";
 
 const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const t = useTranslations(
@@ -133,7 +138,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const schemaFields = formJSON.schema_fields;
 
     useEffect(() => {
-        if (isLoading || existingFormData || !isEditing) {
+        if (isLoading || !isEditing) {
             return;
         }
 
@@ -142,7 +147,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             return;
         }
 
-        let latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        const metadataLocation = getMetadata(isDraft);
+
+        let latestMetadata = get(dataset, metadataLocation);
 
         if (isDuplicate) {
             latestMetadata = omit(latestMetadata, "summary.title");
@@ -154,14 +161,16 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         );
 
         setExistingFormData(mappedFormData);
-    }, [dataset, existingFormData, isLoading]);
+    }, [dataset, isLoading]);
 
     useEffect(() => {
         if (!dataset) {
             return;
         }
 
-        const latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        const metadataLocation = getMetadata(isDraft);
+
+        const latestMetadata = get(dataset, metadataLocation);
         setStructuralMetadata(latestMetadata?.structuralMetadata);
     }, [dataset]);
 
@@ -205,7 +214,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         }
     );
 
-    const updateDataset = usePatch<NewDataset>(apis.datasetsV1Url, {
+    const updateDataset = usePut<NewDataset>(apis.datasetsV1Url, {
         itemName: "Dataset",
         query: datasetVersionQuery,
     });
@@ -240,9 +249,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
     useEffect(() => {
         if (!existingFormData) {
+            reset({});
             return;
         }
-
         reset(existingFormData);
     }, [existingFormData]);
 
@@ -331,10 +340,15 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         const formPayload = isEditing
             ? {
                   ...omit(dataset, ["versions"]),
+                  team_id: teamId,
+                  user_id: userId,
                   status: isDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
+                  create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
                       metadata: mappedFormData,
                   },
@@ -346,6 +360,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
                       metadata: mappedFormData,
                   },
@@ -358,6 +374,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       : ("ACTIVE" as DatasetStatus),
                   create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       metadata: {
                           issued: new Date().toString(),
                           modified: new Date().toString(),
@@ -366,7 +384,6 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       },
                   },
               };
-
         try {
             const formPostRequest = isEditing
                 ? await updateDataset(
@@ -376,6 +393,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 : await createDataset(formPayload as NewDataset);
 
             if (formPostRequest !== null && !autoSaveDraft) {
+                reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
                 );
