@@ -104,6 +104,8 @@ const Search = ({ filters }: SearchProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { isLoggedIn } = useAuth();
 
+    console.log(filters);
+
     const getParamString = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
     };
