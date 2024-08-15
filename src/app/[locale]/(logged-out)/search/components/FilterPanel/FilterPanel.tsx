@@ -94,6 +94,11 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_PROGRAMMING_LANGUAGE,
         FILTER_LICENSE,
     ],
+    dataProvider: [
+        FILTER_DATA_TYPE,
+        FILTER_DATA_SET_TITLES,
+        FILTER_GEOGRAPHIC_LOCATION,
+    ],
 };
 
 type DefaultValues = {
@@ -306,8 +311,12 @@ const FilterPanel = ({
         }
     ) => {
         const ordering = FILTER_ORDERING[filterCategory];
-        const item1 = ordering?.indexOf(itemA.label);
-        const item2 = ordering?.indexOf(itemB.label);
+        if (!ordering) {
+            return;
+        }
+
+        const item1 = ordering.indexOf(itemA.label);
+        const item2 = ordering.indexOf(itemB.label);
 
         if (item1 && item2) {
             return item1 - item2;
