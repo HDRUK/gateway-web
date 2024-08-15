@@ -312,7 +312,7 @@ const FilterPanel = ({
     ) => {
         const ordering = FILTER_ORDERING[filterCategory];
         if (!ordering) {
-            return;
+            return null;
         }
 
         const item1 = ordering.indexOf(itemA.label);
