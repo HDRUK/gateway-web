@@ -3,6 +3,7 @@ import { FileExport } from "@/interfaces/FileExport";
 import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { FILTER_TYPE_MAPPING } from "@/consts/search";
 import { downloadFile } from "@/utils/download";
 import { pickOnlyFilters } from "@/utils/filters";
 import usePost from "./usePost";
@@ -26,7 +27,7 @@ const useSearch = (
     const handleDownload = async () => {
         const csvData = await submitPostRequest({
             query: queryParams.query,
-            ...pickOnlyFilters("dataset", queryParams),
+            ...pickOnlyFilters(FILTER_TYPE_MAPPING[searchType], queryParams),
             download: true,
             download_type: downloadType,
         });

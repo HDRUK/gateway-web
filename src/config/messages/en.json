@@ -476,6 +476,18 @@
                     }
                 },
                 "tools": {
+                    "create": {
+                        "title": "Manage or create analysis script, tool or software",
+                        "intro": "Analysis script, tool or software can be anything you or someone else created or used during a research project",
+                        "addResources": "Add resources (optional)",
+                        "addResourcesInfo": "Link publications, data uses and other analysis scripts, tools or software. Resources must be added to the Gateway first",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
+                        "labelTag": "Analysis script, tools and software"
+                    },
                     "components": {
                         "TeamTools": {
                             "title": "Analysis script, tools and software",

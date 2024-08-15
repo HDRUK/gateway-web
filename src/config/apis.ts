@@ -57,6 +57,8 @@ const apis = {
     fileProcessedV1Url: `${apiV1Url}/files/processed`,
     librariesV1Url: `${apiV1Url}/libraries`,
     librariesV1UrlIP: `${apiV1IPUrl}/libraries`,
+    toolCategoriesV1Url: `${apiV1Url}/type_categories`,
+    programmingLanguagesV1Url: `${apiV1Url}/programming_languages`,
 };
 
 export default apis;

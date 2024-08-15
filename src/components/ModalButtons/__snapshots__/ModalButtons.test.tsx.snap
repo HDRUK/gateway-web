@@ -2,19 +2,19 @@
 
 exports[`ModalButtons should render basic modal buttons 1`] = `
 <div>
-  <button
-    class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedSecondary MuiButton-sizeMedium MuiButton-outlinedSizeMedium mui-style-ulqr65-MuiButtonBase-root-MuiButton-root"
-    tabindex="0"
-    type="button"
-  >
-    Cancel
-    <span
-      class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-    />
-  </button>
   <div
     class="MuiBox-root mui-style-f2lpgk"
   >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorInherit mui-style-ttpvpp-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      Cancel
+      <span
+        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
     <button
       class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-ltvumc-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
