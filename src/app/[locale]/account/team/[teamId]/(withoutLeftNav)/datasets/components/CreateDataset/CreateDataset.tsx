@@ -3,11 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs from "dayjs";
 import { get, omit } from "lodash";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { buildYup } from "schema-to-yup";
+import { AuthUser } from "@/interfaces/AuthUser";
 import {
     CreateOrigin,
     Dataset,
@@ -68,7 +70,7 @@ import FormFieldArray from "./FormFieldArray";
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
-    userId: number;
+    user: AuthUser;
 }
 
 const INITIAL_FORM_SECTION = "Home";
@@ -82,7 +84,7 @@ const getMetadata = (isDraft: boolean) =>
         ? "versions[0].metadata.original_metadata"
         : "versions[0].metadata.metadata";
 
-const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
+const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -136,6 +138,19 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     }));
 
     const schemaFields = formJSON.schema_fields;
+
+    const defaultFormValues = {
+        "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
+        "Dataset Version": "1.0.0",
+        "revision version": "1.0.0",
+        "revision url": "http://www.example.com/",
+        "Metadata Issued Datetime": dayjs(),
+        "Last Modified Datetime": dayjs(),
+        "Name of data provider": "--",
+        "Dataset population size": 1,
+        "contact point": user?.email,
+        "Observations array": null,
+    };
 
     useEffect(() => {
         if (isLoading || !isEditing) {
@@ -244,15 +259,16 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     } = useForm({
         mode: "onTouched",
         resolver: yupResolver(yupSchema),
-        defaultValues: existingFormData,
+        defaultValues: defaultFormValues,
     });
 
     useEffect(() => {
         if (!existingFormData) {
-            reset({});
+            reset(defaultFormValues);
             return;
         }
-        reset(existingFormData);
+
+        reset({ ...defaultFormValues, ...existingFormData });
     }, [existingFormData]);
 
     const formSections = [INITIAL_FORM_SECTION]
@@ -341,7 +357,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             ? {
                   ...omit(dataset, ["versions"]),
                   team_id: teamId,
-                  user_id: userId,
+                  user_id: user.id,
                   status: isDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
@@ -350,7 +366,11 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       schemaModel: SCHEMA_NAME,
                       schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
-                      metadata: mappedFormData,
+                      metadata: {
+                          observations: [],
+                          coverage: null,
+                          ...mappedFormData,
+                      },
                   },
               }
             : isDuplicate
@@ -363,12 +383,16 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       schemaModel: SCHEMA_NAME,
                       schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
-                      metadata: mappedFormData,
+                      metadata: {
+                          observations: [],
+                          coverage: null,
+                          ...mappedFormData,
+                      },
                   },
               }
             : {
                   team_id: teamId,
-                  user_id: userId,
+                  user_id: user.id,
                   status: isDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
@@ -379,7 +403,8 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       metadata: {
                           issued: new Date().toString(),
                           modified: new Date().toString(),
-                          revisions: [],
+                          observations: [],
+                          coverage: null,
                           ...mappedFormData,
                       },
                   },
