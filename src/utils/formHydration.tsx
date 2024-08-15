@@ -308,11 +308,17 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
         ),
 });
 
-const convertRevisionsToArray = (data: { revisions?: Array<Revision> }) => {
-    if (data.revisions && !Array.isArray(data.revisions)) {
-        data.revisions = [data.revisions];
-    }
-    return data;
+const convertRevisionsToArray = (data: {
+    revisions?: Revision | Revision[];
+}) => {
+    return {
+        ...data,
+        revisions: Array.isArray(data.revisions)
+            ? data.revisions
+            : data.revisions
+            ? [data.revisions]
+            : [],
+    };
 };
 
 const mapFormFieldsForSubmission = (
