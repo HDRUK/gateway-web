@@ -95,8 +95,8 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_LICENSE,
     ],
     dataProvider: [
-        FILTER_DATA_TYPE,
         FILTER_DATA_SET_TITLES,
+        FILTER_DATA_TYPE,
         FILTER_GEOGRAPHIC_LOCATION,
     ],
 };
