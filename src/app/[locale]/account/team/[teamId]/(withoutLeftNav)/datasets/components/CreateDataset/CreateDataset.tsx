@@ -84,6 +84,8 @@ const getMetadata = (isDraft: boolean) =>
         ? "versions[0].metadata.original_metadata"
         : "versions[0].metadata.metadata";
 
+const today = dayjs();
+
 const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
@@ -144,8 +146,8 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
         "revision url": "http://www.example.com/",
-        "Metadata Issued Datetime": dayjs(),
-        "Last Modified Datetime": dayjs(),
+        "Metadata Issued Datetime": today,
+        "Last Modified Datetime": today,
         "Name of data provider": "--",
         "Dataset population size": 1,
         "contact point": user?.email,
