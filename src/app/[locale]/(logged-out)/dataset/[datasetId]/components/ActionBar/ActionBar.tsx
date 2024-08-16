@@ -32,7 +32,13 @@ import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
-const ActionBar = () => {
+const ActionBar = ({
+    teamName,
+    teamMemberOf,
+}: {
+    teamName: string;
+    teamMemberOf: string;
+}) => {
     const params = useParams<{
         datasetId: string;
     }>();
@@ -121,7 +127,8 @@ const ActionBar = () => {
                                                     },
                                                 }}>
                                                 <Typography variant="h1">
-                                                    TFL {">"} GRGR
+                                                    {teamMemberOf} {">"}{" "}
+                                                    {teamName}
                                                 </Typography>
                                                 <Typography>
                                                     Send a general enquiry to

@@ -6,7 +6,7 @@ import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { getDataset } from "@/utils/api";
+import { getDataset, getTeam } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
@@ -41,6 +41,8 @@ export default async function DatasetItemPage({
 
     const cookieStore = cookies();
     const data = await getDataset(cookieStore, datasetId);
+
+    const team = await getTeam(cookieStore, `${data?.team_id}`);
 
     let googleRecommendedDataset: Dataset | undefined;
 
@@ -79,7 +81,10 @@ export default async function DatasetItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar />
+                    <ActionBar
+                        teamName={team.name}
+                        teamMemberOf={team.member_of}
+                    />
                     <Box
                         sx={{
                             display: "flex",
