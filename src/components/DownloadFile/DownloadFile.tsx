@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SxProps } from "@mui/material";
 import { FileExport } from "@/interfaces/FileExport";
 import Button from "@/components/Button";
 import useGet from "@/hooks/useGet";
@@ -8,9 +9,10 @@ import { downloadFile } from "@/utils/download";
 interface DownloadFileProps {
     apiPath: string;
     buttonText: string;
+    buttonSx?: SxProps;
 }
 
-const DownloadFile = ({ apiPath, buttonText }: DownloadFileProps) => {
+const DownloadFile = ({ apiPath, buttonText, buttonSx }: DownloadFileProps) => {
     const [shouldFetch, setShouldFetch] = useState(false);
 
     const download = useGet<FileExport>(apiPath, {
@@ -29,7 +31,7 @@ const DownloadFile = ({ apiPath, buttonText }: DownloadFileProps) => {
     return (
         <Button
             onClick={() => setShouldFetch(true)}
-            sx={{ marginBottom: 2 }}
+            sx={{ marginBottom: 2, ...buttonSx }}
             variant="link"
             startIcon={<DownloadIcon />}>
             {buttonText}

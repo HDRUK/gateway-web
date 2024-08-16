@@ -311,7 +311,6 @@
                 },
                 "dataUses": {
                     "title": "Data Uses",
-                    "createDataUse": "Create Data Use",
                     "description": "View, add, edit, archive and check the status of your data uses.",
                     "uploadButton": "+ Upload",
                     "components": {
@@ -413,7 +412,11 @@
                             "duplicateButton": "Duplicate"
                         },
                         "CreateDataUse": {
+                            "downloadTitle": "Download template",
+                            "downloadInfo": "Please use the template provided to add new approved data uses. Alternatively, you can download your current data use register from the Gateway, edit offline and upload the edited file below.",
+                            "downloadButtonText": "Download the data use template",
                             "successMessage": "Data Use successfully created",
+                            "upload": "Upload",
                             "returnButtonText": "View Data Uses"
                         },
                         "EditDataUse": {
