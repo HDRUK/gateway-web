@@ -8,7 +8,7 @@ import {
 import dayjs from "dayjs";
 import { get, isArray, isObject, set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { Metadata } from "@/interfaces/Dataset";
+import { Metadata, Revision } from "@/interfaces/Dataset";
 import {
     FormHydration,
     FormHydrationField,
@@ -308,6 +308,19 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
         ),
 });
 
+const convertRevisionsToArray = (data: {
+    revisions?: Revision | Revision[];
+}) => {
+    return {
+        ...data,
+        revisions: Array.isArray(data.revisions)
+            ? data.revisions
+            : data.revisions
+            ? [data.revisions]
+            : [],
+    };
+};
+
 const mapFormFieldsForSubmission = (
     formData: Metadata,
     schemaFields: FormHydration[]
@@ -365,7 +378,7 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    return formattedFormData;
+    return convertRevisionsToArray(formattedFormData);
 };
 
 const mapExistingDatasetToFormFields = (

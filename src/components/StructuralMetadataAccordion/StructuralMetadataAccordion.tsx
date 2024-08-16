@@ -70,16 +70,15 @@ const StructuralMetadataAccordion = ({
     };
 
     let tableData;
+    if (!tableData) {
+        return null;
+    }
     if (isPublicSchema(metadata)) {
         tableData = metadata.tables;
     } else if (Array.isArray(metadata)) {
         tableData = metadata;
     } else {
         tableData = [metadata];
-    }
-
-    if (tableData.length === 0) {
-        return null;
     }
 
     const formattedMetadata = formatMetadata(tableData);

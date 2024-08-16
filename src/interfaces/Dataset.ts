@@ -28,6 +28,11 @@ interface StructuralMetadataPublicSchema {
     syntheticDataWebLink: string[];
 }
 
+interface Revision {
+    revision: string;
+    revisionUrl: string;
+}
+
 interface Metadata {
     summary: {
         abstract: string;
@@ -93,6 +98,7 @@ interface Metadata {
         syntheticDataWebLink: string;
     };
     structuralMetadata?: StructuralMetadata[];
+    revisions: Revision[];
 }
 
 interface LinkedDatasetVersions {
@@ -156,4 +162,5 @@ export type {
     StructuralMetadataColumn,
     StructuralMetadataPublicSchema,
     CreateOrigin,
+    Revision,
 };
