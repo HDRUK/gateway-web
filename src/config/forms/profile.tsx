@@ -69,6 +69,21 @@ const validationSchema = yup
     })
     .required();
 
+const validationSchemaOpenAthens = validationSchema.concat(
+    yup
+        .object({
+            secondary_email: yup
+                .string()
+                .required()
+                .email()
+                .transform(value => {
+                    return value === "" ? null : value;
+                })
+                .label("Secondary email"),
+        })
+        .required()
+);
+
 const formFields = [
     {
         label: "First name",
@@ -159,6 +174,18 @@ const formFields = [
     },
 ];
 
+const formFieldsOpenAthens = formFields.map(field =>
+    field.name === "secondary_email"
+        ? {
+              label: "Secondary email",
+              info: "Enter a secondary email address if you want contact from Health Data Research to an alternative address",
+              name: "secondary_email",
+              component: inputComponents.TextField,
+              required: true,
+          }
+        : field
+);
+
 const contactFormFields = [
     {
         title: "Feedback",
@@ -179,4 +206,6 @@ export {
     defaultValues as profileDefaultValues,
     validationSchema as profileValidationSchema,
     formFields as profileFormFields,
+    validationSchemaOpenAthens as profileValidationSchemaOpenAthens,
+    formFieldsOpenAthens as profileFormFieldsOpenAthens,
 };

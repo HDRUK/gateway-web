@@ -17,12 +17,25 @@ import {
     profileDefaultValues,
     profileFormFields,
     profileContactFormFields,
+    profileValidationSchemaOpenAthens,
     profileValidationSchema,
+    profileFormFieldsOpenAthens,
 } from "@/config/forms/profile";
 import KeepingUpdated from "../KeepingUpdated";
 
 const ProfileForm = () => {
     const { user } = useAuth();
+
+    const isOpenAthens = user?.provider === "openathens";
+
+    const hydratedDefaultValues = useMemo(() => {
+        return {
+            ...profileDefaultValues,
+            ...user,
+            ...(isOpenAthens && { preferred_email: "secondary" }),
+        };
+    }, [isOpenAthens, user]);
+
     const updateProfile = usePut<User>(apis.usersV1Url, {
         itemName: "Account",
     });
@@ -33,18 +46,22 @@ const ProfileForm = () => {
     const { setValue, control, handleSubmit, reset, formState, watch } =
         useForm<User>({
             mode: "onTouched",
-            resolver: yupResolver(profileValidationSchema),
-            defaultValues: {
-                ...profileDefaultValues,
-                ...user,
-            },
+            resolver: yupResolver(
+                !isOpenAthens
+                    ? profileValidationSchema
+                    : profileValidationSchemaOpenAthens
+            ),
+            defaultValues: hydratedDefaultValues,
         });
 
     const secondaryEmail = watch("secondary_email");
 
     const hydratedFormFields = useMemo(
         () =>
-            profileFormFields.map(field => {
+            (!isOpenAthens
+                ? profileFormFields
+                : profileFormFieldsOpenAthens
+            ).map(field => {
                 if (field.name === "sector_id") {
                     return {
                         ...field,
@@ -57,19 +74,22 @@ const ProfileForm = () => {
                 if (field.name === "preferred_email") {
                     return {
                         ...field,
-                        disabled: !secondaryEmail,
+                        disabled:
+                            (!isOpenAthens && !secondaryEmail) || isOpenAthens,
                     };
                 }
                 return field;
             }),
-        [sectors, secondaryEmail]
+        [isOpenAthens, sectors, secondaryEmail]
     );
 
     useEffect(() => {
-        if (!secondaryEmail) {
+        if (isOpenAthens) {
+            setValue("preferred_email", "secondary");
+        } else if (!secondaryEmail) {
             setValue("preferred_email", "primary");
         }
-    }, [secondaryEmail, setValue]);
+    }, [isOpenAthens, secondaryEmail, setValue]);
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
@@ -89,8 +109,8 @@ const ProfileForm = () => {
         if (!user) {
             return;
         }
-        reset({ ...profileDefaultValues, ...user });
-    }, [reset, user]);
+        reset(hydratedDefaultValues);
+    }, [isOpenAthens, hydratedDefaultValues, reset, user]);
 
     if (isSectorLoading) return <Loading />;
 
