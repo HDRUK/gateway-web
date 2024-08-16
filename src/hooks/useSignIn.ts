@@ -21,7 +21,7 @@ const useSignIn = () => {
         await signIn(data);
         hideDialog();
         setTimeout(() => {
-            router.push("/account");
+            router.push("/account/profile");
             mutate(apis.authInternalUrl);
         }, 500);
     };

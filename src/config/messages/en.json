@@ -566,8 +566,7 @@
                         }
                     }
                 }
-            },
-            "title": "My account"
+            }
         },
         "home": {
             "flashyText": "Explore the different functionalities of the Gateway",
