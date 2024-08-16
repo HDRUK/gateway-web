@@ -14,6 +14,9 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
+import ProvidersDialog from "@/modules/ProvidersDialog";
+import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useSidebar from "@/hooks/useSidebar";
 import notificationService from "@/services/notification";
@@ -33,6 +36,9 @@ const ActionBar = () => {
     const params = useParams<{
         datasetId: string;
     }>();
+
+    const { isLoggedIn, user } = useAuth();
+    const { showDialog } = useDialog();
 
     const [isDownloading, setIsDownloading] = useState(false);
 
@@ -86,86 +92,85 @@ const ActionBar = () => {
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
                 <Button
-                    onClick={() =>
-                        showSidebar({
-                            title: "Messages",
-                            content: (
-                                <>
-                                    <BoxContainer
-                                        sx={{
-                                            gridTemplateColumns: {
-                                                tablet: "repeat(6, 1fr)",
-                                            },
-                                            gap: {
-                                                mobile: 1,
-                                                tablet: 2,
-                                            },
-                                            p: 0,
-                                        }}>
-                                        <Box
+                    onClick={() => {
+                        if (!isLoggedIn) {
+                            showDialog(ProvidersDialog, {
+                                isProvidersDialog: true,
+                            });
+                        } else {
+                            showSidebar({
+                                title: "Messages",
+                                content: (
+                                    <>
+                                        <BoxContainer
                                             sx={{
-                                                gridColumn: {
-                                                    tablet: "span 2",
-                                                    laptop: "span 2",
+                                                gridTemplateColumns: {
+                                                    tablet: "repeat(4, 1fr)",
                                                 },
-                                            }}>
-                                            <p>TODO - MESAGE LIST</p>
-                                        </Box>
-                                        <Box
-                                            sx={{
-                                                gridColumn: {
-                                                    tablet: "span 4",
-                                                    laptop: "span 4",
+                                                gap: {
+                                                    mobile: 1,
+                                                    tablet: 2,
                                                 },
+                                                p: 0,
                                             }}>
-                                            <Typography variant="h1">
-                                                TFL {">"} GRGR
-                                            </Typography>
-                                            <Typography>
-                                                Your message will be sent to the
-                                                selected Data Custodian(s) in
-                                                seperate enquiry threads. When a
-                                                Data Custodian replies you will
-                                                receive an email via the Health
-                                                Data Gateway. To reply to Data
-                                                Custodian via the same Gateway
-                                                messaging service, use
-                                                reply/reply all on your email
-                                                client.
-                                            </Typography>
+                                            <Box
+                                                sx={{
+                                                    gridColumn: {
+                                                        tablet: "span 4",
+                                                        laptop: "span 4",
+                                                    },
+                                                }}>
+                                                <Typography variant="h1">
+                                                    TFL {">"} GRGR
+                                                </Typography>
+                                                <Typography>
+                                                    Send a general enquiry to
+                                                    one or multiple Data
+                                                    Custodians. You will receive
+                                                    an email copy of the enquiry
+                                                    sent. The Data Custodian(s)
+                                                    will reply via email to your
+                                                    preferred email address,
+                                                    with a copy shared with the
+                                                    Gateway.
+                                                </Typography>
 
-                                            <Form
-                                                sx={{ mt: 3 }}
-                                                onSubmit={handleSubmit(
-                                                    submitForm
-                                                )}>
-                                                {generalEnquiryFormFields.map(
-                                                    field => (
-                                                        <InputWrapper
-                                                            key={field.name}
-                                                            control={control}
-                                                            {...field}
-                                                        />
-                                                    )
-                                                )}
+                                                <Form
+                                                    sx={{ mt: 3 }}
+                                                    onSubmit={handleSubmit(
+                                                        submitForm
+                                                    )}>
+                                                    {generalEnquiryFormFields.map(
+                                                        field => (
+                                                            <InputWrapper
+                                                                key={field.name}
+                                                                control={
+                                                                    control
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        )
+                                                    )}
 
-                                                <Box
-                                                    sx={{
-                                                        p: 0,
-                                                        display: "flex",
-                                                        justifyContent: "end",
-                                                    }}>
-                                                    <Button type="submit">
-                                                        Save changes
-                                                    </Button>
-                                                </Box>
-                                            </Form>
-                                        </Box>
-                                    </BoxContainer>
-                                </>
-                            ),
-                        })
-                    }>
+                                                    <Box
+                                                        sx={{
+                                                            p: 0,
+                                                            display: "flex",
+                                                            justifyContent:
+                                                                "end",
+                                                        }}>
+                                                        <Button type="submit">
+                                                            Save changes
+                                                        </Button>
+                                                    </Box>
+                                                </Form>
+                                            </Box>
+                                        </BoxContainer>
+                                    </>
+                                ),
+                            });
+                        }
+                    }}>
                     {t("contact")}
                 </Button>
 
