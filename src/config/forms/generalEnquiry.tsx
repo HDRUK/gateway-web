@@ -39,7 +39,7 @@ const validationSchema = yup
             .nullable(),
         number: yup
             .string()
-            .transform(value => !value ? null : value)
+            .transform(value => value === "" ? null : value)
             .nullable()
             .matches(phoneRegex, "Contact number is not valid")
             .label("Contact number"),
@@ -61,6 +61,7 @@ const formFields = [
         label: "Applicant organisation",
         name: "organisation",
         component: inputComponents.TextField,
+        value: 'my test org',
         required: true,
         info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
@@ -69,6 +70,7 @@ const formFields = [
         label: "Email",
         name: "email",
         component: inputComponents.TextField,
+        value: 'my test email',
         required: true,
         info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
