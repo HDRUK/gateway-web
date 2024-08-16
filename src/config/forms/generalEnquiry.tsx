@@ -39,6 +39,8 @@ const validationSchema = yup
             .nullable(),
         number: yup
             .string()
+            .transform(value => !value ? null : value)
+            .nullable()
             .matches(phoneRegex, "Contact number is not valid")
             .label("Contact number"),
         message: yup.string().required().max(1500).label("Your enquiry"),
@@ -50,27 +52,32 @@ const formFields = [
         label: "Name",
         name: "name",
         component: inputComponents.TextField,
+        value: 'my test name',
         required: true,
+        info: "This is automatically filled from your profile and cannot be changed in this form.",
+        readOnly: true,
     },
     {
         label: "Applicant organisation",
         name: "organisation",
         component: inputComponents.TextField,
         required: true,
+        info: "This is automatically filled from your profile and cannot be changed in this form.",
+        readOnly: true,
     },
     {
         label: "Email",
         name: "email",
         component: inputComponents.TextField,
         required: true,
-        info: "Where do you want the Data Custodian to contact you?",
+        info: "This is automatically filled from your profile and cannot be changed in this form.",
+        readOnly: true,
     },
     {
-        label: "Contact number",
+        label: "Contact number (optional)",
         name: "number",
         component: inputComponents.TextField,
-        required: true,
-        info: "Where do you want the Data Custodian to contact you?",
+        required: false,
     },
     {
         label: "Your enquiry",
