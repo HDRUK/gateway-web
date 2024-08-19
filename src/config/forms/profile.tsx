@@ -76,9 +76,6 @@ const validationSchemaOpenAthens = validationSchema.concat(
                 .string()
                 .required()
                 .email()
-                .transform(value => {
-                    return value === "" ? null : value;
-                })
                 .label("Secondary email"),
         })
         .required()
