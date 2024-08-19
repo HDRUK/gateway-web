@@ -9,10 +9,11 @@ global.URL.createObjectURL = jest.fn();
 
 mockRouter.query = { teamId: `${datasetV1.id}` };
 
+const buttonText = "Click here";
+const apiPath = "api/path";
+
 describe("DownloadFile", () => {
     it("should call export api with team id", async () => {
-        const buttonText = "Click here";
-        const apiPath = "api/path";
         render(<DownloadFile buttonText={buttonText} apiPath={apiPath} />);
 
         (apiService.getRequest as jest.Mock).mockResolvedValue({
@@ -35,5 +36,20 @@ describe("DownloadFile", () => {
                 withPagination: false,
             });
         });
+    });
+    it("should apply buttonSx styles", async () => {
+        const customSx = { color: "red", marginBottom: "4px" };
+
+        render(
+            <DownloadFile
+                buttonText={buttonText}
+                apiPath={apiPath}
+                buttonSx={customSx}
+            />
+        );
+
+        const button = screen.getByRole("button");
+        expect(button).toHaveStyle("color: red");
+        expect(button).toHaveStyle("margin-bottom: 4px");
     });
 });

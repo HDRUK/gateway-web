@@ -17,6 +17,8 @@ import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import DownloadFile from "@/components/DownloadFile";
+import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
 import useGet from "@/hooks/useGet";
@@ -108,111 +110,130 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
 
     return (
         <>
-            {!durContent && (
-                <Box sx={{ pt: 0 }}>
-                    <UploadFile
-                        apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
-                        fileUploadedAction={(fileId: number) =>
-                            setCreatedDurId(fileId)
-                        }
-                        isUploading={setIsUploading}
+            <Paper sx={{ mb: 2 }}>
+                <Box>
+                    <Typography variant="h2">{t("downloadTitle")}</Typography>
+                    <Typography sx={{ mb: 2 }}>{t("downloadInfo")}</Typography>
+
+                    <DownloadFile
+                        apiPath={`${apis.dataUseV1Url}/template`}
+                        buttonText={t("downloadButtonText")}
+                        buttonSx={{ mb: 0 }}
                     />
                 </Box>
+            </Paper>
+
+            {!durContent && (
+                <Paper>
+                    <Box>
+                        <Typography variant="h2">{t("upload")}</Typography>
+                        <UploadFile
+                            apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
+                            fileUploadedAction={(fileId: number) =>
+                                setCreatedDurId(fileId)
+                            }
+                            isUploading={setIsUploading}
+                        />
+                    </Box>
+                </Paper>
             )}
 
             {durValues && !isUploading && (
-                <Box sx={{ gap: 2 }}>
-                    <Typography sx={{ ml: 2, mb: 2 }} fontWeight="bold">
-                        {t("successMessage")}
-                    </Typography>
+                <Paper>
+                    <Box sx={{ gap: 2 }}>
+                        <Typography variant="h2" sx={{ mb: 2 }}>
+                            {t("successMessage")}
+                        </Typography>
 
-                    <Accordion
-                        variant="plain"
-                        key="data-use-details"
-                        sx={{ mb: 4 }}
-                        heading={
-                            <Table sx={{ mr: 4 }}>
-                                <TableHead>
-                                    <TableRow>
-                                        {DUR_TABLE_HEADERS.map(header => (
-                                            <TableCell key={header}>
-                                                {header}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        {DUR_TABLE_ROWS.map(row => (
-                                            <TableCell>
-                                                {displayDataUseValue(row)}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        }
-                        contents={dataUseFormFields
-                            .filter(
-                                f =>
-                                    f.sectionName !== "Related resources" &&
-                                    f.sectionName !== "Keywords"
-                            )
-                            .map(section => (
-                                <BoxContainer>
-                                    <Typography
-                                        sx={{ fontWeight: "bold", p: 2 }}>
-                                        {section.sectionName}
-                                    </Typography>
+                        <Accordion
+                            variant="plain"
+                            key="data-use-details"
+                            sx={{ mb: 4 }}
+                            heading={
+                                <Table sx={{ mr: 4 }}>
+                                    <TableHead>
+                                        <TableRow>
+                                            {DUR_TABLE_HEADERS.map(header => (
+                                                <TableCell key={header}>
+                                                    {header}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            {DUR_TABLE_ROWS.map(row => (
+                                                <TableCell>
+                                                    {displayDataUseValue(row)}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            }
+                            contents={dataUseFormFields
+                                .filter(
+                                    f =>
+                                        f.sectionName !== "Related resources" &&
+                                        f.sectionName !== "Keywords"
+                                )
+                                .map(section => (
+                                    <BoxContainer>
+                                        <Typography
+                                            sx={{ fontWeight: "bold", p: 2 }}>
+                                            {section.sectionName}
+                                        </Typography>
 
-                                    {section.fields.map(field => (
-                                        <BoxContainer
-                                            sx={{
-                                                gridTemplateColumns: {
-                                                    desktop: "repeat(2, 1fr)",
-                                                },
-                                                gap: 1,
-                                                p: 2,
-                                            }}>
-                                            <Box
+                                        {section.fields.map(field => (
+                                            <BoxContainer
                                                 sx={{
-                                                    gridColumn: {
-                                                        desktop: "span 1",
+                                                    gridTemplateColumns: {
+                                                        desktop:
+                                                            "repeat(2, 1fr)",
                                                     },
-                                                    p: 0,
+                                                    gap: 1,
+                                                    p: 2,
                                                 }}>
-                                                <Typography>
-                                                    {field.label}
-                                                </Typography>
-                                            </Box>
-                                            <Box
-                                                sx={{
-                                                    gridColumn: {
-                                                        desktop: "span 1",
-                                                    },
-                                                    p: 0,
-                                                }}>
-                                                <Typography>
-                                                    {displayDataUseValue(
-                                                        field.name
-                                                    )}
-                                                </Typography>
-                                            </Box>
-                                        </BoxContainer>
-                                    ))}
-                                </BoxContainer>
-                            ))}
-                    />
+                                                <Box
+                                                    sx={{
+                                                        gridColumn: {
+                                                            desktop: "span 1",
+                                                        },
+                                                        p: 0,
+                                                    }}>
+                                                    <Typography>
+                                                        {field.label}
+                                                    </Typography>
+                                                </Box>
+                                                <Box
+                                                    sx={{
+                                                        gridColumn: {
+                                                            desktop: "span 1",
+                                                        },
+                                                        p: 0,
+                                                    }}>
+                                                    <Typography>
+                                                        {displayDataUseValue(
+                                                            field.name
+                                                        )}
+                                                    </Typography>
+                                                </Box>
+                                            </BoxContainer>
+                                        ))}
+                                    </BoxContainer>
+                                ))}
+                        />
 
-                    <Button
-                        onClick={() =>
-                            push(
-                                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}?tab=DRAFT`
-                            )
-                        }>
-                        {t("returnButtonText")}
-                    </Button>
-                </Box>
+                        <Button
+                            onClick={() =>
+                                push(
+                                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}?tab=DRAFT`
+                                )
+                            }>
+                            {t("returnButtonText")}
+                        </Button>
+                    </Box>
+                </Paper>
             )}
         </>
     );
