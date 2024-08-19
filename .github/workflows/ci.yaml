@@ -29,15 +29,19 @@ jobs:
 
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
 
       - name: NPM install
+        id: npminstall
         run: "npm install"
 
       - name: Run lint
+        id: runlint
         run: "npm run lint"
 
       - name: Run unit tests
+        id: unittests
         run: "npm run test"
 
       - name: Run Notification
