@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
+import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { Enquiry } from "@/interfaces/Enquiry";
 import { FileExport } from "@/interfaces/FileExport";
 import { User } from "@/interfaces/User";
 import BackButton from "@/components/BackButton";
@@ -18,6 +20,7 @@ import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
+import usePost from "@/hooks/usePost";
 import useSidebar from "@/hooks/useSidebar";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
@@ -33,9 +36,11 @@ import { ActionBarWrapper } from "./ActionBar.styles";
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
 const ActionBar = ({
+    teamId,
     teamName,
     teamMemberOf,
 }: {
+    teamId: number;
     teamName: string;
     teamMemberOf: string;
 }) => {
@@ -49,6 +54,10 @@ const ActionBar = ({
     const [isDownloading, setIsDownloading] = useState(false);
 
     const t = useTranslations(TRANSLATION_PATH);
+
+    const startEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
+        itemName: "Enquiry item",
+    });
 
     const { data: datasetCsv } = useGet<{
         content: string;
@@ -88,17 +97,39 @@ const ActionBar = ({
     });
 
     const hydratedFormFields = generalEnquiryFormFields;
-    // useMemo(
-    //     () =>
-    //         generalEnquiryFormFields.map(field => {
-    //             console.log(field);
-    //             return field;
-    //         }),
-    //     [user, generalEnquiryFormFields]
-    // );
 
-    const submitForm = (formData: User) => {
-        console.log("SUBMIT GENERAL ENQURIY", formData);
+    const submitForm = async (formData: Enquiry) => {
+        console.log("SUBMIT GENERAL ENQUIRY", formData);
+        if (!user) return;
+        const minUser = { id: user.id };
+
+        const payload = {
+            ...minUser,
+            ...formData,
+            team_id: teamId,
+            project_title: "blah",
+            contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
+            datasets: [
+                {
+                    dataset_id: toNumber(params.datasetId),
+                    team_id: teamId,
+                    interest_type: "PRIMARY",
+                },
+            ],
+            // dataset_parts_known: "",
+            enabled: true,
+            from: "sam.cox@hdruk.ac.uk",
+            is_dar_dialogue: false,
+            is_dar_status: false,
+            // other_datasets: "",
+            // unique_key: "78634786478",
+            is_feasibility_enquiry: false,
+            is_general_enquiry: true,
+            // query: "",
+        };
+        console.log("payload");
+        console.log(payload);
+        const response = await startEnquiry(payload);
     };
 
     useEffect(() => {

@@ -7,7 +7,7 @@ const defaultValues = {
     organisation: "",
     email: "",
     number: "",
-    message: "",
+    query: "",
 };
 
 const phoneRegex =
@@ -21,7 +21,7 @@ const validationSchema = yup
             .nullable()
             .matches(phoneRegex, "Contact number is not valid")
             .label("Contact number"),
-        message: yup.string().required().max(1500).label("Your enquiry"),
+        query: yup.string().required().max(1500).label("Your enquiry"),
     })
     .required();
 
@@ -52,13 +52,13 @@ const formFields = [
     },
     {
         label: "Contact number (optional)",
-        name: "number",
+        name: "contact_number",
         component: inputComponents.TextField,
         required: false,
     },
     {
         label: "Your enquiry",
-        name: "message",
+        name: "query",
         component: inputComponents.TextArea,
         required: true,
         limit: 1500,
