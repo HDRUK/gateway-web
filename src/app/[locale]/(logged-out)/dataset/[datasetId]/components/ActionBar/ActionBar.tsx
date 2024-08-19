@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
@@ -78,19 +78,35 @@ const ActionBar = ({
 
     const { showSidebar } = useSidebar();
 
-    const { setValue, control, handleSubmit, reset, formState, watch } =
-        useForm<User>({
-            mode: "onTouched",
-            resolver: yupResolver(generalEnquiryValidationSchema),
-            defaultValues: {
-                ...generalEnquiryDefaultValues,
-                // ...user,
-            },
-        });
+    const { control, handleSubmit, reset } = useForm<User>({
+        mode: "onTouched",
+        resolver: yupResolver(generalEnquiryValidationSchema),
+        defaultValues: {
+            ...generalEnquiryDefaultValues,
+            ...user,
+        },
+    });
+
+    const hydratedFormFields = generalEnquiryFormFields;
+    // useMemo(
+    //     () =>
+    //         generalEnquiryFormFields.map(field => {
+    //             console.log(field);
+    //             return field;
+    //         }),
+    //     [user, generalEnquiryFormFields]
+    // );
 
     const submitForm = (formData: User) => {
         console.log("SUBMIT GENERAL ENQURIY", formData);
     };
+
+    useEffect(() => {
+        if (!user) {
+            return;
+        }
+        reset({ ...generalEnquiryDefaultValues, ...user });
+    }, [reset, user]);
 
     return (
         <ActionBarWrapper>
@@ -147,7 +163,7 @@ const ActionBar = ({
                                                     onSubmit={handleSubmit(
                                                         submitForm
                                                     )}>
-                                                    {generalEnquiryFormFields.map(
+                                                    {hydratedFormFields.map(
                                                         field => (
                                                             <InputWrapper
                                                                 key={field.name}

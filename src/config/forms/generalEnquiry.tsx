@@ -15,28 +15,6 @@ const phoneRegex =
 
 const validationSchema = yup
     .object({
-        name: yup
-            .string()
-            .required()
-            .matches(
-                REGEX_ALPHA_ONLY,
-                "Name should have alphabetic characters only"
-            )
-            .min(2)
-            .label("Name"),
-        organisation: yup
-            .string()
-            .required()
-            .min(2)
-            .label("Applicant organisation"),
-        email: yup
-            .string()
-            .email()
-            .transform(value => {
-                return value === "" ? null : value;
-            })
-            .label("Email")
-            .nullable(),
         number: yup
             .string()
             .transform(value => value === "" ? null : value)
@@ -52,7 +30,6 @@ const formFields = [
         label: "Name",
         name: "name",
         component: inputComponents.TextField,
-        value: 'my test name',
         required: true,
         info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
@@ -61,7 +38,6 @@ const formFields = [
         label: "Applicant organisation",
         name: "organisation",
         component: inputComponents.TextField,
-        value: 'my test org',
         required: true,
         info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
@@ -70,7 +46,6 @@ const formFields = [
         label: "Email",
         name: "email",
         component: inputComponents.TextField,
-        value: 'my test email',
         required: true,
         info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
