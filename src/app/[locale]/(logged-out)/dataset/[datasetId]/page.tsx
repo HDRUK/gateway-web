@@ -82,6 +82,7 @@ export default async function DatasetItemPage({
             body={
                 <>
                     <ActionBar
+                        teamId={data.team_id}
                         teamName={team.name}
                         teamMemberOf={team.member_of}
                     />
