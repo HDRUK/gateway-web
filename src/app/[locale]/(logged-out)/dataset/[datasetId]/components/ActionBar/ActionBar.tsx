@@ -55,7 +55,7 @@ const ActionBar = ({
 
     const t = useTranslations(TRANSLATION_PATH);
 
-    const startEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
+    const sendEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
         itemName: "Enquiry item",
     });
 
@@ -85,7 +85,7 @@ const ActionBar = ({
         setIsDownloading(false);
     };
 
-    const { showSidebar } = useSidebar();
+    const { showSidebar, hideSidebar } = useSidebar();
 
     const { control, handleSubmit, reset } = useForm<User>({
         mode: "onTouched",
@@ -129,7 +129,12 @@ const ActionBar = ({
         };
         console.log("payload");
         console.log(payload);
-        const response = await startEnquiry(payload);
+        await sendEnquiry(payload).then(res => {
+            if (res) {
+                hideSidebar();
+            };
+        });
+
     };
 
     useEffect(() => {
