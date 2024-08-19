@@ -3,14 +3,13 @@ run-name: ${{ github.actor }} triggered quality check pipeline
 on:
   push:
     branches:
-      - GAT-3817
+      - dev
       - staging
       - main
   pull_request:
     branches:
       - main
-      - staging
-      - GAT-3817
+      - dev
 
 env:
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
@@ -22,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest    
     environment: |-
       ${{
-         github.ref_name == 'GAT-3817' && 'dev'
+         github.ref_name == 'dev' && 'dev'
       || github.base_ref == 'dev' && 'dev'
       ||                             'release'
       }}
