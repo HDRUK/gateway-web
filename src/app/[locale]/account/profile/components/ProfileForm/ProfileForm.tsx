@@ -78,9 +78,15 @@ const ProfileForm = () => {
                             (!isOpenAthens && !secondaryEmail) || isOpenAthens,
                     };
                 }
+                if (field.name === "secondary_email") {
+                    return {
+                        ...field,
+                        disabled: isOpenAthens && !!user?.secondary_email,
+                    };
+                }
                 return field;
             }),
-        [isOpenAthens, sectors, secondaryEmail]
+        [isOpenAthens, sectors, secondaryEmail, user?.secondary_email]
     );
 
     useEffect(() => {
