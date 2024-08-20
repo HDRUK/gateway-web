@@ -30,7 +30,7 @@ const AddDatasetDialog = ({ teamId }: AddDatasetDialogProps) => {
 
     const handleUpload = () => {
         hideDialog();
-        router.push(`${DATASET_ROUTE}/upload`);
+        router.push(`${DATASET_ROUTE}/${RouteName.UPLOAD}`);
     };
 
     return (
