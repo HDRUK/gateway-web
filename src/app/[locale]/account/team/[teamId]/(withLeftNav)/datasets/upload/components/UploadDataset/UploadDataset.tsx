@@ -11,24 +11,16 @@ import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
-import {
-    ACCOUNT,
-    COMPONENTS,
-    DATASETS,
-    PAGES,
-    TEAM,
-} from "@/consts/translation";
 
 interface UploadDatasetProps {
     teamId: string;
 }
 
+const TRANSLATION_PATH = "pages.account.team.datasets.components.UploadDataset";
 const FILE_TYPE = ".json";
 
 const UploadDataset = ({ teamId }: UploadDatasetProps) => {
-    const t = useTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.UploadDataset`
-    );
+    const t = useTranslations(TRANSLATION_PATH);
 
     const { push } = useRouter();
 
