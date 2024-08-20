@@ -496,7 +496,7 @@
                                     "buttonText": "Make Active",
                                     "confirmText": "Make Draft",
                                     "title": "Unarchive the Collection so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
                                     "label": "Unarchive the Collection so it is live on the Gateway"
                                 },
                                 "edit": {

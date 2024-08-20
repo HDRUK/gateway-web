@@ -1,6 +1,6 @@
 import { Control } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { Tool } from "@/interfaces/Tool";
+import { Collection } from "@/interfaces/Collection";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -19,7 +19,7 @@ const TRANSLATION_PATH =
     "pages.account.team.collections.components.CollectionsTab";
 
 interface CollectionsTabProps {
-    list?: Tool[];
+    list?: Collection[];
     actions: {
         icon: IconType;
         href?: string;
@@ -102,7 +102,7 @@ const CollectionsTab = ({
                         collection={collection}
                     />
                 ))
-                .filter(tool => !!tool)}
+                .filter(collection => !!collection)}
             {list?.length === 0 && (
                 <Paper sx={{ p: 2, mb: 2 }}>
                     {t("notFound", { label: label.toLowerCase() })}

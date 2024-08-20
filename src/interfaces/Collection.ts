@@ -1,3 +1,4 @@
+import { DataStatus } from "@/consts/application";
 import { Application } from "./Application";
 import { DataUse } from "./DataUse";
 import { Dataset } from "./Dataset";
@@ -11,6 +12,7 @@ interface Collection {
     description: string;
     id: string;
     enabled: boolean;
+    status: DataStatus;
     public: number;
     create_at: string;
     updated_at: string;

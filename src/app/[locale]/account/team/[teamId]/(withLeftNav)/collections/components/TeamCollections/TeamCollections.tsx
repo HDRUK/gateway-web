@@ -25,15 +25,6 @@ import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import {
-    ACCOUNT,
-    PAGES,
-    TEAM,
-    COMPONENTS,
-    TITLE,
-    TEXT,
-    COLLECTIONS,
-} from "@/consts/translation";
 import { capitalise } from "@/utils/general";
 import CollectionsTab from "../CollectionsTab";
 
@@ -43,7 +34,7 @@ interface CountStatus {
     ARCHIVED?: number;
 }
 
-interface TeamToolsProps {
+interface TeamCollectionsProps {
     permissions: { [key: string]: boolean };
     teamId: string;
     userId: string;
@@ -52,7 +43,11 @@ interface TeamToolsProps {
 const TRANSLATION_PATH =
     "pages.account.team.collections.components.TeamCollections";
 
-const TeamCollections = ({ permissions, teamId, userId }: TeamToolsProps) => {
+const TeamCollections = ({
+    permissions,
+    teamId,
+    userId,
+}: TeamCollectionsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
     const searchParams = useSearchParams();
@@ -142,10 +137,13 @@ const TeamCollections = ({ permissions, teamId, userId }: TeamToolsProps) => {
 
     console.log(data);
 
-    const unArchiveTool = usePatch<Partial<Collection>>(apis.collectionsV1Url, {
-        query: "unarchive",
-        localeKey: "archiveCollection",
-    });
+    const unArchiveCollection = usePatch<Partial<Collection>>(
+        apis.collectionsV1Url,
+        {
+            query: "unarchive",
+            localeKey: "archiveCollection",
+        }
+    );
 
     const archiveCollection = useDelete(apis.collectionsV1Url, {
         localeKey: "archiveCollection",
@@ -183,7 +181,7 @@ const TeamCollections = ({ permissions, teamId, userId }: TeamToolsProps) => {
                           showModal({
                               tertiaryButton: {
                                   onAction: async () => {
-                                      await unArchiveTool(id, {
+                                      await unArchiveCollection(id, {
                                           status: DataStatus.ACTIVE,
                                       });
                                       mutateCollections();
@@ -192,7 +190,7 @@ const TeamCollections = ({ permissions, teamId, userId }: TeamToolsProps) => {
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: async () => {
-                                  await unArchiveTool(id, {
+                                  await unArchiveCollection(id, {
                                       status: DataStatus.DRAFT,
                                   });
                                   mutateCollections();
@@ -278,8 +276,8 @@ const TeamCollections = ({ permissions, teamId, userId }: TeamToolsProps) => {
                         alignItems: "center",
                     }}>
                     <Box sx={{ flexGrow: 1, p: 0 }}>
-                        <Typography variant="h2">{t(TITLE)}</Typography>
-                        <Typography>{t(TEXT)}</Typography>
+                        <Typography variant="h2">{t("title")}</Typography>
+                        <Typography>{t("text")}</Typography>
                     </Box>
 
                     {showAddNewButton && (
