@@ -21,16 +21,16 @@ const AddDatasetDialog = ({ teamId }: AddDatasetDialogProps) => {
     const { hideDialog } = useDialog();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const DATASET_CREATE_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}/${RouteName.CREATE}`;
+    const DATASET_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`;
 
     const handleManual = () => {
         hideDialog();
-        router.push(DATASET_CREATE_ROUTE);
+        router.push(`${DATASET_ROUTE}/${RouteName.CREATE}`);
     };
 
     const handleUpload = () => {
         hideDialog();
-        router.push(`${DATASET_CREATE_ROUTE}?tab=UPLOAD`);
+        router.push(`${DATASET_ROUTE}/upload`);
     };
 
     return (

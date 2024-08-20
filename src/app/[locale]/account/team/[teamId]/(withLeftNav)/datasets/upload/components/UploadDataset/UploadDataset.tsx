@@ -1,0 +1,89 @@
+"use client";
+
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import Box from "@/components/Box";
+import Button from "@/components/Button";
+import DownloadFile from "@/components/DownloadFile";
+import Paper from "@/components/Paper";
+import Typography from "@/components/Typography";
+import UploadFile from "@/components/UploadFile";
+import apis from "@/config/apis";
+import { RouteName } from "@/consts/routeName";
+import {
+    ACCOUNT,
+    COMPONENTS,
+    DATASETS,
+    PAGES,
+    TEAM,
+} from "@/consts/translation";
+
+interface UploadDatasetProps {
+    teamId: string;
+}
+
+const FILE_TYPE = ".json";
+
+const UploadDataset = ({ teamId }: UploadDatasetProps) => {
+    const t = useTranslations(
+        `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.UploadDataset`
+    );
+
+    const { push } = useRouter();
+
+    const [createdDatasetId, setCreatedDatasetId] = useState<number>();
+    const [isUploading, setIsUploading] = useState<boolean>(false);
+
+    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=dataset-from-upload&team_id=${teamId}`;
+    const REDIRECT_URL = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}?tab=DRAFT`;
+
+    return (
+        <>
+            <Paper sx={{ mb: 2 }}>
+                <Box>
+                    <Typography variant="h2">{t("downloadTitle")}</Typography>
+                    <Typography sx={{ mb: 2 }}>{t("downloadInfo")}</Typography>
+
+                    <DownloadFile
+                        apiPath=""
+                        buttonText={t("downloadButtonText")}
+                        buttonSx={{ mb: 0 }}
+                    />
+                </Box>
+            </Paper>
+
+            {!createdDatasetId && (
+                <Paper>
+                    <Box>
+                        <Typography variant="h2">{t("upload")}</Typography>
+                        <UploadFile
+                            apiPath={FILE_UPLOAD_URL}
+                            fileUploadedAction={(fileId: number) =>
+                                setCreatedDatasetId(fileId)
+                            }
+                            isUploading={setIsUploading}
+                            acceptedFileTypes={FILE_TYPE}
+                        />
+                    </Box>
+                </Paper>
+            )}
+
+            {createdDatasetId && !isUploading && (
+                <Paper>
+                    <Box sx={{ gap: 2 }}>
+                        <Typography variant="h2" sx={{ mb: 2 }}>
+                            {t("successMessage")}
+                        </Typography>
+
+                        <Button onClick={() => push(REDIRECT_URL)}>
+                            {t("returnButtonText")}
+                        </Button>
+                    </Box>
+                </Paper>
+            )}
+        </>
+    );
+};
+
+export default UploadDataset;
