@@ -405,7 +405,11 @@
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
                                 "downloadTemplate": "Download data dictionary template",
                                 "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
-                            }
+                            },
+                            "discardChanges": "Discard changes",
+                            "saveAsDraft": "Save changes as draft",
+                            "confirmSave": "Do you want to save changes as draft before exiting?",
+                            "backToManagementPage": "Back to dataset metadata management page"
                         },
                         "EditDataset": {
                             "editButton": "Update",
