@@ -94,6 +94,16 @@
                     "message": "Dataset added to your Library"
                 }
             }
+        },
+        "archiveCollection": {
+            "success": {
+                "delete": {
+                    "message": "Collection has been archived"
+                },
+                "patch": {
+                    "message": "Collection has been updated"
+                }
+            }
         }
     },
     "common": {
@@ -472,6 +482,33 @@
                                 "dar": "Data Access Requests",
                                 "metadata": "Metadata"
                             }
+                        }
+                    }
+                },
+                "collections": {
+                    "components": {
+                        "TeamCollections": {
+                            "title": "Collections",
+                            "text": " View, add, edit, archive and check the status of your Collections.",
+                            "create": "Add new Collection",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive the Collection so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive the Collection so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit Collection metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive the Collection so it is no longer live on the Gateway"
+                                }
+                            }
+                        },
+                        "CollectionsTab": {
+                            "notFound": "No {label} collections found"
                         }
                     }
                 },
@@ -1128,6 +1165,12 @@
             "columnDesc": "Column description",
             "dataType": "Data type",
             "sensitive": "Sensitive"
+        },
+        "CollectionCard": {
+            "users": "Users",
+            "entities": "Entities",
+            "entitiesCounts": "Datasets ({nDatasets}), Publications ({nPublications}), Tools ({nTools})",
+            "lastActivity": "Last activity"
         }
     },
     "modules": {
