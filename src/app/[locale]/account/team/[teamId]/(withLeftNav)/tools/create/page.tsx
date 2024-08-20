@@ -3,14 +3,14 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import CreateDataUse from "./components/CreateDataUse";
+import CreateTool from "./components/CreateTool";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Data Use Create",
+    title: "Health Data Research Innovation Gateway - My Account - Tool Create",
     description: "",
 };
 
-export default async function DataUseCreatePage({
+export default async function ToolCreatePage({
     params,
 }: {
     params: { teamId: string };
@@ -25,8 +25,8 @@ export default async function DataUseCreatePage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["dur.read"]}>
-            <CreateDataUse teamId={teamId} />
+            pagePermissions={["tools.create"]}>
+            <CreateTool teamId={teamId} userId={user.id} />
         </ProtectedAccountRoute>
     );
 }

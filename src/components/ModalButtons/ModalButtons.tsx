@@ -16,7 +16,7 @@ export interface ModalButtonProps {
     tertiaryButton?: {
         onAction: (props: unknown) => void;
         buttonText: string;
-        buttonProps: ButtonProps;
+        buttonProps?: ButtonProps;
     };
 }
 
@@ -55,53 +55,45 @@ const ModalButtons = ({
     };
 
     return (
-        <>
+        <Box
+            sx={{
+                p: 0,
+                gap: 2,
+                display: "flex",
+                width: !showCancel && tertiaryButton ? "100%" : undefined,
+                justifyContent:
+                    !showCancel && tertiaryButton ? "space-between" : undefined,
+            }}>
             {showCancel && (
-                <Button
-                    key="cancel"
-                    variant="outlined"
-                    color="secondary"
-                    onClick={handleCancel}>
+                <Button key="cancel" color="inherit" onClick={handleCancel}>
                     {cancelText}
                 </Button>
             )}
-            <Box
-                sx={{
-                    p: 0,
-                    gap: 2,
-                    display: "flex",
-                    width: !showCancel && tertiaryButton ? "100%" : undefined,
-                    justifyContent:
-                        !showCancel && tertiaryButton
-                            ? "space-between"
-                            : undefined,
-                }}>
-                {tertiaryButton && (
+            {tertiaryButton && (
+                <Button
+                    onClick={handleTertiary}
+                    color="inherit"
+                    {...tertiaryButton.buttonProps}>
+                    {tertiaryButton.buttonText}
+                </Button>
+            )}
+            {showConfirm &&
+                (confirmType === "submit" ? (
                     <Button
-                        onClick={handleTertiary}
-                        color="inherit"
-                        {...tertiaryButton.buttonProps}>
-                        {tertiaryButton.buttonText}
+                        {...(formId && { form: formId })}
+                        key="confirm"
+                        type="submit">
+                        {confirmText}
                     </Button>
-                )}
-                {showConfirm &&
-                    (confirmType === "submit" ? (
-                        <Button
-                            {...(formId && { form: formId })}
-                            key="confirm"
-                            type="submit">
-                            {confirmText}
-                        </Button>
-                    ) : (
-                        <Button
-                            key="confirm"
-                            type={confirmType}
-                            onClick={handleSuccess}>
-                            {confirmText}
-                        </Button>
-                    ))}
-            </Box>
-        </>
+                ) : (
+                    <Button
+                        key="confirm"
+                        type={confirmType}
+                        onClick={handleSuccess}>
+                        {confirmText}
+                    </Button>
+                ))}
+        </Box>
     );
 };
 
