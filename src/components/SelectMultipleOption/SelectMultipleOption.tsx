@@ -32,7 +32,7 @@ const SelectMultipleOption = ({
                     : prevOption
             )
         );
-    }, [debouncedLabel]);
+    }, [debouncedLabel, id, option.value, setOptions]);
 
     return (
         <Box

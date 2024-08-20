@@ -66,7 +66,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
             };
             return hydratedReleases;
         });
-    }, [allReleases, expanded]);
+    }, [allReleases, expanded, t, years]);
 
     return (
         <Tabs

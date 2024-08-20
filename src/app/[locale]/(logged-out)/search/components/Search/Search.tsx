@@ -184,11 +184,14 @@ const Search = ({ filters }: SearchProps) => {
         }
     }, [queryParams.type, resultsView]);
 
-    const updatePath = (key: string, value: string) => {
-        router.push(`${pathname}?${updateQueryString(key, value)}`, {
-            scroll: false,
-        });
-    };
+    const updatePath = useCallback(
+        (key: string, value: string) => {
+            router.push(`${pathname}?${updateQueryString(key, value)}`, {
+                scroll: false,
+            });
+        },
+        [pathname, router, updateQueryString]
+    );
 
     const onQuerySubmit = async (data: FieldValues) => {
         setQueryParams({ ...queryParams, ...data });
@@ -477,6 +480,20 @@ const Search = ({ filters }: SearchProps) => {
         }
     };
 
+    const setFilterQueryParams = useCallback(
+        () => (filterValues: string[], filterName: string) => {
+            // url requires string format, ie "one, two, three"
+            updatePath(filterName, filterValues.join(","));
+
+            // api requires string[] format, ie ["one", "two", "three"]
+            setQueryParams({
+                ...queryParams,
+                [filterName]: filterValues,
+            });
+        },
+        [queryParams, updatePath]
+    );
+
     const handleSaveSubmit = ({ name }: SaveSearchValues) => {
         saveSearchQuery({
             search_term: queryParams.query || "",
@@ -629,19 +646,7 @@ const Search = ({ filters }: SearchProps) => {
                         selectedFilters={selectedFilters}
                         filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
                         filterSourceData={filters}
-                        setFilterQueryParams={(
-                            filterValues: string[],
-                            filterName: string
-                        ) => {
-                            // url requires string format, ie "one, two, three"
-                            updatePath(filterName, filterValues.join(","));
-
-                            // api requires string[] format, ie ["one", "two", "three"]
-                            setQueryParams({
-                                ...queryParams,
-                                [filterName]: filterValues,
-                            });
-                        }}
+                        setFilterQueryParams={setFilterQueryParams}
                         aggregations={data?.aggregations}
                         updateStaticFilter={(
                             filterName: string,

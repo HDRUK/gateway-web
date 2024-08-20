@@ -51,7 +51,7 @@ const DatasetMindMap = ({
                 href: `/data-custodian/${teamId}`,
             },
         };
-    }, [data, t]);
+    }, [data, t, teamId]);
 
     const hydratedOuterNodes = useMemo(
         () =>
@@ -115,7 +115,7 @@ const DatasetMindMap = ({
                     };
                 })
                 .filter(item => !!item),
-        [data]
+        [data, hasStructuralMetadata, linkageCounts, populatedSections, t]
     );
 
     return (

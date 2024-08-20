@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
@@ -141,18 +141,20 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     const schemaFields = formJSON.schema_fields;
 
-    const defaultFormValues = {
-        "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
-        "Dataset Version": "1.0.0",
-        "revision version": "1.0.0",
-        "revision url": "http://www.example.com/",
-        "Metadata Issued Datetime": today,
-        "Last Modified Datetime": today,
-        "Name of data provider": "--",
-        "Dataset population size": 1,
-        "contact point": user?.email,
-        "Observations array": null,
-    };
+    const defaultFormValues = useMemo(() => {
+        return {
+            "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
+            "Dataset Version": "1.0.0",
+            "revision version": "1.0.0",
+            "revision url": "http://www.example.com/",
+            "Metadata Issued Datetime": today,
+            "Last Modified Datetime": today,
+            "Name of data provider": "--",
+            "Dataset population size": 1,
+            "contact point": user?.email,
+            "Observations array": null,
+        };
+    }, [user?.email]);
 
     useEffect(() => {
         if (isLoading || !isEditing) {
@@ -178,7 +180,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         );
 
         setExistingFormData(mappedFormData);
-    }, [dataset, isLoading]);
+    }, [dataset, isLoading, isDraft, isDuplicate, isEditing, schemaFields]);
 
     useEffect(() => {
         if (!dataset) {
@@ -189,7 +191,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
         const latestMetadata = get(dataset, metadataLocation);
         setStructuralMetadata(latestMetadata?.structuralMetadata);
-    }, [dataset]);
+    }, [dataset, isDraft]);
 
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
@@ -271,7 +273,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         }
 
         reset({ ...defaultFormValues, ...existingFormData });
-    }, [existingFormData]);
+    }, [existingFormData, defaultFormValues, reset]);
 
     const formSections = [INITIAL_FORM_SECTION]
         .concat(
@@ -302,7 +304,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         setSelectedFormSection(
             (!isEditing && INITIAL_FORM_SECTION) || initialSection
         );
-    }, [schemaFields]);
+    }, [schemaFields, isEditing]);
 
     useEffect(() => {
         const createLegendItems = async () => {
@@ -347,112 +349,135 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         };
     }, [isLoading]);
 
-    const postForm = async (formData: Metadata) => {
-        setIsSaving(true);
+    const postForm = useCallback(
+        async (formData: Metadata) => {
+            setIsSaving(true);
 
-        const mappedFormData: Partial<Metadata> = mapFormFieldsForSubmission(
-            formData,
-            schemaFields
-        );
+            const mappedFormData: Partial<Metadata> =
+                mapFormFieldsForSubmission(formData, schemaFields);
 
-        const formPayload = isEditing
-            ? {
-                  ...omit(dataset, ["versions"]),
-                  team_id: teamId,
-                  user_id: user.id,
-                  status: isDraft
-                      ? ("DRAFT" as DatasetStatus)
-                      : ("ACTIVE" as DatasetStatus),
-                  create_origin: "MANUAL" as CreateOrigin,
-                  metadata: {
-                      schemaModel: SCHEMA_NAME,
-                      schemaVersion: SCHEMA_VERSION,
-                      ...dataset?.versions[0].metadata,
+            const formPayload = isEditing
+                ? {
+                      ...omit(dataset, ["versions"]),
+                      team_id: teamId,
+                      user_id: user.id,
+                      status: isDraft
+                          ? ("DRAFT" as DatasetStatus)
+                          : ("ACTIVE" as DatasetStatus),
+                      create_origin: "MANUAL" as CreateOrigin,
                       metadata: {
-                          observations: [],
-                          coverage: null,
-                          ...mappedFormData,
+                          schemaModel: SCHEMA_NAME,
+                          schemaVersion: SCHEMA_VERSION,
+                          ...dataset?.versions[0].metadata,
+                          metadata: {
+                              observations: [],
+                              coverage: null,
+                              ...mappedFormData,
+                          },
                       },
-                  },
-              }
-            : isDuplicate
-            ? {
-                  ...omit(dataset, ["id", "versions"]),
-                  status: isDraft
-                      ? ("DRAFT" as DatasetStatus)
-                      : ("ACTIVE" as DatasetStatus),
-                  metadata: {
-                      schemaModel: SCHEMA_NAME,
-                      schemaVersion: SCHEMA_VERSION,
-                      ...dataset?.versions[0].metadata,
+                  }
+                : isDuplicate
+                ? {
+                      ...omit(dataset, ["id", "versions"]),
+                      status: isDraft
+                          ? ("DRAFT" as DatasetStatus)
+                          : ("ACTIVE" as DatasetStatus),
                       metadata: {
-                          observations: [],
-                          coverage: null,
-                          ...mappedFormData,
+                          schemaModel: SCHEMA_NAME,
+                          schemaVersion: SCHEMA_VERSION,
+                          ...dataset?.versions[0].metadata,
+                          metadata: {
+                              observations: [],
+                              coverage: null,
+                              ...mappedFormData,
+                          },
                       },
-                  },
-              }
-            : {
-                  team_id: teamId,
-                  user_id: user.id,
-                  status: isDraft
-                      ? ("DRAFT" as DatasetStatus)
-                      : ("ACTIVE" as DatasetStatus),
-                  create_origin: "MANUAL" as CreateOrigin,
-                  metadata: {
-                      schemaModel: SCHEMA_NAME,
-                      schemaVersion: SCHEMA_VERSION,
+                  }
+                : {
+                      team_id: teamId,
+                      user_id: user.id,
+                      status: isDraft
+                          ? ("DRAFT" as DatasetStatus)
+                          : ("ACTIVE" as DatasetStatus),
+                      create_origin: "MANUAL" as CreateOrigin,
                       metadata: {
-                          issued: new Date().toString(),
-                          modified: new Date().toString(),
-                          observations: [],
-                          coverage: null,
-                          ...mappedFormData,
+                          schemaModel: SCHEMA_NAME,
+                          schemaVersion: SCHEMA_VERSION,
+                          metadata: {
+                              issued: new Date().toString(),
+                              modified: new Date().toString(),
+                              observations: [],
+                              coverage: null,
+                              ...mappedFormData,
+                          },
                       },
-                  },
-              };
-        try {
-            const formPostRequest = isEditing
-                ? await updateDataset(
-                      params.datasetId,
-                      formPayload as NewDataset
-                  )
-                : await createDataset(formPayload as NewDataset);
+                  };
+            try {
+                const formPostRequest = isEditing
+                    ? await updateDataset(
+                          params.datasetId,
+                          formPayload as NewDataset
+                      )
+                    : await createDataset(formPayload as NewDataset);
 
-            if (formPostRequest !== null && !autoSaveDraft) {
-                reset({});
-                push(
-                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
-                );
-            } else {
-                setIsSaving(false);
+                if (formPostRequest !== null && !autoSaveDraft) {
+                    reset({});
+                    push(
+                        `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
+                    );
+                } else {
+                    setIsSaving(false);
 
-                if (formPostRequest && autoSaveDraft) {
-                    setDatasetId(formPostRequest as string);
-                    setAutoSaveDraft(false);
+                    if (formPostRequest && autoSaveDraft) {
+                        setDatasetId(formPostRequest as string);
+                        setAutoSaveDraft(false);
+                    }
                 }
+            } catch (err) {
+                setIsSaving(false);
             }
-        } catch (err) {
-            setIsSaving(false);
-        }
-    };
+        },
+        [
+            autoSaveDraft,
+            createDataset,
+            dataset,
+            isDraft,
+            isDuplicate,
+            isEditing,
+            params?.datasetId,
+            push,
+            reset,
+            schemaFields,
+            teamId,
+            updateDataset,
+            user.id,
+        ]
+    );
 
-    const formSubmit = (formData: Metadata) => {
-        postForm(formData);
-    };
+    const formSubmit = useCallback(
+        (formData: Metadata) => {
+            postForm(formData);
+        },
+        [postForm]
+    );
 
-    const handleFormSubmission = async (isDraft: boolean) => {
-        if (!isDraft) {
-            const formIsValid = await trigger();
-            if (formIsValid) {
-                handleSubmit(formSubmit)();
+    const handleFormSubmission = useCallback(
+        async (isDraft: boolean) => {
+            if (!isDraft) {
+                const formIsValid = await trigger();
+                if (formIsValid) {
+                    handleSubmit(formSubmit)();
+                } else {
+                    setSelectedFormSection(
+                        formSections[formSections.length - 1]
+                    );
+                }
             } else {
-                setSelectedFormSection(formSections[formSections.length - 1]);
+                handleSubmit(formSubmit)();
             }
-        } else {
-            handleSubmit(formSubmit)();
-        }
-    };
+        },
+        [formSections, formSubmit, handleSubmit, trigger]
+    );
 
     const handleMakeActive = async () => {
         setSubmissionRequested(true);
@@ -460,11 +485,11 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         handleFormSubmission(false);
     };
 
-    const handleSaveDraft = async () => {
+    const handleSaveDraft = useCallback(async () => {
         setDraftToggled(true);
         setIsDraft(true);
         handleFormSubmission(true);
-    };
+    }, [handleFormSubmission]);
 
     // Handle submission after draft toggle
     useEffect(() => {
@@ -480,7 +505,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         if (isDraft && draftToggled) {
             handleFormSubmission(isDraft);
         }
-    }, [isDraft, clearErrors, draftToggled]);
+    }, [isDraft, clearErrors, draftToggled, handleFormSubmission]);
 
     const [optionalPercentage, setOptionalPercentage] = useState(0);
     const [requiredPercentage, setRequiredPercentage] = useState(0);
@@ -526,7 +551,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             setAutoSaveDraft(true);
             handleSaveDraft();
         }
-    }, [selectedFormSection, datasetId]);
+    }, [selectedFormSection, datasetId, handleSaveDraft]);
 
     if (isEditing && isLoading) {
         return <Loading />;

@@ -1,7 +1,7 @@
 import { getContentPageQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
 
-export const URI = "/support/data-access-request";
+const URI = "/support/data-access-request";
 
 export default async function DataAccessRequest() {
     const data = await getContentPageQuery("GetContentPageQuery", {
