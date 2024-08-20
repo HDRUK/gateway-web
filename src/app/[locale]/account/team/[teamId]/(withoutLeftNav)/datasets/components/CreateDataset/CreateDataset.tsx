@@ -132,15 +132,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [struturalMetadata, setStructuralMetadata] =
         useState<StructuralMetadata[]>();
 
-    const bannerTabList = [
-        { label: t("onlineForm"), value: "FORM" },
-        { label: t("uploadFile"), value: "UPLOAD" },
-    ].map(tabItem => ({
-        label: tabItem.label,
-        value: tabItem.value,
-        content: null,
-    }));
-
     const schemaFields = formJSON.schema_fields;
 
     const defaultFormValues = {
@@ -572,7 +563,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             </Link>
 
             <FormBanner
-                tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
                 saveAsDraftAction={handleSaveDraft}
