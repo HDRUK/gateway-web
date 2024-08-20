@@ -1,16 +1,17 @@
 import { cookies } from "next/headers";
+import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import CreateDataUse from "./components/CreateDataUse";
+import UploadDataset from "./components/UploadDataset";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Data Use Create",
+    title: "Health Data Research Innovation Gateway - My Account - Dataset Upload",
     description: "",
 };
 
-export default async function DataUseCreatePage({
+export default async function UploadDatasetPage({
     params,
 }: {
     params: { teamId: string };
@@ -25,8 +26,10 @@ export default async function DataUseCreatePage({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["dur.read"]}>
-            <CreateDataUse teamId={teamId} />
+            pagePermissions={["datasets.create"]}>
+            <BoxContainer sx={{ mt: "14px" }}>
+                <UploadDataset teamId={teamId} />
+            </BoxContainer>
         </ProtectedAccountRoute>
     );
 }

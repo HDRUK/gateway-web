@@ -29,12 +29,14 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
+import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePut from "@/hooks/usePut";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
@@ -129,15 +131,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [existingFormData, setExistingFormData] = useState<Metadata>();
     const [struturalMetadata, setStructuralMetadata] =
         useState<StructuralMetadata[]>();
-
-    const bannerTabList = [
-        { label: t("onlineForm"), value: "FORM" },
-        { label: t("uploadFile"), value: "UPLOAD" },
-    ].map(tabItem => ({
-        label: tabItem.label,
-        value: tabItem.value,
-        content: null,
-    }));
 
     const schemaFields = formJSON.schema_fields;
 
@@ -258,6 +251,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         trigger,
         getValues,
         reset,
+        formState,
     } = useForm({
         mode: "onTouched",
         resolver: yupResolver(yupSchema),
@@ -526,7 +520,19 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             setAutoSaveDraft(true);
             handleSaveDraft();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedFormSection, datasetId]);
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty,
+        onSuccess: handleSaveDraft,
+        modalProps: {
+            cancelText: t("discardChanges"),
+            confirmText: t("saveAsDraft"),
+            title: t("confirmSave"),
+            content: "",
+        },
+    });
 
     if (isEditing && isLoading) {
         return <Loading />;
@@ -542,8 +548,21 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     return (
         <>
+            <Link
+                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`}
+                underline="hover"
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    pb: 0.5,
+                    pl: 2,
+                }}>
+                <ArrowBackIosNewIcon fontSize="small" />
+                {t("backToManagementPage")}
+            </Link>
+
             <FormBanner
-                tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
                 saveAsDraftAction={handleSaveDraft}

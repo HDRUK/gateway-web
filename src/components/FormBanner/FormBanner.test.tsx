@@ -1,15 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import FormBanner from "./FormBanner";
 
-const tabsList = [
-    { label: "Online Form", value: "FORM" },
-    { label: "Upload File", value: "UPLOAD" },
-].map(tabItem => ({
-    label: `${tabItem.label} `,
-    value: tabItem.value,
-    content: null,
-}));
-
 describe("FormBanner", () => {
     const downloadFn = jest.fn();
     const makeActiveFn = jest.fn();
@@ -18,7 +9,6 @@ describe("FormBanner", () => {
     it("should render all data", async () => {
         render(
             <FormBanner
-                tabItems={tabsList}
                 downloadAction={downloadFn}
                 makeActiveAction={makeActiveFn}
                 saveAsDraftAction={saveDraftFn}
@@ -26,14 +16,12 @@ describe("FormBanner", () => {
                 optionalPercentage={0}
             />
         );
-        expect(screen.getByText("Online Form")).toBeInTheDocument();
         expect(screen.getByText("20% (required fields)")).toBeInTheDocument();
     });
 
     it("should fire all functions", async () => {
         render(
             <FormBanner
-                tabItems={tabsList}
                 downloadAction={downloadFn}
                 makeActiveAction={makeActiveFn}
                 saveAsDraftAction={saveDraftFn}

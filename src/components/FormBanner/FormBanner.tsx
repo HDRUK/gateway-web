@@ -5,13 +5,9 @@ import { useTranslations } from "next-intl";
 import { colors } from "@/config/theme";
 import { DownloadIcon } from "@/consts/icons";
 import Button from "../Button";
-import Paper from "../Paper";
-import Tabs from "../Tabs";
-import { Tab, TabVariant } from "../Tabs/Tabs";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
 
 interface FormBannerProps {
-    tabItems: Tab[];
     completionPercentage?: number;
     optionalPercentage?: number;
     actionButtonsEnabled?: boolean;
@@ -24,7 +20,6 @@ const TRANSLATION_PATH = "components.FormBanner";
 export const NAVBAR_ID = "form-navbar";
 
 const FormBanner = ({
-    tabItems,
     completionPercentage = 0,
     optionalPercentage = 0,
     actionButtonsEnabled = true,
@@ -36,16 +31,6 @@ const FormBanner = ({
 
     return (
         <Wrapper id={NAVBAR_ID}>
-            <Paper sx={{ m: 0 }}>
-                <Tabs
-                    variant={TabVariant.SLIM}
-                    centered
-                    tabs={tabItems}
-                    rootBoxSx={{ padding: 0, m: 0 }}
-                    renderTabContent={false}
-                />
-            </Paper>
-
             <DetailBanner>
                 <Column justify={Justify.START}>
                     <Button
