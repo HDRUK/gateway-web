@@ -4,7 +4,7 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import UploadDataset from "./components";
+import UploadDataset from "./components/UploadDataset";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Dataset Upload",
