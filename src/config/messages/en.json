@@ -345,8 +345,6 @@
                             "guidance": "Guidance",
                             "next": "Next",
                             "previous": "Previous",
-                            "onlineForm": "Online Form",
-                            "uploadFile": "Upload File",
                             "welcomeMessage": "Welcome to dataset metadata on-boarding",
                             "legendIntro": "You will see a legend to help you as you on-board your dataset metadata",
                             "progressLegend": "Progress legend:",
@@ -458,6 +456,14 @@
                                     "label": "Archive dataset metadata so it is no longer live on the Gateway"
                                 }
                             }
+                        },
+                        "UploadDataset": {
+                            "downloadTitle": "Download template",
+                            "downloadInfo": "Please use the template provided to create a .json file to upload for metadata onboarding.",
+                            "downloadButtonText": "Download metadata template",
+                            "successMessage": "Dataset successfully created",
+                            "upload": "Upload",
+                            "returnButtonText": "View dataset in 'Drafts' tab"
                         }
                     }
                 },
@@ -1139,7 +1145,7 @@
         "UploadFile": {
             "upload": "Select file",
             "uploadButtonText": "Upload",
-            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
+            "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
             "error": "An error has occured. Please check your file and try again"
         },
         "StructuralMetadataAccordion": {
