@@ -599,8 +599,8 @@
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
-                "label": "Feasibility Analysis",
-                "title": "Feasibility Analysis Tool",
+                "label": "Cohort Discovery",
+                "title": "Cohort Discovery Tool",
                 "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
@@ -847,8 +847,8 @@
                         "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
-                        "label": "Feasibility analysis",
-                        "tooltip": "Indicates if frequency count accessible in HDR UK feasibility analysis tool"
+                        "label": "Cohort Discovery",
+                        "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
                     "containsTissue": {
                         "label": "Tissue sample availability",
