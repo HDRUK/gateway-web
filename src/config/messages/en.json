@@ -94,6 +94,16 @@
                     "message": "Dataset added to your Library"
                 }
             }
+        },
+        "archiveCollection": {
+            "success": {
+                "delete": {
+                    "message": "Collection has been archived"
+                },
+                "patch": {
+                    "message": "Collection has been updated"
+                }
+            }
         }
     },
     "common": {
@@ -488,6 +498,33 @@
                         }
                     }
                 },
+                "collections": {
+                    "components": {
+                        "TeamCollections": {
+                            "title": "Collections",
+                            "text": " View, add, edit, archive and check the status of your Collections.",
+                            "create": "Add new Collection",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive the Collection so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive the Collection so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit Collection metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive the Collection so it is no longer live on the Gateway"
+                                }
+                            }
+                        },
+                        "CollectionsTab": {
+                            "notFound": "No {label} collections found"
+                        }
+                    }
+                },
                 "tools": {
                     "create": {
                         "title": "Manage or create analysis script, tool or software",
@@ -599,8 +636,8 @@
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
-                "label": "Feasibility Analysis",
-                "title": "Feasibility Analysis Tool",
+                "label": "Cohort Discovery",
+                "title": "Cohort Discovery Tool",
                 "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
@@ -847,8 +884,8 @@
                         "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
-                        "label": "Feasibility analysis",
-                        "tooltip": "Indicates if frequency count accessible in HDR UK feasibility analysis tool"
+                        "label": "Cohort Discovery",
+                        "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
                     "containsTissue": {
                         "label": "Tissue sample availability",
@@ -1098,7 +1135,7 @@
             "descriptionTitle": "Description"
         },
         "SupportPopOut": {
-            "buttonText": "Visit Support Centre",
+            "buttonText": "Need support?",
             "giveFeedback": "Give feedback",
             "reportBug": "Report bug",
             "requestSupport": "Request support",
@@ -1152,6 +1189,12 @@
             "columnDesc": "Column description",
             "dataType": "Data type",
             "sensitive": "Sensitive"
+        },
+        "CollectionCard": {
+            "users": "Users",
+            "entities": "Entities",
+            "entitiesCounts": "Datasets ({nDatasets}), Publications ({nPublications}), Tools ({nTools})",
+            "lastActivity": "Last activity"
         }
     },
     "modules": {
