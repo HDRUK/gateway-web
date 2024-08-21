@@ -70,7 +70,7 @@ const GeneralEnquirySidebar = ({
             ...minUser,
             ...formData,
             team_id: teamId,
-            project_title: "Placeholder project title",
+            project_title: "",
             contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
             datasets: [
                 {
