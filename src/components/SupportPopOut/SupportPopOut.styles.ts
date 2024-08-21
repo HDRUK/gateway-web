@@ -11,9 +11,8 @@ export const SupportButton = styled(Button)(() => ({
     height: 40,
     width: 160,
     position: "fixed",
-    right: -60,
-    bottom: 100,
-    transform: "rotate(90deg)",
+    right: 20,
+    bottom: 20,
     borderRadius: 4,
     zIndex: 9999,
 }));
