@@ -69,6 +69,10 @@ const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
     return Object.values(groupedByDatasetID);
 };
 
+const formatTextDelimiter = (text: string) => {
+    return text.replaceAll(";,;", ", ");
+};
+
 export {
     formatYearStat,
     getLatestVersion,
@@ -76,4 +80,5 @@ export {
     hasValidValue,
     parseLeadTime,
     splitStringList,
+    formatTextDelimiter,
 };

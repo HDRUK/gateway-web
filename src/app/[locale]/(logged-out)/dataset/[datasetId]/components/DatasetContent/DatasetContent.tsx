@@ -16,7 +16,7 @@ import Table from "@/components/Table";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
-import { splitStringList } from "@/utils/dataset";
+import { formatTextDelimiter, splitStringList } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import {
     DatasetSection,
@@ -119,7 +119,7 @@ const DatasetContent = ({
             }
 
             default:
-                return <Typography>{value.replaceAll(";,;", ", ")}</Typography>;
+                return <Typography>{formatTextDelimiter(value)}</Typography>;
         }
     };
 
