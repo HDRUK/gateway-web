@@ -9,6 +9,7 @@ describe("ResultCardDataUse", () => {
         organisationName: "organisationName",
         publisher: "publisher",
         datasetTitles: ["datasetTitles"],
+        datasetIds: [1],
         _id: "1",
     };
 
