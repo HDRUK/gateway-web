@@ -24,9 +24,8 @@ jobs:
       
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
-      - run: |-
-          chrome --version
-          echo ${{ steps.setup-chrome.outputs.chrome-path }}
+        with:
+          chrome-version: 130
 
       - uses: actions/setup-node@v4
         with:

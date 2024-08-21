@@ -21,6 +21,9 @@ module.exports = {
 
   // NOTE: defaults are OVERRIDDEN not extended
   defaults : {
+    chromeLaunchConfig          : { 
+        executablePath              : "/opt/hostedtoolcache/setup-chrome/chromium/1344790/x64/chrome", 
+     },
     // concurrency=1 so urls are sequential, with login first (if browser context is preserved)
     concurrency                 : 1,
     ignore                      : ignoreDefault,
