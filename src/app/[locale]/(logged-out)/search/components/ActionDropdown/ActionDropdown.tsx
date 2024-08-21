@@ -15,8 +15,10 @@ import useDialog from "@/hooks/useDialog";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { colors } from "@/config/theme";
+import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
-import menuItems from "./config";
+import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
+import useSidebar from "@/hooks/useSidebar";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -33,6 +35,7 @@ const ActionDropdown = ({
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
+    const { showSidebar } = useSidebar();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
@@ -46,6 +49,45 @@ const ActionDropdown = ({
         event.stopPropagation();
         setAnchorElement(event.currentTarget);
     };
+
+    const genEnq = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            showSidebar({
+                title: "Messages",
+                content: (
+                    <GeneralEnquirySidebar
+                        teamId={42}
+                        teamName={"name"}
+                        teamMemberOf={"member"}
+                    />
+                ),
+            });
+        }
+    };
+    
+    const menuItems = [
+        {
+            label: "General enquiry",
+            action: genEnq,
+            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+        },
+        {
+            label: "Feasibility enquiry",
+            href: "TBC",
+            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+        },
+        {
+            label: "Data Access Request",
+            href: "TBC",
+            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+        },
+    ];
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
