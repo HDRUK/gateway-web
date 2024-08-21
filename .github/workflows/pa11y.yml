@@ -26,6 +26,8 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 130
+          install-dependencies: true
+
 
       - uses: actions/setup-node@v4
         with:
@@ -46,5 +48,5 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: ${{ env.SLACK_CHANNEL }}
-          message: Running pa11y tests on {{ env.GITHUB_REF_NAME }} branch failed
+          message: Running pa11y tests on {{ env.GITHUB_REF_NAME }} branch ${{ job.status }}
         if: always()
