@@ -7,36 +7,19 @@ import { FileExport } from "@/interfaces/FileExport";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import ProvidersDialog from "@/modules/ProvidersDialog";
-import useAuth from "@/hooks/useAuth";
-import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
-import useSidebar from "@/hooks/useSidebar";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { DownloadIcon } from "@/consts/icons";
 import { downloadFile } from "@/utils/download";
-import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
 import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
-const ActionBar = ({
-    teamId,
-    teamName,
-    teamMemberOf,
-}: {
-    teamId: number;
-    teamName: string;
-    teamMemberOf: string;
-}) => {
+const ActionBar = () => {
     const params = useParams<{
         datasetId: string;
     }>();
-
-    const { isLoggedIn } = useAuth();
-    const { showDialog } = useDialog();
-    const { showSidebar } = useSidebar();
 
     const [isDownloading, setIsDownloading] = useState(false);
 
@@ -68,32 +51,11 @@ const ActionBar = ({
         setIsDownloading(false);
     };
 
-    const handleGeneralEnquiries = () => {
-        if (!isLoggedIn) {
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-            });
-        } else {
-            showSidebar({
-                title: "Messages",
-                content: (
-                    <GeneralEnquirySidebar
-                        teamId={teamId}
-                        teamName={teamName}
-                        teamMemberOf={teamMemberOf}
-                    />
-                ),
-            });
-        }
-    };
-
     return (
         <ActionBarWrapper>
             <BackButton label={t("label")} style={{ margin: 0 }} />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
-                <Button onClick={handleGeneralEnquiries}>{t("contact")}</Button>
-
                 <Button variant="outlined" color="secondary" disabled>
                     {t("submitApplication")}
                 </Button>
