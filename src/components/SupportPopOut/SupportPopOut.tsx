@@ -11,7 +11,6 @@ import {
     CUSTOMER_PORTAL_REPORT_BUG_URL,
     CUSTOMER_PORTAL_SUPPORT_URL,
 } from "@/config/hrefs";
-import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
 import { SupportButton, SupportList } from "./SupportPopOut.styles";
 
@@ -70,7 +69,6 @@ const SupportPopOut = () => {
         <div>
             <SupportButton
                 color="yellowCustom"
-                endIcon={<SpeechBubbleIcon />}
                 onClick={handleClick}>
                 {t("buttonText")}
             </SupportButton>
