@@ -23,6 +23,7 @@ jobs:
           ref: GAT-3806
       
       - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
       - run: |-
           chrome --version
           echo ${{ steps.setup-chrome.outputs.chrome-path }}
