@@ -17,13 +17,14 @@ import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import GeneralEnquirySidebar from "../../../dataset/[datasetId]/components/GeneralEnquirySidebar";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
-import menuItems from "./config";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -41,11 +42,12 @@ const ResultCard = ({
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
     const { showDialog } = useDialog();
+    const { showSidebar } = useSidebar();
+
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
     const { isLoggedIn, user } = useAuth();
     const { _id: datasetId } = result;
-
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
@@ -85,6 +87,43 @@ const ResultCard = ({
         setAnchorElement(event.currentTarget);
     };
 
+    const genEnq = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        console.log("genEnq started2");
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            showSidebar({
+                title: "Messages",
+                content: (
+                    <GeneralEnquirySidebar
+                        teamId={42}
+                        teamName={"name"}
+                        teamMemberOf={"member"}
+                    />
+                ),
+            });
+        }
+        console.log("genEnq ended");
+    };
+
+    const menuItems = [
+        {
+            label: "General enquiry",
+            action: genEnq,
+        },
+        {
+            label: "Feasibility enquiry",
+            href: "TBC",
+        },
+        {
+            label: "Data Access Request",
+            href: "TBC",
+        },
+    ];
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
