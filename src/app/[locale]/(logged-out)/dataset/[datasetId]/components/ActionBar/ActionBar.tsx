@@ -68,32 +68,31 @@ const ActionBar = ({
         setIsDownloading(false);
     };
 
+    const handleGeneralEnquiries = () => {
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            showSidebar({
+                title: "Messages",
+                content: (
+                    <GeneralEnquirySidebar
+                        teamId={teamId}
+                        teamName={teamName}
+                        teamMemberOf={teamMemberOf}
+                    />
+                ),
+            });
+        }
+    };
+
     return (
         <ActionBarWrapper>
             <BackButton label={t("label")} style={{ margin: 0 }} />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
-                <Button
-                    onClick={() => {
-                        if (!isLoggedIn) {
-                            showDialog(ProvidersDialog, {
-                                isProvidersDialog: true,
-                            });
-                        } else {
-                            showSidebar({
-                                title: "Messages",
-                                content: (
-                                    <GeneralEnquirySidebar
-                                        teamId={teamId}
-                                        teamName={teamName}
-                                        teamMemberOf={teamMemberOf}
-                                    />
-                                ),
-                            });
-                        }
-                    }}>
-                    {t("contact")}
-                </Button>
+                <Button onClick={handleGeneralEnquiries}>{t("contact")}</Button>
 
                 <Button variant="outlined" color="secondary" disabled>
                     {t("submitApplication")}
