@@ -46,6 +46,7 @@ module.exports = {
   urls : [
     { ignore  : ignoreNotForm,
       url     : `${site}`,
+      timeout : 50000,
     },
     { ignore  : ignoreNotForm,
       url     : `${site}/dataset/1`,
