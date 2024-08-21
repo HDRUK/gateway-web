@@ -135,8 +135,6 @@ const TeamCollections = ({
         }
     );
 
-    console.log(data);
-
     const unArchiveCollection = usePatch<Partial<Collection>>(
         apis.collectionsV1Url,
         {
