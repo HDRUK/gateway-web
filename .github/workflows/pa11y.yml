@@ -35,11 +35,12 @@ jobs:
 
       - name: NPM install
         run: |-
-          npm install -g pa11y
           npm install -g pa11y-ci
 
       - name: Run tests
         run: |-
+          which google-chrome-stable
+          which chrome
           pa11y-ci --config .pa11yci.js
 
       - name: Run Notification
