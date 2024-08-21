@@ -1,0 +1,45 @@
+name: Run pa11y test suite
+run-name: ${{ github.actor }} triggered pa11y test suite
+on:  
+  push:
+      branches:
+        - 'GAT-3806'
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+
+env:
+  SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
+  SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
+
+jobs:
+  pa11y-run:
+    runs-on: ubuntu-22.04
+    environment: release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: GAT-3806
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: NPM install
+        run: |-
+          npm install -g pa11y-ci
+
+      - name: Run tests
+        run: |-
+          pa11y-ci --config .pa11yci.js
+
+      - name: Run Notification
+        id: runnotificationsent
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: ${{ env.SLACK_CHANNEL }}
+          message: Running pa11y tests on {{ env.GITHUB_REF_NAME }} branch failed
+        if: always()
