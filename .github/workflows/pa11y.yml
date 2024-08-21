@@ -39,8 +39,6 @@ jobs:
 
       - name: Run tests
         run: |-
-          which google-chrome-stable
-          which chrome
           pa11y-ci --config .pa11yci.js
 
       - name: Run Notification

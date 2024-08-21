@@ -85,6 +85,7 @@ module.exports = {
     },
     { ignore  : ignoreNotForm,
       url     : `${site}/data-custodian/1`,
+      timeout : 50000,
     },
     { ignore  : ignoreNotForm,
       url     : `${site}/data-custodian/getting-started`,
