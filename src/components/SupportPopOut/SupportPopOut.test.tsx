@@ -6,12 +6,16 @@ describe("SupportPopOut", () => {
     it("should open support panel ", async () => {
         render(<SupportPopOut />);
 
-        const button = screen.getByLabelText("Need support?");
+        const button = screen.getByRole('button', {
+            name: /Need support?/i
+          })
         fireEvent.click(button);
 
         await waitFor(() => {
             expect(
-                screen.getByLabelText("Visit Support Centre")
+                screen.getByRole('button', {
+                    name: /Visit Support Centre?/i
+                  })
             ).toBeInTheDocument();
             expect(screen.getByText("Give feedback")).toBeInTheDocument();
             expect(screen.getByText("Report bug")).toBeInTheDocument();
