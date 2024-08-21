@@ -67,9 +67,7 @@ const SupportPopOut = () => {
     const id = open ? "support-popover" : undefined;
     return (
         <div>
-            <SupportButton
-                color="yellowCustom"
-                onClick={handleClick}>
+            <SupportButton color="yellowCustom" onClick={handleClick}>
                 {t("buttonText")}
             </SupportButton>
             <Popover
