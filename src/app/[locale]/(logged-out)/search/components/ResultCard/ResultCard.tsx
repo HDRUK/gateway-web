@@ -89,7 +89,6 @@ const ResultCard = ({
 
     const genEnq = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
-        console.log("genEnq started2");
 
         if (!isLoggedIn) {
             showDialog(ProvidersDialog, {
@@ -107,7 +106,6 @@ const ResultCard = ({
                 ),
             });
         }
-        console.log("genEnq ended");
     };
 
     const menuItems = [
@@ -124,6 +122,7 @@ const ResultCard = ({
             href: "TBC",
         },
     ];
+
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
