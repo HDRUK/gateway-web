@@ -23,7 +23,7 @@ module.exports = {
   defaults : {
     chromeLaunchConfig          : { 
         executablePath              : "/opt/hostedtoolcache/setup-chrome/chromium/1344790/x64/chrome",
-        args: ['--no-sandbox']
+        args                        : ['--no-sandbox']
      },
     // concurrency=1 so urls are sequential, with login first (if browser context is preserved)
     concurrency                 : 1,
@@ -34,6 +34,7 @@ module.exports = {
     includeWarnings             : true,
     // e.g., error, warning, or notice
     level                       : "error",
+    runners                     : ["axe"],
     // e.g., WCAG2A, WCAG2AA, WCAG2AAA (low to high), Section508 (deprecated)
     //standard                    : "WCAG2AAA",
     // timeout (in msec) for an entire test run
