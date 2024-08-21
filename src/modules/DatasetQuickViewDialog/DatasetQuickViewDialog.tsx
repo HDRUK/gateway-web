@@ -47,7 +47,7 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
-                    {keywords.split(";,;").map(word => (
+                    {keywords?.split(";,;").map(word => (
                         <EllipsisCharacterLimit
                             key={word}
                             text={word}
