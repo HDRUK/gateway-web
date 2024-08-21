@@ -19,25 +19,29 @@ jobs:
     environment: release
     steps:
       - uses: actions/checkout@v4
+        id: checkout
         with:
           ref: GAT-3806
       
       - uses: browser-actions/setup-chrome@v1
-        id: setup-chrome
+        id: setupchrome
         with:
           chrome-version: 130
           install-dependencies: true
 
 
       - uses: actions/setup-node@v4
+        id: setupnode
         with:
           node-version: 20
 
       - name: NPM install
+        id: npminstall
         run: |-
           npm install -g pa11y-ci
 
       - name: Run tests
+        id: runtests
         run: |-
           pa11y-ci --config .pa11yci.js
 
