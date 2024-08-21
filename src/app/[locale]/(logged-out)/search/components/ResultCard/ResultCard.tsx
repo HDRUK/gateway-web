@@ -23,7 +23,7 @@ import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import GeneralEnquirySidebar from "../../../dataset/[datasetId]/components/GeneralEnquirySidebar";
+import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 
 interface ResultCardProps {
