@@ -86,6 +86,10 @@ const formatTextWithLinks = (text: string) => {
     );
 };
 
+const formatTextDelimiter = (text: string) => {
+    return text.replaceAll(";,;", ", ");
+};
+
 export {
     formatYearStat,
     getLatestVersion,
@@ -94,4 +98,5 @@ export {
     parseLeadTime,
     splitStringList,
     formatTextWithLinks,
+    formatTextDelimiter,
 };
