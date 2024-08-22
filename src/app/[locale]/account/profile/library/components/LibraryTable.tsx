@@ -36,6 +36,7 @@ const LibraryTable = ({
         dataCustodianId: item.data_provider_id,
         dataCustodianMemberOf: item.data_provider_member_of,
     }));
+
     const translations = {
         name: t("name.label"),
         darEnabled: t("darEnabled.label"),
