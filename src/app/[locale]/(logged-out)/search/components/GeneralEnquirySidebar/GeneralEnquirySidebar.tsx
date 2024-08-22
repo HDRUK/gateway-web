@@ -126,6 +126,7 @@ const GeneralEnquirySidebar = ({
                             p: 0,
                             display: "flex",
                             justifyContent: "end",
+                            pb: 7,
                         }}>
                         <Button type="submit">{t("saveButton")}</Button>
                     </Box>
