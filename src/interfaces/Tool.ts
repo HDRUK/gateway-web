@@ -50,7 +50,7 @@ export interface ToolPayload {
     user_id: number;
     enabled: boolean;
     category_id?: number;
-    team_id: number;
+    team_id?: number | null;
     associated_authors: string;
     programming_language?: number[];
     type_category?: number[];
