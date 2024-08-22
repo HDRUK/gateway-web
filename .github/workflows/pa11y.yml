@@ -12,8 +12,6 @@ on:
 env:
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
   SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
-  GATEWAY_PASSWORD: '${{ secrets.GATEWAY_PASSWORD}}'
-  GATEWAY_USER: '${{ secrets.GATEWAY_USER}}'
 
 jobs:
   pa11y-run:
@@ -44,6 +42,9 @@ jobs:
 
       - name: Run tests
         id: runtests
+        env:
+          GATEWAY_PASSWORD: ${{ secrets.GATEWAY_PASSWORD }}
+          GATEWAY_USER: ${{ secrets.GATEWAY_USER }}
         run: |-
           pa11y-ci --config .pa11yci.js
 
