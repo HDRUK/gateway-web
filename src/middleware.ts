@@ -19,8 +19,10 @@ export function middleware(request: NextRequest) {
             new URL("/", request.url)
         );
 
-        // Remove the JWT cookie by setting it with maxAge: 0
-        redirectResponse.cookies.set(conf.JWT_COOKIE, "", { maxAge: 0 });
+        if (token) {
+            // Remove the JWT cookie by setting it with maxAge: 0
+            redirectResponse.cookies.set(conf.JWT_COOKIE, "", { maxAge: 0 });
+        }
 
         return redirectResponse;
     }
