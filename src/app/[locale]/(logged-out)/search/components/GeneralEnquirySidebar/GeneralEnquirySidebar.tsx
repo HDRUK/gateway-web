@@ -111,12 +111,12 @@ const GeneralEnquirySidebar = ({
                             laptop: "span 4",
                         },
                     }}>
-                    <Typography variant="h1">
-                        {datasets[0].teamMemberOf} {">"} {datasets[0].teamName}
-                    </Typography>
-                    <Typography>
-                        {t("helperText")}
-                    </Typography>
+                    {datasets.map(item => (
+                        <Typography variant="h1">
+                            {item.teamMemberOf} {">"} {item.teamName}
+                        </Typography>
+                    ))}
+                    <Typography>{t("helperText")}</Typography>
 
                     <Form sx={{ mt: 3 }} onSubmit={handleSubmit(submitForm)}>
                         {hydratedFormFields.map(field => (
