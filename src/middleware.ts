@@ -15,13 +15,28 @@ export function middleware(request: NextRequest) {
         ) &&
         !authUser
     ) {
-        return NextResponse.redirect(new URL("/", request.url));
+        const redirectResponse = NextResponse.redirect(
+            new URL("/", request.url)
+        );
+
+        // Remove the JWT cookie by setting it with maxAge: 0
+        redirectResponse.cookies.set(conf.JWT_COOKIE, "", { maxAge: 0 });
+
+        return redirectResponse;
     }
+
     const handleI18nRouting = createIntlMiddleware({
         locales: ["en"],
         defaultLocale: "en",
     });
+
     const response = handleI18nRouting(request);
+
+    // Remove the JWT cookie if the token exists but the user is not authenticated
+    if (!authUser && token) {
+        response.cookies.set(conf.JWT_COOKIE, "", { maxAge: 0 });
+    }
+
     return response;
 }
 
