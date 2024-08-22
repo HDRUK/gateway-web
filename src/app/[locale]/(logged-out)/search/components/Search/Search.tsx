@@ -448,7 +448,7 @@ const Search = ({ filters }: SearchProps) => {
 
     const renderResults = () => {
         if (resultsView === ViewType.TABLE) {
-            console.log('ResultsList', data);
+            console.log("ResultsList", data);
             return (
                 <ResultsTable results={data?.list as SearchResultDataset[]} />
             );

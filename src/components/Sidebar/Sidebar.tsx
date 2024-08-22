@@ -38,7 +38,7 @@ const Sidebar = () => {
     const [open, setOpen] = useState(false);
 
     const props: DrawerProps = {
-        open: open,
+        open,
         role: "presentation",
         anchor: "right",
         ...styleProps,
