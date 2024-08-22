@@ -1,7 +1,7 @@
 //*** local variables used in exports
 
 var site      = 'web.dev.hdruk.cloud';
-var email  = process.env.GATEWAY_USER;
+var email     = process.env.GATEWAY_USER;
 var password  = process.env.GATEWAY_PASSWORD;
 
 var ignoreDefault = [
@@ -48,11 +48,11 @@ module.exports = {
   urls : [
     { url     : `${site}/sign-in`,
     actions : [
-      "wait for url to be https://web.dev.hdruk.cloud/en/sign-in",              "screen capture .pa11y/login0.png",
+      "wait for url to be https://web.dev.hdruk.cloud/en/sign-in",
       `set field input[name=email] to ${email}`,
       `set field input[name=password] to ${password}`,
       `click element button[type=submit]`,
-      "wait for url to be https://web.dev.hdruk.cloud/en/account/profile",            "screen capture .pa11y/login1.png",
+      "wait for url to be https://web.dev.hdruk.cloud/en/account/profile",
     ],
   },
     { ignore  : ignoreNotForm,
