@@ -14,7 +14,7 @@ interface Enquiry {
     team_id: number;
     project_title: string;
     is_dar_dialogue: boolean;
-    is_dar_review: boolean;
+    is_dar_status: boolean;
     is_feasibility_enquiry: boolean;
     is_general_enquiry: boolean;
     datasets: DatasetWithInterestType[];

@@ -31,7 +31,7 @@ const GeneralEnquirySidebar = ({
 }: {
     datasets: DatasetEnquiry[];
 }) => {
-    console.log(datasets);
+    console.log('datasets', datasets);
 
     const { hideSidebar } = useSidebar();
 
@@ -56,17 +56,15 @@ const GeneralEnquirySidebar = ({
 
     const submitForm = async (formData: Enquiry) => {
         if (!user) return;
-
         const minUser = { id: user.id };
 
         const payload = {
             ...minUser,
             ...formData,
-            team_id: datasets[0].teamId,
             project_title: "",
             contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
             datasets: datasets.map(item => ({
-                dataset_id: toNumber(item.datasetId),
+                dataset_id: item.datasetId,
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
@@ -76,7 +74,7 @@ const GeneralEnquirySidebar = ({
             is_feasibility_enquiry: false,
             is_general_enquiry: true,
         };
-
+        console.log('payload', payload);
         await sendEnquiry(payload).then(res => {
             if (res) {
                 hideSidebar();
