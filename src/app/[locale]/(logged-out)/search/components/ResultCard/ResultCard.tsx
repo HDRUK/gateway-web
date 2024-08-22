@@ -47,7 +47,7 @@ const ResultCard = ({
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId } = result;
+    const { _id: datasetId, team: team } = result;
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
@@ -99,9 +99,9 @@ const ResultCard = ({
                 title: "Messages",
                 content: (
                     <GeneralEnquirySidebar
-                        teamId={42}
-                        teamName={"name"}
-                        teamMemberOf={"member"}
+                        teamId={team.id}
+                        teamName={team.name}
+                        teamMemberOf={team.member_of}
                     />
                 ),
             });
