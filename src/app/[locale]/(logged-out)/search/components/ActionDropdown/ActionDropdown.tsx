@@ -12,18 +12,21 @@ import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
-import useSidebar from "@/hooks/useSidebar";
 
-interface ResultCardProps {
+interface ResultRowProps {
     result: SearchResultDataset;
     libraryData: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
+    teamId: number;
+    teamName: string;
+    teamMemberOf: string;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
@@ -32,7 +35,10 @@ const ActionDropdown = ({
     result,
     libraryData,
     showLibraryModal,
-}: ResultCardProps) => {
+    teamId,
+    teamName,
+    teamMemberOf,
+}: ResultRowProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
     const { showSidebar } = useSidebar();
@@ -53,6 +59,9 @@ const ActionDropdown = ({
     const genEnq = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
+        console.log("teamId", teamId);
+        console.log("teamName", teamName);
+        console.log("teamMemberOf", teamMemberOf);
         if (!isLoggedIn) {
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,
@@ -62,15 +71,15 @@ const ActionDropdown = ({
                 title: "Messages",
                 content: (
                     <GeneralEnquirySidebar
-                        teamId={42}
-                        teamName={"name"}
-                        teamMemberOf={"member"}
+                        teamId={teamId}
+                        teamName={teamName}
+                        teamMemberOf={teamMemberOf}
                     />
                 ),
             });
         }
     };
-    
+
     const menuItems = [
         {
             label: "General enquiry",

@@ -48,12 +48,16 @@ const getColumns = ({
         id: "actions",
         meta: { isPinned: true },
         cell: ({ row: { original } }) => {
+            const { team: team } = original;
             return (
                 <div style={{ textAlign: "center" }}>
                     <ActionDropdown
                         result={original}
                         libraryData={libraryData}
                         showLibraryModal={showLibraryModal}
+                        teamId={team.id}
+                        teamName={team.name}
+                        teamMemberOf={team.member_of}
                     />
                 </div>
             );
