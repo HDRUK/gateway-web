@@ -39,7 +39,7 @@ const ActionDropdown = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId, team: team } = result;
+    const { _id: datasetId, team } = result;
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null

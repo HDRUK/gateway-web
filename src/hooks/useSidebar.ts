@@ -4,7 +4,7 @@ import { GlobalDialogContext } from "@/providers/DialogProvider";
 import { sidebarPropsType } from "@/providers/SidebarProvider";
 
 const useSidebar = () => {
-    const { showDialog, hideDialog, store, ...rest } =
+    const { showDialog, hideDialog, ...rest } =
         useContext(GlobalDialogContext);
 
     return {
