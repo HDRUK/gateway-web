@@ -17,7 +17,7 @@ const validationSchema = yup
     .object({
         number: yup
             .string()
-            .transform(value => value === "" ? null : value)
+            .transform(value => (value === "" ? null : value))
             .nullable()
             .matches(phoneRegex, "Contact number is not valid")
             .label("Contact number"),

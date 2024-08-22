@@ -6,8 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { Enquiry } from "@/interfaces/Enquiry";
+import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -28,17 +27,11 @@ import { getPreferredEmail } from "@/utils/user";
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
 const GeneralEnquirySidebar = ({
-    teamId,
-    teamName,
-    teamMemberOf,
+    datasets,
 }: {
-    teamId: number;
-    teamName: string;
-    teamMemberOf: string;
+    datasets: DatasetEnquiry[];
 }) => {
-    const params = useParams<{
-        datasetId: string;
-    }>();
+    console.log(datasets);
 
     const { hideSidebar } = useSidebar();
 
@@ -69,16 +62,14 @@ const GeneralEnquirySidebar = ({
         const payload = {
             ...minUser,
             ...formData,
-            team_id: teamId,
+            team_id: datasets[0].teamId,
             project_title: "",
             contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
-            datasets: [
-                {
-                    dataset_id: toNumber(params.datasetId),
-                    team_id: teamId,
-                    interest_type: "PRIMARY",
-                },
-            ],
+            datasets: datasets.map(item => ({
+                dataset_id: toNumber(item.datasetId),
+                team_id: item.teamId,
+                interest_type: "PRIMARY",
+            })),
             from: getPreferredEmail(user),
             is_dar_dialogue: false,
             is_dar_status: false,
@@ -121,7 +112,7 @@ const GeneralEnquirySidebar = ({
                         },
                     }}>
                     <Typography variant="h1">
-                        {teamMemberOf} {">"} {teamName}
+                        {datasets[0].teamMemberOf} {">"} {datasets[0].teamName}
                     </Typography>
                     <Typography>
                         Send a general enquiry to one or multiple Data

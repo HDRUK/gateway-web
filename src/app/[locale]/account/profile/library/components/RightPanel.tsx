@@ -8,8 +8,10 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import GeneralEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/GeneralEnquirySidebar";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
@@ -20,12 +22,20 @@ interface RightPanelProps {
 
 const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { showSidebar } = useSidebar();
 
-    const selectedDatasetIds = useMemo(
+    const selectedDatasets = useMemo(
         () =>
             Object.values(selected)
                 .filter(item => item.selected)
-                .map(item => item.datasetId),
+                .map(item => {
+                    return {
+                        datasetId: Number(item.datasetId),
+                        teamId: Number(item.teamId),
+                        teamName: item.teamName,
+                        teamMemberOf: item.teamMemberOf,
+                    };
+                }),
         [selected]
     );
 
@@ -36,13 +46,17 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
 
     const handleGeneralEnquiries = () => {
         // to be implemented
-        console.log(selectedDatasetIds);
+        console.log(selectedDatasets);
         console.log(selectedLibraryIds);
+        showSidebar({
+            title: "Messages",
+            content: <GeneralEnquirySidebar datasets={selectedDatasets} />,
+        });
     };
 
     const handleFeasibilityEnquiries = () => {
         // to be implemented
-        console.log(selectedDatasetIds);
+        console.log(selectedDatasets);
         console.log(selectedLibraryIds);
     };
 
@@ -84,7 +98,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                         {t("feasabilityEnquiries.buttonText")}
                     </Button>
                 </Box>
-                {selectedDatasetIds.length > 1 && (
+                {selectedDatasets.length > 1 && (
                     <>
                         <Divider sx={{ my: 2 }} />
                         <Box
