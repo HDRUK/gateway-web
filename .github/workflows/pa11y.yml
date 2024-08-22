@@ -1,9 +1,6 @@
 name: Run pa11y test suite
 run-name: ${{ github.actor }} triggered pa11y test suite
 on:  
-  push:
-      branches:
-        - 'GAT-3806'
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
@@ -21,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         id: checkout
         with:
-          ref: GAT-3806
+          ref: dev
       
       - uses: browser-actions/setup-chrome@v1
         id: setupchrome
