@@ -60,6 +60,7 @@ const ActionDropdown = ({
         } else {
             const datasets = [
                 {
+                    datasetId: datasetId,
                     teamId: team.id,
                     teamName: team.name,
                     teamMemberOf: team.member_of,
