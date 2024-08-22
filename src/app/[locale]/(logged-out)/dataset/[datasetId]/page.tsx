@@ -42,8 +42,6 @@ export default async function DatasetItemPage({
     const cookieStore = cookies();
     const data = await getDataset(cookieStore, datasetId);
 
-    const team = await getTeam(cookieStore, `${data?.team_id}`);
-
     let googleRecommendedDataset: Dataset | undefined;
 
     try {
@@ -81,11 +79,7 @@ export default async function DatasetItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar
-                        teamId={data.team_id}
-                        teamName={team.name}
-                        teamMemberOf={team.member_of}
-                    />
+                    <ActionBar />
                     <Box
                         sx={{
                             display: "flex",
