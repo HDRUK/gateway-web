@@ -1,10 +1,13 @@
 import { isEmpty } from "lodash";
 import { Dataset, VersionItem } from "@/interfaces/Dataset";
+import Link from "@/components/Link";
+import Typography from "@/components/Typography";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
 const UNDEFINED_VALUE = "undefined";
 const NULL_VALUE = "null";
+const URL_REGEX = /(https?:\/\/[^\s]+)/g;
 
 const parseLeadTime = (leadTimeString: string) => {
     if (!leadTimeString) {
@@ -69,6 +72,20 @@ const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
     return Object.values(groupedByDatasetID);
 };
 
+const formatTextWithLinks = (text: string) => {
+    return text.split(URL_REGEX).map(segment =>
+        URL_REGEX.test(segment) ? (
+            <Link href={segment} key={segment} target="_blank" rel="noopener">
+                {segment}
+            </Link>
+        ) : (
+            <Typography component="span" key={segment}>
+                {segment}
+            </Typography>
+        )
+    );
+};
+
 const formatTextDelimiter = (text: string) => {
     return text.replaceAll(";,;", ", ");
 };
@@ -80,5 +97,6 @@ export {
     hasValidValue,
     parseLeadTime,
     splitStringList,
+    formatTextWithLinks,
     formatTextDelimiter,
 };

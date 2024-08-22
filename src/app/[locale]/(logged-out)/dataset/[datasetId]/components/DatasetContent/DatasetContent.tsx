@@ -16,7 +16,11 @@ import Table from "@/components/Table";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
-import { formatTextDelimiter, splitStringList } from "@/utils/dataset";
+import {
+    formatTextDelimiter,
+    formatTextWithLinks,
+    splitStringList,
+} from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import {
     DatasetSection,
@@ -101,9 +105,7 @@ const DatasetContent = ({
                 );
             case FieldType.LIST: {
                 const list = Array.from(new Set(splitStringList(value)));
-                return list.map(item => (
-                    <Typography key={item}>{item}</Typography>
-                ));
+                return list.map(item => formatTextWithLinks(item));
             }
             case FieldType.LINK_LIST: {
                 const list = Array.from(new Set(splitStringList(value)));
@@ -119,7 +121,7 @@ const DatasetContent = ({
             }
 
             default:
-                return <Typography>{formatTextDelimiter(value)}</Typography>;
+                return formatTextWithLinks(formatTextDelimiter(value));
         }
     };
 
