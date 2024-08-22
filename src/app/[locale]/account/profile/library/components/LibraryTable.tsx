@@ -26,7 +26,6 @@ const LibraryTable = ({
 }: LibraryTableProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    console.log(data);
     const results = data?.map(item => ({
         id: item.id,
         datasetId: item.dataset_id,
@@ -37,7 +36,6 @@ const LibraryTable = ({
         dataCustodianId: item.data_provider_id,
         dataCustodianMemberOf: item.data_provider_member_of,
     }));
-    console.log("results", results);
     const translations = {
         name: t("name.label"),
         darEnabled: t("darEnabled.label"),
