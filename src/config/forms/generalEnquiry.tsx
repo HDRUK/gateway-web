@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { REGEX_ALPHA_ONLY } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues = {

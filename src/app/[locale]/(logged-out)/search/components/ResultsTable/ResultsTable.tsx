@@ -48,7 +48,6 @@ const getColumns = ({
         id: "actions",
         meta: { isPinned: true },
         cell: ({ row: { original } }) => {
-            const { _id: datasetId, team: team } = original;
             return (
                 <div style={{ textAlign: "center" }}>
                     <ActionDropdown

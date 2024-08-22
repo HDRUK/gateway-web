@@ -27,14 +27,6 @@ const Sidebar = () => {
 
     const {
         content,
-        onSuccess,
-        onCancel,
-        confirmText,
-        cancelText,
-        showCancel = true,
-        showConfirm = true,
-        tertiaryButton,
-        invertCloseIconBehaviour,
         title,
         styleProps = {},
     } = store.dialogProps as unknown as SidebarProps;

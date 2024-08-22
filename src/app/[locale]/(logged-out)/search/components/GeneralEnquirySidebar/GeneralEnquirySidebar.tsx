@@ -24,7 +24,7 @@ import {
 } from "@/config/forms/generalEnquiry";
 import { getPreferredEmail } from "@/utils/user";
 
-const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
+const TRANSLATION_PATH = "pages.search.components.GeneralEnquiryForm";
 
 const GeneralEnquirySidebar = ({
     datasets,
@@ -115,11 +115,7 @@ const GeneralEnquirySidebar = ({
                         {datasets[0].teamMemberOf} {">"} {datasets[0].teamName}
                     </Typography>
                     <Typography>
-                        Send a general enquiry to one or multiple Data
-                        Custodians. You will receive an email copy of the
-                        enquiry sent. The Data Custodian(s) will reply via email
-                        to your preferred email address, with a copy shared with
-                        the Gateway.
+                        {t("helperText")}
                     </Typography>
 
                     <Form sx={{ mt: 3 }} onSubmit={handleSubmit(submitForm)}>
@@ -137,7 +133,7 @@ const GeneralEnquirySidebar = ({
                                 display: "flex",
                                 justifyContent: "end",
                             }}>
-                            <Button type="submit">Save changes</Button>
+                            <Button type="submit">{t("saveButton")}</Button>
                         </Box>
                     </Form>
                 </Box>
