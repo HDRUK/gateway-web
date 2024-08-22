@@ -94,6 +94,16 @@
                     "message": "Dataset added to your Library"
                 }
             }
+        },
+        "archiveCollection": {
+            "success": {
+                "delete": {
+                    "message": "Collection has been archived"
+                },
+                "patch": {
+                    "message": "Collection has been updated"
+                }
+            }
         }
     },
     "common": {
@@ -345,8 +355,6 @@
                             "guidance": "Guidance",
                             "next": "Next",
                             "previous": "Previous",
-                            "onlineForm": "Online Form",
-                            "uploadFile": "Upload File",
                             "welcomeMessage": "Welcome to dataset metadata on-boarding",
                             "legendIntro": "You will see a legend to help you as you on-board your dataset metadata",
                             "progressLegend": "Progress legend:",
@@ -405,7 +413,11 @@
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
                                 "downloadTemplate": "Download data dictionary template",
                                 "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
-                            }
+                            },
+                            "discardChanges": "Discard changes",
+                            "saveAsDraft": "Save changes as draft",
+                            "confirmSave": "Do you want to save changes as draft before exiting?",
+                            "backToManagementPage": "Back to dataset metadata management page"
                         },
                         "EditDataset": {
                             "editButton": "Update",
@@ -454,6 +466,14 @@
                                     "label": "Archive dataset metadata so it is no longer live on the Gateway"
                                 }
                             }
+                        },
+                        "UploadDataset": {
+                            "downloadTitle": "Download template",
+                            "downloadInfo": "Please use the template provided to create a .json file to upload for metadata onboarding.",
+                            "downloadButtonText": "Download metadata template",
+                            "successMessage": "Dataset successfully created",
+                            "upload": "Upload",
+                            "returnButtonText": "View dataset in 'Drafts' tab"
                         }
                     }
                 },
@@ -475,6 +495,33 @@
                                 "dar": "Data Access Requests",
                                 "metadata": "Metadata"
                             }
+                        }
+                    }
+                },
+                "collections": {
+                    "components": {
+                        "TeamCollections": {
+                            "title": "Collections",
+                            "text": " View, add, edit, archive and check the status of your Collections.",
+                            "create": "Add new Collection",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive the Collection so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive the Collection so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit Collection metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive the Collection so it is no longer live on the Gateway"
+                                }
+                            }
+                        },
+                        "CollectionsTab": {
+                            "notFound": "No {label} collections found"
                         }
                     }
                 },
@@ -569,8 +616,7 @@
                         }
                     }
                 }
-            },
-            "title": "My account"
+            }
         },
         "home": {
             "flashyText": "Explore the different functionalities of the Gateway",
@@ -590,8 +636,8 @@
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
-                "label": "Feasibility Analysis",
-                "title": "Feasibility Analysis Tool",
+                "label": "Cohort Discovery",
+                "title": "Cohort Discovery Tool",
                 "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
@@ -838,8 +884,8 @@
                         "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
-                        "label": "Feasibility analysis",
-                        "tooltip": "Indicates if frequency count accessible in HDR UK feasibility analysis tool"
+                        "label": "Cohort Discovery",
+                        "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
                     "containsTissue": {
                         "label": "Tissue sample availability",
@@ -1089,7 +1135,7 @@
             "descriptionTitle": "Description"
         },
         "SupportPopOut": {
-            "buttonText": "Visit Support Centre",
+            "buttonText": "Need support?",
             "giveFeedback": "Give feedback",
             "reportBug": "Report bug",
             "requestSupport": "Request support",
@@ -1135,7 +1181,7 @@
         "UploadFile": {
             "upload": "Select file",
             "uploadButtonText": "Upload",
-            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
+            "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
             "error": "An error has occured. Please check your file and try again"
         },
         "StructuralMetadataAccordion": {
@@ -1143,6 +1189,12 @@
             "columnDesc": "Column description",
             "dataType": "Data type",
             "sensitive": "Sensitive"
+        },
+        "CollectionCard": {
+            "users": "Users",
+            "entities": "Entities",
+            "entitiesCounts": "Datasets ({nDatasets}), Publications ({nPublications}), Tools ({nTools})",
+            "lastActivity": "Last activity"
         }
     },
     "modules": {

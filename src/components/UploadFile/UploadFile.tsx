@@ -25,6 +25,7 @@ type UploadFormData = {
 interface UploadFileProps {
     apiPath: string;
     allowReuploading?: boolean;
+    acceptedFileTypes?: string;
     fileUploadedAction: (fileId: number) => void;
     isUploading: Dispatch<SetStateAction<boolean>>;
 }
@@ -34,6 +35,7 @@ const TRANSLATION_PATH = "components.UploadFile";
 const UploadFile = ({
     apiPath,
     allowReuploading,
+    acceptedFileTypes = ".xlsx",
     fileUploadedAction,
     isUploading,
 }: UploadFileProps) => {
@@ -66,6 +68,8 @@ const UploadFile = ({
         setHasError(true);
         setFileId(undefined);
         setFile(undefined);
+        isUploading(false);
+        setPollFileStatus(false);
 
         notificationService.apiError(fileScanStatus?.error || t("error"));
     }, [fileScanStatus?.error, t]);
@@ -88,6 +92,9 @@ const UploadFile = ({
                 if (allowReuploading) {
                     setFileId(undefined);
                 }
+            }
+            if (fileScanStatus && fileScanStatus?.status === "FAILED") {
+                handleError();
             }
         }
     }, [
@@ -132,9 +139,14 @@ const UploadFile = ({
                             label={t("upload")}
                             name="upload"
                             uploadSx={{ display: "none" }}
-                            acceptFileTypes=".xlsx"
+                            acceptFileTypes={acceptedFileTypes}
                             onFileChange={(file: File) => setFile(file)}
-                            helperText={file?.name || t("uploadHelper")}
+                            helperText={
+                                file?.name ||
+                                t("uploadHelper", {
+                                    fileType: acceptedFileTypes,
+                                })
+                            }
                         />
                         <Button
                             type="submit"
