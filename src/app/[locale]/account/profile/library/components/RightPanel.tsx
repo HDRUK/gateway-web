@@ -45,9 +45,6 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     );
 
     const handleGeneralEnquiries = () => {
-        // to be implemented
-        console.log(selectedDatasets);
-        console.log(selectedLibraryIds);
         showSidebar({
             title: "Messages",
             content: <GeneralEnquirySidebar datasets={selectedDatasets} />,

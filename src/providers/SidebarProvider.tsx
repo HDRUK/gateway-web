@@ -44,7 +44,6 @@ const SidebarProvider: FC<GlobalSidebarProps> = ({ children }) => {
     }>({ sidebarComponent: null, sidebarProps: {} });
 
     const renderComponent = () => {
-        console.log("HERE IN SIDEBAR");
         if (!store.sidebarComponent) return null;
 
         const SidebarComponent = store.sidebarComponent;
@@ -52,8 +51,6 @@ const SidebarProvider: FC<GlobalSidebarProps> = ({ children }) => {
         if (!SidebarComponent) {
             return null;
         }
-
-        console.log("HERE IN SIDEBAR");
 
         return <SidebarComponent {...store.sidebarProps} />;
     };

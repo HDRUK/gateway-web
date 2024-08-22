@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
-import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
 import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
 import { User } from "@/interfaces/User";
@@ -31,8 +30,6 @@ const GeneralEnquirySidebar = ({
 }: {
     datasets: DatasetEnquiry[];
 }) => {
-    console.log('datasets', datasets);
-
     const { hideSidebar } = useSidebar();
 
     const t = useTranslations(TRANSLATION_PATH);
@@ -74,7 +71,7 @@ const GeneralEnquirySidebar = ({
             is_feasibility_enquiry: false,
             is_general_enquiry: true,
         };
-        console.log('payload', payload);
+
         await sendEnquiry(payload).then(res => {
             if (res) {
                 hideSidebar();
