@@ -92,53 +92,51 @@ const GeneralEnquirySidebar = ({
     }, [reset, user]);
 
     return (
-        <>
-            <BoxContainer
+        <BoxContainer
+            sx={{
+                gridTemplateColumns: {
+                    tablet: "repeat(4, 1fr)",
+                },
+                gap: {
+                    mobile: 1,
+                    tablet: 2,
+                },
+                p: 0,
+            }}>
+            <Box
                 sx={{
-                    gridTemplateColumns: {
-                        tablet: "repeat(4, 1fr)",
+                    gridColumn: {
+                        tablet: "span 4",
+                        laptop: "span 4",
                     },
-                    gap: {
-                        mobile: 1,
-                        tablet: 2,
-                    },
-                    p: 0,
                 }}>
-                <Box
-                    sx={{
-                        gridColumn: {
-                            tablet: "span 4",
-                            laptop: "span 4",
-                        },
-                    }}>
-                    {datasets.map(item => (
-                        <Typography variant="h1">
-                            {item.teamMemberOf} {">"} {item.teamName}
-                        </Typography>
+                {datasets.map(item => (
+                    <Typography variant="h1">
+                        {item.teamMemberOf} {">"} {item.teamName}
+                    </Typography>
+                ))}
+                <Typography>{t("helperText")}</Typography>
+
+                <Form sx={{ mt: 3 }} onSubmit={handleSubmit(submitForm)}>
+                    {hydratedFormFields.map(field => (
+                        <InputWrapper
+                            key={field.name}
+                            control={control}
+                            {...field}
+                        />
                     ))}
-                    <Typography>{t("helperText")}</Typography>
 
-                    <Form sx={{ mt: 3 }} onSubmit={handleSubmit(submitForm)}>
-                        {hydratedFormFields.map(field => (
-                            <InputWrapper
-                                key={field.name}
-                                control={control}
-                                {...field}
-                            />
-                        ))}
-
-                        <Box
-                            sx={{
-                                p: 0,
-                                display: "flex",
-                                justifyContent: "end",
-                            }}>
-                            <Button type="submit">{t("saveButton")}</Button>
-                        </Box>
-                    </Form>
-                </Box>
-            </BoxContainer>
-        </>
+                    <Box
+                        sx={{
+                            p: 0,
+                            display: "flex",
+                            justifyContent: "end",
+                        }}>
+                        <Button type="submit">{t("saveButton")}</Button>
+                    </Box>
+                </Form>
+            </Box>
+        </BoxContainer>
     );
 };
 
