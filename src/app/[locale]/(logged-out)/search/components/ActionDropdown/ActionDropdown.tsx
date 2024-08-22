@@ -24,9 +24,6 @@ interface ResultRowProps {
     result: SearchResultDataset;
     libraryData: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
-    teamId: number;
-    teamName: string;
-    teamMemberOf: string;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
@@ -35,9 +32,6 @@ const ActionDropdown = ({
     result,
     libraryData,
     showLibraryModal,
-    teamId,
-    teamName,
-    teamMemberOf,
 }: ResultRowProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
@@ -45,7 +39,7 @@ const ActionDropdown = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId } = result;
+    const { _id: datasetId, team: team } = result;
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -59,23 +53,21 @@ const ActionDropdown = ({
     const genEnq = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
-        console.log("teamId", teamId);
-        console.log("teamName", teamName);
-        console.log("teamMemberOf", teamMemberOf);
         if (!isLoggedIn) {
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,
             });
         } else {
+            const datasets = [
+                {
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+            ];
             showSidebar({
                 title: "Messages",
-                content: (
-                    <GeneralEnquirySidebar
-                        teamId={teamId}
-                        teamName={teamName}
-                        teamMemberOf={teamMemberOf}
-                    />
-                ),
+                content: <GeneralEnquirySidebar datasets={datasets} />,
             });
         }
     };

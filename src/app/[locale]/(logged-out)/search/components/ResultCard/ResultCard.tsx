@@ -5,6 +5,7 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { KeyedMutator } from "swr";
+import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -95,15 +96,17 @@ const ResultCard = ({
                 isProvidersDialog: true,
             });
         } else {
+            const datasets: DatasetEnquiry[] = [
+                {
+                    datasetId: Number(datasetId),
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+            ];
             showSidebar({
                 title: "Messages",
-                content: (
-                    <GeneralEnquirySidebar
-                        teamId={team.id}
-                        teamName={team.name}
-                        teamMemberOf={team.member_of}
-                    />
-                ),
+                content: <GeneralEnquirySidebar datasets={datasets} />,
             });
         }
     };

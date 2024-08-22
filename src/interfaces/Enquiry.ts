@@ -3,7 +3,13 @@ interface DatasetWithInterestType {
     interest_type: string,
 }
 
-export interface Enquiry {
+interface DatasetEnquiry {
+    datasetId: number;
+    teamId: number;
+    teamName: string;
+    teamMemberOf: string;
+}
+interface Enquiry {
     from: string,
     team_id: number,
     project_title: string,
@@ -19,4 +25,9 @@ export interface Enquiry {
     funding: string,
     potential_research_benefit: string,
     query: string,
+};
+
+export type {
+    DatasetEnquiry,
+    Enquiry,
 };
