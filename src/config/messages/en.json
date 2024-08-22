@@ -831,7 +831,7 @@
                 },
                 "GeneralEnquiryForm": {
                     "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
-                    "saveButton": "Save changes"
+                    "saveButton": "Send message"
                 },
                 "PopulationFilter": {
                     "includeUnreported": "Include {unreportedCount} datasets where population is not reported"
