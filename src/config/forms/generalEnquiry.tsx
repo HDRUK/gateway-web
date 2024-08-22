@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { REGEX_PHONE } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -9,16 +10,13 @@ const defaultValues = {
     query: "",
 };
 
-const phoneRegex =
-    /^(\+?\d{1,4}?[\s.-]?)?(\(?\d{1,4}?\)?[\s.-]?)?[\d\s.-]{5,15}$/;
-
 const validationSchema = yup
     .object({
         number: yup
             .string()
             .transform(value => (value === "" ? null : value))
             .nullable()
-            .matches(phoneRegex, "Contact number is not valid")
+            .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
         query: yup.string().required().max(1500).label("Your enquiry"),
     })

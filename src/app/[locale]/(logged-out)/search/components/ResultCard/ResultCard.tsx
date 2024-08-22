@@ -49,6 +49,7 @@ const ResultCard = ({
     const highlight = get(result, "highlight");
     const { isLoggedIn, user } = useAuth();
     const { _id: datasetId, team } = result;
+
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
     useEffect(() => {
