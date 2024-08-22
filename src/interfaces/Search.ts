@@ -92,6 +92,7 @@ export interface SearchResultDataUse extends SearchResultBase {
     organisationName: string;
     publisher: string;
     datasetTitles: string[];
+    datasetIds: number[];
 }
 
 export interface SearchResultPublication extends SearchResultBase {

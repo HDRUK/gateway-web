@@ -1,5 +1,6 @@
 import { Divider, ListItem, ListItemText } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { SearchResultDataUse } from "@/interfaces/Search";
 import Button from "@/components/Button";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
@@ -27,6 +28,7 @@ const CHARACTER_LIMIT = 50;
 
 const ResultCardDataUse = ({ result }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { push } = useRouter();
     const { showDialog } = useDialog();
 
     const leadOrgNames = result?.organisationName?.split(",");
@@ -131,6 +133,11 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                 }
                                                 isButton
                                                 characterLimit={CHARACTER_LIMIT}
+                                                onClick={() =>
+                                                    push(
+                                                        `/${RouteName.DATASET_ITEM}/${result.datasetIds[0]}`
+                                                    )
+                                                }
                                             />
                                         </ResultButtonWrap>
                                         {result.datasetTitles?.length > 1 && (
