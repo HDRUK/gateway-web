@@ -1360,10 +1360,10 @@
                 "noResults": "No results found"
             },
             "DatasetQuickView": {
-                "keyWords":"Keywords",
-                "dataType":"Data type",
-                "collectionSource":"Collection source",
-                "noCollectionSource":"No collection sources found"
+                "keyWords": "Keywords",
+                "dataType": "Data type",
+                "collectionSource": "Collection source",
+                "noCollectionSource": "No collection sources found"
             },
             "FeasibilityEnquiryDialog": {
                 "enquire": "Make feasibility enquiry for this dataset only",
