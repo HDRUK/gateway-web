@@ -2,7 +2,7 @@
 
 exports[`Footer should render component 1`] = `
 <div>
-  <div
+  <footer
     class="mui-style-7ip1ev"
   >
     <div
@@ -86,56 +86,60 @@ exports[`Footer should render component 1`] = `
       <ul
         class="mui-style-63817c"
       >
-        <ul
-          class="mui-style-1hdbc19"
-        >
-          <li>
-            <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-              href="https://www.hdruk.ac.uk/"
-            >
-              Visit the HDR UK Site
-            </a>
-          </li>
-          <li>
-            <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-              href="https://www.healthdatagateway.org/about/terms-and-conditions"
-            >
-              Terms and conditions
-            </a>
-          </li>
-          <li>
-            <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-              href="https://www.healthdatagateway.org/about/privacy-policy"
-            >
-              Privacy policy
-            </a>
-          </li>
-        </ul>
-        <ul
-          class="mui-style-1hdbc19"
-        >
-          <li>
-            <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-              href="https://www.healthdatagateway.org/about/cookie-notice"
-            >
-              Cookie notice
-            </a>
-          </li>
-          <li>
-            <a
-              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-              href="https://api.www.healthdatagateway.org/api-docs/?_gl=1*1pz4jlx*_ga*MTcwOTYwOTYxMy4xNjc3MjgyNjU2*_ga_GJ2NS0NB4W*MTcxNzA2NTg0MC40NTYuMS4xNzE3MDY1ODUxLjQ5LjAuMA.."
-            >
-              API docs
-            </a>
-          </li>
-        </ul>
+        <li>
+          <ul
+            class="mui-style-1hdbc19"
+          >
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+                href="https://www.hdruk.ac.uk/"
+              >
+                Visit the HDR UK Site
+              </a>
+            </li>
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+                href="https://www.healthdatagateway.org/about/terms-and-conditions"
+              >
+                Terms and conditions
+              </a>
+            </li>
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+                href="https://www.healthdatagateway.org/about/privacy-policy"
+              >
+                Privacy policy
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <ul
+            class="mui-style-1hdbc19"
+          >
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+                href="https://www.healthdatagateway.org/about/cookie-notice"
+              >
+                Cookie notice
+              </a>
+            </li>
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
+                href="https://api.www.healthdatagateway.org/api-docs/?_gl=1*1pz4jlx*_ga*MTcwOTYwOTYxMy4xNjc3MjgyNjU2*_ga_GJ2NS0NB4W*MTcxNzA2NTg0MC40NTYuMS4xNzE3MDY1ODUxLjQ5LjAuMA.."
+              >
+                API docs
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
-  </div>
+  </footer>
 </div>
 `;
