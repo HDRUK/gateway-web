@@ -46,12 +46,14 @@ const DatasetMindMap = ({
             data: {
                 ...rootNode.data,
                 label:
-                    data.metadata.metadata.summary.publisher.name ||
+                    data.metadata.metadata.summary.publisher.publisherName ||
                     t(rootNode.data.name),
                 href: `/data-custodian/${teamId}`,
             },
         };
     }, [data, t]);
+
+    const emptyNodes = useMemo<string[]>(() => [], []);
 
     const hydratedOuterNodes = useMemo(
         () =>
@@ -59,13 +61,15 @@ const DatasetMindMap = ({
                 .map(node => {
                     let href = null;
                     let action = null;
+                    let hidden = false;
                     const title = data.metadata.metadata.summary.shortTitle;
 
                     if (node.id === "node-synthetic") {
                         href =
                             data.metadata.metadata.linkage.syntheticDataWebLink;
                         if (!href) {
-                            return undefined;
+                            emptyNodes.push(node.id);
+                            hidden = true;
                         }
                     } else if (
                         [
@@ -77,7 +81,8 @@ const DatasetMindMap = ({
                         const entityName = node.id.replace("node-", "");
                         const entityCount = linkageCounts[entityName];
                         if (!entityCount) {
-                            return undefined;
+                            hidden = true;
+                            emptyNodes.push(node.id);
                         }
                         href = `${node.data.href}&datasetTitles=${title}`;
                     }
@@ -100,7 +105,8 @@ const DatasetMindMap = ({
                                         block: "start",
                                     });
                         } else {
-                            return undefined;
+                            hidden = true;
+                            emptyNodes.push(node.id);
                         }
                     }
 
@@ -111,6 +117,7 @@ const DatasetMindMap = ({
                             label: t(node.data.name),
                             href,
                             action,
+                            hidden,
                         },
                     };
                 })
@@ -130,7 +137,9 @@ const DatasetMindMap = ({
                 {...rest}
                 rootNode={hydratedRootNode}
                 outerNodes={hydratedOuterNodes}
-                initialEdges={initialEdges}
+                initialEdges={initialEdges.filter(
+                    edge => !emptyNodes.includes(edge.target)
+                )}
                 connectionLineStyle={connectionLineStyle}
             />
         </Paper>
