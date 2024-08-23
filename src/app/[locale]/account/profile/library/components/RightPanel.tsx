@@ -11,6 +11,7 @@ import Typography from "@/components/Typography";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
 import GeneralEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/GeneralEnquirySidebar";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
@@ -55,6 +56,10 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
         // to be implemented
         console.log(selectedDatasets);
         console.log(selectedLibraryIds);
+        showSidebar({
+            title: "Messages",
+            content: <FeasibilityEnquirySidebar datasets={selectedDatasets} />,
+        });
     };
 
     const handleMultiDelete = () => {
