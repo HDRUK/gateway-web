@@ -84,23 +84,22 @@ const SupportPopOut = () => {
                     <SupportList>
                         {links.map(link => (
                             <li key={link.label}>
-                                <Link
-                                    passHref
+                                    <Button
+                                    component={Link}
                                     href={link.href}
                                     {...(link.isExternal && {
                                         target: "_blank",
                                         rel: "noreferrer",
-                                    })}>
-                                    <Button
+                                    })}
                                         sx={{
                                             borderRadius: 0,
                                             boxShadow: "none",
                                         }}
-                                        fullWidth
+                                         fullWidth
                                         color="yellowCustom">
                                         {link.label}
                                     </Button>
-                                </Link>
+
                             </li>
                         ))}
                     </SupportList>

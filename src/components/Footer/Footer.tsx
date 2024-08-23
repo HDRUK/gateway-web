@@ -91,6 +91,7 @@ const Footer = () => {
                     </FooterCopyright>
                 </Box>
                 <FooterLinksContainer>
+                    <li>
                     <FooterLinks>
                         {links1.map(link => (
                             <li key={`${link.label}-${link.href}`}>
@@ -100,6 +101,8 @@ const Footer = () => {
                             </li>
                         ))}
                     </FooterLinks>
+                    </li>
+                    <li>
                     <FooterLinks>
                         {links2.map(link => (
                             <li key={`${link.label}-${link.href}`}>
@@ -109,6 +112,7 @@ const Footer = () => {
                             </li>
                         ))}
                     </FooterLinks>
+                    </li>
                 </FooterLinksContainer>
             </FooterContainer>
         </FooterWrapper>
