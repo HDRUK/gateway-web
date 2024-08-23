@@ -84,22 +84,21 @@ const SupportPopOut = () => {
                     <SupportList>
                         {links.map(link => (
                             <li key={link.label}>
-                                    <Button
+                                <Button
                                     component={Link}
                                     href={link.href}
                                     {...(link.isExternal && {
                                         target: "_blank",
                                         rel: "noreferrer",
                                     })}
-                                        sx={{
-                                            borderRadius: 0,
-                                            boxShadow: "none",
-                                        }}
-                                         fullWidth
-                                        color="yellowCustom">
-                                        {link.label}
-                                    </Button>
-
+                                    sx={{
+                                        borderRadius: 0,
+                                        boxShadow: "none",
+                                    }}
+                                    fullWidth
+                                    color="yellowCustom">
+                                    {link.label}
+                                </Button>
                             </li>
                         ))}
                     </SupportList>
