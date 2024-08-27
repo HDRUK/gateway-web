@@ -985,7 +985,9 @@
                     "yearTitle": "Years",
                     "associatedTissuesTitle": "Associated Tissues",
                     "geographicCoverageTitle": "Geographic coverage",
-                    "leadTimeTitle": "Lead time"
+                    "leadTimeTitle": "Lead time",
+                    "notReported": "Not reported",
+                    "dataOnly": "Data only"
                 },
                 "DatasetMindMap": {
                     "tools": "View associated data analysis scripts/software",

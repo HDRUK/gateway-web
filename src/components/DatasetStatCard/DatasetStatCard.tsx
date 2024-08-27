@@ -1,6 +1,7 @@
 "use client";
 
 import Typography from "@mui/material/Typography";
+import { hasValidValue } from "@/utils/dataset";
 import TooltipIcon from "../TooltipIcon";
 import {
     InfoWrapper,
@@ -18,6 +19,7 @@ export interface DatasetStatCardProps {
     iconSrc: string;
     unit?: string;
     helperText?: string;
+    noStatText?: string;
 }
 
 const DatasetStatCard = ({
@@ -27,6 +29,7 @@ const DatasetStatCard = ({
     iconSrc,
     unit,
     helperText,
+    noStatText,
 }: DatasetStatCardProps) => {
     return (
         <StatCard>
@@ -40,23 +43,27 @@ const DatasetStatCard = ({
             </Title>
 
             <InfoWrapper>
-                <StatWrapper>
-                    {Array.isArray(stat) ? (
-                        stat.map(item => (
-                            <Typography
-                                fontSize={16}
-                                sx={{ alignSelf: "flex-start" }}
-                                key={`${stat}_${item}`}>
-                                {item}
+                {hasValidValue(stat) ? (
+                    <StatWrapper>
+                        {Array.isArray(stat) ? (
+                            stat.map(item => (
+                                <Typography
+                                    fontSize={16}
+                                    sx={{ alignSelf: "flex-start" }}
+                                    key={`${stat}_${item}`}>
+                                    {item}
+                                </Typography>
+                            ))
+                        ) : (
+                            <Typography fontSize={largeStatText ? 24 : 16}>
+                                {stat}
                             </Typography>
-                        ))
-                    ) : (
-                        <Typography fontSize={largeStatText ? 24 : 16}>
-                            {stat}
-                        </Typography>
-                    )}
-                    {unit && <Typography sx={{ pb: 1 }}>{unit}</Typography>}
-                </StatWrapper>
+                        )}
+                        {unit && <Typography sx={{ pb: 1 }}>{unit}</Typography>}
+                    </StatWrapper>
+                ) : (
+                    <StatWrapper>{noStatText}</StatWrapper>
+                )}
 
                 {iconSrc && (
                     <StatImageWrapper>
