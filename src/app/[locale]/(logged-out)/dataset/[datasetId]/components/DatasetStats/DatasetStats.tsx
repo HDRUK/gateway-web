@@ -96,6 +96,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                 <DatasetStatCard
                     title={datasetStat.title}
                     stat={datasetStat.stat}
+                    noStatText={datasetStat.noStatText}
                     largeStatText={!!datasetStat.largeStatText}
                     unit={datasetStat.unit}
                     iconSrc={datasetStat.iconSrc}
