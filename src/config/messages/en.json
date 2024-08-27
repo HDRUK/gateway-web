@@ -643,7 +643,7 @@
             "dataProviders": {
                 "label": "Data Custodians",
                 "title": "Data Custodians",
-                "text": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts/software), and find out how to contact them."
+                "text": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
             },
             "collections": {
                 "label": "Collections",
@@ -954,7 +954,7 @@
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis scripts, tools and software ({ length })"
+                    "heading": "Analysis Scripts & Software ({ length })"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
@@ -984,7 +984,7 @@
                     "leadTimeTitle": "Lead time"
                 },
                 "DatasetMindMap": {
-                    "tools": "View associated data analysis scripts/software",
+                    "tools": "View associated data analysis scripts & software",
                     "durs": "Research projects/ Data Use",
                     "linkages": "See which datasets are linkable",
                     "collections": "Explore associated Collections",
@@ -1284,7 +1284,7 @@
                 "radioDataset": "Datasets",
                 "radioDatause": "Data uses",
                 "radioPublication": "Publications",
-                "radioTool": "Analysis scripts, tools & software",
+                "radioTool": "Analysis Scripts & Software",
                 "chipDataset": "Dataset",
                 "chipDatause": "Data use",
                 "chipPublication": "Publication",
