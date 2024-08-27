@@ -15,6 +15,7 @@ export enum RouteName {
     DATASET_ITEM = "dataset",
     DATA_PROVIDERS = "data-providers",
     DATA_PROVIDERS_ITEM = "data-custodian",
+    COLLECTIONS = "collections",
     COLLECTION_ITEM = "collection",
     TOOLS = "tools",
     TOOL_ITEM = "tool",
@@ -27,6 +28,7 @@ export enum RouteName {
     HOW_TO_SEARCH = "how-to-search",
     INTEGRATION = "integration",
     INTEGRATIONS = "integrations",
+    LIBRARY = "library",
     LIST = "list",
     PERMISSIONS = "permissions",
     PROFILE = "profile",
@@ -48,4 +50,5 @@ export enum RouteName {
     SUPPORT_DUR = "support/data-use-register",
     SUPPORT_DAR = "support/data-access-request",
     SUPPORT_TOOLS = "support/tools",
+    UPLOAD = "upload",
 }

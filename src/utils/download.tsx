@@ -1,8 +1,8 @@
-import { CsvExport } from "@/interfaces/CsvExport";
+import { FileExport } from "@/interfaces/FileExport";
 
-const downloadCSV = (csvData: CsvExport | undefined) => {
-    if (!csvData) return;
-    const { content, type, filename } = csvData;
+const downloadFile = (fileData: FileExport | undefined) => {
+    if (!fileData) return;
+    const { content, type, filename } = fileData;
     const blob = new Blob([content], { type });
 
     const link = document.createElement("a");
@@ -13,4 +13,4 @@ const downloadCSV = (csvData: CsvExport | undefined) => {
     link.remove();
 };
 
-export { downloadCSV };
+export { downloadFile };

@@ -87,6 +87,7 @@ export interface SearchResultDataUse extends SearchResultBase {
     organisationName: string;
     publisher: string;
     datasetTitles: string[];
+    datasetIds: number[];
 }
 
 export interface SearchResultPublication extends SearchResultBase {
@@ -139,7 +140,7 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
-    DATA_PROVIDERS = "data_provider_colls",
+    DATA_PROVIDERS = "data_providers",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",

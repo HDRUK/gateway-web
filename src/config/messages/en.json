@@ -84,6 +84,26 @@
                     "message": "Publication successfully archived"
                 }
             }
+        },
+        "updateYourLibrary": {
+            "success": {
+                "delete": {
+                    "message": "Dataset removed from your Library"
+                },
+                "post": {
+                    "message": "Dataset added to your Library"
+                }
+            }
+        },
+        "archiveCollection": {
+            "success": {
+                "delete": {
+                    "message": "Collection has been archived"
+                },
+                "patch": {
+                    "message": "Collection has been updated"
+                }
+            }
         }
     },
     "common": {
@@ -252,6 +272,39 @@
                             }
                         }
                     }
+                },
+                "library": {
+                    "title": "Library",
+                    "text": "The space where you can sort all your datasets and entity types",
+                    "components": {
+                        "RightPanel": {
+                            "generalEnquiries": {
+                                "title": "General Enquiry",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a general enquiry"
+                            },
+                            "feasabilityEnquiries": {
+                                "title": "Feasability Enquiry",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "buttonText": "Make a feasibility enquiry"
+                            },
+                            "multiDelete": {
+                                "label": "Multi delete"
+                            }
+                        }
+                    },
+                    "name": {
+                        "label": "Name"
+                    },
+                    "darEnabled": {
+                        "label": "Data Access Request Enabled"
+                    },
+                    "dataCustodian": {
+                        "label": "Data Custodian"
+                    },
+                    "entityType": {
+                        "label": "Entity Type"
+                    }
                 }
             },
             "team": {
@@ -268,7 +321,6 @@
                 },
                 "dataUses": {
                     "title": "Data Uses",
-                    "createDataUse": "Create Data Use",
                     "description": "View, add, edit, archive and check the status of your data uses.",
                     "uploadButton": "+ Upload",
                     "components": {
@@ -303,8 +355,6 @@
                             "guidance": "Guidance",
                             "next": "Next",
                             "previous": "Previous",
-                            "onlineForm": "Online Form",
-                            "uploadFile": "Upload File",
                             "welcomeMessage": "Welcome to dataset metadata on-boarding",
                             "legendIntro": "You will see a legend to help you as you on-board your dataset metadata",
                             "progressLegend": "Progress legend:",
@@ -344,19 +394,42 @@
                                 "politics": "Politics",
                                 "politicsTooltip": "Includes any data related to political views, activities, voting, etc."
                             },
-                            "errorLoading": "An error occured while loading the Dataset"
+                            "errorLoading": "An error occured while loading the Dataset",
+                            "structuralMetadata": {
+                                "intro": "Upload a file with the description of all table and data elements that are included in the dataset. This will be rendered in tabular format for a researcher to review the dataset table(s).",
+                                "metadataFieldHeader": "Metadata field",
+                                "metadataField1": "Table name <red>*</red>",
+                                "metadataField2": "Table description",
+                                "metadataField3": "Column name <red>*</red>",
+                                "metadataField4": "Column description <red>*</red>",
+                                "metadataField5": "Data type <red>*</red>",
+                                "metadataField6": "Sensitive <red>*</red>",
+                                "completionGuidanceHeader": "Completion Guidance",
+                                "completionGuidance1": "Name of the table in the dataset. Use a fully qualified name if appropriate.",
+                                "completionGuidance2": "Description of the table in the dataset.",
+                                "completionGuidance3": "Name of the column in the table dataset.",
+                                "completionGuidance4": "Description of the column in the table dataset.",
+                                "completionGuidance5": "Type of data contained in the column.",
+                                "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
+                                "downloadTemplate": "Download data dictionary template",
+                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
+                            },
+                            "discardChanges": "Discard changes",
+                            "saveAsDraft": "Save changes as draft",
+                            "confirmSave": "Do you want to save changes as draft before exiting?",
+                            "backToManagementPage": "Back to dataset metadata management page"
                         },
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
                         },
                         "CreateDataUse": {
-                            "upload": "Upload",
-                            "uploadButtonText": "Upload",
-                            "uploadHelper": "Must be a .xlsx file, cannot exceed 10 mb per file.",
-                            "error": "An error has occured. Please check your file and try again",
+                            "downloadTitle": "Download template",
+                            "downloadInfo": "Please use the template provided to add new approved data uses. Alternatively, you can download your current data use register from the Gateway, edit offline and upload the edited file below.",
+                            "downloadButtonText": "Download the data use template",
                             "successMessage": "Data Use successfully created",
-                            "returnButtonText": "Return to Data Uses"
+                            "upload": "Upload",
+                            "returnButtonText": "View Data Uses"
                         },
                         "EditDataUse": {
                             "editDataUse": "Edit a data use",
@@ -393,6 +466,14 @@
                                     "label": "Archive dataset metadata so it is no longer live on the Gateway"
                                 }
                             }
+                        },
+                        "UploadDataset": {
+                            "downloadTitle": "Download template",
+                            "downloadInfo": "Please use the template provided to create a .json file to upload for metadata onboarding.",
+                            "downloadButtonText": "Download metadata template",
+                            "successMessage": "Dataset successfully created",
+                            "upload": "Upload",
+                            "returnButtonText": "View dataset in 'Drafts' tab"
                         }
                     }
                 },
@@ -417,7 +498,46 @@
                         }
                     }
                 },
+                "collections": {
+                    "components": {
+                        "TeamCollections": {
+                            "title": "Collections",
+                            "text": " View, add, edit, archive and check the status of your Collections.",
+                            "create": "Add new Collection",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive the Collection so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive the Collection so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit Collection metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive the Collection so it is no longer live on the Gateway"
+                                }
+                            }
+                        },
+                        "CollectionsTab": {
+                            "notFound": "No {label} collections found"
+                        }
+                    }
+                },
                 "tools": {
+                    "create": {
+                        "title": "Manage or create analysis script, tool or software",
+                        "intro": "Analysis script, tool or software can be anything you or someone else created or used during a research project",
+                        "addResources": "Add resources (optional)",
+                        "addResourcesInfo": "Link publications, data uses and other analysis scripts, tools or software. Resources must be added to the Gateway first",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
+                        "labelTag": "Analysis script, tools and software"
+                    },
                     "components": {
                         "TeamTools": {
                             "title": "Analysis script, tools and software",
@@ -496,8 +616,7 @@
                         }
                     }
                 }
-            },
-            "title": "My account"
+            }
         },
         "home": {
             "flashyText": "Explore the different functionalities of the Gateway",
@@ -517,8 +636,8 @@
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
-                "label": "Feasibility Analysis",
-                "title": "Feasibility Analysis Tool",
+                "label": "Cohort Discovery",
+                "title": "Cohort Discovery Tool",
                 "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
             },
             "dataProviders": {
@@ -723,7 +842,10 @@
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
                     "dataCustodian": "Data Custodian",
                     "dataCustodianTooltip": "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
-                    "showAll": "Quick view"
+                    "showAll": "Quick view",
+                    "actions": "Actions",
+                    "addToLibrary": "Add to library",
+                    "removeFromLibrary": "Remove from library"
                 },
                 "ResultCardPublication": {
                     "published": "Published",
@@ -734,6 +856,9 @@
                     "showAll": "Quick view"
                 },
                 "ResultsTable": {
+                    "action": {
+                        "label": "Action search result"
+                    },
                     "title": {
                         "label": "Metadata title"
                     },
@@ -759,8 +884,8 @@
                         "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
-                        "label": "Feasibility analysis",
-                        "tooltip": "Indicates if frequency count accessible in HDR UK feasibility analysis tool"
+                        "label": "Cohort Discovery",
+                        "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
                     "containsTissue": {
                         "label": "Tissue sample availability",
@@ -770,6 +895,14 @@
                         "label": "Structural metadata",
                         "tooltip": "Descriptions and details about the tables and columns within a dataset"
                     }
+                }
+            },
+            "hooks": {
+                "useAddLibraryModal": {
+                    "title": "Add dataset to your library",
+                    "confirmText": "Add and go to library",
+                    "buttonContinueText": "Add to library and continue searching",
+                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple Data Custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple Data Custodians (if the Data Custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
                 }
             }
         },
@@ -852,12 +985,25 @@
                 },
                 "DatasetMindMap": {
                     "tools": "View associated data analysis scripts/software",
-                    "dur": "Research projects/ Data Use",
+                    "durs": "Research projects/ Data Use",
                     "linkages": "See which datasets are linkable",
                     "collections": "Explore associated Collections",
                     "synthetic": "Access synthetic data",
                     "root": "Data custodian link",
                     "structuralMetadata": "Review data variables"
+                },
+                "Linkages": {
+                    "title": "Relationships:",
+                    "noRelationships": "No relationships found",
+                    "isPartOf": "Dataset is part of ({ count })",
+                    "isDerivedFrom": "Datasets this derives from ({ count })",
+                    "linkedDatasets": "Linkages Datasets ({ count })",
+                    "isMemberOf": "Similar Datasets ({ count })"
+                },
+                "Sources": {
+                    "datasetTypes": "Dataset Types",
+                    "collectionSources": "Collection Sources",
+                    "noCollectionSources": "No collection sources listed"
                 }
             }
         },
@@ -989,7 +1135,7 @@
             "descriptionTitle": "Description"
         },
         "SupportPopOut": {
-            "buttonText": "Visit Support Centre",
+            "buttonText": "Need support?",
             "giveFeedback": "Give feedback",
             "reportBug": "Report bug",
             "requestSupport": "Request support",
@@ -1031,6 +1177,24 @@
             "completion": "Completion",
             "requiredFields": "required fields",
             "optionalFields": "optional fields"
+        },
+        "UploadFile": {
+            "upload": "Select file",
+            "uploadButtonText": "Upload",
+            "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
+            "error": "An error has occured. Please check your file and try again"
+        },
+        "StructuralMetadataAccordion": {
+            "columnName": "Column name",
+            "columnDesc": "Column description",
+            "dataType": "Data type",
+            "sensitive": "Sensitive"
+        },
+        "CollectionCard": {
+            "users": "Users",
+            "entities": "Entities",
+            "entitiesCounts": "Datasets ({nDatasets}), Publications ({nPublications}), Tools ({nTools})",
+            "lastActivity": "Last activity"
         }
     },
     "modules": {
@@ -1106,10 +1270,32 @@
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
             },
-            "AddDataUseDialog": {
-                "title": "I would like to...",
-                "manualButton": "Manually input data use",
-                "uploadButton": "Upload a file of data use"
+            "RelatedResources": {
+                "title": "Add related resources",
+                "intro": "Search for data uses, publications and other analysis scripts, tools and software to add to your entry. Resources must already be on the Gateway.",
+                "resultsShown": "results shown",
+                "selected": "selected",
+                "cancel": "Cancel",
+                "addResources": "Add resources",
+                "headerAdd": "Action",
+                "headerName": "Name",
+                "dataProvider": "Data Provider",
+                "entityType": "Entity Type",
+                "radioDataset": "Datasets",
+                "radioDatause": "Data uses",
+                "radioPublication": "Publications",
+                "radioTool": "Analysis scripts, tools & software",
+                "chipDataset": "Dataset",
+                "chipDatause": "Data use",
+                "chipPublication": "Publication",
+                "chipTool": "Analysis Scripts & Software",
+                "noResults": "No results found"
+            },
+            "DatasetQuickView": {
+                "keyWords": "Keywords",
+                "dataType": "Data type",
+                "collectionSource": "Collection source",
+                "noCollectionSource": "No collection sources found"
             }
         }
     }

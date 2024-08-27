@@ -13,6 +13,8 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
@@ -138,4 +140,6 @@ export {
     HandymanOutlinedIcon,
     CloudUploadIcon,
     ArticleIcon,
+    BookmarkBorderIcon,
+    BookmarksIcon,
 };

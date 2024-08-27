@@ -3,17 +3,20 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs from "dayjs";
 import { get, omit } from "lodash";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { buildYup } from "schema-to-yup";
+import { AuthUser } from "@/interfaces/AuthUser";
 import {
     CreateOrigin,
     Dataset,
     DatasetStatus,
     Metadata,
     NewDataset,
+    StructuralMetadata,
 } from "@/interfaces/Dataset";
 import {
     FormHydration,
@@ -26,12 +29,15 @@ import Button from "@/components/Button";
 import Form from "@/components/Form";
 import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
+import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
+import usePut from "@/hooks/usePut";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { DataStatus } from "@/consts/application";
@@ -58,6 +64,7 @@ import {
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
+import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
@@ -65,15 +72,23 @@ import FormFieldArray from "./FormFieldArray";
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
-    userId: number;
+    user: AuthUser;
 }
 
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
+const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
 
-const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
+const getMetadata = (isDraft: boolean) =>
+    isDraft
+        ? "versions[0].metadata.original_metadata"
+        : "versions[0].metadata.metadata";
+
+const today = dayjs();
+
+const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -95,31 +110,45 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
 
     const isEditing = params?.datasetId;
 
+    const [datasetId, setDatasetId] = useState<string | undefined>(
+        params?.datasetId
+    );
+
     const { push } = useRouter();
 
-    const { data: dataset, isLoading } = useGet<Dataset>(
+    const {
+        data: dataset,
+        isLoading,
+        mutate: refetchDataset,
+    } = useGet<Dataset>(
         isDraft
-            ? `${apis.datasetsV1Url}/${params?.datasetId}`
-            : `${apis.datasetsV1Url}/${params?.datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
-        { shouldFetch: !!params?.teamId && !!params?.datasetId }
+            ? `${apis.datasetsV1Url}/${datasetId}`
+            : `${apis.datasetsV1Url}/${datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
+        { shouldFetch: !!params?.teamId && !!datasetId }
     );
 
     const [hasError, setHasError] = useState<boolean>();
     const [existingFormData, setExistingFormData] = useState<Metadata>();
-
-    const bannerTabList = [
-        { label: t("onlineForm"), value: "FORM" },
-        { label: t("uploadFile"), value: "UPLOAD" },
-    ].map(tabItem => ({
-        label: tabItem.label,
-        value: tabItem.value,
-        content: null,
-    }));
+    const [struturalMetadata, setStructuralMetadata] =
+        useState<StructuralMetadata[]>();
 
     const schemaFields = formJSON.schema_fields;
 
+    const defaultFormValues = {
+        "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
+        "Dataset Version": "1.0.0",
+        "revision version": "1.0.0",
+        "revision url": "http://www.example.com/",
+        "Metadata Issued Datetime": today,
+        "Last Modified Datetime": today,
+        "Name of data provider": "--",
+        "Dataset population size": 1,
+        "contact point": user?.email,
+        "Observations array": null,
+    };
+
     useEffect(() => {
-        if (isLoading || existingFormData || !isEditing) {
+        if (isLoading || !isEditing) {
             return;
         }
 
@@ -128,7 +157,9 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
             return;
         }
 
-        let latestMetadata = get(dataset, "versions[0].metadata.metadata");
+        const metadataLocation = getMetadata(isDraft);
+
+        let latestMetadata = get(dataset, metadataLocation);
 
         if (isDuplicate) {
             latestMetadata = omit(latestMetadata, "summary.title");
@@ -140,7 +171,18 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         );
 
         setExistingFormData(mappedFormData);
-    }, [dataset, existingFormData, isLoading]);
+    }, [dataset, isLoading]);
+
+    useEffect(() => {
+        if (!dataset) {
+            return;
+        }
+
+        const metadataLocation = getMetadata(isDraft);
+
+        const latestMetadata = get(dataset, metadataLocation);
+        setStructuralMetadata(latestMetadata?.structuralMetadata);
+    }, [dataset]);
 
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
@@ -170,6 +212,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [guidanceText, setGuidanceText] = useState<string>();
+    const [autoSaveDraft, setAutoSaveDraft] = useState<boolean>();
 
     const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
     const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
@@ -181,7 +224,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         }
     );
 
-    const updateDataset = usePatch<NewDataset>(apis.datasetsV1Url, {
+    const updateDataset = usePut<NewDataset>(apis.datasetsV1Url, {
         itemName: "Dataset",
         query: datasetVersionQuery,
     });
@@ -208,18 +251,20 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         trigger,
         getValues,
         reset,
+        formState,
     } = useForm({
         mode: "onTouched",
         resolver: yupResolver(yupSchema),
-        defaultValues: existingFormData,
+        defaultValues: defaultFormValues,
     });
 
     useEffect(() => {
         if (!existingFormData) {
+            reset(defaultFormValues);
             return;
         }
 
-        reset(existingFormData);
+        reset({ ...defaultFormValues, ...existingFormData });
     }, [existingFormData]);
 
     const formSections = [INITIAL_FORM_SECTION]
@@ -228,7 +273,7 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                 hasVisibleFieldsForLocation(schemaFields, location)
             )
         )
-        .concat(SUBMISSON_FORM_SECTION);
+        .concat([STRUCTURAL_METADATA_FORM_SECTION, SUBMISSON_FORM_SECTION]);
 
     const currentSectionIndex = selectedFormSection
         ? formSections.indexOf(selectedFormSection)
@@ -307,12 +352,21 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         const formPayload = isEditing
             ? {
                   ...omit(dataset, ["versions"]),
+                  team_id: teamId,
+                  user_id: user.id,
                   status: isDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
+                  create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
-                      metadata: mappedFormData,
+                      metadata: {
+                          observations: [],
+                          coverage: null,
+                          ...mappedFormData,
+                      },
                   },
               }
             : isDuplicate
@@ -322,27 +376,35 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       ...dataset?.versions[0].metadata,
-                      metadata: mappedFormData,
+                      metadata: {
+                          observations: [],
+                          coverage: null,
+                          ...mappedFormData,
+                      },
                   },
               }
             : {
                   team_id: teamId,
-                  user_id: userId,
+                  user_id: user.id,
                   status: isDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   create_origin: "MANUAL" as CreateOrigin,
                   metadata: {
+                      schemaModel: SCHEMA_NAME,
+                      schemaVersion: SCHEMA_VERSION,
                       metadata: {
                           issued: new Date().toString(),
                           modified: new Date().toString(),
-                          revisions: [],
+                          observations: [],
+                          coverage: null,
                           ...mappedFormData,
                       },
                   },
               };
-
         try {
             const formPostRequest = isEditing
                 ? await updateDataset(
@@ -351,12 +413,18 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                   )
                 : await createDataset(formPayload as NewDataset);
 
-            if (formPostRequest !== null) {
+            if (formPostRequest !== null && !autoSaveDraft) {
+                reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
                 );
             } else {
                 setIsSaving(false);
+
+                if (formPostRequest && autoSaveDraft) {
+                    setDatasetId(formPostRequest as string);
+                    setAutoSaveDraft(false);
+                }
             }
         } catch (err) {
             setIsSaving(false);
@@ -439,6 +507,33 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
         }
     };
 
+    const isStructuralMetadataSection =
+        selectedFormSection === STRUCTURAL_METADATA_FORM_SECTION;
+
+    // Dataset needs to be saved before adding structural metadata
+    useEffect(() => {
+        if (selectedFormSection !== STRUCTURAL_METADATA_FORM_SECTION) {
+            return;
+        }
+
+        if (!datasetId) {
+            setAutoSaveDraft(true);
+            handleSaveDraft();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedFormSection, datasetId]);
+
+    useUnsavedChanges({
+        shouldConfirmLeave: formState.isDirty,
+        onSuccess: handleSaveDraft,
+        modalProps: {
+            cancelText: t("discardChanges"),
+            confirmText: t("saveAsDraft"),
+            title: t("confirmSave"),
+            content: "",
+        },
+    });
+
     if (isEditing && isLoading) {
         return <Loading />;
     }
@@ -446,15 +541,28 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
     if (hasError) {
         return (
             <Box>
-                <Typography variant="h2">{t("errorLoading")}</Typography>;
+                <Typography variant="h2">{t("errorLoading")}</Typography>
             </Box>
         );
     }
 
     return (
         <>
+            <Link
+                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`}
+                underline="hover"
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    pb: 0.5,
+                    pl: 2,
+                }}>
+                <ArrowBackIosNewIcon fontSize="small" />
+                {t("backToManagementPage")}
+            </Link>
+
             <FormBanner
-                tabItems={bannerTabList}
                 downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
                 saveAsDraftAction={handleSaveDraft}
@@ -486,68 +594,88 @@ const CreateDataset = ({ formJSON, teamId, userId }: CreateDatasetProps) => {
                     {currentSectionIndex < formSections.length - 1 ? (
                         <>
                             <Box sx={{ flex: 2, p: 0 }}>
-                                <Form onSubmit={handleSubmit(formSubmit)}>
-                                    <Paper
-                                        sx={{
-                                            marginTop: "10px",
-                                            marginBottom: "10px",
-                                            padding: 2,
-                                        }}>
-                                        <Typography variant="h2">
-                                            {capitalise(
-                                                splitCamelcase(
-                                                    selectedFormSection
-                                                )
-                                            )}
-                                        </Typography>
+                                {isStructuralMetadataSection && (
+                                    <StructuralMetadataSection
+                                        selectedFormSection={
+                                            selectedFormSection
+                                        }
+                                        datasetId={datasetId}
+                                        structuralMetadata={struturalMetadata}
+                                        fileProcessedAction={() => {
+                                            refetchDataset();
+                                            notificationService.apiSuccess(
+                                                "Your data has been successfully uploaded"
+                                            );
+                                        }}
+                                    />
+                                )}
 
-                                        <Box sx={{ p: 0 }}>
-                                            {selectedFormSection &&
-                                                schemaFields
-                                                    .filter(
-                                                        schemaField =>
-                                                            !schemaField.field
-                                                                ?.hidden
+                                {!isStructuralMetadataSection && (
+                                    <Form onSubmit={handleSubmit(formSubmit)}>
+                                        <Paper
+                                            sx={{
+                                                marginTop: "10px",
+                                                marginBottom: "10px",
+                                                padding: 2,
+                                            }}>
+                                            <Typography variant="h2">
+                                                {capitalise(
+                                                    splitCamelcase(
+                                                        selectedFormSection
                                                     )
-                                                    .filter(({ location }) =>
-                                                        location?.startsWith(
-                                                            selectedFormSection
+                                                )}
+                                            </Typography>
+
+                                            <Box sx={{ p: 0 }}>
+                                                {selectedFormSection &&
+                                                    schemaFields
+                                                        .filter(
+                                                            schemaField =>
+                                                                !schemaField
+                                                                    .field
+                                                                    ?.hidden
                                                         )
-                                                    )
-                                                    .map(fieldParent => {
-                                                        const {
-                                                            field,
-                                                            fields,
-                                                        } = fieldParent;
-
-                                                        return fields?.length ? (
-                                                            <FormFieldArray
-                                                                control={
-                                                                    control
-                                                                }
-                                                                schemaFields={
-                                                                    fields
-                                                                }
-                                                                fieldParent={
-                                                                    fieldParent
-                                                                }
-                                                                setSelectedField={
-                                                                    updateGuidanceText
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            field &&
-                                                                renderFormHydrationField(
-                                                                    field,
-                                                                    control,
-                                                                    undefined,
-                                                                    updateGuidanceText
+                                                        .filter(
+                                                            ({ location }) =>
+                                                                location?.startsWith(
+                                                                    selectedFormSection
                                                                 )
-                                                        );
-                                                    })}
-                                        </Box>
-                                    </Paper>
-                                </Form>
+                                                        )
+                                                        .map(fieldParent => {
+                                                            const {
+                                                                field,
+                                                                fields,
+                                                            } = fieldParent;
+
+                                                            return fields?.length ? (
+                                                                <FormFieldArray
+                                                                    control={
+                                                                        control
+                                                                    }
+                                                                    schemaFields={
+                                                                        fields
+                                                                    }
+                                                                    fieldParent={
+                                                                        fieldParent
+                                                                    }
+                                                                    setSelectedField={
+                                                                        updateGuidanceText
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                field &&
+                                                                    renderFormHydrationField(
+                                                                        field,
+                                                                        control,
+                                                                        undefined,
+                                                                        updateGuidanceText
+                                                                    )
+                                                            );
+                                                        })}
+                                            </Box>
+                                        </Paper>
+                                    </Form>
+                                )}
                             </Box>
                             <Paper
                                 style={{

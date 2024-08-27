@@ -32,6 +32,7 @@ const apis = {
     datasetsV1Url: `${apiV1Url}/datasets`,
     datasetsV1UrlIP: `${apiV1IPUrl}/datasets`,
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
+    structuralMetadataExportV1Url: `${apiV1Url}/datasets/export/mock?type=template_dataset_structural_metadata`,
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
     dataUseExportV1Url: `${apiV1Url}/dur/export`,
@@ -54,6 +55,10 @@ const apis = {
     categoriesV1Url: `${apiV1Url}/categories`,
     fileUploadV1Url: `${apiV1Url}/files`,
     fileProcessedV1Url: `${apiV1Url}/files/processed`,
+    librariesV1Url: `${apiV1Url}/libraries`,
+    librariesV1UrlIP: `${apiV1IPUrl}/libraries`,
+    toolCategoriesV1Url: `${apiV1Url}/type_categories`,
+    programmingLanguagesV1Url: `${apiV1Url}/programming_languages`,
 };
 
 export default apis;

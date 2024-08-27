@@ -44,6 +44,12 @@ async function getFilters(
     );
 }
 
+async function getEntityAction(
+    cookieStore: ReadonlyRequestCookies
+): Promise<string | undefined> {
+    return cookieStore.get(config.ENTITY_ACTION_COOKIE.COOKIE_NAME)?.value;
+}
+
 async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const authUser = getUserFromToken(jwt?.value);
@@ -109,7 +115,7 @@ async function getDataset(
 
     if (schemaModel && schemaVersion) {
         params.append("schema_model", schemaModel);
-        params.append("schemaVersion", schemaVersion);
+        params.append("schema_version", schemaVersion);
     }
     const queryString = params.toString();
 
@@ -175,4 +181,5 @@ export {
     getTool,
     getCollection,
     getFormHydration,
+    getEntityAction,
 };

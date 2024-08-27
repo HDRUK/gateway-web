@@ -10,14 +10,9 @@ const outerNodeValues = [
         href: "/search?type=tools",
     },
     {
-        name: "dur",
+        name: "durs",
         label: undefined,
         href: "/search?type=dur",
-    },
-    {
-        name: "linkages",
-        label: undefined,
-        /* to-do: section does not exist on the landing page yet */
     },
     {
         name: "collections",
@@ -39,7 +34,12 @@ const rootNode = {
     id: "node-root",
     type: "circle",
     position: { x: centerX, y: centerY },
-    data: { id: 0, name: "root", label: undefined },
+    data: {
+        id: 0,
+        name: "root",
+        label: undefined,
+        href: "/data-custodian",
+    },
 };
 
 const outerNodes = outerNodeValues.map((node, index) =>

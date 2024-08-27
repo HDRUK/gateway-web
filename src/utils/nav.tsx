@@ -13,6 +13,8 @@ import {
     StorageOutlinedIcon,
     CloudUploadIcon,
     ArticleIcon,
+    BookmarkBorderIcon,
+    BookmarksIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -47,6 +49,11 @@ const getProfileNav = (permissions: {
             icon: <SearchIcon />,
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
+        },
+        {
+            icon: <BookmarkBorderIcon />,
+            label: "Library",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
         },
         ...(permissions["custodians.read"]
             ? [
@@ -105,6 +112,15 @@ const getTeamNav = (
                       icon: <StorageOutlinedIcon />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["collections.read"]
+            ? [
+                  {
+                      icon: <BookmarksIcon />,
+                      label: "Collections",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                   },
               ]
             : []),

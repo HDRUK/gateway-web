@@ -55,7 +55,7 @@ const DataUseContent = ({
                                 text={dataset.shortTitle}
                                 characterLimit={50}
                                 isButton
-                                action={() =>
+                                onClick={() =>
                                     router.push(
                                         `/${RouteName.DATASET_ITEM}/${dataset.id}`
                                     )

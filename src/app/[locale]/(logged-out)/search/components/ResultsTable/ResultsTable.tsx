@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
+import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
-import StyledCheckbox from "@/components/StyledCheckbox";
 import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
+import useAuth from "@/hooks/useAuth";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import config from "@/config/config";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import useAddLibraryModal from "../../hooks/useAddLibraryModal";
+import ActionDropdown from "../ActionDropdown";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
@@ -28,34 +36,30 @@ const STRUCTURAL_METADATA_PATH = "metadata.additional.hasTechnicalMetadata";
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
 const getColumns = ({
-    handleSelect,
-    selected,
     translations,
+    libraryData,
+    showLibraryModal,
 }: {
-    handleSelect: (data: { [id: string]: boolean }) => void;
-    selected: { [id: string]: boolean };
     translations: { [id: string]: string };
+    libraryData: Library[];
+    showLibraryModal: (props: { datasetId: number }) => void;
 }) => [
     columnHelper.display({
         id: "actions",
         meta: { isPinned: true },
-        cell: ({ row }) => {
+        cell: ({ row: { original } }) => {
             return (
                 <div style={{ textAlign: "center" }}>
-                    <StyledCheckbox
-                        checked={selected[row.id]}
-                        onChange={(_e, value) =>
-                            handleSelect({ [row.id]: value })
-                        }
-                        size="large"
-                        sx={{ p: 0 }}
-                        iconSx={{ mr: 0 }}
+                    <ActionDropdown
+                        result={original}
+                        libraryData={libraryData}
+                        showLibraryModal={showLibraryModal}
                     />
                 </div>
             );
         },
-        header: () => null,
-        size: 43,
+        header: () => <span>{translations.actionLabel}</span>,
+        size: 120,
     }),
 
     columnHelper.display({
@@ -240,14 +244,41 @@ const getColumns = ({
 
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
 const ResultTable = ({ results }: ResultTableProps) => {
-    const [selected, setSelected] = useState({});
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
+    const router = useRouter();
+    const { isLoggedIn } = useAuth();
 
-    const handleSelect = (data: { [id: string]: boolean }) => {
-        setSelected({ ...selected, ...data });
-    };
+    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
+        `${apis.librariesV1Url}?perPage=1000`,
+        { shouldFetch: isLoggedIn }
+    );
+
+    const { showLibraryModal } = useAddLibraryModal({
+        onSuccess: () =>
+            router.push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
+            ),
+        onContinue: () => mutateLibraries(),
+    });
+
+    const entityActionCookie = Cookies.get(
+        config.ENTITY_ACTION_COOKIE.COOKIE_NAME
+    );
+
+    useEffect(() => {
+        if (entityActionCookie && isLoggedIn) {
+            const { datasetId, action } = JSON.parse(entityActionCookie);
+            if (action === config.ENTITY_ACTION_COOKIE.ACTION_ADD_LIBRARY) {
+                showLibraryModal({ datasetId });
+            }
+            Cookies.remove(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, {
+                path: "/",
+            });
+        }
+    }, [entityActionCookie, showLibraryModal, isLoggedIn]);
 
     const translations = {
+        actionLabel: t("action.label"),
         metaDataLabel: t("title.label"),
         populationSizeLabel: t("populationSize.label"),
         populationSizeTooltip: t("populationSize.tooltip"),
@@ -280,9 +311,9 @@ const ResultTable = ({ results }: ResultTableProps) => {
             }}>
             <Table<SearchResultDataset>
                 columns={getColumns({
-                    handleSelect,
-                    selected,
                     translations,
+                    libraryData,
+                    showLibraryModal,
                 })}
                 rows={results}
             />

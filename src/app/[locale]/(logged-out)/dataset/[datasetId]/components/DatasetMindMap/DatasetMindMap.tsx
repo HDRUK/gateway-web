@@ -4,8 +4,6 @@ import { useMemo } from "react";
 import { ReactFlowProps } from "reactflow";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
-import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
 import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
 import {
@@ -20,18 +18,23 @@ const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 
 interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
+    teamId: number;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
+    linkageCounts: { [key: string]: number };
 }
 
 const DatasetMindMap = ({
     data,
+    teamId,
     populatedSections,
+    linkageCounts,
     panOnDrag = false,
     panOnScroll = false,
     zoomOnScroll = false,
     zoomOnPinch = false,
     zoomOnDoubleClick = false,
+    nodesDraggable = false,
     hasStructuralMetadata,
     ...rest
 }: DatasetMindMapProps) => {
@@ -42,10 +45,15 @@ const DatasetMindMap = ({
             ...rootNode,
             data: {
                 ...rootNode.data,
-                label: t(rootNode.data.name),
+                label:
+                    data.metadata.metadata.summary.publisher.publisherName ||
+                    t(rootNode.data.name),
+                href: `/data-custodian/${teamId}`,
             },
         };
     }, [data, t]);
+
+    const emptyNodes = useMemo<string[]>(() => [], []);
 
     const hydratedOuterNodes = useMemo(
         () =>
@@ -53,16 +61,29 @@ const DatasetMindMap = ({
                 .map(node => {
                     let href = null;
                     let action = null;
+                    let hidden = false;
                     const title = data.metadata.metadata.summary.shortTitle;
 
                     if (node.id === "node-synthetic") {
                         href =
                             data.metadata.metadata.linkage.syntheticDataWebLink;
+                        if (!href) {
+                            emptyNodes.push(node.id);
+                            hidden = true;
+                        }
                     } else if (
-                        ["node-collections", "node-dur", "node-tools"].includes(
-                            node.id
-                        )
+                        [
+                            "node-collections",
+                            "node-durs",
+                            "node-tools",
+                        ].includes(node.id)
                     ) {
+                        const entityName = node.id.replace("node-", "");
+                        const entityCount = linkageCounts[entityName];
+                        if (!entityCount) {
+                            hidden = true;
+                            emptyNodes.push(node.id);
+                        }
                         href = `${node.data.href}&datasetTitles=${title}`;
                     }
 
@@ -84,7 +105,8 @@ const DatasetMindMap = ({
                                         block: "start",
                                     });
                         } else {
-                            return undefined;
+                            hidden = true;
+                            emptyNodes.push(node.id);
                         }
                     }
 
@@ -95,6 +117,7 @@ const DatasetMindMap = ({
                             label: t(node.data.name),
                             href,
                             action,
+                            hidden,
                         },
                     };
                 })
@@ -103,38 +126,23 @@ const DatasetMindMap = ({
     );
 
     return (
-        <BoxContainer
-            sx={{
-                gridTemplateColumns: {
-                    tablet: "repeat(5, 1fr)",
-                },
-                gap: {
-                    mobile: 1,
-                    tablet: 2,
-                },
-                p: 0,
-            }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 5", laptop: "span 3" },
-                    p: 0,
-                }}>
-                <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
-                    <MindMap
-                        panOnDrag={panOnDrag}
-                        panOnScroll={panOnScroll}
-                        zoomOnScroll={zoomOnScroll}
-                        zoomOnPinch={zoomOnPinch}
-                        zoomOnDoubleClick={zoomOnDoubleClick}
-                        {...rest}
-                        rootNode={hydratedRootNode}
-                        outerNodes={hydratedOuterNodes}
-                        initialEdges={initialEdges}
-                        connectionLineStyle={connectionLineStyle}
-                    />
-                </Paper>
-            </Box>
-        </BoxContainer>
+        <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
+            <MindMap
+                panOnDrag={panOnDrag}
+                panOnScroll={panOnScroll}
+                zoomOnScroll={zoomOnScroll}
+                zoomOnPinch={zoomOnPinch}
+                zoomOnDoubleClick={zoomOnDoubleClick}
+                nodesDraggable={nodesDraggable}
+                {...rest}
+                rootNode={hydratedRootNode}
+                outerNodes={hydratedOuterNodes}
+                initialEdges={initialEdges.filter(
+                    edge => !emptyNodes.includes(edge.target)
+                )}
+                connectionLineStyle={connectionLineStyle}
+            />
+        </Paper>
     );
 };
 

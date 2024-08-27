@@ -23,12 +23,23 @@ interface StructuralMetadata {
     columns: StructuralMetadataColumn[];
 }
 
+interface StructuralMetadataPublicSchema {
+    tables: StructuralMetadata[];
+    syntheticDataWebLink: string[];
+}
+
+interface Revision {
+    revision: string;
+    revisionUrl: string;
+}
+
 interface Metadata {
     summary: {
         abstract: string;
         contactPoint: string;
         controlledKeywords: string;
         datasetType: string;
+        datasetSubType: string;
         description: string;
         doiName: string;
         keywords: string;
@@ -63,6 +74,9 @@ interface Metadata {
         };
     };
     provenance: {
+        origin: {
+            collectionSituation: string | undefined;
+        };
         temporal: {
             startDate: string | undefined;
             endDate: string | undefined;
@@ -84,6 +98,13 @@ interface Metadata {
         syntheticDataWebLink: string;
     };
     structuralMetadata?: StructuralMetadata[];
+    revisions: Revision[];
+}
+
+interface LinkedDatasetVersions {
+    pivot: {
+        linkage_type: string;
+    };
 }
 
 interface MetadataMax {
@@ -99,6 +120,7 @@ interface VersionItem {
     metadata: MetadataMax;
     version: number;
     publications: Publication[];
+    linked_dataset_versions: LinkedDatasetVersions[];
 }
 
 interface Dataset {
@@ -111,6 +133,10 @@ interface Dataset {
     updated: string;
     create_origin: CreateOrigin;
     latest_metadata?: VersionItem;
+    durs_count: number;
+    publications_count: number;
+    tools_count: number;
+    collections_count: number;
 }
 
 interface DataCustodianDataset {
@@ -134,5 +160,7 @@ export type {
     VersionItem,
     StructuralMetadata,
     StructuralMetadataColumn,
+    StructuralMetadataPublicSchema,
     CreateOrigin,
+    Revision,
 };

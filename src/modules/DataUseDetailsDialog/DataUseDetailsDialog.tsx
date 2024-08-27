@@ -1,10 +1,13 @@
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { SearchResultDataUse } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
+import useDialog from "@/hooks/useDialog";
+import { RouteName } from "@/consts/routeName";
 import { CategoryHeader } from "./DataUseDetailsDialog.styles";
 
 interface DataUseDetailsDialogProps {
@@ -17,6 +20,8 @@ const CHARACTER_LIMIT = 50;
 
 const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { push } = useRouter();
+    const { hideDialog } = useDialog();
     const leadOrgNames = result?.organisationName?.split(",");
 
     const formattedTitle =
@@ -32,11 +37,17 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
-                    {result.datasetTitles.map(dataset => (
+                    {result.datasetTitles.map((dataset, index) => (
                         <EllipsisCharacterLimit
                             text={dataset}
                             isButton
                             characterLimit={CHARACTER_LIMIT}
+                            onClick={() => {
+                                hideDialog();
+                                push(
+                                    `/${RouteName.DATASET_ITEM}/${result.datasetIds[index]}`
+                                );
+                            }}
                         />
                     ))}
                 </Box>

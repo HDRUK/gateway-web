@@ -101,6 +101,7 @@ export const colors = {
     white: "#fff",
     black: "#000",
     orange: "#FE9A2D",
+    orange300: "#F9B475",
     green400: "#3DB28C",
     green700: "#2c8267",
     amber500: "#ffc107",
@@ -125,6 +126,7 @@ export const colors = {
     purple700: "#384B91",
     purple900: "#29235C",
     darkGreen50: "#DEF0F0",
+    darkGreen100: "#ADDAD9",
     yellow400: "#F4E751",
 };
 

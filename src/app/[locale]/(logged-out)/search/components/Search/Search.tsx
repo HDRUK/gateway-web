@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
+import { Library } from "@/interfaces/Library";
 import {
     SavedSearchPayload,
     SearchCategory,
@@ -36,6 +37,7 @@ import SaveSearchDialog, {
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
@@ -89,7 +91,11 @@ import { ActionBar, ResultLimitText } from "./Search.styles";
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
 
-const Search = ({ filters }: { filters: Filter[] }) => {
+interface SearchProps {
+    filters: Filter[];
+}
+
+const Search = ({ filters }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
@@ -273,7 +279,19 @@ const Search = ({ filters }: { filters: Filter[] }) => {
         } else if (!!queryParams.query && !initialQuery) {
             mutate();
         }
-    }, [queryParams.query, queryParams.type, initialCategory, initialQuery]);
+    }, [
+        queryParams.query,
+        queryParams.type,
+        initialCategory,
+        initialQuery,
+        mutate,
+    ]);
+
+    // Update the list of libraries
+    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
+        `${apis.librariesV1Url}?perPage=1000`,
+        { shouldFetch: isLoggedIn }
+    );
 
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
@@ -392,6 +410,8 @@ const Search = ({ filters }: { filters: Filter[] }) => {
                     <ResultCard
                         result={result as SearchResultDataset}
                         key={resultId}
+                        mutateLibraries={mutateLibraries}
+                        libraryData={libraryData}
                     />
                 );
             case SearchCategory.PUBLICATIONS:

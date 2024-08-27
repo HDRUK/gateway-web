@@ -27,6 +27,7 @@ const FilterSectionRadio = ({
                         value={radio.value}
                         control={<StyledRadio />}
                         label={radio.label}
+                        key={radio.label}
                     />
                 ))}
             </RadioGroup>
