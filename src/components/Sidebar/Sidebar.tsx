@@ -52,10 +52,7 @@ const Sidebar = () => {
         setOpen(newOpen);
 
         if (!newOpen) {
-            setTimeout(() => {
-                // todo - can this be reaplcesd
-                handleClose();
-            }, 400);
+            handleClose();
         }
     };
 
