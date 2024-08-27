@@ -141,7 +141,6 @@ const FilterPanel = ({
     getParamString: (paramName: string) => string | null;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
-
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({
         [FILTER_PUBLISHER_NAME]: {},
@@ -164,7 +163,7 @@ const FilterPanel = ({
             },
         }
     );
-
+    
     useEffect(() => {
         const defaultValues: DefaultValues = {};
         filtersList.forEach(filterName => {
@@ -193,9 +192,8 @@ const FilterPanel = ({
             [FILTER_MATERIAL_TYPE]: "",
         },
     });
-
     const filterItems = useMemo(() => {
-        const formattedFilters = groupByType(
+        let formattedFilters = groupByType(
             filterSourceData,
             filterCategory
         ).filter(filterItem => filtersList.includes(filterItem.label));
@@ -205,9 +203,12 @@ const FilterPanel = ({
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
 
-        return formattedFilters;
-    }, [filterCategory, filterSourceData]);
+        if (!!staticFilterValues.source.FED) {
+            formattedFilters =formattedFilters.filter(filterItem => filterItem.label !== FILTER_DATA_SET_TITLES )
+        }
 
+        return formattedFilters;
+    }, [filterCategory, filterSourceData, staticFilterValues]);
     const [maximised, setMaximised] = useState<string[]>([]);
 
     const updateCheckboxes = (
@@ -334,7 +335,6 @@ const FilterPanel = ({
         buckets: BucketCheckbox[];
     }) => {
         const { label } = filterItem;
-
         switch (label) {
             case STATIC_FILTER_SOURCE:
                 return (
