@@ -19,7 +19,12 @@ const validationSchema = yup
             .nullable()
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
-        query: yup.string().required().max(1500).label("Your enquiry"),
+        research_aim: yup.string().required().max(1500).label("Research aim or question"),
+        project_title: yup.string().required().min(2).label("Project title"),
+        funding: yup.string().required().max(1500).label("Funding"),
+        potential_research_benefit: yup.string().required().max(1500).label("Potential research benefits"),
+        other_datasets: yup.string().required("Please select an option"),
+        dataset_parts_known: yup.string().required("Please select an option"),
     })
     .required();
 
@@ -62,7 +67,7 @@ const formFields = [
     },
     {
         label: "Research aim or question",
-        name: "query",
+        name: "research_aim",
         component: inputComponents.TextArea,
         required: true,
         info: "Please briefly explain the purpose of your research, why you require this dataset and when you intend to begin the project.",
@@ -87,7 +92,7 @@ const formFields = [
     },
     {
         label: "Are there other datasets you would like to link with the ones listed above?",
-        name: "other_datasets_yes_no",
+        name: "other_datasets",
         component: inputComponents.RadioGroup,
         radios: Object.values(['Yes', 'No']).map(value => ({
             label: value,
@@ -98,7 +103,7 @@ const formFields = [
     },
     {
         label: "Do you know which parts of the dataset you are interested in?",
-        name: "dataset_parts_yes_no",
+        name: "dataset_parts_known",
         component: inputComponents.RadioGroup,
         radios: Object.values(['Yes', 'No']).map(value => ({
             label: value,
@@ -118,7 +123,7 @@ const formFields = [
     },
     {
         label: "Potential research benefits",
-        name: "potential_research_benefits",
+        name: "potential_research_benefit",
         component: inputComponents.TextArea,
         required: true,
         info: "Please provide a short explanation of how your research would benefit the health and care system.",
