@@ -349,7 +349,7 @@ const Search = ({ filters }: SearchProps) => {
             label: t("collections"),
             value: SearchCategory.COLLECTIONS,
             content: "",
-        }
+        },
     ];
 
     const removeFilter = (
