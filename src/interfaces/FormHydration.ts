@@ -50,7 +50,7 @@ interface FormHydrationSchema {
     validation: FormHydrationValidation[];
     defaultValues: {
         [key: string]: string | string[];
-    }[];
+    };
 }
 
 export type { FormHydration, FormHydrationSchema };
