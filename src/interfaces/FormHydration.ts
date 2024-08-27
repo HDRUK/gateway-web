@@ -48,6 +48,9 @@ interface FormHydration {
 interface FormHydrationSchema {
     schema_fields: FormHydration[];
     validation: FormHydrationValidation[];
+    defaultValues: {
+        [key: string]: string | string[];
+    }[];
 }
 
 export type { FormHydration, FormHydrationSchema };

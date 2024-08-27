@@ -142,9 +142,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
         "Name of data provider": "--",
-        "Dataset population size": 1,
+        "Dataset population size": -1,
         "contact point": user?.email,
         "Observations array": null,
+        ...formJSON.defaultValues,
     };
 
     useEffect(() => {
