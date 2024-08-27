@@ -18,7 +18,7 @@ describe("DesktopNav", () => {
         render(<DesktopNav />);
         await waitFor(() => {
             fireEvent.click(screen.getByText("Search"));
-            expect(screen.getByText("Datasets/Tissues")).toBeInTheDocument();
+            expect(screen.getByText("Datasets/BioSamples")).toBeInTheDocument();
         });
     });
 });
