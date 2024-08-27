@@ -270,14 +270,13 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         defaultValues: defaultFormValues,
     });
 
-    const { data: formJSONUpdated, isLoading: isLoadingt } =
-        useGet<FormHydrationSchema>(
-            `${
-                apis.formHydrationV1Url
-            }?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${getValues(
-                DATASET_TYPE
-            )}`
-        );
+    const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
+        `${
+            apis.formHydrationV1Url
+        }?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${getValues(
+            DATASET_TYPE
+        )}`
+    );
 
     useEffect(() => {
         if (formJSONUpdated) {
