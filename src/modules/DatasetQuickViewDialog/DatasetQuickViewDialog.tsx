@@ -6,6 +6,7 @@ import Dialog from "@/components/Dialog";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
+import { formatTextDelimiter } from "@/utils/dataset";
 import { CategoryHeader } from "./DatasetQuickViewDialog.styles";
 
 const TRANSLATION_PATH = "modules.dialogs.DatasetQuickView";
@@ -25,10 +26,6 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
 
     /* note: sort this out as this is returning the GWDM, rather than the schema */
     const { collectionSituation } = result?.metadata?.provenance.origin || {};
-    /* note: quite hacky to split */
-    const formattedCollectionSource = collectionSituation
-        ?.split(";,;")
-        .join(", ");
 
     const title = result?.metadata?.summary.shortTitle;
     const formattedTitle =
@@ -47,7 +44,7 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
-                    {keywords.split(";,;").map(word => (
+                    {keywords?.split(";,;").map(word => (
                         <EllipsisCharacterLimit
                             key={word}
                             text={word}
@@ -65,11 +62,11 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                 <CategoryHeader variant="h3">
                     {t("collectionSource")}
                 </CategoryHeader>
-                {formattedCollectionSource ? (
-                    <Typography>{formattedCollectionSource}</Typography>
-                ) : (
-                    <Typography> {t("noCollectionSource")} </Typography>
-                )}
+                <Typography>
+                    {collectionSituation
+                        ? formatTextDelimiter(collectionSituation)
+                        : t("noCollectionSource")}
+                </Typography>
             </MuiDialogContent>
         </Dialog>
     );

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Metadata } from "@/interfaces/Dataset";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import { formatTextDelimiter } from "@/utils/dataset";
 
 const TRANSLATION_PATH = "pages.dataset.components.Sources";
 
@@ -20,14 +21,16 @@ const Sources = ({ data }: SourcesProps) => {
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             <Typography variant="h4">
-                <b> {`${t("datasetTypes")}:`} </b>
+                <b>{`${t("datasetTypes")}: `}</b>
                 {datasetType}
                 {datasetSubType && `, ${datasetSubType}`}
             </Typography>
             <Divider sx={{ my: 1 }} />
             <Typography variant="h4">
-                <b> {`${t("collectionSources")}:`} </b>
-                {collectionSituation || t("noCollectionSources")}
+                <b>{`${t("collectionSources")}: `}</b>
+                {collectionSituation
+                    ? formatTextDelimiter(collectionSituation)
+                    : t("noCollectionSources")}
             </Typography>
         </Paper>
     );
