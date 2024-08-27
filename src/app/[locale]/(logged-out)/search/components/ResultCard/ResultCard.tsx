@@ -5,6 +5,7 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { KeyedMutator } from "swr";
+import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -17,13 +18,14 @@ import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
-import menuItems from "./config";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -41,10 +43,12 @@ const ResultCard = ({
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
     const { showDialog } = useDialog();
+    const { showSidebar } = useSidebar();
+
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId } = result;
+    const { _id: datasetId, team } = result;
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -84,6 +88,44 @@ const ResultCard = ({
         event.stopPropagation();
         setAnchorElement(event.currentTarget);
     };
+
+    const genEnq = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            const datasets: DatasetEnquiry[] = [
+                {
+                    datasetId: Number(datasetId),
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+            ];
+            showSidebar({
+                title: "Messages",
+                content: <GeneralEnquirySidebar datasets={datasets} />,
+            });
+        }
+    };
+
+    const menuItems = [
+        {
+            label: "General enquiry",
+            action: genEnq,
+        },
+        {
+            label: "Feasibility enquiry",
+            href: "TBC",
+        },
+        {
+            label: "Data Access Request",
+            href: "TBC",
+        },
+    ];
 
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
