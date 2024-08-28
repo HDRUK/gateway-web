@@ -5,7 +5,7 @@ const navItems = [
         label: "Search",
         subItems: [
             {
-                label: "Datasets/Tissues",
+                label: "Datasets/BioSamples",
                 href: "/search?type=datasets",
             },
             {
