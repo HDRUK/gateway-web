@@ -163,7 +163,7 @@ const FilterPanel = ({
             },
         }
     );
-    
+
     useEffect(() => {
         const defaultValues: DefaultValues = {};
         filtersList.forEach(filterName => {
@@ -202,10 +202,12 @@ const FilterPanel = ({
         if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
-        
+
         // If the selected source is 'Search Europe PMC' then remove the 'Dataset' filter
-        if (!!staticFilterValues.source.FED) {
-            formattedFilters =formattedFilters.filter(filterItem => filterItem.label !== FILTER_DATA_SET_TITLES )
+        if (staticFilterValues.source.FED) {
+            formattedFilters = formattedFilters.filter(
+                filterItem => filterItem.label !== FILTER_DATA_SET_TITLES
+            );
         }
 
         return formattedFilters;
@@ -261,7 +263,7 @@ const FilterPanel = ({
 
         setFilterQueryParams(Object.values(dateRange), dateFilterName);
     };
-    
+
     const handleUpdatePopulationSize = (
         populationSize?: number[],
         includeUnreported?: boolean
