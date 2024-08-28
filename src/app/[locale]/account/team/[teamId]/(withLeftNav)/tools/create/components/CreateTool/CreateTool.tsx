@@ -183,7 +183,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         const payload: ToolPayloadSubmission = {
             ...formData,
             user_id: userId,
-            team_id: teamId ? +teamId : null,
+            team_id: teamId ? +teamId : undefined,
             enabled: true,
             tag: [],
             status,
