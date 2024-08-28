@@ -72,6 +72,11 @@ interface SearchResultBase {
 export interface SearchResultDataset extends SearchResultBase {
     highlight: Highlight;
     metadata: Metadata;
+    team: {
+        id: number;
+        member_of: string;
+        name: string;
+    };
 }
 
 export interface SearchResultDataUse extends SearchResultBase {

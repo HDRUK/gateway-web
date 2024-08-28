@@ -56,8 +56,6 @@ const ActionBar = () => {
             <BackButton label={t("label")} style={{ margin: 0 }} />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
-                <Button disabled>{t("contact")}</Button>
-
                 <Button variant="outlined" color="secondary" disabled>
                     {t("submitApplication")}
                 </Button>

@@ -13,9 +13,7 @@ const getColumns = ({
     selected,
     translations,
 }: {
-    handleSelect: (data: {
-        [id: string]: { selected: boolean; datasetId: number };
-    }) => void;
+    handleSelect: (data: SelectedLibrary) => void;
     handleRemove: (id: string | number) => void;
     selected: SelectedLibrary;
     translations: { [id: string]: string };
@@ -24,14 +22,26 @@ const getColumns = ({
         id: "actions",
         meta: { isPinned: true },
         cell: ({ row }) => {
-            const { id, datasetId } = row.original;
+            const {
+                id,
+                datasetId,
+                dataCustodianId,
+                dataCustodian,
+                dataCustodianMemberOf,
+            } = row.original;
             return (
                 <div style={{ textAlign: "center" }}>
                     <StyledCheckbox
                         checked={selected[id]?.selected}
                         onChange={(_e, value) =>
                             handleSelect({
-                                [id]: { selected: value, datasetId },
+                                [id]: {
+                                    selected: value,
+                                    datasetId,
+                                    teamId: dataCustodianId,
+                                    teamName: dataCustodian,
+                                    teamMemberOf: dataCustodianMemberOf,
+                                },
                             })
                         }
                         size="large"
