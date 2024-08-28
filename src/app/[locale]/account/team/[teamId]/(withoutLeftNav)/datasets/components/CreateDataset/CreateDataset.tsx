@@ -80,6 +80,7 @@ const SUBMISSON_FORM_SECTION = "Submission";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+const DATASET_TYPE = "Dataset type";
 
 const getMetadata = (isDraft: boolean) =>
     isDraft
@@ -89,6 +90,14 @@ const getMetadata = (isDraft: boolean) =>
 const today = dayjs();
 
 const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
+    const [formJSONDynamic, setFormJSONDynamic] = useState<
+        FormHydrationSchema | undefined
+    >();
+
+    const currentFormJSON = useMemo(() => {
+        return formJSONDynamic || formJSON;
+    }, [formJSON, formJSONDynamic]);
+
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -132,7 +141,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [struturalMetadata, setStructuralMetadata] =
         useState<StructuralMetadata[]>();
 
-    const schemaFields = formJSON.schema_fields;
+    const schemaFields = currentFormJSON.schema_fields;
 
     const defaultFormValues = {
         "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
@@ -142,9 +151,11 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
         "Name of data provider": "--",
-        "Dataset population size": 1,
+        "Dataset population size": -1,
         "contact point": user?.email,
         "Observations array": null,
+        [DATASET_TYPE]: [] as string[],
+        ...currentFormJSON.defaultValues,
     };
 
     useEffect(() => {
@@ -231,14 +242,14 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     const generatedYupValidation = useMemo(
         () =>
-            formJSON?.validation && {
+            currentFormJSON?.validation && {
                 title: "Metadata form",
                 type: "object",
                 properties: !isDraft
-                    ? generateValidationRules(formJSON.validation)
+                    ? generateValidationRules(currentFormJSON.validation)
                     : {},
             },
-        [formJSON.validation, generateValidationRules, isDraft]
+        [currentFormJSON.validation, generateValidationRules, isDraft]
     );
 
     const yupSchema = buildYup(generatedYupValidation);
@@ -250,6 +261,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         clearErrors,
         trigger,
         getValues,
+        setValue,
         reset,
         formState,
     } = useForm({
@@ -257,6 +269,22 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         resolver: yupResolver(yupSchema),
         defaultValues: defaultFormValues,
     });
+
+    const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
+        `${
+            apis.formHydrationV1Url
+        }?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${getValues(
+            DATASET_TYPE
+        )}`
+    );
+
+    useEffect(() => {
+        if (formJSONUpdated) {
+            setFormJSONDynamic(formJSONUpdated);
+        } else {
+            setFormJSONDynamic(undefined);
+        }
+    }, [formJSONUpdated]);
 
     useEffect(() => {
         if (!existingFormData) {
@@ -285,6 +313,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     // When form loaded - select first form section with displayed fields
     useEffect(() => {
+        if (selectedFormSection) {
+            return;
+        }
+
         const getFirstNonHiddenSection = (schemaFields: FormHydration[]) => {
             const nonHiddenField = schemaFields.find(field =>
                 hasVisibleFieldsForLocation(schemaFields, field.location!)
@@ -296,7 +328,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         setSelectedFormSection(
             (!isEditing && INITIAL_FORM_SECTION) || initialSection
         );
-    }, [schemaFields]);
+    }, [schemaFields, selectedFormSection]);
 
     useEffect(() => {
         const createLegendItems = async () => {
@@ -493,14 +525,14 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const updateGuidanceText = (fieldName: string, fieldArrayName?: string) => {
         if (fieldArrayName) {
             setGuidanceText(
-                formJSON.schema_fields
+                currentFormJSON.schema_fields
                     .find(field => field.title === fieldArrayName)
                     ?.fields?.find(field => field.title === fieldName)
                     ?.guidance?.replaceAll("\\n", "\n")
             );
         } else {
             setGuidanceText(
-                formJSON.schema_fields
+                currentFormJSON.schema_fields
                     .find(field => field.title === fieldName)
                     ?.guidance?.replaceAll("\\n", "\n")
             );
@@ -570,7 +602,14 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                 actionButtonsEnabled={!isSaving}
             />
 
-            {currentSectionIndex === 0 && <IntroScreen />}
+            {currentSectionIndex === 0 && (
+                <IntroScreen
+                    defaultValue={getValues(DATASET_TYPE) || []}
+                    setDatasetType={(value: string[]) =>
+                        setValue(DATASET_TYPE, value)
+                    }
+                />
+            )}
 
             {currentSectionIndex > 0 && (
                 <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
