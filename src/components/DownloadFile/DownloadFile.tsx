@@ -34,7 +34,8 @@ const DownloadFile = ({
         }
         const response = await fetch(apiPath);
         if (!response.ok) {
-            return notificationService.apiError("Failed to download file");
+            notificationService.apiError("Failed to download file");
+            return;
         }
 
         downloadExternalFile(response, externalFileName);
