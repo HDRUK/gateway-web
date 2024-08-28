@@ -563,7 +563,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             </Link>
 
             <FormBanner
-                downloadAction={() => console.log("DOWNLOAD")}
                 makeActiveAction={handleMakeActive}
                 saveAsDraftAction={handleSaveDraft}
                 completionPercentage={requiredPercentage}
