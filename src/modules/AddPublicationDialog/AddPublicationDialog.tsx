@@ -17,6 +17,7 @@ import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import { RouteName } from "@/consts/routeName";
 
@@ -68,7 +69,11 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
         setLoading(true);
         await searchRequest({ query: queryValue }).then(res => {
             if (res) {
-                console.log("JUMP TO FORM WITH DATA");
+                localStorage.setItem(
+                    config.PUBLICATION_LOCAL_STORAGE,
+                    JSON.stringify(res)
+                );
+                router.push(PUBLICATION_ROUTE);
             } else {
                 notificationService.apiError(t("notFound"));
                 setLoading(false);
