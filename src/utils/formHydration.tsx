@@ -6,7 +6,7 @@ import {
     UseFormTrigger,
 } from "react-hook-form";
 import dayjs from "dayjs";
-import { get, isArray, isObject, set } from "lodash";
+import { get, isArray, isEmpty, isObject, set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Metadata, Revision } from "@/interfaces/Dataset";
 import {
@@ -70,7 +70,11 @@ const formGetFieldsCompletedCount = (
     const fieldValues = getValues(allFields);
 
     if (allFields && fieldValues) {
-        fieldsWithValue += fieldValues.filter(value => value).length;
+        const nonEmptyCount = fieldValues.filter(
+            value => value !== null && !isEmpty(value)
+        ).length;
+
+        fieldsWithValue = nonEmptyCount;
     }
 
     const arrayFields = schemaFields.filter(
