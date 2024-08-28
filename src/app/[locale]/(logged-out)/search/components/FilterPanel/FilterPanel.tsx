@@ -419,7 +419,7 @@ const FilterPanel = ({
         }
     };
 
-    // Clear Material Type filter when Tissues toggled off
+    // Clear Material Type filter when BioSamples toggled off
     useEffect(() => {
         if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
             setFilterQueryParams([], FILTER_MATERIAL_TYPE);
