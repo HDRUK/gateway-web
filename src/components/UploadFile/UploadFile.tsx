@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useState,
+} from "react";
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -58,7 +64,7 @@ const UploadFile = ({
         successNotificationsOn: false,
     });
 
-    const handleError = () => {
+    const handleError = useCallback(() => {
         setHasError(true);
         setFileId(undefined);
         setFile(undefined);
@@ -66,7 +72,7 @@ const UploadFile = ({
         setPollFileStatus(false);
 
         notificationService.apiError(fileScanStatus?.error || t("error"));
-    };
+    }, [fileScanStatus?.error, t]);
 
     useEffect(() => {
         if (fileId) {
@@ -91,8 +97,14 @@ const UploadFile = ({
                 handleError();
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fileId, fileScanStatus]);
+    }, [
+        fileId,
+        fileScanStatus,
+        allowReuploading,
+        fileUploadedAction,
+        handleError,
+        isUploading,
+    ]);
 
     const onSubmit = async () => {
         if (!file) {

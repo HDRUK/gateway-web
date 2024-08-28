@@ -16,7 +16,6 @@ const TRANSLATIONS_NAMESPACE_TEAM_MODAL = "components.TeamModal";
 export default function TeamModal({ onCancel, teamMember }: TeamModalProps) {
     const { showModal } = useModal();
     const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MODAL);
-
     useEffect(() => {
         showModal({
             content: (
@@ -47,7 +46,17 @@ export default function TeamModal({ onCancel, teamMember }: TeamModalProps) {
             showConfirm: false,
             onCancel,
         });
-    }, []);
+    }, [
+        onCancel,
+        showModal,
+        t,
+        teamMember,
+        teamMember.image.node.sourceUrl,
+        teamMember.image.node.altText,
+        teamMember.info,
+        teamMember.name,
+        teamMember.jobTitle,
+    ]);
 
     return null;
 }

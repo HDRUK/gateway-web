@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
@@ -162,47 +162,48 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         name: "dataset",
     });
 
-    const watchAll = watch();
+    const onSubmit = useCallback(
+        async (formData: ToolPayload, status: DataStatus) => {
+            const formatEntityToIdArray = (
+                data: DataUse[] | Publication[] | Tool[]
+            ) => {
+                if (
+                    Array.isArray(data) &&
+                    data.every(item => typeof item === "number")
+                ) {
+                    return data;
+                }
 
-    const onSubmit = async (formData: ToolPayload, status: DataStatus) => {
-        const formatEntityToIdArray = (
-            data: DataUse[] | Publication[] | Tool[]
-        ) => {
-            if (
-                Array.isArray(data) &&
-                data.every(item => typeof item === "number")
-            ) {
-                return data;
+                return data?.map(item => item?.id);
+            };
+
+            const payload: ToolPayloadSubmission = {
+                ...formData,
+                user_id: userId,
+                team_id: +teamId,
+                enabled: true,
+                tag: [],
+                status,
+                durs: formatEntityToIdArray(formData.durs),
+                publications: formatEntityToIdArray(formData.publications),
+                tools: formatEntityToIdArray(formData.tools),
+                dataset: formData.dataset.every(
+                    obj => Object.keys(obj).length === 0
+                )
+                    ? []
+                    : formData.dataset,
+            };
+
+            if (!toolId) {
+                await createTool(payload);
+            } else {
+                await editTool(toolId, payload);
             }
 
-            return data?.map(item => item?.id);
-        };
-
-        const payload: ToolPayloadSubmission = {
-            ...formData,
-            user_id: userId,
-            team_id: +teamId,
-            enabled: true,
-            tag: [],
-            status,
-            durs: formatEntityToIdArray(formData.durs),
-            publications: formatEntityToIdArray(formData.publications),
-            tools: formatEntityToIdArray(formData.tools),
-            dataset: formData.dataset.every(
-                obj => Object.keys(obj).length === 0
-            )
-                ? []
-                : formData.dataset,
-        };
-
-        if (!toolId) {
-            await createTool(payload);
-        } else {
-            await editTool(toolId, payload);
-        }
-
-        push(TOOL_ROUTE);
-    };
+            push(TOOL_ROUTE);
+        },
+        [TOOL_ROUTE, createTool, editTool, push, teamId, toolId, userId]
+    );
 
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
@@ -231,7 +232,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             tool: (getValues("tools") as Tool[]) || [],
             dataset: [],
         };
-    }, [watchAll]);
+    }, [getValues]);
 
     useEffect(() => {
         showBar("CreateTool", {
@@ -258,7 +259,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 push(TOOL_ROUTE);
             },
         });
-    }, []);
+    }, [TOOL_ROUTE, handleSubmit, onSubmit, push, showBar, t]);
 
     const handleRemoveResource = (
         data: ResourceDataType,
@@ -286,7 +287,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         if (watchAnyDataset) {
             replace(defaultDatasetValue);
         }
-    }, [watchAnyDataset]);
+    }, [watchAnyDataset, replace]);
 
     const hydratedFormFields = useMemo(
         () =>
@@ -340,6 +341,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             toolCategoryOptions,
             fields,
             watchAnyDataset,
+            append,
+            control,
+            remove,
         ]
     );
 

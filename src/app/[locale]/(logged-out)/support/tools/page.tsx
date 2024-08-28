@@ -1,7 +1,7 @@
 import { getContentPageQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
 
-export const URI = "/support/tools";
+const URI = "/support/tools";
 
 export default async function Tools() {
     const data = await getContentPageQuery("GetContentPageQuery", {

@@ -421,7 +421,7 @@ const FilterPanel = ({
         if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
             setFilterQueryParams([], FILTER_MATERIAL_TYPE);
         }
-    }, [selectedFilters[FILTER_CONTAINS_TISSUE]]);
+    }, [selectedFilters, setFilterQueryParams]);
 
     return (
         <>

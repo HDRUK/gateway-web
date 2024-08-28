@@ -92,7 +92,18 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             },
         };
         reset(formData);
-    }, [reset, question, sectionData]);
+    }, [
+        reset,
+        question,
+        sectionData,
+        allow_guidance_override,
+        field?.component,
+        force_required,
+        guidance,
+        required,
+        section_id,
+        title,
+    ]);
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         const payload = {

@@ -1,7 +1,7 @@
 import { getContentPageQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
 
-export const URI = "/support/data-use-register";
+const URI = "/support/data-use-register";
 
 export default async function DataUseRegister() {
     const data = await getContentPageQuery("GetContentPageQuery", {

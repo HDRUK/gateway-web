@@ -193,7 +193,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                     content: <QuestionItem task={t} setTasks={setTasks} />,
                 })),
         }),
-        [tasks, isLoading]
+        [tasks, t]
     );
 
     const initalQuestionBankBoard = useMemo(
@@ -219,7 +219,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                     };
                 }),
         }),
-        [tasks, isLoading]
+        [tasks, t]
     );
 
     useEffect(() => {
@@ -241,7 +241,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
         const anyTaskChanged = currentTasks.some(t => t.task?.hasChanged);
         setHasChanges(!tasksAreUnchanged || anyTaskChanged);
-    }, [boardSections, isLoading]);
+    }, [boardSections, isLoading, initialSelectBoard.tasks]);
 
     const handleSaveChanges = () => {
         // first board is the select board
