@@ -53,7 +53,7 @@ const mockSourceData = [
     "buckets": []
   }
 ]
-// Sample props
+
 const defaultProps = {
   filterCategory: "dataset",
   selectedFilters: {
