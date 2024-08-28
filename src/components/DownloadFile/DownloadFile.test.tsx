@@ -7,10 +7,18 @@ import DownloadFile from "./DownloadFile";
 jest.mock("@/services/api");
 global.URL.createObjectURL = jest.fn();
 
+const mockDownloadExternalFile = jest.fn();
+jest.mock("@/utils/download", () => ({
+    ...jest.requireActual("@/utils/download"),
+    downloadExternalFile: (response: Response, filename: string) =>
+        mockDownloadExternalFile(response, filename),
+}));
+
 mockRouter.query = { teamId: `${datasetV1.id}` };
 
 const buttonText = "Click here";
 const apiPath = "api/path";
+const externalFileName = "externalFile.csv";
 
 describe("DownloadFile", () => {
     it("should call export api with team id", async () => {
@@ -51,5 +59,40 @@ describe("DownloadFile", () => {
         const button = screen.getByRole("button");
         expect(button).toHaveStyle("color: red");
         expect(button).toHaveStyle("margin-bottom: 4px");
+    });
+
+    it("should download external file with correct filename", async () => {
+        const fetchMock = jest.spyOn(window, "fetch").mockResolvedValue({
+            ok: true,
+            blob: () =>
+                Promise.resolve(
+                    new Blob(["file content"], { type: "text/csv" })
+                ),
+        } as Response);
+
+        render(
+            <DownloadFile
+                buttonText={buttonText}
+                apiPath={apiPath}
+                isExternalFile={true}
+                externalFileName={externalFileName}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button"));
+
+        await waitFor(() => {
+            expect(fetchMock).toHaveBeenCalledWith(apiPath);
+
+            expect(mockDownloadExternalFile).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    ok: true,
+                    blob: expect.any(Function),
+                }),
+                externalFileName
+            );
+        });
+
+        fetchMock.mockRestore();
     });
 });
