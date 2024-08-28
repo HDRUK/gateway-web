@@ -626,8 +626,8 @@
             "welcomeTitle": "Welcome to The Gateway",
             "welcomeText": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond",
             "datasets": {
-                "label": "Datasets / Tissues",
-                "title": "Datasets / Tissues",
+                "label": "Datasets / BioSamples",
+                "title": "Datasets / BioSamples",
                 "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
             },
             "dur": {
@@ -720,7 +720,7 @@
             }
         },
         "search": {
-            "datasets": "Datasets / Tissues",
+            "datasets": "Datasets / BioSamples",
             "dataUse": "Data Use",
             "tools": "Analysis Scripts & Software",
             "dataProviders": "Data Custodians",
@@ -769,7 +769,7 @@
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
-                            "containsTissue": "Datasets with tissues",
+                            "containsTissue": "Datasets with BioSamples",
                             "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
                             "sampleAvailability": "Material type",
                             "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
@@ -917,7 +917,7 @@
                     "label": "Back to Collections search results"
                 },
                 "DatasetsContent": {
-                    "heading": "Datasets / Tissues ({ length })",
+                    "heading": "Datasets / BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
@@ -983,7 +983,7 @@
                     "populationTitle": "Population Size",
                     "populationUnit": "People",
                     "yearTitle": "Years",
-                    "associatedTissuesTitle": "Associated Tissues",
+                    "associatedTissuesTitle": "Associated BioSamples",
                     "geographicCoverageTitle": "Geographic coverage",
                     "leadTimeTitle": "Lead time"
                 },

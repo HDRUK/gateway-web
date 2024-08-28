@@ -19,7 +19,7 @@ describe("InfoHoverPanel", () => {
 
     it("should render default", async () => {
         render(<InfoHoverPanel items={items} />);
-        expect(screen.getByText("Datasets / Tissues")).toBeInTheDocument();
+        expect(screen.getByText("Datasets / BioSamples")).toBeInTheDocument();
         expect(
             screen.getByText("Data Uses / Research projects")
         ).toBeInTheDocument();
