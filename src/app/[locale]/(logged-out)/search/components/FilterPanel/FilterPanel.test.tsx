@@ -4,6 +4,11 @@ import FilterPanel from "./FilterPanel";
 import { Aggregations } from "@/interfaces/Search";
 import "@testing-library/jest-dom/extend-expect";
 
+// Mock useTranslations hook
+jest.mock("next-intl", () => ({
+  useTranslations: jest.fn().mockReturnValue((key: string) => key),
+}));
+
 const mockSourceData = [
   {
     "id": 2,
