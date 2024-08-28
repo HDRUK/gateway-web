@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
@@ -49,20 +49,32 @@ const FeasibilityEnquirySidebar = ({
         },
     });
 
-    const hydratedFormFields = feasibilityEnquiryFormFields;
+    const hydratedFormFields = useMemo(() => {
+        return feasibilityEnquiryFormFields.map(field => {
+            if (field.name === "datasets") {
+                return {
+                    ...field,
+                    defaultValue: datasets.map(v => ({
+                        value: v.datasetId,
+                        label: v.name,
+                    })),
+                };
+            }
+            return field;
+        });
+    }, [feasibilityEnquiryFormFields, datasets]);
 
     const submitForm = async (formData: Enquiry) => {
-        console.log("SUBMIT FEASIBILITY ENQUIRY", formData);
         if (!user) return;
         const minUser = { id: user.id };
 
         const payload = {
             ...minUser,
             ...formData,
-            // project_title: "",
             contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
             datasets: datasets.map(item => ({
                 dataset_id: item.datasetId,
+                name: item.name,
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),

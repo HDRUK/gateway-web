@@ -1,7 +1,7 @@
 import * as yup from "yup";
+import { colors } from "@/config/theme";
 import { REGEX_PHONE } from "@/consts/regex";
 import { inputComponents } from ".";
-import Chip from "@/components/Chip";
 
 const defaultValues = {
     name: "",
@@ -19,12 +19,20 @@ const validationSchema = yup
             .nullable()
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
-        research_aim: yup.string().required().max(1500).label("Research aim or question"),
         project_title: yup.string().required().min(2).label("Project title"),
-        funding: yup.string().required().max(1500).label("Funding"),
-        potential_research_benefit: yup.string().required().max(1500).label("Potential research benefits"),
+        research_aim: yup
+            .string()
+            .required()
+            .max(1500)
+            .label("Research aim or question"),
         other_datasets: yup.string().required("Please select an option"),
         dataset_parts_known: yup.string().required("Please select an option"),
+        funding: yup.string().required().max(1500).label("Funding"),
+        potential_research_benefit: yup
+            .string()
+            .required()
+            .max(1500)
+            .label("Potential research benefits"),
     })
     .required();
 
@@ -77,24 +85,17 @@ const formFields = [
         label: "Datasets",
         name: "datasets",
         component: inputComponents.Autocomplete,
-        options: ['Yes', 'No'],
-        // getOptionLabel: ((option) => option),
-        //     options: { value: string | number; label: string }[],
-        //     value: unknown
-        // ) => options.find(option => option.value === value)?.label,
-        // value: <Chip
-        //     size="small"
-        //     label={"1"}
-        //     color={"error"}
-        // />, //TODO: chips
-        required: true,
+        freeSolo: true,
+        multiple: true,
         readOnly: true,
+        required: true,
+        style: { backgroundColor: colors.grey },
     },
     {
         label: "Are there other datasets you would like to link with the ones listed above?",
         name: "other_datasets",
         component: inputComponents.RadioGroup,
-        radios: Object.values(['Yes', 'No']).map(value => ({
+        radios: Object.values(["Yes", "No"]).map(value => ({
             label: value,
             value,
         })),
@@ -105,7 +106,7 @@ const formFields = [
         label: "Do you know which parts of the dataset you are interested in?",
         name: "dataset_parts_known",
         component: inputComponents.RadioGroup,
-        radios: Object.values(['Yes', 'No']).map(value => ({
+        radios: Object.values(["Yes", "No"]).map(value => ({
             label: value,
             value,
         })),
