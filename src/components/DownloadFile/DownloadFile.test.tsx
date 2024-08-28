@@ -74,7 +74,7 @@ describe("DownloadFile", () => {
             <DownloadFile
                 buttonText={buttonText}
                 apiPath={apiPath}
-                isExternalFile={true}
+                isExternalFile
                 externalFileName={externalFileName}
             />
         );

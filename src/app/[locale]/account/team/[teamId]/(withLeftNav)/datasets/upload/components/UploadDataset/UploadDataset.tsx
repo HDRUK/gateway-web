@@ -19,6 +19,7 @@ interface UploadDatasetProps {
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
 const TRANSLATION_PATH = "pages.account.team.datasets.components.UploadDataset";
 const FILE_TYPE = ".json";
+const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
 
 const UploadDataset = ({ teamId }: UploadDatasetProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -31,8 +32,6 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
     const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=dataset-from-upload&team_id=${teamId}`;
     const REDIRECT_URL = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}?tab=DRAFT`;
 
-    const fileName = `HDRUK_${SCHEMA_VERSION}.example.json`;
-
     return (
         <>
             <Paper sx={{ mb: 2 }}>
@@ -44,8 +43,8 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                         apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/GAT-4754/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
                         buttonText={t("downloadButtonText")}
                         buttonSx={{ mb: 0 }}
-                        isExternalFile={true}
-                        externalFileName={fileName}
+                        isExternalFile
+                        externalFileName={FILE_DOWNLOAD_NAME}
                     />
                 </Box>
             </Paper>
