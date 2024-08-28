@@ -1274,6 +1274,13 @@
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
             },
+            "AddPublicationDialog": {
+                "manualButton": "Manually fill form",
+                "searchText": "Search Europe PMC",
+                "doiPlaceholder": "Auto populate by searching Europe PMC using a DOI",
+                "or": "or",
+                "notFound": "DOI not found on Europe PMC"
+            },
             "RelatedResources": {
                 "title": "Add related resources",
                 "intro": "Search for data uses, publications and other analysis scripts, tools and software to add to your entry. Resources must already be on the Gateway.",

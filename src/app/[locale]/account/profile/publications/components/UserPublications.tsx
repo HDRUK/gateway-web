@@ -11,8 +11,10 @@ import Button from "@/components/Button";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
+import AddPublicationDialog from "@/modules/AddPublicationDialog";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -24,7 +26,6 @@ import {
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
-// import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import PublicationTab from "./PublicationTab";
 
@@ -43,8 +44,7 @@ const TRANSLATION_PATH = "pages.account.profile.publications.list";
 
 const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    // commented out - to be added when AddPublicationDiaglog is created
-    // const { showDialog } = useDialog();
+    const { showDialog } = useDialog();
     const { showModal } = useModal();
     const searchParams = useSearchParams();
 
@@ -246,9 +246,9 @@ const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
     }));
 
     const handleAdd = () => {
-        // to-be implemented..
-        // showDialog(AddPublicationDialog, { userId });
+        showDialog(AddPublicationDialog, { userId });
     };
+
     return (
         <>
             <Paper>
