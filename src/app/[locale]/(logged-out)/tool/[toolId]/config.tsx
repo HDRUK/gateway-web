@@ -48,7 +48,7 @@ const toolFields: ToolSection[] = [
                 label: "url",
             },
             {
-                path: "license",
+                path: "license.label",
                 type: FieldType.TEXT,
                 hideTooltip: false,
                 label: "license",

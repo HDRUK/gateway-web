@@ -29,20 +29,21 @@ const ToolContent = ({
     const router = useRouter();
     const path = usePathname();
 
-    const renderToolField = (
-        path: string,
-        type: FieldType,
-        value: string | string[]
-    ) => {
-        const val = value as string;
+    interface ToolFieldProps {
+        type: FieldType;
+        value: string;
+    }
 
+    const ToolField = ({ type, value }: ToolFieldProps) => {
         switch (type) {
             case FieldType.DATE:
-                return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
+                return (
+                    <Typography>{formatDate(value, DATE_FORMAT)}</Typography>
+                );
             case FieldType.LINK:
-                return <Link href={val}>{val}</Link>;
+                return <Link href={value}>{value}</Link>;
             default:
-                return <Typography>{val}</Typography>;
+                return <Typography>{value}</Typography>;
         }
     };
 
@@ -108,11 +109,10 @@ const ToolContent = ({
                                                     pb: 2,
                                                 }}
                                                 key={value}>
-                                                {renderToolField(
-                                                    field.path,
-                                                    field.type,
-                                                    value
-                                                )}
+                                                <ToolField
+                                                    type={field.type}
+                                                    value={value}
+                                                />
                                             </Box>
                                         );
                                     }
@@ -156,11 +156,10 @@ const ToolContent = ({
                                                     display: "flex",
                                                     alignItems: "center",
                                                 }}>
-                                                {renderToolField(
-                                                    field.path,
-                                                    field.type,
-                                                    value
-                                                )}
+                                                <ToolField
+                                                    type={field.type}
+                                                    value={value}
+                                                />
                                             </Box>
                                         </BoxContainer>
                                     );

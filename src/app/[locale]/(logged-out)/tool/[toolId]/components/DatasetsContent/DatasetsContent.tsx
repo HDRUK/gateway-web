@@ -25,7 +25,7 @@ export default function DatasetContent({
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const datasetsLatestVersions = getLatestVersions(dataset_versions);
+    const datasetsLatestVersions = getLatestVersions(dataset_versions ?? []);
 
     return (
         <InView
