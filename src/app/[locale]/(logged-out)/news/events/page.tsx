@@ -5,7 +5,7 @@ import { getEvents, getNews } from "@/utils/cms";
 import Content from "./components/Content";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Releases",
+    title: "Health Data Research Innovation Gateway - About - News and Events",
     description: "",
 };
 

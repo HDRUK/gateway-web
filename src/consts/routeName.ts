@@ -50,5 +50,6 @@ export enum RouteName {
     SUPPORT_DUR = "support/data-use-register",
     SUPPORT_DAR = "support/data-access-request",
     SUPPORT_TOOLS = "support/tools",
+    NEWS_EVENTS = "news/events",
     UPLOAD = "upload",
 }

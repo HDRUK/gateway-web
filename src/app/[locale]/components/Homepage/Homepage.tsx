@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { isMobile } from "react-device-detect";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -195,12 +196,33 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 }}
                 textAlign="center">
                 <Container>
-                    <TitleWithBg
-                        size="md"
-                        variant="h2"
-                        mb={2}
-                        title={newsHeader}
-                    />
+                    <Box sx={{ position: "relative", mb: 2 }}>
+                        <TitleWithBg
+                            size="md"
+                            variant="h2"
+                            title={newsHeader}
+                        />
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                right: 0,
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                            }}>
+                            <Link
+                                href={RouteName.NEWS_EVENTS}
+                                color="primary"
+                                passHref>
+                                <Button
+                                    variant="text"
+                                    endIcon={
+                                        <ArrowForwardIosIcon color="primary" />
+                                    }>
+                                    {t("newsEvents.seeAllLink")}
+                                </Button>
+                            </Link>
+                        </Box>
+                    </Box>
                     <NewsSection posts={posts} />
                 </Container>
             </Box>

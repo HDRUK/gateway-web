@@ -692,6 +692,9 @@
                     "title": "Community",
                     "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
                 }
+            },
+            "newsEvents": {
+                "seeAllLink": "See all events"
             }
         },
         "saved_searches": {
