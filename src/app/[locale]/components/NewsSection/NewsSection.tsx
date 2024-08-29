@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { CMSPostResponse, NewsPost } from "@/interfaces/Cms";
+import { CMSPostsResponse, NewsPost } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import NewsSummaryCard from "@/components/NewsSummaryCard";
 
-const NewsSection = ({ posts }: CMSPostResponse<NewsPost>) => {
+const NewsSection = ({ posts }: CMSPostsResponse<NewsPost>) => {
     const t = useTranslations("pages.home");
     return (
         <Box
