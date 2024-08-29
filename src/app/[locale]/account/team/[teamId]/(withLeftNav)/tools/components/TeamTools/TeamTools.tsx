@@ -45,7 +45,7 @@ interface CountStatus {
 
 interface TeamToolsProps {
     permissions: { [key: string]: boolean };
-    teamId: string;
+    teamId?: string;
     userId: string;
 }
 
@@ -166,7 +166,9 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         ...(permissions["tools.update"]
             ? [
                   {
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                      href: teamId
+                          ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`
+                          : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
                   },
@@ -260,7 +262,9 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     }));
 
     const handleAdd = () => {
-        const TOOL_CREATE_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}/${RouteName.CREATE}`;
+        const TOOL_CREATE_ROUTE = teamId
+            ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}/${RouteName.CREATE}`
+            : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}/${RouteName.CREATE}`;
         router.push(TOOL_CREATE_ROUTE);
     };
 

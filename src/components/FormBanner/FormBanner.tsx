@@ -2,16 +2,16 @@
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { DownloadIcon } from "@/consts/icons";
 import Button from "../Button";
+import DownloadFile from "../DownloadFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
 
 interface FormBannerProps {
     completionPercentage?: number;
     optionalPercentage?: number;
     actionButtonsEnabled?: boolean;
-    downloadAction: () => void;
     makeActiveAction: () => void;
     saveAsDraftAction: () => void;
 }
@@ -23,7 +23,6 @@ const FormBanner = ({
     completionPercentage = 0,
     optionalPercentage = 0,
     actionButtonsEnabled = true,
-    downloadAction,
     makeActiveAction,
     saveAsDraftAction,
 }: FormBannerProps) => {
@@ -33,13 +32,11 @@ const FormBanner = ({
         <Wrapper id={NAVBAR_ID}>
             <DetailBanner>
                 <Column justify={Justify.START}>
-                    <Button
-                        data-testid="btn-download"
-                        variant="text"
-                        startIcon={<DownloadIcon />}
-                        onClick={downloadAction}>
-                        {t("downloadExample")}
-                    </Button>
+                    <DownloadFile
+                        apiPath={`${apis.datasetsExportV1Url}/mock?type=dataset_metadata`}
+                        buttonText={t("downloadExample")}
+                        buttonSx={{ mb: 0 }}
+                    />
                 </Column>
                 <Column>
                     <Button
