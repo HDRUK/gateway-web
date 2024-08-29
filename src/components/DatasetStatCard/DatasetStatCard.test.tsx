@@ -1,25 +1,32 @@
-import { render } from "@/utils/testUtils";
-import DatasetStatCard from "./DatasetStatCard";
+import { render, screen } from "@/utils/testUtils";
+import DatasetStatCard, { DatasetStatCardProps } from "./DatasetStatCard";
 
-describe("DatasetInfoCard", () => {
+const renderTest = (props?: Partial<DatasetStatCardProps>) =>
+    render(
+        <DatasetStatCard
+            iconSrc="/test.jpg"
+            title="A description"
+            stat="10"
+            largeStatText
+            unit="days"
+            helperText="helper"
+            noStatText="Fallback text"
+            {...props}
+        />
+    );
+
+describe("DatasetStatCard", () => {
     it("should match snapshot", async () => {
-        const img = "/test.jpg";
-        const title = "A description";
-        const stat = "10";
-        const unit = "days";
-        const helperText = "helper";
-
-        const wrapper = render(
-            <DatasetStatCard
-                iconSrc={img}
-                title={title}
-                stat={stat}
-                largeStatText
-                unit={unit}
-                helperText={helperText}
-            />
-        );
+        const wrapper = renderTest();
 
         expect(wrapper.container).toMatchSnapshot();
+    });
+
+    it("shows no stat fallback text", async () => {
+        renderTest({
+            stat: "",
+        });
+
+        expect(screen.getByText("Fallback text")).toBeInTheDocument();
     });
 });

@@ -1,9 +1,6 @@
 import { cookies } from "next/headers";
-import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import Typography from "@/components/Typography";
 import { getFormHydration, getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -39,16 +36,11 @@ export default async function TeamDatasetPage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["datasets.update"]}>
-            <BoxContainer sx={{ gap: 0 }}>
-                <Paper>
-                    <Box sx={{ bgcolor: "white", mb: 0 }}>
-                        <Typography variant="h2">Dataset</Typography>
-                    </Box>
-                </Paper>
+            <BoxContainer sx={{ mt: "14px" }}>
                 <EditDataset
                     formJSON={formJSON}
                     teamId={Number(teamId)}
-                    userId={user?.id}
+                    user={user}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>
