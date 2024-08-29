@@ -250,8 +250,7 @@ const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
     nameOverride?: string,
-    setActiveField?: (fieldName: string) => void,
-    unsetActiveField?: () => void
+    setActiveField?: (fieldName: string) => void
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
     const { options } = rest;
@@ -292,7 +291,6 @@ const renderFormHydrationField = (
                 selectedOption
             }
             onFocus={() => setActiveField && setActiveField(name)}
-            onBlur={() => unsetActiveField && unsetActiveField()}
             {...rest}
             label={name || ""}
         />
