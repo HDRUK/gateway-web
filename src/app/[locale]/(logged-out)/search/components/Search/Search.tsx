@@ -331,8 +331,8 @@ const Search = ({ filters }: SearchProps) => {
             content: "",
         },
         {
-            label: t("collections"),
-            value: SearchCategory.COLLECTIONS,
+            label: t("tools"),
+            value: SearchCategory.TOOLS,
             content: "",
         },
         {
@@ -346,8 +346,8 @@ const Search = ({ filters }: SearchProps) => {
             content: "",
         },
         {
-            label: t("tools"),
-            value: SearchCategory.TOOLS,
+            label: t("collections"),
+            value: SearchCategory.COLLECTIONS,
             content: "",
         },
     ];

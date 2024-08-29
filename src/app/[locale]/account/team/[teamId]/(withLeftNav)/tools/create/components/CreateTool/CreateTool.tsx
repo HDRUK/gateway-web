@@ -45,7 +45,7 @@ import { RouteName } from "@/consts/routeName";
 import DatasetRelationshipFields from "../DatasetRelationshipFields";
 
 interface ToolCreateProps {
-    teamId: string;
+    teamId?: string;
     userId: number;
     toolId?: string;
 }
@@ -59,7 +59,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
     const { showBar } = useActionBar();
     const { push } = useRouter();
 
-    const TOOL_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`;
+    const TOOL_ROUTE = teamId
+        ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`
+        : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<ToolPayload>({
@@ -181,7 +183,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         const payload: ToolPayloadSubmission = {
             ...formData,
             user_id: userId,
-            team_id: +teamId,
+            team_id: teamId ? +teamId : undefined,
             enabled: true,
             tag: [],
             status,
