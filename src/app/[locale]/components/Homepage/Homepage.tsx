@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Typography } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { PageTemplateHome } from "@/interfaces/Cms";
@@ -89,6 +89,7 @@ interface HomePageProps {
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+    const theme = useTheme();
 
     const {
         meetTheTeam,
@@ -208,6 +209,10 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 right: 0,
                                 top: "50%",
                                 transform: "translateY(-50%)",
+                                [theme.breakpoints.down("tablet")]: {
+                                    position: "static",
+                                    transform: "none",
+                                },
                             }}>
                             <Link
                                 href={RouteName.NEWS_EVENTS}
