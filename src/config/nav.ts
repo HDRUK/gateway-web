@@ -5,6 +5,10 @@ const navItems = [
         label: "Search",
         subItems: [
             {
+                label: "Cohort Discovery",
+                href: "/about/cohort-discovery",
+            },
+            {
                 label: "Datasets/BioSamples",
                 href: "/search?type=datasets",
             },
@@ -27,10 +31,6 @@ const navItems = [
             {
                 label: "Analysis scripts & software",
                 href: "/search?type=tools",
-            },
-            {
-                label: "Cohort Discovery Tool",
-                href: "/about/cohort-discovery",
             },
         ],
     },
