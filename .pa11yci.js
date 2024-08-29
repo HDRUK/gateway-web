@@ -1,5 +1,5 @@
 //*** local variables used in exports
-
+//local var site      = 'http://localhost:3000/en';
 var site      = 'web.dev.hdruk.cloud';
 var email     = process.env.GATEWAY_USER;
 var password  = process.env.GATEWAY_PASSWORD;
@@ -24,8 +24,9 @@ module.exports = {
   // NOTE: defaults are OVERRIDDEN not extended
   defaults : {
     chromeLaunchConfig          : { 
-        executablePath              : "/usr/bin/google-chrome-stable",
-        args                        : ['--no-sandbox']
+      // macs executablePath              : "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome",
+       executablePath              : "/usr/bin/google-chrome-stable",
+       args                        : ['--no-sandbox']
      },
     // concurrency=1 so urls are sequential, with login first (if browser context is preserved)
     concurrency                 : 1,
@@ -55,9 +56,13 @@ module.exports = {
       "wait for url to be https://web.dev.hdruk.cloud/en/account/profile",
     ],
   },
-    { ignore  : ignoreNotForm,
+    { 
+      ignore  : ignoreNotForm,
       url     : `${site}`,
       timeout : 50000,
+      // actions: [
+      //   "screen capture home.png",
+      // ]
     },
     { ignore  : ignoreNotForm,
       url     : `${site}/dataset/1`,

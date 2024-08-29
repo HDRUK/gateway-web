@@ -34,7 +34,9 @@ const Banner = ({ title, subTitle, src }: BannerProps) => (
                 maxWidth: "550px",
                 padding: "0 20px",
             }}>
-            <Typography style={{ fontSize: 40 }}>{title}</Typography>
+            <Typography style={{ fontSize: 40 }} component="h1">
+                {title}
+            </Typography>
             {subTitle && <Typography>{subTitle}</Typography>}
         </div>
         {src && (
