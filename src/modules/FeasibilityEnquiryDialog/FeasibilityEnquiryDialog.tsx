@@ -7,6 +7,8 @@ import Dialog from "@/components/Dialog";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
+import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
+import useSidebar from "@/hooks/useSidebar";
 
 // import { CategoryHeader } from "./DatasetQuickViewDialog.styles";
 
@@ -16,9 +18,21 @@ interface DatasetQuickViewDialogProps {
     result: SearchResultDataset;
 }
 
+
+
 const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
+    const { showSidebar } = useSidebar();
+    console.log(result);
+
+    const datasets = [result];
+    const handleFeasibilityEnquiries = () => {
+        showSidebar({
+            title: "Messages",
+            content: <FeasibilityEnquirySidebar datasets={datasets} />,
+        });
+    };
 
     return (
         <Dialog
@@ -30,7 +44,7 @@ const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
                         display: "grid",
                         gridTemplateColumns: "repeat(2, 1fr)",
                     }}>
-                    <Button sx={{display: 'flex'}} variant="contained">{t("enquire")}</Button>
+                    <Button sx={{display: 'flex'}} variant="contained" onClick={handleFeasibilityEnquiries}>{t("enquire")}</Button>
                     {/* <Divider
                         orientation="vertical"
                         variant="middle"

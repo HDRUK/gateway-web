@@ -20,6 +20,7 @@ import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 
 interface ResultRowProps {
     result: SearchResultDataset;
@@ -75,6 +76,18 @@ const ActionDropdown = ({
         }
     };
 
+    const feasibilityEnquiryDialog = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            showDialog(FeasibilityEnquiryDialog, { result });
+        }
+    }
+
     const menuItems = [
         {
             label: "General enquiry",
@@ -83,7 +96,7 @@ const ActionDropdown = ({
         },
         {
             label: "Feasibility enquiry",
-            href: "TBC",
+            action: feasibilityEnquiryDialog,
             icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
         },
         {
