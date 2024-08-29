@@ -40,6 +40,7 @@ export default function DatasetContent({
                 heading={t("heading", {
                     length: publications.length,
                 })}
+                defaultExpanded={publications.length}
                 contents={publications.map(
                     ({ paper_title, authors, url, year_of_publication }) => (
                         <Fragment key={`publication_${paper_title}`}>

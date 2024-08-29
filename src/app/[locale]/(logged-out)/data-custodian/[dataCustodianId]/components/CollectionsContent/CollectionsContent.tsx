@@ -40,6 +40,7 @@ export default function CollectionsContent({
                 heading={t("heading", {
                     length: collections.length,
                 })}
+                defaultExpanded={collections.length}
                 contents={collections.map(({ name, id, image_link }) => (
                     <CardStacked
                         href={`${RouteName.COLLECTION_ITEM}/${id}`}

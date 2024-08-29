@@ -40,6 +40,7 @@ export default function ToolsContent({
                 heading={t("heading", {
                     length: tools.length,
                 })}
+                defaultExpanded={tools.length}
                 contents={tools.map(({ name, id }) => (
                     <Link
                         href={`/${RouteName.TOOL_ITEM}/${id}`}

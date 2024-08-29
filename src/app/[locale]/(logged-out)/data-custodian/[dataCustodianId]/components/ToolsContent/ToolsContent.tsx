@@ -42,6 +42,7 @@ export default function ToolsContent({
                 heading={t("heading", {
                     length: tools.length,
                 })}
+                defaultExpanded={tools.length}
                 contents={tools.map(({ name, id, created_at, user }) => (
                     <Fragment key={`tool_${id}`}>
                         <Link href={`/${RouteName.TOOL_ITEM}/${id}`}>

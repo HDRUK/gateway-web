@@ -40,6 +40,7 @@ export default function PublicationContent({
                 heading={t("heading", {
                     length: publications.length,
                 })}
+                defaultExpanded={publications.length}
                 contents={publications.map(({ paper_title, authors, url }) => (
                     <Fragment key={`publication_${paper_title}`}>
                         <Link href={url}>{paper_title}</Link>
