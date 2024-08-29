@@ -10,9 +10,10 @@ import TitlePanel from "@/components/TitlePanel";
 
 interface InfoHoverPanelProps {
     items: { id: string; image: string; href: string }[];
+    defaultImageSrc: string;
 }
 
-const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
+const InfoHoverPanel = ({ items, defaultImageSrc }: InfoHoverPanelProps) => {
     const t = useTranslations("pages.home");
 
     const [selected, setSelected] = useState<{
@@ -24,7 +25,7 @@ const InfoHoverPanel = ({ items }: InfoHoverPanelProps) => {
     return (
         <Box>
             <TitlePanel
-                image={selected ? selected?.image : items[0].image}
+                image={selected ? selected?.image : defaultImageSrc}
                 text={selected ? t(`${selected?.id}.text`) : t("welcomeText")}
                 title={
                     selected ? t(`${selected?.id}.title`) : t("welcomeTitle")
