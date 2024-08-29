@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isMobile } from "react-device-detect";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Typography, useTheme } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { PageTemplateHome } from "@/interfaces/Cms";
@@ -89,7 +89,6 @@ interface HomePageProps {
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
     const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
-    const theme = useTheme();
 
     const {
         meetTheTeam,
