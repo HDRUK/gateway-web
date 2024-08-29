@@ -46,7 +46,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                 data,
                 "metadata.metadata.coverage.biologicalsamples"
             )}`,
-            iconSrc: "/images/dataset/pie-chart.svg",
+            iconSrc: "/images/dataset/lungs.svg",
         },
         {
             title: t("geographicCoverageTitle"),
