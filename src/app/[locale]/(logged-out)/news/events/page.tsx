@@ -5,11 +5,11 @@ import { getEvents, getNews } from "@/utils/cms";
 import Content from "./components/Content";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - News and Events",
+    title: "Health Data Research Innovation Gateway - News - Events",
     description: "",
 };
 
-const ReleasesPage = async () => {
+const NewsEventsPage = async () => {
     const newsData = await getNews();
     const eventsData = await getEvents();
 
@@ -40,4 +40,4 @@ const ReleasesPage = async () => {
     );
 };
 
-export default ReleasesPage;
+export default NewsEventsPage;
