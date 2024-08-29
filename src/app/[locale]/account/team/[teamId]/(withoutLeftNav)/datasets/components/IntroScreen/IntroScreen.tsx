@@ -1,9 +1,9 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
-import Checkbox from "@/components/Checkbox";
+import CheckboxControlled from "@/components/CheckboxControlled";
 import FormLegend from "@/components/FormLegend";
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
@@ -57,24 +57,38 @@ const METADATA_CHECKBOXES = [
     "politics",
 ];
 
-const defaultValues = {
-    healthAndDisease: false,
-    treatmentsInterventions: false,
-};
+interface IntroScreenProps {
+    defaultValue: string[];
+    setDatasetType: (value: string[]) => void;
+}
 
-type FormData = {
-    healthAndDisease: boolean;
-    treatmentsInterventions: boolean;
-};
-
-const IntroScreen = () => {
+const IntroScreen = ({ defaultValue, setDatasetType }: IntroScreenProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
 
-    const { control } = useForm<FormData>({
-        defaultValues,
-    });
+    const [selectedCheckboxes, setSelectedCheckboxes] =
+        useState<string[]>(defaultValue);
+
+    useEffect(() => {
+        if (selectedCheckboxes.length) {
+            setDatasetType(selectedCheckboxes);
+        } else {
+            setDatasetType([]);
+        }
+    }, [selectedCheckboxes]);
+
+    const updateState = (item: string, shouldAdd: boolean) => {
+        setSelectedCheckboxes(prevState => {
+            if (shouldAdd) {
+                return [...prevState, item].filter(
+                    (v, i, arr) => arr.indexOf(v) === i
+                );
+            }
+
+            return prevState.filter(v => v !== item);
+        });
+    };
 
     return (
         <Box sx={{ mt: 1.25, display: "flex", justifyContent: "center" }}>
@@ -118,13 +132,25 @@ const IntroScreen = () => {
                                 display: "flex",
                                 justifyContent: "space-between",
                                 alignItems: "flex-start",
+                                gap: 2,
                                 p: 0,
                             }}>
-                            <Checkbox
+                            <CheckboxControlled
                                 label={t(`${CHECKBOX_PREFIX}.${checkbox}`)}
-                                control={control}
-                                name={checkbox}
+                                name={t(`${CHECKBOX_PREFIX}.${checkbox}`)}
                                 sx={{ pt: 0, pb: 0 }}
+                                onChange={(_, value) =>
+                                    updateState(
+                                        t(`${CHECKBOX_PREFIX}.${checkbox}`),
+                                        value
+                                    )
+                                }
+                                checked={
+                                    !!defaultValue.includes(
+                                        t(`${CHECKBOX_PREFIX}.${checkbox}`)
+                                    )
+                                }
+                                formControlSx={{ mb: 2 }}
                             />
                             <TooltipIcon
                                 label=""
