@@ -27,7 +27,6 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
     if (!latestMetadata) return null;
 
     const {
-        version,
         updated_at,
         metadata: { metadata, gwdmVersion },
     } = latestMetadata;
@@ -39,6 +38,10 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
             ? "summary.publisher.publisherName"
             : "summary.publisher.name"
     ) as unknown as string;
+
+    const version = get(
+        metadata, "required.version"
+    );
 
     const originMapping = {
         MANUAL: "Manually",
