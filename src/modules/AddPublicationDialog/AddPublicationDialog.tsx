@@ -64,7 +64,6 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
         successNotificationsOn: false,
     });
 
-    // Perform search using the debounced value directly
     const performSearch = async () => {
         setLoading(true);
         await searchRequest({ query: queryValue }).then(res => {
@@ -74,6 +73,7 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
                     JSON.stringify(res)
                 );
                 router.push(PUBLICATION_ROUTE);
+                hideDialog();
             } else {
                 notificationService.apiError(t("notFound"));
                 setLoading(false);

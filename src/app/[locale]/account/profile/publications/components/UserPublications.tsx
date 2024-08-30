@@ -26,6 +26,7 @@ import {
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import PublicationTab from "./PublicationTab";
 
@@ -38,11 +39,16 @@ interface CountStatus {
 interface UserPublicationProps {
     permissions: { [key: string]: boolean };
     userId: string;
+    teamId?: string;
 }
 
 const TRANSLATION_PATH = "pages.account.profile.publications.list";
 
-const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
+const UserPublications = ({
+    permissions,
+    userId,
+    teamId,
+}: UserPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
     const { showModal } = useModal();
@@ -153,7 +159,9 @@ const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
         ...(permissions["papers.update"]
             ? [
                   {
-                      href: "to-be-implemented", // GAT-4558
+                      href: teamId
+                          ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`
+                          : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
                   },

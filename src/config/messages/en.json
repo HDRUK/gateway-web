@@ -255,6 +255,17 @@
                             "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
                     },
+                    "create": {
+                        "title": "Manage or create a publication entry",
+                        "intro": "Publications should be peer reviewed documents (including pre-prints or articles published in a journal)",
+                        "addResources": "Related resources (optional)",
+                        "addResourcesInfo": "Show relationships for publications, data uses, other publications and analysis scripts, tools and software. Resources must already be on the Gateway.",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "labelTag": "Publication"
+                    },
                     "list": {
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",

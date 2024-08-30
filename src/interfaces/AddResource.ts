@@ -13,8 +13,8 @@ export enum ResourceType {
 }
 
 export interface SelectedResources {
-    [ResourceType.DATASET]: Dataset[];
-    [ResourceType.DATA_USE]: DataUse[];
-    [ResourceType.PUBLICATION]: Publication[];
-    [ResourceType.TOOL]: Tool[];
+    [ResourceType.DATASET]?: Dataset[];
+    [ResourceType.DATA_USE]?: DataUse[];
+    [ResourceType.PUBLICATION]?: Publication[];
+    [ResourceType.TOOL]?: Tool[];
 }
