@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import { colors } from "@/config/theme";
 
 interface MenuDropdownProps {
+    title?: string;
     anchorElement: null | HTMLElement;
     menuItems: {
         label: string;
@@ -30,6 +31,7 @@ function MenuDropdown({
     handleClose,
     transformOrigin,
     anchorOrigin,
+    title
 }: MenuDropdownProps) {
     return (
         <Menu
@@ -81,7 +83,9 @@ function MenuDropdown({
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
+                                aria-label={(title) ? menuItem.label + ' for ' + title : undefined}
                                 sx={{ pl: 0 }}>
+                                    
                                 {menuItem.label}
                             </Button>
                         </MenuItem>

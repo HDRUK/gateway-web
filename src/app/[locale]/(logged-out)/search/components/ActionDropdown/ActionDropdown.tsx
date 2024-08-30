@@ -19,6 +19,7 @@ import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
+import { get } from "lodash";
 
 interface ResultRowProps {
     result: SearchResultDataset;
@@ -33,6 +34,7 @@ const ActionDropdown = ({
     libraryData,
     showLibraryModal,
 }: ResultRowProps) => {
+    const title = get(result, "metadata.summary.title")
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
     const { showSidebar } = useSidebar();
@@ -171,12 +173,15 @@ const ActionDropdown = ({
                 variant="contained"
                 endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
                 sx={{ py: 0.5 }}
-                onClick={handleOpenDropdownMenu}>
+                onClick={handleOpenDropdownMenu}
+                aria-label={(title) ? t("actions") + ' for ' + title : undefined}>
                 {t("actions")}
+              
             </Button>
             <MenuDropdown
                 handleClose={() => setAnchorElement(null)}
                 menuItems={libraryItem.concat(menuItems)}
+                title={title}
                 anchorElement={anchorElement}
                 anchorOrigin={{
                     vertical: "top",
