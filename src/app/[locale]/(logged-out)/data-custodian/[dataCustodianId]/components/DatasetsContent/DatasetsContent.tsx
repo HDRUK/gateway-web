@@ -42,7 +42,7 @@ export default function DatasetContent({
                 heading={t("heading", {
                     length: datasets.length,
                 })}
-                defaultExpanded={datasets.length}
+                defaultExpanded={datasets.length > 0}
                 contents={datasets.map(
                     ({ id, title, populationSize, datasetType }) => (
                         <Fragment key={`dataset_${id}`}>
@@ -52,7 +52,10 @@ export default function DatasetContent({
                             {populationSize && (
                                 <div>
                                     {t("populationSize", {
-                                        length: (populationSize > 0 ? populationSize.toLocaleString() : 'Unknown'),
+                                        length:
+                                            populationSize > 0
+                                                ? populationSize.toLocaleString()
+                                                : "Unknown",
                                     })}
                                 </div>
                             )}

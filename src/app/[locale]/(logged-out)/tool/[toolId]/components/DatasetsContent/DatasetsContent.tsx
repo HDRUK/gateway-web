@@ -67,7 +67,10 @@ export default function DatasetContent({
                             {populationSize && (
                                 <div>
                                     {t("populationSize", {
-                                        length: (populationSize > 0 ? populationSize.toLocaleString() : 'Unknown'),
+                                        length:
+                                            populationSize > 0
+                                                ? populationSize.toLocaleString()
+                                                : "Unknown",
                                     })}
                                 </div>
                             )}

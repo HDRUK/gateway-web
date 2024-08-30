@@ -47,7 +47,7 @@ export default function DatasetContent({
                 heading={t("heading", {
                     length: datasetsLatestVersions.length,
                 })}
-                defaultExpanded={datasetsLatestVersions.length}
+                defaultExpanded={datasetsLatestVersions.length > 0}
                 contents={datasetsLatestVersions.map(
                     (
                         {
@@ -71,7 +71,10 @@ export default function DatasetContent({
                             {populationSize && (
                                 <div>
                                     {t("populationSize", {
-                                        length: (populationSize > 0 ? populationSize.toLocaleString() : 'Unknown'),
+                                        length:
+                                            populationSize > 0
+                                                ? populationSize.toLocaleString()
+                                                : "Unknown",
                                     })}
                                 </div>
                             )}

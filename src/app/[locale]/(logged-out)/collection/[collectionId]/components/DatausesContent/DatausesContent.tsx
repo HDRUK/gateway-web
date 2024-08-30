@@ -41,7 +41,7 @@ export default function DatausesContent({
                 heading={t("heading", {
                     length: datauses.length,
                 })}
-                defaultExpanded={datauses.length}
+                defaultExpanded={datauses.length > 0}
                 contents={datauses.map(
                     ({ project_title, organisation_name, id }) => (
                         <Fragment key={`dataUse_${id}`}>
