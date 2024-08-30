@@ -106,7 +106,8 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                         }>
                         <Button
                             onClick={handleFeasibilityEnquiries}
-                            sx={{ mt: 2, width: "100%" }}>
+                            sx={{ mt: 2, width: "100%" }}
+                            disabled={!(selectedDatasets.length > 0)}>
                             <QuestionAnswerIcon sx={{ pr: 1 }} />
                             {t("feasibilityEnquiries.buttonText")}
                         </Button>
