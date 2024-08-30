@@ -75,6 +75,10 @@ const navItems = [
                 href: "/news/releases",
             },
             {
+                label: "Events",
+                href: "/news/events",
+            },
+            {
                 label: "Newsletter",
                 href: "/newsletter-signup",
             },

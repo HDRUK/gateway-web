@@ -7,6 +7,7 @@ import NewsSummaryCard from "@/components/NewsSummaryCard";
 
 const NewsSection = ({ posts }: CMSPostsResponse<NewsPost>) => {
     const t = useTranslations("pages.home");
+
     return (
         <Box
             sx={{
@@ -28,10 +29,12 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsPost>) => {
                     },
                 }) => (
                     <NewsSummaryCard
+                        variant="feature"
                         buttonText={t("newsCardButtonText")}
                         summary={text}
                         imageLink={image.node.mediaItemUrl}
                         imageAlt={image.node.altText}
+                        imageHeight="140px"
                         headline={headline}
                         date={date}
                         url={link.url}

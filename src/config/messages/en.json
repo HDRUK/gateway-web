@@ -120,6 +120,9 @@
         "all": "All"
     },
     "pages": {
+        "newsEvents": {
+            "noResults": "There are no results for the selected year."
+        },
         "support": {
             "title": "Support centre",
             "backToSupport": "Back to Support Centre",
@@ -693,6 +696,9 @@
                     "title": "Community",
                     "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
                 }
+            },
+            "newsEvents": {
+                "seeAllLink": "See all events"
             }
         },
         "saved_searches": {
