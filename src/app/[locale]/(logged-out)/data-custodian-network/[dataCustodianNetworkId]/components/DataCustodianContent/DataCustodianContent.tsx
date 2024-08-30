@@ -12,7 +12,7 @@ import { RouteName } from "@/consts/routeName";
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.DataCustodianContent";
 
-export interface DataCustodianContentProps {
+interface DataCustodianContentProps {
     dataCustodians: DataCustodians[];
     anchorIndex: number;
     id: string;
@@ -52,34 +52,36 @@ export default function DataCustodianContent({
                         collections_count,
                         durs_count,
                     }) => (
-                        <Fragment key={`data-custodian_${id}`}>
+                        <Fragment key="data-custodian">
                             <Link
                                 href={`/${RouteName.DATA_PROVIDERS_ITEM}/${id}`}
                                 style={{ textDecoration: "none" }}>
                                 {name}
                             </Link>
                             <table>
-                                <tr>
-                                    <td>{`${t("datasets", {
-                                        length: datasets_count,
-                                    })}`}</td>
-                                    <td>{`${t("datause", {
-                                        length: durs_count,
-                                    })}`}</td>
-                                </tr>
-                                <tr>
-                                    <td>{`${t("tools", {
-                                        length: tools_count,
-                                    })}`}</td>
-                                    <td>{`${t("publications", {
-                                        length: publications_count,
-                                    })}`}</td>
-                                </tr>
-                                <tr>
-                                    <td>{`${t("collections", {
-                                        length: collections_count,
-                                    })}`}</td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>{`${t("datasets", {
+                                            length: datasets_count,
+                                        })}`}</td>
+                                        <td>{`${t("datause", {
+                                            length: durs_count,
+                                        })}`}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{`${t("tools", {
+                                            length: tools_count,
+                                        })}`}</td>
+                                        <td>{`${t("publications", {
+                                            length: publications_count,
+                                        })}`}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{`${t("collections", {
+                                            length: collections_count,
+                                        })}`}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </Fragment>
                     )

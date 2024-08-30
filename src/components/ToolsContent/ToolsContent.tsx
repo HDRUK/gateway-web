@@ -26,7 +26,6 @@ export default function ToolsContent({
     const TRANSLATION_PATH = `pages.${page}.components.ToolsContent`;
 
     const t = useTranslations(TRANSLATION_PATH);
-
     return (
         <InView
             id={`anchor${anchorIndex}`}
