@@ -16,56 +16,6 @@ import ToolsContent from "./components/ToolsContent";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
-const testobject = [
-    {
-        name: "PUBLIC HEALTH SCOTLAND",
-        datasets_count: 30,
-        durs_count: 51,
-        publications_count: 27,
-        tools_count: 1,
-        collections_count: 17,
-    },
-    {
-        name: "DataLoch",
-        datasets_count: 12,
-        durs_count: 11,
-        publications_count: 0,
-        tools_count: 0,
-        collections_count: 2,
-    },
-    {
-        name: "West of Scotland Safe Haven",
-        datasets_count: 10,
-        durs_count: 0,
-        publications_count: 0,
-        tools_count: 0,
-        collections_count: 1,
-    },
-    {
-        name: "PUBLIC HEALTH SCOTLAND",
-        datasets_count: 30,
-        durs_count: 51,
-        publications_count: 27,
-        tools_count: 1,
-        collections_count: 17,
-    },
-    {
-        name: "DataLoch",
-        datasets_count: 12,
-        durs_count: 11,
-        publications_count: 0,
-        tools_count: 0,
-        collections_count: 2,
-    },
-    {
-        name: "West of Scotland Safe Haven",
-        datasets_count: 10,
-        durs_count: 0,
-        publications_count: 0,
-        tools_count: 0,
-        collections_count: 1,
-    },
-];
 
 export default async function DataCustodianNetworkPage({
     params,
