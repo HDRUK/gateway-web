@@ -7,6 +7,7 @@ import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
+import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
@@ -76,12 +77,20 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                         {t("generalEnquiries.title")}
                     </Typography>
                     <Typography>{t("generalEnquiries.text")}</Typography>
-                    <Button
-                        onClick={handleGeneralEnquiries}
-                        sx={{ mt: 2, width: "100%" }}>
-                        <QuestionAnswerIcon sx={{ pr: 1 }} />
-                        {t("generalEnquiries.buttonText")}
-                    </Button>
+                    <Tooltip
+                        title={
+                            selectedDatasets.length > 0
+                                ? ""
+                                : t("generalEnquiries.buttonTooltip")
+                        }>
+                        <Button
+                            onClick={handleGeneralEnquiries}
+                            sx={{ mt: 2, width: "100%" }}
+                            disabled={!(selectedDatasets.length > 0)}>
+                            <QuestionAnswerIcon sx={{ pr: 1 }} />
+                            {t("generalEnquiries.buttonText")}
+                        </Button>
+                    </Tooltip>
                 </Box>
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ p: 0 }}>
@@ -89,12 +98,19 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                         {t("feasibilityEnquiries.title")}
                     </Typography>
                     <Typography>{t("feasibilityEnquiries.text")}</Typography>
-                    <Button
-                        onClick={handleFeasibilityEnquiries}
-                        sx={{ mt: 2, width: "100%" }}>
-                        <QuestionAnswerIcon sx={{ pr: 1 }} />
-                        {t("feasibilityEnquiries.buttonText")}
-                    </Button>
+                    <Tooltip
+                        title={
+                            selectedDatasets.length > 0
+                                ? ""
+                                : t("feasibilityEnquiries.buttonTooltip")
+                        }>
+                        <Button
+                            onClick={handleFeasibilityEnquiries}
+                            sx={{ mt: 2, width: "100%" }}>
+                            <QuestionAnswerIcon sx={{ pr: 1 }} />
+                            {t("feasibilityEnquiries.buttonText")}
+                        </Button>
+                    </Tooltip>
                 </Box>
                 {selectedDatasets.length > 1 && (
                     <>

@@ -282,12 +282,14 @@
                                 "title": "General Enquiry",
                                 "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a general enquiry",
+                                "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "feasibilityEnquiries": {
                                 "title": "Feasibility Enquiry",
                                 "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a feasibility enquiry",
+                                "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "multiDelete": {
