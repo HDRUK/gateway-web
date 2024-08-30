@@ -31,7 +31,7 @@ function MenuDropdown({
     handleClose,
     transformOrigin,
     anchorOrigin,
-    title
+    title,
 }: MenuDropdownProps) {
     return (
         <Menu
@@ -83,9 +83,12 @@ function MenuDropdown({
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
-                                aria-label={(title) ? menuItem.label + ' for ' + title : undefined}
+                                aria-label={
+                                    title
+                                        ? `${menuItem.label} for ${title}`
+                                        : undefined
+                                }
                                 sx={{ pl: 0 }}>
-                                    
                                 {menuItem.label}
                             </Button>
                         </MenuItem>
