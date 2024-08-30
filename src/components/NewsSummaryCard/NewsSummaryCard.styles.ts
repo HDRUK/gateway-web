@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
 
 export const DateBox = styled("div")({
+    textAlign: "center",
     color: "white",
     position: "absolute",
     top: 8,
