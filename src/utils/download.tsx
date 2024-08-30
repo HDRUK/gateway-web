@@ -13,4 +13,17 @@ const downloadFile = (fileData: FileExport | undefined) => {
     link.remove();
 };
 
-export { downloadFile };
+const downloadExternalFile = async (
+    fileData: Response | undefined,
+    fileName: string
+) => {
+    if (!fileData) return;
+    const blob = await fileData.blob();
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    link.remove();
+};
+
+export { downloadFile, downloadExternalFile };

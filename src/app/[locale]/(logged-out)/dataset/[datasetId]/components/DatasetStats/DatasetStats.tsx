@@ -7,7 +7,6 @@ import DatasetStatCard, {
 } from "@/components/DatasetStatCard/DatasetStatCard";
 import {
     formatYearStat,
-    hasValidValue,
     parseLeadTime,
     splitStringList,
 } from "@/utils/dataset";
@@ -22,6 +21,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const formattedStats: DatasetStatCardProps[] = [
         {
             title: t("populationTitle"),
+            noStatText: t("notReported"),
             stat: get(
                 data,
                 "metadata.metadata.summary.populationSize"
@@ -41,14 +41,16 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("associatedTissuesTitle"),
+            noStatText: t("notReported"),
             stat: `${get(
                 data,
                 "metadata.metadata.coverage.biologicalsamples"
             )}`,
-            iconSrc: "/images/dataset/pie-chart.svg",
+            iconSrc: "/images/dataset/lungs.svg",
         },
         {
             title: t("geographicCoverageTitle"),
+            noStatText: t("notReported"),
             stat: spatialCoverage
                 ? Array.from(new Set(splitStringList(spatialCoverage)))
                 : "",
@@ -56,6 +58,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
         {
             title: t("leadTimeTitle"),
+            noStatText: t("dataOnly"),
             stat: `${
                 parseLeadTime(
                     get(
@@ -89,18 +92,16 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                     tablet: 2,
                 },
             }}>
-            {formattedStats.map(
-                datasetStat =>
-                    hasValidValue(datasetStat.stat) && (
-                        <DatasetStatCard
-                            title={datasetStat.title}
-                            stat={datasetStat.stat}
-                            largeStatText={!!datasetStat.largeStatText}
-                            unit={datasetStat.unit}
-                            iconSrc={datasetStat.iconSrc}
-                        />
-                    )
-            )}
+            {formattedStats.map(datasetStat => (
+                <DatasetStatCard
+                    title={datasetStat.title}
+                    stat={datasetStat.stat}
+                    noStatText={datasetStat.noStatText}
+                    largeStatText={!!datasetStat.largeStatText}
+                    unit={datasetStat.unit}
+                    iconSrc={datasetStat.iconSrc}
+                />
+            ))}
         </BoxContainer>
     );
 };

@@ -5,6 +5,18 @@ const navItems = [
         label: "Search",
         subItems: [
             {
+                label: "Cohort Discovery",
+                href: "/about/cohort-discovery",
+            },
+            {
+                label: "Phenotypes",
+                href: "https://phenotypes.healthdatagateway.org/",
+            },
+            {
+                label: "Courses",
+                href: "https://hdruklearn.org/",
+            },
+            {
                 label: "Datasets/BioSamples",
                 href: "/search?type=datasets",
             },
@@ -13,8 +25,8 @@ const navItems = [
                 href: "/search?type=dur",
             },
             {
-                label: "Collections/Networks",
-                href: "/search?type=collections",
+                label: "Analysis scripts & software",
+                href: "/search?type=tools",
             },
             {
                 label: "Publications",
@@ -25,12 +37,8 @@ const navItems = [
                 href: "/search?type=data_providers",
             },
             {
-                label: "Analysis scripts & software",
-                href: "/search?type=tools",
-            },
-            {
-                label: "Cohort Discovery Tool",
-                href: "/about/cohort-discovery",
+                label: "Collections/Networks",
+                href: "/search?type=collections",
             },
         ],
     },
@@ -65,6 +73,10 @@ const navItems = [
             {
                 label: "Gateway releases",
                 href: "/news/releases",
+            },
+            {
+                label: "Events",
+                href: "/news/events",
             },
             {
                 label: "Newsletter",
