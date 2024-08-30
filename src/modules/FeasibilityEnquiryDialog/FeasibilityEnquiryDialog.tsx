@@ -8,7 +8,10 @@ import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import useSidebar from "@/hooks/useSidebar";
 import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
-
+import usePost from "@/hooks/usePost";
+import { NewLibrary } from "@/interfaces/Library";
+import apis from "@/config/apis";
+import useAuth from "@/hooks/useAuth";
 
 const TRANSLATION_PATH = "modules.dialogs.FeasibilityEnquiryDialog";
 
@@ -20,6 +23,7 @@ const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
     const { showSidebar } = useSidebar();
+    const { user } = useAuth();
     console.log(result);
 
     const handleFeasibilityEnquiries = () => {
@@ -36,6 +40,21 @@ const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
             title: "Messages",
             content: <FeasibilityEnquirySidebar datasets={datasets} />,
         });
+    };
+
+    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url, {
+        itemName: `Library item`,
+    });
+    
+    const handleAddToLibrary = (datasetId: number) => {
+        const payload: NewLibrary = {
+            user_id: user?.id,
+            dataset_id: datasetId,
+        };
+        addLibrary(payload);
+        // .then(() => {
+        //     mutateLibraries();
+        // });
     };
 
     return (
@@ -71,7 +90,10 @@ const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
                                 "BLAH BLAH6To make a feasibility enquiry for multiple datasets:\n1. Add datasets to your library2. Generate a feasibility enquiry from your library page"
                             }
                         </Typography>
-                        <Button variant="outlined" color="secondary">
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={handleAddToLibrary}>
                             {t("addToLibrary")}
                         </Button>
                     </Box>
