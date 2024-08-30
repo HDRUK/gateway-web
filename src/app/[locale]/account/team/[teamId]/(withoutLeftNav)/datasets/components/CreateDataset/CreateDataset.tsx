@@ -130,7 +130,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         isLoading,
         mutate: refetchDataset,
     } = useGet<Dataset>(
-        isDraft
+        searchParams?.get("status") === DataStatus.DRAFT
             ? `${apis.datasetsV1Url}/${datasetId}`
             : `${apis.datasetsV1Url}/${datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
         { shouldFetch: !!params?.teamId && !!datasetId }
@@ -488,9 +488,15 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     };
 
     const handleSaveDraft = async () => {
-        setDraftToggled(true);
-        setIsDraft(true);
-        handleFormSubmission(true);
+        if (!isDraft) {
+            setIsDraft(true);
+        }
+
+        if (!draftToggled) {
+            setDraftToggled(true);
+        } else {
+            handleFormSubmission(true);
+        }
     };
 
     // Handle submission after draft toggle
