@@ -4,7 +4,7 @@ import { render, screen } from "@/utils/testUtils";
 
 describe("MindMap", () => {
     it("should render component", async () => {
-        const connectionLineStyle = { stroke: "black", strokeWidth: 3 };
+        const connectionLineStyle = { stroke: "rgb(226, 226, 226)", strokeWidth: 3 };
         const rootNode = {
             id: "root",
             type: "circle",

@@ -771,7 +771,7 @@
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway",
-                            "dataUseTitles": "Data use title",
+                            "dataUseTitles": "Data Use / Research project title",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
@@ -1005,13 +1005,12 @@
                     "dataOnly": "Data only"
                 },
                 "DatasetMindMap": {
-                    "tools": "View associated data analysis scripts & software",
-                    "durs": "Research projects/ Data Use",
-                    "linkages": "See which datasets are linkable",
-                    "collections": "Explore associated Collections",
-                    "synthetic": "Access synthetic data",
-                    "root": "Data Custodian page",
-                    "structuralMetadata": "Review data variables"
+                    "tools": "Data Analysis Scripts & Software",
+                    "durs": "Data Uses / Research Projects",
+                    "collections": "Collections",
+                    "synthetic": "Synthetic data",
+                    "root": "Data Custodian",
+                    "structuralMetadata": "Data variables"
                 },
                 "Linkages": {
                     "title": "Relationships:",
