@@ -148,6 +148,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
         "revision url": "http://www.example.com/",
+        identifier: "226fb3f1-4471-400a-8c39-2b66d46a39b6",
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
         "Name of data provider": "--",
