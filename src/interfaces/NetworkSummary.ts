@@ -1,10 +1,10 @@
-import { Collection } from "@/interfaces/Collection";
+import { DataProvider as DataCustodian } from "@/interfaces/DataProvider";
 import { DataUse } from "@/interfaces/DataUse";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 
-interface TeamSummary {
+interface NetworkSummary {
     id: number;
     name: string;
     is_provider: boolean;
@@ -12,7 +12,7 @@ interface TeamSummary {
     durs: DataUse[];
     tools: Tool[];
     publications: Publication[];
-    collections: Collection[];
+    teams_count: DataCustodian[];
 }
 
-export type { TeamSummary };
+export type { NetworkSummary };

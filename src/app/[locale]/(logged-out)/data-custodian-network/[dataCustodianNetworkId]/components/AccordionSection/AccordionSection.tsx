@@ -24,6 +24,7 @@ export default function AccordionSection({
 
     const TRANSLATION_PATH = "components.ShowMore";
     const t = useTranslations(TRANSLATION_PATH);
+
     return (
         <Accordion
             {...restProps}
