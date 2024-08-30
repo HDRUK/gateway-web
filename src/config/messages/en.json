@@ -281,12 +281,14 @@
                             "generalEnquiries": {
                                 "title": "General Enquiry",
                                 "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
-                                "buttonText": "Make a general enquiry"
+                                "buttonText": "Make a general enquiry",
+                                "sidebarTitle": "Messages"
                             },
                             "feasabilityEnquiries": {
                                 "title": "Feasability Enquiry",
                                 "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
-                                "buttonText": "Make a feasibility enquiry"
+                                "buttonText": "Make a feasibility enquiry",
+                                "sidebarTitle": "Messages"
                             },
                             "multiDelete": {
                                 "label": "Multi delete"
@@ -829,9 +831,14 @@
                     "to": "to",
                     "minYearErrorMessage": "Please enter a valid starting year"
                 },
+                "FeasibilityEnquiryForm": {
+                    "itemName": "Feasibility Enquiry item",
+                    "helperText": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "saveButton": "Send message"
+                },
                 "GeneralEnquiryForm": {
                     "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
-                    "saveButton": "Save changes"
+                    "saveButton": "Send message"
                 },
                 "PopulationFilter": {
                     "includeUnreported": "Include {unreportedCount} datasets where population is not reported"
