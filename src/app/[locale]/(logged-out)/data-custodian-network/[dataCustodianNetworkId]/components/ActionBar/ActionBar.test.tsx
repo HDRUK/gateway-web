@@ -4,7 +4,6 @@ import { render, fireEvent } from "@testing-library/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SearchCategory } from "@/interfaces/Search";
-// Adjust the path based on your file structure
 import { RouteName } from "@/consts/routeName";
 import ActionBar from "./ActionBar";
 
