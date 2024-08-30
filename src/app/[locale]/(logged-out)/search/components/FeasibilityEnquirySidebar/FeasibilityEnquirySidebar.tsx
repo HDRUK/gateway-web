@@ -37,7 +37,7 @@ const FeasibilityEnquirySidebar = ({
     const { user } = useAuth();
 
     const sendEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
-        itemName: "Feasibility Enquiry item",
+        itemName: t("itemName"),
     });
 
     const { control, handleSubmit, reset } = useForm<User>({
@@ -130,8 +130,6 @@ const FeasibilityEnquirySidebar = ({
                         <InputWrapper
                             key={field.name}
                             control={control}
-                            // options={['1', '2']}
-                            // options={userOptions}
                             {...field}
                         />
                     ))}

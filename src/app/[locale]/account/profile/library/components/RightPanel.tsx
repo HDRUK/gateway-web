@@ -46,14 +46,14 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
 
     const handleGeneralEnquiries = () => {
         showSidebar({
-            title: "Messages",
+            title: t("generalEnquiries.sidebarTitle"),
             content: <GeneralEnquirySidebar datasets={selectedDatasets} />,
         });
     };
 
     const handleFeasibilityEnquiries = () => {
         showSidebar({
-            title: "Messages",
+            title: t("feasibilityEnquiries.sidebarTitle"),
             content: <FeasibilityEnquirySidebar datasets={selectedDatasets} />,
         });
     };
