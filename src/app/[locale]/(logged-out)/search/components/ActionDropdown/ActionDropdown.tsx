@@ -3,6 +3,7 @@ import { BookmarkBorder, Bookmark } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button } from "@mui/material";
 import Cookies from "js-cookie";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Library } from "@/interfaces/Library";
@@ -33,6 +34,7 @@ const ActionDropdown = ({
     libraryData,
     showLibraryModal,
 }: ResultRowProps) => {
+    const title = get(result, "metadata.summary.title");
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
     const { showSidebar } = useSidebar();
@@ -171,12 +173,14 @@ const ActionDropdown = ({
                 variant="contained"
                 endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
                 sx={{ py: 0.5 }}
-                onClick={handleOpenDropdownMenu}>
+                onClick={handleOpenDropdownMenu}
+                aria-label={title ? `${t("actions")} for ${title}` : undefined}>
                 {t("actions")}
             </Button>
             <MenuDropdown
                 handleClose={() => setAnchorElement(null)}
                 menuItems={libraryItem.concat(menuItems)}
+                title={title}
                 anchorElement={anchorElement}
                 anchorOrigin={{
                     vertical: "top",

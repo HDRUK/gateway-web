@@ -15,6 +15,7 @@ interface SelectedLibrary {
     [id: string]: {
         selected: boolean;
         datasetId: number;
+        name: string;
         teamId: number;
         teamName: string;
         teamMemberOf: string;
