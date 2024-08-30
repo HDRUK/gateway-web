@@ -70,7 +70,7 @@ export default function DatasetContent({
                                         length:
                                             populationSize > 0
                                                 ? populationSize.toLocaleString()
-                                                : "Unknown",
+                                                : t("unknownString"),
                                     })}
                                 </div>
                             )}
