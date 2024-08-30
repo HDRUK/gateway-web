@@ -120,6 +120,9 @@
         "all": "All"
     },
     "pages": {
+        "newsEvents": {
+            "noResults": "There are no results for the selected year."
+        },
         "support": {
             "title": "Support centre",
             "backToSupport": "Back to Support Centre",
@@ -281,12 +284,16 @@
                             "generalEnquiries": {
                                 "title": "General Enquiry",
                                 "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
-                                "buttonText": "Make a general enquiry"
+                                "buttonText": "Make a general enquiry",
+                                "buttonTooltip": "Select at least one dataset to enable",
+                                "sidebarTitle": "Messages"
                             },
-                            "feasabilityEnquiries": {
-                                "title": "Feasability Enquiry",
+                            "feasibilityEnquiries": {
+                                "title": "Feasibility Enquiry",
                                 "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
-                                "buttonText": "Make a feasibility enquiry"
+                                "buttonText": "Make a feasibility enquiry",
+                                "buttonTooltip": "Select at least one dataset to enable",
+                                "sidebarTitle": "Messages"
                             },
                             "multiDelete": {
                                 "label": "Multi delete"
@@ -624,7 +631,7 @@
             "seeNow": "See now",
             "newsCardButtonText": "Read more",
             "welcomeTitle": "Welcome to The Gateway",
-            "welcomeText": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond",
+            "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
             "datasets": {
                 "label": "Datasets / BioSamples",
                 "title": "Datasets / BioSamples",
@@ -689,6 +696,9 @@
                     "title": "Community",
                     "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
                 }
+            },
+            "newsEvents": {
+                "seeAllLink": "See all events"
             }
         },
         "saved_searches": {
@@ -829,9 +839,14 @@
                     "to": "to",
                     "minYearErrorMessage": "Please enter a valid starting year"
                 },
+                "FeasibilityEnquiryForm": {
+                    "itemName": "Feasibility Enquiry item",
+                    "helperText": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "saveButton": "Send message"
+                },
                 "GeneralEnquiryForm": {
                     "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
-                    "saveButton": "Save changes"
+                    "saveButton": "Send message"
                 },
                 "PopulationFilter": {
                     "includeUnreported": "Include {unreportedCount} datasets where population is not reported"

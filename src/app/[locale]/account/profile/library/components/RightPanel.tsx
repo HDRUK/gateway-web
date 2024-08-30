@@ -7,10 +7,12 @@ import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
+import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
 import GeneralEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/GeneralEnquirySidebar";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
@@ -24,20 +26,19 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showSidebar } = useSidebar();
 
-    const selectedDatasets = useMemo(
-        () =>
-            Object.values(selected)
-                .filter(item => item.selected)
-                .map(item => {
-                    return {
-                        datasetId: Number(item.datasetId),
-                        teamId: Number(item.teamId),
-                        teamName: item.teamName,
-                        teamMemberOf: item.teamMemberOf,
-                    };
-                }),
-        [selected]
-    );
+    const selectedDatasets = useMemo(() => {
+        return Object.values(selected)
+            .filter(item => item.selected)
+            .map(item => {
+                return {
+                    datasetId: Number(item.datasetId),
+                    name: item.name,
+                    teamId: Number(item.teamId),
+                    teamName: item.teamName,
+                    teamMemberOf: item.teamMemberOf,
+                };
+            });
+    }, [selected]);
 
     const selectedLibraryIds = useMemo(
         () => Object.keys(selected).filter(key => selected[key].selected),
@@ -46,15 +47,16 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
 
     const handleGeneralEnquiries = () => {
         showSidebar({
-            title: "Messages",
+            title: t("generalEnquiries.sidebarTitle"),
             content: <GeneralEnquirySidebar datasets={selectedDatasets} />,
         });
     };
 
     const handleFeasibilityEnquiries = () => {
-        // to be implemented
-        console.log(selectedDatasets);
-        console.log(selectedLibraryIds);
+        showSidebar({
+            title: t("feasibilityEnquiries.sidebarTitle"),
+            content: <FeasibilityEnquirySidebar datasets={selectedDatasets} />,
+        });
     };
 
     const handleMultiDelete = () => {
@@ -75,25 +77,41 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                         {t("generalEnquiries.title")}
                     </Typography>
                     <Typography>{t("generalEnquiries.text")}</Typography>
-                    <Button
-                        onClick={handleGeneralEnquiries}
-                        sx={{ mt: 2, width: "100%" }}>
-                        <QuestionAnswerIcon sx={{ pr: 1 }} />
-                        {t("generalEnquiries.buttonText")}
-                    </Button>
+                    <Tooltip
+                        title={
+                            selectedDatasets.length > 0
+                                ? ""
+                                : t("generalEnquiries.buttonTooltip")
+                        }>
+                        <Button
+                            onClick={handleGeneralEnquiries}
+                            sx={{ mt: 2, width: "100%" }}
+                            disabled={!(selectedDatasets.length > 0)}>
+                            <QuestionAnswerIcon sx={{ pr: 1 }} />
+                            {t("generalEnquiries.buttonText")}
+                        </Button>
+                    </Tooltip>
                 </Box>
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ p: 0 }}>
                     <Typography variant="h2">
-                        {t("feasabilityEnquiries.title")}
+                        {t("feasibilityEnquiries.title")}
                     </Typography>
-                    <Typography>{t("feasabilityEnquiries.text")}</Typography>
-                    <Button
-                        onClick={handleFeasibilityEnquiries}
-                        sx={{ mt: 2, width: "100%" }}>
-                        <QuestionAnswerIcon sx={{ pr: 1 }} />
-                        {t("feasabilityEnquiries.buttonText")}
-                    </Button>
+                    <Typography>{t("feasibilityEnquiries.text")}</Typography>
+                    <Tooltip
+                        title={
+                            selectedDatasets.length > 0
+                                ? ""
+                                : t("feasibilityEnquiries.buttonTooltip")
+                        }>
+                        <Button
+                            onClick={handleFeasibilityEnquiries}
+                            sx={{ mt: 2, width: "100%" }}
+                            disabled={!(selectedDatasets.length > 0)}>
+                            <QuestionAnswerIcon sx={{ pr: 1 }} />
+                            {t("feasibilityEnquiries.buttonText")}
+                        </Button>
+                    </Tooltip>
                 </Box>
                 {selectedDatasets.length > 1 && (
                     <>
