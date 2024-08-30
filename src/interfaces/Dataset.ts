@@ -29,8 +29,8 @@ interface StructuralMetadataPublicSchema {
 }
 
 interface Revision {
-    revision: string;
-    revisionUrl: string;
+    version: string;
+    url: string;
 }
 
 interface Metadata {

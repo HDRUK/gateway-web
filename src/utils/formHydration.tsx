@@ -471,6 +471,24 @@ const mapExistingDatasetToFormFields = (
                     !isArray(defaultValue)
                 ) {
                     set(values, title, []);
+                } else if (fullPath.includes("revisions")) {
+                    const revisions = get(metadata, "revisions");
+                    const latestRevision = revisions?.[revisions.length - 1];
+
+                    if (latestRevision) {
+                        switch (fullPath) {
+                            case "revisions.version":
+                                set(
+                                    values,
+                                    "revision version",
+                                    latestRevision.version
+                                );
+                                break;
+                            default:
+                                set(values, "revision url", latestRevision.url);
+                                break;
+                        }
+                    }
                 } else {
                     set(values, title, defaultValue);
                 }
