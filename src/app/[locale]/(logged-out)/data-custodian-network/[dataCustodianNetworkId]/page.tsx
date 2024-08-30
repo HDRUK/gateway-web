@@ -71,7 +71,7 @@ export default async function DataCustodianNetworkPage({
                         />
 
                         <DataCustodianContent
-                            dataCustodians={testobject}
+                            dataCustodians={summaryData.teams_counts}
                             id={id}
                             anchorIndex={1}
                         />

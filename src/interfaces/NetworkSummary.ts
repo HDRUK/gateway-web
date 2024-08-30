@@ -12,7 +12,7 @@ interface NetworkSummary {
     durs: DataUse[];
     tools: Tool[];
     publications: Publication[];
-    teams_count: DataCustodian[];
+    teams_counts: DataCustodian[];
 }
 
 export type { NetworkSummary };
