@@ -6,21 +6,23 @@ import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Publication } from "@/interfaces/Publication";
-import AccordionSection from "../AccordionSection";
-
-const TRANSLATION_PATH = "pages.dataCustodian.components.PublicationsContent";
+import AccordionSection from "@/components/AccordionSection";
 
 export interface PublicationsContentProps {
     publications: Publication[];
     anchorIndex: number;
+    page: string;
 }
 
 export default function PublicationContent({
     publications,
     anchorIndex,
+    page,
 }: PublicationsContentProps) {
     const router = useRouter();
     const path = usePathname();
+    const TRANSLATION_PATH = `pages.${page}.components.PublicationsContent`;
+
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
