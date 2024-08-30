@@ -25,6 +25,21 @@ import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
     {
+        id: "feasibility",
+        image: "/images/homepage/welcome-image.png",
+        href: "/about/cohort-discovery",
+    },
+    {
+        id: "phenotypes",
+        image: "/images/homepage/welcome-image.png",
+        href: "https://phenotypes.healthdatagateway.org/",
+    },
+    {
+        id: "courses",
+        image: "/images/homepage/welcome-image.png",
+        href: "https://hdruklearn.org/",
+    },
+    {
         id: SearchCategory.DATASETS,
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.DATASETS}`,
@@ -33,11 +48,6 @@ const services = [
         id: SearchCategory.DATA_USE,
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.DATA_USE}`,
-    },
-    {
-        id: "feasibility",
-        image: "/images/homepage/welcome-image.png",
-        href: "/about/cohort-discovery",
     },
     {
         id: SearchCategory.TOOLS,
@@ -64,21 +74,12 @@ const services = [
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
-    {
-        id: "phenotypes",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://phenotypes.healthdatagateway.org/",
-    },
+
     // {
     //     id: "diseaseAtlas",
     //     image: "/images/homepage/welcome-image.png",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
-    {
-        id: "courses",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://hdruklearn.org/",
-    },
 ];
 
 interface HomePageProps {
