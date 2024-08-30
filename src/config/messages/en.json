@@ -284,8 +284,8 @@
                                 "buttonText": "Make a general enquiry",
                                 "sidebarTitle": "Messages"
                             },
-                            "feasabilityEnquiries": {
-                                "title": "Feasability Enquiry",
+                            "feasibilityEnquiries": {
+                                "title": "Feasibility Enquiry",
                                 "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a feasibility enquiry",
                                 "sidebarTitle": "Messages"

@@ -86,14 +86,14 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ p: 0 }}>
                     <Typography variant="h2">
-                        {t("feasabilityEnquiries.title")}
+                        {t("feasibilityEnquiries.title")}
                     </Typography>
-                    <Typography>{t("feasabilityEnquiries.text")}</Typography>
+                    <Typography>{t("feasibilityEnquiries.text")}</Typography>
                     <Button
                         onClick={handleFeasibilityEnquiries}
                         sx={{ mt: 2, width: "100%" }}>
                         <QuestionAnswerIcon sx={{ pr: 1 }} />
-                        {t("feasabilityEnquiries.buttonText")}
+                        {t("feasibilityEnquiries.buttonText")}
                     </Button>
                 </Box>
                 {selectedDatasets.length > 1 && (
