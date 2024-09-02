@@ -39,9 +39,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
             : "summary.publisher.name"
     ) as unknown as string;
 
-    const version = get(
-        metadata, "required.version"
-    );
+    const version = get(metadata, "required.version");
 
     const originMapping = {
         MANUAL: "Manually",
