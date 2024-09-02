@@ -75,6 +75,7 @@ import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
+import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
@@ -771,6 +772,22 @@ const Search = ({ filters }: SearchProps) => {
                             !!data?.list?.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>
+                                    {queryParams.type ===
+                                        SearchCategory.COLLECTIONS && (
+                                        <>
+                                            <DataCustodianNetwork />
+                                            <Typography
+                                                fontWeight={600}
+                                                sx={{
+                                                    mt: 1,
+                                                    mb: 1,
+                                                    textDecoration: "underline",
+                                                }}>
+                                                {t("collectionsHeader")}
+                                            </Typography>
+                                        </>
+                                    )}
+
                                     {renderResults()}
                                     <Pagination
                                         isLoading={isSearching}
