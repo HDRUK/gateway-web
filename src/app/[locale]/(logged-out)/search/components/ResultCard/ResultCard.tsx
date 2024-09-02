@@ -193,13 +193,15 @@ const ResultCard = ({
                                             onClick={handleToggleLibraryItem}
                                             variant="outlined"
                                             aria-label={
-                                              isLibraryToggled
-                                                  ? t("removeFromLibrary")
-                                                  : `${t("addToLibrary")} for ${
-                                                        metadata.summary
-                                                            .shortTitle
-                                                    }`
-                                          }
+                                                isLibraryToggled
+                                                    ? t("removeFromLibrary")
+                                                    : `${t(
+                                                          "addToLibrary"
+                                                      )} for ${
+                                                          metadata.summary
+                                                              .shortTitle
+                                                      }`
+                                            }
                                             startIcon={
                                                 isLibraryToggled ? (
                                                     <Bookmark color="secondary" />
