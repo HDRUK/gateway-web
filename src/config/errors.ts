@@ -1,6 +1,3 @@
-import { SvgIconComponent } from "@mui/icons-material";
-import { RemoveCircleIcon } from "@/consts/icons";
-
 type Error = {
     imageSrc: string;
     message: string;

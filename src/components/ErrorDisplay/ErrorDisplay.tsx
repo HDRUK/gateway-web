@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
-import { Box, BoxProps, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { AllowedErrors, errors } from "@/config/errors";
 
 interface ErrorDisplayProps {
@@ -13,7 +12,7 @@ export default function ErrorDisplay({ variant }: ErrorDisplayProps) {
 
     const errorStatusCode = variant;
 
-    const { message, imageSrc } = errors[errorStatusCode];
+    const { message, imageSrc, imageAlt } = errors[errorStatusCode];
 
     return (
         <Box
@@ -30,7 +29,12 @@ export default function ErrorDisplay({ variant }: ErrorDisplayProps) {
                 },
             }}>
             <Box sx={{ maxWidth: "550px" }}>
-                <Box component="img" width="100%" src={imageSrc} />
+                <Box
+                    component="img"
+                    width="100%"
+                    src={imageSrc}
+                    alt={imageAlt}
+                />
                 <Typography variant="h2" sx={{ mt: 2 }}>
                     {message}
                 </Typography>
