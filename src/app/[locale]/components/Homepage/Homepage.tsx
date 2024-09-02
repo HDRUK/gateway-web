@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { NextResponse } from "next/server";
 import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";

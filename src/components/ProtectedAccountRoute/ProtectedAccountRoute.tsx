@@ -21,7 +21,7 @@ const ProtectedAccountRoute = ({
         redirect(RouteName.ERROR_403);
     }
 
-    return <>{children}</>;
+    return children;
 };
 
 export default ProtectedAccountRoute;
