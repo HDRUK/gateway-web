@@ -84,9 +84,9 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
     collection: [FILTER_PUBLISHER_NAME, FILTER_DATA_SET_TITLES],
     paper: [
         STATIC_FILTER_SOURCE,
-        FILTER_PUBLICATION_TYPE,
-        FILTER_PUBLICATION_DATE,
         FILTER_DATA_SET_TITLES,
+        FILTER_PUBLICATION_DATE,
+        FILTER_PUBLICATION_TYPE,
     ],
     tool: [
         FILTER_TYPE_CATEGORY,

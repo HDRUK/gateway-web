@@ -8,8 +8,10 @@ import {
     PageTemplatePromo,
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
+import { EventNode } from "@/interfaces/Events";
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
+import { NewsNode } from "@/interfaces/News";
 import { ReleaseNode } from "@/interfaces/Releases";
 import { SupportCohortDiscoveryPage } from "@/interfaces/Support";
 import apis from "@/config/apis";
@@ -17,10 +19,12 @@ import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetContentPageQuery } from "@/config/queries/contentPage";
+import { GetEventsQuery } from "@/config/queries/events";
 import { GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
 import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
+import { GetNewsQuery } from "@/config/queries/news";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
 
@@ -94,6 +98,26 @@ const getMissionAndPurposes = async () => {
 const getMeetTheTeam = async () => {
     const data: CMSPostsResponse<MeetTheTeamNode> = await fetchCMS(
         GetMeetTheTeamQuery,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
+const getNews = async () => {
+    const data: CMSPostsResponse<NewsNode> = await fetchCMS(
+        GetNewsQuery,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
+const getEvents = async () => {
+    const data: CMSPostsResponse<EventNode> = await fetchCMS(
+        GetEventsQuery,
         DEFAULT_OPTIONS,
         true
     );
@@ -283,4 +307,6 @@ export {
     getGlossary,
     getTutorials,
     getGettingStarted,
+    getNews,
+    getEvents,
 };

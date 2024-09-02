@@ -52,6 +52,6 @@ const initialEdges = outerNodeValues.map((node, index) => ({
     target: `node-${node.name}`,
 }));
 
-const connectionLineStyle = { stroke: "black", strokeWidth: 3 };
+const connectionLineStyle = { stroke: "rgb(226, 226, 226)", strokeWidth: 3 };
 
 export { rootNode, outerNodes, connectionLineStyle, initialEdges };

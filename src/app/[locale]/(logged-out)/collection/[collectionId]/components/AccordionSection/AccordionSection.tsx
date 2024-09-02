@@ -15,7 +15,7 @@ export interface AccordionSectionProps
 export default function AccordionSection({
     contents,
     heading,
-    limitRows = 3,
+    limitRows = 6,
     ...restProps
 }: AccordionSectionProps) {
     const limitItems = contents.slice(0, limitRows);

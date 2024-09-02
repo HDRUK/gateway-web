@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
@@ -17,15 +17,15 @@ import usePost from "@/hooks/usePost";
 import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import {
-    generalEnquiryFormFields,
-    generalEnquiryValidationSchema,
-    generalEnquiryDefaultValues,
-} from "@/config/forms/generalEnquiry";
+    feasibilityEnquiryFormFields,
+    feasibilityEnquiryValidationSchema,
+    feasibilityEnquiryDefaultValues,
+} from "@/config/forms/feasibilityEnquiry";
 import { getPreferredEmail } from "@/utils/user";
 
-const TRANSLATION_PATH = "pages.search.components.GeneralEnquiryForm";
+const TRANSLATION_PATH = "pages.search.components.FeasibilityEnquiryForm";
 
-const GeneralEnquirySidebar = ({
+const FeasibilityEnquirySidebar = ({
     datasets,
 }: {
     datasets: DatasetEnquiry[];
@@ -37,19 +37,32 @@ const GeneralEnquirySidebar = ({
     const { user } = useAuth();
 
     const sendEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
-        itemName: "Enquiry item",
+        itemName: t("itemName"),
     });
 
     const { control, handleSubmit, reset } = useForm<User>({
         mode: "onTouched",
-        resolver: yupResolver(generalEnquiryValidationSchema),
+        resolver: yupResolver(feasibilityEnquiryValidationSchema),
         defaultValues: {
-            ...generalEnquiryDefaultValues,
+            ...feasibilityEnquiryDefaultValues,
             ...user,
         },
     });
 
-    const hydratedFormFields = generalEnquiryFormFields;
+    const hydratedFormFields = useMemo(() => {
+        return feasibilityEnquiryFormFields.map(field => {
+            if (field.name === "datasets") {
+                return {
+                    ...field,
+                    defaultValue: datasets.map(v => ({
+                        value: v.datasetId,
+                        label: v.name,
+                    })),
+                };
+            }
+            return field;
+        });
+    }, [feasibilityEnquiryFormFields, datasets]);
 
     const submitForm = async (formData: Enquiry) => {
         if (!user) return;
@@ -58,18 +71,18 @@ const GeneralEnquirySidebar = ({
         const payload = {
             ...minUser,
             ...formData,
-            project_title: "",
             contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
             datasets: datasets.map(item => ({
                 dataset_id: item.datasetId,
+                name: item.name,
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
             from: getPreferredEmail(user),
             is_dar_dialogue: false,
             is_dar_status: false,
-            is_feasibility_enquiry: false,
-            is_general_enquiry: true,
+            is_feasibility_enquiry: true,
+            is_general_enquiry: false,
         };
 
         await sendEnquiry(payload).then(res => {
@@ -83,7 +96,7 @@ const GeneralEnquirySidebar = ({
         if (!user) {
             return;
         }
-        reset({ ...generalEnquiryDefaultValues, ...user });
+        reset({ ...feasibilityEnquiryDefaultValues, ...user });
     }, [reset, user]);
 
     return (
@@ -136,4 +149,4 @@ const GeneralEnquirySidebar = ({
     );
 };
 
-export default GeneralEnquirySidebar;
+export default FeasibilityEnquirySidebar;

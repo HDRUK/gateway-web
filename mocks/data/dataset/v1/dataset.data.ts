@@ -25,6 +25,9 @@ const generateDatasetMetadataV1 = (): MetadataMax => {
                 shortTitle: faker.datatype.string(),
                 populationSize: faker.datatype.number(),
             },
+            required: {
+                version: "1.0.0",
+            },
             provenance: {
                 temporal: {
                     startDate: faker.date.past().toString(),
