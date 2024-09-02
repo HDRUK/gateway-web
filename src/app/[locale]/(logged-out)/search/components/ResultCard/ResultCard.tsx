@@ -1,8 +1,8 @@
 import { useCallback, useState, useEffect, useRef } from "react";
-import uniqueId from 'lodash/uniqueId'
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
+import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { KeyedMutator } from "swr";
@@ -170,17 +170,19 @@ const ResultCard = ({
         highlight?.description?.[0] ??
         metadata.summary.abstract;
 
-    const {current: resultId} = useRef(uniqueId('result-title-'))
+    const { current: resultId } = useRef(uniqueId("result-title-"));
 
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
-                <section style={{width: '100%'}} aria-description={'Result for ' + metadata.summary.shortTitle}>
+                <section
+                    style={{ width: "100%" }}
+                    aria-description={`Result for ${metadata.summary.shortTitle}`}>
                     <ListItemButton component="a" onClick={handleClickItem}>
                         <ListItemText
                             primary={
                                 <ResultTitle>
-                                    <span id={resultId} role='heading'>
+                                    <span id={resultId} role="heading">
                                         {metadata.summary.shortTitle}
                                     </span>
                                     <div style={{ textAlign: "end" }}>
@@ -235,7 +237,8 @@ const ResultCard = ({
                             disableTypography
                             secondary={
                                 <section aria-describedby={resultId}>
-                                    <Typography aria-description="Data Custodian"
+                                    <Typography
+                                        aria-description="Data Custodian"
                                         sx={{
                                             textDecoration: "uppercase",
                                             fontWeight: 400,
@@ -247,7 +250,7 @@ const ResultCard = ({
                                         undefined
                                             ? metadata.summary.publisher.name
                                             : metadata.summary.publisher
-                                                .publisherName}
+                                                  .publisherName}
                                     </Typography>
                                     <Highlight
                                         sx={{ mb: 1.5 }}
