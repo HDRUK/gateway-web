@@ -10,6 +10,8 @@ describe("AccordionSection", () => {
             <Button>Card 3</Button>,
             <Button>Card 4</Button>,
             <Button>Card 5</Button>,
+            <Button>Card 6</Button>,
+            <Button>Card 7</Button>,
         ];
 
         render(
@@ -24,7 +26,7 @@ describe("AccordionSection", () => {
 
         fireEvent.click(showMore);
 
-        expect(screen.getAllByRole("button")).toHaveLength(7);
+        expect(screen.getAllByRole("button")).toHaveLength(9);
     });
 
     it("expands when showing more", () => {

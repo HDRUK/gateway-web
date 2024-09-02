@@ -25,6 +25,7 @@ const getColumns = ({
             const {
                 id,
                 datasetId,
+                name,
                 dataCustodianId,
                 dataCustodian,
                 dataCustodianMemberOf,
@@ -38,6 +39,7 @@ const getColumns = ({
                                 [id]: {
                                     selected: value,
                                     datasetId,
+                                    name,
                                     teamId: dataCustodianId,
                                     teamName: dataCustodian,
                                     teamMemberOf: dataCustodianMemberOf,
