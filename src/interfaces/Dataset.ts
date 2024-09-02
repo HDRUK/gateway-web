@@ -51,6 +51,9 @@ interface Metadata {
             name?: string;
         };
     };
+    required: {
+        version: string;
+    };
     accessibility: {
         access: {
             deliveryLeadTime: string;
