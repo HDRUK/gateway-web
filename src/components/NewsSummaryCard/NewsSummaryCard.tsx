@@ -1,12 +1,12 @@
-import { Button, CardActions } from "@mui/material";
+import { Box, Button, CardActions } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { ArrowForward } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import EllipsisLineLimit from "../EllipsisLineLimit";
+import Link from "../Link";
 import { DateBox } from "./NewsSummaryCard.styles";
 
 interface NewsSummaryCardProps {
@@ -17,9 +17,12 @@ interface NewsSummaryCardProps {
     url: string;
     imageLink: string;
     imageAlt: string;
+    imageHeight?: string;
+    variant?: "content" | "feature";
 }
 
 const NewsSummaryCard = ({
+    variant = "content",
     buttonText,
     headline,
     summary,
@@ -27,17 +30,19 @@ const NewsSummaryCard = ({
     url,
     imageLink,
     imageAlt,
+    imageHeight = "225px",
 }: NewsSummaryCardProps) => {
     return (
         <Card
             sx={{
+                width: "100%",
                 maxWidth: { tablet: 345 },
                 background: "transparent",
                 position: "relative",
             }}>
             <CardMedia
                 component="img"
-                height="140"
+                height={imageHeight}
                 image={imageLink}
                 alt={imageAlt}
             />
@@ -57,16 +62,25 @@ const NewsSummaryCard = ({
                 <Typography variant="body2" textAlign="left" component="div">
                     <EllipsisLineLimit maxLine={4} text={summary} />
                 </Typography>
+                {variant === "content" && (
+                    <Box sx={{ mt: 1 }}>
+                        <Link href={url} underline="hover">
+                            {buttonText}
+                        </Link>
+                    </Box>
+                )}
             </CardContent>
-            <CardActions>
-                <Link href={url} color="primary" passHref>
-                    <Button
-                        variant="text"
-                        endIcon={<ArrowForward color="primary" />}>
-                        {buttonText}
-                    </Button>
-                </Link>
-            </CardActions>
+            {variant === "feature" && (
+                <CardActions>
+                    <Link href={url} color="primary" passHref>
+                        <Button
+                            variant="text"
+                            endIcon={<ArrowForward color="primary" />}>
+                            {buttonText}
+                        </Button>
+                    </Link>
+                </CardActions>
+            )}
         </Card>
     );
 };
