@@ -1,34 +1,44 @@
-import Paper from "@/components/Paper";
-import Typography from "@/components/Typography";
-import { errors, AllowedErrors } from "@/config/errors";
-import { RemoveCircleIcon } from "@/consts/icons";
+"use client";
+
+import { Box, Typography, useTheme } from "@mui/material";
+import { AllowedErrors, errors } from "@/config/errors";
 
 interface ErrorDisplayProps {
     variant: AllowedErrors;
 }
 
-const ErrorDisplay = ({ variant }: ErrorDisplayProps) => {
-    const errorStatusCode = variant;
-    const {
-        statusMessage: errorStatusMessage,
-        message: errorMessage,
-        icon,
-    } = errors[errorStatusCode];
+export default function ErrorDisplay({ variant }: ErrorDisplayProps) {
+    const theme = useTheme();
 
-    const Icon = icon || RemoveCircleIcon;
+    const errorStatusCode = variant;
+
+    const { message, imageSrc, imageAlt } = errors[errorStatusCode];
 
     return (
-        <Paper sx={{ padding: 3 }}>
-            <Typography variant="h2" align="center">
-                <Icon color="error" fontSize="large" />
-            </Typography>
-
-            <Typography variant="h2" align="center">
-                {errorStatusCode} {errorStatusMessage}
-            </Typography>
-            <Typography align="center">{errorMessage}</Typography>
-        </Paper>
+        <Box
+            sx={{
+                textAlign: "center",
+                p: 2,
+                display: "flex",
+                maxHeight: "550px",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                [theme.breakpoints.down("laptop")]: {
+                    my: "auto",
+                },
+            }}>
+            <Box sx={{ maxWidth: "550px" }}>
+                <Box
+                    component="img"
+                    width="100%"
+                    src={imageSrc}
+                    alt={imageAlt}
+                />
+                <Typography variant="h2" sx={{ mt: 2 }}>
+                    {message}
+                </Typography>
+            </Box>
+        </Box>
     );
-};
-
-export default ErrorDisplay;
+}
