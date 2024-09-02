@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
@@ -70,24 +70,13 @@ const IntroScreen = ({ defaultValue, setDatasetType }: IntroScreenProps) => {
     const [selectedCheckboxes, setSelectedCheckboxes] =
         useState<string[]>(defaultValue);
 
-    useEffect(() => {
-        if (selectedCheckboxes.length) {
-            setDatasetType(selectedCheckboxes);
-        } else {
-            setDatasetType([]);
-        }
-    }, [selectedCheckboxes]);
+    const updateState = (item: string, selected: boolean) => {
+        const updatedCheckboxes = selected
+            ? [...selectedCheckboxes, item]
+            : selectedCheckboxes.filter(v => v !== item);
 
-    const updateState = (item: string, shouldAdd: boolean) => {
-        setSelectedCheckboxes(prevState => {
-            if (shouldAdd) {
-                return [...prevState, item].filter(
-                    (v, i, arr) => arr.indexOf(v) === i
-                );
-            }
-
-            return prevState.filter(v => v !== item);
-        });
+        setDatasetType(updatedCheckboxes);
+        setSelectedCheckboxes(updatedCheckboxes);
     };
 
     return (
