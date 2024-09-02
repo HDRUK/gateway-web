@@ -42,6 +42,7 @@ const ResultCard = ({
     mutateLibraries,
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { current: resultId } = useRef(uniqueId("result-title-"));
     const router = useRouter();
     const { showDialog } = useDialog();
     const { showSidebar } = useSidebar();
@@ -170,8 +171,6 @@ const ResultCard = ({
         highlight?.description?.[0] ??
         metadata.summary.abstract;
 
-    const { current: resultId } = useRef(uniqueId("result-title-"));
-
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
@@ -182,7 +181,10 @@ const ResultCard = ({
                         <ListItemText
                             primary={
                                 <ResultTitle>
-                                    <span id={resultId} role="heading">
+                                    <span
+                                        id={resultId}
+                                        role="heading"
+                                        aria-level="3">
                                         {metadata.summary.shortTitle}
                                     </span>
                                     <div style={{ textAlign: "end" }}>
