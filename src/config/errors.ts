@@ -1,32 +1,42 @@
-import { SvgIconComponent } from "@mui/icons-material";
-import { RemoveCircleIcon } from "@/consts/icons";
-
 type Error = {
-    statusMessage: string;
+    imageSrc: string;
     message: string;
-    icon?: SvgIconComponent;
+    imageAlt: string;
 };
 
 export const errors: { [char: number]: Error } = {
     400: {
-        statusMessage: "Page not found",
-        message: "This page does not exist.",
-        icon: RemoveCircleIcon,
+        message:
+            "We couldn't understand your request, please try again and check that the link is valid. Contact support on the need support overlay if this exists",
+        imageAlt: "Bad request",
+        imageSrc: "/images/errors/400.png",
     },
     401: {
-        statusMessage: "Unauthorised",
-        message: "You are not authorised to access this page.",
-        icon: RemoveCircleIcon,
+        message: "You do not have access to this page",
+        imageAlt: "Unauthorised",
+        imageSrc: "/images/errors/401.png",
     },
     403: {
-        statusMessage: "Forbidden",
-        message: "You are forbidden to access this page.",
-        icon: RemoveCircleIcon,
+        message: "Permission denied. You do not have access to this page",
+        imageAlt: "Permission denied",
+        imageSrc: "/images/errors/403.png",
+    },
+    404: {
+        message:
+            "Oops! We tried but couldn’t find the page you were looking for",
+        imageAlt: "Permission denied",
+        imageSrc: "/images/errors/404.png",
     },
     423: {
-        statusMessage: "Locked",
-        message: "This page is currently locked.",
-        icon: RemoveCircleIcon,
+        message: "This page is currently locked",
+        imageAlt: "Locked",
+        imageSrc: "/images/errors/423.png",
+    },
+    500: {
+        message:
+            "Uh oh, our internal server has experienced an error, feel free to message us if the problem persists",
+        imageAlt: "internal server error",
+        imageSrc: "/images/errors/500.png",
     },
 };
 
