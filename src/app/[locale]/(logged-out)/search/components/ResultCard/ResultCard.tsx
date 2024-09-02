@@ -176,6 +176,7 @@ const ResultCard = ({
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
                 <section
                     style={{ width: "100%" }}
+                    // eslint-disable-next-line
                     aria-description={`Result for ${metadata.summary.shortTitle}`}>
                     <ListItemButton component="a" onClick={handleClickItem}>
                         <ListItemText
@@ -240,6 +241,7 @@ const ResultCard = ({
                             secondary={
                                 <section aria-describedby={resultId}>
                                     <Typography
+                                        // eslint-disable-next-line
                                         aria-description="Data Custodian"
                                         sx={{
                                             textDecoration: "uppercase",
