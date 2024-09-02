@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import ErrorDisplay from "@/components/ErrorDisplay";
+import { redirect } from "next/navigation";
+import { RouteName } from "@/consts/routeName";
 import { hasPermissions } from "@/utils/permissions";
 
 interface ProtectedAccountRouteProps {
@@ -17,10 +18,10 @@ const ProtectedAccountRoute = ({
     const userHasPermission = hasPermissions(permissions, pagePermissions);
 
     if (!userHasPermission) {
-        return <ErrorDisplay variant={401} />;
+        redirect(RouteName.ERROR_403);
     }
 
-    return <> {children} </>;
+    return <>{children}</>;
 };
 
 export default ProtectedAccountRoute;

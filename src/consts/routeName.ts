@@ -51,4 +51,8 @@ export enum RouteName {
     SUPPORT_DAR = "support/data-access-request",
     SUPPORT_TOOLS = "support/tools",
     UPLOAD = "upload",
+    ERROR_401 = "/error/401",
+    ERROR_404 = "/error/404",
+    ERROR_403 = "/error/403",
+    ERROR_500 = "/error/500",
 }

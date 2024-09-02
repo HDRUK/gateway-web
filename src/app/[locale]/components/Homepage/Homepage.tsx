@@ -5,6 +5,7 @@ import { isMobile } from "react-device-detect";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { NextResponse } from "next/server";
 import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -84,6 +85,13 @@ const services = [
 interface HomePageProps {
     cmsContent: PageTemplateHome;
 }
+
+// 403 (would be a change in current behaviour)
+// 401 (would be a change in current behaviour)
+// 500 not sure how to customise this
+// 404 can be done
+// 400 (would be a change in current baheviour)
+// 429
 
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
