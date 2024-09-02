@@ -11,12 +11,12 @@ import {
     ResourceType,
     SelectedResources,
 } from "@/interfaces/AddResource";
-import { Category } from "@/interfaces/Category";
 import {
+    EuropePMCPublication,
     PublicationPayload,
     PublicationPayloadSubmission,
 } from "@/interfaces/Publication";
-import { Tool, ToolPayload } from "@/interfaces/Tool";
+import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -60,9 +60,6 @@ const CreatePublication = ({
 }: CreatePublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const storedData = localStorage.getItem(config.PUBLICATION_LOCAL_STORAGE);
-    // console.log(JSON.parse(storedData));
-
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
@@ -80,15 +77,7 @@ const CreatePublication = ({
             },
         });
 
-    const { data: toolCategoryData } = useGet<Category[]>(
-        `${apis.toolCategoriesV1Url}?perPage=200`
-    );
-
-    const { data: programmingLanguageData } = useGet<Category[]>(
-        `${apis.programmingLanguagesV1Url}?perPage=200`
-    );
-
-    const { data: existingPublicationData } = useGet<Tool>(
+    const { data: existingPublicationData } = useGet<PublicationPayload>(
         `${apis.publicationsV1Url}/${publicationId}`,
         {
             shouldFetch: !!publicationId,
@@ -98,19 +87,48 @@ const CreatePublication = ({
     const createPublication = usePost<PublicationPayloadSubmission>(
         `${apis.publicationsV1Url}`,
         {
-            itemName: "Tool",
+            itemName: "Publication",
         }
     );
 
     const editPublication = usePatch<Partial<PublicationPayloadSubmission>>(
         `${apis.publicationsV1Url}`,
         {
-            itemName: "Tool",
+            itemName: "Publication",
         }
     );
 
     useEffect(() => {
         if (!existingPublicationData) {
+            const storedPmcData = localStorage.getItem(
+                config.PUBLICATION_LOCAL_STORAGE
+            );
+
+            if (!storedPmcData) {
+                return;
+            }
+
+            const data: EuropePMCPublication =
+                storedPmcData && JSON.parse(storedPmcData);
+
+            // Clear localstorage
+            localStorage.removeItem(config.PUBLICATION_LOCAL_STORAGE);
+
+            // Populate from EuropePMC
+            const formData = {
+                ...publicationDefaultValues,
+                dataset: defaultDatasetValue,
+                journal_name: data?.journal_name,
+                paper_title: data?.title,
+                authors: data?.authors,
+                abstract: data?.abstract,
+                publication_type: data?.is_preprint
+                    ? "Preprints"
+                    : "Research articles",
+                year_of_publication: data?.publication_year,
+            };
+
+            reset(formData as PublicationPayload);
             return;
         }
 
@@ -121,17 +139,17 @@ const CreatePublication = ({
 
         const propertiesToDelete = ["publication_type_mk1", "mongo_id"];
 
-        // // Remove any legacy tool properties
+        // Remove any legacy properties
         propertiesToDelete.forEach(key => {
             if (key in formData) {
                 delete formData[key as keyof typeof formData];
             }
         });
 
-        reset(formData as ToolPayload);
+        reset(formData as PublicationPayload);
     }, [reset, existingPublicationData]);
 
-    const { fields, append, remove, replace } = useFieldArray({
+    const { fields, append, remove } = useFieldArray({
         control,
         name: "dataset",
     });

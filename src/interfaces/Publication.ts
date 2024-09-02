@@ -55,3 +55,12 @@ export interface PublicationPayloadSubmission
     extends Omit<PublicationPayload, "tools"> {
     tools: number[];
 }
+
+export interface EuropePMCPublication {
+    title: string;
+    authors: string;
+    abstract: string;
+    is_preprint: boolean;
+    journal_name: string;
+    publication_year: string;
+}
