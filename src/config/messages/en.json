@@ -120,6 +120,9 @@
         "all": "All"
     },
     "pages": {
+        "newsEvents": {
+            "noResults": "There are no results for the selected year."
+        },
         "support": {
             "title": "Support centre",
             "backToSupport": "Back to Support Centre",
@@ -281,12 +284,16 @@
                             "generalEnquiries": {
                                 "title": "General Enquiry",
                                 "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
-                                "buttonText": "Make a general enquiry"
+                                "buttonText": "Make a general enquiry",
+                                "buttonTooltip": "Select at least one dataset to enable",
+                                "sidebarTitle": "Messages"
                             },
-                            "feasabilityEnquiries": {
-                                "title": "Feasability Enquiry",
+                            "feasibilityEnquiries": {
+                                "title": "Feasibility Enquiry",
                                 "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
-                                "buttonText": "Make a feasibility enquiry"
+                                "buttonText": "Make a feasibility enquiry",
+                                "buttonTooltip": "Select at least one dataset to enable",
+                                "sidebarTitle": "Messages"
                             },
                             "multiDelete": {
                                 "label": "Multi delete"
@@ -689,6 +696,9 @@
                     "title": "Community",
                     "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
                 }
+            },
+            "newsEvents": {
+                "seeAllLink": "See all events"
             }
         },
         "saved_searches": {
@@ -761,7 +771,7 @@
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway",
-                            "dataUseTitles": "Data use title",
+                            "dataUseTitles": "Data Use / Research project title",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
@@ -829,9 +839,14 @@
                     "to": "to",
                     "minYearErrorMessage": "Please enter a valid starting year"
                 },
+                "FeasibilityEnquiryForm": {
+                    "itemName": "Feasibility Enquiry item",
+                    "helperText": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "saveButton": "Send message"
+                },
                 "GeneralEnquiryForm": {
                     "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
-                    "saveButton": "Save changes"
+                    "saveButton": "Send message"
                 },
                 "PopulationFilter": {
                     "includeUnreported": "Include {unreportedCount} datasets where population is not reported"
@@ -949,7 +964,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Data uses ({ length })"
@@ -990,13 +1006,12 @@
                     "dataOnly": "Data only"
                 },
                 "DatasetMindMap": {
-                    "tools": "View associated data analysis scripts & software",
-                    "durs": "Research projects/ Data Use",
-                    "linkages": "See which datasets are linkable",
-                    "collections": "Explore associated Collections",
-                    "synthetic": "Access synthetic data",
-                    "root": "Data Custodian page",
-                    "structuralMetadata": "Review data variables"
+                    "tools": "Data Analysis Scripts & Software",
+                    "durs": "Data Uses / Research Projects",
+                    "collections": "Collections",
+                    "synthetic": "Synthetic data",
+                    "root": "Data Custodian",
+                    "structuralMetadata": "Data variables"
                 },
                 "Linkages": {
                     "title": "Relationships:",

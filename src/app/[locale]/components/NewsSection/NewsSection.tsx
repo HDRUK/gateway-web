@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { CMSPostResponse, NewsPost } from "@/interfaces/Cms";
+import { CMSPostsResponse, NewsPost } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import NewsSummaryCard from "@/components/NewsSummaryCard";
 
-const NewsSection = ({ posts }: CMSPostResponse<NewsPost>) => {
+const NewsSection = ({ posts }: CMSPostsResponse<NewsPost>) => {
     const t = useTranslations("pages.home");
+
     return (
         <Box
             sx={{
@@ -28,10 +29,12 @@ const NewsSection = ({ posts }: CMSPostResponse<NewsPost>) => {
                     },
                 }) => (
                     <NewsSummaryCard
+                        variant="feature"
                         buttonText={t("newsCardButtonText")}
                         summary={text}
                         imageLink={image.node.mediaItemUrl}
                         imageAlt={image.node.altText}
+                        imageHeight="140px"
                         headline={headline}
                         date={date}
                         url={link.url}

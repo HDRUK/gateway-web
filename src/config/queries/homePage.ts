@@ -41,7 +41,7 @@ query GetHomePageQuery {
       }
     }
   }
-    posts(first: 4, where:{categoryName: "news",  orderby: {field: DATE, order: DESC}}) {
+    posts(first: 4, where:{categoryName: "news,events",  orderby: {field: DATE, order: DESC}}) {
       edges {
         node {
           title
