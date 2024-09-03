@@ -21,11 +21,11 @@ export const sortByOptionsDataset = [
     },
     {
         label: "Sort by most recently updated",
-        value: "created_at:asc",
+        value: "updated_at:desc",
     },
     {
         label: "Sort by least recently updated",
-        value: "created_at:desc",
+        value: "updated_at:asc",
     },
 ];
 
@@ -44,11 +44,11 @@ export const sortByOptionsDataUse = [
     },
     {
         label: "Sort by most recently updated",
-        value: "created_at:asc",
+        value: "updated_at:desc",
     },
     {
         label: "Sort by least recently updated",
-        value: "created_at:desc",
+        value: "updated_at:asc",
     },
 ];
 
@@ -67,11 +67,11 @@ export const sortByOptionsTool = [
     },
     {
         label: "Sort by most recently updated",
-        value: "created_at:asc",
+        value: "updated_at:desc",
     },
     {
-        label: "Sort by leeast recently updated",
-        value: "created_at:desc",
+        label: "Sort by least recently updated",
+        value: "updated_at:asc",
     },
 ];
 
