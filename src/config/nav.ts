@@ -126,7 +126,7 @@ const navItems = [
             },
             {
                 label: "Support Centre",
-                href: "/help/support-centre",
+                href: "/support",
             },
             {
                 label: "Tutorials",
