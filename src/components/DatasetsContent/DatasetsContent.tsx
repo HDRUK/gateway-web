@@ -6,23 +6,25 @@ import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
+import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { toTitleCase } from "@/utils/string";
-import AccordionSection from "../AccordionSection";
-
-const TRANSLATION_PATH = "pages.dataCustodian.components.DatasetsContent";
 
 export interface DatasetsContentProps {
     datasets: DataCustodianDataset[];
     anchorIndex: number;
+    page: string;
 }
 
 export default function DatasetContent({
     datasets,
     anchorIndex,
+    page,
 }: DatasetsContentProps) {
     const router = useRouter();
     const path = usePathname();
+    const TRANSLATION_PATH = `pages.${page}.components.DatasetsContent`;
+
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
