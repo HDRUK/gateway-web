@@ -214,14 +214,10 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                     "publications",
                     selectedResources[ResourceType.PUBLICATION]
                 );
-                setValue("tools", selectedResources[ResourceType.TOOL]);
             },
-            hideDatasets: true,
             defaultResources: {
                 datause: getValues("durs"),
                 publication: getValues("publications"),
-                tool: getValues("tools"),
-                dataset: [],
             },
         });
     };
@@ -233,7 +229,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             tool: (getValues("tools") as Tool[]) || [],
             dataset: [],
         };
-    }, [watchAll]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchAll, getValues]);
 
     useEffect(() => {
         showBar("CreateTool", {
@@ -260,6 +257,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 push(TOOL_ROUTE);
             },
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleRemoveResource = (
@@ -288,7 +286,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         if (watchAnyDataset) {
             replace(defaultDatasetValue);
         }
-    }, [watchAnyDataset]);
+    }, [replace, watchAnyDataset]);
 
     const hydratedFormFields = useMemo(
         () =>
@@ -338,10 +336,13 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 );
             }),
         [
-            programmingLanguageOptions,
-            toolCategoryOptions,
+            control,
             fields,
+            append,
+            remove,
             watchAnyDataset,
+            toolCategoryOptions,
+            programmingLanguageOptions,
         ]
     );
 
