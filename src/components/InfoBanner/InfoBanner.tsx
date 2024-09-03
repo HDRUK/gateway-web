@@ -52,7 +52,7 @@ const InfoBanner = ({
             }
             ContentProps={{
                 sx: {
-                    background: theme.palette[color].main,
+                    background: theme.palette[color].dark,
                 },
             }}
             anchorOrigin={anchorOrigin}

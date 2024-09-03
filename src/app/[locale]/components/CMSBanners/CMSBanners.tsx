@@ -45,7 +45,8 @@ const CMSBanners = () => {
                                     <Button
                                         color="greyCustom"
                                         variant="contained"
-                                        href={linkUrl}>
+                                        href={linkUrl}
+                                        disableElevation>
                                         {linkText}
                                     </Button>
                                 )
