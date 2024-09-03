@@ -734,8 +734,10 @@
             "dataUse": "Data Use",
             "tools": "Analysis Scripts & Software",
             "dataProviders": "Data Custodians",
-            "collections": "Collections/Networks",
+            "collections": "Collections / Networks",
             "publications": "Publications",
+            "dataCustodianNetworks": "Data Custodian Networks",
+            "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchExplainerDataUse": "Search by lead organisation, data custodian",
             "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data custodian name",
@@ -966,6 +968,48 @@
                     "heading": "Datasets ({ length })",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
+                },
+                "DatausesContent": {
+                    "heading": "Data uses ({ length })"
+                },
+                "PublicationsContent": {
+                    "heading": "Publications ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis Scripts & Software ({ length })"
+                },
+                "ServiceOfferingsContent": {
+                    "heading": "Service offerings ({ length })"
+                }
+            }
+        },
+        "dataCustodianNetwork": {
+            "introduction": "Introduction",
+            "dataCustodian": "Data Custodian",
+            "datasets": "Datasets",
+            "dataUses": "Data use",
+            "publications": "Publication",
+            "tools": "Analysis scripts and software",
+            "serviceOfferings": "Service offerings",
+            "components": {
+                "ActionBar": {
+                    "label": "Back to Collections search results",
+                    "enquire": "Make an enquiry"
+                },
+                "IntroductionContent": {
+                    "heading": "Introduction"
+                },
+                "DataCustodianContent": {
+                    "heading": "Data Custodians ({ length })",
+                    "datasets": "Datasets ({ length })",
+                    "datause": "Data Use ({ length })",
+                    "tools": "Tools ({ length })",
+                    "publications": "Publications ({ length })",
+                    "collections": "Collections ({ length })"
+                },
+                "DatasetsContent": {
+                    "heading": "Datasets ({ length })",
+                    "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
                     "heading": "Data uses ({ length })"
