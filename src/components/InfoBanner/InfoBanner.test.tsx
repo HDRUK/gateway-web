@@ -1,4 +1,3 @@
-import ErrorDisplay from "@/components/ErrorDisplay";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 import InfoBanner, { InfoBannerProps } from "./InfoBanner";
 

@@ -14,10 +14,11 @@ const CMSBanners = () => {
     const [data, setData] = useState<HomepageBannerNode[]>([]);
 
     useEffect(() => {
-        process.env.NEXT_PUBLIC_INCLUDE_BANNERS &&
+        if (process.env.NEXT_PUBLIC_INCLUDE_BANNERS === "true") {
             getHomePageBanner().then(response => {
                 setData(response);
             });
+        }
     }, []);
 
     return data?.length ? (
@@ -39,16 +40,15 @@ const CMSBanners = () => {
                             ariaCloseButtonLabel={t("ariaCloseButtonLabel")}
                             isDismissable
                             action={
-                                <>
-                                    {linkText && linkUrl && (
-                                        <Button
-                                            color="greyCustom"
-                                            variant="contained"
-                                            href={linkUrl}>
-                                            {linkText}
-                                        </Button>
-                                    )}
-                                </>
+                                linkText &&
+                                linkUrl && (
+                                    <Button
+                                        color="greyCustom"
+                                        variant="contained"
+                                        href={linkUrl}>
+                                        {linkText}
+                                    </Button>
+                                )
                             }
                             message={
                                 <Box

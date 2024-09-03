@@ -3,8 +3,7 @@ import { homepageBannerV1 } from "@/mocks/data/cms";
 import CMSBanners from "./CMSBanners";
 
 jest.mock("@/utils/cms", () => ({
-    getHomePageBanner: () =>
-        new Promise(resolve => resolve(homepageBannerV1.posts.edges)),
+    getHomePageBanner: () => Promise.resolve(homepageBannerV1.posts.edges),
 }));
 
 const processEnv = { ...process.env };
