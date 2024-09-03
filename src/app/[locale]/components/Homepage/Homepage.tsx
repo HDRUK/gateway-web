@@ -27,7 +27,7 @@ import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 const services = [
     {
         id: "feasibility",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-cohort-discovery.png",
         href: "/about/cohort-discovery",
     },
     {
@@ -37,32 +37,32 @@ const services = [
     },
     {
         id: "courses",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-courses.png",
         href: "https://hdruklearn.org/",
     },
     {
         id: SearchCategory.DATASETS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-datasets.png",
         href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
         id: SearchCategory.DATA_USE,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-data-uses.jpg",
         href: `/search?type=${SearchCategory.DATA_USE}`,
     },
     {
         id: SearchCategory.TOOLS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-tools.jpg",
         href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: SearchCategory.PUBLICATIONS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-publications.jpg",
         href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
     {
         id: "dataProviders",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-custodians.png",
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
@@ -146,7 +146,10 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
                 }}>
                 <Container>
-                    <InfoHoverPanel items={responsiveServices} />
+                    <InfoHoverPanel
+                        items={responsiveServices}
+                        defaultImageSrc="/images/homepage/welcome-image.png"
+                    />
                 </Container>
             </Box>
             <Box
