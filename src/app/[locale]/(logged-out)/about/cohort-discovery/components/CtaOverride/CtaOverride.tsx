@@ -6,11 +6,11 @@ import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import { COHORT_DISCOVERY_URL } from "@/consts/application";
 import { getPermissions } from "@/utils/permissions";
 
 export const DATA_TEST_ID = "cta-override-button";
 const COHORT_DISCOVERY_PERMISSION = "GENERAL_ACCESS";
-const COHORT_DISCOVERY_URL = "https://rquest.prod.healthdatagateway.org/";
 
 const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { showDialog } = useDialog();
