@@ -60,7 +60,12 @@ const CMSBanners = () => {
                                     }}>
                                     <Typography
                                         variant="h3"
-                                        sx={{ mb: 0, color: "warning" }}>
+                                        color="warning"
+                                        fontWeight="500"
+                                        sx={{
+                                            mb: 0,
+                                            color: "yellowCustom.main",
+                                        }}>
                                         {heading}
                                     </Typography>
                                     <Box
