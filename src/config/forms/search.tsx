@@ -8,70 +8,93 @@ export const SOURCE_GAT = "GAT";
 
 export const sortByOptionsDataset = [
     {
-        label: "Sort By Most Relevant",
+        label: "Sort by most relevant",
         value: "score:desc",
     },
     {
-        label: "Sort Alphabetically By Title (A-Z)",
+        label: "Sort alphabetically by title (A-Z)",
         value: "title:asc",
     },
     {
-        label: "Sort Alphabetically By Title (Z-A)",
+        label: "Sort alphabetically by title (Z-A)",
         value: "title:desc",
     },
     {
-        label: "Sort By Most Recently Updated",
+        label: "Sort by most recently updated",
         value: "created_at:asc",
     },
     {
-        label: "Sort By Least Recently Updated",
+        label: "Sort by least recently updated",
         value: "created_at:desc",
     },
 ];
 
 export const sortByOptionsDataUse = [
     {
-        label: "Sort By Most Relevant",
+        label: "Sort by most relevant",
         value: "score:desc",
     },
     {
-        label: "Sort Alphabetically By Project Title (A-Z)",
+        label: "Sort alphabetically by project title (A-Z)",
         value: "projectTitle:asc",
     },
     {
-        label: "Sort Alphabetically By Project Title (Z-A)",
+        label: "Sort alphabetically by project title (Z-A)",
         value: "projectTitle:desc",
     },
     {
-        label: "Sort By Most Recently Updated",
+        label: "Sort by most recently updated",
         value: "created_at:asc",
     },
     {
-        label: "Sort By Least Recently Updated",
+        label: "Sort by least recently updated",
         value: "created_at:desc",
     },
 ];
 
 export const sortByOptionsTool = [
     {
-        label: "Sort By Most Relevant",
+        label: "Sort by most relevant",
         value: "score:desc",
     },
     {
-        label: "Sort Alphabetically By Name (A-Z)",
+        label: "Sort alphabetically by name (A-Z)",
         value: "name:asc",
     },
     {
-        label: "Sort Alphabetically By Name (Z-A)",
+        label: "Sort alphabetically by name (Z-A)",
         value: "name:desc",
     },
     {
-        label: "Sort By Most Recently Updated",
+        label: "Sort by most recently updated",
         value: "created_at:asc",
     },
     {
-        label: "Sort By Least Recently Updated",
+        label: "Sort by leeast recently updated",
         value: "created_at:desc",
+    },
+];
+
+export const sortByOptionsPublications = [
+    {
+        label: "Sort by most recent publication year",
+        value: "year_of_publication:desc",
+    },
+    {
+        label: "Sort by least recent publication year",
+        value: "year_of_publication:asc",
+    },
+    {
+        label: "Sort by most relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort alphabetically by title (A-Z)",
+        value: "name:asc",
+    },
+    {
+        label: "Sort alphabetically by title (Z-A)",
+        value: "name:desc",
     },
 ];
 
