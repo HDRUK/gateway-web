@@ -8,10 +8,12 @@ import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { sourceSans3 } from "@/config/fonts";
+import { getHomePageBanner } from "@/utils/cms";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
+import CMSBanners from "./components/CMSBanners";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway",
@@ -53,6 +55,7 @@ export default function RootLayout({
                                             minHeight: "100vh",
                                         }}>
                                         <SupportPopOut />
+                                        <CMSBanners />
                                         {children}
                                         <Footer />
                                     </div>

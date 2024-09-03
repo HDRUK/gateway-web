@@ -9,6 +9,7 @@ import {
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
 import { EventNode } from "@/interfaces/Events";
+import { HomepageBannerNode } from "@/interfaces/Homepage";
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { NewsNode } from "@/interfaces/News";
@@ -20,7 +21,7 @@ import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDisco
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetContentPageQuery } from "@/config/queries/contentPage";
 import { GetEventsQuery } from "@/config/queries/events";
-import { GetHomePageQuery } from "@/config/queries/homePage";
+import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
 import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
@@ -98,6 +99,16 @@ const getMissionAndPurposes = async () => {
 const getMeetTheTeam = async () => {
     const data: CMSPostsResponse<MeetTheTeamNode> = await fetchCMS(
         GetMeetTheTeamQuery,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
+const getHomePageBanner = async () => {
+    const data: CMSPostsResponse<HomepageBannerNode> = await fetchCMS(
+        GetHomePageBanner,
         DEFAULT_OPTIONS,
         true
     );
@@ -293,20 +304,21 @@ export {
     getCohortDiscoverySupportPageQuery,
     getCohortTermsAndConditions,
     getContentPageQuery,
+    getDataCustodians,
+    getDevelopmentCommunity,
+    getEvents,
+    getGettingStarted,
+    getHomePageBanner,
+    getGlossary,
     getHomePage,
     getHowToSearchPage,
     getMeetTheTeam,
     getMissionAndPurposes,
-    getReleaseNotes,
-    getTermsAndConditions,
-    getWorkWithUs,
-    getDevelopmentCommunity,
-    getResearchersInnovators,
-    getDataCustodians,
-    getPatientsAndPublic,
-    getGlossary,
-    getTutorials,
-    getGettingStarted,
     getNews,
-    getEvents,
+    getPatientsAndPublic,
+    getReleaseNotes,
+    getResearchersInnovators,
+    getTermsAndConditions,
+    getTutorials,
+    getWorkWithUs,
 };
