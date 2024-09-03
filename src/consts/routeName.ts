@@ -52,4 +52,5 @@ export enum RouteName {
     SUPPORT_TOOLS = "support/tools",
     NEWS_EVENTS = "news/events",
     UPLOAD = "upload",
+    DATA_CUSTODIAN_NETWORK_ITEM = "data-custodian-network",
 }

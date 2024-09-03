@@ -734,8 +734,10 @@
             "dataUse": "Data Use",
             "tools": "Analysis Scripts & Software",
             "dataProviders": "Data Custodians",
-            "collections": "Collections/Networks",
+            "collections": "Collections / Networks",
             "publications": "Publications",
+            "dataCustodianNetworks": "Data Custodian Networks",
+            "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
             "searchExplainerDataUse": "Search by lead organisation, data custodian",
             "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data custodian name",
@@ -998,11 +1000,11 @@
                 },
                 "DataCustodianContent": {
                     "heading": "Data Custodians ({ length })",
-                    "datasets":"Datasets ({ length })",
-                    "datause":"Data Use ({ length })",
-                    "tools":"Tools ({ length })",
-                    "publications":"Publications ({ length })",
-                    "collections":"Collections ({ length })"
+                    "datasets": "Datasets ({ length })",
+                    "datause": "Data Use ({ length })",
+                    "tools": "Tools ({ length })",
+                    "publications": "Publications ({ length })",
+                    "collections": "Collections ({ length })"
                 },
                 "DatasetsContent": {
                     "heading": "Datasets ({ length })",
