@@ -37,7 +37,7 @@ export default function IntroductionContent({
             <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
                 "heading"
             )}`}</Typography>
-            <Typography style={{ paddingBottom: "8px" }}>{content}</Typography>
+            <Typography sx={{ pb: 1 }}>{content}</Typography>
         </InView>
     );
 }
