@@ -181,6 +181,14 @@ const ResultCard = ({
                                     <Button
                                         onClick={handleToggleLibraryItem}
                                         variant="outlined"
+                                        aria-label={
+                                            isLibraryToggled
+                                                ? t("removeFromLibrary")
+                                                : `${t("addToLibrary")} for ${
+                                                      metadata.summary
+                                                          .shortTitle
+                                                  }`
+                                        }
                                         startIcon={
                                             isLibraryToggled ? (
                                                 <Bookmark color="secondary" />
@@ -194,6 +202,9 @@ const ResultCard = ({
                                             : t("addToLibrary")}
                                     </Button>
                                     <Button
+                                        aria-label={`${t("actions")} for ${
+                                            metadata.summary.shortTitle
+                                        }`}
                                         variant="contained"
                                         startIcon={
                                             <SpeechBubbleIcon
@@ -216,6 +227,7 @@ const ResultCard = ({
                                         }
                                         menuItems={menuItems}
                                         anchorElement={anchorElement}
+                                        title={metadata.summary.shortTitle}
                                     />
                                 </div>
                             </ResultTitle>
