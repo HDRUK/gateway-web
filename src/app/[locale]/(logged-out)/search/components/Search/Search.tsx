@@ -69,6 +69,7 @@ import searchFormConfig, {
     sortByOptionsDataUse,
     sortByOptionsDataset,
     sortByOptionsTool,
+    sortByOptionsPublications,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
@@ -472,6 +473,8 @@ const Search = ({ filters }: SearchProps) => {
                 return sortByOptionsDataUse;
             case SearchCategory.TOOLS:
                 return sortByOptionsTool;
+            case SearchCategory.PUBLICATIONS:
+                return sortByOptionsPublications;
             default:
                 return sortByOptionsDataset;
         }
