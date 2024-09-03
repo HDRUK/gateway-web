@@ -12,6 +12,7 @@ import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
+import CMSBanners from "./components/CMSBanners";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway",
@@ -53,6 +54,7 @@ export default function RootLayout({
                                             minHeight: "100vh",
                                         }}>
                                         <SupportPopOut />
+                                        <CMSBanners />
                                         {children}
                                         <Footer />
                                     </div>

@@ -2,17 +2,19 @@
 
 import { Box, Typography, useTheme } from "@mui/material";
 import { AllowedErrors, errors } from "@/config/errors";
+import { RemoveCircleIcon } from "@/consts/icons";
 
 interface ErrorDisplayProps {
     variant: AllowedErrors;
 }
 
-export default function ErrorDisplay({ variant }: ErrorDisplayProps) {
+const ErrorDisplay = ({ variant }: ErrorDisplayProps) => {
     const theme = useTheme();
-
     const errorStatusCode = variant;
 
-    const { message, imageSrc, imageAlt } = errors[errorStatusCode];
+    const { message, imageSrc, imageAlt, icon } = errors[errorStatusCode];
+
+    const Icon = icon || RemoveCircleIcon;
 
     return (
         <Box
@@ -29,16 +31,22 @@ export default function ErrorDisplay({ variant }: ErrorDisplayProps) {
                 },
             }}>
             <Box sx={{ maxWidth: "550px" }}>
-                <Box
-                    component="img"
-                    width="100%"
-                    src={imageSrc}
-                    alt={imageAlt}
-                />
+                {imageSrc ? (
+                    <Box
+                        component="img"
+                        width="100%"
+                        src={imageSrc}
+                        alt={imageAlt}
+                    />
+                ) : (
+                    <Icon color="error" sx={{ fontSize: "200px" }} />
+                )}
                 <Typography variant="h2" sx={{ mt: 2 }}>
                     {message}
                 </Typography>
             </Box>
         </Box>
     );
-}
+};
+
+export default ErrorDisplay;
