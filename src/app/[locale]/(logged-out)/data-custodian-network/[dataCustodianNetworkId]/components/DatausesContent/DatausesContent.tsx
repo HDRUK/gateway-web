@@ -9,7 +9,8 @@ import { DataUse } from "@/interfaces/DataUse";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 
-const TRANSLATION_PATH = "pages.dataCustodian.components.DatausesContent";
+const TRANSLATION_PATH =
+    "pages.dataCustodianNetwork.components.DatausesContent";
 
 export interface DatausesContentProps {
     datauses: DataUse[];
@@ -41,7 +42,6 @@ export default function DatausesContent({
                 heading={t("heading", {
                     length: datauses.length,
                 })}
-                defaultExpanded={datauses.length > 0}
                 contents={datauses.map(
                     ({ project_title, organisation_name, id }) => (
                         <Fragment key={`dataUse_${id}`}>
