@@ -1,9 +1,44 @@
 import { faker } from "@faker-js/faker";
 import { CMSPostsResponse } from "@/interfaces/Cms";
 import { EventNode } from "@/interfaces/Events";
+import { HomepageBannerNode } from "@/interfaces/Homepage";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { NewsNode } from "@/interfaces/News";
 import { ReleaseNode } from "@/interfaces/Releases";
+
+const generateHomepageBannerV1 = (
+    data = {}
+): CMSPostsResponse<HomepageBannerNode> => {
+    return {
+        posts: {
+            edges: [
+                {
+                    node: {
+                        homepageBanner: {
+                            heading: "Banner heading 1",
+                            description: "Banner description 1",
+                            linkText: "Read more 1",
+                            linkUrl: "http://link1.me",
+                        },
+                    },
+                },
+                {
+                    node: {
+                        homepageBanner: {
+                            heading: "Banner heading 2",
+                            description: "Banner description 2",
+                            linkText: "Read more 2",
+                            linkUrl: "http://link2.me",
+                        },
+                    },
+                },
+            ],
+        },
+        ...data,
+    };
+};
+
+const homepageBannerV1 = generateHomepageBannerV1();
 
 const generateNewsV1 = (data = {}): CMSPostsResponse<NewsNode> => {
     return {
@@ -195,6 +230,7 @@ const generateMissionV1 = (
 const missionV1 = generateMissionV1();
 
 export {
+    generateHomepageBannerV1,
     generateMissionV1,
     generateNewsV1,
     generateReleaseV1,
@@ -203,4 +239,5 @@ export {
     newsV1,
     releaseV1,
     eventsV1,
+    homepageBannerV1,
 };

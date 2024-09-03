@@ -23,21 +23,19 @@ const CMSBanners = () => {
     return data?.length ? (
         <div>
             {data.map(
-                (
-                    {
-                        node: {
-                            homepageBanner: {
-                                description,
-                                heading,
-                                linkText,
-                                linkUrl,
-                            },
+                ({
+                    node: {
+                        homepageBanner: {
+                            description,
+                            heading,
+                            linkText,
+                            linkUrl,
                         },
                     },
-                    i: number
-                ) => {
+                }) => {
                     return !!description || !!heading ? (
                         <InfoBanner
+                            key={`${heading}${description}`}
                             ariaCloseButtonLabel={t("ariaCloseButtonLabel")}
                             isDismissable
                             action={
