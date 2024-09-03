@@ -57,6 +57,9 @@ function MenuDropdown({
                         </MenuItem>
                     ));
                 }
+                const ariaLabel = title
+                    ? `${menuItem.label} for ${title}`
+                    : undefined;
                 if (menuItem.href)
                     return (
                         <MenuItem
@@ -69,6 +72,7 @@ function MenuDropdown({
                             onClick={() => handleClose()}>
                             {menuItem.icon || null}
                             <Link
+                                aria-label={ariaLabel}
                                 key={menuItem.label}
                                 underline="hover"
                                 href={menuItem.href}>
@@ -83,11 +87,7 @@ function MenuDropdown({
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
-                                aria-label={
-                                    title
-                                        ? `${menuItem.label} for ${title}`
-                                        : undefined
-                                }
+                                aria-label={ariaLabel}
                                 sx={{ pl: 0 }}>
                                 {menuItem.label}
                             </Button>
