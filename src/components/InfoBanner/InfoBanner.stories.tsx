@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Button from "../Button";
 import InfoBanner from "./InfoBanner";
 
-const meta: Meta = {
+const meta = {
     component: InfoBanner,
     tags: ["autodocs"],
 } satisfies Meta<typeof InfoBanner>;
