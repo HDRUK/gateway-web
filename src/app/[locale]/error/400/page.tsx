@@ -1,7 +1,5 @@
 import ErrorDisplay from "@/components/ErrorDisplay";
 
-const NotFound = () => {
+export default function Page400() {
     return <ErrorDisplay variant={400} />;
-};
-
-export default NotFound;
+}
