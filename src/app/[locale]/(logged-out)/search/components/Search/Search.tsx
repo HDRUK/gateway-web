@@ -70,6 +70,7 @@ import searchFormConfig, {
     sortByOptionsDataset,
     sortByOptionsTool,
     sortByOptionsPublications,
+    PAGE_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
@@ -133,7 +134,7 @@ const Search = ({ filters }: SearchProps) => {
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
-        page: "1",
+        page: getParamString(PAGE_FIELD) || "1",
         per_page: "25",
         type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
@@ -300,6 +301,7 @@ const Search = ({ filters }: SearchProps) => {
         setQueryParams({
             ...queryParams,
             sort: searchFormConfig.defaultValues.sort,
+            page: "1",
             type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
@@ -799,12 +801,16 @@ const Search = ({ filters }: SearchProps) => {
                                         onChange={(
                                             e: React.ChangeEvent<unknown>,
                                             page: number
-                                        ) =>
+                                        ) => {
                                             setQueryParams({
                                                 ...queryParams,
                                                 page: page.toString(),
-                                            })
-                                        }
+                                            });
+                                            updatePath(
+                                                PAGE_FIELD,
+                                                page.toString()
+                                            );
+                                        }}
                                     />
                                 </>
                             )}
