@@ -44,7 +44,7 @@ const limitLabelLength = (label?: string) => {
     }
 
     return label.length > MAX_LABEL_LENGTH
-        ? `${label?.slice(0, MAX_LABEL_LENGTH)}...`
+        ? `${label.slice(0, MAX_LABEL_LENGTH)}...`
         : label;
 };
 
