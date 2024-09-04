@@ -69,5 +69,5 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: ${{ env.SLACK_CHANNEL }}
-          message: Running release build on {{ env.GITHUB_REF_NAME }} branch ${{ job.status }}
+          message: Deploying {{ env.GITHUB_REF_NAME }} branch to PREPROD ${{ job.status }}
         if: always()
