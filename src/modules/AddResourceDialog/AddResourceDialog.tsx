@@ -29,24 +29,16 @@ import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/addResources";
 import { colors } from "@/config/theme";
 import { capitalise } from "@/utils/general";
-import {
-    availableResourceTypes,
-    defaultValues,
-    searchResource,
-} from "./config";
+import { resourceTypes, defaultValues, searchResource } from "./config";
 
 const TRANSLATION_PATH = "modules.dialogs.RelatedResources";
 
 interface AddDatasetDialogProps {
-    hideDatasets?: boolean;
-    hideTools?: boolean;
     defaultResources?: SelectedResources;
     setResources: (selectedResources: SelectedResources) => void;
 }
 
 const AddDatasetDialog = ({
-    hideDatasets,
-    hideTools,
     defaultResources,
     setResources,
 }: AddDatasetDialogProps) => {
@@ -76,11 +68,16 @@ const AddDatasetDialog = ({
     const { control, watch, setValue } = useForm({
         defaultValues: {
             ...defaultValues,
-            resourceType: hideDatasets
+            resourceType: defaultResources?.[ResourceType.DATASET]
+                ? ResourceType.DATASET
+                : defaultResources?.[ResourceType.DATA_USE]
                 ? ResourceType.DATA_USE
-                : ResourceType.DATASET,
+                : defaultResources?.[ResourceType.PUBLICATION]
+                ? ResourceType.PUBLICATION
+                : ResourceType.TOOL,
         },
     });
+
     const watchAll = watch();
     useEffect(() => {
         setQueryParams(previous => ({
@@ -166,18 +163,32 @@ const AddDatasetDialog = ({
         isLoadingTools,
     ]);
 
+    const availableResourceTypes = useMemo(() => {
+        return [
+            ResourceType.DATASET,
+            ResourceType.DATA_USE,
+            ResourceType.PUBLICATION,
+            ResourceType.TOOL,
+        ].filter(type => defaultResources?.[type]);
+    }, [defaultResources]);
+
     const [selectedResources, setSelectedResources] =
-        useState<SelectedResources>(
-            defaultResources || {
-                [ResourceType.DATASET]: [],
-                [ResourceType.DATA_USE]: [],
-                [ResourceType.PUBLICATION]: [],
-                [ResourceType.TOOL]: [],
-            }
-        );
+        useState<SelectedResources>({
+            [ResourceType.DATASET]:
+                defaultResources?.[ResourceType.DATASET] || [],
+            [ResourceType.DATA_USE]:
+                defaultResources?.[ResourceType.DATA_USE] || [],
+            [ResourceType.PUBLICATION]:
+                defaultResources?.[ResourceType.PUBLICATION] || [],
+            [ResourceType.TOOL]: defaultResources?.[ResourceType.TOOL] || [],
+        });
 
     const handleCheckbox = (isSelected: boolean, data: ResourceDataType) => {
         const currentResource = selectedResources[resourceType];
+
+        if (!currentResource) {
+            return;
+        }
 
         // Add or remove the resource based on isSelected
         const updatedResources = isSelected
@@ -208,19 +219,8 @@ const AddDatasetDialog = ({
                     name="resourceType"
                     label="Search for:"
                     control={control}
-                    radios={availableResourceTypes
-                        ?.filter(radio => {
-                            if (
-                                hideDatasets &&
-                                radio === ResourceType.DATASET
-                            ) {
-                                return false;
-                            }
-                            if (hideTools && radio === ResourceType.TOOL) {
-                                return false;
-                            }
-                            return true;
-                        })
+                    radios={resourceTypes
+                        .filter(radio => availableResourceTypes.includes(radio))
                         .map(type => ({
                             value: type,
                             label: t(`radio${capitalise(type)}`),
