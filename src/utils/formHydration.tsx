@@ -6,9 +6,9 @@ import {
     UseFormTrigger,
 } from "react-hook-form";
 import dayjs from "dayjs";
-import { get, isArray, isObject, set } from "lodash";
+import { get, isArray, isEmpty, isObject, set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { Metadata } from "@/interfaces/Dataset";
+import { Metadata, Revision } from "@/interfaces/Dataset";
 import {
     FormHydration,
     FormHydrationField,
@@ -70,7 +70,11 @@ const formGetFieldsCompletedCount = (
     const fieldValues = getValues(allFields);
 
     if (allFields && fieldValues) {
-        fieldsWithValue += fieldValues.filter(value => value).length;
+        const nonEmptyCount = fieldValues.filter(
+            value => value !== null && !isEmpty(value)
+        ).length;
+
+        fieldsWithValue = nonEmptyCount;
     }
 
     const arrayFields = schemaFields.filter(
@@ -246,8 +250,7 @@ const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
     nameOverride?: string,
-    setActiveField?: (fieldName: string) => void,
-    unsetActiveField?: () => void
+    setActiveField?: (fieldName: string) => void
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
     const { options } = rest;
@@ -288,7 +291,6 @@ const renderFormHydrationField = (
                 selectedOption
             }
             onFocus={() => setActiveField && setActiveField(name)}
-            onBlur={() => unsetActiveField && unsetActiveField()}
             {...rest}
             label={name || ""}
         />
@@ -307,6 +309,19 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
             []
         ),
 });
+
+const convertRevisionsToArray = (data: {
+    revisions?: Revision | Revision[];
+}) => {
+    return {
+        ...data,
+        revisions: Array.isArray(data.revisions)
+            ? data.revisions
+            : data.revisions
+            ? [data.revisions]
+            : [],
+    };
+};
 
 const mapFormFieldsForSubmission = (
     formData: Metadata,
@@ -365,7 +380,7 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    return formattedFormData;
+    return convertRevisionsToArray(formattedFormData);
 };
 
 const mapExistingDatasetToFormFields = (
@@ -456,6 +471,24 @@ const mapExistingDatasetToFormFields = (
                     !isArray(defaultValue)
                 ) {
                     set(values, title, []);
+                } else if (fullPath.includes("revisions")) {
+                    const revisions = get(metadata, "revisions");
+                    const latestRevision = revisions?.[revisions.length - 1];
+
+                    if (latestRevision) {
+                        switch (fullPath) {
+                            case "revisions.version":
+                                set(
+                                    values,
+                                    "revision version",
+                                    latestRevision.version
+                                );
+                                break;
+                            default:
+                                set(values, "revision url", latestRevision.url);
+                                break;
+                        }
+                    }
                 } else {
                     set(values, title, defaultValue);
                 }

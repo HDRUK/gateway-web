@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { isMobile } from "react-device-detect";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -25,33 +26,43 @@ import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
     {
-        id: SearchCategory.DATASETS,
+        id: "feasibility",
+        image: "/images/homepage/banner-cohort-discovery.png",
+        href: "/about/cohort-discovery",
+    },
+    {
+        id: "phenotypes",
         image: "/images/homepage/welcome-image.png",
+        href: "https://phenotypes.healthdatagateway.org/",
+    },
+    {
+        id: "courses",
+        image: "/images/homepage/banner-courses.png",
+        href: "https://hdruklearn.org/",
+    },
+    {
+        id: SearchCategory.DATASETS,
+        image: "/images/homepage/banner-datasets.png",
         href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
         id: SearchCategory.DATA_USE,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-data-uses.jpg",
         href: `/search?type=${SearchCategory.DATA_USE}`,
     },
     {
-        id: "feasibility",
-        image: "/images/homepage/welcome-image.png",
-        href: "/about/cohort-discovery",
-    },
-    {
         id: SearchCategory.TOOLS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-tools.jpg",
         href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: SearchCategory.PUBLICATIONS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-publications.jpg",
         href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
     {
         id: "dataProviders",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-custodians.png",
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
@@ -64,21 +75,12 @@ const services = [
         image: "/images/homepage/welcome-image.png",
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
-    {
-        id: "phenotypes",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://phenotypes.healthdatagateway.org/",
-    },
+
     // {
     //     id: "diseaseAtlas",
     //     image: "/images/homepage/welcome-image.png",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
-    {
-        id: "courses",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://hdruklearn.org/",
-    },
 ];
 
 interface HomePageProps {
@@ -144,7 +146,10 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
                 }}>
                 <Container>
-                    <InfoHoverPanel items={responsiveServices} />
+                    <InfoHoverPanel
+                        items={responsiveServices}
+                        defaultImageSrc="/images/homepage/welcome-image.png"
+                    />
                 </Container>
             </Box>
             <Box
@@ -195,12 +200,37 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 }}
                 textAlign="center">
                 <Container>
-                    <TitleWithBg
-                        size="md"
-                        variant="h2"
-                        mb={2}
-                        title={newsHeader}
-                    />
+                    <Box sx={{ position: "relative", mb: 2 }}>
+                        <TitleWithBg
+                            size="md"
+                            variant="h2"
+                            title={newsHeader}
+                        />
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                right: 0,
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                                [theme.breakpoints.down("tablet")]: {
+                                    position: "static",
+                                    transform: "none",
+                                },
+                            }}>
+                            <Link
+                                href={RouteName.NEWS_EVENTS}
+                                color="primary"
+                                passHref>
+                                <Button
+                                    variant="text"
+                                    endIcon={
+                                        <ArrowForwardIosIcon color="primary" />
+                                    }>
+                                    {t("newsEvents.seeAllLink")}
+                                </Button>
+                            </Link>
+                        </Box>
+                    </Box>
                     <NewsSection posts={posts} />
                 </Container>
             </Box>

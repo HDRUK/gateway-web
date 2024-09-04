@@ -48,6 +48,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
                     action,
                 },
             });
+
             return data as T;
         } catch (error) {
             console.error("Error fetching data:", error);

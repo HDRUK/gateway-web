@@ -40,7 +40,7 @@ describe("TeamDatasets", () => {
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].versions[0].version}`
+                    `${mockDatasets[0].versions[0].metadata.metadata.required.version}`
                 )
             ).toBeInTheDocument();
 

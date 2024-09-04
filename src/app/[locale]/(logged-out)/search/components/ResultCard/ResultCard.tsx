@@ -1,10 +1,12 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
+import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { KeyedMutator } from "swr";
+import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -17,13 +19,14 @@ import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
-import menuItems from "./config";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -39,12 +42,15 @@ const ResultCard = ({
     mutateLibraries,
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { current: resultId } = useRef(uniqueId("result-title-"));
     const router = useRouter();
     const { showDialog } = useDialog();
+    const { showSidebar } = useSidebar();
+
     const metadata = get(result, "metadata");
     const highlight = get(result, "highlight");
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId } = result;
+    const { _id: datasetId, team } = result;
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -84,6 +90,44 @@ const ResultCard = ({
         event.stopPropagation();
         setAnchorElement(event.currentTarget);
     };
+
+    const genEnq = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            const datasets: DatasetEnquiry[] = [
+                {
+                    datasetId: Number(datasetId),
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+            ];
+            showSidebar({
+                title: "Messages",
+                content: <GeneralEnquirySidebar datasets={datasets} />,
+            });
+        }
+    };
+
+    const menuItems = [
+        {
+            label: "General enquiry",
+            action: genEnq,
+        },
+        {
+            label: "Feasibility enquiry",
+            href: "TBC",
+        },
+        {
+            label: "Data Access Request",
+            href: "TBC",
+        },
+    ];
 
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
@@ -130,120 +174,148 @@ const ResultCard = ({
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
-                <ListItemButton component="a" onClick={handleClickItem}>
-                    <ListItemText
-                        primary={
-                            <ResultTitle>
-                                {metadata.summary.shortTitle}
-                                <div style={{ textAlign: "end" }}>
-                                    <Button
-                                        onClick={handleToggleLibraryItem}
-                                        variant="outlined"
-                                        startIcon={
-                                            isLibraryToggled ? (
-                                                <Bookmark color="secondary" />
-                                            ) : (
-                                                <BookmarkBorder color="secondary" />
-                                            )
-                                        }
-                                        sx={{ mb: 1 }}>
-                                        {isLibraryToggled
-                                            ? t("removeFromLibrary")
-                                            : t("addToLibrary")}
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        startIcon={
-                                            <SpeechBubbleIcon
-                                                sx={{ fill: "white" }}
-                                            />
-                                        }
-                                        endIcon={
-                                            <ChevronThinIcon
-                                                fontSize="medium"
-                                                style={{ color: "white" }}
-                                            />
-                                        }
-                                        sx={{ ml: 2, mb: 1 }}
-                                        onClick={handleOpenDropdownMenu}>
-                                        {t("actions")}
-                                    </Button>
-                                    <MenuDropdown
-                                        handleClose={() =>
-                                            setAnchorElement(null)
-                                        }
-                                        menuItems={menuItems}
-                                        anchorElement={anchorElement}
-                                    />
-                                </div>
-                            </ResultTitle>
-                        }
-                        primaryTypographyProps={{
-                            color: "primary",
-                            fontWeight: 600,
-                            fontSize: 16,
-                            mb: 1.5,
-                        }}
-                        secondary={
-                            <>
-                                <Typography
-                                    sx={{
-                                        textDecoration: "uppercase",
-                                        fontWeight: 400,
-                                        fontSize: 16,
-                                        color: "black",
-                                        mb: 1.5,
-                                    }}>
-                                    {metadata.summary.publisher.name !==
-                                    undefined
-                                        ? metadata.summary.publisher.name
-                                        : metadata.summary.publisher
-                                              .publisherName}
-                                </Typography>
-                                <Highlight
-                                    sx={{ mb: 1.5 }}
-                                    component="div"
-                                    variant="body2"
-                                    color="text.gray"
-                                    dangerouslySetInnerHTML={{
-                                        __html: formattedText,
-                                    }}
-                                />
-                                <Box
-                                    sx={{
-                                        p: 0,
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                    }}>
-                                    <Typography
-                                        color="secondary"
-                                        sx={{ fontSize: 16 }}>
-                                        {t("populationSize")}:{" "}
-                                        {getPopulationSize(
-                                            metadata,
-                                            t("populationSizeNotReported")
-                                        )}
-                                    </Typography>
-                                    <Typography
-                                        color="secondary"
-                                        sx={{ fontSize: 16 }}>
-                                        {t("dateLabel")}:{" "}
-                                        {getDateRange(metadata)}
-                                    </Typography>
-                                    <Typography>
+                <section
+                    style={{ width: "100%" }}
+                    // eslint-disable-next-line
+                    aria-description={`Result for ${metadata.summary.shortTitle}`}>
+                    <ListItemButton component="a" onClick={handleClickItem}>
+                        <ListItemText
+                            primary={
+                                <ResultTitle>
+                                    <span
+                                        id={resultId}
+                                        role="heading"
+                                        aria-level="3">
+                                        {metadata.summary.shortTitle}
+                                    </span>
+                                    <div style={{ textAlign: "end" }}>
                                         <Button
-                                            onClick={handleClickQuickView}
-                                            color="secondary"
-                                            variant="outlined">
-                                            {t("showAll")}
+                                            onClick={handleToggleLibraryItem}
+                                            variant="outlined"
+                                            aria-label={
+                                                isLibraryToggled
+                                                    ? t("removeFromLibrary")
+                                                    : `${t(
+                                                          "addToLibrary"
+                                                      )} for ${
+                                                          metadata.summary
+                                                              .shortTitle
+                                                      }`
+                                            }
+                                            startIcon={
+                                                isLibraryToggled ? (
+                                                    <Bookmark color="secondary" />
+                                                ) : (
+                                                    <BookmarkBorder color="secondary" />
+                                                )
+                                            }
+                                            sx={{ mb: 1 }}>
+                                            {isLibraryToggled
+                                                ? t("removeFromLibrary")
+                                                : t("addToLibrary")}
                                         </Button>
+                                        <Button
+                                            aria-label={`${t("actions")} for ${
+                                                metadata.summary.shortTitle
+                                            }`}
+                                            variant="contained"
+                                            startIcon={
+                                                <SpeechBubbleIcon
+                                                    sx={{ fill: "white" }}
+                                                />
+                                            }
+                                            endIcon={
+                                                <ChevronThinIcon
+                                                    fontSize="medium"
+                                                    style={{ color: "white" }}
+                                                />
+                                            }
+                                            sx={{ ml: 2, mb: 1 }}
+                                            onClick={handleOpenDropdownMenu}>
+                                            {t("actions")}
+                                        </Button>
+                                        <MenuDropdown
+                                            handleClose={() =>
+                                                setAnchorElement(null)
+                                            }
+                                            menuItems={menuItems}
+                                            anchorElement={anchorElement}
+                                            title={metadata.summary.shortTitle}
+                                        />
+                                    </div>
+                                </ResultTitle>
+                            }
+                            primaryTypographyProps={{
+                                color: "primary",
+                                fontWeight: 600,
+                                fontSize: 16,
+                                mb: 1.5,
+                            }}
+                            disableTypography
+                            secondary={
+                                <section aria-describedby={resultId}>
+                                    <Typography
+                                        // eslint-disable-next-line
+                                        aria-description="Data Custodian"
+                                        sx={{
+                                            textDecoration: "uppercase",
+                                            fontWeight: 400,
+                                            fontSize: 16,
+                                            color: "black",
+                                            mb: 1.5,
+                                        }}>
+                                        {metadata.summary.publisher.name !==
+                                        undefined
+                                            ? metadata.summary.publisher.name
+                                            : metadata.summary.publisher
+                                                  .publisherName}
                                     </Typography>
-                                </Box>
-                            </>
-                        }
-                    />
-                </ListItemButton>
+                                    <Highlight
+                                        sx={{ mb: 1.5 }}
+                                        component="div"
+                                        variant="body2"
+                                        color="text.gray"
+                                        dangerouslySetInnerHTML={{
+                                            __html: formattedText,
+                                        }}
+                                    />
+                                    <Box
+                                        sx={{
+                                            p: 0,
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                        }}>
+                                        <Typography
+                                            color="secondary"
+                                            sx={{ fontSize: 16 }}>
+                                            {t("populationSize")}:{" "}
+                                            {getPopulationSize(
+                                                metadata,
+                                                t("populationSizeNotReported")
+                                            )}
+                                        </Typography>
+                                        <Typography
+                                            color="secondary"
+                                            sx={{ fontSize: 16 }}>
+                                            {t("dateLabel")}:{" "}
+                                            {getDateRange(metadata)}
+                                        </Typography>
+                                        <Typography>
+                                            <Button
+                                                onClick={handleClickQuickView}
+                                                color="secondary"
+                                                variant="outlined">
+                                                {t("showAll")}
+                                            </Button>
+                                        </Typography>
+                                    </Box>
+                                </section>
+                            }
+                        />
+                    </ListItemButton>
+                </section>
             </ListItem>
+
             <Divider component="li" />
         </>
     );

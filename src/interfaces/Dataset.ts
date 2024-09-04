@@ -23,6 +23,16 @@ interface StructuralMetadata {
     columns: StructuralMetadataColumn[];
 }
 
+interface StructuralMetadataPublicSchema {
+    tables: StructuralMetadata[];
+    syntheticDataWebLink: string[];
+}
+
+interface Revision {
+    version: string;
+    url: string;
+}
+
 interface Metadata {
     summary: {
         abstract: string;
@@ -40,6 +50,9 @@ interface Metadata {
             publisherName: string;
             name?: string;
         };
+    };
+    required: {
+        version: string;
     };
     accessibility: {
         access: {
@@ -88,6 +101,7 @@ interface Metadata {
         syntheticDataWebLink: string;
     };
     structuralMetadata?: StructuralMetadata[];
+    revisions: Revision[];
 }
 
 interface LinkedDatasetVersions {
@@ -149,5 +163,7 @@ export type {
     VersionItem,
     StructuralMetadata,
     StructuralMetadataColumn,
+    StructuralMetadataPublicSchema,
     CreateOrigin,
+    Revision,
 };

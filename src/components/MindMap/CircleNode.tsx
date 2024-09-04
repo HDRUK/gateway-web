@@ -2,6 +2,7 @@ import { Handle, Position, NodeProps } from "reactflow";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { LaunchIcon } from "@/consts/icons";
+import EllipsisLineLimit from "../EllipsisLineLimit";
 
 export interface CircleNodeData {
     id: string;
@@ -36,8 +37,11 @@ const CircleNode = ({
                     style={{
                         display: "inline-flex",
                         alignItems: "center",
+                        padding: "0 15px 0 20px",
+                        gap: "5px",
                     }}>
-                    {label} <LaunchIcon fontSize="small" />
+                    <EllipsisLineLimit text={label} maxLine={3} showToolTip />
+                    <LaunchIcon fontSize="small" />
                 </div>
                 <Handle
                     type="source"

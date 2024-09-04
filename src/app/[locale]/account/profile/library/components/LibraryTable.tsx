@@ -33,6 +33,8 @@ const LibraryTable = ({
         darEnabled: item.data_provider_dar_enabled,
         dataCustodian: item.data_provider_name,
         entityType: "Dataset", // will we update in the future with other entities?
+        dataCustodianId: item.data_provider_id,
+        dataCustodianMemberOf: item.data_provider_member_of,
     }));
 
     const translations = {

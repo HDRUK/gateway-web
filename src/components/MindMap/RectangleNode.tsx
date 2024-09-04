@@ -11,10 +11,11 @@ export interface RectangleNodeData {
     nodeSx: React.CSSProperties;
     color: string;
     position: Position;
+    hidden: boolean;
 }
 
 const RectangleNode = ({
-    data: { id, label, href, nodeSx, position, color, action },
+    data: { id, label, href, nodeSx, position, color, hidden, action },
 }: NodeProps<RectangleNodeData>) => {
     return (
         <div
@@ -27,6 +28,8 @@ const RectangleNode = ({
                     : theme.palette.greyCustom.main,
                 padding: "14px",
                 ...nodeSx,
+                opacity: hidden ? 0 : 1,
+                pointerEvents: hidden ? "none" : "inherit",
             }}>
             <Handle type="target" position={position} id={`${id}.bottom`} />
             {href ? (

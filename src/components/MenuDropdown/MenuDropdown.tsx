@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import { colors } from "@/config/theme";
 
 interface MenuDropdownProps {
+    title?: string;
     anchorElement: null | HTMLElement;
     menuItems: {
         label: string;
@@ -30,6 +31,7 @@ function MenuDropdown({
     handleClose,
     transformOrigin,
     anchorOrigin,
+    title,
 }: MenuDropdownProps) {
     return (
         <Menu
@@ -55,6 +57,9 @@ function MenuDropdown({
                         </MenuItem>
                     ));
                 }
+                const ariaLabel = title
+                    ? `${menuItem.label} for ${title}`
+                    : undefined;
                 if (menuItem.href)
                     return (
                         <MenuItem
@@ -67,6 +72,7 @@ function MenuDropdown({
                             onClick={() => handleClose()}>
                             {menuItem.icon || null}
                             <Link
+                                aria-label={ariaLabel}
                                 key={menuItem.label}
                                 underline="hover"
                                 href={menuItem.href}>
@@ -81,6 +87,7 @@ function MenuDropdown({
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
+                                aria-label={ariaLabel}
                                 sx={{ pl: 0 }}>
                                 {menuItem.label}
                             </Button>

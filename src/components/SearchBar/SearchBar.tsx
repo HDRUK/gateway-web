@@ -60,6 +60,9 @@ const SearchBar = ({
                         name={queryName}
                         placeholder={queryPlaceholder}
                         label=""
+                        sx={{
+                            borderBottom: "1px solid #3DB28C",
+                        }}
                     />
                 </InputWrapper>
                 <IconButton

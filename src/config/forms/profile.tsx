@@ -48,8 +48,7 @@ const validationSchema = yup
             .nullable(),
         sector_id: yup
             .number()
-            .moreThan(1, "You must select a sector")
-            .required()
+            .required("You must select a sector")
             .label("Sector"),
         bio: yup.string().max(500).nullable().label("Bio"),
         orcid: yup
@@ -69,6 +68,18 @@ const validationSchema = yup
         contact_feedback: yup.boolean(),
     })
     .required();
+
+const validationSchemaOpenAthens = validationSchema.concat(
+    yup
+        .object({
+            secondary_email: yup
+                .string()
+                .required()
+                .email()
+                .label("Secondary email"),
+        })
+        .required()
+);
 
 const formFields = [
     {
@@ -160,6 +171,18 @@ const formFields = [
     },
 ];
 
+const formFieldsOpenAthens = formFields.map(field =>
+    field.name === "secondary_email"
+        ? {
+              label: "Secondary email",
+              info: "Enter a secondary email address if you want contact from Health Data Research to an alternative address",
+              name: "secondary_email",
+              component: inputComponents.TextField,
+              required: true,
+          }
+        : field
+);
+
 const contactFormFields = [
     {
         title: "Feedback",
@@ -180,4 +203,6 @@ export {
     defaultValues as profileDefaultValues,
     validationSchema as profileValidationSchema,
     formFields as profileFormFields,
+    validationSchemaOpenAthens as profileValidationSchemaOpenAthens,
+    formFieldsOpenAthens as profileFormFieldsOpenAthens,
 };

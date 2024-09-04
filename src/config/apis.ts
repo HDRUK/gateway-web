@@ -36,6 +36,8 @@ const apis = {
     dataUseV1Url: `${apiV1Url}/dur`,
     dataUseV1UrlIP: `${apiV1IPUrl}/dur`,
     dataUseExportV1Url: `${apiV1Url}/dur/export`,
+    dataCustodianNetworkV1Url: `${apiV1Url}/data_provider_colls`,
+    dataCustodianNetworkV1UrlIP: `${apiV1IPUrl}/data_provider_colls`,
     publicationsV1Url: `${apiV1Url}/publications`,
     publicationsV1UrlIP: `${apiV1IPUrl}/publications`,
     toolsV1Url: `${apiV1Url}/tools`,
@@ -57,6 +59,9 @@ const apis = {
     fileProcessedV1Url: `${apiV1Url}/files/processed`,
     librariesV1Url: `${apiV1Url}/libraries`,
     librariesV1UrlIP: `${apiV1IPUrl}/libraries`,
+    toolCategoriesV1Url: `${apiV1Url}/type_categories`,
+    programmingLanguagesV1Url: `${apiV1Url}/programming_languages`,
+    enquiryThreadsV1Url: `${apiV1Url}/enquiry_threads`,
 };
 
 export default apis;
