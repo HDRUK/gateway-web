@@ -1,5 +1,5 @@
 import mockRouter from "next-router-mock";
-import { render, screen, waitFor } from "@/utils/testUtils";
+import { act, render, screen, waitFor } from "@/utils/testUtils";
 import { eventsV1, newsV1 } from "@/mocks/data/cms";
 import NewsEventsPage from "./page";
 
@@ -31,7 +31,9 @@ describe("NewsEvents", () => {
 
         render(Result);
 
-        mockRouter.setCurrentUrl("/news_events?tab=news&year=2023");
+        act(() => {
+            mockRouter.setCurrentUrl("/news_events?tab=news&year=2023");
+        });
 
         await waitFor(() => {
             expect(
@@ -45,7 +47,9 @@ describe("NewsEvents", () => {
 
         render(Result);
 
-        mockRouter.setCurrentUrl("/news_events?tab=events");
+        act(() => {
+            mockRouter.setCurrentUrl("/news_events?tab=events");
+        });
 
         await waitFor(() => {
             expect(

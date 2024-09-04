@@ -1191,6 +1191,9 @@
         }
     },
     "components": {
+        "CMSBanner": {
+            "ariaCloseButtonLabel": "Close banner"
+        },
         "ContactSupport": {
             "title": "Still can’t find what you’re looking for?",
             "content": "The quickest way to get your issue solved is through the links above, but if you aren’t able to find a solution then contact us here:",
