@@ -1,7 +1,10 @@
+import { SvgIconComponent } from "@mui/icons-material";
+
 type Error = {
-    imageSrc: string;
     message: string;
-    imageAlt: string;
+    icon?: SvgIconComponent;
+    imageSrc?: string;
+    imageAlt?: string;
 };
 
 export const errors: { [char: number]: Error } = {
@@ -29,8 +32,6 @@ export const errors: { [char: number]: Error } = {
     },
     423: {
         message: "This page is currently locked",
-        imageAlt: "Locked",
-        imageSrc: "/images/errors/423.png",
     },
     500: {
         message:

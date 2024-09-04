@@ -69,4 +69,20 @@ query GetHomePageQuery {
 }
 `;
 
-export { GetHomePageQuery };
+const GetHomePageBanner = `
+query GetHomePageBanner {
+  posts(where: {categoryName: "homepage banner"}) {
+    edges {
+      node {
+        homepageBanner {
+          linkUrl
+          linkText
+          heading
+          description
+        }
+      }
+    }
+  }
+}`;
+
+export { GetHomePageQuery, GetHomePageBanner };
