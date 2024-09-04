@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { KeyedMutator } from "swr";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -13,6 +14,8 @@ import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
+import useModal from "@/hooks/useModal";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { CheckIcon } from "@/consts/icons";
@@ -20,6 +23,7 @@ import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import ActionDropdown from "../ActionDropdown";
+import FeasibilityEnquirySidebar from "../FeasibilityEnquirySidebar";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
@@ -39,10 +43,12 @@ const getColumns = ({
     translations,
     libraryData,
     showLibraryModal,
+    mutateLibraries,
 }: {
     translations: { [id: string]: string };
     libraryData: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
+    mutateLibraries: KeyedMutator<Library[]>;
 }) => [
     columnHelper.display({
         id: "actions",
@@ -54,6 +60,7 @@ const getColumns = ({
                         result={original}
                         libraryData={libraryData}
                         showLibraryModal={showLibraryModal}
+                        mutateLibraries={mutateLibraries}
                     />
                 </div>
             );
@@ -247,6 +254,8 @@ const ResultTable = ({ results }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
     const router = useRouter();
     const { isLoggedIn } = useAuth();
+    const { showSidebar } = useSidebar();
+    const { hideModal } = useModal();
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?perPage=1000`,
@@ -314,6 +323,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
                     translations,
                     libraryData,
                     showLibraryModal,
+                    mutateLibraries,
                 })}
                 rows={results}
             />

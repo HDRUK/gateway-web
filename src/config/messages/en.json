@@ -915,6 +915,9 @@
                     "hasTechnicalMetadata": {
                         "label": "Structural metadata",
                         "tooltip": "Descriptions and details about the tables and columns within a dataset"
+                    },
+                    "feasibilityEnquiries": {
+                        "sidebarTitle": "Messages"
                     }
                 }
             },
@@ -1367,7 +1370,8 @@
             },
             "FeasibilityEnquiryDialog": {
                 "enquire": "Make feasibility enquiry for this dataset only",
-                "addToLibrary": "Add to library and continue searching"
+                "addToLibrary": "Add to library and continue searching",
+                "helpText": "To make a feasibility enquiry for multiple datasets:\n \n1. Add datasets to your library\n2. Generate a feasibility enquiry from your library page"
             }
         }
     }

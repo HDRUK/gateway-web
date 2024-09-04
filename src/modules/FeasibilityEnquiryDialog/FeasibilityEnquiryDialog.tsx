@@ -1,30 +1,35 @@
 import { Button, Divider, Grid } from "@mui/material";
 import MuiDialogContent from "@mui/material/DialogContent";
+import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
+import { KeyedMutator } from "swr";
+import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import Typography from "@/components/Typography";
-import useDialog from "@/hooks/useDialog";
-import useSidebar from "@/hooks/useSidebar";
-import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
-import usePost from "@/hooks/usePost";
-import { NewLibrary } from "@/interfaces/Library";
-import apis from "@/config/apis";
 import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
+import usePost from "@/hooks/usePost";
+import useSidebar from "@/hooks/useSidebar";
+import apis from "@/config/apis";
+import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
 
 const TRANSLATION_PATH = "modules.dialogs.FeasibilityEnquiryDialog";
 
 interface DatasetQuickViewDialogProps {
     result: SearchResultDataset;
+    mutateLibraries: KeyedMutator<Library[]>;
 }
 
-const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
+const FeasibilityEnquiryDialog = ({
+    result,
+    mutateLibraries,
+}: DatasetQuickViewDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
     const { showSidebar } = useSidebar();
     const { user } = useAuth();
-    console.log(result);
 
     const handleFeasibilityEnquiries = () => {
         const datasets = [
@@ -45,50 +50,50 @@ const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
     const addLibrary = usePost<NewLibrary>(apis.librariesV1Url, {
         itemName: `Library item`,
     });
-    
-    const handleAddToLibrary = (datasetId: number) => {
+
+    const handleAddToLibrary = () => {
         const payload: NewLibrary = {
             user_id: user?.id,
-            dataset_id: datasetId,
+            dataset_id: Number(result._id),
         };
-        addLibrary(payload);
-        // .then(() => {
-        //     mutateLibraries();
-        // });
+
+        addLibrary(payload).then(() => {
+            mutateLibraries();
+            hideDialog();
+        });
     };
 
     return (
-        <Dialog
-            // titleSx={{ paddingLeft: 8 }}
-            // title={"Title"}
-            onClose={() => hideDialog()}>
-            <MuiDialogContent sx={{ paddingX: 8 }}>
-                <Box
-                    sx={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(2, 1fr)",
-                    }}>
-                    <Button
-                        sx={{ display: "flex" }}
-                        variant="contained"
-                        onClick={handleFeasibilityEnquiries}>
-                        {t("enquire")}
-                    </Button>
-                    {/* <Divider
-                        orientation="vertical"
-                        variant="middle"
-                        color="black"
-                    /> */}
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        }}>
-                        <Typography variant="h3" mb={2}>
-                            {
-                                "BLAH BLAH6To make a feasibility enquiry for multiple datasets:\n1. Add datasets to your library2. Generate a feasibility enquiry from your library page"
-                            }
+        <Dialog onClose={() => hideDialog()}>
+            <MuiDialogContent sx={{ paddingX: 2 }}>
+                <Grid
+                    container
+                    rowSpacing={4}
+                    columnSpacing={1}
+                    // flexWrap={"noWrap"}
+                    alignItems="center">
+                    <Grid item tablet={5} mobile={5} desktop={5} sx={{ p: 0 }}>
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center">
+                            <Button
+                                variant="contained"
+                                onClick={handleFeasibilityEnquiries}>
+                                {t("enquire")}
+                            </Button>
+                        </Box>
+                    </Grid>
+                    <Grid item>
+                        <Divider
+                            sx={{ mr: 2, height: 200 }}
+                            orientation="vertical"
+                            color="black"
+                        />
+                    </Grid>
+                    <Grid item tablet={6} mobile={6} desktop={6} sx={{ p: 0 }}>
+                        <Typography mb={2}>
+                            <Markdown>{t("helpText")}</Markdown>
                         </Typography>
                         <Button
                             variant="outlined"
@@ -96,8 +101,8 @@ const FeasibilityEnquiryDialog = ({ result }: DatasetQuickViewDialogProps) => {
                             onClick={handleAddToLibrary}>
                             {t("addToLibrary")}
                         </Button>
-                    </Box>
-                </Box>
+                    </Grid>
+                </Grid>
             </MuiDialogContent>
         </Dialog>
     );
