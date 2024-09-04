@@ -17,7 +17,7 @@ export const searchResource = {
     icon: SearchIcon,
 };
 
-export const availableResourceTypes = [
+export const resourceTypes = [
     ResourceType.DATASET,
     ResourceType.DATA_USE,
     ResourceType.PUBLICATION,
