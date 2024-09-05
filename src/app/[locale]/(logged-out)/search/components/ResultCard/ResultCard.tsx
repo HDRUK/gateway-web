@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
@@ -6,27 +6,26 @@ import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { KeyedMutator } from "swr";
-import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
+import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
-import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
-import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
+import useFeasibilityEnquiry from "../../hooks/useFeasibilityEnquiry";
+import useGeneralEnquiry from "../../hooks/useGeneralEnquiry";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 
 interface ResultCardProps {
@@ -46,11 +45,12 @@ const ResultCard = ({
     const { current: resultId } = useRef(uniqueId("result-title-"));
     const router = useRouter();
     const { showDialog } = useDialog();
-    const { showSidebar } = useSidebar();
 
     const highlight = get(result, "highlight");
     const { isLoggedIn, user } = useAuth();
     const { _id: datasetId, metadata, team } = result;
+    const showGeneralEnquiry = useGeneralEnquiry();
+    const showFeasibilityEnquiry = useFeasibilityEnquiry();
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -91,63 +91,48 @@ const ResultCard = ({
         setAnchorElement(event.currentTarget);
     };
 
-    const genEnq = (event: React.MouseEvent<HTMLElement>) => {
-        event.stopPropagation();
+    const handleGeneralEnquiryClick = (
+        event?: React.MouseEvent<HTMLElement>
+    ) => {
+        event?.stopPropagation();
 
-        if (!isLoggedIn) {
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-            });
-        } else {
-            const datasets: DatasetEnquiry[] = [
-                {
-                    datasetId: Number(datasetId),
-                    teamId: team.id,
-                    teamName: team.name,
-                    teamMemberOf: team.member_of,
-                },
-            ];
-            showSidebar({
-                title: "Messages",
-                content: <GeneralEnquirySidebar datasets={datasets} />,
-            });
-        }
+        showGeneralEnquiry({ dataset: result, isLoggedIn });
     };
 
-    const feasibilityEnquiryDialog = (event: React.MouseEvent<HTMLElement>) => {
+    const handleFeasibilityEnquiryClick = (
+        event?: React.MouseEvent<HTMLElement>
+    ) => {
+        event?.stopPropagation();
+
+        showFeasibilityEnquiry({
+            dataset: result,
+            isLoggedIn,
+            mutateLibraries,
+        });
+    };
+
+    const handleStartDARRequest = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
-        if (!isLoggedIn) {
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-            });
-        } else {
-            const dataset: DatasetEnquiry = {
-                datasetId: Number(datasetId),
-                name: metadata.summary.title,
-                teamId: team.id,
-                teamName: team.name,
-                teamMemberOf: team.member_of,
-            };
-            showDialog(FeasibilityEnquiryDialog, {
-                result: dataset,
-                mutateLibraries,
-            });
-        }
+        showDialog(DarEnquiryDialog, {
+            isDAREnabled: team.is_question_bank,
+            onGeneralEnquiryClick: handleGeneralEnquiryClick,
+            onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
+        });
     };
 
     const menuItems = [
         {
             label: "General enquiry",
-            action: genEnq,
+            action: handleGeneralEnquiryClick,
         },
         {
             label: "Feasibility enquiry",
-            action: feasibilityEnquiryDialog,
+            action: handleFeasibilityEnquiryClick,
         },
         {
-            label: "Data Access Request",
-            href: "TBC",
+            label: "Start a Data Access Request",
+            action: handleStartDARRequest,
         },
     ];
 
@@ -172,12 +157,14 @@ const ResultCard = ({
                     element =>
                         element.user_id === user?.id &&
                         element.dataset_id === Number(datasetId)
-                ).id;
+                )?.id;
 
-                await deleteLibrary(libraryIdToDelete);
+                if (libraryIdToDelete) {
+                    await deleteLibrary(libraryIdToDelete);
 
-                mutateLibraries();
-                setLibraryToggle(false);
+                    mutateLibraries();
+                    setLibraryToggle(false);
+                }
             }
         } else {
             showDialog(ProvidersDialog, { isProvidersDialog: true });
@@ -207,7 +194,7 @@ const ResultCard = ({
                                     <span
                                         id={resultId}
                                         role="heading"
-                                        aria-level="3">
+                                        aria-level={3}>
                                         {metadata.summary.shortTitle}
                                     </span>
                                     <div style={{ textAlign: "end" }}>
