@@ -25,7 +25,7 @@ export default function DatasetContent({
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const datasetsLatestVersions = getLatestVersions(dataset_versions);
+    const datasetsLatestVersions = getLatestVersions(dataset_versions ?? []);
 
     return (
         <InView
@@ -67,7 +67,10 @@ export default function DatasetContent({
                             {populationSize && (
                                 <div>
                                     {t("populationSize", {
-                                        length: populationSize,
+                                        length:
+                                            populationSize > 0
+                                                ? populationSize.toLocaleString()
+                                                : t("unknownString"),
                                     })}
                                 </div>
                             )}

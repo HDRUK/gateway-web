@@ -84,15 +84,20 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
     collection: [FILTER_PUBLISHER_NAME, FILTER_DATA_SET_TITLES],
     paper: [
         STATIC_FILTER_SOURCE,
-        FILTER_PUBLICATION_TYPE,
-        FILTER_PUBLICATION_DATE,
         FILTER_DATA_SET_TITLES,
+        FILTER_PUBLICATION_DATE,
+        FILTER_PUBLICATION_TYPE,
     ],
     tool: [
         FILTER_TYPE_CATEGORY,
         FILTER_DATA_SET_TITLES,
         FILTER_PROGRAMMING_LANGUAGE,
         FILTER_LICENSE,
+    ],
+    dataProvider: [
+        FILTER_DATA_SET_TITLES,
+        FILTER_DATA_TYPE,
+        FILTER_GEOGRAPHIC_LOCATION,
     ],
 };
 
@@ -306,8 +311,12 @@ const FilterPanel = ({
         }
     ) => {
         const ordering = FILTER_ORDERING[filterCategory];
-        const item1 = ordering?.indexOf(itemA.label);
-        const item2 = ordering?.indexOf(itemB.label);
+        if (!ordering) {
+            return null;
+        }
+
+        const item1 = ordering.indexOf(itemA.label);
+        const item2 = ordering.indexOf(itemB.label);
 
         if (item1 && item2) {
             return item1 - item2;
@@ -407,7 +416,7 @@ const FilterPanel = ({
         }
     };
 
-    // Clear Material Type filter when Tissues toggled off
+    // Clear Material Type filter when BioSamples toggled off
     useEffect(() => {
         if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
             setFilterQueryParams([], FILTER_MATERIAL_TYPE);

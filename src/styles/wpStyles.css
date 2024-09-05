@@ -49,3 +49,112 @@
     border-bottom: 1px solid #eeeeee;
     padding: 1em;
 }
+
+.hg-glossary *,
+.hg-glossary *::before,
+.hg-glossary *::after {
+    word-break: initial;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.hg-glossary .hg-glossary__header {
+    margin: 0 0 1em;
+}
+
+.hg-glossary.is-style-boxed {
+    background: #fafafa;
+    padding: 4rem;
+}
+
+.hg-glossary.is-style-boxed .hg-content .hg-content__letter {
+    border-bottom: 1px solid;
+    padding: 1rem 0rem;
+}
+
+.hg-glossary .hg-nav {
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 0 1rem;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.hg-glossary .hg-nav a.htgb_active_nav {
+    text-decoration: underline;
+}
+
+.hg-glossary .hg-nav a.htgb_disabled {
+    color: #494c4d;
+    pointer-events: none;
+}
+
+.hg-glossary .hg-nav a.htgb_search_disabled {
+    color: #494c4d;
+    pointer-events: none;
+}
+
+.hg-glossary .hg-nav a {
+    display: block;
+    padding: 8px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.hg-glossary .hg-search {
+    margin: 0 0 1rem;
+}
+
+.hg-glossary .hg-search input {
+    max-width: 100%;
+    width: 100%;
+    padding: 1rem 1.4rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.hg-glossary .hg-content .hg-content__letter {
+    display: block;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 1rem 1.1rem;
+    margin: 0 0 2rem;
+    background-color: #fafafa;
+}
+
+.hg-glossary .hg-content dl {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    margin: 1rem 0;
+    padding: 0;
+}
+
+.hg-glossary .hg-content dl dt {
+    -ms-flex-preferred-size: 20%;
+    flex-basis: 20%;
+    margin: 0 20px 0 0;
+    font-weight: 600;
+}
+
+.hg-glossary .hg-content dl dd {
+    -ms-flex-preferred-size: 80%;
+    flex-basis: 80%;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.hg-glossary .hg-content .hg-item-description > p {
+    margin: 0;
+}
+
+.hg-glossary .hg-nullsearch {
+    display: none;
+    margin: 0 0 1em;
+}

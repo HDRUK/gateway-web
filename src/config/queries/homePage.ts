@@ -41,7 +41,7 @@ query GetHomePageQuery {
       }
     }
   }
-    posts(first: 4, where:{categoryName: "news",  orderby: {field: DATE, order: DESC}}) {
+    posts(first: 4, where:{categoryName: "news,events",  orderby: {field: DATE, order: DESC}}) {
       edges {
         node {
           title
@@ -69,4 +69,20 @@ query GetHomePageQuery {
 }
 `;
 
-export { GetHomePageQuery };
+const GetHomePageBanner = `
+query GetHomePageBanner {
+  posts(where: {categoryName: "homepage banner"}) {
+    edges {
+      node {
+        homepageBanner {
+          linkUrl
+          linkText
+          heading
+          description
+        }
+      }
+    }
+  }
+}`;
+
+export { GetHomePageQuery, GetHomePageBanner };

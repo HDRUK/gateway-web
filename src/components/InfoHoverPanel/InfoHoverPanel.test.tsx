@@ -19,14 +19,14 @@ describe("InfoHoverPanel", () => {
 
     it("should render default", async () => {
         render(<InfoHoverPanel items={items} />);
-        expect(screen.getByText("Datasets / Tissues")).toBeInTheDocument();
+        expect(screen.getByText("Datasets / BioSamples")).toBeInTheDocument();
         expect(
             screen.getByText("Data Uses / Research projects")
         ).toBeInTheDocument();
         expect(screen.getByText("Welcome to The Gateway")).toBeInTheDocument();
         expect(
             screen.getByText(
-                "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+                "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
             )
         ).toBeInTheDocument();
     });

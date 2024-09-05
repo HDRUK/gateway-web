@@ -8,8 +8,11 @@ import {
     PageTemplatePromo,
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
+import { EventNode } from "@/interfaces/Events";
+import { HomepageBannerNode } from "@/interfaces/Homepage";
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
+import { NewsNode } from "@/interfaces/News";
 import { ReleaseNode } from "@/interfaces/Releases";
 import { SupportCohortDiscoveryPage } from "@/interfaces/Support";
 import apis from "@/config/apis";
@@ -17,10 +20,12 @@ import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetContentPageQuery } from "@/config/queries/contentPage";
-import { GetHomePageQuery } from "@/config/queries/homePage";
+import { GetEventsQuery } from "@/config/queries/events";
+import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
 import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
+import { GetNewsQuery } from "@/config/queries/news";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
 
@@ -94,6 +99,36 @@ const getMissionAndPurposes = async () => {
 const getMeetTheTeam = async () => {
     const data: CMSPostsResponse<MeetTheTeamNode> = await fetchCMS(
         GetMeetTheTeamQuery,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
+const getHomePageBanner = async () => {
+    const data: CMSPostsResponse<HomepageBannerNode> = await fetchCMS(
+        GetHomePageBanner,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
+const getNews = async () => {
+    const data: CMSPostsResponse<NewsNode> = await fetchCMS(
+        GetNewsQuery,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
+const getEvents = async () => {
+    const data: CMSPostsResponse<EventNode> = await fetchCMS(
+        GetEventsQuery,
         DEFAULT_OPTIONS,
         true
     );
@@ -269,18 +304,21 @@ export {
     getCohortDiscoverySupportPageQuery,
     getCohortTermsAndConditions,
     getContentPageQuery,
+    getDataCustodians,
+    getDevelopmentCommunity,
+    getEvents,
+    getGettingStarted,
+    getHomePageBanner,
+    getGlossary,
     getHomePage,
     getHowToSearchPage,
     getMeetTheTeam,
     getMissionAndPurposes,
-    getReleaseNotes,
-    getTermsAndConditions,
-    getWorkWithUs,
-    getDevelopmentCommunity,
-    getResearchersInnovators,
-    getDataCustodians,
+    getNews,
     getPatientsAndPublic,
-    getGlossary,
+    getReleaseNotes,
+    getResearchersInnovators,
+    getTermsAndConditions,
     getTutorials,
-    getGettingStarted,
+    getWorkWithUs,
 };
