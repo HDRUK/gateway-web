@@ -3,7 +3,6 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
-import { dialogPropsType } from "@/providers/DialogProvider";
 
 interface MenuDropdownProps {
     title?: string;
@@ -108,7 +107,9 @@ function MenuDropdown({
                         <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
                             {menuItem.icon || null}
                             <Button
-                                onClick={() => handleShowDialog(menuItem.dialog)}
+                                onClick={() =>
+                                    handleShowDialog(menuItem.dialog)
+                                }
                                 variant="link"
                                 sx={{ pl: 0 }}>
                                 {menuItem.label}

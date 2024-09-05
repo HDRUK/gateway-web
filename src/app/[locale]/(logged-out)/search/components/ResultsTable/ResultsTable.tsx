@@ -23,7 +23,6 @@ import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import ActionDropdown from "../ActionDropdown";
-import FeasibilityEnquirySidebar from "../FeasibilityEnquirySidebar";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
@@ -254,8 +253,6 @@ const ResultTable = ({ results }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
     const router = useRouter();
     const { isLoggedIn } = useAuth();
-    const { showSidebar } = useSidebar();
-    const { hideModal } = useModal();
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?perPage=1000`,
