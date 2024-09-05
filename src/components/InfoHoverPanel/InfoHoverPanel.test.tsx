@@ -1,4 +1,3 @@
-import React from "react";
 import userEvent from "@testing-library/user-event";
 import { render, screen, waitFor } from "@/utils/testUtils";
 import InfoHoverPanel from "./InfoHoverPanel";
@@ -23,7 +22,7 @@ describe("InfoHoverPanel", () => {
         expect(
             screen.getByText("Data Uses / Research projects")
         ).toBeInTheDocument();
-        expect(screen.getByText("Welcome to The Gateway")).toBeInTheDocument();
+        expect(screen.getByText("Welcome to the Gateway")).toBeInTheDocument();
         expect(
             screen.getByText(
                 "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
