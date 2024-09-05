@@ -14,8 +14,6 @@ import Table from "@/components/Table";
 import TooltipIcon from "@/components/TooltipIcon";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
-import useModal from "@/hooks/useModal";
-import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { CheckIcon } from "@/consts/icons";

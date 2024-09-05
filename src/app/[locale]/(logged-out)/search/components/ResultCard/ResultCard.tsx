@@ -131,7 +131,7 @@ const ResultCard = ({
             };
             showDialog(FeasibilityEnquiryDialog, {
                 result: dataset,
-                mutateLibraries: mutateLibraries,
+                mutateLibraries,
             });
         }
     };

@@ -96,7 +96,7 @@ const ActionDropdown = ({
                     teamName: team.name,
                     teamMemberOf: team.member_of,
                 },
-                mutateLibraries: mutateLibraries,
+                mutateLibraries,
             });
         }
     };
