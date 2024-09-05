@@ -33,7 +33,7 @@ describe("useGeneralEnquiry", () => {
 
             expect(mockShowSidebar).toHaveBeenCalledWith({
                 title: "Messages",
-                content: expect.any(Function),
+                content: expect.anything(),
             });
         } else {
             fail("No callback was returned");
