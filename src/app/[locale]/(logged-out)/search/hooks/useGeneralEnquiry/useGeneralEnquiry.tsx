@@ -4,7 +4,7 @@ import { SearchResultDataset } from "@/interfaces/Search";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useDialog from "@/hooks/useDialog";
 import useSidebar from "@/hooks/useSidebar";
-import GeneralEnquirySidebar from "../components/GeneralEnquirySidebar";
+import GeneralEnquirySidebar from "../../components/GeneralEnquirySidebar";
 
 interface UseGeneralEnquiryProps {
     isLoggedIn: boolean;

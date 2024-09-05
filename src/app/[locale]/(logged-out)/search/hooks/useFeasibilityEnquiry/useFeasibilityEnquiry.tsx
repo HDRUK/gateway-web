@@ -24,6 +24,8 @@ const useFeasibilityEnquiry = () => {
         }: UseFeasibilityEnquiryProps) => {
             const { _id, team, metadata } = dataset;
 
+            console.log("dataset", dataset);
+
             if (!isLoggedIn) {
                 showDialog(ProvidersDialog, {
                     isProvidersDialog: true,
