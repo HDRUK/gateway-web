@@ -89,7 +89,13 @@ const ActionDropdown = ({
             });
         } else {
             showDialog(FeasibilityEnquiryDialog, {
-                result: result,
+                result: {
+                    datasetId: Number(datasetId),
+                    name: metadata.summary.title,
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
                 mutateLibraries: mutateLibraries,
             });
         }

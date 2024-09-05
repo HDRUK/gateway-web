@@ -3,8 +3,8 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
+import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
-import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import Typography from "@/components/Typography";
@@ -18,7 +18,7 @@ import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/compon
 const TRANSLATION_PATH = "modules.dialogs.FeasibilityEnquiryDialog";
 
 interface DatasetQuickViewDialogProps {
-    result: SearchResultDataset;
+    result: DatasetEnquiry;
     mutateLibraries: KeyedMutator<Library[]>;
 }
 
@@ -32,18 +32,9 @@ const FeasibilityEnquiryDialog = ({
     const { user } = useAuth();
 
     const handleFeasibilityEnquiries = () => {
-        const datasets = [
-            {
-                datasetId: Number(result._id),
-                name: result.metadata.summary.title,
-                teamId: result.team.id,
-                teamName: result.team.name,
-                teamMemberOf: result.team.member_of,
-            },
-        ];
         showSidebar({
             title: "Messages",
-            content: <FeasibilityEnquirySidebar datasets={datasets} />,
+            content: <FeasibilityEnquirySidebar datasets={[result]} />,
         });
     };
 
@@ -54,7 +45,7 @@ const FeasibilityEnquiryDialog = ({
     const handleAddToLibrary = () => {
         const payload: NewLibrary = {
             user_id: user?.id,
-            dataset_id: Number(result._id),
+            dataset_id: Number(result.datasetId),
         };
 
         addLibrary(payload).then(() => {
@@ -70,7 +61,6 @@ const FeasibilityEnquiryDialog = ({
                     container
                     rowSpacing={4}
                     columnSpacing={1}
-                    // flexWrap={"noWrap"}
                     alignItems="center">
                     <Grid item tablet={5} mobile={5} desktop={5} sx={{ p: 0 }}>
                         <Box
