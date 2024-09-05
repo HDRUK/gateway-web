@@ -31,7 +31,6 @@ const FeasibilityEnquirySidebar = ({
     datasets: DatasetEnquiry[];
 }) => {
     const { hideSidebar } = useSidebar();
-
     const t = useTranslations(TRANSLATION_PATH);
 
     const { user } = useAuth();

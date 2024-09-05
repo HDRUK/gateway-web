@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { GATEWAY_TERMS_URL } from "@/config/hrefs";
-import { REGEX_ALPHA_ONLY, REGEX_ORCID } from "@/consts/regex";
+import { REGEX_NAME, REGEX_ORCID } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -26,7 +26,7 @@ const validationSchema = yup
             .string()
             .required()
             .matches(
-                REGEX_ALPHA_ONLY,
+                REGEX_NAME,
                 "First name should have alphabetic characters only"
             )
             .label("First name"),
@@ -34,7 +34,7 @@ const validationSchema = yup
             .string()
             .required()
             .matches(
-                REGEX_ALPHA_ONLY,
+                REGEX_NAME,
                 "Last name should have alphabetic characters only"
             )
             .label("Last name"),

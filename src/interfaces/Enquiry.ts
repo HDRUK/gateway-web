@@ -5,7 +5,7 @@ interface DatasetWithInterestType {
 
 interface DatasetEnquiry {
     datasetId: number;
-    name: string;
+    name?: string;
     teamId: number;
     teamName: string;
     teamMemberOf: string;

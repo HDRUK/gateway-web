@@ -6,9 +6,12 @@ import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
+import { KeyedMutator } from "swr";
+import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
@@ -25,6 +28,7 @@ interface ResultRowProps {
     result: SearchResultDataset;
     libraryData: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
+    mutateLibraries: KeyedMutator<Library[]>;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
@@ -33,6 +37,7 @@ const ActionDropdown = ({
     result,
     libraryData,
     showLibraryModal,
+    mutateLibraries,
 }: ResultRowProps) => {
     const title = get(result, "metadata.summary.title");
     const t = useTranslations(TRANSLATION_PATH);
@@ -41,7 +46,7 @@ const ActionDropdown = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId, team } = result;
+    const { _id: datasetId, metadata, team } = result;
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -60,9 +65,9 @@ const ActionDropdown = ({
                 isProvidersDialog: true,
             });
         } else {
-            const datasets = [
+            const datasets: DatasetEnquiry[] = [
                 {
-                    datasetId,
+                    datasetId: Number(datasetId),
                     teamId: team.id,
                     teamName: team.name,
                     teamMemberOf: team.member_of,
@@ -75,6 +80,27 @@ const ActionDropdown = ({
         }
     };
 
+    const feasibilityEnquiryDialog = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            showDialog(FeasibilityEnquiryDialog, {
+                result: {
+                    datasetId: Number(datasetId),
+                    name: metadata.summary.title,
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+                mutateLibraries,
+            });
+        }
+    };
+
     const menuItems = [
         {
             label: "General enquiry",
@@ -83,7 +109,7 @@ const ActionDropdown = ({
         },
         {
             label: "Feasibility enquiry",
-            href: "TBC",
+            action: feasibilityEnquiryDialog,
             icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
         },
         {
