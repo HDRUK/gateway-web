@@ -31,7 +31,6 @@ const FeasibilityEnquirySidebar = ({
     datasets: DatasetEnquiry[];
 }) => {
     const { hideSidebar } = useSidebar();
-    console.log("sidebar opened");
     const t = useTranslations(TRANSLATION_PATH);
 
     const { user } = useAuth();
@@ -52,7 +51,6 @@ const FeasibilityEnquirySidebar = ({
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
             if (field.name === "datasets") {
-                console.log(datasets);
                 return {
                     ...field,
                     defaultValue: datasets.map(v => ({
