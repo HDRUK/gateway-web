@@ -299,6 +299,30 @@ const getGettingStarted = async () => {
     return data?.page || null;
 };
 
+const getMetadataOnboarding = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getMetadataOnboardingQuery", {
+            id: "data-custodian-metadata-onboarding",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getOpenSourceDevelopment = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getOpenSourceDevelopmentQuery", {
+            id: "open-source-development",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -321,4 +345,6 @@ export {
     getTermsAndConditions,
     getTutorials,
     getWorkWithUs,
+    getMetadataOnboarding,
+    getOpenSourceDevelopment,
 };
