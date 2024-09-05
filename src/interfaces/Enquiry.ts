@@ -5,10 +5,6 @@ interface DatasetWithInterestType {
 
 interface DatasetEnquiry {
     datasetId: number;
-<<<<<<< Updated upstream
-    name?: string;
-=======
->>>>>>> Stashed changes
     teamId: number;
     teamName: string;
     teamMemberOf: string;

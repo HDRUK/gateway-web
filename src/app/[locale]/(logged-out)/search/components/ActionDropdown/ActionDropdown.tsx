@@ -11,7 +11,6 @@ import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
 import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
-import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
@@ -45,7 +44,7 @@ const ActionDropdown = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId, metadata, team } = result;
+    const { _id: datasetId, team } = result;
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
 
