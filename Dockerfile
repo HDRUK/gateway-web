@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:20.2.0-bullseye-slim
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
