@@ -37,7 +37,7 @@ const services = [
     },
     {
         id: "courses",
-        image: "/images/homepage/banner-courses.png",
+        image: "/images/homepage/banner-courses.jpg",
         href: "https://hdruklearn.org/",
     },
     {
