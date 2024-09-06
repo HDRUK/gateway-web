@@ -2,8 +2,8 @@ import { ReactNode, Suspense } from "react";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
@@ -43,15 +43,15 @@ export default function RootLayout({
                         <ThemeRegistry>
                             <DialogProvider>
                                 <ActionBarProvider>
-                                <Header />
-                                <SupportPopOut />
-                                <CMSBanners />
-                                {children}
-                                <Footer />
-                                <SnackbarProvider />
-                                <Suspense fallback={null}>
-                                    <NavigationEvents />
-                                </Suspense>
+                                    <Header />
+                                    <SupportPopOut />
+                                    <CMSBanners />
+                                    {children}
+                                    <Footer />
+                                    <SnackbarProvider />
+                                    <Suspense fallback={null}>
+                                        <NavigationEvents />
+                                    </Suspense>
                                 </ActionBarProvider>
                                 {/* ProvidersDialog has to remain in DOM */}
                                 <ProvidersDialog />
