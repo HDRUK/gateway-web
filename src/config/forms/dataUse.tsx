@@ -442,12 +442,12 @@ const formFields = [
             },
         ],
     },
-    {
-        sectionName: "Related resources",
-        fields: [
-            // TODO
-        ],
-    },
+    // {
+    //     sectionName: "Related resources",
+    //     fields: [
+    //         // TODO
+    //     ],
+    // },
 ];
 
 export {
