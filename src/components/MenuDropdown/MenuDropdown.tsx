@@ -1,6 +1,7 @@
 import { Menu, MenuItem } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
+import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
 
 interface MenuDropdownProps {
@@ -13,6 +14,7 @@ interface MenuDropdownProps {
         subItems?: { label: string; href: string }[];
         divider?: boolean;
         icon?: HTMLElement;
+        dialog?;
     }[];
     handleClose: () => void;
     transformOrigin?: null | {
@@ -33,6 +35,12 @@ function MenuDropdown({
     anchorOrigin,
     title,
 }: MenuDropdownProps) {
+    const { showDialog } = useDialog();
+
+    const handleShowDialog = dialog => {
+        showDialog(dialog);
+    };
+
     return (
         <Menu
             anchorEl={anchorElement}
@@ -57,6 +65,9 @@ function MenuDropdown({
                         </MenuItem>
                     ));
                 }
+                const ariaLabel = title
+                    ? `${menuItem.label} for ${title}`
+                    : undefined;
                 if (menuItem.href)
                     return (
                         <MenuItem
@@ -69,6 +80,7 @@ function MenuDropdown({
                             onClick={() => handleClose()}>
                             {menuItem.icon || null}
                             <Link
+                                aria-label={ariaLabel}
                                 key={menuItem.label}
                                 underline="hover"
                                 href={menuItem.href}>
@@ -83,11 +95,22 @@ function MenuDropdown({
                             <Button
                                 onClick={menuItem.action}
                                 variant="link"
-                                aria-label={
-                                    title
-                                        ? `${menuItem.label} for ${title}`
-                                        : undefined
+                                aria-label={ariaLabel}
+                                sx={{ pl: 0 }}>
+                                {menuItem.label}
+                            </Button>
+                        </MenuItem>
+                    );
+                }
+                if (menuItem.dialog) {
+                    return (
+                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
+                            {menuItem.icon || null}
+                            <Button
+                                onClick={() =>
+                                    handleShowDialog(menuItem.dialog)
                                 }
+                                variant="link"
                                 sx={{ pl: 0 }}>
                                 {menuItem.label}
                             </Button>

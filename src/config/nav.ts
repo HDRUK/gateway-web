@@ -37,7 +37,7 @@ const navItems = [
                 href: "/search?type=data_providers",
             },
             {
-                label: "Collections/Networks",
+                label: "Collections / Networks",
                 href: "/search?type=collections",
             },
         ],
@@ -46,24 +46,12 @@ const navItems = [
         label: "Community",
         subItems: [
             {
-                label: "Technology ecosystem",
-                href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/technology-ecosystem/",
+                label: "The Technology Ecosystem",
+                href: "/community/development-community",
             },
             {
-                label: "Gateway development community",
-                href: "/community/gateway-development-community",
-            },
-            {
-                label: "Our principles for development",
-                href: "https://www.hdruk.ac.uk/about-us/policies/development-principles/",
-            },
-            {
-                label: "Technical commitment",
-                href: "https://www.hdruk.ac.uk/study-and-train/about-the-training-team/vision-and-strategy/the-technician-commitment/",
-            },
-            {
-                label: "DARE UK",
-                href: "https://dareuk.org.uk/",
+                label: "Open-Source Development",
+                href: "/community/open-source-development",
             },
         ],
     },
@@ -71,12 +59,16 @@ const navItems = [
         label: "News",
         subItems: [
             {
-                label: "Gateway releases",
-                href: "/news/releases",
+                label: "News",
+                href: "/news/events?tab=news",
             },
             {
                 label: "Events",
-                href: "/news/events",
+                href: "/news/events?tab=events",
+            },
+            {
+                label: "Gateway releases",
+                href: "/news/releases",
             },
             {
                 label: "Newsletter",
@@ -92,23 +84,15 @@ const navItems = [
                 href: "/about/our-mission-and-purpose",
             },
             {
-                label: "Terms and conditions",
-                href: "/terms-and-conditions",
-            },
-            {
                 label: "For Researchers and Innovators",
                 href: "/about/researchers-innovators",
             },
             {
-                label: "For the Development Community",
-                href: "/about/development-community",
-            },
-            {
-                label: "For Data Custodians",
+                label: "For Custodians",
                 href: "/about/data-custodians",
             },
             {
-                label: "For Patients and Public",
+                label: "For the Public",
                 href: "/about/patients-and-public",
             },
             {
@@ -121,12 +105,8 @@ const navItems = [
         label: "Help",
         subItems: [
             {
-                label: "Glossary",
-                href: "/help/glossary",
-            },
-            {
                 label: "Support Centre",
-                href: "/help/support-centre",
+                href: "/support",
             },
             {
                 label: "Tutorials",
@@ -134,7 +114,11 @@ const navItems = [
             },
             {
                 label: "Contact Us",
-                href: "/help/contact-us",
+                href: "https://hdruk.atlassian.net/servicedesk/customer/portal/7",
+            },
+            {
+                label: "Glossary",
+                href: "/help/glossary",
             },
         ],
     },
@@ -143,21 +127,20 @@ const navItems = [
         divider: true,
         href: "",
     },
-    // TODO: Verticle line here
     {
         label: "Data Custodian Area",
         subItems: [
             {
-                label: "Getting started on the Gateway",
-                href: "/data/getting-started",
+                label: "How to set yourself up as a Data Custodian",
+                href: "/data-custodian/getting-started",
             },
             {
                 label: "Integrations",
-                href: "https://hdruk.github.io/gateway-2-integrations-testing/",
+                href: "https://hdruk.github.io/gateway-2-integrations-testing/integrations-hdruk-datasets/",
             },
             {
                 label: "Metadata onboarding",
-                href: "https://hdruk.github.io/gateway-2-integrations-testing/creating-metadata/",
+                href: "/data-custodian/metadata-onboarding",
             },
             {
                 label: "The Alliance",
