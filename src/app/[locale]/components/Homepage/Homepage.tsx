@@ -32,7 +32,7 @@ const services = [
     },
     {
         id: "phenotypes",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-phenotypes.png",
         href: "https://phenotypes.healthdatagateway.org/",
     },
     {
@@ -67,18 +67,18 @@ const services = [
     },
     {
         id: "dataCustodianNetworks",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-data-custodian-network.png",
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/banner-collections.jpg",
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
 
     // {
     //     id: "diseaseAtlas",
-    //     image: "/images/homepage/welcome-image.png",
+    //     image: "/images/homepage/welcome-image.jpg",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
 ];
@@ -148,7 +148,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 <Container>
                     <InfoHoverPanel
                         items={responsiveServices}
-                        defaultImageSrc="/images/homepage/welcome-image.png"
+                        defaultImageSrc="/images/homepage/welcome-image.jpg"
                     />
                 </Container>
             </Box>
