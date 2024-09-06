@@ -25,7 +25,7 @@ function DesktopNav() {
         setAnchorElement(event);
     };
 
-    const isHome = path === "/en";
+    const isHome = path?.split("/").filter(Boolean).length === 1;
 
     return (
         <Box
