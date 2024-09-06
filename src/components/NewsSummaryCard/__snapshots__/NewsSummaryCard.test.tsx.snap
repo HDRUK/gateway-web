@@ -3,16 +3,16 @@
 exports[`NewsSummaryCard should render component 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-x9r5gr-MuiPaper-root-MuiCard-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-120eg3o-MuiPaper-root-MuiCard-root"
   >
     <img
       alt="Image alt text"
       class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img mui-style-o69gx8-MuiCardMedia-root"
-      height="140"
+      height="225px"
       src="/images/account/teams/integrations/create.jpg"
     />
     <div
-      class="mui-style-pkenty"
+      class="mui-style-1sn3vv7"
     >
       <div>
         Jan
@@ -45,40 +45,16 @@ exports[`NewsSummaryCard should render component 1`] = `
           <wbr />
         </div>
       </div>
-    </div>
-    <div
-      class="MuiCardActions-root MuiCardActions-spacing mui-style-1t6e9jv-MuiCardActions-root"
-    >
-      <a
-        color="primary"
-        href="https://www.healthdatagateway.org/"
+      <div
+        class="MuiBox-root mui-style-164r41r"
       >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium mui-style-1b2oehb-MuiButtonBase-root-MuiButton-root"
-          tabindex="0"
-          type="button"
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover mui-style-zky3v8-MuiTypography-root-MuiLink-root"
+          href="https://www.healthdatagateway.org/"
         >
           Read more
-          <span
-            class="MuiButton-endIcon MuiButton-iconSizeMedium mui-style-1gnd1fd-MuiButton-endIcon"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-1hd79o3-MuiSvgIcon-root"
-              data-testid="ArrowForwardIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-              />
-            </svg>
-          </span>
-          <span
-            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-      </a>
+        </a>
+      </div>
     </div>
   </div>
 </div>

@@ -5,12 +5,21 @@ interface Library {
     created_at: string;
     updated_at: string;
     dataset_name: string;
+    data_provider_id: number;
     data_provider_dar_enabled: boolean;
     data_provider_name: string;
+    data_provider_member_of: string;
 }
 
 interface SelectedLibrary {
-    [id: string]: { selected: boolean; datasetId: number };
+    [id: string]: {
+        selected: boolean;
+        datasetId: number;
+        name: string;
+        teamId: number;
+        teamName: string;
+        teamMemberOf: string;
+    };
 }
 
 interface LibraryListItem {
@@ -20,6 +29,8 @@ interface LibraryListItem {
     darEnabled: boolean;
     dataCustodian: string;
     entityType: string;
+    dataCustodianId: number;
+    dataCustodianMemberOf: string;
 }
 
 interface NewLibrary {

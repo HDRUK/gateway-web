@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
@@ -45,7 +45,7 @@ interface CountStatus {
 
 interface TeamToolsProps {
     permissions: { [key: string]: boolean };
-    teamId: string;
+    teamId?: string;
     userId: string;
 }
 
@@ -53,6 +53,7 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${TOOLS}.${COMPONENTS}.Tea
 
 const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const router = useRouter();
     const { showModal } = useModal();
     const searchParams = useSearchParams();
     const tab = searchParams?.get("tab");
@@ -165,7 +166,9 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         ...(permissions["tools.update"]
             ? [
                   {
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                      href: teamId
+                          ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`
+                          : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
                   },
@@ -259,7 +262,10 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     }));
 
     const handleAdd = () => {
-        // TODO
+        const TOOL_CREATE_ROUTE = teamId
+            ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}/${RouteName.CREATE}`
+            : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}/${RouteName.CREATE}`;
+        router.push(TOOL_CREATE_ROUTE);
     };
 
     return (

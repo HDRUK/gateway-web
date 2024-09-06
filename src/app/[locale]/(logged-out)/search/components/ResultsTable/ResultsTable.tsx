@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { KeyedMutator } from "swr";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -39,10 +40,12 @@ const getColumns = ({
     translations,
     libraryData,
     showLibraryModal,
+    mutateLibraries,
 }: {
     translations: { [id: string]: string };
     libraryData: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
+    mutateLibraries: KeyedMutator<Library[]>;
 }) => [
     columnHelper.display({
         id: "actions",
@@ -54,6 +57,7 @@ const getColumns = ({
                         result={original}
                         libraryData={libraryData}
                         showLibraryModal={showLibraryModal}
+                        mutateLibraries={mutateLibraries}
                     />
                 </div>
             );
@@ -314,6 +318,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
                     translations,
                     libraryData,
                     showLibraryModal,
+                    mutateLibraries,
                 })}
                 rows={results}
             />

@@ -3,25 +3,32 @@ import { BookmarkBorder, Bookmark } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button } from "@mui/material";
 import Cookies from "js-cookie";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
+import { KeyedMutator } from "swr";
+import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { colors } from "@/config/theme";
+import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
-import menuItems from "./config";
+import GeneralEnquirySidebar from "../GeneralEnquirySidebar";
 
-interface ResultCardProps {
+interface ResultRowProps {
     result: SearchResultDataset;
     libraryData: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
+    mutateLibraries: KeyedMutator<Library[]>;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
@@ -30,13 +37,16 @@ const ActionDropdown = ({
     result,
     libraryData,
     showLibraryModal,
-}: ResultCardProps) => {
+    mutateLibraries,
+}: ResultRowProps) => {
+    const title = get(result, "metadata.summary.title");
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
+    const { showSidebar } = useSidebar();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { isLoggedIn, user } = useAuth();
-    const { _id: datasetId } = result;
+    const { _id: datasetId, metadata, team } = result;
 
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
@@ -46,6 +56,68 @@ const ActionDropdown = ({
         event.stopPropagation();
         setAnchorElement(event.currentTarget);
     };
+
+    const genEnq = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            const datasets: DatasetEnquiry[] = [
+                {
+                    datasetId: Number(datasetId),
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+            ];
+            showSidebar({
+                title: "Messages",
+                content: <GeneralEnquirySidebar datasets={datasets} />,
+            });
+        }
+    };
+
+    const feasibilityEnquiryDialog = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+
+        if (!isLoggedIn) {
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+            });
+        } else {
+            showDialog(FeasibilityEnquiryDialog, {
+                result: {
+                    datasetId: Number(datasetId),
+                    name: metadata.summary.title,
+                    teamId: team.id,
+                    teamName: team.name,
+                    teamMemberOf: team.member_of,
+                },
+                mutateLibraries,
+            });
+        }
+    };
+
+    const menuItems = [
+        {
+            label: "General enquiry",
+            action: genEnq,
+            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+        },
+        {
+            label: "Feasibility enquiry",
+            action: feasibilityEnquiryDialog,
+            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+        },
+        {
+            label: "Data Access Request",
+            href: "TBC",
+            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+        },
+    ];
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -127,12 +199,14 @@ const ActionDropdown = ({
                 variant="contained"
                 endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
                 sx={{ py: 0.5 }}
-                onClick={handleOpenDropdownMenu}>
+                onClick={handleOpenDropdownMenu}
+                aria-label={title ? `${t("actions")} for ${title}` : undefined}>
                 {t("actions")}
             </Button>
             <MenuDropdown
                 handleClose={() => setAnchorElement(null)}
                 menuItems={libraryItem.concat(menuItems)}
+                title={title}
                 anchorElement={anchorElement}
                 anchorOrigin={{
                     vertical: "top",

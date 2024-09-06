@@ -9,6 +9,8 @@ on:
 env:
   PROJECT_ID: "${{ secrets.PROJECT_ID }}"
   GAR_LOCATION: "${{ secrets.GAR_LOCATION }}"
+  SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
+  SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
 
 jobs:
   build:
@@ -20,6 +22,7 @@ jobs:
     environment: release
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
         with:
           ref: release
@@ -56,5 +59,15 @@ jobs:
           GAR_NAME: ${{ secrets.GAR_NAME }}
 
         run: |-
-          docker build -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:latest --build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} --build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} --build-arg NEXT_PUBLIC_WORDPRESS_API_URL=${{ vars.NEXT_PUBLIC_WORDPRESS_API_URL }} --build-arg NEXT_PUBLIC_SERVICE_DESK_URL=${{ vars.NEXT_PUBLIC_SERVICE_DESK_URL }} --build-arg NEXT_PUBLIC_GATEWAY_URL=${{ vars.NEXT_PUBLIC_GATEWAY_URL }} --build-arg NEXT_PUBLIC_HOTJAR_ID=${{ vars.NEXT_PUBLIC_HOTJAR_ID }} --build-arg NEXT_PUBLIC_SCHEMA_NAME=${{ vars.NEXT_PUBLIC_SCHEMA_NAME }} --build-arg NEXT_PUBLIC_SCHEMA_VERSION=${{ vars.NEXT_PUBLIC_SCHEMA_VERSION }} --build-arg NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }} --build-arg NEXT_PUBLIC_OA_APP_ID=${{ vars.NEXT_PUBLIC_OA_APP_ID }} ./
+          docker build -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:latest --build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} --build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} --build-arg NEXT_PUBLIC_WORDPRESS_API_URL=${{ vars.NEXT_PUBLIC_WORDPRESS_API_URL }} --build-arg NEXT_PUBLIC_SERVICE_DESK_URL=${{ vars.NEXT_PUBLIC_SERVICE_DESK_URL }} --build-arg NEXT_PUBLIC_GATEWAY_URL=${{ vars.NEXT_PUBLIC_GATEWAY_URL }} --build-arg NEXT_PUBLIC_HOTJAR_ID=${{ vars.NEXT_PUBLIC_HOTJAR_ID }} --build-arg NEXT_PUBLIC_SCHEMA_NAME=${{ vars.NEXT_PUBLIC_SCHEMA_NAME }} --build-arg NEXT_PUBLIC_SCHEMA_VERSION=${{ vars.NEXT_PUBLIC_SCHEMA_VERSION }} --build-arg NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }} --build-arg NEXT_PUBLIC_OA_APP_ID=${{ vars.NEXT_PUBLIC_OA_APP_ID }} --build-arg NEXT_PUBLIC_INCLUDE_BANNERS=${{ vars.NEXT_PUBLIC_INCLUDE_BANNERS }} ./
           docker push --all-tags '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}
+
+      - name: Run Notification
+        id: runnotificationsent
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: ${{ env.SLACK_CHANNEL }}
+          message: Running release build on {{ env.GITHUB_REF_NAME }} branch ${{ job.status }}
+        if: always()

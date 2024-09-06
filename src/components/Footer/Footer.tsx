@@ -91,24 +91,28 @@ const Footer = () => {
                     </FooterCopyright>
                 </Box>
                 <FooterLinksContainer>
-                    <FooterLinks>
-                        {links1.map(link => (
-                            <li key={`${link.label}-${link.href}`}>
-                                <FooterLink href={link.href}>
-                                    {link.label}
-                                </FooterLink>
-                            </li>
-                        ))}
-                    </FooterLinks>
-                    <FooterLinks>
-                        {links2.map(link => (
-                            <li key={`${link.label}-${link.href}`}>
-                                <FooterLink href={link.href}>
-                                    {link.label}
-                                </FooterLink>
-                            </li>
-                        ))}
-                    </FooterLinks>
+                    <li>
+                        <FooterLinks>
+                            {links1.map(link => (
+                                <li key={`${link.label}-${link.href}`}>
+                                    <FooterLink href={link.href}>
+                                        {link.label}
+                                    </FooterLink>
+                                </li>
+                            ))}
+                        </FooterLinks>
+                    </li>
+                    <li>
+                        <FooterLinks>
+                            {links2.map(link => (
+                                <li key={`${link.label}-${link.href}`}>
+                                    <FooterLink href={link.href}>
+                                        {link.label}
+                                    </FooterLink>
+                                </li>
+                            ))}
+                        </FooterLinks>
+                    </li>
                 </FooterLinksContainer>
             </FooterContainer>
         </FooterWrapper>

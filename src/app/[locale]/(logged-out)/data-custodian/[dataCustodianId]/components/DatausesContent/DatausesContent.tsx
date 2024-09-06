@@ -6,8 +6,8 @@ import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataUse } from "@/interfaces/DataUse";
+import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import AccordionSection from "../AccordionSection";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.DatausesContent";
 
@@ -41,6 +41,7 @@ export default function DatausesContent({
                 heading={t("heading", {
                     length: datauses.length,
                 })}
+                defaultExpanded={datauses.length > 0}
                 contents={datauses.map(
                     ({ project_title, organisation_name, id }) => (
                         <Fragment key={`dataUse_${id}`}>

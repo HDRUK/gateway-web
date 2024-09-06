@@ -72,6 +72,11 @@ interface SearchResultBase {
 export interface SearchResultDataset extends SearchResultBase {
     highlight: Highlight;
     metadata: Metadata;
+    team: {
+        id: number;
+        member_of: string;
+        name: string;
+    };
 }
 
 export interface SearchResultDataUse extends SearchResultBase {
@@ -87,6 +92,7 @@ export interface SearchResultDataUse extends SearchResultBase {
     organisationName: string;
     publisher: string;
     datasetTitles: string[];
+    datasetIds: number[];
 }
 
 export interface SearchResultPublication extends SearchResultBase {

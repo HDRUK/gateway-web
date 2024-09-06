@@ -14,6 +14,7 @@ import {
     CloudUploadIcon,
     ArticleIcon,
     BookmarkBorderIcon,
+    BookmarksIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -111,6 +112,15 @@ const getTeamNav = (
                       icon: <StorageOutlinedIcon />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["collections.read"]
+            ? [
+                  {
+                      icon: <BookmarksIcon />,
+                      label: "Collections",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                   },
               ]
             : []),

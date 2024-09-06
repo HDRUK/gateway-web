@@ -5,6 +5,7 @@ export interface NodeValue {
     name: string;
     label?: string;
     href?: string;
+    hidden?: boolean;
 }
 
 export const nodeValueToRectNode = (
@@ -62,6 +63,7 @@ export const nodeValueToRectNode = (
             position,
             color,
             href: node.href,
+            hidden: node.hidden,
         },
     };
 };
