@@ -630,7 +630,7 @@
             "touchDevice": "Explore the different functionalities of the Gateway",
             "seeNow": "See now",
             "newsCardButtonText": "Read more",
-            "welcomeTitle": "Welcome to The Gateway",
+            "welcomeTitle": "Welcome to the Gateway",
             "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
             "datasets": {
                 "label": "Datasets / BioSamples",
@@ -690,11 +690,11 @@
             "helpLinks": {
                 "item1": {
                     "title": "Support Centre",
-                    "text": "Find out more about Gateway features and learn how to use them via the Support Centre. You can also submit feedback via the Support Centre to help improve the Gateway."
+                    "text": "Explore Gateway features and learn how to use them. You can also submit queries and feedback to help us improve the Gateway."
                 },
                 "item2": {
                     "title": "Community",
-                    "text": "A place to share ideas, collaborate on projects, seek feedback, access resources and foster growth of the technology ecosystem. Join the online community space."
+                    "text": "Designed with and for the community, the Gateway is built for collaboration. Discover how you can get involved."
                 }
             },
             "newsEvents": {
@@ -915,6 +915,9 @@
                     "hasTechnicalMetadata": {
                         "label": "Structural metadata",
                         "tooltip": "Descriptions and details about the tables and columns within a dataset"
+                    },
+                    "feasibilityEnquiries": {
+                        "sidebarTitle": "Messages"
                     }
                 }
             },
@@ -1364,6 +1367,11 @@
                 "dataType": "Data type",
                 "collectionSource": "Collection source",
                 "noCollectionSource": "No collection sources found"
+            },
+            "FeasibilityEnquiryDialog": {
+                "enquire": "Make feasibility enquiry for this dataset only",
+                "addToLibrary": "Add to library and continue searching",
+                "helpText": "To make a feasibility enquiry for multiple datasets:\n \n1. Add datasets to your library\n2. Generate a feasibility enquiry from your library page"
             }
         }
     }
