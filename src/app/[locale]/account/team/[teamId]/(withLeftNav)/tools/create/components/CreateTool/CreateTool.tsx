@@ -137,7 +137,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 existingToolData?.tag?.map(item => ({
                     value: item.id,
                     label: item.description,
-                }))
+                })) || [],
         };
 
         const propertiesToDelete = [
