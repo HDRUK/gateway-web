@@ -7,10 +7,41 @@ interface FormInfoLabelProps {
     horizontalForm?: boolean;
     disabled?: boolean;
     required?: boolean;
-    info?: string;
+    info?: string | string[];
     label: string;
     name?: string;
 }
+
+interface RenderInfoProps {
+    info: string | string[];
+    name: string;
+}
+
+const RenderInfo = ({ info, name }: RenderInfoProps) => {
+    return Array.isArray(info) ? (
+        <div id={`${name}-information`}>
+            {info.map(text => (
+                <FormHelperText
+                    key={text}
+                    sx={{
+                        fontSize: 13,
+                        color: colors.grey700,
+                    }}>
+                    {text}
+                </FormHelperText>
+            ))}
+        </div>
+    ) : (
+        <FormHelperText
+            id={`${name}-information`}
+            sx={{
+                fontSize: 13,
+                color: colors.grey700,
+            }}>
+            {info}
+        </FormHelperText>
+    );
+};
 
 const FormInfoLabel = ({
     horizontalForm = false,
@@ -34,15 +65,10 @@ const FormInfoLabel = ({
                     }}
                 />
             )}
-            {!horizontalForm && info && (
-                <FormHelperText
-                    sx={{
-                        fontSize: 13,
-                        color: colors.grey700,
-                    }}>
-                    {info}
-                </FormHelperText>
-            )}
+            <tbody />
+
+            {!horizontalForm && info && <RenderInfo info={info} name={name!} />}
+
             {info && horizontalForm && (
                 <TooltipIcon
                     label={
