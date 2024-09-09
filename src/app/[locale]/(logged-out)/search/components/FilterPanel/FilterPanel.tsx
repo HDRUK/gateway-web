@@ -46,7 +46,6 @@ import PopulationFilter from "../PopulationFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
-const TOOLTIP_TITLE_LINK_SUFFIX = "Link";
 const FILTER_CATEGORY_PUBLICATIONS = "paper";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
