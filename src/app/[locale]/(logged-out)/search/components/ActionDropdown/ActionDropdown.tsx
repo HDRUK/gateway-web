@@ -19,6 +19,7 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 import useFeasibilityEnquiry from "../../hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "../../hooks/useGeneralEnquiry";
@@ -84,6 +85,7 @@ const ActionDropdown = ({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDAREnabled: team.is_question_bank,
+            url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
         });
     };
 

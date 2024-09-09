@@ -118,6 +118,7 @@ const ResultCard = ({
             isDAREnabled: team.is_question_bank,
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
+            url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
         });
     };
 

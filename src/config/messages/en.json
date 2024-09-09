@@ -1282,13 +1282,15 @@
         "dialogs": {
             "DarEnquiryDialog": {
                 "titleEnabled": "This feature is temporarily unavailable",
-                "messageEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
-                "messageEnabledOtherInstructions": "Alternatively contact the Data Custodian using the General Enquiry or Feasibility Enquiry forms and they will contact you to discuss your requirements and guide you through their data access request process.",
+                "messageEnabled": "In the mean time, you can still contact the Data Custodian via the general enquiry or feasibility enquiry form to discuss your requirements and guide you through their Data Access Request process.",
                 "titleNotEnabled": "Data access requests not enabled for this Data Custodian",
                 "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
-                "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the General Enquiry or Feasibility Enquiry forms and they will contact you to discuss your requirements and guide you through their data access request process.",
+                "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
                 "feasibilityEnquiryButton": "Make feasibility enquiry for this dataset",
-                "generalEnquiryButton": "Make general enquiry for this dataset"
+                "generalEnquiryButton": "Make general enquiry for this dataset",
+                "accessInformationButton": "Access information",
+                "feasibilityEnquiryLink": "feasibility enquiry",
+                "generalEnquiryLink": "general enquiry"
             },
             "SaveSearch": {
                 "name": "Name your search query",
