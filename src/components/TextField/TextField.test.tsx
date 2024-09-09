@@ -34,7 +34,13 @@ describe("TextField", () => {
         expect(screen.getByText("This is info")).toBeInTheDocument();
     });
     it("should render HTML with Markdown", async () => {
-        render(<Component info={"This is info\n <span data-testid='MyMoreInfo'>This is another info</span>"} />);
+        render(
+            <Component
+                info={
+                    "This is info\n <span data-testid='MyMoreInfo'>This is another info</span>"
+                }
+            />
+        );
 
         expect(screen.getByTestId("MyMoreInfo")).toBeInTheDocument();
         expect(screen.getByText("This is another info")).toBeInTheDocument();
