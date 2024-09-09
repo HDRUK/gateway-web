@@ -35,7 +35,6 @@ const FormInfoLabel = ({
                     }}
                 />
             )}
-            <tbody />
 
             {!horizontalForm && info && (
                 <FormHelperText
