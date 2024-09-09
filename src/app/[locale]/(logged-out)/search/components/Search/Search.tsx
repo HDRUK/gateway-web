@@ -183,7 +183,7 @@ const Search = ({ filters }: SearchProps) => {
     useEffect(() => {
         const viewType =
             queryParams.type === SearchCategory.DATASETS
-                ? localStorage.getItem(config.VIEW_TYPE) || ViewType.LIST
+                ? localStorage.getItem(config.VIEW_TYPE) || ViewType.TABLE
                 : ViewType.LIST;
 
         if (resultsView !== viewType) {
