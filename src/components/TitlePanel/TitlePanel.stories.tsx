@@ -14,6 +14,6 @@ export const Default: Story = {
     args: {
         title: "This is a title",
         text: "This is a sub text",
-        image: "/images/homepage/welcome-image.png",
+        image: "/images/homepage/welcome-image.jpg",
     },
 };

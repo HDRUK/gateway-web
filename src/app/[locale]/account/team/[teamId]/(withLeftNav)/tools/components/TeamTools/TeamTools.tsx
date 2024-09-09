@@ -157,10 +157,9 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         tab !== DataStatus.ARCHIVED && permissions["tools.delete"];
     const showUnarchiveButton =
         tab === DataStatus.ARCHIVED && permissions["tools.update"];
-    const showAddNewButton = useMemo(
-        () => permissions["tools.create"],
-        [permissions]
-    );
+    const showAddNewButton = useMemo(() => {
+        return teamId ? permissions["tools.create"] : true;
+    }, [permissions]);
 
     const actions = [
         ...(permissions["tools.update"]
