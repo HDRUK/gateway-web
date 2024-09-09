@@ -105,21 +105,6 @@ type DefaultValues = {
     [key: string]: { [key: string]: boolean };
 };
 
-const TooltipTitle = (label: string, t) => {
-    return label === FILTER_LICENSE
-        ? t.rich(`${label}${TOOLTIP_SUFFIX}`, {
-              TooltipLink: (chunks: string) => (
-                  <a
-                      href={t(
-                          `${label}${TOOLTIP_SUFFIX}${TOOLTIP_TITLE_LINK_SUFFIX}`
-                      )}>
-                      {chunks}
-                  </a>
-              ),
-          })
-        : t(`${label}${TOOLTIP_SUFFIX}`);
-};
-
 const FilterPanel = ({
     filterCategory,
     filterSourceData,
@@ -481,7 +466,7 @@ const FilterPanel = ({
                                     {t(label)}
                                 </Typography>
                                 <TooltipIcon
-                                    content={TooltipTitle(label, t)}
+                                    content={t(`${label}${TOOLTIP_SUFFIX}`)}
                                     label=""
                                     buttonSx={{ p: 0 }}
                                     size="small"
