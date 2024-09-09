@@ -38,7 +38,7 @@ export default function RootLayout({
     return (
         <html lang={locale}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
-            <Organization/>
+            <Organization />
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <SWRProvider>
