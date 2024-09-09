@@ -109,6 +109,10 @@
     "common": {
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
+        "companyDescription": "We are uniting the UK's health data to enable discoveries that improve people's lives. By making health data available to researchers and innovators we can better understand diseases and find ways to prevent, treat and cure them.",
+        "companyLocality": "London",
+        "companyPostalCode": "NW1 2BE",
+        "companyStreetAddress": "Gibbs Building, 215 Euston Road",
         "submit": "Submit",
         "logout": "Logout",
         "publish": "Publish",

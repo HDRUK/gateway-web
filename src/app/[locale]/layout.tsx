@@ -13,6 +13,7 @@ import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
 import CMSBanners from "./components/CMSBanners";
+import Organization from "./components/RichResults/Organization";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway",
@@ -37,6 +38,7 @@ export default function RootLayout({
     return (
         <html lang={locale}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
+            <Organization/>
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <SWRProvider>
