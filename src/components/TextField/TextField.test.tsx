@@ -33,10 +33,10 @@ describe("TextField", () => {
 
         expect(screen.getByText("This is info")).toBeInTheDocument();
     });
-    it("should render multiple info", async () => {
-        render(<Component info={["This is info", "This is another info"]} />);
+    it("should render HTML with Markdown", async () => {
+        render(<Component info={"This is info\n <span data-testid='MyMoreInfo'>This is another info</span>"} />);
 
-        expect(screen.getByText("This is info")).toBeInTheDocument();
+        expect(screen.getByTestId("MyMoreInfo")).toBeInTheDocument();
         expect(screen.getByText("This is another info")).toBeInTheDocument();
     });
     it("should render icon", async () => {
