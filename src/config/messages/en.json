@@ -831,7 +831,7 @@
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
-                            "typeCategoryTooltip": "Programming language used in developing an analysis script or software",
+                            "typeCategoryTooltip": "Categorisation based on where in the research journey an analysis script or software is used",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
