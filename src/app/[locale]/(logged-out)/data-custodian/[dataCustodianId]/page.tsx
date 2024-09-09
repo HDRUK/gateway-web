@@ -58,7 +58,9 @@ export default async function DataCustodianItemPage({
                             alt={data.name}
                             src="/images/data-providers/sample.thumbnail.jpg"
                         />
-                        <Typography variant="h1" sx={{ml: 2}}>{data.name}</Typography>
+                        <Typography variant="h1" sx={{ ml: 2 }}>
+                            {data.name}
+                        </Typography>
                     </Box>
                     <ActionBar />
                     <Box
