@@ -33,6 +33,12 @@ describe("TextField", () => {
 
         expect(screen.getByText("This is info")).toBeInTheDocument();
     });
+    it("should render multiple info", async () => {
+        render(<Component info={["This is info", "This is another info"]} />);
+
+        expect(screen.getByText("This is info")).toBeInTheDocument();
+        expect(screen.getByText("This is another info")).toBeInTheDocument();
+    });
     it("should render icon", async () => {
         const wrapper = render(<Component icon={AddAPhoto} />);
 
