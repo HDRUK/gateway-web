@@ -18,9 +18,9 @@ describe("InfoHoverPanel", () => {
 
     it("should render default", async () => {
         render(<InfoHoverPanel items={items} />);
-        expect(screen.getByText("Datasets / BioSamples")).toBeInTheDocument();
+        expect(screen.getByText("Datasets & BioSamples")).toBeInTheDocument();
         expect(
-            screen.getByText("Data Uses / Research projects")
+            screen.getByText("Data Uses / Research Projects")
         ).toBeInTheDocument();
         expect(screen.getByText("Welcome to the Gateway")).toBeInTheDocument();
         expect(
@@ -32,7 +32,7 @@ describe("InfoHoverPanel", () => {
     it("should change on hover default", async () => {
         render(<InfoHoverPanel items={items} />);
 
-        const dur = screen.getByText("Data Uses / Research projects");
+        const dur = screen.getByText("Data Uses / Research Projects");
         userEvent.hover(dur);
 
         await waitFor(() => {
