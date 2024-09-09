@@ -633,13 +633,13 @@
             "welcomeTitle": "Welcome to the Gateway",
             "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
             "datasets": {
-                "label": "Datasets / BioSamples",
-                "title": "Datasets / BioSamples",
-                "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+                "label": "Datasets & BioSamples",
+                "title": "Datasets & BioSamples",
+                "text": "Explore datasets and biosamples from across the UK and beyond and then navigate their associated resources e.g. metadata, linked datasets, data provenance, publications, analysis scripts & software and demographics."
             },
             "dur": {
-                "label": "Data Uses / Research projects",
-                "title": "Data Uses / Research projects",
+                "label": "Data Uses / Research Projects",
+                "title": "Data Uses / Research Projects",
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
@@ -678,8 +678,8 @@
                 "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
             },
             "tools": {
-                "label": "Data Analysis Scripts / Software",
-                "title": "Data Analysis Scripts / Software",
+                "label": "Analysis Scripts & Software",
+                "title": "Analysis Scripts & Software",
                 "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
             },
             "courses": {
@@ -730,8 +730,8 @@
             }
         },
         "search": {
-            "datasets": "Datasets / BioSamples",
-            "dataUse": "Data Use",
+            "datasets": "Datasets & BioSamples",
+            "dataUse": "Data Uses/\n\nResearch Projects",
             "tools": "Analysis Scripts & Software",
             "dataProviders": "Data Custodians",
             "collections": "Collections / Networks",
@@ -782,7 +782,7 @@
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
                             "containsTissue": "Datasets with BioSamples",
-                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
+                            "containsTissueTooltip": "Restrict your search result to datasets with biospecimen samples",
                             "sampleAvailability": "Material type",
                             "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
                         },
@@ -831,7 +831,7 @@
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
-                            "typeCategoryTooltip": "Programming language used in developing an analysis script or software",
+                            "typeCategoryTooltip": "Categorisation based on where in the research journey an analysis script or software is used",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
@@ -909,7 +909,7 @@
                         "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
                     "containsTissue": {
-                        "label": "Tissue sample availability",
+                        "label": "BioSample availability",
                         "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },
                     "hasTechnicalMetadata": {
