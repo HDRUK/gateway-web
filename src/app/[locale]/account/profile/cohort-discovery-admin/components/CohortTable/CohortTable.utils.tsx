@@ -22,9 +22,8 @@ interface getColumnsProps {
     setSort: (sort: { key: string; direction: string }) => void;
     setRequestStatus: (status: string) => void;
     requestStatus?: CohortRequestStatus;
+    translations: { [id: string]: string };
 }
-
-const TRANSLATION_PATH = `pages.account.profile.cohortDiscoveryAdmin`;
 
 const updateSort =
     (key: string) => (prev: { key: string; direction: string }) => ({
@@ -48,8 +47,11 @@ const statusRadios = [
     { label: "Expired", value: "EXPIRED" },
 ];
 
-const showAlert = (date: string, status: string) => {
-    const t = useTranslations(TRANSLATION_PATH);
+const showAlert = (
+    date: string,
+    status: string,
+    translations: { [id: string]: string }
+) => {
     const actionedDate = new Date(date);
     const currentDate = new Date();
 
@@ -61,9 +63,9 @@ const showAlert = (date: string, status: string) => {
     const hasExpired = status === "EXPIRED";
 
     const toolTipMessage = hasExpired
-        ? t("accountExpired")
+        ? translations.accountExpired
         : showWarning
-        ? t("expiryWarning")
+        ? translations.expiryWarning
         : "";
 
     const showToolTip = hasExpired || showWarning;
@@ -76,9 +78,8 @@ const getColumns = ({
     sort,
     setRequestStatus,
     requestStatus,
+    translations,
 }: getColumnsProps): ColumnDef<CohortRequest>[] => {
-    const t = useTranslations(TRANSLATION_PATH);
-
     return [
         {
             id: "name",
@@ -214,7 +215,7 @@ const getColumns = ({
                     textAlign="left">
                     <TooltipIcon
                         label="Date Actioned"
-                        content={t("dateActionedTooltip")}
+                        content={translations.dateActionedTooltip}
                     />{" "}
                     <SortIcon
                         setSort={setSort}
@@ -227,7 +228,8 @@ const getColumns = ({
             cell: ({ row }) => {
                 const { showToolTip, toolTipMessage, hasExpired } = showAlert(
                     row.original.updated_at,
-                    row.original.request_status
+                    row.original.request_status,
+                    translations
                 );
 
                 return (
