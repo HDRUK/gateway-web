@@ -1281,7 +1281,7 @@
         "dialogs": {
             "DarEnquiryDialog": {
                 "titleEnabled": "This feature is temporarily unavailable",
-                "messageEnabled": "In the mean time, you can still contact the Data Custodian via the general enquiry or feasibility enquiry form to discuss your requirements and guide you through their Data Access Request process.",
+                "messageEnabled": "In the meantime, you can still contact the Data Custodian via the general enquiry or feasibility enquiry form to discuss your requirements and guide you through their Data Access Request process.",
                 "titleNotEnabled": "Data access requests not enabled for this Data Custodian",
                 "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
                 "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
