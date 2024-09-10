@@ -86,7 +86,7 @@ const formFields = [
     {
         label: "Dataset Endpoint",
         name: "endpoint_dataset",
-        info: "Additional web address suffix which specifies additional parameters for the call to the Datasets Endpoint. Include query parameters after {PID} if necessary.",
+        info: "Additional web address suffix which specifies additional parameters for the call to the datasets Endpoint. Include query parameters after {PID} if necessary.",
         extraInfo:
             "The URL should follow our standard and be made up of: dataset/{id}?queryString - eg: dataset/{id}?assigned=true. The `{id}` is a required placeholder, and should always be present. You can add as many query string parameters as needed, separated by '&'",
         component: inputComponents.TextField,
