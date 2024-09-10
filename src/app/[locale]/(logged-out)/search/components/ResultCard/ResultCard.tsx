@@ -95,6 +95,7 @@ const ResultCard = ({
         event?: React.MouseEvent<HTMLElement>
     ) => {
         event?.stopPropagation();
+        setAnchorElement(null);
 
         showGeneralEnquiry({ dataset: result, isLoggedIn });
     };
@@ -103,6 +104,7 @@ const ResultCard = ({
         event?: React.MouseEvent<HTMLElement>
     ) => {
         event?.stopPropagation();
+        setAnchorElement(null);
 
         showFeasibilityEnquiry({
             dataset: result,
@@ -113,6 +115,7 @@ const ResultCard = ({
 
     const handleStartDARRequest = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
+        setAnchorElement(null);
 
         showDialog(DarEnquiryDialog, {
             isDAREnabled: team.is_question_bank,
@@ -160,6 +163,10 @@ const ResultCard = ({
                         element.dataset_id === Number(datasetId)
                 )?.id;
 
+                if (!libraryIdToDelete) {
+                    return;
+                }
+
                 if (libraryIdToDelete) {
                     await deleteLibrary(libraryIdToDelete);
 
@@ -188,7 +195,7 @@ const ResultCard = ({
                     style={{ width: "100%" }}
                     // eslint-disable-next-line
                     aria-description={`Result for ${metadata.summary.shortTitle}`}>
-                    <ListItemButton component="a" onClick={handleClickItem}>
+                    <ListItemButton onClick={handleClickItem}>
                         <ListItemText
                             primary={
                                 <ResultTitle>
@@ -251,6 +258,7 @@ const ResultCard = ({
                                             menuItems={menuItems}
                                             anchorElement={anchorElement}
                                             title={metadata.summary.shortTitle}
+                                            stopPropagation
                                         />
                                     </div>
                                 </ResultTitle>

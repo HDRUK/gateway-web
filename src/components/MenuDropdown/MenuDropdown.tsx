@@ -28,6 +28,7 @@ interface MenuDropdownProps {
         horizontal: string;
         vertical: string;
     };
+    stopPropagation?: boolean;
 }
 
 function MenuDropdown({
@@ -37,6 +38,7 @@ function MenuDropdown({
     transformOrigin,
     anchorOrigin,
     title,
+    stopPropagation,
 }: MenuDropdownProps) {
     const { showDialog } = useDialog();
 
@@ -53,7 +55,12 @@ function MenuDropdown({
             anchorOrigin={
                 anchorOrigin || { horizontal: "left", vertical: "bottom" }
             }
-            onClose={() => handleClose()}
+            onClose={(event: React.MouseEvent<HTMLElement>) => {
+                if (stopPropagation) {
+                    event.stopPropagation();
+                }
+                handleClose();
+            }}
             open={Boolean(anchorElement)}>
             {menuItems.map(menuItem => {
                 if (menuItem.subItems) {

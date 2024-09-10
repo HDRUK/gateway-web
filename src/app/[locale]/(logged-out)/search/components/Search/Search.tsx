@@ -42,6 +42,7 @@ import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
+import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
     FILTER_CONTAINS_TISSUE,
@@ -117,7 +118,9 @@ const Search = ({ filters }: SearchProps) => {
     };
 
     const [resultsView, setResultsView] = useState(
-        getParamString(VIEW_FIELD) || ViewType.TABLE
+        getParamString(VIEW_FIELD) ||
+            localStorage.getItem(config.VIEW_TYPE) ||
+            ViewType.TABLE
     );
 
     const updateQueryString = useCallback(
@@ -179,11 +182,13 @@ const Search = ({ filters }: SearchProps) => {
     };
 
     useEffect(() => {
-        if (
-            resultsView !== ViewType.LIST &&
-            queryParams.type !== SearchCategory.DATASETS
-        ) {
-            setResultsView(ViewType.LIST);
+        const viewType =
+            queryParams.type === SearchCategory.DATASETS
+                ? localStorage.getItem(config.VIEW_TYPE) || ViewType.TABLE
+                : ViewType.LIST;
+
+        if (resultsView !== viewType) {
+            setResultsView(viewType);
         }
     }, [queryParams.type, resultsView]);
 
@@ -382,6 +387,7 @@ const Search = ({ filters }: SearchProps) => {
     const handleChangeView = (viewType: ViewType) => {
         setResultsView(viewType);
         updatePath(VIEW_FIELD, viewType);
+        localStorage.setItem(config.VIEW_TYPE, viewType);
     };
 
     const toggleButtons = [

@@ -70,7 +70,7 @@ const StructuralMetadataAccordion = ({
     };
 
     let tableData;
-    if (!tableData) {
+    if (!metadata) {
         return null;
     }
     if (isPublicSchema(metadata)) {
