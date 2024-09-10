@@ -181,7 +181,9 @@
                 "text": "Use this form to register an account and update your account on the Gateway",
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
-                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
+                    "accountExpired": "This user’s access is expired",
+                    "expiryWarning": "This user access is close to expiration date"
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",

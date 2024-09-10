@@ -15,6 +15,7 @@ import { SortByAlphaIcon, WarningIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate, differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
+import { useTranslations } from "next-intl";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -22,6 +23,8 @@ interface getColumnsProps {
     setRequestStatus: (status: string) => void;
     requestStatus?: CohortRequestStatus;
 }
+
+const TRANSLATION_PATH = `pages.account.profile.cohortDiscoveryAdmin`;
 
 const updateSort =
     (key: string) => (prev: { key: string; direction: string }) => ({
@@ -46,6 +49,7 @@ const statusRadios = [
 ];
 
 const showAlert = (date: string, status: string) => {
+    const t = useTranslations(TRANSLATION_PATH);
     const actionedDate = new Date(date);
     const currentDate = new Date();
 
@@ -57,9 +61,9 @@ const showAlert = (date: string, status: string) => {
     const hasExpired = status === "EXPIRED";
 
     const toolTipMessage = hasExpired
-        ? "This user’s access is expired"
+        ? t("accountExpired")
         : showWarning
-        ? "This user access is close to expiration date"
+        ? t("expiryWarning")
         : "";
 
     const showToolTip = hasExpired || showWarning;
@@ -207,7 +211,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     <TooltipIcon
-                        label="Date Actioned"
+                        label="Date Actioned"// Needs moving to translations file
                         content={
                             <div>
                                 This is the date for the latest status update
