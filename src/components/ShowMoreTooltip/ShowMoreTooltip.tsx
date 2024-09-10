@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
@@ -9,6 +10,8 @@ interface ShowMoreTooltipProps {
     label?: string;
     showLimit?: number;
 }
+
+const TRANSLATION_PATH = "components.ShowMoreTooltip";
 
 const linkWrapper = (title: string) => (children: ReactNode) => {
     return (
@@ -21,7 +24,7 @@ const linkWrapper = (title: string) => (children: ReactNode) => {
 const ShowMoreTooltip = ({
     items,
     showLimit = 3,
-    label = "...more",
+    label = useTranslations(TRANSLATION_PATH)("ShowMoreTooltip"),
 }: ShowMoreTooltipProps) => {
     const allItems = items.join(", ");
     const topThree = items.slice(0, showLimit).join(", ");

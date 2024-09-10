@@ -1221,6 +1221,9 @@
             "showLess": "...show less",
             "showMore": "...show more"
         },
+        "ShowMoreTooltip": {
+            "more": "...more"
+        },
         "FilterSection": {
             "placeholder": "I'm looking for...",
             "noFilters": "No filters available"
