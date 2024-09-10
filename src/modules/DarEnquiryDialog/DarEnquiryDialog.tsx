@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
@@ -52,19 +52,19 @@ const DarEnquiryDialog = ({
                         {t.rich("messageNotEnabledOtherInstructions", {
                             // eslint-disable-next-line react/no-unstable-nested-components
                             generalEnquiryLink: () => (
-                                <Link
-                                    component="button"
+                                <Button
+                                    variant="link"
                                     onClick={handleGeneralEnquiry}>
                                     {t("generalEnquiryLink")}
-                                </Link>
+                                </Button>
                             ),
                             // eslint-disable-next-line react/no-unstable-nested-components
                             feasabilityEnquiryLink: () => (
-                                <Link
-                                    component="button"
+                                <Button
+                                    variant="link"
                                     onClick={handleFeasibilityEnquiry}>
                                     {t("feasibilityEnquiryLink")}
-                                </Link>
+                                </Button>
                             ),
                         })}
                     </Typography>
