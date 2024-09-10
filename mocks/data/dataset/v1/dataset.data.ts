@@ -118,7 +118,9 @@ const generateDatasetHighlightsV1 = (): Highlight => {
     };
 };
 
-const generateSearchResultV1 = (): SearchResultDataset => ({
+const generateSearchResultV1 = (
+    data?: Partial<SearchResultDataset>
+): SearchResultDataset => ({
     _id: faker.datatype.uuid(),
     highlight: generateDatasetHighlightsV1(),
     metadata: generateDatasetMetadataMiniV1(),
@@ -128,6 +130,7 @@ const generateSearchResultV1 = (): SearchResultDataset => ({
         name: faker.datatype.string(),
         is_question_bank: false,
     },
+    ...data,
 });
 
 const datasetSearchResultV1 = generateSearchResultV1();
