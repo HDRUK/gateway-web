@@ -35,6 +35,7 @@ interface PageTemplatePromo {
             topRightPanel?: string;
             topLeftPanel: string;
             middlePanel: string;
+            bottomPanel?: string;
         };
     };
     ctaOverrideComponent?: React.ReactElement;
