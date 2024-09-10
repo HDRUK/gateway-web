@@ -1,5 +1,6 @@
 import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -15,7 +16,6 @@ import { SortByAlphaIcon, WarningIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate, differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
-import { useTranslations } from "next-intl";
 
 interface getColumnsProps {
     sort: { key: string; direction: string };
@@ -211,7 +211,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     <TooltipIcon
-                        label="Date Actioned"// Needs moving to translations file
+                        label="Date Actioned" // Needs moving to translations file
                         content={
                             <div>
                                 This is the date for the latest status update
