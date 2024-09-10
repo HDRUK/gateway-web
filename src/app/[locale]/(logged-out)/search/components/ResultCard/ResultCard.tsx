@@ -93,6 +93,7 @@ const ResultCard = ({
 
     const genEnq = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
+        setAnchorElement(null);
 
         if (!isLoggedIn) {
             showDialog(ProvidersDialog, {
@@ -116,6 +117,7 @@ const ResultCard = ({
 
     const feasibilityEnquiryDialog = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
+        setAnchorElement(null);
 
         if (!isLoggedIn) {
             showDialog(ProvidersDialog, {
@@ -172,7 +174,11 @@ const ResultCard = ({
                     element =>
                         element.user_id === user?.id &&
                         element.dataset_id === Number(datasetId)
-                ).id;
+                )?.id;
+
+                if (!libraryIdToDelete) {
+                    return;
+                }
 
                 await deleteLibrary(libraryIdToDelete);
 
@@ -200,14 +206,14 @@ const ResultCard = ({
                     style={{ width: "100%" }}
                     // eslint-disable-next-line
                     aria-description={`Result for ${metadata.summary.shortTitle}`}>
-                    <ListItemButton component="a" onClick={handleClickItem}>
+                    <ListItemButton onClick={handleClickItem}>
                         <ListItemText
                             primary={
                                 <ResultTitle>
                                     <span
                                         id={resultId}
                                         role="heading"
-                                        aria-level="3">
+                                        aria-level={3}>
                                         {metadata.summary.shortTitle}
                                     </span>
                                     <div style={{ textAlign: "end" }}>
@@ -263,6 +269,7 @@ const ResultCard = ({
                                             menuItems={menuItems}
                                             anchorElement={anchorElement}
                                             title={metadata.summary.shortTitle}
+                                            stopPropagation
                                         />
                                     </div>
                                 </ResultTitle>

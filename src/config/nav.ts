@@ -17,7 +17,7 @@ const navItems = [
                 href: "https://hdruklearn.org/",
             },
             {
-                label: "Datasets/BioSamples",
+                label: "Datasets & BioSamples",
                 href: "/search?type=datasets",
             },
             {
@@ -25,7 +25,7 @@ const navItems = [
                 href: "/search?type=dur",
             },
             {
-                label: "Analysis scripts & software",
+                label: "Analysis Scripts & Software",
                 href: "/search?type=tools",
             },
             {
@@ -37,7 +37,7 @@ const navItems = [
                 href: "/search?type=data_providers",
             },
             {
-                label: "Collections / Networks",
+                label: "Collections/Networks",
                 href: "/search?type=collections",
             },
         ],
