@@ -9,7 +9,7 @@ const renderTest = (props?: Partial<DarEnquiryDialogProps>) =>
         <DarEnquiryDialog
             onFeasibilityEnquiryClick={mockFeasibilityEnquiryClick}
             onGeneralEnquiryClick={mockGeneralEnquiryClick}
-            isDAREnabled
+            isDarEnabled
             {...props}
         />
     );
@@ -25,7 +25,7 @@ describe("<DarEnquiryDialog />", () => {
 
     it("has the correct content when is_question_bank=0", () => {
         renderTest({
-            isDAREnabled: false,
+            isDarEnabled: false,
         });
 
         expect(

@@ -12,7 +12,7 @@ import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 export interface DarEnquiryDialogProps {
     onGeneralEnquiryClick(): void;
     onFeasibilityEnquiryClick(): void;
-    isDAREnabled: boolean;
+    isDarEnabled: boolean;
     url: string;
 }
 
@@ -21,7 +21,7 @@ const TRANSLATION_PATH = "modules.dialogs.DarEnquiryDialog";
 const DarEnquiryDialog = ({
     onGeneralEnquiryClick,
     onFeasibilityEnquiryClick,
-    isDAREnabled,
+    isDarEnabled,
     url,
 }: DarEnquiryDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -40,14 +40,14 @@ const DarEnquiryDialog = ({
     };
 
     return (
-        <Dialog title={isDAREnabled ? t("titleEnabled") : t("titleNotEnabled")}>
+        <Dialog title={isDarEnabled ? t("titleEnabled") : t("titleNotEnabled")}>
             <MuiDialogContent>
                 <Typography mb={2}>
-                    {isDAREnabled
+                    {isDarEnabled
                         ? t("messageEnabled")
                         : t("messageNotEnabled")}
                 </Typography>
-                {!isDAREnabled && (
+                {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {
                             // eslint-disable-next-line react/no-unstable-nested-components
@@ -71,7 +71,7 @@ const DarEnquiryDialog = ({
                 )}
             </MuiDialogContent>
             <MuiDialogActions>
-                {isDAREnabled ? (
+                {isDarEnabled ? (
                     <>
                         <Button
                             variant="outlined"

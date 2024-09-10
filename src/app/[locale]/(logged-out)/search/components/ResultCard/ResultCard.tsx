@@ -113,12 +113,12 @@ const ResultCard = ({
         });
     };
 
-    const handleStartDARRequest = (event: React.MouseEvent<HTMLElement>) => {
+    const handleStartDarRequest = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
         setAnchorElement(null);
 
         showDialog(DarEnquiryDialog, {
-            isDAREnabled: team.is_question_bank,
+            isDarEnabled: team.is_question_bank,
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
@@ -136,7 +136,7 @@ const ResultCard = ({
         },
         {
             label: "Start a Data Access Request",
-            action: handleStartDARRequest,
+            action: handleStartDarRequest,
         },
     ];
 

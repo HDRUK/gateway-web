@@ -78,13 +78,13 @@ const ActionDropdown = ({
         });
     };
 
-    const handleStartDARRequest = (event: React.MouseEvent<HTMLElement>) => {
+    const handleStartDarRequest = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
         showDialog(DarEnquiryDialog, {
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
-            isDAREnabled: team.is_question_bank,
+            isDarEnabled: team.is_question_bank,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
         });
     };
@@ -102,7 +102,7 @@ const ActionDropdown = ({
         },
         {
             label: "Start a Data Access Request",
-            action: handleStartDARRequest,
+            action: handleStartDarRequest,
             icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
         },
     ];
