@@ -181,7 +181,10 @@
                 "text": "Use this form to register an account and update your account on the Gateway",
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
-                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
+                    "dateActionedTooltip": "This is the date for the latest status update for this user",
+                    "accountExpired": "This user's access is expired",
+                    "expiryWarning": "This user access is close to expiration date"
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",
@@ -806,7 +809,7 @@
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
                             "publicationType": "Publication type",
-                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
+                            "publicationTypeTooltip": "The type of publication: research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -825,12 +828,8 @@
                             "geographicLocationTooltip": "The geographical area covered by the dataset"
                         },
                         "tool": {
-                            "dataProvider": "Data Custodian",
-                            "dataProviderTooltip": "The name of the data custodian (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
                             "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
-                            "category": "Category",
-                            "categoryTooltip": "Category",
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
