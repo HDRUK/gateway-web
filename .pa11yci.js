@@ -1,8 +1,9 @@
 //*** local variables used in exports
-
+//local var site      = 'http://localhost:3000/en';
 var site      = 'web.dev.hdruk.cloud';
 var email     = process.env.GATEWAY_USER;
 var password  = process.env.GATEWAY_PASSWORD;
+
 
 var ignoreDefault = [
   "WCAG2AAA.Principle1.Guideline1_4.1_4_3_F24.F24.FGColour",            // check for inherited BG color to complement inline FG color
@@ -24,8 +25,9 @@ module.exports = {
   // NOTE: defaults are OVERRIDDEN not extended
   defaults : {
     chromeLaunchConfig          : { 
-        executablePath              : "/usr/bin/google-chrome-stable",
-        args                        : ['--no-sandbox']
+      // macs executablePath              : "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome",
+       executablePath              : "/usr/bin/google-chrome-stable",
+       args                        : ['--no-sandbox']
      },
     // concurrency=1 so urls are sequential, with login first (if browser context is preserved)
     concurrency                 : 1,
@@ -39,6 +41,7 @@ module.exports = {
     runners                     : ["axe"],
     // e.g., WCAG2A, WCAG2AA, WCAG2AAA (low to high), Section508 (deprecated)
     standard                    : "WCAG2A",
+    //standard                    : "WCAG2AA",
     // timeout (in msec) for an entire test run
     timeout                     : 10000,
     // false to preserve browser context
@@ -46,19 +49,24 @@ module.exports = {
   },
 
   urls : [
+    { 
+      ignore  : ignoreNotForm,
+      url     : `${site}`,
+      timeout : 50000,
+  
+      // actions: [
+      //   "screen capture home.png",
+      // ]
+    },
     { url     : `${site}/sign-in`,
     actions : [
-      "wait for url to be https://web.dev.hdruk.cloud/en/sign-in",
+      `wait for url to be ${site}/sign-in`,
       `set field input[name=email] to ${email}`,
       `set field input[name=password] to ${password}`,
       `click element button[type=submit]`,
       "wait for url to be https://web.dev.hdruk.cloud/en/account/profile",
     ],
   },
-    { ignore  : ignoreNotForm,
-      url     : `${site}`,
-      timeout : 50000,
-    },
     { ignore  : ignoreNotForm,
       url     : `${site}/dataset/1`,
     },
@@ -303,7 +311,7 @@ module.exports = {
     },
     { ignore  : ignoreNotForm,
       url     : `${site}/account/team/1/datasets/create`,
-    },
+    }
   ],
 
 }; // end module.exports

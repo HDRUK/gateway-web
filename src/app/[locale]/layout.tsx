@@ -3,11 +3,11 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { sourceSans3 } from "@/config/fonts";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
@@ -43,21 +43,12 @@ export default function RootLayout({
                         <ThemeRegistry>
                             <DialogProvider>
                                 <ActionBarProvider>
+                                    <Header />
+                                    <SupportPopOut />
+                                    <CMSBanners />
+                                    {children}
+                                    <Footer />
                                     <SnackbarProvider />
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            fontFamily:
-                                                sourceSans3.style.fontFamily,
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            minHeight: "100vh",
-                                        }}>
-                                        <SupportPopOut />
-                                        <CMSBanners />
-                                        {children}
-                                        <Footer />
-                                    </div>
                                     <Suspense fallback={null}>
                                         <NavigationEvents />
                                     </Suspense>

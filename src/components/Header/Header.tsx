@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import AccountNav from "@/modules/AccountNav";
@@ -17,14 +18,12 @@ import useAccountMenu from "@/hooks/useAccountMenu";
 import navItems from "@/config/nav";
 import { MenuIcon } from "@/consts/icons";
 
-interface HeaderProps {
-    isHome?: boolean;
-}
-
-function Header({ isHome = false }: HeaderProps) {
+function Header() {
     const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
     const HOTJAR_VERSION = 6;
     const isTablet = useMediaQuery("(min-width:640px)");
+
+    const isHome = usePathname() === "/en";
 
     if (HOTJAR_ID && typeof window !== "undefined" && !hotjar.initialized()) {
         // eslint-disable-next-line radix

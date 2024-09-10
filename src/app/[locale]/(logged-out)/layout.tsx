@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import Header from "@/components/Header";
 
 export default async function LoggedOutLayout({
     children,
@@ -7,11 +6,8 @@ export default async function LoggedOutLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
-            <Header />
-            <Box component="main" sx={{ flexGrow: 1 }}>
-                {children}
-            </Box>
-        </>
+        <Box component="section" sx={{ flexGrow: 1 }}>
+            {children}
+        </Box>
     );
 }
