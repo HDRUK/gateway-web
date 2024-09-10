@@ -59,7 +59,7 @@ function Header({ isHome = false }: HeaderProps) {
                             mr: 1,
                         }}>
                         <Image
-                            src="/images/logos/gateway-white-logo.svg"
+                            src={`${process.env.NEXT_PUBLIC_MEDIA_URL}/heath_data_research_gateway_logo_white.svg`}
                             priority
                             width={110}
                             height={50}
@@ -102,7 +102,7 @@ function Header({ isHome = false }: HeaderProps) {
                             display: { tablet: "flex", desktop: "none" },
                         }}>
                         <Image
-                            src="/images/logos/gateway-white-logo.svg"
+                            src={`${process.env.NEXT_PUBLIC_MEDIA_URL}/heath_data_research_gateway_logo_white.svg`}
                             priority
                             width={110}
                             height={50}
