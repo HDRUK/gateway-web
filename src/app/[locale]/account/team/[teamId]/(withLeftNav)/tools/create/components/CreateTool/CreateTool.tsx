@@ -185,6 +185,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             return data?.map(item => item?.id);
         };
 
+        const publications = formData.publications.map(({updated_at, created_at, ...item}) => item);
+
         const payload: ToolPayloadSubmission = {
             ...formData,
             user_id: userId,
@@ -193,7 +195,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             tag: [],
             status,
             durs: formatEntityToIdArray(formData.durs),
-            publications: formatEntityToIdArray(formData.publications),
+            publications: publications,
             tools: formatEntityToIdArray(formData.tools),
             dataset: formData.dataset.every(
                 obj => Object.keys(obj).length === 0
