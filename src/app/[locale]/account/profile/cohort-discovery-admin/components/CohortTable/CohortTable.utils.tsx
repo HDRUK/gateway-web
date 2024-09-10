@@ -1,6 +1,5 @@
 import { IconButton, Typography } from "@mui/material";
 import { ColumnDef } from "@tanstack/react-table";
-import { useTranslations } from "next-intl";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
