@@ -76,6 +76,7 @@ export interface SearchResultDataset extends SearchResultBase {
         id: number;
         member_of: string;
         name: string;
+        is_question_bank: boolean;
     };
 }
 
