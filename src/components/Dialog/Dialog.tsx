@@ -8,11 +8,13 @@ import MuiDialogTitle from "@mui/material/DialogTitle";
 import useDialog from "@/hooks/useDialog";
 import { CloseIcon } from "@/consts/icons";
 import { GlobalDialogContextProps } from "@/providers/DialogProvider";
+import TooltipIcon from "../TooltipIcon";
 
 export interface DialogProps {
     children: ReactNode;
     onClose?: (props: unknown) => void;
     title: string;
+    titleTooltip?: string;
     maxWidth?: false | Breakpoint;
     titleSx?: SxProps;
     showCloseButton?: boolean;
@@ -24,6 +26,7 @@ export interface DialogProps {
 
 const Dialog = ({
     title,
+    titleTooltip,
     styleProps,
     children,
     titleSx,
@@ -70,7 +73,11 @@ const Dialog = ({
             )}
             {title && (
                 <MuiDialogTitle sx={{ ...titleSx, pr: 6 }}>
-                    {title}
+                    {titleTooltip ? (
+                        <TooltipIcon content={titleTooltip} label={title} />
+                    ) : (
+                        title
+                    )}
                 </MuiDialogTitle>
             )}
             {children}
