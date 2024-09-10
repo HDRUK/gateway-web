@@ -106,7 +106,7 @@ const formFields = [
     {
         label: "Results / Insights",
         info: "Include any results or insights about the analysis script, tool or software. Must be at least 50 characters.",
-        name: "results",
+        name: "results_insights",
         options: [],
         component: inputComponents.TextArea,
         required: true,
