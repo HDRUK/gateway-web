@@ -283,14 +283,14 @@
                         "RightPanel": {
                             "generalEnquiries": {
                                 "title": "General Enquiry",
-                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "text": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
                                 "buttonText": "Make a general enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "feasibilityEnquiries": {
                                 "title": "Feasibility Enquiry",
-                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "text": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
                                 "buttonText": "Make a feasibility enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
@@ -509,7 +509,7 @@
                     "components": {
                         "TeamCollections": {
                             "title": "Collections",
-                            "text": " View, add, edit, archive and check the status of your Collections.",
+                            "text": " View, add, edit, archive and check the status of your collections.",
                             "create": "Add new Collection",
                             "actions": {
                                 "unarchive": {
@@ -640,6 +640,8 @@
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
+                "label": "Data Uses / Research Projects",
+                "title": "Data Uses / Research Projects",
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
@@ -650,7 +652,7 @@
             "dataProviders": {
                 "label": "Data Custodians",
                 "title": "Data Custodians",
-                "text": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
+                "text": "Search data custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
             },
             "collections": {
                 "label": "Collections",
@@ -670,7 +672,7 @@
             "dataCustodianNetworks": {
                 "label": "Data Custodian Networks",
                 "title": "Data Custodian Networks",
-                "text": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
+                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
             },
             "publications": {
                 "label": "Publications",
@@ -678,6 +680,8 @@
                 "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
             },
             "tools": {
+                "label": "Analysis Scripts & Software",
+                "title": "Analysis Scripts & Software",
                 "label": "Analysis Scripts & Software",
                 "title": "Analysis Scripts & Software",
                 "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
@@ -822,7 +826,7 @@
                         },
                         "tool": {
                             "dataProvider": "Data Custodian",
-                            "dataProviderTooltip": "The name of the Data Custodian (i.e. the organisation who facilitates access to the dataset)",
+                            "dataProviderTooltip": "The name of the data custodian (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
                             "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
                             "category": "Category",
@@ -842,11 +846,11 @@
                 },
                 "FeasibilityEnquiryForm": {
                     "itemName": "Feasibility Enquiry item",
-                    "helperText": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "helperText": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                     "saveButton": "Send message"
                 },
                 "GeneralEnquiryForm": {
-                    "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "helperText": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                     "saveButton": "Send message"
                 },
                 "PopulationFilter": {
@@ -888,19 +892,19 @@
                         "tooltip": "Population size associated with the population type in the dataset"
                     },
                     "dateRangePublisher": {
-                        "label": "Date range",
+                        "label": "Date Range",
                         "tooltip": "Start and end of the time period that the dataset provides coverage for"
                     },
                     "dataStandard": {
-                        "label": "Data standard",
+                        "label": "Data Standard",
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
                     "dataProvider": {
-                        "label": "Data custodian",
+                        "label": "Data Custodian",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
                     "accessService": {
-                        "label": "Access service",
+                        "label": "Access Service",
                         "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
@@ -912,7 +916,7 @@
                         "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },
                     "hasTechnicalMetadata": {
-                        "label": "Structural metadata",
+                        "label": "Structural Metadata",
                         "tooltip": "Descriptions and details about the tables and columns within a dataset"
                     },
                     "feasibilityEnquiries": {
@@ -925,7 +929,7 @@
                     "title": "Add dataset to your library",
                     "confirmText": "Add and go to library",
                     "buttonContinueText": "Add to library and continue searching",
-                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple Data Custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple Data Custodians (if the Data Custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
+                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple data custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple data custodians (if the data custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
                 }
             }
         },
@@ -936,11 +940,11 @@
                     "label": "Back to Collections search results"
                 },
                 "DatasetsContent": {
-                    "heading": "Datasets / BioSamples ({ length })",
+                    "heading": "Datasets & BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
-                    "heading": "Data uses ({ length })"
+                    "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
@@ -954,7 +958,7 @@
             "introduction": "Introduction",
             "collections": "Collections",
             "datasets": "Datasets",
-            "dataUses": "Data uses",
+            "dataUses": "Data Uses",
             "publications": "Publications",
             "tools": "Tools",
             "serviceOfferings": "Service offerings",
@@ -972,7 +976,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Data uses ({ length })"
+                    "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
@@ -991,7 +995,7 @@
             "datasets": "Datasets",
             "dataUses": "Data use",
             "publications": "Publication",
-            "tools": "Analysis scripts and software",
+            "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
             "components": {
                 "ActionBar": {
@@ -1014,7 +1018,7 @@
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
-                    "heading": "Data uses ({ length })"
+                    "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
@@ -1032,7 +1036,7 @@
             "datasetPublications": "Publications about this dataset",
             "components": {
                 "ActionBar": {
-                    "contact": "Contact data custodian",
+                    "contact": "Contact Data Custodian",
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata",
@@ -1083,7 +1087,7 @@
             "safeSetting": "Safe Setting",
             "safeOutput": "Safe Outputs",
             "projectIdText": "Project ID",
-            "projectIdTextTooltip": "A unique identifier for the project assigned by the Data Custodian",
+            "projectIdTextTooltip": "A unique identifier for the project assigned by the data custodian",
             "organisationName": "Organisation name",
             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
             "organisationId": "Organisation ID",
@@ -1168,10 +1172,10 @@
             "keywords": "Keywords",
             "domain": "Domain",
             "notAvailable": "Not specified",
-            "datasets": "Related datasets",
-            "dataUses": "Related data uses",
-            "publications": "Related publications",
-            "collections": "Related collections",
+            "datasets": "Related Datasets",
+            "dataUses": "Related Data Uses",
+            "publications": "Related Publications",
+            "collections": "Related Collections",
             "components": {
                 "ActionBar": {
                     "label": "Back to Tools search results"
@@ -1364,7 +1368,7 @@
                 "dataProvider": "Data Custodian",
                 "entityType": "Entity Type",
                 "radioDataset": "Datasets",
-                "radioDatause": "Data uses",
+                "radioDatause": "Data Uses",
                 "radioPublication": "Publications",
                 "radioTool": "Analysis Scripts & Software",
                 "chipDataset": "Dataset",
