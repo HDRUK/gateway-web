@@ -45,10 +45,7 @@ const DatasetMindMap = ({
             ...rootNode,
             data: {
                 ...rootNode.data,
-                label:
-                    data.metadata.metadata.summary.publisher.publisherName ||
-                    t(rootNode.data.name),
-                href: `/data-custodian/${teamId}`,
+                label: "Dataset",
             },
         };
     }, [data, t]);
