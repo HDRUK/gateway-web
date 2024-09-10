@@ -31,10 +31,15 @@ function extractSubdomain(url: string) {
     }
 }
 
+function getStaticAssetUrl(file: string) {
+    return `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/${file}`;
+}
+
 export {
     capitalise,
     convertToCamelCase,
     splitCamelcase,
     extractSubdomain,
     getTrimmedpathname,
+    getStaticAssetUrl,
 };

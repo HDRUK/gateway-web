@@ -19,6 +19,7 @@ import TitleWithBg from "@/components/TitleWithBg";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { getStaticAssetUrl } from "@/utils/general";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
@@ -27,52 +28,52 @@ import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 const services = [
     {
         id: SearchCategory.DATASETS,
-        image: "/images/homepage/banner-datasets.png",
+        image: getStaticAssetUrl("datasets_biosamples.png"),
         href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
         id: SearchCategory.DATA_USE,
-        image: "/images/homepage/banner-data-uses.jpg",
+        image: getStaticAssetUrl("data_uses_research_projects.png"),
         href: `/search?type=${SearchCategory.DATA_USE}`,
     },
     {
         id: "feasibility",
-        image: "/images/homepage/banner-cohort-discovery.png",
+        image: getStaticAssetUrl("cohort_discovery.png"),
         href: "/about/cohort-discovery",
     },
     {
         id: SearchCategory.TOOLS,
-        image: "/images/homepage/banner-tools.jpg",
+        image: getStaticAssetUrl("analysis_scripts_software.png"),
         href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: SearchCategory.PUBLICATIONS,
-        image: "/images/homepage/banner-publications.jpg",
+        image: getStaticAssetUrl("publications.png"),
         href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
     {
         id: "dataProviders",
-        image: "/images/homepage/banner-custodians.png",
+        image: getStaticAssetUrl("data_custodians.png"),
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
         id: "dataCustodianNetworks",
-        image: "/images/homepage/banner-data-custodian-network.png",
+        image: getStaticAssetUrl("data_custodian_network.png"),
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
-        image: "/images/homepage/banner-collections.jpg",
+        image: getStaticAssetUrl("collections.png"),
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: "phenotypes",
-        image: "/images/homepage/banner-phenotypes.png",
+        image: getStaticAssetUrl("phenotypes.png"),
         href: "https://phenotypes.healthdatagateway.org/",
     },
     {
         id: "courses",
-        image: "/images/homepage/banner-courses.jpg",
+        image: getStaticAssetUrl("courses.jpg"),
         href: "https://hdruklearn.org/",
     },
 
