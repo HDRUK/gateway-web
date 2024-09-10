@@ -6,12 +6,12 @@ describe("InfoHoverPanel", () => {
     const items = [
         {
             id: "datasets",
-            image: "/images/homepage/welcome-image.webp",
+            image: "/images/homepage/welcome-image.jpg",
             href: "/search?type=datasets",
         },
         {
             id: "dur",
-            image: "/images/homepage/welcome-image.webp",
+            image: "/images/homepage/welcome-image.jpg",
             href: "/search?type=dur",
         },
     ];

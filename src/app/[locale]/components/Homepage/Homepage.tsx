@@ -79,7 +79,7 @@ const services = [
 
     // {
     //     id: "diseaseAtlas",
-    //     image: "/images/homepage/welcome-image.webp",
+    //     image: "/images/homepage/welcome-image.jpg",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
 ];
