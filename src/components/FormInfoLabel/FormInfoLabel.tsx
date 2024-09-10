@@ -1,4 +1,5 @@
 import { FormHelperText } from "@mui/material";
+import Markdown from "markdown-to-jsx";
 import Label from "@/components/Label";
 import TooltipIcon from "@/components/TooltipIcon";
 import { colors } from "@/config/theme";
@@ -34,15 +35,18 @@ const FormInfoLabel = ({
                     }}
                 />
             )}
+
             {!horizontalForm && info && (
                 <FormHelperText
+                    id={`${name}-information`}
                     sx={{
                         fontSize: 13,
                         color: colors.grey700,
                     }}>
-                    {info}
+                    <Markdown>{info}</Markdown>
                 </FormHelperText>
             )}
+
             {info && horizontalForm && (
                 <TooltipIcon
                     label={

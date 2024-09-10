@@ -75,6 +75,7 @@ const services = [
         image: "/images/homepage/banner-courses.jpg",
         href: "https://hdruklearn.org/",
     },
+
     // {
     //     id: "diseaseAtlas",
     //     image: "/images/homepage/welcome-image.jpg",

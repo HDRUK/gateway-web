@@ -635,9 +635,11 @@
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "A knowledge graph to explore and access the wealth of health data and research from across the UK and beyond"
+                "text": "Explore datasets and biosamples from across the UK and beyond and then navigate their associated resources e.g. metadata, linked datasets, data provenance, publications, analysis scripts & software and demographics."
             },
             "dur": {
+                "label": "Data Uses / Research Projects",
+                "title": "Data Uses / Research Projects",
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
@@ -678,6 +680,8 @@
                 "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
             },
             "tools": {
+                "label": "Analysis Scripts & Software",
+                "title": "Analysis Scripts & Software",
                 "label": "Analysis Scripts & Software",
                 "title": "Analysis Scripts & Software",
                 "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
@@ -731,7 +735,7 @@
         },
         "search": {
             "datasets": "Datasets & BioSamples",
-            "dataUse": "Data Uses / Research Projects",
+            "dataUse": "Data Uses/\n\nResearch Projects",
             "tools": "Analysis Scripts & Software",
             "dataProviders": "Data Custodians",
             "collections": "Collections / Networks",
@@ -782,7 +786,7 @@
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
                             "containsTissue": "Datasets with BioSamples",
-                            "containsTissueTooltip": "Restrict your search result to datasets with tissue sample",
+                            "containsTissueTooltip": "Restrict your search result to datasets with biospecimen samples",
                             "sampleAvailability": "Material type",
                             "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
                         },
@@ -824,8 +828,7 @@
                             "dataProvider": "Data Custodian",
                             "dataProviderTooltip": "The name of the data custodian (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
-                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary. <TooltipLink>(Read more)</TooltipLink>",
-                            "licenseTooltipLink": "https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://publications.europa.eu/resource/authority/licence",
+                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
                             "category": "Category",
                             "categoryTooltip": "Category",
                             "programmingLanguages": "Programming language",
@@ -909,8 +912,8 @@
                         "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
                     "containsTissue": {
-                        "label": "Tissue Sample Availability",
-                        "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the data custodian"
+                        "label": "BioSample availability",
+                        "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },
                     "hasTechnicalMetadata": {
                         "label": "Structural Metadata",
