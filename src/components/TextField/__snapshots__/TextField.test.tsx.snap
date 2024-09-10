@@ -17,7 +17,6 @@ exports[`TextField should render icon 1`] = `
           This is a label
         </label>
       </p>
-      <tbody />
     </div>
     <div
       class="MuiBox-root mui-style-ve6emg"
