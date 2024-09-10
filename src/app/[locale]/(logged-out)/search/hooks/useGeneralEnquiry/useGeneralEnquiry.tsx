@@ -15,29 +15,32 @@ const useGeneralEnquiry = () => {
     const { showDialog } = useDialog();
     const { showSidebar } = useSidebar();
 
-    return useCallback(({ isLoggedIn, dataset }: UseGeneralEnquiryProps) => {
-        const { _id, team } = dataset;
+    return useCallback(
+        ({ isLoggedIn, dataset }: UseGeneralEnquiryProps) => {
+            const { _id, team } = dataset;
 
-        if (!isLoggedIn) {
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-            });
-        } else {
-            const datasets: DatasetEnquiry[] = [
-                {
-                    datasetId: Number(_id),
-                    teamId: team.id,
-                    teamName: team.name,
-                    teamMemberOf: team.member_of,
-                },
-            ];
+            if (!isLoggedIn) {
+                showDialog(ProvidersDialog, {
+                    isProvidersDialog: true,
+                });
+            } else {
+                const datasets: DatasetEnquiry[] = [
+                    {
+                        datasetId: Number(_id),
+                        teamId: team.id,
+                        teamName: team.name,
+                        teamMemberOf: team.member_of,
+                    },
+                ];
 
-            showSidebar({
-                title: "Messages",
-                content: <GeneralEnquirySidebar datasets={datasets} />,
-            });
-        }
-    }, []);
+                showSidebar({
+                    title: "Messages",
+                    content: <GeneralEnquirySidebar datasets={datasets} />,
+                });
+            }
+        },
+        [showSidebar, showDialog]
+    );
 };
 
 export default useGeneralEnquiry;

@@ -43,7 +43,7 @@ const useFeasibilityEnquiry = () => {
                 });
             }
         },
-        []
+        [showDialog]
     );
 };
 
