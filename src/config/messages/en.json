@@ -182,7 +182,8 @@
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
-                    "accountExpired": "This user’s access is expired",
+                    "dateActionedTooltip": "This is the date for the latest status update for this user",
+                    "accountExpired": "This user's access is expired",
                     "expiryWarning": "This user access is close to expiration date"
                 },
                 "darAdmin": {

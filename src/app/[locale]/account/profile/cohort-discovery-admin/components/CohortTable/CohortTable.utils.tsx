@@ -77,6 +77,8 @@ const getColumns = ({
     setRequestStatus,
     requestStatus,
 }: getColumnsProps): ColumnDef<CohortRequest>[] => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     return [
         {
             id: "name",
@@ -211,13 +213,8 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     <TooltipIcon
-                        label="Date Actioned" // Needs moving to translations file
-                        content={
-                            <div>
-                                This is the date for the latest status update
-                                for this user
-                            </div>
-                        }
+                        label="Date Actioned"
+                        content={t("dateActionedTooltip")}
                     />{" "}
                     <SortIcon
                         setSort={setSort}
