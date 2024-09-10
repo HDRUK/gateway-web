@@ -14,9 +14,9 @@ import MenuDropdown from "@/components/MenuDropdown";
 import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
+import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
 import { MenuIcon } from "@/consts/icons";
-import { getStaticAssetUrl } from "@/utils/general";
 
 interface HeaderProps {
     isHome?: boolean;
@@ -60,9 +60,7 @@ function Header({ isHome = false }: HeaderProps) {
                             mr: 1,
                         }}>
                         <Image
-                            src={getStaticAssetUrl(
-                                "heath_data_research_gateway_logo_white.svg"
-                            )}
+                            src={StaticImages.BASE.logo}
                             priority
                             width={110}
                             height={50}
@@ -105,9 +103,7 @@ function Header({ isHome = false }: HeaderProps) {
                             display: { tablet: "flex", desktop: "none" },
                         }}>
                         <Image
-                            src={getStaticAssetUrl(
-                                "heath_data_research_gateway_logo_white.svg"
-                            )}
+                            src={StaticImages.BASE.logo}
                             priority
                             width={110}
                             height={50}

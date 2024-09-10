@@ -16,10 +16,10 @@ import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanel from "@/components/InfoHoverPanel";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
+import { StaticImages } from "@/config/images";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { getStaticAssetUrl } from "@/utils/general";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
@@ -28,58 +28,58 @@ import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 const services = [
     {
         id: SearchCategory.DATASETS,
-        image: getStaticAssetUrl("datasets_biosamples.png"),
+        image: StaticImages.LANDING_PAGE.datasets,
         href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
         id: SearchCategory.DATA_USE,
-        image: getStaticAssetUrl("data_uses_research_projects.png"),
+        image: StaticImages.LANDING_PAGE.data_uses,
         href: `/search?type=${SearchCategory.DATA_USE}`,
     },
     {
         id: "feasibility",
-        image: getStaticAssetUrl("cohort_discovery.png"),
+        image: StaticImages.LANDING_PAGE.cohort_discovery,
         href: "/about/cohort-discovery",
     },
     {
         id: SearchCategory.TOOLS,
-        image: getStaticAssetUrl("analysis_scripts_software.png"),
+        image: StaticImages.LANDING_PAGE.analysis_scripts_software,
         href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: SearchCategory.PUBLICATIONS,
-        image: getStaticAssetUrl("publications.png"),
+        image: StaticImages.LANDING_PAGE.publications,
         href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
     {
         id: "dataProviders",
-        image: getStaticAssetUrl("data_custodians.png"),
+        image: StaticImages.LANDING_PAGE.data_custodians,
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
         id: "dataCustodianNetworks",
-        image: getStaticAssetUrl("data_custodian_network.png"),
+        image: StaticImages.LANDING_PAGE.data_custodian_network,
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
-        image: getStaticAssetUrl("collections.png"),
+        image: StaticImages.LANDING_PAGE.collections,
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: "phenotypes",
-        image: getStaticAssetUrl("phenotypes.png"),
+        image: StaticImages.LANDING_PAGE.phenotypes,
         href: "https://phenotypes.healthdatagateway.org/",
     },
     {
         id: "courses",
-        image: getStaticAssetUrl("courses.jpg"),
+        image: StaticImages.LANDING_PAGE.courses,
         href: "https://hdruklearn.org/",
     },
 
     // {
     //     id: "diseaseAtlas",
-    //     image: "/images/homepage/welcome-image.jpg",
+    //     image: "/images/homepage/welcome-image.webp",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
 ];
@@ -149,7 +149,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 <Container>
                     <InfoHoverPanel
                         items={responsiveServices}
-                        defaultImageSrc="/images/homepage/welcome-image.jpg"
+                        defaultImageSrc={
+                            StaticImages.LANDING_PAGE.welcome_image
+                        }
                     />
                 </Container>
             </Box>
