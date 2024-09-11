@@ -14,6 +14,7 @@ import MenuDropdown from "@/components/MenuDropdown";
 import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
+import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
 import { MenuIcon } from "@/consts/icons";
 
@@ -59,7 +60,7 @@ function Header({ isHome = false }: HeaderProps) {
                             mr: 1,
                         }}>
                         <Image
-                            src="/images/logos/gateway-white-logo.svg"
+                            src={StaticImages.BASE.logo}
                             priority
                             width={110}
                             height={50}
@@ -102,7 +103,7 @@ function Header({ isHome = false }: HeaderProps) {
                             display: { tablet: "flex", desktop: "none" },
                         }}>
                         <Image
-                            src="/images/logos/gateway-white-logo.svg"
+                            src={StaticImages.BASE.logo}
                             priority
                             width={110}
                             height={50}
