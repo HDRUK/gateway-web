@@ -1067,7 +1067,7 @@
                     "noRelationships": "No relationships found",
                     "isPartOf": "Dataset is part of ({ count })",
                     "isDerivedFrom": "Datasets this derives from ({ count })",
-                    "linkedDatasets": "Linkages Datasets ({ count })",
+                    "linkedDatasets": "Linked Datasets ({ count })",
                     "isMemberOf": "Similar Datasets ({ count })"
                 },
                 "Sources": {
@@ -1386,6 +1386,18 @@
                 "enquire": "Make feasibility enquiry for this dataset only",
                 "addToLibrary": "Add to library and continue searching",
                 "helpText": "To make a feasibility enquiry for multiple datasets:\n \n1. Add datasets to your library\n2. Generate a feasibility enquiry from your library page"
+            },
+            "DatasetRelationshipDialog": {
+                "isPartOf": "Dataset is part of",
+                "isDerivedFrom": "Datasets this derives from",
+                "linkedDatasets": "Linked Datasets",
+                "isMemberOf": "Similar Datasets",
+                "isPartOfTooltip": "A Dataset could be part of a larger group of Datasets. This relationship indicates that the Dataset is a component or subset of a broader collection of related Datasets.",
+                "isDerivedFromTooltip": "The data in this Dataset is derived or calculated from data in another Dataset. Some examples of types of derivations are if the Dataset is extracted or a subset of another Dataset. This relationship indicates that one Dataset is encompassed within another.",
+                "linkedDatasetsTooltip": "If this Dataset can be linked to another Dataset through a common identifier or variable.",
+                "isMemberOfTooltip": "If another Dataset is similar to this Dataset in some manner, but cannot necessarily be directly linked to the Dataset.",
+                "addToLibrary": "Add to library",
+                "removeFromLibrary": "Remove from library"
             }
         }
     }
