@@ -40,7 +40,6 @@
         "@visx/responsive": "^3.3.0",
         "@visx/scale": "^3.5.0",
         "@visx/shape": "^3.5.0",
-        "array.prototype.tosorted": "^1.1.4",
         "cookie": "^0.5.0",
         "dayjs": "^1.11.10",
         "eslint": "^8.37.0",

@@ -325,7 +325,7 @@ const getOpenSourceDevelopment = async () => {
 };
 
 const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
-    data.toSorted((a, b) => {
+    [...data].sort((a, b) => {
         return dayjs(b.node.newsFields.date).isBefore(
             dayjs(a.node.newsFields.date)
         )
