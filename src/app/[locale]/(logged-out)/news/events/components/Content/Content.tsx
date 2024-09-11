@@ -11,13 +11,13 @@ import NewsSummaryCard from "@/components/NewsSummaryCard";
 import Tabs from "@/components/Tabs";
 import { getReleaseByYear } from "@/utils/releaseNotes";
 
-interface EventsProps {
+interface ContentProps {
     data: EventNode[] | NewsNode[];
 }
 
 const TRANSLATIONS_NAMESPACE_RELEASES = "pages.newsEvents";
 
-const Events = ({ data }: EventsProps) => {
+const Content = ({ data }: ContentProps) => {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
     const startYear = 2021;
     const currentYear = new Date().getFullYear();
@@ -85,4 +85,4 @@ const Events = ({ data }: EventsProps) => {
     );
 };
 
-export default Events;
+export default Content;
