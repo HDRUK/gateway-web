@@ -17,6 +17,7 @@ import DatausesContent from "./components/DatausesContent";
 import { dataCustodianFields, accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
+const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Data Custodian",
@@ -56,7 +57,7 @@ export default async function DataCustodianItemPage({
                             width={554}
                             height={250}
                             alt={data.name}
-                            src="/images/data-providers/sample.thumbnail.jpg"
+                            src={data.team_logo || DEFAULT_IMAGE_URL}
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {data.name}
