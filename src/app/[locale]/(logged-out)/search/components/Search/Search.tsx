@@ -532,6 +532,13 @@ const Search = ({ filters }: SearchProps) => {
                 return t("searchExplainerDatasets");
         }
     };
+
+    const excludedDownloadSearchCategories = [
+        SearchCategory.PUBLICATIONS,
+        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.COLLECTIONS,
+    ];
+
     const showPublicationWelcomeMessage =
         !isSearching &&
         !queryParams.query &&
@@ -582,15 +589,19 @@ const Search = ({ filters }: SearchProps) => {
                             sortOptions={getSortOptions()}
                         />
                     </Box>
-                    <Button
-                        onClick={() =>
-                            !isDownloading && downloadSearchResults()
-                        }
-                        variant="text"
-                        startIcon={<DownloadIcon />}
-                        disabled={isDownloading || !data?.list?.length}>
-                        {t("downloadResults")}
-                    </Button>
+                    {!excludedDownloadSearchCategories.includes(
+                        queryParams.type
+                    ) && (
+                        <Button
+                            onClick={() =>
+                                !isDownloading && downloadSearchResults()
+                            }
+                            variant="text"
+                            startIcon={<DownloadIcon />}
+                            disabled={isDownloading || !data?.list?.length}>
+                            {t("downloadResults")}
+                        </Button>
+                    )}
                     <Button
                         variant="outlined"
                         color="secondary"

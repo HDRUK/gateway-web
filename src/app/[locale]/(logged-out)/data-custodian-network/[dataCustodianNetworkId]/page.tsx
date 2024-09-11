@@ -56,9 +56,10 @@ export default async function DataCustodianNetworkPage({
                             height={250}
                             alt={summaryData.name}
                             src="/images/data-providers/sample.thumbnail.jpg"
-                            style={{ objectFit: "scale-down" }}
                         />
-                        <Typography variant="h1">{summaryData.name}</Typography>
+                        <Typography variant="h1" sx={{ ml: 2 }}>
+                            {summaryData.name}
+                        </Typography>
                     </Box>
                     <ActionBar />
                     <Box

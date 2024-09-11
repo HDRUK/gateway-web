@@ -18,7 +18,6 @@ const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 
 interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
-    teamId: number;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
     linkageCounts: { [key: string]: number };
@@ -26,7 +25,6 @@ interface DatasetMindMapProps extends ReactFlowProps {
 
 const DatasetMindMap = ({
     data,
-    teamId,
     populatedSections,
     linkageCounts,
     panOnDrag = false,
@@ -45,10 +43,7 @@ const DatasetMindMap = ({
             ...rootNode,
             data: {
                 ...rootNode.data,
-                label:
-                    data.metadata.metadata.summary.publisher.publisherName ||
-                    t(rootNode.data.name),
-                href: `/data-custodian/${teamId}`,
+                label: "Dataset",
             },
         };
     }, [data, t]);
