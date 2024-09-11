@@ -21,6 +21,7 @@ interface getColumnsProps {
     setSort: (sort: { key: string; direction: string }) => void;
     setRequestStatus: (status: string) => void;
     requestStatus?: CohortRequestStatus;
+    translations: { [id: string]: string };
 }
 
 const updateSort =
@@ -45,7 +46,11 @@ const statusRadios = [
     { label: "Expired", value: "EXPIRED" },
 ];
 
-const showAlert = (date: string, status: string) => {
+const showAlert = (
+    date: string,
+    status: string,
+    translations: { [id: string]: string }
+) => {
     const actionedDate = new Date(date);
     const currentDate = new Date();
 
@@ -57,9 +62,9 @@ const showAlert = (date: string, status: string) => {
     const hasExpired = status === "EXPIRED";
 
     const toolTipMessage = hasExpired
-        ? "This user’s access is expired"
+        ? translations.accountExpired
         : showWarning
-        ? "This user access is close to expiration date"
+        ? translations.expiryWarning
         : "";
 
     const showToolTip = hasExpired || showWarning;
@@ -72,6 +77,7 @@ const getColumns = ({
     sort,
     setRequestStatus,
     requestStatus,
+    translations,
 }: getColumnsProps): ColumnDef<CohortRequest>[] => {
     return [
         {
@@ -208,12 +214,7 @@ const getColumns = ({
                     textAlign="left">
                     <TooltipIcon
                         label="Date Actioned"
-                        content={
-                            <div>
-                                This is the date for the latest status update
-                                for this user
-                            </div>
-                        }
+                        content={translations.dateActionedTooltip}
                     />{" "}
                     <SortIcon
                         setSort={setSort}
@@ -226,7 +227,8 @@ const getColumns = ({
             cell: ({ row }) => {
                 const { showToolTip, toolTipMessage, hasExpired } = showAlert(
                     row.original.updated_at,
-                    row.original.request_status
+                    row.original.request_status,
+                    translations
                 );
 
                 return (
