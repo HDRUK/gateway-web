@@ -1,4 +1,5 @@
 /* eslint-disable default-param-last */
+import dayjs from "dayjs";
 import {
     CMSPageResponse,
     CMSPostsResponse,
@@ -323,6 +324,15 @@ const getOpenSourceDevelopment = async () => {
     return data?.page || null;
 };
 
+const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
+    data.toSorted((a, b) => {
+        return dayjs(b.node.newsFields.date).isBefore(
+            dayjs(a.node.newsFields.date)
+        )
+            ? -1
+            : 1;
+    });
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -347,4 +357,5 @@ export {
     getWorkWithUs,
     getMetadataOnboarding,
     getOpenSourceDevelopment,
+    getSortedNewsEventsByDate,
 };
