@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
@@ -18,7 +19,11 @@ import {
 } from "@/config/forms/cohortAccountSearch";
 import { getColumns } from "./CohortTable.utils";
 
+const TRANSLATION_PATH = `pages.account.profile.cohortDiscoveryAdmin`;
+
 const CohortTable = () => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [sort, setSort] = useState({ key: "updated_at", direction: "asc" });
     const [requestStatus, setRequestStatus] = useState<CohortRequestStatus>();
@@ -46,12 +51,19 @@ const CohortTable = () => {
         { withPagination: true, keepPreviousData: true }
     );
 
+    const translations = {
+        accountExpired: t("accountExpired"),
+        expiryWarning: t("expiryWarning"),
+        dateActionedTooltip: t("dateActionedTooltip"),
+    };
+
     const { lastPage, list } = data || {};
     const columns = getColumns({
         setSort,
         sort,
         setRequestStatus,
         requestStatus,
+        translations,
     });
 
     if (!list) return <Loading />;

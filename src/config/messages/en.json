@@ -181,7 +181,10 @@
                 "text": "Use this form to register an account and update your account on the Gateway",
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
-                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
+                    "dateActionedTooltip": "This is the date for the latest status update for this user",
+                    "accountExpired": "This user's access is expired",
+                    "expiryWarning": "This user access is close to expiration date"
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",
@@ -806,7 +809,7 @@
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
                             "publicationType": "Publication type",
-                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
+                            "publicationTypeTooltip": "The type of publication: research articles, review articles, preprints or books and documents",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -825,12 +828,8 @@
                             "geographicLocationTooltip": "The geographical area covered by the dataset"
                         },
                         "tool": {
-                            "dataProvider": "Data Custodian",
-                            "dataProviderTooltip": "The name of the data custodian (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
                             "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
-                            "category": "Category",
-                            "categoryTooltip": "Category",
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
@@ -1068,7 +1067,7 @@
                     "noRelationships": "No relationships found",
                     "isPartOf": "Dataset is part of ({ count })",
                     "isDerivedFrom": "Datasets this derives from ({ count })",
-                    "linkedDatasets": "Linkages Datasets ({ count })",
+                    "linkedDatasets": "Linked Datasets ({ count })",
                     "isMemberOf": "Similar Datasets ({ count })"
                 },
                 "Sources": {
@@ -1283,6 +1282,18 @@
             "bookmarks": "Bookmarks"
         },
         "dialogs": {
+            "DarEnquiryDialog": {
+                "titleEnabled": "This feature is temporarily unavailable",
+                "messageEnabled": "In the meantime, you can still contact the Data Custodian via the general enquiry or feasibility enquiry form to discuss your requirements and guide you through their Data Access Request process.",
+                "titleNotEnabled": "Data access requests not enabled for this Data Custodian",
+                "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
+                "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
+                "feasibilityEnquiryButton": "Make feasibility enquiry for this dataset",
+                "generalEnquiryButton": "Make general enquiry for this dataset",
+                "accessInformationButton": "Access information",
+                "feasibilityEnquiryLink": "feasibility enquiry",
+                "generalEnquiryLink": "general enquiry"
+            },
             "SaveSearch": {
                 "name": "Name your search query",
                 "nameRequired": "A search query title is required",
@@ -1375,6 +1386,18 @@
                 "enquire": "Make feasibility enquiry for this dataset only",
                 "addToLibrary": "Add to library and continue searching",
                 "helpText": "To make a feasibility enquiry for multiple datasets:\n \n1. Add datasets to your library\n2. Generate a feasibility enquiry from your library page"
+            },
+            "DatasetRelationshipDialog": {
+                "isPartOf": "Dataset is part of",
+                "isDerivedFrom": "Datasets this derives from",
+                "linkedDatasets": "Linked Datasets",
+                "isMemberOf": "Similar Datasets",
+                "isPartOfTooltip": "A Dataset could be part of a larger group of Datasets. This relationship indicates that the Dataset is a component or subset of a broader collection of related Datasets.",
+                "isDerivedFromTooltip": "The data in this Dataset is derived or calculated from data in another Dataset. Some examples of types of derivations are if the Dataset is extracted or a subset of another Dataset. This relationship indicates that one Dataset is encompassed within another.",
+                "linkedDatasetsTooltip": "If this Dataset can be linked to another Dataset through a common identifier or variable.",
+                "isMemberOfTooltip": "If another Dataset is similar to this Dataset in some manner, but cannot necessarily be directly linked to the Dataset.",
+                "addToLibrary": "Add to library",
+                "removeFromLibrary": "Remove from library"
             }
         }
     }
