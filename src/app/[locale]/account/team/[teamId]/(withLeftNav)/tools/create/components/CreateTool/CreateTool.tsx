@@ -127,7 +127,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
         const formData = {
             ...existingToolData,
-            dataset: defaultDatasetValue, // TODO - update this when BE returns dataset linkages correctly
+            dataset: existingToolData.datasets,
             programming_language:
                 existingToolData?.programming_languages?.map(item => item.id) ||
                 [],

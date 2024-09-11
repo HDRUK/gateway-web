@@ -57,10 +57,10 @@ const formArrayFields = [
         label: "Relationship",
         component: inputComponents.Select,
         options: [
-            { label: "Used on", value: "USED_ON" },
-            { label: "Derived from (Tool)", value: "DERIVED_FROM" },
-            { label: "Used in (Tool)", value: "USED_IN" },
-            { label: "Created from (Tool)", value: "CREATED_FROM" },
+            { label: "Used on", value: "Used on" },
+            { label: "Derived from (Tool)", value: "Derived from (Tool)" },
+            { label: "Used in (Tool)", value: "Used in (Tool)" },
+            { label: "Created from (Tool)", value: "Created from (Tool)" },
         ],
     },
     {
