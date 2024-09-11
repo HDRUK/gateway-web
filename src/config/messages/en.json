@@ -643,8 +643,6 @@
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
-                "label": "Data Uses / Research Projects",
-                "title": "Data Uses / Research Projects",
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
@@ -1055,9 +1053,9 @@
                     "dataOnly": "Data only"
                 },
                 "DatasetMindMap": {
-                    "tools": "Data Analysis Scripts & Software",
+                    "tools": "Analysis Scripts & Software",
                     "durs": "Data Uses / Research Projects",
-                    "collections": "Collections",
+                    "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
                     "root": "Data Custodian",
                     "structuralMetadata": "Data variables"
