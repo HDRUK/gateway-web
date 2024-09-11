@@ -11,11 +11,16 @@ const nextConfig = withNextIntl({
         API_VERSION: process.env.NEXT_PUBLIC_API_VERSION,
     },
     images: {
-        domains: [process.env.NEXT_PUBLIC_MEDIA_DOMAIN || ""],
         remotePatterns: [
             {
                 protocol: "https",
                 hostname: "storage.googleapis.com",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: process.env.NEXT_PUBLIC_MEDIA_DOMAIN || "",
                 port: "",
                 pathname: "/**",
             },
