@@ -42,7 +42,6 @@ const rootNode = {
         id: 0,
         name: "root",
         label: undefined,
-        href: "/data-custodian",
     },
 };
 
