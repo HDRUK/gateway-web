@@ -20,7 +20,7 @@ const nextConfig = withNextIntl({
             },
             {
                 protocol: "https",
-                hostname: process.env.NEXT_PUBLIC_MEDIA_DOMAIN,
+                hostname: process.env.NEXT_PUBLIC_MEDIA_DOMAIN || "",
                 port: "",
                 pathname: "/**",
             },
