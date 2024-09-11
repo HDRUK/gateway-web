@@ -122,7 +122,6 @@ export default async function DatasetItemPage({
                                 }}>
                                 <DatasetMindMap
                                     data={datasetVersion}
-                                    teamId={data?.team_id}
                                     populatedSections={populatedSections}
                                     linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
