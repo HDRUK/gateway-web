@@ -4,16 +4,18 @@ import CardStacked from "../CardStacked/CardStacked";
 
 interface ResultCardProps {
     result: SearchResultCollection;
-    imgUrl?: string;
 }
 
-const ResultCollectionCard = ({ result, imgUrl }: ResultCardProps) => {
+const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
+
+const ResultCollectionCard = ({ result }: ResultCardProps) => {
+    const { _id: id } = result;
+
     return (
         <CardStacked
-            // eslint-disable-next-line no-underscore-dangle
-            href={`${RouteName.COLLECTION_ITEM}/${result._id}`}
+            href={`${RouteName.COLLECTION_ITEM}/${id}`}
             title={result.name}
-            imgUrl={result?.image_link || imgUrl || ""}
+            imgUrl={result?.image_link || DEFAULT_IMAGE_URL}
         />
     );
 };
