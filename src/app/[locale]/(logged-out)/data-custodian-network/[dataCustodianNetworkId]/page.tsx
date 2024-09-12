@@ -8,6 +8,7 @@ import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { StaticImages } from "@/config/images";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -16,7 +17,6 @@ import IntroductionContent from "./components/IntroductionContent";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
-const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
 
 export default async function DataCustodianNetworkPage({
     params,
@@ -57,7 +57,10 @@ export default async function DataCustodianNetworkPage({
                             height={250}
                             style={{ width: "auto" }}
                             alt={summaryData.name}
-                            src={summaryData?.img_url || DEFAULT_IMAGE_URL}
+                            src={
+                                summaryData?.img_url ||
+                                StaticImages.BASE.placeholder
+                            }
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {summaryData.name}

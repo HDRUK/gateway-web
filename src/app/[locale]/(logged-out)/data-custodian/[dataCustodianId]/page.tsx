@@ -9,6 +9,7 @@ import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { StaticImages } from "@/config/images";
 import { getTeamSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import CollectionsContent from "./components/CollectionsContent";
@@ -17,7 +18,6 @@ import DatausesContent from "./components/DatausesContent";
 import { dataCustodianFields, accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
-const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Data Custodian",
@@ -58,7 +58,9 @@ export default async function DataCustodianItemPage({
                             height={250}
                             style={{ width: "auto" }}
                             alt={data.name}
-                            src={data?.team_logo || DEFAULT_IMAGE_URL}
+                            src={
+                                data?.team_logo || StaticImages.BASE.placeholder
+                            }
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {data.name}
