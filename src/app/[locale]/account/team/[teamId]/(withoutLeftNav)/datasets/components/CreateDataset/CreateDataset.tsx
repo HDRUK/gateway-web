@@ -549,19 +549,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const isStructuralMetadataSection =
         selectedFormSection === STRUCTURAL_METADATA_FORM_SECTION;
 
-    // Dataset needs to be saved before adding structural metadata
-    useEffect(() => {
-        if (selectedFormSection !== STRUCTURAL_METADATA_FORM_SECTION) {
-            return;
-        }
-
-        if (!datasetId) {
-            setAutoSaveDraft(true);
-            handleSaveDraft();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFormSection, datasetId]);
-
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         onSuccess: handleSaveDraft,

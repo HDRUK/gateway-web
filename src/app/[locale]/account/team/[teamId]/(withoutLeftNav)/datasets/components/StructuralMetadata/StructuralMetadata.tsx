@@ -142,14 +142,12 @@ const StructuralMetadataSection = ({
                 </Typography>
             </Box>
 
-            {datasetId && (
-                <UploadFile
-                    apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload&dataset_id=${datasetId}`}
-                    fileUploadedAction={fileProcessedAction}
-                    isUploading={setIsUploading}
-                    allowReuploading
-                />
-            )}
+            <UploadFile
+                apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload`} // &dataset_id=${datasetId}
+                fileUploadedAction={fileProcessedAction}
+                isUploading={setIsUploading}
+                allowReuploading
+            />
 
             {structuralMetadata && !isUploading && (
                 <Box sx={{ mt: 4, p: 0 }}>
