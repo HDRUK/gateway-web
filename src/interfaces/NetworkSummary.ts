@@ -13,6 +13,7 @@ interface NetworkSummary {
     tools: Tool[];
     publications: Publication[];
     teams_counts: DataCustodian[];
+    img_url?: string;
 }
 
 export type { NetworkSummary };
