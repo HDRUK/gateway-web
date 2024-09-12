@@ -100,7 +100,7 @@ interface Metadata {
         dataUses: string[];
         syntheticDataWebLink: string;
     };
-    structuralMetadata?: StructuralMetadata[];
+    structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
 }
 

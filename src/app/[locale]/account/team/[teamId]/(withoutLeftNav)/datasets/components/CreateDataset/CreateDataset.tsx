@@ -174,7 +174,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             latestMetadata = omit(latestMetadata, "summary.title");
         }
 
-        setStructuralMetadata(latestMetadata?.structuralMetadata || []);
+        setStructuralMetadata(latestMetadata?.structuralMetadata?.tables || []);
         const mappedFormData = mapExistingDatasetToFormFields(
             schemaFields,
             latestMetadata
