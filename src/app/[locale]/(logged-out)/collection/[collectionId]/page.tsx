@@ -24,6 +24,7 @@ export const metadata = {
 };
 
 const TRANSLATION_PATH = "pages.collection";
+const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
 
 export default async function CollectionItemPage({
     params,
@@ -67,8 +68,9 @@ export default async function CollectionItemPage({
                         <Image
                             width={554}
                             height={250}
+                            style={{ width: "auto" }}
                             alt={toTitleCase(collection.name)}
-                            src="/images/collections/banner.jpeg"
+                            src={collection.image_link || DEFAULT_IMAGE_URL}
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {toTitleCase(collection.name)}
