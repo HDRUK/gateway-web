@@ -123,13 +123,12 @@ export interface SearchResultTool extends SearchResultBase {
 
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
-    image_link: string;
-    _id: string;
+    image_link?: string;
 }
 
 export interface SearchResultDataProvider extends SearchResultBase {
     name: string;
-    _id: string;
+    team_logo?: string;
 }
 
 export type SearchResult =
@@ -137,7 +136,8 @@ export type SearchResult =
     | SearchResultDataUse
     | SearchResultPublication
     | SearchResultCollection
-    | SearchResultTool;
+    | SearchResultTool
+    | SearchResultDataProvider;
 
 export interface SearchForm {
     query: string;

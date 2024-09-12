@@ -441,7 +441,6 @@ const Search = ({ filters }: SearchProps) => {
             case SearchCategory.DATA_PROVIDERS:
                 return (
                     <ResultCardDataProvider
-                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
                         result={result as SearchResultDataProvider}
                     />
                 );

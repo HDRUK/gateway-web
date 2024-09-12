@@ -4,19 +4,18 @@ import CardStacked from "../CardStacked/CardStacked";
 
 interface ResultCardDataProviderProps {
     result: SearchResultDataProvider;
-    imgUrl: string;
 }
 
-const ResultCardDataProvider = ({
-    result,
-    imgUrl,
-}: ResultCardDataProviderProps) => {
+const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
+
+const ResultCardDataProvider = ({ result }: ResultCardDataProviderProps) => {
+    const { _id: id } = result;
+
     return (
         <CardStacked
-            // eslint-disable-next-line no-underscore-dangle
-            href={`${RouteName.DATA_PROVIDERS_ITEM}/${result._id}`}
+            href={`${RouteName.DATA_PROVIDERS_ITEM}/${id}`}
             title={result.name}
-            imgUrl={imgUrl}
+            imgUrl={result?.team_logo || DEFAULT_IMAGE_URL}
         />
     );
 };

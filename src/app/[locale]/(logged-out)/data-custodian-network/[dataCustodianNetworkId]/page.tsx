@@ -16,6 +16,7 @@ import IntroductionContent from "./components/IntroductionContent";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
+const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
 
 export default async function DataCustodianNetworkPage({
     params,
@@ -54,8 +55,9 @@ export default async function DataCustodianNetworkPage({
                         <Image
                             width={554}
                             height={250}
+                            style={{ width: "auto" }}
                             alt={summaryData.name}
-                            src="/images/data-providers/sample.thumbnail.jpg"
+                            src={summaryData?.img_url || DEFAULT_IMAGE_URL}
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {summaryData.name}
