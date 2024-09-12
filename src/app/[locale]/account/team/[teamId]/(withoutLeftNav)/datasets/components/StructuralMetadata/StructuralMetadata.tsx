@@ -6,6 +6,7 @@ import {
     ReactFragment,
     ReactNode,
     useState,
+    useEffect,
 } from "react";
 import { colors } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -34,9 +35,9 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.
 
 interface StructuralMetadataProps {
     selectedFormSection: string;
-    datasetId?: string;
     structuralMetadata?: StructuralMetadata[];
     fileProcessedAction: () => void;
+    handleToggleUploading: (isUploading: boolean) => void;
 }
 
 const columnHelper = createColumnHelper();
@@ -72,9 +73,9 @@ const renderTableHeader = (headerText: string) => (
 
 const StructuralMetadataSection = ({
     selectedFormSection,
-    datasetId,
     structuralMetadata,
     fileProcessedAction,
+    handleToggleUploading,
 }: StructuralMetadataProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -106,6 +107,10 @@ const StructuralMetadataSection = ({
                 size: column.path === "metadataField" ? 70 : 150,
             })
         );
+
+    useEffect(() => {
+        handleToggleUploading(isUploading);
+    }, [isUploading]);
 
     return (
         <Paper
@@ -143,11 +148,13 @@ const StructuralMetadataSection = ({
             </Box>
 
             <UploadFile
-                apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload`} // &dataset_id=${datasetId}
+                apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload`}
                 fileUploadedAction={fileProcessedAction}
                 isUploading={setIsUploading}
                 allowReuploading
             />
+
+            {isUploading && <Typography>{t("uploadMessage")}</Typography>}
 
             {structuralMetadata && !isUploading && (
                 <Box sx={{ mt: 4, p: 0 }}>

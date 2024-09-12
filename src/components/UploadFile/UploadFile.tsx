@@ -79,6 +79,8 @@ const UploadFile = ({
                     fileScanStatus?.entity_id > 0
                 ) {
                     fileUploadedAction(fileScanStatus?.entity_id);
+                } else if (fileScanStatus?.structural_metadata) {
+                    fileUploadedAction(fileScanStatus?.structural_metadata);
                 } else {
                     handleError();
                 }

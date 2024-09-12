@@ -419,7 +419,8 @@
                                 "completionGuidance5": "Type of data contained in the column.",
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
                                 "downloadTemplate": "Download data dictionary template",
-                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
+                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata.",
+                                "uploadMessage": "Please wait while we scan and process your file. When processing has finished, your data will display below and you will be able to submit the Metadata to the Gateway. Scanning and processing typically takes 30-45 seconds, please do not leave this page"
                             },
                             "discardChanges": "Discard changes",
                             "saveAsDraft": "Save changes as draft",

@@ -125,11 +125,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     const { push } = useRouter();
 
-    const {
-        data: dataset,
-        isLoading,
-        mutate: refetchDataset,
-    } = useGet<Dataset>(
+    const { data: dataset, isLoading } = useGet<Dataset>(
         searchParams?.get("status") === DataStatus.DRAFT
             ? `${apis.datasetsV1Url}/${datasetId}`
             : `${apis.datasetsV1Url}/${datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
@@ -138,8 +134,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     const [hasError, setHasError] = useState<boolean>();
     const [existingFormData, setExistingFormData] = useState<Metadata>();
-    const [struturalMetadata, setStructuralMetadata] =
-        useState<StructuralMetadata[]>();
+    const [structuralMetadata, setStructuralMetadata] = useState<
+        StructuralMetadata[]
+    >([]);
 
     const schemaFields = currentFormJSON.schema_fields;
 
@@ -177,6 +174,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             latestMetadata = omit(latestMetadata, "summary.title");
         }
 
+        setStructuralMetadata(latestMetadata?.structuralMetadata || []);
         const mappedFormData = mapExistingDatasetToFormFields(
             schemaFields,
             latestMetadata
@@ -184,17 +182,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
         setExistingFormData(mappedFormData);
     }, [dataset, isLoading]);
-
-    // useEffect(() => {
-    //     if (!dataset) {
-    //         return;
-    //     }
-
-    //     const metadataLocation = getMetadata(isDraft);
-
-    //     const latestMetadata = get(dataset, metadataLocation);
-    //     setStructuralMetadata(latestMetadata?.structuralMetadata);
-    // }, [dataset]);
 
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
@@ -383,69 +370,80 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             schemaFields
         );
 
-        const formPayload = isEditing
-            ? {
-                  ...omit(dataset, ["versions"]),
-                  team_id: teamId,
-                  user_id: user.id,
-                  status: saveAsDraft
-                      ? ("DRAFT" as DatasetStatus)
-                      : ("ACTIVE" as DatasetStatus),
-                  create_origin: "MANUAL" as CreateOrigin,
-                  metadata: {
-                      schemaModel: SCHEMA_NAME,
-                      schemaVersion: SCHEMA_VERSION,
-                      ...dataset?.versions[0].metadata,
+        const formPayload =
+            isEditing && !isDuplicate
+                ? {
+                      ...omit(dataset, ["versions"]),
+                      team_id: teamId,
+                      user_id: user.id,
+                      status: saveAsDraft
+                          ? ("DRAFT" as DatasetStatus)
+                          : ("ACTIVE" as DatasetStatus),
+                      create_origin: "MANUAL" as CreateOrigin,
                       metadata: {
-                          observations: [],
-                          coverage: null,
-                          ...mappedFormData,
+                          schemaModel: SCHEMA_NAME,
+                          schemaVersion: SCHEMA_VERSION,
+                          ...dataset?.versions[0].metadata,
+                          metadata: {
+                              observations: [],
+                              coverage: null,
+                              structuralMetadata: {
+                                  tables: structuralMetadata,
+                              },
+                              ...mappedFormData,
+                          },
                       },
-                  },
-              }
-            : isDuplicate
-            ? {
-                  ...omit(dataset, ["id", "versions"]),
-                  status: saveAsDraft
-                      ? ("DRAFT" as DatasetStatus)
-                      : ("ACTIVE" as DatasetStatus),
-                  metadata: {
-                      schemaModel: SCHEMA_NAME,
-                      schemaVersion: SCHEMA_VERSION,
-                      ...dataset?.versions[0].metadata,
+                  }
+                : isDuplicate
+                ? {
+                      ...omit(dataset, ["id", "versions"]),
+                      status: saveAsDraft
+                          ? ("DRAFT" as DatasetStatus)
+                          : ("ACTIVE" as DatasetStatus),
                       metadata: {
-                          observations: [],
-                          coverage: null,
-                          ...mappedFormData,
+                          schemaModel: SCHEMA_NAME,
+                          schemaVersion: SCHEMA_VERSION,
+                          ...dataset?.versions[0].metadata,
+                          metadata: {
+                              observations: [],
+                              coverage: null,
+                              structuralMetadata: {
+                                  tables: structuralMetadata,
+                              },
+                              ...mappedFormData,
+                          },
                       },
-                  },
-              }
-            : {
-                  team_id: teamId,
-                  user_id: user.id,
-                  status: saveAsDraft
-                      ? ("DRAFT" as DatasetStatus)
-                      : ("ACTIVE" as DatasetStatus),
-                  create_origin: "MANUAL" as CreateOrigin,
-                  metadata: {
-                      schemaModel: SCHEMA_NAME,
-                      schemaVersion: SCHEMA_VERSION,
+                  }
+                : {
+                      team_id: teamId,
+                      user_id: user.id,
+                      status: saveAsDraft
+                          ? ("DRAFT" as DatasetStatus)
+                          : ("ACTIVE" as DatasetStatus),
+                      create_origin: "MANUAL" as CreateOrigin,
                       metadata: {
-                          issued: new Date().toString(),
-                          modified: new Date().toString(),
-                          observations: [],
-                          coverage: null,
-                          ...mappedFormData,
+                          schemaModel: SCHEMA_NAME,
+                          schemaVersion: SCHEMA_VERSION,
+                          metadata: {
+                              issued: new Date().toString(),
+                              modified: new Date().toString(),
+                              observations: [],
+                              coverage: null,
+                              structuralMetadata: {
+                                  tables: structuralMetadata,
+                              },
+                              ...mappedFormData,
+                          },
                       },
-                  },
-              };
+                  };
         try {
-            const formPostRequest = isEditing
-                ? await updateDataset(
-                      params.datasetId,
-                      formPayload as NewDataset
-                  )
-                : await createDataset(formPayload as NewDataset);
+            const formPostRequest =
+                isEditing && !isDuplicate
+                    ? await updateDataset(
+                          params.datasetId,
+                          formPayload as NewDataset
+                      )
+                    : await createDataset(formPayload as NewDataset);
 
             if (formPostRequest !== null) {
                 reset({});
@@ -631,14 +629,17 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                         selectedFormSection={
                                             selectedFormSection
                                         }
-                                        datasetId={datasetId}
-                                        structuralMetadata={struturalMetadata}
-                                        fileProcessedAction={() => {
-                                            refetchDataset();
+                                        structuralMetadata={structuralMetadata}
+                                        fileProcessedAction={structMetadata => {
                                             notificationService.apiSuccess(
                                                 "Your data has been successfully uploaded"
                                             );
+                                            console.log(structMetadata);
+                                            setStructuralMetadata(
+                                                structMetadata
+                                            );
                                         }}
+                                        handleToggleUploading={setIsSaving}
                                     />
                                 )}
 
