@@ -73,7 +73,7 @@ export default async function CollectionItemPage({
                             src={collection.image_link || DEFAULT_IMAGE_URL}
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
-                            {toTitleCase(collection.name)}
+                            {collection.name}
                         </Typography>
                     </Box>
 
