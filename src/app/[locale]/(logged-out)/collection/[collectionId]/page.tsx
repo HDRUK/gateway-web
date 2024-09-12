@@ -7,6 +7,7 @@ import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { StaticImages } from "@/config/images";
 import { getCollection, getDataset } from "@/utils/api";
 import { removeEmpty } from "@/utils/array";
 import { getLatestVersion } from "@/utils/dataset";
@@ -24,7 +25,6 @@ export const metadata = {
 };
 
 const TRANSLATION_PATH = "pages.collection";
-const DEFAULT_IMAGE_URL = `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/default_placeholder.png`;
 
 export default async function CollectionItemPage({
     params,
@@ -70,7 +70,10 @@ export default async function CollectionItemPage({
                             height={250}
                             style={{ width: "auto" }}
                             alt={toTitleCase(collection.name)}
-                            src={collection.image_link || DEFAULT_IMAGE_URL}
+                            src={
+                                collection.image_link ||
+                                StaticImages.BASE.placeholder
+                            }
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {collection.name}
