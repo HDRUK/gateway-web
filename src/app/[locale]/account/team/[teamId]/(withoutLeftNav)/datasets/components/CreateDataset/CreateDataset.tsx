@@ -185,16 +185,16 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         setExistingFormData(mappedFormData);
     }, [dataset, isLoading]);
 
-    useEffect(() => {
-        if (!dataset) {
-            return;
-        }
+    // useEffect(() => {
+    //     if (!dataset) {
+    //         return;
+    //     }
 
-        const metadataLocation = getMetadata(isDraft);
+    //     const metadataLocation = getMetadata(isDraft);
 
-        const latestMetadata = get(dataset, metadataLocation);
-        setStructuralMetadata(latestMetadata?.structuralMetadata);
-    }, [dataset]);
+    //     const latestMetadata = get(dataset, metadataLocation);
+    //     setStructuralMetadata(latestMetadata?.structuralMetadata);
+    // }, [dataset]);
 
     const generateValidationRules = useMemo(
         () => (validationFields: FormHydrationValidation[]) => {
@@ -224,7 +224,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [guidanceText, setGuidanceText] = useState<string>();
-    const [autoSaveDraft, setAutoSaveDraft] = useState<boolean>();
 
     const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
     const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
@@ -309,8 +308,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         : 0;
 
     const [legendItems, setLegendItems] = useState<LegendItem[]>([]);
-    const [submissionRequested, setSubmissionRequested] =
-        useState<boolean>(false);
+    const [submissionRequested, setSubmissionRequested] = useState<boolean>(
+        !!isEditing
+    );
 
     // When form loaded - select first form section with displayed fields
     useEffect(() => {
@@ -341,7 +341,8 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                 clearErrors,
                 getValues,
                 trigger,
-                submissionRequested
+                submissionRequested,
+                formState.dirtyFields
             );
             setLegendItems(items);
         };
@@ -374,7 +375,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         };
     }, [isLoading]);
 
-    const postForm = async (formData: Metadata) => {
+    const postForm = async (formData: Metadata, saveAsDraft: boolean) => {
         setIsSaving(true);
 
         const mappedFormData: Partial<Metadata> = mapFormFieldsForSubmission(
@@ -387,7 +388,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                   ...omit(dataset, ["versions"]),
                   team_id: teamId,
                   user_id: user.id,
-                  status: isDraft
+                  status: saveAsDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   create_origin: "MANUAL" as CreateOrigin,
@@ -405,7 +406,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             : isDuplicate
             ? {
                   ...omit(dataset, ["id", "versions"]),
-                  status: isDraft
+                  status: saveAsDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   metadata: {
@@ -422,7 +423,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             : {
                   team_id: teamId,
                   user_id: user.id,
-                  status: isDraft
+                  status: saveAsDraft
                       ? ("DRAFT" as DatasetStatus)
                       : ("ACTIVE" as DatasetStatus),
                   create_origin: "MANUAL" as CreateOrigin,
@@ -446,7 +447,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                   )
                 : await createDataset(formPayload as NewDataset);
 
-            if (formPostRequest !== null && !autoSaveDraft) {
+            if (formPostRequest !== null) {
                 reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
@@ -454,9 +455,8 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             } else {
                 setIsSaving(false);
 
-                if (formPostRequest && autoSaveDraft) {
+                if (formPostRequest) {
                     setDatasetId(formPostRequest as string);
-                    setAutoSaveDraft(false);
                 }
             }
         } catch (err) {
@@ -464,20 +464,20 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         }
     };
 
-    const formSubmit = (formData: Metadata) => {
-        postForm(formData);
+    const formSubmit = (formData: Metadata, saveAsDraft: boolean) => {
+        postForm(formData, saveAsDraft);
     };
 
-    const handleFormSubmission = async (isDraft: boolean) => {
-        if (!isDraft) {
+    const handleFormSubmission = async (saveAsDraft: boolean) => {
+        if (!saveAsDraft) {
             const formIsValid = await trigger();
             if (formIsValid) {
-                handleSubmit(formSubmit)();
+                handleSubmit(data => formSubmit(data, saveAsDraft))();
             } else {
                 setSelectedFormSection(formSections[formSections.length - 1]);
             }
         } else {
-            handleSubmit(formSubmit)();
+            handleSubmit(data => formSubmit(data, saveAsDraft))();
         }
     };
 
@@ -551,7 +551,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
-        onSuccess: handleSaveDraft,
+        onSuccess: () => handleSaveDraft,
         modalProps: {
             cancelText: t("discardChanges"),
             confirmText: t("saveAsDraft"),
@@ -643,7 +643,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                 )}
 
                                 {!isStructuralMetadataSection && (
-                                    <Form onSubmit={handleSubmit(formSubmit)}>
+                                    <Form>
                                         <Paper
                                             sx={{
                                                 marginTop: "10px",
