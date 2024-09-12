@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -42,6 +43,7 @@ import usePost from "@/hooks/usePost";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
+import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
     FILTER_CONTAINS_TISSUE,
@@ -70,6 +72,7 @@ import searchFormConfig, {
     sortByOptionsDataset,
     sortByOptionsTool,
     sortByOptionsPublications,
+    PAGE_FIELD,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
@@ -116,7 +119,9 @@ const Search = ({ filters }: SearchProps) => {
     };
 
     const [resultsView, setResultsView] = useState(
-        getParamString(VIEW_FIELD) || ViewType.TABLE
+        getParamString(VIEW_FIELD) ||
+            Cookies.get(config.VIEW_TYPE) ||
+            ViewType.TABLE
     );
 
     const updateQueryString = useCallback(
@@ -133,7 +138,7 @@ const Search = ({ filters }: SearchProps) => {
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
-        page: "1",
+        page: getParamString(PAGE_FIELD) || "1",
         per_page: "25",
         type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
@@ -178,11 +183,13 @@ const Search = ({ filters }: SearchProps) => {
     };
 
     useEffect(() => {
-        if (
-            resultsView !== ViewType.LIST &&
-            queryParams.type !== SearchCategory.DATASETS
-        ) {
-            setResultsView(ViewType.LIST);
+        const viewType =
+            queryParams.type === SearchCategory.DATASETS
+                ? Cookies.get(config.VIEW_TYPE) || ViewType.TABLE
+                : ViewType.LIST;
+
+        if (resultsView !== viewType) {
+            setResultsView(viewType);
         }
     }, [queryParams.type, resultsView]);
 
@@ -300,6 +307,7 @@ const Search = ({ filters }: SearchProps) => {
         setQueryParams({
             ...queryParams,
             sort: searchFormConfig.defaultValues.sort,
+            page: "1",
             type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
@@ -380,6 +388,7 @@ const Search = ({ filters }: SearchProps) => {
     const handleChangeView = (viewType: ViewType) => {
         setResultsView(viewType);
         updatePath(VIEW_FIELD, viewType);
+        Cookies.set(config.VIEW_TYPE, viewType);
     };
 
     const toggleButtons = [
@@ -432,7 +441,6 @@ const Search = ({ filters }: SearchProps) => {
             case SearchCategory.DATA_PROVIDERS:
                 return (
                     <ResultCardDataProvider
-                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
                         result={result as SearchResultDataProvider}
                     />
                 );
@@ -523,6 +531,13 @@ const Search = ({ filters }: SearchProps) => {
                 return t("searchExplainerDatasets");
         }
     };
+
+    const excludedDownloadSearchCategories = [
+        SearchCategory.PUBLICATIONS,
+        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.COLLECTIONS,
+    ];
+
     const showPublicationWelcomeMessage =
         !isSearching &&
         !queryParams.query &&
@@ -573,15 +588,19 @@ const Search = ({ filters }: SearchProps) => {
                             sortOptions={getSortOptions()}
                         />
                     </Box>
-                    <Button
-                        onClick={() =>
-                            !isDownloading && downloadSearchResults()
-                        }
-                        variant="text"
-                        startIcon={<DownloadIcon />}
-                        disabled={isDownloading || !data?.list?.length}>
-                        {t("downloadResults")}
-                    </Button>
+                    {!excludedDownloadSearchCategories.includes(
+                        queryParams.type
+                    ) && (
+                        <Button
+                            onClick={() =>
+                                !isDownloading && downloadSearchResults()
+                            }
+                            variant="text"
+                            startIcon={<DownloadIcon />}
+                            disabled={isDownloading || !data?.list?.length}>
+                            {t("downloadResults")}
+                        </Button>
+                    )}
                     <Button
                         variant="outlined"
                         color="secondary"
@@ -799,12 +818,16 @@ const Search = ({ filters }: SearchProps) => {
                                         onChange={(
                                             e: React.ChangeEvent<unknown>,
                                             page: number
-                                        ) =>
+                                        ) => {
                                             setQueryParams({
                                                 ...queryParams,
                                                 page: page.toString(),
-                                            })
-                                        }
+                                            });
+                                            updatePath(
+                                                PAGE_FIELD,
+                                                page.toString()
+                                            );
+                                        }}
                                     />
                                 </>
                             )}

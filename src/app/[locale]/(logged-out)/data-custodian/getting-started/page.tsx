@@ -5,7 +5,7 @@ import { getGettingStarted } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - Glossary",
+    title: "Health Data Research Innovation Gateway - Getting Started",
     description: "",
 };
 

@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
@@ -10,7 +11,9 @@ interface MenuDropdownProps {
     menuItems: {
         label: string;
         href?: string;
-        action?: () => void;
+        action?: (
+            e: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>
+        ) => void;
         subItems?: { label: string; href: string }[];
         divider?: boolean;
         icon?: HTMLElement;
@@ -25,6 +28,7 @@ interface MenuDropdownProps {
         horizontal: string;
         vertical: string;
     };
+    stopPropagation?: boolean;
 }
 
 function MenuDropdown({
@@ -34,6 +38,7 @@ function MenuDropdown({
     transformOrigin,
     anchorOrigin,
     title,
+    stopPropagation,
 }: MenuDropdownProps) {
     const { showDialog } = useDialog();
 
@@ -50,7 +55,12 @@ function MenuDropdown({
             anchorOrigin={
                 anchorOrigin || { horizontal: "left", vertical: "bottom" }
             }
-            onClose={() => handleClose()}
+            onClose={(event: React.MouseEvent<HTMLElement>) => {
+                if (stopPropagation) {
+                    event.stopPropagation();
+                }
+                handleClose();
+            }}
             open={Boolean(anchorElement)}>
             {menuItems.map(menuItem => {
                 if (menuItem.subItems) {

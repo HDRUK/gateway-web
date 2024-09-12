@@ -96,6 +96,7 @@ const formFields = [
     },
     {
         label: "SSO email",
+        info: "This email address will receive service-related & marketing emails (e.g. terms and conditions changes, Gateway newsletter)",
         name: "email",
         component: inputComponents.TextField,
         required: true,
@@ -103,7 +104,7 @@ const formFields = [
     },
     {
         label: "Secondary email",
-        info: "Enter a secondary email address if you want contact from Health Data Research to an alternative address",
+        info: "Enter a secondary email address if you want contact from Health Data Research to an alternative address\n This email address will receive notifications related to actions taken on the Gateway (e.g. responses to enquiries submitted via the Gateway)",
         name: "secondary_email",
         component: inputComponents.TextField,
     },

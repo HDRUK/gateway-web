@@ -1,4 +1,5 @@
 /* eslint-disable default-param-last */
+import dayjs from "dayjs";
 import {
     CMSPageResponse,
     CMSPostsResponse,
@@ -299,6 +300,39 @@ const getGettingStarted = async () => {
     return data?.page || null;
 };
 
+const getMetadataOnboarding = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getMetadataOnboardingQuery", {
+            id: "data-custodian-metadata-onboarding",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getOpenSourceDevelopment = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getOpenSourceDevelopmentQuery", {
+            id: "open-source-development",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
+    [...data].sort((a, b) => {
+        return dayjs(b.node.newsFields.date).isBefore(
+            dayjs(a.node.newsFields.date)
+        )
+            ? -1
+            : 1;
+    });
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -321,4 +355,7 @@ export {
     getTermsAndConditions,
     getTutorials,
     getWorkWithUs,
+    getMetadataOnboarding,
+    getOpenSourceDevelopment,
+    getSortedNewsEventsByDate,
 };
