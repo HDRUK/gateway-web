@@ -56,6 +56,7 @@ export default async function DataCustodianItemPage({
                         <Image
                             width={554}
                             height={250}
+                            style={{ width: "auto" }}
                             alt={data.name}
                             src={data?.team_logo || DEFAULT_IMAGE_URL}
                         />
