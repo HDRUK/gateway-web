@@ -1,6 +1,7 @@
 "use client";
 
 import { InView } from "react-intersection-observer";
+import DOMPurify from "dompurify";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
@@ -12,8 +13,14 @@ import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import { WysiwygOut } from "@/components/Wysiwyg";
 import { formatDate } from "@/utils/date";
-import { DataCustodianSection, FieldType } from "../../config";
+import { parseEncodedJSON, slateJsonToHtml } from "@/utils/json";
+import {
+    DataCustodianField,
+    DataCustodianSection,
+    FieldType,
+} from "../../config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";
@@ -30,14 +37,23 @@ const DataCustodianContent = ({
     const router = useRouter();
     const path = usePathname();
 
+    const getValue = (data: DataProvider, field: DataCustodianField) => {
+        const value = get(data, field.path);
+
+        return value || t("notAvailable");
+    };
+
     const renderDataCustodianField = (
-        path: string,
         type: FieldType,
         value: string | string[]
     ) => {
         const val = value as string;
 
+        console.log(type === FieldType.WYSIWYG);
+
         switch (type) {
+            case FieldType.WYSIWYG:
+                return <WysiwygOut value={value as string} />;
             case FieldType.DATE:
                 return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
             case FieldType.LINK:
@@ -101,9 +117,7 @@ const DataCustodianContent = ({
                                 {section.fields.map(field => {
                                     const { label } = field;
 
-                                    const value =
-                                        get(data, field.path) ||
-                                        t("notAvailable");
+                                    const value = getValue(data, field);
 
                                     if (!label) {
                                         return (
@@ -114,7 +128,6 @@ const DataCustodianContent = ({
                                                 }}
                                                 key={value}>
                                                 {renderDataCustodianField(
-                                                    field.path,
                                                     field.type,
                                                     value
                                                 )}
@@ -162,7 +175,6 @@ const DataCustodianContent = ({
                                                     alignItems: "center",
                                                 }}>
                                                 {renderDataCustodianField(
-                                                    field.path,
                                                     field.type,
                                                     value
                                                 )}

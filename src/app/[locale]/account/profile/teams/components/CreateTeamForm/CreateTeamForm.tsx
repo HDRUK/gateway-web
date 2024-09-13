@@ -53,7 +53,9 @@ const CreateIntegrationForm = () => {
         useForm<TeamForm>({
             mode: "onTouched",
             resolver: yupResolver(teamValidationSchema),
-            defaultValues: teamDefaultValues,
+            defaultValues: {
+                ...teamDefaultValues,
+            },
         });
 
     useEffect(() => {
@@ -65,6 +67,7 @@ const CreateIntegrationForm = () => {
             ...existingTeamData,
             users: existingTeamData?.users?.map(user => user.id),
         };
+
         reset(teamData);
     }, [reset, existingTeamData]);
 

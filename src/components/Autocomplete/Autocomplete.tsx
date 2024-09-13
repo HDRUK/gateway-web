@@ -42,6 +42,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     control: Control<T>;
     horizontalForm?: boolean;
     required?: boolean;
+    id?: string;
 }
 
 interface SearchOptions {
@@ -67,6 +68,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         disabled = false,
         freeSolo = false,
         multiple = false,
+        id,
         ...restProps
     } = props;
 
@@ -113,6 +115,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
             disabled={disabled}
             required={required}>
             <MuiAutocomplete
+                id={id || name}
                 {...field}
                 {...restProps}
                 freeSolo={freeSolo}

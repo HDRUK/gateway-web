@@ -26,6 +26,7 @@ export interface RadioGroupProps<TFieldValues extends FieldValues, TName> {
     control: Control<TFieldValues>;
     radioSx?: SxProps;
     formControlSx?: SxProps;
+    id?: string;
 }
 
 const RadioGroup = <
@@ -44,6 +45,7 @@ const RadioGroup = <
     extraInfo,
     required = false,
     isRow = false,
+    id,
     ...rest
 }: RadioGroupProps<TFieldValues, TName>) => {
     const {
@@ -68,7 +70,11 @@ const RadioGroup = <
                 control={control}
                 name={name}
                 render={({ field }) => (
-                    <MuiRadioGroup row={isRow} {...field} {...rest}>
+                    <MuiRadioGroup
+                        row={isRow}
+                        id={id || name}
+                        {...field}
+                        {...rest}>
                         {radios?.map(({ value, label: radioLabel }) => (
                             <FormControlLabel
                                 key={value}

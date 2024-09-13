@@ -8,6 +8,7 @@ interface TeamSummary {
     id: number;
     name: string;
     is_provider: boolean;
+    introduction: string | null;
     datasets: DataCustodianDataset[];
     durs: DataUse[];
     tools: Tool[];
