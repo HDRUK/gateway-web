@@ -7,6 +7,10 @@ jest.mock("notistack", () => ({
 }));
 
 describe("Notification Service", () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
     it("should call correct props for `apiError` notification", () => {
         notificationService.apiError("mockMessage");
         expect(notistack.enqueueSnackbar).toBeCalledWith("mockMessage", {
@@ -15,6 +19,7 @@ describe("Notification Service", () => {
                 vertical: "top",
             },
             persist: true,
+            preventDuplicate: true,
             variant: "apiError",
         });
     });
@@ -26,6 +31,7 @@ describe("Notification Service", () => {
                 horizontal: "right",
                 vertical: "top",
             },
+            preventDuplicate: true,
             variant: "error",
         });
     });
@@ -37,6 +43,7 @@ describe("Notification Service", () => {
                 horizontal: "right",
                 vertical: "top",
             },
+            preventDuplicate: true,
             variant: "success",
         });
     });
@@ -48,6 +55,7 @@ describe("Notification Service", () => {
                 horizontal: "right",
                 vertical: "top",
             },
+            preventDuplicate: true,
             variant: "warning",
         });
     });
@@ -59,6 +67,7 @@ describe("Notification Service", () => {
                 horizontal: "right",
                 vertical: "top",
             },
+            preventDuplicate: true,
             variant: "info",
         });
     });

@@ -8,6 +8,7 @@ import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { StaticImages } from "@/config/images";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -54,8 +55,12 @@ export default async function DataCustodianNetworkPage({
                         <Image
                             width={554}
                             height={250}
+                            style={{ width: "auto" }}
                             alt={summaryData.name}
-                            src="/images/data-providers/sample.thumbnail.jpg"
+                            src={
+                                summaryData?.img_url ||
+                                StaticImages.BASE.placeholder
+                            }
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {summaryData.name}

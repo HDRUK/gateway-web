@@ -4,6 +4,7 @@ import { eventsV1, newsV1 } from "@/mocks/data/cms";
 import NewsEventsPage from "./page";
 
 jest.mock("@/utils/cms", () => ({
+    ...jest.requireActual("@/utils/cms"),
     getEvents: async () => eventsV1.posts.edges,
     getNews: async () => newsV1.posts.edges,
 }));

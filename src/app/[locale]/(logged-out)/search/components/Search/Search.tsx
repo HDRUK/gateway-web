@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -119,7 +120,7 @@ const Search = ({ filters }: SearchProps) => {
 
     const [resultsView, setResultsView] = useState(
         getParamString(VIEW_FIELD) ||
-            localStorage.getItem(config.VIEW_TYPE) ||
+            Cookies.get(config.VIEW_TYPE) ||
             ViewType.TABLE
     );
 
@@ -184,7 +185,7 @@ const Search = ({ filters }: SearchProps) => {
     useEffect(() => {
         const viewType =
             queryParams.type === SearchCategory.DATASETS
-                ? localStorage.getItem(config.VIEW_TYPE) || ViewType.TABLE
+                ? Cookies.get(config.VIEW_TYPE) || ViewType.TABLE
                 : ViewType.LIST;
 
         if (resultsView !== viewType) {
@@ -387,7 +388,7 @@ const Search = ({ filters }: SearchProps) => {
     const handleChangeView = (viewType: ViewType) => {
         setResultsView(viewType);
         updatePath(VIEW_FIELD, viewType);
-        localStorage.setItem(config.VIEW_TYPE, viewType);
+        Cookies.set(config.VIEW_TYPE, viewType);
     };
 
     const toggleButtons = [
@@ -440,7 +441,6 @@ const Search = ({ filters }: SearchProps) => {
             case SearchCategory.DATA_PROVIDERS:
                 return (
                     <ResultCardDataProvider
-                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
                         result={result as SearchResultDataProvider}
                     />
                 );
@@ -531,6 +531,13 @@ const Search = ({ filters }: SearchProps) => {
                 return t("searchExplainerDatasets");
         }
     };
+
+    const excludedDownloadSearchCategories = [
+        SearchCategory.PUBLICATIONS,
+        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.COLLECTIONS,
+    ];
+
     const showPublicationWelcomeMessage =
         !isSearching &&
         !queryParams.query &&
@@ -581,15 +588,19 @@ const Search = ({ filters }: SearchProps) => {
                             sortOptions={getSortOptions()}
                         />
                     </Box>
-                    <Button
-                        onClick={() =>
-                            !isDownloading && downloadSearchResults()
-                        }
-                        variant="text"
-                        startIcon={<DownloadIcon />}
-                        disabled={isDownloading || !data?.list?.length}>
-                        {t("downloadResults")}
-                    </Button>
+                    {!excludedDownloadSearchCategories.includes(
+                        queryParams.type
+                    ) && (
+                        <Button
+                            onClick={() =>
+                                !isDownloading && downloadSearchResults()
+                            }
+                            variant="text"
+                            startIcon={<DownloadIcon />}
+                            disabled={isDownloading || !data?.list?.length}>
+                            {t("downloadResults")}
+                        </Button>
+                    )}
                     <Button
                         variant="outlined"
                         color="secondary"
