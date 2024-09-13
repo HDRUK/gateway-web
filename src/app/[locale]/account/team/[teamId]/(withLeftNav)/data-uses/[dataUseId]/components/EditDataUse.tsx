@@ -46,7 +46,7 @@ const EditDataUse = () => {
     const { push } = useRouter();
 
     const { data: keywords } = useGet<Keyword[]>(
-        `${apis.keywordsV1Url}?perPage=200`
+        `${apis.keywordsV1Url}?perPage=all`
     );
 
     const { data } = useGet<DataUse[]>(
