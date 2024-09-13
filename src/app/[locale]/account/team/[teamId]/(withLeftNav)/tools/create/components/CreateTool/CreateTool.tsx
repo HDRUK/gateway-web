@@ -150,10 +150,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             type_category:
                 existingToolData?.type_category?.map(item => item.id) || [],
             keywords:
-                existingToolData?.tag?.map(item => ({
-                    label: item.description,
-                    value: item.id,
-                })) || [],
+                existingToolData?.tag?.map(item => 
+                    item.id,
+                ) || [],
         };
 
         const propertiesToDelete = [

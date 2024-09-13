@@ -142,11 +142,7 @@ const formFields = [
         getChipLabel: (
             options: { value: string | number; label: string }[],
             value: unknown
-        ) => {
-            const labels = options.find(option => option.value === ((typeof value === 'object') ? value.value : value))?.label;
-            console.log('labels', labels);
-            return labels;
-        }
+        ) => options.find(option => option.value === value)?.label,
     },
     {
         label: "DATASET_RELATIONSHIP_COMPONENT",
