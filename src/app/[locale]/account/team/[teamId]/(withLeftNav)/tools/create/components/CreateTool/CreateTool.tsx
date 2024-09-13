@@ -13,7 +13,9 @@ import {
 } from "@/interfaces/AddResource";
 import { Category } from "@/interfaces/Category";
 import { DataUse } from "@/interfaces/DataUse";
+import { ProgrammingLanguage } from "@/interfaces/ProgrammingLanguage";
 import { Publication } from "@/interfaces/Publication";
+import { Tag } from "@/interfaces/Tag";
 import { Tool, ToolPayload, ToolPayloadSubmission } from "@/interfaces/Tool";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
@@ -43,6 +45,7 @@ import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import DatasetRelationshipFields from "../DatasetRelationshipFields";
+import { ValueType } from "@/components/Autocomplete/Autocomplete";
 
 interface ToolCreateProps {
     teamId?: string;
@@ -76,9 +79,11 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         `${apis.toolCategoriesV1Url}?perPage=200`
     );
 
-    const { data: programmingLanguageData } = useGet<Category[]>(
+    const { data: programmingLanguageData } = useGet<ProgrammingLanguage[]>(
         `${apis.programmingLanguagesV1Url}?perPage=200`
     );
+
+    const { data: tagData } = useGet<Tag[]>(`${apis.tagsV1Url}?per_page=200`);
 
     const { data: existingToolData } = useGet<Tool>(
         `${apis.toolsV1Url}/${toolId}`,
@@ -120,6 +125,17 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         }) as OptionsType[];
     }, [programmingLanguageData]);
 
+    const tagOptions = useMemo(() => {
+        if (!tagData) return [];
+
+        return tagData.map(data => {
+            return {
+                value: data.id as ValueType,
+                label: data.description,
+            };
+        }) as OptionsType[];
+    }, [tagData]);
+
     useEffect(() => {
         if (!existingToolData) {
             return;
@@ -135,8 +151,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 existingToolData?.type_category?.map(item => item.id) || [],
             keywords:
                 existingToolData?.tag?.map(item => ({
-                    value: item.id,
                     label: item.description,
+                    value: item.id,
                 })) || [],
         };
 
@@ -185,14 +201,16 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             return data?.map(item => item?.id);
         };
 
-        const publications = formData.publications.map(({updated_at, created_at, ...item}) => item);
+        const publications = formData.publications.map(
+            ({ updated_at, created_at, ...item }) => item
+        );
 
         const payload: ToolPayloadSubmission = {
             ...formData,
             user_id: userId,
             team_id: teamId ? +teamId : undefined,
             enabled: true,
-            tag: [],
+            tag: formData.keywords,
             status,
             durs: formatEntityToIdArray(formData.durs),
             publications: publications,
@@ -318,6 +336,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                             return toolCategoryOptions;
                         case "programming_language":
                             return programmingLanguageOptions;
+                        case "keywords":
+                            return tagOptions;
                         default:
                             return field.options || [];
                     }
@@ -350,6 +370,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             watchAnyDataset,
             toolCategoryOptions,
             programmingLanguageOptions,
+            tagOptions,
         ]
     );
 

@@ -133,8 +133,20 @@ const formFields = [
         info: "Technological paradigms or other keywords, eg. rule-based, clustering, supervised machine learning",
         name: "keywords",
         component: inputComponents.Autocomplete,
-        canCreate: true,
+        // canCreate: true,
         multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel: (
+            options: { value: string | number; label: string }[],
+            value: unknown
+        ) => {
+            const labels = options.find(option => option.value === ((typeof value === 'object') ? value.value : value))?.label;
+            console.log('labels', labels);
+            return labels;
+        }
     },
     {
         label: "DATASET_RELATIONSHIP_COMPONENT",
