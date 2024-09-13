@@ -17,7 +17,7 @@ import { ProgrammingLanguage } from "@/interfaces/ProgrammingLanguage";
 import { Publication } from "@/interfaces/Publication";
 import { Tag } from "@/interfaces/Tag";
 import { Tool, ToolPayload, ToolPayloadSubmission } from "@/interfaces/Tool";
-import { OptionsType } from "@/components/Autocomplete/Autocomplete";
+import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -45,7 +45,6 @@ import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import DatasetRelationshipFields from "../DatasetRelationshipFields";
-import { ValueType } from "@/components/Autocomplete/Autocomplete";
 
 interface ToolCreateProps {
     teamId?: string;
@@ -149,10 +148,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 [],
             type_category:
                 existingToolData?.type_category?.map(item => item.id) || [],
-            keywords:
-                existingToolData?.tag?.map(item => 
-                    item.id,
-                ) || [],
+            keywords: existingToolData?.tag?.map(item => item.id) || [],
         };
 
         const propertiesToDelete = [
@@ -201,6 +197,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         };
 
         const publications = formData.publications.map(
+            // eslint-disable-next-line react/no-unused-vars
             ({ updated_at, created_at, ...item }) => item
         );
 
