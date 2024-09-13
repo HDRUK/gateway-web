@@ -197,7 +197,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         };
 
         const publications = formData.publications.map(
-            // eslint-disable-next-line react/no-unused-vars
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ updated_at, created_at, ...item }) => item
         );
 
@@ -209,7 +209,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             tag: formData.keywords,
             status,
             durs: formatEntityToIdArray(formData.durs),
-            publications: publications,
+            publications,
             tools: formatEntityToIdArray(formData.tools),
             dataset: formData.dataset.every(
                 obj => Object.keys(obj).length === 0
