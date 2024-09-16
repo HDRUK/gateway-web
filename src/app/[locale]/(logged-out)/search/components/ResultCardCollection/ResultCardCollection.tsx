@@ -1,19 +1,20 @@
 import { SearchResultCollection } from "@/interfaces/Search";
+import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import CardStacked from "../CardStacked/CardStacked";
 
 interface ResultCardProps {
     result: SearchResultCollection;
-    imgUrl?: string;
 }
 
-const ResultCollectionCard = ({ result, imgUrl }: ResultCardProps) => {
+const ResultCollectionCard = ({ result }: ResultCardProps) => {
+    const { _id: id } = result;
+
     return (
         <CardStacked
-            // eslint-disable-next-line no-underscore-dangle
-            href={`${RouteName.COLLECTION_ITEM}/${result._id}`}
+            href={`${RouteName.COLLECTION_ITEM}/${id}`}
             title={result.name}
-            imgUrl={result?.image_link || imgUrl || ""}
+            imgUrl={result?.image_link || StaticImages.BASE.placeholder}
         />
     );
 };

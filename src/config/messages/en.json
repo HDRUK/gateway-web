@@ -643,8 +643,6 @@
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
-                "label": "Data Uses / Research Projects",
-                "title": "Data Uses / Research Projects",
                 "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
             },
             "feasibility": {
@@ -779,7 +777,7 @@
                             "dataType": "Data type",
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
-                            "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "dataUseTitles": "Data Use / Research project title",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
@@ -795,7 +793,7 @@
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",
-                            "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "organisationName": "Lead applicant organisation",
                             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
                             "datasetTitles": "Dataset",
@@ -817,7 +815,7 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data Custodian",
-                            "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                         },
                         "dataProvider": {
                             "datasetTitles": "Dataset",
@@ -1055,9 +1053,9 @@
                     "dataOnly": "Data only"
                 },
                 "DatasetMindMap": {
-                    "tools": "Data Analysis Scripts & Software",
+                    "tools": "Analysis Scripts & Software",
                     "durs": "Data Uses / Research Projects",
-                    "collections": "Collections",
+                    "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
                     "root": "Data Custodian",
                     "structuralMetadata": "Data variables"
