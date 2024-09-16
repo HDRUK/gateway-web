@@ -11,30 +11,31 @@ function parseEncodedJSON(value?: string | null) {
 }
 
 const slateSerialiseJsonToHtml = (node: Descendant): string => {
-    if (Text.isText(node)) {
+    console.log("NODE", node);
+    if (node.type === "text") {
         let value = escapeHtml(node.text);
 
-        if (node.bold) {
-            value = `<strong>${value}</strong>`;
-        } else if (node.italic) {
-            value = `<em>${value}</em>`;
-        } else if (node.underline) {
-            value = `<u>${value}</u>`;
-        }
+        let tags = "";
+
+        node.marks.forEach(mark => {
+            if (node.bold) {
+                tags = `<strong>${tags}</strong>`;
+            } else if (node.italic) {
+                tags = `<em>${tags}</em>`;
+            } else if (node.underline) {
+                value = `<u>${tags}</u>`;
+            }
+        });
 
         return value;
     }
 
-    const children = node?.children
+    const children = node?.children?.content
         .map((n: Descendant) => slateSerialiseJsonToHtml(n))
         .join("");
 
     switch (node.type) {
-        case Blocks.LIST_ITEM:
-            return `<li>${children}</li>`;
-        case Blocks.BULLETED_LIST:
-            return `<ul {...attributes}>{children}</ul>`;
-        case Blocks.NUMBERED_LIST:
+        case BlocksType.NUMBERED_LIST:
             return `<ol>${children}</ol>`;
         case Blocks.PARAGRAPH:
             return `<p>${children}</p>`;

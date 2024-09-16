@@ -1,7 +1,6 @@
 "use client";
 
 import { InView } from "react-intersection-observer";
-import DOMPurify from "dompurify";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,7 +14,6 @@ import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { WysiwygOut } from "@/components/Wysiwyg";
 import { formatDate } from "@/utils/date";
-import { parseEncodedJSON, slateJsonToHtml } from "@/utils/json";
 import {
     DataCustodianField,
     DataCustodianSection,
@@ -49,11 +47,9 @@ const DataCustodianContent = ({
     ) => {
         const val = value as string;
 
-        console.log(type === FieldType.WYSIWYG);
-
         switch (type) {
             case FieldType.WYSIWYG:
-                return <WysiwygOut value={value as string} />;
+                return <WysiwygOut value={val} />;
             case FieldType.DATE:
                 return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
             case FieldType.LINK:

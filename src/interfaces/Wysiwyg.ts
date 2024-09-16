@@ -1,22 +1,10 @@
-enum Marks {
+enum ButtonType {
     BOLD = "bold",
     UNDERLINE = "underline",
     ITALIC = "italic",
+    CODE = "code",
+    REDO = "redo",
+    UNDO = "undo",
 }
 
-enum Blocks {
-    BULLETED_LIST = "bulleted-list",
-    NUMBERED_LIST = "numbered-list",
-    LIST_ITEM = "list-item",
-    PARAGRAPH = "paragraph",
-    BLOCK_QUOTE = "block-quote",
-}
-
-enum TextAlign {
-    LEFT = "left",
-    RIGHT = "right",
-    CENTER = "center",
-    JUSTIFY = "justify",
-}
-
-export { Marks, Blocks, TextAlign };
+export { ButtonType };

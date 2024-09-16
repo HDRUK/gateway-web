@@ -1,23 +1,47 @@
-import { useEffect, useState } from "react";
-import DOMPurify from "dompurify";
-import { parseEncodedJSON, slateJsonToHtml } from "@/utils/json";
+import { useMemo } from "react";
+import { Typography } from "@mui/material";
+import { generateHTML, JSONContent } from "@tiptap/react";
+import parse, {
+    attributesToProps,
+    DOMNode,
+    domToReact,
+} from "html-react-parser";
+import { EXTENSIONS } from "./consts";
 
 interface WysiwygOutProps {
     value: string;
 }
 
 export default function WysiwygOut({ value }: WysiwygOutProps) {
-    const [html, setHTML] = useState("");
+    const html = useMemo(() => {
+        if (value) {
+            return parse(
+                generateHTML(JSON.parse(value) as JSONContent, EXTENSIONS),
+                {
+                    replace: domNode => {
+                        if (domNode.type === "tag") {
+                            const props = attributesToProps(domNode.attribs);
 
-    useEffect(() => {
-        setHTML(slateJsonToHtml(parseEncodedJSON(value)));
+                            switch (domNode.name) {
+                                case "p":
+                                    return (
+                                        <Typography {...props}>
+                                            {domToReact(
+                                                domNode.children as DOMNode[]
+                                            )}
+                                        </Typography>
+                                    );
+                                default:
+                                    break;
+                            }
+                        }
+                    },
+                }
+            );
+        }
     }, [value]);
 
-    return (
-        <div
-            dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(html),
-            }}
-        />
-    );
+    if (!html) return null;
+
+    return html;
 }

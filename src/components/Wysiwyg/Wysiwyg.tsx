@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { Box } from "@mui/material";
-import { createEditor, Descendant, Editor, Transforms } from "slate";
-import { ReactEditor, Slate, withReact } from "slate-react";
-import { parseEncodedJSON } from "@/utils/json";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import FormInputWrapper from "../FormInputWrapper";
 import { TextFieldBaseProps } from "../TextFieldBase";
-import TextEditor from "./TextEditor";
+import Toolbar from "./Toolbar";
+import { StyledEditorWrapper } from "./Wysiwyg.styles";
+import { EXTENSIONS } from "./consts";
 
 const Wysiwyg = <
     TFieldValues extends FieldValues,
@@ -15,9 +15,6 @@ const Wysiwyg = <
     control,
     ...props
 }: TextFieldBaseProps<TFieldValues, TName>) => {
-    const [editor] = useState(() => withReact(createEditor()));
-    const [updated, setUpdated] = useState(false);
-
     const { name, label, info } = props;
 
     const { field } = useController({
@@ -25,57 +22,29 @@ const Wysiwyg = <
         control,
     });
 
-    const initialValue = field.value
-        ? typeof field.value === "string"
-            ? parseEncodedJSON(field.value)
-            : field.value
-        : [
-              {
-                  type: "paragraph",
-                  children: [{ text: "" }],
-              },
-          ];
-
-    const handleChange = useCallback(
-        (data: Descendant[]) => {
-            if (!updated) setUpdated(updated);
-
-            field.onChange(JSON.stringify(data));
+    const editor = useEditor({
+        extensions: EXTENSIONS,
+        onUpdate({ editor }) {
+            field.onChange(JSON.stringify(editor.getJSON()));
         },
-        [updated]
-    );
+    }) as Editor;
 
     const handleLabelClick = useCallback(() => {
-        ReactEditor.focus(editor);
-    }, [updated]);
-
-    useEffect(() => {
-        Transforms.delete(editor, {
-            at: {
-                anchor: Editor.start(editor, []),
-                focus: Editor.end(editor, []),
-            },
-        });
-
-        Transforms.removeNodes(editor, {
-            at: [0],
-        });
-
-        Transforms.insertNodes(editor, initialValue);
-    }, [initialValue]);
+        editor.commands.focus("start");
+        // ReactEditor.focus(editor);
+    }, []);
 
     return (
         <FormInputWrapper
             info={info}
             label={label}
+            name={name}
             onLabelClick={handleLabelClick}>
             <Box sx={{ mt: "3px" }}>
-                <Slate
-                    editor={editor}
-                    initialValue={initialValue}
-                    onChange={handleChange}>
-                    <TextEditor editor={editor} />
-                </Slate>
+                <Toolbar editor={editor} />
+                <StyledEditorWrapper>
+                    <EditorContent editor={editor} name={name} />
+                </StyledEditorWrapper>
             </Box>
         </FormInputWrapper>
     );

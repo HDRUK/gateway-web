@@ -3,7 +3,7 @@ import { grey } from "@mui/material/colors";
 
 const StyledEditorWrapper = styled("div")(({ theme }) => ({
     marginBottom: theme.spacing(2),
-    "> div": {
+    "div[contenteditable='true']": {
         overflow: "scroll",
         height: "100px",
         border: "2px solid rgba(0, 0, 0, 0.23)",
