@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { Box } from "@mui/material";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
@@ -30,9 +30,13 @@ const Wysiwyg = <
     }) as Editor;
 
     const handleLabelClick = useCallback(() => {
-        editor.commands.focus("start");
-        // ReactEditor.focus(editor);
-    }, []);
+        editor?.commands.focus("start");
+        editor?.commands.selectTextblockEnd();
+    }, [editor]);
+
+    useEffect(() => {
+        editor?.commands.setContent(JSON.parse(field.value || "{}"));
+    }, [editor]);
 
     return (
         <FormInputWrapper

@@ -25,7 +25,7 @@ export default function WysiwygOut({ value }: WysiwygOutProps) {
                             switch (domNode.name) {
                                 case "p":
                                     return (
-                                        <Typography {...props}>
+                                        <Typography {...props} sx={{ mb: 2 }}>
                                             {domToReact(
                                                 domNode.children as DOMNode[]
                                             )}

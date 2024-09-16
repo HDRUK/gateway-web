@@ -5,6 +5,8 @@ enum ButtonType {
     CODE = "code",
     REDO = "redo",
     UNDO = "undo",
+    BULLETED_LIST = "bulletted-list",
+    NUMBERED_LIST = "numbered-list",
 }
 
 export { ButtonType };

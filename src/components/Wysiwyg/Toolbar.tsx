@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import CodeIcon from "@mui/icons-material/Code";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import RedoIcon from "@mui/icons-material/Redo";
 import UndoIcon from "@mui/icons-material/Undo";
@@ -26,6 +28,8 @@ function Toolbar({
         ButtonType.REDO,
         ButtonType.UNDO,
         ButtonType.UNDERLINE,
+        ButtonType.BULLETED_LIST,
+        ButtonType.NUMBERED_LIST,
     ],
 }: ToolbarProps) {
     const toggleBold = useCallback(() => {
@@ -52,6 +56,14 @@ function Toolbar({
 
     const toggleCode = useCallback(() => {
         editor.chain().focus().toggleCode().run();
+    }, [editor]);
+
+    const toggleBulletedList = useCallback(() => {
+        editor.chain().focus().toggleBulletList().run();
+    }, [editor]);
+
+    const toggleOrderedList = useCallback(() => {
+        editor.chain().focus().toggleOrderedList().run();
     }, [editor]);
 
     if (!editor) {
@@ -105,6 +117,20 @@ function Toolbar({
                 <li>
                     <IconButton size="small" onPointerDown={toggleCode}>
                         <CodeIcon />
+                    </IconButton>
+                </li>
+            )}
+            {includeButtons.includes(ButtonType.BULLETED_LIST) && (
+                <li>
+                    <IconButton size="small" onPointerDown={toggleBulletedList}>
+                        <FormatListBulletedIcon />
+                    </IconButton>
+                </li>
+            )}
+            {includeButtons.includes(ButtonType.NUMBERED_LIST) && (
+                <li>
+                    <IconButton size="small" onPointerDown={toggleOrderedList}>
+                        <FormatListNumberedIcon />
                     </IconButton>
                 </li>
             )}
