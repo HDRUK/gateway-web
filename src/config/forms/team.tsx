@@ -52,7 +52,7 @@ const formFields = [
     {
         label: "Organisation name",
         name: "name",
-        info: "Provide a description of the organisation and/or services for display on the Data Custodian landing page. Include formatting as it should render on the Gateway",
+        info: "Please ensure the name matches the standard format for organsitation names",
         component: inputComponents.TextArea,
         required: true,
     },
