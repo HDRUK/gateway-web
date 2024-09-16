@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { Typography } from "@mui/material";
 import { generateHTML, JSONContent } from "@tiptap/react";
 import parse, {
@@ -13,35 +13,37 @@ interface WysiwygOutProps {
 }
 
 export default function WysiwygOut({ value }: WysiwygOutProps) {
+    const replace = useCallback((domNode: DOMNode) => {
+        if (domNode.type === "tag") {
+            const props = attributesToProps(domNode.attribs);
+
+            switch (domNode.name) {
+                case "p":
+                    return (
+                        <Typography {...props} sx={{ mb: 2 }}>
+                            {domToReact(domNode.children as DOMNode[])}
+                        </Typography>
+                    );
+                default:
+                    break;
+            }
+        }
+
+        return domNode;
+    }, []);
+
     const html = useMemo(() => {
         if (value) {
             return parse(
                 generateHTML(JSON.parse(value) as JSONContent, EXTENSIONS),
                 {
-                    replace: domNode => {
-                        if (domNode.type === "tag") {
-                            const props = attributesToProps(domNode.attribs);
-
-                            switch (domNode.name) {
-                                case "p":
-                                    return (
-                                        <Typography {...props} sx={{ mb: 2 }}>
-                                            {domToReact(
-                                                domNode.children as DOMNode[]
-                                            )}
-                                        </Typography>
-                                    );
-                                default:
-                                    break;
-                            }
-                        }
-                    },
+                    replace,
                 }
             );
         }
-    }, [value]);
 
-    if (!html) return null;
+        return null;
+    }, [value]);
 
     return html;
 }
