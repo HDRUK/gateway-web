@@ -30,7 +30,7 @@ const validationSchema = yup.object().shape({
     name: yup.string().required().label("Name of script, tool or software"),
     type_category: yup.array().of(yup.number()).required().label("Category"),
     description: yup.string().min(50).max(1500).required().label("Description"),
-    results: yup
+    results_insights: yup
         .string()
         .min(50)
         .max(1500)
@@ -57,10 +57,10 @@ const formArrayFields = [
         label: "Relationship",
         component: inputComponents.Select,
         options: [
-            { label: "Used on", value: "USED_ON" },
-            { label: "Derived from (Tool)", value: "DERIVED_FROM" },
-            { label: "Used in (Tool)", value: "USED_IN" },
-            { label: "Created from (Tool)", value: "CREATED_FROM" },
+            { label: "Used on", value: "Used on" },
+            { label: "Derived from (Tool)", value: "Derived from (Tool)" },
+            { label: "Used in (Tool)", value: "Used in (Tool)" },
+            { label: "Created from (Tool)", value: "Created from (Tool)" },
         ],
     },
     {
@@ -106,7 +106,7 @@ const formFields = [
     {
         label: "Results / Insights",
         info: "Include any results or insights about the analysis script, tool or software. Must be at least 50 characters.",
-        name: "results",
+        name: "results_insights",
         options: [],
         component: inputComponents.TextArea,
         required: true,
@@ -133,8 +133,16 @@ const formFields = [
         info: "Technological paradigms or other keywords, eg. rule-based, clustering, supervised machine learning",
         name: "keywords",
         component: inputComponents.Autocomplete,
-        canCreate: true,
+        // canCreate: true,
         multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel: (
+            options: { value: string | number; label: string }[],
+            value: unknown
+        ) => options.find(option => option.value === value)?.label,
     },
     {
         label: "DATASET_RELATIONSHIP_COMPONENT",
