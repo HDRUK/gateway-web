@@ -253,7 +253,7 @@ const ResultTable = ({ results }: ResultTableProps) => {
     const { isLoggedIn } = useAuth();
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=all`,
+        `${apis.librariesV1Url}?perPage=-1`,
         { shouldFetch: isLoggedIn }
     );
 
