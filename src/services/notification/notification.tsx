@@ -27,6 +27,7 @@ const notification = (
             ...(options?.anchorOrigin && { ...options?.anchorOrigin }),
         },
         variant,
+        preventDuplicate: true,
     });
 };
 

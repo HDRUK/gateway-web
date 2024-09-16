@@ -6,6 +6,8 @@ import Box from "@/components/Box";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import DatasetRelationshipDialog from "@/modules/DatasetRelationshipDialog";
+import useDialog from "@/hooks/useDialog";
 
 const TRANSLATION_PATH = "pages.dataset.components.Linkages";
 
@@ -15,6 +17,8 @@ interface LinkagesProps {
 
 const Linkages = ({ data }: LinkagesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { showDialog } = useDialog();
+
     const { linked_dataset_versions } = data.versions[0];
 
     const linkageCounts = Object.entries(
@@ -29,9 +33,14 @@ const Linkages = ({ data }: LinkagesProps) => {
         )
     );
 
-    // dont return component if no linkages
-    if (linkageCounts.length === 0) {
-        return <> </>;
+    const linkageDetails = linked_dataset_versions.map(item => ({
+        linkage_type: item.pivot.linkage_type,
+        id: item.id,
+        metadata: item.metadata,
+    }));
+
+    if (!linkageCounts.length) {
+        return null;
     }
 
     return (
@@ -42,6 +51,14 @@ const Linkages = ({ data }: LinkagesProps) => {
                     <EllipsisCharacterLimit
                         isButton
                         text={t(type, { count })}
+                        onClick={() =>
+                            showDialog(DatasetRelationshipDialog, {
+                                datasetId: data.id,
+                                linkageDetails: linkageDetails.filter(
+                                    linkage => linkage.linkage_type === type
+                                ),
+                            })
+                        }
                     />
                 ))}
             </Box>

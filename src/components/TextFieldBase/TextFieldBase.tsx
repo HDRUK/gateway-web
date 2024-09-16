@@ -87,6 +87,7 @@ const TextFieldBase = <
             required={required}
             formControlSx={formControlSx}>
             <OutlinedInput
+                aria-describedby={info ? `${name}-information` : undefined}
                 fullWidth={fullWidth}
                 size="small"
                 disabled={disabled}
