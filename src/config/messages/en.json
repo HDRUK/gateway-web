@@ -375,6 +375,7 @@
                             "makeActive": "Make active",
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
+                            "uploadSuccess": "Your data has been successfully uploaded",
                             "checkboxes": {
                                 "healthAndDisease": "Health and disease",
                                 "healthAndDiseaseTooltip": "Includes any data related to mental health, cardiovascular, cancer, rare diseases, metabolic and endocrine, neurological, reproductive, maternity and neonatology, respiratory, immunity, musculoskeletal, vision, renal and urogenital, oral and gastrointestinal, cognitive function or hearing.",

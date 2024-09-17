@@ -11,7 +11,7 @@ interface FileUpload {
     error: string | null;
     entity_type: string | null;
     entity_id: number | null;
-    structural_metadata?: StructuralMetadata | null;
+    structural_metadata?: StructuralMetadata[] | null;
 }
 
 export type { FileUpload };

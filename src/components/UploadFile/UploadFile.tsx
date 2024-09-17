@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { StructuralMetadata } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
@@ -20,7 +21,9 @@ interface UploadFileProps {
     apiPath: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
-    fileUploadedAction: (fileId: number) => void;
+    fileUploadedAction: (
+        uploadResponse?: number | StructuralMetadata[]
+    ) => void;
     isUploading: Dispatch<SetStateAction<boolean>>;
 }
 

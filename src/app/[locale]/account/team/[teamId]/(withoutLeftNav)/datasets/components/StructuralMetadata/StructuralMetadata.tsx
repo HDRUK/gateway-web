@@ -36,7 +36,7 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.
 interface StructuralMetadataProps {
     selectedFormSection: string;
     structuralMetadata?: StructuralMetadata[];
-    fileProcessedAction: () => void;
+    fileProcessedAction: (metadata: StructuralMetadata[]) => void;
     handleToggleUploading: (isUploading: boolean) => void;
 }
 
@@ -110,6 +110,7 @@ const StructuralMetadataSection = ({
 
     useEffect(() => {
         handleToggleUploading(isUploading);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isUploading]);
 
     return (
@@ -149,7 +150,9 @@ const StructuralMetadataSection = ({
 
             <UploadFile
                 apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload`}
-                fileUploadedAction={fileProcessedAction}
+                fileUploadedAction={metadata =>
+                    fileProcessedAction(metadata as StructuralMetadata[])
+                }
                 isUploading={setIsUploading}
                 allowReuploading
             />

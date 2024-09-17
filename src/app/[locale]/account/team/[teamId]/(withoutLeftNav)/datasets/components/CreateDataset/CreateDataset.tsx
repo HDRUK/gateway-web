@@ -633,13 +633,13 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                             selectedFormSection
                                         }
                                         structuralMetadata={structuralMetadata}
-                                        fileProcessedAction={structMetadata => {
+                                        fileProcessedAction={(
+                                            metadata: StructuralMetadata[]
+                                        ) => {
                                             notificationService.apiSuccess(
-                                                "Your data has been successfully uploaded"
+                                                t("uploadSuccess")
                                             );
-                                            setStructuralMetadata(
-                                                structMetadata
-                                            );
+                                            setStructuralMetadata(metadata);
                                         }}
                                         handleToggleUploading={setIsSaving}
                                     />
