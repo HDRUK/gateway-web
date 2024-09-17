@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
@@ -10,7 +11,9 @@ interface MenuDropdownProps {
     menuItems: {
         label: string;
         href?: string;
-        action?: () => void;
+        action?: (
+            e: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>
+        ) => void;
         subItems?: { label: string; href: string }[];
         divider?: boolean;
         icon?: HTMLElement;

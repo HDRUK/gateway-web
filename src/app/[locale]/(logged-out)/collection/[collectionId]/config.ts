@@ -4,11 +4,11 @@ const collectionSections = [
         id: "datasets",
     },
     {
-        sectionName: "Analysis scripts and software",
+        sectionName: "Analysis Scripts & Software",
         id: "tools",
     },
     {
-        sectionName: "Data uses",
+        sectionName: "Data Uses",
         id: "durs",
     },
     {

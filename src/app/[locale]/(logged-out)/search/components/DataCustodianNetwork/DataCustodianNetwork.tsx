@@ -3,6 +3,7 @@ import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import CardStacked from "../CardStacked/CardStacked";
 import ResultsList from "../ResultsList";
@@ -36,7 +37,9 @@ const DataCustodianNetwork = () => {
                     <CardStacked
                         href={`${RouteName.DATA_CUSTODIAN_NETWORK_ITEM}/${result.id}`}
                         title={result.name}
-                        imgUrl={result?.img_url || ""}
+                        imgUrl={
+                            result?.img_url || StaticImages.BASE.placeholder
+                        }
                     />
                 ))}
             </ResultsList>
