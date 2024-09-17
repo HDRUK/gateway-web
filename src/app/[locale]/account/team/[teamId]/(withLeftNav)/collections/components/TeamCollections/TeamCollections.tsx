@@ -27,6 +27,7 @@ import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import CollectionsTab from "../CollectionsTab";
+import router from "next/router";
 
 interface CountStatus {
     ACTIVE?: number;
@@ -260,7 +261,8 @@ const TeamCollections = ({
     }));
 
     const handleAdd = () => {
-        // TODO - https://hdruk.atlassian.net/browse/GAT-4350
+        const COLLECTION_CREATE_ROUTE =`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`
+        router.push(COLLECTION_CREATE_ROUTE);
     };
 
     return (
