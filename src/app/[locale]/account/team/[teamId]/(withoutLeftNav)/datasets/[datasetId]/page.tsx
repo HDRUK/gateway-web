@@ -46,7 +46,7 @@ export default async function TeamDatasetPage({
 
     const metadataLocation = getMetadata(isDraft);
 
-    let latestMetadata = get(dataset, metadataLocation);
+    const latestMetadata = get(dataset, metadataLocation);
 
     const dataTypes =
         get(latestMetadata, "provenance.origin.datasetType") || [];
