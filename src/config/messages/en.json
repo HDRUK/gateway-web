@@ -683,8 +683,6 @@
             "tools": {
                 "label": "Analysis Scripts & Software",
                 "title": "Analysis Scripts & Software",
-                "label": "Analysis Scripts & Software",
-                "title": "Analysis Scripts & Software",
                 "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
             },
             "courses": {
@@ -1057,7 +1055,7 @@
                     "durs": "Data Uses / Research Projects",
                     "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
-                    "root": "Data Custodian",
+                    "dataCustodian": "Data Custodian",
                     "structuralMetadata": "Data variables"
                 },
                 "Linkages": {
