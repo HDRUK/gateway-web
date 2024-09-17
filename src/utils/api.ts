@@ -191,7 +191,7 @@ async function getFormHydration(
         `${
             apis.formHydrationV1UrlIP
         }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
-            dataTypes ? dataTypes : []
+            dataTypes || []
         }`
     );
 }
