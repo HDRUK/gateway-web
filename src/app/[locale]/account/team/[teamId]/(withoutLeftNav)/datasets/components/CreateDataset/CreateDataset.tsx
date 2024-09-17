@@ -152,7 +152,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Dataset population size": -1,
         "contact point": user?.email,
         "Observations array": null,
-        [DATASET_TYPE]: [] as string[],
         ...currentFormJSON.defaultValues,
     };
 
@@ -175,6 +174,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         }
 
         setStructuralMetadata(latestMetadata?.structuralMetadata?.tables || []);
+
         const mappedFormData = mapExistingDatasetToFormFields(
             schemaFields,
             latestMetadata
@@ -262,7 +262,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             apis.formHydrationV1Url
         }?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${getValues(
             DATASET_TYPE
-        )}`
+        )}`,
+        {
+            shouldFetch: !!getValues(DATASET_TYPE),
+        }
     );
 
     useEffect(() => {
@@ -634,7 +637,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                             notificationService.apiSuccess(
                                                 "Your data has been successfully uploaded"
                                             );
-                                            console.log(structMetadata);
                                             setStructuralMetadata(
                                                 structMetadata
                                             );

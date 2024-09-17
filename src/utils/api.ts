@@ -183,11 +183,16 @@ async function getCollection(
 async function getFormHydration(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,
-    schemaVersion: string
+    schemaVersion: string,
+    dataTypes?: string[]
 ): Promise<FormHydrationSchema> {
     return get<FormHydrationSchema>(
         cookieStore,
-        `${apis.formHydrationV1UrlIP}?name=${schemaName}&version=${schemaVersion}`
+        `${
+            apis.formHydrationV1UrlIP
+        }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
+            dataTypes ? dataTypes : []
+        }`
     );
 }
 
