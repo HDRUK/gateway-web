@@ -157,7 +157,9 @@ const StructuralMetadataSection = ({
                 allowReuploading
             />
 
-            {isUploading && <Typography>{t("uploadMessage")}</Typography>}
+            {isUploading && (
+                <Typography sx={{ mt: 2 }}>{t("uploadMessage")}</Typography>
+            )}
 
             {structuralMetadata && !isUploading && (
                 <Box sx={{ mt: 4, p: 0 }}>

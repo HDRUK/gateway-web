@@ -451,7 +451,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             if (formPostRequest !== null) {
                 reset({});
                 push(
-                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`
+                    `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
+                        RouteName.DATASETS
+                    }?tab=${saveAsDraft ? "DRAFT " : "ACTIVE"}`
                 );
             } else {
                 setIsSaving(false);
@@ -576,7 +578,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     return (
         <>
             <Link
-                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`}
+                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
+                    RouteName.DATASETS
+                }?tab=${isDraft ? "DRAFT " : "ACTIVE"}`}
                 underline="hover"
                 sx={{
                     display: "flex",
