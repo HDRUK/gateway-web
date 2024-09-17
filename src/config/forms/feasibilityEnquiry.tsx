@@ -100,7 +100,7 @@ const formFields = [
             value,
         })),
         required: true,
-        info: "This information helps the Data Custodian(s) understand your project requirement but you will not be able to list the datasets on this form.",
+        info: "This information helps the data custodian(s) understand your project requirement but you will not be able to list the datasets on this form.",
     },
     {
         label: "Do you know which parts of the dataset you are interested in?",
@@ -111,7 +111,7 @@ const formFields = [
             value,
         })),
         required: true,
-        info: "This information helps the Data Custodian(s) understand the level of service required but you will not be able to list variables of interest on this form.",
+        info: "This information helps the data custodian(s) understand the level of service required but you will not be able to list variables of interest on this form.",
         limit: 1500,
     },
     {

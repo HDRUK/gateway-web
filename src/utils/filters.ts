@@ -82,11 +82,11 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                               INCLUDE_UNREPORTED
                           ),
                   },
-                  [FILTER_CONTAINS_TISSUE]: [
-                      !!filterQueries?.[FILTER_CONTAINS_TISSUE]?.includes(
-                          FILTER_CONTAINS_TISSUE
-                      ),
-                  ],
+                  ...(filterQueries?.[FILTER_CONTAINS_TISSUE]?.includes(
+                      FILTER_CONTAINS_TISSUE
+                  )
+                      ? { [FILTER_CONTAINS_TISSUE]: [true] }
+                      : {}),
                   [FILTER_MATERIAL_TYPE]: !filterQueries?.[
                       FILTER_CONTAINS_TISSUE
                   ]?.includes(FILTER_CONTAINS_TISSUE)

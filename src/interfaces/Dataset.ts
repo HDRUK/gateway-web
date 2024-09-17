@@ -105,9 +105,11 @@ interface Metadata {
 }
 
 interface LinkedDatasetVersions {
+    id: string;
     pivot: {
         linkage_type: string;
     };
+    metadata: Metadata;
 }
 
 interface MetadataMax {
