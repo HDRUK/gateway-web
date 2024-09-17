@@ -49,7 +49,9 @@ export default function ToolsContent({
                         <Link href={`/${RouteName.TOOL_ITEM}/${id}`}>
                             {name}
                         </Link>
-                        {!!user && <div>{`${user.firstname} ${user.lastname}`}</div> }
+                        {!!user && (
+                            <div>{`${user.firstname} ${user.lastname}`}</div>
+                        )}
                         <Typography color="GrayText">
                             Created - {formatDate(created_at, "DD MMMM YYYY")}
                         </Typography>
