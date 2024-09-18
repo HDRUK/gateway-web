@@ -48,7 +48,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
                 sx={{ mt: 3 }}
                 onClick={handleCtaClick}
                 data-testid={DATA_TEST_ID}>
-                {ctaLink.title}
+                {ctaLink?.title}
             </Button>
 
             <Button sx={{ mt: 3, ml: 3 }} onClick={handleVisit}>
