@@ -33,11 +33,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
-    const { data: datasetCsv } = useGet<{
-        content: string;
-        filename: string;
-        type: string;
-    }>(`${apis.cohortRequestsV1Url}/access`, {
+    const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
         shouldFetch: isClicked,
     });
 
