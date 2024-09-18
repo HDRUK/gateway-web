@@ -39,7 +39,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
 
     const handleVisit = async () => {
         setIsClicked(true);
-        datasetCsv;
+        console.log(datasetCsv);
     };
 
     return (
