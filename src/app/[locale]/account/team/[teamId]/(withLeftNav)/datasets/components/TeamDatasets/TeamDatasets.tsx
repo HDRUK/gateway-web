@@ -167,7 +167,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     );
 
     const actions = [
-        ...(permissions["datasets.update"]
+        ...(permissions["datasets.update"] && tab !== DataStatus.ARCHIVED
             ? [
                   {
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
@@ -176,7 +176,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                   },
               ]
             : []),
-        ...(permissions["datasets.create"]
+        ...(permissions["datasets.create"] && tab !== DataStatus.ARCHIVED
             ? [
                   {
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
