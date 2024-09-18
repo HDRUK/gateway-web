@@ -39,8 +39,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
 
     const handleVisit = async () => {
         setIsClicked(true);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const data = datasetCsv;
+        datasetCsv;
     };
 
     return (
