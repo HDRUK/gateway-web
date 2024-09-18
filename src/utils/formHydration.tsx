@@ -32,11 +32,19 @@ const formGetAllSectionFields = (
 const formSectionHasAllEmptyFields = (
     schemaFields: FormHydration[],
     section: string,
-    getValues: UseFormGetValues<FieldValues>
+    getValues: UseFormGetValues<FieldValues>,
+    dirtyFields: Partial<FieldValues>
 ) => {
     const allSectionFields = formGetAllSectionFields(schemaFields, section).map(
         field => field.title
     );
+    const hasDirtyFields = Object.keys(dirtyFields).some(key =>
+        allSectionFields.some(item => item.includes(key))
+    );
+
+    if (!hasDirtyFields) {
+        return true;
+    }
 
     return getValues(allSectionFields).every(value =>
         Array.isArray(value)
@@ -139,14 +147,20 @@ const formGetSectionStatus = (
     schemaFields: FormHydration[],
     section: string,
     getValues: UseFormGetValues<FieldValues>,
-    submissionRequested: boolean
+    submissionRequested: boolean,
+    dirtyFields: Partial<FieldValues>
 ) => {
     if (isSectionActive) {
         return LegendStatus.ACTIVE;
     }
     if (
         !submissionRequested &&
-        formSectionHasAllEmptyFields(schemaFields, section, getValues)
+        formSectionHasAllEmptyFields(
+            schemaFields,
+            section,
+            getValues,
+            dirtyFields
+        )
     ) {
         return LegendStatus.UNTOUCHED;
     }
@@ -197,7 +211,8 @@ const formGenerateLegendItems = async (
     clearErrors: UseFormClearErrors<FieldValues>,
     getValues: UseFormGetValues<FieldValues>,
     trigger: UseFormTrigger<FieldValues>,
-    submissionRequested: boolean
+    submissionRequested: boolean,
+    dirtyFields: Partial<FieldValues>
 ) => {
     const legendItems: LegendItem[] = await Promise.all(
         formSections.map(async section => {
@@ -217,7 +232,8 @@ const formGenerateLegendItems = async (
                 schemaFields,
                 section,
                 getValues,
-                submissionRequested
+                submissionRequested,
+                dirtyFields
             );
 
             return {
