@@ -1,3 +1,6 @@
+import { EventNode } from "./Events";
+import { NewsNode } from "./News";
+
 interface CMSPostResponse<T> {
     post: T;
 }
@@ -100,7 +103,7 @@ interface PageTemplateHome {
         };
     };
     posts: {
-        edges: NewsPost[];
+        edges: (NewsNode | EventNode)[];
     };
 }
 
