@@ -55,8 +55,8 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={FILE_UPLOAD_URL}
-                            fileUploadedAction={(fileId: number) =>
-                                setCreatedDatasetId(fileId)
+                            fileUploadedAction={fileId =>
+                                setCreatedDatasetId(fileId as number)
                             }
                             isUploading={setIsUploading}
                             acceptedFileTypes={FILE_TYPE}
