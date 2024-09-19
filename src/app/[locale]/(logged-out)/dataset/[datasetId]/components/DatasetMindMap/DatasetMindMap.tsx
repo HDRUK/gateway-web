@@ -82,7 +82,7 @@ const DatasetMindMap = ({
                             emptyNodes.push(node.id);
                         }
                         href = `${node.data.href}&datasetTitles=${title}`;
-                    } else if (node.id === "node-root") {
+                    } else if (node.id === "node-dataCustodian") {
                         href = `/data-custodian/${teamId}`;
                     }
 
