@@ -43,7 +43,7 @@ const isValueEmpty = (val: string) =>
 
 const hasValidValue = (val: string | string[]) => {
     if (Array.isArray(val)) {
-        return val.filter(item => !isValueEmpty(item));
+        return val.filter(item => !isValueEmpty(item)).length === 0;
     }
 
     return isValueEmpty(val);

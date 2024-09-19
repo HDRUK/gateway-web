@@ -50,4 +50,22 @@ describe("Dataset utils", () => {
             expect(formatYearStat("", "2023")).toEqual("2023");
         });
     });
+
+    describe("hasValidValue", () => {
+        it("returns false for array with undefined values", () => {
+            expect(hasValidValue(["undefined"])).toEqual(false);
+        });
+
+        it("return false for string undefined values", () => {
+            expect(hasValidValue("undefined")).toEqual(false);
+        });
+
+        it("returns true for string values", () => {
+            expect(hasValidValue("value")).toEqual(true);
+        });
+
+        it("returns true for string array values", () => {
+            expect(hasValidValue(["value"])).toEqual(true);
+        });
+    });
 });
