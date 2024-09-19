@@ -8,13 +8,18 @@ interface ResultCardProps {
 }
 
 const ResultCollectionCard = ({ result }: ResultCardProps) => {
-    const { _id: id } = result;
+    const { _id: id, team } = result;
+    let imgUrl = result?.image_link || StaticImages.BASE.placeholder;
+
+    if (team?.team_image) {
+        imgUrl = team?.team_image;
+    }
 
     return (
         <CardStacked
             href={`${RouteName.COLLECTION_ITEM}/${id}`}
             title={result.name}
-            imgUrl={result?.image_link || StaticImages.BASE.placeholder}
+            imgUrl={imgUrl}
         />
     );
 };

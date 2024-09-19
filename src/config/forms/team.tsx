@@ -50,6 +50,13 @@ const formFields = [
         required: true,
     },
     {
+        label: "Organisation name",
+        name: "name",
+        info: "Please ensure the name matches the standard format for organsitation names",
+        component: inputComponents.TextField,
+        required: true,
+    },
+    {
         label: "Member of",
         name: "member_of",
         component: inputComponents.Select,

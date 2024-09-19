@@ -19,6 +19,7 @@ interface Team {
     users: User[];
     notification_status: boolean;
     notifications: Notification[];
+    team_image?: string;
 }
 
 interface TeamForm

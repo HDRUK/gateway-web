@@ -1,16 +1,22 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Stack } from "@mui/material";
+import { BoxProps, Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { FileUpload } from "@/interfaces/FileUpload";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { convertBase64 } from "@/utils/file";
 import Button from "../Button";
 import Form from "../Form";
 import Loading from "../Loading";
 import Upload from "../Upload";
+
+export type EventUploadedImage = {
+    width: number;
+    height: number;
+};
 
 type UploadFormData = {
     upload: string;
@@ -20,8 +26,14 @@ interface UploadFileProps {
     apiPath: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
+    fileSelectButtonText?: string;
     fileUploadedAction: (fileId: number) => void;
-    isUploading: Dispatch<SetStateAction<boolean>>;
+    isUploading?: Dispatch<SetStateAction<boolean>>;
+    onBeforeUploadCheck?: (event: Event & EventUploadedImage) => boolean;
+    onFileCheckFailed?: () => void;
+    onFileCheckSucceeded?: (response: FileUpload) => void;
+    onFileChange?: () => void;
+    sx?: BoxProps["sx"];
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -29,9 +41,15 @@ const TRANSLATION_PATH = "components.UploadFile";
 const UploadFile = ({
     apiPath,
     allowReuploading,
-    acceptedFileTypes = ".xlsx",
+    acceptedFileTypes = ".xslx",
+    fileSelectButtonText,
     fileUploadedAction,
     isUploading,
+    onBeforeUploadCheck,
+    onFileCheckFailed,
+    onFileCheckSucceeded,
+    onFileChange,
+    sx,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -62,7 +80,7 @@ const UploadFile = ({
         setHasError(true);
         setFileId(undefined);
         setFile(undefined);
-        isUploading(false);
+        isUploading?.(false);
         setPollFileStatus(false);
 
         notificationService.apiError(fileScanStatus?.error || t("error"));
@@ -71,7 +89,7 @@ const UploadFile = ({
     useEffect(() => {
         if (fileId) {
             if (fileScanStatus && fileScanStatus?.status === "PROCESSED") {
-                isUploading(false);
+                isUploading?.(false);
                 setPollFileStatus(false);
 
                 if (
@@ -99,36 +117,73 @@ const UploadFile = ({
             return;
         }
 
-        const formData = new FormData();
-        formData.append("file", file);
+        let shouldContinue = true;
 
-        const uploadedFileStatus = (await uploadFile(formData).catch(() =>
-            handleError()
-        )) as FileUpload;
+        if (file.type.startsWith("image/")) {
+            try {
+                await new Promise(async (resolve, reject) => {
+                    const image = new Image();
+                    const base64 = await convertBase64(file);
+                    image.src = base64.toString();
 
-        setHasError(false);
+                    image.onload = function (e: Event) {
+                        if (onBeforeUploadCheck) {
+                            const checked = onBeforeUploadCheck?.apply(this, [
+                                e as Event & EventUploadedImage,
+                            ]);
 
-        if (uploadedFileStatus) {
-            const fileId = uploadedFileStatus.id;
+                            checked ? resolve(null) : reject(null);
+                        } else {
+                            resolve(null);
+                        }
+                    };
+                });
+            } catch (_) {
+                shouldContinue = false;
+            }
+        }
 
-            setFileId(fileId);
-            setPollFileStatus(true);
-            isUploading(true);
+        if (shouldContinue) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
+                handleError()
+            )) as FileUpload;
+
+            setHasError(false);
+
+            if (uploadedFileStatus) {
+                const fileId = uploadedFileStatus.id;
+
+                setFileId(fileId);
+                setPollFileStatus(true);
+                isUploading?.(true);
+            }
+
+            onFileCheckSucceeded?.(uploadedFileStatus);
+        } else {
+            setHasError(false);
+
+            onFileCheckFailed?.();
         }
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form sx={sx}>
             <Stack spacing={0}>
                 {!fileId && (
                     <>
                         <Upload
                             control={control}
-                            label={t("upload")}
+                            label={fileSelectButtonText || t("upload")}
                             name="upload"
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
-                            onFileChange={(file: File) => setFile(file)}
+                            onFileChange={(file: File) => {
+                                onFileChange?.();
+                                setFile(file);
+                            }}
                             helperText={
                                 file?.name ||
                                 t("uploadHelper", {
@@ -137,7 +192,7 @@ const UploadFile = ({
                             }
                         />
                         <Button
-                            type="submit"
+                            onClick={handleSubmit(onSubmit)}
                             sx={{ maxWidth: 150 }}
                             disabled={!file}>
                             {t("uploadButtonText")}
