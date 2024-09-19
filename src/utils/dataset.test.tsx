@@ -56,7 +56,7 @@ describe("Dataset utils", () => {
             expect(hasValidValue(["undefined"])).toEqual(false);
         });
 
-        it("return false for string undefined values", () => {
+        it("returns false for string undefined values", () => {
             expect(hasValidValue("undefined")).toEqual(false);
         });
 
