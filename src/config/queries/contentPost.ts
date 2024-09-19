@@ -1,12 +1,12 @@
 import { ContentPageQueryOptions } from "@/interfaces/Cms";
 
-const GetContentPageQuery = (
+const GetContentPostQuery = (
     queryName: string,
     { id, idType = "URI" }: ContentPageQueryOptions
 ) => {
     return `
       query ${queryName} {
-        page(id: "${id}", idType: ${idType} ) {
+        post(id: "${id}", idType: ${idType} ) {
           title
           content
           categories {
@@ -19,4 +19,4 @@ const GetContentPageQuery = (
     `;
 };
 
-export { GetContentPageQuery };
+export { GetContentPostQuery };

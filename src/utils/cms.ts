@@ -2,6 +2,7 @@
 import dayjs from "dayjs";
 import {
     CMSPageResponse,
+    CMSPostResponse,
     CMSPostsResponse,
     ContentPageQueryOptions,
     PageTemplateDefault,
@@ -21,6 +22,7 @@ import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetContentPageQuery } from "@/config/queries/contentPage";
+import { GetContentPostQuery } from "@/config/queries/contentPost";
 import { GetEventsQuery } from "@/config/queries/events";
 import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
@@ -135,6 +137,18 @@ const getEvents = async () => {
     );
 
     return data?.posts?.edges || null;
+};
+
+const getContentPostQuery = async (
+    queryName: string,
+    queryOptions: ContentPageQueryOptions
+) => {
+    const data: CMSPostResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPostQuery(queryName, queryOptions),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.post || null;
 };
 
 const getContentPageQuery = async (
@@ -333,6 +347,13 @@ const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
             : 1;
     });
 
+const hasCategoryName = (
+    categories: PageTemplateDefault["categories"],
+    categoryName: string
+) => {
+    return !!categories?.nodes?.find(item => item.name === categoryName);
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -358,4 +379,6 @@ export {
     getMetadataOnboarding,
     getOpenSourceDevelopment,
     getSortedNewsEventsByDate,
+    getContentPostQuery,
+    hasCategoryName,
 };
