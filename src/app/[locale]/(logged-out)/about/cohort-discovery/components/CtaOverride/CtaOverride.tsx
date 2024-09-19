@@ -1,11 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
 import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
 import { COHORT_DISCOVERY_URL } from "@/consts/application";
 import { getPermissions } from "@/utils/permissions";
 
@@ -18,6 +21,8 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { isLoggedIn, user } = useAuth();
     const permissions = getPermissions(user?.roles);
 
+    const [isClicked, setIsClicked] = useState(false);
+
     const handleCtaClick = () => {
         if (permissions[COHORT_DISCOVERY_PERMISSION]) {
             push(COHORT_DISCOVERY_URL);
@@ -28,13 +33,28 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
+    const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
+        shouldFetch: isClicked,
+    });
+
+    const handleVisit = async () => {
+        setIsClicked(true);
+        console.log(datasetCsv);
+    };
+
     return (
-        <Button
-            sx={{ mt: 3 }}
-            onClick={handleCtaClick}
-            data-testid={DATA_TEST_ID}>
-            {ctaLink.title}
-        </Button>
+        <>
+            <Button
+                sx={{ mt: 3 }}
+                onClick={handleCtaClick}
+                data-testid={DATA_TEST_ID}>
+                {ctaLink?.title}
+            </Button>
+
+            <Button sx={{ mt: 3, ml: 3 }} onClick={handleVisit}>
+                Visit Cohort Discovery
+            </Button>
+        </>
     );
 };
 
