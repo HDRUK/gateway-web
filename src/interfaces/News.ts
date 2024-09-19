@@ -16,6 +16,7 @@ interface News {
 }
 
 interface NewsNode {
+    slug: string;
     node: { newsFields: News };
 }
 

@@ -4,6 +4,7 @@ const GetEventsQuery = `
       edges {
         node {
           postId,
+          slug,
           newsFields {
             headline
             link {

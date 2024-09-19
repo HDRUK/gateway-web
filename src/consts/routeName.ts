@@ -53,6 +53,8 @@ export enum RouteName {
     NEWS_EVENTS = "news/events",
     UPLOAD = "upload",
     DATA_CUSTODIAN_NETWORK_ITEM = "data-custodian-network",
+    NEWS_ARTICLE = "news/article",
+    EVENT_ARTICLE = "news/events/article",
     ERROR_401 = "/error/401",
     ERROR_404 = "/error/404",
     ERROR_403 = "/error/403",
