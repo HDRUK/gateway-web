@@ -15,8 +15,8 @@ interface NewsSummaryCardProps {
     summary: string;
     date: string;
     url: string;
-    imageLink: string;
-    imageAlt: string;
+    imageLink?: string;
+    imageAlt?: string;
     imageHeight?: string;
     variant?: "content" | "feature";
 }
