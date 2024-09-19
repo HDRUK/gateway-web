@@ -9,7 +9,7 @@ import NewsSummaryCard from "@/components/NewsSummaryCard";
 
 const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
     const t = useTranslations("pages.home");
-    console.log("posts", posts);
+
     return (
         <Box
             sx={{
