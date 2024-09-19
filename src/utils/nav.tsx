@@ -15,6 +15,7 @@ import {
     ArticleIcon,
     BookmarkBorderIcon,
     BookmarksIcon,
+    StickyNote2OutlinedIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -33,10 +34,11 @@ const getProfileNav = (permissions: {
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
         },
         {
-            icon: <ArticleIcon />,
+            icon: <StickyNote2OutlinedIcon />,
             label: "Publications",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
         },
+        //TODO: do these go under a "Dashboard" parent?
         {
             icon: <SearchIcon />,
             label: "Saved searches",
@@ -92,12 +94,46 @@ const getTeamNav = (
     },
     teamId: string | undefined
 ): LeftNavItem[] => {
+    console.log(permissions);
     return [
         {
             icon: <SettingsOutlinedIcon />,
             label: "Team Management",
             href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
         },
+        ...([
+            permissions["integrations.metadata"],
+            permissions["integrations.dar"],
+            permissions["applications.read"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <CloudUploadIcon />,
+                      label: "Integrations",
+                      subItems: [
+                          ...(permissions["applications.read"]
+                              ? [
+                                    {
+                                        label: "Private apps",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
+                                    },
+                                ]
+                              : []),
+                          ...([
+                              permissions["integrations.metadata"],
+                              permissions["integrations.dar"],
+                          ].some(isTrue => isTrue)
+                              ? [
+                                    {
+                                        label: "Gateway apps",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
+                                    },
+                                ]
+                              : []),
+                      ],
+                  },
+              ]
+            : []),
         ...(permissions["datasets.read"]
             ? [
                   {
@@ -172,37 +208,30 @@ const getTeamNav = (
                   },
               ]
             : []),
-
-        ...([
-            permissions["integrations.metadata"],
-            permissions["integrations.dar"],
-            permissions["applications.read"],
-        ].some(isTrue => isTrue)
+        ...(permissions["papers.read"]
             ? [
                   {
-                      icon: <CloudUploadIcon />,
-                      label: "Integrations",
-                      subItems: [
-                          ...(permissions["applications.read"]
-                              ? [
-                                    {
-                                        label: "Private Apps",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
-                                    },
-                                ]
-                              : []),
-                          ...([
-                              permissions["integrations.metadata"],
-                              permissions["integrations.dar"],
-                          ].some(isTrue => isTrue)
-                              ? [
-                                    {
-                                        label: "Integration",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
-                                    },
-                                ]
-                              : []),
-                      ],
+                      icon: <ArticleIcon />,
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <HandymanOutlinedIcon />,
+                      label: "Analysis Scripts & Software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["collections.read"]
+            ? [
+                  {
+                      icon: <BookmarksIcon />,
+                      label: "Collections",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                   },
               ]
             : []),

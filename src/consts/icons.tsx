@@ -60,6 +60,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 import StorageIcon from "@mui/icons-material/Storage";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
@@ -142,4 +143,5 @@ export {
     ArticleIcon,
     BookmarkBorderIcon,
     BookmarksIcon,
+    StickyNote2OutlinedIcon,
 };
