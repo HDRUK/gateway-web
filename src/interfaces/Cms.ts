@@ -123,7 +123,7 @@ interface PageTemplateRepeat {
 
 interface ContentPageQueryOptions {
     id: string;
-    idType?: "URI" | "ID" | "DATABASE_ID";
+    idType?: "URI" | "ID" | "DATABASE_ID" | "SLUG";
 }
 
 export type {

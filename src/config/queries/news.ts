@@ -3,6 +3,7 @@ const GetNewsQuery = `
     posts(where:{categoryName: "News"}) {
       edges {
         node {
+          postId,
           newsFields {
             headline
             link {

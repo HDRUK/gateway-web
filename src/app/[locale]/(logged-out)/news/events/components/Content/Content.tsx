@@ -23,6 +23,8 @@ const Content = ({ data }: ContentProps) => {
     const currentYear = new Date().getFullYear();
     const years = rangeRight(startYear, currentYear + 1).map(String);
 
+    console.log("data", data);
+
     const generatedData = useMemo(() => {
         return years.map(year => {
             const dataByYear = getReleaseByYear(data, year);
@@ -49,18 +51,22 @@ const Content = ({ data }: ContentProps) => {
                                         <NewsSummaryCard
                                             summary={item.newsFields.text}
                                             imageLink={
-                                                item.newsFields.image.node
-                                                    .mediaItemUrl
+                                                item.newsFields.image?.node
+                                                    ?.mediaItemUrl
                                             }
                                             imageAlt={
-                                                item.newsFields.image.node
-                                                    .altText
+                                                item.newsFields.image?.node
+                                                    ?.altText
                                             }
                                             headline={item.newsFields.headline}
                                             date={item.newsFields.date}
-                                            url={item.newsFields.link.url}
+                                            url={
+                                                item.newsFields.link?.url ||
+                                                "/news/articleitem.slug"
+                                            }
                                             buttonText={
-                                                item.newsFields.link.title
+                                                item.newsFields.link?.title ||
+                                                "Read more"
                                             }
                                             key={item.newsFields.headline}
                                         />
