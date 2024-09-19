@@ -347,6 +347,13 @@ const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
             : 1;
     });
 
+const hasCategoryName = (
+    categories: PageTemplateDefault["categories"],
+    categoryName: string
+) => {
+    return !!categories?.nodes?.find(item => item.name === categoryName);
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -373,4 +380,5 @@ export {
     getOpenSourceDevelopment,
     getSortedNewsEventsByDate,
     getContentPostQuery,
+    hasCategoryName,
 };

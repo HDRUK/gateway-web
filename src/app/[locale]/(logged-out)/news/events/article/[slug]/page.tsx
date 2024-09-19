@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import { getContentPostQuery } from "@/utils/cms";
+import { getContentPostQuery, hasCategoryName } from "@/utils/cms";
 
 interface ArticlePageProps {
     params: {
@@ -25,7 +25,7 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
         idType: "SLUG",
     });
 
-    if (!cmsPost) {
+    if (!cmsPost || !hasCategoryName(cmsPost.categories, "Events")) {
         notFound();
     }
 

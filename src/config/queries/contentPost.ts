@@ -9,6 +9,11 @@ const GetContentPostQuery = (
         post(id: "${id}", idType: ${idType} ) {
           title
           content
+          categories {
+            nodes {
+              name
+            }
+          }
         }
       }
     `;
