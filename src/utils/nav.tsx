@@ -38,16 +38,19 @@ const getProfileNav = (permissions: {
             label: "Publications",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
         },
-        //TODO: do these go under a "Dashboard" parent?
-        {
-            icon: <SearchIcon />,
-            label: "Saved searches",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
-        },
         {
             icon: <BookmarkBorderIcon />,
-            label: "Library",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
+            label: "Data Access Requests",
+            subItems: [
+                {
+                    label: "Library",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
+                },
+                {
+                    label: "Saved searches",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
+                },
+            ],
         },
         ...(permissions["custodians.read"]
             ? [
