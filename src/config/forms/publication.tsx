@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { REGEX_DOI } from "@/consts/regex";
 import { inputComponents } from ".";
 
 const defaultDatasetValue = [
@@ -28,8 +29,6 @@ const defaultValues = {
     durs: [],
     is_preprint: false,
 };
-
-const DOI_REGEX = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
 
 const validationSchema = yup
     .object()
@@ -61,7 +60,7 @@ const validationSchema = yup
             .test(
                 "is-valid-doi",
                 "Enter a valid DOI",
-                value => !value || DOI_REGEX.test(value)
+                value => !value || REGEX_DOI.test(value)
             )
             .label("DOI"),
         datasets: yup.array().of(

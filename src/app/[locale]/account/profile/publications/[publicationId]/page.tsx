@@ -9,7 +9,7 @@ export const metadata = {
     description: "",
 };
 
-export default async function PublicationCreatePage({
+export default async function PublicationEditPage({
     params,
 }: {
     params: { publicationId: string; teamId: string };
@@ -23,11 +23,7 @@ export default async function PublicationCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["papers.update"]}>
-            <CreatePublication
-                userId={user.id}
-                teamId={teamId}
-                publicationId={publicationId}
-            />
+            <CreatePublication teamId={teamId} publicationId={publicationId} />
         </ProtectedAccountRoute>
     );
 }

@@ -9,7 +9,7 @@ export const metadata = {
     description: "",
 };
 
-export default async function PublicationCreatePage({
+export default async function PublicationTeamsCreatePage({
     params,
 }: {
     params: { teamId: string };

@@ -20,6 +20,7 @@ import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
+import { REGEX_DOI } from "@/consts/regex";
 import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = "modules.dialogs.AddPublicationDialog";
@@ -28,10 +29,9 @@ interface AddPublicationDialogProps {
     teamId?: number;
 }
 
-const DOI_REGEX = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
 const VALIDATION_SCHEMA = yup
     .object({
-        query: yup.string().matches(DOI_REGEX, "Enter a valid DOI"),
+        query: yup.string().matches(REGEX_DOI, "Enter a valid DOI"),
     })
     .required();
 
