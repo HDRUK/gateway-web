@@ -74,6 +74,42 @@ const datasetFields: DatasetSection[] = [
         ],
     },
     {
+        sectionName: "Observations",
+        fields: [
+            {
+                path: "metadata.metadata.observations",
+                type: FieldType.TEXT,
+            },
+        ],
+    },
+    {
+        sectionName: "Provenance",
+        fields: [
+            {
+                path: "metadata.metadata.provenance.origin.purpose",
+                type: FieldType.LIST,
+                label: "Purpose",
+                tooltip: "The purpose for which the dataset was collected.",
+            },
+            {
+                path: "metadata.metadata.provenance.origin.source",
+                type: FieldType.LIST,
+                label: "Source",
+                tooltip: "The source from which the data was extracted.",
+            },
+            {
+                path: "metadata.metadata.provenance.origin.collectionSituation",
+                type: FieldType.LIST,
+                label: "Collection Situation Setting",
+            },
+            {
+                path: "metadata.metadata.accessibility.enrichmentAndLinkage.derivation",
+                type: FieldType.TEXT,
+                label: "Derivations",
+            },
+        ],
+    },
+    {
         sectionName: "Structural Metadata",
         fields: [
             {
@@ -125,116 +161,6 @@ const datasetFields: DatasetSection[] = [
                 path: "metadata.metadata.accessibility.usage.resourceCreator.name",
                 type: FieldType.TEXT,
                 label: "Citation Requirements",
-            },
-        ],
-    },
-
-    {
-        sectionName: "Data Access Requests",
-        fields: [
-            {
-                path: "metadata.metadata.accessibility.access.accessRights",
-                type: FieldType.LIST,
-                label: "Access Rights",
-                tooltip:
-                    "The webpage where the data access request process and/or guidance is provided.",
-            },
-            {
-                path: "metadata.metadata.accessibility.access.deliveryLeadTime",
-                type: FieldType.TEXT,
-                label: "Access Request Duration",
-                tooltip:
-                    "Indication of the typical processing times based on the types of requests typically received.",
-            },
-            {
-                path: "metadata.metadata.accessibility.access.accessRequestCost",
-                type: FieldType.LIST,
-                label: "Organisation Access Request Cost",
-                tooltip:
-                    "Webpage or description detailing the service or cost model for processing data access requests.",
-            },
-            {
-                path: "metadata.metadata.accessibility.access.accessService",
-                type: FieldType.TEXT,
-                label: "Access Service",
-                tooltip:
-                    "A brief description of the data access services that are available from the Data Custodian",
-            },
-            {
-                path: "metadata.metadata.accessibility.access.jurisdiction",
-                type: FieldType.TEXT,
-                label: "Jurisdiction",
-                tooltip:
-                    "ISO 3166-1 country codes and the associated SO 3166-2 for regions, cities, states, etc. for the country/state under whose laws the data subject's data is collected, processed and stored. Multiple jurisdictions might be provided.",
-            },
-            {
-                path: "metadata.metadata.accessibility.usage.dataUseLimitation",
-                type: FieldType.TEXT,
-                label: "Data Use Limitation",
-                tooltip:
-                    "Indication of consent permissions for datasets and/or materials, and relates to the purposes for which datasets and/or material might be removed, stored or used.",
-            },
-            {
-                path: "metadata.metadata.accessibility.usage.dataUseRequirements",
-                type: FieldType.TEXT,
-                label: "Data Use Requirements",
-                tooltip:
-                    "Indication of whether there are any additional conditions set for use if any, multiple requirements may be provided.",
-            },
-            {
-                path: "metadata.metadata.accessibility.access.dataController",
-                type: FieldType.LIST,
-                label: "Data Controller",
-                tooltip:
-                    "The person/entity who (either alone or jointly or in common with other persons/entities) determines the purposes for which and the way any Data Subject data, specifically personal data or are to be processed.",
-            },
-            {
-                path: "metadata.metadata.accessibility.access.dataProcessor",
-                type: FieldType.LIST,
-                label: "Data Processor",
-                tooltip:
-                    "The person(s)/entity (other than an employee of the Data Controller) who process the data on behalf of the Data Controller.",
-            },
-        ],
-    },
-    {
-        sectionName: "Observations",
-        fields: [
-            {
-                path: "metadata.metadata.observations",
-                type: FieldType.TEXT,
-            },
-        ],
-    },
-    {
-        sectionName: "Tissue sample",
-        fields: [
-            {
-                path: "metadata.metadata.tissuesSampleCollection.dataCategories",
-                type: FieldType.LIST,
-                label: "Data Categories",
-            },
-            {
-                path: "metadata.metadata.tissuesSampleCollection.materialType",
-                type: FieldType.LIST,
-                label: "Material Type",
-                tooltip:
-                    "Type of biospeciment saved from a biological entity, and indication of the specimen availability.",
-            },
-            {
-                path: "metadata.metadata.tissuesSampleCollection.tissueSampleMetadata.creationDate",
-                type: FieldType.DATE,
-                label: "Creation Date",
-            },
-            {
-                path: "metadata.metadata.tissuesSampleCollection.tissueSampleMetadata.AnatomicalSiteOntologyCode",
-                type: FieldType.TEXT,
-                label: "Anatomical Site Ontology Code",
-            },
-            {
-                path: "metadata.metadata.tissuesSampleCollection.collectionType",
-                type: FieldType.TEXT,
-                label: "Collection Type",
             },
         ],
     },
@@ -331,7 +257,38 @@ const datasetFields: DatasetSection[] = [
             },
         ],
     },
-
+    {
+        sectionName: "Tissue sample",
+        fields: [
+            {
+                path: "metadata.metadata.tissuesSampleCollection.dataCategories",
+                type: FieldType.LIST,
+                label: "Data Categories",
+            },
+            {
+                path: "metadata.metadata.tissuesSampleCollection.materialType",
+                type: FieldType.LIST,
+                label: "Material Type",
+                tooltip:
+                    "Type of biospeciment saved from a biological entity, and indication of the specimen availability.",
+            },
+            {
+                path: "metadata.metadata.tissuesSampleCollection.tissueSampleMetadata.creationDate",
+                type: FieldType.DATE,
+                label: "Creation Date",
+            },
+            {
+                path: "metadata.metadata.tissuesSampleCollection.tissueSampleMetadata.AnatomicalSiteOntologyCode",
+                type: FieldType.TEXT,
+                label: "Anatomical Site Ontology Code",
+            },
+            {
+                path: "metadata.metadata.tissuesSampleCollection.collectionType",
+                type: FieldType.TEXT,
+                label: "Collection Type",
+            },
+        ],
+    },
     {
         sectionName: "Format And Standards",
         fields: [
@@ -366,56 +323,70 @@ const datasetFields: DatasetSection[] = [
         ],
     },
     {
-        sectionName: "Provenance",
+        sectionName: "Data Access Requests",
         fields: [
             {
-                path: "metadata.metadata.provenance.origin.purpose",
+                path: "metadata.metadata.accessibility.access.accessRights",
                 type: FieldType.LIST,
-                label: "Purpose",
-                tooltip: "The purpose for which the dataset was collected.",
+                label: "Access Rights",
+                tooltip:
+                    "The webpage where the data access request process and/or guidance is provided.",
             },
             {
-                path: "metadata.metadata.provenance.origin.source",
+                path: "metadata.metadata.accessibility.access.deliveryLeadTime",
+                type: FieldType.TEXT,
+                label: "Access Request Duration",
+                tooltip:
+                    "Indication of the typical processing times based on the types of requests typically received.",
+            },
+            {
+                path: "metadata.metadata.accessibility.access.accessRequestCost",
                 type: FieldType.LIST,
-                label: "Source",
-                tooltip: "The source from which the data was extracted.",
+                label: "Organisation Access Request Cost",
+                tooltip:
+                    "Webpage or description detailing the service or cost model for processing data access requests.",
             },
             {
-                path: "metadata.metadata.provenance.origin.collectionSituation",
+                path: "metadata.metadata.accessibility.access.accessService",
+                type: FieldType.TEXT,
+                label: "Access Service",
+                tooltip:
+                    "A brief description of the data access services that are available from the Data Custodian",
+            },
+            {
+                path: "metadata.metadata.accessibility.access.jurisdiction",
+                type: FieldType.TEXT,
+                label: "Jurisdiction",
+                tooltip:
+                    "ISO 3166-1 country codes and the associated SO 3166-2 for regions, cities, states, etc. for the country/state under whose laws the data subject's data is collected, processed and stored. Multiple jurisdictions might be provided.",
+            },
+            {
+                path: "metadata.metadata.accessibility.usage.dataUseLimitation",
+                type: FieldType.TEXT,
+                label: "Data Use Limitation",
+                tooltip:
+                    "Indication of consent permissions for datasets and/or materials, and relates to the purposes for which datasets and/or material might be removed, stored or used.",
+            },
+            {
+                path: "metadata.metadata.accessibility.usage.dataUseRequirements",
+                type: FieldType.TEXT,
+                label: "Data Use Requirements",
+                tooltip:
+                    "Indication of whether there are any additional conditions set for use if any, multiple requirements may be provided.",
+            },
+            {
+                path: "metadata.metadata.accessibility.access.dataController",
                 type: FieldType.LIST,
-                label: "Collection Situation Setting",
+                label: "Data Controller",
+                tooltip:
+                    "The person/entity who (either alone or jointly or in common with other persons/entities) determines the purposes for which and the way any Data Subject data, specifically personal data or are to be processed.",
             },
             {
-                path: "metadata.metadata.accessibility.enrichmentAndLinkage.derivation",
-                type: FieldType.TEXT,
-                label: "Derivations",
-            },
-        ],
-    },
-
-    {
-        sectionName: "Related resources",
-        fields: [
-            {
-                path: "metadata.metadata.accessibility.usage.isReferencedBy",
-                type: FieldType.TEXT,
-                label: "Citations",
-            },
-            {
-                path: "metadata.metadata.accessibility.usage.investigations",
-                type: FieldType.TEXT,
-                label: "Investigations",
-                tooltip: "Weblink to any active projects using the dataset.",
-            },
-            {
-                path: "metadata.metadata.accessibility.enrichmentAndLinkage.tools",
-                type: FieldType.TEXT,
-                label: "Tools",
-            },
-            {
-                path: "metadata.metadata.accessibility.enrichmentAndLinkage.qualifiedRelation",
-                type: FieldType.TEXT,
-                label: "Linked Datasets",
+                path: "metadata.metadata.accessibility.access.dataProcessor",
+                type: FieldType.LIST,
+                label: "Data Processor",
+                tooltip:
+                    "The person(s)/entity (other than an employee of the Data Controller) who process the data on behalf of the Data Controller.",
             },
         ],
     },

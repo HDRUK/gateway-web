@@ -36,6 +36,7 @@ exports[`KeepingUpdated should render content 1`] = `
             <input
               class="PrivateSwitchBase-input mui-style-1m9pwf3"
               data-indeterminate="false"
+              id="contact_feedback"
               name="contact_feedback"
               type="checkbox"
             />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
@@ -49,12 +49,15 @@ const CreateIntegrationForm = () => {
 
     const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
 
-    const { control, handleSubmit, formState, reset, watch } =
-        useForm<TeamForm>({
-            mode: "onTouched",
-            resolver: yupResolver(teamValidationSchema),
-            defaultValues: teamDefaultValues,
-        });
+    const methods = useForm<TeamForm>({
+        mode: "onTouched",
+        resolver: yupResolver(teamValidationSchema),
+        defaultValues: {
+            ...teamDefaultValues,
+        },
+    });
+
+    const { control, handleSubmit, formState, reset, watch } = methods;
 
     useEffect(() => {
         if (!existingTeamData) {
@@ -65,6 +68,7 @@ const CreateIntegrationForm = () => {
             ...existingTeamData,
             users: existingTeamData?.users?.map(user => user.id),
         };
+
         reset(teamData);
     }, [reset, existingTeamData]);
 
@@ -120,80 +124,82 @@ const CreateIntegrationForm = () => {
     }
 
     return (
-        <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
-            <Paper sx={{ marginBottom: 1 }}>
-                <Box
-                    display="flex"
-                    sx={{
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}>
-                    <div>
-                        <Typography variant="h2">
-                            {params?.teamId
-                                ? t(`${TRANSLATION_PATH_EDIT}.title`)
-                                : t(`${TRANSLATION_PATH_CREATE}.title`)}
-                        </Typography>
-                        <Typography>
-                            {params?.teamId
-                                ? t(`${TRANSLATION_PATH_EDIT}.text`)
-                                : t(`${TRANSLATION_PATH_CREATE}.text`)}
-                        </Typography>
-                    </div>
-                    <Box>
-                        <InputWrapper
-                            control={control}
-                            {...questionBankField}
-                            checkedLabel={
-                                <>
-                                    {t(
-                                        `${TRANSLATION_PATH_COMMON}.questionBank`
-                                    )}
-                                    <Typography
-                                        component="span"
-                                        sx={{ fontWeight: "bold" }}>
-                                        {" "}
-                                        {questionBankLabel.toLowerCase()}
-                                    </Typography>
-                                </>
-                            }
-                        />
+        <FormProvider {...methods}>
+            <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
+                <Paper sx={{ marginBottom: 1 }}>
+                    <Box
+                        display="flex"
+                        sx={{
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}>
+                        <div>
+                            <Typography variant="h2">
+                                {params?.teamId
+                                    ? t(`${TRANSLATION_PATH_EDIT}.title`)
+                                    : t(`${TRANSLATION_PATH_CREATE}.title`)}
+                            </Typography>
+                            <Typography>
+                                {params?.teamId
+                                    ? t(`${TRANSLATION_PATH_EDIT}.text`)
+                                    : t(`${TRANSLATION_PATH_CREATE}.text`)}
+                            </Typography>
+                        </div>
+                        <Box>
+                            <InputWrapper
+                                control={control}
+                                {...questionBankField}
+                                checkedLabel={
+                                    <>
+                                        {t(
+                                            `${TRANSLATION_PATH_COMMON}.questionBank`
+                                        )}
+                                        <Typography
+                                            component="span"
+                                            sx={{ fontWeight: "bold" }}>
+                                            {" "}
+                                            {questionBankLabel.toLowerCase()}
+                                        </Typography>
+                                    </>
+                                }
+                            />
+                        </Box>
                     </Box>
-                </Box>
-            </Paper>
-            <Paper sx={{ marginBottom: 1, gridColumn: "span 2" }}>
-                <Box padding={0}>
-                    {hydratedFormFields.map(field => (
-                        <InputWrapper
-                            key={field.name}
-                            control={control}
-                            {...field}
-                        />
-                    ))}
-                </Box>
-            </Paper>
-            <Paper>
-                <Box
-                    padding={0}
-                    display="flex"
-                    justifyContent="space-between"
-                    marginBottom={10}>
-                    <Button
-                        color="secondary"
-                        variant="outlined"
-                        onClick={() => reset(teamDefaultValues)}>
-                        {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
-                    </Button>
-                    <Button type="submit">
-                        {t(
-                            `${TRANSLATION_PATH_COMMON}.${
-                                params?.teamId ? "update" : "publish"
-                            }`
-                        )}
-                    </Button>
-                </Box>
-            </Paper>
-        </Form>
+                </Paper>
+                <Paper sx={{ marginBottom: 1, gridColumn: "span 2" }}>
+                    <Box padding={0}>
+                        {hydratedFormFields.map(field => (
+                            <InputWrapper
+                                key={field.name}
+                                control={control}
+                                {...field}
+                            />
+                        ))}
+                    </Box>
+                </Paper>
+                <Paper>
+                    <Box
+                        padding={0}
+                        display="flex"
+                        justifyContent="space-between"
+                        marginBottom={10}>
+                        <Button
+                            color="secondary"
+                            variant="outlined"
+                            onClick={() => reset(teamDefaultValues)}>
+                            {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
+                        </Button>
+                        <Button type="submit">
+                            {t(
+                                `${TRANSLATION_PATH_COMMON}.${
+                                    params?.teamId ? "update" : "publish"
+                                }`
+                            )}
+                        </Button>
+                    </Box>
+                </Paper>
+            </Form>
+        </FormProvider>
     );
 };
 

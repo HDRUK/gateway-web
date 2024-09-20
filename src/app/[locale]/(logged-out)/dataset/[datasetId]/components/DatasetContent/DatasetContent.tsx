@@ -112,7 +112,10 @@ const DatasetContent = ({
                 );
             case FieldType.LIST: {
                 const list = Array.from(new Set(splitStringList(value)));
-                return list.map(item => formatTextWithLinks(item));
+                return list.map((item, i) => [
+                    i > 0 && ", ",
+                    formatTextWithLinks(item),
+                ]);
             }
             case FieldType.LINK_LIST: {
                 const list = Array.from(new Set(splitStringList(value)));
