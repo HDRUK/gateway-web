@@ -16,7 +16,8 @@ const defaultValues: TeamForm = {
     access_requests_management: true,
     uses_5_safes: true,
     is_question_bank: false,
-    team_image: "",
+    team_logo: "",
+    introduction: "",
 };
 
 const validationSchema = yup.object({
@@ -55,13 +56,6 @@ const formFields = [
         name: "name",
         info: "Please ensure the name matches the standard format for organsitation names",
         component: inputComponents.TextArea,
-        required: true,
-    },
-    {
-        label: "Organisation name",
-        name: "name",
-        info: "Please ensure the name matches the standard format for organsitation names",
-        component: inputComponents.TextField,
         required: true,
     },
     {
