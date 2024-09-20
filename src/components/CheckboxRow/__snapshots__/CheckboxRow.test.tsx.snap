@@ -22,6 +22,7 @@ exports[`CheckboxRow should render component 1`] = `
           <input
             class="PrivateSwitchBase-input mui-style-1m9pwf3"
             data-indeterminate="false"
+            id="fieldName"
             name="fieldName"
             type="checkbox"
           />

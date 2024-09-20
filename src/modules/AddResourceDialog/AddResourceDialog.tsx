@@ -29,11 +29,7 @@ import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/addResources";
 import { colors } from "@/config/theme";
 import { capitalise } from "@/utils/general";
-import {
-    availableResourceTypes,
-    defaultValues,
-    searchResource,
-} from "./config";
+import { resourceTypes, defaultValues, searchResource } from "./config";
 
 const TRANSLATION_PATH = "modules.dialogs.RelatedResources";
 
@@ -81,6 +77,7 @@ const AddDatasetDialog = ({
                 : ResourceType.TOOL,
         },
     });
+
     const watchAll = watch();
     useEffect(() => {
         setQueryParams(previous => ({
@@ -166,6 +163,15 @@ const AddDatasetDialog = ({
         isLoadingTools,
     ]);
 
+    const availableResourceTypes = useMemo(() => {
+        return [
+            ResourceType.DATASET,
+            ResourceType.DATA_USE,
+            ResourceType.PUBLICATION,
+            ResourceType.TOOL,
+        ].filter(type => defaultResources?.[type]);
+    }, [defaultResources]);
+
     const [selectedResources, setSelectedResources] =
         useState<SelectedResources>({
             [ResourceType.DATASET]:
@@ -213,20 +219,8 @@ const AddDatasetDialog = ({
                     name="resourceType"
                     label="Search for:"
                     control={control}
-                    radios={availableResourceTypes
-                        .filter(
-                            radio =>
-                                radio ===
-                                (defaultResources?.[ResourceType.DATASET]
-                                    ? ResourceType.DATASET
-                                    : defaultResources?.[ResourceType.DATA_USE]
-                                    ? ResourceType.DATA_USE
-                                    : defaultResources?.[
-                                          ResourceType.PUBLICATION
-                                      ]
-                                    ? ResourceType.PUBLICATION
-                                    : ResourceType.TOOL)
-                        )
+                    radios={resourceTypes
+                        .filter(radio => availableResourceTypes.includes(radio))
                         .map(type => ({
                             value: type,
                             label: t(`radio${capitalise(type)}`),

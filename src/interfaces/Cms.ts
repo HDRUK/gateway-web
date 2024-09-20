@@ -1,3 +1,6 @@
+import { EventNode } from "./Events";
+import { NewsNode } from "./News";
+
 interface CMSPostResponse<T> {
     post: T;
 }
@@ -17,6 +20,11 @@ interface PageTemplateDefault {
     id: string;
     title: string;
     content: string;
+    categories?: {
+        nodes?: {
+            name: string;
+        }[];
+    };
 }
 
 interface CtaLink {
@@ -99,7 +107,7 @@ interface PageTemplateHome {
         };
     };
     posts: {
-        edges: NewsPost[];
+        edges: (NewsNode | EventNode)[];
     };
 }
 
@@ -120,7 +128,12 @@ interface PageTemplateRepeat {
 
 interface ContentPageQueryOptions {
     id: string;
-    idType?: "URI" | "ID" | "DATABASE_ID";
+    idType?: "URI" | "ID" | "DATABASE_ID" | "SLUG";
+}
+
+interface ContentPostQueryOptions {
+    id: string;
+    idType?: "URI" | "ID" | "DATABASE_ID" | "SLUG";
 }
 
 export type {
@@ -135,5 +148,6 @@ export type {
     CtaLink,
     NewsPost,
     ContentPageQueryOptions,
+    ContentPostQueryOptions,
     CMSPostsResponse,
 };

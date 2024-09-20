@@ -29,8 +29,8 @@ interface StructuralMetadataPublicSchema {
 }
 
 interface Revision {
-    revision: string;
-    revisionUrl: string;
+    version: string;
+    url: string;
 }
 
 interface Metadata {
@@ -50,6 +50,9 @@ interface Metadata {
             publisherName: string;
             name?: string;
         };
+    };
+    required: {
+        version: string;
     };
     accessibility: {
         access: {
@@ -97,14 +100,16 @@ interface Metadata {
         dataUses: string[];
         syntheticDataWebLink: string;
     };
-    structuralMetadata?: StructuralMetadata[];
+    structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
 }
 
 interface LinkedDatasetVersions {
+    id: string;
     pivot: {
         linkage_type: string;
     };
+    metadata: Metadata;
 }
 
 interface MetadataMax {

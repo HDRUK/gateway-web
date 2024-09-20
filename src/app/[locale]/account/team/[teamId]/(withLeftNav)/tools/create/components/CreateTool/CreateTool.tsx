@@ -13,9 +13,11 @@ import {
 } from "@/interfaces/AddResource";
 import { Category } from "@/interfaces/Category";
 import { DataUse } from "@/interfaces/DataUse";
+import { ProgrammingLanguage } from "@/interfaces/ProgrammingLanguage";
 import { Publication } from "@/interfaces/Publication";
+import { Tag } from "@/interfaces/Tag";
 import { Tool, ToolPayload, ToolPayloadSubmission } from "@/interfaces/Tool";
-import { OptionsType } from "@/components/Autocomplete/Autocomplete";
+import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -73,12 +75,14 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         });
 
     const { data: toolCategoryData } = useGet<Category[]>(
-        `${apis.toolCategoriesV1Url}?perPage=200`
+        `${apis.toolCategoriesV1Url}?perPage=-1`
     );
 
-    const { data: programmingLanguageData } = useGet<Category[]>(
-        `${apis.programmingLanguagesV1Url}?perPage=200`
+    const { data: programmingLanguageData } = useGet<ProgrammingLanguage[]>(
+        `${apis.programmingLanguagesV1Url}?perPage=-1`
     );
+
+    const { data: tagData } = useGet<Tag[]>(`${apis.tagsV1Url}?per_page=-1`);
 
     const { data: existingToolData } = useGet<Tool>(
         `${apis.toolsV1Url}/${toolId}`,
@@ -120,6 +124,17 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         }) as OptionsType[];
     }, [programmingLanguageData]);
 
+    const tagOptions = useMemo(() => {
+        if (!tagData) return [];
+
+        return tagData.map(data => {
+            return {
+                value: data.id as ValueType,
+                label: data.description,
+            };
+        }) as OptionsType[];
+    }, [tagData]);
+
     useEffect(() => {
         if (!existingToolData) {
             return;
@@ -127,12 +142,13 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
         const formData = {
             ...existingToolData,
-            dataset: defaultDatasetValue, // TODO - update this when BE returns dataset linkages correctly
+            dataset: existingToolData.datasets,
             programming_language:
                 existingToolData?.programming_languages?.map(item => item.id) ||
                 [],
             type_category:
                 existingToolData?.type_category?.map(item => item.id) || [],
+            keywords: existingToolData?.tag?.map(item => item.id) || [],
         };
 
         const propertiesToDelete = [
@@ -180,15 +196,20 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             return data?.map(item => item?.id);
         };
 
+        const publications = formData.publications.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ updated_at, created_at, ...item }) => item
+        );
+
         const payload: ToolPayloadSubmission = {
             ...formData,
             user_id: userId,
             team_id: teamId ? +teamId : undefined,
             enabled: true,
-            tag: [],
+            tag: formData.keywords,
             status,
             durs: formatEntityToIdArray(formData.durs),
-            publications: formatEntityToIdArray(formData.publications),
+            publications,
             tools: formatEntityToIdArray(formData.tools),
             dataset: formData.dataset.every(
                 obj => Object.keys(obj).length === 0
@@ -214,14 +235,10 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                     "publications",
                     selectedResources[ResourceType.PUBLICATION]
                 );
-                setValue("tools", selectedResources[ResourceType.TOOL]);
             },
-            hideDatasets: true,
             defaultResources: {
                 datause: getValues("durs"),
                 publication: getValues("publications"),
-                tool: getValues("tools"),
-                dataset: [],
             },
         });
     };
@@ -233,7 +250,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             tool: (getValues("tools") as Tool[]) || [],
             dataset: [],
         };
-    }, [watchAll]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchAll, getValues]);
 
     useEffect(() => {
         showBar("CreateTool", {
@@ -260,6 +278,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 push(TOOL_ROUTE);
             },
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleRemoveResource = (
@@ -288,7 +307,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         if (watchAnyDataset) {
             replace(defaultDatasetValue);
         }
-    }, [watchAnyDataset]);
+    }, [replace, watchAnyDataset]);
 
     const hydratedFormFields = useMemo(
         () =>
@@ -313,6 +332,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                             return toolCategoryOptions;
                         case "programming_language":
                             return programmingLanguageOptions;
+                        case "keywords":
+                            return tagOptions;
                         default:
                             return field.options || [];
                     }
@@ -338,10 +359,14 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 );
             }),
         [
-            programmingLanguageOptions,
-            toolCategoryOptions,
+            control,
             fields,
+            append,
+            remove,
             watchAnyDataset,
+            toolCategoryOptions,
+            programmingLanguageOptions,
+            tagOptions,
         ]
     );
 

@@ -5,6 +5,7 @@ const config = {
         ACTION_ADD_LIBRARY: "action-add-library",
     },
     PUBLICATION_LOCAL_STORAGE: "publication-data",
+    VIEW_TYPE: "view-type",
 };
 
 export default config;

@@ -3,10 +3,12 @@ import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Collection } from "@/interfaces/Collection";
+import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
+import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
@@ -104,6 +106,26 @@ async function getTeamSummary(
     );
 }
 
+async function getNetworkSummary(
+    cookieStore: ReadonlyRequestCookies,
+    networkId: string
+): Promise<NetworkSummary> {
+    return await get<NetworkSummary>(
+        cookieStore,
+        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}/summary`
+    );
+}
+
+async function getDataCustodianNetworks(
+    cookieStore: ReadonlyRequestCookies,
+    networkId: string
+): Promise<DataCustodianNetwork> {
+    return await get<DataCustodianNetwork>(
+        cookieStore,
+        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}`
+    );
+}
+
 async function getDataset(
     cookieStore: ReadonlyRequestCookies,
     datasetId: string,
@@ -161,11 +183,16 @@ async function getCollection(
 async function getFormHydration(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,
-    schemaVersion: string
+    schemaVersion: string,
+    dataTypes?: string[]
 ): Promise<FormHydrationSchema> {
     return get<FormHydrationSchema>(
         cookieStore,
-        `${apis.formHydrationV1UrlIP}?name=${schemaName}&version=${schemaVersion}`
+        `${
+            apis.formHydrationV1UrlIP
+        }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
+            dataTypes || []
+        }`
     );
 }
 
@@ -174,6 +201,8 @@ export {
     getUser,
     getTeam,
     getTeamSummary,
+    getNetworkSummary,
+    getDataCustodianNetworks,
     getApplication,
     getCohort,
     getDataset,

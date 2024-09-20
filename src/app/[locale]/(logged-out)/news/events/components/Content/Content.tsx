@@ -4,24 +4,29 @@ import { useMemo } from "react";
 import { Grid } from "@mui/material";
 import { rangeRight } from "lodash";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import { EventNode } from "@/interfaces/Events";
 import { NewsNode } from "@/interfaces/News";
 import Box from "@/components/Box";
 import NewsSummaryCard from "@/components/NewsSummaryCard";
 import Tabs from "@/components/Tabs";
+import { RouteName } from "@/consts/routeName";
 import { getReleaseByYear } from "@/utils/releaseNotes";
 
-interface EventsProps {
+interface ContentProps {
     data: EventNode[] | NewsNode[];
 }
 
 const TRANSLATIONS_NAMESPACE_RELEASES = "pages.newsEvents";
 
-const Events = ({ data }: EventsProps) => {
+const Content = ({ data }: ContentProps) => {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
     const startYear = 2021;
     const currentYear = new Date().getFullYear();
     const years = rangeRight(startYear, currentYear + 1).map(String);
+    const params = useParams<{ tab?: string }>();
+
+    const tab = params?.tab || "news";
 
     const generatedData = useMemo(() => {
         return years.map(year => {
@@ -40,32 +45,44 @@ const Events = ({ data }: EventsProps) => {
                             </Box>
                         ) : (
                             <Grid container rowSpacing={4} columnSpacing={4}>
-                                {dataByYear.map(item => (
-                                    <Grid
-                                        item
-                                        desktop={3}
-                                        tablet={4}
-                                        mobile={12}>
-                                        <NewsSummaryCard
-                                            summary={item.newsFields.text}
-                                            imageLink={
-                                                item.newsFields.image.node
-                                                    .mediaItemUrl
-                                            }
-                                            imageAlt={
-                                                item.newsFields.image.node
-                                                    .altText
-                                            }
-                                            headline={item.newsFields.headline}
-                                            date={item.newsFields.date}
-                                            url={item.newsFields.link.url}
-                                            buttonText={
-                                                item.newsFields.link.title
-                                            }
-                                            key={item.newsFields.headline}
-                                        />
-                                    </Grid>
-                                ))}
+                                {dataByYear.map(item => {
+                                    return (
+                                        <Grid
+                                            item
+                                            desktop={3}
+                                            tablet={4}
+                                            mobile={12}>
+                                            <NewsSummaryCard
+                                                summary={item.newsFields.text}
+                                                imageLink={
+                                                    item.newsFields.image?.node
+                                                        ?.mediaItemUrl
+                                                }
+                                                imageAlt={
+                                                    item.newsFields.image?.node
+                                                        ?.altText
+                                                }
+                                                headline={
+                                                    item.newsFields.headline
+                                                }
+                                                date={item.newsFields.date}
+                                                url={
+                                                    item.newsFields.link?.url ||
+                                                    `/${
+                                                        tab === "news"
+                                                            ? RouteName.NEWS_ARTICLE
+                                                            : RouteName.EVENT_ARTICLE
+                                                    }/${item.slug}`
+                                                }
+                                                buttonText={
+                                                    item.newsFields.link
+                                                        ?.title || t("readMore")
+                                                }
+                                                key={item.newsFields.headline}
+                                            />
+                                        </Grid>
+                                    );
+                                })}
                             </Grid>
                         )}
                     </div>
@@ -85,4 +102,4 @@ const Events = ({ data }: EventsProps) => {
     );
 };
 
-export default Events;
+export default Content;

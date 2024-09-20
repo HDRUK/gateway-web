@@ -27,24 +27,16 @@ const getProfileNav = (permissions: {
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
-        ...(permissions["tools.read"]
-            ? [
-                  {
-                      icon: <HandymanOutlinedIcon />,
-                      label: "Analysis script, tools and software",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["papers.read"]
-            ? [
-                  {
-                      icon: <ArticleIcon />,
-                      label: "Publications",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
-                  },
-              ]
-            : []),
+        {
+            icon: <HandymanOutlinedIcon />,
+            label: "Analysis script, tools and software",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+        },
+        {
+            icon: <ArticleIcon />,
+            label: "Publications",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
+        },
         {
             icon: <SearchIcon />,
             label: "Saved searches",

@@ -6,7 +6,7 @@ import {
     UseFormTrigger,
 } from "react-hook-form";
 import dayjs from "dayjs";
-import { get, isArray, isObject, set } from "lodash";
+import { get, isArray, isEmpty, isObject, set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Metadata, Revision } from "@/interfaces/Dataset";
 import {
@@ -32,11 +32,19 @@ const formGetAllSectionFields = (
 const formSectionHasAllEmptyFields = (
     schemaFields: FormHydration[],
     section: string,
-    getValues: UseFormGetValues<FieldValues>
+    getValues: UseFormGetValues<FieldValues>,
+    dirtyFields: Partial<FieldValues>
 ) => {
     const allSectionFields = formGetAllSectionFields(schemaFields, section).map(
         field => field.title
     );
+    const hasDirtyFields = Object.keys(dirtyFields).some(key =>
+        allSectionFields.some(item => item.includes(key))
+    );
+
+    if (!hasDirtyFields) {
+        return true;
+    }
 
     return getValues(allSectionFields).every(value =>
         Array.isArray(value)
@@ -70,7 +78,11 @@ const formGetFieldsCompletedCount = (
     const fieldValues = getValues(allFields);
 
     if (allFields && fieldValues) {
-        fieldsWithValue += fieldValues.filter(value => value).length;
+        const nonEmptyCount = fieldValues.filter(
+            value => value !== null && !isEmpty(value)
+        ).length;
+
+        fieldsWithValue = nonEmptyCount;
     }
 
     const arrayFields = schemaFields.filter(
@@ -135,14 +147,20 @@ const formGetSectionStatus = (
     schemaFields: FormHydration[],
     section: string,
     getValues: UseFormGetValues<FieldValues>,
-    submissionRequested: boolean
+    submissionRequested: boolean,
+    dirtyFields: Partial<FieldValues>
 ) => {
     if (isSectionActive) {
         return LegendStatus.ACTIVE;
     }
     if (
         !submissionRequested &&
-        formSectionHasAllEmptyFields(schemaFields, section, getValues)
+        formSectionHasAllEmptyFields(
+            schemaFields,
+            section,
+            getValues,
+            dirtyFields
+        )
     ) {
         return LegendStatus.UNTOUCHED;
     }
@@ -193,7 +211,8 @@ const formGenerateLegendItems = async (
     clearErrors: UseFormClearErrors<FieldValues>,
     getValues: UseFormGetValues<FieldValues>,
     trigger: UseFormTrigger<FieldValues>,
-    submissionRequested: boolean
+    submissionRequested: boolean,
+    dirtyFields: Partial<FieldValues>
 ) => {
     const legendItems: LegendItem[] = await Promise.all(
         formSections.map(async section => {
@@ -213,7 +232,8 @@ const formGenerateLegendItems = async (
                 schemaFields,
                 section,
                 getValues,
-                submissionRequested
+                submissionRequested,
+                dirtyFields
             );
 
             return {
@@ -246,8 +266,7 @@ const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
     nameOverride?: string,
-    setActiveField?: (fieldName: string) => void,
-    unsetActiveField?: () => void
+    setActiveField?: (fieldName: string) => void
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
     const { options } = rest;
@@ -288,7 +307,6 @@ const renderFormHydrationField = (
                 selectedOption
             }
             onFocus={() => setActiveField && setActiveField(name)}
-            onBlur={() => unsetActiveField && unsetActiveField()}
             {...rest}
             label={name || ""}
         />
@@ -469,6 +487,24 @@ const mapExistingDatasetToFormFields = (
                     !isArray(defaultValue)
                 ) {
                     set(values, title, []);
+                } else if (fullPath.includes("revisions")) {
+                    const revisions = get(metadata, "revisions");
+                    const latestRevision = revisions?.[revisions.length - 1];
+
+                    if (latestRevision) {
+                        switch (fullPath) {
+                            case "revisions.version":
+                                set(
+                                    values,
+                                    "revision version",
+                                    latestRevision.version
+                                );
+                                break;
+                            default:
+                                set(values, "revision url", latestRevision.url);
+                                break;
+                        }
+                    }
                 } else {
                     set(values, title, defaultValue);
                 }

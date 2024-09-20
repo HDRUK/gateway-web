@@ -1,14 +1,16 @@
 import { Collection } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
-import { Dataset } from "@/interfaces/Dataset";
+import { DataCustodianDataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 
 interface TeamSummary {
     id: number;
     name: string;
+    team_logo: string;
     is_provider: boolean;
-    datasets: Dataset[];
+    introduction: string | null;
+    datasets: DataCustodianDataset[];
     durs: DataUse[];
     tools: Tool[];
     publications: Publication[];

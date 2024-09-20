@@ -28,6 +28,10 @@ const outerNodeValues = [
         label: undefined,
         href: "scrollTo:Structural Metadata",
     },
+    {
+        name: "dataCustodian",
+        label: undefined,
+    },
 ];
 
 const rootNode = {
@@ -38,7 +42,6 @@ const rootNode = {
         id: 0,
         name: "root",
         label: undefined,
-        href: "/data-custodian",
     },
 };
 
@@ -52,6 +55,6 @@ const initialEdges = outerNodeValues.map((node, index) => ({
     target: `node-${node.name}`,
 }));
 
-const connectionLineStyle = { stroke: "black", strokeWidth: 3 };
+const connectionLineStyle = { stroke: "rgb(226, 226, 226)", strokeWidth: 3 };
 
 export { rootNode, outerNodes, connectionLineStyle, initialEdges };

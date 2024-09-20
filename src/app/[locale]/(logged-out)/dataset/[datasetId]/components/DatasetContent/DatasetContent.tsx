@@ -13,6 +13,7 @@ import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
 import Table from "@/components/Table";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
@@ -46,7 +47,13 @@ const getColumns = () =>
             cell: ({ row: { original } }) => (
                 <p>{get(original, column.path)}</p>
             ),
-            header: () => <span>{column.header}</span>,
+            header: () => (
+                <TooltipIcon
+                    content={column.tooltip}
+                    label={column.header}
+                    buttonSx={{ p: 0 }}
+                />
+            ),
         })
     );
 
@@ -105,7 +112,10 @@ const DatasetContent = ({
                 );
             case FieldType.LIST: {
                 const list = Array.from(new Set(splitStringList(value)));
-                return list.map(item => formatTextWithLinks(item));
+                return list.map((item, i) => [
+                    i > 0 && ", ",
+                    formatTextWithLinks(item),
+                ]);
             }
             case FieldType.LINK_LIST: {
                 const list = Array.from(new Set(splitStringList(value)));
@@ -229,7 +239,15 @@ const DatasetContent = ({
                                                 },
                                                 p: 0,
                                             }}>
-                                            {field.label}
+                                            {field.tooltip ? (
+                                                <TooltipIcon
+                                                    content={field.tooltip}
+                                                    label={field.label}
+                                                    buttonSx={{ p: 0, mr: 1 }}
+                                                />
+                                            ) : (
+                                                field.label
+                                            )}
                                         </Box>
                                         <Box
                                             sx={{

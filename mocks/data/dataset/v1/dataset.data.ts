@@ -6,6 +6,7 @@ import {
     VersionItem,
 } from "@/interfaces/Dataset";
 import { Highlight } from "@/interfaces/HighlightDataset";
+import { SearchResultDataset } from "@/interfaces/Search";
 
 const generateDatasetMetadataV1 = (): MetadataMax => {
     return {
@@ -24,6 +25,9 @@ const generateDatasetMetadataV1 = (): MetadataMax => {
                 keywords: faker.datatype.string(),
                 shortTitle: faker.datatype.string(),
                 populationSize: faker.datatype.number(),
+            },
+            required: {
+                version: "1.0.0",
             },
             provenance: {
                 temporal: {
@@ -114,6 +118,22 @@ const generateDatasetHighlightsV1 = (): Highlight => {
     };
 };
 
+const generateSearchResultV1 = (
+    data?: Partial<SearchResultDataset>
+): SearchResultDataset => ({
+    _id: faker.datatype.uuid(),
+    highlight: generateDatasetHighlightsV1(),
+    metadata: generateDatasetMetadataMiniV1(),
+    team: {
+        id: faker.datatype.number(),
+        member_of: faker.company.name(),
+        name: faker.datatype.string(),
+        is_question_bank: false,
+    },
+    ...data,
+});
+
+const datasetSearchResultV1 = generateSearchResultV1();
 const datasetVersionV1 = generateDatasetVersionV1("1.0");
 const datasetVersionV1p1 = generateDatasetVersionV1("1.1");
 const datasetV1 = generateDatasetV1("1.0");
@@ -137,4 +157,5 @@ export {
     datasetV1p1,
     datasetVersionV1,
     datasetVersionV1p1,
+    datasetSearchResultV1,
 };

@@ -52,4 +52,12 @@ export enum RouteName {
     SUPPORT_TOOLS = "support/tools",
     NEWS_EVENTS = "news/events",
     UPLOAD = "upload",
+    DATA_CUSTODIAN_NETWORK_ITEM = "data-custodian-network",
+    NEWS_ARTICLE = "news/article",
+    EVENT_ARTICLE = "news/events/article",
+    ERROR_401 = "/error/401",
+    ERROR_404 = "/error/404",
+    ERROR_403 = "/error/403",
+    ERROR_423 = "/error/423",
+    ERROR_500 = "/error/500",
 }

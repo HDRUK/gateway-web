@@ -10,6 +10,8 @@ import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import SelectMenuItem from "@/components/SelectMenuItem";
 
+const MAX_LABEL_LENGTH = 100;
+
 type ValueType = string | number;
 export interface SelectOptionsType {
     value: ValueType;
@@ -34,7 +36,18 @@ export interface SelectProps<TFieldValues extends FieldValues, TName> {
     required?: boolean;
     hasCheckbox?: boolean;
     formControlSx?: SxProps;
+    id?: string;
 }
+
+const limitLabelLength = (label?: string) => {
+    if (!label) {
+        return "";
+    }
+
+    return label.length > MAX_LABEL_LENGTH
+        ? `${label.slice(0, MAX_LABEL_LENGTH)}...`
+        : label;
+};
 
 const renderValue = (
     selected: ValueType | ValueType[],
@@ -47,7 +60,9 @@ const renderValue = (
             .map(option => option.label)
             .join(", ");
     }
-    return options?.find(option => option.value === selected)?.label;
+    return limitLabelLength(
+        options?.find(option => option.value === selected)?.label
+    );
 };
 
 const Select = <
@@ -69,6 +84,7 @@ const Select = <
     iconRight = false,
     disabled = false,
     invertListItem = false,
+    id,
     ...rest
 }: SelectProps<TFieldValues, TName>) => {
     const {
@@ -102,6 +118,7 @@ const Select = <
                 renderValue={selected =>
                     renderValue(selected, options, !!multiple)
                 }
+                id={id || name}
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
                 {...rest}>
@@ -123,7 +140,7 @@ const Select = <
                             hasCheckbox={hasCheckbox}
                             iconRight={iconRight}
                             icon={icon || option.icon}
-                            label={option.label}
+                            label={limitLabelLength(option.label)}
                             labelComponent={option.labelComponent}
                             invertListItem={invertListItem}
                         />

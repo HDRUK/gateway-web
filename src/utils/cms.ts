@@ -1,6 +1,8 @@
 /* eslint-disable default-param-last */
+import dayjs from "dayjs";
 import {
     CMSPageResponse,
+    CMSPostResponse,
     CMSPostsResponse,
     ContentPageQueryOptions,
     PageTemplateDefault,
@@ -9,6 +11,7 @@ import {
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
 import { EventNode } from "@/interfaces/Events";
+import { HomepageBannerNode } from "@/interfaces/Homepage";
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { NewsNode } from "@/interfaces/News";
@@ -19,8 +22,9 @@ import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import { GetContentPageQuery } from "@/config/queries/contentPage";
+import { GetContentPostQuery } from "@/config/queries/contentPost";
 import { GetEventsQuery } from "@/config/queries/events";
-import { GetHomePageQuery } from "@/config/queries/homePage";
+import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
 import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
@@ -105,6 +109,16 @@ const getMeetTheTeam = async () => {
     return data?.posts?.edges || null;
 };
 
+const getHomePageBanner = async () => {
+    const data: CMSPostsResponse<HomepageBannerNode> = await fetchCMS(
+        GetHomePageBanner,
+        DEFAULT_OPTIONS,
+        true
+    );
+
+    return data?.posts?.edges || null;
+};
+
 const getNews = async () => {
     const data: CMSPostsResponse<NewsNode> = await fetchCMS(
         GetNewsQuery,
@@ -123,6 +137,18 @@ const getEvents = async () => {
     );
 
     return data?.posts?.edges || null;
+};
+
+const getContentPostQuery = async (
+    queryName: string,
+    queryOptions: ContentPageQueryOptions
+) => {
+    const data: CMSPostResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPostQuery(queryName, queryOptions),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.post || null;
 };
 
 const getContentPageQuery = async (
@@ -288,25 +314,71 @@ const getGettingStarted = async () => {
     return data?.page || null;
 };
 
+const getMetadataOnboarding = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getMetadataOnboardingQuery", {
+            id: "data-custodian-metadata-onboarding",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getOpenSourceDevelopment = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getOpenSourceDevelopmentQuery", {
+            id: "open-source-development",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
+const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
+    [...data].sort((a, b) => {
+        return dayjs(b.node.newsFields.date).isBefore(
+            dayjs(a.node.newsFields.date)
+        )
+            ? -1
+            : 1;
+    });
+
+const hasCategoryName = (
+    categories: PageTemplateDefault["categories"],
+    categoryName: string
+) => {
+    return !!categories?.nodes?.find(item => item.name === categoryName);
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
     getCohortTermsAndConditions,
     getContentPageQuery,
+    getDataCustodians,
+    getDevelopmentCommunity,
+    getEvents,
+    getGettingStarted,
+    getHomePageBanner,
+    getGlossary,
     getHomePage,
     getHowToSearchPage,
     getMeetTheTeam,
     getMissionAndPurposes,
-    getReleaseNotes,
-    getTermsAndConditions,
-    getWorkWithUs,
-    getDevelopmentCommunity,
-    getResearchersInnovators,
-    getDataCustodians,
-    getPatientsAndPublic,
-    getGlossary,
-    getTutorials,
-    getGettingStarted,
     getNews,
-    getEvents,
+    getPatientsAndPublic,
+    getReleaseNotes,
+    getResearchersInnovators,
+    getTermsAndConditions,
+    getTutorials,
+    getWorkWithUs,
+    getMetadataOnboarding,
+    getOpenSourceDevelopment,
+    getSortedNewsEventsByDate,
+    getContentPostQuery,
+    hasCategoryName,
 };

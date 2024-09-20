@@ -16,6 +16,7 @@ import HTMLContent from "@/components/HTMLContent";
 import InfoHoverPanel from "@/components/InfoHoverPanel";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
+import { StaticImages } from "@/config/images";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -26,59 +27,59 @@ import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
 
 const services = [
     {
-        id: "feasibility",
-        image: "/images/homepage/welcome-image.png",
-        href: "/about/cohort-discovery",
-    },
-    {
-        id: "phenotypes",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://phenotypes.healthdatagateway.org/",
-    },
-    {
-        id: "courses",
-        image: "/images/homepage/welcome-image.png",
-        href: "https://hdruklearn.org/",
-    },
-    {
         id: SearchCategory.DATASETS,
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.datasets,
         href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
         id: SearchCategory.DATA_USE,
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.data_uses,
         href: `/search?type=${SearchCategory.DATA_USE}`,
     },
     {
+        id: "feasibility",
+        image: StaticImages.LANDING_PAGE.cohort_discovery,
+        href: "/about/cohort-discovery",
+    },
+    {
         id: SearchCategory.TOOLS,
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.analysis_scripts_software,
         href: `/search?type=${SearchCategory.TOOLS}`,
     },
     {
         id: SearchCategory.PUBLICATIONS,
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.publications,
         href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
     {
         id: "dataProviders",
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.data_custodians,
         href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
     },
     {
         id: "dataCustodianNetworks",
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.data_custodian_network,
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
         id: SearchCategory.COLLECTIONS,
-        image: "/images/homepage/welcome-image.png",
+        image: StaticImages.LANDING_PAGE.collections,
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
+    },
+    {
+        id: "phenotypes",
+        image: StaticImages.LANDING_PAGE.phenotypes,
+        href: "https://phenotypes.healthdatagateway.org/",
+    },
+    {
+        id: "courses",
+        image: StaticImages.LANDING_PAGE.courses,
+        href: "https://hdruklearn.org/",
     },
 
     // {
     //     id: "diseaseAtlas",
-    //     image: "/images/homepage/welcome-image.png",
+    //     image: "/images/homepage/welcome-image.jpg",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
 ];
@@ -146,7 +147,12 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
                 }}>
                 <Container>
-                    <InfoHoverPanel items={responsiveServices} />
+                    <InfoHoverPanel
+                        items={responsiveServices}
+                        defaultImageSrc={
+                            StaticImages.LANDING_PAGE.welcome_image
+                        }
+                    />
                 </Container>
             </Box>
             <Box

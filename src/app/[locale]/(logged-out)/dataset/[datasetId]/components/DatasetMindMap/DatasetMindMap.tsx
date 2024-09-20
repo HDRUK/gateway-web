@@ -45,10 +45,7 @@ const DatasetMindMap = ({
             ...rootNode,
             data: {
                 ...rootNode.data,
-                label:
-                    data.metadata.metadata.summary.publisher.publisherName ||
-                    t(rootNode.data.name),
-                href: `/data-custodian/${teamId}`,
+                label: "Dataset",
             },
         };
     }, [data, t]);
@@ -85,6 +82,8 @@ const DatasetMindMap = ({
                             emptyNodes.push(node.id);
                         }
                         href = `${node.data.href}&datasetTitles=${title}`;
+                    } else if (node.id === "node-dataCustodian") {
+                        href = `/data-custodian/${teamId}`;
                     }
 
                     if (node.data.href?.includes("scrollTo:")) {
