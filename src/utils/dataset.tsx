@@ -38,10 +38,10 @@ const splitStringList = (inputString: string) => {
     }
 };
 
-const isValueNotEmpty = (val: string) =>
+const isValueNotEmpty = (val: string | undefined) =>
     !isEmpty(val) && val !== UNDEFINED_VALUE && val !== NULL_VALUE;
 
-const hasValidValue = (val: string | string[]) => {
+const hasValidValue = (val: string | string[] | undefined) => {
     if (Array.isArray(val)) {
         return !!val.filter(item => isValueNotEmpty(item)).length;
     }
