@@ -5,8 +5,9 @@ export enum FieldType {
     DATE = "date",
     LINK = "link",
     TAG = "tag",
+    WYSIWYG = "wysiwyg",
 }
-interface DataCustodianField {
+export interface DataCustodianField {
     path: string;
     type: FieldType;
     label?: string;
@@ -24,7 +25,7 @@ const dataCustodianFields: DataCustodianSection[] = [
         fields: [
             {
                 path: "introduction",
-                type: FieldType.TEXT,
+                type: FieldType.WYSIWYG,
             },
         ],
     },
@@ -57,4 +58,4 @@ const accordions = [
     // },
 ];
 
-export { dataCustodianFields, accordions };
+export { accordions, dataCustodianFields };
