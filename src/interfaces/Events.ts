@@ -16,6 +16,7 @@ interface Event {
 }
 
 interface EventNode {
+    slug: string;
     node: { newsFields: Event };
 }
 

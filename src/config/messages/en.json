@@ -121,7 +121,8 @@
     },
     "pages": {
         "newsEvents": {
-            "noResults": "There are no results for the selected year."
+            "noResults": "There are no results for the selected year.",
+            "readMore": "Read more"
         },
         "support": {
             "title": "Support centre",
