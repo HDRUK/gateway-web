@@ -29,8 +29,8 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
                     node: {
                         newsFields: { text, headline, date, image, link },
                     },
-                }) => (
-                    <NewsSummaryCard
+                }) => ({
+                    /* <NewsSummaryCard
                         variant="feature"
                         buttonText={t("newsCardButtonText")}
                         summary={text}
@@ -41,8 +41,8 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
                         date={date}
                         url={link.url}
                         key={`${date}-${link}`}
-                    />
-                )
+                /> */
+                })
             )}
         </Box>
     );

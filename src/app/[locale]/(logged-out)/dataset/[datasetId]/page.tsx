@@ -148,7 +148,7 @@ export default async function DatasetItemPage({
                                 />
                                 <Linkages data={data} />
 
-                                <Publications />
+                                <Publications data={data} />
                             </Box>
                             <Box />
                         </BoxContainer>

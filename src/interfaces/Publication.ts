@@ -1,3 +1,10 @@
+interface PublicationHasDatasetVersion {
+    link_type: string;
+    id: number;
+    publication_id: number;
+    dataset_version_id: number;
+}
+
 interface Publication {
     id: number;
     created_at: string;
@@ -17,6 +24,7 @@ interface Publication {
         tool_id: number;
         publication_id: number;
     };
+    dataset_versions: PublicationHasDatasetVersion[];
 }
 
 export type { Publication };
