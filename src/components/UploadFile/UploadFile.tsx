@@ -22,6 +22,9 @@ interface UploadFileProps {
     acceptedFileTypes?: string;
     fileUploadedAction: (fileId: number) => void;
     isUploading: Dispatch<SetStateAction<boolean>>;
+    helperText?: boolean;
+    label?: string;
+    setIsInvalidImage: (isNotValid: boolean) => void;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -32,6 +35,9 @@ const UploadFile = ({
     acceptedFileTypes = ".xlsx",
     fileUploadedAction,
     isUploading,
+    helperText = true,
+    label = "upload",
+    setIsInvalidImage = () => false
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -39,7 +45,6 @@ const UploadFile = ({
     const [fileId, setFileId] = useState<number>();
     const [pollFileStatus, setPollFileStatus] = useState<boolean>(false);
     const [hasError, setHasError] = useState<boolean>();
-
     const { handleSubmit, control } = useForm<UploadFormData>({
         defaultValues: {
             upload: "",
@@ -67,6 +72,30 @@ const UploadFile = ({
 
         notificationService.apiError(fileScanStatus?.error || t("error"));
     };
+
+    const imageValidation = (file) => {
+        let result;
+        if(acceptedFileTypes != ".png"){
+            result = true;
+        } else {
+          const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                const image = new Image();
+                image.src = e.target.result;
+                image.onload = function () {
+                    const height = this.height;
+                    const width = this.width;
+                    if (height != 350 || width != 700) {
+                      setIsInvalidImage(true);
+                      result = false;
+                    }
+                    result = true;
+                  };
+            }
+        }
+        return result;
+    }
 
     useEffect(() => {
         if (fileId) {
@@ -99,6 +128,11 @@ const UploadFile = ({
             return;
         }
 
+        // if(acceptedFileTypes === ".png"){
+            
+       
+        // }
+
         const formData = new FormData();
         formData.append("file", file);
 
@@ -124,16 +158,18 @@ const UploadFile = ({
                     <>
                         <Upload
                             control={control}
-                            label={t("upload")}
+                            label={t(label)}
                             name="upload"
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
-                            onFileChange={(file: File) => setFile(file)}
-                            helperText={
+                            onFileChange={(file: File) => {
+                                !!imageValidation(file) && setFile(file)
+                            }}
+                            helperText={helperText && (
                                 file?.name ||
                                 t("uploadHelper", {
                                     fileType: acceptedFileTypes,
-                                })
+                                }))
                             }
                         />
                         <Button

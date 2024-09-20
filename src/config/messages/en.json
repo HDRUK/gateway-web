@@ -509,6 +509,25 @@
                     }
                 },
                 "collections": {
+                    "create": {
+                        "title": "Manage or create a Collection",
+                        "intro": "Collections are groupings of useful resources based on set criteria, and are a useful way for a Researcher to explore resources that are linked to each other. Types of Collections could include resources related to a research domain, research hub or research project.",
+                        "addImages": "Collection image cover (recommended)",
+                        "addImagesInfo": "Upload an image W700 x H350 (1:0.5). If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
+                        "addImagesButton": "Upload file",
+                        "addImageSuccess": "Image uploaded",
+                        "addImageFailTitle": "Warning: Image ratio",
+                        "addImageFailInfo": "The image you have uploaded does not meet the recommended aspect ratio of 2:1. This may lead to your image not being displayed as intended.",
+                        "addImageFailButtonNewImage": "Upload new image",
+                        "addImageFailButtonContinue": "Continue to use image",
+                        "addResources": "Add resources",
+                        "addResourcesInfo": "Link resources in the Gateway to your Collection",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "makeActive": "Make active",
+                        "labelTag": "Collection"
+                    },
                     "components": {
                         "TeamCollections": {
                             "title": "Collections",
@@ -1253,6 +1272,7 @@
             "upload": "Select file",
             "uploadButtonText": "Upload",
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
+            "uploadImage": "Upload file",
             "error": "An error has occured. Please check your file and try again"
         },
         "StructuralMetadataAccordion": {

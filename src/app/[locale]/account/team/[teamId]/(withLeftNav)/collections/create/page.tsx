@@ -9,7 +9,7 @@ export const metadata = {
     description: "",
 };
 
-export default async function ToolCreatePage({
+export default async function CollectionCreatePage({
     params,
 }: {
     params: { teamId: string };

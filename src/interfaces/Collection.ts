@@ -30,4 +30,11 @@ interface Collection {
     image_link: string;
 }
 
+export interface CollectionSubmission
+    extends Omit<Collection, "publications" | "durs" | "tools"> {
+    publications: number[];
+    durs: number[];
+    tools: number[];
+}
+
 export type { Collection };
