@@ -1,4 +1,5 @@
 import { DatasetRelationship } from "@/config/forms/tool";
+import type { DataUse } from "./DataUse";
 import type { Tool } from "./Tool";
 
 export interface Publication {
@@ -43,12 +44,14 @@ export interface PublicationPayload {
         publication_id: number;
     };
     tools: Tool[];
+    durs: DataUse[];
     datasets: DatasetRelationship[];
 }
 
 export interface PublicationPayloadSubmission
-    extends Omit<PublicationPayload, "tools"> {
-    tools: number[];
+    extends Omit<PublicationPayload, "tools" | "durs"> {
+    tools: { id: number }[];
+    durs: { id: number }[];
 }
 
 export interface EuropePMCPublication {

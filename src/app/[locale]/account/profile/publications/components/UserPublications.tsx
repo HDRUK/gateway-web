@@ -60,14 +60,14 @@ const UserPublications = ({
         o => o.value === publicationSearchDefaultValues.sortField
     );
 
-    const [queryParams, setQueryParams] = useState({
-        owner_id: userId,
+    const [queryParams, setQueryParams] = useState(() => ({
         withTrashed: "true",
         status: "ACTIVE",
         page: "1",
         sort: `${publicationSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         paper_title: "",
-    });
+        ...(teamId ? { team_id: teamId } : { owner_id: 1 }),
+    }));
 
     const { control, watch, setValue } = useForm({
         defaultValues: {
@@ -147,8 +147,11 @@ const UserPublications = ({
         tab === DataStatus.ARCHIVED && permissions["papers.update"];
 
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        `${apis.publicationsV1Url}/count/status?owner_id=${userId}`
+        `${apis.publicationsV1Url}/count/status?${
+            teamId ? `team_id=${teamId}` : `owner_id=${userId}`
+        }`
     );
+
     const {
         ACTIVE: countActive,
         DRAFT: countDraft,
@@ -254,7 +257,7 @@ const UserPublications = ({
     }));
 
     const handleAdd = () => {
-        showDialog(AddPublicationDialog, { userId });
+        showDialog(AddPublicationDialog, { userId, teamId });
     };
 
     return (

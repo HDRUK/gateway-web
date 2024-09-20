@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
+import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
@@ -27,7 +28,7 @@ interface AddPublicationDialogProps {
     teamId?: number;
 }
 
-const DOI_REGEX = /^https:\/\/doi\.org\/10\.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i;
+const DOI_REGEX = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
 const VALIDATION_SCHEMA = yup
     .object({
         query: yup.string().matches(DOI_REGEX, "Enter a valid DOI"),
@@ -50,7 +51,11 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
         router.push(PUBLICATION_ROUTE);
     };
 
-    const { control, watch } = useForm({
+    const {
+        control,
+        watch,
+        formState: { errors },
+    } = useForm({
         mode: "onTouched",
         resolver: yupResolver(VALIDATION_SCHEMA),
         defaultValues: {
@@ -70,7 +75,7 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
             if (res) {
                 localStorage.setItem(
                     config.PUBLICATION_LOCAL_STORAGE,
-                    JSON.stringify(res)
+                    JSON.stringify({ ...res, doi: queryValue })
                 );
                 router.push(PUBLICATION_ROUTE);
                 hideDialog();
@@ -115,7 +120,7 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
                     />
                     <Button
                         onClick={performSearch}
-                        disabled={!queryValue || loading}>
+                        disabled={!queryValue || loading || !isEmpty(errors)}>
                         {t("searchText")}
                     </Button>
                 </Box>

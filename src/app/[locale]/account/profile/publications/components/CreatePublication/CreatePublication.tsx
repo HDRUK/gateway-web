@@ -11,6 +11,7 @@ import {
     ResourceType,
     SelectedResources,
 } from "@/interfaces/AddResource";
+import { DataUse } from "@/interfaces/DataUse";
 import {
     EuropePMCPublication,
     PublicationPayload,
@@ -30,8 +31,8 @@ import AddResourceDialog from "@/modules/AddResourceDialog";
 import useActionBar from "@/hooks/useActionBar";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
+import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import {
@@ -47,7 +48,6 @@ import DatasetRelationshipFields from "../DatasetRelationshipFields";
 
 interface CreatePublicationProps {
     teamId?: string;
-    userId: number;
     publicationId?: string;
 }
 
@@ -55,7 +55,6 @@ const TRANSLATION_PATH = "pages.account.profile.publications.create";
 
 const CreatePublication = ({
     teamId,
-    userId,
     publicationId,
 }: CreatePublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -91,7 +90,7 @@ const CreatePublication = ({
         }
     );
 
-    const editPublication = usePatch<Partial<PublicationPayloadSubmission>>(
+    const editPublication = usePut<Partial<PublicationPayloadSubmission>>(
         `${apis.publicationsV1Url}`,
         {
             itemName: "Publication",
@@ -117,7 +116,7 @@ const CreatePublication = ({
             // Populate from EuropePMC
             const formData = {
                 ...publicationDefaultValues,
-                dataset: defaultDatasetValue,
+                datasets: defaultDatasetValue,
                 journal_name: data?.journal_name,
                 paper_title: data?.title,
                 authors: data?.authors,
@@ -126,15 +125,16 @@ const CreatePublication = ({
                     ? "Preprints"
                     : "Research articles",
                 year_of_publication: data?.publication_year,
+                paper_doi: data?.doi,
+                is_preprint: data?.is_preprint,
             };
 
-            reset(formData as PublicationPayload);
+            reset(formData as unknown as PublicationPayload);
             return;
         }
 
         const formData = {
             ...existingPublicationData,
-            dataset: defaultDatasetValue,
         };
 
         const propertiesToDelete = ["publication_type_mk1", "mongo_id"];
@@ -151,7 +151,7 @@ const CreatePublication = ({
 
     const { fields, append, remove } = useFieldArray({
         control,
-        name: "dataset",
+        name: "datasets",
     });
 
     const watchAll = watch();
@@ -160,7 +160,7 @@ const CreatePublication = ({
         formData: PublicationPayload,
         status: DataStatus
     ) => {
-        const formatEntityToIdArray = (data: Tool[]) => {
+        const formatEntityToIdArray = (data: Tool[] | DataUse[]) => {
             if (
                 Array.isArray(data) &&
                 data.every(item => typeof item === "number")
@@ -175,16 +175,14 @@ const CreatePublication = ({
             ...formData,
             status,
             tools: formatEntityToIdArray(formData.tools),
-            dataset: formData.dataset.every(
-                (obj: {}) => Object.keys(obj).length === 0
+            durs: formatEntityToIdArray(formData.durs),
+            ...(teamId && { team_id: teamId }),
+            datasets: formData.datasets.every(
+                (obj: object) => Object.keys(obj).length === 0
             )
                 ? []
-                : formData.dataset,
-
-            paper_doi: formData.url,
+                : formData.datasets,
         };
-
-        console.log(payload);
 
         if (!publicationId) {
             await createPublication(payload);
@@ -192,7 +190,7 @@ const CreatePublication = ({
             await editPublication(publicationId, payload);
         }
 
-        // push(PUBLICATIONS_ROUTE);
+        push(PUBLICATIONS_ROUTE);
     };
 
     const handleAddResource = () => {
@@ -202,10 +200,14 @@ const CreatePublication = ({
                     "tools",
                     selectedResources[ResourceType.TOOL] as Tool[]
                 );
+                setValue(
+                    "durs",
+                    selectedResources[ResourceType.DATA_USE] as DataUse[]
+                );
             },
-            hideDatasets: true,
             defaultResources: {
                 tool: getValues("tools"),
+                datause: getValues("durs"),
             },
         });
     };
@@ -213,7 +215,9 @@ const CreatePublication = ({
     const selectedResources = useMemo(() => {
         return {
             tool: (getValues("tools") as Tool[]) || [],
+            datause: (getValues("durs") as DataUse[]) || [],
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll]);
 
     useEffect(() => {
@@ -258,6 +262,9 @@ const CreatePublication = ({
         if (resourceType === ResourceType.TOOL) {
             setValue("tools", updatedResources as Tool[]);
         }
+        if (resourceType === ResourceType.DATA_USE) {
+            setValue("durs", updatedResources as DataUse[]);
+        }
     };
 
     const hydratedFormFields = useMemo(
@@ -284,6 +291,7 @@ const CreatePublication = ({
                     />
                 );
             }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [fields]
     );
 

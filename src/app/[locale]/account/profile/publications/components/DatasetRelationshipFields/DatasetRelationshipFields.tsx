@@ -24,8 +24,8 @@ interface OptionType {
 
 interface DatasetRelationshipFieldsProps<TFieldValues extends FieldValues> {
     fields: FieldArrayWithId<
-        { dataset: DatasetRelationship[] },
-        "dataset",
+        { datasets: DatasetRelationship[] },
+        "datasets",
         "item"
     >[];
     control: Control<TFieldValues>;
@@ -94,7 +94,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                         <InputWrapper
                             {...relationshipField}
                             control={control}
-                            name={`dataset.${index}.link_type`}
+                            name={`datasets.${index}.link_type`}
                             disabled={isDisabled}
                         />
                     </Box>
@@ -114,7 +114,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                             }}
                             options={isLoadingDatasets ? [] : datasetOptions}
                             filterOptions={(x: OptionType) => x}
-                            name={`dataset.${index}.id`}
+                            name={`datasets.${index}.id`}
                             loading={isLoadingDatasets}
                             disabled={isDisabled}
                         />

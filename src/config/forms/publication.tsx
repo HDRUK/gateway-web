@@ -22,42 +22,72 @@ const defaultValues = {
     year_of_publication: "",
     abstract: "",
     url: "",
-    // keywords: [],
-    dataset: defaultDatasetValue,
+    paper_doi: "",
+    datasets: defaultDatasetValue,
     tools: [],
+    durs: [],
+    is_preprint: false,
 };
 
-const validationSchema = yup.object().shape({
-    paper_title: yup.string().required().label("Title"),
-    authors: yup.string().label("Authors"),
-    publication_type: yup.string().required().label("Publication type"),
-    journal_name: yup
-        .string()
-        .min(50)
-        .max(1500)
-        .required()
-        .label("Journal name"),
-    year_of_publication: yup
-        .string()
-        .min(4)
-        .max(4)
-        .required()
-        .label("Publication year"),
-    abstract: yup
-        .string()
-        .min(50)
-        .max(1500)
-        .required()
-        .label("Publication year"),
-    url: yup.string().required().nullable().url().label("DOI/Web link"),
-    // keywords: yup.array().of(yup.string()),
-    dataset: yup.array().of(
-        yup.object().shape({
-            link_type: yup.string().required().label("Relationship"),
-            id: yup.number().required().label("Dataset"),
-        })
-    ),
-});
+const DOI_REGEX = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
+
+const validationSchema = yup
+    .object()
+    .shape({
+        paper_title: yup.string().required().label("Title"),
+        authors: yup.string().required().label("Authors"),
+        publication_type: yup.string().required().label("Publication type"),
+        journal_name: yup
+            .string()
+            .min(50)
+            .max(1500)
+            .required()
+            .label("Journal name"),
+        year_of_publication: yup
+            .string()
+            .min(4)
+            .max(4)
+            .required()
+            .label("Publication year"),
+        abstract: yup
+            .string()
+            .min(50)
+            .max(1500)
+            .required()
+            .label("Publication year"),
+        url: yup.string().nullable().url().label("DOI/Web link"),
+        paper_doi: yup
+            .string()
+            .test(
+                "is-valid-doi",
+                "Enter a valid DOI",
+                value => !value || DOI_REGEX.test(value)
+            )
+            .label("DOI"),
+        datasets: yup.array().of(
+            yup.object().shape({
+                link_type: yup.string().required().label("Relationship"),
+                id: yup.number().required().label("Dataset"),
+            })
+        ),
+    })
+    .test(
+        "at-least-one",
+        "Either DOI or Web link is required",
+        function atLeastOneTest(value) {
+            const { url, paper_doi } = value;
+
+            // If both url and paper_doi are empty, trigger error on the url field
+            if (!url && !paper_doi) {
+                return this.createError({
+                    path: "url", // Attach the error to the URL field
+                    message: "Either DOI or Web link is required",
+                });
+            }
+
+            return true;
+        }
+    );
 
 const formArrayFields = [
     {
@@ -87,16 +117,17 @@ const formFields = [
         required: true,
     },
     {
-        label: "Authors (optional)",
+        label: "Authors",
         info: "Please add the names of the people who authored this paper, using a comma to separate the names",
         name: "authors",
         component: inputComponents.TextField,
+        required: true,
     },
-    // {
-    //     label: <span>This article is a preprint</span>,
-    //     name: "preprint",
-    //     component: inputComponents.Checkbox,
-    // },
+    {
+        label: <span>This article is a preprint</span>,
+        name: "is_preprint",
+        component: inputComponents.Checkbox,
+    },
     {
         label: "Publication type",
         name: "publication_type",
@@ -131,20 +162,17 @@ const formFields = [
         limit: 1500,
     },
     {
-        label: "DOI/Web link",
+        label: "Web link",
         name: "url",
-        info: "DOI or url for the publication",
+        info: "Url for the publication",
         component: inputComponents.TextField,
-        required: true,
     },
-    // {
-    //     label: "Keywords (optional)",
-    //     info: "Technological paradigms or other keywords. Eg. Rule-based, clustering, supervised machine learning",
-    //     name: "keywords",
-    //     component: inputComponents.Autocomplete,
-    //     canCreate: true,
-    //     multiple: true,
-    // },
+    {
+        label: "DOI link",
+        name: "paper_doi",
+        info: "DOI for the publication",
+        component: inputComponents.TextField,
+    },
     {
         label: "DATASET_RELATIONSHIP_COMPONENT",
     },
