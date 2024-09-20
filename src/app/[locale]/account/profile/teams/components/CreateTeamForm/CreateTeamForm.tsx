@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Team, TeamForm } from "@/interfaces/Team";
@@ -30,7 +29,7 @@ import {
     teamValidationSchema,
 } from "@/config/forms/team";
 import { Routes } from "@/consts/routes";
-import { getTeamAssetPath, getTeamAssetUrl } from "@/utils/general";
+import { getTeamAssetPath } from "@/utils/general";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";

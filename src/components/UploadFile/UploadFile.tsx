@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BoxProps, Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { StructuralMetadata } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
@@ -27,7 +28,7 @@ interface UploadFileProps {
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
-    onFileUploaded: (fileId: number) => void;
+    onFileUploaded: (uploadResponse?: number | StructuralMetadata[]) => void;
     isUploading?: Dispatch<SetStateAction<boolean>>;
     onBeforeUploadCheck?: (event: Event & EventUploadedImage) => boolean;
     onFileCheckFailed?: () => void;
@@ -97,6 +98,8 @@ const UploadFile = ({
                     fileScanStatus?.entity_id > 0
                 ) {
                     onFileUploaded(fileScanStatus?.entity_id);
+                } else if (fileScanStatus?.structural_metadata) {
+                    onFileUploaded(fileScanStatus?.structural_metadata);
                 } else {
                     handleError();
                 }
@@ -121,6 +124,7 @@ const UploadFile = ({
 
         if (file.type.startsWith("image/")) {
             try {
+                // eslint-disable-next-line no-async-promise-executor
                 await new Promise(async (resolve, reject) => {
                     const image = new Image();
                     const base64 = await convertBase64(file);
@@ -132,10 +136,16 @@ const UploadFile = ({
                                 e as Event & EventUploadedImage,
                             ]);
 
-                            checked ? resolve(null) : reject(null);
-                        } else {
-                            resolve(null);
+                            return checked
+                                ? resolve(null)
+                                : reject(
+                                      new Error(
+                                          "The image does not pass it's checks"
+                                      )
+                                  );
                         }
+
+                        return resolve(null);
                     };
                 });
             } catch (_) {

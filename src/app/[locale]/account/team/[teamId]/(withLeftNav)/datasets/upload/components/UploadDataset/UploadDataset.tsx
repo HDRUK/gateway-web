@@ -32,8 +32,6 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
     const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=dataset-from-upload&team_id=${teamId}`;
     const REDIRECT_URL = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}?tab=DRAFT`;
 
-    console.log("FILE_UPLOAD_URL", FILE_UPLOAD_URL);
-
     return (
         <>
             <Paper sx={{ mb: 2 }}>
