@@ -125,7 +125,8 @@
     },
     "pages": {
         "newsEvents": {
-            "noResults": "There are no results for the selected year."
+            "noResults": "There are no results for the selected year.",
+            "readMore": "Read more"
         },
         "support": {
             "title": "Support centre",
@@ -262,6 +263,17 @@
                             "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
                     },
+                    "create": {
+                        "title": "Manage or create a publication entry",
+                        "intro": "Publications should be peer reviewed documents (including pre-prints or articles published in a journal)",
+                        "addResources": "Related resources (optional)",
+                        "addResourcesInfo": "Show relationships for publications, data uses, other publications and analysis scripts, tools and software. Resources must already be on the Gateway.",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "labelTag": "Publication"
+                    },
                     "list": {
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",
@@ -382,6 +394,7 @@
                             "makeActive": "Make active",
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
+                            "uploadSuccess": "Your data has been successfully uploaded",
                             "checkboxes": {
                                 "healthAndDisease": "Health and disease",
                                 "healthAndDiseaseTooltip": "Includes any data related to mental health, cardiovascular, cancer, rare diseases, metabolic and endocrine, neurological, reproductive, maternity and neonatology, respiratory, immunity, musculoskeletal, vision, renal and urogenital, oral and gastrointestinal, cognitive function or hearing.",
@@ -426,7 +439,8 @@
                                 "completionGuidance5": "Type of data contained in the column.",
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
                                 "downloadTemplate": "Download data dictionary template",
-                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
+                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata.",
+                                "uploadMessage": "Please wait while we scan and process your file. When processing has finished, your data will display below and you will be able to submit the Metadata to the Gateway. Scanning and processing typically takes 30-45 seconds, please do not leave this page"
                             },
                             "discardChanges": "Discard changes",
                             "saveAsDraft": "Save changes as draft",
@@ -685,8 +699,6 @@
                 "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
             },
             "tools": {
-                "label": "Analysis Scripts & Software",
-                "title": "Analysis Scripts & Software",
                 "label": "Analysis Scripts & Software",
                 "title": "Analysis Scripts & Software",
                 "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
@@ -1061,7 +1073,7 @@
                     "durs": "Data Uses / Research Projects",
                     "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
-                    "root": "Data Custodian",
+                    "dataCustodian": "Data Custodian",
                     "structuralMetadata": "Data variables"
                 },
                 "Linkages": {
@@ -1356,6 +1368,13 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
+            },
+            "AddPublicationDialog": {
+                "manualButton": "Manually fill form",
+                "searchText": "Search Europe PMC",
+                "doiPlaceholder": "Auto populate by searching Europe PMC using a DOI",
+                "or": "or",
+                "notFound": "DOI not found on Europe PMC"
             },
             "RelatedResources": {
                 "title": "Add related resources",

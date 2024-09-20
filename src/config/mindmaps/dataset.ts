@@ -29,7 +29,7 @@ const outerNodeValues = [
         href: "scrollTo:Structural Metadata",
     },
     {
-        name: "root",
+        name: "dataCustodian",
         label: undefined,
     },
 ];

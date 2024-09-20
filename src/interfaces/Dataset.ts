@@ -1,4 +1,4 @@
-import { Publication } from "./Publication";
+import type { Publication } from "./Publication";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 type CreateOrigin = "FMA" | "MANUAL" | "API";
@@ -100,7 +100,7 @@ interface Metadata {
         dataUses: string[];
         syntheticDataWebLink: string;
     };
-    structuralMetadata?: StructuralMetadata[];
+    structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
 }
 

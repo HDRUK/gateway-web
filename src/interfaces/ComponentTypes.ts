@@ -12,6 +12,7 @@ type ComponentTypes =
     | "TextTime"
     | "TextArea"
     | "DatePicker"
-    | "SelectMultipleOptions";
+    | "SelectMultipleOptions"
+    | "Wysiwyg";
 
 export type { ComponentTypes };
