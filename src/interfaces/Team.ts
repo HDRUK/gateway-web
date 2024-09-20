@@ -19,7 +19,7 @@ interface Team {
     users: User[];
     notification_status: boolean;
     notifications: Notification[];
-    team_image?: string;
+    team_logo?: string;
 }
 
 interface TeamForm
@@ -35,6 +35,7 @@ interface TeamForm
         | "member_of"
         | "contact_point"
         | "is_question_bank"
+        | "team_logo"
     > {
     users: number[];
 }

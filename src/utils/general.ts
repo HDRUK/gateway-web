@@ -35,6 +35,10 @@ function getStaticAssetUrl(file: string) {
     return `${process.env.NEXT_PUBLIC_MEDIA_STATIC_URL}/${file}`;
 }
 
+function getTeamAssetPath(file: string) {
+    return `/teams/${file}`;
+}
+
 function parseStaticImagePaths<T>(values: T, prefix?: string) {
     return Object.entries(values || {}).reduce(
         (accumulator, currentValue) => ({
@@ -54,4 +58,5 @@ export {
     extractSubdomain,
     getTrimmedpathname,
     parseStaticImagePaths,
+    getTeamAssetPath,
 };
