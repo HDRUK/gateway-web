@@ -33,13 +33,19 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
-    const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
+    const response = useGet<{ 'redirect_uri': string;}>(`${apis.cohortRequestsV1Url}/access`, {
         shouldFetch: isClicked,
     });
 
+    const handleGet = async () => {
+        const data = response;
+        console.log('data', data);
+    };
+
     const handleVisit = async () => {
         setIsClicked(true);
-        console.log(datasetCsv);
+        await handleGet();
+        setIsClicked(false);
     };
 
     return (
