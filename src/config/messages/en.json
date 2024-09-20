@@ -1037,7 +1037,9 @@
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata",
-                    "downloadStarted": "Your download has started"
+                    "downloadStarted": "Your download has started",
+                    "feasibilityEnquiryButtonText": "Make a feasibility enquiry",
+                    "generalEnquiryButtonText": "Make a general enquiry"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
