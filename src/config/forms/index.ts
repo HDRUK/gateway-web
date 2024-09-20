@@ -15,4 +15,5 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     ToggleDirection: "ToggleDirection",
     DatePicker: "DatePicker",
     SelectMultipleOptions: "SelectMultipleOptions",
+    Wysiwyg: "Wysiwyg",
 };
