@@ -145,7 +145,7 @@ const StructuralMetadataSection = ({
             {datasetId && (
                 <UploadFile
                     apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload&dataset_id=${datasetId}`}
-                    fileUploadedAction={fileProcessedAction}
+                    onFileUploaded={fileProcessedAction}
                     isUploading={setIsUploading}
                     allowReuploading
                 />

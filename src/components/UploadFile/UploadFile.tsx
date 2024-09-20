@@ -27,7 +27,7 @@ interface UploadFileProps {
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
-    fileUploadedAction: (fileId: number) => void;
+    onFileUploaded: (fileId: number) => void;
     isUploading?: Dispatch<SetStateAction<boolean>>;
     onBeforeUploadCheck?: (event: Event & EventUploadedImage) => boolean;
     onFileCheckFailed?: () => void;
@@ -43,7 +43,7 @@ const UploadFile = ({
     allowReuploading,
     acceptedFileTypes = ".xslx",
     fileSelectButtonText,
-    fileUploadedAction,
+    onFileUploaded,
     isUploading,
     onBeforeUploadCheck,
     onFileCheckFailed,
@@ -96,7 +96,7 @@ const UploadFile = ({
                     fileScanStatus?.entity_id &&
                     fileScanStatus?.entity_id > 0
                 ) {
-                    fileUploadedAction(fileScanStatus?.entity_id);
+                    onFileUploaded(fileScanStatus?.entity_id);
                 } else {
                     handleError();
                 }
