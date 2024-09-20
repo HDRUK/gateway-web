@@ -259,6 +259,17 @@
                             "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
                     },
+                    "create": {
+                        "title": "Manage or create a publication entry",
+                        "intro": "Publications should be peer reviewed documents (including pre-prints or articles published in a journal)",
+                        "addResources": "Related resources (optional)",
+                        "addResourcesInfo": "Show relationships for publications, data uses, other publications and analysis scripts, tools and software. Resources must already be on the Gateway.",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "labelTag": "Publication"
+                    },
                     "list": {
                         "title": "Publications",
                         "text": "View, add, edit and archive your publications.",
@@ -1353,6 +1364,13 @@
                 "title": "I would like to...",
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
+            },
+            "AddPublicationDialog": {
+                "manualButton": "Manually fill form",
+                "searchText": "Search Europe PMC",
+                "doiPlaceholder": "Auto populate by searching Europe PMC using a DOI",
+                "or": "or",
+                "notFound": "DOI not found on Europe PMC"
             },
             "RelatedResources": {
                 "title": "Add related resources",
