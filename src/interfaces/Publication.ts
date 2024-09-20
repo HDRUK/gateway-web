@@ -1,5 +1,5 @@
 import { DatasetRelationship } from "@/config/forms/tool";
-import { Tool } from "./Tool";
+import type { Tool } from "./Tool";
 
 export interface Publication {
     id: number;
@@ -42,13 +42,8 @@ export interface PublicationPayload {
         tool_id: number;
         publication_id: number;
     };
-    // durs: DataUse[];
-    // status?: DataStatus;
     tools: Tool[];
-    dataset: DatasetRelationship[];
-    // any_dataset?: boolean;
-    // tag: Tag[];
-    // dataset_versions: VersionItem[];
+    datasets: DatasetRelationship[];
 }
 
 export interface PublicationPayloadSubmission
@@ -63,4 +58,5 @@ export interface EuropePMCPublication {
     is_preprint: boolean;
     journal_name: string;
     publication_year: string;
+    doi: string;
 }
