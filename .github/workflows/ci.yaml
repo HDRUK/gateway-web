@@ -6,6 +6,7 @@ on:
       - dev
       - staging
       - main
+      - debug/oidc-redirect
   pull_request:
     branches:
       - main
