@@ -11,8 +11,10 @@ import Button from "@/components/Button";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
+import AddPublicationDialog from "@/modules/AddPublicationDialog";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -24,7 +26,7 @@ import {
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
-// import { RouteName } from "@/consts/routeName";
+import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import PublicationTab from "./PublicationTab";
 
@@ -37,14 +39,18 @@ interface CountStatus {
 interface UserPublicationProps {
     permissions: { [key: string]: boolean };
     userId: string;
+    teamId?: string;
 }
 
 const TRANSLATION_PATH = "pages.account.profile.publications.list";
 
-const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
+const UserPublications = ({
+    permissions,
+    userId,
+    teamId,
+}: UserPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    // commented out - to be added when AddPublicationDiaglog is created
-    // const { showDialog } = useDialog();
+    const { showDialog } = useDialog();
     const { showModal } = useModal();
     const searchParams = useSearchParams();
 
@@ -54,14 +60,14 @@ const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
         o => o.value === publicationSearchDefaultValues.sortField
     );
 
-    const [queryParams, setQueryParams] = useState({
-        owner_id: userId,
+    const [queryParams, setQueryParams] = useState(() => ({
         withTrashed: "true",
         status: "ACTIVE",
         page: "1",
         sort: `${publicationSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         paper_title: "",
-    });
+        ...(teamId ? { team_id: teamId } : { owner_id: 1 }),
+    }));
 
     const { control, watch, setValue } = useForm({
         defaultValues: {
@@ -141,8 +147,11 @@ const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
         tab === DataStatus.ARCHIVED && permissions["papers.update"];
 
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        `${apis.publicationsV1Url}/count/status?owner_id=${userId}`
+        `${apis.publicationsV1Url}/count/status?${
+            teamId ? `team_id=${teamId}` : `owner_id=${userId}`
+        }`
     );
+
     const {
         ACTIVE: countActive,
         DRAFT: countDraft,
@@ -153,7 +162,9 @@ const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
         ...(permissions["papers.update"]
             ? [
                   {
-                      href: "to-be-implemented", // GAT-4558
+                      href: teamId
+                          ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`
+                          : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
                   },
@@ -246,9 +257,9 @@ const UserPublications = ({ permissions, userId }: UserPublicationProps) => {
     }));
 
     const handleAdd = () => {
-        // to-be implemented..
-        // showDialog(AddPublicationDialog, { userId });
+        showDialog(AddPublicationDialog, { userId, teamId });
     };
+
     return (
         <>
             <Paper>

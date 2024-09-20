@@ -20,6 +20,7 @@ interface Team {
     notification_status: boolean;
     notifications: Notification[];
     team_logo?: string;
+    introduction: string;
 }
 
 interface TeamForm
@@ -36,6 +37,7 @@ interface TeamForm
         | "contact_point"
         | "is_question_bank"
         | "team_logo"
+        | "introduction"
     > {
     users: number[];
 }

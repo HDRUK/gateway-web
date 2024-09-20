@@ -1,13 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
-import { FileUpload } from "@/interfaces/FileUpload";
-import { Team, TeamForm } from "@/interfaces/Team";
-import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -17,10 +9,6 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
-import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
-import usePost from "@/hooks/usePost";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import {
     questionBankField,
@@ -29,7 +17,19 @@ import {
     teamValidationSchema,
 } from "@/config/forms/team";
 import { Routes } from "@/consts/routes";
+import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
+import usePost from "@/hooks/usePost";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import { FileUpload } from "@/interfaces/FileUpload";
+import { Team, TeamForm } from "@/interfaces/Team";
+import { User } from "@/interfaces/User";
 import { getTeamAssetPath } from "@/utils/general";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslations } from "next-intl";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
@@ -54,12 +54,15 @@ const CreateIntegrationForm = () => {
 
     const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
 
-    const { control, handleSubmit, formState, reset, watch } =
-        useForm<TeamForm>({
-            mode: "onTouched",
-            resolver: yupResolver(teamValidationSchema),
-            defaultValues: teamDefaultValues,
-        });
+    const methods = useForm<TeamForm>({
+        mode: "onTouched",
+        resolver: yupResolver(teamValidationSchema),
+        defaultValues: {
+            ...teamDefaultValues,
+        },
+    });
+
+    const { control, handleSubmit, formState, reset, watch } = methods;
 
     useEffect(() => {
         if (!existingTeamData) {
@@ -70,6 +73,7 @@ const CreateIntegrationForm = () => {
             ...existingTeamData,
             users: existingTeamData?.users?.map(user => user.id),
         };
+
         reset(teamData);
     }, [reset, existingTeamData]);
 
@@ -147,44 +151,46 @@ const CreateIntegrationForm = () => {
     }
 
     return (
-        <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
-            <Paper sx={{ marginBottom: 1 }}>
-                <Box
-                    display="flex"
-                    sx={{
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}>
-                    <div>
-                        <Typography variant="h2">
-                            {params?.teamId
-                                ? t(`${TRANSLATION_PATH_EDIT}.title`)
-                                : t(`${TRANSLATION_PATH_CREATE}.title`)}
-                        </Typography>
-                        <Typography>
-                            {params?.teamId
-                                ? t(`${TRANSLATION_PATH_EDIT}.text`)
-                                : t(`${TRANSLATION_PATH_CREATE}.text`)}
-                        </Typography>
-                    </div>
-                    <Box>
-                        <InputWrapper
-                            control={control}
-                            {...questionBankField}
-                            checkedLabel={
-                                <>
-                                    {t(
-                                        `${TRANSLATION_PATH_COMMON}.questionBank`
-                                    )}
-                                    <Typography
-                                        component="span"
-                                        sx={{ fontWeight: "bold" }}>
-                                        {" "}
-                                        {questionBankLabel.toLowerCase()}
-                                    </Typography>
-                                </>
-                            }
-                        />
+        <FormProvider {...methods}>
+            <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
+                <Paper sx={{ marginBottom: 1 }}>
+                    <Box
+                        display="flex"
+                        sx={{
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}>
+                        <div>
+                            <Typography variant="h2">
+                                {params?.teamId
+                                    ? t(`${TRANSLATION_PATH_EDIT}.title`)
+                                    : t(`${TRANSLATION_PATH_CREATE}.title`)}
+                            </Typography>
+                            <Typography>
+                                {params?.teamId
+                                    ? t(`${TRANSLATION_PATH_EDIT}.text`)
+                                    : t(`${TRANSLATION_PATH_CREATE}.text`)}
+                            </Typography>
+                        </div>
+                        <Box>
+                            <InputWrapper
+                                control={control}
+                                {...questionBankField}
+                                checkedLabel={
+                                    <>
+                                        {t(
+                                            `${TRANSLATION_PATH_COMMON}.questionBank`
+                                        )}
+                                        <Typography
+                                            component="span"
+                                            sx={{ fontWeight: "bold" }}>
+                                            {" "}
+                                            {questionBankLabel.toLowerCase()}
+                                        </Typography>
+                                    </>
+                                }
+                            />
+                        </Box>
                     </Box>
                 </Box>
             </Paper>

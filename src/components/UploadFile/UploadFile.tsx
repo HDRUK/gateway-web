@@ -28,7 +28,7 @@ interface UploadFileProps {
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
-    onFileUploaded: (uploadResponse?: number | StructuralMetadata[]) => void;
+    onFileUploaded?: (uploadResponse?: number | StructuralMetadata[]) => void;
     isUploading?: Dispatch<SetStateAction<boolean>>;
     onBeforeUploadCheck?: (event: Event & EventUploadedImage) => boolean;
     onFileCheckFailed?: () => void;
@@ -97,9 +97,9 @@ const UploadFile = ({
                     fileScanStatus?.entity_id &&
                     fileScanStatus?.entity_id > 0
                 ) {
-                    onFileUploaded(fileScanStatus?.entity_id);
+                    onFileUploaded?.(fileScanStatus?.entity_id);
                 } else if (fileScanStatus?.structural_metadata) {
-                    onFileUploaded(fileScanStatus?.structural_metadata);
+                    onFileUploaded?.(fileScanStatus?.structural_metadata);
                 } else {
                     handleError();
                 }

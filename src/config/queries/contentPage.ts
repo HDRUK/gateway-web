@@ -9,6 +9,11 @@ const GetContentPageQuery = (
         page(id: "${id}", idType: ${idType} ) {
           title
           content
+          categories {
+            nodes {
+              name
+            }
+          }
         }
       }
     `;

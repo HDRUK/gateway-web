@@ -20,6 +20,7 @@ import TextField from "@/components/TextField";
 import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
+import { Wysiwyg } from "@/components/Wysiwyg";
 import SelectMultipleOptions from "../SelectMultipleOptions";
 
 type InputType<TFieldValues extends FieldValues, TName> =
@@ -66,6 +67,7 @@ function InputWrapper<
         SwitchInline,
         DatePicker,
         SelectMultipleOptions,
+        Wysiwyg,
     };
 
     if (component === "TextTime") {

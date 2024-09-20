@@ -20,6 +20,7 @@ const defaultValues: TeamForm = {
 };
 
 const validationSchema = yup.object({
+    introduction: yup.string().label("Introduction"),
     name: yup
         .string()
         .required()
@@ -44,10 +45,16 @@ const questionBankField = {
 
 const formFields = [
     {
+        label: "Introduction",
+        name: "introduction",
+        info: "Provide a description of the organisation and/or services for display on the Data Custodian landing page. Include formatting as it should render on the Gateway",
+        component: inputComponents.Wysiwyg,
+    },
+    {
         label: "Organisation name",
         name: "name",
         info: "Please ensure the name matches the standard format for organsitation names",
-        component: inputComponents.TextField,
+        component: inputComponents.TextArea,
         required: true,
     },
     {
