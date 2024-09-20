@@ -38,8 +38,16 @@ const splitStringList = (inputString: string) => {
     }
 };
 
-const hasValidValue = (val: string | string[]) =>
+const isValueNotEmpty = (val: string | undefined) =>
     !isEmpty(val) && val !== UNDEFINED_VALUE && val !== NULL_VALUE;
+
+const hasValidValue = (val: string | string[] | undefined) => {
+    if (Array.isArray(val)) {
+        return !!val.filter(item => isValueNotEmpty(item)).length;
+    }
+
+    return isValueNotEmpty(val);
+};
 
 const formatYearStat = (startYear?: string, endYear?: string) => {
     const hasStartYear = startYear && hasValidValue(startYear);
