@@ -1,5 +1,13 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslations } from "next-intl";
+import { useParams, useRouter } from "next/navigation";
+import { FileUpload } from "@/interfaces/FileUpload";
+import { Team, TeamForm } from "@/interfaces/Team";
+import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -9,6 +17,10 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
+import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
+import usePost from "@/hooks/usePost";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import {
     questionBankField,
@@ -17,19 +29,7 @@ import {
     teamValidationSchema,
 } from "@/config/forms/team";
 import { Routes } from "@/consts/routes";
-import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
-import usePost from "@/hooks/usePost";
-import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
-import { FileUpload } from "@/interfaces/FileUpload";
-import { Team, TeamForm } from "@/interfaces/Team";
-import { User } from "@/interfaces/User";
 import { getTeamAssetPath } from "@/utils/general";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
@@ -192,103 +192,106 @@ const CreateIntegrationForm = () => {
                             />
                         </Box>
                     </Box>
-                </Box>
-            </Paper>
-            <Paper sx={{ marginBottom: 1, gridColumn: "span 2" }}>
-                <Box padding={0}>
-                    {hydratedFormFields.map(field => (
-                        <InputWrapper
-                            key={field.name}
-                            control={control}
-                            {...field}
-                        />
-                    ))}
-                    <Box
-                        sx={{
-                            display: "flex",
-                            p: 0,
-                            gap: 4,
-                        }}>
-                        <FormInputWrapper
-                            label="Logo"
-                            info={t(
-                                `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
-                            )}
-                            error={
-                                fileNotUploaded
-                                    ? {
-                                          type: "",
-                                          message: t(
-                                              `${TRANSLATION_PATH_CREATE}.aspectRatioError`
-                                          ),
-                                      }
-                                    : undefined
-                            }
-                            formControlSx={{ width: "70%", p: 0 }}>
-                            <UploadFile
-                                fileSelectButtonText={t(
-                                    `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
-                                )}
-                                acceptedFileTypes=".jpg,.png"
-                                apiPath={FILE_UPLOAD_URL}
-                                onBeforeUploadCheck={(
-                                    event: Event & EventUploadedImage
-                                ) => {
-                                    const aspectRatio =
-                                        (event?.width || 0) /
-                                        (event?.height || 0);
-
-                                    return (
-                                        aspectRatio <= 2.2 && aspectRatio >= 1.8
-                                    );
-                                }}
-                                onFileChange={() => {
-                                    setFileNotUploaded(false);
-                                }}
-                                onFileCheckSucceeded={(file: FileUpload) => {
-                                    handleFileUploaded(file);
-                                    setFileNotUploaded(false);
-                                }}
-                                onFileCheckFailed={() => {
-                                    setFileNotUploaded(true);
-                                }}
+                </Paper>
+                <Paper sx={{ marginBottom: 1, gridColumn: "span 2" }}>
+                    <Box padding={0}>
+                        {hydratedFormFields.map(field => (
+                            <InputWrapper
+                                key={field.name}
+                                control={control}
+                                {...field}
                             />
-                        </FormInputWrapper>
+                        ))}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                p: 0,
+                                gap: 4,
+                            }}>
+                            <FormInputWrapper
+                                label="Logo"
+                                info={t(
+                                    `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
+                                )}
+                                error={
+                                    fileNotUploaded
+                                        ? {
+                                              type: "",
+                                              message: t(
+                                                  `${TRANSLATION_PATH_CREATE}.aspectRatioError`
+                                              ),
+                                          }
+                                        : undefined
+                                }
+                                formControlSx={{ width: "70%", p: 0 }}>
+                                <UploadFile
+                                    fileSelectButtonText={t(
+                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                    )}
+                                    acceptedFileTypes=".jpg,.png"
+                                    apiPath={FILE_UPLOAD_URL}
+                                    onBeforeUploadCheck={(
+                                        event: Event & EventUploadedImage
+                                    ) => {
+                                        const aspectRatio =
+                                            (event?.width || 0) /
+                                            (event?.height || 0);
 
-                        {existingTeamData?.team_logo && (
-                            <Box sx={{ width: "30%" }}>
-                                <img
-                                    src={existingTeamData?.team_logo}
-                                    alt={`${existingTeamData?.name} logo`}
-                                    width="100%"
+                                        return (
+                                            aspectRatio <= 2.2 &&
+                                            aspectRatio >= 1.8
+                                        );
+                                    }}
+                                    onFileChange={() => {
+                                        setFileNotUploaded(false);
+                                    }}
+                                    onFileCheckSucceeded={(
+                                        file: FileUpload
+                                    ) => {
+                                        handleFileUploaded(file);
+                                        setFileNotUploaded(false);
+                                    }}
+                                    onFileCheckFailed={() => {
+                                        setFileNotUploaded(true);
+                                    }}
                                 />
-                            </Box>
-                        )}
+                            </FormInputWrapper>
+
+                            {existingTeamData?.team_logo && (
+                                <Box sx={{ width: "30%" }}>
+                                    <img
+                                        src={existingTeamData?.team_logo}
+                                        alt={`${existingTeamData?.name} logo`}
+                                        width="100%"
+                                    />
+                                </Box>
+                            )}
+                        </Box>
                     </Box>
-                </Box>
-            </Paper>
-            <Paper>
-                <Box
-                    padding={0}
-                    display="flex"
-                    justifyContent="space-between"
-                    marginBottom={10}>
-                    <Button
-                        color="secondary"
-                        variant="outlined"
-                        onClick={() => reset(teamDefaultValues)}>
-                        {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
-                    </Button>
-                    <Button type="submit">
-                        {t(
-                            `${TRANSLATION_PATH_COMMON}.${
-                                params?.teamId ? "update" : "publish"
-                            }`
-                        )}
-                    </Button>
-                </Box>
-            </Paper>
-        </Form>
+                </Paper>
+                <Paper>
+                    <Box
+                        padding={0}
+                        display="flex"
+                        justifyContent="space-between"
+                        marginBottom={10}>
+                        <Button
+                            color="secondary"
+                            variant="outlined"
+                            onClick={() => reset(teamDefaultValues)}>
+                            {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
+                        </Button>
+                        <Button type="submit">
+                            {t(
+                                `${TRANSLATION_PATH_COMMON}.${
+                                    params?.teamId ? "update" : "publish"
+                                }`
+                            )}
+                        </Button>
+                    </Box>
+                </Paper>
+            </Form>
+        </FormProvider>
     );
 };
 
