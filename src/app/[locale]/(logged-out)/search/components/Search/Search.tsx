@@ -544,8 +544,6 @@ const Search = ({ filters }: SearchProps) => {
         queryParams.type === SearchCategory.PUBLICATIONS &&
         (!data?.list?.length || !data?.path?.includes(queryParams.type));
 
-    console.log("data", data);
-
     return (
         <Box
             display={{

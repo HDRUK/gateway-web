@@ -198,69 +198,68 @@ const CreateIntegrationForm = () => {
                             {...field}
                         />
                     ))}
-                    <FormInputWrapper
-                        label="Logo"
-                        info={t(`${TRANSLATION_PATH_CREATE}.aspectRatioInfo`)}
-                        error={
-                            fileNotUploaded
-                                ? {
-                                      type: "",
-                                      message: t(
-                                          `${TRANSLATION_PATH_CREATE}.aspectRatioError`
-                                      ),
-                                  }
-                                : undefined
-                        }>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                p: 0,
-                                gap: 4,
-                            }}>
-                            <Box sx={{ width: "70%" }}>
-                                <UploadFile
-                                    fileSelectButtonText={t(
-                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
-                                    )}
-                                    acceptedFileTypes=".jpg,.png"
-                                    apiPath={FILE_UPLOAD_URL}
-                                    onBeforeUploadCheck={(
-                                        event: Event & EventUploadedImage
-                                    ) => {
-                                        const aspectRatio =
-                                            (event?.width || 0) /
-                                            (event?.height || 0);
+                    <Box
+                        sx={{
+                            display: "flex",
+                            p: 0,
+                            gap: 4,
+                        }}>
+                        <FormInputWrapper
+                            label="Logo"
+                            info={t(
+                                `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
+                            )}
+                            error={
+                                fileNotUploaded
+                                    ? {
+                                          type: "",
+                                          message: t(
+                                              `${TRANSLATION_PATH_CREATE}.aspectRatioError`
+                                          ),
+                                      }
+                                    : undefined
+                            }
+                            formControlSx={{ width: "70%", p: 0 }}>
+                            <UploadFile
+                                fileSelectButtonText={t(
+                                    `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                )}
+                                acceptedFileTypes=".jpg,.png"
+                                apiPath={FILE_UPLOAD_URL}
+                                onBeforeUploadCheck={(
+                                    event: Event & EventUploadedImage
+                                ) => {
+                                    const aspectRatio =
+                                        (event?.width || 0) /
+                                        (event?.height || 0);
 
-                                        return (
-                                            aspectRatio <= 2.2 &&
-                                            aspectRatio >= 1.8
-                                        );
-                                    }}
-                                    onFileChange={() => {
-                                        setFileNotUploaded(false);
-                                    }}
-                                    onFileCheckSucceeded={(
-                                        file: FileUpload
-                                    ) => {
-                                        handleFileUploaded(file);
-                                        setFileNotUploaded(false);
-                                    }}
-                                    onFileCheckFailed={() => {
-                                        setFileNotUploaded(true);
-                                    }}
+                                    return (
+                                        aspectRatio <= 2.2 && aspectRatio >= 1.8
+                                    );
+                                }}
+                                onFileChange={() => {
+                                    setFileNotUploaded(false);
+                                }}
+                                onFileCheckSucceeded={(file: FileUpload) => {
+                                    handleFileUploaded(file);
+                                    setFileNotUploaded(false);
+                                }}
+                                onFileCheckFailed={() => {
+                                    setFileNotUploaded(true);
+                                }}
+                            />
+                        </FormInputWrapper>
+
+                        {existingTeamData?.team_logo && (
+                            <Box sx={{ width: "30%" }}>
+                                <img
+                                    src={existingTeamData?.team_logo}
+                                    alt={`${existingTeamData?.name} logo`}
+                                    width="100%"
                                 />
                             </Box>
-                            {existingTeamData?.team_logo && (
-                                <Box sx={{ width: "30%" }}>
-                                    <img
-                                        src={existingTeamData?.team_logo}
-                                        alt={`${existingTeamData?.name} logo`}
-                                        width="100%"
-                                    />
-                                </Box>
-                            )}
-                        </Box>
-                    </FormInputWrapper>
+                        )}
+                    </Box>
                 </Box>
             </Paper>
             <Paper>
