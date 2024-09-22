@@ -63,7 +63,8 @@ const DatasetMindMap = ({
 
                     if (node.id === "node-synthetic") {
                         href =
-                            data.metadata.metadata.linkage.syntheticDataWebLink;
+                            data.metadata.metadata?.structuralMetadata
+                                ?.syntheticDataWebLink;
                         if (!href) {
                             emptyNodes.push(node.id);
                             hidden = true;

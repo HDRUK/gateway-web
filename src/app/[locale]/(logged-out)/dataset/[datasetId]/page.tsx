@@ -32,6 +32,9 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
 
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+
 export default async function DatasetItemPage({
     params,
 }: {
@@ -40,7 +43,12 @@ export default async function DatasetItemPage({
     const { datasetId } = params;
 
     const cookieStore = cookies();
-    const data = await getDataset(cookieStore, datasetId);
+    const data = await getDataset(
+        cookieStore,
+        datasetId,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
+    );
 
     let googleRecommendedDataset: Dataset | undefined;
 
