@@ -75,14 +75,14 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         });
 
     const { data: toolCategoryData } = useGet<Category[]>(
-        `${apis.toolCategoriesV1Url}?perPage=200`
+        `${apis.toolCategoriesV1Url}?perPage=-1`
     );
 
     const { data: programmingLanguageData } = useGet<ProgrammingLanguage[]>(
-        `${apis.programmingLanguagesV1Url}?perPage=200`
+        `${apis.programmingLanguagesV1Url}?perPage=-1`
     );
 
-    const { data: tagData } = useGet<Tag[]>(`${apis.tagsV1Url}?per_page=200`);
+    const { data: tagData } = useGet<Tag[]>(`${apis.tagsV1Url}?per_page=-1`);
 
     const { data: existingToolData } = useGet<Tool>(
         `${apis.toolsV1Url}/${toolId}`,
