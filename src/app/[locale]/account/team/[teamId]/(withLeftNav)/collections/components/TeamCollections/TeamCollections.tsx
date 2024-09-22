@@ -166,7 +166,6 @@ const TeamCollections = ({
         ...(permissions["collections.update"]
             ? [
                   {
-                      // TODO- https://hdruk.atlassian.net/browse/GAT-4350
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),

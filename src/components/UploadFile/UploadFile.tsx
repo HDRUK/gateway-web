@@ -69,11 +69,10 @@ const UploadFile = ({
         setFile(undefined);
         isUploading(false);
         setPollFileStatus(false);
-
         notificationService.apiError(fileScanStatus?.error || t("error"));
     };
 
-    const imageValidation = (file) => {
+    const imageValidation = (file: File) => {
         let result;
         if(acceptedFileTypes != ".png"){
             result = true;
@@ -86,6 +85,7 @@ const UploadFile = ({
                 image.onload = function () {
                     const height = this.height;
                     const width = this.width;
+                    const imageRatio = width/height;
                     if (height != 350 || width != 700) {
                       setIsInvalidImage(true);
                       result = false;
