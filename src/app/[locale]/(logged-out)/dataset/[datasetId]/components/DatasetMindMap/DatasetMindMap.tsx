@@ -94,7 +94,7 @@ const DatasetMindMap = ({
                         hidden = true;
                         emptyNodes.push(node.id);
                     }
-                    href = `${node.data.href}&query=&datasetTitles=${title}&source=${node.data.source}`;
+                    href = `${node.data.href}&query=&datasetTitles=${title}&source=${node.data.source}&force`;
                 } else if (node.id === "node-externalPublications") {
                     href = `${node.data.href}&query=${title}&source=${node.data.source}`;
                 }
