@@ -8,7 +8,6 @@ import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { formatDate } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.dataset";
 
@@ -18,8 +17,8 @@ interface PublicationsProps {
 
 const Publications = ({ data }: PublicationsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const publicationsUsingDataset = data.publications.filter(
-        pub => pub.dataset_versions[0].link_type === "USING"
+    const publicationAboutThisDataset = data.publications.filter(
+        pub => pub.dataset_versions[0].link_type === "ABOUT"
     );
 
     return (
@@ -33,11 +32,13 @@ const Publications = ({ data }: PublicationsProps) => {
                     p: 0,
                     gap: 2,
                 }}>
-                {publicationsUsingDataset.map(pub => (
+                {publicationAboutThisDataset.map(pub => (
                     <Card
                         variant="outlined"
                         sx={{ p: 1, borderRadius: 2, display: "grid" }}>
-                        <Link href={pub?.url || pub?.paper_doi || ""}>
+                        <Link
+                            target="_blank"
+                            href={pub?.url || pub?.paper_doi || ""}>
                             <EllipsisCharacterLimit
                                 text={pub.paper_title}
                                 characterLimit={100}
