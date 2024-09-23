@@ -49,7 +49,7 @@ const rootNode = {
     },
 };
 
-const getOuterNodes = (nodes: any[]) =>
+const getOuterNodes = (nodes: []) =>
     nodes.map((node, index) =>
         nodeValueToRectNode(node, index, nodes.length, centerX, centerY)
     );
