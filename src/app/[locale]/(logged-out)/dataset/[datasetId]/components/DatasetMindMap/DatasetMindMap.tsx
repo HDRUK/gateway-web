@@ -66,7 +66,7 @@ const DatasetMindMap = ({
                 let href = null;
                 let action = null;
                 let hidden = false;
-                const title = data.metadata.metadata.summary.shortTitle;
+                const { title } = data.metadata.metadata.summary;
 
                 if (node.id === "node-synthetic") {
                     href =
