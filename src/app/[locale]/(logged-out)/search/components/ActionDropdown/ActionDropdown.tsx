@@ -15,14 +15,14 @@ import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
+import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
+import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
-import useFeasibilityEnquiry from "../../hooks/useFeasibilityEnquiry";
-import useGeneralEnquiry from "../../hooks/useGeneralEnquiry";
 
 interface ResultRowProps {
     result: SearchResultDataset;
