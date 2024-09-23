@@ -345,7 +345,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.jurisdiction",
-                type: FieldType.TEXT,
+                type: FieldType.LIST,
                 label: "Jurisdiction",
                 tooltip:
                     "ISO 3166-1 country codes and the associated SO 3166-2 for regions, cities, states, etc. for the country/state under whose laws the data subject's data is collected, processed and stored. Multiple jurisdictions might be provided.",

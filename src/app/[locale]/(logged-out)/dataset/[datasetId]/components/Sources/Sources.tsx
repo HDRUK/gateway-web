@@ -23,13 +23,13 @@ const Sources = ({ data }: SourcesProps) => {
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             <Typography variant="h4">
                 <b>{`${t("datasetTypes")}: `}</b>
-                {datasetType}
+                {formatTextDelimiter(datasetType)}
             </Typography>
 
             {datasetSubType && !isEqual(datasetSubType, ["Not applicable"]) && (
                 <Typography variant="h4">
                     <b>{`${t("datasetSubtypes")}: `}</b>
-                    {datasetSubType}
+                    {formatTextDelimiter(datasetSubType)}
                 </Typography>
             )}
 

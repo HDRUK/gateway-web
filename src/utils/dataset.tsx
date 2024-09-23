@@ -28,10 +28,8 @@ const parseLeadTime = (leadTimeString: string) => {
     return [leadTimeString];
 };
 
-const splitStringList = (text: string | string[]) =>
-    Array.isArray(text)
-        ? test
-        : text.split(",").map(item => item.replace(/;/g, "").trim());
+const splitStringList = (text: string) =>
+    text.split(",").map(item => item.replace(/;/g, "").trim());
 
 const isValueNotEmpty = (val: string | undefined) =>
     !isEmpty(val) && val !== UNDEFINED_VALUE && val !== NULL_VALUE;
@@ -98,7 +96,9 @@ const formatTextWithLinks = (text: string | string[] | number) => {
 };
 
 const formatTextDelimiter = (text: string | string[] | number) => {
-    return Array.isArray(text) || typeof text === "number"
+    return Array.isArray(text)
+        ? text.join(", ") // Join array elements with ", " if it's an array
+        : typeof text === "number"
         ? text
         : text.replaceAll(";,;", ", ");
 };
