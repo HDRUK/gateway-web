@@ -8,13 +8,22 @@ export const metadata = {
     description: "",
 };
 
-const UserPublicationsPage = async () => {
+export default async function UserPublicationsPage({
+    params,
+}: {
+    params: { teamId: string };
+}) {
+    const { teamId } = params;
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 
-    return <UserPublications permissions={permissions} userId={userId} />;
-};
-
-export default UserPublicationsPage;
+    return (
+        <UserPublications
+            permissions={permissions}
+            userId={userId}
+            teamId={teamId}
+        />
+    );
+}

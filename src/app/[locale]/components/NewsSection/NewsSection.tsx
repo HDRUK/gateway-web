@@ -34,8 +34,8 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
                         variant="feature"
                         buttonText={t("newsCardButtonText")}
                         summary={text}
-                        imageLink={image.node.mediaItemUrl}
-                        imageAlt={image.node.altText}
+                        imageLink={image?.node?.mediaItemUrl}
+                        imageAlt={image?.node?.altText}
                         imageHeight="140px"
                         headline={headline}
                         date={date}
