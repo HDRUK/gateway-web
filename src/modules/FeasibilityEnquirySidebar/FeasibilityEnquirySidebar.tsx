@@ -50,6 +50,12 @@ const FeasibilityEnquirySidebar = ({
 
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
+            if (field.name === "organisation") {
+                return {
+                    ...field,
+                   readOnly : !!user?.organisation
+                };
+            }
             if (field.name === "datasets") {
                 return {
                     ...field,

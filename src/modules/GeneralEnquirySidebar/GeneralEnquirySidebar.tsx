@@ -51,6 +51,11 @@ const GeneralEnquirySidebar = ({
 
     const hydratedFormFields = generalEnquiryFormFields;
 
+    const organisationField = hydratedFormFields.find(item => item.name === 'organisation')
+    if (organisationField){
+        organisationField.readOnly = !!user?.organisation
+    }
+
     const submitForm = async (formData: Enquiry) => {
         if (!user) return;
         const minUser = { id: user.id };
