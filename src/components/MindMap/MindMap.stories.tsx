@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
     rootNode,
-    outerNodes,
+    outerNodeValues,
+    getOuterNodes,
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
@@ -25,6 +26,7 @@ const WrapperComponent = (props: MindMapProps) => {
 };
 
 export const Single: Story = {
+    const outerNodes = getOuterNodes(outerNodeValues);
     render: () => (
         <WrapperComponent
             rootNode={rootNode}
