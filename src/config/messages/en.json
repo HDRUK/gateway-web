@@ -1074,6 +1074,7 @@
                     "synthetic": "Synthetic data",
                     "dataCustodian": "Data Custodian",
                     "structuralMetadata": "Data variables",
+                    "demographics": "Explore demographics",
                     "curatedPublications": "Publications using this dataset (curated)",
                     "externalPublications": "Publications using this dataset (external search)"
                 },
@@ -1278,6 +1279,9 @@
             "columnDesc": "Column description",
             "dataType": "Data type",
             "sensitive": "Sensitive"
+        },
+        "DemographicsAccordion": {
+            "noData": "No data available"
         },
         "CollectionCard": {
             "users": "Users",

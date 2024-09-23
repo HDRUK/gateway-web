@@ -22,6 +22,7 @@ interface DatasetMindMapProps extends ReactFlowProps {
     teamId: number;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
+    hasDemographics: boolean;
     linkageCounts: { [key: string]: number };
 }
 
@@ -37,6 +38,7 @@ const DatasetMindMap = ({
     zoomOnDoubleClick = false,
     nodesDraggable = false,
     hasStructuralMetadata,
+    hasDemographics,
     ...rest
 }: DatasetMindMapProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -103,7 +105,11 @@ const DatasetMindMap = ({
                 }
 
                 if (node.data.href?.includes("scrollTo:")) {
-                    if (hasStructuralMetadata) {
+                    if (
+                        (hasStructuralMetadata &&
+                            node.data.name === "structuralMetadata") ||
+                        (hasDemographics && node.data.name === "demographics")
+                    ) {
                         const sectionIndex = populatedSections.findIndex(
                             section =>
                                 node.data.href?.includes(section.sectionName)

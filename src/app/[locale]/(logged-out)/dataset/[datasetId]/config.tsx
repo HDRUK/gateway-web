@@ -145,7 +145,7 @@ const datasetFields: DatasetSection[] = [
         sectionName: "Structural Metadata",
         fields: [
             {
-                path: "metadata.metadata.structuralMetadata",
+                path: "metadata.metadata.structuralMetadata.tables",
                 type: FieldType.TAG,
             },
         ],
@@ -163,13 +163,13 @@ const datasetFields: DatasetSection[] = [
             {
                 path: "metadata.metadata.version",
                 type: FieldType.TEXT,
-                label: "version",
+                label: "Version",
                 tooltip: "Dataset metadata version",
             },
             {
                 path: "metadata.metadata.modified",
                 type: FieldType.DATE,
-                label: "modified",
+                label: "Modified",
                 tooltip:
                     "The most recent date when the information about this dataset was updated.",
             },

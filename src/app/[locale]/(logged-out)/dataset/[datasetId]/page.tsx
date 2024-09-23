@@ -1,4 +1,4 @@
-import { get, isEmpty, pick } from "lodash";
+import { get, isEmpty, pick, some } from "lodash";
 import { cookies } from "next/headers";
 import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
@@ -27,7 +27,7 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",
     "metadata.metadata.provenance.temporal.startDate",
     "metadata.metadata.provenance.temporal.endDate",
-    "metadata.metadata.coverage.biologicalsamples",
+    "metadata.metadata.coverage.materialType",
     "metadata.metadata.coverage.spatial",
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
@@ -141,7 +141,14 @@ export default async function DatasetItemPage({
                                     linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
                                         !!datasetVersion.metadata?.metadata
-                                            ?.structuralMetadata?.length
+                                            ?.structuralMetadata?.tables?.length
+                                    }
+                                    hasDemographics={
+                                        !!some(
+                                            datasetVersion.metadata?.metadata
+                                                ?.demographicFrequency,
+                                            value => value !== null
+                                        )
                                     }
                                 />
 
