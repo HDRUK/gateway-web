@@ -1089,6 +1089,7 @@
                 },
                 "Sources": {
                     "datasetTypes": "Dataset Types",
+                    "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
                     "noCollectionSources": "No collection sources listed"
                 }

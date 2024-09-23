@@ -2,7 +2,7 @@
 
 import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get } from "lodash";
+import { get, isArray } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
@@ -111,14 +111,20 @@ const DatasetContent = ({
                     </Link>
                 );
             case FieldType.LIST: {
-                const list = Array.from(new Set(splitStringList(value)));
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
                 return list.map((item, i) => [
                     i > 0 && ", ",
                     formatTextWithLinks(item),
                 ]);
             }
             case FieldType.LINK_LIST: {
-                const list = Array.from(new Set(splitStringList(value)));
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
                 return (
                     <ListContainer>
                         {list.map(item => (
@@ -130,8 +136,9 @@ const DatasetContent = ({
                 );
             }
 
-            default:
+            default: {
                 return formatTextWithLinks(formatTextDelimiter(value));
+            }
         }
     };
 
@@ -200,7 +207,7 @@ const DatasetContent = ({
                             section.fields.map(field => {
                                 const value = get(data, field.path);
 
-                                if (!value) {
+                                if (!value || value === -1) {
                                     return null;
                                 }
 
