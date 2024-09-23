@@ -1,14 +1,14 @@
 import { useCallback } from "react";
 import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { SearchResultDataset } from "@/interfaces/Search";
+import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useDialog from "@/hooks/useDialog";
 import useSidebar from "@/hooks/useSidebar";
-import GeneralEnquirySidebar from "../../components/GeneralEnquirySidebar";
 
 interface UseGeneralEnquiryProps {
     isLoggedIn: boolean;
-    dataset: SearchResultDataset;
+    dataset: Pick<SearchResultDataset, "team" | "_id">;
 }
 
 const useGeneralEnquiry = () => {

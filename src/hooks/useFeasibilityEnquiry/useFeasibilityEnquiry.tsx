@@ -9,8 +9,8 @@ import useDialog from "@/hooks/useDialog";
 
 interface UseFeasibilityEnquiryProps {
     isLoggedIn: boolean;
-    dataset: SearchResultDataset;
-    mutateLibraries: KeyedMutator<Library[]>;
+    dataset: Pick<SearchResultDataset, "team" | "_id" | "metadata">;
+    mutateLibraries?: KeyedMutator<Library[]>;
 }
 
 const useFeasibilityEnquiry = () => {
