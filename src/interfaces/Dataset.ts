@@ -28,6 +28,23 @@ interface StructuralMetadataPublicSchema {
     syntheticDataWebLink: string[];
 }
 
+interface DemographicGeneric {
+    bin: string;
+    count: number;
+}
+
+interface DemographicDisease {
+    diseaseCode: string;
+    diseaseCodeVocabulary?: string;
+    count: number;
+}
+
+interface Demographics {
+    age: DemographicGeneric[] | null;
+    ethnicity: DemographicGeneric[] | null;
+    disease: DemographicDisease[] | null;
+}
+
 interface Revision {
     version: string;
     url: string;
@@ -101,6 +118,7 @@ interface Metadata {
     };
     structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
+    demographicFrequency: Demographics;
 }
 
 interface LinkedDatasetVersions {
@@ -168,4 +186,7 @@ export type {
     StructuralMetadataPublicSchema,
     CreateOrigin,
     Revision,
+    Demographics,
+    DemographicDisease,
+    DemographicGeneric,
 };

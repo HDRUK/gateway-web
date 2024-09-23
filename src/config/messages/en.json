@@ -1281,6 +1281,9 @@
             "dataType": "Data type",
             "sensitive": "Sensitive"
         },
+        "DemographicsAccordion": {
+            "noData": "No data available"
+        },
         "CollectionCard": {
             "users": "Users",
             "entities": "Entities",

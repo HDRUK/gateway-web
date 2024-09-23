@@ -9,6 +9,7 @@ import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import DemographicsAccordion from "@/components/DemographicsAccordion";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
@@ -176,6 +177,33 @@ const DatasetContent = ({
                             renderObservationsTable(
                                 get(data, "metadata.metadata.observations")
                             )
+                        ) : section.sectionName === "Demographics" ? (
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    p: 0,
+                                }}>
+                                <Button
+                                    onClick={() =>
+                                        showModal({
+                                            title: "Demographics",
+                                            content: (
+                                                <DemographicsAccordion
+                                                    data={get(
+                                                        data,
+                                                        section.fields[0].path
+                                                    )}
+                                                />
+                                            ),
+                                            showConfirm: false,
+                                            showCancel: false,
+                                        })
+                                    }>
+                                    Open table
+                                </Button>
+                            </Box>
                         ) : section.sectionName === "Structural Metadata" ? (
                             <Box
                                 sx={{
