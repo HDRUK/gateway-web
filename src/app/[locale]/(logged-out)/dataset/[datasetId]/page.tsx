@@ -6,7 +6,7 @@ import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { getDataset, getTeam, getUser, getUserFromToken } from "@/utils/api";
+import { getDataset } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
