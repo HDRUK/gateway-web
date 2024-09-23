@@ -30,7 +30,6 @@ interface ActionBarProps {
 const ActionBar = ({ dataset }: ActionBarProps) => {
     const [isDownloading, setIsDownloading] = useState(false);
     const { showDialog } = useDialog();
-    // const { showSidebar } = useSidebar();
     const { id: datasetId } = dataset;
     const path = usePathname();
 
