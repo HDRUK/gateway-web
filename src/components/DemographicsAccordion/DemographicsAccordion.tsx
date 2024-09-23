@@ -45,14 +45,15 @@ const AGE_ORDER = [
     "100+ years",
 ];
 
-const sortedAgeGroups = (age: DemographicGeneric[]) => {
-    if (!age) return null;
-    return age.sort((a, b) => {
+const sortedAgeGroups = (age: DemographicGeneric[]) =>
+    age.sort((a, b) => {
         const indexA = AGE_ORDER.indexOf(a.bin);
         const indexB = AGE_ORDER.indexOf(b.bin);
         return indexA - indexB;
     });
-};
+
+const sortedByCount = (data: DemographicGeneric[] | DemographicDisease[]) =>
+    data.sort((a, b) => b.count - a.count);
 
 const DemographicsAccordion = ({ data }: { data: Demographics }) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -62,8 +63,14 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
             {DEMOGRAPHIC_ORDER.map(key => {
                 let items = data[key];
 
-                if (key === "age" && items) {
+                if (!items) {
+                    return null;
+                }
+
+                if (key === "age") {
                     items = sortedAgeGroups(items as DemographicGeneric[]);
+                } else {
+                    items = sortedByCount(items);
                 }
 
                 return (
