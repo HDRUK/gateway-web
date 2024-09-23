@@ -21,6 +21,10 @@ const Publications = ({ data }: PublicationsProps) => {
         pub => pub.dataset_versions[0].link_type === "ABOUT"
     );
 
+    if (publicationAboutThisDataset.length === 0) {
+        return <> </>;
+    }
+
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             <Typography variant="h2"> {t("datasetPublications")} </Typography>
