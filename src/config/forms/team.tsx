@@ -4,7 +4,7 @@ import { REGEX_ALPHA_ONLY } from "@/consts/regex";
 import { memberOfOptions } from "@/consts/team";
 import { inputComponents } from ".";
 
-const defaultValues: Partial<TeamForm> = {
+const defaultValues: TeamForm = {
     name: "",
     member_of: "",
     contact_point: "",
@@ -16,6 +16,8 @@ const defaultValues: Partial<TeamForm> = {
     access_requests_management: true,
     uses_5_safes: true,
     is_question_bank: false,
+    team_logo: "",
+    introduction: "",
 };
 
 const validationSchema = yup.object({
