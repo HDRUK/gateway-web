@@ -18,14 +18,14 @@ import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
+import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
+import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import useFeasibilityEnquiry from "../../hooks/useFeasibilityEnquiry";
-import useGeneralEnquiry from "../../hooks/useGeneralEnquiry";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 
 interface ResultCardProps {
