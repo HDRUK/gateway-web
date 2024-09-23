@@ -174,7 +174,6 @@ const Search = ({ filters }: SearchProps) => {
     );
 
     const allSearchParams = getAllParams(searchParams);
-    const forceSearch = searchParams?.get("force") !== null;
 
     const hasNotSearched = () => {
         const keys = Object.keys(allSearchParams).filter(
@@ -250,7 +249,6 @@ const Search = ({ filters }: SearchProps) => {
             keepPreviousData: true,
             withPagination: true,
             shouldFetch:
-                forceSearch ||
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
                 !!(
                     queryParams.type === SearchCategory.PUBLICATIONS &&
@@ -541,7 +539,6 @@ const Search = ({ filters }: SearchProps) => {
     ];
 
     const showPublicationWelcomeMessage =
-        !forceSearch &&
         !isSearching &&
         !queryParams.query &&
         queryParams.type === SearchCategory.PUBLICATIONS &&
