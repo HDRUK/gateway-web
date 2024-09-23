@@ -8,6 +8,8 @@ import {
 } from "@/config/mindmaps/dataset";
 import MindMap, { MindMapProps } from "./MindMap";
 
+const outerNodes = getOuterNodes(outerNodeValues);
+
 const meta: Meta<typeof MindMap> = {
     component: MindMap,
     tags: ["autodocs"],
@@ -26,7 +28,6 @@ const WrapperComponent = (props: MindMapProps) => {
 };
 
 export const Single: Story = {
-    const outerNodes = getOuterNodes(outerNodeValues);
     render: () => (
         <WrapperComponent
             rootNode={rootNode}
