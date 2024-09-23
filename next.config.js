@@ -11,6 +11,7 @@ const nextConfig = withNextIntl({
         API_VERSION: process.env.NEXT_PUBLIC_API_VERSION,
     },
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: "https",
