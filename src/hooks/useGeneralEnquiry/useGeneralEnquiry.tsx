@@ -9,6 +9,7 @@ import useSidebar from "@/hooks/useSidebar";
 interface UseGeneralEnquiryProps {
     isLoggedIn: boolean;
     dataset: Pick<SearchResultDataset, "team" | "_id">;
+    redirectPath?: string | null;
 }
 
 const useGeneralEnquiry = () => {
@@ -16,12 +17,17 @@ const useGeneralEnquiry = () => {
     const { showSidebar } = useSidebar();
 
     return useCallback(
-        ({ isLoggedIn, dataset }: UseGeneralEnquiryProps) => {
+        ({
+            isLoggedIn,
+            dataset,
+            redirectPath = "/",
+        }: UseGeneralEnquiryProps) => {
             const { _id, team } = dataset;
 
             if (!isLoggedIn) {
                 showDialog(ProvidersDialog, {
                     isProvidersDialog: true,
+                    redirectPath,
                 });
             } else {
                 const datasets: DatasetEnquiry[] = [

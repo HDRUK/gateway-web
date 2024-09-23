@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileExport } from "@/interfaces/FileExport";
-import { Team } from "@/interfaces/Team";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
-import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
-import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
+import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
+import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import useGet from "@/hooks/useGet";
-import useSidebar from "@/hooks/useSidebar";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { DownloadIcon, QuestionAnswerIcon } from "@/consts/icons";
@@ -22,31 +22,36 @@ import { downloadFile } from "@/utils/download";
 import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
-const TRANSLATION_PATH_SIDEBAR =
-    "pages.account.profile.library.components.RightPanel";
 
 interface ActionBarProps {
     dataset: Dataset;
-    team: Team;
 }
 
-const ActionBar = ({ dataset, team }: ActionBarProps) => {
+const ActionBar = ({ dataset }: ActionBarProps) => {
     const [isDownloading, setIsDownloading] = useState(false);
     const { showDialog } = useDialog();
-    const { showSidebar } = useSidebar();
+    // const { showSidebar } = useSidebar();
     const { id: datasetId } = dataset;
+    const path = usePathname();
+
+    const { isLoggedIn } = useAuth();
+    const showGeneralEnquiry = useGeneralEnquiry();
+    const showFeasibilityEnquiry = useFeasibilityEnquiry();
 
     const t = useTranslations(TRANSLATION_PATH);
-    const tSidebar = useTranslations(TRANSLATION_PATH_SIDEBAR);
 
-    const datasetsEnquiry = [
-        {
-            datasetId: dataset.id,
-            teamId: team.id,
-            teamName: team.name,
-            teamMemberOf: team.member_of,
-        },
-    ];
+    const { team } = dataset;
+
+    const result = {
+        // this is a temp hack
+        // these components were originally built for SearchDatasetResult.......
+        // -- which is some weird combo of elastic and GWDM
+        // - this might cause problems in the future too as our metadata is HDRUK not GWDM
+        // - fuck it, have to have something working for now....
+        _id: dataset.id.toString(),
+        team,
+        metadata: dataset.versions[0].metadata.metadata,
+    };
 
     const { data: datasetCsv } = useGet<{
         content: string;
@@ -68,18 +73,22 @@ const ActionBar = ({ dataset, team }: ActionBarProps) => {
         }
     };
 
-    const handleFeasibilityEnquiryClick = () => {
-        showSidebar({
-            title: tSidebar("feasibilityEnquiries.sidebarTitle"),
-            content: <FeasibilityEnquirySidebar datasets={datasetsEnquiry} />,
+    const handleFeasibilityEnquiryClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event?.stopPropagation();
+        showFeasibilityEnquiry({
+            dataset: result,
+            isLoggedIn,
+            redirectPath: path,
         });
     };
 
-    const handleGeneralEnquiryClick = () => {
-        showSidebar({
-            title: tSidebar("generalEnquiries.sidebarTitle"),
-            content: <GeneralEnquirySidebar datasets={datasetsEnquiry} />,
-        });
+    const handleGeneralEnquiryClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event?.stopPropagation();
+        showGeneralEnquiry({ dataset: result, isLoggedIn, redirectPath: path });
     };
 
     const handleStartDarRequest = (event: React.MouseEvent<HTMLElement>) => {
