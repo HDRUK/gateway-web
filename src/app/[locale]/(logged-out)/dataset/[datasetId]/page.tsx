@@ -1,4 +1,4 @@
-import { get, isEmpty, pick } from "lodash";
+import { get, isEmpty, pick, some } from "lodash";
 import { cookies } from "next/headers";
 import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
@@ -142,7 +142,14 @@ export default async function DatasetItemPage({
                                     linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
                                         !!datasetVersion.metadata?.metadata
-                                            ?.structuralMetadata?.length
+                                            ?.structuralMetadata?.tables?.length
+                                    }
+                                    hasDemographics={
+                                        !!some(
+                                            datasetVersion.metadata?.metadata
+                                                ?.demographicFrequency,
+                                            value => value !== null
+                                        )
                                     }
                                 />
 

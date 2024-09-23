@@ -145,7 +145,7 @@ const datasetFields: DatasetSection[] = [
         sectionName: "Structural Metadata",
         fields: [
             {
-                path: "metadata.metadata.structuralMetadata",
+                path: "metadata.metadata.structuralMetadata.tables",
                 type: FieldType.TAG,
             },
         ],

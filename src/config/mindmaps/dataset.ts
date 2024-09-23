@@ -34,6 +34,10 @@ const outerNodeValues = [
         href: "scrollTo:Structural Metadata",
     },
     {
+        name: "demographics",
+        href: "scrollTo:Demographics",
+    },
+    {
         name: "dataCustodian",
     },
 ];
