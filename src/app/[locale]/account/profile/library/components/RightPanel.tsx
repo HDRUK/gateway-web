@@ -9,11 +9,11 @@ import Button from "@/components/Button";
 import Paper from "@/components/Paper";
 import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
+import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
+import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
-import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
-import GeneralEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/GeneralEnquirySidebar";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 

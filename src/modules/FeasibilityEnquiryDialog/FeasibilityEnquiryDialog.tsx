@@ -8,18 +8,18 @@ import { Library, NewLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import Typography from "@/components/Typography";
+import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
-import FeasibilityEnquirySidebar from "@/app/[locale]/(logged-out)/search/components/FeasibilityEnquirySidebar";
 
 const TRANSLATION_PATH = "modules.dialogs.FeasibilityEnquiryDialog";
 
 interface DatasetQuickViewDialogProps {
     result: DatasetEnquiry;
-    mutateLibraries: KeyedMutator<Library[]>;
+    mutateLibraries?: KeyedMutator<Library[]>;
 }
 
 const FeasibilityEnquiryDialog = ({
@@ -43,15 +43,17 @@ const FeasibilityEnquiryDialog = ({
     });
 
     const handleAddToLibrary = () => {
-        const payload: NewLibrary = {
-            user_id: user?.id,
-            dataset_id: Number(result.datasetId),
-        };
+        if (mutateLibraries) {
+            const payload: NewLibrary = {
+                user_id: user?.id,
+                dataset_id: Number(result.datasetId),
+            };
 
-        addLibrary(payload).then(() => {
-            mutateLibraries();
-            hideDialog();
-        });
+            addLibrary(payload).then(() => {
+                mutateLibraries();
+                hideDialog();
+            });
+        }
     };
 
     return (
@@ -85,12 +87,14 @@ const FeasibilityEnquiryDialog = ({
                         <Typography mb={2}>
                             <Markdown>{t("helpText")}</Markdown>
                         </Typography>
-                        <Button
-                            variant="outlined"
-                            color="secondary"
-                            onClick={handleAddToLibrary}>
-                            {t("addToLibrary")}
-                        </Button>
+                        {mutateLibraries && (
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={handleAddToLibrary}>
+                                {t("addToLibrary")}
+                            </Button>
+                        )}
                     </Grid>
                 </Grid>
             </MuiDialogContent>

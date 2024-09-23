@@ -6,7 +6,7 @@ import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { getDataset } from "@/utils/api";
+import { getDataset, getTeam } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
@@ -32,6 +32,9 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
 
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+
 export default async function DatasetItemPage({
     params,
 }: {
@@ -40,7 +43,13 @@ export default async function DatasetItemPage({
     const { datasetId } = params;
 
     const cookieStore = cookies();
-    const data = await getDataset(cookieStore, datasetId);
+    const data = await getDataset(
+        cookieStore,
+        datasetId,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
+    );
+    const team = await getTeam(cookieStore, data.team_id.toString());
 
     let googleRecommendedDataset: Dataset | undefined;
 
@@ -66,6 +75,12 @@ export default async function DatasetItemPage({
     const linkageCounts = {
         tools: data?.tools_count,
         publications: data?.publications_count,
+        publications_about: data?.publications.filter(
+            pub => pub.dataset_versions[0].link_type === "ABOUT"
+        ).length,
+        publications_using: data?.publications.filter(
+            pub => pub.dataset_versions[0].link_type === "USING"
+        ).length,
         durs: data?.durs_count,
         collections: data?.collections_count,
     };
@@ -79,7 +94,7 @@ export default async function DatasetItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar />
+                    <ActionBar dataset={data} team={team} />
                     <Box
                         sx={{
                             display: "flex",
@@ -148,7 +163,7 @@ export default async function DatasetItemPage({
                                 />
                                 <Linkages data={data} />
 
-                                <Publications />
+                                <Publications data={data} />
                             </Box>
                             <Box />
                         </BoxContainer>

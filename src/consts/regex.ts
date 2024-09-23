@@ -7,6 +7,7 @@ const REGEX_PHONE =
     /^(\+?\d{1,4}?[\s.-]?)?(\(?\d{1,4}?\)?[\s.-]?)?[\d\s.-]{5,15}$/;
 const REGEX_NAME =
     /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+const REGEX_DOI = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i;
 
 export {
     REGEX_ALPHA_ONLY,
@@ -15,4 +16,5 @@ export {
     REGEX_ORCID,
     REGEX_PHONE,
     REGEX_NAME,
+    REGEX_DOI,
 };

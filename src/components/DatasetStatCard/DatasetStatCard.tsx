@@ -59,7 +59,9 @@ const DatasetStatCard = ({
                                 {stat}
                             </Typography>
                         )}
-                        {unit && <Typography sx={{ pb: 1 }}>{unit}</Typography>}
+                        {hasValidValue(unit) && (
+                            <Typography sx={{ pb: 1 }}>{unit}</Typography>
+                        )}
                     </StatWrapper>
                 ) : (
                     <StatWrapper>{noStatText}</StatWrapper>

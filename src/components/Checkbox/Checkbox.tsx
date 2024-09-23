@@ -16,6 +16,7 @@ export interface CheckboxProps<TFieldValues extends FieldValues, TName>
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
     count?: number;
+    id?: string;
 }
 
 const Checkbox = <
@@ -33,6 +34,7 @@ const Checkbox = <
         checkboxSx,
         formControlSx,
         count,
+        id,
         ...rest
     } = props;
 
@@ -57,6 +59,7 @@ const Checkbox = <
                         size={size}
                         inputRef={ref}
                         sx={{ ...checkboxSx }}
+                        id={id || name}
                         {...rest}
                         {...fieldProps}
                     />

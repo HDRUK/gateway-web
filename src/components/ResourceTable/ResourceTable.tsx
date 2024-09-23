@@ -37,17 +37,17 @@ const ResourceTable = ({
     const tableData = [
         {
             resourceType: ResourceType.DATA_USE,
-            rows: selectedResources[ResourceType.DATA_USE],
+            rows: selectedResources[ResourceType.DATA_USE] || [],
             hideHeader: false,
         },
         {
             resourceType: ResourceType.PUBLICATION,
-            rows: selectedResources[ResourceType.PUBLICATION],
+            rows: selectedResources[ResourceType.PUBLICATION] || [],
             hideHeader: true,
         },
         {
             resourceType: ResourceType.TOOL,
-            rows: selectedResources[ResourceType.TOOL],
+            rows: selectedResources[ResourceType.TOOL] || [],
             hideHeader: true,
         },
     ];

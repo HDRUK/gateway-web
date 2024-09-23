@@ -1,4 +1,4 @@
-import { Publication } from "./Publication";
+import type { Publication } from "./Publication";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 type CreateOrigin = "FMA" | "MANUAL" | "API";
@@ -38,11 +38,9 @@ interface Metadata {
         abstract: string;
         contactPoint: string;
         controlledKeywords: string;
-        datasetType: string;
-        datasetSubType: string;
         description: string;
         doiName: string;
-        keywords: string;
+        keywords: string[];
         shortTitle: string;
         title: string;
         populationSize: number | null;
@@ -79,6 +77,8 @@ interface Metadata {
     provenance: {
         origin: {
             collectionSituation: string | undefined;
+            datasetType: string[];
+            datasetSubType: string[];
         };
         temporal: {
             startDate: string | undefined;
@@ -98,7 +98,6 @@ interface Metadata {
         investigations: string[];
         isGeneratedUsing: string;
         dataUses: string[];
-        syntheticDataWebLink: string;
     };
     structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
@@ -142,6 +141,7 @@ interface Dataset {
     publications_count: number;
     tools_count: number;
     collections_count: number;
+    publications: Publication[];
 }
 
 interface DataCustodianDataset {

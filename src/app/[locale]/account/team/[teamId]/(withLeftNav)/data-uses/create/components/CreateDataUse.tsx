@@ -129,8 +129,8 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
-                            fileUploadedAction={fileId =>
-                                setCreatedDurId(fileId as number)
+                            onFileUploaded={(fileId: number) =>
+                                setCreatedDurId(fileId)
                             }
                             isUploading={setIsUploading}
                         />
