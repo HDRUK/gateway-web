@@ -142,6 +142,7 @@ interface Dataset {
     publications_count: number;
     tools_count: number;
     collections_count: number;
+    publications: Publication[];
 }
 
 interface DataCustodianDataset {

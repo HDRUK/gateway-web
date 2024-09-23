@@ -1075,7 +1075,9 @@
                     "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
                     "dataCustodian": "Data Custodian",
-                    "structuralMetadata": "Data variables"
+                    "structuralMetadata": "Data variables",
+                    "curatedPublications": "Publications using this dataset (curated)",
+                    "externalPublications": "Publications using this dataset (external search)"
                 },
                 "Linkages": {
                     "title": "Relationships:",
