@@ -53,7 +53,7 @@ const FeasibilityEnquirySidebar = ({
             if (field.name === "organisation") {
                 return {
                     ...field,
-                   readOnly : !!user?.organisation
+                    readOnly: !!user?.organisation,
                 };
             }
             if (field.name === "datasets") {
