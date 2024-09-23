@@ -1,19 +1,22 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+import { FileUpload } from "@/interfaces/FileUpload";
 import { Team, TeamForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
+import FormInputWrapper from "@/components/FormInputWrapper";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
@@ -26,6 +29,7 @@ import {
     teamValidationSchema,
 } from "@/config/forms/team";
 import { Routes } from "@/consts/routes";
+import { getTeamAssetPath } from "@/utils/general";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
@@ -33,6 +37,7 @@ const TRANSLATION_PATH_COMMON = "common";
 
 const CreateIntegrationForm = () => {
     const t = useTranslations();
+    const [fileNotUploaded, setFileNotUploaded] = useState(false);
 
     const { push } = useRouter();
 
@@ -97,6 +102,28 @@ const CreateIntegrationForm = () => {
         });
     };
 
+    const handleFileUploaded = async (fileResponse: FileUpload) => {
+        const { file_location } = fileResponse;
+        const selectedUsers =
+            existingTeamData?.users?.map(user => user.id) || [];
+        const team_logo = getTeamAssetPath(file_location);
+
+        await submitForm(
+            !params?.teamId
+                ? {
+                      ...teamDefaultValues,
+                      team_logo,
+                  }
+                : {
+                      ...teamDefaultValues,
+                      ...existingTeamData,
+                      users: selectedUsers,
+                      team_logo,
+                  }
+        );
+    };
+
+    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=team-image&team_id=${params?.teamId}`;
     const is_question_bank = watch("is_question_bank");
     const questionBankLabel = is_question_bank
         ? t(`${TRANSLATION_PATH_COMMON}.enabled`)
@@ -175,6 +202,71 @@ const CreateIntegrationForm = () => {
                                 {...field}
                             />
                         ))}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                p: 0,
+                                gap: 4,
+                            }}>
+                            <FormInputWrapper
+                                label="Logo"
+                                info={t(
+                                    `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
+                                )}
+                                error={
+                                    fileNotUploaded
+                                        ? {
+                                              type: "",
+                                              message: t(
+                                                  `${TRANSLATION_PATH_CREATE}.aspectRatioError`
+                                              ),
+                                          }
+                                        : undefined
+                                }
+                                formControlSx={{ width: "70%", p: 0 }}>
+                                <UploadFile
+                                    fileSelectButtonText={t(
+                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                    )}
+                                    acceptedFileTypes=".jpg,.png"
+                                    apiPath={FILE_UPLOAD_URL}
+                                    onBeforeUploadCheck={(
+                                        event: Event & EventUploadedImage
+                                    ) => {
+                                        const aspectRatio =
+                                            (event?.width || 0) /
+                                            (event?.height || 0);
+
+                                        return (
+                                            aspectRatio <= 2.2 &&
+                                            aspectRatio >= 1.8
+                                        );
+                                    }}
+                                    onFileChange={() => {
+                                        setFileNotUploaded(false);
+                                    }}
+                                    onFileCheckSucceeded={(
+                                        file: FileUpload
+                                    ) => {
+                                        handleFileUploaded(file);
+                                        setFileNotUploaded(false);
+                                    }}
+                                    onFileCheckFailed={() => {
+                                        setFileNotUploaded(true);
+                                    }}
+                                />
+                            </FormInputWrapper>
+
+                            {existingTeamData?.team_logo && (
+                                <Box sx={{ width: "30%" }}>
+                                    <img
+                                        src={existingTeamData?.team_logo}
+                                        alt={`${existingTeamData?.name} logo`}
+                                        width="100%"
+                                    />
+                                </Box>
+                            )}
+                        </Box>
                     </Box>
                 </Paper>
                 <Paper>

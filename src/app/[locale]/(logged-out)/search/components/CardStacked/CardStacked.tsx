@@ -36,7 +36,7 @@ export default function CardStacked({
                     backgroundImage: `url(${imgUrl})`,
                     backgroundColor: colors.white,
                     backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
+                    backgroundSize: "calc(100% - 48px) auto",
                     backgroundPosition: "center",
                 }}>
                 <Chip
