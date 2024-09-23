@@ -40,7 +40,7 @@ interface Metadata {
         controlledKeywords: string;
         description: string;
         doiName: string;
-        keywords: string;
+        keywords: string[];
         shortTitle: string;
         title: string;
         populationSize: number | null;

@@ -64,7 +64,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.documentation.associatedMedia",
-                type: FieldType.LINK_LIST,
+                type: FieldType.TEXT,
                 label: "Associated media",
                 tooltip:
                     "Media that might provide additional context for researchers wanting to understand more about the dataset and its relevance to their research question.",
@@ -83,7 +83,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.summary.keywords",
-                type: FieldType.TEXT,
+                type: FieldType.LIST,
             },
         ],
     },
@@ -231,7 +231,7 @@ const datasetFields: DatasetSection[] = [
                 type: FieldType.TEXT,
                 label: "Typical age range max",
                 tooltip:
-                    "The maximum age of dataset participants. NOTE: a value of 150 indicate the dataset contains all ages",
+                    "The maximum age of dataset participants. NOTE: a value of 150 indicates the dataset contains all ages",
             },
             {
                 path: "metadata.metadata.coverage.followup",

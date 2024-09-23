@@ -123,6 +123,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         params?.datasetId
     );
 
+    const [finishedLoadingExisting, setFinishedLoadingExisting] =
+        useState<boolean>();
+
     const { push } = useRouter();
 
     const { data: dataset, isLoading } = useGet<Dataset>(
@@ -277,13 +280,16 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     }, [formJSONUpdated]);
 
     useEffect(() => {
-        if (!existingFormData) {
-            reset(defaultFormValues);
+        if (!isEditing) {
+            setFinishedLoadingExisting(true);
             return;
         }
 
-        reset({ ...defaultFormValues, ...existingFormData });
-    }, [existingFormData]);
+        if (existingFormData) {
+            reset({ ...defaultFormValues, ...existingFormData });
+            setFinishedLoadingExisting(true);
+        }
+    }, [existingFormData, isEditing]);
 
     const formSections = [INITIAL_FORM_SECTION]
         .concat(
@@ -563,7 +569,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         },
     });
 
-    if (isEditing && isLoading) {
+    if ((isEditing && isLoading) || !finishedLoadingExisting) {
         return <Loading />;
     }
 
