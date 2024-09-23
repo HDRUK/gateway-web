@@ -403,8 +403,6 @@
                                 "measurementsTestsTooltip": "Includes any data related to laboratory or other diagnostics.",
                                 "imagingTypes": "Imaging types",
                                 "imagingTypesTooltip": "Includes any data related to CT, MRI, PET, x-ray, ultrasound or pathology imaging.",
-                                "imagingAreaOfTheBody": "Imaging area of the body",
-                                "imagingAreaOfTheBodyTooltip": "Indicates whether the dataset relates to head, chest, arm abdomen or leg imaging.",
                                 "omics": "Omics",
                                 "omicsTooltip": "Includes any data related to proteomics, transcriptomics, epigenomics, metabolomics, multiomics, metagenomics or genomics.",
                                 "socioeconomic": "Socioeconomic",
