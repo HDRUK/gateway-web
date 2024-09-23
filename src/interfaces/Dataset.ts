@@ -1,4 +1,4 @@
-import { Publication } from "./Publication";
+import type { Publication } from "./Publication";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
 type CreateOrigin = "FMA" | "MANUAL" | "API";
@@ -141,6 +141,7 @@ interface Dataset {
     publications_count: number;
     tools_count: number;
     collections_count: number;
+    publications: Publication[];
 }
 
 interface DataCustodianDataset {

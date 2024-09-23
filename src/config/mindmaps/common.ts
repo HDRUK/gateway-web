@@ -5,6 +5,7 @@ export interface NodeValue {
     name: string;
     label?: string;
     href?: string;
+    source?: string;
     hidden?: boolean;
 }
 
@@ -36,7 +37,7 @@ export const nodeValueToRectNode = (
 
     // correct for the length of the text box
     // rough guess that the length is 2.5 as long as the number of characters in the label
-    let correctionX = node.label ? 2.5 * node.label.length : 80;
+    let correctionX = node.label ? 3.0 * node.label.length : 100;
     let color = theme.palette.secondary.main;
     if (angleRad > Math.PI) {
         // need to subtract this if it's on the left side of the inner node
@@ -64,6 +65,7 @@ export const nodeValueToRectNode = (
             color,
             href: node.href,
             hidden: node.hidden,
+            source: node.source,
         },
     };
 };

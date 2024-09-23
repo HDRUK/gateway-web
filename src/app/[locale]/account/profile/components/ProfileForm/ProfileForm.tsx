@@ -26,7 +26,7 @@ import KeepingUpdated from "../KeepingUpdated";
 const ProfileForm = () => {
     const { user } = useAuth();
 
-    const isOpenAthens = user?.provider === "openathens";
+    const isOpenAthens = user?.provider === "open-athens";
 
     const hydratedDefaultValues = useMemo(() => {
         return {

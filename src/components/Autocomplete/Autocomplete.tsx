@@ -136,7 +136,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => {
+                    tagValue?.map((option, index) => {
                         const chipLabel =
                             typeof getChipLabel === "function"
                                 ? getChipLabel(options, option)

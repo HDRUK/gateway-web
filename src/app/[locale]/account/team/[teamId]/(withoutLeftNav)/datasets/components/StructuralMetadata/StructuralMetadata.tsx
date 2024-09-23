@@ -150,7 +150,7 @@ const StructuralMetadataSection = ({
 
             <UploadFile
                 apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload`}
-                fileUploadedAction={metadata =>
+                onFileUploaded={metadata =>
                     fileProcessedAction(metadata as StructuralMetadata[])
                 }
                 isUploading={setIsUploading}

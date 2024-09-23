@@ -1,7 +1,9 @@
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import UserPublications from "./components/UserPublications";
+import UserPublications from "@/app/[locale]/account/profile/publications/components/UserPublications";
+
+// import UserPublications from "./components/UserPublications";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Publications",
@@ -22,8 +24,8 @@ export default async function UserPublicationsPage({
     return (
         <UserPublications
             permissions={permissions}
-            userId={userId}
             teamId={teamId}
+            userId={userId}
         />
     );
 }

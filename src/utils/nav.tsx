@@ -125,6 +125,15 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...(permissions["papers.read"]
+            ? [
+                  {
+                      icon: <ArticleIcon />,
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
+                  },
+              ]
+            : []),
         ...([
             permissions["dar.read.assigned"],
             permissions["workflows.read"],
