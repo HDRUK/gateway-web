@@ -42,10 +42,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         {
             title: t("associatedTissuesTitle"),
             noStatText: t("notReported"),
-            stat: `${get(
-                data,
-                "metadata.metadata.coverage.biologicalsamples"
-            )}`,
+            stat: `${get(data, "metadata.metadata.coverage.materialType")}`,
             iconSrc: "/images/dataset/lungs.svg",
         },
         {

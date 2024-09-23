@@ -27,7 +27,7 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",
     "metadata.metadata.provenance.temporal.startDate",
     "metadata.metadata.provenance.temporal.endDate",
-    "metadata.metadata.coverage.biologicalsamples",
+    "metadata.metadata.coverage.materialType",
     "metadata.metadata.coverage.spatial",
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
