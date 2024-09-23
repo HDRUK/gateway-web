@@ -36,8 +36,7 @@ export default async function DataCustodianNetworkPage({
         cookieStore,
         dataCustodianNetworkId
     );
-    const { summary, id } = networkData;
-
+    const { summary } = networkData;
     const activeLinkList = accordions.map(section => {
         return {
             label: t(section.sectionName),
@@ -80,7 +79,6 @@ export default async function DataCustodianNetworkPage({
 
                         <DataCustodianContent
                             dataCustodians={summaryData.teams_counts}
-                            id={id}
                             anchorIndex={1}
                         />
                         <DatasetsContent
