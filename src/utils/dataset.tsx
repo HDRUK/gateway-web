@@ -75,7 +75,7 @@ const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
 
 const formatTextWithLinks = (text: string | string[] | number) => {
     if (typeof text === "number") {
-        return text;
+        return text.toLocaleString();
     }
 
     // Convert text to an array if it's not already one
@@ -99,7 +99,7 @@ const formatTextDelimiter = (text: string | string[] | number) => {
     return Array.isArray(text)
         ? text.join(", ") // Join array elements with ", " if it's an array
         : typeof text === "number"
-        ? text
+        ? text.toLocaleString()
         : text.replaceAll(";,;", ", ");
 };
 

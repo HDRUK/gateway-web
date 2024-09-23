@@ -130,7 +130,7 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
                                                             justifyContent:
                                                                 "flex-end",
                                                         }}>
-                                                        {item.count}
+                                                        {item.count.toLocaleString()}
                                                     </Typography>
                                                 </>
                                             ) : (
@@ -149,7 +149,7 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
                                                             justifyContent:
                                                                 "flex-end",
                                                         }}>
-                                                        {item.count}
+                                                        {item.count.toLocaleString()}
                                                     </Typography>
                                                 </>
                                             )}
