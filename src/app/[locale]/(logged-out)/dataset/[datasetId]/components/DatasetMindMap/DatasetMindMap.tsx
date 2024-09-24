@@ -102,9 +102,15 @@ const DatasetMindMap = ({
                     href = `${node.data.href}&query=&datasetTitles=${title}&source=${node.data.source}&force`;
                 } else if (node.id === "node-externalPublications") {
                     href = `${node.data.href}&query=${title}&source=${node.data.source}`;
-                }
+                } else if (node.id === "node-coverageCompleteness") {
+                    href =
+                        data.metadata.metadata?.coverage?.datasetCompleteness;
 
-                if (node.data.href?.includes("scrollTo:")) {
+                    if (!href) {
+                        emptyNodes.push(node.id);
+                        hidden = true;
+                    }
+                } else if (node.data.href?.includes("scrollTo:")) {
                     if (
                         (hasStructuralMetadata &&
                             node.data.name === "structuralMetadata") ||

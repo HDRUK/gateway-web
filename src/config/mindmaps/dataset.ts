@@ -27,6 +27,10 @@ const outerNodeValues = [
         href: "/search?type=collections",
     },
     {
+        name: "coverageCompleteness",
+        href: "/search?type=publications",
+    },
+    {
         name: "synthetic",
     },
     {
