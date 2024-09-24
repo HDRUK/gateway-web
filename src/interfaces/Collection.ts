@@ -2,7 +2,6 @@ import { DataStatus } from "@/consts/application";
 import { Application } from "./Application";
 import { DataUse } from "./DataUse";
 import { Dataset } from "./Dataset";
-import type { Keyword } from "./Keyword";
 import { Publication } from "./Publication";
 import { Team } from "./Team";
 import type { Tool } from "./Tool";

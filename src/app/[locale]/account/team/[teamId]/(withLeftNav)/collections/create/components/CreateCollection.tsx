@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
     ResourceDataType,
     ResourceType,
@@ -29,7 +29,6 @@ import ResourceTable from "@/components/ResourceTable";
 import Typography from "@/components/Typography";
 import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
 import AddResourceDialog from "@/modules/AddResourceDialog";
-import UploadImageDialog from "@/modules/UploadImageDialog/UploadImageDialog";
 import useActionBar from "@/hooks/useActionBar";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
@@ -253,34 +252,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         [control, keywordItem]
     );
 
-    useEffect(() => {
-        showBar("CreateCollection", {
-            cancelText: t(`${TRANSLATION_PATH_CREATE}.cancel`),
-            confirmText: t(`${TRANSLATION_PATH_CREATE}.publish`),
-            tertiaryButton: {
-                onAction: async () => {
-                    handleSubmit(formData =>
-                        onSubmit(formData, DataStatus.DRAFT, keywordItem)
-                    )();
-                },
-                buttonText: t(`${TRANSLATION_PATH_CREATE}.saveDraft`),
-                buttonProps: {
-                    color: "secondary",
-                    variant: "outlined",
-                },
-            },
-            onSuccess: () => {
-                handleSubmit(formData =>
-                    onSubmit(formData, DataStatus.ACTIVE, keywordItem)
-                )();
-            },
-            onCancel: () => {
-                push(COLLECTION_ROUTE);
-            },
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [keywordItem]);
-
     const onSubmit = async (
         formData: Collection,
         status?: DataStatus,
@@ -322,6 +293,34 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         push(COLLECTION_ROUTE);
     };
 
+    useEffect(() => {
+        showBar("CreateCollection", {
+            cancelText: t(`${TRANSLATION_PATH_CREATE}.cancel`),
+            confirmText: t(`${TRANSLATION_PATH_CREATE}.publish`),
+            tertiaryButton: {
+                onAction: async () => {
+                    handleSubmit(formData =>
+                        onSubmit(formData, DataStatus.DRAFT, keywordItem)
+                    )();
+                },
+                buttonText: t(`${TRANSLATION_PATH_CREATE}.saveDraft`),
+                buttonProps: {
+                    color: "secondary",
+                    variant: "outlined",
+                },
+            },
+            onSuccess: () => {
+                handleSubmit(formData =>
+                    onSubmit(formData, DataStatus.ACTIVE, keywordItem)
+                )();
+            },
+            onCancel: () => {
+                push(COLLECTION_ROUTE);
+            },
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [keywordItem]);
+
     const handleFileUploaded = async (fileResponse: FileUpload) => {
         const { file_location } = fileResponse;
         const image_link = `/collections/${file_location}`;
@@ -339,7 +338,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                   }
         );
     };
-    
+
     return (
         <>
             <BoxContainer

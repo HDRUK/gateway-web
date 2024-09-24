@@ -1,4 +1,10 @@
-import { Control, FieldValues, Path, Ref, useController } from "react-hook-form";
+import {
+    Control,
+    FieldValues,
+    Path,
+    Ref,
+    useController,
+} from "react-hook-form";
 import { SerializedStyles } from "@emotion/react";
 import {
     InputAdornment,
@@ -30,7 +36,7 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     formControlSx?: SxProps;
     css?: SerializedStyles;
     id?: string;
-    inputRef?: Ref<any>;
+    inputRef?: Ref;
 }
 
 const TextFieldBase = <
