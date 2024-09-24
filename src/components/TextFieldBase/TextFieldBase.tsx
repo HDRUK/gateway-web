@@ -30,6 +30,8 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     formControlSx?: SxProps;
     css?: SerializedStyles;
     id?: string;
+    inputRef?: Ref<any>;
+    value?: string;
 }
 
 const TextFieldBase = <
@@ -57,9 +59,10 @@ const TextFieldBase = <
         showClearButton = false,
         formControlSx,
         id,
+        inputRef,
+        value,
         ...inputProps
     } = props;
-
     const Icon = icon;
     const {
         field: { ref, ...fieldProps },
@@ -68,13 +71,11 @@ const TextFieldBase = <
         name,
         control,
     });
-
     if (showClearButton && setValue === undefined) {
         throw Error(
             "You must pass `setValue` if you would like to show the clear button"
         );
     }
-
     return (
         <FormInputWrapper
             label={label}
@@ -123,10 +124,10 @@ const TextFieldBase = <
                         </InputAdornment>
                     ),
                 })}
-                inputRef={ref}
+                inputRef={inputRef ?? ref}
                 error={!!error}
                 {...fieldProps}
-                value={fieldProps.value ?? ""}
+                value={value ?? fieldProps.value ?? ""}
                 {...inputProps}
             />
         </FormInputWrapper>

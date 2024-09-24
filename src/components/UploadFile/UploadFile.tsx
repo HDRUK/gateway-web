@@ -21,7 +21,7 @@ interface UploadFileProps {
     apiPath: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
-    fileUploadedAction: (
+    fileUploadedAction?: (
         uploadResponse?: number | StructuralMetadata[]
     ) => void;
     isUploading: Dispatch<SetStateAction<boolean>>;
@@ -75,29 +75,30 @@ const UploadFile = ({
         notificationService.apiError(fileScanStatus?.error || t("error"));
     };
 
+    const calculateImageRatio = (width, height) => {
+        return `${width/height}:${height/height}`
+    }
+
     const imageValidation = (file: File) => {
-        let result;
-        if(acceptedFileTypes != ".png"){
-            result = true;
-        } else {
-          const reader = new FileReader();
+        
+        if(acceptedFileTypes.includes(".png") || acceptedFileTypes.includes(".jpeg")){
+            const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function (e) {
                 const image = new Image();
-                image.src = e.target.result;
+                image.src = e?.target?.result;
                 image.onload = function () {
                     const height = this.height;
                     const width = this.width;
-                    const imageRatio = width/height;
-                    if (height != 350 || width != 700) {
+                    const imageRatio = calculateImageRatio(width,height);
+                    if (imageRatio != "2:1") {
                       setIsInvalidImage(true);
-                      result = false;
-                    }
-                    result = true;
+                    } 
                   };
             }
+        } else {
+            return;
         }
-        return result;
     }
 
     useEffect(() => {
@@ -132,15 +133,9 @@ const UploadFile = ({
         if (!file) {
             return;
         }
-
-        // if(acceptedFileTypes === ".png"){
-            
-       
-        // }
-
         const formData = new FormData();
         formData.append("file", file);
-
+        console.log(formData)
         const uploadedFileStatus = (await uploadFile(formData).catch(() =>
             handleError()
         )) as FileUpload;
@@ -168,7 +163,8 @@ const UploadFile = ({
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
                             onFileChange={(file: File) => {
-                                !!imageValidation(file) && setFile(file)
+                                imageValidation(file)
+                                setFile(file)
                             }}
                             helperText={helperText && (
                                 file?.name ||

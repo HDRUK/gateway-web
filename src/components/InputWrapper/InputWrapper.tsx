@@ -80,11 +80,9 @@ function InputWrapper<
     }
 
     const Component = inputs[component as ComponentTypes] as ElementType;
-
     if (!Component) {
         throw Error(`${component} is not a valid input component`);
     }
-
     return <Component control={control} sx={sx} {...props} />;
 }
 

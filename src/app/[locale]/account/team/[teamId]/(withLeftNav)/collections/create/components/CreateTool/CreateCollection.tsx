@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useEffect, useMemo, useState, useRef } from "react";
+import {  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -10,11 +10,12 @@ import {
     ResourceType,
     SelectedResources,
 } from "@/interfaces/AddResource";
-import { Keyword } from "@/interfaces/Keyword";
 import { DataUse } from "@/interfaces/DataUse";
 import { Publication } from "@/interfaces/Publication";
-import { Tool, ToolPayload, ToolPayloadSubmission } from "@/interfaces/Tool";
+import { Divider } from "@mui/material";
+import { Tool } from "@/interfaces/Tool";
 import { DataSet } from "@/interfaces/DataSet"
+import { Keyword } from "@/interfaces/Keyword";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -39,30 +40,32 @@ import {
     collectionValidationSchema,
 } from "@/config/forms/collection";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, UploadFileIcon } from "@/consts/icons";
+import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { Collection, CollectionSubmission } from "@/interfaces/Collection";
-import { TextField } from "@mui/material";
 import { useSearchParams } from 'next/navigation'
 
 interface CollectionCreateProps {
     teamId?: string;
     userId: number;
-    collectionId?: string;
+    collectionId?: number;
 }
 
 const TRANSLATION_PATH = `pages.account.team.collections.create`;
 
-const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProps) => {
-    const [collectionImage, setCollectionImage] = useState();
+const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const [isInvalidImage, setIsInvalidImage] = useState<boolean>(false);
     const [isUploading, setIsUploading] = useState<boolean>(false);
+    const [keywordItem, setkeywordItem] = useState([]);
+    const [createdCollectionId, setCreatedCollectionId]
+
     const t = useTranslations(TRANSLATION_PATH);
 
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
     const searchParams = useSearchParams();
+    const textFieldRef = useRef();
 
     const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
     
@@ -99,85 +102,42 @@ const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProp
             return;
         }
 
-    //     const propertiesToDelete = [
-    //         "programming_languages",
-    //         "mongo_object_id",
-    //         "team_id",
-    //         "collections",
-    //         "license",
-    //         "status",
-    //         "datasets",
-    //         "user",
-    //         "mongo_id",
-    //     ];
-
-    //     // Remove any legacy tool properties
-    //     propertiesToDelete.forEach(key => {
-    //         if (key in formData) {
-    //             delete formData[key as keyof typeof formData];
-    //         }
-    //     });
-
-        reset(existingCollectionData as Collection);
-    }, [reset, existingCollectionData]);
-
-    const { fields, append, remove, replace } = useFieldArray({
-        control,
-        name: "dataset",
-    });
-
-    const watchAll = watch();
-
-    const onSubmit = async (formData: Collection, status: DataStatus) => {
-        const formatEntityToIdArray = (
-            data: DataUse[] | Publication[] | Tool[]
-        ) => {
-            if (
-                Array.isArray(data) &&
-                data.every(item => typeof item === "number")
-            ) {
-                return data;
-            }
-
-            return data?.map(item => item?.id);
-        };
-
-        const publications = formData.publications.map(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ({ updated_at, created_at, ...item }) => item
-        );
-
-        const payload: CollectionSubmission = {
-            ...formData,
-            user_id: userId,
-            team_id: teamId ? +teamId : undefined,
-            enabled: true,
-            tag: formData.keywords,
-            status,
-            durs: formatEntityToIdArray(formData.durs),
-            publications,
-            tools: formatEntityToIdArray(formData.tools),
-        };
-
-        if (!collectionId) {
-            await createCollection(payload);
-        } else {
-            await editCollection(collectionId, payload);
+        const formData = {
+            ...collectionDefaultValues,
+            name: existingCollectionData?.name,
+            description: existingCollectionData?.description,
+            keywords: existingCollectionData?.keywords
+                ? setkeywordItem(existingCollectionData?.keywords)
+                : [],
+            image_link: existingCollectionData?.image_link,
         }
 
-        push(COLLECTION_ROUTE);
-    };
+        const propertiesToDelete = [
+            "mongo_object_id",
+            "mongo_id",
+        ];
+
+        propertiesToDelete.forEach(key => {
+            if (key in formData) {
+                delete formData[key as keyof typeof formData];
+            }
+        });
+
+        reset(formData);
+    }, [reset, existingCollectionData]);
+
+    const watchAll = watch();
 
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
-                setValue("datasets", selectedResources[ResourceType.DATASET]);
-                setValue("durs", selectedResources[ResourceType.DATA_USE]);
+                setValue("datasets", selectedResources[ResourceType.DATASET] as DataSet[]);
+                setValue("durs", selectedResources[ResourceType.DATA_USE] as DataUse[]);
                 setValue(
                     "publications",
-                    selectedResources[ResourceType.PUBLICATION]
+                    selectedResources[ResourceType.PUBLICATION] as Publication[]
                 );
-                setValue("tools", selectedResources[ResourceType.TOOL]);
+                setValue("tools", selectedResources[ResourceType.TOOL] as Tool[]);
 
             },
             defaultResources: {
@@ -198,36 +158,9 @@ const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProp
             dataset: (getValues("datasets") as DataSet[]) || [],
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchAll, getValues]);
+    }, [watchAll]);
 
-    useEffect(() => {
-        showBar("CreateCollection", {
-            cancelText: t("cancel"),
-            confirmText: t("makeActive"),
-            tertiaryButton: {
-                onAction: async () => {
-                    handleSubmit(formData =>
-                        onSubmit(formData, DataStatus.DRAFT)
-                    )();
-                },
-                buttonText: t("saveDraft"),
-                buttonProps: {
-                    color: "secondary",
-                    variant: "outlined",
-                },
-            },
-            onSuccess: () => {
-                handleSubmit(formData =>
-                    onSubmit(formData, DataStatus.ACTIVE)
-                )();
-            },
-            onCancel: () => {
-                push(COLLECTION_ROUTE);
-            },
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+   
     const handleRemoveResource = (
         data: ResourceDataType,
         resourceType: ResourceType
@@ -241,12 +174,12 @@ const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProp
 
         // Update the state with the new list of selected resources
         if (resourceType === ResourceType.DATA_USE) {
-            setValue("durs", updatedResources as DataUse[]);
+            setValue("dur", updatedResources as DataUse[]);
         } else if (resourceType === ResourceType.PUBLICATION) {
             setValue("publications", updatedResources as Publication[]);
         } else if (resourceType === ResourceType.TOOL) {
             setValue("tools", updatedResources as Tool[]);
-        } else if (resourceType === ResourceType.DATA_SET) {
+        } else if (resourceType === ResourceType.DATASET) {
             setValue("datasets", updatedResources as DataSet[]);
         }
     };
@@ -261,26 +194,137 @@ const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProp
         }
     },[isInvalidImage]);
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === ";") {
+          event.preventDefault();
+          const newkeywordItem = [...keywordItem];
+          const newKeyword = textFieldRef?.current?.value;
+          const duplicatedValues = newkeywordItem.indexOf(
+            newKeyword.trim()
+          );
+    
+          if (duplicatedValues !== -1) {
+            setValue("keywords", "")
+            return;
+          }
+          if (!event.target.value.replace(/\s/g, "").length) return;
+    
+          newkeywordItem.push(newKeyword.trim());
+          setkeywordItem(newkeywordItem);
+          setValue("keywords", "")
+        }
+        if (
+          keywordItem.length &&
+          !textFieldRef?.current?.value.length &&
+          event.code === "Backspace"
+        ) {
+          setkeywordItem(keywordItem.slice(0, keywordItem.length - 1));
+        }
+      }
+
+    const handleDelete = item => () => {
+        const newkeywordItem = [...keywordItem];
+        newkeywordItem.splice(newkeywordItem.indexOf(item), 1);
+        setkeywordItem(newkeywordItem);
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
+                
                 return (
                     <InputWrapper
                         key={field.name}
                         control={control}
                         sx={{ mt: 1 }}
                         {...field}
+                        {...(field.name ===
+                            "keywords" && {
+                            startAdornment: keywordItem.map(item => (
+                                <Chip
+                                    key={item}
+                                    tabIndex={-1}
+                                    label={item}
+                                    onDelete={handleDelete(item)}
+                                    sx={{my: 1, mr: 1}}
+                                />
+                                )),
+                            onKeyDown: event => {
+                                handleKeyDown(event)
+                            },
+                            inputRef: textFieldRef,
+                        })}
                     />
                 );
             })
             ,
-        [
-            control,
-            fields,
-            append,
-            remove
-        ]
+        [control,keywordItem]
     );
+
+    useEffect(() => {
+        showBar("CreateCollection", {
+            cancelText: t("cancel"),
+            confirmText: t("publish"),
+            tertiaryButton: {
+                onAction: async () => {
+                    handleSubmit(formData =>
+                        onSubmit(formData, DataStatus.DRAFT, keywordItem)
+                    )();
+                },
+                buttonText: t("saveDraft"),
+                buttonProps: {
+                    color: "secondary",
+                    variant: "outlined",
+                },
+            },
+            onSuccess: () => {
+                handleSubmit(formData =>
+                    onSubmit(formData, DataStatus.ACTIVE, keywordItem)
+                )();
+            },
+            onCancel: () => {
+                push(COLLECTION_ROUTE);
+            },
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [keywordItem]);
+
+    const onSubmit = async (formData: Collection, status: DataStatus, keywordItem: string[]) => {
+        const formatEntityToIdArray = (
+            data: DataUse[] | Publication[] | Tool[] | DataSet[]
+        ) => {
+            if (
+                Array.isArray(data) &&
+                data.every(item => typeof item === "number")
+            ) {
+                return data;
+            }
+
+            return data?.map(item => item?.id);
+        };
+      
+        const payload: CollectionSubmission = {
+            ...formData,
+            status,
+            enabled: true,
+            public: 1,
+            team_id: teamId ? +teamId : undefined,
+            keywords: keywordItem,
+            image_link: formData.image_link,
+            durs: formatEntityToIdArray(formData.dur),
+            publications: formatEntityToIdArray(formData.publications),
+            tools: formatEntityToIdArray(formData.tools),
+            datasets: formatEntityToIdArray(formData.datasets),
+        };
+
+        if (!collectionId) {
+            await createCollection(payload);
+        } else {
+            await editCollection(collectionId, payload);
+        }
+
+        push(COLLECTION_ROUTE);
+    };
 
     return (
         <>
@@ -314,14 +358,14 @@ const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProp
                             <Box sx={{ display: "flex", textAlign: "center", justifyContent: "space-between", pr: 0, alignItems: "center" }}>
                                 <UploadFile
                                     sx={{ml: 20}}
-                                    apiPath={`${apis.fileUploadV1Url}?entity_flag=collections-media&collection_id=80`}
-                                    fileUploadedAction={(fileId: number) =>
-                                        setCreatedDurId(fileId)
-                                    }
+                                    apiPath={`${apis.fileUploadV1Url}?entity_flag=collections-media&collection_id=${collectionId}`}
                                     isUploading={setIsUploading}
+                                    fileUploadedAction={fileId =>
+                                        setCreatedCollectionId(fileId as number)
+                                    }
                                     helperText={false}
                                     label="uploadImage"
-                                    acceptedFileTypes=".png"
+                                    acceptedFileTypes=".png .jpeg"
                                     setIsInvalidImage={handleInvalidImage}
                                  />
                             </Box>
@@ -329,16 +373,15 @@ const CreateCollection = ({ teamId, userId, collectionId }: CollectionCreateProp
                     </Paper>
                     {/* ADD RESOURCES */}
                     <Paper sx={{ mt: 1, mb: 2 }}>
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                            <Box>
+                        <Box>
                             <Typography variant="h2">
                                 {t("addResources")}
                             </Typography>
                             <Typography sx={{ mb: 2 }}>
                                 {t("addResourcesInfo")}
                             </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", pr: 0, alignItems: "center" }}>
+                            <Divider />
+                            <Box sx={{ textAlign: "center", mt: 1 }}>
                                 <Button
                                     onClick={handleAddResource}
                                     variant="outlined"

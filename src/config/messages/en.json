@@ -539,7 +539,7 @@
                         "addResourceButton": "Add resource",
                         "cancel": "Cancel",
                         "saveDraft": "Save as draft",
-                        "makeActive": "Make active",
+                        "publish": "Publish",
                         "labelTag": "Collection"
                     },
                     "components": {

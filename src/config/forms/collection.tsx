@@ -4,7 +4,8 @@ import { inputComponents } from ".";
 const defaultValues = {
     name: "",
     description: "",
-    keywords: [""],
+    keywords: "",
+    image_link: "",
 };
 
 const validationSchema = yup.object().shape({
@@ -32,7 +33,7 @@ const formFields = [
         label: "Keywords (optional)",
         info: "Use semicolon (;) to create separate keywords (E.g. NCS; charity; disease)",
         name: "keywords",
-        component: inputComponents.TextField,
+        component: inputComponents.TextField
     },
 ];
 

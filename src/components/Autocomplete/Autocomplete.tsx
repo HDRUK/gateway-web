@@ -71,7 +71,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         id,
         ...restProps
     } = props;
-
+    
     const {
         field,
         fieldState: { error },
@@ -79,7 +79,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         name,
         control,
     });
-
     const filterOptions = (
         searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
@@ -94,17 +93,17 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         const isExisting = searchOptions.some(
             option => inputValue === option.label
         );
+
         if (inputValue !== "" && !isExisting) {
             filtered.push({
                 value: inputValue,
                 label: `${createLabel} "${inputValue}"`,
             });
         }
-
         return filtered;
     };
-
-    return (
+    console.log();
+        return (
         <FormInputWrapper
             name={name}
             label={label}
@@ -151,6 +150,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                     })
                 }
                 onChange={(e, v) => {
+                    console.log(v);
                     if (Array.isArray(v)) {
                         const values = v.map(value => {
                             if (typeof value === "object") return value?.value;

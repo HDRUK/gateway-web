@@ -23,24 +23,24 @@ const UploadImageDialog = ({ setIsInvalidImage }) => {
                  </Typography>
                  <Box sx={{display: "flex", justifyContent: "space-between"}}>
                     <Button 
-                    sx={{ display: "flex", m: 2, p: 1, width: "25%"}} 
-                    color= "secondary"
-                    variant= "outlined"
-                    onClick={() => {
-                        setIsInvalidImage(false);
-                        hideDialog();
-                        }}>
-                    {t("addImageFailButtonNewImage")}
-                     </Button>
-                     <Button 
-                    sx={{ display: "flex", m: 2, p: 0, width: "30%" }} 
-                    color="secondary"
-                    variant= "outlined"
-                    onClick={() => {
-                        setIsInvalidImage(false);
-                        hideDialog(); 
-                        }}>
-                    {t("addImageFailButtonContinue")}
+                        sx={{ display: "flex", m: 2, p: 1, width: "25%"}} 
+                        color= "secondary"
+                        variant= "outlined"
+                        onClick={() => {
+                            setIsInvalidImage(false);
+                            hideDialog();
+                            }}>
+                        {t("addImageFailButtonNewImage")}
+                        </Button>
+                        <Button 
+                        sx={{ display: "flex", m: 2, p: 0, width: "30%" }} 
+                        color="secondary"
+                        variant= "outlined"
+                        onClick={() => {
+                            setIsInvalidImage(false);
+                            hideDialog(); 
+                            }}>
+                        {t("addImageFailButtonContinue")}
                     </Button>
                 </Box>
             </MuiDialogContent>

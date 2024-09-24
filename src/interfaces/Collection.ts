@@ -2,6 +2,7 @@ import { DataStatus } from "@/consts/application";
 import { Application } from "./Application";
 import { DataUse } from "./DataUse";
 import { Dataset } from "./Dataset";
+import type { Keyword } from "./Keyword";
 import { Publication } from "./Publication";
 import { Team } from "./Team";
 import type { Tool } from "./Tool";
@@ -17,7 +18,7 @@ interface Collection {
     create_at: string;
     updated_at: string;
     deleted_at: string;
-    keywords: string[];
+    keywords: Keyword[] | string[];
     datasets: Dataset[];
     team: Team;
     users: User[];
@@ -31,10 +32,11 @@ interface Collection {
 }
 
 export interface CollectionSubmission
-    extends Omit<Collection, "publications" | "durs" | "tools"> {
+    extends Omit<Collection, "publications" | "durs" | "tools" | "datasets"> {
     publications: number[];
     durs: number[];
     tools: number[];
+    datasets: number[];
 }
 
 export type { Collection };
