@@ -155,14 +155,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Dataset population size": -1,
         "contact point": user?.email,
         "Follow-up": null,
-        "Observations Array": null,
-        "Demographic Frequency Age Array": null,
-        "Demographic Frequency Ethnicity Array": null,
-        "Demographic Frequency Disease Array": null,
-        "Similar To Datasets Array": null,
-        "Linkable Datasets Array": null,
-        "Is Part Of Array": null,
-        "Derived From Array": null,
         ...currentFormJSON.defaultValues,
     };
 
