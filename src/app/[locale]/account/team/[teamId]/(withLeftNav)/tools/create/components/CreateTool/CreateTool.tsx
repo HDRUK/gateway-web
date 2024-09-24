@@ -180,8 +180,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         name: "dataset",
     });
 
-    const watchAll = watch();
-
     const onSubmit = async (formData: ToolPayload, status: DataStatus) => {
         const formatEntityToIdArray = (
             data: DataUse[] | Publication[] | Tool[]
@@ -227,6 +225,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         push(TOOL_ROUTE);
     };
 
+    const watchAll = watch();
+
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
@@ -242,6 +242,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             },
         });
     };
+    console.log(getValues("durs"));
 
     const selectedResources = useMemo(() => {
         return {

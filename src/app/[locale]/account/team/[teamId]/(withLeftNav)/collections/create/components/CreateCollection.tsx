@@ -51,10 +51,8 @@ interface CollectionCreateProps {
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
-const TRANSLATION_PATH_EDIT = "pages.account.team.collections.edit";
 
 const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
-    const [isInvalidImage, setIsInvalidImage] = useState(false);
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [keywordItem, setKeywordItem] = useState<string[]>([]);
 
@@ -120,12 +118,12 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
                 setValue(
-                    "datasets",
-                    selectedResources[ResourceType.DATASET] as Dataset[]
+                    "dur",
+                    selectedResources[ResourceType.DATA_USE] as DataUse[]
                 );
                 setValue(
-                    "durs",
-                    selectedResources[ResourceType.DATA_USE] as DataUse[]
+                    "datasets",
+                    selectedResources[ResourceType.DATASET] as Dataset[]
                 );
                 setValue(
                     "publications",
@@ -137,23 +135,22 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                 );
             },
             defaultResources: {
+                datause: getValues("dur"),
                 dataset: getValues("datasets"),
-                datause: getValues("durs"),
                 publication: getValues("publications"),
                 tool: getValues("tools"),
             },
         });
     };
-
     const selectedResources = useMemo(() => {
         return {
-            datause: (getValues("durs") as DataUse[]) || [],
+            datause: (getValues("dur") as DataUse[]) || [],
             publication: (getValues("publications") as Publication[]) || [],
             tool: (getValues("tools") as Tool[]) || [],
             dataset: (getValues("datasets") as Dataset[]) || [],
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchAll]);
+    }, [watchAll, getValues]);
 
     const handleRemoveResource = (
         data: ResourceDataType,
@@ -177,18 +174,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             setValue("datasets", updatedResources as Dataset[]);
         }
     };
-
-    const handleInvalidImage = (isNotValid: boolean) => {
-        setIsInvalidImage(isNotValid);
-    };
-
-    useEffect(() => {
-        if (isInvalidImage) {
-            showDialog(UploadImageDialog, {
-                setIsInvalidImage: handleInvalidImage,
-            });
-        }
-    }, [isInvalidImage]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
         if (event.key === ";") {
@@ -325,17 +310,19 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         const { file_location } = fileResponse;
         const image_link = `/collections/${file_location}`;
 
-        await onSubmit(
-            !collectionId
-                ? {
-                      ...collectionDefaultValues,
-                      image_link,
-                  }
-                : {
-                      ...collectionDefaultValues,
-                      ...existingCollectionData,
-                      image_link,
-                  }
+        await handleSubmit(formData =>
+            onSubmit(
+                !collectionId
+                    ? {
+                          ...formData,
+                          image_link,
+                      }
+                    : {
+                          ...formData,
+                          ...existingCollectionData,
+                          image_link,
+                      }
+            )
         );
     };
 
@@ -354,7 +341,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                 <Box>
                     <Chip
                         resourceType={ResourceType.TOOL}
-                        label={t(`${TRANSLATION_PATH_CREATE}.title`)}
+                        label={t(`${TRANSLATION_PATH_CREATE}.labelTag`)}
                     />
                 </Box>
             </BoxContainer>

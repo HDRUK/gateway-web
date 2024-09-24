@@ -4,8 +4,13 @@ import { inputComponents } from ".";
 const defaultValues = {
     name: "",
     description: "",
+    id: "",
     keywords: "",
     image_link: "",
+    dur: [],
+    publications: [],
+    tools: [],
+    datasets: [],
 };
 
 const validationSchema = yup.object().shape({
