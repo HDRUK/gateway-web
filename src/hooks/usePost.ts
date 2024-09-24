@@ -11,7 +11,7 @@ const usePost = <T>(url: string, options?: HttpOptions) => {
         successNotificationsOn = true,
         errorNotificationsOn = true,
     } = options || {};
-    
+
     return async (payload: T) => {
         return await apiService.postRequest<T>(url, payload, {
             notificationOptions: {

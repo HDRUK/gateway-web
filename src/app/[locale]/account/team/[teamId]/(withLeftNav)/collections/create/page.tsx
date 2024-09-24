@@ -3,6 +3,7 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import CreateCollection from "./components";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Create Collection",
@@ -12,7 +13,7 @@ export const metadata = {
 export default async function CollectionCreatePage({
     params,
 }: {
-    params: { teamId: string, collectionId: string };
+    params: { teamId: string; collectionId: string };
 }) {
     const { teamId, collectionId } = params;
     const cookieStore = cookies();
@@ -25,7 +26,11 @@ export default async function CollectionCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["collections.create"]}>
-            <CreateCollection teamId={teamId} userId={user.id} collectionId={collectionId} />
+            <CreateCollection
+                teamId={teamId}
+                userId={user.id}
+                collectionId={collectionId}
+            />
         </ProtectedAccountRoute>
     );
 }

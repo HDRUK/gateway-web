@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import router from "next/router";
 import { Collection } from "@/interfaces/Collection";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
@@ -27,7 +28,6 @@ import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import CollectionsTab from "../CollectionsTab";
-import router from "next/router";
 
 interface CountStatus {
     ACTIVE?: number;
@@ -260,7 +260,7 @@ const TeamCollections = ({
     }));
 
     const handleAdd = () => {
-        const COLLECTION_CREATE_ROUTE =`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`
+        const COLLECTION_CREATE_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`;
         router.push(COLLECTION_CREATE_ROUTE);
     };
 

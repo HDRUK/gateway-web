@@ -1,30 +1,33 @@
 "use client";
 
 import { useEffect, useMemo, useState, useRef } from "react";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
     ResourceDataType,
     ResourceType,
     SelectedResources,
 } from "@/interfaces/AddResource";
+import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
+import { Dataset } from "@/interfaces/Dataset";
+import { FileUpload } from "@/interfaces/FileUpload";
 import { Publication } from "@/interfaces/Publication";
-import { Divider } from "@mui/material";
 import { Tool } from "@/interfaces/Tool";
-import { DataSet } from "@/interfaces/DataSet"
-import { Keyword } from "@/interfaces/Keyword";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
 import Form from "@/components/Form";
+import FormInputWrapper from "@/components/FormInputWrapper";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import ResourceTable from "@/components/ResourceTable";
 import Typography from "@/components/Typography";
+import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
 import AddResourceDialog from "@/modules/AddResourceDialog";
 import UploadImageDialog from "@/modules/UploadImageDialog/UploadImageDialog";
 import useActionBar from "@/hooks/useActionBar";
@@ -33,7 +36,6 @@ import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import UploadFile from "@/components/UploadFile";
 import {
     collectionDefaultValues,
     collectionFormFields,
@@ -42,8 +44,6 @@ import {
 import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { Collection, CollectionSubmission } from "@/interfaces/Collection";
-import { useSearchParams } from 'next/navigation'
 
 interface CollectionCreateProps {
     teamId?: string;
@@ -51,50 +51,42 @@ interface CollectionCreateProps {
     collectionId?: number;
 }
 
-const TRANSLATION_PATH = `pages.account.team.collections.create`;
+const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
+const TRANSLATION_PATH_EDIT = "pages.account.team.collections.edit";
 
 const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
-    const [isInvalidImage, setIsInvalidImage] = useState<boolean>(false);
-    const [isUploading, setIsUploading] = useState<boolean>(false);
-    const [keywordItem, setkeywordItem] = useState([]);
-    const [createdCollectionId, setCreatedCollectionId]
+    const [isInvalidImage, setIsInvalidImage] = useState(false);
+    const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [keywordItem, setKeywordItem] = useState<string[]>([]);
 
-    const t = useTranslations(TRANSLATION_PATH);
-
+    const t = useTranslations();
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
-    const searchParams = useSearchParams();
-    const textFieldRef = useRef();
+    const textFieldRef = useRef<HTMLInputElement>(null);
 
-    const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
-    
+    const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
+    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=collections-media&collection_id=${collectionId}`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
             mode: "onTouched",
             resolver: yupResolver(collectionValidationSchema),
-            defaultValues: {
-                ...collectionDefaultValues,
-            },
+            defaultValues: collectionDefaultValues,
         });
 
     const { data: existingCollectionData } = useGet<Collection>(
         `${apis.collectionsV1Url}/${collectionId}`,
-        {
-            shouldFetch: !!collectionId,
-        }
+        { shouldFetch: !!collectionId }
     );
 
-    const createCollection = usePost<CollectionSubmission>(`${apis.collectionsV1Url}`, {
-        itemName: "Collection",
-    });
-
+    const createCollection = usePost<CollectionSubmission>(
+        apis.collectionsV1Url,
+        { itemName: "Collection" }
+    );
     const editCollection = usePatch<Partial<CollectionSubmission>>(
-        `${apis.collectionsV1Url}`,
-        {
-            itemName: "Collection",
-        }
+        apis.collectionsV1Url,
+        { itemName: "Collection" }
     );
 
     useEffect(() => {
@@ -107,15 +99,12 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             name: existingCollectionData?.name,
             description: existingCollectionData?.description,
             keywords: existingCollectionData?.keywords
-                ? setkeywordItem(existingCollectionData?.keywords)
+                ? setKeywordItem(existingCollectionData?.keywords)
                 : [],
             image_link: existingCollectionData?.image_link,
-        }
+        };
 
-        const propertiesToDelete = [
-            "mongo_object_id",
-            "mongo_id",
-        ];
+        const propertiesToDelete = ["mongo_object_id", "mongo_id"];
 
         propertiesToDelete.forEach(key => {
             if (key in formData) {
@@ -131,36 +120,42 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
-                setValue("datasets", selectedResources[ResourceType.DATASET] as DataSet[]);
-                setValue("durs", selectedResources[ResourceType.DATA_USE] as DataUse[]);
+                setValue(
+                    "datasets",
+                    selectedResources[ResourceType.DATASET] as Dataset[]
+                );
+                setValue(
+                    "durs",
+                    selectedResources[ResourceType.DATA_USE] as DataUse[]
+                );
                 setValue(
                     "publications",
                     selectedResources[ResourceType.PUBLICATION] as Publication[]
                 );
-                setValue("tools", selectedResources[ResourceType.TOOL] as Tool[]);
-
+                setValue(
+                    "tools",
+                    selectedResources[ResourceType.TOOL] as Tool[]
+                );
             },
             defaultResources: {
                 dataset: getValues("datasets"),
                 datause: getValues("durs"),
                 publication: getValues("publications"),
-                tool: getValues("tools")
+                tool: getValues("tools"),
             },
         });
     };
 
-  
     const selectedResources = useMemo(() => {
         return {
             datause: (getValues("durs") as DataUse[]) || [],
             publication: (getValues("publications") as Publication[]) || [],
             tool: (getValues("tools") as Tool[]) || [],
-            dataset: (getValues("datasets") as DataSet[]) || [],
+            dataset: (getValues("datasets") as Dataset[]) || [],
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll]);
 
-   
     const handleRemoveResource = (
         data: ResourceDataType,
         resourceType: ResourceType
@@ -180,98 +175,95 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         } else if (resourceType === ResourceType.TOOL) {
             setValue("tools", updatedResources as Tool[]);
         } else if (resourceType === ResourceType.DATASET) {
-            setValue("datasets", updatedResources as DataSet[]);
+            setValue("datasets", updatedResources as Dataset[]);
         }
     };
-    
+
     const handleInvalidImage = (isNotValid: boolean) => {
         setIsInvalidImage(isNotValid);
     };
 
     useEffect(() => {
-        if(isInvalidImage) {
-            showDialog(UploadImageDialog, { setIsInvalidImage: handleInvalidImage })
+        if (isInvalidImage) {
+            showDialog(UploadImageDialog, {
+                setIsInvalidImage: handleInvalidImage,
+            });
         }
-    },[isInvalidImage]);
+    }, [isInvalidImage]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
         if (event.key === ";") {
-          event.preventDefault();
-          const newkeywordItem = [...keywordItem];
-          const newKeyword = textFieldRef?.current?.value;
-          const duplicatedValues = newkeywordItem.indexOf(
-            newKeyword.trim()
-          );
-    
-          if (duplicatedValues !== -1) {
-            setValue("keywords", "")
-            return;
-          }
-          if (!event.target.value.replace(/\s/g, "").length) return;
-    
-          newkeywordItem.push(newKeyword.trim());
-          setkeywordItem(newkeywordItem);
-          setValue("keywords", "")
+            event.preventDefault();
+            const newkeywordItem = [...keywordItem];
+            const newKeyword = textFieldRef?.current?.value;
+            const duplicatedValues = newkeywordItem.indexOf(newKeyword?.trim());
+
+            if (duplicatedValues !== -1) {
+                setValue("keywords", "");
+                return;
+            }
+            if (!event.target.value.replace(/\s/g, "").length) return;
+
+            newkeywordItem.push(newKeyword.trim());
+            setKeywordItem(newkeywordItem);
+            setValue("keywords", "");
         }
         if (
-          keywordItem.length &&
-          !textFieldRef?.current?.value.length &&
-          event.code === "Backspace"
+            keywordItem.length &&
+            !textFieldRef?.current?.value.length &&
+            event.code === "Backspace"
         ) {
-          setkeywordItem(keywordItem.slice(0, keywordItem.length - 1));
+            setKeywordItem(keywordItem.slice(0, keywordItem.length - 1));
         }
-      }
+    };
 
     const handleDelete = item => () => {
         const newkeywordItem = [...keywordItem];
         newkeywordItem.splice(newkeywordItem.indexOf(item), 1);
-        setkeywordItem(newkeywordItem);
+        setKeywordItem(newkeywordItem);
     };
 
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
-                
                 return (
                     <InputWrapper
                         key={field.name}
                         control={control}
                         sx={{ mt: 1 }}
                         {...field}
-                        {...(field.name ===
-                            "keywords" && {
+                        {...(field.name === "keywords" && {
                             startAdornment: keywordItem.map(item => (
                                 <Chip
                                     key={item}
                                     tabIndex={-1}
                                     label={item}
                                     onDelete={handleDelete(item)}
-                                    sx={{my: 1, mr: 1}}
+                                    sx={{ my: 1, mr: 1 }}
                                 />
-                                )),
+                            )),
                             onKeyDown: event => {
-                                handleKeyDown(event)
+                                handleKeyDown(event);
                             },
                             inputRef: textFieldRef,
                         })}
                     />
                 );
-            })
-            ,
-        [control,keywordItem]
+            }),
+        [control, keywordItem]
     );
 
     useEffect(() => {
         showBar("CreateCollection", {
-            cancelText: t("cancel"),
-            confirmText: t("publish"),
+            cancelText: t(`${TRANSLATION_PATH_CREATE}.cancel`),
+            confirmText: t(`${TRANSLATION_PATH_CREATE}.publish`),
             tertiaryButton: {
                 onAction: async () => {
                     handleSubmit(formData =>
                         onSubmit(formData, DataStatus.DRAFT, keywordItem)
                     )();
                 },
-                buttonText: t("saveDraft"),
+                buttonText: t(`${TRANSLATION_PATH_CREATE}.saveDraft`),
                 buttonProps: {
                     color: "secondary",
                     variant: "outlined",
@@ -289,9 +281,13 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [keywordItem]);
 
-    const onSubmit = async (formData: Collection, status: DataStatus, keywordItem: string[]) => {
+    const onSubmit = async (
+        formData: Collection,
+        status?: DataStatus,
+        keywordItem?: string[]
+    ) => {
         const formatEntityToIdArray = (
-            data: DataUse[] | Publication[] | Tool[] | DataSet[]
+            data: DataUse[] | Publication[] | Tool[] | Dataset[]
         ) => {
             if (
                 Array.isArray(data) &&
@@ -302,7 +298,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
             return data?.map(item => item?.id);
         };
-      
+
         const payload: CollectionSubmission = {
             ...formData,
             status,
@@ -326,18 +322,40 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         push(COLLECTION_ROUTE);
     };
 
+    const handleFileUploaded = async (fileResponse: FileUpload) => {
+        const { file_location } = fileResponse;
+        const image_link = `/collections/${file_location}`;
+
+        await onSubmit(
+            !collectionId
+                ? {
+                      ...collectionDefaultValues,
+                      image_link,
+                  }
+                : {
+                      ...collectionDefaultValues,
+                      ...existingCollectionData,
+                      image_link,
+                  }
+        );
+    };
+    
     return (
         <>
             <BoxContainer
                 sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box>
-                    <Typography variant="h2">{t("title")}</Typography>
-                    <Typography>{t("intro")}</Typography>
+                    <Typography variant="h2">
+                        {t(`${TRANSLATION_PATH_CREATE}.title`)}
+                    </Typography>
+                    <Typography>
+                        {t(`${TRANSLATION_PATH_CREATE}.intro`)}
+                    </Typography>
                 </Box>
                 <Box>
                     <Chip
                         resourceType={ResourceType.TOOL}
-                        label={t("labelTag")}
+                        label={t(`${TRANSLATION_PATH_CREATE}.title`)}
                     />
                 </Box>
             </BoxContainer>
@@ -345,40 +363,76 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                 <Form>
                     <Paper>
                         <Box>{hydratedFormFields.map(field => field)}</Box>
-                        {/*UPLOAD IMAGE*/}
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                            <Box>
-                            <Typography variant="h2">
-                                {t("addImages")}
-                            </Typography>
-                            <Typography sx={{ mb: 2 }}>
-                            {!!searchParams?.get('upload') ? t("addImageSuccess") : t("addImagesInfo")}
-                            </Typography>
-                            </Box>
-                            <Box sx={{ display: "flex", textAlign: "center", justifyContent: "space-between", pr: 0, alignItems: "center" }}>
+                        {/* UPLOAD IMAGE */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                p: 2,
+                                gap: 4,
+                            }}>
+                            <FormInputWrapper
+                                label={t(
+                                    `${TRANSLATION_PATH_CREATE}.addImages`
+                                )}
+                                info={t(
+                                    `${TRANSLATION_PATH_CREATE}.addImagesInfo`
+                                )}
+                                error={
+                                    fileNotUploaded
+                                        ? {
+                                              type: "",
+                                              message: t(
+                                                  `${TRANSLATION_PATH_CREATE}.aspectRatioError`
+                                              ),
+                                          }
+                                        : undefined
+                                }
+                                formControlSx={{ width: "70%", p: 0 }}>
                                 <UploadFile
-                                    sx={{ml: 20}}
-                                    apiPath={`${apis.fileUploadV1Url}?entity_flag=collections-media&collection_id=${collectionId}`}
-                                    isUploading={setIsUploading}
-                                    fileUploadedAction={fileId =>
-                                        setCreatedCollectionId(fileId as number)
-                                    }
-                                    helperText={false}
-                                    label="uploadImage"
-                                    acceptedFileTypes=".png .jpeg"
-                                    setIsInvalidImage={handleInvalidImage}
-                                 />
-                            </Box>
+                                    fileSelectButtonText={t(
+                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                    )}
+                                    acceptedFileTypes=".jpg,.png"
+                                    apiPath={FILE_UPLOAD_URL}
+                                    onBeforeUploadCheck={(
+                                        event: Event & EventUploadedImage
+                                    ) => {
+                                        const aspectRatio =
+                                            (event?.width || 0) /
+                                            (event?.height || 0);
+
+                                        return (
+                                            aspectRatio <= 2.2 &&
+                                            aspectRatio >= 1.8
+                                        );
+                                    }}
+                                    onFileChange={() => {
+                                        setFileNotUploaded(false);
+                                    }}
+                                    onFileCheckSucceeded={(
+                                        file: FileUpload
+                                    ) => {
+                                        handleFileUploaded(file);
+                                        setFileNotUploaded(false);
+                                    }}
+                                    onFileCheckFailed={() => {
+                                        setFileNotUploaded(true);
+                                    }}
+                                    sx={{ py: 2 }}
+                                />
+                            </FormInputWrapper>
                         </Box>
                     </Paper>
                     {/* ADD RESOURCES */}
                     <Paper sx={{ mt: 1, mb: 2 }}>
                         <Box>
                             <Typography variant="h2">
-                                {t("addResources")}
+                                {t(`${TRANSLATION_PATH_CREATE}.addResources`)}
                             </Typography>
                             <Typography sx={{ mb: 2 }}>
-                                {t("addResourcesInfo")}
+                                {t(
+                                    `${TRANSLATION_PATH_CREATE}.addResourcesInfo`
+                                )}
                             </Typography>
                             <Divider />
                             <Box sx={{ textAlign: "center", mt: 1 }}>
@@ -387,7 +441,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     variant="outlined"
                                     color="secondary"
                                     startIcon={<AddIcon />}>
-                                    {t("addResourceButton")}
+                                    {t(
+                                        `${TRANSLATION_PATH_CREATE}.addResourceButton`
+                                    )}
                                 </Button>
 
                                 {!!Object.values(selectedResources)?.flat()

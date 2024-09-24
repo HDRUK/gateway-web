@@ -10,7 +10,7 @@ export interface UploadProps extends InputProps {
     label: string;
     name: string;
     control: Control;
-    helperText?: string | undefined;
+    helperText?: string;
     acceptFileTypes?: string;
     uploadSx?: SxProps;
     formControlSx?: SxProps;

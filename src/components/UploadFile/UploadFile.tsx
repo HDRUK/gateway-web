@@ -58,6 +58,7 @@ const UploadFile = ({
     const [fileId, setFileId] = useState<number>();
     const [pollFileStatus, setPollFileStatus] = useState<boolean>(false);
     const [hasError, setHasError] = useState<boolean>();
+
     const { handleSubmit, control } = useForm<UploadFormData>({
         defaultValues: {
             upload: "",
@@ -82,34 +83,9 @@ const UploadFile = ({
         setFile(undefined);
         isUploading?.(false);
         setPollFileStatus(false);
+
         notificationService.apiError(fileScanStatus?.error || t("error"));
     };
-
-    const calculateImageRatio = (width, height) => {
-        return `${width/height}:${height/height}`
-    }
-
-    const imageValidation = (file: File) => {
-        
-        if(acceptedFileTypes.includes(".png") || acceptedFileTypes.includes(".jpeg")){
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function (e) {
-                const image = new Image();
-                image.src = e?.target?.result;
-                image.onload = function () {
-                    const height = this.height;
-                    const width = this.width;
-                    const imageRatio = calculateImageRatio(width,height);
-                    if (imageRatio != "2:1") {
-                      setIsInvalidImage(true);
-                    } 
-                  };
-            }
-        } else {
-            return;
-        }
-    }
 
     useEffect(() => {
         if (fileId) {
@@ -222,7 +198,7 @@ const UploadFile = ({
                                 file?.name ||
                                 t("uploadHelper", {
                                     fileType: acceptedFileTypes,
-                                }))
+                                })
                             }
                         />
                         <Button

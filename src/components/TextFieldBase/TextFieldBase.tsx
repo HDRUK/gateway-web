@@ -1,4 +1,4 @@
-import { Control, FieldValues, Path, useController } from "react-hook-form";
+import { Control, FieldValues, Path, Ref, useController } from "react-hook-form";
 import { SerializedStyles } from "@emotion/react";
 import {
     InputAdornment,
@@ -31,7 +31,6 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     css?: SerializedStyles;
     id?: string;
     inputRef?: Ref<any>;
-    value?: string;
 }
 
 const TextFieldBase = <
@@ -60,7 +59,6 @@ const TextFieldBase = <
         formControlSx,
         id,
         inputRef,
-        value,
         ...inputProps
     } = props;
     const Icon = icon;
@@ -127,7 +125,7 @@ const TextFieldBase = <
                 inputRef={inputRef ?? ref}
                 error={!!error}
                 {...fieldProps}
-                value={value ?? fieldProps.value ?? ""}
+                value={fieldProps.value ?? ""}
                 {...inputProps}
             />
         </FormInputWrapper>

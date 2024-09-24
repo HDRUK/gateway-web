@@ -71,7 +71,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         id,
         ...restProps
     } = props;
-    
+
     const {
         field,
         fieldState: { error },
@@ -102,8 +102,8 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         }
         return filtered;
     };
-    console.log();
-        return (
+
+    return (
         <FormInputWrapper
             name={name}
             label={label}
@@ -150,7 +150,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                     })
                 }
                 onChange={(e, v) => {
-                    console.log(v);
                     if (Array.isArray(v)) {
                         const values = v.map(value => {
                             if (typeof value === "object") return value?.value;

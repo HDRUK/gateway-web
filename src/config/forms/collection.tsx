@@ -12,7 +12,6 @@ const validationSchema = yup.object().shape({
     name: yup.string().required().min(2).label("Collection name"),
     keywords: yup.string().label("Keywords (optional)"),
     description: yup.string().min(2).max(5000).required().label("Description"),
-    
 });
 
 const formFields = [
@@ -33,7 +32,7 @@ const formFields = [
         label: "Keywords (optional)",
         info: "Use semicolon (;) to create separate keywords (E.g. NCS; charity; disease)",
         name: "keywords",
-        component: inputComponents.TextField
+        component: inputComponents.TextField,
     },
 ];
 

@@ -13,12 +13,12 @@ interface Collection {
     description: string;
     id: string;
     enabled: boolean;
-    status: DataStatus;
+    status: DataStatus | undefined;
     public: number;
     create_at: string;
     updated_at: string;
     deleted_at: string;
-    keywords: Keyword[] | string[];
+    keywords: string | string[];
     datasets: Dataset[];
     team: Team;
     users: User[];
