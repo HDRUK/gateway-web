@@ -55,11 +55,11 @@ const Content = ({ data }: ContentProps) => {
                                             <NewsSummaryCard
                                                 summary={item.newsFields.text}
                                                 imageLink={
-                                                    item.newsFields.image?.node
+                                                    item.newsFields?.image?.node
                                                         ?.mediaItemUrl
                                                 }
                                                 imageAlt={
-                                                    item.newsFields.image?.node
+                                                    item.newsFields?.image?.node
                                                         ?.altText
                                                 }
                                                 headline={
@@ -67,7 +67,8 @@ const Content = ({ data }: ContentProps) => {
                                                 }
                                                 date={item.newsFields.date}
                                                 url={
-                                                    item.newsFields.link?.url ||
+                                                    item.newsFields?.link
+                                                        ?.url ||
                                                     `/${
                                                         tab === "news"
                                                             ? RouteName.NEWS_ARTICLE
@@ -75,7 +76,7 @@ const Content = ({ data }: ContentProps) => {
                                                     }/${item.slug}`
                                                 }
                                                 buttonText={
-                                                    item.newsFields.link
+                                                    item.newsFields?.link
                                                         ?.title || t("readMore")
                                                 }
                                                 key={item.newsFields.headline}

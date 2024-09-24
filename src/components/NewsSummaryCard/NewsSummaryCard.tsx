@@ -48,7 +48,7 @@ const NewsSummaryCard = ({
             />
             <DateBox>
                 <div>{formatDate(date, "MMM")}</div>
-                <div> {formatDate(date, "DD")}</div>
+                <div>{formatDate(date, "DD")}</div>
             </DateBox>
             <CardContent>
                 <Typography
