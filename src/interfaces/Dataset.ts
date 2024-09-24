@@ -120,6 +120,9 @@ interface Metadata {
     structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
     demographicFrequency: Demographics;
+    coverage: {
+        datasetCompleteness: string;
+    };
 }
 
 interface LinkedDatasetVersions {

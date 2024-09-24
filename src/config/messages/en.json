@@ -1076,7 +1076,8 @@
                     "structuralMetadata": "Data variables",
                     "demographics": "Explore demographics",
                     "curatedPublications": "Publications using this dataset (curated)",
-                    "externalPublications": "Publications using this dataset (external search)"
+                    "externalPublications": "Publications using this dataset (external search)",
+                    "coverageCompleteness": "Coverage and completeness"
                 },
                 "Linkages": {
                     "title": "Relationships:",
