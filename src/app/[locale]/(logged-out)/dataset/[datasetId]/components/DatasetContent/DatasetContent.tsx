@@ -2,13 +2,14 @@
 
 import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get } from "lodash";
+import { get, isArray } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import DemographicsAccordion from "@/components/DemographicsAccordion";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
@@ -111,14 +112,20 @@ const DatasetContent = ({
                     </Link>
                 );
             case FieldType.LIST: {
-                const list = Array.from(new Set(splitStringList(value)));
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
                 return list.map((item, i) => [
                     i > 0 && ", ",
                     formatTextWithLinks(item),
                 ]);
             }
             case FieldType.LINK_LIST: {
-                const list = Array.from(new Set(splitStringList(value)));
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
                 return (
                     <ListContainer>
                         {list.map(item => (
@@ -130,8 +137,9 @@ const DatasetContent = ({
                 );
             }
 
-            default:
+            default: {
                 return formatTextWithLinks(formatTextDelimiter(value));
+            }
         }
     };
 
@@ -169,6 +177,33 @@ const DatasetContent = ({
                             renderObservationsTable(
                                 get(data, "metadata.metadata.observations")
                             )
+                        ) : section.sectionName === "Demographics" ? (
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    p: 0,
+                                }}>
+                                <Button
+                                    onClick={() =>
+                                        showModal({
+                                            title: "Demographics",
+                                            content: (
+                                                <DemographicsAccordion
+                                                    data={get(
+                                                        data,
+                                                        section.fields[0].path
+                                                    )}
+                                                />
+                                            ),
+                                            showConfirm: false,
+                                            showCancel: false,
+                                        })
+                                    }>
+                                    Open table
+                                </Button>
+                            </Box>
                         ) : section.sectionName === "Structural Metadata" ? (
                             <Box
                                 sx={{
@@ -200,7 +235,7 @@ const DatasetContent = ({
                             section.fields.map(field => {
                                 const value = get(data, field.path);
 
-                                if (!value) {
+                                if (!value || value === -1) {
                                     return null;
                                 }
 

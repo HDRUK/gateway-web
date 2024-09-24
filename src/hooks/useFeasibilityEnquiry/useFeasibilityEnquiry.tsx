@@ -9,8 +9,9 @@ import useDialog from "@/hooks/useDialog";
 
 interface UseFeasibilityEnquiryProps {
     isLoggedIn: boolean;
-    dataset: SearchResultDataset;
-    mutateLibraries: KeyedMutator<Library[]>;
+    dataset: Pick<SearchResultDataset, "team" | "_id" | "metadata">;
+    redirectPath?: string | null;
+    mutateLibraries?: KeyedMutator<Library[]>;
 }
 
 const useFeasibilityEnquiry = () => {
@@ -20,6 +21,7 @@ const useFeasibilityEnquiry = () => {
         ({
             isLoggedIn,
             dataset,
+            redirectPath = "/",
             mutateLibraries,
         }: UseFeasibilityEnquiryProps) => {
             const { _id, team, metadata } = dataset;
@@ -27,6 +29,7 @@ const useFeasibilityEnquiry = () => {
             if (!isLoggedIn) {
                 showDialog(ProvidersDialog, {
                     isProvidersDialog: true,
+                    redirectPath,
                 });
             } else {
                 const dataset: DatasetEnquiry = {

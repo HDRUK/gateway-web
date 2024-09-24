@@ -28,15 +28,8 @@ const parseLeadTime = (leadTimeString: string) => {
     return [leadTimeString];
 };
 
-const splitStringList = (inputString: string) => {
-    try {
-        return inputString
-            .split(",")
-            ?.map(item => item.replace(/;/g, "").trim());
-    } catch (err) {
-        return [inputString];
-    }
-};
+const splitStringList = (text: string) =>
+    text.split(",").map(item => item.replace(/;/g, "").trim());
 
 const isValueNotEmpty = (val: string | undefined) =>
     !isEmpty(val) && val !== UNDEFINED_VALUE && val !== NULL_VALUE;
@@ -80,8 +73,16 @@ const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
     return Object.values(groupedByDatasetID);
 };
 
-const formatTextWithLinks = (text: string) => {
-    return text.split(URL_REGEX).map(segment =>
+const formatTextWithLinks = (text: string | string[] | number) => {
+    if (typeof text === "number") {
+        return text.toLocaleString();
+    }
+
+    // Convert text to an array if it's not already one
+    const segments = Array.isArray(text) ? text : text.split(URL_REGEX);
+
+    // Map over the segments to wrap them in the appropriate component
+    return segments.map(segment =>
         URL_REGEX.test(segment) ? (
             <Link href={segment} key={segment} target="_blank" rel="noopener">
                 {segment}
@@ -94,8 +95,12 @@ const formatTextWithLinks = (text: string) => {
     );
 };
 
-const formatTextDelimiter = (text: string) => {
-    return text.replaceAll(";,;", ", ");
+const formatTextDelimiter = (text: string | string[] | number) => {
+    return Array.isArray(text)
+        ? text.join(", ") // Join array elements with ", " if it's an array
+        : typeof text === "number"
+        ? text.toLocaleString()
+        : text.replaceAll(";,;", ", ");
 };
 
 export {

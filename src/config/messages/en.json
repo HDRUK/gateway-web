@@ -246,7 +246,10 @@
                     "create": {
                         "backButton": "Back to Teams list",
                         "title": "Add Team’s details",
-                        "text": "Add details of the data publisher team you want to create on the Gateway"
+                        "text": "Add details of the data publisher team you want to create on the Gateway",
+                        "aspectRatioInfo": "Please note the aspect ratio of the image must be approximately 2:1 (width:height)",
+                        "aspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height)",
+                        "fileSelectButtonText": "Choose logo"
                     },
                     "edit": {
                         "title": "Edit Team details",
@@ -400,8 +403,6 @@
                                 "measurementsTestsTooltip": "Includes any data related to laboratory or other diagnostics.",
                                 "imagingTypes": "Imaging types",
                                 "imagingTypesTooltip": "Includes any data related to CT, MRI, PET, x-ray, ultrasound or pathology imaging.",
-                                "imagingAreaOfTheBody": "Imaging area of the body",
-                                "imagingAreaOfTheBodyTooltip": "Indicates whether the dataset relates to head, chest, arm abdomen or leg imaging.",
                                 "omics": "Omics",
                                 "omicsTooltip": "Includes any data related to proteomics, transcriptomics, epigenomics, metabolomics, multiomics, metagenomics or genomics.",
                                 "socioeconomic": "Socioeconomic",
@@ -1068,7 +1069,9 @@
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata",
-                    "downloadStarted": "Your download has started"
+                    "downloadStarted": "Your download has started",
+                    "feasibilityEnquiryButtonText": "Make a feasibility enquiry",
+                    "generalEnquiryButtonText": "Make a general enquiry"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
@@ -1089,7 +1092,11 @@
                     "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
                     "dataCustodian": "Data Custodian",
-                    "structuralMetadata": "Data variables"
+                    "structuralMetadata": "Data variables",
+                    "demographics": "Explore demographics",
+                    "curatedPublications": "Publications using this dataset (curated)",
+                    "externalPublications": "Publications using this dataset (external search)",
+                    "coverageCompleteness": "Coverage and completeness"
                 },
                 "Linkages": {
                     "title": "Relationships:",
@@ -1101,6 +1108,7 @@
                 },
                 "Sources": {
                     "datasetTypes": "Dataset Types",
+                    "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
                     "noCollectionSources": "No collection sources listed"
                 }
@@ -1292,6 +1300,9 @@
             "columnDesc": "Column description",
             "dataType": "Data type",
             "sensitive": "Sensitive"
+        },
+        "DemographicsAccordion": {
+            "noData": "No data available"
         },
         "CollectionCard": {
             "users": "Users",

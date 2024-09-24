@@ -1,4 +1,4 @@
-import { get, isEmpty, pick } from "lodash";
+import { get, isEmpty, pick, some } from "lodash";
 import { cookies } from "next/headers";
 import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
@@ -27,10 +27,13 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",
     "metadata.metadata.provenance.temporal.startDate",
     "metadata.metadata.provenance.temporal.endDate",
-    "metadata.metadata.coverage.biologicalsamples",
+    "metadata.metadata.coverage.materialType",
     "metadata.metadata.coverage.spatial",
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
+
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
 
 export default async function DatasetItemPage({
     params,
@@ -40,7 +43,12 @@ export default async function DatasetItemPage({
     const { datasetId } = params;
 
     const cookieStore = cookies();
-    const data = await getDataset(cookieStore, datasetId);
+    const data = await getDataset(
+        cookieStore,
+        datasetId,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
+    );
 
     let googleRecommendedDataset: Dataset | undefined;
 
@@ -66,6 +74,12 @@ export default async function DatasetItemPage({
     const linkageCounts = {
         tools: data?.tools_count,
         publications: data?.publications_count,
+        publications_about: data?.publications.filter(
+            pub => pub.dataset_versions[0].link_type === "ABOUT"
+        ).length,
+        publications_using: data?.publications.filter(
+            pub => pub.dataset_versions[0].link_type === "USING"
+        ).length,
         durs: data?.durs_count,
         collections: data?.collections_count,
     };
@@ -79,7 +93,7 @@ export default async function DatasetItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar />
+                    <ActionBar dataset={data} />
                     <Box
                         sx={{
                             display: "flex",
@@ -127,7 +141,14 @@ export default async function DatasetItemPage({
                                     linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
                                         !!datasetVersion.metadata?.metadata
-                                            ?.structuralMetadata?.length
+                                            ?.structuralMetadata?.tables?.length
+                                    }
+                                    hasDemographics={
+                                        !!some(
+                                            datasetVersion.metadata?.metadata
+                                                ?.demographicFrequency,
+                                            value => value !== null
+                                        )
                                     }
                                 />
 
@@ -148,7 +169,7 @@ export default async function DatasetItemPage({
                                 />
                                 <Linkages data={data} />
 
-                                <Publications />
+                                <Publications data={data} />
                             </Box>
                             <Box />
                         </BoxContainer>
