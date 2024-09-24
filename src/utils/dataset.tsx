@@ -1,9 +1,8 @@
 import { isEmpty } from "lodash";
+import Markdown from "markdown-to-jsx";
 import { Dataset, VersionItem } from "@/interfaces/Dataset";
 import Link from "@/components/Link";
-import Typography from "@/components/Typography";
 import { getYear } from "./date";
-import Markdown from "markdown-to-jsx";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
 const UNDEFINED_VALUE = "undefined";
