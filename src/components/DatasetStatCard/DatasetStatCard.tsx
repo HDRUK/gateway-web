@@ -31,6 +31,7 @@ const DatasetStatCard = ({
     helperText,
     noStatText,
 }: DatasetStatCardProps) => {
+
     return (
         <StatCard>
             <Title>
@@ -46,14 +47,27 @@ const DatasetStatCard = ({
                 {hasValidValue(stat) ? (
                     <StatWrapper>
                         {Array.isArray(stat) ? (
-                            stat.map(item => (
-                                <Typography
-                                    fontSize={16}
-                                    sx={{ alignSelf: "flex-start" }}
-                                    key={`${stat}_${item}`}>
-                                    {item}
-                                </Typography>
-                            ))
+                            stat.map((item, index) => <>
+                                {index < 2 && (
+                                    <Typography
+                            fontSize={16}
+                            sx={{ alignSelf: "flex-start" }}
+                            key={`${stat}_${item}`}>
+                            {item}
+                            
+                        </Typography>
+                                )}
+                                {index === 2 && (
+                                    <Typography
+                            fontSize={16}
+                            sx={{ alignSelf: "flex-start" }}
+                            key={`${stat}_${item}`}>
+                            ...
+                            
+                        </Typography>
+                                )}
+                                </>
+                            )
                         ) : (
                             <Typography fontSize={largeStatText ? 24 : 16}>
                                 {stat}
