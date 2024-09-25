@@ -62,7 +62,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const textFieldRef = useRef<HTMLInputElement>(null);
 
     const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
-    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=collections-media&collection_id=${collectionId}`;
+    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=collections-media${!!collectionId ? `&collection_id=${collectionId}` : ''}`
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
@@ -405,6 +405,16 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     sx={{ py: 2 }}
                                 />
                             </FormInputWrapper>
+
+                            {existingCollectionData?.image_link && (
+                                <Box sx={{ width: "30%" }}>
+                                    <img
+                                        src={existingCollectionData?.image_link}
+                                        alt={`${existingCollectionData?.name} image`}
+                                        width="100%"
+                                    />
+                                </Box>
+                            )}
                         </Box>
                     </Paper>
                     {/* ADD RESOURCES */}
