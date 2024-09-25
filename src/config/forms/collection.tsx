@@ -37,7 +37,7 @@ const formFields = [
         label: "Keywords (optional)",
         info: "Use semicolon (;) to create separate keywords (E.g. NCS; charity; disease)",
         name: "keywords",
-        component: inputComponents.TextField,
+        component: inputComponents.Autocomplete,
     },
 ];
 

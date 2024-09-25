@@ -30,7 +30,7 @@ interface UploadFileProps {
     fileSelectButtonText?: string;
     onFileUploaded?: (uploadResponse?: number | StructuralMetadata[]) => void;
     isUploading?: Dispatch<SetStateAction<boolean>>;
-    onBeforeUploadCheck?: (event: Event & EventUploadedImage) => boolean;
+    onBeforeUploadCheck?: (height: number, width: number) => boolean;
     onFileCheckFailed?: () => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
     onFileChange?: () => void;
@@ -126,41 +126,38 @@ const UploadFile = ({
             try {
                 // eslint-disable-next-line no-async-promise-executor
                 await new Promise(async (resolve, reject) => {
-                    const image = new Image();
-                    const base64 = await convertBase64(file);
-                    image.src = base64.toString();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        const image = new Image();
+                        // const base64 = await convertBase64(file);
+                        image.src = e?.target?.result;
+                        image.onload = function () {
+                            if (onBeforeUploadCheck) {
+                                const checked = onBeforeUploadCheck(image.height,image.width)
+                                return checked
+                                    ? resolve(null)
+                                    : reject(
+                                        new Error(
+                                            "The image does not pass it's checks"
+                                        )
+                                    );
+                            }
 
-                    image.onload = function (e: Event) {
-                        if (onBeforeUploadCheck) {
-                            const checked = onBeforeUploadCheck?.apply(this, [
-                                e as Event & EventUploadedImage,
-                            ]);
-
-                            return checked
-                                ? resolve(null)
-                                : reject(
-                                      new Error(
-                                          "The image does not pass it's checks"
-                                      )
-                                  );
-                        }
-
-                        return resolve(null);
+                            return resolve(null);
+                        };
                     };
                 });
             } catch (_) {
                 shouldContinue = false;
             }
         }
-
         if (shouldContinue) {
             const formData = new FormData();
             formData.append("file", file);
-
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 handleError()
             )) as FileUpload;
-
             setHasError(false);
 
             if (uploadedFileStatus) {
@@ -170,7 +167,6 @@ const UploadFile = ({
                 setPollFileStatus(true);
                 isUploading?.(true);
             }
-
             onFileCheckSucceeded?.(uploadedFileStatus);
         } else {
             setHasError(false);

@@ -309,7 +309,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         const { file_location } = fileResponse;
         const image_link = `/collections/${file_location}`;
 
-        await handleSubmit(formData =>
+        handleSubmit(formData =>
             onSubmit(
                 !collectionId
                     ? {
@@ -380,12 +380,11 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     acceptedFileTypes=".jpg,.png"
                                     apiPath={FILE_UPLOAD_URL}
                                     onBeforeUploadCheck={(
-                                        event: Event & EventUploadedImage
+                                        height: number, width: number
                                     ) => {
                                         const aspectRatio =
-                                            (event?.width || 0) /
-                                            (event?.height || 0);
-                                            
+                                            (width || 0) /
+                                            (height || 0);
                                         return (
                                             aspectRatio <= 2.2 &&
                                             aspectRatio >= 1.8
