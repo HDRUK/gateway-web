@@ -53,7 +53,7 @@ const DatasetStatCard = ({
                                     key={`${stat}_${item}`}>
                                     {index < 2
                                         ? item
-                                        : index === 3
+                                        : index >= 3
                                         ? "..."
                                         : null}
                                 </Typography>
