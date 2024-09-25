@@ -14,6 +14,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
@@ -142,6 +143,7 @@ export {
     CloudUploadIcon,
     ArticleIcon,
     BookmarkBorderIcon,
+    BookmarkIcon,
     BookmarksIcon,
     StickyNote2OutlinedIcon,
 };

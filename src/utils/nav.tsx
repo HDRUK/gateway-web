@@ -10,10 +10,11 @@ import {
     QuestionAnswerIcon,
     SchemaOutlinedIcon,
     SettingsOutlinedIcon,
-    StorageOutlinedIcon,
+    DatabaseIcon,
     CloudUploadIcon,
     ArticleIcon,
     BookmarkBorderIcon,
+    BookmarkIcon,
     BookmarksIcon,
     StickyNote2OutlinedIcon,
 } from "@/consts/icons";
@@ -40,18 +41,15 @@ const getProfileNav = (permissions: {
         },
         {
             icon: <BookmarkBorderIcon />,
-            label: "Data Access Requests",
-            subItems: [
-                {
-                    label: "Library",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
-                },
-                {
-                    label: "Saved searches",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
-                },
-            ],
+            label: "Library",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
         },
+        {
+            icon: <BookmarkIcon />,
+            label: "Saved searches",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
+        },
+        
         ...(permissions["custodians.read"]
             ? [
                   {
@@ -140,36 +138,9 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: <StorageOutlinedIcon />,
+                      icon: <DatabaseIcon color="secondary"/>,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["collections.read"]
-            ? [
-                  {
-                      icon: <BookmarksIcon />,
-                      label: "Collections",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["tools.read"]
-            ? [
-                  {
-                      icon: <HandymanOutlinedIcon />,
-                      label: "Analysis Scripts & Software",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["papers.read"]
-            ? [
-                  {
-                      icon: <ArticleIcon />,
-                      label: "Publications",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
                   },
               ]
             : []),
