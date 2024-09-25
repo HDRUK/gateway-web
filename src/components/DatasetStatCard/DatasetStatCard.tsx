@@ -31,11 +31,7 @@ const DatasetStatCard = ({
     helperText,
     noStatText,
 }: DatasetStatCardProps) => {
-    if (Array.isArray(stat)) {
-        stat.push("tester");
-        stat.push("tester");
-        stat.push("tester");
-    }
+
     return (
         <StatCard>
             <Title>
