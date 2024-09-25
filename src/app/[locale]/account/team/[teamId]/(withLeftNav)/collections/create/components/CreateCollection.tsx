@@ -46,7 +46,6 @@ import { RouteName } from "@/consts/routeName";
 
 interface CollectionCreateProps {
     teamId?: string;
-    userId: number;
     collectionId?: number;
 }
 
@@ -386,7 +385,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                         const aspectRatio =
                                             (event?.width || 0) /
                                             (event?.height || 0);
-
+                                            
                                         return (
                                             aspectRatio <= 2.2 &&
                                             aspectRatio >= 1.8
