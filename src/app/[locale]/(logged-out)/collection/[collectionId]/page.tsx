@@ -68,7 +68,12 @@ export default async function CollectionItemPage({
                         <Image
                             width={554}
                             height={250}
-                            style={{ width: "auto" }}
+                            style={{
+                                width: "auto",
+                                maxHeight: "20vw",
+                                maxWidth: "30vw",
+                                height: "100%",
+                            }}
                             alt={toTitleCase(collection.name)}
                             src={
                                 collection.image_link ||

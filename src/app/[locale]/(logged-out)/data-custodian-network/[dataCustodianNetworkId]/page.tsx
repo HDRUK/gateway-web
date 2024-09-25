@@ -54,7 +54,12 @@ export default async function DataCustodianNetworkPage({
                         <Image
                             width={554}
                             height={250}
-                            style={{ width: "auto" }}
+                            style={{
+                                width: "auto",
+                                maxHeight: "20vw",
+                                maxWidth: "30vw",
+                                height: "100%",
+                            }}
                             alt={summaryData.name}
                             src={
                                 summaryData?.img_url ||
