@@ -31,7 +31,6 @@ const DatasetStatCard = ({
     helperText,
     noStatText,
 }: DatasetStatCardProps) => {
-
     return (
         <StatCard>
             <Title>
