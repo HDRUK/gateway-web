@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
 import Button from "@/components/Button";
@@ -43,18 +44,22 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     };
 
     return (
-        <>
+        <Box sx={{ display: "flex" }}>
             <Button
                 sx={{ mt: 3 }}
                 onClick={handleCtaClick}
-                data-testid={DATA_TEST_ID}>
+                data-testid={DATA_TEST_ID}
+                color="greyCustom">
                 {ctaLink?.title}
             </Button>
 
-            <Button sx={{ mt: 3, ml: 3 }} onClick={handleVisit}>
+            <Button
+                sx={{ mt: 3, ml: 3 }}
+                onClick={handleVisit}
+                color="greyCustom">
                 Visit Cohort Discovery
             </Button>
-        </>
+        </Box>
     );
 };
 
