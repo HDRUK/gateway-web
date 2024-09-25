@@ -17,7 +17,7 @@ interface Collection {
     create_at: string;
     updated_at: string;
     deleted_at: string;
-    keywords: string | string[];
+    keywords: string[] | string;
     datasets: Dataset[];
     team: Team;
     users: User[];

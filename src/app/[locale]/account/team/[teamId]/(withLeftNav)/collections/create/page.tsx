@@ -13,9 +13,9 @@ export const metadata = {
 export default async function CollectionCreatePage({
     params,
 }: {
-    params: { teamId: string; };
+    params: { teamId: string };
 }) {
-    const { teamId, collectionId } = params;
+    const { teamId } = params;
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const team = await getTeam(cookieStore, teamId);
@@ -26,9 +26,7 @@ export default async function CollectionCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["collections.create"]}>
-            <CreateCollection
-                teamId={teamId}
-            />
+            <CreateCollection teamId={teamId} />
         </ProtectedAccountRoute>
     );
 }

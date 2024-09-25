@@ -15,8 +15,10 @@ import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
+import { Keyword } from "@/interfaces/Keyword";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
+import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -35,6 +37,7 @@ import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { inputComponents } from "@/config/forms";
 import {
     collectionDefaultValues,
     collectionFormFields,
@@ -46,7 +49,7 @@ import { RouteName } from "@/consts/routeName";
 
 interface CollectionCreateProps {
     teamId?: string;
-    collectionId?: number;
+    collectionId?: string;
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
@@ -62,7 +65,11 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const textFieldRef = useRef<HTMLInputElement>(null);
 
     const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
-    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=collections-media${!!collectionId ? `&collection_id=${collectionId}` : ''}`
+    const FILE_UPLOAD_URL = `${
+        apis.fileUploadV1Url
+    }?entity_flag=collections-media${
+        collectionId ? `&collection_id=${collectionId}` : ""
+    }`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
@@ -70,6 +77,10 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             resolver: yupResolver(collectionValidationSchema),
             defaultValues: collectionDefaultValues,
         });
+
+    const { data: keywordData } = useGet<Keyword[]>(
+        `${apis.keywordsV1Url}?per_page=-1`
+    );
 
     const { data: existingCollectionData } = useGet<Collection>(
         `${apis.collectionsV1Url}/${collectionId}`,
@@ -85,6 +96,16 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         { itemName: "Collection" }
     );
 
+    const keywordOptions = useMemo(() => {
+        if (!keywordData) return [];
+        return keywordData.map(data => {
+            return {
+                value: data.id as ValueType,
+                label: data.name,
+            };
+        }) as OptionsType[];
+    }, [keywordData]);
+
     useEffect(() => {
         if (!existingCollectionData) {
             return;
@@ -94,9 +115,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             ...collectionDefaultValues,
             name: existingCollectionData?.name,
             description: existingCollectionData?.description,
-            keywords: existingCollectionData?.keywords
-                ? setKeywordItem(existingCollectionData?.keywords)
-                : [],
+            keywords: existingCollectionData?.keywords || [],
             image_link: existingCollectionData?.image_link,
         };
 
@@ -173,39 +192,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             setValue("datasets", updatedResources as Dataset[]);
         }
     };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-        if (event.key === ";") {
-            event.preventDefault();
-            const newkeywordItem = [...keywordItem];
-            const newKeyword = textFieldRef?.current?.value;
-            const duplicatedValues = newkeywordItem.indexOf(newKeyword?.trim());
-
-            if (duplicatedValues !== -1) {
-                setValue("keywords", "");
-                return;
-            }
-            if (!event.target.value.replace(/\s/g, "").length) return;
-
-            newkeywordItem.push(newKeyword.trim());
-            setKeywordItem(newkeywordItem);
-            setValue("keywords", "");
-        }
-        if (
-            keywordItem.length &&
-            !textFieldRef?.current?.value.length &&
-            event.code === "Backspace"
-        ) {
-            setKeywordItem(keywordItem.slice(0, keywordItem.length - 1));
-        }
-    };
-
-    const handleDelete = item => () => {
-        const newkeywordItem = [...keywordItem];
-        newkeywordItem.splice(newkeywordItem.indexOf(item), 1);
-        setKeywordItem(newkeywordItem);
-    };
-
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
@@ -215,32 +201,18 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                         control={control}
                         sx={{ mt: 1 }}
                         {...field}
-                        {...(field.name === "keywords" && {
-                            startAdornment: keywordItem.map(item => (
-                                <Chip
-                                    key={item}
-                                    tabIndex={-1}
-                                    label={item}
-                                    onDelete={handleDelete(item)}
-                                    sx={{ my: 1, mr: 1 }}
-                                />
-                            )),
-                            onKeyDown: event => {
-                                handleKeyDown(event);
-                            },
-                            inputRef: textFieldRef,
-                        })}
+                        {...(field.component === inputComponents.Autocomplete
+                            ? {
+                                  options: keywordOptions,
+                              }
+                            : {})}
                     />
                 );
             }),
-        [control, keywordItem]
+        [control, keywordOptions]
     );
 
-    const onSubmit = async (
-        formData: Collection,
-        status?: DataStatus,
-        keywordItem?: string[]
-    ) => {
+    const onSubmit = async (formData: Collection, status?: DataStatus) => {
         const formatEntityToIdArray = (
             data: DataUse[] | Publication[] | Tool[] | Dataset[]
         ) => {
@@ -260,7 +232,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             enabled: true,
             public: 1,
             team_id: teamId ? +teamId : undefined,
-            keywords: keywordItem,
+            keywords: formData.keywords,
             image_link: formData.image_link,
             durs: formatEntityToIdArray(formData.dur),
             publications: formatEntityToIdArray(formData.publications),
@@ -284,7 +256,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             tertiaryButton: {
                 onAction: async () => {
                     handleSubmit(formData =>
-                        onSubmit(formData, DataStatus.DRAFT, keywordItem)
+                        onSubmit(formData, DataStatus.DRAFT)
                     )();
                 },
                 buttonText: t(`${TRANSLATION_PATH_CREATE}.saveDraft`),
@@ -295,7 +267,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             },
             onSuccess: () => {
                 handleSubmit(formData =>
-                    onSubmit(formData, DataStatus.ACTIVE, keywordItem)
+                    onSubmit(formData, DataStatus.ACTIVE)
                 )();
             },
             onCancel: () => {
@@ -303,7 +275,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [keywordItem]);
+    }, []);
 
     const handleFileUploaded = async (fileResponse: FileUpload) => {
         const { file_location } = fileResponse;
@@ -380,11 +352,11 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     acceptedFileTypes=".jpg,.png"
                                     apiPath={FILE_UPLOAD_URL}
                                     onBeforeUploadCheck={(
-                                        height: number, width: number
+                                        height: number,
+                                        width: number
                                     ) => {
                                         const aspectRatio =
-                                            (width || 0) /
-                                            (height || 0);
+                                            (width || 0) / (height || 0);
                                         return (
                                             aspectRatio <= 2.2 &&
                                             aspectRatio >= 1.8

@@ -231,11 +231,11 @@ const CreateIntegrationForm = () => {
                                     acceptedFileTypes=".jpg,.png"
                                     apiPath={FILE_UPLOAD_URL}
                                     onBeforeUploadCheck={(
-                                        height: number, width: number
+                                        height: number,
+                                        width: number
                                     ) => {
                                         const aspectRatio =
-                                            (width || 0) /
-                                            (height || 0);
+                                            (width || 0) / (height || 0);
                                         return (
                                             aspectRatio <= 2.2 &&
                                             aspectRatio >= 1.8

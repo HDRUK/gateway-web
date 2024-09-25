@@ -134,14 +134,17 @@ const UploadFile = ({
                         image.src = e?.target?.result;
                         image.onload = function () {
                             if (onBeforeUploadCheck) {
-                                const checked = onBeforeUploadCheck(image.height,image.width)
+                                const checked = onBeforeUploadCheck(
+                                    image.height,
+                                    image.width
+                                );
                                 return checked
                                     ? resolve(null)
                                     : reject(
-                                        new Error(
-                                            "The image does not pass it's checks"
-                                        )
-                                    );
+                                          new Error(
+                                              "The image does not pass it's checks"
+                                          )
+                                      );
                             }
 
                             return resolve(null);

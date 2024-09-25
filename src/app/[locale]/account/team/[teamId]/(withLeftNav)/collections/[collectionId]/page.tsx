@@ -26,10 +26,7 @@ export default async function CollectionCreatePage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["collections.update"]}>
-            <CreateCollection
-                teamId={teamId}
-                collectionId={collectionId}
-            />
+            <CreateCollection teamId={teamId} collectionId={collectionId} />
         </ProtectedAccountRoute>
     );
 }

@@ -5,7 +5,6 @@ const defaultValues = {
     name: "",
     description: "",
     id: "",
-    keywords: "",
     image_link: "",
     dur: [],
     publications: [],
@@ -15,7 +14,7 @@ const defaultValues = {
 
 const validationSchema = yup.object().shape({
     name: yup.string().required().min(2).label("Collection name"),
-    keywords: yup.string().label("Keywords (optional)"),
+    keywords: yup.array().of(yup.string()).label("Keywords (optional)"),
     description: yup.string().min(2).max(5000).required().label("Description"),
 });
 
@@ -35,9 +34,18 @@ const formFields = [
     },
     {
         label: "Keywords (optional)",
-        info: "Use semicolon (;) to create separate keywords (E.g. NCS; charity; disease)",
+        info: "E.g. NCS; charity; disease",
         name: "keywords",
         component: inputComponents.Autocomplete,
+        multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel: (
+            options: { value: string | number; label: string }[],
+            value: unknown
+        ) => options.find(option => option === value)?.label,
     },
 ];
 
