@@ -141,8 +141,6 @@ async function getDataset(
     }
     const queryString = params.toString();
 
-    console.log(queryString ? `${baseUrl}?${queryString}` : baseUrl);
-
     return await get<Dataset>(
         cookieStore,
         queryString ? `${baseUrl}?${queryString}` : baseUrl
