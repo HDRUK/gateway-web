@@ -31,7 +31,11 @@ const DatasetStatCard = ({
     helperText,
     noStatText,
 }: DatasetStatCardProps) => {
-
+    if (Array.isArray(stat)) {
+        stat.push("tester");
+        stat.push("tester");
+        stat.push("tester");
+    }
     return (
         <StatCard>
             <Title>
@@ -47,27 +51,18 @@ const DatasetStatCard = ({
                 {hasValidValue(stat) ? (
                     <StatWrapper>
                         {Array.isArray(stat) ? (
-                            stat.map((item, index) => <>
-                                {index < 2 && (
-                                    <Typography
-                            fontSize={16}
-                            sx={{ alignSelf: "flex-start" }}
-                            key={`${stat}_${item}`}>
-                            {item}
-                            
-                        </Typography>
-                                )}
-                                {index === 2 && (
-                                    <Typography
-                            fontSize={16}
-                            sx={{ alignSelf: "flex-start" }}
-                            key={`${stat}_${item}`}>
-                            ...
-                            
-                        </Typography>
-                                )}
-                                </>
-                            )
+                            stat.map((item, index) => (
+                                <Typography
+                                    fontSize={16}
+                                    sx={{ alignSelf: "flex-start" }}
+                                    key={`${stat}_${item}`}>
+                                    {index < 2
+                                        ? item
+                                        : index === 3
+                                        ? "..."
+                                        : null}
+                                </Typography>
+                            ))
                         ) : (
                             <Typography fontSize={largeStatText ? 24 : 16}>
                                 {stat}
