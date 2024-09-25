@@ -870,7 +870,7 @@
                     "populationSizeNotReported": "not reported",
                     "populationSize": "Dataset population size",
                     "dateLabel": "Date range",
-                    "leadOrganisation": "Lead organisation",
+                    "leadOrganisation": "Lead applicant organisation",
                     "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
                     "datasets": "Datasets",
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
@@ -939,7 +939,7 @@
                     "title": "Add dataset to your library",
                     "confirmText": "Add and go to library",
                     "buttonContinueText": "Add to library and continue searching",
-                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple data custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple data custodians (if the data custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
+                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to make a general enquiry for one or multiple data custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple data custodians (if the data custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
                 }
             }
         },
@@ -975,7 +975,7 @@
             "components": {
                 "ActionBar": {
                     "label": "Back",
-                    "enquire": "Make an enquiry"
+                    "enquire": "Make a general enquiry"
                 },
                 "CollectionsContent": {
                     "heading": "Collections ({ length })"
