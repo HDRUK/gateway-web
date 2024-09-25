@@ -3,7 +3,7 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import CreateCollection from "./components";
+import CreateCollection from "../create/components";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Create Collection",
