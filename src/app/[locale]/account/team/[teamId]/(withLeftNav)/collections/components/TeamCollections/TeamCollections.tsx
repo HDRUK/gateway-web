@@ -3,8 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
-import router from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Collection } from "@/interfaces/Collection";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
@@ -50,6 +49,7 @@ const TeamCollections = ({
     userId,
 }: TeamCollectionsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const router = useRouter();
     const { showModal } = useModal();
     const searchParams = useSearchParams();
     const tab = searchParams?.get("tab");
