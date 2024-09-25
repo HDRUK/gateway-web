@@ -88,6 +88,10 @@ export default async function DatasetItemPage({
         return { label: section.sectionName };
     });
 
+    const enableMetaScroll = !!populatedSections.find(
+        element => element.sectionName === "Structural Metadata"
+    );
+
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
@@ -111,11 +115,13 @@ export default async function DatasetItemPage({
                                     }
                                 </Typography>
                                 <div>
-                                    <DatasetStats data={datasetStats} />
+                                    <DatasetStats
+                                        data={datasetStats}
+                                        enableMetaScroll={enableMetaScroll}
+                                    />
                                 </div>
                             </Box>
                         )}
-
                         <BoxContainer
                             sx={{
                                 gridTemplateColumns: {

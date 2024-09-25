@@ -13,7 +13,13 @@ import {
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
-const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
+const DatasetStats = ({
+    data,
+    enableMetaScroll,
+}: {
+    data: Partial<VersionItem>;
+    enableMetaScroll: boolean;
+}) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
@@ -97,6 +103,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                     largeStatText={!!datasetStat.largeStatText}
                     unit={datasetStat.unit}
                     iconSrc={datasetStat.iconSrc}
+                    enableMetaScroll={enableMetaScroll}
                 />
             ))}
         </BoxContainer>
