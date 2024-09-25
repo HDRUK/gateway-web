@@ -4,19 +4,18 @@ import {
     DescriptionOutlinedIcon,
     FolderSharedOutlinedIcon,
     GroupsIcon,
-    GroupsOutlinedIcon,
-    HandymanOutlinedIcon,
+    DescriptionIcon,
+    ToolIcon,
     HelpOutlineOutlinedIcon,
     QuestionAnswerIcon,
-    SchemaOutlinedIcon,
+    DataUseIcon,
     SettingsOutlinedIcon,
     DatabaseIcon,
     CloudUploadIcon,
-    ArticleIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
-    BookmarksIcon,
-    StickyNote2OutlinedIcon,
+    BookmarksOutlinedIcon,
+    PublicationIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -30,16 +29,6 @@ const getProfileNav = (permissions: {
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
         {
-            icon: <HandymanOutlinedIcon />,
-            label: "Analysis Scripts & Software",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
-        },
-        {
-            icon: <StickyNote2OutlinedIcon />,
-            label: "Publications",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
-        },
-        {
             icon: <BookmarkBorderIcon />,
             label: "Library",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
@@ -49,7 +38,6 @@ const getProfileNav = (permissions: {
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
-        
         ...(permissions["custodians.read"]
             ? [
                   {
@@ -86,6 +74,21 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
+        {
+            icon: <ToolIcon />,
+            label: "Analysis script, tools and software",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+        },
+        {
+            icon: <PublicationIcon />,
+            label: "Publications",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
+        },
+        {
+            icon: <BookmarksOutlinedIcon />,
+            label: "Collections",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
+        },
     ];
 };
 
@@ -151,7 +154,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <GroupsOutlinedIcon />,
+                      icon: <DescriptionIcon />,
                       label: "Data Access Requests",
                       subItems: [
                           ...(permissions["dar-form.update"]
@@ -185,7 +188,7 @@ const getTeamNav = (
         ...(permissions["papers.read"]
             ? [
                   {
-                      icon: <ArticleIcon />,
+                      icon: <PublicationIcon />,
                       label: "Publications",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
                   },
@@ -194,7 +197,7 @@ const getTeamNav = (
         ...(permissions["tools.read"]
             ? [
                   {
-                      icon: <HandymanOutlinedIcon />,
+                      icon: <ToolIcon />,
                       label: "Analysis Scripts & Software",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
                   },
@@ -203,7 +206,7 @@ const getTeamNav = (
         ...(permissions["collections.read"]
             ? [
                   {
-                      icon: <BookmarksIcon />,
+                      icon: <BookmarksOutlinedIcon />,
                       label: "Collections",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                   },
@@ -217,7 +220,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <SchemaOutlinedIcon />,
+                      icon: <DataUseIcon />,
                       label: "Data Uses",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
                   },

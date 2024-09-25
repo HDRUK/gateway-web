@@ -14,8 +14,8 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
@@ -29,6 +29,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import DescriptionIcon from "@mui/icons-material/Description";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import DownloadIcon from "@mui/icons-material/Download";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
@@ -83,6 +84,7 @@ export {
     ArrowDropUpIcon,
     SortByAlphaIcon,
     DescriptionOutlinedIcon,
+    DescriptionIcon,
     UnarchiveIcon,
     ArchiveIcon,
     EditIcon,
@@ -144,6 +146,6 @@ export {
     ArticleIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
-    BookmarksIcon,
+    BookmarksOutlinedIcon,
     StickyNote2OutlinedIcon,
 };
