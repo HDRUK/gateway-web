@@ -62,7 +62,7 @@ const Footer = () => {
 
     const links2 = [
         {
-            href: "https://www.healthdatagateway.org/about/cookie-notice",
+            href: "/about/cookie-notice",
             label: t("cookieNotice"),
         },
         {
