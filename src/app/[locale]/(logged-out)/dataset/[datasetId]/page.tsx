@@ -115,7 +115,6 @@ export default async function DatasetItemPage({
                                 </div>
                             </Box>
                         )}
-
                         <BoxContainer
                             sx={{
                                 gridTemplateColumns: {

@@ -160,7 +160,10 @@ const DatasetContent = ({
                     }}>
                     <Box
                         key={`${section.sectionName}_wrap`}
-                        id={`anchor${index + 1}`}
+                        id={`anchor-${section.sectionName.replaceAll(
+                            /\s/g,
+                            ""
+                        )}`}
                         sx={{
                             "&:not(:last-of-type)": {
                                 borderBottom: 1,
