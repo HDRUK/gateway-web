@@ -36,7 +36,10 @@ const DatasetStatCard = ({
     targetScroll,
 }: DatasetStatCardProps) => {
     const handleScroll = () => {
-        document.getElementById(targetScroll)!.scrollIntoView();
+        document?.getElementById(targetScroll)!.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
     };
 
     return (
