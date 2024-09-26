@@ -19,6 +19,7 @@ import {
     DataCustodianSection,
     FieldType,
 } from "../../config";
+import TrailingContent from "../TrailingContent";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";
@@ -103,6 +104,9 @@ const DataCustodianContent = ({
                                         borderBottom: 1,
                                         borderColor: "greyCustom.light",
                                     },
+                                    "&:last-child": {
+                                        pb: 0,
+                                    },
                                     pl: 0,
                                     pr: 0,
                                 }}>
@@ -181,6 +185,7 @@ const DataCustodianContent = ({
                             </Box>
                         </InView>
                     ))}
+                    <TrailingContent data={data} sx={{ mb: 2 }} />
                 </Paper>
             </Box>
         </BoxContainer>
