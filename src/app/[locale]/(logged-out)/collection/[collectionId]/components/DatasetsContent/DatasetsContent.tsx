@@ -8,7 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { RouteName } from "@/consts/routeName";
 import { getLatestVersion } from "@/utils/dataset";
-import { toTitleCase } from "@/utils/string";
+import { capitalize } from "@/utils/string";
 import AccordionSection from "../AccordionSection";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
@@ -25,11 +25,9 @@ export default function DatasetContent({
     const router = useRouter();
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
-
     const datasetsLatestVersions = datasets.map(dataset =>
         getLatestVersion(dataset)
     );
-
     return (
         <InView
             id={`anchor${anchorIndex}`}
@@ -78,7 +76,7 @@ export default function DatasetContent({
                                     })}
                                 </div>
                             )}
-                            <div>{toTitleCase(datasetType)}</div>
+                            <div>{capitalize(datasetType)}</div>
                         </Fragment>
                     )
                 )}
