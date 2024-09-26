@@ -12,6 +12,8 @@ const TrailingContent = ({ data, ...restProps }: TrailingContentProps) => {
         return null;
     }
 
+    console.log("DATA", data);
+
     return (
         <Box {...restProps}>
             {data.url && <Link href={data.url}>{data.url}</Link>}

@@ -47,6 +47,8 @@ export default async function DataCustodianItemPage({
 
     const page = "dataCustodian";
 
+    console.log("DATA", data);
+
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
