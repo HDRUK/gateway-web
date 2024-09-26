@@ -31,7 +31,7 @@ interface Collection {
 }
 
 export interface CollectionSubmission
-    extends Omit<Collection, "publications" | "durs" | "tools" | "datasets"> {
+    extends Omit<Collection, "publications" | "dur" | "tools" | "datasets"> {
     publications: number[];
     durs: number[];
     tools: number[];

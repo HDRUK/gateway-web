@@ -56,7 +56,7 @@ const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
 
 const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
-    const [keywordItem, setKeywordItem] = useState<string[]>([]);
+    const [imageUploaded, setImageUploaded] = useState(false);
 
     const t = useTranslations();
     const { showDialog } = useDialog();
@@ -67,9 +67,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
     const FILE_UPLOAD_URL = `${
         apis.fileUploadV1Url
-    }?entity_flag=collections-media${
-        collectionId ? `&collection_id=${collectionId}` : ""
-    }`;
+    }?entity_flag=collections-media&collection_id=${collectionId}`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
@@ -86,7 +84,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         `${apis.collectionsV1Url}/${collectionId}`,
         { shouldFetch: !!collectionId }
     );
-
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
         { itemName: "Collection" }
@@ -225,7 +222,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
             return data?.map(item => item?.id);
         };
-
         const payload: CollectionSubmission = {
             ...formData,
             status,
@@ -296,7 +292,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             )
         );
     };
-
     return (
         <>
             <BoxContainer
@@ -331,8 +326,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                 label={t(
                                     `${TRANSLATION_PATH_CREATE}.addImages`
                                 )}
-                                info={t(
-                                    `${TRANSLATION_PATH_CREATE}.addImagesInfo`
+                                info={imageUploaded ? t( `${TRANSLATION_PATH_CREATE}.addImageSuccess`)
+                                    : t( `${TRANSLATION_PATH_CREATE}.addImagesInfo`
                                 )}
                                 error={
                                     fileNotUploaded
@@ -370,6 +365,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     ) => {
                                         handleFileUploaded(file);
                                         setFileNotUploaded(false);
+                                        setImageUploaded(true);
                                     }}
                                     onFileCheckFailed={() => {
                                         setFileNotUploaded(true);
@@ -377,16 +373,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     sx={{ py: 2 }}
                                 />
                             </FormInputWrapper>
-
-                            {existingCollectionData?.image_link && (
-                                <Box sx={{ width: "30%" }}>
-                                    <img
-                                        src={existingCollectionData?.image_link}
-                                        alt={`${existingCollectionData?.name} image`}
-                                        width="100%"
-                                    />
-                                </Box>
-                            )}
                         </Box>
                     </Paper>
                     {/* ADD RESOURCES */}
