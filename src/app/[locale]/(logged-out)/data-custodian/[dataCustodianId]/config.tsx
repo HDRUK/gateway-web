@@ -6,7 +6,6 @@ export enum FieldType {
     LINK = "link",
     TAG = "tag",
     WYSIWYG = "wysiwyg",
-    CONTENT = "content",
 }
 export interface DataCustodianField {
     path: string;
