@@ -32,9 +32,9 @@ async function get<T>(
         throw new Error("Failed to fetch data");
     }
 
-    const { data } = await res.json();
+    const x = await res.json();
 
-    return data;
+    return x.data;
 }
 
 async function getFilters(

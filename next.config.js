@@ -24,6 +24,12 @@ const nextConfig = withNextIntl({
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "http",
+                hostname: "media.local",
+                port: "",
+                pathname: "/**",
+            },
         ],
     },
     async redirects() {

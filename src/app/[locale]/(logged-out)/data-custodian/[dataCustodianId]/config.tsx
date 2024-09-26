@@ -29,6 +29,15 @@ const dataCustodianFields: DataCustodianSection[] = [
             },
         ],
     },
+    {
+        sectionName: "website",
+        fields: [
+            {
+                path: "url",
+                type: FieldType.LINK,
+            },
+        ],
+    },
 ];
 
 const accordions = [

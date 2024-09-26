@@ -34,12 +34,16 @@ export default function WysiwygOut({ value }: WysiwygOutProps) {
 
     const html = useMemo(() => {
         if (value) {
-            return parse(
-                generateHTML(JSON.parse(value) as JSONContent, EXTENSIONS),
-                {
-                    replace,
-                }
-            );
+            try {
+                return parse(
+                    generateHTML(JSON.parse(value) as JSONContent, EXTENSIONS),
+                    {
+                        replace,
+                    }
+                );
+            } catch (e) {
+                return "";
+            }
         }
 
         return null;

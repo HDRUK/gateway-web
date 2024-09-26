@@ -966,6 +966,7 @@
         },
         "dataCustodian": {
             "introduction": "Introduction",
+            "website": "Website",
             "collections": "Collections",
             "datasets": "Datasets",
             "dataUses": "Data Uses",

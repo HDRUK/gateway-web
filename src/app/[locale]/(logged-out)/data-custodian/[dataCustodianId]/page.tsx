@@ -2,6 +2,7 @@ import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
@@ -34,7 +35,14 @@ export default async function DataCustodianItemPage({
     const { dataCustodianId } = params;
     const cookieStore = cookies();
 
-    const data = await getTeamSummary(cookieStore, dataCustodianId);
+    let data;
+
+    try {
+        data = await getTeamSummary(cookieStore, dataCustodianId);
+    } catch (_) {
+        notFound();
+    }
+
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );
