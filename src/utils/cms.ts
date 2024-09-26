@@ -366,6 +366,18 @@ const getPrivacyPolicy = async () => {
     return data?.page || null;
 };
 
+const getCookieNotice = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getCookieNoticeQuery", {
+            id: "cookie-notice",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -394,4 +406,5 @@ export {
     getContentPostQuery,
     hasCategoryName,
     getPrivacyPolicy,
+    getCookieNotice,
 };
