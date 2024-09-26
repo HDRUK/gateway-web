@@ -66,7 +66,7 @@ const DatasetStatCard = ({
                                     {index < 2
                                         ? item
                                         : index === 3
-                                        ? "'...see more"
+                                        ? "...see more"
                                         : null}
                                 </Typography>
                             ))
