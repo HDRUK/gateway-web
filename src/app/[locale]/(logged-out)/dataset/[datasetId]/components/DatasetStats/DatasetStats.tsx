@@ -57,7 +57,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         {
             title: t("associatedTissuesTitle"),
             noStatText: t("notReported"),
-            stat: tissueStat ?? '',
+            stat: tissueStat ?? "",
             iconSrc: "/images/dataset/lungs.svg",
             targetScroll: "anchor-Provenance",
             enableScroll: !!tissueStat,
