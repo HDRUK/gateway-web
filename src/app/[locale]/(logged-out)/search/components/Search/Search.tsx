@@ -32,7 +32,6 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
-import TooltipIcon from "@/components/TooltipIcon";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
@@ -65,15 +64,15 @@ import {
     FILTER_TYPE_CATEGORY,
 } from "@/config/forms/filters";
 import searchFormConfig, {
+    PAGE_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
     VIEW_FIELD,
     sortByOptionsDataUse,
     sortByOptionsDataset,
-    sortByOptionsTool,
     sortByOptionsPublications,
-    PAGE_FIELD,
+    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
