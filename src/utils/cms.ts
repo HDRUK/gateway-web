@@ -354,6 +354,18 @@ const hasCategoryName = (
     return !!categories?.nodes?.find(item => item.name === categoryName);
 };
 
+const getPrivacyPolicy = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getPrivacyPolicyQuery", {
+            id: "privacy-policy",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
+};
+
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
@@ -381,4 +393,5 @@ export {
     getSortedNewsEventsByDate,
     getContentPostQuery,
     hasCategoryName,
+    getPrivacyPolicy,
 };

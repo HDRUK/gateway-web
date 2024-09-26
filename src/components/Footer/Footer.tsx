@@ -55,7 +55,7 @@ const Footer = () => {
             label: t("termsConditions"),
         },
         {
-            href: "https://www.healthdatagateway.org/about/privacy-policy",
+            href: "/about/privacy-policy",
             label: t("privacyPolicy"),
         },
     ];
