@@ -20,7 +20,8 @@ export interface DatasetStatCardProps {
     unit?: string;
     helperText?: string;
     noStatText?: string;
-    enableMetaScroll: boolean;
+    targetScroll: string;
+    enableScroll: boolean;
 }
 
 const DatasetStatCard = ({
@@ -31,22 +32,18 @@ const DatasetStatCard = ({
     unit,
     helperText,
     noStatText,
-    enableMetaScroll,
+    enableScroll,
+    targetScroll,
 }: DatasetStatCardProps) => {
-    // This should really be using useRefs, but the ref would need to live in the
-    // parent page which is a serverside component... so it canny use hooks..
-    // not a great solution but if this needs expanding to other sections id possibly look at
-    // splitting out the parent page into nested clientside components, a bigger job.. much...
-    // Jamie Byrne
-    const isGeoAndHasMeta = title === "Geographic coverage" && enableMetaScroll;
-    const handleMetaScroll = () => {
-        document.getElementById("anchor-StructuralMetadata")!.scrollIntoView();
+    const handleScroll = () => {
+        document.getElementById(targetScroll)!.scrollIntoView();
     };
+
     return (
         <StatCard
-            onClick={isGeoAndHasMeta ? () => handleMetaScroll() : undefined}
+            onClick={enableScroll ? () => handleScroll() : undefined}
             sx={{
-                ...(isGeoAndHasMeta ? { cursor: "pointer" } : {}),
+                ...(enableScroll ? { cursor: "pointer" } : {}),
             }}>
             <Title>
                 <Typography fontSize={16} sx={{ mb: 0, pt: 1, pb: 1 }}>

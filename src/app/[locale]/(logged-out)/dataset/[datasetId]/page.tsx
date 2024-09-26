@@ -115,10 +115,7 @@ export default async function DatasetItemPage({
                                     }
                                 </Typography>
                                 <div>
-                                    <DatasetStats
-                                        data={datasetStats}
-                                        enableMetaScroll={enableMetaScroll}
-                                    />
+                                    <DatasetStats data={datasetStats} />
                                 </div>
                             </Box>
                         )}
