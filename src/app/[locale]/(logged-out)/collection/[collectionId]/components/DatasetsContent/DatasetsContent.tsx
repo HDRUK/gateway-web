@@ -8,7 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { RouteName } from "@/consts/routeName";
 import { getLatestVersion } from "@/utils/dataset";
-import { capitalize } from "@/utils/string";
+import { capitalise } from "@/utils/general";
 import AccordionSection from "../AccordionSection";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
@@ -76,7 +76,7 @@ export default function DatasetContent({
                                     })}
                                 </div>
                             )}
-                            <div>{capitalize(datasetType)}</div>
+                            <div>{capitalise(datasetType)}</div>
                         </Fragment>
                     )
                 )}

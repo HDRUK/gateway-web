@@ -4,13 +4,9 @@ const toTitleCase = (value: string) => {
     });
 };
 
-const capitalize = (value: string) => {
-    return value.charAt(0).toUpperCase() + value.slice(1);
-};
-
 const getLastSplitPart = (input: string, delimiter: string): string => {
     const parts = input.split(delimiter);
     return parts[parts.length - 1];
 };
 
-export { toTitleCase, getLastSplitPart, capitalize };
+export { toTitleCase, getLastSplitPart };
