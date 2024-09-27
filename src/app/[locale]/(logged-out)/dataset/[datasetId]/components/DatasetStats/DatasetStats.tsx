@@ -33,7 +33,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         get(data, "metadata.metadata.accessibility.access.deliveryLeadTime") ||
             ""
     )?.[0];
-
+    
     const formattedStats: DatasetStatCardProps[] = [
         {
             title: t("populationTitle"),
@@ -43,8 +43,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
             targetScroll: "anchor-Documentation",
-            enableScroll:
-                populationStat.toString() === "-1" ? false : !!populationStat,
+            enableScroll: (populationStat) ? populationStat.toString() === "-1" ? false : !!populationStat : false,
         },
         {
             title: t("yearTitle"),

@@ -148,7 +148,10 @@ const DatasetContent = ({
             {populatedSections.map((section, index) => (
                 <InView
                     key={`${section.sectionName}_inview`}
-                    id={`anchor${index + 1}`}
+                    id={`anchor-${section.sectionName.replaceAll(
+                            /\s/g,
+                            ""
+                        )}`}
                     threshold={1}
                     as="div"
                     onChange={inView => {
