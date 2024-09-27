@@ -230,10 +230,10 @@ const getWorkWithUs = async () => {
     return data?.page || null;
 };
 
-const getDevelopmentCommunity = async () => {
+const getTechnologyEcosystem = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-        GetContentPageQuery("getDevelopmentCommunityQuery", {
-            id: "development-community",
+        GetContentPageQuery("getTechnologyEcosystem", {
+            id: "technology-ecosystem",
             idType: "URI",
         }),
         DEFAULT_OPTIONS
@@ -384,7 +384,7 @@ export {
     getCohortTermsAndConditions,
     getContentPageQuery,
     getDataCustodians,
-    getDevelopmentCommunity,
+    getTechnologyEcosystem,
     getEvents,
     getGettingStarted,
     getHomePageBanner,

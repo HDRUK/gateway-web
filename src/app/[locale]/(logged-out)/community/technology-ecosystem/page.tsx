@@ -1,16 +1,16 @@
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import { getDevelopmentCommunity } from "@/utils/cms";
+import { getTechnologyEcosystem } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - Development Community",
+    title: "Health Data Research Innovation Gateway - The Technology Ecosystem",
     description: "",
 };
 
 const DevelopmentCommunityPage = async () => {
-    const cmsPage = await getDevelopmentCommunity();
+    const cmsPage = await getTechnologyEcosystem();
 
     return (
         <>
