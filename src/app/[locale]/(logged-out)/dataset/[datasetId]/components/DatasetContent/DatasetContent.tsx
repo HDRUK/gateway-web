@@ -146,7 +146,10 @@ const DatasetContent = ({
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             {populatedSections.map((section, index) => {
-                const id = `anchor-${section.sectionName.replaceAll(/\s/g, "")}`;
+                const id = `anchor-${section.sectionName.replaceAll(
+                    /\s/g,
+                    ""
+                )}`;
                 return (
                     <InView
                         key={`${section.sectionName}_inview`}
@@ -174,7 +177,7 @@ const DatasetContent = ({
                             <Typography variant="h2">
                                 {section.sectionName}
                             </Typography>
-    
+
                             {section.sectionName === "Observations" ? (
                                 renderObservationsTable(
                                     get(data, "metadata.metadata.observations")
@@ -195,7 +198,8 @@ const DatasetContent = ({
                                                     <DemographicsAccordion
                                                         data={get(
                                                             data,
-                                                            section.fields[0].path
+                                                            section.fields[0]
+                                                                .path
                                                         )}
                                                     />
                                                 ),
@@ -206,7 +210,8 @@ const DatasetContent = ({
                                         Open table
                                     </Button>
                                 </Box>
-                            ) : section.sectionName === "Structural Metadata" ? (
+                            ) : section.sectionName ===
+                              "Structural Metadata" ? (
                                 <Box
                                     sx={{
                                         display: "flex",
@@ -222,7 +227,8 @@ const DatasetContent = ({
                                                     <StructuralMetadataAccordion
                                                         metadata={get(
                                                             data,
-                                                            section.fields[0].path
+                                                            section.fields[0]
+                                                                .path
                                                         )}
                                                     />
                                                 ),
@@ -236,11 +242,11 @@ const DatasetContent = ({
                             ) : (
                                 section.fields.map(field => {
                                     const value = get(data, field.path);
-    
+
                                     if (!value || value === -1) {
                                         return null;
                                     }
-    
+
                                     if (!field.label) {
                                         return (
                                             <Box
@@ -256,7 +262,7 @@ const DatasetContent = ({
                                             </Box>
                                         );
                                     }
-    
+
                                     return (
                                         <BoxContainer
                                             sx={{
@@ -280,7 +286,10 @@ const DatasetContent = ({
                                                     <TooltipIcon
                                                         content={field.tooltip}
                                                         label={field.label}
-                                                        buttonSx={{ p: 0, mr: 1 }}
+                                                        buttonSx={{
+                                                            p: 0,
+                                                            mr: 1,
+                                                        }}
                                                     />
                                                 ) : (
                                                     field.label
@@ -305,9 +314,8 @@ const DatasetContent = ({
                             )}
                         </Box>
                     </InView>
-                )
-            }
-            )}
+                );
+            })}
         </Paper>
     );
 };
