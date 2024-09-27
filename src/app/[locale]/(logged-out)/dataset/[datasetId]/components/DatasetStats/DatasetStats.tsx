@@ -33,7 +33,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         get(data, "metadata.metadata.accessibility.access.deliveryLeadTime") ||
             ""
     )?.[0];
-    
+
     const formattedStats: DatasetStatCardProps[] = [
         {
             title: t("populationTitle"),
