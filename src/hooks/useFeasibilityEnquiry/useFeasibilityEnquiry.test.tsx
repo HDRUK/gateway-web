@@ -58,6 +58,7 @@ describe("useFeasibilityEnquiry", () => {
 
             expect(mockShowDialog).toHaveBeenCalledWith(expect.any(Function), {
                 isProvidersDialog: true,
+                redirectPath: "/",
             });
         } else {
             fail("No callback was returned");

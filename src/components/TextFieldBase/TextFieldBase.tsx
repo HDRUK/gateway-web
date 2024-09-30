@@ -29,6 +29,7 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     required?: boolean;
     formControlSx?: SxProps;
     css?: SerializedStyles;
+    id?: string;
 }
 
 const TextFieldBase = <
@@ -55,6 +56,7 @@ const TextFieldBase = <
         setValue,
         showClearButton = false,
         formControlSx,
+        id,
         ...inputProps
     } = props;
 
@@ -95,6 +97,7 @@ const TextFieldBase = <
                 rows={rows}
                 sx={{ fontSize: 14 }}
                 placeholder={placeholder}
+                id={id || name}
                 {...(icon &&
                     Icon && {
                         startAdornment: (

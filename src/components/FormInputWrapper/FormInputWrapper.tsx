@@ -21,6 +21,7 @@ interface FormInputWrapperProps {
     limit?: number;
     children: ReactNode;
     error?: FieldError | FieldError[];
+    onLabelClick?: (e: React.MouseEvent) => void;
 }
 
 const FormInputWrapper = ({
@@ -36,6 +37,7 @@ const FormInputWrapper = ({
     value,
     children,
     error,
+    onLabelClick,
 }: FormInputWrapperProps) => {
     const characterCount = useMemo(() => {
         if (!value || typeof value !== "string") return 0;
@@ -65,6 +67,7 @@ const FormInputWrapper = ({
                         info={info}
                         disabled={disabled}
                         required={required}
+                        onClick={onLabelClick}
                     />
                 </Box>
             )}
