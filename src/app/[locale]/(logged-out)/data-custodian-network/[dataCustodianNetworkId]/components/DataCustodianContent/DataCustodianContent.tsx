@@ -15,13 +15,11 @@ const TRANSLATION_PATH =
 interface DataCustodianContentProps {
     dataCustodians: DataCustodians[];
     anchorIndex: number;
-    id: string;
 }
 
 export default function DataCustodianContent({
     dataCustodians,
     anchorIndex,
-    id,
 }: DataCustodianContentProps) {
     const router = useRouter();
     const path = usePathname();
@@ -46,6 +44,7 @@ export default function DataCustodianContent({
                 contents={dataCustodians.map(
                     ({
                         name,
+                        id,
                         datasets_count,
                         publications_count,
                         tools_count,

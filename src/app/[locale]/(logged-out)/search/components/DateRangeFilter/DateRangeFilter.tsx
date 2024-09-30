@@ -64,7 +64,7 @@ const DateRangeFilter = ({
     };
 
     const startDate = aggregations?.startDate?.value_as_string;
-    const endDate = aggregations?.endDate?.value_as_string;
+    const endDate = new Date().setFullYear(new Date().getFullYear() + 5);
 
     const defaultMinDate = dateRange.minYear
         ? yearToDayJsDate(dateRange.minYear)

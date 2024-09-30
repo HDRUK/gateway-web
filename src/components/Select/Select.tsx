@@ -36,6 +36,7 @@ export interface SelectProps<TFieldValues extends FieldValues, TName> {
     required?: boolean;
     hasCheckbox?: boolean;
     formControlSx?: SxProps;
+    id?: string;
 }
 
 const limitLabelLength = (label?: string) => {
@@ -83,6 +84,7 @@ const Select = <
     iconRight = false,
     disabled = false,
     invertListItem = false,
+    id,
     ...rest
 }: SelectProps<TFieldValues, TName>) => {
     const {
@@ -116,6 +118,7 @@ const Select = <
                 renderValue={selected =>
                     renderValue(selected, options, !!multiple)
                 }
+                id={id || name}
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
                 {...rest}>

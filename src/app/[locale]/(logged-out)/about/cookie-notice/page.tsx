@@ -1,16 +1,16 @@
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import { getDevelopmentCommunity } from "@/utils/cms";
+import { getCookieNotice } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - Development Community",
+    title: "Health Data Research Innovation Gateway - Cookie Notice",
     description: "",
 };
 
-const DevelopmentCommunityPage = async () => {
-    const cmsPage = await getDevelopmentCommunity();
+const PrivacyPolicyPage = async () => {
+    const cmsPage = await getCookieNotice();
 
     return (
         <>
@@ -22,4 +22,4 @@ const DevelopmentCommunityPage = async () => {
     );
 };
 
-export default DevelopmentCommunityPage;
+export default PrivacyPolicyPage;

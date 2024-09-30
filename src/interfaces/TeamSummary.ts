@@ -9,6 +9,7 @@ interface TeamSummary {
     name: string;
     team_logo: string;
     is_provider: boolean;
+    introduction: string | null;
     datasets: DataCustodianDataset[];
     durs: DataUse[];
     tools: Tool[];

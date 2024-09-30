@@ -3,7 +3,7 @@ import { DataStatus } from "@/consts/application";
 import { Category } from "./Category";
 import { DataUse } from "./DataUse";
 import { VersionItem } from "./Dataset";
-import { Publication } from "./Publication";
+import type { Publication } from "./Publication";
 import { Tag } from "./Tag";
 import { Team } from "./Team";
 
