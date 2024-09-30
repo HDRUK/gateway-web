@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import UserPublications from "@/app/[locale]/account/profile/publications/components/UserPublications";
-
-// import UserPublications from "./components/UserPublications";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Publications",
@@ -22,10 +21,14 @@ export default async function UserPublicationsPage({
     const userId = user?.id?.toString();
 
     return (
-        <UserPublications
+        <ProtectedAccountRoute
             permissions={permissions}
-            teamId={teamId}
-            userId={userId}
-        />
+            pagePermissions={["papers.read"]}>
+            <UserPublications
+                permissions={permissions}
+                teamId={teamId}
+                userId={userId}
+            />
+        </ProtectedAccountRoute>
     );
 }
