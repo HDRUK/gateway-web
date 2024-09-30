@@ -52,6 +52,7 @@ const InfoHoverPanel = ({ items, defaultImageSrc }: InfoHoverPanelProps) => {
                         key={item.id}
                         passHref
                         onMouseEnter={() => setSelected(item)}
+                        onMouseLeave={() => setSelected(null)}
                         href={item.href}>
                         <Button
                             size="large"

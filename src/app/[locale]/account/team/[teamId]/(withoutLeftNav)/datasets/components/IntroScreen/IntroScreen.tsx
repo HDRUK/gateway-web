@@ -47,7 +47,6 @@ const METADATA_CHECKBOXES = [
     "treatmentsInterventions",
     "measurementsTests",
     "imagingTypes",
-    "imagingAreaOfTheBody",
     "omics",
     "socioeconomic",
     "lifestyle",

@@ -62,6 +62,7 @@ const apis = {
     toolCategoriesV1Url: `${apiV1Url}/type_categories`,
     programmingLanguagesV1Url: `${apiV1Url}/programming_languages`,
     enquiryThreadsV1Url: `${apiV1Url}/enquiry_threads`,
+    doiSearchV1Url: `${apiV1Url}/search/doi`,
 };
 
 export default apis;

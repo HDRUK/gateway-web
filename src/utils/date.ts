@@ -1,7 +1,16 @@
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const DEFAULT_TIMEZONE = "UTC";
 
 const getDayjs = (date: string | Date) => {
-    return typeof date === "string" ? dayjs(new Date(date)) : dayjs(date);
+    return typeof date === "string"
+        ? dayjs.tz(new Date(date), DEFAULT_TIMEZONE)
+        : dayjs.tz(date, DEFAULT_TIMEZONE);
 };
 
 const formatDate = (date: string | Date, formatStr = "DD MMM YYYY") => {

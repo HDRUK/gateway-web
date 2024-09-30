@@ -21,6 +21,7 @@ import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
 import { Highlight } from "./HighlightDataset";
 import { PaginationType } from "./Pagination";
+import { Team } from "./Team";
 
 export interface Aggregations {
     [FILTER_DATA_TYPE]: {
@@ -124,6 +125,7 @@ export interface SearchResultTool extends SearchResultBase {
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
     image_link?: string;
+    team: Team | null;
 }
 
 export interface SearchResultDataProvider extends SearchResultBase {
