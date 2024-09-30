@@ -130,7 +130,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         reset(formData);
     }, [reset, existingCollectionData]);
     const watchAll = watch();
-
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
@@ -246,7 +245,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ updated_at, created_at, ...item }) => item
         );
-        console.log(formData.datasets);
         const payload: CollectionSubmission = {
             ...formData,
             status,
@@ -258,9 +256,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             durs: formatEntityToIdArray(formData.dur),
             publications,
             tools: formatEntityToIdArray(formData.tools),
-            dataset: formatEntityToIdArray(formData.datasets),
+            dataset: formatEntityToIdArray(formData.datasets)
         };
-
         if (!collectionId) {
             await createCollection(payload).then(async result => {
                 if (typeof result === "number" && file) {

@@ -176,7 +176,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         control,
         name: "dataset",
     });
-
     const onSubmit = async (formData: ToolPayload, status: DataStatus) => {
         const formatEntityToIdArray = (
             data: DataUse[] | Publication[] | Tool[]
