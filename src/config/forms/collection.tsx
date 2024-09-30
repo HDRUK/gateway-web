@@ -6,6 +6,7 @@ const defaultValues = {
     description: "",
     id: "",
     image_link: "",
+    keywords: [],
     dur: [],
     publications: [],
     tools: [],
@@ -45,7 +46,7 @@ const formFields = [
         getChipLabel: (
             options: { value: string | number; label: string }[],
             value: unknown
-        ) => options.find(option => option === value)?.label,
+        ) => options.find(option => option.value === value)?.label,
     },
 ];
 

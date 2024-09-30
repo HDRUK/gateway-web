@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
@@ -29,7 +29,7 @@ import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import ResourceTable from "@/components/ResourceTable";
 import Typography from "@/components/Typography";
-import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
+import UploadFile from "@/components/UploadFile";
 import AddResourceDialog from "@/modules/AddResourceDialog";
 import useActionBar from "@/hooks/useActionBar";
 import useDialog from "@/hooks/useDialog";
@@ -57,23 +57,23 @@ const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
 const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
+    const [file, setFile] = useState<File>();
+    const [createdCollectionId, setCreatedCollectionId] = useState<string>();
 
     const t = useTranslations();
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
-    const textFieldRef = useRef<HTMLInputElement>(null);
 
     const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
-    const FILE_UPLOAD_URL = `${
-        apis.fileUploadV1Url
-    }?entity_flag=collections-media&collection_id=${collectionId}`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
             mode: "onTouched",
             resolver: yupResolver(collectionValidationSchema),
-            defaultValues: collectionDefaultValues,
+            defaultValues: {
+                ...collectionDefaultValues,
+            },
         });
 
     const { data: keywordData } = useGet<Keyword[]>(
@@ -95,6 +95,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
     const keywordOptions = useMemo(() => {
         if (!keywordData) return [];
+
         return keywordData.map(data => {
             return {
                 value: data.id as ValueType,
@@ -109,15 +110,17 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         }
 
         const formData = {
-            ...collectionDefaultValues,
+            ...existingCollectionData,
             name: existingCollectionData?.name,
             description: existingCollectionData?.description,
-            keywords: existingCollectionData?.keywords || [],
+            keywords:
+                existingCollectionData?.keywords?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link,
         };
-
+        if (formData.image_link) {
+            setImageUploaded(true);
+        }
         const propertiesToDelete = ["mongo_object_id", "mongo_id"];
-
         propertiesToDelete.forEach(key => {
             if (key in formData) {
                 delete formData[key as keyof typeof formData];
@@ -126,7 +129,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
         reset(formData);
     }, [reset, existingCollectionData]);
-
     const watchAll = watch();
 
     const handleAddResource = () => {
@@ -166,7 +168,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll, getValues]);
-
     const handleRemoveResource = (
         data: ResourceDataType,
         resourceType: ResourceType
@@ -208,8 +209,11 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             }),
         [control, keywordOptions]
     );
-
-    const onSubmit = async (formData: Collection, status?: DataStatus) => {
+    const onSubmit = async (
+        formData: Collection,
+        status?: DataStatus,
+        file?: File
+    ) => {
         const formatEntityToIdArray = (
             data: DataUse[] | Publication[] | Tool[] | Dataset[]
         ) => {
@@ -222,22 +226,47 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
             return data?.map(item => item?.id);
         };
+
+        const formatKeywords = (data: string[] | string) => {
+            const keywordArray: string[] = [];
+            if (Array.isArray(data)) {
+                keywordOptions?.forEach(x => {
+                    data.forEach(y => {
+                        const number = Number(y);
+                        if (number === x.value) {
+                            keywordArray.push(x.label);
+                        }
+                    });
+                });
+            }
+            return keywordArray;
+        };
+
+        const publications = formData.publications.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ updated_at, created_at, ...item }) => item
+        );
+        console.log(formData.datasets);
         const payload: CollectionSubmission = {
             ...formData,
             status,
             enabled: true,
             public: 1,
             team_id: teamId ? +teamId : undefined,
-            keywords: formData.keywords,
+            keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
             durs: formatEntityToIdArray(formData.dur),
-            publications: formatEntityToIdArray(formData.publications),
+            publications,
             tools: formatEntityToIdArray(formData.tools),
-            datasets: formatEntityToIdArray(formData.datasets),
+            dataset: formatEntityToIdArray(formData.datasets),
         };
 
         if (!collectionId) {
-            await createCollection(payload);
+            await createCollection(payload).then(async result => {
+                if (typeof result === "number" && file) {
+                    setCreatedCollectionId(result as string);
+                }
+            });
         } else {
             await editCollection(collectionId, payload);
         }
@@ -252,7 +281,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             tertiaryButton: {
                 onAction: async () => {
                     handleSubmit(formData =>
-                        onSubmit(formData, DataStatus.DRAFT)
+                        onSubmit(formData, DataStatus.DRAFT, file)
                     )();
                 },
                 buttonText: t(`${TRANSLATION_PATH_CREATE}.saveDraft`),
@@ -263,7 +292,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             },
             onSuccess: () => {
                 handleSubmit(formData =>
-                    onSubmit(formData, DataStatus.ACTIVE)
+                    onSubmit(formData, DataStatus.ACTIVE, file)
                 )();
             },
             onCancel: () => {
@@ -271,27 +300,38 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [file]);
 
-    const handleFileUploaded = async (fileResponse: FileUpload) => {
-        const { file_location } = fileResponse;
-        const image_link = `/collections/${file_location}`;
+    const uploadFile = usePost(
+        `${apis.fileUploadV1Url}?entity_flag=collections-media&collection_id=${createdCollectionId}`,
+        {
+            successNotificationsOn: false,
+        }
+    );
 
-        handleSubmit(formData =>
-            onSubmit(
-                !collectionId
-                    ? {
-                          ...formData,
-                          image_link,
-                      }
-                    : {
-                          ...formData,
-                          ...existingCollectionData,
-                          image_link,
-                      }
-            )
-        );
-    };
+    useEffect(() => {
+        const handleFileUploaded = async (
+            createdCollectionId: string,
+            file: File
+        ) => {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
+                setFile(undefined)
+            )) as FileUpload;
+            console.log(uploadedFileStatus);
+            const { file_location } = uploadedFileStatus;
+            await editCollection(createdCollectionId, {
+                image_link: file_location,
+            });
+        };
+
+        if (file && createdCollectionId) {
+            handleFileUploaded(createdCollectionId, file);
+        }
+    }, [createdCollectionId]);
+
     return (
         <>
             <BoxContainer
@@ -326,9 +366,15 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                 label={t(
                                     `${TRANSLATION_PATH_CREATE}.addImages`
                                 )}
-                                info={imageUploaded ? t( `${TRANSLATION_PATH_CREATE}.addImageSuccess`)
-                                    : t( `${TRANSLATION_PATH_CREATE}.addImagesInfo`
-                                )}
+                                info={
+                                    imageUploaded
+                                        ? t(
+                                              `${TRANSLATION_PATH_CREATE}.addImageSuccess`
+                                          )
+                                        : t(
+                                              `${TRANSLATION_PATH_CREATE}.addImagesInfo`
+                                          )
+                                }
                                 error={
                                     fileNotUploaded
                                         ? {
@@ -345,7 +391,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                         `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
                                     )}
                                     acceptedFileTypes=".jpg,.png"
-                                    apiPath={FILE_UPLOAD_URL}
                                     onBeforeUploadCheck={(
                                         height: number,
                                         width: number
@@ -357,13 +402,11 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                             aspectRatio >= 1.8
                                         );
                                     }}
-                                    onFileChange={() => {
+                                    onFileChange={(file: File) => {
                                         setFileNotUploaded(false);
+                                        setFile(file);
                                     }}
-                                    onFileCheckSucceeded={(
-                                        file: FileUpload
-                                    ) => {
-                                        handleFileUploaded(file);
+                                    onFileCheckSucceeded={() => {
                                         setFileNotUploaded(false);
                                         setImageUploaded(true);
                                     }}
@@ -371,6 +414,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                         setFileNotUploaded(true);
                                     }}
                                     sx={{ py: 2 }}
+                                    showUploadButton={false}
                                 />
                             </FormInputWrapper>
                         </Box>

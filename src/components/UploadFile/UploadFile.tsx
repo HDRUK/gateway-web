@@ -8,7 +8,6 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { convertBase64 } from "@/utils/file";
 import Button from "../Button";
 import Form from "../Form";
 import Loading from "../Loading";
@@ -24,7 +23,7 @@ type UploadFormData = {
 };
 
 interface UploadFileProps {
-    apiPath: string;
+    apiPath?: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
@@ -33,7 +32,8 @@ interface UploadFileProps {
     onBeforeUploadCheck?: (height: number, width: number) => boolean;
     onFileCheckFailed?: () => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
-    onFileChange?: () => void;
+    onFileChange?: (file: File) => void;
+    showUploadButton?: boolean;
     sx?: BoxProps["sx"];
 }
 
@@ -50,6 +50,7 @@ const UploadFile = ({
     onFileCheckFailed,
     onFileCheckSucceeded,
     onFileChange,
+    showUploadButton = true,
     sx,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -115,12 +116,10 @@ const UploadFile = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileId, fileScanStatus]);
 
-    const onSubmit = async () => {
+    const imageValidation = async (file: File) => {
         if (!file) {
-            return;
+            return true;
         }
-
-        let shouldContinue = true;
 
         if (file.type.startsWith("image/")) {
             try {
@@ -130,7 +129,6 @@ const UploadFile = ({
                     reader.readAsDataURL(file);
                     reader.onload = function (e) {
                         const image = new Image();
-                        // const base64 = await convertBase64(file);
                         image.src = e?.target?.result;
                         image.onload = function () {
                             if (onBeforeUploadCheck) {
@@ -147,15 +145,25 @@ const UploadFile = ({
                                       );
                             }
 
-                            return resolve(null);
+                            return resolve(true);
                         };
                     };
                 });
+                return true;
             } catch (_) {
-                shouldContinue = false;
+                return false;
             }
+        } else {
+            return true;
         }
-        if (shouldContinue) {
+    };
+
+    const onSubmit = async () => {
+        if (!file) {
+            return true;
+        }
+
+        try {
             const formData = new FormData();
             formData.append("file", file);
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
@@ -171,10 +179,11 @@ const UploadFile = ({
                 isUploading?.(true);
             }
             onFileCheckSucceeded?.(uploadedFileStatus);
-        } else {
+            return true;
+        } catch {
             setHasError(false);
-
             onFileCheckFailed?.();
+            return false;
         }
     };
 
@@ -190,8 +199,14 @@ const UploadFile = ({
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
                             onFileChange={(file: File) => {
-                                onFileChange?.();
-                                setFile(file);
+                                imageValidation(file).then(result => {
+                                    if (result) {
+                                        setFile(file);
+                                        onFileChange?.(file);
+                                    } else {
+                                        onFileCheckFailed?.();
+                                    }
+                                });
                             }}
                             helperText={
                                 file?.name ||
@@ -200,12 +215,14 @@ const UploadFile = ({
                                 })
                             }
                         />
-                        <Button
-                            onClick={handleSubmit(onSubmit)}
-                            sx={{ maxWidth: 150 }}
-                            disabled={!file}>
-                            {t("uploadButtonText")}
-                        </Button>
+                        {showUploadButton && (
+                            <Button
+                                onClick={handleSubmit(onSubmit)}
+                                sx={{ maxWidth: 150 }}
+                                disabled={!file}>
+                                {t("uploadButtonText")}
+                            </Button>
+                        )}
                     </>
                 )}
                 {fileId && !hasError && pollFileStatus && <Loading />}

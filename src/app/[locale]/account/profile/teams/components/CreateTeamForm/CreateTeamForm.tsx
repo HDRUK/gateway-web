@@ -16,7 +16,7 @@ import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
+import UploadFile from "@/components/UploadFile";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
