@@ -153,7 +153,7 @@ const DatasetContent = ({
                 return (
                     <InView
                         key={`${section.sectionName}_inview`}
-                        id={id}
+                        id={`anchor${index + 1}`}
                         threshold={1}
                         as="div"
                         onChange={inView => {
