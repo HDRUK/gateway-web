@@ -1434,6 +1434,19 @@
                 "isMemberOfTooltip": "If another Dataset is similar to this Dataset in some manner, but cannot necessarily be directly linked to the Dataset.",
                 "addToLibrary": "Add to library",
                 "removeFromLibrary": "Remove from library"
+            },
+            "PublicationsSearchDialog": {
+                "searchField": {
+                    "placeholder": "I'm looking for...",
+                    "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
+                },
+                "datasetNameField": {
+                    "placeholder": "Dataset name",
+                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
+                },
+                "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
+                "cancel": "Cancel",
+                "search": "Search"
             }
         }
     }
