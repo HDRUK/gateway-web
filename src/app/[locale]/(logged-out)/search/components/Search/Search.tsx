@@ -736,11 +736,13 @@ const Search = ({ filters }: SearchProps) => {
                                                     total={data?.total}
                                                 />
                                             )}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
-                                        )}
+                                        {data &&
+                                            data.elastic_total > 100 &&
+                                            !showPublicationWelcomeMessage && (
+                                                <ResultLimitText>
+                                                    {t("resultLimit")}
+                                                </ResultLimitText>
+                                            )}
                                     </>
                                 </Box>
 
