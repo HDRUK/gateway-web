@@ -33,6 +33,7 @@ import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
 import ProvidersDialog from "@/modules/ProvidersDialog";
+import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
@@ -65,6 +66,7 @@ import {
 } from "@/config/forms/filters";
 import searchFormConfig, {
     PAGE_FIELD,
+    PMC_TYPE_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
@@ -147,6 +149,7 @@ const Search = ({ filters }: SearchProps) => {
         source:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
+        [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
@@ -195,10 +198,28 @@ const Search = ({ filters }: SearchProps) => {
         }
     }, [queryParams.type, resultsView]);
 
-    const updatePath = (key: string, value: string) => {
-        router.push(`${pathname}?${updateQueryString(key, value)}`, {
-            scroll: false,
+    const updatePath = useCallback(
+        (key: string, value: string) => {
+            router.push(`${pathname}?${updateQueryString(key, value)}`, {
+                scroll: false,
+            });
+        },
+        [pathname, router, updateQueryString]
+    );
+
+    const updatePathMultiple = (params: Record<string, string>) => {
+        const currentParams = new URLSearchParams(searchParams?.toString());
+
+        Object.entries(params).forEach(([key, value]) => {
+            if (value === undefined) {
+                currentParams.delete(key);
+            } else {
+                currentParams.set(key, value);
+            }
         });
+
+        const newPath = `${pathname}?${currentParams.toString()}`;
+        router.push(newPath, { scroll: false });
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
@@ -572,6 +593,35 @@ const Search = ({ filters }: SearchProps) => {
         queryParams.type === SearchCategory.PUBLICATIONS &&
         (!data?.list?.length || !data?.path?.includes(queryParams.type));
 
+    const isEuropePmcSearch = useMemo(
+        () =>
+            queryParams.type === SearchCategory.PUBLICATIONS &&
+            queryParams.source === "FED",
+        [queryParams.source, queryParams.type]
+    );
+
+    const europePmcModalAction = () =>
+        showDialog(() => (
+            <PublicationSearchDialog
+                onSubmit={(query: string, type: string) => {
+                    onQuerySubmit({
+                        query,
+                    });
+                    setQueryParams({
+                        ...queryParams,
+                        pmc: type,
+                        query,
+                    });
+                    updatePathMultiple({
+                        pmc: type,
+                        query,
+                    });
+                }}
+                defaultQuery={queryParams.query}
+                isDataset={queryParams.pmc === "dataset"}
+            />
+        ));
+
     return (
         <Box
             display={{
@@ -596,6 +646,12 @@ const Search = ({ filters }: SearchProps) => {
                     submitAction={onQuerySubmit}
                     queryPlaceholder={t("searchPlaceholder")}
                     queryName={QUERY_FIELD}
+                    inputOverrideAction={
+                        isEuropePmcSearch ? europePmcModalAction : undefined
+                    }
+                    valueOverride={
+                        isEuropePmcSearch ? queryParams.query : undefined
+                    }
                 />
             </Box>
             <ActionBar>
