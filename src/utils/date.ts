@@ -32,4 +32,4 @@ const yearToDayJsDate = (year: string) => {
     return dayjs(`${year}-01-01T00:00:00.000Z`);
 };
 
-export { formatDate, differenceInDays, getYear, yearToDayJsDate };
+export { formatDate, differenceInDays, getYear, yearToDayJsDate, getDayjs };
