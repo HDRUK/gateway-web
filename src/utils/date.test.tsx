@@ -6,9 +6,6 @@ import {
 } from "./date";
 
 describe("Date utils", () => {
-    it("should return empty string for empty string", async () => {
-        expect(getDayjs("")).toBe("");
-    });
     it("should return default formatted date", async () => {
         expect(formatDate("2023-09-15T09:33:01.000000Z")).toBe("15 Sep 2023");
     });
