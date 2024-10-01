@@ -124,25 +124,43 @@
             "noResults": "There are no results for the selected year.",
             "readMore": "Read more"
         },
+        "dataCustodianSupport": {
+            "title": "Data Custodian Area",
+            "backToSupport": "Back to Data Custodian Area",
+            "gatewaySchemaTitle": "Gateway Schema",
+            "uploadingToolsTitle": "Uploading Analysis Scripts & Software",
+            "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
+            "uploadingPublicationsTitle": "Uploading Publications ",
+            "uploadingDataUsesProjectsTitle": "Uploading Data Uses / Research Projects",
+            "managingCollectionsTitle": "Managing Collections, Data Custodians and Data Custodian Networks",
+            "managingEnquiryDarTitle": "Using the Gateway Enquiry & Data Access Request Module",
+            "gettingStartedTitle": "Getting started on the Gateway and managing your Team",
+            "theAllianceTitle": "The Alliance",
+            "onboardingCohortDiscoveryTitle": "Onboarding to Cohort Discovery",
+            "documentation": {
+                "title": "Documentation"
+            },
+            "explainer": {
+                "unsupportedVideo": "Your browser does not support the video element",
+                "title": "Explainer"
+            },
+            "faqs": {
+                "title": "FAQs"
+            }
+        },
         "support": {
             "title": "Support centre",
             "backToSupport": "Back to Support Centre",
             "gatewaySchemaTitle": "Gateway Schema",
             "teamManagementTitle": "Team Management",
-            "toolsTitle": "Analysis script, software and publication",
-            "searchTitle": "Search",
-            "metadataOnboardingTitle": "Metadata Onboarding (Private app & Federation)",
-            "durTitle": "Data Use Register",
-            "darTitle": "Data Access Request",
-            "cohortDiscoveryTitle": "Cohort Discovery",
-            "gatewaySchemaDescription": "Find out what we have in our schema and support we offer here.",
-            "teamManagementDescription": "Help with the team management and how to perform certain actions and what permissions you are assigned.",
-            "toolsDescription": "What are Tools and Papers on the Gateway? How are they created and how can you use them? Get help with Tools and papers.",
-            "searchDescription": "Learn how to search entities on the Gateway.",
-            "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
-            "durDescription": "Learn About Data Use Registers.",
-            "darDescription": "Learn about Data Access Request forms and process.",
-            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery.",
+            "toolsTitle": "Uploading Analysis Scripts & Software",
+            "searchTitle": "Exploring Data Resources",
+            "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
+            "durTitle": "Exploring Data Uses / Research Projects",
+            "darTitle": "Submitting Enquiries and Data Access Requests",
+            "uploadingPublicationsTitle": "Uploading Publications ",
+            "cohortDiscoveryTitle": "Using Cohort Discovery",
+            "exploringCollectionsTitle": "Exploring Collections, Data Custodians and Data Custodian Networks",
             "documentation": {
                 "title": "Documentation"
             },

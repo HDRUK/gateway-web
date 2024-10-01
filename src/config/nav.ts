@@ -109,10 +109,6 @@ const navItems = [
                 href: "/support",
             },
             {
-                label: "Tutorials",
-                href: "/help/tutorials",
-            },
-            {
                 label: "Contact Us",
                 href: "https://hdruk.atlassian.net/servicedesk/customer/portal/7",
             },
@@ -131,20 +127,40 @@ const navItems = [
         label: "Data Custodian Area",
         subItems: [
             {
-                label: "How to set yourself up as a Data Custodian",
-                href: "/data-custodian/getting-started",
+                label: "Getting started on the Gateway and managing your Team",
+                href: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
             },
             {
-                label: "Integrations",
-                href: "https://hdruk.github.io/gateway-2-integrations-testing/integrations-hdruk-datasets/",
+                label: "Metadata Onboarding and Integrations",
+                href: RouteName.DATA_CUSTODIAN_METADATA_ONBOARDING,
             },
             {
-                label: "Metadata onboarding",
-                href: "/data-custodian/metadata-onboarding",
+                label: "Uploading Data Uses / Research Projects",
+                href: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
+            },
+            {
+                label: "Onboarding to Cohort Discovery",
+                href: RouteName.DATA_CUSTODIAN_COHORT_DISCOVERY,
+            },
+            {
+                label: "Uploading Analysis Scripts & Software",
+                href: RouteName.DATA_CUSTODIAN_TOOLS,
+            },
+            {
+                label: "Uploading Publications",
+                href: RouteName.DATA_CUSTODIAN_PUBLICATIONS,
+            },
+            {
+                label: "Managing Collections, Data Custodians and Data Custodian Networks",
+                href: RouteName.DATA_CUSTODIAN_MANAGING_COLLECTIONS,
+            },
+            {
+                label: "Using the Gateway Enquiry & Data Access Request Module",
+                href: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
             },
             {
                 label: "The Alliance",
-                href: "https://ukhealthdata.org/",
+                href: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
             },
         ],
     },

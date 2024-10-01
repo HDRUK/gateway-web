@@ -5,7 +5,7 @@ import Typography from "@/components/Typography";
 import theme from "@/config/theme";
 
 export interface BannerProps {
-    title: string;
+    title?: string;
     subTitle?: string;
     src?: string;
 }
@@ -34,10 +34,10 @@ const Banner = ({ title, subTitle, src }: BannerProps) => (
                 maxWidth: "550px",
                 padding: "0 20px",
             }}>
-            <Typography style={{ fontSize: 40 }}>{title}</Typography>
+            {title && <Typography style={{ fontSize: 40 }}>{title}</Typography>}
             {subTitle && <Typography>{subTitle}</Typography>}
         </div>
-        {src && (
+        {src && title && (
             <Image style={{ objectFit: "cover" }} fill src={src} alt={title} />
         )}
     </div>

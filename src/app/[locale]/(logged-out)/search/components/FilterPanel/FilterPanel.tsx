@@ -125,6 +125,7 @@ const FilterPanel = ({
     getParamString: (paramName: string) => string | null;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
+
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({
         [FILTER_PUBLISHER_NAME]: {},
@@ -176,8 +177,9 @@ const FilterPanel = ({
             [FILTER_MATERIAL_TYPE]: "",
         },
     });
+
     const filterItems = useMemo(() => {
-        let formattedFilters = groupByType(
+        const formattedFilters = groupByType(
             filterSourceData,
             filterCategory
         ).filter(filterItem => filtersList.includes(filterItem.label));
@@ -187,15 +189,9 @@ const FilterPanel = ({
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
 
-        // If the selected source is 'Search Europe PMC' then remove the 'Dataset' filter
-        if (staticFilterValues.source.FED) {
-            formattedFilters = formattedFilters.filter(
-                filterItem => filterItem.label !== FILTER_DATA_SET_TITLES
-            );
-        }
-
         return formattedFilters;
-    }, [filterCategory, filterSourceData, staticFilterValues]);
+    }, [filterCategory, filterSourceData]);
+
     const [maximised, setMaximised] = useState<string[]>([]);
 
     const updateCheckboxes = (
@@ -322,6 +318,7 @@ const FilterPanel = ({
         buckets: BucketCheckbox[];
     }) => {
         const { label } = filterItem;
+
         switch (label) {
             case STATIC_FILTER_SOURCE:
                 return (
