@@ -49,10 +49,14 @@ function useSkipper() {
     return [shouldSkip, skip] as const;
 }
 
-const getCommonCellStyles = <T,>(column: Column<T>, isHeaderPinned?: boolean): CSSProperties => {
+const getCommonCellStyles = <T,>(
+    column: Column<T>,
+    isHeaderPinned?: boolean
+): CSSProperties => {
     const {
         columnDef: { meta = {} },
-    } = column; console.log(column);
+    } = column;
+    console.log(column);
 
     const { isPinned, hasPinnedBorder } = meta as {
         isPinned?: boolean;
@@ -144,7 +148,10 @@ const Table = <T,>({
                                     css={styles.th}
                                     key={header.id}
                                     style={{
-                                        ...getCommonCellStyles(header.column, pinHeader),
+                                        ...getCommonCellStyles(
+                                            header.column,
+                                            pinHeader
+                                        ),
                                     }}>
                                     <div className="whitespace-nowrap">
                                         {header.isPlaceholder
