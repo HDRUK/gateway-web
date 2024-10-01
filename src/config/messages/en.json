@@ -561,11 +561,11 @@
                         "saveDraft": "Save as draft",
                         "publish": "Publish",
                         "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
-                        "labelTag": "Analysis script, tools and software"
+                        "labelTag": "Analysis Scripts & Software"
                     },
                     "components": {
                         "TeamTools": {
-                            "title": "Analysis script, tools and software",
+                            "title": "Analysis Scripts & Software",
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
@@ -968,7 +968,7 @@
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis, scripts and software ({ length })"
+                    "heading": "Analysis Scripts & Software ({ length })"
                 }
             }
         },
