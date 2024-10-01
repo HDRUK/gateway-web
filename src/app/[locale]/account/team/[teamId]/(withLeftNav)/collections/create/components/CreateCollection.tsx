@@ -58,7 +58,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
-    const [createdCollectionId, setCreatedCollectionId] = useState<string>();
+    const [createdCollectionId, setCreatedCollectionId] = useState<string | undefined>(collectionId);
+    const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
 
     const t = useTranslations();
     const { showDialog } = useDialog();
@@ -115,8 +116,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             description: existingCollectionData?.description,
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
-            image_link: existingCollectionData?.image_link,
-        };
+            image_link: existingCollectionData?.image_link ?? "",
+        }; 
         if (formData.image_link) {
             setImageUploaded(true);
         }
@@ -222,10 +223,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             ) {
                 return data;
             }
-
-            return data?.map(item => item?.id);
+            return data?.map(item => ({ id: item?.id }));
         };
-
         const formatKeywords = (data: string[] | string) => {
             const keywordArray: string[] = [];
             if (Array.isArray(data)) {
@@ -253,19 +252,28 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             team_id: teamId ? +teamId : undefined,
             keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
-            durs: formatEntityToIdArray(formData.dur),
+            dur: formatEntityToIdArray(formData.dur),
             publications,
             tools: formatEntityToIdArray(formData.tools),
-            dataset: formatEntityToIdArray(formData.datasets)
+            datasets: formatEntityToIdArray(formData.datasets),
+            created_at: formData.created_at?.split('.')[0],
+            updated_at: formData.updated_at?.split('.')[0],
+            updated_on: formData.updated_on?.split('.')[0]
+            
         };
         if (!collectionId) {
             await createCollection(payload).then(async result => {
                 if (typeof result === "number" && file) {
                     setCreatedCollectionId(result as string);
+                    setFileToBeUploaded(true);
                 }
             });
         } else {
-            await editCollection(collectionId, payload);
+            await editCollection(collectionId, payload).then(async result => {
+                if (typeof result === "number" && file) {
+                    setFileToBeUploaded(true);                
+                }
+             });
         }
 
         push(COLLECTION_ROUTE);
@@ -324,10 +332,10 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             });
         };
 
-        if (file && createdCollectionId) {
+        if (file && fileToBeUploaded && createdCollectionId) {
             handleFileUploaded(createdCollectionId, file);
         }
-    }, [createdCollectionId]);
+    }, [createdCollectionId, fileToBeUploaded]);
 
     return (
         <>

@@ -14,8 +14,9 @@ interface Collection {
     enabled: boolean;
     status: DataStatus | undefined;
     public: number;
-    create_at: string;
+    created_at: string;
     updated_at: string;
+    updated_on: string;
     deleted_at: string;
     keywords: string[] | string;
     datasets: Dataset[];
@@ -32,10 +33,10 @@ interface Collection {
 
 export interface CollectionSubmission
     extends Omit<Collection, "publications" | "dur" | "tools" | "datasets"> {
-    publications: number[];
-    durs: number[];
-    tools: number[];
-    datasets: number[];
+    publications: { id: number }[];
+    dur: { id: number }[];
+    tools: { id: number }[];
+    datasets: { id: number }[];
 }
 
 export type { Collection };
