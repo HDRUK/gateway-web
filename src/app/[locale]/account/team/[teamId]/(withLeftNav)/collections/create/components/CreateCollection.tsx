@@ -58,7 +58,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
-    const [createdCollectionId, setCreatedCollectionId] = useState<string | undefined>(collectionId);
+    const [createdCollectionId, setCreatedCollectionId] = useState<
+        string | undefined
+    >(collectionId);
     const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
 
     const t = useTranslations();
@@ -117,7 +119,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link ?? "",
-        }; 
+        };
         if (formData.image_link) {
             setImageUploaded(true);
         }
@@ -256,10 +258,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             publications,
             tools: formatEntityToIdArray(formData.tools),
             datasets: formatEntityToIdArray(formData.datasets),
-            created_at: formData.created_at?.split('.')[0],
-            updated_at: formData.updated_at?.split('.')[0],
-            updated_on: formData.updated_on?.split('.')[0]
-            
+            created_at: formData.created_at?.split(".")[0],
+            updated_at: formData.updated_at?.split(".")[0],
+            updated_on: formData.updated_on?.split(".")[0],
         };
         if (!collectionId) {
             await createCollection(payload).then(async result => {
@@ -271,14 +272,13 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         } else {
             await editCollection(collectionId, payload).then(async result => {
                 if (typeof result === "number" && file) {
-                    setFileToBeUploaded(true);                
+                    setFileToBeUploaded(true);
                 }
-             });
+            });
         }
 
         push(COLLECTION_ROUTE);
     };
-
     useEffect(() => {
         showBar("CreateCollection", {
             cancelText: t(`${TRANSLATION_PATH_CREATE}.cancel`),

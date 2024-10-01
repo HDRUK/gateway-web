@@ -176,6 +176,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         control,
         name: "dataset",
     });
+
+    const watchAll = watch();
+
     const onSubmit = async (formData: ToolPayload, status: DataStatus) => {
         const formatEntityToIdArray = (
             data: DataUse[] | Publication[] | Tool[]
@@ -219,8 +222,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
         push(TOOL_ROUTE);
     };
-
-    const watchAll = watch();
 
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
