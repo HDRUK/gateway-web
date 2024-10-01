@@ -56,22 +56,22 @@ const getCommonCellStyles = <T,>(
     const {
         columnDef: { meta = {} },
     } = column;
-    console.log(column);
 
     const { isPinned, hasPinnedBorder } = meta as {
         isPinned?: boolean;
         hasPinnedBorder?: boolean;
     };
 
+    const shouldPin = isPinned || isHeaderPinned;
     return {
-        backgroundColor: isPinned || isHeaderPinned ? colors.grey100 : "white",
+        backgroundColor: shouldPin ? colors.grey100 : "white",
         boxShadow: hasPinnedBorder ? `1px 0 ${colors.grey300}` : undefined,
-        left: isPinned || isHeaderPinned ? `${column.getStart()}px` : undefined,
-        top: isPinned || isHeaderPinned ? 0 : undefined,
-        opacity: isPinned || isHeaderPinned ? 0.95 : 1,
-        position: isPinned || isHeaderPinned ? "sticky" : "relative",
+        left: shouldPin ? `${column.getStart()}px` : undefined,
+        top: shouldPin ? 0 : undefined,
+        opacity: shouldPin ? 0.95 : 1,
+        position: shouldPin ? "sticky" : "relative",
         width: column.getSize(),
-        zIndex: isPinned || isHeaderPinned ? 1 : 0,
+        zIndex: shouldPin ? 1 : 0,
     };
 };
 
