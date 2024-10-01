@@ -11,8 +11,6 @@ import dayjs from "dayjs";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import FormInputWrapper from "@/components/FormInputWrapper";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
 
 export interface DatePickerProps<TFieldValue extends FieldValues, TName> {
     label: string;
