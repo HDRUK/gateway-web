@@ -12,12 +12,12 @@ import Accordion from "../Accordion";
 import Box from "../Box";
 import Typography from "../Typography";
 
+type FormattedDemographics = {
+    [key: string]: DemographicDisease[] | DemographicGeneric[] | null;
+};
+
 const TRANSLATION_PATH = "components.DemographicsAccordion";
-const DEMOGRAPHIC_ORDER: Array<keyof Demographics> = [
-    "age",
-    "ethnicity",
-    "disease",
-];
+const DEMOGRAPHIC_ORDER: Array<keyof Demographics> = ["age", "ethnicity"];
 const AGE_ORDER = [
     "0-6 days",
     "7-27 days",
@@ -55,13 +55,52 @@ const sortedAgeGroups = (age: DemographicGeneric[]) =>
 const sortedByCount = (data: DemographicGeneric[] | DemographicDisease[]) =>
     data.sort((a, b) => b.count - a.count);
 
+const formatDiseaseKey = (code: string) => `Disease (${code})`;
+
+const generateDiseaseKeys = (diseases: DemographicDisease[] | null) => {
+    const diseaseVocabularies = new Set();
+    diseases?.forEach(disease => {
+        diseaseVocabularies.add(
+            formatDiseaseKey(disease.diseaseCodeVocabulary || "")
+        );
+    });
+    return Array.from(diseaseVocabularies);
+};
+
 const DemographicsAccordion = ({ data }: { data: Demographics }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
+    const diseaseKeys = generateDiseaseKeys(data.disease);
+
+    const FINAL_DEMOGRAPHIC_ORDER: string[] = [
+        ...(DEMOGRAPHIC_ORDER as string[]),
+        ...(diseaseKeys as string[]),
+    ];
+
+    const formatData = ({
+        disease,
+        ethnicity,
+        age,
+    }: Demographics): FormattedDemographics => ({
+        ...disease?.reduce((acc, { diseaseCodeVocabulary, ...rest }) => {
+            const key = formatDiseaseKey(diseaseCodeVocabulary || "");
+            acc[key] = acc[key] || [];
+            (acc[key] as DemographicDisease[]).push({
+                diseaseCodeVocabulary,
+                ...rest,
+            });
+            return acc;
+        }, {} as Record<string, DemographicDisease[]>),
+        ethnicity,
+        age,
+    });
+
+    const formattedData = formatData(data);
+
     return (
         <>
-            {DEMOGRAPHIC_ORDER.map(key => {
-                let items = data[key];
+            {FINAL_DEMOGRAPHIC_ORDER.map(key => {
+                let items = formattedData[key];
 
                 if (!items) {
                     return null;
@@ -75,7 +114,7 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
 
                 return (
                     <Accordion
-                        key={key}
+                        key={`${key}_accordion`}
                         heading={
                             <Box
                                 sx={{
@@ -86,7 +125,9 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
                                     width: "100%",
                                 }}>
                                 <Typography variant="h4" sx={{ m: 0 }}>
-                                    {toTitleCase(key)}
+                                    {key.startsWith("Disease")
+                                        ? key
+                                        : toTitleCase(key)}
                                 </Typography>
                             </Box>
                         }
@@ -95,13 +136,15 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
                                 {items && items.length > 0 ? (
                                     items.map(item => (
                                         <ListItem
-                                            key={`${key}-${item}`}
+                                            key={`${key}-${
+                                                item?.count || item?.bin
+                                            }`}
                                             sx={{
                                                 display: "flex",
                                                 pl: 0,
                                                 pr: 0,
                                             }}>
-                                            {key === "disease" ? (
+                                            {key.startsWith("Disease") ? (
                                                 <>
                                                     <Typography
                                                         sx={{ flex: 1 }}>
@@ -111,19 +154,6 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
                                                             ).diseaseCode
                                                         }
                                                     </Typography>
-                                                    {(
-                                                        item as DemographicDisease
-                                                    ).diseaseCodeVocabulary && (
-                                                        <Typography
-                                                            sx={{ flex: 1 }}>
-                                                            {
-                                                                (
-                                                                    item as DemographicDisease
-                                                                )
-                                                                    .diseaseCodeVocabulary
-                                                            }
-                                                        </Typography>
-                                                    )}
                                                     <Typography
                                                         sx={{
                                                             display: "flex",
