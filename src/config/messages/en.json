@@ -1442,7 +1442,7 @@
                 },
                 "datasetNameField": {
                     "placeholder": "Dataset name",
-                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name"
+                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
                 },
                 "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
                 "cancel": "Cancel",
