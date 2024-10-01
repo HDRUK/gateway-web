@@ -1,9 +1,4 @@
-import {
-    formatDate,
-    differenceInDays,
-    yearToDayJsDate,
-    getDayjs,
-} from "./date";
+import { formatDate, differenceInDays, yearToDayJsDate } from "./date";
 
 describe("Date utils", () => {
     it("should return default formatted date", async () => {
