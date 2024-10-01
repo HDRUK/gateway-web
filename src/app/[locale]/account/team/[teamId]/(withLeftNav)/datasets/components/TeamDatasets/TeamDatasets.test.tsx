@@ -19,7 +19,7 @@ describe("TeamDatasets", () => {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetV1("1.0", { create_origin: "FMA", status: "DRAFT" }),
+            generateDatasetV1("1.0", { create_origin: "GMI", status: "DRAFT" }),
         ];
         server.use(getDatasetsV1(mockDatasets));
         render(<TeamDatasets permissions={{}} />);
@@ -51,7 +51,7 @@ describe("TeamDatasets", () => {
                 within(datasetCards[1]).getByText(`API created dataset`)
             ).toBeInTheDocument();
             expect(
-                within(datasetCards[2]).getByText(`FMA created dataset`)
+                within(datasetCards[2]).getByText(`HDR UK Metadata Integration created dataset`)
             ).toBeInTheDocument();
         });
     });
