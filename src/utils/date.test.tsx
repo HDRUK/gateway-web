@@ -1,6 +1,14 @@
-import { formatDate, differenceInDays, yearToDayJsDate } from "./date";
+import {
+    formatDate,
+    differenceInDays,
+    yearToDayJsDate,
+    getDayjs,
+} from "./date";
 
 describe("Date utils", () => {
+    it("should return null for empty string", async () => {
+        expect(getDayjs("")).toBe(null);
+    });
     it("should return default formatted date", async () => {
         expect(formatDate("2023-09-15T09:33:01.000000Z")).toBe("15 Sep 2023");
     });
