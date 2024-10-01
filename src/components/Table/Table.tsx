@@ -30,6 +30,7 @@ interface TableProps<T> {
         { rowIndex, columnId, value }: OnUpdateProps
     ) => void;
     hideHeader?: boolean;
+    pinHeader?: boolean;
 }
 
 function useSkipper() {
@@ -48,10 +49,10 @@ function useSkipper() {
     return [shouldSkip, skip] as const;
 }
 
-const getCommonCellStyles = <T,>(column: Column<T>): CSSProperties => {
+const getCommonCellStyles = <T,>(column: Column<T>, isHeaderPinned?: boolean): CSSProperties => {
     const {
         columnDef: { meta = {} },
-    } = column;
+    } = column; console.log(column);
 
     const { isPinned, hasPinnedBorder } = meta as {
         isPinned?: boolean;
@@ -59,13 +60,14 @@ const getCommonCellStyles = <T,>(column: Column<T>): CSSProperties => {
     };
 
     return {
-        backgroundColor: isPinned ? colors.grey100 : "white",
+        backgroundColor: isPinned || isHeaderPinned ? colors.grey100 : "white",
         boxShadow: hasPinnedBorder ? `1px 0 ${colors.grey300}` : undefined,
-        left: isPinned ? `${column.getStart()}px` : undefined,
-        opacity: isPinned ? 0.95 : 1,
-        position: isPinned ? "sticky" : "relative",
+        left: isPinned || isHeaderPinned ? `${column.getStart()}px` : undefined,
+        top: isPinned || isHeaderPinned ? 0 : undefined,
+        opacity: isPinned || isHeaderPinned ? 0.95 : 1,
+        position: isPinned || isHeaderPinned ? "sticky" : "relative",
         width: column.getSize(),
-        zIndex: isPinned ? 1 : 0,
+        zIndex: isPinned || isHeaderPinned ? 1 : 0,
     };
 };
 
@@ -75,6 +77,7 @@ const Table = <T,>({
     onUpdate,
     defaultColumn,
     hideHeader,
+    pinHeader,
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
     const table = useReactTable(
@@ -141,7 +144,7 @@ const Table = <T,>({
                                     css={styles.th}
                                     key={header.id}
                                     style={{
-                                        ...getCommonCellStyles(header.column),
+                                        ...getCommonCellStyles(header.column, pinHeader),
                                     }}>
                                     <div className="whitespace-nowrap">
                                         {header.isPlaceholder

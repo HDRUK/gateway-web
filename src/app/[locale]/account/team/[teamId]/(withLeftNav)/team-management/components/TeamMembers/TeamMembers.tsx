@@ -214,6 +214,7 @@ const TeamMembers = ({
                 columns={columns}
                 onUpdate={handleUpdate}
                 rows={tableRows}
+                pinHeader
             />
         </Paper>
     );
