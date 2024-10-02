@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
@@ -42,6 +42,15 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         setIsClicked(true);
         console.log(datasetCsv);
     };
+    useEffect(()=>{
+        console.log('iam absolute')
+        if(datasetCsv){
+            const {redirect_url} = datasetCsv as any
+            if (redirect_url){
+                window.location.href=redirect_url
+            }
+        }
+    },[datasetCsv])
 
     return (
         <Box sx={{ display: "flex" }}>
