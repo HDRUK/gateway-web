@@ -135,7 +135,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         {
             title: t("helpLinks.item2.title"),
             text: t("helpLinks.item2.text"),
-            href: "https://www.hdruk.ac.uk/",
+            href: "/community/open-source-development",
             externalUrl: true,
         },
     ];

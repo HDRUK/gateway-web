@@ -47,7 +47,7 @@ const navItems = [
         subItems: [
             {
                 label: "The Technology Ecosystem",
-                href: "/community/development-community",
+                href: "/community/technology-ecosystem",
             },
             {
                 label: "Open-Source Development",

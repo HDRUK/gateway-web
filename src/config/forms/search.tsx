@@ -5,6 +5,7 @@ export const SORT_FIELD = "sort";
 export const TYPE_FIELD = "type";
 export const VIEW_FIELD = "view";
 export const PAGE_FIELD = "page";
+export const PMC_TYPE_FIELD = "pmc";
 export const SOURCE_GAT = "GAT";
 
 export const sortByOptionsDataset = [

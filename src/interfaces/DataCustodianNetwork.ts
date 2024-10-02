@@ -7,4 +7,5 @@ export interface DataCustodianNetwork {
     enabled: boolean;
     img_url: string | null;
     summary: string | null;
+    url: string | null;
 }

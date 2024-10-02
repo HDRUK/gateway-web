@@ -579,11 +579,11 @@
                         "saveDraft": "Save as draft",
                         "publish": "Publish",
                         "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
-                        "labelTag": "Analysis script, tools and software"
+                        "labelTag": "Analysis Scripts & Software"
                     },
                     "components": {
                         "TeamTools": {
-                            "title": "Analysis script, tools and software",
+                            "title": "Analysis Scripts & Software",
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
@@ -729,7 +729,7 @@
                     "text": "Explore Gateway features and learn how to use them. You can also submit queries and feedback to help us improve the Gateway."
                 },
                 "item2": {
-                    "title": "Community",
+                    "title": "Open-Source Development",
                     "text": "Designed with and for the community, the Gateway is built for collaboration. Discover how you can get involved."
                 }
             },
@@ -781,12 +781,12 @@
             "dataCustodianNetworks": "Data Custodian Networks",
             "dataCustodianNetworksTooltip": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network.",
             "collectionsHeader": "Collections",
-            "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
-            "searchExplainerDataUse": "Search by lead organisation, data custodian",
-            "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data custodian name",
-            "searchExplainerCollections": "Search by collection name",
-            "searchExplainerTools": "Search by name, programming language",
-            "searchExplainerDataProviders": "Enter your search term here",
+            "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
+            "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
+            "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, keywords",
+            "searchExplainerCollections": "Search, for example, by Collection name, keywords",
+            "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
+            "searchExplainerDataProviders": "Search, for example, by Data Custodian name, Dataset title",
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
@@ -797,8 +797,8 @@
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
             "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
             "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data custodian.",
-            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' field to improve the relevance of results returned.",
-            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the Keyword(s) of interest or the name of a dataset in the search box at the top, and hit enter/return on your keyboard.</bold>",
+            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' and 'RESULTS' fields to improve the relevance of results returned.",
+            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the keyword(s) of interest, the name of a dataset or DOI in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -846,6 +846,8 @@
                             "publicationDateTooltip": "The range of years during which results were published",
                             "publicationType": "Publication type",
                             "publicationTypeTooltip": "The type of publication: research articles, review articles, preprints or books and documents",
+                            "datasetLinkTypes": "Publication & dataset relationship",
+                            "datasetLinkTypesTooltip": "Differentiate whether you are looking for a publication which describes or is about a dataset, or a publication which utilises the dataset for analysis",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -976,7 +978,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets & BioSamples ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Data Uses ({ length })"
@@ -985,7 +988,7 @@
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis, scripts and software ({ length })"
+                    "heading": "Analysis Scripts & Software ({ length })"
                 }
             }
         },
@@ -1451,6 +1454,19 @@
                 "isMemberOfTooltip": "If another Dataset is similar to this Dataset in some manner, but cannot necessarily be directly linked to the Dataset.",
                 "addToLibrary": "Add to library",
                 "removeFromLibrary": "Remove from library"
+            },
+            "PublicationsSearchDialog": {
+                "searchField": {
+                    "placeholder": "I'm looking for...",
+                    "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
+                },
+                "datasetNameField": {
+                    "placeholder": "Dataset name",
+                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
+                },
+                "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
+                "cancel": "Cancel",
+                "search": "Search"
             }
         }
     }
