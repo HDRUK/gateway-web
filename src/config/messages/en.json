@@ -809,9 +809,9 @@
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
                             "containsTissue": "Datasets with BioSamples",
-                            "containsTissueTooltip": "Restrict your search result to datasets with biospecimen samples",
+                            "containsTissueTooltip": "Restrict your search result to datasets with BioSamples",
                             "sampleAvailability": "Material type",
-                            "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
+                            "sampleAvailabilityTooltip": "BioSamples associated with the dataset"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",
@@ -851,11 +851,11 @@
                         },
                         "tool": {
                             "license": "Licensing",
-                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
+                            "licenseTooltip": "The type of software licence for this entity, if applicable",
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
-                            "typeCategoryTooltip": "Categorisation based on where in the research journey an analysis script or software is used",
+                            "typeCategoryTooltip": "Categorisation based on where in the research journey an Analysis Script & Software is used",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
