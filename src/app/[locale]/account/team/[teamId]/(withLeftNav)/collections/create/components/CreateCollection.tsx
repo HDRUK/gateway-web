@@ -118,7 +118,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             description: existingCollectionData?.description,
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
-            image_link: existingCollectionData?.image_link ?? "",
+            image_link: existingCollectionData?.image_link,
         };
         if (formData.image_link) {
             setImageUploaded(true);
