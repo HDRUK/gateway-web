@@ -47,6 +47,7 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
+            // TODO: add Datasets
         ...(permissions["cohort.read"]
             ? [
                   {
@@ -60,23 +61,24 @@ const getProfileNav = (permissions: {
             ? [
                   {
                       icon: <QuestionAnswerIcon />,
-                      label: "DAR Admin",
+                      label: "Data Access Requests",
                       subItems: [
                           ...(permissions["dar-config.update"]
                               ? [
                                     {
-                                        label: "Question Bank Management",
+                                        label: "Question Bank",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
                                     },
                                 ]
                               : []),
+                              // TODO add Applications for HDRUK DAR Admin
                       ],
                   },
               ]
             : []),
         {
             icon: <ToolIcon />,
-            label: "Analysis script, tools and software",
+            label: "Analysis Scripts & Software",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
         },
         {
@@ -89,6 +91,7 @@ const getProfileNav = (permissions: {
             label: "Collections",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
         },
+        // TODO: add Data Uses
     ];
 };
 
