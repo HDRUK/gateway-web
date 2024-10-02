@@ -22,7 +22,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { isLoggedIn, user } = useAuth();
     const permissions = getPermissions(user?.roles);
 
-    const [isClicked, setIsClicked] = useState(false);
+    // const [isClicked, setIsClicked] = useState(false);
 
     const handleCtaClick = () => {
         if (permissions[COHORT_DISCOVERY_PERMISSION]) {
@@ -34,25 +34,37 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
-    const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
-        shouldFetch: isClicked,
-    });
+    const handleMyClick = async ()=>{
+        console.log('biscuits')
+            const response = await fetch(`${apis.cohortRequestsV1Url}/access`, { credentials: "include" })
+            if (response.ok) {
+                const json = await response.json();
+                push(json.data.redirect_url); 
+                console.log('response data:', JSON.stringify(json))
+            }
+            else {
 
-    if (isClicked){
-        console.log('cake1')
-
-        if (datasetCsv){
-            console.log('cake2')
-            const {redirect_url} = datasetCsv as any
-            push(redirect_url); 
-        }
+                console.log('helpme')
+            }
     }
 
+    
 
-    const handleVisit = async () => {
-        setIsClicked(true);
-        console.log(datasetCsv);
-    };
+    // if (isClicked){
+    //     console.log('cake1')
+
+    //     if (datasetCsv){
+    //         console.log('cake2')
+    //         const {redirect_url} = datasetCsv as any
+    //         push(redirect_url); 
+    //     }
+    // }
+
+
+    // const handleVisit = async () => {
+    //     setIsClicked(true);
+    //     console.log(datasetCsv);
+    // };
 
 
     return (
@@ -67,7 +79,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
 
             <Button
                 sx={{ mt: 3, ml: 3 }}
-                onClick={handleVisit}
+                onClick={handleMyClick}
                 color="greyCustom">
                 Visit Cohort Discovery
             </Button>
