@@ -335,7 +335,13 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         if (file && fileToBeUploaded && createdCollectionId) {
             handleFileUploaded(createdCollectionId, file);
         }
-    }, [createdCollectionId, fileToBeUploaded]);
+    }, [
+        createdCollectionId,
+        fileToBeUploaded,
+        editCollection,
+        file,
+        uploadFile,
+    ]);
 
     return (
         <>
