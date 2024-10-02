@@ -20,7 +20,7 @@ interface Options {
     refreshInterval?: number;
 }
 
-const useGet = <T>(url: string | null, options?: Options): Response<T> => {
+const useGet = <T>(url: string | null, options?: Options, noCors = false): Response<T> => {
     const {
         localeKey,
         itemName,
@@ -47,7 +47,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
                     t,
                     action,
                 },
-            });
+            }, noCors);
 
             return data as T;
         } catch (error) {
