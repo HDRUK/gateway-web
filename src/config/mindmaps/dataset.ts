@@ -6,27 +6,43 @@ const centerY = 0;
 const outerNodeValues = [
     {
         name: "tools",
-        label: undefined,
         href: "/search?type=tools",
     },
     {
         name: "durs",
-        label: undefined,
         href: "/search?type=dur",
     },
     {
+        name: "curatedPublications",
+        source: "GAT",
+        href: "/search?type=publications",
+    },
+    {
+        name: "externalPublications",
+        source: "FED",
+        href: "/search?type=publications",
+    },
+    {
         name: "collections",
-        label: undefined,
         href: "/search?type=collections",
     },
     {
+        name: "coverageCompleteness",
+        href: "/search?type=publications",
+    },
+    {
         name: "synthetic",
-        label: undefined,
     },
     {
         name: "structuralMetadata",
-        label: undefined,
         href: "scrollTo:Structural Metadata",
+    },
+    {
+        name: "demographics",
+        href: "scrollTo:Demographics",
+    },
+    {
+        name: "dataCustodian",
     },
 ];
 
@@ -38,13 +54,13 @@ const rootNode = {
         id: 0,
         name: "root",
         label: undefined,
-        href: "/data-custodian",
     },
 };
 
-const outerNodes = outerNodeValues.map((node, index) =>
-    nodeValueToRectNode(node, index, outerNodeValues.length, centerX, centerY)
-);
+const getOuterNodes = nodes =>
+    nodes.map((node, index) =>
+        nodeValueToRectNode(node, index, nodes.length, centerX, centerY)
+    );
 
 const initialEdges = outerNodeValues.map((node, index) => ({
     id: `e1-${index}`,
@@ -54,4 +70,10 @@ const initialEdges = outerNodeValues.map((node, index) => ({
 
 const connectionLineStyle = { stroke: "rgb(226, 226, 226)", strokeWidth: 3 };
 
-export { rootNode, outerNodes, connectionLineStyle, initialEdges };
+export {
+    rootNode,
+    outerNodeValues,
+    getOuterNodes,
+    connectionLineStyle,
+    initialEdges,
+};

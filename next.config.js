@@ -18,6 +18,24 @@ const nextConfig = withNextIntl({
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: process.env.NEXT_PUBLIC_MEDIA_DOMAIN || "",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "http",
+                hostname: "media.local",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "fakeimg.pl",
+                port: "",
+                pathname: "/**",
+            },
         ],
     },
     async redirects() {

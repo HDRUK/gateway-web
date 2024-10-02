@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -16,6 +17,8 @@ interface SearchBarProps {
     explainerText?: string;
     resetAction: () => void;
     submitAction: (fieldValues: FieldValues) => void;
+    inputOverrideAction?: () => void;
+    valueOverride?: string;
     isDisabled: boolean;
     defaultValue?: string;
     queryName: string;
@@ -33,6 +36,8 @@ const SearchBar = ({
     explainerText,
     resetAction,
     submitAction,
+    inputOverrideAction,
+    valueOverride,
     isDisabled,
     defaultValue,
     queryName,
@@ -40,9 +45,13 @@ const SearchBar = ({
 }: SearchBarProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const { control, handleSubmit, reset } = useForm({
+    const { control, handleSubmit, reset, setValue } = useForm({
         defaultValues: { [queryName]: defaultValue },
     });
+
+    useEffect(() => {
+        setValue(queryName, valueOverride);
+    }, [queryName, setValue, valueOverride]);
 
     return (
         <FormWrapper data-testid={TEST_ID_WRAPPER}>
@@ -54,7 +63,10 @@ const SearchBar = ({
                         width: SEARCH_ICON_SIZE,
                     }}
                 />
-                <InputWrapper>
+                <InputWrapper
+                    onClick={() =>
+                        inputOverrideAction && inputOverrideAction()
+                    }>
                     <SearchInput
                         control={control}
                         name={queryName}

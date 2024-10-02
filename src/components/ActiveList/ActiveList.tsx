@@ -51,6 +51,7 @@ const ActiveList = ({
                                     sx={{
                                         opacity:
                                             activeItem === index + 1 ? 1 : 0.3,
+                                        transition: "opacity 0.2s, lineBreak",
                                     }}
                                 />
                             }>

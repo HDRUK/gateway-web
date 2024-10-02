@@ -1,12 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import Image from "next/image";
 import { VersionItem } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { StaticImages } from "@/config/images";
+import { AspectRatioImage } from "@/config/theme";
 import { getCollection, getDataset } from "@/utils/api";
 import { removeEmpty } from "@/utils/array";
 import { getLatestVersion } from "@/utils/dataset";
@@ -64,14 +65,17 @@ export default async function CollectionItemPage({
             body={
                 <>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
+                        <AspectRatioImage
                             width={554}
                             height={250}
                             alt={toTitleCase(collection.name)}
-                            src="/images/collections/banner.jpeg"
+                            src={
+                                collection.image_link ||
+                                StaticImages.BASE.placeholder
+                            }
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
-                            {toTitleCase(collection.name)}
+                            {collection.name}
                         </Typography>
                     </Box>
 

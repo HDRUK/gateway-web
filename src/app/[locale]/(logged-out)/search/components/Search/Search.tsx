@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -32,6 +33,7 @@ import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
 import ProvidersDialog from "@/modules/ProvidersDialog";
+import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
@@ -63,15 +65,16 @@ import {
     FILTER_TYPE_CATEGORY,
 } from "@/config/forms/filters";
 import searchFormConfig, {
+    PAGE_FIELD,
+    PMC_TYPE_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
     VIEW_FIELD,
     sortByOptionsDataUse,
     sortByOptionsDataset,
-    sortByOptionsTool,
     sortByOptionsPublications,
-    PAGE_FIELD,
+    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
@@ -90,6 +93,7 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
+import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
@@ -119,7 +123,7 @@ const Search = ({ filters }: SearchProps) => {
 
     const [resultsView, setResultsView] = useState(
         getParamString(VIEW_FIELD) ||
-            localStorage.getItem(config.VIEW_TYPE) ||
+            Cookies.get(config.VIEW_TYPE) ||
             ViewType.TABLE
     );
 
@@ -145,6 +149,7 @@ const Search = ({ filters }: SearchProps) => {
         source:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
+        [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
@@ -173,6 +178,7 @@ const Search = ({ filters }: SearchProps) => {
     );
 
     const allSearchParams = getAllParams(searchParams);
+    const forceSearch = searchParams?.get("force") !== null;
 
     const hasNotSearched = () => {
         const keys = Object.keys(allSearchParams).filter(
@@ -184,7 +190,7 @@ const Search = ({ filters }: SearchProps) => {
     useEffect(() => {
         const viewType =
             queryParams.type === SearchCategory.DATASETS
-                ? localStorage.getItem(config.VIEW_TYPE) || ViewType.TABLE
+                ? Cookies.get(config.VIEW_TYPE) || ViewType.TABLE
                 : ViewType.LIST;
 
         if (resultsView !== viewType) {
@@ -192,10 +198,28 @@ const Search = ({ filters }: SearchProps) => {
         }
     }, [queryParams.type, resultsView]);
 
-    const updatePath = (key: string, value: string) => {
-        router.push(`${pathname}?${updateQueryString(key, value)}`, {
-            scroll: false,
+    const updatePath = useCallback(
+        (key: string, value: string) => {
+            router.push(`${pathname}?${updateQueryString(key, value)}`, {
+                scroll: false,
+            });
+        },
+        [pathname, router, updateQueryString]
+    );
+
+    const updatePathMultiple = (params: Record<string, string>) => {
+        const currentParams = new URLSearchParams(searchParams?.toString());
+
+        Object.entries(params).forEach(([key, value]) => {
+            if (value === undefined) {
+                currentParams.delete(key);
+            } else {
+                currentParams.set(key, value);
+            }
         });
+
+        const newPath = `${pathname}?${currentParams.toString()}`;
+        router.push(newPath, { scroll: false });
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
@@ -248,6 +272,7 @@ const Search = ({ filters }: SearchProps) => {
             keepPreviousData: true,
             withPagination: true,
             shouldFetch:
+                forceSearch ||
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
                 !!(
                     queryParams.type === SearchCategory.PUBLICATIONS &&
@@ -297,7 +322,7 @@ const Search = ({ filters }: SearchProps) => {
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=1000`,
+        `${apis.librariesV1Url}?perPage=-1`,
         { shouldFetch: isLoggedIn }
     );
 
@@ -330,32 +355,56 @@ const Search = ({ filters }: SearchProps) => {
 
     const categoryTabs = [
         {
-            label: t("datasets"),
+            label: (
+                <TabTooltip content={t("datasetsTooltip")}>
+                    {t("datasets")}
+                </TabTooltip>
+            ),
             value: SearchCategory.DATASETS,
             content: "",
         },
         {
-            label: t("dataUse"),
+            label: (
+                <TabTooltip content={t("dataUseTooltip")}>
+                    {t("dataUse")}
+                </TabTooltip>
+            ),
             value: SearchCategory.DATA_USE,
             content: "",
         },
         {
-            label: t("tools"),
+            label: (
+                <TabTooltip content={t("toolsTooltip")}>
+                    {t("tools")}
+                </TabTooltip>
+            ),
             value: SearchCategory.TOOLS,
             content: "",
         },
         {
-            label: t("publications"),
+            label: (
+                <TabTooltip content={t("publicationsTooltip")}>
+                    {t("publications")}
+                </TabTooltip>
+            ),
             value: SearchCategory.PUBLICATIONS,
             content: "",
         },
         {
-            label: t("dataProviders"),
+            label: (
+                <TabTooltip content={t("dataProvidersTooltip")}>
+                    {t("dataProviders")}
+                </TabTooltip>
+            ),
             value: SearchCategory.DATA_PROVIDERS,
             content: "",
         },
         {
-            label: t("collections"),
+            label: (
+                <TabTooltip content={t("collectionsTooltip")}>
+                    {t("collections")}
+                </TabTooltip>
+            ),
             value: SearchCategory.COLLECTIONS,
             content: "",
         },
@@ -387,7 +436,7 @@ const Search = ({ filters }: SearchProps) => {
     const handleChangeView = (viewType: ViewType) => {
         setResultsView(viewType);
         updatePath(VIEW_FIELD, viewType);
-        localStorage.setItem(config.VIEW_TYPE, viewType);
+        Cookies.set(config.VIEW_TYPE, viewType);
     };
 
     const toggleButtons = [
@@ -440,7 +489,6 @@ const Search = ({ filters }: SearchProps) => {
             case SearchCategory.DATA_PROVIDERS:
                 return (
                     <ResultCardDataProvider
-                        imgUrl="/images/data-providers/sample.thumbnail.jpg"
                         result={result as SearchResultDataProvider}
                     />
                 );
@@ -531,11 +579,48 @@ const Search = ({ filters }: SearchProps) => {
                 return t("searchExplainerDatasets");
         }
     };
+
+    const excludedDownloadSearchCategories = [
+        SearchCategory.PUBLICATIONS,
+        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.COLLECTIONS,
+    ];
+
     const showPublicationWelcomeMessage =
+        !forceSearch &&
         !isSearching &&
         !queryParams.query &&
         queryParams.type === SearchCategory.PUBLICATIONS &&
         (!data?.list?.length || !data?.path?.includes(queryParams.type));
+
+    const isEuropePmcSearch = useMemo(
+        () =>
+            queryParams.type === SearchCategory.PUBLICATIONS &&
+            queryParams.source === "FED",
+        [queryParams.source, queryParams.type]
+    );
+
+    const europePmcModalAction = () =>
+        showDialog(() => (
+            <PublicationSearchDialog
+                onSubmit={(query: string, type: string) => {
+                    onQuerySubmit({
+                        query,
+                    });
+                    setQueryParams({
+                        ...queryParams,
+                        pmc: type,
+                        query,
+                    });
+                    updatePathMultiple({
+                        pmc: type,
+                        query,
+                    });
+                }}
+                defaultQuery={queryParams.query}
+                isDataset={queryParams.pmc === "dataset"}
+            />
+        ));
 
     return (
         <Box
@@ -561,6 +646,12 @@ const Search = ({ filters }: SearchProps) => {
                     submitAction={onQuerySubmit}
                     queryPlaceholder={t("searchPlaceholder")}
                     queryName={QUERY_FIELD}
+                    inputOverrideAction={
+                        isEuropePmcSearch ? europePmcModalAction : undefined
+                    }
+                    valueOverride={
+                        isEuropePmcSearch ? queryParams.query : undefined
+                    }
                 />
             </Box>
             <ActionBar>
@@ -581,15 +672,19 @@ const Search = ({ filters }: SearchProps) => {
                             sortOptions={getSortOptions()}
                         />
                     </Box>
-                    <Button
-                        onClick={() =>
-                            !isDownloading && downloadSearchResults()
-                        }
-                        variant="text"
-                        startIcon={<DownloadIcon />}
-                        disabled={isDownloading || !data?.list?.length}>
-                        {t("downloadResults")}
-                    </Button>
+                    {!excludedDownloadSearchCategories.includes(
+                        queryParams.type
+                    ) && (
+                        <Button
+                            onClick={() =>
+                                !isDownloading && downloadSearchResults()
+                            }
+                            variant="text"
+                            startIcon={<DownloadIcon />}
+                            disabled={isDownloading || !data?.list?.length}>
+                            {t("downloadResults")}
+                        </Button>
+                    )}
                     <Button
                         variant="outlined"
                         color="secondary"
@@ -697,11 +792,13 @@ const Search = ({ filters }: SearchProps) => {
                                                     total={data?.total}
                                                 />
                                             )}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
-                                        )}
+                                        {data &&
+                                            data.elastic_total > 100 &&
+                                            !showPublicationWelcomeMessage && (
+                                                <ResultLimitText>
+                                                    {t("resultLimit")}
+                                                </ResultLimitText>
+                                            )}
                                     </>
                                 </Box>
 

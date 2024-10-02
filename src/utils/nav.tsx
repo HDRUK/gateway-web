@@ -29,7 +29,7 @@ const getProfileNav = (permissions: {
         },
         {
             icon: <HandymanOutlinedIcon />,
-            label: "Analysis script, tools and software",
+            label: "Analysis Scripts & Software",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
         },
         {
@@ -120,8 +120,17 @@ const getTeamNav = (
             ? [
                   {
                       icon: <HandymanOutlinedIcon />,
-                      label: "Analysis script, tools and software",
+                      label: "Analysis Scripts & Software",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["papers.read"]
+            ? [
+                  {
+                      icon: <ArticleIcon />,
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
                   },
               ]
             : []),

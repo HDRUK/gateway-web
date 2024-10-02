@@ -17,10 +17,12 @@ import {
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
 } from "@/config/forms/filters";
+import { PMC_TYPE_FIELD } from "@/config/forms/search";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
 import { Highlight } from "./HighlightDataset";
 import { PaginationType } from "./Pagination";
+import { Team } from "./Team";
 
 export interface Aggregations {
     [FILTER_DATA_TYPE]: {
@@ -76,6 +78,7 @@ export interface SearchResultDataset extends SearchResultBase {
         id: number;
         member_of: string;
         name: string;
+        is_question_bank: boolean;
     };
 }
 
@@ -122,13 +125,13 @@ export interface SearchResultTool extends SearchResultBase {
 
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
-    image_link: string;
-    _id: string;
+    image_link?: string;
+    team: Team | null;
 }
 
 export interface SearchResultDataProvider extends SearchResultBase {
     name: string;
-    _id: string;
+    team_logo?: string;
 }
 
 export type SearchResult =
@@ -136,7 +139,8 @@ export type SearchResult =
     | SearchResultDataUse
     | SearchResultPublication
     | SearchResultCollection
-    | SearchResultTool;
+    | SearchResultTool
+    | SearchResultDataProvider;
 
 export interface SearchForm {
     query: string;
@@ -212,6 +216,7 @@ export interface SearchQueryParams {
     [FILTER_TYPE_CATEGORY]: string[] | undefined;
     [FILTER_CONTAINS_TISSUE]: string[] | undefined;
     [FILTER_MATERIAL_TYPE]: string[] | undefined;
+    [PMC_TYPE_FIELD]: string | undefined;
 }
 
 export type CountType = { [key: string]: number };

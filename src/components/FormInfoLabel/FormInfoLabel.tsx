@@ -11,6 +11,7 @@ interface FormInfoLabelProps {
     info?: string;
     label: string;
     name?: string;
+    onClick?: (e: React.MouseEvent) => void;
 }
 
 const FormInfoLabel = ({
@@ -20,6 +21,7 @@ const FormInfoLabel = ({
     label,
     disabled = false,
     required = false,
+    onClick,
 }: FormInfoLabelProps) => {
     return (
         <>
@@ -33,6 +35,7 @@ const FormInfoLabel = ({
                             color: colors.grey600,
                         }),
                     }}
+                    onClick={onClick}
                 />
             )}
 

@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
     rootNode,
-    outerNodes,
+    outerNodeValues,
+    getOuterNodes,
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
 import MindMap, { MindMapProps } from "./MindMap";
+
+const outerNodes = getOuterNodes(outerNodeValues);
 
 const meta: Meta<typeof MindMap> = {
     component: MindMap,

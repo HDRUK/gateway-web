@@ -121,7 +121,8 @@
     },
     "pages": {
         "newsEvents": {
-            "noResults": "There are no results for the selected year."
+            "noResults": "There are no results for the selected year.",
+            "readMore": "Read more"
         },
         "support": {
             "title": "Support centre",
@@ -181,7 +182,10 @@
                 "text": "Use this form to register an account and update your account on the Gateway",
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
-                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status"
+                    "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
+                    "dateActionedTooltip": "This is the date for the latest status update for this user",
+                    "accountExpired": "This user's access is expired",
+                    "expiryWarning": "This user access is close to expiration date"
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",
@@ -242,7 +246,10 @@
                     "create": {
                         "backButton": "Back to Teams list",
                         "title": "Add Team’s details",
-                        "text": "Add details of the data publisher team you want to create on the Gateway"
+                        "text": "Add details of the data publisher team you want to create on the Gateway",
+                        "aspectRatioInfo": "Please note the aspect ratio of the image must be approximately 2:1 (width:height)",
+                        "aspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height)",
+                        "fileSelectButtonText": "Choose logo"
                     },
                     "edit": {
                         "title": "Edit Team details",
@@ -254,6 +261,17 @@
                         "PublicationTab": {
                             "noPublications": "No {status} publications found on the Gateway associated with your profile."
                         }
+                    },
+                    "create": {
+                        "title": "Manage or create a publication entry",
+                        "intro": "Publications should be peer reviewed documents (including pre-prints or articles published in a journal)",
+                        "addResources": "Related resources (optional)",
+                        "addResourcesInfo": "Show relationships for publications, data uses, other publications and analysis scripts, tools and software. Resources must already be on the Gateway.",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "labelTag": "Publication"
                     },
                     "list": {
                         "title": "Publications",
@@ -283,14 +301,14 @@
                         "RightPanel": {
                             "generalEnquiries": {
                                 "title": "General Enquiry",
-                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "text": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
                                 "buttonText": "Make a general enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "feasibilityEnquiries": {
                                 "title": "Feasibility Enquiry",
-                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
+                                "text": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
                                 "buttonText": "Make a feasibility enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
@@ -375,6 +393,7 @@
                             "makeActive": "Make active",
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
+                            "uploadSuccess": "Your data has been successfully uploaded",
                             "checkboxes": {
                                 "healthAndDisease": "Health and disease",
                                 "healthAndDiseaseTooltip": "Includes any data related to mental health, cardiovascular, cancer, rare diseases, metabolic and endocrine, neurological, reproductive, maternity and neonatology, respiratory, immunity, musculoskeletal, vision, renal and urogenital, oral and gastrointestinal, cognitive function or hearing.",
@@ -384,8 +403,6 @@
                                 "measurementsTestsTooltip": "Includes any data related to laboratory or other diagnostics.",
                                 "imagingTypes": "Imaging types",
                                 "imagingTypesTooltip": "Includes any data related to CT, MRI, PET, x-ray, ultrasound or pathology imaging.",
-                                "imagingAreaOfTheBody": "Imaging area of the body",
-                                "imagingAreaOfTheBodyTooltip": "Indicates whether the dataset relates to head, chest, arm abdomen or leg imaging.",
                                 "omics": "Omics",
                                 "omicsTooltip": "Includes any data related to proteomics, transcriptomics, epigenomics, metabolomics, multiomics, metagenomics or genomics.",
                                 "socioeconomic": "Socioeconomic",
@@ -419,7 +436,8 @@
                                 "completionGuidance5": "Type of data contained in the column.",
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
                                 "downloadTemplate": "Download data dictionary template",
-                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata."
+                                "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata.",
+                                "uploadMessage": "Please wait while we scan and process your file. When processing has finished, your data will display below and you will be able to submit the Metadata to the Gateway. Scanning and processing typically takes 30-45 seconds, please do not leave this page"
                             },
                             "discardChanges": "Discard changes",
                             "saveAsDraft": "Save changes as draft",
@@ -509,7 +527,7 @@
                     "components": {
                         "TeamCollections": {
                             "title": "Collections",
-                            "text": " View, add, edit, archive and check the status of your Collections.",
+                            "text": " View, add, edit, archive and check the status of your collections.",
                             "create": "Add new Collection",
                             "actions": {
                                 "unarchive": {
@@ -543,11 +561,11 @@
                         "saveDraft": "Save as draft",
                         "publish": "Publish",
                         "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
-                        "labelTag": "Analysis script, tools and software"
+                        "labelTag": "Analysis Scripts & Software"
                     },
                     "components": {
                         "TeamTools": {
-                            "title": "Analysis script, tools and software",
+                            "title": "Analysis Scripts & Software",
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
@@ -650,7 +668,7 @@
             "dataProviders": {
                 "label": "Data Custodians",
                 "title": "Data Custodians",
-                "text": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
+                "text": "Search data custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
             },
             "collections": {
                 "label": "Collections",
@@ -670,7 +688,7 @@
             "dataCustodianNetworks": {
                 "label": "Data Custodian Networks",
                 "title": "Data Custodian Networks",
-                "text": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
+                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
             },
             "publications": {
                 "label": "Publications",
@@ -693,7 +711,7 @@
                     "text": "Explore Gateway features and learn how to use them. You can also submit queries and feedback to help us improve the Gateway."
                 },
                 "item2": {
-                    "title": "Community",
+                    "title": "Open-Source Development",
                     "text": "Designed with and for the community, the Gateway is built for collaboration. Discover how you can get involved."
                 }
             },
@@ -731,19 +749,26 @@
         },
         "search": {
             "datasets": "Datasets & BioSamples",
+            "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
             "dataUse": "Data Uses/\n\nResearch Projects",
+            "dataUseTooltip": "Find data uses/research projects: search and filter data uses/research projects/studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
+            "toolsTooltip": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software.",
             "dataProviders": "Data Custodians",
+            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts and software), and find out how to contact them. ",
             "collections": "Collections / Networks",
+            "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts and Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
             "publications": "Publications",
+            "publicationsTooltip": "Understand what research has been undertaken utilising specific datasets: search and deposit publications which have used a dataset or publications which describe a dataset.",
             "dataCustodianNetworks": "Data Custodian Networks",
+            "dataCustodianNetworksTooltip": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network.",
             "collectionsHeader": "Collections",
-            "searchExplainerDatasets": "Search by keywords, phenotypes, SNOMED code, LOINC term, Read code, ICD10 code, MESH term",
-            "searchExplainerDataUse": "Search by lead organisation, data custodian",
-            "searchExplainerPublications": "Search by publication title, publication DOI, dataset DOI, software title, data custodian name",
-            "searchExplainerCollections": "Search by collection name",
-            "searchExplainerTools": "Search by name, programming language",
-            "searchExplainerDataProviders": "Enter your search term here",
+            "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
+            "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
+            "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, keywords",
+            "searchExplainerCollections": "Search, for example, by Collection name, keywords",
+            "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
+            "searchExplainerDataProviders": "Search, for example, by Data Custodian name, Dataset title",
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
@@ -754,8 +779,8 @@
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
             "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
             "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data custodian.",
-            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' field to improve the relevance of results returned.",
-            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the Keyword(s) of interest or the name of a dataset in the search box at the top, and hit enter/return on your keyboard.</bold>",
+            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' and 'RESULTS' fields to improve the relevance of results returned.",
+            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the keyword(s) of interest, the name of a dataset or DOI in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -772,7 +797,7 @@
                             "dataType": "Data type",
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
-                            "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "dataUseTitles": "Data Use / Research project title",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
@@ -788,7 +813,7 @@
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",
-                            "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway",
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "organisationName": "Lead applicant organisation",
                             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
                             "datasetTitles": "Dataset",
@@ -802,7 +827,9 @@
                             "publicationDate": "Publication date range",
                             "publicationDateTooltip": "The range of years during which results were published",
                             "publicationType": "Publication type",
-                            "publicationTypeTooltip": "The type of publication; research articles, review articles, preprints or books and documents",
+                            "publicationTypeTooltip": "The type of publication: research articles, review articles, preprints or books and documents",
+                            "datasetLinkTypes": "Publication & dataset relationship",
+                            "datasetLinkTypesTooltip": "Differentiate whether you are looking for a publication which describes or is about a dataset, or a publication which utilises the dataset for analysis",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -810,7 +837,7 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "publisherName": "Data Custodian",
-                            "publisherNameTooltip": "Organisation a researcher contacts about a dataset on the Gateway"
+                            "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway"
                         },
                         "dataProvider": {
                             "datasetTitles": "Dataset",
@@ -821,12 +848,8 @@
                             "geographicLocationTooltip": "The geographical area covered by the dataset"
                         },
                         "tool": {
-                            "dataProvider": "Data Custodian",
-                            "dataProviderTooltip": "The name of the Data Custodian (i.e. the organisation who facilitates access to the dataset)",
                             "license": "Licensing",
                             "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
-                            "category": "Category",
-                            "categoryTooltip": "Category",
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
@@ -842,11 +865,11 @@
                 },
                 "FeasibilityEnquiryForm": {
                     "itemName": "Feasibility Enquiry item",
-                    "helperText": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "helperText": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                     "saveButton": "Send message"
                 },
                 "GeneralEnquiryForm": {
-                    "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "helperText": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                     "saveButton": "Send message"
                 },
                 "PopulationFilter": {
@@ -856,7 +879,7 @@
                     "populationSizeNotReported": "not reported",
                     "populationSize": "Dataset population size",
                     "dateLabel": "Date range",
-                    "leadOrganisation": "Lead organisation",
+                    "leadOrganisation": "Lead applicant organisation",
                     "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
                     "datasets": "Datasets",
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
@@ -888,19 +911,19 @@
                         "tooltip": "Population size associated with the population type in the dataset"
                     },
                     "dateRangePublisher": {
-                        "label": "Date range",
+                        "label": "Date Range",
                         "tooltip": "Start and end of the time period that the dataset provides coverage for"
                     },
                     "dataStandard": {
-                        "label": "Data standard",
+                        "label": "Data Standard",
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
                     "dataProvider": {
-                        "label": "Data custodian",
+                        "label": "Data Custodian",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
                     "accessService": {
-                        "label": "Access service",
+                        "label": "Access Service",
                         "tooltip": "Method for accessing the dataset, if access request is approved"
                     },
                     "cohortDiscovery": {
@@ -912,7 +935,7 @@
                         "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },
                     "hasTechnicalMetadata": {
-                        "label": "Structural metadata",
+                        "label": "Structural Metadata",
                         "tooltip": "Descriptions and details about the tables and columns within a dataset"
                     },
                     "feasibilityEnquiries": {
@@ -925,7 +948,7 @@
                     "title": "Add dataset to your library",
                     "confirmText": "Add and go to library",
                     "buttonContinueText": "Add to library and continue searching",
-                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to raise an enquiry for one or multiple Data Custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple Data Custodians (if the Data Custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
+                    "content": "Adding datasets to your Library will allow you to perform the following actions: \n   * Select one or multiple datasets to make a general enquiry for one or multiple data custodians.\n   * Select one or multiple datasets to raise a Data Access Request (DAR) application for one or multiple data custodians (if the data custodians have DAR enabled).\n \nAccess your profile page in the navigation menu to see all of your saved datasets."
                 }
             }
         },
@@ -936,17 +959,18 @@
                     "label": "Back to Collections search results"
                 },
                 "DatasetsContent": {
-                    "heading": "Datasets / BioSamples ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "heading": "Datasets & BioSamples ({ length })",
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Data uses ({ length })"
+                    "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis, scripts and software ({ length })"
+                    "heading": "Analysis Scripts & Software ({ length })"
                 }
             }
         },
@@ -954,14 +978,14 @@
             "introduction": "Introduction",
             "collections": "Collections",
             "datasets": "Datasets",
-            "dataUses": "Data uses",
+            "dataUses": "Data Uses",
             "publications": "Publications",
             "tools": "Tools",
             "serviceOfferings": "Service offerings",
             "components": {
                 "ActionBar": {
                     "label": "Back",
-                    "enquire": "Make an enquiry"
+                    "enquire": "Make a general enquiry"
                 },
                 "CollectionsContent": {
                     "heading": "Collections ({ length })"
@@ -972,7 +996,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Data uses ({ length })"
+                    "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
@@ -991,7 +1015,7 @@
             "datasets": "Datasets",
             "dataUses": "Data use",
             "publications": "Publication",
-            "tools": "Analysis scripts and software",
+            "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
             "components": {
                 "ActionBar": {
@@ -1014,7 +1038,7 @@
                     "populationSize": "Dataset population size: { length }"
                 },
                 "DatausesContent": {
-                    "heading": "Data uses ({ length })"
+                    "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications ({ length })"
@@ -1032,11 +1056,13 @@
             "datasetPublications": "Publications about this dataset",
             "components": {
                 "ActionBar": {
-                    "contact": "Contact data custodian",
+                    "contact": "Contact Data Custodian",
                     "label": "Back to search results",
                     "submitApplication": "Submit an application",
                     "downloadMetadata": "Download metadata",
-                    "downloadStarted": "Your download has started"
+                    "downloadStarted": "Your download has started",
+                    "feasibilityEnquiryButtonText": "Make a feasibility enquiry",
+                    "generalEnquiryButtonText": "Make a general enquiry"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
@@ -1052,23 +1078,28 @@
                     "dataOnly": "Data only"
                 },
                 "DatasetMindMap": {
-                    "tools": "Data Analysis Scripts & Software",
+                    "tools": "Analysis Scripts & Software",
                     "durs": "Data Uses / Research Projects",
-                    "collections": "Collections",
+                    "collections": "Collection(s)",
                     "synthetic": "Synthetic data",
-                    "root": "Data Custodian",
-                    "structuralMetadata": "Data variables"
+                    "dataCustodian": "Data Custodian",
+                    "structuralMetadata": "Data variables",
+                    "demographics": "Explore demographics",
+                    "curatedPublications": "Publications using this dataset (curated)",
+                    "externalPublications": "Publications using this dataset (external search)",
+                    "coverageCompleteness": "Coverage and completeness"
                 },
                 "Linkages": {
                     "title": "Relationships:",
                     "noRelationships": "No relationships found",
                     "isPartOf": "Dataset is part of ({ count })",
                     "isDerivedFrom": "Datasets this derives from ({ count })",
-                    "linkedDatasets": "Linkages Datasets ({ count })",
+                    "linkedDatasets": "Linked Datasets ({ count })",
                     "isMemberOf": "Similar Datasets ({ count })"
                 },
                 "Sources": {
                     "datasetTypes": "Dataset Types",
+                    "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
                     "noCollectionSources": "No collection sources listed"
                 }
@@ -1083,7 +1114,7 @@
             "safeSetting": "Safe Setting",
             "safeOutput": "Safe Outputs",
             "projectIdText": "Project ID",
-            "projectIdTextTooltip": "A unique identifier for the project assigned by the Data Custodian",
+            "projectIdTextTooltip": "A unique identifier for the project assigned by the data custodian",
             "organisationName": "Organisation name",
             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
             "organisationId": "Organisation ID",
@@ -1168,10 +1199,10 @@
             "keywords": "Keywords",
             "domain": "Domain",
             "notAvailable": "Not specified",
-            "datasets": "Related datasets",
-            "dataUses": "Related data uses",
-            "publications": "Related publications",
-            "collections": "Related collections",
+            "datasets": "Related Datasets",
+            "dataUses": "Related Data Uses",
+            "publications": "Related Publications",
+            "collections": "Related Collections",
             "components": {
                 "ActionBar": {
                     "label": "Back to Tools search results"
@@ -1260,6 +1291,9 @@
             "dataType": "Data type",
             "sensitive": "Sensitive"
         },
+        "DemographicsAccordion": {
+            "noData": "No data available"
+        },
         "CollectionCard": {
             "users": "Users",
             "entities": "Entities",
@@ -1279,6 +1313,18 @@
             "bookmarks": "Bookmarks"
         },
         "dialogs": {
+            "DarEnquiryDialog": {
+                "titleEnabled": "This feature is temporarily unavailable",
+                "messageEnabled": "In the meantime, you can still contact the Data Custodian via the general enquiry or feasibility enquiry form to discuss your requirements and guide you through their Data Access Request process.",
+                "titleNotEnabled": "Data access requests not enabled for this Data Custodian",
+                "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
+                "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
+                "feasibilityEnquiryButton": "Make feasibility enquiry for this dataset",
+                "generalEnquiryButton": "Make general enquiry for this dataset",
+                "accessInformationButton": "Access information",
+                "feasibilityEnquiryLink": "feasibility enquiry",
+                "generalEnquiryLink": "general enquiry"
+            },
             "SaveSearch": {
                 "name": "Name your search query",
                 "nameRequired": "A search query title is required",
@@ -1340,6 +1386,13 @@
                 "manualButton": "Manually input metadata",
                 "uploadButton": "Upload a file of metadata"
             },
+            "AddPublicationDialog": {
+                "manualButton": "Manually fill form",
+                "searchText": "Search Europe PMC",
+                "doiPlaceholder": "Auto populate by searching Europe PMC using a DOI",
+                "or": "or",
+                "notFound": "DOI not found on Europe PMC"
+            },
             "RelatedResources": {
                 "title": "Add related resources",
                 "intro": "Search for data uses, publications and other analysis scripts, tools and software to add to your entry. Resources must already be on the Gateway.",
@@ -1352,7 +1405,7 @@
                 "dataProvider": "Data Custodian",
                 "entityType": "Entity Type",
                 "radioDataset": "Datasets",
-                "radioDatause": "Data uses",
+                "radioDatause": "Data Uses",
                 "radioPublication": "Publications",
                 "radioTool": "Analysis Scripts & Software",
                 "chipDataset": "Dataset",
@@ -1371,6 +1424,31 @@
                 "enquire": "Make feasibility enquiry for this dataset only",
                 "addToLibrary": "Add to library and continue searching",
                 "helpText": "To make a feasibility enquiry for multiple datasets:\n \n1. Add datasets to your library\n2. Generate a feasibility enquiry from your library page"
+            },
+            "DatasetRelationshipDialog": {
+                "isPartOf": "Dataset is part of",
+                "isDerivedFrom": "Datasets this derives from",
+                "linkedDatasets": "Linked Datasets",
+                "isMemberOf": "Similar Datasets",
+                "isPartOfTooltip": "A Dataset could be part of a larger group of Datasets. This relationship indicates that the Dataset is a component or subset of a broader collection of related Datasets.",
+                "isDerivedFromTooltip": "The data in this Dataset is derived or calculated from data in another Dataset. Some examples of types of derivations are if the Dataset is extracted or a subset of another Dataset. This relationship indicates that one Dataset is encompassed within another.",
+                "linkedDatasetsTooltip": "If this Dataset can be linked to another Dataset through a common identifier or variable.",
+                "isMemberOfTooltip": "If another Dataset is similar to this Dataset in some manner, but cannot necessarily be directly linked to the Dataset.",
+                "addToLibrary": "Add to library",
+                "removeFromLibrary": "Remove from library"
+            },
+            "PublicationsSearchDialog": {
+                "searchField": {
+                    "placeholder": "I'm looking for...",
+                    "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
+                },
+                "datasetNameField": {
+                    "placeholder": "Dataset name",
+                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
+                },
+                "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
+                "cancel": "Cancel",
+                "search": "Search"
             }
         }
     }

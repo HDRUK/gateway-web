@@ -1,7 +1,6 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import Image from "next/image";
 import Box from "@/components/Box";
 import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
@@ -9,6 +8,8 @@ import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { StaticImages } from "@/config/images";
+import { AspectRatioImage } from "@/config/theme";
 import { getTeamSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import CollectionsContent from "./components/CollectionsContent";
@@ -52,11 +53,13 @@ export default async function DataCustodianItemPage({
             body={
                 <>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
+                        <AspectRatioImage
                             width={554}
                             height={250}
                             alt={data.name}
-                            src="/images/data-providers/sample.thumbnail.jpg"
+                            src={
+                                data?.team_logo || StaticImages.BASE.placeholder
+                            }
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
                             {data.name}
