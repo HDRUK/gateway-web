@@ -13,7 +13,7 @@ const GetContentPageQuery = (
         page(id: "${id}", idType: ${idType} ) {
           title
           content
-          ${otherFields ? otherFields : ""}
+          ${otherFields ?? ""}
         }
       }
     `;
