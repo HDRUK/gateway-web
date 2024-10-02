@@ -10,7 +10,8 @@ import { INCLUDE_UNREPORTED } from "@/consts/filters";
 
 const groupByType = (
     data: Filter[],
-    type: string
+    type: string,
+    t?: (key: string) => string
 ): {
     label: string;
     value: string;
@@ -25,7 +26,9 @@ const groupByType = (
                 buckets: item.buckets?.map(bucket => {
                     return {
                         value: bucket.key,
-                        label: bucket.key,
+                        label: t
+                            ? t(`${item.keys}.values.${bucket.key}`)
+                            : bucket.key,
                         count: bucket.doc_count,
                     };
                 }),
