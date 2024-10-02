@@ -794,7 +794,7 @@
                             "populationSize": "Population size",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
-                            "dataType": "Data type",
+                            "dataType": "Dataset type",
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
