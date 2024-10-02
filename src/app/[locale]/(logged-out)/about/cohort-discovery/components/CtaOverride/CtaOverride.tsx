@@ -38,19 +38,22 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         shouldFetch: isClicked,
     });
 
+    if (isClicked){
+        console.log('cake1')
+
+        if (datasetCsv){
+            console.log('cake2')
+            const {redirect_url} = datasetCsv as any
+            push(redirect_url); 
+        }
+    }
+
+
     const handleVisit = async () => {
         setIsClicked(true);
         console.log(datasetCsv);
     };
-    useEffect(()=>{
-        console.log('iam absolute')
-        if(datasetCsv){
-            const {redirect_url} = datasetCsv as any
-            if (redirect_url){
-                window.location.href=redirect_url
-            }
-        }
-    },[datasetCsv])
+
 
     return (
         <Box sx={{ display: "flex" }}>
