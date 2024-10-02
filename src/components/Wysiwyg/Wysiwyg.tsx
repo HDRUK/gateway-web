@@ -52,7 +52,7 @@ const Wysiwyg = <
         }
 
         editor?.commands.setContent(content);
-    }, [editor]);
+    }, [editor, field.value]);
 
     return (
         <FormInputWrapper
