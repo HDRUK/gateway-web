@@ -30,6 +30,7 @@ interface TableProps<T> {
         { rowIndex, columnId, value }: OnUpdateProps
     ) => void;
     hideHeader?: boolean;
+    pinHeader?: boolean;
 }
 
 function useSkipper() {
@@ -48,7 +49,10 @@ function useSkipper() {
     return [shouldSkip, skip] as const;
 }
 
-const getCommonCellStyles = <T,>(column: Column<T>): CSSProperties => {
+const getCommonCellStyles = <T,>(
+    column: Column<T>,
+    isHeaderPinned?: boolean
+): CSSProperties => {
     const {
         columnDef: { meta = {} },
     } = column;
@@ -58,14 +62,16 @@ const getCommonCellStyles = <T,>(column: Column<T>): CSSProperties => {
         hasPinnedBorder?: boolean;
     };
 
+    const shouldPin = isPinned || isHeaderPinned;
     return {
-        backgroundColor: isPinned ? colors.grey100 : "white",
+        backgroundColor: shouldPin ? colors.grey100 : "white",
         boxShadow: hasPinnedBorder ? `1px 0 ${colors.grey300}` : undefined,
-        left: isPinned ? `${column.getStart()}px` : undefined,
-        opacity: isPinned ? 0.95 : 1,
-        position: isPinned ? "sticky" : "relative",
+        left: shouldPin ? `${column.getStart()}px` : undefined,
+        top: shouldPin ? 0 : undefined,
+        opacity: shouldPin ? 0.95 : 1,
+        position: shouldPin ? "sticky" : "relative",
         width: column.getSize(),
-        zIndex: isPinned ? 1 : 0,
+        zIndex: shouldPin ? 1 : 0,
     };
 };
 
@@ -75,6 +81,7 @@ const Table = <T,>({
     onUpdate,
     defaultColumn,
     hideHeader,
+    pinHeader,
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
     const table = useReactTable(
@@ -141,7 +148,10 @@ const Table = <T,>({
                                     css={styles.th}
                                     key={header.id}
                                     style={{
-                                        ...getCommonCellStyles(header.column),
+                                        ...getCommonCellStyles(
+                                            header.column,
+                                            pinHeader
+                                        ),
                                     }}>
                                     <div className="whitespace-nowrap">
                                         {header.isPlaceholder
