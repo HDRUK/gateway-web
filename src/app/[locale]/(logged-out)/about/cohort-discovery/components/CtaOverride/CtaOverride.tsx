@@ -36,7 +36,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
 
     const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
         shouldFetch: isClicked,
-    }, true);
+    });
 
     const handleVisit = async () => {
         setIsClicked(true);

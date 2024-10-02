@@ -7,14 +7,13 @@ const CONTENT_TYPE_CSV = "text/csv";
 
 const getRequest = async <T>(
     url: string,
-    options: RequestOptions,
-    noCors = false
+    options: RequestOptions
 ): Promise<T | unknown> => {
     const { withPagination, notificationOptions } = options;
     const { errorNotificationsOn = true, ...props } = notificationOptions;
 
     try {
-        const response = await fetch(url, { credentials: "include", ...(noCors) ? {mode: 'no-cors'} : {} });
+        const response = await fetch(url, { credentials: "include" });
 
         if (response.ok) {
             const contentType = response.headers.get("Content-Type");
