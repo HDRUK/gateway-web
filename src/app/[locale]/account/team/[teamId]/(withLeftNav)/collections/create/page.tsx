@@ -7,7 +7,7 @@ import CreateCollection from "./components";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Create Collection",
-    description: "",
+    description: "Create a collection",
 };
 
 export default async function CollectionCreatePage({

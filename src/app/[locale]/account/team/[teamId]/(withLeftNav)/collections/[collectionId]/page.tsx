@@ -6,11 +6,11 @@ import { getTeamUser } from "@/utils/user";
 import CreateCollection from "../create/components";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Create Collection",
-    description: "",
+    title: "Health Data Research Innovation Gateway - My Account - Edit Collection",
+    description: "Edit a collection",
 };
 
-export default async function CollectionCreatePage({
+export default async function CollectionEditPage({
     params,
 }: {
     params: { teamId: string; collectionId: string };

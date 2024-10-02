@@ -124,12 +124,12 @@ const UploadFile = ({
         if (file.type.startsWith("image/")) {
             try {
                 // eslint-disable-next-line no-async-promise-executor
-                await new Promise(async (resolve, reject) => {
+                await new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
                     reader.onload = function (e) {
                         const image = new Image();
-                        image.src = e?.target?.result;
+                        image.src = e?.target?.result as string;
                         image.onload = function () {
                             if (onBeforeUploadCheck) {
                                 const checked = onBeforeUploadCheck(
@@ -181,7 +181,7 @@ const UploadFile = ({
             onFileCheckSucceeded?.(uploadedFileStatus);
             return true;
         } catch {
-            setHasError(false);
+            setHasError(true);
             onFileCheckFailed?.();
             return false;
         }
