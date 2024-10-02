@@ -459,7 +459,9 @@
                         "EditDataUse": {
                             "editDataUse": "Edit a data use",
                             "submit": "Save",
-                            "cancel": "Cancel"
+                            "cancel": "Cancel",
+                            "saveDraft": "Save as draft",
+                            "publish": "Publish"
                         },
                         "DatasetTab": {
                             "downloadButton": "Download dataset information as .csv",
