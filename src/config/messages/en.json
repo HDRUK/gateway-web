@@ -828,6 +828,8 @@
                             "publicationDateTooltip": "The range of years during which results were published",
                             "publicationType": "Publication type",
                             "publicationTypeTooltip": "The type of publication: research articles, review articles, preprints or books and documents",
+                            "datasetLinkTypes": "Publication & dataset relationship",
+                            "datasetLinkTypesTooltip": "Differentiate whether you are looking for a publication which describes or is about a dataset, or a publication which utilises the dataset for analysis",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
