@@ -5,7 +5,6 @@ import {
     DescriptionIcon,
     ToolIcon,
     HelpOutlineOutlinedIcon,
-    QuestionAnswerIcon,
     DataUseIcon,
     SettingsOutlinedIcon,
     DatabaseIcon,
@@ -59,7 +58,7 @@ const getProfileNav = (permissions: {
         ...(permissions["dar-config.update"] // this will need fixing/updating
             ? [
                   {
-                      icon: <QuestionAnswerIcon />,
+                      icon: <DescriptionIcon />,
                       label: "Data Access Requests",
                       subItems: [
                           ...(permissions["dar-config.update"]
