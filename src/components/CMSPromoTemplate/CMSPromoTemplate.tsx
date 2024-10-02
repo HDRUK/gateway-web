@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactElement } from "react";
+import { Divider } from "@mui/material";
 import { PageTemplatePromo } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -19,7 +20,6 @@ const CMSPromoTemplate = ({
     const {
         template: { promofields },
     } = content;
-
     const CtaContent =
         ctaOverrideComponent ||
         (promofields.ctaLink && (
@@ -31,11 +31,15 @@ const CMSPromoTemplate = ({
     return (
         <div className="wpStyles">
             <GradientBanner title={promofields.bannerTitle} />
-            <Box sx={{ p: 0, bgcolor: "white", pb: 2 }}>
-                <Box sx={{ display: { laptop: "flex" } }}>
+            <Box sx={{ bgcolor: "white", pt: 5, pb: 8, px: 6 }}>
+                <Box
+                    sx={{
+                        p: 0,
+                        display: "flex",
+                        alignItems: "center",
+                    }}>
                     <Box sx={{ flex: 1 }}>
                         <HTMLContent content={promofields.topLeftPanel} />
-                        {CtaContent}
                     </Box>
                     <Box sx={{ flex: 1 }}>
                         {promofields.topRightPanel && (
@@ -43,6 +47,7 @@ const CMSPromoTemplate = ({
                         )}
                     </Box>
                 </Box>
+                {CtaContent}
             </Box>
             <Box
                 sx={{
@@ -51,23 +56,33 @@ const CMSPromoTemplate = ({
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    pb: 10,
+                    pt: 5,
+                    pb: 8,
+                    px: 6,
                 }}>
-                <Box
-                    sx={{
-                        maxWidth: "1100px",
-                    }}>
+                <Box>
                     <HTMLContent content={promofields.middlePanel} />
                 </Box>
                 {CtaContent}
             </Box>
             {promofields.bottomPanel && (
-                <Box sx={{ p: 0, bgcolor: "white", pb: 2 }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        bgcolor: "white",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        pt: 5,
+                        pb: 8,
+                        px: 6,
+                    }}>
                     <Box sx={{ display: { laptop: "flex" } }}>
                         <Box sx={{ flex: 1 }}>
                             <HTMLContent content={promofields.bottomPanel} />
                         </Box>
                     </Box>
+                    <Divider sx={{ width: "100%!important" }} />
+                    {CtaContent}
                 </Box>
             )}
         </div>

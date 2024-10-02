@@ -16,6 +16,7 @@ query GetCohortDiscoveryQuery {
             topRightPanel
             topLeftPanel
             middlePanel
+            bottomPanel
           }
         }
     }
