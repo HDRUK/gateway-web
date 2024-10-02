@@ -34,12 +34,14 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
+
+
     const handleMyClick = async ()=>{
         console.log('biscuits')
             const response = await fetch(`${apis.cohortRequestsV1Url}/access`, { credentials: "include" })
             if (response.ok) {
                 const json = await response.json();
-                push(json.data.redirect_url); 
+                push(json.redirect_url); 
                 console.log('response data:', JSON.stringify(json))
             }
             else {
