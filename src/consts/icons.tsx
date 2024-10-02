@@ -52,6 +52,7 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -148,4 +149,5 @@ export {
     BookmarkIcon,
     BookmarksOutlinedIcon,
     StickyNote2OutlinedIcon,
+    PersonOutlineOutlinedIcon,
 };

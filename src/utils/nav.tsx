@@ -1,8 +1,6 @@
-import SearchIcon from "@mui/icons-material/Search";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     DescriptionOutlinedIcon,
-    FolderSharedOutlinedIcon,
     GroupsIcon,
     DescriptionIcon,
     ToolIcon,
@@ -16,6 +14,7 @@ import {
     BookmarkIcon,
     BookmarksOutlinedIcon,
     PublicationIcon,
+    PersonOutlineOutlinedIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -24,7 +23,7 @@ const getProfileNav = (permissions: {
 }): LeftNavItem[] => {
     return [
         {
-            icon: <FolderSharedOutlinedIcon />,
+            icon: <PersonOutlineOutlinedIcon />,
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
@@ -47,7 +46,7 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-            // TODO: add Datasets
+        // TODO: add Datasets
         ...(permissions["cohort.read"]
             ? [
                   {
@@ -71,7 +70,7 @@ const getProfileNav = (permissions: {
                                     },
                                 ]
                               : []),
-                              // TODO add Applications for HDRUK DAR Admin
+                          // TODO add Applications for HDRUK DAR Admin
                       ],
                   },
               ]
@@ -103,11 +102,15 @@ const getTeamNav = (
 ): LeftNavItem[] => {
     console.log(permissions);
     return [
-        {
-            icon: <SettingsOutlinedIcon />,
-            label: "Team Management",
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
-        },
+        ...(permissions["roles.read"]
+            ? [
+                  {
+                      icon: <SettingsOutlinedIcon />,
+                      label: "Team Management",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
+                  },
+              ]
+            : []),
         ...([
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -144,7 +147,7 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: <DatabaseIcon color="secondary"/>,
+                      icon: <DatabaseIcon color="secondary" />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },
