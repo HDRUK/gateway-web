@@ -226,8 +226,6 @@ const getContentPageByParentQuery = async (
         ({ slug }) => slug === queryOptions.id
     );
 
-    console.log("matchedPage", matchedPage);
-
     if (matchedPage) {
         const data: CMSPagesResponse<PageTemplateDefault> = await fetchCMS(
             GetContentPagesByNameQuery(queryName, {
@@ -328,14 +326,6 @@ const getResearchersInnovators = async () => {
             idType: "URI",
         }),
         DEFAULT_OPTIONS
-    );
-
-    console.log(
-        "*********** data",
-        GetContentPageQuery("getResearchersInnovatorsQuery", {
-            id: "researchers-innovators",
-            idType: "URI",
-        })
     );
 
     return substituteEnvLinks(data?.page);
