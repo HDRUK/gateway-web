@@ -218,12 +218,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...([
-            permissions["dur.read"],
-            permissions["dur.write"],
-            permissions["dur.update"],
-            permissions["dur.delete"],
-        ].some(isTrue => isTrue)
+        ...(permissions["dur.read"]
             ? [
                   {
                       icon: <DataUseIcon />,
