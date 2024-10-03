@@ -561,7 +561,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
-        onSuccess: () => handleSaveDraft,
+        onSuccess: handleSaveDraft,
         modalProps: {
             cancelText: t("discardChanges"),
             confirmText: t("saveAsDraft"),
