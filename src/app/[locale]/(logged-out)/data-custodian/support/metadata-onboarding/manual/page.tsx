@@ -12,7 +12,7 @@ const ManagingPage = async () => {
     const cmsPage = await getContentPageByParentQuery("Managing", {
         id: "manual-metadata-onboarding",
         idType: "URI",
-        parentId: "/data-custodian-metadata-onboarding",
+        parentId: "/data-custodian-support/data-custodian-metadata-onboarding",
     });
 
     if (!cmsPage) {
