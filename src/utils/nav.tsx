@@ -45,7 +45,6 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-        // TODO: add Datasets
         ...(permissions["cohort.read"]
             ? [
                   {
@@ -55,13 +54,13 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-        ...(permissions["dar-config.update"] // this will need fixing/updating
+        ...(permissions["question-bank.update"]
             ? [
                   {
                       icon: <DescriptionIcon />,
                       label: "Data Access Requests",
                       subItems: [
-                          ...(permissions["dar-config.update"]
+                          ...(permissions["question-bank.update"]
                               ? [
                                     {
                                         label: "Question Bank",
@@ -69,7 +68,6 @@ const getProfileNav = (permissions: {
                                     },
                                 ]
                               : []),
-                          // TODO add Applications for HDRUK DAR Admin
                       ],
                   },
               ]
@@ -111,9 +109,9 @@ const getTeamNav = (
               ]
             : []),
         ...([
+            permissions["applications.read"],
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
-            permissions["applications.read"],
         ].some(isTrue => isTrue)
             ? [
                   {
@@ -153,16 +151,16 @@ const getTeamNav = (
               ]
             : []),
         ...([
-            permissions["dar.read.assigned"],
-            permissions["workflows.read"],
-            permissions["dar-form.update"],
+            permissions["data-access-template.read"],
+            permissions["data-access-applications.provider.read"],
+            permissions["data-access-applications.review.read"],
         ].some(isTrue => isTrue)
             ? [
                   {
                       icon: <DescriptionIcon />,
                       label: "Data Access Requests",
                       subItems: [
-                          ...(permissions["dar-form.update"]
+                          ...(permissions["data-access-template.read"]
                               ? [
                                     {
                                         label: "Manage Templates",
@@ -170,19 +168,18 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions["dar.read.assigned"]
+                          ...([
+                              permissions[
+                                  "data-access-applications.provider.read"
+                              ],
+                              permissions[
+                                  "data-access-applications.review.read"
+                              ],
+                          ].some(isTrue => isTrue)
                               ? [
                                     {
                                         label: "Applications",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
-                                    },
-                                ]
-                              : []),
-                          ...(permissions["workflows.read"]
-                              ? [
-                                    {
-                                        label: "Workflows",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.WORKFLOWS}`,
                                     },
                                 ]
                               : []),
