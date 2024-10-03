@@ -6,7 +6,7 @@ describe("Nav utils", () => {
         const teamId = "123";
 
         it("should include Team Management item with href", () => {
-            const navItems = getTeamNav({"roles.read": true}, teamId);
+            const navItems = getTeamNav({ "roles.read": true }, teamId);
             const teamManagementItem = navItems.find(
                 item => item.label === "Team Management"
             );
@@ -30,7 +30,10 @@ describe("Nav utils", () => {
         });
 
         it("should include Data Access Requests Applications item", () => {
-            const navItems = getTeamNav({ "data-access-applications.provider.read": true }, teamId);
+            const navItems = getTeamNav(
+                { "data-access-applications.provider.read": true },
+                teamId
+            );
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
@@ -47,7 +50,10 @@ describe("Nav utils", () => {
             );
         });
         it("should include Data Access Requests Edit form", () => {
-            const navItems = getTeamNav({ "data-access-template.read": true }, teamId);
+            const navItems = getTeamNav(
+                { "data-access-template.read": true },
+                teamId
+            );
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
