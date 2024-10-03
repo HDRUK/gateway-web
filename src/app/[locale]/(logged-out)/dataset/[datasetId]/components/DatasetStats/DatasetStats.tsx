@@ -81,8 +81,6 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         },
     ];
 
-    console.log(formattedStats);
-
     return (
         <BoxContainer
             sx={{
