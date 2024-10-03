@@ -35,6 +35,7 @@ describe("LeftNav", () => {
             <LeftNav
                 teamId="1"
                 permissions={{
+                    "roles.read": true,
                     "applications.read": true,
                     "integrations.metadata": true,
                     "integrations.dar": true,
