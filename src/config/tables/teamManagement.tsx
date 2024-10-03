@@ -1,4 +1,5 @@
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import DOMPurify from "isomorphic-dompurify";
 import { Team } from "@/interfaces/Team";
 import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
@@ -70,6 +71,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     {translations.dataProvider}
+
                     <SortIcon
                         setSort={setSort}
                         sort={sort}
@@ -78,8 +80,17 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            cell: ({ row: { original } }) =>
-                `${capitalise(original.member_of)} > ${original.name}`,
+            cell: ({ row: { original } }) => (
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify(
+                            `${capitalise(original.member_of)} > ${
+                                original.name
+                            }`
+                        ),
+                    }}
+                />
+            ),
         }),
         columnHelper.display({
             id: "teamManagers",
