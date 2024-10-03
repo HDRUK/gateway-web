@@ -27,6 +27,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -150,4 +151,5 @@ export {
     BookmarksOutlinedIcon,
     StickyNote2OutlinedIcon,
     PersonOutlineOutlinedIcon,
+    ControlPointIcon,
 };

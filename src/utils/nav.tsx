@@ -1,6 +1,6 @@
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
-    GroupsIcon,
+    ControlPointIcon,
     DescriptionIcon,
     ToolIcon,
     HelpOutlineOutlinedIcon,
@@ -39,7 +39,7 @@ const getProfileNav = (permissions: {
         ...(permissions["custodians.read"]
             ? [
                   {
-                      icon: <GroupsIcon />,
+                      icon: <ControlPointIcon />,
                       label: "Teams",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
                   },
@@ -87,7 +87,15 @@ const getProfileNav = (permissions: {
             label: "Collections",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
         },
-        // TODO: add Data Uses
+        ...(permissions["dur.update"]
+            ? [
+                  {
+                      icon: <DataUseIcon />,
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_USES}`,
+                  },
+              ]
+            : []),
     ];
 };
 
@@ -214,12 +222,12 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...(permissions["dur.read"]
+        ...(permissions["dur.update"]
             ? [
                   {
                       icon: <DataUseIcon />,
                       label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
                   },
               ]
             : []),
