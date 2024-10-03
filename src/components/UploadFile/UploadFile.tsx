@@ -8,7 +8,6 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { convertBase64 } from "@/utils/file";
 import Button from "../Button";
 import Form from "../Form";
 import Loading from "../Loading";
@@ -24,16 +23,17 @@ type UploadFormData = {
 };
 
 interface UploadFileProps {
-    apiPath: string;
+    apiPath?: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
     onFileUploaded?: (uploadResponse?: number | StructuralMetadata[]) => void;
     isUploading?: Dispatch<SetStateAction<boolean>>;
-    onBeforeUploadCheck?: (event: Event & EventUploadedImage) => boolean;
+    onBeforeUploadCheck?: (height: number, width: number) => boolean;
     onFileCheckFailed?: () => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
-    onFileChange?: () => void;
+    onFileChange?: (file: File) => void;
+    showUploadButton?: boolean;
     sx?: BoxProps["sx"];
 }
 
@@ -50,6 +50,7 @@ const UploadFile = ({
     onFileCheckFailed,
     onFileCheckSucceeded,
     onFileChange,
+    showUploadButton = true,
     sx,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -115,45 +116,53 @@ const UploadFile = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileId, fileScanStatus]);
 
+    const imageValidation = async (file: File) => {
+        if (!file) {
+            return true;
+        }
+
+        if (file.type.startsWith("image/")) {
+            try {
+                await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        const image = new Image();
+                        image.src = e?.target?.result as string;
+                        image.onload = function () {
+                            if (onBeforeUploadCheck) {
+                                const checked = onBeforeUploadCheck(
+                                    image.height,
+                                    image.width
+                                );
+                                return checked
+                                    ? resolve(null)
+                                    : reject(
+                                          new Error(
+                                              "The image does not pass it's checks"
+                                          )
+                                      );
+                            }
+
+                            return resolve(true);
+                        };
+                    };
+                });
+                return true;
+            } catch (_) {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    };
+
     const onSubmit = async () => {
         if (!file) {
             return;
         }
 
-        let shouldContinue = true;
-
-        if (file.type.startsWith("image/")) {
-            try {
-                // eslint-disable-next-line no-async-promise-executor
-                await new Promise(async (resolve, reject) => {
-                    const image = new Image();
-                    const base64 = await convertBase64(file);
-                    image.src = base64.toString();
-
-                    image.onload = function (e: Event) {
-                        if (onBeforeUploadCheck) {
-                            const checked = onBeforeUploadCheck?.apply(this, [
-                                e as Event & EventUploadedImage,
-                            ]);
-
-                            return checked
-                                ? resolve(null)
-                                : reject(
-                                      new Error(
-                                          "The image does not pass it's checks"
-                                      )
-                                  );
-                        }
-
-                        return resolve(null);
-                    };
-                });
-            } catch (_) {
-                shouldContinue = false;
-            }
-        }
-
-        if (shouldContinue) {
+        try {
             const formData = new FormData();
             formData.append("file", file);
 
@@ -172,9 +181,8 @@ const UploadFile = ({
             }
 
             onFileCheckSucceeded?.(uploadedFileStatus);
-        } else {
-            setHasError(false);
-
+        } catch {
+            setHasError(true);
             onFileCheckFailed?.();
         }
     };
@@ -191,8 +199,14 @@ const UploadFile = ({
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
                             onFileChange={(file: File) => {
-                                onFileChange?.();
-                                setFile(file);
+                                imageValidation(file).then(result => {
+                                    if (result) {
+                                        setFile(file);
+                                        onFileChange?.(file);
+                                    } else {
+                                        onFileCheckFailed?.();
+                                    }
+                                });
                             }}
                             helperText={
                                 file?.name ||
@@ -201,12 +215,14 @@ const UploadFile = ({
                                 })
                             }
                         />
-                        <Button
-                            onClick={handleSubmit(onSubmit)}
-                            sx={{ maxWidth: 150 }}
-                            disabled={!file}>
-                            {t("uploadButtonText")}
-                        </Button>
+                        {showUploadButton && (
+                            <Button
+                                onClick={handleSubmit(onSubmit)}
+                                sx={{ maxWidth: 150 }}
+                                disabled={!file}>
+                                {t("uploadButtonText")}
+                            </Button>
+                        )}
                     </>
                 )}
                 {fileId && !hasError && pollFileStatus && <Loading />}
