@@ -44,7 +44,7 @@ describe("LeftNav", () => {
         );
 
         const buttons = getAllByRole("button");
-        expect(getAllByRole("button")).toHaveLength(4);
+        expect(getAllByRole("button")).toHaveLength(5);
 
         expect(
             within(buttons[0]).getByText("Team Management")
