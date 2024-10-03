@@ -1,6 +1,5 @@
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
-    DescriptionOutlinedIcon,
     GroupsIcon,
     DescriptionIcon,
     ToolIcon,
@@ -14,6 +13,7 @@ import {
     BookmarksOutlinedIcon,
     PublicationIcon,
     PersonOutlineOutlinedIcon,
+    CohortIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -48,7 +48,7 @@ const getProfileNav = (permissions: {
         ...(permissions["cohort.read"]
             ? [
                   {
-                      icon: <DescriptionOutlinedIcon />,
+                      icon: <CohortIcon />,
                       label: "Cohort Discovery Admin",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                   },
