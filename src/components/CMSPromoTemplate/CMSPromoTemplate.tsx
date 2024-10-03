@@ -27,11 +27,19 @@ const CMSPromoTemplate = ({
                 <Button sx={{ mt: 3 }}>{promofields.ctaLink.title}</Button>
             </Link>
         ));
-
     return (
         <div className="wpStyles">
             <GradientBanner title={promofields.bannerTitle} />
-            <Box sx={{ bgcolor: "white", pt: 5, pb: 8, px: 6 }}>
+            <Box
+                sx={{
+                    bgcolor: "white",
+                    pt: 5,
+                    pb: 8,
+                    px: 6,
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                }}>
                 <Box
                     sx={{
                         p: 0,

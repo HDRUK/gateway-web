@@ -53,12 +53,13 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
                 {ctaLink?.title}
             </Button>
 
-            <Button
+            {/*Commented out until fully implemented*/}
+            {/* <Button
                 sx={{ mt: 3, ml: 3 }}
                 onClick={handleVisit}
                 color="greyCustom">
                 Visit Cohort Discovery
-            </Button>
+            </Button> */}
         </Box>
     );
 };
