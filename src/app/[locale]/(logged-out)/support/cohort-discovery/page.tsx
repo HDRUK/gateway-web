@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getCohortDiscoverySupportPageQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
 import Documentation from "./components/Documentation";
@@ -6,6 +7,10 @@ import FAQs from "./components/FAQs";
 
 export default async function CohortDiscovery() {
     const data = await getCohortDiscoverySupportPageQuery();
+
+    if (!data) {
+        notFound();
+    }
 
     const {
         supportCohortDiscovery: { documentation, faqs, explainer },

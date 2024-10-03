@@ -6,17 +6,22 @@ import {
     getReleaseNotes,
     getMissionAndPurposes,
     getTermsAndConditions,
+    substituteEnvLinks,
 } from "@/utils/cms";
 
 describe("CMS utils", () => {
-    beforeAll(() => jest.spyOn(window, "fetch"));
+    beforeAll(() => {
+        jest.spyOn(window, "fetch");
+    });
 
     afterEach(() => {
         jest.clearAllMocks();
     });
+
     describe("getReleaseNotes", () => {
         it("should call fetch with correct params", async () => {
             await getReleaseNotes();
+
             expect(window.fetch).toBeCalledWith(apis.wordPressApiUrl, {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
@@ -28,6 +33,7 @@ describe("CMS utils", () => {
     describe("getMissionAndPurposes", () => {
         it("should call fetch with correct params", async () => {
             await getMissionAndPurposes();
+
             expect(window.fetch).toBeCalledWith(apis.wordPressApiUrl, {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
@@ -39,11 +45,38 @@ describe("CMS utils", () => {
     describe("getTermsAndConditions", () => {
         it("should call fetch with correct params", async () => {
             await getTermsAndConditions();
+
             expect(window.fetch).toBeCalledWith(apis.wordPressApiUrl, {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ query: GetTermsAndConditionsQuery }),
                 next: { revalidate: 10 },
+            });
+        });
+    });
+
+    describe("substituteEnvLinks", () => {
+        it("should replace the correct link hostname", async () => {
+            const result = await substituteEnvLinks({
+                data: {
+                    nodes: [
+                        {
+                            content:
+                                '<p><a href="https://web.preprod.hdruk.cloud">Link</a></p>',
+                        },
+                    ],
+                },
+            });
+
+            expect(result).toEqual({
+                data: {
+                    nodes: [
+                        {
+                            content:
+                                '<p><a href="https://web.dev.hdruk.cloud">Link</a></p>',
+                        },
+                    ],
+                },
             });
         });
     });
