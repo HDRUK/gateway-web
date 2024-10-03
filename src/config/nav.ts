@@ -125,44 +125,45 @@ const navItems = [
     },
     {
         label: "Data Custodian Area",
-        subItems: [
-            {
-                label: "Getting started on the Gateway and managing your Team",
-                href: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
-            },
-            {
-                label: "Metadata Onboarding and Integrations",
-                href: RouteName.DATA_CUSTODIAN_METADATA_ONBOARDING,
-            },
-            {
-                label: "Uploading Data Uses / Research Projects",
-                href: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
-            },
-            {
-                label: "Onboarding to Cohort Discovery",
-                href: RouteName.DATA_CUSTODIAN_COHORT_DISCOVERY,
-            },
-            {
-                label: "Uploading Analysis Scripts & Software",
-                href: RouteName.DATA_CUSTODIAN_TOOLS,
-            },
-            {
-                label: "Uploading Publications",
-                href: RouteName.DATA_CUSTODIAN_PUBLICATIONS,
-            },
-            {
-                label: "Managing Collections, Data Custodians and Data Custodian Networks",
-                href: RouteName.DATA_CUSTODIAN_MANAGING_COLLECTIONS,
-            },
-            {
-                label: "Using the Gateway Enquiry & Data Access Request Module",
-                href: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
-            },
-            {
-                label: "The Alliance",
-                href: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
-            },
-        ],
+        href: RouteName.DATA_CUSTODIAN_SUPPORT,
+        // subItems: [
+        //     {
+        //         label: "Getting started on the Gateway and managing your Team",
+        //         href: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
+        //     },
+        //     {
+        //         label: "Metadata Onboarding and Integrations",
+        //         href: RouteName.DATA_CUSTODIAN_METADATA_ONBOARDING,
+        //     },
+        //     {
+        //         label: "Uploading Data Uses / Research Projects",
+        //         href: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
+        //     },
+        //     {
+        //         label: "Onboarding to Cohort Discovery",
+        //         href: RouteName.DATA_CUSTODIAN_COHORT_DISCOVERY,
+        //     },
+        //     {
+        //         label: "Uploading Analysis Scripts & Software",
+        //         href: RouteName.DATA_CUSTODIAN_TOOLS,
+        //     },
+        //     {
+        //         label: "Uploading Publications",
+        //         href: RouteName.DATA_CUSTODIAN_PUBLICATIONS,
+        //     },
+        //     {
+        //         label: "Managing Collections, Data Custodians and Data Custodian Networks",
+        //         href: RouteName.DATA_CUSTODIAN_MANAGING_COLLECTIONS,
+        //     },
+        //     {
+        //         label: "Using the Gateway Enquiry & Data Access Request Module",
+        //         href: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
+        //     },
+        //     {
+        //         label: "The Alliance",
+        //         href: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
+        //     },
+        // ],
     },
 ];
 
