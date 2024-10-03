@@ -17,6 +17,8 @@ export default async function TeamsPage({
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = getPermissions(user.roles);
+    console.log(user.roles);
+    console.log(permissions);
     const userId = user?.id?.toString();
 
     return <Tools permissions={permissions} teamId={teamId} userId={userId} />;

@@ -7,6 +7,7 @@ import DatasetStatCard, {
 } from "@/components/DatasetStatCard/DatasetStatCard";
 import {
     formatYearStat,
+    formatTextDelimiter,
     parseLeadTime,
     splitStringList,
 } from "@/utils/dataset";
@@ -18,14 +19,18 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
 
     const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
 
+    const populationSize = formatTextDelimiter(
+        get(
+            data,
+            "metadata.metadata.summary.populationSize"
+        ) as unknown as string
+    );
+
     const formattedStats: DatasetStatCardProps[] = [
         {
             title: t("populationTitle"),
             noStatText: t("notReported"),
-            stat: get(
-                data,
-                "metadata.metadata.summary.populationSize"
-            ) as unknown as string,
+            stat: `${populationSize}`,
             unit: t("populationUnit"),
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
@@ -75,6 +80,8 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             iconSrc: "/images/dataset/clock-white.svg",
         },
     ];
+
+    console.log(formattedStats);
 
     return (
         <BoxContainer
