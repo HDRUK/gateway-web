@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
-import Link from "@/components/Link";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";

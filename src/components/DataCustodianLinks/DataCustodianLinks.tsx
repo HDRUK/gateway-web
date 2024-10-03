@@ -1,14 +1,21 @@
 import { Box, BoxProps, List, ListItem, Typography } from "@mui/material";
-import { isEmpty } from "lodash";
+import { useTranslations } from "next-intl";
 import { DataProvider } from "@/interfaces/DataProvider";
 import Link from "@/components/Link";
 
-interface TrailingContentProps extends BoxProps {
+interface DataCustodianLinksProps extends BoxProps {
     data: Pick<DataProvider, "service" | "url">;
 }
 
-const TrailingContent = ({ data, ...restProps }: TrailingContentProps) => {
-    console.log("DATA", data);
+const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS =
+    "pages.dataCustodian.components.DataCustodianLinks";
+
+const DataCustodianLinks = ({
+    data,
+    ...restProps
+}: DataCustodianLinksProps) => {
+    const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MEMBERS);
+
     return (
         <Box
             component={Typography}
@@ -26,8 +33,13 @@ const TrailingContent = ({ data, ...restProps }: TrailingContentProps) => {
                 </Link>
             )}
             {data.service?.length && (
-                <Box sx={{ display: "flex", gap: 0.5, alignItems: "center" }}>
-                    Useful links:
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: 0.5,
+                        alignItems: "center",
+                    }}>
+                    {t("usefulLinks")}
                     <List
                         sx={{
                             display: "flex",
@@ -60,4 +72,4 @@ const TrailingContent = ({ data, ...restProps }: TrailingContentProps) => {
     );
 };
 
-export default TrailingContent;
+export default DataCustodianLinks;
