@@ -117,43 +117,35 @@ const UploadFile = ({
     }, [fileId, fileScanStatus]);
 
     const imageValidation = async (file: File) => {
-        if (!file) {
-            return true;
-        }
+        try {
+            await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    const image = new Image();
+                    image.src = e?.target?.result as string;
+                    image.onload = function () {
+                        if (onBeforeUploadCheck) {
+                            const checked = onBeforeUploadCheck(
+                                image.height,
+                                image.width
+                            );
+                            return checked
+                                ? resolve(null)
+                                : reject(
+                                      new Error(
+                                          "The image does not pass it's checks"
+                                      )
+                                  );
+                        }
 
-        if (file.type.startsWith("image/")) {
-            try {
-                await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = function (e) {
-                        const image = new Image();
-                        image.src = e?.target?.result as string;
-                        image.onload = function () {
-                            if (onBeforeUploadCheck) {
-                                const checked = onBeforeUploadCheck(
-                                    image.height,
-                                    image.width
-                                );
-                                return checked
-                                    ? resolve(null)
-                                    : reject(
-                                          new Error(
-                                              "The image does not pass it's checks"
-                                          )
-                                      );
-                            }
-
-                            return resolve(true);
-                        };
+                        return resolve(true);
                     };
-                });
-                return true;
-            } catch (_) {
-                return false;
-            }
-        } else {
+                };
+            });
             return true;
+        } catch (_) {
+            return false;
         }
     };
 
@@ -199,14 +191,19 @@ const UploadFile = ({
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
                             onFileChange={(file: File) => {
-                                imageValidation(file).then(result => {
-                                    if (result) {
-                                        setFile(file);
-                                        onFileChange?.(file);
-                                    } else {
-                                        onFileCheckFailed?.();
-                                    }
-                                });
+                                if (file.type.startsWith("image/")) {
+                                    imageValidation(file).then(result => {
+                                        if (result) {
+                                            setFile(file);
+                                            onFileChange?.(file);
+                                        } else {
+                                            onFileCheckFailed?.();
+                                        }
+                                    });
+                                } else {
+                                    setFile(file);
+                                    onFileChange?.(file);
+                                }
                             }}
                             helperText={
                                 file?.name ||
