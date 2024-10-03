@@ -457,7 +457,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                     : await createDataset(formPayload as NewDataset);
 
             if (formPostRequest !== null) {
-                reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
                         RouteName.DATASETS
