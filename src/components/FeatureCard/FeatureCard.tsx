@@ -26,6 +26,7 @@ export default function FeatureCard({
             {...restProps}>
             <Box
                 sx={{
+                    height: "4rem",
                     color: "primary.main",
                     "> *": { fontSize: theme.typography.h3 },
                 }}>

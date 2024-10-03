@@ -119,7 +119,7 @@ const datasetFields: DatasetSection[] = [
                     "The setting(s) where data was collected. Multiple settings may be provided.",
             },
             {
-                path: "metadata.metadata.provenance.coverage.pathway",
+                path: "metadata.metadata.coverage.pathway",
                 type: FieldType.LIST,
                 label: "Patient pathway description",
                 tooltip:
@@ -133,7 +133,7 @@ const datasetFields: DatasetSection[] = [
                     "Indication of whether usage of imaging contrast is captured within the dataset.",
             },
             {
-                path: "metadata.metadata.provenance.coverage.materialType",
+                path: "metadata.metadata.coverage.materialType",
                 type: FieldType.TEXT,
                 label: "Biological sample availability",
                 tooltip:

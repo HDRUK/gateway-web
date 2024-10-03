@@ -24,6 +24,18 @@ const nextConfig = withNextIntl({
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "http",
+                hostname: "media.local",
+                port: "",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "fakeimg.pl",
+                port: "",
+                pathname: "/**",
+            },
         ],
     },
     async redirects() {
@@ -31,6 +43,16 @@ const nextConfig = withNextIntl({
             {
                 source: "/about/terms-and-conditions",
                 destination: "/terms-and-conditions",
+                permanent: true,
+            },
+            {
+                source: "/data-custodian/getting-started",
+                destination: "/data-custodian/support/getting-started",
+                permanent: true,
+            },
+            {
+                source: "/data-custodian/metadata-onboarding",
+                destination: "/data-custodian/support/metadata-onboarding",
                 permanent: true,
             },
         ];

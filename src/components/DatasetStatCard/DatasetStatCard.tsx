@@ -20,6 +20,8 @@ export interface DatasetStatCardProps {
     unit?: string;
     helperText?: string;
     noStatText?: string;
+    targetScroll: string;
+    enableScroll: boolean;
 }
 
 const DatasetStatCard = ({
@@ -30,9 +32,22 @@ const DatasetStatCard = ({
     unit,
     helperText,
     noStatText,
+    enableScroll,
+    targetScroll,
 }: DatasetStatCardProps) => {
+    const handleScroll = () => {
+        document?.getElementById(targetScroll)!.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
     return (
-        <StatCard>
+        <StatCard
+            onClick={enableScroll ? () => handleScroll() : undefined}
+            sx={{
+                ...(enableScroll ? { cursor: "pointer" } : {}),
+            }}>
             <Title>
                 <Typography fontSize={16} sx={{ mb: 0, pt: 1, pb: 1 }}>
                     {title}
@@ -46,12 +61,16 @@ const DatasetStatCard = ({
                 {hasValidValue(stat) ? (
                     <StatWrapper>
                         {Array.isArray(stat) ? (
-                            stat.map(item => (
+                            stat.map((item, index) => (
                                 <Typography
                                     fontSize={16}
                                     sx={{ alignSelf: "flex-start" }}
                                     key={`${stat}_${item}`}>
-                                    {item}
+                                    {index < 2
+                                        ? item
+                                        : index === 3
+                                        ? "...see more"
+                                        : null}
                                 </Typography>
                             ))
                         ) : (

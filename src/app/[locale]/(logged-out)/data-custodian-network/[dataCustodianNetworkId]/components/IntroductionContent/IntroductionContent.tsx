@@ -4,22 +4,25 @@ import { InView } from "react-intersection-observer";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
+import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
+import Link from "@/components/Link";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";
 
 export interface IntroductionContentProps {
-    content: string | null;
+    networkData: DataCustodianNetwork;
     anchorIndex: number;
 }
 
 export default function IntroductionContent({
-    content,
+    networkData,
     anchorIndex,
 }: IntroductionContentProps) {
     const router = useRouter();
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
+    const { url, summary } = networkData;
 
     return (
         <InView
@@ -37,7 +40,12 @@ export default function IntroductionContent({
             <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
                 "heading"
             )}`}</Typography>
-            <Typography sx={{ pb: 1 }}>{content}</Typography>
+            <Typography sx={{ pb: 1 }}>{summary}</Typography>
+            {url && (
+                <Link href={url} sx={{ pb: 1 }}>
+                    {url}
+                </Link>
+            )}
         </InView>
     );
 }

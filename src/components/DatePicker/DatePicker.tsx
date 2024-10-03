@@ -11,6 +11,7 @@ import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "dayjs/locale/en-gb";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import { getDayjs } from "@/utils/date";
 
 export interface DatePickerProps<TFieldValue extends FieldValues, TName> {
     label: string;
@@ -24,7 +25,6 @@ export interface DatePickerProps<TFieldValue extends FieldValues, TName> {
     control: Control<TFieldValue>;
     formControlSx?: SxProps;
 }
-
 const DatePicker = <
     TFieldValues extends FieldValues,
     TName extends Path<TFieldValues>
@@ -46,7 +46,6 @@ const DatePicker = <
         name,
         control,
     });
-
     return (
         <FormInputWrapper
             label={label}
@@ -68,7 +67,7 @@ const DatePicker = <
                         <MuiDatePicker
                             format="DD/MM/YYYY"
                             {...field}
-                            value={field.value}
+                            value={getDayjs(field.value)}
                             {...rest}
                         />
                     </LocalizationProvider>
@@ -77,5 +76,4 @@ const DatePicker = <
         </FormInputWrapper>
     );
 };
-
 export default DatePicker;

@@ -1,20 +1,25 @@
+import { notFound } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import { getGettingStarted } from "@/utils/cms";
+import { getPrivacyPolicy } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - Getting Started",
+    title: "Health Data Research Innovation Gateway - Privacy Policy",
     description: "",
 };
 
-const GettingStartedPage = async () => {
-    const cmsPage = await getGettingStarted();
+const PrivacyPolicyPage = async () => {
+    const cmsPage = await getPrivacyPolicy();
+
+    if (!cmsPage) {
+        notFound();
+    }
 
     return (
         <>
-            <Banner title={cmsPage.title} />
+            <Banner title={cmsPage?.title} />
             <Container sx={{ padding: 10 }} className="wpStyles">
                 {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
             </Container>
@@ -22,4 +27,4 @@ const GettingStartedPage = async () => {
     );
 };
 
-export default GettingStartedPage;
+export default PrivacyPolicyPage;

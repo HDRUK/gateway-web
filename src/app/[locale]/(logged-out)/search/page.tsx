@@ -11,7 +11,12 @@ const SearchPage = async () => {
     const cookieStore = cookies();
     const filters = await getFilters(cookieStore);
 
-    return <Search filters={filters} />;
+    // TODO - TEMPORARILY HIDE FILTER
+    const formattedFilters = filters.filter(
+        f => !(f.type === "collection" && f.keys === "publisherName")
+    );
+
+    return <Search filters={formattedFilters} />;
 };
 
 export default SearchPage;

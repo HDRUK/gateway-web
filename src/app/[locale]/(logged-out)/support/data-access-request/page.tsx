@@ -1,12 +1,17 @@
-import { getContentPageQuery } from "@/utils/cms";
+import { notFound } from "next/navigation";
+import { getContentPageByParentQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
 
-export const URI = "/support/data-access-request";
-
 export default async function DataAccessRequest() {
-    const data = await getContentPageQuery("GetContentPageQuery", {
-        id: URI,
+    const cmsPage = await getContentPageByParentQuery("GetContentPageQuery", {
+        id: "data-access-request",
+        idType: "URI",
+        parentId: "/support",
     });
 
-    return <SupportPage title={data?.title} content={data?.content} />;
+    if (!cmsPage) {
+        notFound();
+    }
+
+    return <SupportPage title={cmsPage?.title} content={cmsPage?.content} />;
 }
