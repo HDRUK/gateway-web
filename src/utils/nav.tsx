@@ -105,7 +105,6 @@ const getTeamNav = (
     },
     teamId: string | undefined
 ): LeftNavItem[] => {
-    console.log(permissions);
     return [
         ...(permissions["roles.read"]
             ? [
