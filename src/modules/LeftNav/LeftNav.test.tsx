@@ -54,7 +54,9 @@ describe("LeftNav", () => {
         expect(
             within(buttons[2]).getByText("Private apps")
         ).toBeInTheDocument();
-        expect(within(buttons[3]).getByText("Gateway apps")).toBeInTheDocument();
+        expect(
+            within(buttons[3]).getByText("Gateway apps")
+        ).toBeInTheDocument();
         expect(within(buttons[4]).getByText("Help")).toBeInTheDocument();
     });
 });
