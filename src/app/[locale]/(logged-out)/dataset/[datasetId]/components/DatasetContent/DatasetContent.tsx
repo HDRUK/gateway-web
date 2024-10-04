@@ -1,7 +1,7 @@
 "use client";
 
 import { createColumnHelper } from "@tanstack/react-table";
-import { get, isArray, isEmpty } from "lodash";
+import { get, isArray } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -253,7 +253,7 @@ const DatasetContent = ({
                                     if (
                                         !value ||
                                         value === -1 ||
-                                        isEmpty(value)
+                                        (Array.isArray(value) && !value.length)
                                     ) {
                                         return null;
                                     }
