@@ -141,6 +141,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             typeof getChipLabel === "function"
                                 ? getChipLabel(options, option)
                                 : option?.label || `${option}`;
+
                         return (
                             <Chip
                                 label={chipLabel || ""}
