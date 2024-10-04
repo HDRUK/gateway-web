@@ -11,6 +11,7 @@ import {
     parseLeadTime,
     splitStringList,
 } from "@/utils/dataset";
+import { r } from "msw/lib/glossary-de6278a9";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
@@ -41,7 +42,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         {
             title: t("populationTitle"),
             noStatText: t("notReported"),
-            stat: populationStat,
+            stat: populationStat !== "-1" ? populationStat : "",
             unit: t("populationUnit"),
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
