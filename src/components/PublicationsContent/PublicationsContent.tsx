@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 import { InView } from "react-intersection-observer";
-import { Link, Typography } from "@mui/material";
+import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Publication } from "@/interfaces/Publication";
