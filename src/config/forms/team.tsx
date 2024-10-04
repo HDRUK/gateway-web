@@ -1,6 +1,5 @@
 import * as yup from "yup";
 import { TeamForm } from "@/interfaces/Team";
-import { REGEX_ALPHA_ONLY } from "@/consts/regex";
 import { memberOfOptions } from "@/consts/team";
 import { inputComponents } from ".";
 
@@ -21,15 +20,8 @@ const defaultValues: TeamForm = {
 };
 
 const validationSchema = yup.object({
-    introduction: yup.string().label("Introduction"),
-    name: yup
-        .string()
-        .required()
-        .matches(
-            REGEX_ALPHA_ONLY,
-            "Organisation name should have alphabetic characters only"
-        )
-        .label("Organisation name"),
+    introduction: yup.string().nullable().label("Introduction"),
+    name: yup.string().required().label("Organisation name"),
     member_of: yup.string().required().label("Member of"),
     contact_point: yup.string().email().label("Contact point"),
     users: yup
