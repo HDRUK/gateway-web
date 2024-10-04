@@ -1004,6 +1004,9 @@
             "tools": "Tools",
             "serviceOfferings": "Service offerings",
             "components": {
+                "DataCustodianLinks": {
+                    "usefulLinks": "Useful links:"
+                },
                 "ActionBar": {
                     "label": "Back",
                     "enquire": "Make a general enquiry"

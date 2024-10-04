@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { DataProvider } from "@/interfaces/DataProvider";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import DataCustodianLinks from "@/components/DataCustodianLinks";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
@@ -19,7 +20,6 @@ import {
     DataCustodianSection,
     FieldType,
 } from "../../config";
-import TrailingContent from "../TrailingContent";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";
@@ -187,7 +187,7 @@ const DataCustodianContent = ({
                                 </Box>
                             </InView>
                         ))}
-                        <TrailingContent data={data} sx={{ mb: 2 }} />
+                        <DataCustodianLinks data={data} sx={{ mb: 2 }} />
                     </Paper>
                 </Box>
             </BoxContainer>
