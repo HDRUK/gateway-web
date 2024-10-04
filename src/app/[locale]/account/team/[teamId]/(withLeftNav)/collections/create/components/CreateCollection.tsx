@@ -270,8 +270,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                 }
             });
         } else {
-            await editCollection(collectionId, payload).then(async result => {
-                if (typeof result === "number" && file) {
+            await editCollection(collectionId, payload).then(async () => {
+                if (file) {
                     setFileToBeUploaded(true);
                 }
             });
