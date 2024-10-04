@@ -47,11 +47,6 @@ export default function PublicationContent({
                     <Fragment key={`publication_${paper_title}`}>
                         <Link href={url}>{paper_title}</Link>
                         {authors && <div>{authors}</div>}
-                        {true && (
-                            <Typography color="GrayText">
-                                LINK TYPE HERE - when BE supports it
-                            </Typography>
-                        )}
                     </Fragment>
                 ))}
             />
