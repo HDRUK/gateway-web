@@ -1,8 +1,8 @@
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import DOMPurify from "isomorphic-dompurify";
 import { Team } from "@/interfaces/Team";
 import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
+import Encoder from "@/components/Encoder";
 import FilterPopover from "@/components/FilterPopover";
 import ShowMoreTooltip from "@/components/ShowMoreTooltip";
 import SortIcon from "@/components/SortIcon";
@@ -81,14 +81,8 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html: DOMPurify(
-                            `${capitalise(original.member_of)} > ${
-                                original.name
-                            }`
-                        ),
-                    }}
+                <Encoder
+                    raw={`${capitalise(original.member_of)} > ${original.name}`}
                 />
             ),
         }),
