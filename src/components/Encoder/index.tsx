@@ -6,7 +6,7 @@ interface EncoderProps {
 }
 
 const Encoder = ({ raw, component }: EncoderProps) => {
-    const Component = component || "div";
+    const Component = component || "span";
     return (
         <Component
             dangerouslySetInnerHTML={{
