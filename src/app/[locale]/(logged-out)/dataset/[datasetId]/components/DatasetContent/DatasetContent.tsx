@@ -2,7 +2,7 @@
 
 import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get, isArray } from "lodash";
+import { get, isArray, isEmpty } from "lodash";
 import { usePathname, useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
@@ -243,7 +243,11 @@ const DatasetContent = ({
                                 section.fields.map(field => {
                                     const value = get(data, field.path);
 
-                                    if (!value || value === -1) {
+                                    if (
+                                        !value ||
+                                        value === -1 ||
+                                        isEmpty(value)
+                                    ) {
                                         return null;
                                     }
 
