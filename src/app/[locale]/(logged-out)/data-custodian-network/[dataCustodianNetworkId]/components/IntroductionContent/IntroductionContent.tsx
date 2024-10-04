@@ -2,7 +2,6 @@
 
 import { InView } from "react-intersection-observer";
 import { Typography } from "@mui/material";
-import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
