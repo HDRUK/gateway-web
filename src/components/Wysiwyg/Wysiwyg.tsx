@@ -35,8 +35,24 @@ const Wysiwyg = <
     }, [editor]);
 
     useEffect(() => {
-        editor?.commands.setContent(JSON.parse(field.value || "{}"));
-    }, [editor]);
+        let content = {};
+
+        try {
+            content = JSON.parse(field.value);
+        } catch (_) {
+            content = {
+                type: "paragraph",
+                content: [
+                    {
+                        type: "text",
+                        text: field.value,
+                    },
+                ],
+            };
+        }
+
+        editor?.commands.setContent(content);
+    }, [editor, field.value]);
 
     return (
         <FormInputWrapper

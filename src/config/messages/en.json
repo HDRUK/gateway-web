@@ -124,25 +124,43 @@
             "noResults": "There are no results for the selected year.",
             "readMore": "Read more"
         },
+        "dataCustodianSupport": {
+            "title": "Data Custodian Area",
+            "backToSupport": "Back to Data Custodian Area",
+            "gatewaySchemaTitle": "Gateway Schema",
+            "uploadingToolsTitle": "Uploading Analysis Scripts & Software",
+            "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
+            "uploadingPublicationsTitle": "Uploading Publications ",
+            "uploadingDataUsesProjectsTitle": "Uploading Data Uses / Research Projects",
+            "managingCollectionsTitle": "Managing Collections, Data Custodians and Data Custodian Networks",
+            "managingEnquiryDarTitle": "Using the Gateway Enquiry & Data Access Request Module",
+            "gettingStartedTitle": "Getting started on the Gateway and managing your Team",
+            "theAllianceTitle": "The Alliance",
+            "onboardingCohortDiscoveryTitle": "Onboarding to Cohort Discovery",
+            "documentation": {
+                "title": "Documentation"
+            },
+            "explainer": {
+                "unsupportedVideo": "Your browser does not support the video element",
+                "title": "Explainer"
+            },
+            "faqs": {
+                "title": "FAQs"
+            }
+        },
         "support": {
             "title": "Support centre",
             "backToSupport": "Back to Support Centre",
             "gatewaySchemaTitle": "Gateway Schema",
             "teamManagementTitle": "Team Management",
-            "toolsTitle": "Analysis script, software and publication",
-            "searchTitle": "Search",
-            "metadataOnboardingTitle": "Metadata Onboarding (Private app & Federation)",
-            "durTitle": "Data Use Register",
-            "darTitle": "Data Access Request",
-            "cohortDiscoveryTitle": "Cohort Discovery",
-            "gatewaySchemaDescription": "Find out what we have in our schema and support we offer here.",
-            "teamManagementDescription": "Help with the team management and how to perform certain actions and what permissions you are assigned.",
-            "toolsDescription": "What are Tools and Papers on the Gateway? How are they created and how can you use them? Get help with Tools and papers.",
-            "searchDescription": "Learn how to search entities on the Gateway.",
-            "metadataOnboardingDescription": "Find technical documentation for  integrating with the Gateway.",
-            "durDescription": "Learn About Data Use Registers.",
-            "darDescription": "Learn about Data Access Request forms and process.",
-            "cohortDiscoveryDescription": "Find materials to get your started on Cohort Discovery.",
+            "toolsTitle": "Uploading Analysis Scripts & Software",
+            "searchTitle": "Exploring Data Resources",
+            "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
+            "durTitle": "Exploring Data Uses / Research Projects",
+            "darTitle": "Submitting Enquiries and Data Access Requests",
+            "uploadingPublicationsTitle": "Uploading Publications ",
+            "cohortDiscoveryTitle": "Using Cohort Discovery",
+            "exploringCollectionsTitle": "Exploring Collections, Data Custodians and Data Custodian Networks",
             "documentation": {
                 "title": "Documentation"
             },
@@ -459,7 +477,9 @@
                         "EditDataUse": {
                             "editDataUse": "Edit a data use",
                             "submit": "Save",
-                            "cancel": "Cancel"
+                            "cancel": "Cancel",
+                            "saveDraft": "Save as draft",
+                            "publish": "Publish"
                         },
                         "DatasetTab": {
                             "downloadButton": "Download dataset information as .csv",
@@ -561,11 +581,11 @@
                         "saveDraft": "Save as draft",
                         "publish": "Publish",
                         "relationshipInfo": "Dataset(s) related to this analysis script, tool or software",
-                        "labelTag": "Analysis script, tools and software"
+                        "labelTag": "Analysis Scripts & Software"
                     },
                     "components": {
                         "TeamTools": {
-                            "title": "Analysis script, tools and software",
+                            "title": "Analysis Scripts & Software",
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
@@ -711,7 +731,7 @@
                     "text": "Explore Gateway features and learn how to use them. You can also submit queries and feedback to help us improve the Gateway."
                 },
                 "item2": {
-                    "title": "Community",
+                    "title": "Open-Source Development",
                     "text": "Designed with and for the community, the Gateway is built for collaboration. Discover how you can get involved."
                 }
             },
@@ -779,8 +799,8 @@
             "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
             "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
             "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data custodian.",
-            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' field to improve the relevance of results returned.",
-            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the Keyword(s) of interest or the name of a dataset in the search box at the top, and hit enter/return on your keyboard.</bold>",
+            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' and 'RESULTS' fields to improve the relevance of results returned.",
+            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the keyword(s) of interest, the name of a dataset or DOI in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -794,11 +814,11 @@
                             "populationSize": "Population size",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
-                            "dataType": "Data type",
+                            "dataType": "Dataset type",
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
-                            "dataUseTitles": "Data Use / Research project title",
+                            "dataUseTitles": "Data Uses / Research projects",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
@@ -807,9 +827,9 @@
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
                             "containsTissue": "Datasets with BioSamples",
-                            "containsTissueTooltip": "Restrict your search result to datasets with biospecimen samples",
+                            "containsTissueTooltip": "Restrict your search result to datasets with BioSamples",
                             "sampleAvailability": "Material type",
-                            "sampleAvailabilityTooltip": "Physical samples associated with the dataset"
+                            "sampleAvailabilityTooltip": "BioSamples associated with the dataset"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",
@@ -828,6 +848,8 @@
                             "publicationDateTooltip": "The range of years during which results were published",
                             "publicationType": "Publication type",
                             "publicationTypeTooltip": "The type of publication: research articles, review articles, preprints or books and documents",
+                            "datasetLinkTypes": "Publication & dataset relationship",
+                            "datasetLinkTypesTooltip": "Differentiate whether you are looking for a publication which describes or is about a dataset, or a publication which utilises the dataset for analysis",
                             "source": "Source",
                             "sourceTooltip": "Select either to run your search against tailored fields in Europe PMC or search the Gateway publications"
                         },
@@ -847,11 +869,11 @@
                         },
                         "tool": {
                             "license": "Licensing",
-                            "licenseTooltip": "Analysis script and software usage restriction, using EU controlled vocabulary",
+                            "licenseTooltip": "The type of software licence for this entity, if applicable",
                             "programmingLanguages": "Programming language",
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
-                            "typeCategoryTooltip": "Categorisation based on where in the research journey an analysis script or software is used",
+                            "typeCategoryTooltip": "Categorisation based on where in the research journey an Analysis Script & Software is used",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
@@ -968,7 +990,7 @@
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis, scripts and software ({ length })"
+                    "heading": "Analysis Scripts & Software ({ length })"
                 }
             }
         },
@@ -1434,6 +1456,19 @@
                 "isMemberOfTooltip": "If another Dataset is similar to this Dataset in some manner, but cannot necessarily be directly linked to the Dataset.",
                 "addToLibrary": "Add to library",
                 "removeFromLibrary": "Remove from library"
+            },
+            "PublicationsSearchDialog": {
+                "searchField": {
+                    "placeholder": "I'm looking for...",
+                    "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
+                },
+                "datasetNameField": {
+                    "placeholder": "Dataset name",
+                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
+                },
+                "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
+                "cancel": "Cancel",
+                "search": "Search"
             }
         }
     }
