@@ -239,7 +239,7 @@ const DatasetContent = ({
                                     if (
                                         !value ||
                                         value === -1 ||
-                                        (Array.isArray(value) && value.length)
+                                        (Array.isArray(value) && !value.length)
                                     ) {
                                         return null;
                                     }
