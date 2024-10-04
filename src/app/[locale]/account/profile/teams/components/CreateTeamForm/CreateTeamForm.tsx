@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { FileUpload } from "@/interfaces/FileUpload";
+import { Option } from "@/interfaces/Option";
 import { Team, TeamForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
@@ -40,7 +41,8 @@ const CreateIntegrationForm = () => {
     const t = useTranslations();
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [searchName, setSearchName] = useState("");
-    const searchNameDebounced = useDebounce(searchName, 100);
+    const [userOptions, setUserOptions] = useState<Option[]>([]);
+    const searchNameDebounced = useDebounce(searchName, 500);
 
     const { push } = useRouter();
 
@@ -71,6 +73,57 @@ const CreateIntegrationForm = () => {
     });
 
     const { control, handleSubmit, formState, reset, watch } = methods;
+
+    useEffect(() => {
+        const userOptions = existingTeamData?.users.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+
+        setUserOptions(prevOptions => {
+            const existingUserIds = prevOptions.map(option => option.value);
+            const newOptions = userOptions?.filter(
+                option => !existingUserIds.includes(option.value)
+            );
+            if (newOptions && newOptions.length > 0) {
+                return [...prevOptions, ...newOptions].sort((a, b) =>
+                    a.label.localeCompare(b.label)
+                );
+            }
+            return prevOptions;
+        });
+    }, [existingTeamData?.users]);
+
+    useEffect(() => {
+        const userOptions = users.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+
+        setUserOptions(prevOptions => {
+            const existingUserIds = prevOptions.map(option => option.value);
+            const newOptions = userOptions.filter(
+                option => !existingUserIds.includes(option.value)
+            );
+            if (newOptions.length > 0) {
+                return [...prevOptions, ...newOptions].sort((a, b) =>
+                    a.label.localeCompare(b.label)
+                );
+            }
+            return prevOptions;
+        });
+    }, [users]);
+
+    const selectedUsers = watch("users");
+    useEffect(() => {
+        if (selectedUsers) {
+            setUserOptions(prevOptions => {
+                return prevOptions.filter(option =>
+                    selectedUsers.includes(option.value as number)
+                );
+            });
+        }
+    }, [selectedUsers]);
 
     useEffect(() => {
         if (!existingTeamData) {
@@ -145,25 +198,12 @@ const CreateIntegrationForm = () => {
                         ...field,
                         onInputChange: setSearchName,
                         isLoadingOptions: isLoadingUsers,
-                        options: Array.from(
-                            new Map(
-                                [
-                                    ...(existingTeamData?.users || []),
-                                    ...(users || []),
-                                ].map(user => [
-                                    user.id,
-                                    {
-                                        value: user.id,
-                                        label: `${user.name} (${user.email})`,
-                                    },
-                                ])
-                            ).values()
-                        ),
+                        options: userOptions,
                     };
                 }
                 return field;
             }),
-        [users, existingTeamData?.users, isLoadingUsers]
+        [userOptions, isLoadingUsers]
     );
 
     if (isLoading) {

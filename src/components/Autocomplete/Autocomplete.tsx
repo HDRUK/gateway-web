@@ -46,6 +46,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     required?: boolean;
     id?: string;
     isLoadingOptions?: boolean;
+    noOptionsText?: string;
 }
 
 interface SearchOptions {
@@ -73,6 +74,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         freeSolo = false,
         multiple = false,
         isLoadingOptions = false,
+        noOptionsText = "No options",
         id,
         ...restProps
     } = props;
@@ -205,7 +207,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                     </li>
                 )}
                 noOptionsText={
-                    isLoadingOptions ? <Loading size={20} /> : "No options"
+                    isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }
             />
         </FormInputWrapper>

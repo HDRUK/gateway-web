@@ -75,6 +75,7 @@ const formFields = [
         ) => options.find(option => option.value === value)?.label,
         component: inputComponents.Autocomplete,
         info: "   * Assign at least one team admin. A team admin will be able to manage members, add new team members and manage the team notification preferences.\n   * Type more than 3 characters to search for users by their name",
+        noOptionsText: "Try searching for a user by name...",
     },
     {
         label: "Contact point",
