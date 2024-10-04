@@ -1304,7 +1304,7 @@
         "CollectionCard": {
             "users": "Users",
             "entities": "Entities",
-            "entitiesCounts": "Datasets ({nDatasets}), Publications ({nPublications}), Tools ({nTools})",
+            "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
         }
     },

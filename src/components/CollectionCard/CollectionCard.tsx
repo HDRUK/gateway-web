@@ -32,6 +32,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
         image_link,
         publications,
         updated_at,
+        dur
     } = collection || {};
 
     const hasImage = !!image_link;
@@ -95,6 +96,8 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                                         nTools: tools?.length || 0,
                                         nPublications:
                                             publications?.length || 0,
+                                        nDur:
+                                            dur?.length || 0,
                                     }),
                                 },
                                 {

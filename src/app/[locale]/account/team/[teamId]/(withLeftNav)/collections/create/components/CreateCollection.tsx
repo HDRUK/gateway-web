@@ -325,9 +325,13 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 setFile(undefined)
             )) as FileUpload;
-            console.log(uploadedFileStatus);
+
             const { file_location } = uploadedFileStatus;
-            await editCollection(createdCollectionId, {
+            
+            await usePatch<Partial<CollectionSubmission>>(
+                apis.collectionsV1Url,
+                { itemName: "Collection", successNotificationsOn: false }
+            )(createdCollectionId, {
                 image_link: file_location,
             });
         };
