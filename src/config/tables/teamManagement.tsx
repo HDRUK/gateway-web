@@ -24,11 +24,7 @@ interface getColumnsProps {
 }
 
 const columnHelper = createColumnHelper<Team>();
-function encodeHTML(str: string) {
-    const div = document.createElement("div");
-    div.innerText = str;
-    return div.innerHTML;
-}
+
 const getColumns = ({
     setSort,
     sort,
