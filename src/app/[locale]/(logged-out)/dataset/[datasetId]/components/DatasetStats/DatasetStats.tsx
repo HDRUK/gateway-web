@@ -11,7 +11,6 @@ import {
     parseLeadTime,
     splitStringList,
 } from "@/utils/dataset";
-import { r } from "msw/lib/glossary-de6278a9";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
