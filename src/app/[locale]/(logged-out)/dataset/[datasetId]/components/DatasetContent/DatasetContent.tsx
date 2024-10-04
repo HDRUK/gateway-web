@@ -2,6 +2,7 @@
 
 import { createColumnHelper } from "@tanstack/react-table";
 import { get, isArray, isEmpty } from "lodash";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
@@ -38,10 +39,11 @@ import {
 
 const DATE_FORMAT = "DD/MM/YYYY";
 const OBSERVATION_DATE = "observationDate";
+const TRANSLATION_PATH = "common";
 
 const columnHelper = createColumnHelper<Observation>();
 
-const getColumns = () =>
+const getColumns = (notReportedText: string) =>
     observationTableColumns.map(column =>
         columnHelper.display({
             id: column.header,
@@ -49,7 +51,11 @@ const getColumns = () =>
                 column.path === OBSERVATION_DATE ? (
                     <p>{formatDate(get(original, column.path))}</p>
                 ) : (
-                    <p>{get(original, column.path)}</p>
+                    <p>
+                        {get(original, column.path) !== -1
+                            ? get(original, column.path)
+                            : notReportedText}
+                    </p>
                 ),
             header: () => (
                 <TooltipIcon
@@ -61,9 +67,15 @@ const getColumns = () =>
         })
     );
 
-const renderObservationsTable = (rows?: Observation[]) => (
+const renderObservationsTable = (
+    notReportedText: string,
+    rows?: Observation[]
+) => (
     <ObservationTableWrapper>
-        <Table<Observation> columns={getColumns()} rows={rows || []} />
+        <Table<Observation>
+            columns={getColumns(notReportedText)}
+            rows={rows || []}
+        />
     </ObservationTableWrapper>
 );
 
@@ -75,6 +87,7 @@ const DatasetContent = ({
     populatedSections: DatasetSection[];
 }) => {
     const router = useRouter();
+    const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
     const renderDatasetField = (type: FieldType, value: string) => {
@@ -173,6 +186,7 @@ const DatasetContent = ({
 
                             {section.sectionName === "Observations" ? (
                                 renderObservationsTable(
+                                    t("notReported"),
                                     get(data, "metadata.metadata.observations")
                                 )
                             ) : section.sectionName === "Demographics" ? (
