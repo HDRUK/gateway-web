@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
 import Link from "@/components/Link";
+import Markdown from "markdown-to-jsx";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";
@@ -40,7 +41,7 @@ export default function IntroductionContent({
             <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
                 "heading"
             )}`}</Typography>
-            <Typography sx={{ pb: 1 }}>{summary}</Typography>
+            {summary && <Markdown sx={{ pb: 1 }}>{summary}</Markdown>}
             {url && (
                 <Link href={url} sx={{ pb: 1 }}>
                     {url}
