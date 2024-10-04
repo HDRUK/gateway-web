@@ -57,7 +57,7 @@ const FormFieldArray = ({
     );
 
     return (
-        <>
+        <div key={`${fieldParent.title}_fieldarray`}>
             <Typography sx={{ mb: 1 }}>
                 {fieldParent.title.replace(" Array", "")}
             </Typography>
@@ -104,7 +104,7 @@ const FormFieldArray = ({
                 sx={{ mb: theme.spacing(3) }}>
                 {t("add")}
             </Button>
-        </>
+        </div>
     );
 };
 
