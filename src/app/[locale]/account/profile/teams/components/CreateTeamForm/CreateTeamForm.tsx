@@ -17,6 +17,7 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile, { EventUploadedImage } from "@/components/UploadFile";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
@@ -38,6 +39,8 @@ const TRANSLATION_PATH_COMMON = "common";
 const CreateIntegrationForm = () => {
     const t = useTranslations();
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [searchName, setSearchName] = useState("");
+    const searchNameDebounced = useDebounce(searchName, 100);
 
     const { push } = useRouter();
 
@@ -52,7 +55,12 @@ const CreateIntegrationForm = () => {
         }
     );
 
-    const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
+    const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced,
+        }
+    );
 
     const methods = useForm<TeamForm>({
         mode: "onTouched",
@@ -135,15 +143,27 @@ const CreateIntegrationForm = () => {
                 if (field.name === "users") {
                     return {
                         ...field,
-                        options: users?.map(user => ({
-                            value: user.id,
-                            label: `${user.firstname} ${user.lastname}`,
-                        })),
+                        onInputChange: setSearchName,
+                        isLoadingOptions: isLoadingUsers,
+                        options: Array.from(
+                            new Map(
+                                [
+                                    ...(existingTeamData?.users || []),
+                                    ...(users || []),
+                                ].map(user => [
+                                    user.id,
+                                    {
+                                        value: user.id,
+                                        label: `${user.name} (${user.email})`,
+                                    },
+                                ])
+                            ).values()
+                        ),
                     };
                 }
                 return field;
             }),
-        [users]
+        [users, existingTeamData?.users, isLoadingUsers]
     );
 
     if (isLoading) {

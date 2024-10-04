@@ -12,6 +12,7 @@ import MuiAutocomplete, {
 import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import Loading from "../Loading";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -33,6 +34,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     clearOnBlur?: boolean;
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
+    onInputChange: (value: string) => void;
     getChipLabel?: (options: OptionsType[], value: ValueType) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
@@ -43,6 +45,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     horizontalForm?: boolean;
     required?: boolean;
     id?: string;
+    isLoadingOptions?: boolean;
 }
 
 interface SearchOptions {
@@ -61,6 +64,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         placeholder,
         startAdornmentIcon = null,
         canCreate = false,
+        onInputChange,
         getChipLabel,
         horizontalForm,
         required = false,
@@ -68,6 +72,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         disabled = false,
         freeSolo = false,
         multiple = false,
+        isLoadingOptions = false,
         id,
         ...restProps
     } = props;
@@ -167,6 +172,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         field.onChange(v);
                     }
                 }}
+                onInputChange={(_, value) => onInputChange?.(value)}
                 {...(canCreate && {
                     filterOptions,
                 })}
@@ -198,6 +204,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         <ListItemText>{item.label}</ListItemText>
                     </li>
                 )}
+                noOptionsText={
+                    isLoadingOptions ? <Loading size={20} /> : "No options"
+                }
             />
         </FormInputWrapper>
     );
