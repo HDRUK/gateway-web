@@ -7,6 +7,7 @@ import DatasetStatCard, {
 } from "@/components/DatasetStatCard/DatasetStatCard";
 import {
     formatYearStat,
+    formatTextDelimiter,
     parseLeadTime,
     splitStringList,
 } from "@/utils/dataset";
@@ -17,10 +18,12 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
-    const populationStat = get(
-        data,
-        "metadata.metadata.summary.populationSize"
-    ) as unknown as string;
+    const populationStat = formatTextDelimiter(
+        get(
+            data,
+            "metadata.metadata.summary.populationSize"
+        ) as unknown as string
+    );
     const yearsStat = formatYearStat(
         get(data, "metadata.metadata.provenance.temporal.startDate"),
         get(data, "metadata.metadata.provenance.temporal.endDate")
@@ -43,8 +46,11 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
             targetScroll: "anchor-Documentation",
-            enableScroll:
-                populationStat.toString() === "-1" ? false : !!populationStat,
+            enableScroll: populationStat
+                ? populationStat.toString() === "-1"
+                    ? false
+                    : !!populationStat
+                : false,
         },
         {
             title: t("yearTitle"),

@@ -25,24 +25,24 @@ type FormValues = Record<string, unknown>;
 
 interface CreateDatasetProps {
     control: Control<FormValues>;
-    schemaFields: FormHydration[];
     fieldParent: FormHydration;
     setSelectedField?: (fieldName: string, fieldArrayName: string) => void;
+    formArrayValues: FormValues[] | null;
 }
 
 const ID = "id";
 
 const FormFieldArray = ({
     control,
-    schemaFields,
     fieldParent,
     setSelectedField,
+    formArrayValues,
 }: CreateDatasetProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
 
-    const { fields, append, remove } = useFieldArray({
+    const { append, remove } = useFieldArray({
         control,
         name: fieldParent.title,
     });
@@ -53,32 +53,35 @@ const FormFieldArray = ({
                 acc[field.title] = null;
                 return acc;
             }, {}),
-        [fieldParent?.fields]
+        [fieldParent]
     );
 
     return (
-        <>
+        <div key={`${fieldParent.title}_fieldarray`}>
             <Typography sx={{ mb: 1 }}>
                 {fieldParent.title.replace(" Array", "")}
             </Typography>
-            {fields.map((field, index) => (
-                <Box key={field.id} sx={{ mb: theme.spacing(3) }}>
+
+            {formArrayValues?.map((field, index) => (
+                <Box
+                    key={`${fieldParent.title}${field.id}`}
+                    sx={{ mb: theme.spacing(3) }}>
                     {Object.entries(field)
                         .filter(([key]) => key !== ID)
                         .map(([key]) => {
-                            const schemaField = schemaFields.find(
+                            const arrayField = fieldParent?.fields?.find(
                                 field => field.title === key
                             );
 
-                            const testField = schemaField?.field;
+                            const field = arrayField?.field;
 
                             return (
                                 <React.Fragment key={key}>
-                                    {testField &&
+                                    {field &&
                                         renderFormHydrationField(
-                                            testField,
+                                            field,
                                             control,
-                                            `${fieldParent.title}.${index}.${testField.name}`,
+                                            `${fieldParent.title}.${index}.${field.name}`,
                                             (fieldTest: string) =>
                                                 setSelectedField &&
                                                 setSelectedField(
@@ -101,7 +104,7 @@ const FormFieldArray = ({
                 sx={{ mb: theme.spacing(3) }}>
                 {t("add")}
             </Button>
-        </>
+        </div>
     );
 };
 

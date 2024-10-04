@@ -29,7 +29,7 @@ const searchFilter = {
     showClearButton: true,
     variant: "outlined",
     name: "searchTitle",
-    placeholder: "Search analysis script, tools and software titles",
+    placeholder: "Search Analysis Scripts & Software titles",
     label: "",
     icon: SearchIcon,
 };
