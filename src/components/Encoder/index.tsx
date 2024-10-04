@@ -7,9 +7,8 @@ interface EncoderProps {
 const Encoder = ({ raw }: EncoderProps) => (
     <div
         dangerouslySetInnerHTML={{
-            __html: DOMPurify(raw),
+            __html: DOMPurify.sanitize(raw),
         }}
     />
 );
-
 export default Encoder;
