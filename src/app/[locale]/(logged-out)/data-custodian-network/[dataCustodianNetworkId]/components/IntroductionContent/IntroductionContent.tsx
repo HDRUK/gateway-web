@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
-import Link from "@/components/Link";
+import DataCustodianLinks from "@/components/DataCustodianLinks";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";
@@ -22,7 +22,7 @@ export default function IntroductionContent({
     const router = useRouter();
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
-    const { url, summary } = networkData;
+    const { url, service, summary } = networkData;
 
     return (
         <InView
@@ -41,11 +41,13 @@ export default function IntroductionContent({
                 "heading"
             )}`}</Typography>
             <Typography sx={{ pb: 1 }}>{summary}</Typography>
-            {url && (
-                <Link href={url} sx={{ pb: 1 }}>
-                    {url}
-                </Link>
-            )}
+            <DataCustodianLinks
+                data={{
+                    url,
+                    service,
+                }}
+                sx={{ mb: 2 }}
+            />
         </InView>
     );
 }

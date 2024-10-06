@@ -523,6 +523,9 @@ const theme = createTheme({
                     fontWeight: 400,
                     marginBottom: 2,
                 },
+                caption: {
+                    fontSize: "0.75rem",
+                },
             },
         },
         MuiSwitch: {
