@@ -76,6 +76,7 @@ const CreateIntegrationForm = () => {
         const teamData = {
             ...existingTeamData,
             users: existingTeamData?.users?.map(user => user.id),
+            contact_point: existingTeamData?.contact_point ?? "",
         };
 
         if (teamData.team_logo) {
@@ -91,6 +92,7 @@ const CreateIntegrationForm = () => {
 
     const createTeam = usePost<TeamForm>(apis.teamsV1Url, {
         itemName: "Team",
+        successNotificationsOn: file ? false : true,
     });
 
     const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
@@ -132,14 +134,18 @@ const CreateIntegrationForm = () => {
         ) => {
             const formData = new FormData();
             formData.append("file", file);
+
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 setFile(undefined)
             )) as FileUpload;
+
             const { file_location } = uploadedFileStatus;
 
             await editTeam(createdTeamId, {
                 team_logo: file_location,
             });
+
+            
         };
 
         if (file && fileToBeUploaded && createdTeamId) {
@@ -265,8 +271,8 @@ const CreateIntegrationForm = () => {
                                         const aspectRatio =
                                             (width || 0) / (height || 0);
                                         return (
-                                            aspectRatio <= 2.2 &&
-                                            aspectRatio >= 1.8
+                                            aspectRatio <= 2.5 &&
+                                            aspectRatio >= 1.5
                                         );
                                     }}
                                     onFileChange={(file: File) => {
