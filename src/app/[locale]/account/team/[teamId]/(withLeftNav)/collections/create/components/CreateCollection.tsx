@@ -89,7 +89,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     );
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
-        { itemName: "Collection" }
+        { itemName: "Collection", successNotificationsOn: file ? false : true, }
     );
     const editCollection = usePatch<Partial<CollectionSubmission>>(
         apis.collectionsV1Url,
@@ -328,12 +328,10 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
             const { file_location } = uploadedFileStatus;
             
-            await usePatch<Partial<CollectionSubmission>>(
-                apis.collectionsV1Url,
-                { itemName: "Collection", successNotificationsOn: false }
-            )(createdCollectionId, {
+            await editCollection(createdCollectionId, {
                 image_link: file_location,
             });
+
         };
 
         if (file && fileToBeUploaded && createdCollectionId) {
