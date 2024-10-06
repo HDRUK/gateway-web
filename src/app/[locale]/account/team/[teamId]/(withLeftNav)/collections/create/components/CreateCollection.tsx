@@ -413,8 +413,8 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                         const aspectRatio =
                                             (width || 0) / (height || 0);
                                         return (
-                                            aspectRatio <= 2.2 &&
-                                            aspectRatio >= 1.8
+                                            aspectRatio <= 2.5 &&
+                                            aspectRatio >= 1.5
                                         );
                                     }}
                                     onFileChange={(file: File) => {
