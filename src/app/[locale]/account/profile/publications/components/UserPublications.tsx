@@ -66,7 +66,7 @@ const UserPublications = ({
         page: "1",
         sort: `${publicationSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         paper_title: "",
-        ...(teamId ? { team_id: teamId } : { owner_id: 1 }),
+        ...(teamId ? { team_id: teamId } : { owner_id: userId }),
     }));
 
     const { control, watch, setValue } = useForm({

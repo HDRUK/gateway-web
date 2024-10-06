@@ -22,7 +22,7 @@ export default function CardStacked({
 }: CardStackedProps) {
     return (
         <BoxStacked
-            sx={{ aspectRatio: "2.1 / 1", minHeight: "130px" }}
+            sx={{ aspectRatio: "1.9 / 1", minHeight: "130px" }}
             {...boxStackedProps}>
             <Box
                 component={Link}
@@ -36,7 +36,7 @@ export default function CardStacked({
                     backgroundImage: `url(${imgUrl})`,
                     backgroundColor: colors.white,
                     backgroundRepeat: "no-repeat",
-                    backgroundSize: "calc(100% - 48px) auto",
+                    backgroundSize: "contain",
                     backgroundPosition: "center",
                 }}>
                 <Chip

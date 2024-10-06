@@ -61,6 +61,15 @@ const CMSPromoTemplate = ({
                 </Box>
                 {CtaContent}
             </Box>
+            {promofields.bottomPanel && (
+                <Box sx={{ p: 0, bgcolor: "white", pb: 2 }}>
+                    <Box sx={{ display: { laptop: "flex" } }}>
+                        <Box sx={{ flex: 1 }}>
+                            <HTMLContent content={promofields.bottomPanel} />
+                        </Box>
+                    </Box>
+                </Box>
+            )}
         </div>
     );
 };

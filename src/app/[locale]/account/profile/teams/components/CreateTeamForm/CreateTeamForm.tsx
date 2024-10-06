@@ -29,21 +29,25 @@ import {
     teamValidationSchema,
 } from "@/config/forms/team";
 import { Routes } from "@/consts/routes";
-import { getTeamAssetPath } from "@/utils/general";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
 
 const CreateIntegrationForm = () => {
-    const t = useTranslations();
-    const [fileNotUploaded, setFileNotUploaded] = useState(false);
-
-    const { push } = useRouter();
-
     const params = useParams<{
         teamId: string;
     }>();
+    const t = useTranslations();
+    const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [imageUploaded, setImageUploaded] = useState(false);
+    const [file, setFile] = useState<File>();
+    const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
+        params?.teamId
+    );
+    const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
+
+    const { push } = useRouter();
 
     const { data: existingTeamData, isLoading } = useGet<Team>(
         `${apis.teamsV1Url}/${params?.teamId}`,
@@ -74,6 +78,10 @@ const CreateIntegrationForm = () => {
             users: existingTeamData?.users?.map(user => user.id),
         };
 
+        if (teamData.team_logo) {
+            setImageUploaded(true);
+        }
+
         reset(teamData);
     }, [reset, existingTeamData]);
 
@@ -85,45 +93,60 @@ const CreateIntegrationForm = () => {
         itemName: "Team",
     });
 
-    const editTeam = usePatch<TeamForm>(apis.teamsV1Url);
+    const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
 
     const submitForm = async (formData: TeamForm) => {
         if (!params?.teamId) {
             await createTeam({
                 ...teamDefaultValues,
                 ...formData,
+            }).then(async result => {
+                if (typeof result === "number" && file) {
+                    setCreatedTeamId(result as string);
+                    setFileToBeUploaded(true);
+                }
             });
         } else {
-            await editTeam(params?.teamId, formData);
+            await editTeam(params?.teamId, formData).then(async result => {
+                if (typeof result === "number" && file) {
+                    setFileToBeUploaded(true);
+                }
+            });
         }
 
         setTimeout(() => {
             push(Routes.ACCOUNT_TEAMS);
         });
     };
+    const uploadFile = usePost(
+        `${apis.fileUploadV1Url}?entity_flag=team-image&team_id=${createdTeamId}`,
+        {
+            successNotificationsOn: false,
+        }
+    );
 
-    const handleFileUploaded = async (fileResponse: FileUpload) => {
-        const { file_location } = fileResponse;
-        const selectedUsers =
-            existingTeamData?.users?.map(user => user.id) || [];
-        const team_logo = getTeamAssetPath(file_location);
+    useEffect(() => {
+        const handleFileUploaded = async (
+            createdTeamId: string,
+            file: File
+        ) => {
+            const formData = new FormData();
+            formData.append("file", file);
+            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
+                setFile(undefined)
+            )) as FileUpload;
+            const { file_location } = uploadedFileStatus;
 
-        await submitForm(
-            !params?.teamId
-                ? {
-                      ...teamDefaultValues,
-                      team_logo,
-                  }
-                : {
-                      ...teamDefaultValues,
-                      ...existingTeamData,
-                      users: selectedUsers,
-                      team_logo,
-                  }
-        );
-    };
+            await editTeam(createdTeamId, {
+                team_logo: file_location,
+            });
+        };
 
-    const FILE_UPLOAD_URL = `${apis.fileUploadV1Url}?entity_flag=team-image&team_id=${params?.teamId}`;
+        if (file && fileToBeUploaded && createdTeamId) {
+            handleFileUploaded(createdTeamId, file);
+        }
+    }, [createdTeamId, fileToBeUploaded, editTeam, file, uploadFile]);
+
     const is_question_bank = watch("is_question_bank");
     const questionBankLabel = is_question_bank
         ? t(`${TRANSLATION_PATH_COMMON}.enabled`)
@@ -210,9 +233,15 @@ const CreateIntegrationForm = () => {
                             }}>
                             <FormInputWrapper
                                 label="Logo"
-                                info={t(
-                                    `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
-                                )}
+                                info={
+                                    imageUploaded
+                                        ? t(
+                                              `${TRANSLATION_PATH_CREATE}.addImageSuccess`
+                                          )
+                                        : t(
+                                              `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
+                                          )
+                                }
                                 error={
                                     fileNotUploaded
                                         ? {
@@ -229,7 +258,6 @@ const CreateIntegrationForm = () => {
                                         `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
                                     )}
                                     acceptedFileTypes=".jpg,.png"
-                                    apiPath={FILE_UPLOAD_URL}
                                     onBeforeUploadCheck={(
                                         height: number,
                                         width: number
@@ -241,18 +269,19 @@ const CreateIntegrationForm = () => {
                                             aspectRatio >= 1.8
                                         );
                                     }}
-                                    onFileChange={() => {
+                                    onFileChange={(file: File) => {
                                         setFileNotUploaded(false);
+                                        setFile(file);
                                     }}
-                                    onFileCheckSucceeded={(
-                                        file: FileUpload
-                                    ) => {
-                                        handleFileUploaded(file);
+                                    onFileCheckSucceeded={() => {
+                                        setImageUploaded(true);
                                         setFileNotUploaded(false);
                                     }}
                                     onFileCheckFailed={() => {
                                         setFileNotUploaded(true);
                                     }}
+                                    sx={{ py: 2 }}
+                                    showUploadButton={false}
                                 />
                             </FormInputWrapper>
 

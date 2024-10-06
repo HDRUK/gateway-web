@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
@@ -11,14 +12,18 @@ export const metadata = {
 const TermsAndConditionsPage = async () => {
     const cmsPage = await getTermsAndConditions();
 
+    if (!cmsPage) {
+        notFound();
+    }
+
     return (
         <>
             <Banner
-                title={cmsPage.title}
+                title={cmsPage?.title}
                 src="/images/banners/release-notes.png"
             />
             <Container sx={{ padding: 10 }}>
-                <HTMLContent content={cmsPage?.content} />
+                {cmsPage?.content && <HTMLContent content={cmsPage?.content} />}
             </Container>
         </>
     );

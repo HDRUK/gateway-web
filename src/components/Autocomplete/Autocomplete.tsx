@@ -161,6 +161,10 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                     if ((v as OptionsType)?.value) {
                         field.onChange((v as OptionsType).value);
                     }
+
+                    if (!v) {
+                        field.onChange(v);
+                    }
                 }}
                 {...(canCreate && {
                     filterOptions,

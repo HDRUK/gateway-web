@@ -1,7 +1,8 @@
 "use client";
 
 import { ReactElement } from "react";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, styled } from "@mui/material/styles";
+import Image from "next/image";
 
 const buttonLinkStyle = {
     padding: 0,
@@ -10,6 +11,13 @@ const buttonLinkStyle = {
         backgroundColor: "transparent",
     },
 };
+
+export const AspectRatioImage = styled(Image)(() => ({
+    width: "auto",
+    maxHeight: "20vw",
+    maxWidth: "30vw",
+    height: "100%",
+}));
 
 export const DISABLED_OPACITY = 0.4;
 
@@ -514,6 +522,9 @@ const theme = createTheme({
                     fontSize: "1rem",
                     fontWeight: 400,
                     marginBottom: 2,
+                },
+                caption: {
+                    fontSize: "0.75rem",
                 },
             },
         },

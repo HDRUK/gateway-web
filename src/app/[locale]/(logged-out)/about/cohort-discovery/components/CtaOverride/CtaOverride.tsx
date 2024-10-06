@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
 import Button from "@/components/Button";
@@ -14,6 +15,10 @@ import { getPermissions } from "@/utils/permissions";
 
 export const DATA_TEST_ID = "cta-override-button";
 const COHORT_DISCOVERY_PERMISSION = "GENERAL_ACCESS";
+
+interface accessRequestType {
+    redirect_url: string;
+}
 
 const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { showDialog } = useDialog();
@@ -33,28 +38,36 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
-    const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
-        shouldFetch: isClicked,
-    });
+    const { data: accessData } = useGet<accessRequestType>(
+        `${apis.cohortRequestsV1Url}/access`,
+        {
+            shouldFetch: isClicked,
+        }
+    );
 
-    const handleVisit = async () => {
-        setIsClicked(true);
-        console.log(datasetCsv);
-    };
+    if (accessData) {
+        push(accessData.redirect_url);
+    }
 
     return (
-        <>
+        <Box sx={{ display: "flex" }}>
             <Button
                 sx={{ mt: 3 }}
                 onClick={handleCtaClick}
-                data-testid={DATA_TEST_ID}>
+                data-testid={DATA_TEST_ID}
+                color="greyCustom">
                 {ctaLink?.title}
             </Button>
 
-            <Button sx={{ mt: 3, ml: 3 }} onClick={handleVisit}>
+            <Button
+                sx={{ mt: 3, ml: 3 }}
+                onClick={() => {
+                    setIsClicked(true);
+                }}
+                color="greyCustom">
                 Visit Cohort Discovery
             </Button>
-        </>
+        </Box>
     );
 };
 

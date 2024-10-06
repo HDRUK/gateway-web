@@ -7,4 +7,6 @@ export interface DataProvider {
     tools_count?: number;
     collections_count?: number;
     durs_count?: number;
+    url: string | null;
+    service: string[] | null;
 }

@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
+import Markdown from "markdown-to-jsx";
 import { Dataset, VersionItem } from "@/interfaces/Dataset";
 import Link from "@/components/Link";
-import Typography from "@/components/Typography";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -88,9 +88,9 @@ const formatTextWithLinks = (text: string | string[] | number) => {
                 {segment}
             </Link>
         ) : (
-            <Typography component="span" key={segment}>
+            <Markdown component="span" key={segment}>
                 {segment}
-            </Typography>
+            </Markdown>
         )
     );
 };
@@ -100,7 +100,7 @@ const formatTextDelimiter = (text: string | string[] | number) => {
         ? text.join(", ") // Join array elements with ", " if it's an array
         : typeof text === "number"
         ? text.toLocaleString()
-        : text.replaceAll(";,;", ", ");
+        : text?.replaceAll(";,;", ", ");
 };
 
 export {
