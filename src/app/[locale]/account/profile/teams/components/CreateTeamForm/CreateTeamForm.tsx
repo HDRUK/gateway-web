@@ -107,8 +107,8 @@ const CreateIntegrationForm = () => {
                 }
             });
         } else {
-            await editTeam(params?.teamId, formData).then(async result => {
-                if (typeof result === "number" && file) {
+            await editTeam(params?.teamId, formData).then(async () => {
+                if (file) {
                     setFileToBeUploaded(true);
                 }
             });
