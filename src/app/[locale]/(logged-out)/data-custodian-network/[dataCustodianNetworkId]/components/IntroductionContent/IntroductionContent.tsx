@@ -2,11 +2,10 @@
 
 import { InView } from "react-intersection-observer";
 import { Typography } from "@mui/material";
-import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
-import Link from "@/components/Link";
+import DataCustodianLinks from "@/components/DataCustodianLinks";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";
@@ -23,7 +22,7 @@ export default function IntroductionContent({
     const router = useRouter();
     const path = usePathname();
     const t = useTranslations(TRANSLATION_PATH);
-    const { url, summary } = networkData;
+    const { url, service, summary } = networkData;
 
     return (
         <InView
@@ -41,12 +40,14 @@ export default function IntroductionContent({
             <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
                 "heading"
             )}`}</Typography>
-            {summary && <Markdown sx={{ pb: 1 }}>{summary}</Markdown>}
-            {url && (
-                <Link href={url} sx={{ pb: 1 }}>
-                    {url}
-                </Link>
-            )}
+            <Typography sx={{ pb: 1 }}>{summary}</Typography>
+            <DataCustodianLinks
+                data={{
+                    url,
+                    service,
+                }}
+                sx={{ mb: 2 }}
+            />
         </InView>
     );
 }

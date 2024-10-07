@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { FileUpload } from "@/interfaces/FileUpload";
+import { Option } from "@/interfaces/Option";
 import { Team, TeamForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
@@ -17,6 +18,7 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
@@ -34,18 +36,22 @@ const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
 
-const CreateIntegrationForm = () => {
+const CreateTeamForm = () => {
     const params = useParams<{
         teamId: string;
     }>();
     const t = useTranslations();
-    const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [fileWarning, setFileWarning] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
     const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
         params?.teamId
     );
     const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
+
+    const [searchName, setSearchName] = useState("");
+    const [userOptions, setUserOptions] = useState<Option[]>([]);
+    const searchNameDebounced = useDebounce(searchName, 500);
 
     const { push } = useRouter();
 
@@ -56,7 +62,12 @@ const CreateIntegrationForm = () => {
         }
     );
 
-    const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
+    const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced,
+        }
+    );
 
     const methods = useForm<TeamForm>({
         mode: "onTouched",
@@ -68,6 +79,56 @@ const CreateIntegrationForm = () => {
 
     const { control, handleSubmit, formState, reset, watch } = methods;
 
+    const updateUserOptions = (
+        prevOptions: Option[],
+        userOptions: Option[]
+    ) => {
+        const existingUserIds = prevOptions.map(option => option.value);
+        const newOptions = userOptions?.filter(
+            option => !existingUserIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length > 0) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const userOptions = existingTeamData?.users.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+        if (!userOptions) return;
+
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
+    }, [existingTeamData?.users]);
+
+    useEffect(() => {
+        const userOptions = users.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
+    }, [users]);
+
+    const selectedUsers = watch("users");
+    useEffect(() => {
+        if (selectedUsers) {
+            setUserOptions(prevOptions => {
+                return prevOptions.filter(option =>
+                    selectedUsers.includes(option.value as number)
+                );
+            });
+        }
+    }, [selectedUsers]);
+
     useEffect(() => {
         if (!existingTeamData) {
             return;
@@ -76,6 +137,7 @@ const CreateIntegrationForm = () => {
         const teamData = {
             ...existingTeamData,
             users: existingTeamData?.users?.map(user => user.id),
+            contact_point: existingTeamData?.contact_point ?? "",
         };
 
         if (teamData.team_logo) {
@@ -91,6 +153,7 @@ const CreateIntegrationForm = () => {
 
     const createTeam = usePost<TeamForm>(apis.teamsV1Url, {
         itemName: "Team",
+        successNotificationsOn: !file,
     });
 
     const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
@@ -107,8 +170,8 @@ const CreateIntegrationForm = () => {
                 }
             });
         } else {
-            await editTeam(params?.teamId, formData).then(async result => {
-                if (typeof result === "number" && file) {
+            await editTeam(params?.teamId, formData).then(async () => {
+                if (file) {
                     setFileToBeUploaded(true);
                 }
             });
@@ -119,7 +182,7 @@ const CreateIntegrationForm = () => {
         });
     };
     const uploadFile = usePost(
-        `${apis.fileUploadV1Url}?entity_flag=team-image&team_id=${createdTeamId}`,
+        `${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`,
         {
             successNotificationsOn: false,
         }
@@ -132,9 +195,11 @@ const CreateIntegrationForm = () => {
         ) => {
             const formData = new FormData();
             formData.append("file", file);
+
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 setFile(undefined)
             )) as FileUpload;
+
             const { file_location } = uploadedFileStatus;
 
             await editTeam(createdTeamId, {
@@ -152,21 +217,31 @@ const CreateIntegrationForm = () => {
         ? t(`${TRANSLATION_PATH_COMMON}.enabled`)
         : t(`${TRANSLATION_PATH_COMMON}.disabled`);
 
+    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             teamFormFields.map(field => {
                 if (field.name === "users") {
                     return {
                         ...field,
-                        options: users?.map(user => ({
-                            value: user.id,
-                            label: `${user.firstname} ${user.lastname}`,
-                        })),
+                        onInputChange: handleOnUserInputChange,
+                        isLoadingOptions: isLoadingUsers,
+                        options: userOptions,
                     };
                 }
                 return field;
             }),
-        [users]
+        [userOptions, isLoadingUsers]
     );
 
     if (isLoading) {
@@ -243,7 +318,7 @@ const CreateIntegrationForm = () => {
                                           )
                                 }
                                 error={
-                                    fileNotUploaded
+                                    fileWarning
                                         ? {
                                               type: "",
                                               message: t(
@@ -265,20 +340,19 @@ const CreateIntegrationForm = () => {
                                         const aspectRatio =
                                             (width || 0) / (height || 0);
                                         return (
-                                            aspectRatio <= 2.2 &&
-                                            aspectRatio >= 1.8
+                                            aspectRatio <= 2.5 &&
+                                            aspectRatio >= 1.5
                                         );
                                     }}
                                     onFileChange={(file: File) => {
-                                        setFileNotUploaded(false);
                                         setFile(file);
+                                        setFileWarning(false);
                                     }}
                                     onFileCheckSucceeded={() => {
                                         setImageUploaded(true);
-                                        setFileNotUploaded(false);
                                     }}
                                     onFileCheckFailed={() => {
-                                        setFileNotUploaded(true);
+                                        setFileWarning(true);
                                     }}
                                     sx={{ py: 2 }}
                                     showUploadButton={false}
@@ -323,4 +397,4 @@ const CreateIntegrationForm = () => {
     );
 };
 
-export default CreateIntegrationForm;
+export default CreateTeamForm;
