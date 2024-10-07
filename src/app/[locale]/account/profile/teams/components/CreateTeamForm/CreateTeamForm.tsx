@@ -5,7 +5,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { Options } from "prettier";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import { Team, TeamForm } from "@/interfaces/Team";
