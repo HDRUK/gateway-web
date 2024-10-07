@@ -223,22 +223,29 @@ const datasetFields: DatasetSection[] = [
             {
                 path: "metadata.metadata.coverage.typicalAgeRangeMin",
                 type: FieldType.TEXT,
-                label: "Typical age range min",
+                label: "Minimum age range",
                 tooltip: "The minimum age of dataset participants.",
             },
             {
                 path: "metadata.metadata.coverage.typicalAgeRangeMax",
                 type: FieldType.TEXT,
-                label: "Typical age range max",
+                label: "Maximum age range",
                 tooltip:
                     "The maximum age of dataset participants. NOTE: a value of 150 indicates the dataset contains all ages",
             },
             {
-                path: "metadata.metadata.coverage.followup",
+                path: "metadata.metadata.coverage.followUp",
                 type: FieldType.TEXT,
                 label: "Follow-up",
                 tooltip:
                     "The typical time span that a patient appears in the dataset (follow up period).",
+            },
+            {
+                path: "metadata.metadata.coverage.datasetCompleteness",
+                type: FieldType.TEXT,
+                label: "Dataset completeness",
+                tooltip:
+                    "The URL where a Researcher can learn more about the completeness of the dataset.",
             },
         ],
     },
@@ -261,29 +268,29 @@ const datasetFields: DatasetSection[] = [
         sectionName: "Accessibility",
         fields: [
             {
-                path: "metadata.metadata.accessibility.formatandstandards.language",
-                type: FieldType.TEXT,
+                path: "metadata.metadata.accessibility.formatAndStandards.language",
+                type: FieldType.LIST,
                 label: "Language",
                 tooltip:
                     "All the languages in which the dataset metadata and underlying data are made available.",
             },
             {
-                path: "metadata.metadata.accessibility.formatandstandards.conformsTo",
-                type: FieldType.TEXT,
+                path: "metadata.metadata.accessibility.formatAndStandards.conformsTo",
+                type: FieldType.LIST,
                 label: "Alignment with standardised data models",
                 tooltip:
                     "Standardised data models that the dataset has been stored in or transformed to (e.g. OMOP, FHIR), or if the data is only available in a local format.",
             },
             {
-                path: "metadata.metadata.accessibility.formatandstandards.vocabularyEncodingScheme",
-                type: FieldType.TEXT,
+                path: "metadata.metadata.accessibility.formatAndStandards.vocabularyEncodingScheme",
+                type: FieldType.LIST,
                 label: "Controlled vocabulary",
                 tooltip:
                     "Relevant terminologies/ontologies/controlled vocabularies that are being used in the dataset. (e.g. ICD-10 codes, NHS Data Dictionary national codes, SNOMED CT International)",
             },
             {
-                path: "metadata.metadata.accessibility.formatandstandards.format",
-                type: FieldType.TEXT,
+                path: "metadata.metadata.accessibility.formatAndStandards.format",
+                type: FieldType.LIST,
                 label: "Format",
                 tooltip:
                     "Format(s) in which the dataset is available. (e.g. application, audio, image, message, model, multipart, text, video)",
@@ -379,7 +386,7 @@ const datasetFields: DatasetSection[] = [
                     "The person(s)/entity (other than an employee of the Data Controller) who process the data on behalf of the Data Controller.",
             },
             {
-                path: "metadata.metadata.accessibility.usage.investigations",
+                path: "metadata.metadata.enrichmentAndLinkage.investigations",
                 type: FieldType.LIST,
                 label: "Investigations",
                 tooltip: "Weblink to any active projects using the dataset.",
