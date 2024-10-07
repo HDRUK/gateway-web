@@ -7,8 +7,9 @@ const getAvailableUsers = (teamUsers: User[], allUsers: User[]) => {
         .filter(user => ![...teamUserIds].includes(user.id))
         .map(user => ({
             value: user.id as ValueType,
-            label: user.name,
-        }));
+            label: `${user.name} (${user.email})`,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
 };
 
 export { getAvailableUsers };
