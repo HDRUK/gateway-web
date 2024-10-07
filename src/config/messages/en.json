@@ -117,7 +117,8 @@
         "questionBank": "Question Bank",
         "disabled": "Disabled",
         "enabled": "Enabled",
-        "all": "All"
+        "all": "All",
+        "notReported": "Not reported"
     },
     "pages": {
         "newsEvents": {
