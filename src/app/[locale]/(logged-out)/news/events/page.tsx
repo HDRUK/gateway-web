@@ -13,16 +13,8 @@ const NewsEventsPage = async () => {
     const newsData = await getNews();
     const eventsData = await getEvents();
 
-    let sortedNews = null;
-    let sortedEvents = null;
-
-    if (newsData) {
-        sortedNews = getSortedNewsEventsByDate(newsData);
-    }
-
-    if (eventsData) {
-        sortedEvents = getSortedNewsEventsByDate(eventsData);
-    }
+    const sortedNews = getSortedNewsEventsByDate(newsData || []);
+    const sortedEvents = getSortedNewsEventsByDate(eventsData || []);
 
     return (
         <>
@@ -37,12 +29,12 @@ const NewsEventsPage = async () => {
                         {
                             value: "news",
                             label: "News",
-                            content: <Content data={sortedNews || []} />,
+                            content: <Content data={sortedNews} />,
                         },
                         {
                             value: "events",
                             label: "Events",
-                            content: <Content data={sortedEvents || []} />,
+                            content: <Content data={sortedEvents} />,
                         },
                     ]}
                 />
