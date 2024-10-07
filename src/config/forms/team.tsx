@@ -81,6 +81,18 @@ const formFields = [
         info: "Please provide a valid email address that can be used as a default.",
         component: inputComponents.TextField,
     },
+    {
+        label: "Website URL",
+        name: "url",
+        info: "Provide a valid URL to your own website.",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Service URL",
+        name: "service",
+        info: "Provide a valid URL to services offered.",
+        component: inputComponents.TextField,
+    },
 ];
 
 export {
