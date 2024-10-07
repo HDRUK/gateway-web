@@ -193,10 +193,9 @@ const UploadFile = ({
                             onFileChange={(file: File) => {
                                 if (file.type.startsWith("image/")) {
                                     imageValidation(file).then(result => {
-                                        if (result) {
-                                            setFile(file);
-                                            onFileChange?.(file);
-                                        } else {
+                                        setFile(file);
+                                        onFileChange?.(file);
+                                        if (!result) {
                                             onFileCheckFailed?.();
                                         }
                                     });

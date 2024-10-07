@@ -39,7 +39,7 @@ const CreateIntegrationForm = () => {
         teamId: string;
     }>();
     const t = useTranslations();
-    const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [fileWarning, setFileWarning] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
     const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
@@ -247,7 +247,7 @@ const CreateIntegrationForm = () => {
                                           )
                                 }
                                 error={
-                                    fileNotUploaded
+                                    fileWarning
                                         ? {
                                               type: "",
                                               message: t(
@@ -274,15 +274,14 @@ const CreateIntegrationForm = () => {
                                         );
                                     }}
                                     onFileChange={(file: File) => {
-                                        setFileNotUploaded(false);
                                         setFile(file);
+                                        setFileWarning(false);
                                     }}
                                     onFileCheckSucceeded={() => {
                                         setImageUploaded(true);
-                                        setFileNotUploaded(false);
                                     }}
                                     onFileCheckFailed={() => {
-                                        setFileNotUploaded(true);
+                                        setFileWarning(true);
                                     }}
                                     sx={{ py: 2 }}
                                     showUploadButton={false}
