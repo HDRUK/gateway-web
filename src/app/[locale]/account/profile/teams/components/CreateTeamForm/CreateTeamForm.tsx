@@ -213,13 +213,24 @@ const CreateTeamForm = () => {
         ? t(`${TRANSLATION_PATH_COMMON}.enabled`)
         : t(`${TRANSLATION_PATH_COMMON}.disabled`);
 
+    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             teamFormFields.map(field => {
                 if (field.name === "users") {
                     return {
                         ...field,
-                        onInputChange: setSearchName,
+                        onInputChange: handleOnUserInputChange,
                         isLoadingOptions: isLoadingUsers,
                         options: userOptions,
                     };
