@@ -9,6 +9,8 @@ jest.mock("@/utils/cms", () => ({
     getNews: async () => newsV1.posts.edges,
 }));
 
+jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
+
 describe("NewsEvents", () => {
     it("renders the news content", async () => {
         const Result = await NewsEventsPage();
@@ -33,7 +35,7 @@ describe("NewsEvents", () => {
         render(Result);
 
         act(() => {
-            mockRouter.setCurrentUrl("/news_events?tab=news&year=2023");
+            mockRouter.setCurrentUrl("/news_events?tab=news&year=2025");
         });
 
         await waitFor(() => {

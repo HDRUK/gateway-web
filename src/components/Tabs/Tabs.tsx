@@ -34,6 +34,7 @@ export interface TabProps {
     paramName?: string;
     renderTabContent?: boolean;
     persistParams?: boolean;
+    defaultSelectedTab?: string;
     handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
@@ -76,12 +77,13 @@ const Tabs = ({
     paramName = "tab",
     renderTabContent = true,
     persistParams = true,
+    defaultSelectedTab,
     handleChange,
 }: TabProps) => {
     const searchParams = useSearchParams();
     const currentTab = searchParams?.get(paramName);
 
-    const selectedTab = currentTab || tabs[0].value;
+    const selectedTab = currentTab || defaultSelectedTab || tabs[0].value;
 
     return (
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>

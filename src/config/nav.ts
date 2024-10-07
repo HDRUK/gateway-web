@@ -67,7 +67,7 @@ const navItems = [
                 href: "/news/events?tab=events",
             },
             {
-                label: "Gateway releases",
+                label: "Gateway Releases",
                 href: "/news/releases",
             },
             {
