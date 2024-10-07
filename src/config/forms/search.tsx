@@ -100,6 +100,29 @@ export const sortByOptionsPublications = [
     },
 ];
 
+export const sortByOptionsCollections = [
+    {
+        label: "Sort by most relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort alphabetically by name (A-Z)",
+        value: "name:asc",
+    },
+    {
+        label: "Sort alphabetically by name (Z-A)",
+        value: "name:desc",
+    },
+    {
+        label: "Sort by most recently updated",
+        value: "updated_at:desc",
+    },
+    {
+        label: "Sort by least recently updated",
+        value: "updated_at:asc",
+    },
+];
+
 const searchFormConfig = {
     defaultValues: {
         sort: "score:desc",
