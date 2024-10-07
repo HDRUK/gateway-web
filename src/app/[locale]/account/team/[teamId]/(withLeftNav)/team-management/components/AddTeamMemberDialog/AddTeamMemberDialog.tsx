@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
@@ -14,6 +14,7 @@ import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import ModalButtons from "@/components/ModalButtons";
 import useAuth from "@/hooks/useAuth";
+import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
@@ -52,7 +53,15 @@ const AddTeamMemberDialog = () => {
         name: "userAndRoles",
     });
 
-    const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
+    // const [searchName, setSearchName] = useState("");
+    // const searchNameDebounced = useDebounce(searchName, 500);
+
+    const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}?mini`, // filterNames=${searchNameDebounced}`,
+        {
+            shouldFetch: true, // !!searchNameDebounced
+        }
+    );
 
     const { team } = useGetTeam(dialogProps.teamId);
 
@@ -112,6 +121,8 @@ const AddTeamMemberDialog = () => {
                         remove={remove}
                         control={control}
                         userOptions={userOptions}
+                        // onInputChangeUser={setSearchName}
+                        isLoadingUsers={isLoadingUsers}
                         userPermissions={permissions}
                     />
                 </MuiDialogContent>

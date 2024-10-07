@@ -37,7 +37,7 @@ const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
 
-const CreateIntegrationForm = () => {
+const CreateTeamForm = () => {
     const t = useTranslations();
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [searchName, setSearchName] = useState("");
@@ -355,4 +355,4 @@ const CreateIntegrationForm = () => {
     );
 };
 
-export default CreateIntegrationForm;
+export default CreateTeamForm;
