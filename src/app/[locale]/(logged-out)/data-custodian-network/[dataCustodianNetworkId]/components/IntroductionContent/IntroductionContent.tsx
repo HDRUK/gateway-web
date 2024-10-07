@@ -2,6 +2,7 @@
 
 import { InView } from "react-intersection-observer";
 import { Typography } from "@mui/material";
+import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
@@ -40,7 +41,7 @@ export default function IntroductionContent({
             <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
                 "heading"
             )}`}</Typography>
-            <Typography sx={{ pb: 1 }}>{summary}</Typography>
+            {summary && <Markdown sx={{ pb: 1 }}>{summary}</Markdown>}
             <DataCustodianLinks
                 data={{
                     url,
