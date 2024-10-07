@@ -1,5 +1,6 @@
 "use client";
 
+import DOMPurify from "isomorphic-dompurify";
 import { Content } from "./HTMLContent.styles";
 
 export interface HTMLContentProps {
@@ -11,7 +12,7 @@ const HTMLContent = ({ content }: HTMLContentProps) => {
         <Content
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-                __html: content,
+                __html: DOMPurify.sanitize(content),
             }}
         />
     );

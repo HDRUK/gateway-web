@@ -183,7 +183,7 @@ const SavedSearches = () => {
                                                             }
                                                         />
                                                     </DataList>
-                                                    <Typography variant="caption">
+                                                    <Typography>
                                                         {t("dateSaved", {
                                                             date: dayjs(
                                                                 updated_at

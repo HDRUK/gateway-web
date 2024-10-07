@@ -16,7 +16,7 @@ const useAccountMenu = () => {
         const teams = (user?.teams || [])
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(team => ({
-                label: `${team.member_of} > ${team.name}`,
+                label: team.name,
                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
             }));
 

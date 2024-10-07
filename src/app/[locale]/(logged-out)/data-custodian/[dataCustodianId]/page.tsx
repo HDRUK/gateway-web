@@ -15,7 +15,7 @@ import ActionBar from "./components/ActionBar";
 import CollectionsContent from "./components/CollectionsContent";
 import DataCustodianContent from "./components/DataCustodianContent";
 import DatausesContent from "./components/DatausesContent";
-import { dataCustodianFields, accordions } from "./config";
+import { accordions, dataCustodianFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 

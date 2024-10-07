@@ -18,6 +18,8 @@ interface AddTeamMemberRowsProps<TFieldValues extends FieldValues> {
     userPermissions: { [key: string]: boolean };
     remove: (fieldId: number) => void;
     append: (newRow: UserAndRoles) => void;
+    onInputChangeUser?: (value: string) => void;
+    isLoadingUsers?: boolean;
 }
 
 const AddTeamMemberRows = <TFieldValues extends FieldValues>({
@@ -27,6 +29,8 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
     userPermissions,
     remove,
     append,
+    onInputChangeUser,
+    isLoadingUsers = false,
 }: AddTeamMemberRowsProps<TFieldValues>) => {
     const roleOptionsFiltered = useMemo(() => {
         return getRoleOptions().filter(role =>
@@ -55,6 +59,8 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
                                 control={control}
                                 icon={SearchRoundedIcon}
                                 options={userOptions}
+                                onInputChange={onInputChangeUser}
+                                isLoadingOptions={isLoadingUsers}
                             />
                         </Box>
                         <Box sx={{ p: 0, gridColumn: "span 3" }}>

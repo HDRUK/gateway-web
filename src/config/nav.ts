@@ -109,10 +109,6 @@ const navItems = [
                 href: "/support",
             },
             {
-                label: "Tutorials",
-                href: "/help/tutorials",
-            },
-            {
                 label: "Contact Us",
                 href: "https://hdruk.atlassian.net/servicedesk/customer/portal/7",
             },
@@ -129,24 +125,7 @@ const navItems = [
     },
     {
         label: "Data Custodian Area",
-        subItems: [
-            {
-                label: "How to set yourself up as a Data Custodian",
-                href: "/data-custodian/getting-started",
-            },
-            {
-                label: "Integrations",
-                href: "https://hdruk.github.io/gateway-2-integrations-testing/integrations-hdruk-datasets/",
-            },
-            {
-                label: "Metadata onboarding",
-                href: "/data-custodian/metadata-onboarding",
-            },
-            {
-                label: "The Alliance",
-                href: "https://ukhealthdata.org/",
-            },
-        ],
+        href: RouteName.DATA_CUSTODIAN_SUPPORT,
     },
 ];
 

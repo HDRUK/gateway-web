@@ -1,9 +1,9 @@
 "use client";
 
-import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get, isArray } from "lodash";
-import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -38,16 +38,25 @@ import {
 } from "./DatasetContent.styles";
 
 const DATE_FORMAT = "DD/MM/YYYY";
+const OBSERVATION_DATE = "observationDate";
+const TRANSLATION_PATH = "common";
 
 const columnHelper = createColumnHelper<Observation>();
 
-const getColumns = () =>
+const getColumns = (notReportedText: string) =>
     observationTableColumns.map(column =>
         columnHelper.display({
             id: column.header,
-            cell: ({ row: { original } }) => (
-                <p>{get(original, column.path)}</p>
-            ),
+            cell: ({ row: { original } }) =>
+                column.path === OBSERVATION_DATE ? (
+                    <p>{formatDate(get(original, column.path))}</p>
+                ) : (
+                    <p>
+                        {get(original, column.path) !== -1
+                            ? get(original, column.path)
+                            : notReportedText}
+                    </p>
+                ),
             header: () => (
                 <TooltipIcon
                     content={column.tooltip}
@@ -58,9 +67,15 @@ const getColumns = () =>
         })
     );
 
-const renderObservationsTable = (rows?: Observation[]) => (
+const renderObservationsTable = (
+    notReportedText: string,
+    rows?: Observation[]
+) => (
     <ObservationTableWrapper>
-        <Table<Observation> columns={getColumns()} rows={rows || []} />
+        <Table<Observation>
+            columns={getColumns(notReportedText)}
+            rows={rows || []}
+        />
     </ObservationTableWrapper>
 );
 
@@ -72,7 +87,7 @@ const DatasetContent = ({
     populatedSections: DatasetSection[];
 }) => {
     const router = useRouter();
-    const path = usePathname();
+    const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
     const renderDatasetField = (type: FieldType, value: string) => {
@@ -151,18 +166,9 @@ const DatasetContent = ({
                     ""
                 )}`;
                 return (
-                    <InView
-                        key={`${section.sectionName}_inview`}
-                        id={id}
-                        threshold={1}
-                        as="div"
-                        onChange={inView => {
-                            if (inView && path) {
-                                router.replace(`${path}?section=${index + 1}`, {
-                                    scroll: false,
-                                });
-                            }
-                        }}>
+                    <div
+                        key={`${section.sectionName}_section`}
+                        id={`anchor${index + 1}`}>
                         <Box
                             key={`${section.sectionName}_wrap`}
                             id={id}
@@ -180,6 +186,7 @@ const DatasetContent = ({
 
                             {section.sectionName === "Observations" ? (
                                 renderObservationsTable(
+                                    t("notReported"),
                                     get(data, "metadata.metadata.observations")
                                 )
                             ) : section.sectionName === "Demographics" ? (
@@ -243,7 +250,11 @@ const DatasetContent = ({
                                 section.fields.map(field => {
                                     const value = get(data, field.path);
 
-                                    if (!value || value === -1) {
+                                    if (
+                                        !value ||
+                                        value === -1 ||
+                                        (Array.isArray(value) && !value.length)
+                                    ) {
                                         return null;
                                     }
 
@@ -313,7 +324,7 @@ const DatasetContent = ({
                                 })
                             )}
                         </Box>
-                    </InView>
+                    </div>
                 );
             })}
         </Paper>
