@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+import { Options } from "prettier";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import { Team, TeamForm } from "@/interfaces/Team";
@@ -79,24 +80,32 @@ const CreateTeamForm = () => {
 
     const { control, handleSubmit, formState, reset, watch } = methods;
 
+    const updateUserOptions = (
+        prevOptions: Option[],
+        userOptions: Option[]
+    ) => {
+        const existingUserIds = prevOptions.map(option => option.value);
+        const newOptions = userOptions?.filter(
+            option => !existingUserIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length > 0) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
     useEffect(() => {
         const userOptions = existingTeamData?.users.map(user => ({
             value: user.id,
             label: `${user.name} (${user.email})`,
         }));
+        if (!userOptions) return;
 
-        setUserOptions(prevOptions => {
-            const existingUserIds = prevOptions.map(option => option.value);
-            const newOptions = userOptions?.filter(
-                option => !existingUserIds.includes(option.value)
-            );
-            if (newOptions && newOptions.length > 0) {
-                return [...prevOptions, ...newOptions].sort((a, b) =>
-                    a.label.localeCompare(b.label)
-                );
-            }
-            return prevOptions;
-        });
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
     }, [existingTeamData?.users]);
 
     useEffect(() => {
@@ -105,18 +114,9 @@ const CreateTeamForm = () => {
             label: `${user.name} (${user.email})`,
         }));
 
-        setUserOptions(prevOptions => {
-            const existingUserIds = prevOptions.map(option => option.value);
-            const newOptions = userOptions.filter(
-                option => !existingUserIds.includes(option.value)
-            );
-            if (newOptions.length > 0) {
-                return [...prevOptions, ...newOptions].sort((a, b) =>
-                    a.label.localeCompare(b.label)
-                );
-            }
-            return prevOptions;
-        });
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
     }, [users]);
 
     const selectedUsers = watch("users");
