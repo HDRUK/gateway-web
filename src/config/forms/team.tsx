@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { TeamForm } from "@/interfaces/Team";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { memberOfOptions } from "@/consts/team";
 import { inputComponents } from ".";
 
@@ -69,10 +70,7 @@ const formFields = [
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
         component: inputComponents.Autocomplete,
         info: "   * Assign at least one team admin. A team admin will be able to manage members, add new team members and manage the team notification preferences.\n   * Type more than 3 characters to search for users by their name",
         noOptionsText: "Try searching for a user by name...",

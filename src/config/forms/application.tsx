@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { ApplicationForm } from "@/interfaces/Application";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { REGEX_ALPHA_NUMERIC_ONLY } from "@/consts/regex";
 import { inputComponents } from ".";
 
@@ -58,10 +59,7 @@ const formFields = [
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
         component: inputComponents.Autocomplete,
         info: "Identify which team members should receive notifications related to this Private App. Select from the drop-down list.",
     },
