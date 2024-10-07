@@ -121,7 +121,7 @@ const CreateIntegrationForm = () => {
         });
     };
     const uploadFile = usePost(
-        `${apis.fileUploadV1Url}?entity_flag=team-image&team_id=${createdTeamId}`,
+        `${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`,
         {
             successNotificationsOn: false,
         }
