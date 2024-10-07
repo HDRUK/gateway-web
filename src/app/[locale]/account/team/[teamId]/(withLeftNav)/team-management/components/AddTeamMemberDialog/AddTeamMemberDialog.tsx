@@ -53,6 +53,9 @@ const AddTeamMemberDialog = () => {
         name: "userAndRoles",
     });
 
+    // TODO: switch to typeahead propery
+    // - difficult due to use of useFieldArray and shared options
+    // - defaulting to full list of all users as a temporary measure..
     // const [searchName, setSearchName] = useState("");
     // const searchNameDebounced = useDebounce(searchName, 500);
 

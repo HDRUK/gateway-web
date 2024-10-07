@@ -34,7 +34,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     clearOnBlur?: boolean;
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
-    onInputChange: (value: string) => void;
+    onInputChange?: (value: string) => void;
     getChipLabel?: (options: OptionsType[], value: ValueType) => void;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
@@ -174,7 +174,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         field.onChange(v);
                     }
                 }}
-                onInputChange={(_, value) => onInputChange?.(value)}
+                {...(onInputChange && {
+                    onInputChange: (_, value) => onInputChange(value),
+                })}
                 {...(canCreate && {
                     filterOptions,
                 })}
