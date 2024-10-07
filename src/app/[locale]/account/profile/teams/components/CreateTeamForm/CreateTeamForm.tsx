@@ -39,7 +39,7 @@ const CreateIntegrationForm = () => {
         teamId: string;
     }>();
     const t = useTranslations();
-    const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [fileWarning, setFileWarning] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
     const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
@@ -76,6 +76,7 @@ const CreateIntegrationForm = () => {
         const teamData = {
             ...existingTeamData,
             users: existingTeamData?.users?.map(user => user.id),
+            contact_point: existingTeamData?.contact_point ?? "",
         };
 
         if (teamData.team_logo) {
@@ -91,6 +92,7 @@ const CreateIntegrationForm = () => {
 
     const createTeam = usePost<TeamForm>(apis.teamsV1Url, {
         itemName: "Team",
+        successNotificationsOn: !file,
     });
 
     const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
@@ -107,8 +109,8 @@ const CreateIntegrationForm = () => {
                 }
             });
         } else {
-            await editTeam(params?.teamId, formData).then(async result => {
-                if (typeof result === "number" && file) {
+            await editTeam(params?.teamId, formData).then(async () => {
+                if (file) {
                     setFileToBeUploaded(true);
                 }
             });
@@ -119,7 +121,7 @@ const CreateIntegrationForm = () => {
         });
     };
     const uploadFile = usePost(
-        `${apis.fileUploadV1Url}?entity_flag=team-image&team_id=${createdTeamId}`,
+        `${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`,
         {
             successNotificationsOn: false,
         }
@@ -132,9 +134,11 @@ const CreateIntegrationForm = () => {
         ) => {
             const formData = new FormData();
             formData.append("file", file);
+
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 setFile(undefined)
             )) as FileUpload;
+
             const { file_location } = uploadedFileStatus;
 
             await editTeam(createdTeamId, {
@@ -243,7 +247,7 @@ const CreateIntegrationForm = () => {
                                           )
                                 }
                                 error={
-                                    fileNotUploaded
+                                    fileWarning
                                         ? {
                                               type: "",
                                               message: t(
@@ -265,20 +269,19 @@ const CreateIntegrationForm = () => {
                                         const aspectRatio =
                                             (width || 0) / (height || 0);
                                         return (
-                                            aspectRatio <= 2.2 &&
-                                            aspectRatio >= 1.8
+                                            aspectRatio <= 2.5 &&
+                                            aspectRatio >= 1.5
                                         );
                                     }}
                                     onFileChange={(file: File) => {
-                                        setFileNotUploaded(false);
                                         setFile(file);
+                                        setFileWarning(false);
                                     }}
                                     onFileCheckSucceeded={() => {
                                         setImageUploaded(true);
-                                        setFileNotUploaded(false);
                                     }}
                                     onFileCheckFailed={() => {
-                                        setFileNotUploaded(true);
+                                        setFileWarning(true);
                                     }}
                                     sx={{ py: 2 }}
                                     showUploadButton={false}
