@@ -40,6 +40,8 @@ import {
 const DATE_FORMAT = "DD/MM/YYYY";
 const OBSERVATION_DATE = "observationDate";
 const TRANSLATION_PATH = "common";
+const DOI_URL = "https://doi.org/";
+const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -120,12 +122,6 @@ const DatasetContent = ({
                     </DatasetFieldWrapper>
                 );
             }
-            case FieldType.LINK:
-                return (
-                    <Link href={value} target="_blank">
-                        {value}
-                    </Link>
-                );
             case FieldType.LIST: {
                 const list = isArray(value)
                     ? value
@@ -248,7 +244,7 @@ const DatasetContent = ({
                                 </Box>
                             ) : (
                                 section.fields.map(field => {
-                                    const value = get(data, field.path);
+                                    let value = get(data, field.path);
 
                                     if (
                                         !value ||
@@ -256,6 +252,10 @@ const DatasetContent = ({
                                         (Array.isArray(value) && !value.length)
                                     ) {
                                         return null;
+                                    }
+
+                                    if (field.path === DOI_NAME_PATH) {
+                                        value = DOI_URL.concat(value);
                                     }
 
                                     if (!field.label) {
