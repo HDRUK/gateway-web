@@ -92,7 +92,7 @@ const CreateIntegrationForm = () => {
 
     const createTeam = usePost<TeamForm>(apis.teamsV1Url, {
         itemName: "Team",
-        successNotificationsOn: file ? false : true,
+        successNotificationsOn: !file,
     });
 
     const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
@@ -144,8 +144,6 @@ const CreateIntegrationForm = () => {
             await editTeam(createdTeamId, {
                 team_logo: file_location,
             });
-
-            
         };
 
         if (file && fileToBeUploaded && createdTeamId) {
