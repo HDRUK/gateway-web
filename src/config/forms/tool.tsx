@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { inputComponents } from ".";
 
 const defaultDatasetValue = [
@@ -133,16 +134,16 @@ const formFields = [
         info: "Technological paradigms or other keywords, eg. rule-based, clustering, supervised machine learning",
         name: "keywords",
         component: inputComponents.Autocomplete,
-        // canCreate: true,
+        canCreate: true,
         multiple: true,
+        selectOnFocus: true,
+        clearOnBlur: true,
+        handleHomeEndKeys: true,
         isOptionEqualToValue: (
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
     },
     {
         label: "DATASET_RELATIONSHIP_COMPONENT",
