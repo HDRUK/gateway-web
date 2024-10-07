@@ -117,7 +117,8 @@
         "questionBank": "Question Bank",
         "disabled": "Disabled",
         "enabled": "Enabled",
-        "all": "All"
+        "all": "All",
+        "notReported": "Not reported"
     },
     "pages": {
         "newsEvents": {
@@ -267,6 +268,7 @@
                         "text": "Add details of the data publisher team you want to create on the Gateway",
                         "aspectRatioInfo": "Please note the aspect ratio of the image must be approximately 2:1 (width:height)",
                         "aspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height)",
+                        "addImageSuccess": "Image Uploaded",
                         "fileSelectButtonText": "Choose logo"
                     },
                     "edit": {
@@ -1003,6 +1005,9 @@
             "tools": "Tools",
             "serviceOfferings": "Service offerings",
             "components": {
+                "DataCustodianLinks": {
+                    "usefulLinks": "Useful links:"
+                },
                 "ActionBar": {
                     "label": "Back",
                     "enquire": "Make a general enquiry"
