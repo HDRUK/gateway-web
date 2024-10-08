@@ -22,7 +22,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { isLoggedIn, user } = useAuth();
     const permissions = getPermissions(user?.roles);
 
-    const [isClicked, setIsClicked] = useState(false);
+    // const [isClicked, setIsClicked] = useState(false);
 
     const handleCtaClick = () => {
         if (permissions[COHORT_DISCOVERY_PERMISSION]) {
@@ -39,7 +39,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     });
 
     const handleVisit = async () => {
-        setIsClicked(true);
+        // setIsClicked(true);
         console.log(datasetCsv);
     };
 
