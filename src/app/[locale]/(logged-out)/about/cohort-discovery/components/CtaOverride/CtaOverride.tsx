@@ -26,7 +26,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { isLoggedIn, user } = useAuth();
     const permissions = getPermissions(user?.roles);
 
-    // const [isClicked, setIsClicked] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
 
     const handleCtaClick = () => {
         if (permissions[COHORT_DISCOVERY_PERMISSION]) {
@@ -58,16 +58,14 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
                 color="greyCustom">
                 {ctaLink?.title}
             </Button>
-
-            {/* Commented out until fully implemented */}
-            {/* <Button
+            <Button
                 sx={{ mt: 3, ml: 3 }}
                 onClick={() => {
                     setIsClicked(true);
                 }}
                 color="greyCustom">
                 Visit Cohort Discovery
-            </Button> */}
+            </Button>
         </Box>
     );
 };
