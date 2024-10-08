@@ -30,6 +30,7 @@ import {
     teamFormFields,
     teamValidationSchema,
 } from "@/config/forms/team";
+import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { Routes } from "@/consts/routes";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
@@ -61,6 +62,13 @@ const CreateTeamForm = () => {
             shouldFetch: !!params?.teamId,
         }
     );
+
+    const teamAdmins =
+        existingTeamData?.users.filter(user =>
+            user.roles
+                .map(role => role.name)
+                .includes(ROLE_CUSTODIAN_TEAM_ADMIN)
+        ) || [];
 
     const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
         `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
@@ -96,7 +104,7 @@ const CreateTeamForm = () => {
     };
 
     useEffect(() => {
-        const userOptions = existingTeamData?.users.map(user => ({
+        const userOptions = teamAdmins.map(user => ({
             value: user.id,
             label: `${user.name} (${user.email})`,
         }));
@@ -105,7 +113,7 @@ const CreateTeamForm = () => {
         setUserOptions(prevOptions =>
             updateUserOptions(prevOptions, userOptions)
         );
-    }, [existingTeamData?.users]);
+    }, [teamAdmins]);
 
     useEffect(() => {
         const userOptions = users.map(user => ({
@@ -136,7 +144,7 @@ const CreateTeamForm = () => {
 
         const teamData = {
             ...existingTeamData,
-            users: existingTeamData?.users?.map(user => user.id),
+            users: teamAdmins.map(user => user.id),
             contact_point: existingTeamData?.contact_point ?? "",
         };
 
