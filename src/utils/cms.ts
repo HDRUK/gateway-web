@@ -2,10 +2,8 @@
 import dayjs from "dayjs";
 import {
     CMSPageResponse,
-    CMSPagesResponse,
     CMSPostResponse,
     CMSPostsResponse,
-    ContentPageByParentQueryOptions,
     ContentPageQueryOptions,
     PageTemplateDefault,
     PageTemplateHome,
@@ -23,10 +21,7 @@ import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
-import {
-    GetContentPageQuery,
-    GetContentPagesByNameQuery,
-} from "@/config/queries/contentPage";
+import { GetContentPageQuery } from "@/config/queries/contentPage";
 import { GetContentPostQuery } from "@/config/queries/contentPost";
 import { GetEventsQuery } from "@/config/queries/events";
 import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
@@ -39,38 +34,6 @@ import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions"
 
 const DEFAULT_OPTIONS = {
     next: { revalidate: 10 },
-};
-
-const substituteEnvLinks = async <T>(content: T) => {
-    if (!content) return null;
-
-    const environments = [
-        "web.preprod.hdruk.cloud",
-        "web.dev.hdruk.cloud",
-        "web.prod.hdruk.cloud",
-        "www.healthdatagateway.org",
-    ];
-
-    const regexp = new RegExp(
-        `${environments.join("|").replace(/\./g, "\\.")}`,
-        "gi"
-    );
-
-    try {
-        const hostname = process.env.NEXT_PUBLIC_CMS_LINK_HOSTNAME;
-
-        if (hostname) {
-            return JSON.parse(
-                JSON.stringify(content).replace(regexp, hostname)
-            ) as T;
-        }
-
-        console.warn("Cms link hostname env not set");
-
-        return content;
-    } catch (_) {
-        return content;
-    }
 };
 
 function textResponseToJson(response: string) {
@@ -153,7 +116,7 @@ const getHomePageBanner = async () => {
         true
     );
 
-    return substituteEnvLinks(data?.posts?.edges);
+    return data?.posts?.edges || null;
 };
 
 const getNews = async () => {
@@ -163,7 +126,7 @@ const getNews = async () => {
         true
     );
 
-    return substituteEnvLinks(data?.posts?.edges);
+    return data?.posts?.edges || null;
 };
 
 const getEvents = async () => {
@@ -173,7 +136,7 @@ const getEvents = async () => {
         true
     );
 
-    return substituteEnvLinks(data?.posts?.edges);
+    return data?.posts?.edges || null;
 };
 
 const getContentPostQuery = async (
@@ -185,7 +148,7 @@ const getContentPostQuery = async (
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.post);
+    return data?.post || null;
 };
 
 const getContentPageQuery = async (
@@ -197,47 +160,7 @@ const getContentPageQuery = async (
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
-};
-
-const getContentPageByParentQuery = async (
-    queryName: string,
-    queryOptions: ContentPageByParentQueryOptions
-) => {
-    const parentData: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
-        GetContentPageQuery(
-            queryName,
-            {
-                ...queryOptions,
-                id: queryOptions.parentId,
-            },
-            `
-                children {
-                    nodes {
-                        slug
-                    }
-                }
-        `
-        ),
-        DEFAULT_OPTIONS
-    );
-
-    const matchedPage = parentData?.page?.children?.nodes.find(
-        ({ slug }) => slug === queryOptions.id
-    );
-
-    if (matchedPage) {
-        const data: CMSPagesResponse<PageTemplateDefault> = await fetchCMS(
-            GetContentPagesByNameQuery(queryName, {
-                name: matchedPage.slug,
-            }),
-            DEFAULT_OPTIONS
-        );
-
-        return substituteEnvLinks(data?.pages.nodes[0]);
-    }
-
-    return null;
+    return data?.page || null;
 };
 
 const getCohortDiscoverySupportPageQuery = async () => {
@@ -247,7 +170,7 @@ const getCohortDiscoverySupportPageQuery = async () => {
         true
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getCohortDiscovery = async () => {
@@ -256,7 +179,7 @@ const getCohortDiscovery = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getHomePage = async () => {
@@ -265,7 +188,7 @@ const getHomePage = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data);
+    return data || null;
 };
 
 const getTermsAndConditions = async () => {
@@ -274,7 +197,7 @@ const getTermsAndConditions = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getCohortTermsAndConditions = async () => {
@@ -283,7 +206,7 @@ const getCohortTermsAndConditions = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getHowToSearchPage = async () => {
@@ -292,7 +215,7 @@ const getHowToSearchPage = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getWorkWithUs = async () => {
@@ -304,7 +227,7 @@ const getWorkWithUs = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getTechnologyEcosystem = async () => {
@@ -316,7 +239,7 @@ const getTechnologyEcosystem = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getResearchersInnovators = async () => {
@@ -328,7 +251,7 @@ const getResearchersInnovators = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getDataCustodians = async () => {
@@ -340,7 +263,7 @@ const getDataCustodians = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getPatientsAndPublic = async () => {
@@ -352,7 +275,7 @@ const getPatientsAndPublic = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getGlossary = async () => {
@@ -364,7 +287,19 @@ const getGlossary = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
+};
+
+const getTutorials = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getTutorialsQuery", {
+            id: "tutorials",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return data?.page || null;
 };
 
 const getGettingStarted = async () => {
@@ -376,7 +311,7 @@ const getGettingStarted = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getMetadataOnboarding = async () => {
@@ -388,7 +323,7 @@ const getMetadataOnboarding = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getOpenSourceDevelopment = async () => {
@@ -400,7 +335,7 @@ const getOpenSourceDevelopment = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
@@ -428,7 +363,7 @@ const getPrivacyPolicy = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 const getCookieNotice = async () => {
@@ -440,37 +375,36 @@ const getCookieNotice = async () => {
         DEFAULT_OPTIONS
     );
 
-    return substituteEnvLinks(data?.page);
+    return data?.page || null;
 };
 
 export {
     getCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
     getCohortTermsAndConditions,
-    getContentPageByParentQuery,
     getContentPageQuery,
-    getContentPostQuery,
-    getCookieNotice,
     getDataCustodians,
     getTechnologyEcosystem,
     getEvents,
     getGettingStarted,
+    getHomePageBanner,
     getGlossary,
     getHomePage,
-    getHomePageBanner,
     getHowToSearchPage,
     getMeetTheTeam,
-    getMetadataOnboarding,
     getMissionAndPurposes,
     getNews,
-    getOpenSourceDevelopment,
     getPatientsAndPublic,
-    getPrivacyPolicy,
     getReleaseNotes,
     getResearchersInnovators,
-    getSortedNewsEventsByDate,
     getTermsAndConditions,
+    getTutorials,
     getWorkWithUs,
+    getMetadataOnboarding,
+    getOpenSourceDevelopment,
+    getSortedNewsEventsByDate,
+    getContentPostQuery,
     hasCategoryName,
-    substituteEnvLinks,
+    getPrivacyPolicy,
+    getCookieNotice,
 };
