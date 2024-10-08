@@ -18,6 +18,7 @@ import DatausesContent from "./components/DatausesContent";
 import PublicationsContent from "./components/PublicationsContent";
 import ToolsContent from "./components/ToolsContent";
 import { collectionSections } from "./config";
+import Markdown from "markdown-to-jsx";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Collection",
@@ -87,7 +88,7 @@ export default async function CollectionItemPage({
                             <Typography variant="h3" sx={{ mb: 1 }}>
                                 {t("introTitle")}
                             </Typography>
-                            <Typography>{collection.description}</Typography>
+                            <Markdown>{collection.description}</Markdown>
                         </Box>
                         <Box>
                             <DatasetsContent
