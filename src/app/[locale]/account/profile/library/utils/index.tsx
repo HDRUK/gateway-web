@@ -1,9 +1,11 @@
 import { IconButton } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { LibraryListItem, SelectedLibrary } from "@/interfaces/Library";
+import Link from "@/components/Link";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import TooltipIcon from "@/components/TooltipIcon";
 import { CheckIcon, DeleteForeverIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 
 const columnHelper = createColumnHelper<LibraryListItem>();
 
@@ -59,11 +61,16 @@ const getColumns = ({
 
     columnHelper.display({
         id: "name",
-        cell: ({
-            row: {
-                original: { name },
-            },
-        }) => <div style={{ textAlign: "center" }}>{name}</div>,
+        cell: ({ row: { original } }) => {
+            const { datasetId, name } = original;
+            const linkHref = `/${RouteName.DATASET_ITEM}/${datasetId}`;
+
+            return (
+                <Link href={linkHref}>
+                    <div style={{ textAlign: "center" }}>{name}</div>
+                </Link>
+            );
+        },
         header: () => <span>{translations.name}</span>,
         size: 150,
     }),

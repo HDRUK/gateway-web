@@ -11,6 +11,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
+import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
@@ -18,6 +19,7 @@ import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { RouteName } from "@/consts/routeName";
 import ProvidersDialog from "../ProvidersDialog";
 
 interface LinkageDetails {
@@ -135,12 +137,15 @@ const DatasetRelationshipDialog = ({
                                 }}
                                 gap={2}>
                                 <div>
-                                    <Typography variant="h3" component="p">
-                                        {get(
-                                            linkage,
-                                            "metadata.metadata.summary.title"
-                                        )}
-                                    </Typography>
+                                    <Link
+                                        href={`/${RouteName.DATASET_ITEM}/${linkage.id}`}>
+                                        <Typography variant="h3" component="p">
+                                            {get(
+                                                linkage,
+                                                "metadata.metadata.summary.title"
+                                            )}
+                                        </Typography>
+                                    </Link>
                                     <Typography>
                                         {memberOf && `${memberOf} > `}
                                         {get(
