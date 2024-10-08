@@ -8,4 +8,5 @@ export interface DataCustodianNetwork {
     img_url: string | null;
     summary: string | null;
     url: string | null;
+    service: string[] | null;
 }

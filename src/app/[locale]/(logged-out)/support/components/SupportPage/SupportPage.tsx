@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
+import HTMLContent from "@/components/HTMLContent";
 import { RouteName } from "@/consts/routeName";
 import ContactSupport from "../ContactSupport";
 
 const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.support";
 
 interface SupportPageProps {
-    title: string;
+    title?: string;
     content?: string;
     children?: ReactNode;
 }
@@ -42,9 +43,7 @@ export default function SupportPage({
                     <Typography variant="h2">{title}</Typography>
                 </header>
                 <Divider sx={{ mb: 2 }} />
-                {content && (
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
-                )}
+                {content && <HTMLContent content={content} />}
                 {children}
                 <Box sx={{ mt: 5 }}>
                     <ContactSupport />

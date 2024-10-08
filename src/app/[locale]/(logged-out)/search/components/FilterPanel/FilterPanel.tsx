@@ -64,15 +64,15 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 };
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
-        FILTER_DATA_TYPE,
         FILTER_CONTAINS_TISSUE,
-        FILTER_MATERIAL_TYPE,
+        FILTER_DATA_TYPE,
+        FILTER_PUBLISHER_NAME,
         FILTER_DATA_USE_TITLES,
+        FILTER_MATERIAL_TYPE,
         FILTER_ACCESS_SERVICE,
         FILTER_DATE_RANGE,
         FILTER_POPULATION_SIZE,
         FILTER_GEOGRAPHIC_LOCATION,
-        FILTER_PUBLISHER_NAME,
     ],
     dataUseRegister: [
         FILTER_DATA_SET_TITLES,

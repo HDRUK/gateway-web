@@ -1,20 +1,19 @@
-import SearchIcon from "@mui/icons-material/Search";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
-    DescriptionOutlinedIcon,
-    FolderSharedOutlinedIcon,
-    GroupsIcon,
-    GroupsOutlinedIcon,
-    HandymanOutlinedIcon,
+    ControlPointIcon,
+    DescriptionIcon,
+    ToolIcon,
     HelpOutlineOutlinedIcon,
-    QuestionAnswerIcon,
-    SchemaOutlinedIcon,
+    DataUseIcon,
     SettingsOutlinedIcon,
-    StorageOutlinedIcon,
+    DatabaseIcon,
     CloudUploadIcon,
-    ArticleIcon,
     BookmarkBorderIcon,
-    BookmarksIcon,
+    BookmarkIcon,
+    BookmarksOutlinedIcon,
+    PublicationIcon,
+    PersonOutlineOutlinedIcon,
+    CohortIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -23,34 +22,24 @@ const getProfileNav = (permissions: {
 }): LeftNavItem[] => {
     return [
         {
-            icon: <FolderSharedOutlinedIcon />,
+            icon: <PersonOutlineOutlinedIcon />,
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
-        },
-        {
-            icon: <HandymanOutlinedIcon />,
-            label: "Analysis script, tools and software",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
-        },
-        {
-            icon: <ArticleIcon />,
-            label: "Publications",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
-        },
-        {
-            icon: <SearchIcon />,
-            label: "Saved searches",
-            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
         {
             icon: <BookmarkBorderIcon />,
             label: "Library",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
         },
+        {
+            icon: <BookmarkIcon />,
+            label: "Saved searches",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
+        },
         ...(permissions["custodians.read"]
             ? [
                   {
-                      icon: <GroupsIcon />,
+                      icon: <ControlPointIcon />,
                       label: "Teams",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
                   },
@@ -59,27 +48,51 @@ const getProfileNav = (permissions: {
         ...(permissions["cohort.read"]
             ? [
                   {
-                      icon: <DescriptionOutlinedIcon />,
+                      icon: <CohortIcon />,
                       label: "Cohort Discovery Admin",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                   },
               ]
             : []),
-        ...(permissions["dar-config.update"] // this will need fixing/updating
+        ...(permissions["question-bank.update"]
             ? [
                   {
-                      icon: <QuestionAnswerIcon />,
-                      label: "DAR Admin",
+                      icon: <DescriptionIcon />,
+                      label: "Data Access Requests",
                       subItems: [
-                          ...(permissions["dar-config.update"]
+                          ...(permissions["question-bank.update"]
                               ? [
                                     {
-                                        label: "Question Bank Management",
+                                        label: "Question Bank",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
                                     },
                                 ]
                               : []),
                       ],
+                  },
+              ]
+            : []),
+        {
+            icon: <ToolIcon />,
+            label: "Analysis Scripts & Software",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
+        },
+        {
+            icon: <PublicationIcon />,
+            label: "Publications",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
+        },
+        {
+            icon: <BookmarksOutlinedIcon />,
+            label: "Collections",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
+        },
+        ...(permissions["dur.update"]
+            ? [
+                  {
+                      icon: <DataUseIcon />,
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_USES}`,
                   },
               ]
             : []),
@@ -93,90 +106,19 @@ const getTeamNav = (
     teamId: string | undefined
 ): LeftNavItem[] => {
     return [
-        {
-            icon: <SettingsOutlinedIcon />,
-            label: "Team Management",
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
-        },
-        ...(permissions["datasets.read"]
+        ...(permissions["roles.read"]
             ? [
                   {
-                      icon: <StorageOutlinedIcon />,
-                      label: "Datasets",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["collections.read"]
-            ? [
-                  {
-                      icon: <BookmarksIcon />,
-                      label: "Collections",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["tools.read"]
-            ? [
-                  {
-                      icon: <HandymanOutlinedIcon />,
-                      label: "Analysis script, tools and software",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
-                  },
-              ]
-            : []),
-        ...(permissions["papers.read"]
-            ? [
-                  {
-                      icon: <ArticleIcon />,
-                      label: "Publications",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
+                      icon: <SettingsOutlinedIcon />,
+                      label: "Team Management",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
                   },
               ]
             : []),
         ...([
-            permissions["dar.read.assigned"],
-            permissions["workflows.read"],
-            permissions["dar-form.update"],
-        ].some(isTrue => isTrue)
-            ? [
-                  {
-                      icon: <GroupsOutlinedIcon />,
-                      label: "Data Access Requests",
-                      subItems: [
-                          ...(permissions["dar-form.update"]
-                              ? [
-                                    {
-                                        label: "Manage Templates",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
-                                    },
-                                ]
-                              : []),
-                          ...(permissions["dar.read.assigned"]
-                              ? [
-                                    {
-                                        label: "Applications",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
-                                    },
-                                ]
-                              : []),
-                          ...(permissions["workflows.read"]
-                              ? [
-                                    {
-                                        label: "Workflows",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.WORKFLOWS}`,
-                                    },
-                                ]
-                              : []),
-                      ],
-                  },
-              ]
-            : []),
-
-        ...([
+            permissions["applications.read"],
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
-            permissions["applications.read"],
         ].some(isTrue => isTrue)
             ? [
                   {
@@ -186,7 +128,7 @@ const getTeamNav = (
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "Private Apps",
+                                        label: "Private apps",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
@@ -197,7 +139,7 @@ const getTeamNav = (
                           ].some(isTrue => isTrue)
                               ? [
                                     {
-                                        label: "Integration",
+                                        label: "Gateway apps",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
                                     },
                                 ]
@@ -206,17 +148,85 @@ const getTeamNav = (
                   },
               ]
             : []),
+        ...(permissions["datasets.read"]
+            ? [
+                  {
+                      icon: <DatabaseIcon color="secondary" />,
+                      label: "Datasets",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+                  },
+              ]
+            : []),
         ...([
-            permissions["dur.read"],
-            permissions["dur.write"],
-            permissions["dur.update"],
-            permissions["dur.delete"],
+            permissions["data-access-template.read"],
+            permissions["data-access-applications.provider.read"],
+            permissions["data-access-applications.review.read"],
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <SchemaOutlinedIcon />,
+                      icon: <DescriptionIcon />,
+                      label: "Data Access Requests",
+                      subItems: [
+                          ...(permissions["data-access-template.read"]
+                              ? [
+                                    {
+                                        label: "Manage Templates",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
+                                    },
+                                ]
+                              : []),
+                          ...([
+                              permissions[
+                                  "data-access-applications.provider.read"
+                              ],
+                              permissions[
+                                  "data-access-applications.review.read"
+                              ],
+                          ].some(isTrue => isTrue)
+                              ? [
+                                    {
+                                        label: "Applications",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
+                                    },
+                                ]
+                              : []),
+                      ],
+                  },
+              ]
+            : []),
+        ...(permissions["papers.read"]
+            ? [
+                  {
+                      icon: <PublicationIcon />,
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["tools.read"]
+            ? [
+                  {
+                      icon: <ToolIcon />,
+                      label: "Analysis Scripts & Software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["collections.read"]
+            ? [
+                  {
+                      icon: <BookmarksOutlinedIcon />,
+                      label: "Collections",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
+                  },
+              ]
+            : []),
+        ...(permissions["dur.update"]
+            ? [
+                  {
+                      icon: <DataUseIcon />,
                       label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/data-uses`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
                   },
               ]
             : []),

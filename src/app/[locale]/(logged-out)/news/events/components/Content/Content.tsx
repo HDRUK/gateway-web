@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { Grid } from "@mui/material";
+import dayjs from "dayjs";
 import { rangeRight } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
@@ -21,14 +22,14 @@ const TRANSLATIONS_NAMESPACE_RELEASES = "pages.newsEvents";
 
 const Content = ({ data }: ContentProps) => {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
-    const startYear = 2021;
-    const currentYear = new Date().getFullYear();
-    const years = rangeRight(startYear, currentYear + 1).map(String);
+    const currentYear = dayjs().year();
     const params = useParams<{ tab?: string }>();
 
     const tab = params?.tab || "news";
 
     const generatedData = useMemo(() => {
+        const years = rangeRight(currentYear, currentYear + 2).map(String);
+
         return years.map(year => {
             const dataByYear = getReleaseByYear(data, year);
 
@@ -94,6 +95,7 @@ const Content = ({ data }: ContentProps) => {
 
     return (
         <Tabs
+            defaultSelectedTab={currentYear.toString()}
             paramName="year"
             centered
             tabs={generatedData}

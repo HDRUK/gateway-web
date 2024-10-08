@@ -13,8 +13,8 @@ const NewsEventsPage = async () => {
     const newsData = await getNews();
     const eventsData = await getEvents();
 
-    const sortedNews = getSortedNewsEventsByDate(newsData);
-    const sortedEvents = getSortedNewsEventsByDate(eventsData);
+    const sortedNews = getSortedNewsEventsByDate(newsData || []);
+    const sortedEvents = getSortedNewsEventsByDate(eventsData || []);
 
     return (
         <>
