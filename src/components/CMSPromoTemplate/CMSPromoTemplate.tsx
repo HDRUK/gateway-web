@@ -89,7 +89,6 @@ const CMSPromoTemplate = ({
                             <HTMLContent content={promofields.bottomPanel} />
                         </Box>
                     </Box>
-                    <Divider sx={{ width: "100%!important" }} />
                     {CtaContent}
                 </Box>
             )}
