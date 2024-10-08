@@ -45,6 +45,16 @@ const nextConfig = withNextIntl({
                 destination: "/terms-and-conditions",
                 permanent: true,
             },
+            {
+                source: "/data-custodian/getting-started",
+                destination: "/data-custodian/support/getting-started",
+                permanent: true,
+            },
+            {
+                source: "/data-custodian/metadata-onboarding",
+                destination: "/data-custodian/support/metadata-onboarding",
+                permanent: true,
+            },
         ];
     },
     typescript: {

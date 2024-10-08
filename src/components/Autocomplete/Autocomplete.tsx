@@ -12,6 +12,7 @@ import MuiAutocomplete, {
 import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import Loading from "../Loading";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -43,6 +44,8 @@ export interface AutocompleteProps<T extends FieldValues> {
     horizontalForm?: boolean;
     required?: boolean;
     id?: string;
+    isLoadingOptions?: boolean;
+    noOptionsText?: string;
 }
 
 interface SearchOptions {
@@ -68,6 +71,8 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         disabled = false,
         freeSolo = false,
         multiple = false,
+        isLoadingOptions = false,
+        noOptionsText = "No options",
         id,
         ...restProps
     } = props;
@@ -141,6 +146,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             typeof getChipLabel === "function"
                                 ? getChipLabel(options, option)
                                 : option?.label || `${option}`;
+
                         return (
                             <Chip
                                 label={chipLabel || ""}
@@ -198,6 +204,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         <ListItemText>{item.label}</ListItemText>
                     </li>
                 )}
+                noOptionsText={
+                    isLoadingOptions ? <Loading size={30} /> : noOptionsText
+                }
             />
         </FormInputWrapper>
     );

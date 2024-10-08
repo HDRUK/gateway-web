@@ -16,6 +16,10 @@ import { getPermissions } from "@/utils/permissions";
 export const DATA_TEST_ID = "cta-override-button";
 const COHORT_DISCOVERY_PERMISSION = "GENERAL_ACCESS";
 
+interface accessRequestType {
+    redirect_url: string;
+}
+
 const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { showDialog } = useDialog();
     const { push } = useRouter();
@@ -34,14 +38,16 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     };
 
-    const { data: datasetCsv } = useGet(`${apis.cohortRequestsV1Url}/access`, {
-        shouldFetch: isClicked,
-    });
+    const { data: accessData } = useGet<accessRequestType>(
+        `${apis.cohortRequestsV1Url}/access`,
+        {
+            shouldFetch: isClicked,
+        }
+    );
 
-    const handleVisit = async () => {
-        // setIsClicked(true);
-        console.log(datasetCsv);
-    };
+    if (accessData) {
+        push(accessData.redirect_url);
+    }
 
     return (
         <Box sx={{ display: "flex" }}>
@@ -56,7 +62,9 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
             {/* Commented out until fully implemented */}
             {/* <Button
                 sx={{ mt: 3, ml: 3 }}
-                onClick={handleVisit}
+                onClick={() => {
+                    setIsClicked(true);
+                }}
                 color="greyCustom">
                 Visit Cohort Discovery
             </Button> */}

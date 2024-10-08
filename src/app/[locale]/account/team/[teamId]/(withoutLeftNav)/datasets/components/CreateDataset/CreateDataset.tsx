@@ -75,6 +75,8 @@ interface CreateDatasetProps {
     user: AuthUser;
 }
 
+type FormValues = Record<string, unknown>;
+
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
@@ -455,7 +457,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                     : await createDataset(formPayload as NewDataset);
 
             if (formPostRequest !== null) {
-                reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
                         RouteName.DATASETS
@@ -560,7 +561,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
-        onSuccess: () => handleSaveDraft,
+        onSuccess: handleSaveDraft,
         modalProps: {
             cancelText: t("discardChanges"),
             confirmText: t("saveAsDraft"),
@@ -697,8 +698,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                                                     control={
                                                                         control
                                                                     }
-                                                                    schemaFields={
-                                                                        fields
+                                                                    formArrayValues={
+                                                                        getValues(
+                                                                            fieldParent.title
+                                                                        ) as unknown as FormValues[]
                                                                     }
                                                                     fieldParent={
                                                                         fieldParent

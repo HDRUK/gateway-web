@@ -6,7 +6,7 @@ describe("Nav utils", () => {
         const teamId = "123";
 
         it("should include Team Management item with href", () => {
-            const navItems = getTeamNav({}, teamId);
+            const navItems = getTeamNav({ "roles.read": true }, teamId);
             const teamManagementItem = navItems.find(
                 item => item.label === "Team Management"
             );
@@ -30,7 +30,10 @@ describe("Nav utils", () => {
         });
 
         it("should include Data Access Requests Applications item", () => {
-            const navItems = getTeamNav({ "dar.read.assigned": true }, teamId);
+            const navItems = getTeamNav(
+                { "data-access-applications.provider.read": true },
+                teamId
+            );
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
@@ -46,26 +49,11 @@ describe("Nav utils", () => {
                 `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
             );
         });
-        it("should include Data Access Requests Workflows item", () => {
-            const navItems = getTeamNav({ "workflows.read": true }, teamId);
-            const darItem = navItems.find(
-                item => item.label === "Data Access Requests"
-            );
-
-            expect(darItem).toBeDefined();
-            expect(darItem?.subItems).toBeDefined();
-
-            const workflowsItem = darItem?.subItems?.find(
-                item => item.label === "Workflows"
-            );
-
-            expect(workflowsItem).toBeDefined();
-            expect(workflowsItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.WORKFLOWS}`
-            );
-        });
         it("should include Data Access Requests Edit form", () => {
-            const navItems = getTeamNav({ "dar-form.update": true }, teamId);
+            const navItems = getTeamNav(
+                { "data-access-template.read": true },
+                teamId
+            );
             const darItem = navItems.find(
                 item => item.label === "Data Access Requests"
             );
@@ -84,7 +72,7 @@ describe("Nav utils", () => {
         });
 
         it("should include Data Uses item", () => {
-            const navItems = getTeamNav({ "dur.read": true }, teamId);
+            const navItems = getTeamNav({ "dur.update": true }, teamId);
             const dataUsesItem = navItems.find(
                 item => item.label === "Data Uses"
             );
@@ -105,7 +93,7 @@ describe("Nav utils", () => {
             expect(integrationsItem?.subItems).toBeDefined();
 
             const apiManagementItem = integrationsItem?.subItems?.find(
-                item => item.label === "Private Apps"
+                item => item.label === "Private apps"
             );
 
             expect(apiManagementItem).toBeDefined();
@@ -127,7 +115,7 @@ describe("Nav utils", () => {
             expect(integrationsItem?.subItems).toBeDefined();
 
             const integrationItem = integrationsItem?.subItems?.find(
-                item => item.label === "Integration"
+                item => item.label === "Gateway apps"
             );
 
             expect(integrationItem).toBeDefined();
