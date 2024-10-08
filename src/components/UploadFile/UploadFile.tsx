@@ -173,7 +173,6 @@ const UploadFile = ({
         } catch {
             setHasError(true);
             onFileCheckFailed?.();
-            return false;
         }
     };
 

@@ -89,7 +89,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     );
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
-        { itemName: "Collection", successNotificationsOn: file ? false : true, }
+        { itemName: "Collection", successNotificationsOn: !file }
     );
     const editCollection = usePatch<Partial<CollectionSubmission>>(
         apis.collectionsV1Url,
@@ -327,11 +327,10 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             )) as FileUpload;
 
             const { file_location } = uploadedFileStatus;
-            
+
             await editCollection(createdCollectionId, {
                 image_link: file_location,
             });
-
         };
 
         if (file && fileToBeUploaded && createdCollectionId) {
@@ -430,7 +429,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     showUploadButton={false}
                                 />
                             </FormInputWrapper>
-                            
+
                             {existingCollectionData?.image_link && (
                                 <Box sx={{ width: "30%" }}>
                                     <img
