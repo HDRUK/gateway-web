@@ -1,3 +1,4 @@
+import Markdown from "markdown-to-jsx";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -18,7 +19,6 @@ import DatausesContent from "./components/DatausesContent";
 import PublicationsContent from "./components/PublicationsContent";
 import ToolsContent from "./components/ToolsContent";
 import { collectionSections } from "./config";
-import Markdown from "markdown-to-jsx";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - Collection",
