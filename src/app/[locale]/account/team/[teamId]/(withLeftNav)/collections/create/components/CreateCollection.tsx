@@ -430,6 +430,16 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     showUploadButton={false}
                                 />
                             </FormInputWrapper>
+                            
+                            {existingCollectionData?.image_link && (
+                                <Box sx={{ width: "30%" }}>
+                                    <img
+                                        src={existingCollectionData?.image_link}
+                                        alt={`${existingCollectionData?.name} logo`}
+                                        width="100%"
+                                    />
+                                </Box>
+                            )}
                         </Box>
                     </Paper>
                     {/* ADD RESOURCES */}
