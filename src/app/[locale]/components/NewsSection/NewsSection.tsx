@@ -35,8 +35,6 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
                 }) => {
                     const category = categories?.nodes[0].name?.toLowerCase();
 
-                    console.log("category", headline, category);
-
                     const url =
                         link?.url ||
                         `/${
