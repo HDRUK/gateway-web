@@ -71,6 +71,8 @@ import searchFormConfig, {
     SORT_FIELD,
     TYPE_FIELD,
     VIEW_FIELD,
+    sortByOptionsCollections,
+    sortByOptionsDataProviders,
     sortByOptionsDataUse,
     sortByOptionsDataset,
     sortByOptionsPublications,
@@ -532,6 +534,10 @@ const Search = ({ filters }: SearchProps) => {
                 return sortByOptionsTool;
             case SearchCategory.PUBLICATIONS:
                 return sortByOptionsPublications;
+            case SearchCategory.COLLECTIONS:
+                return sortByOptionsCollections;
+            case SearchCategory.DATA_PROVIDERS:
+                return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
         }
