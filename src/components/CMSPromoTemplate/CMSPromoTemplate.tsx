@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactElement } from "react";
-import { Divider } from "@mui/material";
 import { PageTemplatePromo } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
