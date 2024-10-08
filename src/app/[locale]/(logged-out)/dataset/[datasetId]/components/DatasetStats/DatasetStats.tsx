@@ -41,7 +41,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         {
             title: t("populationTitle"),
             noStatText: t("notReported"),
-            stat: populationStat,
+            stat: populationStat !== "-1" ? populationStat : "",
             unit: t("populationUnit"),
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
