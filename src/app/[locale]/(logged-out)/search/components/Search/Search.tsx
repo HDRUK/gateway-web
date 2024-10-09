@@ -47,6 +47,7 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
+    FILTER_COLLECTION_NAME,
     FILTER_CONTAINS_TISSUE,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
@@ -154,6 +155,7 @@ const Search = ({ filters }: SearchProps) => {
         [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
+        [FILTER_COLLECTION_NAME]: getParamArray(FILTER_COLLECTION_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
@@ -337,6 +339,7 @@ const Search = ({ filters }: SearchProps) => {
             type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
+            [FILTER_COLLECTION_NAME]: undefined,
             [FILTER_GEOGRAPHIC_LOCATION]: undefined,
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,

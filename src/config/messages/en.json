@@ -836,6 +836,8 @@
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "collectionName": "Collection name",
+                            "collectionNameTooltip": "Title of collection theme",
                             "dataUseTitles": "Data Uses / Research projects",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
