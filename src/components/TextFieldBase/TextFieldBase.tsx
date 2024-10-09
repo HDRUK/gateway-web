@@ -59,7 +59,6 @@ const TextFieldBase = <
         id,
         ...inputProps
     } = props;
-
     const Icon = icon;
     const {
         field: { ref, ...fieldProps },
@@ -68,13 +67,11 @@ const TextFieldBase = <
         name,
         control,
     });
-
     if (showClearButton && setValue === undefined) {
         throw Error(
             "You must pass `setValue` if you would like to show the clear button"
         );
     }
-
     return (
         <FormInputWrapper
             label={label}

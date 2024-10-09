@@ -12,7 +12,6 @@ const GetNewsQuery = `
               title
             }
             text
-            content
             date
             image {
               node {

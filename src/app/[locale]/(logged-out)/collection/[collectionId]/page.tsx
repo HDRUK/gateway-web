@@ -1,3 +1,4 @@
+import Markdown from "markdown-to-jsx";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -87,7 +88,7 @@ export default async function CollectionItemPage({
                             <Typography variant="h3" sx={{ mb: 1 }}>
                                 {t("introTitle")}
                             </Typography>
-                            <Typography>{collection.description}</Typography>
+                            <Markdown>{collection.description}</Markdown>
                         </Box>
                         <Box>
                             <DatasetsContent

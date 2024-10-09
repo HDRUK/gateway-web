@@ -192,7 +192,10 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                             maxWidth: 950,
                         }}>
                         <IFrameWrapper>
-                            <HTMLContent content={gatewayVideo} />
+                            <HTMLContent
+                                content={gatewayVideo}
+                                sanitize={false}
+                            />
                         </IFrameWrapper>
                     </Box>
                 </Container>

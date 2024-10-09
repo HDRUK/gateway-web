@@ -92,11 +92,57 @@ export const sortByOptionsPublications = [
     },
     {
         label: "Sort alphabetically by title (A-Z)",
-        value: "name:asc",
+        value: "title:asc",
     },
     {
         label: "Sort alphabetically by title (Z-A)",
+        value: "title:desc",
+    },
+];
+
+export const sortByOptionsCollections = [
+    {
+        label: "Sort by most relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort alphabetically by name (A-Z)",
+        value: "name:asc",
+    },
+    {
+        label: "Sort alphabetically by name (Z-A)",
         value: "name:desc",
+    },
+    {
+        label: "Sort by most recently updated",
+        value: "updated_at:desc",
+    },
+    {
+        label: "Sort by least recently updated",
+        value: "updated_at:asc",
+    },
+];
+
+export const sortByOptionsDataProviders = [
+    {
+        label: "Sort by most relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort alphabetically by name (A-Z)",
+        value: "name:asc",
+    },
+    {
+        label: "Sort alphabetically by name (Z-A)",
+        value: "name:desc",
+    },
+    {
+        label: "Sort by most recently updated",
+        value: "updated_at:desc",
+    },
+    {
+        label: "Sort by least recently updated",
+        value: "updated_at:asc",
     },
 ];
 
