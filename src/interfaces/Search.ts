@@ -134,13 +134,20 @@ export interface SearchResultDataProvider extends SearchResultBase {
     team_logo?: string;
 }
 
+export interface SearchResultDataCustodianCol extends SearchResultBase {
+    id: number;
+    name: string;
+    img_url: string;
+}
+
 export type SearchResult =
     | SearchResultDataset
     | SearchResultDataUse
     | SearchResultPublication
     | SearchResultCollection
     | SearchResultTool
-    | SearchResultDataProvider;
+    | SearchResultDataProvider
+    | SearchResultDataCustodianCol;
 
 export interface SearchForm {
     query: string;
