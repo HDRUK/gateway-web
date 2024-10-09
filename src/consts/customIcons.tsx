@@ -352,7 +352,7 @@ const TheAllianceIcon = createSvgIcon(
     "TheAllianceIcon"
 );
 
-const DataUsesIcon = createSvgIcon(
+const DataUseIcon = createSvgIcon(
     <svg
         width="12"
         height="13"
@@ -366,7 +366,7 @@ const DataUsesIcon = createSvgIcon(
             fill="currentcolor"
         />
     </svg>,
-    "DataUsesIcon"
+    "DataUseIcon"
 );
 
 const ToolIcon = createSvgIcon(
@@ -480,7 +480,7 @@ export {
     TeamIcon,
     DatabaseIcon,
     PublicationIcon,
-    DataUsesIcon,
+    DataUseIcon,
     ToolIcon,
     CohortIcon,
     TheAllianceIcon,

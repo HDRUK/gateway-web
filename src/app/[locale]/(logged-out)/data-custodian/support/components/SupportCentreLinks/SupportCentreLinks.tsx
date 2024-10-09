@@ -1,7 +1,5 @@
 "use client";
 
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import PeopleIcon from "@mui/icons-material/People";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -13,15 +11,12 @@ import {
     CollectionsIcon,
     DataCustodiansIcon,
     DataUseIcon,
-    DataUsesIcon,
     MetadataOnboardingIcon,
     PublicationIcon,
     SendIcon,
-    TeamIcon,
     TheAllianceIcon,
     ToolIcon,
 } from "@/consts/customIcons";
-import { SchemaOutlinedIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import ContactSupport from "@/app/[locale]/(logged-out)/support/components/ContactSupport";
 
@@ -45,7 +40,7 @@ export default function MeetTheTeam() {
         {
             heading: t("uploadingDataUsesProjectsTitle"),
             link: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
-            icon: <DataUsesIcon />,
+            icon: <DataUseIcon />,
         },
         {
             heading: t("onboardingCohortDiscoveryTitle"),

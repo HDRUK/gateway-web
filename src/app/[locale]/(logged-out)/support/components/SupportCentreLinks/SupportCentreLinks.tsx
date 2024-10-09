@@ -1,7 +1,5 @@
 "use client";
 
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import PeopleIcon from "@mui/icons-material/People";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -12,12 +10,11 @@ import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
 import {
     CohortDiscoveryIcon,
     CollectionsIcon,
-    DataUsesIcon,
+    DataUseIcon,
     PublicationIcon,
     SendIcon,
     ToolIcon,
 } from "@/consts/customIcons";
-import { SchemaOutlinedIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import ContactSupport from "../ContactSupport";
 
@@ -36,7 +33,7 @@ export default function MeetTheTeam() {
         {
             heading: t("durTitle"),
             link: RouteName.SUPPORT_DUR,
-            icon: <DataUsesIcon />,
+            icon: <DataUseIcon />,
         },
         {
             heading: t("cohortDiscoveryTitle"),
