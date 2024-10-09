@@ -34,6 +34,21 @@ const CheckboxIcon = styled("span")(
     }
 );
 
+const MetadataOnboardingIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M4 20C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H10L12 6H20C20.55 6 21.0208 6.19583 21.4125 6.5875C21.8042 6.97917 22 7.45 22 8H11.175L9.175 6H4V18L6.4 10H23.5L20.925 18.575C20.7917 19.0083 20.5458 19.3542 20.1875 19.6125C19.8292 19.8708 19.4333 20 19 20H4ZM6.1 18H19L20.8 12H7.9L6.1 18Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "MetadataOnboardingIcon"
+);
+
 const CheckboxCheckedIcon = styled(CheckboxIcon)(({ theme, size }) => ({
     backgroundColor: theme.palette.secondary.main,
     borderWidth: 0,
@@ -43,7 +58,7 @@ const CheckboxCheckedIcon = styled(CheckboxIcon)(({ theme, size }) => ({
         height: sizeMappings[size],
         backgroundImage:
             "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
-            " fill-rule='evenodd' clip-rule='evenodd' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' fill='%23fff'/%3E%3C/svg%3E\")",
+            " fillRule='evenodd' clipRule='evenodd' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' fill='%23fff'/%3E%3C/svg%3E\")",
         content: '""',
     },
     "input:hover ~ &": {
@@ -60,7 +75,7 @@ const CheckboxIndeterminateIcon = styled(CheckboxIcon)(({ theme, size }) => ({
         height: sizeMappings[size],
         backgroundImage:
             "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
-            " fill-rule='evenodd' clip-rule='evenodd' d='M21 3H3v18h18V3zm-4 10H7v-2h10v2z' fill='%23fff'/%3E%3C/svg%3E\")",
+            " fillRule='evenodd' clipRule='evenodd' d='M21 3H3v18h18V3zm-4 10H7v-2h10v2z' fill='%23fff'/%3E%3C/svg%3E\")",
         content: '""',
     },
     "input:hover ~ &": {
@@ -148,16 +163,29 @@ const SortDescIcon = createSvgIcon(
 
 const CohortDiscoveryIcon = createSvgIcon(
     <svg
-        width="49"
-        height="48"
-        viewBox="0 0 49 48"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
-        <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M24.5 0C18.9772 0 14.5 4.47715 14.5 10C14.5 14.8379 17.9355 18.8734 22.5 19.8V24.99L16.1002 29.714C14.5024 28.632 12.575 28 10.5 28C4.97715 28 0.5 32.4772 0.5 38C0.5 43.5229 4.97715 48 10.5 48C16.0228 48 20.5 43.5229 20.5 38C20.5 36.0126 19.9202 34.1606 18.9206 32.6039L24.5 28.4858L30.0794 32.6039C29.0798 34.1606 28.5 36.0126 28.5 38C28.5 43.5229 32.9772 48 38.5 48C44.0229 48 48.5 43.5229 48.5 38C48.5 32.4772 44.0229 28 38.5 28C36.425 28 34.4976 28.632 32.8998 29.714L26.5 24.9904V19.8C31.0645 18.8734 34.5 14.8379 34.5 10C34.5 4.47715 30.0228 0 24.5 0ZM24.5 4C27.8137 4 30.5 6.68629 30.5 10C30.5 13.3137 27.8137 16 24.5 16C21.1863 16 18.5 13.3137 18.5 10C18.5 6.68629 21.1863 4 24.5 4ZM16.5 38C16.5 34.6863 13.8137 32 10.5 32C7.18629 32 4.5 34.6863 4.5 38C4.5 41.3137 7.18629 44 10.5 44C13.8137 44 16.5 41.3137 16.5 38ZM38.5 32C41.8137 32 44.5 34.6863 44.5 38C44.5 41.3137 41.8137 44 38.5 44C35.1863 44 32.5 41.3137 32.5 38C32.5 34.6863 35.1863 32 38.5 32Z"
-        />
+        <mask
+            id="mask0_6933_306"
+            style={{
+                maskType: "alpha",
+            }}
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="24"
+            height="24">
+            <rect width="24" height="24" fill="#D9D9D9" />
+        </mask>
+        <g mask="url(#mask0_6933_306)">
+            <path
+                d="M9 12C7.9 12 6.95833 11.6083 6.175 10.825C5.39167 10.0417 5 9.1 5 8C5 6.9 5.39167 5.95833 6.175 5.175C6.95833 4.39167 7.9 4 9 4C10.1 4 11.0417 4.39167 11.825 5.175C12.6083 5.95833 13 6.9 13 8C13 9.1 12.6083 10.0417 11.825 10.825C11.0417 11.6083 10.1 12 9 12ZM17 19C17.5667 19 18.0375 18.8333 18.4125 18.5C18.7875 18.1667 18.9833 17.6667 19 17C19.0167 16.4333 18.8292 15.9583 18.4375 15.575C18.0458 15.1917 17.5667 15 17 15C16.4333 15 15.9583 15.1917 15.575 15.575C15.1917 15.9583 15 16.4333 15 17C15 17.5667 15.1917 18.0417 15.575 18.425C15.9583 18.8083 16.4333 19 17 19ZM21.6 23L19.05 20.45C18.75 20.6333 18.4292 20.7708 18.0875 20.8625C17.7458 20.9542 17.3833 21 17 21C15.9 21 14.9583 20.6083 14.175 19.825C13.3917 19.0417 13 18.1 13 17C13 15.9 13.3917 14.9583 14.175 14.175C14.9583 13.3917 15.9 13 17 13C18.1 13 19.0417 13.3917 19.825 14.175C20.6083 14.9583 21 15.9 21 17C21 17.3833 20.9542 17.7458 20.8625 18.0875C20.7708 18.4292 20.6333 18.75 20.45 19.05L23 21.6L21.6 23ZM1 20V17.2C1 16.6333 1.14583 16.1125 1.4375 15.6375C1.72917 15.1625 2.11667 14.8 2.6 14.55C3.63333 14.0333 4.68333 13.6458 5.75 13.3875C6.81667 13.1292 7.9 13 9 13C9.53333 13 10.0708 13.0292 10.6125 13.0875C11.1542 13.1458 11.6917 13.2417 12.225 13.375C11.825 13.9083 11.5208 14.4833 11.3125 15.1C11.1042 15.7167 11 16.35 11 17C11 17.5333 11.0667 18.0542 11.2 18.5625C11.3333 19.0708 11.5333 19.55 11.8 20H1ZM19 8C19 9.1 18.6083 10.0417 17.825 10.825C17.0417 11.6083 16.1 12 15 12C14.8167 12 14.5833 11.9792 14.3 11.9375C14.0167 11.8958 13.7833 11.85 13.6 11.8C14.05 11.2667 14.3958 10.675 14.6375 10.025C14.8792 9.375 15 8.7 15 8C15 7.3 14.8792 6.625 14.6375 5.975C14.3958 5.325 14.05 4.73333 13.6 4.2C13.8333 4.11667 14.0667 4.0625 14.3 4.0375C14.5333 4.0125 14.7667 4 15 4C16.1 4 17.0417 4.39167 17.825 5.175C18.6083 5.95833 19 6.9 19 8Z"
+                fill="#475DA7"
+            />
+        </g>
     </svg>,
     "CohortDiscoveryIcon"
 );
@@ -175,6 +203,35 @@ const SendIcon = createSvgIcon(
         />
     </svg>,
     "SendIcon"
+);
+
+const CollectionsIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <mask
+            id="mask0_6450_11687"
+            style={{
+                maskType: "alpha",
+            }}
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="24"
+            height="24">
+            <rect width="24" height="24" fill="#D9D9D9" />
+        </mask>
+        <g mask="url(#mask0_6450_11687)">
+            <path
+                d="M4 22V8C4 7.45 4.19583 6.97917 4.5875 6.5875C4.97917 6.19583 5.45 6 6 6H14C14.55 6 15.0208 6.19583 15.4125 6.5875C15.8042 6.97917 16 7.45 16 8V22L10 19L4 22ZM6 18.975L10 16.825L14 18.975V8H6V18.975ZM18 18V4H7V2H18C18.55 2 19.0208 2.19583 19.4125 2.5875C19.8042 2.97917 20 3.45 20 4V18H18Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "CollectionsIcon"
 );
 
 const TeamIcon = createSvgIcon(
@@ -273,7 +330,29 @@ const PublicationIcon = createSvgIcon(
     "PublicationIcon"
 );
 
-const DataUseIcon = createSvgIcon(
+const TheAllianceIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_6450_57249)">
+            <path
+                d="M19.07 4.93L17.66 6.34C19.1 7.79 20 9.79 20 12C20 16.42 16.42 20 12 20C7.58 20 4 16.42 4 12C4 7.92 7.05 4.56 11 4.07V6.09C8.16 6.57 6 9.03 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 10.34 17.33 8.84 16.24 7.76L14.83 9.17C15.55 9.9 16 10.9 16 12C16 14.21 14.21 16 12 16C9.79 16 8 14.21 8 12C8 10.14 9.28 8.59 11 8.14V10.28C10.4 10.63 10 11.26 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 11.26 13.6 10.62 13 10.28V2H12C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 9.24 20.88 6.74 19.07 4.93Z"
+                fill="#475DA7"
+            />
+        </g>
+        <defs>
+            <clipPath id="clip0_6450_57249">
+                <rect width="24" height="24" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>,
+    "TheAllianceIcon"
+);
+
+const DataUsesIcon = createSvgIcon(
     <svg
         width="12"
         height="13"
@@ -287,7 +366,7 @@ const DataUseIcon = createSvgIcon(
             fill="currentcolor"
         />
     </svg>,
-    "DataUseIcon"
+    "DataUsesIcon"
 );
 
 const ToolIcon = createSvgIcon(
@@ -307,6 +386,26 @@ const ToolIcon = createSvgIcon(
     "ToolIcon"
 );
 
+const DataAccessRequestIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="send">
+            <g id="send_2">
+                <path
+                    id="Path"
+                    d="M1.4 10.8L3.977 12.752L12.977 8.752L6 14.251V21C6.00043 21.4199 6.26315 21.7948 6.6577 21.9386C7.05225 22.0823 7.49456 21.9642 7.765 21.643L10.895 17.924L17.4 22.8C17.6742 23.0062 18.0351 23.0575 18.3559 22.9357C18.6767 22.814 18.9126 22.5363 18.981 22.2L22.981 2.2C23.0532 1.84007 22.9223 1.46954 22.6401 1.23474C22.358 0.999945 21.9698 0.938625 21.629 1.075L1.629 9.075C1.29498 9.20976 1.05924 9.51373 1.01184 9.87077C0.964444 10.2278 1.11271 10.5828 1.4 10.8Z"
+                    fill="#475DA7"
+                />
+            </g>
+        </g>
+    </svg>,
+    "DataAccessRequestIcon"
+);
+
 const CohortIcon = createSvgIcon(
     <svg
         width="12"
@@ -324,6 +423,49 @@ const CohortIcon = createSvgIcon(
     "CohortIcon"
 );
 
+const DataCustodiansIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M3.81399 2.00616L4 2C5.57409 2 6.87666 3.21516 6.99384 4.81399L7 5C7 6.57409 5.78484 7.87666 4.18601 7.99384L4 8C2.42591 8 1.12334 6.78484 1.00616 5.18601L1 5C1 3.42591 2.21516 2.12334 3.81399 2.00616ZM4 4L3.9242 4.00278C3.40508 4.04105 3 4.47526 2.99933 4.9633L3.00278 5.0758C3.04105 5.59492 3.47526 6 3.9633 6.00067L4.0758 5.99722C4.59492 5.95895 5 5.52474 5.00067 5.0367L4.99722 4.9242C4.95895 4.40508 4.52474 4 4 4Z"
+            fill="#475DA7"
+        />
+        <path
+            d="M5 9V11H3C2.48676 11 2.06444 11.3857 2.00672 11.8833L2 12V16H4V20H7V22H2V18H0V12C0 10.4019 1.24852 9.09631 2.82368 9.00509L3 9H5Z"
+            fill="#475DA7"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M20 2L20.2228 2.00819C21.7848 2.12334 23 3.42591 22.9993 5.0367L22.9918 5.22284C22.8767 6.78484 21.5741 8 19.9633 7.99933L19.7772 7.99181C18.2152 7.87666 17 6.57409 17.0007 4.9633L17.0082 4.77716C17.1233 3.21516 18.4259 2 20 2ZM19.997 4L19.8807 4.00704C19.4108 4.06278 19.0383 4.44218 19.0048 4.88738L19 5C19 5.52474 19.4051 5.95895 19.8874 5.99519L20 6C20.5247 6 20.959 5.59492 20.9952 5.11262L21 5C21 4.47526 20.5949 4.04105 20.1126 4.00481L19.997 4Z"
+            fill="#475DA7"
+        />
+        <path
+            d="M21 9C22.5981 9 23.9037 10.2485 23.9949 11.8237L24 12V18H22V22H17V20H20V16H22V12C22 11.4868 21.6143 11.0644 21.1167 11.0067L21 11H19V9H21Z"
+            fill="#475DA7"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M11.7948 0.00550908L12 0C14.1219 0 15.871 1.65628 15.9945 3.79484L16 4C16 6.12191 14.3437 7.87102 12.2052 7.99449L12 8C9.87809 8 8.12898 6.34372 8.00551 4.20516L8 4C8 1.87809 9.65628 0.128977 11.7948 0.00550908ZM12 2L11.8815 2.00342C10.8283 2.06443 10 2.9392 9.99958 3.97113L10.0034 4.11845C10.0644 5.17166 10.9392 6 11.9711 6.00042L12.1185 5.99658C13.1717 5.93557 14 5.0608 14.0004 4.02887L13.9966 3.88155C13.9356 2.82834 13.0608 2 12 2Z"
+            fill="#475DA7"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M9 9H15C16.6573 9 18 10.3427 18 12V19H16V24H8V18H6V12C6 10.3427 7.34272 9 9 9ZM15.1167 11.0067L15 11H9C8.44728 11 8 11.4473 8 12V16H10V22H14V17H16V12C16 11.4868 15.6143 11.0644 15.1167 11.0067Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "DataCustodiansIcon"
+);
+
 export {
     SpeechBubbleIcon,
     RemoveFilterIcon,
@@ -338,7 +480,12 @@ export {
     TeamIcon,
     DatabaseIcon,
     PublicationIcon,
-    DataUseIcon,
+    DataUsesIcon,
     ToolIcon,
     CohortIcon,
+    TheAllianceIcon,
+    MetadataOnboardingIcon,
+    DataCustodiansIcon,
+    CollectionsIcon,
+    DataAccessRequestIcon,
 };

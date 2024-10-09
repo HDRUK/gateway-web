@@ -8,7 +8,19 @@ import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
-import { SendIcon, TeamIcon } from "@/consts/customIcons";
+import {
+    CohortDiscoveryIcon,
+    CollectionsIcon,
+    DataCustodiansIcon,
+    DataUseIcon,
+    DataUsesIcon,
+    MetadataOnboardingIcon,
+    PublicationIcon,
+    SendIcon,
+    TeamIcon,
+    TheAllianceIcon,
+    ToolIcon,
+} from "@/consts/customIcons";
 import { SchemaOutlinedIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import ContactSupport from "@/app/[locale]/(logged-out)/support/components/ContactSupport";
@@ -23,47 +35,47 @@ export default function MeetTheTeam() {
         {
             heading: t("gettingStartedTitle"),
             link: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
-            icon: <TeamIcon sx={{ fontSize: "3rem" }} />,
+            icon: <DataCustodiansIcon />,
         },
         {
             heading: t("metadataOnboardingTitle"),
             link: RouteName.DATA_CUSTODIAN_METADATA_ONBOARDING,
-            icon: "[icon tbd]",
+            icon: <MetadataOnboardingIcon />,
         },
         {
             heading: t("uploadingDataUsesProjectsTitle"),
             link: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
-            icon: "[icon tbd]",
+            icon: <DataUsesIcon />,
         },
         {
             heading: t("onboardingCohortDiscoveryTitle"),
             link: RouteName.DATA_CUSTODIAN_COHORT_DISCOVERY,
-            icon: <SchemaOutlinedIcon />,
+            icon: <CohortDiscoveryIcon />,
         },
         {
             heading: t("uploadingToolsTitle"),
             link: RouteName.DATA_CUSTODIAN_TOOLS,
-            icon: <CloudUploadIcon />,
+            icon: <ToolIcon />,
         },
         {
             heading: t("uploadingPublicationsTitle"),
             link: RouteName.DATA_CUSTODIAN_PUBLICATIONS,
-            icon: "[icon tbd]",
+            icon: <PublicationIcon />,
         },
         {
             heading: t("managingCollectionsTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_COLLECTIONS,
-            icon: <PeopleIcon />,
+            icon: <CollectionsIcon />,
         },
         {
             heading: t("managingEnquiryDarTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
-            icon: <SendIcon sx={{ fontSize: "48px" }} />,
+            icon: <SendIcon />,
         },
         {
             heading: t("theAllianceTitle"),
             link: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
-            icon: "[icon tbd]",
+            icon: <TheAllianceIcon />,
         },
     ];
 
@@ -71,7 +83,15 @@ export default function MeetTheTeam() {
         <>
             <Banner title={t("title")} />
             <Container sx={{ background: "white", p: 10 }}>
-                <Grid container columnSpacing={6} rowSpacing={6}>
+                <Grid
+                    container
+                    columnSpacing={6}
+                    rowSpacing={6}
+                    sx={{
+                        svg: {
+                            fontSize: "48px",
+                        },
+                    }}>
                     {data.map(({ heading, icon, link }) => (
                         <Grid
                             item

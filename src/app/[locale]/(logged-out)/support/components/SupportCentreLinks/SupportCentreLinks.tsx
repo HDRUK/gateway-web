@@ -9,7 +9,14 @@ import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
-import { SendIcon } from "@/consts/customIcons";
+import {
+    CohortDiscoveryIcon,
+    CollectionsIcon,
+    DataUsesIcon,
+    PublicationIcon,
+    SendIcon,
+    ToolIcon,
+} from "@/consts/customIcons";
 import { SchemaOutlinedIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import ContactSupport from "../ContactSupport";
@@ -29,32 +36,32 @@ export default function MeetTheTeam() {
         {
             heading: t("durTitle"),
             link: RouteName.SUPPORT_DUR,
-            icon: "[icon tbd]",
+            icon: <DataUsesIcon />,
         },
         {
             heading: t("cohortDiscoveryTitle"),
             link: RouteName.SUPPORT_COHORT_DISCOVERY,
-            icon: <SchemaOutlinedIcon />,
+            icon: <CohortDiscoveryIcon />,
         },
         {
             heading: t("toolsTitle"),
             link: RouteName.SUPPORT_TOOLS,
-            icon: <CloudUploadIcon />,
+            icon: <ToolIcon />,
         },
         {
             heading: t("uploadingPublicationsTitle"),
             link: RouteName.SUPPORT_PUBLICATIONS,
-            icon: "[icon tbd]",
+            icon: <PublicationIcon />,
         },
         {
             heading: t("exploringCollectionsTitle"),
             link: RouteName.SUPPORT_COLLECTIONS,
-            icon: <PeopleIcon />,
+            icon: <CollectionsIcon />,
         },
         {
             heading: t("darTitle"),
             link: RouteName.SUPPORT_DAR,
-            icon: <SendIcon sx={{ fontSize: "3rem" }} />,
+            icon: <SendIcon />,
         },
     ];
 
@@ -62,7 +69,11 @@ export default function MeetTheTeam() {
         <>
             <Banner title={t("title")} />
             <Container sx={{ background: "white", p: 10 }}>
-                <Grid container columnSpacing={6} rowSpacing={6}>
+                <Grid
+                    container
+                    columnSpacing={6}
+                    rowSpacing={6}
+                    sx={{ svg: { fontSize: "48px" } }}>
                     {data.map(({ heading, icon, link }) => (
                         <Grid
                             item
