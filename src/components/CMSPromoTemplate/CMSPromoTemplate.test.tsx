@@ -23,7 +23,7 @@ describe("CMSPromoTemplate", () => {
                     '<p><img loading="lazy" decoding="async" class=" wp-image-130 aligncenter" src="https://storage.googleapis.com/hdrgatewaywordpresspoc/2023/12/e3b24faf-cohort-user-image-300x274.png" alt="Search and analyse medical groups" width="395" height="361" srcset="https://storage.googleapis.com/hdrgatewaywordpresspoc/2023/12/e3b24faf-cohort-user-image-300x274.png 300w, https://storage.googleapis.com/hdrgatewaywordpresspoc/2023/12/e3b24faf-cohort-user-image.png 601w" sizes="(max-width: 395px) 100vw, 395px" /></p>\n',
                 bottomPanel:
                     "<h3>How cohort discovery works</h3>\n" +
-                    '<p>A Cohort Discovery Data Custodian is an organisation who holds data and has enabled querying of that data for the purposes of Cohort Discovery.</p>'
+                    "<p>A Cohort Discovery Data Custodian is an organisation who holds data and has enabled querying of that data for the purposes of Cohort Discovery.</p>",
             },
         },
     };
