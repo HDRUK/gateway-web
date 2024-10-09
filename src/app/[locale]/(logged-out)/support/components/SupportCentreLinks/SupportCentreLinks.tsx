@@ -13,7 +13,6 @@ import {
     DataAccessRequestIcon,
     DataUseIcon,
     PublicationIcon,
-    SendIcon,
     ToolIcon,
 } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";

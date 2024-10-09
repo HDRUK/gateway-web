@@ -14,7 +14,6 @@ import {
     DataUseIcon,
     MetadataOnboardingIcon,
     PublicationIcon,
-    SendIcon,
     TheAllianceIcon,
     ToolIcon,
 } from "@/consts/customIcons";
