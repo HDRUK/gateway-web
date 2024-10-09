@@ -26,8 +26,27 @@ exports[`CMSPromoTemplate should render content 1`] = `
           <div
             class="mui-style-xl0kid"
           >
-            About Cohort Discovery
-Statistical disclosure control policies are in place for each data custodian, so low numbers are excluded from query results and results may also be rounded to eliminate any potential risk of identification.This functionality has been developed as part of the CO-CONNECT programme and further information can be found on their website. The summary metadata of the current datasets that are available to query via Cohort Discovery can be found in this Collection on the Gateway.
+            <h2>
+              About Cohort Discovery
+            </h2>
+            
+
+            <p>
+              Statistical disclosure control policies are in place for each data custodian, so low numbers are excluded from query results and results may also be rounded to eliminate any potential risk of identification.This functionality has been developed as part of the CO-CONNECT programme and further information can be found on their 
+              <a
+                href="https://co-connect.ac.uk/"
+              >
+                website
+              </a>
+              . The summary metadata of the current datasets that are available to query via Cohort Discovery can be found in this 
+              <a
+                href="https://www.healthdatagateway.org/"
+              >
+                Collection
+              </a>
+               on the Gateway.
+            </p>
+            
 
           </div>
         </div>
@@ -37,16 +56,18 @@ Statistical disclosure control policies are in place for each data custodian, so
           <div
             class="mui-style-xl0kid"
           >
-            <iframe
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen=""
-              frameborder="0"
-              height="281"
-              loading="lazy"
-              src="https://www.youtube.com/embed/yvFrnbXlqRk?feature=oembed"
-              title="Cohort Discovery on the Health Data Research Innovation Gateway"
-              width="500"
-            />
+            <p>
+              <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen=""
+                frameborder="0"
+                height="281"
+                loading="lazy"
+                src="https://www.youtube.com/embed/yvFrnbXlqRk?feature=oembed"
+                title="Cohort Discovery on the Health Data Research Innovation Gateway"
+                width="500"
+              />
+            </p>
             
 
           </div>
@@ -77,8 +98,25 @@ Statistical disclosure control policies are in place for each data custodian, so
         <div
           class="mui-style-xl0kid"
         >
-          How you can request access to Cohort Discovery
+          <h3>
+            How you can request access to Cohort Discovery
+          </h3>
+          
 
+          <p>
+            <img
+              alt="Search and analyse medical groups"
+              class="wp-image-130 aligncenter"
+              decoding="async"
+              height="361"
+              loading="lazy"
+              sizes="(max-width: 395px) 100vw, 395px"
+              src="https://storage.googleapis.com/hdrgatewaywordpresspoc/2023/12/e3b24faf-cohort-user-image-300x274.png"
+              srcset="https://storage.googleapis.com/hdrgatewaywordpresspoc/2023/12/e3b24faf-cohort-user-image-300x274.png 300w, https://storage.googleapis.com/hdrgatewaywordpresspoc/2023/12/e3b24faf-cohort-user-image.png 601w"
+              width="395"
+            />
+          </p>
+          
 
         </div>
       </div>
@@ -110,8 +148,14 @@ Statistical disclosure control policies are in place for each data custodian, so
           <div
             class="mui-style-xl0kid"
           >
-            How cohort discovery works
-A Cohort Discovery Data Custodian is an organisation who holds data and has enabled querying of that data for the purposes of Cohort Discovery.
+            <h3>
+              How cohort discovery works
+            </h3>
+            
+
+            <p>
+              A Cohort Discovery Data Custodian is an organisation who holds data and has enabled querying of that data for the purposes of Cohort Discovery.
+            </p>
           </div>
         </div>
       </div>

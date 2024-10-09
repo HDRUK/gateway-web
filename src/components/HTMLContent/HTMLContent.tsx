@@ -13,7 +13,7 @@ const HTMLContent = ({ content }: HTMLContentProps) => {
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(content, {
-                    ALLOWED_TAGS: ["iframe"],
+                    ADD_TAGS: ["iframe"],
                     ADD_ATTR: [
                         "allow",
                         "allowfullscreen",
