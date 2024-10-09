@@ -9,11 +9,11 @@ import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
 import {
     CohortDiscoveryIcon,
     CollectionsIcon,
+    DataAccessRequestIcon,
     DataCustodiansIcon,
     DataUseIcon,
     MetadataOnboardingIcon,
     PublicationIcon,
-    SendIcon,
     TheAllianceIcon,
     ToolIcon,
 } from "@/consts/customIcons";
@@ -65,7 +65,7 @@ export default function MeetTheTeam() {
         {
             heading: t("managingEnquiryDarTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
-            icon: <SendIcon />,
+            icon: <DataAccessRequestIcon />,
         },
         {
             heading: t("theAllianceTitle"),
