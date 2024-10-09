@@ -30,7 +30,7 @@ const defaultValues = {
     access_date: "",
     access_type: "",
     privacy_enhancements: "",
-    safeOutput: [],
+    non_gateway_outputs: [],
     applicants: [],
     datasets: [],
     keywords: [],

@@ -36,6 +36,12 @@ const nextConfig = withNextIntl({
                 port: "",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "*",
+                port: "",
+                pathname: "/**",
+            },
         ],
     },
     async redirects() {
