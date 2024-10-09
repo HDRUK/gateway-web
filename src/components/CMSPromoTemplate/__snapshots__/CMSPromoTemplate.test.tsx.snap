@@ -58,6 +58,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
           >
             <p />
             
+
           </div>
         </div>
       </div>
@@ -140,6 +141,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
               How cohort discovery works
             </h3>
             
+
             <p>
               A Cohort Discovery Data Custodian is an organisation who holds data and has enabled querying of that data for the purposes of Cohort Discovery.
             </p>
