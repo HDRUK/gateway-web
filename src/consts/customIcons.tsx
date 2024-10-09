@@ -58,7 +58,7 @@ const CheckboxCheckedIcon = styled(CheckboxIcon)(({ theme, size }) => ({
         height: sizeMappings[size],
         backgroundImage:
             "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
-            " fillRule='evenodd' clipRule='evenodd' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' fill='%23fff'/%3E%3C/svg%3E\")",
+            " fill-rule='evenodd' clip-rule='evenodd' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' fill='%23fff'/%3E%3C/svg%3E\")",
         content: '""',
     },
     "input:hover ~ &": {
@@ -75,7 +75,7 @@ const CheckboxIndeterminateIcon = styled(CheckboxIcon)(({ theme, size }) => ({
         height: sizeMappings[size],
         backgroundImage:
             "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
-            " fillRule='evenodd' clipRule='evenodd' d='M21 3H3v18h18V3zm-4 10H7v-2h10v2z' fill='%23fff'/%3E%3C/svg%3E\")",
+            " fill-rule='evenodd' clip-rule='evenodd' d='M21 3H3v18h18V3zm-4 10H7v-2h10v2z' fill='%23fff'/%3E%3C/svg%3E\")",
         content: '""',
     },
     "input:hover ~ &": {
@@ -393,15 +393,17 @@ const DataAccessRequestIcon = createSvgIcon(
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
-        <g id="send">
-            <g id="send_2">
-                <path
-                    id="Path"
-                    d="M1.4 10.8L3.977 12.752L12.977 8.752L6 14.251V21C6.00043 21.4199 6.26315 21.7948 6.6577 21.9386C7.05225 22.0823 7.49456 21.9642 7.765 21.643L10.895 17.924L17.4 22.8C17.6742 23.0062 18.0351 23.0575 18.3559 22.9357C18.6767 22.814 18.9126 22.5363 18.981 22.2L22.981 2.2C23.0532 1.84007 22.9223 1.46954 22.6401 1.23474C22.358 0.999945 21.9698 0.938625 21.629 1.075L1.629 9.075C1.29498 9.20976 1.05924 9.51373 1.01184 9.87077C0.964444 10.2278 1.11271 10.5828 1.4 10.8Z"
-                    fill="#475DA7"
-                />
-            </g>
+        <g clipPath="url(#clip0_6857_179379)">
+            <path
+                d="M14 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z"
+                fill="#475DA7"
+            />
         </g>
+        <defs>
+            <clipPath id="clip0_6857_179379">
+                <rect width="24" height="24" fill="white" />
+            </clipPath>
+        </defs>
     </svg>,
     "DataAccessRequestIcon"
 );

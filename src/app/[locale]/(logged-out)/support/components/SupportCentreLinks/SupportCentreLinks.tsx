@@ -10,6 +10,7 @@ import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
 import {
     CohortDiscoveryIcon,
     CollectionsIcon,
+    DataAccessRequestIcon,
     DataUseIcon,
     PublicationIcon,
     SendIcon,
@@ -58,7 +59,7 @@ export default function MeetTheTeam() {
         {
             heading: t("darTitle"),
             link: RouteName.SUPPORT_DAR,
-            icon: <SendIcon />,
+            icon: <DataAccessRequestIcon />,
         },
     ];
 
