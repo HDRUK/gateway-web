@@ -84,7 +84,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         name,
         control,
     });
-
     const filterOptions = (
         searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
@@ -99,13 +98,13 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         const isExisting = searchOptions.some(
             option => inputValue === option.label
         );
+
         if (inputValue !== "" && !isExisting) {
             filtered.push({
                 value: inputValue,
                 label: `${createLabel} "${inputValue}"`,
             });
         }
-
         return filtered;
     };
 
