@@ -15,10 +15,10 @@ exports[`CMSPromoTemplate should render content 1`] = `
       </h2>
     </div>
     <div
-      class="MuiBox-root mui-style-1peaprr"
+      class="MuiBox-root mui-style-twmf8g"
     >
       <div
-        class="MuiBox-root mui-style-1t3222e"
+        class="MuiBox-root mui-style-18srbfw"
       >
         <div
           class="MuiBox-root mui-style-e42i7k"
@@ -49,21 +49,6 @@ exports[`CMSPromoTemplate should render content 1`] = `
             
 
           </div>
-          <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1lcka2s-MuiTypography-root-MuiLink-root"
-            href="button/url"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-1kr9t8c-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              Button title
-              <span
-                class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </a>
         </div>
         <div
           class="MuiBox-root mui-style-e42i7k"
@@ -77,12 +62,27 @@ exports[`CMSPromoTemplate should render content 1`] = `
           </div>
         </div>
       </div>
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1lcka2s-MuiTypography-root-MuiLink-root"
+        href="button/url"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-1kr9t8c-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Button title
+          <span
+            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </a>
     </div>
     <div
-      class="MuiBox-root mui-style-pu06ei"
+      class="MuiBox-root mui-style-1iru1wc"
     >
       <div
-        class="MuiBox-root mui-style-1hvbzpf"
+        class="MuiBox-root mui-style-19midj6"
       >
         <div
           class="mui-style-xl0kid"
@@ -107,6 +107,45 @@ exports[`CMSPromoTemplate should render content 1`] = `
           </p>
           
 
+        </div>
+      </div>
+      <a
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1lcka2s-MuiTypography-root-MuiLink-root"
+        href="button/url"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-1kr9t8c-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Button title
+          <span
+            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </a>
+    </div>
+    <div
+      class="MuiBox-root mui-style-gfthyi"
+    >
+      <div
+        class="MuiBox-root mui-style-1t3222e"
+      >
+        <div
+          class="MuiBox-root mui-style-e42i7k"
+        >
+          <div
+            class="mui-style-xl0kid"
+          >
+            <h3>
+              How cohort discovery works
+            </h3>
+            
+
+            <p>
+              A Cohort Discovery Data Custodian is an organisation who holds data and has enabled querying of that data for the purposes of Cohort Discovery.
+            </p>
+          </div>
         </div>
       </div>
       <a
