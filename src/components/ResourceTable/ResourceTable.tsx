@@ -50,6 +50,11 @@ const ResourceTable = ({
             rows: selectedResources[ResourceType.TOOL] || [],
             hideHeader: true,
         },
+        {
+            resourceType: ResourceType.DATASET,
+            rows: selectedResources[ResourceType.DATASET] || [],
+            hideHeader: true,
+        },
     ];
 
     return (

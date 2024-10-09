@@ -165,6 +165,7 @@ interface Dataset {
     collections_count: number;
     publications: Publication[];
     team: Team;
+    name?: string;
 }
 
 interface DataCustodianDataset {

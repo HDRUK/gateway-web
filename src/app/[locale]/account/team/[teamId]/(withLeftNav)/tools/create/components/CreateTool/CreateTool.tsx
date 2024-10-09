@@ -126,7 +126,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
     const tagOptions = useMemo(() => {
         if (!tagData) return [];
-
         return tagData.map(data => {
             return {
                 value: data.id as ValueType,
@@ -150,7 +149,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                 existingToolData?.type_category?.map(item => item.id) || [],
             keywords: existingToolData?.tag?.map(item => item.id) || [],
         };
-
         const propertiesToDelete = [
             "programming_languages",
             "mongo_object_id",
@@ -172,7 +170,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
         reset(formData as ToolPayload);
     }, [reset, existingToolData]);
-
     const watchAnyDataset = watch("any_dataset");
 
     const { fields, append, remove, replace } = useFieldArray({
@@ -200,7 +197,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ updated_at, created_at, ...item }) => item
         );
-
         const payload: ToolPayloadSubmission = {
             ...formData,
             user_id: userId,

@@ -16,8 +16,15 @@ interface News {
 }
 
 interface NewsNode {
-    slug: string;
-    node: { newsFields: News };
+    node: {
+        slug: string;
+        newsFields: News;
+        categories?: {
+            nodes: {
+                name: string;
+            }[];
+        };
+    };
 }
 
 export type { NewsNode, News };
