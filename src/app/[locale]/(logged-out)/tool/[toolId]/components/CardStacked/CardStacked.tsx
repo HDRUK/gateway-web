@@ -34,7 +34,7 @@ export default function CardStacked({
                     display: "flex",
                     alignItems: "flex-end",
                     backgroundImage: `url(${imgUrl})`,
-                    backgroundColor: colors.black,
+                    backgroundColor: colors.white,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
