@@ -184,7 +184,7 @@
             },
             "cohortDiscoveryRequest": {
                 "title": "Cohort Discovery Registration",
-                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, Orcid id and role description.",
+                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, ORCID id and role description.",
                 "userDeclaration": "User Declaration",
                 "userDeclarationAdditional": "All users of the Cohort Discovery are required to accept the declaration below.",
                 "statementIntro": "I confirm that my use of the tool will be for the sole purpose of understanding the size of populations relevant to a particular research question and that any resulting study or clinical trial will be for public benefit as defined by the National Data Guardian.",
