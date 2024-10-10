@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { Box, IconButton, SxProps } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import { colors } from "@/config/theme";
-import { InfoIcon } from "@/consts/icons";
+import { InfoIcon } from "@/consts/customIcons";
 
 interface TooltipIconProps {
     label: ReactNode;
@@ -49,8 +49,11 @@ const TooltipIcon = ({
                 {icon || (
                     <InfoIcon
                         color={!invertColor ? "primary" : "inherit"}
-                        sx={{ color: `${invertColor && "#E9ECF4"}` }}
+                        sx={{
+                            color: `${invertColor && "#E9ECF4"}`,
+                        }}
                         fontSize={size}
+                        data-testid="InfoIcon"
                     />
                 )}
             </IconButton>

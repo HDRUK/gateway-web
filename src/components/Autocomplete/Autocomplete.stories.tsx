@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import type { Meta, StoryObj } from "@storybook/react";
-import { SearchIcon } from "@/consts/icons";
+import { SearchIcon } from "@/consts/customIcons";
 import Autocomplete, { AutocompleteProps } from "./Autocomplete";
 
 const meta: Meta<typeof Autocomplete> = {

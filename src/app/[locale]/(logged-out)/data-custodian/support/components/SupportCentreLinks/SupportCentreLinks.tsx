@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, SvgIconProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
@@ -22,7 +22,11 @@ import ContactSupport from "@/app/[locale]/(logged-out)/support/components/Conta
 
 const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.dataCustodianSupport";
 
-export default function MeetTheTeam() {
+const SVG_ICON_PROPS: Partial<SvgIconProps> = {
+    fontSize: "xlarge",
+};
+
+export default function SupportCentreLinks() {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
     const router = useRouter();
 
@@ -30,47 +34,47 @@ export default function MeetTheTeam() {
         {
             heading: t("gettingStartedTitle"),
             link: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
-            icon: <DataCustodiansIcon />,
+            icon: <DataCustodiansIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("metadataOnboardingTitle"),
             link: RouteName.DATA_CUSTODIAN_METADATA_ONBOARDING,
-            icon: <MetadataOnboardingIcon />,
+            icon: <MetadataOnboardingIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("uploadingDataUsesProjectsTitle"),
             link: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
-            icon: <DataUseIcon />,
+            icon: <DataUseIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("onboardingCohortDiscoveryTitle"),
             link: RouteName.DATA_CUSTODIAN_COHORT_DISCOVERY,
-            icon: <CohortDiscoveryIcon />,
+            icon: <CohortDiscoveryIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("uploadingToolsTitle"),
             link: RouteName.DATA_CUSTODIAN_TOOLS,
-            icon: <ToolIcon />,
+            icon: <ToolIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("uploadingPublicationsTitle"),
             link: RouteName.DATA_CUSTODIAN_PUBLICATIONS,
-            icon: <PublicationIcon />,
+            icon: <PublicationIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("managingCollectionsTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_COLLECTIONS,
-            icon: <CollectionsIcon />,
+            icon: <CollectionsIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("managingEnquiryDarTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
-            icon: <DataAccessRequestIcon />,
+            icon: <DataAccessRequestIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("theAllianceTitle"),
             link: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
-            icon: <TheAllianceIcon />,
+            icon: <TheAllianceIcon {...SVG_ICON_PROPS} />,
         },
     ];
 

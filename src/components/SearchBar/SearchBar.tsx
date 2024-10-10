@@ -27,7 +27,6 @@ interface SearchBarProps {
 export const TEST_ID_WRAPPER = "search-bar";
 export const TEST_ID_RESET_BUTTON = "reset-btn";
 
-const SEARCH_ICON_SIZE = "48px";
 const CROSS_ICON_SIZE = "60px";
 const HELP_ICON_SIZE = "12px";
 const TRANSLATION_PATH = "pages.search";
@@ -56,13 +55,7 @@ const SearchBar = ({
     return (
         <FormWrapper data-testid={TEST_ID_WRAPPER}>
             <SearchForm onSubmit={handleSubmit(submitAction)}>
-                <SearchIcon
-                    color="primary"
-                    sx={{
-                        height: SEARCH_ICON_SIZE,
-                        width: SEARCH_ICON_SIZE,
-                    }}
-                />
+                <SearchIcon color="primary" fontSize="large" />
                 <InputWrapper
                     onClick={() =>
                         inputOverrideAction && inputOverrideAction()
@@ -95,13 +88,7 @@ const SearchBar = ({
                 <ExplainerText>
                     {explainerText}
                     <ExplainerLink href={`/${RouteName.HOW_TO_SEARCH}`}>
-                        {t("howToSearch")}
-                        <HelpIcon
-                            sx={{
-                                height: HELP_ICON_SIZE,
-                                width: HELP_ICON_SIZE,
-                            }}
-                        />
+                        {t("howToSearch")} <HelpIcon fontSize="xsmall" />
                     </ExplainerLink>
                 </ExplainerText>
             )}

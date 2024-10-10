@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Close } from "@mui/icons-material";
 import { IconButton, Snackbar, SnackbarProps, useTheme } from "@mui/material";
+import { CloseIcon } from "@/consts/customIcons";
 
 export interface InfoBannerProps extends Omit<SnackbarProps, "color"> {
     color?:
@@ -41,7 +41,7 @@ const InfoBanner = ({
                         <IconButton
                             onClick={() => setOpen(false)}
                             aria-label={ariaCloseButtonLabel}>
-                            <Close
+                            <CloseIcon
                                 sx={{
                                     color: theme.palette[color].contrastText,
                                 }}

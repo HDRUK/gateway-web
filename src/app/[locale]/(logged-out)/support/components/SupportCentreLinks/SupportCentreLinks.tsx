@@ -1,7 +1,6 @@
 "use client";
 
-import SearchIcon from "@mui/icons-material/Search";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, SvgIconProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
@@ -13,6 +12,7 @@ import {
     DataAccessRequestIcon,
     DataUseIcon,
     PublicationIcon,
+    SearchIcon,
     ToolIcon,
 } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
@@ -20,7 +20,11 @@ import ContactSupport from "../ContactSupport";
 
 const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.support";
 
-export default function MeetTheTeam() {
+const SVG_ICON_PROPS: Partial<SvgIconProps> = {
+    fontSize: "xlarge",
+};
+
+export default function SupportCentreLinks() {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
     const router = useRouter();
 
@@ -28,37 +32,37 @@ export default function MeetTheTeam() {
         {
             heading: t("searchTitle"),
             link: RouteName.HOW_TO_SEARCH,
-            icon: <SearchIcon />,
+            icon: <SearchIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("durTitle"),
             link: RouteName.SUPPORT_DUR,
-            icon: <DataUseIcon />,
+            icon: <DataUseIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("cohortDiscoveryTitle"),
             link: RouteName.SUPPORT_COHORT_DISCOVERY,
-            icon: <CohortDiscoveryIcon />,
+            icon: <CohortDiscoveryIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("toolsTitle"),
             link: RouteName.SUPPORT_TOOLS,
-            icon: <ToolIcon />,
+            icon: <ToolIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("uploadingPublicationsTitle"),
             link: RouteName.SUPPORT_PUBLICATIONS,
-            icon: <PublicationIcon />,
+            icon: <PublicationIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("exploringCollectionsTitle"),
             link: RouteName.SUPPORT_COLLECTIONS,
-            icon: <CollectionsIcon />,
+            icon: <CollectionsIcon {...SVG_ICON_PROPS} />,
         },
         {
             heading: t("darTitle"),
             link: RouteName.SUPPORT_DAR,
-            icon: <DataAccessRequestIcon />,
+            icon: <DataAccessRequestIcon {...SVG_ICON_PROPS} />,
         },
     ];
 
@@ -66,11 +70,7 @@ export default function MeetTheTeam() {
         <>
             <Banner title={t("title")} />
             <Container sx={{ background: "white", p: 10 }}>
-                <Grid
-                    container
-                    columnSpacing={6}
-                    rowSpacing={6}
-                    sx={{ svg: { fontSize: "48px" } }}>
+                <Grid container columnSpacing={6} rowSpacing={6}>
                     {data.map(({ heading, icon, link }) => (
                         <Grid
                             item

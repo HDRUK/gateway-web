@@ -1,5 +1,4 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AddIcon from "@mui/icons-material/Add";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AppsIcon from "@mui/icons-material/Apps";
@@ -24,7 +23,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import CircleIcon from "@mui/icons-material/Circle";
-import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
@@ -34,7 +32,6 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import DownloadIcon from "@mui/icons-material/Download";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
-import EditIcon from "@mui/icons-material/Edit";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -43,11 +40,9 @@ import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
-import HelpIcon from "@mui/icons-material/Help";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
-import InfoIcon from "@mui/icons-material/Info";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
@@ -60,7 +55,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
@@ -77,79 +71,73 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 export * from "./customIcons";
 
 export {
-    OpenInNewIcon,
-    ArrowForward,
-    AppsIcon,
-    FilterAltOffIcon,
-    FilterAltIcon,
-    InfoIcon,
-    ArrowDropUpIcon,
-    SortByAlphaIcon,
-    DescriptionOutlinedIcon,
-    DescriptionIcon,
-    UnarchiveIcon,
-    ArchiveIcon,
-    EditIcon,
-    CheckCircleTwoToneIcon,
-    CheckCircleIcon,
-    ArrowBackIosNewIcon,
-    ArrowForwardIosIcon,
-    ArrowRightIcon,
-    ArrowLeftIcon,
     AccountCircleIcon,
-    BackupIcon,
-    AdminPanelSettingsIcon,
-    SupervisorAccountIcon,
-    HelpIcon,
-    HelpOutlineIcon,
-    MenuIcon,
-    CancelIcon,
     AddAPhotoIcon,
-    CloseIcon,
-    KeyboardDoubleArrowDownIcon,
-    UploadFileIcon,
+    AdminPanelSettingsIcon,
+    AppsIcon,
+    ArchiveIcon,
+    ArrowBackIosNewIcon,
     ArrowDropDownIcon,
-    GroupsIcon,
-    SearchRoundedIcon,
-    SearchIcon,
-    RemoveIcon,
-    StorageIcon,
-    ExpandLessIcon,
-    ExpandMoreIcon,
-    AddIcon,
-    DeleteForeverIcon,
-    CheckBoxOutlineBlankSharpIcon,
-    CheckBoxSharpIcon,
-    IndeterminateCheckBoxSharpIcon,
-    SettingsOutlinedIcon,
-    FolderSharedOutlinedIcon,
-    StorageOutlinedIcon,
-    SchemaOutlinedIcon,
-    HelpOutlineOutlinedIcon,
-    GroupsOutlinedIcon,
-    ContentCopyIcon,
-    RemoveCircleIcon,
-    DownloadIcon,
-    WarningIcon,
-    WarningRoundedIcon,
-    CircleIcon,
-    ViewListIcon,
-    LaunchIcon,
-    CheckIcon,
-    PriorityHighIcon,
-    DocumentScannerIcon,
-    QuestionAnswerIcon,
-    DragIndicatorIcon,
-    LockIcon,
-    RestartAltIcon,
-    CheckCircleRoundedIcon,
-    HandymanOutlinedIcon,
-    CloudUploadIcon,
+    ArrowDropUpIcon,
+    ArrowForward,
+    ArrowForwardIosIcon,
+    ArrowLeftIcon,
+    ArrowRightIcon,
     ArticleIcon,
+    BackupIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
     BookmarksOutlinedIcon,
-    StickyNote2OutlinedIcon,
-    PersonOutlineOutlinedIcon,
+    CancelIcon,
+    CheckBoxOutlineBlankSharpIcon,
+    CheckBoxSharpIcon,
+    CheckCircleIcon,
+    CheckCircleRoundedIcon,
+    CheckCircleTwoToneIcon,
+    CheckIcon,
+    CircleIcon,
+    CloudUploadIcon,
+    ContentCopyIcon,
     ControlPointIcon,
+    DeleteForeverIcon,
+    DescriptionIcon,
+    DescriptionOutlinedIcon,
+    DocumentScannerIcon,
+    DownloadIcon,
+    DragIndicatorIcon,
+    ExpandLessIcon,
+    ExpandMoreIcon,
+    FilterAltIcon,
+    FilterAltOffIcon,
+    FolderSharedOutlinedIcon,
+    GroupsIcon,
+    GroupsOutlinedIcon,
+    HandymanOutlinedIcon,
+    HelpOutlineIcon,
+    HelpOutlineOutlinedIcon,
+    IndeterminateCheckBoxSharpIcon,
+    KeyboardDoubleArrowDownIcon,
+    LaunchIcon,
+    LockIcon,
+    MenuIcon,
+    OpenInNewIcon,
+    PersonOutlineOutlinedIcon,
+    PriorityHighIcon,
+    QuestionAnswerIcon,
+    RemoveCircleIcon,
+    RemoveIcon,
+    RestartAltIcon,
+    SchemaOutlinedIcon,
+    SearchRoundedIcon,
+    SettingsOutlinedIcon,
+    SortByAlphaIcon,
+    StickyNote2OutlinedIcon,
+    StorageIcon,
+    StorageOutlinedIcon,
+    SupervisorAccountIcon,
+    UnarchiveIcon,
+    UploadFileIcon,
+    ViewListIcon,
+    WarningIcon,
+    WarningRoundedIcon,
 };

@@ -468,6 +468,106 @@ const DataCustodiansIcon = createSvgIcon(
     "DataCustodiansIcon"
 );
 
+const SearchIcon = createSvgIcon(
+    <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M11.71 11H12.5L17.49 16L16 17.49L11 12.5V11.71L10.73 11.43C9.59 12.41 8.11 13 6.5 13C2.91 13 0 10.09 0 6.5C0 2.91 2.91 0 6.5 0C10.09 0 13 2.91 13 6.5C13 8.11 12.41 9.59 11.43 10.73L11.71 11ZM2 6.5C2 8.99 4.01 11 6.5 11C8.99 11 11 8.99 11 6.5C11 4.01 8.99 2 6.5 2C4.01 2 2 4.01 2 6.5Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SearchIcon"
+);
+
+const InfoIcon = createSvgIcon(
+    <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M8 0C3.584 0 0 3.584 0 8C0 12.416 3.584 16 8 16C12.416 16 16 12.416 16 8C16 3.584 12.416 0 8 0ZM8.8 12H7.2V7.2H8.8V12ZM8.8 5.6H7.2V4H8.8V5.6Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "InfoIcon"
+);
+
+const HelpIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="Icon Type=help fill">
+            <path
+                id="Combined Shape"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM13 18C13 18.5523 12.5523 19 12 19C11.4477 19 11 18.5523 11 18C11 17.4477 11.4477 17 12 17C12.5523 17 13 17.4477 13 18ZM16.1207 6.67933C14.9712 4.81919 11.9583 4.53636 9.44879 5.64533L8.53412 6.04954L9.34254 7.87888L10.2572 7.47467L10.4549 7.39185C12.1101 6.73606 13.928 6.93552 14.4193 7.73067C14.9648 8.61343 14.6203 9.73739 13.3945 10.7761C11.622 12.278 11 13.1575 11 14.5V15.5H13V14.5L13.0023 14.4175C13.0304 13.9264 13.3239 13.4945 14.3264 12.6131L14.8741 12.1385C16.6379 10.5411 17.2209 8.45982 16.1207 6.67933Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "HelpIcon"
+);
+
+const EditIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M15.8789 1.70689L2.06629 15.5195L0.783447 23.2165L8.4805 21.9337L22.2931 8.1211C23.4646 6.94958 23.4646 5.05041 22.2931 3.87889L20.1211 1.70689C18.9496 0.535366 17.0504 0.535366 15.8789 1.70689ZM20.8789 5.2931L20.9621 5.3873C21.2671 5.7795 21.2393 6.34645 20.8789 6.70689L19.4999 8.08569L15.9142 4.49999L17.2931 3.1211C17.6836 2.73063 18.3164 2.73063 18.7069 3.1211L20.8789 5.2931ZM18.0856 9.49981L14.5 5.91419L4.41411 15.9999L7.99914 19.5849L18.0856 9.49981ZM5.91839 20.3326L3.6664 18.0806L3.216 20.783L5.91839 20.3326Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "EditIcon"
+);
+
+const PlusIcon = createSvgIcon(
+    <svg
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M21.8995 10V12L12.0006 12.0006L12 21.8995H10L9.99944 12.0006L0.100506 12L0.100506 10L9.99944 9.99944L10 0.100506L12 0.100506L12.0006 9.99944L21.8995 10Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "PlusIcon"
+);
+
+const CloseIcon = createSvgIcon(
+    <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            id="Combined Shape"
+            d="M16 0.585785L17.4142 2L10.415 9L17.4142 16L16 17.4142L9 10.415L2 17.4142L0.585785 16L7.585 9L0.585785 2L2 0.585785L9 7.585L16 0.585785Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "CloseIcon"
+);
+
 export {
     SpeechBubbleIcon,
     RemoveFilterIcon,
@@ -490,4 +590,10 @@ export {
     DataCustodiansIcon,
     CollectionsIcon,
     DataAccessRequestIcon,
+    InfoIcon,
+    SearchIcon,
+    HelpIcon,
+    EditIcon,
+    PlusIcon,
+    CloseIcon,
 };

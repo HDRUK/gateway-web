@@ -4,6 +4,12 @@ import { ReactElement } from "react";
 import { createTheme, styled } from "@mui/material/styles";
 import Image from "next/image";
 
+declare module "@mui/material/SvgIcon" {
+    interface SvgIconPropsSizeOverrides {
+        xlarge: true;
+    }
+}
+
 const buttonLinkStyle = {
     padding: 0,
     "&:hover": {
@@ -198,6 +204,24 @@ const theme = createTheme({
                     props: { fontSize: "xsmall" },
                     style: {
                         fontSize: "0.8rem",
+                    },
+                },
+                {
+                    props: { fontSize: "small" },
+                    style: {
+                        fontSize: "1rem",
+                    },
+                },
+                {
+                    props: { fontSize: "medium" },
+                    style: {
+                        fontSize: "1.25rem",
+                    },
+                },
+                {
+                    props: { fontSize: "xlarge" },
+                    style: {
+                        fontSize: "3rem",
                     },
                 },
             ],
