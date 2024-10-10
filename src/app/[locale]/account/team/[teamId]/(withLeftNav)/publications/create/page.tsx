@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { getUser } from "@/utils/api";
+import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 import CreatePublication from "@/app/[locale]/account/profile/publications/components/CreatePublication";
 
 export const metadata = {
@@ -15,10 +16,11 @@ export default async function PublicationTeamsCreatePage({
     params: { teamId: string };
 }) {
     const { teamId } = params;
-
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
-    const permissions = getPermissions(user.roles);
+    const team = await getTeam(cookieStore, teamId);
+    const teamUser = getTeamUser(team?.users, user?.id);
+    const permissions = getPermissions(user.roles, teamUser?.roles);
 
     return (
         <ProtectedAccountRoute
