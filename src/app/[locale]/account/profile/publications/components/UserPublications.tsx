@@ -136,11 +136,6 @@ const UserPublications = ({
         itemName: "Publication",
     });
 
-    const showAddNewButton = useMemo(
-        () => permissions["papers.create"],
-        [permissions]
-    );
-
     const showArchiveButton =
         tab !== DataStatus.ARCHIVED && permissions["papers.delete"];
     const showUnarchiveButton =
@@ -275,11 +270,9 @@ const UserPublications = ({
                         <Typography>{t("text")}</Typography>
                     </Box>
 
-                    {showAddNewButton && (
-                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
-                            {t("create")}
-                        </Button>
-                    )}
+                    <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                        {t("create")}
+                    </Button>
                 </Box>
             </Paper>
 
