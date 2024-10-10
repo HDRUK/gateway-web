@@ -147,7 +147,7 @@ const EditDataUse = () => {
             existingDataUse,
             edited
         );
-        
+
         const response = await editDataUse(params!.dataUseId, formUpdates);
 
         if (response) {
@@ -213,14 +213,14 @@ const EditDataUse = () => {
     }, [handleSubmit, params?.teamId, t, existingDataUse]);
 
     const getOptions = (fieldName: string) => {
-        if(fieldName === "keywords") {
-            return keywordOptions
-        } else if (fieldName === 'non_gateway_outputs') {
-            return outputOptions
-        } else {
-            return []
+        if (fieldName === "keywords") {
+            return keywordOptions;
         }
-    }
+        if (fieldName === "non_gateway_outputs") {
+            return outputOptions;
+        }
+        return [];
+    };
 
     return (
         <>
@@ -261,7 +261,7 @@ const EditDataUse = () => {
                                             {...field}
                                             {...(field.component ===
                                                 inputComponents.Autocomplete && {
-                                                options: getOptions(field.name)
+                                                options: getOptions(field.name),
                                             })}
                                         />
                                     </Box>
