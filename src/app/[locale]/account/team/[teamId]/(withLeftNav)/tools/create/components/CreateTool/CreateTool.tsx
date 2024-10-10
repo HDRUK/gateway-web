@@ -141,7 +141,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
         const formData = {
             ...existingToolData,
-            dataset: existingToolData.datasets,
+            ...(existingToolData.dataset && {
+                dataset: existingToolData.dataset,
+            }),
             programming_language:
                 existingToolData?.programming_languages?.map(item => item.id) ||
                 [],
