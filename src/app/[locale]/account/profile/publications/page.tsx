@@ -21,7 +21,7 @@ export default async function UserPublicationsPage({
 
     // manually add papers permissions for individual users so that they have permissions on their owned papers.
     ["papers.update", "papers.delete"].forEach(
-        value => (permissions[value] = true)
+        value => {permissions[value] = true}
     );
 
     return (
