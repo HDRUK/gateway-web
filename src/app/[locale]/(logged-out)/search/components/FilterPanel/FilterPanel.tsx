@@ -32,6 +32,7 @@ import {
     FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
+    FILTER_COLLECTION_NAME,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -67,6 +68,7 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_CONTAINS_TISSUE,
         FILTER_DATA_TYPE,
         FILTER_PUBLISHER_NAME,
+        FILTER_COLLECTION_NAME,
         FILTER_DATA_USE_TITLES,
         FILTER_MATERIAL_TYPE,
         FILTER_ACCESS_SERVICE,
@@ -128,6 +130,7 @@ const FilterPanel = ({
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({
         [FILTER_PUBLISHER_NAME]: {},
+        [FILTER_COLLECTION_NAME]: {},
         [FILTER_DATA_USE_TITLES]: {},
         [FILTER_GEOGRAPHIC_LOCATION]: {},
         [FILTER_DATE_RANGE]: {},
@@ -161,6 +164,7 @@ const FilterPanel = ({
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm<{
         [FILTER_PUBLISHER_NAME]: string;
+        [FILTER_COLLECTION_NAME]: string;
         [FILTER_DATA_USE_TITLES]: string;
         [FILTER_SECTOR]: string;
         [FILTER_ACCESS_SERVICE]: string;
@@ -170,6 +174,7 @@ const FilterPanel = ({
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
+            [FILTER_COLLECTION_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
             [FILTER_ACCESS_SERVICE]: "",

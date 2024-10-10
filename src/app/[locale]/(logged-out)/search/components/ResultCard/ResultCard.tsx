@@ -4,7 +4,7 @@ import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
@@ -44,6 +44,8 @@ const ResultCard = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { current: resultId } = useRef(uniqueId("result-title-"));
     const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const { showDialog } = useDialog();
 
     const highlight = get(result, "highlight");
@@ -53,6 +55,10 @@ const ResultCard = ({
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
+
+    const redirectPath = searchParams
+        ? `${pathname}?${searchParams.toString()}`
+        : pathname;
 
     useEffect(() => {
         const librariesDatasetIds: number[] = libraryData?.map(
@@ -97,7 +103,7 @@ const ResultCard = ({
         event?.stopPropagation();
         setAnchorElement(null);
 
-        showGeneralEnquiry({ dataset: result, isLoggedIn });
+        showGeneralEnquiry({ dataset: result, isLoggedIn, redirectPath });
     };
 
     const handleFeasibilityEnquiryClick = (
@@ -110,6 +116,7 @@ const ResultCard = ({
             dataset: result,
             isLoggedIn,
             mutateLibraries,
+            redirectPath,
         });
     };
 
@@ -175,7 +182,10 @@ const ResultCard = ({
                 }
             }
         } else {
-            showDialog(ProvidersDialog, { isProvidersDialog: true });
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+                redirectPath,
+            });
         }
     };
 
