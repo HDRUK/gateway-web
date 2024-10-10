@@ -2,7 +2,6 @@ export enum FieldType {
     TEXT = "text",
     LIST = "list",
     DATE = "date",
-    LINK = "link",
     TAG = "tag",
     LINK_LIST = "link-list",
 }
@@ -71,7 +70,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.structuralMetadata.syntheticDataWebLink",
-                type: FieldType.LINK,
+                type: FieldType.TEXT,
                 label: "Synthetic data web link",
                 tooltip:
                     "Website with information on your synthetic dataset creation, or the location where a synthetic version of the dataset can be accessed.",

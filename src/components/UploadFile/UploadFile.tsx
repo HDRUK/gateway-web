@@ -157,11 +157,9 @@ const UploadFile = ({
         try {
             const formData = new FormData();
             formData.append("file", file);
-
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 handleError()
             )) as FileUpload;
-
             setHasError(false);
 
             if (uploadedFileStatus) {
@@ -171,7 +169,6 @@ const UploadFile = ({
                 setPollFileStatus(true);
                 isUploading?.(true);
             }
-
             onFileCheckSucceeded?.(uploadedFileStatus);
         } catch {
             setHasError(true);

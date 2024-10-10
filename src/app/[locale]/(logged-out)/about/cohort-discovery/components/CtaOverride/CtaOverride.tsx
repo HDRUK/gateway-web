@@ -58,7 +58,6 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
                 color="greyCustom">
                 {ctaLink?.title}
             </Button>
-
             <Button
                 sx={{ mt: 3, ml: 3 }}
                 onClick={() => {

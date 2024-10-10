@@ -546,6 +546,22 @@
                     }
                 },
                 "collections": {
+                    "create": {
+                        "title": "Manage or create a Collection",
+                        "intro": "Collections are groupings of useful resources based on set criteria, and are a useful way for a Researcher to explore resources that are linked to each other. Types of Collections could include resources related to a research domain, research hub or research project.",
+                        "addImages": "Collection image cover (recommended)",
+                        "addImagesInfo": "Upload an image W700 x H350 (1:0.5). If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
+                        "addImageSuccess": "Image uploaded",
+                        "aspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height)",
+                        "fileSelectButtonText": "Upload file",
+                        "addResources": "Add resources",
+                        "addResourcesInfo": "Link resources in the Gateway to your Collection",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "labelTag": "Collection"
+                    },
                     "components": {
                         "TeamCollections": {
                             "title": "Collections",
@@ -820,6 +836,8 @@
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "collectionName": "Collection name",
+                            "collectionNameTooltip": "Title of collection theme",
                             "dataUseTitles": "Data Uses / Research projects",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
@@ -1308,6 +1326,7 @@
             "upload": "Select file",
             "uploadButtonText": "Upload",
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
+            "uploadImage": "Upload file",
             "error": "An error has occured. Please check your file and try again"
         },
         "StructuralMetadataAccordion": {
@@ -1322,7 +1341,7 @@
         "CollectionCard": {
             "users": "Users",
             "entities": "Entities",
-            "entitiesCounts": "Datasets ({nDatasets}), Publications ({nPublications}), Tools ({nTools})",
+            "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
         }
     },
