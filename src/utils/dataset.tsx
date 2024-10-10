@@ -7,7 +7,7 @@ import { getYear } from "./date";
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
 const UNDEFINED_VALUE = "undefined";
 const NULL_VALUE = "null";
-const URL_REGEX = /(https?:\/\/[^\s]+)/g;
+const URL_REGEX = /(https?:\/\/[^\s]+)/gi;
 
 const parseLeadTime = (leadTimeString: string) => {
     if (!leadTimeString) {

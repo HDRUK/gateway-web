@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { AuthType, IntegrationForm } from "@/interfaces/Integration";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { authTypes, federationTypes } from "@/consts/integrations";
 import { requiresSecretKey } from "@/utils/integrations";
 import { inputComponents } from ".";
@@ -112,10 +113,7 @@ const formFields = [
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
         component: inputComponents.Autocomplete,
         info: "Email address for people who should receive notifications related to integration. Use ‘tab’ or ‘enter’ to add another email address if adding more than one",
     },

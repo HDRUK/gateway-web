@@ -43,7 +43,7 @@ export default function CollectionsContent({
                 defaultExpanded={collections.length > 0}
                 contents={collections.map(({ name, id, image_link }) => (
                     <CardStacked
-                        href={`${RouteName.COLLECTION_ITEM}/${id}`}
+                        href={`/${RouteName.COLLECTION_ITEM}/${id}`}
                         title={name}
                         imgUrl={image_link}
                     />

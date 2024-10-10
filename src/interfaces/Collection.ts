@@ -12,12 +12,13 @@ interface Collection {
     description: string;
     id: string;
     enabled: boolean;
-    status: DataStatus;
+    status: DataStatus | undefined;
     public: number;
-    create_at: string;
+    created_at: string;
     updated_at: string;
+    updated_on: string;
     deleted_at: string;
-    keywords: string[];
+    keywords: string[] | string;
     datasets: Dataset[];
     team: Team;
     users: User[];
@@ -28,6 +29,14 @@ interface Collection {
     counter?: number;
     team_id?: number;
     image_link: string;
+}
+
+export interface CollectionSubmission
+    extends Omit<Collection, "publications" | "dur" | "tools" | "datasets"> {
+    publications: { id: number }[];
+    dur: { id: number }[];
+    tools: { id: number }[];
+    datasets: { id: number }[];
 }
 
 export type { Collection };

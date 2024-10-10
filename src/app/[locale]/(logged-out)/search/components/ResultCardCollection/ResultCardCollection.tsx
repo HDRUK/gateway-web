@@ -12,7 +12,7 @@ const ResultCollectionCard = ({ result }: ResultCardProps) => {
 
     return (
         <CardStacked
-            href={`${RouteName.COLLECTION_ITEM}/${id}`}
+            href={`/${RouteName.COLLECTION_ITEM}/${id}`}
             title={result.name}
             imgUrl={result?.image_link || StaticImages.BASE.placeholder}
         />

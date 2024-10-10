@@ -12,7 +12,6 @@ const GetEventsQuery = `
               title
             }
             text
-            content
             date
             image {
               node {
