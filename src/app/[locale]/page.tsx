@@ -1,5 +1,3 @@
-"use client";
-
 import { Box } from "@mui/material";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
