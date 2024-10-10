@@ -1,5 +1,6 @@
 import { get, isEmpty, pick, some } from "lodash";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -47,8 +48,13 @@ export default async function DatasetItemPage({
         cookieStore,
         datasetId,
         SCHEMA_NAME,
-        SCHEMA_VERSION
+        SCHEMA_VERSION,
+        {
+            suppressError: true,
+        }
     );
+
+    if (!data) notFound();
 
     let googleRecommendedDataset: Dataset | undefined;
 

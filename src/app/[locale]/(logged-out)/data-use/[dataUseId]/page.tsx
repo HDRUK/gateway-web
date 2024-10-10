@@ -1,6 +1,7 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
@@ -26,7 +27,11 @@ export default async function DataUseItemPage({
 
     const { dataUseId } = params;
     const cookieStore = cookies();
-    const data = await getDataUse(cookieStore, dataUseId);
+    const data = await getDataUse(cookieStore, dataUseId, {
+        suppressError: true,
+    });
+
+    if (!data) notFound();
 
     const populatedSections = dataUseFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))

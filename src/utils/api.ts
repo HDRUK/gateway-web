@@ -1,4 +1,5 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { notFound } from "next/navigation";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
@@ -9,6 +10,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
+import { GetOptions } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
@@ -19,7 +21,10 @@ import { getUserFromToken } from "@/utils/cookies";
 
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
-    url: string
+    url: string,
+    options: GetOptions = {
+        suppressError: false,
+    }
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
@@ -27,7 +32,7 @@ async function get<T>(
         headers: { Authorization: `Bearer ${jwt?.value}` },
     });
 
-    if (!res.ok) {
+    if (!res.ok && !options.suppressError) {
         // This will activate the closest `error.js` Error Boundary
         throw new Error("Failed to fetch data");
     }
@@ -98,21 +103,25 @@ async function getTeam(
 
 async function getTeamSummary(
     cookieStore: ReadonlyRequestCookies,
-    teamId: string
+    teamId: string,
+    options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
         cookieStore,
-        `${apis.teamsV1UrlIP}/${teamId}/summary`
+        `${apis.teamsV1UrlIP}/${teamId}/summary`,
+        options
     );
 }
 
 async function getNetworkSummary(
     cookieStore: ReadonlyRequestCookies,
-    networkId: string
+    networkId: string,
+    options?: GetOptions
 ): Promise<NetworkSummary> {
     return await get<NetworkSummary>(
         cookieStore,
-        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}/summary`
+        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}/summary`,
+        options
     );
 }
 
@@ -130,7 +139,8 @@ async function getDataset(
     cookieStore: ReadonlyRequestCookies,
     datasetId: string,
     schemaModel?: string,
-    schemaVersion?: string
+    schemaVersion?: string,
+    options?: GetOptions
 ): Promise<Dataset> {
     const baseUrl = `${apis.datasetsV1UrlIP}/${datasetId}`;
     const params = new URLSearchParams();
@@ -143,17 +153,20 @@ async function getDataset(
 
     return await get<Dataset>(
         cookieStore,
-        queryString ? `${baseUrl}?${queryString}` : baseUrl
+        queryString ? `${baseUrl}?${queryString}` : baseUrl,
+        options
     );
 }
 
 async function getDataUse(
     cookieStore: ReadonlyRequestCookies,
-    dataUseId: string
+    dataUseId: string,
+    options?: GetOptions
 ): Promise<DataUse> {
     const dataUse = await get<DataUse[]>(
         cookieStore,
-        `${apis.dataUseV1UrlIP}/${dataUseId}`
+        `${apis.dataUseV1UrlIP}/${dataUseId}`,
+        options
     );
 
     return dataUse?.[0];
@@ -170,11 +183,13 @@ async function getTool(
 
 async function getCollection(
     cookieStore: ReadonlyRequestCookies,
-    collectionId: string
+    collectionId: string,
+    options?: GetOptions
 ): Promise<Collection> {
     const collection = await get<Collection>(
         cookieStore,
-        `${apis.collectionsV1UrlIP}/${collectionId}`
+        `${apis.collectionsV1UrlIP}/${collectionId}`,
+        options
     );
 
     return collection;
