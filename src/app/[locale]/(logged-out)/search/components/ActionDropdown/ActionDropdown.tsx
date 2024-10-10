@@ -49,6 +49,10 @@ const ActionDropdown = ({
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
 
+    const redirectPath = searchParams
+        ? `${pathname}?${searchParams.toString()}`
+        : pathname;
+
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -63,7 +67,11 @@ const ActionDropdown = ({
     ) => {
         event?.stopPropagation();
 
-        showGeneralEnquiry({ dataset: result, isLoggedIn });
+        showGeneralEnquiry({
+            dataset: result,
+            isLoggedIn,
+            redirectPath,
+        });
     };
 
     const handleFeasibilityEnquiryClick = (
@@ -75,6 +83,7 @@ const ActionDropdown = ({
             dataset: result,
             isLoggedIn,
             mutateLibraries,
+            redirectPath,
         });
     };
 
@@ -149,11 +158,6 @@ const ActionDropdown = ({
                 setLibraryToggle(false);
             }
         } else {
-            let redirectPath = pathname;
-            if (searchParams) {
-                redirectPath = `${redirectPath}?${searchParams.toString()}`;
-            }
-
             const action = config.ENTITY_ACTION_COOKIE.ACTION_ADD_LIBRARY;
             const cookieValue = JSON.stringify({ action, datasetId });
             Cookies.set(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, cookieValue, {
