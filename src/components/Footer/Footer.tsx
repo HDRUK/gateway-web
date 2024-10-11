@@ -30,6 +30,7 @@ const Footer = () => {
             label: (
                 <FooterSocial>
                     <Image src={twitterInLogo} alt="Twitter logo" width="17" />
+                    <span>X</span>
                 </FooterSocial>
             ),
         },
