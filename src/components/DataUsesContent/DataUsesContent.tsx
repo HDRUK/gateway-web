@@ -6,23 +6,26 @@ import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { DataUse } from "@/interfaces/DataUse";
-import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
+import AccordionSection from "../AccordionSection";
 
-const TRANSLATION_PATH = "pages.dataCustodian.components.DatausesContent";
-
-export interface DatausesContentProps {
+export interface DataUsesContentProps {
     datauses: DataUse[];
     anchorIndex: number;
+    translationPath: string;
 }
 
-export default function DatausesContent({
+const TRANSLATION_PATH = ".components.DatausesContent";
+
+export default function DataUsesContent({
     datauses,
     anchorIndex,
-}: DatausesContentProps) {
+    translationPath,
+}: DataUsesContentProps) {
     const router = useRouter();
     const path = usePathname();
-    const t = useTranslations(TRANSLATION_PATH);
+
+    const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
 
     return (
         <InView

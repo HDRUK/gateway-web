@@ -4,7 +4,10 @@ import { cookies } from "next/headers";
 import { VersionItem } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
+import DataUsesContent from "@/components/DataUsesContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import PublicationsContent from "@/components/PublicationsContent";
+import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
@@ -15,9 +18,6 @@ import { getLatestVersion } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
-import DatausesContent from "./components/DatausesContent";
-import PublicationsContent from "./components/PublicationsContent";
-import ToolsContent from "./components/ToolsContent";
 import { collectionSections } from "./config";
 
 export const metadata = {
@@ -99,16 +99,19 @@ export default async function CollectionItemPage({
                             <ToolsContent
                                 tools={collection.tools}
                                 anchorIndex={2}
+                                translationPath={TRANSLATION_PATH}
                             />
 
-                            <DatausesContent
+                            <DataUsesContent
                                 datauses={collection.dur}
                                 anchorIndex={3}
+                                translationPath={TRANSLATION_PATH}
                             />
 
                             <PublicationsContent
                                 publications={publications}
                                 anchorIndex={4}
+                                translationPath={TRANSLATION_PATH}
                             />
                         </Box>
                     </Box>

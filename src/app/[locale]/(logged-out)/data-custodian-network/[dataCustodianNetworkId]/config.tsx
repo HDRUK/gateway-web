@@ -19,6 +19,10 @@ const accordions = [
         sectionName: "publications",
         fields: [],
     },
+    {
+        sectionName: "collections",
+        fields: [],
+    },
     // { TODO: Post-MVP
     //     sectionName: "serviceOfferings",
     //     fields: [],

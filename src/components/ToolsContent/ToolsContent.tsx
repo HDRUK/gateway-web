@@ -13,19 +13,21 @@ import { formatDate } from "@/utils/date";
 export interface ToolsContentProps {
     tools: Tool[];
     anchorIndex: number;
-    page: string;
+    translationPath: string;
 }
+
+const TRANSLATION_PATH = ".components.ToolsContent";
 
 export default function ToolsContent({
     tools,
     anchorIndex,
-    page,
+    translationPath,
 }: ToolsContentProps) {
     const router = useRouter();
     const path = usePathname();
-    const TRANSLATION_PATH = `pages.${page}.components.ToolsContent`;
 
-    const t = useTranslations(TRANSLATION_PATH);
+    const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
+
     return (
         <InView
             id={`anchor${anchorIndex}`}
@@ -52,9 +54,12 @@ export default function ToolsContent({
                         {!!user && (
                             <div>{`${user.firstname} ${user.lastname}`}</div>
                         )}
-                        <Typography color="GrayText">
-                            Created - {formatDate(created_at, "DD MMMM YYYY")}
-                        </Typography>
+                        {!!created_at && (
+                            <Typography color="GrayText">
+                                Created -{" "}
+                                {formatDate(created_at, "DD MMMM YYYY")}
+                            </Typography>
+                        )}
                     </Fragment>
                 ))}
             />

@@ -11,19 +11,20 @@ import AccordionSection from "@/components/AccordionSection";
 export interface PublicationsContentProps {
     publications: Publication[];
     anchorIndex: number;
-    page: string;
+    translationPath: string;
 }
+
+const TRANSLATION_PATH = ".components.PublicationsContent";
 
 export default function PublicationContent({
     publications,
     anchorIndex,
-    page,
+    translationPath,
 }: PublicationsContentProps) {
     const router = useRouter();
     const path = usePathname();
-    const TRANSLATION_PATH = `pages.${page}.components.PublicationsContent`;
 
-    const t = useTranslations(TRANSLATION_PATH);
+    const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
 
     return (
         <InView
@@ -43,12 +44,19 @@ export default function PublicationContent({
                     length: publications.length,
                 })}
                 defaultExpanded={publications.length > 0}
-                contents={publications.map(({ paper_title, authors, url }) => (
-                    <Fragment key={`publication_${paper_title}`}>
-                        <Link href={url}>{paper_title}</Link>
-                        {authors && <div>{authors}</div>}
-                    </Fragment>
-                ))}
+                contents={publications.map(
+                    ({ paper_title, authors, url, year_of_publication }) => (
+                        <Fragment key={`publication_${paper_title}`}>
+                            <Link component="a" href={url} target="_blank">
+                                {paper_title}
+                            </Link>
+                            {authors && <div>{authors}</div>}
+                            {year_of_publication && (
+                                <div>{year_of_publication}</div>
+                            )}
+                        </Fragment>
+                    )
+                )}
             />
         </InView>
     );

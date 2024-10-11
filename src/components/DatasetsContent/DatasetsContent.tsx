@@ -13,19 +13,20 @@ import { toTitleCase } from "@/utils/string";
 export interface DatasetsContentProps {
     datasets: DataCustodianDataset[];
     anchorIndex: number;
-    page: string;
+    translationPath: string;
 }
+
+const TRANSLATION_PATH = ".components.DatasetsContent";
 
 export default function DatasetContent({
     datasets,
     anchorIndex,
-    page,
+    translationPath,
 }: DatasetsContentProps) {
     const router = useRouter();
     const path = usePathname();
-    const TRANSLATION_PATH = `pages.${page}.components.DatasetsContent`;
 
-    const t = useTranslations(TRANSLATION_PATH);
+    const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
 
     return (
         <InView

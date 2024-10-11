@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
+import CollectionsContent from "@/components/CollectionsContent";
+import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PublicationsContent from "@/components/PublicationsContent";
@@ -12,7 +14,6 @@ import { AspectRatioImage } from "@/config/theme";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
-import DatausesContent from "./components/DatausesContent";
 import IntroductionContent from "./components/IntroductionContent";
 import { accordions } from "./config";
 
@@ -42,8 +43,6 @@ export default async function DataCustodianNetworkPage({
             label: t(section.sectionName),
         };
     });
-
-    const page = "dataCustodianNetwork";
 
     return (
         <LayoutDataItemPage
@@ -75,7 +74,6 @@ export default async function DataCustodianNetworkPage({
                             networkData={networkData}
                             anchorIndex={0}
                         />
-
                         <DataCustodianContent
                             dataCustodians={summaryData.teams_counts}
                             anchorIndex={1}
@@ -83,21 +81,27 @@ export default async function DataCustodianNetworkPage({
                         <DatasetsContent
                             datasets={summaryData.datasets}
                             anchorIndex={2}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
+                        />
+                        <DataUsesContent
+                            datauses={summaryData.durs}
+                            anchorIndex={3}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <ToolsContent
                             tools={summaryData.tools}
-                            anchorIndex={3}
-                            page={page}
-                        />
-                        <DatausesContent
-                            datauses={summaryData.durs}
                             anchorIndex={4}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <PublicationsContent
                             publications={summaryData.publications}
                             anchorIndex={5}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
+                        />
+                        <CollectionsContent
+                            collections={summaryData.collections}
+                            anchorIndex={6}
+                            translationPath={TRANSLATION_PATH}
                         />
                         {/* Post-MVP: Service Offerings */}
                     </Box>

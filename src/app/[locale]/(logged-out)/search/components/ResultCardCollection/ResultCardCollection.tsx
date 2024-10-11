@@ -1,7 +1,7 @@
 import { SearchResultCollection } from "@/interfaces/Search";
+import CardStacked from "@/components/CardStacked";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
-import CardStacked from "../CardStacked/CardStacked";
 
 interface ResultCardProps {
     result: SearchResultCollection;

@@ -4,24 +4,27 @@ import { InView } from "react-intersection-observer";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Collection } from "@/interfaces/Collection";
+import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import AccordionSection from "../AccordionSection";
-import CardStacked from "../CardStacked/CardStacked";
-
-const TRANSLATION_PATH = "pages.tool.components.CollectionsContent";
+import CardStacked from "../CardStacked";
 
 export interface CollectionsContentProps {
     collections: Collection[];
     anchorIndex: number;
+    translationPath: string;
 }
+
+const TRANSLATION_PATH = ".components.CollectionsContent";
 
 export default function CollectionsContent({
     collections,
     anchorIndex,
+    translationPath,
 }: CollectionsContentProps) {
     const router = useRouter();
     const path = usePathname();
-    const t = useTranslations(TRANSLATION_PATH);
+
+    const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
 
     return (
         <InView
@@ -43,7 +46,7 @@ export default function CollectionsContent({
                 defaultExpanded={collections.length > 0}
                 contents={collections.map(({ name, id, image_link }) => (
                     <CardStacked
-                        href={`${RouteName.COLLECTION_ITEM}/${id}`}
+                        href={`/${RouteName.COLLECTION_ITEM}/${id}`}
                         title={name}
                         imgUrl={image_link}
                     />

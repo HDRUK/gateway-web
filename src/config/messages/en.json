@@ -1054,6 +1054,7 @@
             "introduction": "Introduction",
             "dataCustodian": "Data Custodian",
             "datasets": "Datasets",
+            "collections": "Collections",
             "dataUses": "Data use",
             "publications": "Publication",
             "tools": "Analysis Scripts & Software",
@@ -1076,7 +1077,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Data Uses ({ length })"
@@ -1089,6 +1091,9 @@
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections ({ length })"
                 }
             }
         },
@@ -1250,7 +1255,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"

@@ -64,6 +64,10 @@ const DataCustodianContent = ({
         }
     };
 
+    if (!populatedSections.length || !data.url) {
+        return null;
+    }
+
     return (
         (populatedSections.length || data.url) && (
             <BoxContainer

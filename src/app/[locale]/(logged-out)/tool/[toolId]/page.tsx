@@ -2,15 +2,15 @@ import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
+import CollectionsContent from "@/components/CollectionsContent";
+import DataUsesContent from "@/components/DataUsesContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import PublicationsContent from "@/components/PublicationsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getTool } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
-import CollectionsContent from "./components/CollectionsContent";
 import DatasetsContent from "./components/DatasetsContent";
-import DatausesContent from "./components/DatausesContent";
-import PublicationsContent from "./components/PublicationsContent";
 import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
 
@@ -60,17 +60,20 @@ export default async function ToolPage({
                             dataset_versions={data.dataset_versions}
                             anchorIndex={populatedSections.length + 1}
                         />
-                        <DatausesContent
+                        <DataUsesContent
                             datauses={data.durs}
                             anchorIndex={populatedSections.length + 2}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <PublicationsContent
                             publications={data.publications}
                             anchorIndex={populatedSections.length + 3}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <CollectionsContent
                             collections={data.collections}
                             anchorIndex={populatedSections.length + 4}
+                            translationPath={TRANSLATION_PATH}
                         />
                     </Box>
                 </>

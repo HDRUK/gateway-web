@@ -2,6 +2,8 @@ import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
+import CollectionsContent from "@/components/CollectionsContent";
+import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PublicationsContent from "@/components/PublicationsContent";
@@ -12,9 +14,7 @@ import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getTeamSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
-import CollectionsContent from "./components/CollectionsContent";
 import DataCustodianContent from "./components/DataCustodianContent";
-import DatausesContent from "./components/DatausesContent";
 import { accordions, dataCustodianFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
@@ -44,8 +44,6 @@ export default async function DataCustodianItemPage({
             label: t(section.sectionName),
         };
     });
-
-    const page = "dataCustodian";
 
     return (
         <LayoutDataItemPage
@@ -79,25 +77,27 @@ export default async function DataCustodianItemPage({
                         <DatasetsContent
                             datasets={data.datasets}
                             anchorIndex={populatedSections.length + 1}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <CollectionsContent
                             collections={data.collections}
                             anchorIndex={populatedSections.length + 2}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <ToolsContent
                             tools={data.tools}
                             anchorIndex={populatedSections.length + 3}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
                         />
-                        <DatausesContent
+                        <DataUsesContent
                             datauses={data.durs}
                             anchorIndex={populatedSections.length + 4}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <PublicationsContent
                             publications={data.publications}
                             anchorIndex={populatedSections.length + 5}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
                         />
                         {/* Post-MVP: Service Offerings */}
                     </Box>

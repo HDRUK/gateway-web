@@ -41,6 +41,7 @@ export default function DataCustodianContent({
                 heading={t("heading", {
                     length: dataCustodians.length,
                 })}
+                defaultExpanded={dataCustodians.length > 0}
                 contents={dataCustodians.map(
                     ({
                         name,

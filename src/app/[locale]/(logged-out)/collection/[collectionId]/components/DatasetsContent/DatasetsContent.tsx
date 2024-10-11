@@ -6,10 +6,10 @@ import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
+import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { getLatestVersion } from "@/utils/dataset";
 import { capitalise } from "@/utils/general";
-import AccordionSection from "../AccordionSection";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
 
@@ -28,6 +28,7 @@ export default function DatasetContent({
     const datasetsLatestVersions = datasets.map(dataset =>
         getLatestVersion(dataset)
     );
+
     return (
         <InView
             id={`anchor${anchorIndex}`}
