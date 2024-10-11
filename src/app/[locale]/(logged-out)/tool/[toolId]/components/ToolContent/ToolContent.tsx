@@ -2,7 +2,6 @@
 
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -41,8 +40,6 @@ const ToolContent = ({
     populatedSections: ToolSection[];
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const router = useRouter();
-    const path = usePathname();
 
     return (
         <BoxContainer
