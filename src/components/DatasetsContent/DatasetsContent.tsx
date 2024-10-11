@@ -9,7 +9,6 @@ import { DataCustodianDataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { formatTextDelimiter } from "@/utils/dataset";
-import { toTitleCase } from "@/utils/string";
 
 export interface DatasetsContentProps {
     datasets: DataCustodianDataset[];
@@ -62,9 +61,7 @@ export default function DatasetContent({
                                     })}
                                 </div>
                             )}
-                            <div>
-                                {toTitleCase(formatTextDelimiter(datasetType))}
-                            </div>
+                            <div>{formatTextDelimiter(datasetType)}</div>
                         </Fragment>
                     )
                 )}
