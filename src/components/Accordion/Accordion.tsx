@@ -4,7 +4,7 @@ import MuiAccordion, {
 } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import { ChevronThinIcon } from "@/consts/icons";
+import { ChevronDownIcon } from "@/consts/icons";
 
 export interface AccordionProps
     extends Omit<MuiAccordionProps, "children" | "variant"> {
@@ -59,7 +59,7 @@ const Accordion = ({
             {...restProps}>
             <MuiAccordionSummary
                 expandIcon={
-                    <ChevronThinIcon fontSize="medium" color="primary" />
+                    <ChevronDownIcon fontSize="medium" color="primary" />
                 }>
                 {heading}
             </MuiAccordionSummary>

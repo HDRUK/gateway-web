@@ -23,7 +23,7 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
-import { ChevronThinIcon } from "@/consts/icons";
+import { ChevronDownIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
@@ -252,7 +252,7 @@ const ResultCard = ({
                                                 />
                                             }
                                             endIcon={
-                                                <ChevronThinIcon
+                                                <ChevronDownIcon
                                                     fontSize="medium"
                                                     style={{ color: "white" }}
                                                 />

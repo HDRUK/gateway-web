@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { ArrowForward } from "@/consts/icons";
+import { ArrowRightIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import EllipsisLineLimit from "../EllipsisLineLimit";
 import Link from "../Link";
@@ -75,7 +75,7 @@ const NewsSummaryCard = ({
                     <Link href={url} color="primary" passHref>
                         <Button
                             variant="text"
-                            endIcon={<ArrowForward color="primary" />}>
+                            endIcon={<ArrowRightIcon color="primary" />}>
                             {buttonText}
                         </Button>
                     </Link>

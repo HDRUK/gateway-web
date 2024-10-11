@@ -195,7 +195,7 @@ describe("Select", () => {
             />
         );
 
-        expect(screen.getByTestId("ArrowDropDownIcon")).toBeInTheDocument();
+        expect(screen.getByTestId("StockDownIcon")).toBeInTheDocument();
     });
 
     it("should render different icons", async () => {

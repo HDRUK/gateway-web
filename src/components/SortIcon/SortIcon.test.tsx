@@ -16,7 +16,7 @@ describe("SortIcon", () => {
             />
         );
 
-        expect(screen.getByTestId("ArrowDropUpIcon")).toBeInTheDocument();
+        expect(screen.getByTestId("StockUpIcon")).toBeInTheDocument();
     });
     it("should call setSort with updated direction", async () => {
         render(
@@ -28,7 +28,7 @@ describe("SortIcon", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("ArrowDropUpIcon"));
+        fireEvent.click(screen.getByTestId("StockUpIcon"));
         expect(setSortFn).toBeCalledWith({ direction: "desc", key: "mockKey" });
     });
 });

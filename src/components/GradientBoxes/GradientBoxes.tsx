@@ -3,7 +3,7 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import theme from "@/config/theme";
-import { ArrowForward, OpenInNewIcon } from "@/consts/icons";
+import { ArrowRightIcon, OpenInNewIcon } from "@/consts/icons";
 
 interface GradientBoxesProps {
     maxWidth?: number;
@@ -53,7 +53,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                         {item.externalUrl ? (
                             <OpenInNewIcon />
                         ) : (
-                            <ArrowForward />
+                            <ArrowRightIcon />
                         )}
                     </Link>
 

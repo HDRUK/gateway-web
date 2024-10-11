@@ -21,7 +21,7 @@ exports[`GradientBoxes should render title 1`] = `
         <svg
           aria-hidden="true"
           class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
-          data-testid="ArrowForwardIcon"
+          data-testid="ArrowRightIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -57,7 +57,7 @@ exports[`GradientBoxes should render title 1`] = `
         <svg
           aria-hidden="true"
           class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
-          data-testid="ArrowForwardIcon"
+          data-testid="ArrowRightIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >
@@ -93,7 +93,7 @@ exports[`GradientBoxes should render title 1`] = `
         <svg
           aria-hidden="true"
           class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
-          data-testid="ArrowForwardIcon"
+          data-testid="ArrowRightIcon"
           focusable="false"
           viewBox="0 0 24 24"
         >

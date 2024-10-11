@@ -3,7 +3,7 @@
 import { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
-import { ArrowBackIosNewIcon } from "@/consts/icons";
+import { ArrowLeftIcon } from "@/consts/icons";
 
 interface BackButtonProps {
     label: string;
@@ -27,7 +27,7 @@ const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
             sx={{ marginBottom: 2 }}
             variant="link"
             onClick={handleClick}
-            startIcon={<ArrowBackIosNewIcon />}
+            startIcon={<ArrowLeftIcon />}
             {...rest}>
             {label}
         </Button>

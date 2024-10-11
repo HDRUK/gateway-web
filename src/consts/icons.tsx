@@ -3,13 +3,6 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AppsIcon from "@mui/icons-material/Apps";
 import ArchiveIcon from "@mui/icons-material/Archive";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowForward from "@mui/icons-material/ArrowForward";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -76,13 +69,6 @@ export {
     AdminPanelSettingsIcon,
     AppsIcon,
     ArchiveIcon,
-    ArrowBackIosNewIcon,
-    ArrowDropDownIcon,
-    ArrowDropUpIcon,
-    ArrowForward,
-    ArrowForwardIosIcon,
-    ArrowLeftIcon,
-    ArrowRightIcon,
     ArticleIcon,
     BackupIcon,
     BookmarkBorderIcon,

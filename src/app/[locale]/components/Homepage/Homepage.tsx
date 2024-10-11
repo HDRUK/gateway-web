@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { isMobile } from "react-device-detect";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -18,7 +17,7 @@ import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import { StaticImages } from "@/config/images";
 import theme, { colors } from "@/config/theme";
-import { ArrowForward } from "@/consts/icons";
+import { ArrowRightIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
@@ -230,7 +229,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 <Button
                                     variant="text"
                                     endIcon={
-                                        <ArrowForwardIosIcon color="primary" />
+                                        <ArrowRightIcon color="primary" />
                                     }>
                                     {t("newsEvents.seeAllLink")}
                                 </Button>
@@ -277,7 +276,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 passHref>
                                 <Button
                                     variant="text"
-                                    endIcon={<ArrowForward color="primary" />}>
+                                    endIcon={
+                                        <ArrowRightIcon color="primary" />
+                                    }>
                                     {t("seeNow")}
                                 </Button>
                             </Link>

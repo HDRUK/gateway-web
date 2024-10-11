@@ -115,17 +115,37 @@ const SortAscIcon = createSvgIcon(
     "SortAscIcon"
 );
 
-const ChevronThinIcon = createSvgIcon(
-    <svg fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g id="chevron">
+const CloseIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="close/large">
             <path
-                id="Path"
-                d="M12 16.205C11.768 16.205 11.537 16.125 11.349 15.964L3.59003 9.31404L4.89203 7.79504L12 13.888L19.108 7.79504L20.41 9.31404L12.651 15.964C12.463 16.125 12.232 16.205 12 16.205Z"
-                fill="currentColor"
+                id="Combined Shape"
+                d="M19 3.58578L20.4142 5L13.415 12L20.4142 19L19 20.4142L12 13.415L5 20.4142L3.58578 19L10.585 12L3.58578 5L5 3.58578L12 10.585L19 3.58578Z"
+                fill="#475DA7"
             />
         </g>
     </svg>,
-    "SortAscIcon"
+    "CloseIcon"
+);
+
+const ChevronDownIcon = createSvgIcon(
+    <svg
+        width="18"
+        height="10"
+        viewBox="0 0 18 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M9 9.205C8.768 9.205 8.537 9.125 8.349 8.964L0.589996 2.314L1.892 0.794998L9 6.888L16.108 0.794998L17.41 2.314L9.651 8.964C9.463 9.125 9.232 9.205 9 9.205Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "ChevronDownIcon"
 );
 
 const SortDescIcon = createSvgIcon(
@@ -552,23 +572,142 @@ const PlusIcon = createSvgIcon(
     "PlusIcon"
 );
 
-const CloseIcon = createSvgIcon(
+const ChevronLeftIcon = createSvgIcon(
     <svg
-        width="18"
+        width="9"
         height="18"
-        viewBox="0 0 18 18"
+        viewBox="0 0 9 18"
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <path
-            id="Combined Shape"
-            d="M16 0.585785L17.4142 2L10.415 9L17.4142 16L16 17.4142L9 10.415L2 17.4142L0.585785 16L7.585 9L0.585785 2L2 0.585785L9 7.585L16 0.585785Z"
+            d="M7.4816 0.589966L8.9996 1.89197L2.9066 8.99997L8.9996 16.108L7.4816 17.41L0.830597 9.64996C0.509597 9.27596 0.509597 8.72296 0.830597 8.34896L7.4816 0.589966Z"
             fill="#475DA7"
         />
     </svg>,
-    "CloseIcon"
+    "ChevronLeftIcon"
+);
+
+const ChevronRightIcon = createSvgIcon(
+    <svg
+        width="9"
+        height="18"
+        viewBox="0 0 9 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M2.108 17.41L0.589996 16.108L6.683 9L0.589996 1.892L2.108 0.589996L8.759 8.35C9.08 8.724 9.08 9.277 8.759 9.651L2.108 17.41Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "ChevronRightIcon"
+);
+
+const ArrowRightIcon = createSvgIcon(
+    <svg
+        width="20"
+        height="17"
+        viewBox="0 0 20 17"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19.9706 8.78991C19.9847 8.49748 19.8604 8.22537 19.6622 8.02145L19.6081 7.94995L19.5462 7.88235L12.6134 0.949579C12.1849 0.521007 11.4454 0.521007 11.0168 0.949579C10.5882 1.37815 10.5882 2.11764 11.0168 2.54622L16.1317 7.66049L1.15966 7.65966C0.567504 7.65966 0.121752 8.11352 0.0410375 8.66937L0.0294085 8.78991C0.00195752 9.35854 0.497905 9.85031 1.04241 9.91335L1.15966 9.92017L16.1336 9.921L10.9832 15.0714C10.5546 15.5 10.5546 16.2395 10.9832 16.6681C11.3811 17.066 12.0472 17.0945 12.4835 16.7533L12.5798 16.6681L19.5126 9.73529C19.5673 9.6806 19.6151 9.62129 19.6562 9.55855C19.8415 9.35482 19.9565 9.08255 19.9706 8.78991Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "ArrowRightIcon"
+);
+
+const ArrowLeftIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M2.02941 12.2101C2.0153 12.5025 2.13961 12.7746 2.33777 12.9785L2.39193 13.05L2.45378 13.1176L9.38656 20.0504C9.81513 20.479 10.5546 20.479 10.9832 20.0504C11.4118 19.6218 11.4118 18.8824 10.9832 18.4538L5.86833 13.3395L20.8403 13.3403C21.4325 13.3403 21.8782 12.8865 21.959 12.3306L21.9706 12.2101C21.998 11.6415 21.5021 11.1497 20.9576 11.0867L20.8403 11.0798L5.86638 11.079L11.0168 5.92857C11.4454 5.5 11.4454 4.76051 11.0168 4.33193C10.6189 3.93397 9.9528 3.90555 9.51654 4.24666L9.42017 4.33193L2.4874 11.2647C2.4327 11.3194 2.38485 11.3787 2.34385 11.4414C2.15848 11.6452 2.04354 11.9175 2.02941 12.2101Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "ArrowLeftIcon"
+);
+
+const StockDownIcon = createSvgIcon(
+    <svg
+        width="12"
+        height="9"
+        viewBox="0 0 12 9"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M11.4998 0H0.499799C0.314213 7.51964e-05 0.143936 0.102936 0.0575175 0.267173C-0.0289011 0.431411 -0.017243 0.630002 0.0877986 0.783L5.5878 8.783C5.68108 8.91866 5.83516 8.99971 5.9998 8.99971C6.16443 8.99971 6.31852 8.91866 6.4118 8.783L11.9118 0.783C12.0168 0.630002 12.0285 0.431411 11.9421 0.267173C11.8557 0.102936 11.6854 7.51964e-05 11.4998 0Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "StockDownIcon"
+);
+
+const StockUpIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="stock/up">
+            <path
+                id="Path"
+                d="M17.4998 16.9997H6.4998C6.31421 16.9996 6.14394 16.8968 6.05752 16.7325C5.9711 16.5683 5.98276 16.3697 6.0878 16.2167L11.5878 8.2167C11.6811 8.08104 11.8352 8 11.9998 8C12.1644 8 12.3185 8.08104 12.4118 8.2167L17.9118 16.2167C18.0168 16.3697 18.0285 16.5683 17.9421 16.7325C17.8557 16.8968 17.6854 16.9996 17.4998 16.9997Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "StockUpIcon"
+);
+
+const StockUpIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="stock/up">
+            <path
+                id="Path"
+                d="M17.4998 16.9997H6.4998C6.31421 16.9996 6.14394 16.8968 6.05752 16.7325C5.9711 16.5683 5.98276 16.3697 6.0878 16.2167L11.5878 8.2167C11.6811 8.08104 11.8352 8 11.9998 8C12.1644 8 12.3185 8.08104 12.4118 8.2167L17.9118 16.2167C18.0168 16.3697 18.0285 16.5683 17.9421 16.7325C17.8557 16.8968 17.6854 16.9996 17.4998 16.9997Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "StockUpIcon"
+);
+
+const StockUpIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="stock/up">
+            <path
+                id="Path"
+                d="M17.4998 16.9997H6.4998C6.31421 16.9996 6.14394 16.8968 6.05752 16.7325C5.9711 16.5683 5.98276 16.3697 6.0878 16.2167L11.5878 8.2167C11.6811 8.08104 11.8352 8 11.9998 8C12.1644 8 12.3185 8.08104 12.4118 8.2167L17.9118 16.2167C18.0168 16.3697 18.0285 16.5683 17.9421 16.7325C17.8557 16.8968 17.6854 16.9996 17.4998 16.9997Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "StockUpIcon"
 );
 
 export {
+    StockUpIcon,
+    StockDownIcon,
+    ArrowRightIcon,
+    ArrowLeftIcon,
+    ChevronRightIcon,
+    ChevronLeftIcon,
     SpeechBubbleIcon,
     RemoveFilterIcon,
     SortAscIcon,
@@ -576,7 +715,7 @@ export {
     CheckboxCheckedIcon,
     CheckboxIndeterminateIcon,
     CheckboxIcon,
-    ChevronThinIcon,
+    ChevronDownIcon,
     CohortDiscoveryIcon,
     SendIcon,
     TeamIcon,

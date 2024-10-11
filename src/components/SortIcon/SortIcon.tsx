@@ -1,6 +1,6 @@
 import { IconButton } from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
-import { ArrowDropUpIcon } from "@/consts/icons";
+import { StockUpIcon } from "@/consts/icons";
 
 const updateSort = (key: string, sort: { key: string; direction: string }) => ({
     key,
@@ -23,7 +23,7 @@ const SortIcon = ({
     ariaLabel,
     icon,
 }: SortIconProps) => {
-    const Icon = icon || ArrowDropUpIcon;
+    const Icon = icon || StockUpIcon;
     return (
         <IconButton
             sx={{ p: 0 }}

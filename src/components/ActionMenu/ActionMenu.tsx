@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
-import { ArrowDropDownIcon } from "@mui/x-date-pickers";
+import { StockDownIcon } from "@mui/x-date-pickers";
 import { IconType } from "@/interfaces/Ui";
 import { buttonColourType } from "@/config/theme";
 
@@ -79,7 +79,7 @@ export default function ActionMenu({
                 disableRipple
                 disableElevation
                 onClick={handleClick}
-                endIcon={<ArrowDropDownIcon color="primary" />}>
+                endIcon={<StockDownIcon color="primary" />}>
                 {label}
             </Button>
             <StyledMenu

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button } from "@mui/material";
 import Cookies from "js-cookie";
 import { get } from "lodash";
@@ -21,6 +20,7 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { StockDownIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 
@@ -189,7 +189,7 @@ const ActionDropdown = ({
         <>
             <Button
                 variant="contained"
-                endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
+                endIcon={<StockDownIcon style={{ color: colors.white }} />}
                 sx={{ py: 0.5 }}
                 onClick={handleOpenDropdownMenu}
                 aria-label={title ? `${t("actions")} for ${title}` : undefined}>

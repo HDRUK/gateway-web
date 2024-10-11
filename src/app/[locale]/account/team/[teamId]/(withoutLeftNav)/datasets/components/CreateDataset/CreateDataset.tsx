@@ -41,7 +41,7 @@ import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { DataStatus } from "@/consts/application";
-import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -596,7 +596,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                     pb: 0.5,
                     pl: 2,
                 }}>
-                <ArrowBackIosNewIcon fontSize="small" />
+                <ArrowLeftIcon fontSize="small" />
                 {t("backToManagementPage")}
             </Link>
 
@@ -765,7 +765,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                             }
                             disabled={isFirstSection(currentSectionIndex)}
                             variant="text"
-                            startIcon={<ArrowBackIosNewIcon />}>
+                            startIcon={<ArrowLeftIcon />}>
                             {t("previous")}
                         </Button>
                     </FormFooterItem>
@@ -781,7 +781,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                 formSections,
                                 currentSectionIndex
                             )}
-                            endIcon={<ArrowForwardIosIcon />}>
+                            endIcon={<ArrowRightIcon />}>
                             {t("next")}
                         </Button>
                     </FormFooterItem>

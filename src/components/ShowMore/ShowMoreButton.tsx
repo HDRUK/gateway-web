@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ArrowDropDownIcon } from "@/consts/icons";
+import { StockDownIcon } from "@/consts/icons";
 
 export interface ShowMoreButtonProps extends Omit<ButtonProps, "onClick"> {
     open?: boolean;
@@ -16,7 +16,7 @@ export default function ShowMoreButton({ onClick, open }: ShowMoreButtonProps) {
             size="small"
             onClick={() => onClick?.(!open)}
             endIcon={
-                <ArrowDropDownIcon
+                <StockDownIcon
                     fontSize="large"
                     sx={{
                         transform: `rotate(${open ? 180 : 0}deg)`,
