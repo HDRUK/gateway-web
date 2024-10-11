@@ -100,7 +100,10 @@ const formatTextDelimiter = (text: string | string[] | number) => {
         ? text.join(", ") // Join array elements with ", " if it's an array
         : typeof text === "number"
         ? text.toLocaleString()
-        : text?.replaceAll(";,;", ", ");
+        : text
+              ?.replaceAll(";", "")
+              .replace(/,+/, ", ")
+              .replace(/^\s*,\s*|\s*,\s*$/, "");
 };
 
 export {
