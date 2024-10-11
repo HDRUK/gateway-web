@@ -6,8 +6,7 @@ import { useTranslations } from "next-intl";
 import { Dataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import { getLatestVersion } from "@/utils/dataset";
-import { formatTextDelimiter } from "@/utils/dataset";
+import { formatTextDelimiter, getLatestVersion } from "@/utils/dataset";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
 
