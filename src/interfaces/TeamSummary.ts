@@ -15,6 +15,8 @@ interface TeamSummary {
     tools: Tool[];
     publications: Publication[];
     collections: Collection[];
+    url: string | null;
+    service: string[] | null;
 }
 
 export type { TeamSummary };

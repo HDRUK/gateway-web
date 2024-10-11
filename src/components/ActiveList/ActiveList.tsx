@@ -55,7 +55,9 @@ const ActiveList = ({
                                     }}
                                 />
                             }>
-                            <Typography fontSize="14">{item.label}</Typography>
+                            <Typography fontSize="14" sx={{ width: "100%" }}>
+                                {item.label}
+                            </Typography>
                         </Button>
                     </li>
                 );
