@@ -23,7 +23,7 @@ import {
 } from "@/config/forms/dataUseAccountSearch";
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { AddIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -195,7 +195,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                               content: t("actions.unarchive.content"),
                           });
                       },
-                      icon: UnarchiveIcon,
+                      icon: ArchiveNoIcon,
                       label: t("actions.unarchive.label"),
                   },
               ]

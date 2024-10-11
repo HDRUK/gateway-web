@@ -1,8 +1,6 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AppsIcon from "@mui/icons-material/Apps";
-import ArchiveIcon from "@mui/icons-material/Archive";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -41,7 +39,6 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -55,7 +52,7 @@ import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 import StorageIcon from "@mui/icons-material/Storage";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import UnarchiveIcon from "@mui/icons-material/Unarchive";
+import ArchiveNoIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import WarningIcon from "@mui/icons-material/Warning";
@@ -64,11 +61,9 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 export * from "./customIcons";
 
 export {
-    AccountCircleIcon,
     AddAPhotoIcon,
     AdminPanelSettingsIcon,
     AppsIcon,
-    ArchiveIcon,
     ArticleIcon,
     BackupIcon,
     BookmarkBorderIcon,
@@ -107,7 +102,6 @@ export {
     LockIcon,
     MenuIcon,
     OpenInNewIcon,
-    PersonOutlineOutlinedIcon,
     PriorityHighIcon,
     QuestionAnswerIcon,
     RemoveCircleIcon,
@@ -121,7 +115,7 @@ export {
     StorageIcon,
     StorageOutlinedIcon,
     SupervisorAccountIcon,
-    UnarchiveIcon,
+    ArchiveNoIcon,
     UploadFileIcon,
     ViewListIcon,
     WarningIcon,

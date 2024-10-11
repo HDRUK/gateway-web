@@ -9,7 +9,7 @@ import Form from "@/components/Form";
 import LabelAndDescription from "@/components/LabelAndDescription";
 import SelectComponent from "@/components/Select";
 import {
-    AccountCircleIcon,
+    PersonPlaceholderIcon,
     AdminPanelSettingsIcon,
     BackupIcon,
     SupervisorAccountIcon,
@@ -139,7 +139,7 @@ const WrapperComponent = () => {
                 <SelectComponent
                     label="with icon left"
                     control={control}
-                    icon={AccountCircleIcon}
+                    icon={PersonPlaceholderIcon}
                     options={options}
                     name="third"
                 />
@@ -167,7 +167,7 @@ const WrapperComponent = () => {
                 <SelectComponent
                     label="invert list item"
                     invertListItem
-                    icon={AccountCircleIcon}
+                    icon={PersonPlaceholderIcon}
                     options={options}
                     control={control}
                     name="seventh"

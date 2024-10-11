@@ -16,7 +16,7 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import QuestionListItem from "../QuestionBankListItem/QuestionBankListItem";
 
@@ -52,7 +52,7 @@ const QuestionBankList = () => {
             : [
                   {
                       href: `/to-be-implemented`,
-                      icon: UnarchiveIcon,
+                      icon: ArchiveNoIcon,
                       label: t("unarchive.label"),
                   },
               ]),

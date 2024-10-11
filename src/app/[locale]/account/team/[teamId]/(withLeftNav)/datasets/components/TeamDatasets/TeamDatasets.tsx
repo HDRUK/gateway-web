@@ -30,7 +30,7 @@ import {
     ArchiveIcon,
     ContentCopyIcon,
     EditIcon,
-    UnarchiveIcon,
+    ArchiveNoIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -212,7 +212,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                               content: t("actions.unarchive.content"),
                           });
                       },
-                      icon: UnarchiveIcon,
+                      icon: ArchiveNoIcon,
                       label: t("actions.unarchive.label"),
                   },
               ]

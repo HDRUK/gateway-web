@@ -12,7 +12,7 @@ import {
     BookmarkIcon,
     BookmarksOutlinedIcon,
     PublicationIcon,
-    PersonOutlineOutlinedIcon,
+    PersonOutlineIcon,
     CohortIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -22,7 +22,7 @@ const getProfileNav = (permissions: {
 }): LeftNavItem[] => {
     return [
         {
-            icon: <PersonOutlineOutlinedIcon />,
+            icon: <PersonOutlineIcon />,
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },

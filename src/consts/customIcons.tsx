@@ -665,43 +665,111 @@ const StockUpIcon = createSvgIcon(
     "StockUpIcon"
 );
 
-const StockUpIcon = createSvgIcon(
+const PersonPlaceholderIcon = createSvgIcon(
     <svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
-        <g id="stock/up">
-            <path
-                id="Path"
-                d="M17.4998 16.9997H6.4998C6.31421 16.9996 6.14394 16.8968 6.05752 16.7325C5.9711 16.5683 5.98276 16.3697 6.0878 16.2167L11.5878 8.2167C11.6811 8.08104 11.8352 8 11.9998 8C12.1644 8 12.3185 8.08104 12.4118 8.2167L17.9118 16.2167C18.0168 16.3697 18.0285 16.5683 17.9421 16.7325C17.8557 16.8968 17.6854 16.9996 17.4998 16.9997Z"
-                fill="#475DA7"
-            />
+        <g id="Group" clipPath="url(#clip0_0_1031)">
+            <circle id="Face" cx="12" cy="12" r="12" fill="#B8E2D8" />
+            <mask
+                id="mask0_0_1031"
+                style={{ maskType: "luminance" }}
+                maskUnits="userSpaceOnUse"
+                x="0"
+                y="0"
+                width="24"
+                height="24">
+                <circle id="Face_2" cx="12" cy="12" r="12" fill="white" />
+            </mask>
+            <g mask="url(#mask0_0_1031)">
+                <path
+                    id="Path"
+                    d="M16.3527 17.3775C15.0134 16.9167 14.3253 15.9108 13.9759 15.1C15.9052 13.9217 16.9091 11.125 16.9091 9C16.9091 6.23833 14.7115 4 12 4C9.28855 4 7.09091 6.23833 7.09091 9C7.09091 11.1267 8.09564 13.925 10.0274 15.1017C9.67964 15.9192 8.99318 16.9325 7.65709 17.3742C5.30073 18.1517 3 18.4058 3 22.3333V24H21V22.3333C21 18.4642 18.8015 18.22 16.3527 17.3775Z"
+                    fill="#3DB28C"
+                />
+            </g>
         </g>
+        <defs>
+            <clipPath id="clip0_0_1031">
+                <rect width="24" height="24" fill="white" />
+            </clipPath>
+        </defs>
     </svg>,
-    "StockUpIcon"
+    "PersonPlaceholderIcon"
 );
 
-const StockUpIcon = createSvgIcon(
+const PersonOutlineIcon = createSvgIcon(
     <svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg">
-        <g id="stock/up">
+        <g id="person/outline">
             <path
-                id="Path"
-                d="M17.4998 16.9997H6.4998C6.31421 16.9996 6.14394 16.8968 6.05752 16.7325C5.9711 16.5683 5.98276 16.3697 6.0878 16.2167L11.5878 8.2167C11.6811 8.08104 11.8352 8 11.9998 8C12.1644 8 12.3185 8.08104 12.4118 8.2167L17.9118 16.2167C18.0168 16.3697 18.0285 16.5683 17.9421 16.7325C17.8557 16.8968 17.6854 16.9996 17.4998 16.9997Z"
+                id="Combined Shape"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12 0C8.68672 0 6 2.68672 6 6C6 9.45789 8.77534 13 12 13C15.2247 13 18 9.45789 18 6C18 2.68672 15.3133 0 12 0ZM12 2C14.2087 2 16 3.79128 16 6C16 8.44552 13.9985 11 12 11C10.0015 11 8 8.44552 8 6C8 3.79128 9.79128 2 12 2ZM22 21C22 17.1337 18.8663 14 15 14H9C5.13372 14 2 17.1337 2 21V22.73L2.69522 22.9524C3.13155 23.092 3.94847 23.2911 5.13413 23.4867C7.08186 23.8079 9.37454 24 12 24C14.6255 24 16.9181 23.8079 18.8659 23.4867L19.3869 23.3964C20.2939 23.2313 20.9356 23.0706 21.3048 22.9524L22 22.73V21ZM15 16L15.2169 16.0046C17.878 16.1182 20 18.311 20 21V21.227L19.6961 21.2959C19.3511 21.3699 18.9657 21.4432 18.5404 21.5133C16.699 21.8171 14.5152 22 12 22C9.48484 22 7.30095 21.8171 5.45962 21.5133L5.1481 21.4602C4.94543 21.4244 4.75278 21.388 4.5702 21.3513L4 21.228V21C4 18.2383 6.23829 16 9 16H15Z"
                 fill="#475DA7"
             />
         </g>
     </svg>,
-    "StockUpIcon"
+    "PersonOutlineIcon"
+);
+
+const ArchiveYesIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_5598_270)">
+            <path
+                d="M20.54 5.23L19.15 3.55C18.88 3.21 18.47 3 18 3H6C5.53 3 5.12 3.21 4.84 3.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V6.5C21 6.02 20.83 5.57 20.54 5.23ZM12 17.5L6.5 12H10V10H14V12H17.5L12 17.5ZM5.12 5L5.93 4H17.93L18.87 5H5.12Z"
+                fill="#475DA7"
+            />
+        </g>
+        <defs>
+            <clipPath id="clip0_5598_270">
+                <rect width="24" height="24" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>,
+    "ArchiveYesIcon"
+);
+
+const ArchiveNoIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_5599_2409)">
+            <path
+                d="M20.54 18.77L19.15 20.45C18.88 20.79 18.47 21 18 21H6C5.53 21 5.12 20.79 4.84 20.45L3.46 18.77C3.17 18.43 3 17.98 3 17.5V5C3 3.9 3.9 3 5 3H19C20.1 3 21 3.9 21 5V17.5C21 17.98 20.83 18.43 20.54 18.77ZM12 6.5L6.5 12H10V14H14V12H17.5L12 6.5ZM5.12 19L5.93 20H17.93L18.87 19H5.12Z"
+                fill="#475DA7"
+            />
+        </g>
+        <defs>
+            <clipPath id="clip0_5599_2409">
+                <rect width="24" height="24" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>,
+    "ArchiveNoIcon"
 );
 
 export {
+    ArchiveNoIcon,
+    ArchiveYesIcon,
+    PersonOutlineIcon,
+    PersonPlaceholderIcon,
     StockUpIcon,
     StockDownIcon,
     ArrowRightIcon,
