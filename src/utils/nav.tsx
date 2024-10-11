@@ -6,8 +6,7 @@ import {
     HelpOutlineOutlinedIcon,
     DataUseIcon,
     SettingsOutlinedIcon,
-    DatabaseIcon,
-    CloudUploadIcon,
+    DatabaseIcon, // CloudUploadIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
     BookmarksOutlinedIcon,
@@ -115,39 +114,39 @@ const getTeamNav = (
                   },
               ]
             : []),
-        // ...([
-        //     permissions["applications.read"],
-        //     permissions["integrations.metadata"],
-        //     permissions["integrations.dar"],
-        // ].some(isTrue => isTrue)
-        //     ? [
-        //           {
-        //               icon: <CloudUploadIcon />,
-        //               label: "Integrations",
-        //               subItems: [
-        //                   ...(permissions["applications.read"]
-        //                       ? [
-        //                             {
-        //                                 label: "Private apps",
-        //                                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
-        //                             },
-        //                         ]
-        //                       : []),
-        //                   ...([
-        //                       permissions["integrations.metadata"],
-        //                       permissions["integrations.dar"],
-        //                   ].some(isTrue => isTrue)
-        //                       ? [
-        //                             {
-        //                                 label: "Gateway apps",
-        //                                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
-        //                             },
-        //                         ]
-        //                       : []),
-        //               ],
-        //           },
-        //       ]
-        //     : []),
+        /*...([
+            permissions["applications.read"],
+            permissions["integrations.metadata"],
+            permissions["integrations.dar"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <CloudUploadIcon />,
+                      label: "Integrations",
+                      subItems: [
+                          ...(permissions["applications.read"]
+                              ? [
+                                    {
+                                        label: "Private apps",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
+                                    },
+                                ]
+                              : []),
+                          ...([
+                              permissions["integrations.metadata"],
+                              permissions["integrations.dar"],
+                          ].some(isTrue => isTrue)
+                              ? [
+                                    {
+                                        label: "Gateway apps",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
+                                    },
+                                ]
+                              : []),
+                      ],
+                  },
+              ]
+            : []), */
         ...(permissions["datasets.read"]
             ? [
                   {
