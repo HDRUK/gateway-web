@@ -173,9 +173,14 @@ async function getDataUse(
 
 async function getTool(
     cookieStore: ReadonlyRequestCookies,
-    toolId: string
+    toolId: string,
+    options?: GetOptions
 ): Promise<Tool> {
-    const tool = await get<Tool>(cookieStore, `${apis.toolsV1UrlIP}/${toolId}`);
+    const tool = await get<Tool>(
+        cookieStore,
+        `${apis.toolsV1UrlIP}/${toolId}`,
+        options
+    );
 
     return tool;
 }
