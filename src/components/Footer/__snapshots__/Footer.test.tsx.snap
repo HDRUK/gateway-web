@@ -45,7 +45,7 @@ exports[`Footer should render component 1`] = `
                   width="17"
                 />
                 <span>
-                  Twitter
+                  X
                 </span>
               </span>
             </a>
