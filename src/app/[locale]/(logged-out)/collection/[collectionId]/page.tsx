@@ -1,4 +1,3 @@
-import Markdown from "markdown-to-jsx";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
@@ -6,6 +5,7 @@ import { VersionItem } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import MarkDownParsed from "@/components/MarkDownParsed";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
@@ -93,7 +93,9 @@ export default async function CollectionItemPage({
                             <Typography variant="h3" sx={{ mb: 1 }}>
                                 {t("introTitle")}
                             </Typography>
-                            <Markdown>{collection.description}</Markdown>
+                            <MarkDownParsed>
+                                {collection.description}
+                            </MarkDownParsed>
                         </Box>
                         <Box>
                             <DatasetsContent
