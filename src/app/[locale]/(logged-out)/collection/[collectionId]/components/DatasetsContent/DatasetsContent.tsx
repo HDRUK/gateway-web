@@ -7,7 +7,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { getLatestVersion } from "@/utils/dataset";
-import { capitalise } from "@/utils/general";
+import { formatTextDelimiter } from "@/utils/dataset";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
 
@@ -63,7 +63,7 @@ export default function DatasetContent({
                                 })}
                             </div>
                         )}
-                        <div>{capitalise(datasetType)}</div>
+                        <div>{formatTextDelimiter(datasetType)}</div>
                     </Fragment>
                 )
             )}

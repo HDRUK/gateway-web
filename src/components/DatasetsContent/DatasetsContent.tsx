@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import { toTitleCase } from "@/utils/string";
+import { formatTextDelimiter } from "@/utils/dataset";
 
 export interface DatasetsContentProps {
     datasets: DataCustodianDataset[];
@@ -47,7 +47,7 @@ export default function DatasetContent({
                                 })}
                             </div>
                         )}
-                        <div>{toTitleCase(datasetType)}</div>
+                        <div>{formatTextDelimiter(datasetType)}</div>
                     </Fragment>
                 )
             )}
