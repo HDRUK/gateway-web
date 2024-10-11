@@ -30,8 +30,7 @@ describe("LeftNav", () => {
         expect(getByText("Cohort Discovery Admin")).toBeInTheDocument();
     });
 
-    {
-        /* it("renders expanded items", () => {
+    /* it("renders expanded items", () => {
         mockRouter.push(
             `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
         );
@@ -65,5 +64,4 @@ describe("LeftNav", () => {
         ).toBeInTheDocument();
         expect(within(buttons[4]).getByText("Help")).toBeInTheDocument();
     }); */
-    }
 });
