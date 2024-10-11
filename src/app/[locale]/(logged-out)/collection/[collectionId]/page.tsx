@@ -1,6 +1,7 @@
 import Markdown from "markdown-to-jsx";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
@@ -35,7 +36,11 @@ export default async function CollectionItemPage({
     const { collectionId } = params;
     const cookieStore = cookies();
     const t = await getTranslations(TRANSLATION_PATH);
-    const collection = await getCollection(cookieStore, collectionId);
+    const collection = await getCollection(cookieStore, collectionId, {
+        suppressError: true,
+    });
+
+    if (!collection) notFound();
 
     const datasets = await Promise.all(
         collection.datasets.map(({ id }) =>

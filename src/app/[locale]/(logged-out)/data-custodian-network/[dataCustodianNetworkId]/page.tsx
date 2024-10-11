@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
@@ -31,8 +32,14 @@ export default async function DataCustodianNetworkPage({
 
     const summaryData = await getNetworkSummary(
         cookieStore,
-        dataCustodianNetworkId
+        dataCustodianNetworkId,
+        {
+            suppressError: true,
+        }
     );
+
+    if (!summaryData) notFound();
+
     const networkData = await getDataCustodianNetworks(
         cookieStore,
         dataCustodianNetworkId

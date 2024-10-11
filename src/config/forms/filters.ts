@@ -18,6 +18,7 @@ export const FILTER_TYPE_CATEGORY = "typeCategory";
 export const FILTER_CONTAINS_TISSUE = "containsTissue";
 export const FILTER_MATERIAL_TYPE = "sampleAvailability";
 export const FILTER_DATA_TYPE = "dataType";
+export const FILTER_COLLECTION_NAME = "collectionName";
 
 export const filtersList = [
     FILTER_PUBLISHER_NAME,
@@ -40,4 +41,5 @@ export const filtersList = [
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
     FILTER_DATA_TYPE,
+    FILTER_COLLECTION_NAME,
 ];

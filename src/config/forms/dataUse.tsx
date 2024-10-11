@@ -30,7 +30,7 @@ const defaultValues = {
     access_date: "",
     access_type: "",
     privacy_enhancements: "",
-    safeOutput: [],
+    non_gateway_outputs: [],
     applicants: [],
     datasets: [],
     keywords: [],
@@ -418,7 +418,7 @@ const formFields = [
         fields: [
             {
                 label: "Link to research outputs (optional)",
-                name: "safeOutput",
+                name: "non_gateway_outputs",
                 info: "A URL link to any academic or non-academic research outputs, as they become available, including code used. If the link is to a Gateway resource, this will automatically populate in related resources.",
                 component: inputComponents.Autocomplete,
                 // TODO - populate this list

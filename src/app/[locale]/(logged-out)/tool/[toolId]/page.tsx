@@ -1,6 +1,7 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
@@ -30,7 +31,11 @@ export default async function ToolPage({
 
     const { toolId } = params;
     const cookieStore = cookies();
-    const data = await getTool(cookieStore, toolId);
+    const data = await getTool(cookieStore, toolId, {
+        suppressError: true,
+    });
+
+    if (!data) notFound();
 
     const populatedSections = toolFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))

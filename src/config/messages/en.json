@@ -184,7 +184,7 @@
             },
             "cohortDiscoveryRequest": {
                 "title": "Cohort Discovery Registration",
-                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, Orcid id and role description.",
+                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, ORCID id and role description.",
                 "userDeclaration": "User Declaration",
                 "userDeclarationAdditional": "All users of the Cohort Discovery are required to accept the declaration below.",
                 "statementIntro": "I confirm that my use of the tool will be for the sole purpose of understanding the size of populations relevant to a particular research question and that any resulting study or clinical trial will be for public benefit as defined by the National Data Guardian.",
@@ -321,14 +321,14 @@
                         "RightPanel": {
                             "generalEnquiries": {
                                 "title": "General Enquiry",
-                                "text": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a general enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "feasibilityEnquiries": {
                                 "title": "Feasibility Enquiry",
-                                "text": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a feasibility enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
@@ -685,6 +685,7 @@
             "flashyText": "Explore the different functionalities of the Gateway",
             "touchDevice": "Explore the different functionalities of the Gateway",
             "seeNow": "See now",
+            "meetTheTeam": "Meet the Team",
             "newsCardButtonText": "Read more",
             "welcomeTitle": "Welcome to the Gateway",
             "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
@@ -836,6 +837,8 @@
                             "dataTypeTooltip": "The focus areas to which the dataset content relates",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
+                            "collectionName": "Collection name",
+                            "collectionNameTooltip": "Title of collection theme",
                             "dataUseTitles": "Data Uses / Research projects",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",

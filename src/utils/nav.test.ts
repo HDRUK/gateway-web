@@ -29,47 +29,47 @@ describe("Nav utils", () => {
             );
         });
 
-        it("should include Data Access Requests Applications item", () => {
-            const navItems = getTeamNav(
-                { "data-access-applications.provider.read": true },
-                teamId
-            );
-            const darItem = navItems.find(
-                item => item.label === "Data Access Requests"
-            );
+        // it("should include Data Access Requests Applications item", () => {
+        //     const navItems = getTeamNav(
+        //         { "data-access-applications.provider.read": true },
+        //         teamId
+        //     );
+        //     const darItem = navItems.find(
+        //         item => item.label === "Data Access Requests"
+        //     );
 
-            expect(darItem).toBeDefined();
-            expect(darItem?.subItems).toBeDefined();
+        //     expect(darItem).toBeDefined();
+        //     expect(darItem?.subItems).toBeDefined();
 
-            const applicationsItem = darItem?.subItems?.find(
-                item => item.label === "Applications"
-            );
-            expect(applicationsItem).toBeDefined();
-            expect(applicationsItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
-            );
-        });
-        it("should include Data Access Requests Edit form", () => {
-            const navItems = getTeamNav(
-                { "data-access-template.read": true },
-                teamId
-            );
-            const darItem = navItems.find(
-                item => item.label === "Data Access Requests"
-            );
+        //     const applicationsItem = darItem?.subItems?.find(
+        //         item => item.label === "Applications"
+        //     );
+        //     expect(applicationsItem).toBeDefined();
+        //     expect(applicationsItem?.href).toBe(
+        //         `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+        //     );
+        // });
+        // it("should include Data Access Requests Edit form", () => {
+        //     const navItems = getTeamNav(
+        //         { "data-access-template.read": true },
+        //         teamId
+        //     );
+        //     const darItem = navItems.find(
+        //         item => item.label === "Data Access Requests"
+        //     );
 
-            expect(darItem).toBeDefined();
-            expect(darItem?.subItems).toBeDefined();
+        //     expect(darItem).toBeDefined();
+        //     expect(darItem?.subItems).toBeDefined();
 
-            const editFormItem = darItem?.subItems?.find(
-                item => item.label === "Manage Templates"
-            );
+        //     const editFormItem = darItem?.subItems?.find(
+        //         item => item.label === "Manage Templates"
+        //     );
 
-            expect(editFormItem).toBeDefined();
-            expect(editFormItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`
-            );
-        });
+        //     expect(editFormItem).toBeDefined();
+        //     expect(editFormItem?.href).toBe(
+        //         `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`
+        //     );
+        // });
 
         it("should include Data Uses item", () => {
             const navItems = getTeamNav({ "dur.update": true }, teamId);
