@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
+import { formatTextDelimiter } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 
 export interface DatasetsContentProps {
@@ -61,7 +62,9 @@ export default function DatasetContent({
                                     })}
                                 </div>
                             )}
-                            <div>{toTitleCase(datasetType)}</div>
+                            <div>
+                                {toTitleCase(formatTextDelimiter(datasetType))}
+                            </div>
                         </Fragment>
                     )
                 )}
