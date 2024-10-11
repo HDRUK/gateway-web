@@ -350,6 +350,49 @@
                     "entityType": {
                         "label": "Entity Type"
                     }
+                },
+                "collections": {
+                    "create": {
+                        "title": "Manage or create a Collection",
+                        "intro": "Collections are groupings of useful resources based on set criteria, and are a useful way for a Researcher to explore resources that are linked to each other. Types of Collections could include resources related to a research domain, research hub or research project.",
+                        "addImages": "Collection image cover (recommended)",
+                        "addImagesInfo": "Upload an image W700 x H350 (1:0.5). If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
+                        "addImageSuccess": "Image uploaded",
+                        "aspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height)",
+                        "fileSelectButtonText": "Upload file",
+                        "addResources": "Add resources",
+                        "addResourcesInfo": "Link resources in the Gateway to your Collection",
+                        "addResourceButton": "Add resource",
+                        "cancel": "Cancel",
+                        "saveDraft": "Save as draft",
+                        "publish": "Publish",
+                        "labelTag": "Collection"
+                    },
+                    "components": {
+                        "Collections": {
+                            "title": "Collections",
+                            "text": " View, add, edit, archive and check the status of your collections.",
+                            "create": "Add new Collection",
+                            "actions": {
+                                "unarchive": {
+                                    "buttonText": "Make Active",
+                                    "confirmText": "Make Draft",
+                                    "title": "Unarchive the Collection so it is live on the Gateway",
+                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
+                                    "label": "Unarchive the Collection so it is live on the Gateway"
+                                },
+                                "edit": {
+                                    "label": "Edit Collection metadata"
+                                },
+                                "archive": {
+                                    "label": "Archive the Collection so it is no longer live on the Gateway"
+                                }
+                            }
+                        },
+                        "CollectionsTab": {
+                            "notFound": "No {label} collections found"
+                        }
+                    }
                 }
             },
             "team": {

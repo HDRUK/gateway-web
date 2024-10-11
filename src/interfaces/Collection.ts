@@ -28,6 +28,7 @@ interface Collection {
     publications: Publication[];
     counter?: number;
     team_id?: number;
+    user_id?: string;
     image_link: string;
 }
 
