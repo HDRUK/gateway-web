@@ -2,14 +2,43 @@
 
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 import BackButton from "@/components/BackButton";
+import useAuth from "@/hooks/useAuth";
+import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ActionBarWrapper } from "./ActionBar.styles";
+import { Team } from "@/interfaces/Team";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";
+interface ActionBarProps {
+    team: Pick<Team, "id" | "name" | "member_of">;
+}
 
-const ActionBar = () => {
+const ActionBar = ({ team }: ActionBarProps) => {
+    const path = usePathname();
+    const { isLoggedIn } = useAuth();
+    const showGeneralEnquiry = useGeneralEnquiry();
+
     const t = useTranslations(TRANSLATION_PATH);
+
+    console.log('team', team);
+    const result = {
+        // this is a temp hack
+        // these components were originally built for SearchDatasetResult.......
+        // -- which is some weird combo of elastic and GWDM
+        // - this might cause problems in the future too as our metadata is HDRUK not GWDM
+        // - have to have something working for now....
+        _id: null,
+        team,
+    };
+
+    const handleGeneralEnquiryClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event?.stopPropagation();
+        showGeneralEnquiry({ dataset: result, isLoggedIn, redirectPath: path });
+    };
 
     return (
         <ActionBarWrapper>
@@ -19,6 +48,7 @@ const ActionBar = () => {
                 <Button
                     color="primary"
                     variant="contained"
+                    onClick={handleGeneralEnquiryClick}
                     startIcon={<SpeechBubbleIcon />}>
                     {t("enquire")}
                 </Button>

@@ -7,6 +7,7 @@ import { Tool } from "@/interfaces/Tool";
 interface TeamSummary {
     id: number;
     name: string;
+    member_of: string;
     team_logo: string;
     is_provider: boolean;
     introduction: string | null;

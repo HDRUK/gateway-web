@@ -41,6 +41,8 @@ export default async function DataCustodianItemPage({
 
     if (!data) notFound();
 
+    console.log("data", data);
+    
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );
@@ -69,7 +71,13 @@ export default async function DataCustodianItemPage({
                             {data.name}
                         </Typography>
                     </Box>
-                    <ActionBar />
+                    <ActionBar
+                        team={{
+                            id: data.id,
+                            name: data.name,
+                            member_of: data.member_of,
+                        }}
+                    />
                     <Box
                         sx={{
                             display: "flex",
