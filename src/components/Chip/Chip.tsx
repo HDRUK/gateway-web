@@ -4,7 +4,7 @@ import { ResourceType } from "@/interfaces/AddResource";
 import { colors } from "@/config/theme";
 import {
     DataUseIcon,
-    DatabaseIcon,
+    DatasetIcon,
     PublicationIcon,
     ToolIcon,
 } from "@/consts/customIcons";
@@ -16,7 +16,7 @@ export interface ChipProps extends MuiChipProps {
 
 const resourceChipConfig = {
     [ResourceType.DATASET]: {
-        icon: <DatabaseIcon sx={{ "*": { fill: "white" } }} />,
+        icon: <DatasetIcon sx={{ "*": { fill: "white" } }} />,
         sx: { color: "white", backgroundColor: "secondary.main" },
     },
     [ResourceType.PUBLICATION]: {

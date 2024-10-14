@@ -6,7 +6,6 @@ import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
 import CheckBoxSharpIcon from "@mui/icons-material/CheckBoxSharp";
@@ -21,7 +20,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
-import DownloadIcon from "@mui/icons-material/Download";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -37,7 +35,6 @@ import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateChe
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
-import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -52,10 +49,8 @@ import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 import StorageIcon from "@mui/icons-material/Storage";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import ArchiveNoIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ViewListIcon from "@mui/icons-material/ViewList";
-import WarningIcon from "@mui/icons-material/Warning";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 export * from "./customIcons";
@@ -69,7 +64,6 @@ export {
     BookmarkBorderIcon,
     BookmarkIcon,
     BookmarksOutlinedIcon,
-    CancelIcon,
     CheckBoxOutlineBlankSharpIcon,
     CheckBoxSharpIcon,
     CheckCircleIcon,
@@ -84,7 +78,6 @@ export {
     DescriptionIcon,
     DescriptionOutlinedIcon,
     DocumentScannerIcon,
-    DownloadIcon,
     DragIndicatorIcon,
     ExpandLessIcon,
     ExpandMoreIcon,
@@ -100,7 +93,6 @@ export {
     KeyboardDoubleArrowDownIcon,
     LaunchIcon,
     LockIcon,
-    MenuIcon,
     OpenInNewIcon,
     PriorityHighIcon,
     QuestionAnswerIcon,
@@ -115,9 +107,7 @@ export {
     StorageIcon,
     StorageOutlinedIcon,
     SupervisorAccountIcon,
-    ArchiveNoIcon,
     UploadFileIcon,
     ViewListIcon,
-    WarningIcon,
     WarningRoundedIcon,
 };

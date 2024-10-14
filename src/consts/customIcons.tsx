@@ -665,6 +665,36 @@ const StockUpIcon = createSvgIcon(
     "StockUpIcon"
 );
 
+const StockRightIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M7.4998 17.9999L7.4998 6.99987C7.49988 6.81428 7.60274 6.644 7.76697 6.55758C7.93121 6.47117 8.1298 6.48282 8.2828 6.58787L16.2828 12.0879C16.4185 12.1811 16.4995 12.3352 16.4995 12.4999C16.4995 12.6645 16.4185 12.8186 16.2828 12.9119L8.2828 18.4119C8.1298 18.5169 7.93121 18.5286 7.76697 18.4421C7.60274 18.3557 7.49988 18.1855 7.4998 17.9999Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "StockRightIcon"
+);
+
+const StockLeftIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M7.4998 17.9999L7.4998 6.99987C7.49988 6.81428 7.60274 6.644 7.76697 6.55758C7.93121 6.47117 8.1298 6.48282 8.2828 6.58787L16.2828 12.0879C16.4185 12.1811 16.4995 12.3352 16.4995 12.4999C16.4995 12.6645 16.4185 12.8186 16.2828 12.9119L8.2828 18.4119C8.1298 18.5169 7.93121 18.5286 7.76697 18.4421C7.60274 18.3557 7.49988 18.1855 7.4998 17.9999Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "StockLeftIcon"
+);
+
 const PersonPlaceholderIcon = createSvgIcon(
     <svg
         width="24"
@@ -765,7 +795,262 @@ const ArchiveNoIcon = createSvgIcon(
     "ArchiveNoIcon"
 );
 
+const DownloadIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "DownloadIcon"
+);
+
+const TableIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 9H15V3H9V9H5L12 16L19 9ZM5 18V20H19V18H5Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "TableIcon"
+);
+
+const ExternalLinkIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="external link">
+            <path
+                id="Combined Shape"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M18 0.585785L16.5858 2L19.5852 5H19L18.7116 5.00371C12.7698 5.15663 8 10.0213 8 16H10L10.0038 15.7346C10.1442 10.8868 14.1182 7 19 7H19.5852L16.5858 10L18 11.4142L23.4142 6L18 0.585785ZM8 7V9H3V21H17V14H19V23H1V7H8Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "ExternalLinkIcon"
+);
+
+const ArrowDownIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="arrow/down">
+            <path
+                id="Path"
+                d="M12.2101 21.9706C12.5025 21.9847 12.7746 21.8604 12.9785 21.6622L13.05 21.6081L13.1176 21.5462L20.0504 14.6134C20.479 14.1849 20.479 13.4454 20.0504 13.0168C19.6218 12.5882 18.8823 12.5882 18.4538 13.0168L13.3395 18.1317L13.3403 3.15966C13.3403 2.5675 12.8865 2.12175 12.3306 2.04104L12.2101 2.02941C11.6415 2.00196 11.1497 2.49791 11.0866 3.04241L11.0798 3.15966L11.079 18.1336L5.92857 12.9832C5.49999 12.5546 4.7605 12.5546 4.33193 12.9832C3.93397 13.3811 3.90554 14.0472 4.24665 14.4835L4.33193 14.5798L11.2647 21.5126C11.3194 21.5673 11.3787 21.6151 11.4414 21.6562C11.6452 21.8415 11.9174 21.9565 12.2101 21.9706Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "ArrowDownIcon"
+);
+
+const ArrowUpIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="arrow/up">
+            <path
+                id="Path"
+                d="M12.2101 2.02941C12.5025 2.01529 12.7746 2.13961 12.9785 2.33777L13.05 2.39193L13.1176 2.45378L20.0504 9.38655C20.479 9.81512 20.479 10.5546 20.0504 10.9832C19.6218 11.4118 18.8823 11.4118 18.4538 10.9832L13.3395 5.86832L13.3403 20.8403C13.3403 21.4325 12.8865 21.8782 12.3306 21.959L12.2101 21.9706C11.6415 21.998 11.1497 21.5021 11.0866 20.9576L11.0798 20.8403L11.079 5.86638L5.92857 11.0168C5.49999 11.4454 4.7605 11.4454 4.33193 11.0168C3.93397 10.6188 3.90554 9.95279 4.24665 9.51653L4.33193 9.42017L11.2647 2.48739C11.3194 2.4327 11.3787 2.38485 11.4414 2.34384C11.6452 2.15848 11.9174 2.04354 12.2101 2.02941Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "ArrowUpIcon"
+);
+
+const ShoppingCartIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M7 22C6.45 22 5.97917 21.8042 5.5875 21.4125C5.19583 21.0208 5 20.55 5 20C5 19.45 5.19583 18.9792 5.5875 18.5875C5.97917 18.1958 6.45 18 7 18C7.55 18 8.02083 18.1958 8.4125 18.5875C8.80417 18.9792 9 19.45 9 20C9 20.55 8.80417 21.0208 8.4125 21.4125C8.02083 21.8042 7.55 22 7 22ZM17 22C16.45 22 15.9792 21.8042 15.5875 21.4125C15.1958 21.0208 15 20.55 15 20C15 19.45 15.1958 18.9792 15.5875 18.5875C15.9792 18.1958 16.45 18 17 18C17.55 18 18.0208 18.1958 18.4125 18.5875C18.8042 18.9792 19 19.45 19 20C19 20.55 18.8042 21.0208 18.4125 21.4125C18.0208 21.8042 17.55 22 17 22ZM6.15 6L8.55 11H15.55L18.3 6H6.15ZM5.2 4H19.95C20.3333 4 20.625 4.17083 20.825 4.5125C21.025 4.85417 21.0333 5.2 20.85 5.55L17.3 11.95C17.1167 12.2833 16.8708 12.5417 16.5625 12.725C16.2542 12.9083 15.9167 13 15.55 13H8.1L7 15H19V17H7C6.25 17 5.68333 16.6708 5.3 16.0125C4.91667 15.3542 4.9 14.7 5.25 14.05L6.6 11.6L3 4H1V2H4.25L5.2 4Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "ShoppingCartIcon"
+);
+
+const ShoppingCartPlusIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g clipPath="url(#clip0_5877_21726)">
+            <path
+                d="M11 9V6H8V4H11V1H13V4H16V6H13V9H11ZM7 22C6.45 22 5.97917 21.8042 5.5875 21.4125C5.19583 21.0208 5 20.55 5 20C5 19.45 5.19583 18.9792 5.5875 18.5875C5.97917 18.1958 6.45 18 7 18C7.55 18 8.02083 18.1958 8.4125 18.5875C8.80417 18.9792 9 19.45 9 20C9 20.55 8.80417 21.0208 8.4125 21.4125C8.02083 21.8042 7.55 22 7 22ZM17 22C16.45 22 15.9792 21.8042 15.5875 21.4125C15.1958 21.0208 15 20.55 15 20C15 19.45 15.1958 18.9792 15.5875 18.5875C15.9792 18.1958 16.45 18 17 18C17.55 18 18.0208 18.1958 18.4125 18.5875C18.8042 18.9792 19 19.45 19 20C19 20.55 18.8042 21.0208 18.4125 21.4125C18.0208 21.8042 17.55 22 17 22ZM1 4V2H4.275L8.525 11H15.525L19.425 4H21.7L17.3 11.95C17.1167 12.2833 16.8708 12.5417 16.5625 12.725C16.2542 12.9083 15.9167 13 15.55 13H8.1L7 15H19V17H7C6.25 17 5.67917 16.675 5.2875 16.025C4.89583 15.375 4.88333 14.7167 5.25 14.05L6.6 11.6L3 4H1Z"
+                fill="#475DA7"
+            />
+        </g>
+        <defs>
+            <clipPath id="clip0_5877_21726">
+                <rect width="24" height="24" fill="white" />
+            </clipPath>
+        </defs>
+    </svg>,
+    "ShoppingCartPlusIcon"
+);
+
+const CancelIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="12" fill="#DC3645" />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M7.9355 6.25165C7.46475 5.88562 6.78407 5.91889 6.35149 6.35147C5.88286 6.8201 5.88286 7.5799 6.35149 8.04853L10.303 12L6.35147 15.9515C5.88284 16.4201 5.88284 17.1799 6.35147 17.6485C6.78405 18.0811 7.46473 18.1144 7.93548 17.7484L8.04853 17.6485L12 13.697L15.9515 17.6485L16.0645 17.7484C16.5353 18.1144 17.216 18.0811 17.6485 17.6485C18.1172 17.1799 18.1172 16.4201 17.6485 15.9515L13.6971 12L17.6485 8.04853C18.1172 7.5799 18.1172 6.8201 17.6485 6.35147C17.2159 5.91889 16.5353 5.88562 16.0645 6.25165L15.9515 6.35147L12 10.3029L8.04854 6.35147L7.9355 6.25165Z"
+            fill="white"
+        />
+    </svg>,
+    "CancelIcon"
+);
+
+const ThreeDotsVerticalIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="7" r="2" fill="#B3B8BD" />
+        <circle cx="12" cy="12" r="2" fill="#B3B8BD" />
+        <circle cx="12" cy="17" r="2" fill="#B3B8BD" />
+    </svg>,
+    "ThreeDotsVerticalIcon"
+);
+
+const ThreeDotsHorizontalIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="three-dots/horizontal">
+            <path
+                id="Combined Shape"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M1 12C1 10.3431 2.34315 9 4 9C5.65685 9 7 10.3431 7 12C7 13.6569 5.65685 15 4 15C2.34315 15 1 13.6569 1 12ZM5 12C5 11.4477 4.55228 11 4 11C3.44772 11 3 11.4477 3 12C3 12.5523 3.44772 13 4 13C4.55228 13 5 12.5523 5 12ZM9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12ZM13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12ZM20 9C18.3431 9 17 10.3431 17 12C17 13.6569 18.3431 15 20 15C21.6569 15 23 13.6569 23 12C23 10.3431 21.6569 9 20 9ZM20 11C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13C19.4477 13 19 12.5523 19 12C19 11.4477 19.4477 11 20 11Z"
+                fill="#475DA7"
+            />
+        </g>
+    </svg>,
+    "ThreeDotsHorizontalIcon"
+);
+
+const DoubleArrowLeftIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M15.4816 3.58997L16.9996 4.89197L10.9066 12L16.9996 19.108L15.4816 20.41L8.8306 12.65C8.5096 12.276 8.5096 11.723 8.8306 11.349L15.4816 3.58997Z"
+            fill="#475DA7"
+        />
+        <path
+            d="M10.4816 3.58997L11.9996 4.89197L5.9066 12L11.9996 19.108L10.4816 20.41L3.8306 12.65C3.5096 12.276 3.5096 11.723 3.8306 11.349L10.4816 3.58997Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "DoubleArrowLeftIcon"
+);
+
+const DoubleArrowRightIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M8.51841 20.41L7.00041 19.108L13.0934 12L7.00041 4.89203L8.51841 3.59003L15.1694 11.35C15.4904 11.724 15.4904 12.277 15.1694 12.651L8.51841 20.41Z"
+            fill="#475DA7"
+        />
+        <path
+            d="M13.5184 20.41L12.0004 19.108L18.0934 12L12.0004 4.89203L13.5184 3.59003L20.1694 11.35C20.4904 11.724 20.4904 12.277 20.1694 12.651L13.5184 20.41Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "DoubleArrowRightIcon"
+);
+
+const MenuIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <g id="menu">
+            <g id="Combined Shape">
+                <mask id="path-1-inside-1_0_653" fill="white">
+                    <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M4 5H20V7H4V5ZM4 11H20V13H4V11ZM20 17H4V19H20V17Z"
+                    />
+                </mask>
+                <path
+                    d="M20 5H21V4H20V5ZM4 5V4H3V5H4ZM20 7V8H21V7H20ZM4 7H3V8H4V7ZM20 11H21V10H20V11ZM4 11V10H3V11H4ZM20 13V14H21V13H20ZM4 13H3V14H4V13ZM4 17V16H3V17H4ZM20 17H21V16H20V17ZM4 19H3V20H4V19ZM20 19V20H21V19H20ZM20 4H4V6H20V4ZM21 7V5H19V7H21ZM4 8H20V6H4V8ZM3 5V7H5V5H3ZM20 10H4V12H20V10ZM21 13V11H19V13H21ZM4 14H20V12H4V14ZM3 11V13H5V11H3ZM4 18H20V16H4V18ZM5 19V17H3V19H5ZM20 18H4V20H20V18ZM19 17V19H21V17H19Z"
+                    fill="#475DA7"
+                    mask="url(#path-1-inside-1_0_653)"
+                />
+            </g>
+        </g>
+    </svg>,
+    "MenuIcon"
+);
+
 export {
+    MenuIcon,
+    DoubleArrowRightIcon,
+    DoubleArrowLeftIcon,
+    StockLeftIcon,
+    StockRightIcon,
+    ThreeDotsHorizontalIcon,
+    ThreeDotsVerticalIcon,
+    CancelIcon,
+    ShoppingCartPlusIcon,
+    ShoppingCartIcon,
+    DownloadIcon,
+    ExternalLinkIcon,
+    TableIcon,
+    ArrowDownIcon,
+    ArrowUpIcon,
     ArchiveNoIcon,
     ArchiveYesIcon,
     PersonOutlineIcon,

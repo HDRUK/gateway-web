@@ -6,7 +6,7 @@ import {
     HelpOutlineOutlinedIcon,
     DataUseIcon,
     SettingsOutlinedIcon,
-    DatabaseIcon,
+    DatasetIcon,
     CloudUploadIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
@@ -151,7 +151,7 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: <DatabaseIcon color="secondary" />,
+                      icon: <DatasetIcon color="secondary" />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },
