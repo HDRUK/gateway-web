@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import dayjs from "dayjs";
 import { rangeRight } from "lodash";
 import { useTranslations } from "next-intl";
 import { ReleaseNode } from "@/interfaces/Releases";
@@ -21,14 +22,13 @@ const TRANSLATIONS_NAMESPACE_RELEASES = "pages.releases";
 const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
     const [expanded, setExpanded] = useState<string | null>(null);
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
+    const currentYear = dayjs().year();
 
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : null);
     };
 
-    const startYear = 2021;
-    const currentYear = new Date().getFullYear();
-    const years = rangeRight(startYear, currentYear + 1).map(String);
+    const years = rangeRight(currentYear, currentYear + 2).map(String);
 
     const generatedReleases = useMemo(() => {
         return years.map(year => {

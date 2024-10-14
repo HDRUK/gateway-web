@@ -12,7 +12,7 @@ import Box from "@/components/Box";
 import NewsSummaryCard from "@/components/NewsSummaryCard";
 import Tabs from "@/components/Tabs";
 import { RouteName } from "@/consts/routeName";
-import { getReleaseByYear } from "@/utils/releaseNotes";
+import { getNewsEventsByYear } from "@/utils/newsEvents";
 
 interface ContentProps {
     data: EventNode[] | NewsNode[];
@@ -31,7 +31,7 @@ const Content = ({ data }: ContentProps) => {
         const years = rangeRight(currentYear, currentYear + 2).map(String);
 
         return years.map(year => {
-            const dataByYear = getReleaseByYear(data, year);
+            const dataByYear = getNewsEventsByYear(data, year);
 
             return {
                 label: year,
