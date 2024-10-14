@@ -7,7 +7,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import theme from "@/config/theme";
-import { AddIcon } from "@/consts/icons";
+import { PlusIcon } from "@/consts/icons";
 import {
     ACCOUNT,
     COMPONENTS,
@@ -100,7 +100,7 @@ const FormFieldArray = ({
 
             <Button
                 onClick={() => append(generateEmptyArrayFields)}
-                startIcon={<AddIcon sx={{ height: 14, width: 14 }} />}
+                startIcon={<PlusIcon sx={{ height: 14, width: 14 }} />}
                 sx={{ mb: theme.spacing(3) }}>
                 {t("add")}
             </Button>

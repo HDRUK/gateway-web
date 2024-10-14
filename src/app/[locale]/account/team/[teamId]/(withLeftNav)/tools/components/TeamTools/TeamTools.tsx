@@ -23,7 +23,7 @@ import {
 } from "@/config/forms/toolAccountSearch";
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
+import { PlusIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -283,7 +283,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                     </Box>
 
                     {showAddNewButton && (
-                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                        <Button onClick={handleAdd} startIcon={<PlusIcon />}>
                             {t("create")}
                         </Button>
                     )}

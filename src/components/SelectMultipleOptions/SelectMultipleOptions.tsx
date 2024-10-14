@@ -3,7 +3,7 @@ import { SxProps } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Option } from "@/interfaces/Option";
 import SelectMultipleOption from "@/components/SelectMultipleOption";
-import { AddIcon, RemoveIcon } from "@/consts/icons";
+import { PlusIcon, RemoveIcon } from "@/consts/icons";
 import Box from "../Box";
 import BoxContainer from "../BoxContainer";
 
@@ -73,7 +73,7 @@ const SelectMultipleOptions = ({
                                 size="large"
                                 edge="start"
                                 onClick={handleAdd}>
-                                <AddIcon />
+                                <PlusIcon />
                             </IconButton>
                         </Box>
                     )}

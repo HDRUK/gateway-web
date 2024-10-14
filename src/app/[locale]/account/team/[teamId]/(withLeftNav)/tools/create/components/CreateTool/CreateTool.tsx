@@ -42,7 +42,7 @@ import {
     toolValidationSchema,
 } from "@/config/forms/tool";
 import { DataStatus } from "@/consts/application";
-import { AddIcon } from "@/consts/icons";
+import { PlusIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import DatasetRelationshipFields from "../DatasetRelationshipFields";
 
@@ -402,7 +402,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                                     onClick={handleAddResource}
                                     variant="outlined"
                                     color="secondary"
-                                    startIcon={<AddIcon />}>
+                                    startIcon={<PlusIcon />}>
                                     {t("addResourceButton")}
                                 </Button>
 

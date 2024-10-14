@@ -44,7 +44,7 @@ import {
     collectionValidationSchema,
 } from "@/config/forms/collection";
 import { DataStatus } from "@/consts/application";
-import { AddIcon } from "@/consts/icons";
+import { PlusIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
 interface CollectionCreateProps {
@@ -458,7 +458,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
                                     onClick={handleAddResource}
                                     variant="outlined"
                                     color="secondary"
-                                    startIcon={<AddIcon />}>
+                                    startIcon={<PlusIcon />}>
                                     {t(
                                         `${TRANSLATION_PATH_CREATE}.addResourceButton`
                                     )}

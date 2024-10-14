@@ -23,7 +23,7 @@ import {
 } from "@/config/forms/collectionAccountSearch";
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
+import { PlusIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import CollectionsTab from "../CollectionsTab";
@@ -280,7 +280,7 @@ const TeamCollections = ({
                     </Box>
 
                     {showAddNewButton && (
-                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                        <Button onClick={handleAdd} startIcon={<PlusIcon />}>
                             {t("create")}
                         </Button>
                     )}

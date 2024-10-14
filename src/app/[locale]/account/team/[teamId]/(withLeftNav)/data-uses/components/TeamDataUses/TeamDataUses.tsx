@@ -23,7 +23,7 @@ import {
 } from "@/config/forms/dataUseAccountSearch";
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
+import { PlusIcon, ArchiveIcon, EditIcon, ArchiveNoIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -276,7 +276,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                     </Box>
 
                     {showAddNewButton && (
-                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                        <Button onClick={handleAdd} startIcon={<PlusIcon />}>
                             {t("create")}
                         </Button>
                     )}

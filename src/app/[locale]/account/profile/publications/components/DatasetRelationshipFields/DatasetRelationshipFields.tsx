@@ -15,7 +15,7 @@ import {
     DatasetRelationship,
     publicationFormArrayFields,
 } from "@/config/forms/publication";
-import { AddIcon, RemoveIcon } from "@/consts/icons";
+import { PlusIcon, RemoveIcon } from "@/consts/icons";
 
 interface OptionType {
     label: string;
@@ -148,7 +148,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                                     id: undefined,
                                 })
                             }>
-                            <AddIcon />
+                            <PlusIcon />
                         </IconButton>
                     </Box>
                 </Box>

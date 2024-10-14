@@ -14,7 +14,7 @@ import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { DatasetRelationship, toolFormArrayFields } from "@/config/forms/tool";
-import { AddIcon, RemoveIcon } from "@/consts/icons";
+import { PlusIcon, RemoveIcon } from "@/consts/icons";
 
 interface OptionType {
     label: string;
@@ -152,7 +152,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                                     id: undefined,
                                 })
                             }>
-                            <AddIcon />
+                            <PlusIcon />
                         </IconButton>
                     </Box>
                 </Box>

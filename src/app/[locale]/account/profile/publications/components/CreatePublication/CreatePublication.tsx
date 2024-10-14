@@ -42,7 +42,7 @@ import {
     publicationValidationSchema,
 } from "@/config/forms/publication";
 import { DataStatus } from "@/consts/application";
-import { AddIcon } from "@/consts/icons";
+import { PlusIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import DatasetRelationshipFields from "../DatasetRelationshipFields";
 
@@ -331,7 +331,7 @@ const CreatePublication = ({
                                     onClick={handleAddResource}
                                     variant="outlined"
                                     color="secondary"
-                                    startIcon={<AddIcon />}>
+                                    startIcon={<PlusIcon />}>
                                     {t("addResourceButton")}
                                 </Button>
 

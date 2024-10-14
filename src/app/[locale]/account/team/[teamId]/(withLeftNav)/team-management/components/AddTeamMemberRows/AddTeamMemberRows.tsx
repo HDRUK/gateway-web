@@ -9,7 +9,7 @@ import {
     addTeamMemberFormFields,
     getRoleOptions,
 } from "@/config/forms/addTeamMember";
-import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
+import { PlusIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 
 interface AddTeamMemberRowsProps<TFieldValues extends FieldValues> {
     fields: FieldArrayWithId<AddTeamMember, "userAndRoles", "id">[];
@@ -101,7 +101,7 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
                                         roles: [],
                                     })
                                 }>
-                                <AddIcon />
+                                <PlusIcon />
                             </IconButton>
                         </Box>
                     </Box>

@@ -26,7 +26,7 @@ import {
 import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import {
-    AddIcon,
+    PlusIcon,
     ArchiveIcon,
     ContentCopyIcon,
     EditIcon,
@@ -292,7 +292,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                     </Box>
 
                     {showAddNewButton && (
-                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                        <Button onClick={handleAdd} startIcon={<PlusIcon />}>
                             {t("create")}
                         </Button>
                     )}

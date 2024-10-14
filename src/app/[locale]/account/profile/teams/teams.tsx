@@ -8,7 +8,7 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
-import { AddIcon } from "@/consts/icons";
+import { PlusIcon } from "@/consts/icons";
 import { Routes } from "@/consts/routes";
 import TeamsList from "./components/TeamsList";
 
@@ -37,7 +37,7 @@ export default function Teams({
                     </div>
                     {permissions["custodians.create"] && (
                         <Link passHref href={Routes.ACCOUNT_CREATE_TEAM}>
-                            <Button startIcon={<AddIcon />}>
+                            <Button startIcon={<PlusIcon />}>
                                 {t("addTeamButton")}
                             </Button>
                         </Link>

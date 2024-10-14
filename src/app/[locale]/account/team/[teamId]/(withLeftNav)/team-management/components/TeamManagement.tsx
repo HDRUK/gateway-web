@@ -10,7 +10,7 @@ import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
-import { AddIcon } from "@/consts/icons";
+import { PlusIcon } from "@/consts/icons";
 import AddTeamMemberDialog from "./AddTeamMemberDialog";
 import EmailNotifications from "./EmailNotifications";
 import TeamMembers from "./TeamMembers";
@@ -75,7 +75,7 @@ export default function TeamManagement({
                                         teamId: team.id,
                                     })
                                 }>
-                                <AddIcon /> Add a new member
+                                <PlusIcon /> Add a new member
                             </Button>
                         )}
                     </Box>
