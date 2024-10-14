@@ -1,13 +1,13 @@
 import { EventNode } from "@/interfaces/Events";
-import { mockedEventNode } from "@/mocks/data/newsEvents";
+import { generateEventNode } from "@/mocks/data/cms/v1/cms.data";
 import { getNewsEventsByYear } from "./newsEvents";
 
 jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
 
 const mockedArgs: EventNode[] = [
-    mockedEventNode("2024-01-01", "1"),
-    mockedEventNode("2024-01-02", "2"),
-    mockedEventNode("2025-01-03", "3"),
+    generateEventNode("2024-01-01", "1"),
+    generateEventNode("2024-01-02", "2"),
+    generateEventNode("2025-01-03", "3"),
 ];
 
 describe("NewsEvents utils", () => {

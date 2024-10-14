@@ -1,13 +1,13 @@
 import { ReleaseNode } from "@/interfaces/Releases";
-import { mockedReleaseNode } from "@/mocks/data/releases";
+import { generateReleaseNode } from "@/mocks/data/cms/v1/cms.data";
 import { getReleaseByYear } from "./releaseNotes";
 
 jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
 
 const mockedReleases: ReleaseNode[] = [
-    mockedReleaseNode("2024-01-15", "1"),
-    mockedReleaseNode("2024-02-20", "2"),
-    mockedReleaseNode("2023-12-10", "3"),
+    generateReleaseNode("2024-01-15", "1"),
+    generateReleaseNode("2024-02-20", "2"),
+    generateReleaseNode("2023-12-10", "3"),
 ];
 
 describe("ReleaseNotes utils", () => {
