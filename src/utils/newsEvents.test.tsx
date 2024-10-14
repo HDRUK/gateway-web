@@ -4,7 +4,7 @@ import { getNewsEventsByYear } from "./newsEvents";
 
 jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
 
-const mockedArgs: EventNode[] = [
+const mockedEvents: EventNode[] = [
     generateEventNode("2024-01-01", "1"),
     generateEventNode("2024-01-02", "2"),
     generateEventNode("2025-01-03", "3"),
@@ -12,9 +12,9 @@ const mockedArgs: EventNode[] = [
 
 describe("NewsEvents utils", () => {
     it("should filter events by year", () => {
-        const result = getNewsEventsByYear(mockedArgs, "2024");
+        const result = getNewsEventsByYear(mockedEvents, "2024");
 
-        expect(result).toEqual([mockedArgs[0].node, mockedArgs[1].node]);
+        expect(result).toEqual([mockedEvents[0].node, mockedEvents[1].node]);
     });
 
     it("should handle empty events array", () => {
@@ -24,7 +24,7 @@ describe("NewsEvents utils", () => {
     });
 
     it("should handle non-matching year", () => {
-        const result = getNewsEventsByYear(mockedArgs, "2023");
+        const result = getNewsEventsByYear(mockedEvents, "2023");
 
         expect(result).toEqual([]);
     });
