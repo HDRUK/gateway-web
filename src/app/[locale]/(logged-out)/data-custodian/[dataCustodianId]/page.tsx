@@ -69,7 +69,13 @@ export default async function DataCustodianItemPage({
                             {data.name}
                         </Typography>
                     </Box>
-                    <ActionBar />
+                    <ActionBar
+                        team={{
+                            id: data.id,
+                            name: data.name,
+                            member_of: data.member_of,
+                        }}
+                    />
                     <Box
                         sx={{
                             display: "flex",
