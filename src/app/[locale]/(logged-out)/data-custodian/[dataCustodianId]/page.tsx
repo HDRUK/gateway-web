@@ -41,8 +41,6 @@ export default async function DataCustodianItemPage({
 
     if (!data) notFound();
 
-    console.log("data", data);
-    
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );

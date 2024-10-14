@@ -3,12 +3,12 @@
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { Team } from "@/interfaces/Team";
 import BackButton from "@/components/BackButton";
 import useAuth from "@/hooks/useAuth";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { ActionBarWrapper } from "./ActionBar.styles";
-import { Team } from "@/interfaces/Team";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";
 interface ActionBarProps {
@@ -22,7 +22,6 @@ const ActionBar = ({ team }: ActionBarProps) => {
 
     const t = useTranslations(TRANSLATION_PATH);
 
-    console.log('team', team);
     const result = {
         // this is a temp hack
         // these components were originally built for SearchDatasetResult.......
