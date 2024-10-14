@@ -1,4 +1,3 @@
-import { redirect, RedirectType } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
