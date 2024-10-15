@@ -49,6 +49,8 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
     // eslint-disable-next-line no-underscore-dangle
     const resultId = result._id;
 
+    console.log("result", result);
+
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
@@ -168,9 +170,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                         href={`${RouteName.DATA_PROVIDERS_ITEM}/${result.team.id}`}>
                                         {`${result.team?.member_of} > `}
                                         <EllipsisCharacterLimit
-                                            text={
-                                                "sadasd sadasd asdsad asdasd asdasd asdasdas asdasd asdasdasd"
-                                            }
+                                            text={result.team?.name}
                                             characterLimit={CHARACTER_LIMIT}
                                         />
                                     </Link>
