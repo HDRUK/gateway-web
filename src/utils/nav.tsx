@@ -3,7 +3,7 @@ import {
     ControlPointIcon,
     DescriptionIcon,
     ToolIcon,
-    HelpOutlineOutlinedIcon,
+    HelpOutlineIcon,
     DataUseIcon,
     SettingsOutlinedIcon,
     DatasetIcon,
@@ -231,7 +231,7 @@ const getTeamNav = (
               ]
             : []),
         {
-            icon: <HelpOutlineOutlinedIcon />,
+            icon: <HelpOutlineIcon />,
             label: "Help",
             href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.HELP}`,
         },

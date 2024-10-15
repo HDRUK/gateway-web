@@ -29,8 +29,6 @@ import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -87,8 +85,6 @@ export {
     GroupsIcon,
     GroupsOutlinedIcon,
     HandymanOutlinedIcon,
-    HelpOutlineIcon,
-    HelpOutlineOutlinedIcon,
     IndeterminateCheckBoxSharpIcon,
     KeyboardDoubleArrowDownIcon,
     LaunchIcon,
