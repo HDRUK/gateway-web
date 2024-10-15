@@ -170,7 +170,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                         href={`${RouteName.DATA_PROVIDERS_ITEM}/${result.team.id}`}>
                                         {`${result.team?.member_of} > `}
                                         <EllipsisCharacterLimit
-                                            text={result.team?.name}
+                                            text={result.team.name}
                                             characterLimit={CHARACTER_LIMIT}
                                         />
                                     </Link>
