@@ -150,7 +150,7 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: <DatabaseIcon color="secondary" />,
+                      icon: <DatabaseIcon />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },

@@ -103,7 +103,9 @@ const SavedSearches = () => {
                     <Typography sx={{ marginBottom: 4 }}>
                         {t("text")}
                     </Typography>
-
+                    {!list?.length && (
+                        <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
+                    )}
                     {savedSearchesData?.total && (
                         <ShowingXofX
                             to={savedSearchesData?.to}
