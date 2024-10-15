@@ -92,6 +92,7 @@ export interface SearchResultDataUse extends SearchResultBase {
         description: string;
     };
     team: {
+        id: number;
         member_of: string;
         name: string;
     };
