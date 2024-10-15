@@ -89,6 +89,9 @@ const SavedSearches = () => {
                     <Typography sx={{ marginBottom: 4 }}>
                         {t("text")}
                     </Typography>
+                    {!savedSearchesData?.length && (
+                        <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
+                    )}
                 </Box>
                 <List>
                     {savedSearchesData?.map((data, i: number) => {

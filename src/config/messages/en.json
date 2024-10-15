@@ -760,6 +760,7 @@
         },
         "saved_searches": {
             "title": "Saved searches",
+            "noResults": "There are no saved searches",
             "text": "Use this page to display saved search results and manage your saved searches.",
             "labels": {
                 "entityType": "Entity type",
