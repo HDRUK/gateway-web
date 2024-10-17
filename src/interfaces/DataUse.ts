@@ -6,6 +6,12 @@ import { User } from "./User";
 
 export type DatasetWithTitle = Dataset & { shortTitle: string };
 
+export interface ReducedDataUse {
+    id: number;
+    project_title: string;
+    organisation_name: string;
+}
+
 export interface DataUse {
     id: number;
     created_at: Date | Dayjs | string;

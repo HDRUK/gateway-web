@@ -3,16 +3,15 @@
 import { Fragment } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Dataset } from "@/interfaces/Dataset";
+import { ReducedDataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import { getLatestVersion } from "@/utils/dataset";
 import { capitalise } from "@/utils/general";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
 
 export interface DatasetsContentProps {
-    datasets: Dataset[];
+    datasets: ReducedDataset[];
     anchorIndex: number;
 }
 
@@ -21,36 +20,23 @@ export default function DatasetContent({
     anchorIndex,
 }: DatasetsContentProps) {
     const t = useTranslations(TRANSLATION_PATH);
-    const datasetsLatestVersions = datasets.map(dataset =>
-        getLatestVersion(dataset)
-    );
 
     return (
         <AccordionSection
             id={`anchor${anchorIndex}`}
-            disabled={!datasetsLatestVersions.length}
+            disabled={!datasets.length}
             heading={t("heading", {
-                length: datasetsLatestVersions.length,
+                length: datasets.length,
             })}
-            defaultExpanded={datasetsLatestVersions.length > 0}
-            contents={datasetsLatestVersions.map(
+            defaultExpanded={datasets.length > 0}
+            contents={datasets.map(
                 (
-                    {
-                        metadata: {
-                            metadata: {
-                                summary: {
-                                    shortTitle,
-                                    datasetType,
-                                    populationSize,
-                                },
-                            },
-                        },
-                    },
+                    { shortTitle, datasetType, populationSize },
                     index: number
                 ) => (
-                    <Fragment key={`dataset_${datasets[index].id}`}>
+                    <Fragment key={`dataset_${datasets[index].dataset_id}`}>
                         <Link
-                            href={`/${RouteName.DATASET_ITEM}/${datasets[index].id}`}>
+                            href={`/${RouteName.DATASET_ITEM}/${datasets[index].dataset_id}`}>
                             {shortTitle}
                         </Link>
                         {populationSize && (

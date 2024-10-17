@@ -3,11 +3,11 @@
 import { Fragment } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Publication } from "@/interfaces/Publication";
+import { Publication, ReducedPublication } from "@/interfaces/Publication";
 import AccordionSection from "@/components/AccordionSection";
 
 export interface PublicationsContentProps {
-    publications: Publication[];
+    publications: Publication[] | ReducedPublication[];
     anchorIndex: number;
     translationPath: string;
 }

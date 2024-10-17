@@ -3,13 +3,13 @@
 import { Fragment } from "react";
 import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Tool } from "@/interfaces/Tool";
+import { ReducedTool, Tool } from "@/interfaces/Tool";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 
 export interface ToolsContentProps {
-    tools: Tool[];
+    tools: Tool[] | ReducedTool[];
     anchorIndex: number;
     translationPath: string;
 }
