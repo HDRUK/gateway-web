@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "dev"
+      - "fix/webpack-debugging"
 
 env:
   PROJECT_ID: "${{ secrets.PROJECT_ID }}"
@@ -24,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "fix/webpack-debugging"
 
       - name: Read VERSION file
         id: getversion
@@ -73,7 +74,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "fix/webpack-debugging"
 
       - name: Google Auth
         id: auth
