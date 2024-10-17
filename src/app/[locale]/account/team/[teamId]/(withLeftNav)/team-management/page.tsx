@@ -22,11 +22,5 @@ export default async function TeamManagementPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    return (
-        <ProtectedAccountRoute
-            permissions={permissions}
-            pagePermissions={["roles.read"]}>
-            <TeamManagement permissions={permissions} team={team} />
-        </ProtectedAccountRoute>
-    );
+    return <TeamManagement permissions={permissions} team={team} />;
 }

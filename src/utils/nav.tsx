@@ -13,6 +13,7 @@ import {
     PublicationIcon,
     PersonOutlineOutlinedIcon,
     CohortIcon,
+    CloudUploadIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -114,7 +115,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        /* ...([
+        ...([
             permissions["applications.read"],
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -146,7 +147,7 @@ const getTeamNav = (
                       ],
                   },
               ]
-            : []), */
+            : []),
         ...(permissions["datasets.read"]
             ? [
                   {
