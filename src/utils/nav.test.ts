@@ -83,7 +83,7 @@ describe("Nav utils", () => {
             );
         });
 
-        /* it("should include API management", () => {
+        it("should include API management", () => {
             const navItems = getTeamNav({ "applications.read": true }, teamId);
             const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
@@ -102,27 +102,27 @@ describe("Nav utils", () => {
             );
         });
 
-        it("should include Integrations", () => {
-            const navItems = getTeamNav(
-                { "integrations.metadata": true, "integrations.dar": true },
-                teamId
-            );
-            const integrationsItem = navItems.find(
-                item => item.label === "Integrations"
-            );
+        // it("should include Integrations", () => {
+        //     const navItems = getTeamNav(
+        //         { "integrations.metadata": true, "integrations.dar": true },
+        //         teamId
+        //     );
+        //     const integrationsItem = navItems.find(
+        //         item => item.label === "Integrations"
+        //     );
 
-            expect(integrationsItem).toBeDefined();
-            expect(integrationsItem?.subItems).toBeDefined();
+        //     expect(integrationsItem).toBeDefined();
+        //     expect(integrationsItem?.subItems).toBeDefined();
 
-            const integrationItem = integrationsItem?.subItems?.find(
-                item => item.label === "Gateway apps"
-            );
+        //     const integrationItem = integrationsItem?.subItems?.find(
+        //         item => item.label === "Gateway apps"
+        //     );
 
-            expect(integrationItem).toBeDefined();
-            expect(integrationItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`
-            );
-        }); */
+        //     expect(integrationItem).toBeDefined();
+        //     expect(integrationItem?.href).toBe(
+        //         `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`
+        //     );
+        // });
 
         it("should include Help item", () => {
             const navItems = getTeamNav({}, teamId);
