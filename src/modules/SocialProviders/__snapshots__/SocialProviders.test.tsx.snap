@@ -6,7 +6,7 @@ exports[`SocialProviders should render content 1`] = `
     class="MuiBox-root mui-style-v1crop"
   >
     <p
-      class="MuiTypography-root MuiTypography-body2 mui-style-1psypg1-MuiTypography-root-Label"
+      class="MuiTypography-root MuiTypography-body2 mui-style-1dn6yst-MuiTypography-root-Label"
     >
       <label
         for="provider"
