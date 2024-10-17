@@ -4,6 +4,7 @@ import { render, screen } from "@/utils/testUtils";
 import CollectionItemPage from "./[collectionId]/page";
 
 const enFile = jest.requireActual("@/config/messages/en.json");
+const getReducedCollectionMock = jest.fn();
 
 jest.mock("next-intl/server", () => ({
     getTranslations: () =>
@@ -25,8 +26,11 @@ jest.mock("next/navigation", () => ({
 jest.mock("next/headers", () => ({
     cookies: jest.fn(),
 }));
+
 jest.mock("@/utils/api", () => ({
-    getReducedCollection: jest.fn(),
+    getReducedCollection: jest
+        .fn()
+        .mockImplementation(() => getReducedCollectionMock()),
 }));
 
 const mockLargeCollection = {
@@ -165,10 +169,8 @@ describe("CollectionItemPage", () => {
     };
 
     it("renders the collection page with the data", async () => {
-        jest.spyOn(
-            require("@/utils/api"),
-            "getReducedCollection"
-        ).mockResolvedValue(mockCollection);
+        getReducedCollectionMock.mockResolvedValue(mockCollection);
+
         await setup({ collectionId: "123" });
 
         expect(
@@ -181,10 +183,8 @@ describe("CollectionItemPage", () => {
     });
 
     it("renders the collection page with with datasets", async () => {
-        jest.spyOn(
-            require("@/utils/api"),
-            "getReducedCollection"
-        ).mockResolvedValue(mockLargeCollection);
+        getReducedCollectionMock.mockResolvedValue(mockLargeCollection);
+
         await setup({ collectionId: "123" });
 
         expect(
@@ -195,11 +195,7 @@ describe("CollectionItemPage", () => {
     });
 
     it("calls notFound when collection is not found", async () => {
-        // Mock the getReducedCollection to return null
-        jest.spyOn(
-            require("@/utils/api"),
-            "getReducedCollection"
-        ).mockResolvedValue(undefined);
+        getReducedCollectionMock.mockResolvedValue(null);
 
         await setup({ collectionId: "123" }).catch(() => {
             expect(notFound).toHaveBeenCalled();
