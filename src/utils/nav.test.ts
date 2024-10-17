@@ -83,7 +83,7 @@ describe("Nav utils", () => {
             );
         });
 
-        /* it("should include API management", () => {
+        it("should include API management", () => {
             const navItems = getTeamNav({ "applications.read": true }, teamId);
             const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
@@ -122,7 +122,7 @@ describe("Nav utils", () => {
             expect(integrationItem?.href).toBe(
                 `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`
             );
-        }); */
+        });
 
         it("should include Help item", () => {
             const navItems = getTeamNav({}, teamId);
