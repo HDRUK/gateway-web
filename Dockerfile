@@ -21,8 +21,6 @@ ARG NEXT_PUBLIC_MEDIA_STATIC_URL
 
 ENV NODE_ENV production
 
-RUN rm -rf node_modules
-
 RUN npm install
 
 COPY . .
