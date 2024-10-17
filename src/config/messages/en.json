@@ -321,14 +321,14 @@
                         "RightPanel": {
                             "generalEnquiries": {
                                 "title": "General Enquiry",
-                                "text": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a general enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "feasibilityEnquiries": {
                                 "title": "Feasibility Enquiry",
-                                "text": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the Data Custodian(s) wish to do so).",
                                 "buttonText": "Make a feasibility enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
@@ -685,6 +685,7 @@
             "flashyText": "Explore the different functionalities of the Gateway",
             "touchDevice": "Explore the different functionalities of the Gateway",
             "seeNow": "See now",
+            "meetTheTeam": "Meet the Team",
             "newsCardButtonText": "Read more",
             "welcomeTitle": "Welcome to the Gateway",
             "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
@@ -759,6 +760,7 @@
         },
         "saved_searches": {
             "title": "Saved searches",
+            "noResults": "There are no saved searches",
             "text": "Use this page to display saved search results and manage your saved searches.",
             "labels": {
                 "entityType": "Entity type",
@@ -1056,6 +1058,7 @@
             "introduction": "Introduction",
             "dataCustodian": "Data Custodian",
             "datasets": "Datasets",
+            "collections": "Collections",
             "dataUses": "Data use",
             "publications": "Publication",
             "tools": "Analysis Scripts & Software",
@@ -1078,7 +1081,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Data Uses ({ length })"
@@ -1091,6 +1095,9 @@
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections ({ length })"
                 }
             }
         },
@@ -1252,7 +1259,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"

@@ -6,6 +6,37 @@ import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { NewsNode } from "@/interfaces/News";
 import { ReleaseNode } from "@/interfaces/Releases";
 
+const generateEventNode = (date: string, id: string): EventNode => ({
+    node: {
+        slug: `event-${id}`,
+        newsFields: {
+            id,
+            headline: `Event ${id}`,
+            date,
+            text: `Event ${id} text`,
+            link: {
+                url: `http://event/${id}`,
+                title: `Event link ${id}`,
+            },
+            image: {
+                node: {
+                    mediaItemUrl: `http://mediaItem/${id}`,
+                    altText: `Event media title ${id}`,
+                },
+            },
+        },
+    },
+});
+
+const generateReleaseNode = (date: string, id: string): ReleaseNode => ({
+    node: {
+        id,
+        title: `Release ${id}`,
+        date,
+        content: `Release ${id} content`,
+    },
+});
+
 const generateHomepageBannerV1 = (
     data = {}
 ): CMSPostsResponse<HomepageBannerNode> => {
@@ -230,6 +261,8 @@ const generateMissionV1 = (
 const missionV1 = generateMissionV1();
 
 export {
+    generateEventNode,
+    generateReleaseNode,
     generateHomepageBannerV1,
     generateMissionV1,
     generateNewsV1,
