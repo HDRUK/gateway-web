@@ -17,18 +17,15 @@ export const StaticImages = {
         },
         "landing_page"
     ),
-    TEAM_INTEGRATIONS_API_MANAGEMENT: parseStaticImagePaths({
-        createPrivateApp:
-            "team_integrations_api_management/create_private_app.png",
-        managePrivateApps:
-            "team_integrations_api_management/manage_private_apps.png",
-    }),
-    TEAM_INTEGRATIONS_INTEGRATION: parseStaticImagePaths({
-        createNewIntegration:
-            "team_integrations_integration/create_new_integration.png",
-        manageIntegrations:
-            "team_integrations_integration/manage_integrations.png",
-    }),
+    TEAM_INTEGRATIONS: parseStaticImagePaths(
+        {
+            createPrivateApp: "create_private_app.png",
+            managePrivateApps: "manage_private_apps.png",
+            createNewIntegration: "create_new_integration.png",
+            manageIntegrations: "manage_integrations.png",
+        },
+        "team_integrations"
+    ),
     BASE: parseStaticImagePaths({
         logo: "heath_data_research_gateway_logo_white.svg",
         placeholder: "default_placeholder.png",
