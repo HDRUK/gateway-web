@@ -83,7 +83,7 @@ describe("Nav utils", () => {
             );
         });
 
-        it("should include API management", () => {
+         it("should include API management", () => {
             const navItems = getTeamNav({ "applications.read": true }, teamId);
             const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
