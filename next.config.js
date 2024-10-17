@@ -38,6 +38,10 @@ const nextConfig = withNextIntl({
             },
         ],
     },
+    webpack(config) {
+        config.infrastructureLogging = { debug: /PackFileCache/ };
+        return config;
+    },
     async redirects() {
         return [
             {
