@@ -39,17 +39,13 @@ export default async function TeamIntegrationsPage({
                 <Box sx={{ display: "flex", gap: "40px" }}>
                     <ImageMediaCard
                         img={
-                            StaticImages.TEAM_INTEGRATIONS_INTEGRATION
-                                .createNewIntegration
+                            StaticImages.TEAM_INTEGRATIONS.createNewIntegration
                         }
                         href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.CREATE}`}
                         buttonText="Create new Integration"
                     />
                     <ImageMediaCard
-                        img={
-                            StaticImages.TEAM_INTEGRATIONS_INTEGRATION
-                                .manageIntegrations
-                        }
+                        img={StaticImages.TEAM_INTEGRATIONS.manageIntegrations}
                         href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`}
                         buttonText="Manage Integrations"
                     />
