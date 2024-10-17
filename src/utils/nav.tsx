@@ -115,11 +115,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...([
-            permissions["applications.read"],
-            permissions["integrations.metadata"],
-            permissions["integrations.dar"],
-        ].some(isTrue => isTrue)
+        ...([permissions["applications.read"]].some(isTrue => isTrue)
             ? [
                   {
                       icon: <CloudUploadIcon />,
