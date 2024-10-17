@@ -199,6 +199,7 @@ async function getReducedCollection(
     return collection;
 }
 
+// below is possibly unused
 async function getCollection(
     cookieStore: ReadonlyRequestCookies,
     collectionId: string,
