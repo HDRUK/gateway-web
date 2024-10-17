@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
@@ -38,14 +37,12 @@ export default async function TeamIntegrationsPage({
                 }}>
                 <Box sx={{ display: "flex", gap: "40px" }}>
                     <ImageMediaCard
-                        img={
-                            StaticImages.TEAM_INTEGRATIONS.createNewIntegration
-                        }
+                        img="/images/account/teams/integrations/create.jpg"
                         href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.CREATE}`}
                         buttonText="Create new Integration"
                     />
                     <ImageMediaCard
-                        img={StaticImages.TEAM_INTEGRATIONS.manageIntegrations}
+                        img="/images/account/teams/integrations/manage.jpg"
                         href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`}
                         buttonText="Manage Integrations"
                     />
