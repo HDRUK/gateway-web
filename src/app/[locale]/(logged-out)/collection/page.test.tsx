@@ -229,7 +229,9 @@ describe("CollectionItemPage", () => {
             getReducedCollectionMock.mockResolvedValue(data);
             await setup({ collectionId: "123" });
 
-            expect(await screen.getByText(data.name, {selector: 'h1'})).toBeInTheDocument();
+            expect(
+                await screen.getByText(data.name, { selector: "h1" })
+            ).toBeInTheDocument();
             expect(await screen.findByText("Description")).toBeInTheDocument();
         }
     );
