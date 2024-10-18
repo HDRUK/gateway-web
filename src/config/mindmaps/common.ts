@@ -16,11 +16,12 @@ export const nodeValueToRectNode = (
     centerX: number,
     centerY: number
 ) => {
-    const initialRad = 0.2;
+    const initialRad = 0.5;
     const angleRad = initialRad + (index * 2 * Math.PI) / nNodes;
 
     let position; // connector position
-    const radius = 150; // distance away from the center
+    const radius = index % 2 ? 100 : 190; // distance away from the center
+
     switch (true) {
         case angleRad > 1.25 * Math.PI:
             position = Position.Right;
@@ -37,7 +38,7 @@ export const nodeValueToRectNode = (
 
     // correct for the length of the text box
     // rough guess that the length is 2.5 as long as the number of characters in the label
-    let correctionX = node.label ? 3.0 * node.label.length : 100;
+    let correctionX = node.label ? 4.5 * node.label.length : 100;
     let color = theme.palette.secondary.main;
     if (angleRad > Math.PI) {
         // need to subtract this if it's on the left side of the inner node
