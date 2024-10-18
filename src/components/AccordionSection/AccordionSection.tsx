@@ -12,6 +12,8 @@ export interface AccordionSectionProps
     limitRows?: number;
 }
 
+const TRANSLATION_PATH = "components.ShowMore";
+
 export default function AccordionSection({
     contents,
     heading,
@@ -22,7 +24,6 @@ export default function AccordionSection({
     const remainingItems = contents.slice(limitRows, contents.length);
     const [showAll, setShowAll] = useState(false);
 
-    const TRANSLATION_PATH = "components.ShowMore";
     const t = useTranslations(TRANSLATION_PATH);
 
     return (

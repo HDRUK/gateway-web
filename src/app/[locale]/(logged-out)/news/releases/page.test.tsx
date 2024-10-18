@@ -5,6 +5,7 @@ import ReleasePage from "./page";
 describe("Releases", () => {
     it("should render contents", async () => {
         const Result = await ReleasePage();
+
         render(Result);
 
         await waitFor(() => {

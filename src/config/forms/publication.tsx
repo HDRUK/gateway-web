@@ -50,7 +50,7 @@ const validationSchema = yup
             .label("Publication year"),
         abstract: yup
             .string()
-            .min(50)
+            .min(3)
             .max(1500)
             .required()
             .label("Publication year"),
