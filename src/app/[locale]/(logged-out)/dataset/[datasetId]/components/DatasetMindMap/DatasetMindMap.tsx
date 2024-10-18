@@ -149,7 +149,7 @@ const DatasetMindMap = ({
     }, [data]);
 
     return (
-        <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>
+        <Paper sx={{ borderRadius: 2, height: "370px" }}>
             <MindMap
                 panOnDrag={panOnDrag}
                 panOnScroll={panOnScroll}
