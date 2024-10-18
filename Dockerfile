@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:22.10.0-alpine
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
@@ -19,11 +19,15 @@ ARG NEXT_PUBLIC_INCLUDE_BANNERS
 ARG NEXT_PUBLIC_MEDIA_DOMAIN
 ARG NEXT_PUBLIC_MEDIA_STATIC_URL
 
-ENV NODE_ENV production
+ENV NODE_ENV production 
+
+RUN rm -rf node_modules
 
 RUN npm install
 
 COPY . .
+
+RUN rm -rf .next
 
 RUN npm run build
 
