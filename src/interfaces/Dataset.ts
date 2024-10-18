@@ -149,6 +149,14 @@ interface VersionItem {
     linked_dataset_versions: LinkedDatasetVersions[];
 }
 
+export interface ReducedDataset {
+    id: number;
+    dataset_id: number; // always show this
+    shortTitle: string;
+    populationSize: number;
+    datasetType: string;
+}
+
 interface Dataset {
     id: number;
     team_id: number;
