@@ -199,21 +199,6 @@ async function getReducedCollection(
     return collection;
 }
 
-// below is possibly unused
-async function getCollection(
-    cookieStore: ReadonlyRequestCookies,
-    collectionId: string,
-    options?: GetOptions
-): Promise<Collection> {
-    const collection = await get<Collection>(
-        cookieStore,
-        `${apis.collectionsV1UrlIP}/${collectionId}`,
-        options
-    );
-
-    return collection;
-}
-
 async function getFormHydration(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,

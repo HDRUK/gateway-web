@@ -8,13 +8,10 @@ interface PublicationHasDatasetVersion {
     publication_id: number;
     dataset_version_id: number;
 }
-export interface ReducedPublication {
-    id: number;
-    paper_title: string;
-    authors: string;
-    url: string;
-    year_of_publication: string;
-}
+export type ReducedPublication = Pick<
+    Publication,
+    "id" | "paper_title" | "authors" | "url" | "year_of_publication"
+>;
 export interface Publication {
     id: number;
     created_at: string;

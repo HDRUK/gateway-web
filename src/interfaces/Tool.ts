@@ -9,13 +9,11 @@ import { Tag } from "./Tag";
 import { Team } from "./Team";
 import { User } from "./User";
 
-export interface ReducedTool {
-    id: number;
-    name: string;
-    created_at?: string;
-    user_id?: string;
-    user?: User;
-}
+export type ReducedTool = Pick<
+    Tool,
+    "id" | "name" | "created_at" | "user_id" | "user"
+>;
+
 export interface Tool {
     id: number;
     name: string;
