@@ -1,32 +1,46 @@
 module.exports = {
-  meta: {
-    type: "suggestion", // or "problem" based on your rule's purpose
-    fixable: "code", // This marks the rule as fixable
-    docs: {
-        description: 'Suggest replacing "Data Controller" with "Data Custodian"',
-        category: "Best Practices",
-        recommended: false,
+    meta: {
+        type: "problem",
+        fixable: "code",
+        docs: {
+            description:
+                'Suggest replacing "Data Controller", "Data Processor", or "Data Provider" with "Data Custodian"',
+            category: "Gateway Formatting",
+            recommended: true,
+        },
     },
-},
     create(context) {
+        const patterns = ["Data Controller", "Data Processor", "Data Provider"];
+
         return {
             Literal(node) {
-                if (
-                    typeof node.value === "string" &&
-                    node.value.includes("Data Controller")
-                ) {
-                    context.report({
-                        node,
-                        message:
-                            'Replace "Data Controller" with "Data Custodian"',
-                        fix: fixer => {
-                            const newValue = node.raw.replace(
-                                /Data Controller/g,
+                if (typeof node.value === "string") {
+                    let newValue = node.value;
+                    let hasMatch = false;
+
+                    // Check for the patterns, considering case insensitivity
+                    patterns.forEach(pattern => {
+                        const regex = new RegExp(pattern, "gi"); // 'g' for global, 'i' for case-insensitive
+                        if (regex.test(newValue)) {
+                            newValue = newValue.replace(
+                                regex,
                                 "Data Custodian"
                             );
-                            return fixer.replaceText(node, newValue);
-                        },
+                            hasMatch = true;
+                        }
                     });
+
+                    if (hasMatch) {
+                        context.report({
+                            node,
+                            message: `Replace "Data Controller", "Data Processor", or "Data Provider" with "Data Custodian"`,
+                            fix: fixer =>
+                                fixer.replaceText(
+                                    node,
+                                    node.raw.replace(node.value, newValue)
+                                ),
+                        });
+                    }
                 }
             },
         };
