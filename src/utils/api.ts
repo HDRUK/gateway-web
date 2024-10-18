@@ -2,7 +2,11 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
+<<<<<<< HEAD
 import { Collection, ReducedCollection } from "@/interfaces/Collection";
+=======
+import { ReducedCollection } from "@/interfaces/Collection";
+>>>>>>> origin
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
@@ -199,20 +203,6 @@ async function getReducedCollection(
     return collection;
 }
 
-async function getCollection(
-    cookieStore: ReadonlyRequestCookies,
-    collectionId: string,
-    options?: GetOptions
-): Promise<Collection> {
-    const collection = await get<Collection>(
-        cookieStore,
-        `${apis.collectionsV1UrlIP}/${collectionId}`,
-        options
-    );
-
-    return collection;
-}
-
 async function getFormHydration(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,
@@ -233,7 +223,10 @@ export {
     getApplication,
     getCohort,
     getReducedCollection,
+<<<<<<< HEAD
     getCollection,
+=======
+>>>>>>> origin
     getDataCustodianNetworks,
     getDataset,
     getDataUse,

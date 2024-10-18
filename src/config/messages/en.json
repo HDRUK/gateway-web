@@ -109,6 +109,10 @@
     "common": {
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
+        "companyDescription": "We are uniting the UK's health data to enable discoveries that improve people's lives. By making health data available to researchers and innovators we can better understand diseases and find ways to prevent, treat and cure them.",
+        "companyLocality": "London",
+        "companyPostalCode": "NW1 2BE",
+        "companyStreetAddress": "Gibbs Building, 215 Euston Road",
         "submit": "Submit",
         "logout": "Logout",
         "publish": "Publish",
@@ -628,7 +632,7 @@
                     "create": {
                         "title": "Integration",
                         "text": "Input and edit the authentication information for the Gateway system to use for the integration.",
-                        "helper": "Entities created via an FMA integration can only be managed (updated or deleted/archived) via the FMA integration. Entities created via another method (manual, API integration) cannot be managed via the FMA integration."
+                        "helper": "Entities created via a Gateway App integration can only be managed (updated or deleted/archived) via the Gateway App integration. Entities created via another method (manual, API integration) cannot be managed via the Gateway App integration."
                     }
                 },
                 "integrations": {
