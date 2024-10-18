@@ -12,10 +12,10 @@ interface ReducedCollection {
     name: string;
     description: string;
     image_link: string | null;
-    tools: ReducedTool[];
-    dur: ReducedDataUse[];
-    dataset_versions: ReducedDataset[];
-    publications: ReducedPublication[];
+    tools: ReducedTool[] | [];
+    dur: ReducedDataUse[] | [];
+    dataset_versions: ReducedDataset[] | [];
+    publications: ReducedPublication[] | [];
 }
 
 interface Collection {

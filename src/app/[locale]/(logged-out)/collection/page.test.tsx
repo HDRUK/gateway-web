@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { ReducedCollection } from "@/interfaces/Collection";
 import { render, screen } from "@/utils/testUtils";
 import CollectionItemPage from "./[collectionId]/page";
 
@@ -33,15 +34,13 @@ jest.mock("@/utils/api", () => ({
         .mockImplementation(() => getReducedCollectionMock()),
 }));
 
-const mockLargeCollection = {
-    id: 15,
+const mockLargeCollection: ReducedCollection = {
     name: "Neonatal Data Visualisations",
     description:
         "This tool provides insights into the neonatal health data contained within the National Neonatal Research Database (NNRD). The tools are aimed at parents, clinical teams, researchers and health service managers.  To access our NNRD Interrogation tools, please click here: https://www.imperial.ac.uk/neonatal-data-analysis-unit/neonatal-data-analysis-unit/neonatal-data-visualisations/",
     image_link: null,
     enabled: true,
-    public: 1,
-    counter: 144,
+
     created_at: "2024-10-04T12:23:54.000000Z",
     updated_at: "2024-10-04T12:34:14.000000Z",
     deleted_at: null,
@@ -147,7 +146,43 @@ const mockLargeCollection = {
     team: null,
 };
 
-const mockCollection = {
+const mockBadDataSetCollection: ReducedCollection = {
+    name: "A nice name",
+    description: "A lovely description",
+    image_link: "https://media.preprod.hdruk.cloud/collections/404.png",
+    enabled: true,
+    public: 1,
+    counter: 1310,
+    created_at: "2024-09-06T11:42:06.000000Z",
+    updated_at: "2024-09-06T11:59:10.000000Z",
+    deleted_at: null,
+    mongo_object_id: "5fe1e32dd1bdb74d9e831cdc",
+    mongo_id: "3975719127757711",
+    updated_on: null,
+    team_id: null,
+    status: "ACTIVE",
+    user_id: null,
+    keywords: [],
+    tools: [],
+    dur: [],
+    publications: [],
+    dataset_versions: [
+        {
+            id: 253,
+            dataset_id: 253,
+            shortTitle: null,
+            populationSize: null,
+            datasetType: null,
+            pivot: {
+                collection_id: 87,
+                dataset_version_id: 253,
+            },
+        },
+    ],
+    team: null,
+};
+const mockCollection: ReducedCollection = {
+    id: 123,
     name: "Test Collection",
     image_link: "https://example.com/image.png",
     description: "This is a test description.",
@@ -156,6 +191,26 @@ const mockCollection = {
     dataset_versions: [],
     publications: [],
 };
+
+type DataTestScenariosType = {
+    description: string;
+    data: ReducedCollection;
+};
+
+const dataTestScenarios: DataTestScenariosType[] = [
+    {
+        description: "empty array data",
+        data: mockCollection,
+    },
+    {
+        description: "null dataset_versions data",
+        data: mockBadDataSetCollection,
+    },
+    {
+        description: "large data",
+        data: mockBadDataSetCollection,
+    },
+];
 
 describe("CollectionItemPage", () => {
     beforeEach(() => {
@@ -168,31 +223,19 @@ describe("CollectionItemPage", () => {
         render(JSX);
     };
 
-    it("renders the collection page with the data", async () => {
-        getReducedCollectionMock.mockResolvedValue(mockCollection);
+    it.each(dataTestScenarios)(
+        "renders the collection page with $description",
+        async ({ data }) => {
+            getReducedCollectionMock.mockResolvedValue(data);
+            await setup({ collectionId: "123" });
 
-        await setup({ collectionId: "123" });
-
-        expect(
-            await screen.findByText(mockCollection.name)
-        ).toBeInTheDocument();
-        expect(
-            await screen.findByText(mockCollection.description)
-        ).toBeInTheDocument();
-        expect(await screen.findByText("Description")).toBeInTheDocument();
-    });
-
-    it("renders the collection page with with datasets", async () => {
-        getReducedCollectionMock.mockResolvedValue(mockLargeCollection);
-
-        await setup({ collectionId: "123" });
-
-        expect(
-            await screen.findByText(
-                mockLargeCollection.dataset_versions[0].shortTitle
-            )
-        ).toBeInTheDocument();
-    });
+            expect(await screen.findByText(data.name)).toBeInTheDocument();
+            expect(
+                await screen.findByText(data.description)
+            ).toBeInTheDocument();
+            expect(await screen.findByText("Description")).toBeInTheDocument();
+        }
+    );
 
     it("calls notFound when collection is not found", async () => {
         getReducedCollectionMock.mockResolvedValue(null);
