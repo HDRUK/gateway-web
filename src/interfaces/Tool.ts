@@ -9,11 +9,6 @@ import { Tag } from "./Tag";
 import { Team } from "./Team";
 import { User } from "./User";
 
-export type ReducedTool = Pick<
-    Tool,
-    "id" | "name" | "created_at" | "user_id" | "user"
->;
-
 export interface Tool {
     id: number;
     name: string;
@@ -49,6 +44,12 @@ export interface Tool {
     datasets?: string[];
     mongo_id?: string;
 }
+
+export type ReducedTool = Pick<
+    Tool,
+    "id" | "name" | "created_at" | "user_id" | "user"
+>;
+
 
 export interface ToolPayload {
     id?: number;
