@@ -2,7 +2,7 @@ import type { Publication } from "./Publication";
 import type { Team } from "./Team";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
-type CreateOrigin = "FMA" | "MANUAL" | "API";
+type CreateOrigin = "GMI" | "MANUAL" | "API";
 
 interface StructuralMetadataValue {
     name: string;
