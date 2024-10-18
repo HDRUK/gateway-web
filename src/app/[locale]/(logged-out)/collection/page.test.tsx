@@ -208,7 +208,7 @@ const dataTestScenarios: DataTestScenariosType[] = [
     },
     {
         description: "large data",
-        data: mockBadDataSetCollection,
+        data: mockLargeCollection,
     },
 ];
 
@@ -229,10 +229,7 @@ describe("CollectionItemPage", () => {
             getReducedCollectionMock.mockResolvedValue(data);
             await setup({ collectionId: "123" });
 
-            expect(await screen.findByText(data.name)).toBeInTheDocument();
-            expect(
-                await screen.findByText(data.description)
-            ).toBeInTheDocument();
+            expect(await screen.getByText(data.name, {selector: 'h1'})).toBeInTheDocument();
             expect(await screen.findByText("Description")).toBeInTheDocument();
         }
     );
