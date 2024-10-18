@@ -36,8 +36,6 @@ export default async function CollectionItemPage({
         suppressError: true,
     });
 
-    console.log(collection);
-
     if (!collection) notFound();
 
     const {
