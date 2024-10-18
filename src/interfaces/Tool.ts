@@ -50,7 +50,6 @@ export type ReducedTool = Pick<
     "id" | "name" | "created_at" | "user_id" | "user"
 >;
 
-
 export interface ToolPayload {
     id?: number;
     name: string;
