@@ -84,9 +84,9 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                                     expandedSection,
                                     trimmedPathname
                                 ) ? (
-                                    <ExpandLessIcon />
+                                    <ExpandLessIcon color="primary" />
                                 ) : (
-                                    <ExpandMoreIcon />
+                                    <ExpandMoreIcon color="primary" />
                                 )}
                             </ListItemButton>
                             <Collapse

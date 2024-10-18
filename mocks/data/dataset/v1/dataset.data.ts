@@ -101,7 +101,7 @@ const generateDatasetV1 = (version = "1.0", data = {}): Dataset => {
         team_id: faker.datatype.number(),
         user_id: faker.datatype.number(),
         status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
-        create_origin: faker.helpers.arrayElement(["FMA", "API", "MANUAL"]),
+        create_origin: faker.helpers.arrayElement(["GMI", "API", "MANUAL"]),
         pid: faker.datatype.uuid(),
         versions: Array.from({ length: 3 }).map(() =>
             generateDatasetVersionV1(version)
