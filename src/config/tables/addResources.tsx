@@ -7,6 +7,7 @@ import {
     SelectedResources,
 } from "@/interfaces/AddResource";
 import { DataUse } from "@/interfaces/DataUse";
+import { Dataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import Chip from "@/components/Chip";
@@ -32,21 +33,30 @@ const isResourceSelected = (
 };
 
 const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
-    const getLink = (url: string, text?: string) => (
-        <Link href={url} target="_blank">
-            <EllipsisLineLimit
-                maxLine={2}
-                text={text || EMPTY_VALUE}
-                showToolTip
-            />
-        </Link>
-    );
+    const getLink = (url?: string, text?: string) =>
+        url ? (
+            <Link href={url} target="_blank">
+                <EllipsisLineLimit
+                    maxLine={2}
+                    text={text || EMPTY_VALUE}
+                    showToolTip
+                />
+            </Link>
+        ) : (
+            <Typography>
+                <EllipsisLineLimit
+                    maxLine={2}
+                    text={text || EMPTY_VALUE}
+                    showToolTip
+                />
+            </Typography>
+        );
 
     const titleMap = {
         [ResourceType.DATASET]: () =>
             getLink(
                 `/${RouteName.DATASET_ITEM}/${data.id}`,
-                get(data, TITLE_LOCATION)
+                get(data, TITLE_LOCATION) || (data as Dataset).name
             ),
         [ResourceType.DATA_USE]: () =>
             getLink(

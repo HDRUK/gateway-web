@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
     Box,
     Divider,
@@ -13,11 +14,14 @@ import dayjs from "dayjs";
 import { flatten } from "lodash";
 import { useTranslations } from "next-intl";
 import useSWRMutation from "swr/mutation";
+import { PaginationType } from "@/interfaces/Pagination";
 import { SavedSearchWithPivot } from "@/interfaces/Search";
 import { DataList, DataListItem } from "@/components/DataList";
 import ListItemActions from "@/components/ListItemActions";
 import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
+import ShowingXofX from "@/components/ShowingXofX";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
@@ -41,11 +45,21 @@ const SavedSearches = () => {
 
     const { showModal, hideModal } = useModal();
 
+    const [currentPage, setCurrentPage] = useState(1);
+
     const {
         isLoading: isSavedSearchesLoading,
         data: savedSearchesData,
         mutate: saveSearchesMutate,
-    } = useGet<SavedSearchWithPivot[]>(apis.saveSearchesV1Url);
+    } = useGet<PaginationType<SavedSearchWithPivot>>(
+        `${apis.saveSearchesV1Url}?page=${currentPage}`,
+        {
+            keepPreviousData: true,
+            withPagination: true,
+        }
+    );
+
+    const { lastPage, list } = savedSearchesData || {};
 
     const { trigger: deleteSavedSearchesTrigger } = useSWRMutation(
         apis.saveSearchesV1Url,
@@ -89,9 +103,20 @@ const SavedSearches = () => {
                     <Typography sx={{ marginBottom: 4 }}>
                         {t("text")}
                     </Typography>
+                    {!list?.length && (
+                        <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
+                    )}
+                    {savedSearchesData?.total && (
+                        <ShowingXofX
+                            to={savedSearchesData?.to}
+                            from={savedSearchesData?.from}
+                            total={savedSearchesData?.total}
+                        />
+                    )}
                 </Box>
+
                 <List>
-                    {savedSearchesData?.map((data, i: number) => {
+                    {list?.map((data, i: number) => {
                         const {
                             search_endpoint,
                             sort_order,
@@ -148,7 +173,9 @@ const SavedSearches = () => {
                                                         pr: 5,
                                                     }}>
                                                     <DataList
-                                                        sx={{ flexGrow: 1 }}>
+                                                        sx={{
+                                                            flexGrow: 1,
+                                                        }}>
                                                         <DataListItem
                                                             primary={t(
                                                                 "labels.entityType"
@@ -183,7 +210,7 @@ const SavedSearches = () => {
                                                             }
                                                         />
                                                     </DataList>
-                                                    <Typography variant="caption">
+                                                    <Typography>
                                                         {t("dateSaved", {
                                                             date: dayjs(
                                                                 updated_at
@@ -197,14 +224,22 @@ const SavedSearches = () => {
                                         />
                                     </ListItemButton>
                                 </ListItem>
-                                {i < savedSearchesData.length - 1 && (
-                                    <Divider />
-                                )}
+                                {i < list.length - 1 && <Divider />}
                             </>
                         );
                     })}
                 </List>
             </Box>
+
+            <Pagination
+                isLoading={isLoading}
+                page={currentPage}
+                count={lastPage}
+                onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+                    setCurrentPage(page)
+                }
+                sx={{ mt: 2, mb: 2 }}
+            />
         </Paper>
     );
 };

@@ -47,7 +47,7 @@ const navItems = [
         subItems: [
             {
                 label: "The Technology Ecosystem",
-                href: "/community/development-community",
+                href: "/community/technology-ecosystem",
             },
             {
                 label: "Open-Source Development",
@@ -67,7 +67,7 @@ const navItems = [
                 href: "/news/events?tab=events",
             },
             {
-                label: "Gateway releases",
+                label: "Gateway Releases",
                 href: "/news/releases",
             },
             {
@@ -96,7 +96,7 @@ const navItems = [
                 href: "/about/patients-and-public",
             },
             {
-                label: "The Gateway Team",
+                label: "The Technology Team",
                 href: `/${RouteName.MEET_THE_TEAM}`,
             },
         ],
@@ -107,10 +107,6 @@ const navItems = [
             {
                 label: "Support Centre",
                 href: "/support",
-            },
-            {
-                label: "Tutorials",
-                href: "/help/tutorials",
             },
             {
                 label: "Contact Us",
@@ -129,24 +125,7 @@ const navItems = [
     },
     {
         label: "Data Custodian Area",
-        subItems: [
-            {
-                label: "How to set yourself up as a Data Custodian",
-                href: "/data-custodian/getting-started",
-            },
-            {
-                label: "Integrations",
-                href: "https://hdruk.github.io/gateway-2-integrations-testing/integrations-hdruk-datasets/",
-            },
-            {
-                label: "Metadata onboarding",
-                href: "/data-custodian/metadata-onboarding",
-            },
-            {
-                label: "The Alliance",
-                href: "https://ukhealthdata.org/",
-            },
-        ],
+        href: RouteName.DATA_CUSTODIAN_SUPPORT,
     },
 ];
 

@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
+import CardStacked from "@/components/CardStacked";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
-import CardStacked from "../CardStacked/CardStacked";
 import ResultsList from "../ResultsList";
 
 const TRANSLATION_PATH = "pages.search";

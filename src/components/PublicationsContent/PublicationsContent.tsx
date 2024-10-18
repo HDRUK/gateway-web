@@ -1,60 +1,47 @@
 "use client";
 
 import { Fragment } from "react";
-import { InView } from "react-intersection-observer";
-import { Link, Typography } from "@mui/material";
+import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
-import { Publication } from "@/interfaces/Publication";
+import { Publication, ReducedPublication } from "@/interfaces/Publication";
 import AccordionSection from "@/components/AccordionSection";
 
 export interface PublicationsContentProps {
-    publications: Publication[];
+    publications: Publication[] | ReducedPublication[];
     anchorIndex: number;
-    page: string;
+    translationPath: string;
 }
+
+const TRANSLATION_PATH = ".components.PublicationsContent";
 
 export default function PublicationContent({
     publications,
     anchorIndex,
-    page,
+    translationPath,
 }: PublicationsContentProps) {
-    const router = useRouter();
-    const path = usePathname();
-    const TRANSLATION_PATH = `pages.${page}.components.PublicationsContent`;
-
-    const t = useTranslations(TRANSLATION_PATH);
+    const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
 
     return (
-        <InView
+        <AccordionSection
             id={`anchor${anchorIndex}`}
-            threshold={1}
-            as="div"
-            onChange={inView => {
-                if (inView && path) {
-                    router.replace(`${path}?section=${anchorIndex}`, {
-                        scroll: false,
-                    });
-                }
-            }}>
-            <AccordionSection
-                disabled={!publications.length}
-                heading={t("heading", {
-                    length: publications.length,
-                })}
-                defaultExpanded={publications.length > 0}
-                contents={publications.map(({ paper_title, authors, url }) => (
+            disabled={!publications.length}
+            heading={t("heading", {
+                length: publications.length,
+            })}
+            defaultExpanded={publications.length > 0}
+            contents={publications.map(
+                ({ paper_title, authors, url, year_of_publication }) => (
                     <Fragment key={`publication_${paper_title}`}>
-                        <Link href={url}>{paper_title}</Link>
+                        <Link component="a" href={url} target="_blank">
+                            {paper_title}
+                        </Link>
                         {authors && <div>{authors}</div>}
-                        {true && (
-                            <Typography color="GrayText">
-                                LINK TYPE HERE - when BE supports it
-                            </Typography>
+                        {year_of_publication && (
+                            <div>{year_of_publication}</div>
                         )}
                     </Fragment>
-                ))}
-            />
-        </InView>
+                )
+            )}
+        />
     );
 }

@@ -12,9 +12,9 @@ import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
 import { Keyword } from "@/interfaces/Keyword";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
+import useActionBar from "@/hooks/useActionBar";
 import useGet from "@/hooks/useGet";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
@@ -25,6 +25,7 @@ import {
     dataUseValidationSchema,
 } from "@/config/forms/dataUse";
 import { colors } from "@/config/theme";
+import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -44,6 +45,7 @@ const EditDataUse = () => {
         dataUseId: string;
     }>();
     const { push } = useRouter();
+    const { showBar } = useActionBar();
 
     const { data: keywords } = useGet<Keyword[]>(
         `${apis.keywordsV1Url}?perPage=-1`
@@ -53,7 +55,6 @@ const EditDataUse = () => {
         `${apis.dataUseV1Url}/${params?.dataUseId}`,
         { shouldFetch: !!params?.dataUseId }
     );
-
     const existingDataUse = useMemo(() => data?.[0], [data]);
 
     const mapKeywords = (keywords: Keyword[]) =>
@@ -116,7 +117,7 @@ const EditDataUse = () => {
         }, {} as Partial<T>);
     };
 
-    const submitForm = async (formData: DataUse) => {
+    const submitForm = async (formData: DataUse, status: DataStatus) => {
         if (!existingDataUse) {
             return;
         }
@@ -139,6 +140,7 @@ const EditDataUse = () => {
                 ? dayjs(formData.access_date).format("YYYY-MM-DDThh:mm:ss")
                 : null,
             datasets: existingDataUse?.datasets,
+            status,
         };
 
         const formUpdates: Partial<DataUse> = getChangedFields(
@@ -162,6 +164,7 @@ const EditDataUse = () => {
     };
 
     const [keywordOptions, setKeywordsOptions] = useState<string[]>([]);
+    const [outputOptions, setOutputOptions] = useState<string[]>([]);
 
     useEffect(() => {
         if (!keywords) {
@@ -171,13 +174,61 @@ const EditDataUse = () => {
         setKeywordsOptions(keywords.map(keyword => keyword.name));
     }, [keywords]);
 
+    const existingResearchLinks = existingDataUse?.non_gateway_outputs;
+
+    useEffect(() => {
+        if (!existingResearchLinks) {
+            return;
+        }
+
+        setOutputOptions(existingResearchLinks);
+    }, [existingResearchLinks]);
+
+    useEffect(() => {
+        showBar("CreateDataUse", {
+            cancelText: t("cancel"),
+            confirmText: t("publish"),
+            tertiaryButton: {
+                onAction: async () => {
+                    handleSubmit(formData =>
+                        submitForm(formData, DataStatus.DRAFT)
+                    )();
+                },
+                buttonText: t("saveDraft"),
+                buttonProps: {
+                    color: "secondary",
+                    variant: "outlined",
+                },
+            },
+            onSuccess: () => {
+                handleSubmit(formData =>
+                    submitForm(formData, DataStatus.ACTIVE)
+                )();
+            },
+            onCancel: () => {
+                handleCancel();
+            },
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [handleSubmit, params?.teamId, t, existingDataUse]);
+
+    const getOptions = (fieldName: string) => {
+        if (fieldName === "keywords") {
+            return keywordOptions;
+        }
+        if (fieldName === "non_gateway_outputs") {
+            return outputOptions;
+        }
+        return [];
+    };
+
     return (
         <>
             <Box sx={{ bgcolor: "white", mb: 0 }}>
                 <Typography variant="h2">{t("editDataUse")}</Typography>
             </Box>
 
-            <Form onSubmit={handleSubmit(submitForm)}>
+            <Form>
                 <Box>
                     {dataUseFormFields.map(section => {
                         return (
@@ -210,10 +261,7 @@ const EditDataUse = () => {
                                             {...field}
                                             {...(field.component ===
                                                 inputComponents.Autocomplete && {
-                                                options:
-                                                    field.name === "keywords"
-                                                        ? keywordOptions
-                                                        : [],
+                                                options: getOptions(field.name),
                                             })}
                                         />
                                     </Box>
@@ -221,18 +269,6 @@ const EditDataUse = () => {
                             />
                         );
                     })}
-                </Box>
-
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        gap: 2,
-                    }}>
-                    <Button type="submit">{t("submit")}</Button>
-                    <Button variant="text" onClick={handleCancel}>
-                        {t("cancel")}
-                    </Button>
                 </Box>
             </Form>
         </>

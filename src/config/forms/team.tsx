@@ -1,10 +1,10 @@
 import * as yup from "yup";
 import { TeamForm } from "@/interfaces/Team";
-import { REGEX_ALPHA_ONLY } from "@/consts/regex";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { memberOfOptions } from "@/consts/team";
 import { inputComponents } from ".";
 
-const defaultValues: Partial<TeamForm> = {
+const defaultValues: TeamForm = {
     name: "",
     member_of: "",
     contact_point: "",
@@ -16,18 +16,13 @@ const defaultValues: Partial<TeamForm> = {
     access_requests_management: true,
     uses_5_safes: true,
     is_question_bank: false,
+    team_logo: "",
+    introduction: "",
 };
 
 const validationSchema = yup.object({
-    introduction: yup.string().label("Introduction"),
-    name: yup
-        .string()
-        .required()
-        .matches(
-            REGEX_ALPHA_ONLY,
-            "Organisation name should have alphabetic characters only"
-        )
-        .label("Organisation name"),
+    introduction: yup.string().nullable().label("Introduction"),
+    name: yup.string().required().label("Organisation name"),
     member_of: yup.string().required().label("Member of"),
     contact_point: yup.string().email().label("Contact point"),
     users: yup
@@ -75,17 +70,27 @@ const formFields = [
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
         component: inputComponents.Autocomplete,
-        info: "Assign at least one team admin. A team admin will be able to manage members, add new team members and manage the team notification preferences.",
+        info: "   * Assign at least one team admin. A team admin will be able to manage members, add new team members and manage the team notification preferences.\n   * Type more than 3 characters to search for users by their name",
+        noOptionsText: "Try searching for a user by name...",
     },
     {
         label: "Contact point",
         name: "contact_point",
         info: "Please provide a valid email address that can be used as a default.",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Website URL",
+        name: "url",
+        info: "Provide a valid URL to your own website.",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Service URL",
+        name: "service",
+        info: "Provide a valid URL to services offered.",
         component: inputComponents.TextField,
     },
 ];

@@ -40,6 +40,7 @@ const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
                     height={374}
                     alt={title}
                     src={image}
+                    priority
                     style={{ objectFit: "scale-down" }}
                 />
             </Box>

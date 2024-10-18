@@ -135,7 +135,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         {
             title: t("helpLinks.item2.title"),
             text: t("helpLinks.item2.text"),
-            href: "https://www.hdruk.ac.uk/",
+            href: "/community/open-source-development",
             externalUrl: true,
         },
     ];
@@ -173,6 +173,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         variant="h2"
                         mb={2}
                         title={gatewayVideoHeader}
+                        bgcolor="transparent"
+                        color="secondary.main"
+                        fontWeight="600"
                     />
                 </Container>
             </Box>
@@ -192,7 +195,10 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                             maxWidth: 950,
                         }}>
                         <IFrameWrapper>
-                            <HTMLContent content={gatewayVideo} />
+                            <HTMLContent
+                                content={gatewayVideo}
+                                sanitize={false}
+                            />
                         </IFrameWrapper>
                     </Box>
                 </Container>
@@ -208,6 +214,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                             size="md"
                             variant="h2"
                             title={newsHeader}
+                            bgcolor="transparent"
+                            color="secondary.main"
+                            fontWeight="600"
                         />
                         <Box
                             sx={{
@@ -248,6 +257,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         variant="h2"
                         mb={2}
                         title={meetTheTeam.sectionName}
+                        bgcolor="transparent"
+                        color="secondary.main"
+                        fontWeight="600"
                     />
                     <TeamWrapper>
                         <TeamImage
@@ -275,7 +287,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 <Button
                                     variant="text"
                                     endIcon={<ArrowForward color="primary" />}>
-                                    {t("seeNow")}
+                                    {t("meetTheTeam")}
                                 </Button>
                             </Link>
                         </TeamContent>

@@ -44,7 +44,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
     const originMapping = {
         MANUAL: "Manually",
         API: "API",
-        FMA: "FMA",
+        GMI: "Gateway App",
     };
 
     return (

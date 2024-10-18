@@ -20,6 +20,12 @@ interface PageTemplateDefault {
     id: string;
     title: string;
     content: string;
+    slug?: string;
+    children?: {
+        nodes: {
+            slug: string;
+        }[];
+    };
     categories?: {
         nodes?: {
             name: string;
@@ -43,6 +49,7 @@ interface PageTemplatePromo {
             topRightPanel?: string;
             topLeftPanel: string;
             middlePanel: string;
+            bottomPanel?: string;
         };
     };
     ctaOverrideComponent?: React.ReactElement;
@@ -127,8 +134,13 @@ interface PageTemplateRepeat {
 }
 
 interface ContentPageQueryOptions {
-    id: string;
+    id?: string;
     idType?: "URI" | "ID" | "DATABASE_ID" | "SLUG";
+    name?: string;
+}
+
+interface ContentPageByParentQueryOptions extends ContentPageQueryOptions {
+    parentId: string;
 }
 
 interface ContentPostQueryOptions {
@@ -149,5 +161,6 @@ export type {
     NewsPost,
     ContentPageQueryOptions,
     ContentPostQueryOptions,
+    ContentPageByParentQueryOptions,
     CMSPostsResponse,
 };

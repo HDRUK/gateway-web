@@ -32,6 +32,7 @@ import {
     FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
+    FILTER_COLLECTION_NAME,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -64,15 +65,16 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 };
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
-        FILTER_DATA_TYPE,
         FILTER_CONTAINS_TISSUE,
-        FILTER_MATERIAL_TYPE,
+        FILTER_DATA_TYPE,
+        FILTER_PUBLISHER_NAME,
+        FILTER_COLLECTION_NAME,
         FILTER_DATA_USE_TITLES,
+        FILTER_MATERIAL_TYPE,
         FILTER_ACCESS_SERVICE,
         FILTER_DATE_RANGE,
         FILTER_POPULATION_SIZE,
         FILTER_GEOGRAPHIC_LOCATION,
-        FILTER_PUBLISHER_NAME,
     ],
     dataUseRegister: [
         FILTER_DATA_SET_TITLES,
@@ -125,10 +127,10 @@ const FilterPanel = ({
     getParamString: (paramName: string) => string | null;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
-
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({
         [FILTER_PUBLISHER_NAME]: {},
+        [FILTER_COLLECTION_NAME]: {},
         [FILTER_DATA_USE_TITLES]: {},
         [FILTER_GEOGRAPHIC_LOCATION]: {},
         [FILTER_DATE_RANGE]: {},
@@ -162,6 +164,7 @@ const FilterPanel = ({
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm<{
         [FILTER_PUBLISHER_NAME]: string;
+        [FILTER_COLLECTION_NAME]: string;
         [FILTER_DATA_USE_TITLES]: string;
         [FILTER_SECTOR]: string;
         [FILTER_ACCESS_SERVICE]: string;
@@ -171,15 +174,15 @@ const FilterPanel = ({
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
+            [FILTER_COLLECTION_NAME]: "",
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
             [FILTER_ACCESS_SERVICE]: "",
             [FILTER_MATERIAL_TYPE]: "",
         },
     });
-
     const filterItems = useMemo(() => {
-        const formattedFilters = groupByType(
+        let formattedFilters = groupByType(
             filterSourceData,
             filterCategory
         ).filter(filterItem => filtersList.includes(filterItem.label));
@@ -189,9 +192,15 @@ const FilterPanel = ({
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
 
-        return formattedFilters;
-    }, [filterCategory, filterSourceData]);
+        // If the selected source is 'Search Europe PMC' then remove the 'Dataset' filter
+        if (staticFilterValues.source.FED) {
+            formattedFilters = formattedFilters.filter(
+                filterItem => filterItem.label !== FILTER_DATA_SET_TITLES
+            );
+        }
 
+        return formattedFilters;
+    }, [filterCategory, filterSourceData, staticFilterValues]);
     const [maximised, setMaximised] = useState<string[]>([]);
 
     const updateCheckboxes = (
@@ -318,7 +327,6 @@ const FilterPanel = ({
         buckets: BucketCheckbox[];
     }) => {
         const { label } = filterItem;
-
         switch (label) {
             case STATIC_FILTER_SOURCE:
                 return (

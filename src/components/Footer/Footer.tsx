@@ -30,7 +30,7 @@ const Footer = () => {
             label: (
                 <FooterSocial>
                     <Image src={twitterInLogo} alt="Twitter logo" width="17" />
-                    <span>Twitter</span>
+                    <span>X</span>
                 </FooterSocial>
             ),
         },
@@ -55,14 +55,14 @@ const Footer = () => {
             label: t("termsConditions"),
         },
         {
-            href: "https://www.healthdatagateway.org/about/privacy-policy",
+            href: "/about/privacy-policy",
             label: t("privacyPolicy"),
         },
     ];
 
     const links2 = [
         {
-            href: "https://www.healthdatagateway.org/about/cookie-notice",
+            href: "/about/cookie-notice",
             label: t("cookieNotice"),
         },
         {

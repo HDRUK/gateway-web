@@ -1,7 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
-import Image from "next/image";
+import { notFound } from "next/navigation";
 import Box from "@/components/Box";
+import CollectionsContent from "@/components/CollectionsContent";
+import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PublicationsContent from "@/components/PublicationsContent";
@@ -9,10 +11,10 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
+import { AspectRatioImage } from "@/config/theme";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
-import DatausesContent from "./components/DatausesContent";
 import IntroductionContent from "./components/IntroductionContent";
 import { accordions } from "./config";
 
@@ -30,13 +32,18 @@ export default async function DataCustodianNetworkPage({
 
     const summaryData = await getNetworkSummary(
         cookieStore,
-        dataCustodianNetworkId
+        dataCustodianNetworkId,
+        {
+            suppressError: true,
+        }
     );
+
+    if (!summaryData) notFound();
+
     const networkData = await getDataCustodianNetworks(
         cookieStore,
         dataCustodianNetworkId
     );
-    const { summary, id } = networkData;
 
     const activeLinkList = accordions.map(section => {
         return {
@@ -44,18 +51,15 @@ export default async function DataCustodianNetworkPage({
         };
     });
 
-    const page = "dataCustodianNetwork";
-
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Image
+                        <AspectRatioImage
                             width={554}
                             height={250}
-                            style={{ width: "auto" }}
                             alt={summaryData.name}
                             src={
                                 summaryData?.img_url ||
@@ -74,33 +78,37 @@ export default async function DataCustodianNetworkPage({
                             gap: 2,
                         }}>
                         <IntroductionContent
-                            content={summary}
+                            networkData={networkData}
                             anchorIndex={0}
                         />
-
                         <DataCustodianContent
                             dataCustodians={summaryData.teams_counts}
-                            id={id}
                             anchorIndex={1}
                         />
                         <DatasetsContent
                             datasets={summaryData.datasets}
                             anchorIndex={2}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
+                        />
+                        <DataUsesContent
+                            datauses={summaryData.durs}
+                            anchorIndex={3}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <ToolsContent
                             tools={summaryData.tools}
-                            anchorIndex={3}
-                            page={page}
-                        />
-                        <DatausesContent
-                            datauses={summaryData.durs}
                             anchorIndex={4}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <PublicationsContent
                             publications={summaryData.publications}
                             anchorIndex={5}
-                            page={page}
+                            translationPath={TRANSLATION_PATH}
+                        />
+                        <CollectionsContent
+                            collections={summaryData.collections}
+                            anchorIndex={6}
+                            translationPath={TRANSLATION_PATH}
                         />
                         {/* Post-MVP: Service Offerings */}
                     </Box>

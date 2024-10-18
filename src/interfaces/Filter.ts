@@ -45,7 +45,8 @@ export type FilterKey =
     | "nationalPriorityAreas"
     | "organisationName"
     | "organisationSector"
-    | "fundersAndSponsors";
+    | "fundersAndSponsors"
+    | "publisherName";
 
 export type DateRange = {
     minYear: string;

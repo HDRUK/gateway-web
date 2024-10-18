@@ -5,6 +5,7 @@ export const SORT_FIELD = "sort";
 export const TYPE_FIELD = "type";
 export const VIEW_FIELD = "view";
 export const PAGE_FIELD = "page";
+export const PMC_TYPE_FIELD = "pmc";
 export const SOURCE_GAT = "GAT";
 
 export const sortByOptionsDataset = [
@@ -91,11 +92,57 @@ export const sortByOptionsPublications = [
     },
     {
         label: "Sort alphabetically by title (A-Z)",
-        value: "name:asc",
+        value: "title:asc",
     },
     {
         label: "Sort alphabetically by title (Z-A)",
+        value: "title:desc",
+    },
+];
+
+export const sortByOptionsCollections = [
+    {
+        label: "Sort by most relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort alphabetically by name (A-Z)",
+        value: "name:asc",
+    },
+    {
+        label: "Sort alphabetically by name (Z-A)",
         value: "name:desc",
+    },
+    {
+        label: "Sort by most recently updated",
+        value: "updated_at:desc",
+    },
+    {
+        label: "Sort by least recently updated",
+        value: "updated_at:asc",
+    },
+];
+
+export const sortByOptionsDataProviders = [
+    {
+        label: "Sort by most relevant",
+        value: "score:desc",
+    },
+    {
+        label: "Sort alphabetically by name (A-Z)",
+        value: "name:asc",
+    },
+    {
+        label: "Sort alphabetically by name (Z-A)",
+        value: "name:desc",
+    },
+    {
+        label: "Sort by most recently updated",
+        value: "updated_at:desc",
+    },
+    {
+        label: "Sort by least recently updated",
+        value: "updated_at:asc",
     },
 ];
 

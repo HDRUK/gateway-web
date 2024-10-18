@@ -44,7 +44,6 @@ const AddDatasetDialog = ({
 }: AddDatasetDialogProps) => {
     const { hideDialog } = useDialog();
     const t = useTranslations(TRANSLATION_PATH);
-
     const tableTranslations = {
         headerAdd: t("headerAdd"),
         headerName: t("headerName"),
@@ -201,7 +200,6 @@ const AddDatasetDialog = ({
             [resourceType]: updatedResources,
         });
     };
-
     return (
         <Dialog title={t("title")} maxWidth="laptop">
             <MuiDialogContent sx={{ minHeight: "55vh" }}>

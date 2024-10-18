@@ -112,6 +112,7 @@ const formFields = [
         component: inputComponents.Autocomplete,
         icon: SearchRoundedIcon,
         noOptionsText: "No users found",
+        // noOptionsText: "Try searching for a user by name...",
         required: true,
     },
     {

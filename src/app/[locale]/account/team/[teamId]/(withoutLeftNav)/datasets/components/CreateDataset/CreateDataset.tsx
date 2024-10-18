@@ -75,6 +75,8 @@ interface CreateDatasetProps {
     user: AuthUser;
 }
 
+type FormValues = Record<string, unknown>;
+
 const INITIAL_FORM_SECTION = "Home";
 const SUBMISSON_FORM_SECTION = "Submission";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
@@ -123,6 +125,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         params?.datasetId
     );
 
+    const [finishedLoadingExisting, setFinishedLoadingExisting] =
+        useState<boolean>();
+
     const { push } = useRouter();
 
     const { data: dataset, isLoading } = useGet<Dataset>(
@@ -151,7 +156,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Name of data provider": "--",
         "Dataset population size": -1,
         "contact point": user?.email,
-        "Observations array": null,
+        "Follow-up": null,
         ...currentFormJSON.defaultValues,
     };
 
@@ -277,13 +282,16 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     }, [formJSONUpdated]);
 
     useEffect(() => {
-        if (!existingFormData) {
-            reset(defaultFormValues);
+        if (!isEditing) {
+            setFinishedLoadingExisting(true);
             return;
         }
 
-        reset({ ...defaultFormValues, ...existingFormData });
-    }, [existingFormData]);
+        if (existingFormData) {
+            reset({ ...defaultFormValues, ...existingFormData });
+            setFinishedLoadingExisting(true);
+        }
+    }, [existingFormData, isEditing]);
 
     const formSections = [INITIAL_FORM_SECTION]
         .concat(
@@ -449,7 +457,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                     : await createDataset(formPayload as NewDataset);
 
             if (formPostRequest !== null) {
-                reset({});
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
                         RouteName.DATASETS
@@ -554,7 +561,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
-        onSuccess: () => handleSaveDraft,
+        onSuccess: handleSaveDraft,
         modalProps: {
             cancelText: t("discardChanges"),
             confirmText: t("saveAsDraft"),
@@ -563,7 +570,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         },
     });
 
-    if (isEditing && isLoading) {
+    if ((isEditing && isLoading) || !finishedLoadingExisting) {
         return <Loading />;
     }
 
@@ -691,8 +698,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                                                     control={
                                                                         control
                                                                     }
-                                                                    schemaFields={
-                                                                        fields
+                                                                    formArrayValues={
+                                                                        getValues(
+                                                                            fieldParent.title
+                                                                        ) as unknown as FormValues[]
                                                                     }
                                                                     fieldParent={
                                                                         fieldParent

@@ -1,14 +1,15 @@
 "use client";
 
-import { InView } from "react-intersection-observer";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get } from "lodash";
-import { usePathname, useRouter } from "next/navigation";
+import { get, isArray } from "lodash";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import DemographicsAccordion from "@/components/DemographicsAccordion";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
@@ -37,16 +38,27 @@ import {
 } from "./DatasetContent.styles";
 
 const DATE_FORMAT = "DD/MM/YYYY";
+const OBSERVATION_DATE = "observationDate";
+const TRANSLATION_PATH = "common";
+const DOI_URL = "https://doi.org/";
+const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
 
 const columnHelper = createColumnHelper<Observation>();
 
-const getColumns = () =>
+const getColumns = (notReportedText: string) =>
     observationTableColumns.map(column =>
         columnHelper.display({
             id: column.header,
-            cell: ({ row: { original } }) => (
-                <p>{get(original, column.path)}</p>
-            ),
+            cell: ({ row: { original } }) =>
+                column.path === OBSERVATION_DATE ? (
+                    <p>{formatDate(get(original, column.path))}</p>
+                ) : (
+                    <p>
+                        {get(original, column.path) !== -1
+                            ? get(original, column.path)
+                            : notReportedText}
+                    </p>
+                ),
             header: () => (
                 <TooltipIcon
                     content={column.tooltip}
@@ -57,9 +69,15 @@ const getColumns = () =>
         })
     );
 
-const renderObservationsTable = (rows?: Observation[]) => (
+const renderObservationsTable = (
+    notReportedText: string,
+    rows?: Observation[]
+) => (
     <ObservationTableWrapper>
-        <Table<Observation> columns={getColumns()} rows={rows || []} />
+        <Table<Observation>
+            columns={getColumns(notReportedText)}
+            rows={rows || []}
+        />
     </ObservationTableWrapper>
 );
 
@@ -71,7 +89,7 @@ const DatasetContent = ({
     populatedSections: DatasetSection[];
 }) => {
     const router = useRouter();
-    const path = usePathname();
+    const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
     const renderDatasetField = (type: FieldType, value: string) => {
@@ -104,21 +122,21 @@ const DatasetContent = ({
                     </DatasetFieldWrapper>
                 );
             }
-            case FieldType.LINK:
-                return (
-                    <Link href={value} target="_blank">
-                        {value}
-                    </Link>
-                );
             case FieldType.LIST: {
-                const list = Array.from(new Set(splitStringList(value)));
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
                 return list.map((item, i) => [
                     i > 0 && ", ",
                     formatTextWithLinks(item),
                 ]);
             }
             case FieldType.LINK_LIST: {
-                const list = Array.from(new Set(splitStringList(value)));
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
                 return (
                     <ListContainer>
                         {list.map(item => (
@@ -130,145 +148,185 @@ const DatasetContent = ({
                 );
             }
 
-            default:
+            default: {
                 return formatTextWithLinks(formatTextDelimiter(value));
+            }
         }
     };
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
-            {populatedSections.map((section, index) => (
-                <InView
-                    key={`${section.sectionName}_inview`}
-                    id={`anchor${index + 1}`}
-                    threshold={1}
-                    as="div"
-                    onChange={inView => {
-                        if (inView && path) {
-                            router.replace(`${path}?section=${index + 1}`, {
-                                scroll: false,
-                            });
-                        }
-                    }}>
-                    <Box
-                        key={`${section.sectionName}_wrap`}
-                        id={`anchor${index + 1}`}
-                        sx={{
-                            "&:not(:last-of-type)": {
-                                borderBottom: 1,
-                                borderColor: "greyCustom.light",
-                            },
-                            pl: 0,
-                            pr: 0,
-                        }}>
-                        <Typography variant="h2">
-                            {section.sectionName}
-                        </Typography>
+            {populatedSections.map((section, index) => {
+                const id = `anchor-${section.sectionName.replaceAll(
+                    /\s/g,
+                    ""
+                )}`;
+                return (
+                    <div
+                        key={`${section.sectionName}_section`}
+                        id={`anchor${index + 1}`}>
+                        <Box
+                            key={`${section.sectionName}_wrap`}
+                            id={id}
+                            sx={{
+                                "&:not(:last-of-type)": {
+                                    borderBottom: 1,
+                                    borderColor: "greyCustom.light",
+                                },
+                                pl: 0,
+                                pr: 0,
+                            }}>
+                            <Typography variant="h2">
+                                {section.sectionName}
+                            </Typography>
 
-                        {section.sectionName === "Observations" ? (
-                            renderObservationsTable(
-                                get(data, "metadata.metadata.observations")
-                            )
-                        ) : section.sectionName === "Structural Metadata" ? (
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    p: 0,
-                                }}>
-                                <Button
-                                    onClick={() =>
-                                        showModal({
-                                            title: "Structural Metadata",
-                                            content: (
-                                                <StructuralMetadataAccordion
-                                                    metadata={get(
-                                                        data,
-                                                        section.fields[0].path
-                                                    )}
-                                                />
-                                            ),
-                                            showConfirm: false,
-                                            showCancel: false,
-                                        })
-                                    }>
-                                    Open table
-                                </Button>
-                            </Box>
-                        ) : (
-                            section.fields.map(field => {
-                                const value = get(data, field.path);
+                            {section.sectionName === "Observations" ? (
+                                renderObservationsTable(
+                                    t("notReported"),
+                                    get(data, "metadata.metadata.observations")
+                                )
+                            ) : section.sectionName === "Demographics" ? (
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        p: 0,
+                                    }}>
+                                    <Button
+                                        onClick={() =>
+                                            showModal({
+                                                title: "Demographics",
+                                                content: (
+                                                    <DemographicsAccordion
+                                                        data={get(
+                                                            data,
+                                                            section.fields[0]
+                                                                .path
+                                                        )}
+                                                    />
+                                                ),
+                                                showConfirm: false,
+                                                showCancel: false,
+                                            })
+                                        }>
+                                        Open table
+                                    </Button>
+                                </Box>
+                            ) : section.sectionName ===
+                              "Structural Metadata" ? (
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        p: 0,
+                                    }}>
+                                    <Button
+                                        onClick={() =>
+                                            showModal({
+                                                title: "Structural Metadata",
+                                                content: (
+                                                    <StructuralMetadataAccordion
+                                                        metadata={get(
+                                                            data,
+                                                            section.fields[0]
+                                                                .path
+                                                        )}
+                                                    />
+                                                ),
+                                                showConfirm: false,
+                                                showCancel: false,
+                                            })
+                                        }>
+                                        Open table
+                                    </Button>
+                                </Box>
+                            ) : (
+                                section.fields.map(field => {
+                                    let value = get(data, field.path);
 
-                                if (!value) {
-                                    return null;
-                                }
+                                    if (
+                                        !value ||
+                                        value === -1 ||
+                                        (Array.isArray(value) && !value.length)
+                                    ) {
+                                        return null;
+                                    }
 
-                                if (!field.label) {
+                                    if (field.path === DOI_NAME_PATH) {
+                                        value = DOI_URL.concat(value);
+                                    }
+
+                                    if (!field.label) {
+                                        return (
+                                            <Box
+                                                sx={{
+                                                    p: 0,
+                                                    pb: 2,
+                                                }}
+                                                key={value}>
+                                                {renderDatasetField(
+                                                    field.type,
+                                                    value
+                                                )}
+                                            </Box>
+                                        );
+                                    }
+
                                     return (
-                                        <Box
+                                        <BoxContainer
                                             sx={{
-                                                p: 0,
-                                                pb: 2,
+                                                gridTemplateColumns: {
+                                                    desktop: "repeat(3, 1fr)",
+                                                },
+                                                gap: 1,
+                                                "&:not(:last-of-type)": {
+                                                    mb: 2,
+                                                },
                                             }}
-                                            key={value}>
-                                            {renderDatasetField(
-                                                field.type,
-                                                value
-                                            )}
-                                        </Box>
+                                            key={field.label}>
+                                            <Box
+                                                sx={{
+                                                    gridColumn: {
+                                                        desktop: "span 1",
+                                                    },
+                                                    p: 0,
+                                                }}>
+                                                {field.tooltip ? (
+                                                    <TooltipIcon
+                                                        content={field.tooltip}
+                                                        label={field.label}
+                                                        buttonSx={{
+                                                            p: 0,
+                                                            mr: 1,
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    field.label
+                                                )}
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    gridColumn: {
+                                                        desktop: "span 2",
+                                                    },
+                                                    p: 0,
+                                                    wordWrap: "break-word",
+                                                }}>
+                                                {renderDatasetField(
+                                                    field.type,
+                                                    value
+                                                )}
+                                            </Box>
+                                        </BoxContainer>
                                     );
-                                }
-
-                                return (
-                                    <BoxContainer
-                                        sx={{
-                                            gridTemplateColumns: {
-                                                desktop: "repeat(3, 1fr)",
-                                            },
-                                            gap: 1,
-                                            "&:not(:last-of-type)": {
-                                                mb: 2,
-                                            },
-                                        }}
-                                        key={field.label}>
-                                        <Box
-                                            sx={{
-                                                gridColumn: {
-                                                    desktop: "span 1",
-                                                },
-                                                p: 0,
-                                            }}>
-                                            {field.tooltip ? (
-                                                <TooltipIcon
-                                                    content={field.tooltip}
-                                                    label={field.label}
-                                                    buttonSx={{ p: 0, mr: 1 }}
-                                                />
-                                            ) : (
-                                                field.label
-                                            )}
-                                        </Box>
-                                        <Box
-                                            sx={{
-                                                gridColumn: {
-                                                    desktop: "span 2",
-                                                },
-                                                p: 0,
-                                                wordWrap: "break-word",
-                                            }}>
-                                            {renderDatasetField(
-                                                field.type,
-                                                value
-                                            )}
-                                        </Box>
-                                    </BoxContainer>
-                                );
-                            })
-                        )}
-                    </Box>
-                </InView>
-            ))}
+                                })
+                            )}
+                        </Box>
+                    </div>
+                );
+            })}
         </Paper>
     );
 };

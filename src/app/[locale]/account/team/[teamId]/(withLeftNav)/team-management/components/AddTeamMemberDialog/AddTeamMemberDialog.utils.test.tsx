@@ -9,7 +9,9 @@ describe("AddTeamMemberDialog", () => {
             const existingTeamMembers = [user2];
             const allUsers = [user1, user2];
 
-            const expectedResponse = [{ label: user1.name, value: user1.id }];
+            const expectedResponse = [
+                { label: `${user1.name} (${user1.email})`, value: user1.id },
+            ];
             expect(getAvailableUsers(existingTeamMembers, allUsers)).toEqual(
                 expectedResponse
             );

@@ -1,11 +1,8 @@
-import { Category } from "@/interfaces/Category";
 import { Tool } from "@/interfaces/Tool";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
@@ -22,11 +19,7 @@ interface ToolCardProps {
 }
 
 const ToolCard = ({ tool, actions }: ToolCardProps) => {
-    const { category_id, name, user_name, updated_at } = tool;
-
-    const { data: categories } = useGet<Category[]>(
-        `${apis.categoriesV1Url}?perPage=200`
-    );
+    const { type_category, name, user, updated_at } = tool;
 
     return (
         <Paper data-testid="tool-card" sx={{ mb: 2 }}>
@@ -54,14 +47,18 @@ const ToolCard = ({ tool, actions }: ToolCardProps) => {
                             rows={[
                                 {
                                     key: "Creator",
-                                    value: user_name || "-",
+                                    value:
+                                        `${user?.firstname} ${user?.lastname}` ||
+                                        "-",
                                 },
                                 {
                                     key: "Category",
-                                    value:
-                                        categories?.find(
-                                            c => c.id === category_id
-                                        )?.name || "-",
+                                    value: type_category?.map(
+                                        (category, index) =>
+                                            index !== type_category.length - 1
+                                                ? `${category.name}, `
+                                                : category.name
+                                    ),
                                 },
                                 {
                                     key: "Last activity",

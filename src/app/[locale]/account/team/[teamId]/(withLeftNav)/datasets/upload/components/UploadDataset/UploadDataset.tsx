@@ -40,7 +40,7 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                     <Typography sx={{ mb: 2 }}>{t("downloadInfo")}</Typography>
 
                     <DownloadFile
-                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/GAT-4754/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
+                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
                         buttonText={t("downloadButtonText")}
                         buttonSx={{ mb: 0 }}
                         isExternalFile
@@ -55,8 +55,8 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={FILE_UPLOAD_URL}
-                            fileUploadedAction={fileId =>
-                                setCreatedDatasetId(fileId as number)
+                            onFileUploaded={(fileId: number) =>
+                                setCreatedDatasetId(fileId)
                             }
                             isUploading={setIsUploading}
                             acceptedFileTypes={FILE_TYPE}

@@ -45,7 +45,7 @@ exports[`Footer should render component 1`] = `
                   width="17"
                 />
                 <span>
-                  Twitter
+                  X
                 </span>
               </span>
             </a>
@@ -109,7 +109,7 @@ exports[`Footer should render component 1`] = `
             <li>
               <a
                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-                href="https://www.healthdatagateway.org/about/privacy-policy"
+                href="/about/privacy-policy"
               >
                 Privacy policy
               </a>
@@ -123,7 +123,7 @@ exports[`Footer should render component 1`] = `
             <li>
               <a
                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-                href="https://www.healthdatagateway.org/about/cookie-notice"
+                href="/about/cookie-notice"
               >
                 Cookie notice
               </a>

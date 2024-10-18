@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Stack } from "@mui/material";
+import { BoxProps, Stack } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { StructuralMetadata } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
@@ -13,18 +13,28 @@ import Form from "../Form";
 import Loading from "../Loading";
 import Upload from "../Upload";
 
+export type EventUploadedImage = {
+    width: number;
+    height: number;
+};
+
 type UploadFormData = {
     upload: string;
 };
 
 interface UploadFileProps {
-    apiPath: string;
+    apiPath?: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
-    fileUploadedAction: (
-        uploadResponse?: number | StructuralMetadata[]
-    ) => void;
-    isUploading: Dispatch<SetStateAction<boolean>>;
+    fileSelectButtonText?: string;
+    onFileUploaded?: (uploadResponse?: number | StructuralMetadata[]) => void;
+    isUploading?: Dispatch<SetStateAction<boolean>>;
+    onBeforeUploadCheck?: (height: number, width: number) => boolean;
+    onFileCheckFailed?: () => void;
+    onFileCheckSucceeded?: (response: FileUpload) => void;
+    onFileChange?: (file: File) => void;
+    showUploadButton?: boolean;
+    sx?: BoxProps["sx"];
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -33,8 +43,15 @@ const UploadFile = ({
     apiPath,
     allowReuploading,
     acceptedFileTypes = ".xlsx",
-    fileUploadedAction,
+    fileSelectButtonText,
+    onFileUploaded,
     isUploading,
+    onBeforeUploadCheck,
+    onFileCheckFailed,
+    onFileCheckSucceeded,
+    onFileChange,
+    showUploadButton = true,
+    sx,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -65,7 +82,7 @@ const UploadFile = ({
         setHasError(true);
         setFileId(undefined);
         setFile(undefined);
-        isUploading(false);
+        isUploading?.(false);
         setPollFileStatus(false);
 
         notificationService.apiError(fileScanStatus?.error || t("error"));
@@ -74,16 +91,16 @@ const UploadFile = ({
     useEffect(() => {
         if (fileId) {
             if (fileScanStatus && fileScanStatus?.status === "PROCESSED") {
-                isUploading(false);
+                isUploading?.(false);
                 setPollFileStatus(false);
 
                 if (
                     fileScanStatus?.entity_id &&
                     fileScanStatus?.entity_id > 0
                 ) {
-                    fileUploadedAction(fileScanStatus?.entity_id);
+                    onFileUploaded?.(fileScanStatus?.entity_id);
                 } else if (fileScanStatus?.structural_metadata) {
-                    fileUploadedAction(fileScanStatus?.structural_metadata);
+                    onFileUploaded?.(fileScanStatus?.structural_metadata);
                 } else {
                     handleError();
                 }
@@ -99,41 +116,91 @@ const UploadFile = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileId, fileScanStatus]);
 
+    const imageValidation = async (file: File) => {
+        try {
+            await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    const image = new Image();
+                    image.src = e?.target?.result as string;
+                    image.onload = function () {
+                        if (onBeforeUploadCheck) {
+                            const checked = onBeforeUploadCheck(
+                                image.height,
+                                image.width
+                            );
+                            return checked
+                                ? resolve(null)
+                                : reject(
+                                      new Error(
+                                          "The image does not pass it's checks"
+                                      )
+                                  );
+                        }
+
+                        return resolve(true);
+                    };
+                };
+            });
+            return true;
+        } catch (_) {
+            return false;
+        }
+    };
+
     const onSubmit = async () => {
         if (!file) {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("file", file);
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
+                handleError()
+            )) as FileUpload;
+            setHasError(false);
 
-        const uploadedFileStatus = (await uploadFile(formData).catch(() =>
-            handleError()
-        )) as FileUpload;
+            if (uploadedFileStatus) {
+                const fileId = uploadedFileStatus.id;
 
-        setHasError(false);
-
-        if (uploadedFileStatus) {
-            const fileId = uploadedFileStatus.id;
-
-            setFileId(fileId);
-            setPollFileStatus(true);
-            isUploading(true);
+                setFileId(fileId);
+                setPollFileStatus(true);
+                isUploading?.(true);
+            }
+            onFileCheckSucceeded?.(uploadedFileStatus);
+        } catch {
+            setHasError(true);
+            onFileCheckFailed?.();
         }
     };
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form sx={sx}>
             <Stack spacing={0}>
                 {!fileId && (
                     <>
                         <Upload
                             control={control}
-                            label={t("upload")}
+                            label={fileSelectButtonText || t("upload")}
                             name="upload"
                             uploadSx={{ display: "none" }}
                             acceptFileTypes={acceptedFileTypes}
-                            onFileChange={(file: File) => setFile(file)}
+                            onFileChange={(file: File) => {
+                                if (file.type.startsWith("image/")) {
+                                    imageValidation(file).then(result => {
+                                        setFile(file);
+                                        onFileChange?.(file);
+                                        if (!result) {
+                                            onFileCheckFailed?.();
+                                        }
+                                    });
+                                } else {
+                                    setFile(file);
+                                    onFileChange?.(file);
+                                }
+                            }}
                             helperText={
                                 file?.name ||
                                 t("uploadHelper", {
@@ -141,12 +208,14 @@ const UploadFile = ({
                                 })
                             }
                         />
-                        <Button
-                            type="submit"
-                            sx={{ maxWidth: 150 }}
-                            disabled={!file}>
-                            {t("uploadButtonText")}
-                        </Button>
+                        {showUploadButton && (
+                            <Button
+                                onClick={handleSubmit(onSubmit)}
+                                sx={{ maxWidth: 150 }}
+                                disabled={!file}>
+                                {t("uploadButtonText")}
+                            </Button>
+                        )}
                     </>
                 )}
                 {fileId && !hasError && pollFileStatus && <Loading />}

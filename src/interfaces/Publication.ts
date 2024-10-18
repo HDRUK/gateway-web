@@ -2,6 +2,13 @@ import { DatasetRelationship } from "@/config/forms/tool";
 import type { DataUse } from "./DataUse";
 import type { Tool } from "./Tool";
 
+interface PublicationHasDatasetVersion {
+    link_type: string;
+    id: number;
+    publication_id: number;
+    dataset_version_id: number;
+}
+
 export interface Publication {
     id: number;
     created_at: string;
@@ -21,7 +28,13 @@ export interface Publication {
         tool_id: number;
         publication_id: number;
     };
+    dataset_versions: PublicationHasDatasetVersion[];
 }
+
+export type ReducedPublication = Pick<
+    Publication,
+    "id" | "paper_title" | "authors" | "url" | "year_of_publication"
+>;
 
 export interface PublicationPayload {
     id?: number;

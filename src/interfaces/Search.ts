@@ -1,6 +1,7 @@
 import {
     FILTER_DATA_USE_TITLES,
     FILTER_PUBLISHER_NAME,
+    FILTER_COLLECTION_NAME,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
@@ -17,13 +18,18 @@ import {
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
 } from "@/config/forms/filters";
+import { PMC_TYPE_FIELD } from "@/config/forms/search";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
 import { Highlight } from "./HighlightDataset";
 import { PaginationType } from "./Pagination";
+import { Team } from "./Team";
 
 export interface Aggregations {
     [FILTER_DATA_TYPE]: {
+        buckets: Bucket[];
+    };
+    [FILTER_COLLECTION_NAME]: {
         buckets: Bucket[];
     };
     [FILTER_DATA_USE_TITLES]: {
@@ -86,6 +92,7 @@ export interface SearchResultDataUse extends SearchResultBase {
         description: string;
     };
     team: {
+        id: number;
         member_of: string;
         name: string;
     };
@@ -124,6 +131,7 @@ export interface SearchResultTool extends SearchResultBase {
 export interface SearchResultCollection extends SearchResultBase {
     name: string;
     image_link?: string;
+    team: Team | null;
 }
 
 export interface SearchResultDataProvider extends SearchResultBase {
@@ -198,6 +206,7 @@ export interface SearchQueryParams {
     source: string | undefined;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
+    [FILTER_COLLECTION_NAME]: string[] | undefined;
     [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;
@@ -213,6 +222,7 @@ export interface SearchQueryParams {
     [FILTER_TYPE_CATEGORY]: string[] | undefined;
     [FILTER_CONTAINS_TISSUE]: string[] | undefined;
     [FILTER_MATERIAL_TYPE]: string[] | undefined;
+    [PMC_TYPE_FIELD]: string | undefined;
 }
 
 export type CountType = { [key: string]: number };

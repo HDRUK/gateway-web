@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
+import Encoder from "../Encoder";
 
 interface MenuDropdownProps {
     title?: string;
@@ -70,7 +71,7 @@ function MenuDropdown({
                             key={subItem.label}
                             onClick={() => handleClose()}>
                             <Link underline="none" href={subItem.href}>
-                                {subItem.label}
+                                <Encoder raw={subItem.label} />
                             </Link>
                         </MenuItem>
                     ));
@@ -94,7 +95,7 @@ function MenuDropdown({
                                 key={menuItem.label}
                                 underline="hover"
                                 href={menuItem.href}>
-                                {menuItem.label}
+                                <Encoder raw={menuItem.label} />
                             </Link>
                         </MenuItem>
                     );
@@ -107,7 +108,7 @@ function MenuDropdown({
                                 variant="link"
                                 aria-label={ariaLabel}
                                 sx={{ pl: 0 }}>
-                                {menuItem.label}
+                                <Encoder raw={menuItem.label} />
                             </Button>
                         </MenuItem>
                     );

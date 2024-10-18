@@ -1,19 +1,24 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+import { FileUpload } from "@/interfaces/FileUpload";
+import { Option } from "@/interfaces/Option";
 import { Team, TeamForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
+import FormInputWrapper from "@/components/FormInputWrapper";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import UploadFile from "@/components/UploadFile";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
@@ -25,20 +30,31 @@ import {
     teamFormFields,
     teamValidationSchema,
 } from "@/config/forms/team";
+import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { Routes } from "@/consts/routes";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
 
-const CreateIntegrationForm = () => {
-    const t = useTranslations();
-
-    const { push } = useRouter();
-
+const CreateTeamForm = () => {
     const params = useParams<{
         teamId: string;
     }>();
+    const t = useTranslations();
+    const [fileWarning, setFileWarning] = useState(false);
+    const [imageUploaded, setImageUploaded] = useState(false);
+    const [file, setFile] = useState<File>();
+    const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
+        params?.teamId
+    );
+    const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
+
+    const [searchName, setSearchName] = useState("");
+    const [userOptions, setUserOptions] = useState<Option[]>([]);
+    const searchNameDebounced = useDebounce(searchName, 500);
+
+    const { push } = useRouter();
 
     const { data: existingTeamData, isLoading } = useGet<Team>(
         `${apis.teamsV1Url}/${params?.teamId}`,
@@ -47,7 +63,19 @@ const CreateIntegrationForm = () => {
         }
     );
 
-    const { data: users = [] } = useGet<User[]>(apis.usersV1Url);
+    const teamAdmins =
+        existingTeamData?.users.filter(user =>
+            user.roles
+                .map(role => role.name)
+                .includes(ROLE_CUSTODIAN_TEAM_ADMIN)
+        ) || [];
+
+    const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced,
+        }
+    );
 
     const methods = useForm<TeamForm>({
         mode: "onTouched",
@@ -59,6 +87,56 @@ const CreateIntegrationForm = () => {
 
     const { control, handleSubmit, formState, reset, watch } = methods;
 
+    const updateUserOptions = (
+        prevOptions: Option[],
+        userOptions: Option[]
+    ) => {
+        const existingUserIds = prevOptions.map(option => option.value);
+        const newOptions = userOptions?.filter(
+            option => !existingUserIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length > 0) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const userOptions = teamAdmins.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+        if (!userOptions) return;
+
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
+    }, [teamAdmins]);
+
+    useEffect(() => {
+        const userOptions = users.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
+    }, [users]);
+
+    const selectedUsers = watch("users");
+    useEffect(() => {
+        if (selectedUsers) {
+            setUserOptions(prevOptions => {
+                return prevOptions.filter(option =>
+                    selectedUsers.includes(option.value as number)
+                );
+            });
+        }
+    }, [selectedUsers]);
+
     useEffect(() => {
         if (!existingTeamData) {
             return;
@@ -66,8 +144,13 @@ const CreateIntegrationForm = () => {
 
         const teamData = {
             ...existingTeamData,
-            users: existingTeamData?.users?.map(user => user.id),
+            users: teamAdmins.map(user => user.id),
+            contact_point: existingTeamData?.contact_point ?? "",
         };
+
+        if (teamData.team_logo) {
+            setImageUploaded(true);
+        }
 
         reset(teamData);
     }, [reset, existingTeamData]);
@@ -78,29 +161,80 @@ const CreateIntegrationForm = () => {
 
     const createTeam = usePost<TeamForm>(apis.teamsV1Url, {
         itemName: "Team",
+        successNotificationsOn: !file,
     });
 
-    const editTeam = usePatch<TeamForm>(apis.teamsV1Url);
+    const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
 
     const submitForm = async (formData: TeamForm) => {
         if (!params?.teamId) {
             await createTeam({
                 ...teamDefaultValues,
                 ...formData,
+            }).then(async result => {
+                if (typeof result === "number" && file) {
+                    setCreatedTeamId(result as string);
+                    setFileToBeUploaded(true);
+                }
             });
         } else {
-            await editTeam(params?.teamId, formData);
+            await editTeam(params?.teamId, formData).then(async () => {
+                if (file) {
+                    setFileToBeUploaded(true);
+                }
+            });
         }
 
         setTimeout(() => {
             push(Routes.ACCOUNT_TEAMS);
         });
     };
+    const uploadFile = usePost(
+        `${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`,
+        {
+            successNotificationsOn: false,
+        }
+    );
+
+    useEffect(() => {
+        const handleFileUploaded = async (
+            createdTeamId: string,
+            file: File
+        ) => {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
+                setFile(undefined)
+            )) as FileUpload;
+
+            const { file_location } = uploadedFileStatus;
+
+            await editTeam(createdTeamId, {
+                team_logo: file_location,
+            });
+        };
+
+        if (file && fileToBeUploaded && createdTeamId) {
+            handleFileUploaded(createdTeamId, file);
+        }
+    }, [createdTeamId, fileToBeUploaded, editTeam, file, uploadFile]);
 
     const is_question_bank = watch("is_question_bank");
     const questionBankLabel = is_question_bank
         ? t(`${TRANSLATION_PATH_COMMON}.enabled`)
         : t(`${TRANSLATION_PATH_COMMON}.disabled`);
+
+    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
 
     const hydratedFormFields = useMemo(
         () =>
@@ -108,15 +242,14 @@ const CreateIntegrationForm = () => {
                 if (field.name === "users") {
                     return {
                         ...field,
-                        options: users?.map(user => ({
-                            value: user.id,
-                            label: `${user.firstname} ${user.lastname}`,
-                        })),
+                        onInputChange: handleOnUserInputChange,
+                        isLoadingOptions: isLoadingUsers,
+                        options: userOptions,
                     };
                 }
                 return field;
             }),
-        [users]
+        [userOptions, isLoadingUsers]
     );
 
     if (isLoading) {
@@ -175,6 +308,75 @@ const CreateIntegrationForm = () => {
                                 {...field}
                             />
                         ))}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                p: 0,
+                                gap: 4,
+                            }}>
+                            <FormInputWrapper
+                                label="Logo"
+                                info={
+                                    imageUploaded
+                                        ? t(
+                                              `${TRANSLATION_PATH_CREATE}.addImageSuccess`
+                                          )
+                                        : t(
+                                              `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
+                                          )
+                                }
+                                error={
+                                    fileWarning
+                                        ? {
+                                              type: "",
+                                              message: t(
+                                                  `${TRANSLATION_PATH_CREATE}.aspectRatioError`
+                                              ),
+                                          }
+                                        : undefined
+                                }
+                                formControlSx={{ width: "70%", p: 0 }}>
+                                <UploadFile
+                                    fileSelectButtonText={t(
+                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                    )}
+                                    acceptedFileTypes=".jpg,.png"
+                                    onBeforeUploadCheck={(
+                                        height: number,
+                                        width: number
+                                    ) => {
+                                        const aspectRatio =
+                                            (width || 0) / (height || 0);
+                                        return (
+                                            aspectRatio <= 2.5 &&
+                                            aspectRatio >= 1.5
+                                        );
+                                    }}
+                                    onFileChange={(file: File) => {
+                                        setFile(file);
+                                        setFileWarning(false);
+                                    }}
+                                    onFileCheckSucceeded={() => {
+                                        setImageUploaded(true);
+                                    }}
+                                    onFileCheckFailed={() => {
+                                        setFileWarning(true);
+                                    }}
+                                    sx={{ py: 2 }}
+                                    showUploadButton={false}
+                                />
+                            </FormInputWrapper>
+
+                            {existingTeamData?.team_logo && (
+                                <Box sx={{ width: "30%" }}>
+                                    <img
+                                        src={existingTeamData?.team_logo}
+                                        alt={`${existingTeamData?.name} logo`}
+                                        width="100%"
+                                    />
+                                </Box>
+                            )}
+                        </Box>
                     </Box>
                 </Paper>
                 <Paper>
@@ -203,4 +405,4 @@ const CreateIntegrationForm = () => {
     );
 };
 
-export default CreateIntegrationForm;
+export default CreateTeamForm;

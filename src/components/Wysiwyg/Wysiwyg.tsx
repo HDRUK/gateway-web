@@ -35,8 +35,28 @@ const Wysiwyg = <
     }, [editor]);
 
     useEffect(() => {
-        editor?.commands.setContent(JSON.parse(field.value || "{}"));
-    }, [editor]);
+        if (!editor) return;
+        const { from, to } = editor.state.selection;
+
+        let content = {};
+
+        try {
+            content = JSON.parse(field.value);
+        } catch (_) {
+            content = {
+                type: "paragraph",
+                content: [
+                    {
+                        type: "text",
+                        text: field.value,
+                    },
+                ],
+            };
+        }
+
+        editor?.commands.setContent(content);
+        editor.commands.setTextSelection({ from, to });
+    }, [editor, field.value]);
 
     return (
         <FormInputWrapper

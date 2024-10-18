@@ -1,7 +1,8 @@
 import type { Publication } from "./Publication";
+import type { Team } from "./Team";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
-type CreateOrigin = "FMA" | "MANUAL" | "API";
+type CreateOrigin = "GMI" | "MANUAL" | "API";
 
 interface StructuralMetadataValue {
     name: string;
@@ -28,6 +29,23 @@ interface StructuralMetadataPublicSchema {
     syntheticDataWebLink: string[];
 }
 
+interface DemographicGeneric {
+    bin: string;
+    count: number;
+}
+
+interface DemographicDisease {
+    diseaseCode: string;
+    diseaseCodeVocabulary?: string;
+    count: number;
+}
+
+interface Demographics {
+    age: DemographicGeneric[] | null;
+    ethnicity: DemographicGeneric[] | null;
+    disease: DemographicDisease[] | null;
+}
+
 interface Revision {
     version: string;
     url: string;
@@ -38,11 +56,9 @@ interface Metadata {
         abstract: string;
         contactPoint: string;
         controlledKeywords: string;
-        datasetType: string;
-        datasetSubType: string;
         description: string;
         doiName: string;
-        keywords: string;
+        keywords: string[];
         shortTitle: string;
         title: string;
         populationSize: number | null;
@@ -79,6 +95,8 @@ interface Metadata {
     provenance: {
         origin: {
             collectionSituation: string | undefined;
+            datasetType: string[];
+            datasetSubType: string[];
         };
         temporal: {
             startDate: string | undefined;
@@ -98,10 +116,13 @@ interface Metadata {
         investigations: string[];
         isGeneratedUsing: string;
         dataUses: string[];
-        syntheticDataWebLink: string;
     };
     structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
+    demographicFrequency: Demographics;
+    coverage: {
+        datasetCompleteness: string;
+    };
 }
 
 interface LinkedDatasetVersions {
@@ -128,6 +149,14 @@ interface VersionItem {
     linked_dataset_versions: LinkedDatasetVersions[];
 }
 
+export interface ReducedDataset {
+    id: number;
+    dataset_id: number; // always show this
+    shortTitle: string;
+    populationSize: number;
+    datasetType: string;
+}
+
 interface Dataset {
     id: number;
     team_id: number;
@@ -142,6 +171,9 @@ interface Dataset {
     publications_count: number;
     tools_count: number;
     collections_count: number;
+    publications: Publication[];
+    team: Team;
+    name?: string;
 }
 
 interface DataCustodianDataset {
@@ -168,4 +200,7 @@ export type {
     StructuralMetadataPublicSchema,
     CreateOrigin,
     Revision,
+    Demographics,
+    DemographicDisease,
+    DemographicGeneric,
 };

@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import ActiveList from "@/components/ActiveList";
 import {
     ActiveLinkWrapper,
@@ -21,18 +21,22 @@ const ActiveListSidebar = ({
     }[];
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const searchParams = useSearchParams();
 
-    const [activeItem, setActiveItem] = useState(1);
+    const [activeItem, setActiveItem] = useState(0);
+
+    const searchParams = useSearchParams();
+    const isDatasetPage = usePathname()?.includes("dataset");
 
     useEffect(() => {
         if (!searchParams) {
             return;
         }
 
-        const sectionInView = searchParams.get("section");
-        if (sectionInView) {
-            setActiveItem(toNumber(sectionInView));
+        if (isDatasetPage) {
+            const sectionInView = searchParams.get("section");
+            if (sectionInView) {
+                setActiveItem(toNumber(sectionInView));
+            }
         }
     }, [searchParams]);
 
@@ -41,6 +45,11 @@ const ActiveListSidebar = ({
         if (section) {
             section.scrollIntoView({ behavior: "smooth", block: "start" });
             setActiveItem(id);
+            if (!isDatasetPage) {
+                setTimeout(() => {
+                    setActiveItem(0);
+                }, 200);
+            }
         }
     }, []);
 

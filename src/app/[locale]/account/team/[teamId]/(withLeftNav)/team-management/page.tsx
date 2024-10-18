@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -21,5 +22,11 @@ export default async function TeamManagementPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    return <TeamManagement permissions={permissions} team={team} />;
+    return (
+        <ProtectedAccountRoute
+            permissions={permissions}
+            pagePermissions={["roles.read"]}>
+            <TeamManagement permissions={permissions} team={team} />
+        </ProtectedAccountRoute>
+    );
 }

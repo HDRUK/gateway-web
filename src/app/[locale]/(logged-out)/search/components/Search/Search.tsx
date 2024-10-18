@@ -33,6 +33,7 @@ import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
 import ProvidersDialog from "@/modules/ProvidersDialog";
+import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
@@ -46,6 +47,7 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
+    FILTER_COLLECTION_NAME,
     FILTER_CONTAINS_TISSUE,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
@@ -64,15 +66,18 @@ import {
     FILTER_TYPE_CATEGORY,
 } from "@/config/forms/filters";
 import searchFormConfig, {
+    PAGE_FIELD,
+    PMC_TYPE_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
     VIEW_FIELD,
+    sortByOptionsCollections,
+    sortByOptionsDataProviders,
     sortByOptionsDataUse,
     sortByOptionsDataset,
-    sortByOptionsTool,
     sortByOptionsPublications,
-    PAGE_FIELD,
+    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
@@ -91,6 +96,7 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
+import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
@@ -146,8 +152,10 @@ const Search = ({ filters }: SearchProps) => {
         source:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
+        [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
+        [FILTER_COLLECTION_NAME]: getParamArray(FILTER_COLLECTION_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
@@ -174,6 +182,7 @@ const Search = ({ filters }: SearchProps) => {
     );
 
     const allSearchParams = getAllParams(searchParams);
+    const forceSearch = searchParams?.get("force") !== null;
 
     const hasNotSearched = () => {
         const keys = Object.keys(allSearchParams).filter(
@@ -193,10 +202,28 @@ const Search = ({ filters }: SearchProps) => {
         }
     }, [queryParams.type, resultsView]);
 
-    const updatePath = (key: string, value: string) => {
-        router.push(`${pathname}?${updateQueryString(key, value)}`, {
-            scroll: false,
+    const updatePath = useCallback(
+        (key: string, value: string) => {
+            router.push(`${pathname}?${updateQueryString(key, value)}`, {
+                scroll: false,
+            });
+        },
+        [pathname, router, updateQueryString]
+    );
+
+    const updatePathMultiple = (params: Record<string, string>) => {
+        const currentParams = new URLSearchParams(searchParams?.toString());
+
+        Object.entries(params).forEach(([key, value]) => {
+            if (value === undefined) {
+                currentParams.delete(key);
+            } else {
+                currentParams.set(key, value);
+            }
         });
+
+        const newPath = `${pathname}?${currentParams.toString()}`;
+        router.push(newPath, { scroll: false });
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
@@ -249,6 +276,7 @@ const Search = ({ filters }: SearchProps) => {
             keepPreviousData: true,
             withPagination: true,
             shouldFetch:
+                forceSearch ||
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
                 !!(
                     queryParams.type === SearchCategory.PUBLICATIONS &&
@@ -311,6 +339,7 @@ const Search = ({ filters }: SearchProps) => {
             type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
+            [FILTER_COLLECTION_NAME]: undefined,
             [FILTER_GEOGRAPHIC_LOCATION]: undefined,
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,
@@ -331,32 +360,56 @@ const Search = ({ filters }: SearchProps) => {
 
     const categoryTabs = [
         {
-            label: t("datasets"),
+            label: (
+                <TabTooltip content={t("datasetsTooltip")}>
+                    {t("datasets")}
+                </TabTooltip>
+            ),
             value: SearchCategory.DATASETS,
             content: "",
         },
         {
-            label: t("dataUse"),
+            label: (
+                <TabTooltip content={t("dataUseTooltip")}>
+                    {t("dataUse")}
+                </TabTooltip>
+            ),
             value: SearchCategory.DATA_USE,
             content: "",
         },
         {
-            label: t("tools"),
+            label: (
+                <TabTooltip content={t("toolsTooltip")}>
+                    {t("tools")}
+                </TabTooltip>
+            ),
             value: SearchCategory.TOOLS,
             content: "",
         },
         {
-            label: t("publications"),
+            label: (
+                <TabTooltip content={t("publicationsTooltip")}>
+                    {t("publications")}
+                </TabTooltip>
+            ),
             value: SearchCategory.PUBLICATIONS,
             content: "",
         },
         {
-            label: t("dataProviders"),
+            label: (
+                <TabTooltip content={t("dataProvidersTooltip")}>
+                    {t("dataProviders")}
+                </TabTooltip>
+            ),
             value: SearchCategory.DATA_PROVIDERS,
             content: "",
         },
         {
-            label: t("collections"),
+            label: (
+                <TabTooltip content={t("collectionsTooltip")}>
+                    {t("collections")}
+                </TabTooltip>
+            ),
             value: SearchCategory.COLLECTIONS,
             content: "",
         },
@@ -484,6 +537,10 @@ const Search = ({ filters }: SearchProps) => {
                 return sortByOptionsTool;
             case SearchCategory.PUBLICATIONS:
                 return sortByOptionsPublications;
+            case SearchCategory.COLLECTIONS:
+                return sortByOptionsCollections;
+            case SearchCategory.DATA_PROVIDERS:
+                return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
         }
@@ -539,10 +596,40 @@ const Search = ({ filters }: SearchProps) => {
     ];
 
     const showPublicationWelcomeMessage =
+        !forceSearch &&
         !isSearching &&
         !queryParams.query &&
         queryParams.type === SearchCategory.PUBLICATIONS &&
         (!data?.list?.length || !data?.path?.includes(queryParams.type));
+
+    const isEuropePmcSearch = useMemo(
+        () =>
+            queryParams.type === SearchCategory.PUBLICATIONS &&
+            queryParams.source === "FED",
+        [queryParams.source, queryParams.type]
+    );
+
+    const europePmcModalAction = () =>
+        showDialog(() => (
+            <PublicationSearchDialog
+                onSubmit={(query: string, type: string) => {
+                    onQuerySubmit({
+                        query,
+                    });
+                    setQueryParams({
+                        ...queryParams,
+                        pmc: type,
+                        query,
+                    });
+                    updatePathMultiple({
+                        pmc: type,
+                        query,
+                    });
+                }}
+                defaultQuery={queryParams.query}
+                isDataset={queryParams.pmc === "dataset"}
+            />
+        ));
 
     return (
         <Box
@@ -568,6 +655,12 @@ const Search = ({ filters }: SearchProps) => {
                     submitAction={onQuerySubmit}
                     queryPlaceholder={t("searchPlaceholder")}
                     queryName={QUERY_FIELD}
+                    inputOverrideAction={
+                        isEuropePmcSearch ? europePmcModalAction : undefined
+                    }
+                    valueOverride={
+                        isEuropePmcSearch ? queryParams.query : undefined
+                    }
                 />
             </Box>
             <ActionBar>
@@ -708,11 +801,13 @@ const Search = ({ filters }: SearchProps) => {
                                                     total={data?.total}
                                                 />
                                             )}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
-                                        )}
+                                        {data &&
+                                            data.elastic_total > 100 &&
+                                            !showPublicationWelcomeMessage && (
+                                                <ResultLimitText>
+                                                    {t("resultLimit")}
+                                                </ResultLimitText>
+                                            )}
                                     </>
                                 </Box>
 

@@ -13,8 +13,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
@@ -26,7 +25,9 @@ import CircleIcon from "@mui/icons-material/Circle";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DescriptionIcon from "@mui/icons-material/Description";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -50,6 +51,7 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -60,6 +62,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
+import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
 import StorageIcon from "@mui/icons-material/Storage";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
@@ -81,6 +84,7 @@ export {
     ArrowDropUpIcon,
     SortByAlphaIcon,
     DescriptionOutlinedIcon,
+    DescriptionIcon,
     UnarchiveIcon,
     ArchiveIcon,
     EditIcon,
@@ -140,6 +144,8 @@ export {
     HandymanOutlinedIcon,
     CloudUploadIcon,
     ArticleIcon,
-    BookmarkBorderIcon,
-    BookmarksIcon,
+    BookmarkIcon,
+    StickyNote2OutlinedIcon,
+    PersonOutlineOutlinedIcon,
+    ControlPointIcon,
 };

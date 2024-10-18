@@ -8,7 +8,8 @@ import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
 import {
     rootNode,
-    outerNodes,
+    outerNodeValues,
+    getOuterNodes,
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
@@ -21,6 +22,7 @@ interface DatasetMindMapProps extends ReactFlowProps {
     teamId: number;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
+    hasDemographics: boolean;
     linkageCounts: { [key: string]: number };
 }
 
@@ -36,6 +38,7 @@ const DatasetMindMap = ({
     zoomOnDoubleClick = false,
     nodesDraggable = false,
     hasStructuralMetadata,
+    hasDemographics,
     ...rest
 }: DatasetMindMapProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -52,77 +55,98 @@ const DatasetMindMap = ({
 
     const emptyNodes = useMemo<string[]>(() => [], []);
 
-    const hydratedOuterNodes = useMemo(
-        () =>
-            outerNodes
-                .map(node => {
-                    let href = null;
-                    let action = null;
-                    let hidden = false;
-                    const title = data.metadata.metadata.summary.shortTitle;
+    const hydratedOuterNodes = useMemo(() => {
+        const outerNodes = getOuterNodes(
+            outerNodeValues.map(node => ({
+                ...node,
+                label: t(node.name),
+            }))
+        );
 
-                    if (node.id === "node-synthetic") {
-                        href =
-                            data.metadata.metadata.linkage.syntheticDataWebLink;
-                        if (!href) {
-                            emptyNodes.push(node.id);
-                            hidden = true;
-                        }
-                    } else if (
-                        [
-                            "node-collections",
-                            "node-durs",
-                            "node-tools",
-                        ].includes(node.id)
+        return outerNodes
+            .map(node => {
+                let href = null;
+                let action = null;
+                let hidden = false;
+                const { title } = data.metadata.metadata.summary;
+
+                if (node.id === "node-synthetic") {
+                    href =
+                        data.metadata.metadata?.structuralMetadata
+                            ?.syntheticDataWebLink;
+
+                    if (!href) {
+                        emptyNodes.push(node.id);
+                        hidden = true;
+                    }
+                } else if (
+                    ["node-collections", "node-durs", "node-tools"].includes(
+                        node.id
+                    )
+                ) {
+                    const entityName = node.id.replace("node-", "");
+                    const entityCount = linkageCounts[entityName];
+                    if (!entityCount) {
+                        hidden = true;
+                        emptyNodes.push(node.id);
+                    }
+                    href = `${node.data.href}&datasetTitles=${title}`;
+                } else if (node.id === "node-dataCustodian") {
+                    href = `/data-custodian/${teamId}`;
+                } else if (node.id === "node-curatedPublications") {
+                    const entityCount = linkageCounts.publications_using;
+                    if (!entityCount) {
+                        hidden = true;
+                        emptyNodes.push(node.id);
+                    }
+                    href = `${node.data.href}&query=&datasetTitles=${title}&source=${node.data.source}&force`;
+                } else if (node.id === "node-externalPublications") {
+                    href = `${node.data.href}&query=${title}&source=${node.data.source}&pmc=dataset`;
+                } else if (node.id === "node-coverageCompleteness") {
+                    href =
+                        data.metadata.metadata?.coverage?.datasetCompleteness;
+
+                    if (!href) {
+                        emptyNodes.push(node.id);
+                        hidden = true;
+                    }
+                } else if (node.data.href?.includes("scrollTo:")) {
+                    if (
+                        (hasStructuralMetadata &&
+                            node.data.name === "structuralMetadata") ||
+                        (hasDemographics && node.data.name === "demographics")
                     ) {
-                        const entityName = node.id.replace("node-", "");
-                        const entityCount = linkageCounts[entityName];
-                        if (!entityCount) {
-                            hidden = true;
-                            emptyNodes.push(node.id);
-                        }
-                        href = `${node.data.href}&datasetTitles=${title}`;
-                    } else if (node.id === "node-dataCustodian") {
-                        href = `/data-custodian/${teamId}`;
+                        const sectionIndex = populatedSections.findIndex(
+                            section =>
+                                node.data.href?.includes(section.sectionName)
+                        );
+
+                        href = null;
+                        action = () =>
+                            document
+                                ?.querySelector(`#anchor${sectionIndex}`)
+                                ?.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start",
+                                });
+                    } else {
+                        hidden = true;
+                        emptyNodes.push(node.id);
                     }
+                }
 
-                    if (node.data.href?.includes("scrollTo:")) {
-                        if (hasStructuralMetadata) {
-                            const sectionIndex = populatedSections.findIndex(
-                                section =>
-                                    node.data.href?.includes(
-                                        section.sectionName
-                                    )
-                            );
-
-                            href = null;
-                            action = () =>
-                                document
-                                    ?.querySelector(`#anchor${sectionIndex}`)
-                                    ?.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "start",
-                                    });
-                        } else {
-                            hidden = true;
-                            emptyNodes.push(node.id);
-                        }
-                    }
-
-                    return {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            label: t(node.data.name),
-                            href,
-                            action,
-                            hidden,
-                        },
-                    };
-                })
-                .filter(item => !!item),
-        [data]
-    );
+                return {
+                    ...node,
+                    data: {
+                        ...node.data,
+                        href,
+                        action,
+                        hidden,
+                    },
+                };
+            })
+            .filter(item => !!item);
+    }, [data]);
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2, height: "350px" }}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -66,7 +66,7 @@ const UserPublications = ({
         page: "1",
         sort: `${publicationSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         paper_title: "",
-        ...(teamId ? { team_id: teamId } : { owner_id: 1 }),
+        ...(teamId ? { team_id: teamId } : { owner_id: userId }),
     }));
 
     const { control, watch, setValue } = useForm({
@@ -135,11 +135,6 @@ const UserPublications = ({
         localeKey: "archivePublication",
         itemName: "Publication",
     });
-
-    const showAddNewButton = useMemo(
-        () => permissions["papers.create"],
-        [permissions]
-    );
 
     const showArchiveButton =
         tab !== DataStatus.ARCHIVED && permissions["papers.delete"];
@@ -275,11 +270,9 @@ const UserPublications = ({
                         <Typography>{t("text")}</Typography>
                     </Box>
 
-                    {showAddNewButton && (
-                        <Button onClick={handleAdd} startIcon={<AddIcon />}>
-                            {t("create")}
-                        </Button>
-                    )}
+                    <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                        {t("create")}
+                    </Button>
                 </Box>
             </Paper>
 

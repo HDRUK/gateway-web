@@ -18,7 +18,6 @@ exports[`NewsSummaryCard should render component 1`] = `
         Jan
       </div>
       <div>
-         
         01
       </div>
     </div>
@@ -26,7 +25,7 @@ exports[`NewsSummaryCard should render component 1`] = `
       class="MuiCardContent-root mui-style-46bh2p-MuiCardContent-root"
     >
       <div
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-96vc0a-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-1n7om1r-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "
@@ -36,7 +35,7 @@ exports[`NewsSummaryCard should render component 1`] = `
         </div>
       </div>
       <div
-        class="MuiTypography-root MuiTypography-body2 mui-style-qd21mq-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-1qlfv52-MuiTypography-root"
       >
         <div
           class="LinesEllipsis  "

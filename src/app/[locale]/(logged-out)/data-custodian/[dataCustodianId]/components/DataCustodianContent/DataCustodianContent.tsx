@@ -1,12 +1,11 @@
 "use client";
 
-import { InView } from "react-intersection-observer";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
 import { DataProvider } from "@/interfaces/DataProvider";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import DataCustodianLinks from "@/components/DataCustodianLinks";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
@@ -32,8 +31,6 @@ const DataCustodianContent = ({
     populatedSections: DataCustodianSection[];
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const router = useRouter();
-    const path = usePathname();
 
     const getValue = (data: DataProvider, field: DataCustodianField) => {
         const value = get(data, field.path);
@@ -63,38 +60,30 @@ const DataCustodianContent = ({
         }
     };
 
+    if (!populatedSections.length || !data.url) {
+        return null;
+    }
+
     return (
-        <BoxContainer
-            sx={{
-                gridTemplateColumns: {
-                    tablet: "repeat(5, 1fr)",
-                },
-                gap: {
-                    mobile: 1,
-                    tablet: 2,
-                },
-                p: 0,
-            }}>
-            <Box
+        (populatedSections.length || data.url) && (
+            <BoxContainer
                 sx={{
-                    gridColumn: { tablet: "span 5", laptop: "span 5" },
+                    gridTemplateColumns: {
+                        tablet: "repeat(5, 1fr)",
+                    },
+                    gap: {
+                        mobile: 1,
+                        tablet: 2,
+                    },
                     p: 0,
                 }}>
-                <Paper sx={{ borderRadius: 2, p: 2 }}>
-                    {populatedSections.map((section, index) => (
-                        <InView
-                            key={`${section.sectionName}_inview`}
-                            id={`anchor${index + 1}`}
-                            threshold={1}
-                            as="div"
-                            onChange={inView => {
-                                if (inView && path) {
-                                    router.replace(
-                                        `${path}?section=${index + 1}`,
-                                        { scroll: false }
-                                    );
-                                }
-                            }}>
+                <Box
+                    sx={{
+                        gridColumn: { tablet: "span 5", laptop: "span 5" },
+                        p: 0,
+                    }}>
+                    <Paper sx={{ borderRadius: 2, p: 2 }}>
+                        {populatedSections.map((section, index) => (
                             <Box
                                 key={`${section.sectionName}_wrap`}
                                 id={`anchor${index + 1}`}
@@ -102,6 +91,9 @@ const DataCustodianContent = ({
                                     "&:not(:last-of-type)": {
                                         borderBottom: 1,
                                         borderColor: "greyCustom.light",
+                                    },
+                                    "&:last-child": {
+                                        pb: 0,
                                     },
                                     pl: 0,
                                     pr: 0,
@@ -179,11 +171,12 @@ const DataCustodianContent = ({
                                     );
                                 })}
                             </Box>
-                        </InView>
-                    ))}
-                </Paper>
-            </Box>
-        </BoxContainer>
+                        ))}
+                        <DataCustodianLinks data={data} sx={{ mb: 2 }} />
+                    </Paper>
+                </Box>
+            </BoxContainer>
+        )
     );
 };
 
