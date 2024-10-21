@@ -12,6 +12,7 @@ export interface AccordionProps
     contents: string | ReactNode;
     variant?: "underline" | "plain";
     noIndent?: boolean;
+    collapsable?: boolean;
 }
 
 const Accordion = ({
@@ -20,6 +21,7 @@ const Accordion = ({
     variant = "underline",
     noIndent,
     sx,
+    collapsable = true,
     ...restProps
 }: AccordionProps) => {
     return (
@@ -59,7 +61,9 @@ const Accordion = ({
             {...restProps}>
             <MuiAccordionSummary
                 expandIcon={
-                    <ChevronThinIcon fontSize="medium" color="primary" />
+                    collapsable && (
+                        <ChevronThinIcon fontSize="medium" color="primary" />
+                    )
                 }>
                 {heading}
             </MuiAccordionSummary>

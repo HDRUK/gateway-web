@@ -201,7 +201,7 @@ const FilterPanel = ({
 
         return formattedFilters;
     }, [filterCategory, filterSourceData, staticFilterValues]);
-    const [maximised, setMaximised] = useState<string[]>(['source']);
+    const [maximised, setMaximised] = useState<string[]>([]);
     const updateCheckboxes = (
         updatedCheckbox: { [key: string]: boolean },
         filterSection: string
@@ -418,6 +418,7 @@ const FilterPanel = ({
         <>
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
+                const isSource = label === "source";
 
                 if (filterItem.label === FILTER_CONTAINS_TISSUE) {
                     return (
@@ -455,7 +456,7 @@ const FilterPanel = ({
                             background: "transparent",
                             boxShadow: "none",
                         }}
-                        expanded={maximised.includes(label)}
+                        expanded={isSource ? true : maximised.includes(label)}
                         heading={
                             <Box
                                 sx={{
@@ -466,7 +467,7 @@ const FilterPanel = ({
                                     alignContent: "center",
                                     justifyContent: "space-between",
                                     width: "100%",
-                                    pr: 3.25,
+                                    pr: !isSource && 3.25,
                                 }}>
                                 <Typography fontWeight="400" fontSize={20}>
                                     {t(label)}
@@ -487,6 +488,7 @@ const FilterPanel = ({
                             )
                         }
                         contents={renderFilterContent(filterItem)}
+                        collapsable={!isSource ?? false}
                     />
                 );
             })}
