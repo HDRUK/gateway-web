@@ -8,12 +8,7 @@ export const metadata = {
     description: "",
 };
 
-export default async function TeamsPage({
-    params,
-}: {
-    params: { teamId: string };
-}) {
-    const { teamId } = params;
+export default async function TeamsPage() {
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const permissions = getPermissions(user.roles);
@@ -24,5 +19,5 @@ export default async function TeamsPage({
         permissions[value] = true;
     });
 
-    return <Tools permissions={permissions} teamId={teamId} userId={userId} />;
+    return <Tools permissions={permissions} userId={userId} />;
 }
