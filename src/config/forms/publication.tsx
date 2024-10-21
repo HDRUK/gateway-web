@@ -48,12 +48,7 @@ const validationSchema = yup
             .max(4)
             .required()
             .label("Publication year"),
-        abstract: yup
-            .string()
-            .min(50)
-            .max(5000)
-            .required()
-            .label("Abstract"),
+        abstract: yup.string().min(50).max(5000).required().label("Abstract"),
         url: yup.string().nullable().url().label("DOI/Web link"),
         paper_doi: yup
             .string()
