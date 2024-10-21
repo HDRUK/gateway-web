@@ -38,7 +38,7 @@ const validationSchema = yup
         publication_type: yup.string().required().label("Publication type"),
         journal_name: yup
             .string()
-            .min(50)
+            .min(3)
             .max(1500)
             .required()
             .label("Journal name"),
@@ -50,7 +50,7 @@ const validationSchema = yup
             .label("Publication year"),
         abstract: yup
             .string()
-            .min(3)
+            .min(50)
             .max(1500)
             .required()
             .label("Publication year"),
