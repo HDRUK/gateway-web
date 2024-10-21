@@ -795,7 +795,7 @@
             "datasets": "Datasets & BioSamples",
             "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
             "dataUse": "Data Uses/\n\nResearch Projects",
-            "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data Uses / research projects / studies related to specific data sets and other features.",
+            "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
             "toolsTooltip": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software.",
             "dataProviders": "Data Custodians",
