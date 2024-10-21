@@ -655,6 +655,7 @@
                 "dar": {
                     "application": {
                         "create": {
+                            "chat": "Open Chat",
                             "save": "Save Changes",
                             "defaultGuidance": "Please click on a question to display guidance"
                         }
