@@ -161,6 +161,14 @@ const FilterPanel = ({
         setFilterValues(defaultValues);
     }, [selectedFilters]);
 
+    useEffect(() => {
+        if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
+            setStaticFilterValues({
+                [STATIC_FILTER_SOURCE]: { GAT: true },
+            });
+        }
+    }, [filterCategory]);
+
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm<{
         [FILTER_PUBLISHER_NAME]: string;

@@ -297,19 +297,6 @@ const Search = ({ filters }: SearchProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [initialCategory, setInitialCategory] = useState<string>();
-    const [initialQuery, setInitialQuery] = useState<string>();
-
-    useEffect(() => {
-        if (!initialCategory) {
-            setInitialCategory(queryParams.type);
-        }
-
-        if (!initialQuery) {
-            setInitialQuery(queryParams.query);
-        }
-    }, [initialCategory, initialQuery, queryParams.type, queryParams.query]);
-
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?perPage=-1`,
@@ -341,6 +328,7 @@ const Search = ({ filters }: SearchProps) => {
             [FILTER_TYPE_CATEGORY]: undefined,
             [FILTER_CONTAINS_TISSUE]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
+            [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
         });
     };
 
