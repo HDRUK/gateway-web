@@ -10,22 +10,22 @@ exports[`BarSlider should render component 1`] = `
     />
   </div>
   <span
-    class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall mui-style-18hov5u-MuiSlider-root"
+    class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall mui-style-9w4h7d-MuiSlider-root"
   >
     <span
-      class="MuiSlider-rail mui-style-14pt78w-MuiSlider-rail"
+      class="MuiSlider-rail mui-style-7o8aqz-MuiSlider-rail"
     />
     <span
-      class="MuiSlider-track mui-style-1n40zqk-MuiSlider-track"
+      class="MuiSlider-track mui-style-nl6333-MuiSlider-track"
       style="left: 0%; width: 100%;"
     />
     <span
-      class="MuiSlider-mark MuiSlider-markActive mui-style-6cwnna-MuiSlider-mark"
+      class="MuiSlider-mark MuiSlider-markActive mui-style-z5sdnj-MuiSlider-mark"
       data-index="0"
       style="left: 0%;"
     />
     <span
-      class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary mui-style-1s92h5p-MuiSlider-thumb"
+      class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary mui-style-r6itia-MuiSlider-thumb"
       data-index="0"
       style="left: 0%;"
     >
@@ -46,7 +46,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-1qb7zz8-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-10ghlwl-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"
@@ -60,7 +60,7 @@ exports[`BarSlider should render component 1`] = `
       </span>
     </span>
     <span
-      class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary mui-style-1s92h5p-MuiSlider-thumb"
+      class="MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeSmall MuiSlider-thumbColorPrimary mui-style-r6itia-MuiSlider-thumb"
       data-index="1"
       style="left: 100%;"
     >
@@ -81,7 +81,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-1qb7zz8-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-10ghlwl-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"
