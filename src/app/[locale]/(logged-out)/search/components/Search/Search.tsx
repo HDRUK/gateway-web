@@ -151,7 +151,7 @@ const Search = ({ filters }: SearchProps) => {
         type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
             SearchCategory.DATASETS,
-        source:
+        [STATIC_FILTER_SOURCE]:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
         [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
@@ -610,9 +610,9 @@ const Search = ({ filters }: SearchProps) => {
         if (queryParams.source === EUROPE_PMC_SOURCE_FIELD) {
             europePmcModalAction();
         }
-        resetQueryInput();
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [queryParams.source]);
+    }, [queryParams.source, queryParams.type]);
 
     return (
         <Box
