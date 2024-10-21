@@ -8,13 +8,13 @@ import type { ReducedTool, Tool } from "./Tool";
 import { User } from "./User";
 
 interface ReducedCollection {
-    id: number;
+    id: string;
     name: string;
     description: string;
     image_link: string | null;
     tools: ReducedTool[] | [];
     dur: ReducedDataUse[] | [];
-    dataset_versions: ReducedDataset[] | [];
+    dataset_versions?: ReducedDataset[] | [];
     publications: ReducedPublication[] | [];
 }
 
