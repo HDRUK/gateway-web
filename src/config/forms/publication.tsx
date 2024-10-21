@@ -36,24 +36,14 @@ const validationSchema = yup
         paper_title: yup.string().required().label("Title"),
         authors: yup.string().required().label("Authors"),
         publication_type: yup.string().required().label("Publication type"),
-        journal_name: yup
-            .string()
-            .min(50)
-            .max(1500)
-            .required()
-            .label("Journal name"),
+        journal_name: yup.string().max(1500).required().label("Journal name"),
         year_of_publication: yup
             .string()
             .min(4)
             .max(4)
             .required()
             .label("Publication year"),
-        abstract: yup
-            .string()
-            .min(3)
-            .max(1500)
-            .required()
-            .label("Publication year"),
+        abstract: yup.string().min(3).max(5000).required().label("Abstract"),
         url: yup.string().nullable().url().label("DOI/Web link"),
         paper_doi: yup
             .string()
@@ -140,7 +130,6 @@ const formFields = [
         name: "journal_name",
         component: inputComponents.TextField,
         required: true,
-        min: 50,
         limit: 1500,
     },
     {
@@ -148,8 +137,6 @@ const formFields = [
         name: "year_of_publication",
         component: inputComponents.TextField,
         required: true,
-        min: 50,
-        limit: 1500,
     },
     {
         label: "Abstract",
@@ -157,8 +144,7 @@ const formFields = [
         info: "Provide a brief summary of the paper",
         component: inputComponents.TextArea,
         required: true,
-        min: 50,
-        limit: 1500,
+        limit: 5000,
     },
     {
         label: "Web link",
