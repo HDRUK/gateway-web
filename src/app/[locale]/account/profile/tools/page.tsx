@@ -19,5 +19,10 @@ export default async function TeamsPage({
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 
+    // manually add tools permissions for individual users so that they have permissions on their owned tools.
+    ["tools.update", "tools.delete"].forEach(value => {
+        permissions[value] = true;
+    });
+
     return <Tools permissions={permissions} teamId={teamId} userId={userId} />;
 }
