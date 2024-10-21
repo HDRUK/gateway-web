@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { getYear } from "@/utils/date";
 
 const getReleaseByYear = <T>(releases: T, year: string) => {
@@ -5,9 +6,19 @@ const getReleaseByYear = <T>(releases: T, year: string) => {
 
     return releases
         .map(release => release.node)
+        .sort((a, b) => {
+            return dayjs(a.release?.releaseDate).isBefore(
+                dayjs(b.release.releaseDate)
+            )
+                ? -1
+                : 1;
+        })
         .filter(release => {
-            const releaseYear = getYear(release.date).toString();
-            return releaseYear === year;
+            const releaseDate = release.release?.releaseDate;
+
+            if (!releaseDate) return false;
+
+            return getYear(releaseDate).toString() === year;
         }) as (typeof releases)[number]["node"][];
 };
 

@@ -7,6 +7,9 @@ const GetReleaseNotesQuery = `
           content
           date 
           id
+          release {
+            releaseDate
+          }
         }
       }
     }
