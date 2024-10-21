@@ -488,7 +488,7 @@ const FilterPanel = ({
                             )
                         }
                         contents={renderFilterContent(filterItem)}
-                        collapsable={!isSource ?? false}
+                        collapsable={!isSource}
                     />
                 );
             })}
