@@ -49,7 +49,7 @@ export default function DatasetContent({
                                 })}
                             </div>
                         )}
-                        <div>{capitalise(datasetType)}</div>
+                        {datasetType && <div>{capitalise(datasetType)}</div>}
                     </Fragment>
                 )
             )}

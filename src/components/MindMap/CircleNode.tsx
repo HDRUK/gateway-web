@@ -12,8 +12,8 @@ const CircleNode = ({ data: { id, label } }: NodeProps<CircleNodeData>) => {
         <div
             style={{
                 backgroundColor: theme.palette.greyCustom.light,
-                height: "150px",
-                width: "150px",
+                height: "140px",
+                width: "140px",
                 borderRadius: "50%",
                 display: "flex",
                 justifyContent: "center",
