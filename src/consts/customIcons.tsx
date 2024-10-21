@@ -288,7 +288,7 @@ const DatabaseIcon = createSvgIcon(
             fillRule="evenodd"
             clipRule="evenodd"
             d="M4.5 8C4.5 2.98649 13.4595 0 24.5 0C35.5405 0 44.5 2.98649 44.5 8V22V24V40C44.5 45.0806 35.6738 48 24.5 48C13.5453 48 4.84703 45.1939 4.51013 40.2964L4.5 40V24V22V8ZM8.5 22V24C8.5 25.6733 15.5342 28 24.5 28C33.2573 28 40.1718 25.7803 40.4887 24.1178L40.5 24V22V13.0554C36.8502 14.952 31.0402 16 24.5 16C17.9598 16 12.1498 14.952 8.5 13.0554V22ZM40.5 29.1046C36.8727 30.9829 31.0953 32 24.5 32C17.9047 32 12.1273 30.9829 8.5 29.1046V40C8.5 41.6733 15.5342 44 24.5 44C33.2573 44 40.1718 41.7803 40.4887 40.1178L40.5 40V29.1046ZM24.5 4C33.3417 4 40.5 6.38609 40.5 8C40.5 9.61391 33.3417 12 24.5 12C15.6583 12 8.5 9.61391 8.5 8C8.5 6.42363 15.3292 4.11056 23.8859 4.00383L24.5 4Z"
-            fill="#3C3C3B"
+            fill="currentColor"
         />
     </svg>,
     "DatabaseIcon"
@@ -468,7 +468,55 @@ const DataCustodiansIcon = createSvgIcon(
     "DataCustodiansIcon"
 );
 
+const BookmarkBorderIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="25"
+        viewBox="-4 -4 31 31"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M18.899 23.666C19.104 23.8755 19.3879 23.9891 19.6809 23.9787V23.9266H20.0458C20.4581 23.7726 20.7292 23.3763 20.7234 22.9362V1.04255C20.7234 0.466767 20.2567 0 19.6809 0H4.04258C3.46679 0 3.00002 0.466767 3.00002 1.04255V22.9362C2.98261 23.3772 3.24479 23.7814 3.65457 23.9453C4.06436 24.1092 4.53295 23.9973 4.82449 23.666L11.8617 16.1596L18.899 23.666ZM12.6436 13.9181C12.4386 13.7085 12.1547 13.595 11.8617 13.6053C11.5606 13.6083 11.2755 13.7414 11.0798 13.9702L5.08513 20.3298V2.08511H18.6383V20.3298L12.6436 13.9181Z"
+            fill="currentColor"
+        />
+    </svg>,
+    "BookmarkBorderIcon"
+);
+
+const BookmarksOutlinedIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <mask
+            id="mask0_6935_3229"
+            style={{
+                maskType: "alpha",
+            }}
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width="24"
+            height="24">
+            <rect width="24" height="24" fill="#D9D9D9" />
+        </mask>
+        <g mask="url(#mask0_6935_3229)">
+            <path
+                d="M4 22V8C4 7.45 4.19583 6.97917 4.5875 6.5875C4.97917 6.19583 5.45 6 6 6H14C14.55 6 15.0208 6.19583 15.4125 6.5875C15.8042 6.97917 16 7.45 16 8V22L10 19L4 22ZM6 18.975L10 16.825L14 18.975V8H6V18.975ZM18 18V4H7V2H18C18.55 2 19.0208 2.19583 19.4125 2.5875C19.8042 2.97917 20 3.45 20 4V18H18Z"
+                fill="currentColor"
+            />
+        </g>
+    </svg>,
+    "BookmarksOutlinedIcon"
+);
+
 export {
+    BookmarksOutlinedIcon,
+    BookmarkBorderIcon,
     SpeechBubbleIcon,
     RemoveFilterIcon,
     SortAscIcon,

@@ -1,9 +1,8 @@
 "use client";
 
-import { InView } from "react-intersection-observer";
 import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -33,7 +32,6 @@ const DataUseContent = ({
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
-    const path = usePathname();
 
     const renderDataUseField = (
         path: string,
@@ -132,116 +130,98 @@ const DataUseContent = ({
                     {populatedSections
                         .filter(section => section.sectionName !== "general")
                         .map((section, index) => (
-                            <InView
-                                key={`${section.sectionName}_inview`}
+                            <Box
+                                key={`${section.sectionName}_wrap`}
                                 id={`anchor${index + 2}`}
-                                threshold={1}
-                                as="div"
-                                onChange={inView => {
-                                    if (inView && path) {
-                                        router.replace(
-                                            `${path}?section=${index + 2}`,
-                                            { scroll: false }
-                                        );
-                                    }
+                                sx={{
+                                    "&:not(:last-of-type)": {
+                                        borderBottom: 1,
+                                        borderColor: "greyCustom.light",
+                                    },
+                                    pl: 0,
+                                    pr: 0,
                                 }}>
-                                <Box
-                                    key={`${section.sectionName}_wrap`}
-                                    id={`anchor${index + 2}`}
-                                    sx={{
-                                        "&:not(:last-of-type)": {
-                                            borderBottom: 1,
-                                            borderColor: "greyCustom.light",
-                                        },
-                                        pl: 0,
-                                        pr: 0,
-                                    }}>
-                                    <Typography variant="h2">
-                                        {t(section.sectionName)}
-                                    </Typography>
+                                <Typography variant="h2">
+                                    {t(section.sectionName)}
+                                </Typography>
 
-                                    {section.fields.map(field => {
-                                        const isPopulatedDatasetsField =
-                                            field.path === DATASETS &&
-                                            (!isEmpty(get(data, field.path)) ||
-                                                !isEmpty(
-                                                    get(
-                                                        data,
-                                                        NON_GATEWAY_DATASETS
-                                                    )
-                                                ));
+                                {section.fields.map(field => {
+                                    const isPopulatedDatasetsField =
+                                        field.path === DATASETS &&
+                                        (!isEmpty(get(data, field.path)) ||
+                                            !isEmpty(
+                                                get(data, NON_GATEWAY_DATASETS)
+                                            ));
 
-                                        const value = get(data, field.path);
+                                    const value = get(data, field.path);
 
-                                        if (
-                                            (isEmpty(value) &&
-                                                !isPopulatedDatasetsField) ||
-                                            field.path === NON_GATEWAY_DATASETS
-                                        ) {
-                                            return null;
-                                        }
+                                    if (
+                                        (isEmpty(value) &&
+                                            !isPopulatedDatasetsField) ||
+                                        field.path === NON_GATEWAY_DATASETS
+                                    ) {
+                                        return null;
+                                    }
 
-                                        const label = convertToCamelCase(
-                                            field.path
-                                        );
+                                    const label = convertToCamelCase(
+                                        field.path
+                                    );
 
-                                        return (
-                                            <BoxContainer
+                                    return (
+                                        <BoxContainer
+                                            sx={{
+                                                gridTemplateColumns: {
+                                                    desktop: "repeat(3, 1fr)",
+                                                },
+                                                gap: 1,
+                                                "&:not(:last-of-type)": {
+                                                    mb: 2,
+                                                },
+                                            }}
+                                            key={field.path}>
+                                            <Box
                                                 sx={{
-                                                    gridTemplateColumns: {
-                                                        desktop:
-                                                            "repeat(3, 1fr)",
+                                                    gridColumn: {
+                                                        desktop: "span 1",
                                                     },
-                                                    gap: 1,
-                                                    "&:not(:last-of-type)": {
-                                                        mb: 2,
+                                                    p: 0,
+                                                }}>
+                                                {!field.hideTooltip ? (
+                                                    <TooltipIcon
+                                                        content={t(
+                                                            `${label}${TOOLTIP_SUFFIX}`
+                                                        )}
+                                                        label={t(label)}
+                                                    />
+                                                ) : (
+                                                    t(label)
+                                                )}
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    gridColumn: {
+                                                        desktop: "span 2",
                                                     },
-                                                }}
-                                                key={field.path}>
-                                                <Box
-                                                    sx={{
-                                                        gridColumn: {
-                                                            desktop: "span 1",
-                                                        },
-                                                        p: 0,
-                                                    }}>
-                                                    {!field.hideTooltip ? (
-                                                        <TooltipIcon
-                                                            content={t(
-                                                                `${label}${TOOLTIP_SUFFIX}`
-                                                            )}
-                                                            label={t(label)}
-                                                        />
-                                                    ) : (
-                                                        t(label)
-                                                    )}
-                                                </Box>
-                                                <Box
-                                                    sx={{
-                                                        gridColumn: {
-                                                            desktop: "span 2",
-                                                        },
-                                                        p: 0,
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                    }}>
-                                                    {isPopulatedDatasetsField
-                                                        ? renderDatasetsField(
-                                                              field.path,
-                                                              field.type,
-                                                              value
-                                                          )
-                                                        : renderDataUseField(
-                                                              field.path,
-                                                              field.type,
-                                                              value
-                                                          )}
-                                                </Box>
-                                            </BoxContainer>
-                                        );
-                                    })}
-                                </Box>
-                            </InView>
+                                                    p: 0,
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                }}>
+                                                {isPopulatedDatasetsField
+                                                    ? renderDatasetsField(
+                                                          field.path,
+                                                          field.type,
+                                                          value
+                                                      )
+                                                    : renderDataUseField(
+                                                          field.path,
+                                                          field.type,
+                                                          value
+                                                      )}
+                                            </Box>
+                                        </BoxContainer>
+                                    );
+                                })}
+                            </Box>
                         ))}
                 </Paper>
             </Box>

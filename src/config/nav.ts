@@ -96,7 +96,7 @@ const navItems = [
                 href: "/about/patients-and-public",
             },
             {
-                label: "The Gateway Team",
+                label: "The Technology Team",
                 href: `/${RouteName.MEET_THE_TEAM}`,
             },
         ],

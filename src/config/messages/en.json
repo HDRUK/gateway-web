@@ -109,6 +109,10 @@
     "common": {
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
+        "companyDescription": "We are uniting the UK's health data to enable discoveries that improve people's lives. By making health data available to researchers and innovators we can better understand diseases and find ways to prevent, treat and cure them.",
+        "companyLocality": "London",
+        "companyPostalCode": "NW1 2BE",
+        "companyStreetAddress": "Gibbs Building, 215 Euston Road",
         "submit": "Submit",
         "logout": "Logout",
         "publish": "Publish",
@@ -184,7 +188,7 @@
             },
             "cohortDiscoveryRequest": {
                 "title": "Cohort Discovery Registration",
-                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, Orcid id and role description.",
+                "text": "Your Safe People status will be assessed based on your Gateway registered <userprofile>user profile</userprofile>. Please ensure this is complete and up to date before you submit this request and includes your institutional email address, ORCID id and role description.",
                 "userDeclaration": "User Declaration",
                 "userDeclarationAdditional": "All users of the Cohort Discovery are required to accept the declaration below.",
                 "statementIntro": "I confirm that my use of the tool will be for the sole purpose of understanding the size of populations relevant to a particular research question and that any resulting study or clinical trial will be for public benefit as defined by the National Data Guardian.",
@@ -321,14 +325,14 @@
                         "RightPanel": {
                             "generalEnquiries": {
                                 "title": "General Enquiry",
-                                "text": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
+                                "text": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                                 "buttonText": "Make a general enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
                             },
                             "feasibilityEnquiries": {
                                 "title": "Feasibility Enquiry",
-                                "text": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway (should the data custodian(s) wish to do so).",
+                                "text": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                                 "buttonText": "Make a feasibility enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
@@ -671,7 +675,7 @@
                     "create": {
                         "title": "Integration",
                         "text": "Input and edit the authentication information for the Gateway system to use for the integration.",
-                        "helper": "Entities created via an FMA integration can only be managed (updated or deleted/archived) via the FMA integration. Entities created via another method (manual, API integration) cannot be managed via the FMA integration."
+                        "helper": "Entities created via a Gateway App integration can only be managed (updated or deleted/archived) via the Gateway App integration. Entities created via another method (manual, API integration) cannot be managed via the Gateway App integration."
                     }
                 },
                 "integrations": {
@@ -728,6 +732,7 @@
             "flashyText": "Explore the different functionalities of the Gateway",
             "touchDevice": "Explore the different functionalities of the Gateway",
             "seeNow": "See now",
+            "meetTheTeam": "Meet the Team",
             "newsCardButtonText": "Read more",
             "welcomeTitle": "Welcome to the Gateway",
             "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
@@ -802,6 +807,7 @@
         },
         "saved_searches": {
             "title": "Saved searches",
+            "noResults": "There are no saved searches",
             "text": "Use this page to display saved search results and manage your saved searches.",
             "labels": {
                 "entityType": "Entity type",
@@ -948,11 +954,11 @@
                 },
                 "FeasibilityEnquiryForm": {
                     "itemName": "Feasibility Enquiry item",
-                    "helperText": "Send a feasibility enquiry to one or multiple data custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "helperText": "Send a feasibility enquiry to one or multiple Data Custodians. You must select all entities of interest from your library before starting a feasibility enquiry. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                     "saveButton": "Send message"
                 },
                 "GeneralEnquiryForm": {
-                    "helperText": "Send a general enquiry to one or multiple data custodians. You will receive an email copy of the enquiry sent. The data custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
+                    "helperText": "Send a general enquiry to one or multiple Data Custodians. You will receive an email copy of the enquiry sent. The Data Custodian(s) will reply via email to your preferred email address, with a copy shared with the Gateway.",
                     "saveButton": "Send message"
                 },
                 "PopulationFilter": {
@@ -1099,6 +1105,7 @@
             "introduction": "Introduction",
             "dataCustodian": "Data Custodian",
             "datasets": "Datasets",
+            "collections": "Collections",
             "dataUses": "Data use",
             "publications": "Publication",
             "tools": "Analysis Scripts & Software",
@@ -1121,7 +1128,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Data Uses ({ length })"
@@ -1134,6 +1142,9 @@
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections ({ length })"
                 }
             }
         },
@@ -1295,7 +1306,8 @@
                 },
                 "DatasetsContent": {
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
-                    "populationSize": "Dataset population size: { length }"
+                    "populationSize": "Dataset population size: { length }",
+                    "unknownString": "Unknown"
                 },
                 "DatausesContent": {
                     "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"

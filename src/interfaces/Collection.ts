@@ -1,11 +1,22 @@
 import { DataStatus } from "@/consts/application";
 import { Application } from "./Application";
-import { DataUse } from "./DataUse";
-import { Dataset } from "./Dataset";
-import { Publication } from "./Publication";
+import { DataUse, ReducedDataUse } from "./DataUse";
+import { Dataset, ReducedDataset } from "./Dataset";
+import { Publication, ReducedPublication } from "./Publication";
 import { Team } from "./Team";
-import type { Tool } from "./Tool";
+import type { ReducedTool, Tool } from "./Tool";
 import { User } from "./User";
+
+interface ReducedCollection {
+    id: number;
+    name: string;
+    description: string;
+    image_link: string | null;
+    tools: ReducedTool[];
+    dur: ReducedDataUse[];
+    dataset_versions: ReducedDataset[];
+    publications: ReducedPublication[];
+}
 
 interface Collection {
     name: string;
@@ -40,4 +51,4 @@ export interface CollectionSubmission
     datasets: { id: number }[];
 }
 
-export type { Collection };
+export type { Collection, ReducedCollection };

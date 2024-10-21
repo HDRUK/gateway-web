@@ -6,7 +6,7 @@ exports[`FlashyText should render component 1`] = `
     class="mui-style-183wgoj"
   >
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-nqw9q7-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-w42wrj-MuiTypography-root"
     >
       Cras ut sem eu ligula tincidunt aliquet.
     </p>

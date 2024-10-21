@@ -51,11 +51,12 @@ const ActiveList = ({
                                     sx={{
                                         opacity:
                                             activeItem === index + 1 ? 1 : 0.3,
-                                        transition: "opacity 0.2s, lineBreak",
                                     }}
                                 />
                             }>
-                            <Typography fontSize="14">{item.label}</Typography>
+                            <Typography fontSize="14" sx={{ width: "100%" }}>
+                                {item.label}
+                            </Typography>
                         </Button>
                     </li>
                 );
