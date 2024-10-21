@@ -1267,7 +1267,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                    "heading": "Data Uses / Research Projects which have used this analysis, tool or software ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications related to this analysis, tool or software ({ length })"
