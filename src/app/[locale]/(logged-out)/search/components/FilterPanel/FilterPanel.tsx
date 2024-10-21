@@ -201,8 +201,7 @@ const FilterPanel = ({
 
         return formattedFilters;
     }, [filterCategory, filterSourceData, staticFilterValues]);
-    const [maximised, setMaximised] = useState<string[]>([]);
-
+    const [maximised, setMaximised] = useState<string[]>(['source']);
     const updateCheckboxes = (
         updatedCheckbox: { [key: string]: boolean },
         filterSection: string
