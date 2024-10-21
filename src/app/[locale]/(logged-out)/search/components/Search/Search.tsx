@@ -749,6 +749,7 @@ const Search = ({ filters }: SearchProps) => {
                             setQueryParams({
                                 ...queryParams,
                                 [filterName]: value,
+                                query: "",
                             });
                             updatePath(filterName, value);
                         }}
