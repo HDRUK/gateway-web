@@ -25,7 +25,7 @@ describe("InfoHoverPanel", () => {
         expect(screen.getByText("Welcome to the Gateway")).toBeInTheDocument();
         expect(
             screen.getByText(
-                "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery."
+                "The Gateway streamlines the end-to-end user journey to search, discover and request access to the wealth of health and associated data, data analysis scripts, publications and research from across the UK and beyond."
             )
         ).toBeInTheDocument();
     });
@@ -39,7 +39,7 @@ describe("InfoHoverPanel", () => {
         await waitFor(() => {
             expect(
                 screen.getByText(
-                    "Find data uses / research projects: Search and filter data uses / research projects related to specific datasets and other features"
+                    "Find Data Uses / Research Projects: search and filter Data Uses / Research Projects related to specific Datasets and other features."
                 )
             ).toBeInTheDocument();
         });
