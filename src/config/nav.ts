@@ -37,7 +37,7 @@ const navItems = [
                 href: "/search?type=data_providers",
             },
             {
-                label: "Collections/Networks",
+                label: "Collections / Networks",
                 href: "/search?type=collections",
             },
         ],
