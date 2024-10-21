@@ -39,7 +39,7 @@ describe("InfoHoverPanel", () => {
         await waitFor(() => {
             expect(
                 screen.getByText(
-                    "Find Data Uses / Research Projects projects: Search and filter Data Uses / Research Projects projects related to specific datasets and other features"
+                    "Find Data Uses / Research Projects: search and filter data uses / research projects /studies related to specific data sets and other features."
                 )
             ).toBeInTheDocument();
         });
