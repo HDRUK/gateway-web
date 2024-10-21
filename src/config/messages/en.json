@@ -705,7 +705,7 @@
             },
             "feasibility": {
                 "label": "Cohort Discovery",
-                "title": "Cohort Discovery Tool",
+                "title": "Cohort Discovery",
                 "text": "Query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma. This is useful for high level feasibility analysis or to find potential recruits for clinical trials. Queries run on both routinely collected electronic health records and research collected cohorts."
             },
             "dataProviders": {
