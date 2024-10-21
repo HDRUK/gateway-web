@@ -696,27 +696,27 @@
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "Explore datasets and biosamples from across the UK and beyond and then navigate their associated resources e.g. metadata, linked datasets, data provenance, publications, analysis scripts & software and demographics."
+                "text": "Explore datasets and biosamples from across the UK and beyond and then navigate their associated resources e.g. metadata, linked datasets, data provenance, publications, analysis scripts & software and demographics"
             },
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
-                "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
+                "text": "Find data uses / research projects: Search and filter data uses / research projects related to specific datasets and other features"
             },
             "feasibility": {
                 "label": "Cohort Discovery",
                 "title": "Cohort Discovery Tool",
-                "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
+                "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma"
             },
             "dataProviders": {
                 "label": "Data Custodians",
                 "title": "Data Custodians",
-                "text": "Search data custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
+                "text": "Search data custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them"
             },
             "collections": {
                 "label": "Collections",
                 "title": "Collections",
-                "text": "Discover research resources: datasets, analysis scripts, software, data uses, and publications grouped together by domain, disease, theme or organisation"
+                "text": "Discover research resources: datasets, analysis scripts & software, data uses, and publications grouped together by domain, disease, theme or organisation"
             },
             "phenotypes": {
                 "label": "Phenotypes",
@@ -731,7 +731,7 @@
             "dataCustodianNetworks": {
                 "label": "Data Custodian Networks",
                 "title": "Data Custodian Networks",
-                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
+                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS Research Secure Data Environment (SDE) Network or Scottish Safe Haven Network"
             },
             "publications": {
                 "label": "Publications",
@@ -741,7 +741,7 @@
             "tools": {
                 "label": "Analysis Scripts & Software",
                 "title": "Analysis Scripts & Software",
-                "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
+                "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software / tools"
             },
             "courses": {
                 "label": "Courses",
@@ -794,14 +794,14 @@
         "search": {
             "datasets": "Datasets & BioSamples",
             "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
-            "dataUse": "Data Uses/\n\nResearch Projects",
-            "dataUseTooltip": "Find data uses/research projects: search and filter data uses/research projects/studies related to specific data sets and other features.",
+            "dataUse": "Data Uses /\n\nResearch Projects",
+            "dataUseTooltip": "Find data uses / research projects: search and filter data uses / research projects/studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
             "toolsTooltip": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software.",
             "dataProviders": "Data Custodians",
-            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts and software), and find out how to contact them. ",
+            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them. ",
             "collections": "Collections / Networks",
-            "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts and Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
+            "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts & Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
             "publications": "Publications",
             "publicationsTooltip": "Understand what research has been undertaken utilising specific datasets: search and deposit publications which have used a dataset or publications which describe a dataset.",
             "dataCustodianNetworks": "Data Custodian Networks",
