@@ -53,11 +53,11 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     buckets: [
         {
             value: "FED",
-            label: "Search Europe PMC",
+            label: "Search Online Publications",
         },
         {
             value: "GAT",
-            label: "Search Gateway",
+            label: "Search Gateway Curated Publications",
         },
     ],
     label: STATIC_FILTER_SOURCE,
@@ -192,7 +192,7 @@ const FilterPanel = ({
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
 
-        // If the selected source is 'Search Europe PMC' then remove the 'Dataset' filter
+        // If the selected source is 'Search Online Publications' then remove the 'Dataset' filter
         if (staticFilterValues.source.FED) {
             formattedFilters = formattedFilters.filter(
                 filterItem => filterItem.label !== FILTER_DATA_SET_TITLES
@@ -449,14 +449,27 @@ const FilterPanel = ({
                     return null;
                 }
 
+                const isPublicationSource = label === STATIC_FILTER_SOURCE;
+
                 return (
                     <Accordion
                         key={label}
                         sx={{
                             background: "transparent",
                             boxShadow: "none",
+                            ...(isPublicationSource && {
+                                ".MuiAccordionSummary-expandIconWrapper": {
+                                    opacity: 0,
+                                },
+                                ".MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded":
+                                    {
+                                        cursor: "default",
+                                    },
+                            }),
                         }}
-                        expanded={maximised.includes(label)}
+                        expanded={
+                            maximised.includes(label) || isPublicationSource
+                        }
                         heading={
                             <Box
                                 sx={{

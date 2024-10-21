@@ -101,6 +101,8 @@ import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
+const GATEWAY_SOURCE_FIELD = "GAT";
+const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
@@ -278,8 +280,11 @@ const Search = ({ filters }: SearchProps) => {
             shouldFetch:
                 forceSearch ||
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
+                (queryParams.type === SearchCategory.PUBLICATIONS &&
+                    queryParams.source === GATEWAY_SOURCE_FIELD) ||
                 !!(
                     queryParams.type === SearchCategory.PUBLICATIONS &&
+                    queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
                     !!queryParams.query
                 ),
         }
@@ -304,25 +309,6 @@ const Search = ({ filters }: SearchProps) => {
             setInitialQuery(queryParams.query);
         }
     }, [initialCategory, initialQuery, queryParams.type, queryParams.query]);
-
-    // Fire search request when publications query is entered for the first time
-    useEffect(() => {
-        if (initialCategory !== SearchCategory.PUBLICATIONS || initialQuery) {
-            return;
-        }
-
-        if (queryParams.type !== SearchCategory.PUBLICATIONS) {
-            mutate();
-        } else if (!!queryParams.query && !initialQuery) {
-            mutate();
-        }
-    }, [
-        queryParams.query,
-        queryParams.type,
-        initialCategory,
-        initialQuery,
-        mutate,
-    ]);
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
@@ -595,18 +581,18 @@ const Search = ({ filters }: SearchProps) => {
         SearchCategory.COLLECTIONS,
     ];
 
-    const showPublicationWelcomeMessage =
-        !forceSearch &&
-        !isSearching &&
-        !queryParams.query &&
-        queryParams.type === SearchCategory.PUBLICATIONS &&
-        (!data?.list?.length || !data?.path?.includes(queryParams.type));
-
     const isEuropePmcSearch = useMemo(
+        () => queryParams.source === EUROPE_PMC_SOURCE_FIELD,
+        [queryParams.source]
+    );
+
+    const isEuropePmcSearchNoQuery = useMemo(
         () =>
-            queryParams.type === SearchCategory.PUBLICATIONS &&
-            queryParams.source === "FED",
-        [queryParams.source, queryParams.type]
+            !!(
+                queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
+                !queryParams.query
+            ),
+        [queryParams.query, queryParams.source]
     );
 
     const europePmcModalAction = () =>
@@ -630,6 +616,15 @@ const Search = ({ filters }: SearchProps) => {
                 isDataset={queryParams.pmc === "dataset"}
             />
         ));
+
+    // Display Europe PMC Search Modal
+    useEffect(() => {
+        if (queryParams.source === EUROPE_PMC_SOURCE_FIELD) {
+            europePmcModalAction();
+        }
+        resetQueryInput();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [queryParams.source]);
 
     return (
         <Box
@@ -782,7 +777,7 @@ const Search = ({ filters }: SearchProps) => {
                             flexDirection: "column",
                             m: 2,
                         }}>
-                        {!isSearching && (
+                        {!isSearching && !isEuropePmcSearchNoQuery && (
                             <Box
                                 sx={{
                                     display: "flex",
@@ -801,13 +796,11 @@ const Search = ({ filters }: SearchProps) => {
                                                     total={data?.total}
                                                 />
                                             )}
-                                        {data &&
-                                            data.elastic_total > 100 &&
-                                            !showPublicationWelcomeMessage && (
-                                                <ResultLimitText>
-                                                    {t("resultLimit")}
-                                                </ResultLimitText>
-                                            )}
+                                        {data && data.elastic_total > 100 && (
+                                            <ResultLimitText>
+                                                {t("resultLimit")}
+                                            </ResultLimitText>
+                                        )}
                                     </>
                                 </Box>
 
@@ -821,55 +814,6 @@ const Search = ({ filters }: SearchProps) => {
                             </Box>
                         )}
 
-                        {showPublicationWelcomeMessage && (
-                            <Paper sx={{ textAlign: "left", p: 3 }}>
-                                <Typography
-                                    variant="h2"
-                                    style={{ fontWeight: "bolder" }}
-                                    sx={{
-                                        pb: 4,
-                                        borderBottom: 1,
-                                        borderColor: "greyCustom.light",
-                                    }}>
-                                    {t("publicationWelcomeHeader")}
-                                </Typography>
-                                <Typography variant="h3">
-                                    {t.rich("publicationWelcomeText1", {
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        list: chunks => <ul>{chunks}</ul>,
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        item: chunks => <li>{chunks}</li>,
-                                    })}
-                                </Typography>
-                                <Typography
-                                    variant="h3"
-                                    sx={{
-                                        pb: 3,
-                                    }}>
-                                    {t("publicationWelcomeText2")}
-                                </Typography>
-                                <Typography
-                                    variant="h3"
-                                    sx={{
-                                        pb: 3,
-                                    }}>
-                                    {t.rich("publicationWelcomeText3", {
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        link: chunks => (
-                                            <a href="https://europepmc.org/">
-                                                {chunks}
-                                            </a>
-                                        ),
-                                    })}
-                                </Typography>
-                                <Typography variant="h3">
-                                    {t.rich("publicationWelcomeText4", {
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        bold: chunks => <b>{chunks}</b>,
-                                    })}
-                                </Typography>
-                            </Paper>
-                        )}
                         {isSearching && <Loading />}
 
                         {!isSearching &&
@@ -878,7 +822,8 @@ const Search = ({ filters }: SearchProps) => {
                                 !(
                                     queryParams.type ===
                                     SearchCategory.PUBLICATIONS
-                                )) && (
+                                )) &&
+                            !isEuropePmcSearchNoQuery && (
                                 <Paper sx={{ textAlign: "center", p: 5 }}>
                                     <Typography variant="h3">
                                         {t("noResults")}
@@ -886,6 +831,7 @@ const Search = ({ filters }: SearchProps) => {
                                 </Paper>
                             )}
                         {!isSearching &&
+                            !isEuropePmcSearchNoQuery &&
                             !!data?.list?.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>

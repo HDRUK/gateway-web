@@ -820,11 +820,6 @@
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
-            "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
-            "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
-            "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data custodian.",
-            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' and 'RESULTS' fields to improve the relevance of results returned.",
-            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the keyword(s) of interest, the name of a dataset or DOI in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -1444,7 +1439,7 @@
             },
             "AddPublicationDialog": {
                 "manualButton": "Manually fill form",
-                "searchText": "Search Europe PMC",
+                "searchText": "Search Online Publications",
                 "doiPlaceholder": "Auto populate by searching Europe PMC using a DOI",
                 "or": "or",
                 "notFound": "DOI not found on Europe PMC"
@@ -1494,15 +1489,15 @@
                 "removeFromLibrary": "Remove from library"
             },
             "PublicationsSearchDialog": {
+                "intro": "Search the Title, Method, and Result sections of online Publications (via Europe PMC):",
                 "searchField": {
                     "placeholder": "I'm looking for...",
-                    "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
+                    "label": "Using a search term, for example, by Publication title, Publication DOI, Dataset DOI, Software title, Data Custodian name, keywords"
                 },
                 "datasetNameField": {
                     "placeholder": "Dataset name",
-                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
+                    "label": "Using a Gateway Dataset name, to find publications which may have used a Dataset"
                 },
-                "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
                 "cancel": "Cancel",
                 "search": "Search"
             }
