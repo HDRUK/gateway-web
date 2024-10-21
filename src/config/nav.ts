@@ -21,7 +21,7 @@ const navItems = [
                 href: "/search?type=datasets",
             },
             {
-                label: "Data Uses",
+                label: "Data Uses / Research Projects",
                 href: "/search?type=dur",
             },
             {

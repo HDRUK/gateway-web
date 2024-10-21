@@ -701,7 +701,7 @@
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
-                "text": "Find Data Uses / Research Projects: search and filter data uses / research projects related to specific datasets and other features."
+                "text": "Find Data Uses / Research Projects: search and filter data uses / research projects related to specific Datasets and other features."
             },
             "feasibility": {
                 "label": "Cohort Discovery",
@@ -1267,7 +1267,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                    "heading": "Data Uses / Research Projects which have used this analysis, tool or software ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications related to this analysis, tool or software ({ length })"
