@@ -46,6 +46,7 @@ import {
 import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { User } from "@/interfaces/User";
 
 interface CollectionCreateProps {
     collectionId?: string;
@@ -83,6 +84,10 @@ const CreateCollection = ({ collectionId, userId }: CollectionCreateProps) => {
         `${apis.keywordsV1Url}?per_page=-1`
     );
 
+    const { data: userData, isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}`
+    );
+
     const { data: existingCollectionData } = useGet<Collection>(
         `${apis.collectionsV1Url}/${collectionId}`,
         { shouldFetch: !!collectionId }
@@ -107,6 +112,17 @@ const CreateCollection = ({ collectionId, userId }: CollectionCreateProps) => {
         }) as OptionsType[];
     }, [keywordData]);
 
+    const userOptions = useMemo(() => {
+        if (!userData) return [];
+
+        return userData.map(data => {
+            return {
+                value: data.id as ValueType,
+                label: data.name,
+            };
+        }) as OptionsType[];
+    }, [userData]);
+
     useEffect(() => {
         if (!existingCollectionData) {
             return;
@@ -118,6 +134,8 @@ const CreateCollection = ({ collectionId, userId }: CollectionCreateProps) => {
             description: existingCollectionData?.description,
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
+            collaborators:
+                existingCollectionData?.collaborators?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link,
         };
         if (formData.image_link) {
@@ -192,9 +210,19 @@ const CreateCollection = ({ collectionId, userId }: CollectionCreateProps) => {
             setValue("datasets", updatedResources as Dataset[]);
         }
     };
+    
+    const getOptions = (field: string) => {
+        if(field === 'keywords') {
+            return keywordOptions;
+        } else {
+            return userOptions;
+        }
+    }
+    
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
+                const fieldName = field.name
                 return (
                     <InputWrapper
                         key={field.name}
@@ -203,7 +231,8 @@ const CreateCollection = ({ collectionId, userId }: CollectionCreateProps) => {
                         {...field}
                         {...(field.component === inputComponents.Autocomplete
                             ? {
-                                  options: keywordOptions,
+                                  options: getOptions(fieldName),
+                                  isLoadingOptions: fieldName === 'collaborators' && isLoadingUsers
                               }
                             : {})}
                     />
