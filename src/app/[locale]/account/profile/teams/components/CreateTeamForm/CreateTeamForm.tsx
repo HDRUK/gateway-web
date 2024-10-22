@@ -167,7 +167,6 @@ const CreateTeamForm = () => {
     const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
 
     const submitForm = async (formData: TeamForm) => {
-        console.log("formData", formData);
         if (!params?.teamId) {
             await createTeam({
                 ...teamDefaultValues,
