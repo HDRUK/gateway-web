@@ -30,13 +30,13 @@ export const fromContainer = css({
 export const sent = css({
     alignSelf: "flex-end",
     backgroundColor: colors?.sentMessageBackground || "#dcf8c6", // Adjust based on your theme
-    textAlign: "right",
+    // textAlign: "right",
 });
 
 export const received = css({
     alignSelf: "flex-start",
     backgroundColor: colors?.receivedMessageBackground || "#ffffff", // Adjust based on your theme
-    textAlign: "left",
+    // textAlign: "left",
 });
 
 export const messageBody = css({
@@ -48,4 +48,6 @@ export const timestamp = css({
     fontSize: "12px",
     color: colors?.timestampText || "#888", // Adjust to match your theme's color scheme
     marginTop: "5px",
+    alignSelf: "flex-end",
+    textAlign: "right",
 });

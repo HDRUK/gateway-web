@@ -21,7 +21,7 @@ const Chat = ({ messages, currentUser }) => {
                         <Box css={styles.messageBody}>
                             {message.message_body}
                         </Box>
-                        <Box className={styles.timestamp}>
+                        <Box css={styles.timestamp}>
                             {new Date(message.created_at).toLocaleTimeString()}
                         </Box>
                     </Box>
