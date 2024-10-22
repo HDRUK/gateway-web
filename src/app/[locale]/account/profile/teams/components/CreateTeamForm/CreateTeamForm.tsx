@@ -113,7 +113,6 @@ const CreateTeamForm = () => {
             label: `${user.name} (${user.email})`,
         }));
 
-        console.log("team admins changed ==> set user options");
         setUserOptions(prevOptions =>
             updateUserOptions(prevOptions, userOptions)
         );
@@ -125,7 +124,6 @@ const CreateTeamForm = () => {
             label: `${user.name} (${user.email})`,
         }));
 
-        console.log("users changed ==> set user options");
         setUserOptions(prevOptions =>
             updateUserOptions(prevOptions, userOptions)
         );
@@ -212,28 +210,15 @@ const CreateTeamForm = () => {
     );
 
     useEffect(() => {
-        const handleFileUploaded = async (
-            createdTeamId: string,
-            file: File
-        ) => {
+        const handleFileUploaded = async (file: File) => {
             const formData = new FormData();
             formData.append("file", file);
 
-            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
-                setFile(undefined)
-            )) as FileUpload;
-
-            const { file_location } = uploadedFileStatus;
-
-            console.log("calling edit team with logo only");
-
-            await editTeam(createdTeamId, {
-                team_logo: file_location,
-            });
+            uploadFile(formData).catch(() => setFile(undefined));
         };
 
         if (file && fileToBeUploaded && createdTeamId) {
-            handleFileUploaded(createdTeamId, file);
+            handleFileUploaded(file);
         }
     }, [createdTeamId, fileToBeUploaded, editTeam, file, uploadFile]);
 
@@ -256,8 +241,6 @@ const CreateTeamForm = () => {
     const hydratedFormFields = useMemo(
         () =>
             teamFormFields.map(field => {
-                console.log("update team admins");
-                console.log(userOptions);
                 if (field.name === "teamAdmins") {
                     return {
                         ...field,
@@ -407,7 +390,7 @@ const CreateTeamForm = () => {
                         <Button
                             color="secondary"
                             variant="outlined"
-                            onClick={() => reset(teamDefaultValues)}>
+                            onClick={() => push(Routes.ACCOUNT_TEAMS)}>
                             {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
                         </Button>
                         <Button type="submit">
