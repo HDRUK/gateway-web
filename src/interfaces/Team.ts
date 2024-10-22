@@ -23,7 +23,20 @@ interface Team {
     introduction: string;
 }
 
-interface TeamForm
+interface TeamEditForm
+    extends Pick<
+        Team,
+        | "name"
+        | "member_of"
+        | "contact_point"
+        | "is_question_bank"
+        | "team_logo"
+        | "introduction"
+    > {
+    teamAdmins: number[];
+}
+
+interface TeamCreateForm
     extends Pick<
         Team,
         | "notifications"
@@ -39,7 +52,7 @@ interface TeamForm
         | "team_logo"
         | "introduction"
     > {
-    users: number[];
+    teamAdmins: number[];
 }
 
-export type { Team, TeamForm };
+export type { Team, TeamEditForm, TeamCreateForm };

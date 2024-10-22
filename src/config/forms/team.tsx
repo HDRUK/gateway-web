@@ -1,14 +1,23 @@
 import * as yup from "yup";
-import { TeamForm } from "@/interfaces/Team";
+import { TeamEditForm, TeamCreateForm } from "@/interfaces/Team";
 import { getChipLabel } from "@/components/Autocomplete/utils";
 import { memberOfOptions } from "@/consts/team";
 import { inputComponents } from ".";
 
-const defaultValues: TeamForm = {
+const defaultValues: TeamEditForm = {
     name: "",
     member_of: "",
     contact_point: "",
-    users: [],
+    teamAdmins: [],
+    is_question_bank: false,
+    introduction: "",
+};
+
+const createDefaultValues: TeamCreateForm = {
+    name: "",
+    member_of: "",
+    contact_point: "",
+    teamAdmins: [],
     notifications: [],
     enabled: true,
     allows_messaging: true,
@@ -16,7 +25,6 @@ const defaultValues: TeamForm = {
     access_requests_management: true,
     uses_5_safes: true,
     is_question_bank: false,
-    team_logo: "",
     introduction: "",
 };
 
@@ -25,7 +33,7 @@ const validationSchema = yup.object({
     name: yup.string().required().label("Organisation name"),
     member_of: yup.string().required().label("Member of"),
     contact_point: yup.string().email().label("Contact point"),
-    users: yup
+    teamAdmins: yup
         .array()
         .min(1, "Team admin(s) is a required field")
         .of(yup.number())
@@ -61,7 +69,7 @@ const formFields = [
     {
         label: "Team admin",
         required: true,
-        name: "users",
+        name: "teamAdmins",
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,
@@ -98,6 +106,7 @@ const formFields = [
 export {
     questionBankField,
     defaultValues as teamDefaultValues,
+    createDefaultValues as teamCreateDefaultValues,
     validationSchema as teamValidationSchema,
     formFields as teamFormFields,
 };
