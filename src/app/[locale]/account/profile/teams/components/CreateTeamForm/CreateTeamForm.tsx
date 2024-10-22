@@ -202,15 +202,12 @@ const CreateTeamForm = () => {
             createdTeamId: string,
             file: File
         ) => {
-            console.log("UPLOADING");
             const formData = new FormData();
             formData.append("file", file);
 
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 setFile(undefined)
             )) as FileUpload;
-
-            console.log("uploadedFileStatus", uploadedFileStatus);
 
             const { file_location } = uploadedFileStatus;
 
