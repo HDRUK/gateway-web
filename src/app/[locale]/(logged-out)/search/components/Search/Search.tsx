@@ -280,10 +280,9 @@ const Search = ({ filters }: SearchProps) => {
             shouldFetch:
                 forceSearch ||
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
-                (queryParams.type === SearchCategory.PUBLICATIONS &&
-                    (queryParams.source === GATEWAY_SOURCE_FIELD ||
-                        (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
-                            !!queryParams.query))),
+                queryParams.source === GATEWAY_SOURCE_FIELD ||
+                (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
+                    !!queryParams.query),
         }
     );
 
