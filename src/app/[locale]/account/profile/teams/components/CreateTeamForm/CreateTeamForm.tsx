@@ -129,7 +129,7 @@ const CreateTeamForm = () => {
         );
     }, [users]);
 
-    const selectedUsers = watch("teamAdmins");
+    const selectedUsers = watch("users");
     useEffect(() => {
         if (selectedUsers) {
             setUserOptions(prevOptions => {
@@ -158,7 +158,7 @@ const CreateTeamForm = () => {
             introduction,
             member_of,
             is_question_bank,
-            teamAdmins: teamAdmins.map(user => user.id),
+            users: teamAdmins.map(user => user.id),
             contact_point: contact_point ?? "",
         };
 
@@ -241,7 +241,7 @@ const CreateTeamForm = () => {
     const hydratedFormFields = useMemo(
         () =>
             teamFormFields.map(field => {
-                if (field.name === "teamAdmins") {
+                if (field.name === "users") {
                     return {
                         ...field,
                         onInputChange: handleOnUserInputChange,

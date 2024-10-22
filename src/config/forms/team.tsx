@@ -8,7 +8,7 @@ const defaultValues: TeamEditForm = {
     name: "",
     member_of: "",
     contact_point: "",
-    teamAdmins: [],
+    users: [],
     is_question_bank: false,
     introduction: "",
 };
@@ -17,7 +17,7 @@ const createDefaultValues: TeamCreateForm = {
     name: "",
     member_of: "",
     contact_point: "",
-    teamAdmins: [],
+    users: [],
     notifications: [],
     enabled: true,
     allows_messaging: true,
@@ -33,7 +33,7 @@ const validationSchema = yup.object({
     name: yup.string().required().label("Organisation name"),
     member_of: yup.string().required().label("Member of"),
     contact_point: yup.string().email().label("Contact point"),
-    teamAdmins: yup
+    users: yup
         .array()
         .min(1, "Team admin(s) is a required field")
         .of(yup.number())
@@ -69,7 +69,7 @@ const formFields = [
     {
         label: "Team admin",
         required: true,
-        name: "teamAdmins",
+        name: "users",
         selectOnFocus: true,
         clearOnBlur: true,
         handleHomeEndKeys: true,

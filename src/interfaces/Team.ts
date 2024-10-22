@@ -33,7 +33,7 @@ interface TeamEditForm
         | "team_logo"
         | "introduction"
     > {
-    teamAdmins: number[];
+    users: number[];
 }
 
 interface TeamCreateForm
@@ -52,7 +52,7 @@ interface TeamCreateForm
         | "team_logo"
         | "introduction"
     > {
-    teamAdmins: number[];
+    users: number[];
 }
 
 export type { Team, TeamEditForm, TeamCreateForm };
