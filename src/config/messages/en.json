@@ -692,16 +692,16 @@
             "meetTheTeam": "Meet the Team",
             "newsCardButtonText": "Read more",
             "welcomeTitle": "Welcome to the Gateway",
-            "welcomeText": "The Gateway streamlines the end-to-end user journey to search, discover and request access to the wealth of health and associated data, data analysis scripts, publications and research from across the UK and beyond.",
+            "welcomeText": "The Gateway streamlines the end-to-end user journey to search, discover and request access to the wealth of health and associated Datasets, Analysis Scripts & Software, Publications and Research Projects from across the UK and beyond.",
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated Gateway entities, such as, metadata, linked Datasets, data provenance, Publications, Analysis Scripts & Software, and demographics."
+                "text": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
             },
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
-                "text": "Find Data Uses / Research Projects: search and filter data uses / research projects related to specific Datasets and other features."
+                "text": "Find Data Uses / Research Projects: search and filter Data Uses / Research Projects related to specific Datasets and other features."
             },
             "feasibility": {
                 "label": "Cohort Discovery",
