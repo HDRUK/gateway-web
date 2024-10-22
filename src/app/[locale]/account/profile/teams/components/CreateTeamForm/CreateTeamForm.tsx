@@ -50,6 +50,9 @@ const CreateTeamForm = () => {
     );
     const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
 
+    const [triggerImageUpload, setTriggerImageUpload] =
+        useState<boolean>(false);
+
     const [searchName, setSearchName] = useState("");
     const [userOptions, setUserOptions] = useState<Option[]>([]);
     const searchNameDebounced = useDebounce(searchName, 500);
@@ -197,29 +200,17 @@ const CreateTeamForm = () => {
                 }
             });
         }
-        setTimeout(() => {
+
+        if (!file) {
             push(Routes.ACCOUNT_TEAMS);
-        });
-    };
-    const uploadFile = usePost(
-        `${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`,
-        {
-            successNotificationsOn: false,
         }
-    );
+    };
 
     useEffect(() => {
-        const handleFileUploaded = async (file: File) => {
-            const formData = new FormData();
-            formData.append("file", file);
-
-            uploadFile(formData).catch(() => setFile(undefined));
-        };
-
         if (file && fileToBeUploaded && createdTeamId) {
-            handleFileUploaded(file);
+            setTriggerImageUpload(true);
         }
-    }, [createdTeamId, fileToBeUploaded, editTeam, file, uploadFile]);
+    }, [createdTeamId, fileToBeUploaded, editTeam, file]);
 
     const is_question_bank = watch("is_question_bank");
     const questionBankLabel = is_question_bank
@@ -338,6 +329,7 @@ const CreateTeamForm = () => {
                                 }
                                 formControlSx={{ width: "70%", p: 0 }}>
                                 <UploadFile
+                                    apiPath={`${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`}
                                     fileSelectButtonText={t(
                                         `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
                                     )}
@@ -363,8 +355,20 @@ const CreateTeamForm = () => {
                                     onFileCheckFailed={() => {
                                         setFileWarning(true);
                                     }}
+                                    onFileUploaded={async response => {
+                                        if (!createdTeamId) {
+                                            return;
+                                        }
+
+                                        await editTeam(createdTeamId, {
+                                            team_logo: response as string,
+                                        });
+
+                                        push(Routes.ACCOUNT_TEAMS);
+                                    }}
                                     sx={{ py: 2 }}
                                     showUploadButton={false}
+                                    triggerFileUpload={triggerImageUpload}
                                 />
                             </FormInputWrapper>
 
