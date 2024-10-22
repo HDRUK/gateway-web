@@ -154,8 +154,6 @@ const UploadFile = ({
             return;
         }
 
-        console.log("helloooo from UploadFile");
-
         try {
             const formData = new FormData();
             formData.append("file", file);
