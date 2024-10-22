@@ -569,6 +569,11 @@ const Search = ({ filters }: SearchProps) => {
         SearchCategory.COLLECTIONS,
     ];
 
+    const isPublications = useMemo(
+        () => queryParams.type === SearchCategory.PUBLICATIONS,
+        [queryParams.type]
+    );
+
     const isEuropePmcSearch = useMemo(
         () => queryParams.source === EUROPE_PMC_SOURCE_FIELD,
         [queryParams.source]
@@ -642,7 +647,7 @@ const Search = ({ filters }: SearchProps) => {
                         isEuropePmcSearch ? europePmcModalAction : undefined
                     }
                     valueOverride={
-                        isEuropePmcSearch ? queryParams.query : undefined
+                        isPublications ? queryParams.query : undefined
                     }
                 />
             </Box>
@@ -749,6 +754,7 @@ const Search = ({ filters }: SearchProps) => {
                             setQueryParams({
                                 ...queryParams,
                                 [filterName]: value,
+                                [FILTER_DATA_SET_TITLES]: undefined,
                                 query: "",
                             });
                             updatePath(filterName, value);
