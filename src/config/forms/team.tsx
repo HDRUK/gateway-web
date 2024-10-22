@@ -1,10 +1,19 @@
 import * as yup from "yup";
-import { TeamForm } from "@/interfaces/Team";
+import { TeamEditForm, TeamCreateForm } from "@/interfaces/Team";
 import { getChipLabel } from "@/components/Autocomplete/utils";
 import { memberOfOptions } from "@/consts/team";
 import { inputComponents } from ".";
 
-const defaultValues: TeamForm = {
+const defaultValues: TeamEditForm = {
+    name: "",
+    member_of: "",
+    contact_point: "",
+    users: [],
+    is_question_bank: false,
+    introduction: "",
+};
+
+const createDefaultValues: TeamCreateForm = {
     name: "",
     member_of: "",
     contact_point: "",
@@ -16,7 +25,6 @@ const defaultValues: TeamForm = {
     access_requests_management: true,
     uses_5_safes: true,
     is_question_bank: false,
-    team_logo: "",
     introduction: "",
 };
 
@@ -98,6 +106,7 @@ const formFields = [
 export {
     questionBankField,
     defaultValues as teamDefaultValues,
+    createDefaultValues as teamCreateDefaultValues,
     validationSchema as teamValidationSchema,
     formFields as teamFormFields,
 };
