@@ -48,7 +48,7 @@ const validationSchema = yup
             .max(4)
             .required()
             .label("Publication year"),
-        abstract: yup.string().min(50).max(5000).required().label("Abstract"),
+        abstract: yup.string().required().label("Abstract"),
         url: yup.string().nullable().url().label("DOI/Web link"),
         paper_doi: yup
             .string()
@@ -150,8 +150,6 @@ const formFields = [
         info: "Provide a brief summary of the paper",
         component: inputComponents.TextArea,
         required: true,
-        min: 50,
-        limit: 5000,
     },
     {
         label: "Web link",
