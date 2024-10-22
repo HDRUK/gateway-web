@@ -128,6 +128,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                 </Button>
 
                 <Button
+                    sx={{ display: "none" }} // Hide download button
                     variant="text"
                     startIcon={<DownloadIcon />}
                     disabled={isDownloading}
