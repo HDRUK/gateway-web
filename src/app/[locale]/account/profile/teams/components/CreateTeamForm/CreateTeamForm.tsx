@@ -5,9 +5,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { FileUpload } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
-import { Team, TeamForm } from "@/interfaces/Team";
+import { Team, TeamEditForm, TeamCreateForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -27,6 +26,7 @@ import apis from "@/config/apis";
 import {
     questionBankField,
     teamDefaultValues,
+    teamCreateDefaultValues,
     teamFormFields,
     teamValidationSchema,
 } from "@/config/forms/team";
@@ -63,12 +63,15 @@ const CreateTeamForm = () => {
         }
     );
 
-    const teamAdmins =
-        existingTeamData?.users.filter(user =>
-            user.roles
-                .map(role => role.name)
-                .includes(ROLE_CUSTODIAN_TEAM_ADMIN)
-        ) || [];
+    const teamAdmins = useMemo(
+        () =>
+            existingTeamData?.users.filter(user =>
+                user.roles
+                    .map(role => role.name)
+                    .includes(ROLE_CUSTODIAN_TEAM_ADMIN)
+            ) || [],
+        [existingTeamData]
+    );
 
     const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
         `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
@@ -77,7 +80,7 @@ const CreateTeamForm = () => {
         }
     );
 
-    const methods = useForm<TeamForm>({
+    const methods = useForm<TeamEditForm | TeamCreateForm>({
         mode: "onTouched",
         resolver: yupResolver(teamValidationSchema),
         defaultValues: {
@@ -108,7 +111,6 @@ const CreateTeamForm = () => {
             value: user.id,
             label: `${user.name} (${user.email})`,
         }));
-        if (!userOptions) return;
 
         setUserOptions(prevOptions =>
             updateUserOptions(prevOptions, userOptions)
@@ -141,35 +143,46 @@ const CreateTeamForm = () => {
         if (!existingTeamData) {
             return;
         }
+        const {
+            name,
+            introduction,
+            member_of,
+            contact_point,
+            is_question_bank,
+            team_logo,
+        } = existingTeamData;
 
         const teamData = {
-            ...existingTeamData,
+            name,
+            introduction,
+            member_of,
+            is_question_bank,
             users: teamAdmins.map(user => user.id),
-            contact_point: existingTeamData?.contact_point ?? "",
+            contact_point: contact_point ?? "",
         };
 
-        if (teamData.team_logo) {
+        if (team_logo) {
             setImageUploaded(true);
         }
 
         reset(teamData);
-    }, [reset, existingTeamData]);
+    }, [reset, existingTeamData, teamAdmins]);
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
     });
 
-    const createTeam = usePost<TeamForm>(apis.teamsV1Url, {
+    const createTeam = usePost<TeamCreateForm>(apis.teamsV1Url, {
         itemName: "Team",
         successNotificationsOn: !file,
     });
 
-    const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
+    const editTeam = usePatch<Partial<TeamEditForm>>(apis.teamsV1Url);
 
-    const submitForm = async (formData: TeamForm) => {
+    const submitForm = async (formData: TeamCreateForm | TeamEditForm) => {
         if (!params?.teamId) {
             await createTeam({
-                ...teamDefaultValues,
+                ...teamCreateDefaultValues,
                 ...formData,
             }).then(async result => {
                 if (typeof result === "number" && file) {
@@ -184,7 +197,6 @@ const CreateTeamForm = () => {
                 }
             });
         }
-
         setTimeout(() => {
             push(Routes.ACCOUNT_TEAMS);
         });
@@ -197,26 +209,15 @@ const CreateTeamForm = () => {
     );
 
     useEffect(() => {
-        const handleFileUploaded = async (
-            createdTeamId: string,
-            file: File
-        ) => {
+        const handleFileUploaded = async (file: File) => {
             const formData = new FormData();
             formData.append("file", file);
 
-            const uploadedFileStatus = (await uploadFile(formData).catch(() =>
-                setFile(undefined)
-            )) as FileUpload;
-
-            const { file_location } = uploadedFileStatus;
-
-            await editTeam(createdTeamId, {
-                team_logo: file_location,
-            });
+            uploadFile(formData).catch(() => setFile(undefined));
         };
 
         if (file && fileToBeUploaded && createdTeamId) {
-            handleFileUploaded(createdTeamId, file);
+            handleFileUploaded(file);
         }
     }, [createdTeamId, fileToBeUploaded, editTeam, file, uploadFile]);
 
@@ -388,7 +389,7 @@ const CreateTeamForm = () => {
                         <Button
                             color="secondary"
                             variant="outlined"
-                            onClick={() => reset(teamDefaultValues)}>
+                            onClick={() => push(Routes.ACCOUNT_TEAMS)}>
                             {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
                         </Button>
                         <Button type="submit">

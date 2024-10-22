@@ -32,7 +32,7 @@ const useGeneralEnquiry = () => {
             } else {
                 const datasets: DatasetEnquiry[] = [
                     {
-                        datasetId: Number(_id),
+                        datasetId: Number(_id) || null,
                         teamId: team.id,
                         teamName: team.name,
                         teamMemberOf: team.member_of,

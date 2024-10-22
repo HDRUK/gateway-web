@@ -35,6 +35,9 @@ const Wysiwyg = <
     }, [editor]);
 
     useEffect(() => {
+        if (!editor) return;
+        const { from, to } = editor.state.selection;
+
         let content = {};
 
         try {
@@ -52,6 +55,7 @@ const Wysiwyg = <
         }
 
         editor?.commands.setContent(content);
+        editor.commands.setTextSelection({ from, to });
     }, [editor, field.value]);
 
     return (

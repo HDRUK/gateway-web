@@ -14,26 +14,12 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "storage.googleapis.com",
-                port: "",
-                pathname: "/**",
-            },
-            {
-                protocol: "https",
-                hostname: process.env.NEXT_PUBLIC_MEDIA_DOMAIN || "",
-                port: "",
+                hostname: "**",
                 pathname: "/**",
             },
             {
                 protocol: "http",
-                hostname: "media.local",
-                port: "",
-                pathname: "/**",
-            },
-            {
-                protocol: "https",
-                hostname: "fakeimg.pl",
-                port: "",
+                hostname: "**",
                 pathname: "/**",
             },
         ],

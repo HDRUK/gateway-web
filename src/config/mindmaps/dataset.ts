@@ -59,7 +59,7 @@ const rootNode = {
 
 const getOuterNodes = nodes =>
     nodes.map((node, index) =>
-        nodeValueToRectNode(node, index, nodes.length, centerX, centerY)
+        nodeValueToRectNode(node, index - 1, nodes.length, centerX, centerY)
     );
 
 const initialEdges = outerNodeValues.map((node, index) => ({

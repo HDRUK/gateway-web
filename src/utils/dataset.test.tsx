@@ -1,4 +1,5 @@
 import {
+    formatTextDelimiter,
     formatYearStat,
     hasValidValue,
     parseLeadTime,
@@ -66,6 +67,26 @@ describe("Dataset utils", () => {
 
         it("returns true for string array values", () => {
             expect(hasValidValue(["value"])).toEqual(true);
+        });
+    });
+
+    describe("formatTextDelimiter", () => {
+        it("formats with multiple semi colons", () => {
+            expect(
+                formatTextDelimiter("Health research;;;,;,;NHS study;; ,")
+            ).toEqual("Health research, NHS study");
+        });
+
+        it("formats with ;,;", () => {
+            expect(formatTextDelimiter("Health research;,;NHS study")).toEqual(
+                "Health research, NHS study"
+            );
+        });
+
+        it("formats with commas only", () => {
+            expect(formatTextDelimiter("Health research,,,NHS study")).toEqual(
+                "Health research, NHS study"
+            );
         });
     });
 });

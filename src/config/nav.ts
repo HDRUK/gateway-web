@@ -21,7 +21,7 @@ const navItems = [
                 href: "/search?type=datasets",
             },
             {
-                label: "Data Uses",
+                label: "Data Uses / Research Projects",
                 href: "/search?type=dur",
             },
             {
@@ -37,7 +37,7 @@ const navItems = [
                 href: "/search?type=data_providers",
             },
             {
-                label: "Collections/Networks",
+                label: "Collections / Networks",
                 href: "/search?type=collections",
             },
         ],
@@ -96,7 +96,7 @@ const navItems = [
                 href: "/about/patients-and-public",
             },
             {
-                label: "The Gateway Team",
+                label: "The Technology Team",
                 href: `/${RouteName.MEET_THE_TEAM}`,
             },
         ],

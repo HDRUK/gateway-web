@@ -13,6 +13,7 @@ import {
     PublicationIcon,
     PersonOutlineOutlinedIcon,
     CohortIcon,
+    CloudUploadIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -116,8 +117,8 @@ const getTeamNav = (
             : []),
         /* ...([
             permissions["applications.read"],
-            permissions["integrations.metadata"],
-            permissions["integrations.dar"],
+            // permissions["integrations.metadata"],
+            // permissions["integrations.dar"],
         ].some(isTrue => isTrue)
             ? [
                   {
@@ -132,17 +133,17 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...([
-                              permissions["integrations.metadata"],
-                              permissions["integrations.dar"],
-                          ].some(isTrue => isTrue)
-                              ? [
-                                    {
-                                        label: "Gateway apps",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
-                                    },
-                                ]
-                              : []),
+                          //   ...([
+                          //       permissions["integrations.metadata"],
+                          //       permissions["integrations.dar"],
+                          //   ].some(isTrue => isTrue)
+                          //       ? [
+                          //             {
+                          //                 label: "Gateway apps",
+                          //                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
+                          //             },
+                          //         ]
+                          //       : []),
                       ],
                   },
               ]
@@ -150,7 +151,7 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: <DatabaseIcon color="secondary" />,
+                      icon: <DatabaseIcon />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },

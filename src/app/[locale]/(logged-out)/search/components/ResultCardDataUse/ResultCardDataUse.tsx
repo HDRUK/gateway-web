@@ -164,16 +164,14 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                     />
                                 </ResultRowCategory>
                                 {(!!result?.team?.name && (
-                                    <Typography
-                                        sx={{
-                                            fontWeight: 500,
-                                        }}>
+                                    <Link
+                                        href={`${RouteName.DATA_PROVIDERS_ITEM}/${result.team.id}`}>
                                         {`${result.team?.member_of} > `}
                                         <EllipsisCharacterLimit
                                             text={result.team.name}
                                             characterLimit={CHARACTER_LIMIT}
                                         />
-                                    </Typography>
+                                    </Link>
                                 )) ||
                                     missingDataComponent}
                             </ResultRow>

@@ -45,6 +45,11 @@ export interface Tool {
     mongo_id?: string;
 }
 
+export type ReducedTool = Pick<
+    Tool,
+    "id" | "name" | "created_at" | "user_id" | "user"
+>;
+
 export interface ToolPayload {
     id?: number;
     name: string;
