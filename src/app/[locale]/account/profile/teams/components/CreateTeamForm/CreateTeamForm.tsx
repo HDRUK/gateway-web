@@ -167,6 +167,7 @@ const CreateTeamForm = () => {
     const editTeam = usePatch<Partial<TeamForm>>(apis.teamsV1Url);
 
     const submitForm = async (formData: TeamForm) => {
+        console.log("formData", formData);
         if (!params?.teamId) {
             await createTeam({
                 ...teamDefaultValues,
@@ -201,12 +202,15 @@ const CreateTeamForm = () => {
             createdTeamId: string,
             file: File
         ) => {
+            console.log("UPLOADING");
             const formData = new FormData();
             formData.append("file", file);
 
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 setFile(undefined)
             )) as FileUpload;
+
+            console.log("uploadedFileStatus", uploadedFileStatus);
 
             const { file_location } = uploadedFileStatus;
 
