@@ -52,6 +52,7 @@ const validationSchema = yup
         url: yup.string().nullable().url().label("DOI/Web link"),
         paper_doi: yup
             .string()
+            .nullable()
             .test(
                 "is-valid-doi",
                 "Enter a valid DOI",
