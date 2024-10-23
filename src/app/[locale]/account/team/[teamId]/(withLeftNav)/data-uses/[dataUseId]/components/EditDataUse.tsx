@@ -91,9 +91,13 @@ const EditDataUse = () => {
             keywords: existingDataUse?.keywords
                 ? mapKeywords(existingDataUse.keywords as Keyword[])
                 : [],
-            datasets: existingDataUse?.datasets
-                ? mapDatasets(existingDataUse.datasets as DatasetWithTitle[])
-                : [],
+            datasets:
+                existingDataUse?.datasets ||
+                existingDataUse.non_gateway_datasets
+                    ? mapDatasets(
+                          existingDataUse.datasets as DatasetWithTitle[]
+                      ).concat(existingDataUse.non_gateway_datasets)
+                    : [],
         };
         reset(formData);
     }, [reset, existingDataUse]);
@@ -121,6 +125,10 @@ const EditDataUse = () => {
         if (!existingDataUse) {
             return;
         }
+
+        const gatewayDatasets = formData?.datasets?.filter(d => d.id);
+        const nonGatewayDatasets = formData?.datasets?.filter(d => !d.id);
+
         const edited = {
             ...formData,
             project_start_date: formData.project_start_date
@@ -139,7 +147,8 @@ const EditDataUse = () => {
             access_date: formData.access_date
                 ? dayjs(formData.access_date).format("YYYY-MM-DDThh:mm:ss")
                 : null,
-            datasets: existingDataUse?.datasets,
+            datasets: gatewayDatasets,
+            non_gateway_datasets: nonGatewayDatasets,
             status,
         };
 

@@ -330,8 +330,8 @@ const formFields = [
                 name: "datasets",
                 info: "The name of the dataset(s) being accessed",
                 component: inputComponents.Autocomplete,
-                disabled: true,
                 multiple: true,
+                canCreate: true,
             },
             {
                 label: "Data sensitivity level (optional)",
