@@ -139,11 +139,20 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             return;
         }
 
+        const formattedDatasets = existingToolData.datasets?.length
+            ? existingToolData.datasets.map(d => ({
+                  link_type: d.link_type,
+                  value: d.id,
+                  label: d.name,
+                  id: d.id,
+              }))
+            : defaultDatasetValue;
+
+        console.log(formattedDatasets);
+
         const formData = {
             ...existingToolData,
-            ...(existingToolData.dataset && {
-                dataset: existingToolData.dataset,
-            }),
+            dataset: formattedDatasets,
             programming_language:
                 existingToolData?.programming_languages?.map(item => item.id) ||
                 [],
