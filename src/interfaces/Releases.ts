@@ -3,6 +3,9 @@ interface Release {
     title: string;
     date: string;
     content: string;
+    release: {
+        releaseDate: string;
+    };
 }
 interface ReleaseNode {
     node: Release;

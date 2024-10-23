@@ -735,61 +735,61 @@
             "meetTheTeam": "Meet the Team",
             "newsCardButtonText": "Read more",
             "welcomeTitle": "Welcome to the Gateway",
-            "welcomeText": "Search, discover and request access to hundreds of datasets, tools and resources for your research. Join the thousands of researchers and scientists worldwide who are already using the Gateway for research and scientific discovery.",
+            "welcomeText": "The Gateway streamlines the end-to-end user journey to search, discover and request access to the wealth of health and associated Datasets, Analysis Scripts & Software, Publications and Research Projects from across the UK and beyond.",
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "Explore datasets and biosamples from across the UK and beyond and then navigate their associated resources e.g. metadata, linked datasets, data provenance, publications, analysis scripts & software and demographics."
+                "text": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
             },
             "dur": {
                 "label": "Data Uses / Research Projects",
                 "title": "Data Uses / Research Projects",
-                "text": "Find data uses/research projects: Search and filter data uses/research projects related to specific datasets and other features"
+                "text": "Find Data Uses / Research Projects: search and filter Data Uses / Research Projects related to specific Datasets and other features."
             },
             "feasibility": {
                 "label": "Cohort Discovery",
-                "title": "Cohort Discovery Tool",
-                "text": "Compare the numbers of relevant records across different datasets: query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma."
+                "title": "Cohort Discovery",
+                "text": "Query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma. This is useful for high level feasibility analysis or to find potential recruits for clinical trials. Queries run on both routinely collected electronic health records and research collected cohorts."
             },
             "dataProviders": {
                 "label": "Data Custodians",
                 "title": "Data Custodians",
-                "text": "Search data custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them."
+                "text": "Search Data Custodians, discover their associated Gateway entities (e.g. Datasets, Publications, Analysis Scripts & Software), and find out how to contact them."
             },
             "collections": {
                 "label": "Collections",
                 "title": "Collections",
-                "text": "Discover research resources: datasets, analysis scripts, software, data uses, and publications grouped together by domain, disease, theme or organisation"
+                "text": "Discover Gateway entities: Datasets & BioSamples, Analysis Scripts and Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation."
             },
             "phenotypes": {
                 "label": "Phenotypes",
                 "title": "Phenotype Library",
-                "text": "Find reusable phenotype algorithms: Search and deposit human and machine readable phenotype algorithms"
+                "text": "Find reusable phenotype algorithms: search and deposit human and machine-readable phenotyping algorithms."
             },
             "diseaseAtlas": {
                 "label": "Disease Atlas",
                 "title": "Disease Atlas",
-                "text": "The Disease Atlas is under development and is testing systematic approaches to understanding diseases across the NHS"
+                "text": "The Disease Atlas is under development and is testing systematic approaches to understanding diseases across the NHS."
             },
             "dataCustodianNetworks": {
                 "label": "Data Custodian Networks",
                 "title": "Data Custodian Networks",
-                "text": "Discover networks of data custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network."
+                "text": "Discover networks of Data Custodians to learn about the Gateway entities available across a network e.g. the NHS Research Secure Data Environment (SDE) Network or Scottish Safe Haven Network."
             },
             "publications": {
                 "label": "Publications",
                 "title": "Publications",
-                "text": "Understand what questions can be answered by specific dataset: Search and deposit publications which used a dataset or publications which describe a dataset"
+                "text": "Understand what research has been undertaken utilising specific Datasets: search and deposit Publications which have used a Dataset or Publications which describe a Dataset."
             },
             "tools": {
                 "label": "Analysis Scripts & Software",
                 "title": "Analysis Scripts & Software",
-                "text": "Discover reusable community shared scripts and software: Search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general software/tools"
+                "text": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software."
             },
             "courses": {
                 "label": "Courses",
                 "title": "Courses",
-                "text": "Discover training materials and resources to enhance your data science skills for Health data research. Learn at your pace and achieve CPD certificates to showcase your personal development"
+                "text": "Discover training materials and resources to enhance your data science skills for health data research. Learn at your pace and achieve CPD certificates to show case your personal development."
             },
             "helpLinks": {
                 "item1": {
@@ -837,14 +837,14 @@
         "search": {
             "datasets": "Datasets & BioSamples",
             "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
-            "dataUse": "Data Uses/\n\nResearch Projects",
-            "dataUseTooltip": "Find data uses/research projects: search and filter data uses/research projects/studies related to specific data sets and other features.",
+            "dataUse": "Data Uses /\n\nResearch Projects",
+            "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
             "toolsTooltip": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software.",
             "dataProviders": "Data Custodians",
-            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts and software), and find out how to contact them. ",
+            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them. ",
             "collections": "Collections / Networks",
-            "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts and Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
+            "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts & Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
             "publications": "Publications",
             "publicationsTooltip": "Understand what research has been undertaken utilising specific datasets: search and deposit publications which have used a dataset or publications which describe a dataset.",
             "dataCustodianNetworks": "Data Custodian Networks",
@@ -863,11 +863,6 @@
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
-            "publicationWelcomeHeader": "Welcome to publications search on the Gateway.",
-            "publicationWelcomeText1": "The Gateway publication search enables queries on: <list><item>manually curated publications saved within the Gateway; and</item><item>automatically curated online publications using advanced filters.</item></list>",
-            "publicationWelcomeText2": "Manually uploaded Gateway publications have been curated to enable automated filtering of publications about a specific dataset; publications using a specific dataset; and publications linked to datasets from a specific data custodian.",
-            "publicationWelcomeText3": "For automated querying of online publications utilising <link>Europe PMC</link>, the Gateway performs additional filtering on the 'METHODS' and 'RESULTS' fields to improve the relevance of results returned.",
-            "publicationWelcomeText4": "<bold>To start your search, select your search source (either \"Search Europe PMC\" or \"Search Gateway\"), enter the keyword(s) of interest, the name of a dataset or DOI in the search box at the top, and hit enter/return on your keyboard.</bold>",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
@@ -1310,7 +1305,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Research projects/data uses which have used this analysis, tool or software ({ length })"
+                    "heading": "Data Uses / Research Projects which have used this analysis, tool or software ({ length })"
                 },
                 "PublicationsContent": {
                     "heading": "Publications related to this analysis, tool or software ({ length })"
@@ -1487,7 +1482,7 @@
             },
             "AddPublicationDialog": {
                 "manualButton": "Manually fill form",
-                "searchText": "Search Europe PMC",
+                "searchText": "Search Online Publications",
                 "doiPlaceholder": "Auto populate by searching Europe PMC using a DOI",
                 "or": "or",
                 "notFound": "DOI not found on Europe PMC"
@@ -1537,15 +1532,15 @@
                 "removeFromLibrary": "Remove from library"
             },
             "PublicationsSearchDialog": {
+                "intro": "Search the Title, Method, and Result sections of online Publications (via Europe PMC):",
                 "searchField": {
                     "placeholder": "I'm looking for...",
-                    "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
+                    "label": "Using a search term, for example, by Publication title, Publication DOI, Dataset DOI, Software title, Data Custodian name, keywords"
                 },
                 "datasetNameField": {
                     "placeholder": "Dataset name",
-                    "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
+                    "label": "Using a Gateway Dataset name, to find publications which may have used a Dataset"
                 },
-                "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
                 "cancel": "Cancel",
                 "search": "Search"
             }

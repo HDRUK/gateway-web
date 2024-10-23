@@ -17,6 +17,15 @@ export const StaticImages = {
         },
         "landing_page"
     ),
+    TEAM_INTEGRATIONS: parseStaticImagePaths(
+        {
+            createPrivateApp: "create_private_app.png",
+            managePrivateApps: "manage_private_apps.png",
+            createNewIntegration: "create_new_integration.png",
+            manageIntegrations: "manage_integrations.png",
+        },
+        "team_integrations"
+    ),
     BASE: parseStaticImagePaths({
         logo: "heath_data_research_gateway_logo_white.svg",
         placeholder: "default_placeholder.png",

@@ -107,19 +107,19 @@ const PublicationSearchDialog = ({
     return (
         <Dialog maxWidth="tablet" title="">
             <MuiDialogContent sx={{ p: 10 }}>
+                <Typography sx={{ mb: 4 }}>{t("intro")}</Typography>
+
                 <InputWrapper
                     control={control}
                     {...searchFilter}
                     disabled={!!datasetNameValue?.length}
                 />
-
                 <Typography
                     fontWeight={700}
                     textAlign="center"
                     sx={{ mt: 2, mb: 2 }}>
                     OR
                 </Typography>
-
                 <InputWrapper
                     {...datasetTitleField}
                     control={control}
@@ -147,8 +147,6 @@ const PublicationSearchDialog = ({
                         )
                     }
                 />
-
-                <Typography>({t("helper")})</Typography>
             </MuiDialogContent>
 
             <MuiDialogActions
