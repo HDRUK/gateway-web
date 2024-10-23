@@ -1495,7 +1495,7 @@
                     "label": "Using a search term, for example, by Publication title, Publication DOI, Dataset DOI, Software title, Data Custodian name, keywords"
                 },
                 "datasetNameField": {
-                    "placeholder": "Dataset name",
+                    "placeholder": "Enter three or more letters to filter dataset names",
                     "label": "Using a Gateway Dataset name, to find publications which may have used a Dataset"
                 },
                 "cancel": "Cancel",
