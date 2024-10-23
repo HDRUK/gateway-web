@@ -148,8 +148,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
               }))
             : defaultDatasetValue;
 
-        console.log(formattedDatasets);
-
         const formData = {
             ...existingToolData,
             dataset: formattedDatasets,
