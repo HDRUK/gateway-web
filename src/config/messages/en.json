@@ -809,7 +809,7 @@
             "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
             "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
-            "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, keywords",
+            "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
             "searchExplainerDataProviders": "Search, for example, by Data Custodian name, Dataset title",

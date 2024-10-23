@@ -66,7 +66,7 @@ const Footer = () => {
             label: t("cookieNotice"),
         },
         {
-            href: "https://api.www.healthdatagateway.org/api-docs/?_gl=1*1pz4jlx*_ga*MTcwOTYwOTYxMy4xNjc3MjgyNjU2*_ga_GJ2NS0NB4W*MTcxNzA2NTg0MC40NTYuMS4xNzE3MDY1ODUxLjQ5LjAuMA..",
+            href: `${process.env.NEXT_PUBLIC_API_V1_URL}/documentation`,
             label: t("apiDocs"),
         },
     ];
