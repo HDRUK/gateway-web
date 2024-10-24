@@ -133,8 +133,18 @@ const CreatePublication = ({
             return;
         }
 
+        const formattedDatasets = existingPublicationData.datasets?.length
+            ? existingPublicationData.datasets.map(d => ({
+                  link_type: d.link_type,
+                  value: d.id,
+                  label: d.name,
+                  id: d.id,
+              }))
+            : defaultDatasetValue;
+
         const formData = {
             ...existingPublicationData,
+            datasets: formattedDatasets,
         };
 
         const propertiesToDelete = ["publication_type_mk1", "mongo_id"];

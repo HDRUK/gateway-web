@@ -7,4 +7,6 @@ const FILTER_TYPE_MAPPING: { [key: string]: string } = {
     tools: "tool",
 };
 
-export { FILTER_TYPE_MAPPING };
+const SEARCH_CHAR_LIMIT = 3;
+
+export { FILTER_TYPE_MAPPING, SEARCH_CHAR_LIMIT };

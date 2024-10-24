@@ -60,12 +60,12 @@ const DataCustodianContent = ({
         }
     };
 
-    if (!populatedSections.length || !data.url) {
+    if (!populatedSections.length) {
         return null;
     }
 
     return (
-        (populatedSections.length || data.url) && (
+        populatedSections.length && (
             <BoxContainer
                 sx={{
                     gridTemplateColumns: {

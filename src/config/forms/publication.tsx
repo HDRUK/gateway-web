@@ -48,15 +48,11 @@ const validationSchema = yup
             .max(4)
             .required()
             .label("Publication year"),
-        abstract: yup
-            .string()
-            .min(50)
-            .max(1500)
-            .required()
-            .label("Publication year"),
+        abstract: yup.string().required().label("Abstract"),
         url: yup.string().nullable().url().label("DOI/Web link"),
         paper_doi: yup
             .string()
+            .nullable()
             .test(
                 "is-valid-doi",
                 "Enter a valid DOI",
@@ -140,7 +136,7 @@ const formFields = [
         name: "journal_name",
         component: inputComponents.TextField,
         required: true,
-        min: 50,
+        min: 3,
         limit: 1500,
     },
     {
@@ -148,8 +144,6 @@ const formFields = [
         name: "year_of_publication",
         component: inputComponents.TextField,
         required: true,
-        min: 50,
-        limit: 1500,
     },
     {
         label: "Abstract",
@@ -157,8 +151,6 @@ const formFields = [
         info: "Provide a brief summary of the paper",
         component: inputComponents.TextArea,
         required: true,
-        min: 50,
-        limit: 1500,
     },
     {
         label: "Web link",
