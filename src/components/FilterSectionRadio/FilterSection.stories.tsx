@@ -18,7 +18,7 @@ const WrapperComponent = () => {
                 buckets: [
                     {
                         value: "FED",
-                        label: "Search Europe PMC",
+                        label: "Search Online Publications",
                     },
                     {
                         value: "GAT",
