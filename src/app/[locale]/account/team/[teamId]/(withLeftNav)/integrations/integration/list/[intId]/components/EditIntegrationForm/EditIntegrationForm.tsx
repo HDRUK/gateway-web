@@ -173,7 +173,7 @@ const EditIntegrationForm = () => {
                             ...field,
                             options: team?.users?.map(teamUser => ({
                                 value: teamUser.id,
-                                label: `${teamUser.firstname} ${teamUser.lastname}`,
+                                label: `${teamUser.firstname} ${teamUser.lastname} (${teamUser.preferred_email === 'primary' ? teamUser.email : teamUser.secondary_email})`,
                             })),
                         };
                     }
