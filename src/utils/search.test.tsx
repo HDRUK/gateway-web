@@ -5,7 +5,7 @@ import {
     getAllParams,
     getDateRange,
     getPopulationSize,
-    shouldSearchCharacterLimit,
+    hasMinimumSearchCharLength,
 } from "./search";
 
 describe("Search utils", () => {
@@ -138,13 +138,13 @@ describe("Search utils", () => {
         });
     });
 
-    describe("shouldSearchCharacterLimit", () => {
+    describe("hasMinimumSearchCharLength", () => {
         it("returns true when there is enough characters", async () => {
-            expect(shouldSearchCharacterLimit("Publ")).toBe(true);
+            expect(hasMinimumSearchCharLength("Publ")).toBe(true);
         });
 
         it("returns false when there is too few characters", async () => {
-            expect(shouldSearchCharacterLimit("Pu")).toBe(false);
+            expect(hasMinimumSearchCharLength("Pu")).toBe(false);
         });
     });
 });

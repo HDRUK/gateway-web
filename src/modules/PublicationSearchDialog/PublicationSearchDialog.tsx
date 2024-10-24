@@ -18,7 +18,7 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { SearchIcon } from "@/consts/icons";
-import { shouldSearchCharacterLimit } from "@/utils/search";
+import { hasMinimumSearchCharLength } from "@/utils/search";
 
 const TRANSLATION_PATH = "modules.dialogs.PublicationsSearchDialog";
 
@@ -85,7 +85,7 @@ const PublicationSearchDialog = ({
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
     >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`, {
-        shouldFetch: shouldSearchCharacterLimit(searchParams.title),
+        shouldFetch: hasMinimumSearchCharLength(searchParams.title),
     });
 
     const searchValue = watch("search");
