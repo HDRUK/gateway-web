@@ -293,7 +293,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             });
         }
 
-        // push(COLLECTION_ROUTE);
+        push(COLLECTION_ROUTE);
     };
     useEffect(() => {
         showBar("CreateCollection", {
