@@ -59,7 +59,7 @@ const EditApplicationForm = ({
         const formData: ApplicationForm = {
             ...application,
             notifications: application?.notifications?.map(
-                (notification: { email: string }) => notification.email
+                (notification: { user_id: number }) => notification.user_id
             ),
         };
         reset(formData);
@@ -103,7 +103,7 @@ const EditApplicationForm = ({
                     return {
                         ...field,
                         options: team?.users?.map(teamUser => ({
-                            value: teamUser.email,
+                            value: teamUser.id,
                             label: `${teamUser.firstname} ${teamUser.lastname}`,
                         })),
                     };

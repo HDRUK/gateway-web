@@ -21,12 +21,12 @@ interface Integration {
 
 interface IntegrationForm
     extends Omit<Integration, "notifications" | "run_time_hour"> {
-    notifications: string[] | undefined;
+    notifications: number[] | undefined;
     run_time_hour: string;
 }
 
 interface IntegrationPayload extends Omit<Integration, "notifications"> {
-    notifications: string[] | undefined;
+    notifications: number[] | undefined;
 }
 
 export type { Integration, IntegrationPayload, IntegrationForm };

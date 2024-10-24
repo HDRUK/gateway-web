@@ -5,6 +5,7 @@ interface Notification {
     email: string;
     enabled: boolean;
     notification_type: string;
+    user_id?: number;
 }
 
 export type { Notification };
