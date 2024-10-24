@@ -5,7 +5,7 @@ import {
     getAllParams,
     getDateRange,
     getPopulationSize,
-    shouldDebounceSearch,
+    shouldSearchCharacterLimit,
 } from "./search";
 
 describe("Search utils", () => {
@@ -138,13 +138,13 @@ describe("Search utils", () => {
         });
     });
 
-    describe("shouldDebounceSearch", () => {
+    describe("shouldSearchCharacterLimit", () => {
         it("returns true when there is enough characters", async () => {
-            expect(shouldDebounceSearch("Publ")).toBe(true);
+            expect(shouldSearchCharacterLimit("Publ")).toBe(true);
         });
 
         it("returns false when there is too few characters", async () => {
-            expect(shouldDebounceSearch("Pu")).toBe(false);
+            expect(shouldSearchCharacterLimit("Pu")).toBe(false);
         });
     });
 });

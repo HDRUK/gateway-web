@@ -89,7 +89,7 @@ const getUrlFromSearchParams = (
     return `/${RouteName.SEARCH}?type=${type}&${params.join("&")}&sort=${sort}`;
 };
 
-const shouldDebounceSearch = (value: string | null | undefined) => {
+const shouldSearchCharacterLimit = (value: string | null | undefined) => {
     return (value?.length || 0) >= DEBOUNCE_SEARCH_LIMIT;
 };
 
@@ -100,5 +100,5 @@ export {
     getPopulationSize,
     getSaveSearchFilters,
     getUrlFromSearchParams,
-    shouldDebounceSearch,
+    shouldSearchCharacterLimit,
 };
