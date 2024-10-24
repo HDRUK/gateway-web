@@ -7,7 +7,7 @@ import {
     SearchQueryParams,
 } from "@/interfaces/Search";
 import { RouteName } from "@/consts/routeName";
-import { FILTER_TYPE_MAPPING, DEBOUNCE_SEARCH_LIMIT } from "@/consts/search";
+import { FILTER_TYPE_MAPPING, SEARCH_CHAR_LIMIT } from "@/consts/search";
 import { formatDate } from "./date";
 
 const getDateRange = (metadata: Metadata) => {
@@ -90,7 +90,7 @@ const getUrlFromSearchParams = (
 };
 
 const hasMinimumSearchCharLength = (value: string | null | undefined) => {
-    return (value?.length || 0) >= DEBOUNCE_SEARCH_LIMIT;
+    return (value?.length || 0) >= SEARCH_CHAR_LIMIT;
 };
 
 export {

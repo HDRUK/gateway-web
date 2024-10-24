@@ -7,6 +7,6 @@ const FILTER_TYPE_MAPPING: { [key: string]: string } = {
     tools: "tool",
 };
 
-const DEBOUNCE_SEARCH_LIMIT = 3;
+const SEARCH_CHAR_LIMIT = 3;
 
-export { FILTER_TYPE_MAPPING, DEBOUNCE_SEARCH_LIMIT };
+export { FILTER_TYPE_MAPPING, SEARCH_CHAR_LIMIT };
