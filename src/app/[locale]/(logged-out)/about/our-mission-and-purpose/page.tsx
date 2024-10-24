@@ -5,7 +5,7 @@ import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
 import { getMissionAndPurposes } from "@/utils/cms";
 
 export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Our mission and purpose",
+    title: "Health Data Research Innovation Gateway - About - Our Mission and Purpose",
     description: "",
 };
 
@@ -20,7 +20,7 @@ export default async function MissionsPage() {
     return (
         <>
             <Banner
-                title="Our Mission and purpose"
+                title="Our Mission and Purpose"
                 src="/images/banners/our-mission-and-purpose.png"
             />
             <Container sx={{ background: "white", padding: 10 }}>
