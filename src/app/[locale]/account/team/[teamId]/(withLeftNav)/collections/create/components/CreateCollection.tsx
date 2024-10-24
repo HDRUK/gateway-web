@@ -14,7 +14,6 @@ import {
 } from "@/interfaces/AddResource";
 import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
-import { VersionItem } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
 import { Publication } from "@/interfaces/Publication";
@@ -117,7 +116,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         const datasetVersionToDataset = dataset_versions => {
             // this function is a temporary hack and this all needs sorting out
             // GET collections returns `dataset_versions` in a particular format
-            // but POST collections is expecting dataset .... totally bizzare
+            // but POST collections is expecting datasets
             if (!dataset_versions) return [];
 
             const temp_datasets = dataset_versions.map(dataset_version => {
