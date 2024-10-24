@@ -57,8 +57,6 @@ const ResourceTable = ({
         },
     ];
 
-    console.log(selectedResources);
-
     return (
         <Box
             sx={{

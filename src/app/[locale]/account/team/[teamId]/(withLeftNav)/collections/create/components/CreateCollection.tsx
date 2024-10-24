@@ -115,6 +115,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         }
 
         const datasetVersionToDataset = dataset_versions => {
+            // this function is a temporary hack and this all needs sorting out
+            // GET collections returns `dataset_versions` in a particular format
+            // but POST collections is expecting dataset .... totally bizzare
             if (!dataset_versions) return [];
 
             const temp_datasets = dataset_versions.map(dataset_version => {
