@@ -1499,7 +1499,7 @@
                     "label": "Search Publications stored in Europe PCM, for example, by Publication title, Publication DOI, Journal name, Authors, Dataset DOI, Software title, Data Custodian name, keywords."
                 },
                 "datasetNameField": {
-                    "placeholder": "Type 3 or more characters to search for datasets",
+                    "placeholder": "Dataset name",
                     "label": "Search for Publications that have used a Dataset using a Gateway Dataset name."
                 },
                 "helper": "This searches the methods and results sections of Publications in Europe PMC for the Dataset name. It may return some false positives.",
