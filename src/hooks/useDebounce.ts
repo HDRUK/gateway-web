@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
+import { SEARCH_CHAR_LIMIT } from "@/consts/search";
 
-const useDebounce = (value: string, delay = 500, minLetters = 3) => {
+const useDebounce = (
+    value: string,
+    delay = 500,
+    minLetters = SEARCH_CHAR_LIMIT
+) => {
     const [debouncedValue, setDebouncedValue] = useState(value || "");
 
     useEffect(() => {

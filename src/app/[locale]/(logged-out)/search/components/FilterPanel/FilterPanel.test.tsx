@@ -1,4 +1,3 @@
-import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Aggregations } from "@/interfaces/Search";
@@ -115,7 +114,7 @@ describe("FilterPanel", () => {
             screen.getByRole("button", { name: "datasetTitles" })
         ).toBeInTheDocument();
 
-        const radioButton = screen.getByText("Search Europe PMC");
+        const radioButton = screen.getByText("Search Online Publications");
         fireEvent.click(radioButton);
 
         expect(

@@ -67,9 +67,19 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
     });
 
     const datasetOptions = useMemo(() => {
-        if (!datasetData) return [];
+        const fieldsToOptions = fields.reduce((acc, data) => {
+            if (data.link_type) {
+                acc.push({
+                    label: data.label,
+                    value: data.value,
+                });
+            }
+            return acc;
+        }, [] as OptionsType[]);
 
-        return datasetData.map(data => {
+        if (!datasetData) return fieldsToOptions;
+
+        const datasetToOptions = datasetData.map(data => {
             return {
                 label: get(
                     data,
@@ -78,7 +88,18 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                 value: data.id,
             };
         }) as OptionsType[];
-    }, [datasetData]);
+
+        // Concatenate and remove value duplicates
+        const combinedOptions = [
+            ...fieldsToOptions,
+            ...datasetToOptions,
+        ].filter(
+            (option, index, self) =>
+                index === self.findIndex(o => o.value === option.value)
+        );
+
+        return combinedOptions;
+    }, [datasetData, fields]);
 
     const [relationshipField, datasetTitleField] = toolFormArrayFields;
 

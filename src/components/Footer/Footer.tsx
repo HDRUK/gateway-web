@@ -3,6 +3,7 @@
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { RouteName } from "@/consts/routeName";
 import hdrukLogo from "../../../public/images/logos/hdruk-white.png";
 import linkedInLogo from "../../../public/images/logos/linkedIn-white.png";
 import twitterInLogo from "../../../public/images/logos/twitter-white.png";
@@ -51,7 +52,7 @@ const Footer = () => {
             label: t("visitHDRUKSite"),
         },
         {
-            href: "https://www.healthdatagateway.org/about/terms-and-conditions",
+            href: RouteName.TERMS,
             label: t("termsConditions"),
         },
         {
@@ -66,7 +67,7 @@ const Footer = () => {
             label: t("cookieNotice"),
         },
         {
-            href: "https://api.www.healthdatagateway.org/api-docs/?_gl=1*1pz4jlx*_ga*MTcwOTYwOTYxMy4xNjc3MjgyNjU2*_ga_GJ2NS0NB4W*MTcxNzA2NTg0MC40NTYuMS4xNzE3MDY1ODUxLjQ5LjAuMA..",
+            href: `${process.env.NEXT_PUBLIC_API_V1_URL}/documentation`,
             label: t("apiDocs"),
         },
     ];
