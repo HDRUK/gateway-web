@@ -111,7 +111,11 @@ const DatasetTab = ({
 
             {(list || [])
                 .map(dataset => (
-                    <DatasetCard actions={actions} dataset={dataset} />
+                    <DatasetCard
+                        actions={actions}
+                        key={dataset.id}
+                        dataset={dataset}
+                    />
                 ))
                 .filter(dataset => !!dataset)}
             {list?.length === 0 && (
