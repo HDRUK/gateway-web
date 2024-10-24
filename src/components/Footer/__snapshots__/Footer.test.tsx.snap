@@ -131,7 +131,7 @@ exports[`Footer should render component 1`] = `
             <li>
               <a
                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-                href="https://api.www.healthdatagateway.org/api-docs/?_gl=1*1pz4jlx*_ga*MTcwOTYwOTYxMy4xNjc3MjgyNjU2*_ga_GJ2NS0NB4W*MTcxNzA2NTg0MC40NTYuMS4xNzE3MDY1ODUxLjQ5LjAuMA.."
+                href="http://localhost:8000/api/documentation"
               >
                 API docs
               </a>
