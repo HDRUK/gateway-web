@@ -143,8 +143,8 @@ describe("Search utils", () => {
             expect(shouldDebounceSearch("Publ")).toBe(true);
         });
 
-        it("returns false when there is to few characters", async () => {
-            expect(shouldDebounceSearch("Publ")).toBe(true);
+        it("returns false when there is too few characters", async () => {
+            expect(shouldDebounceSearch("Pu")).toBe(false);
         });
     });
 });
