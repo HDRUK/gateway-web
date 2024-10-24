@@ -101,7 +101,7 @@ exports[`Footer should render component 1`] = `
             <li>
               <a
                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
-                href="https://www.healthdatagateway.org/about/terms-and-conditions"
+                href="/terms-and-conditions"
               >
                 Terms and conditions
               </a>
