@@ -3,6 +3,7 @@
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { RouteName } from "@/consts/routeName";
 import hdrukLogo from "../../../public/images/logos/hdruk-white.png";
 import linkedInLogo from "../../../public/images/logos/linkedIn-white.png";
 import twitterInLogo from "../../../public/images/logos/twitter-white.png";
@@ -51,7 +52,7 @@ const Footer = () => {
             label: t("visitHDRUKSite"),
         },
         {
-            href: "https://www.healthdatagateway.org/about/terms-and-conditions",
+            href: RouteName.TERMS,
             label: t("termsConditions"),
         },
         {
