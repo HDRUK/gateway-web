@@ -80,8 +80,8 @@ const navItems = [
         label: "About",
         subItems: [
             {
-                label: RouteName.MISSION_AND_PURPOSE,
-                href: "/about/our-mission-and-purpose",
+                label: "Our mission and purpose",
+                href: RouteName.MISSION_AND_PURPOSE,
             },
             {
                 label: "For Researchers and Innovators",
