@@ -84,9 +84,10 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     );
 
     const { data: existingCollectionData } = useGet<Collection>(
-        `${apis.collectionsV1Url}/${collectionId}`,
+        `${apis.collectionsV1Url}/${collectionId}?view_type=mini`,
         { shouldFetch: !!collectionId }
     );
+
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
         { itemName: "Collection", successNotificationsOn: !file }
@@ -114,6 +115,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
         const formData = {
             ...existingCollectionData,
+            datasets: existingCollectionData?.dataset_versions,
             name: existingCollectionData?.name,
             description: existingCollectionData?.description,
             keywords:
@@ -242,10 +244,6 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             return keywordArray;
         };
 
-        const publications = formData.publications.map(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ({ updated_at, created_at, ...item }) => item
-        );
         const payload: CollectionSubmission = {
             ...formData,
             status,
@@ -255,13 +253,17 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
             dur: formatEntityToIdArray(formData.dur),
-            publications,
+            publications: formatEntityToIdArray(formData.publications),
             tools: formatEntityToIdArray(formData.tools),
-            datasets: formatEntityToIdArray(formData.datasets),
+            datasets: formData.dataset_versions?.map(dv => dv.dataset_id) || [], // to be fixed - BE returns dataset_versions but posts dataset IDs
             created_at: formData.created_at?.split(".")[0],
             updated_at: formData.updated_at?.split(".")[0],
             updated_on: formData.updated_on?.split(".")[0],
+            user_id: undefined,
         };
+
+        console.log(payload);
+
         if (!collectionId) {
             await createCollection(payload).then(async result => {
                 if (typeof result === "number" && file) {
@@ -277,7 +279,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             });
         }
 
-        push(COLLECTION_ROUTE);
+        // push(COLLECTION_ROUTE);
     };
     useEffect(() => {
         showBar("CreateCollection", {

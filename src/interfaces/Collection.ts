@@ -30,7 +30,8 @@ interface Collection {
     updated_on: string;
     deleted_at: string;
     keywords: string[] | string;
-    datasets: Dataset[];
+    datasets?: Dataset[];
+    dataset_versions?: Dataset[];
     team: Team;
     users: User[];
     applications: Application[];
@@ -40,6 +41,7 @@ interface Collection {
     counter?: number;
     team_id?: number;
     image_link: string;
+    user_id?: number;
 }
 
 export interface CollectionSubmission

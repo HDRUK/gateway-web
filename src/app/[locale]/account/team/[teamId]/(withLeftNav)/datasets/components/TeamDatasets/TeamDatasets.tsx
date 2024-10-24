@@ -75,6 +75,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         withTrashed: "true",
         status: "ACTIVE",
         page: "1",
+        per_page: 3,
         sort: `${datasetSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         title: "",
     });
@@ -143,6 +144,8 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
             withPagination: true,
         }
     );
+
+    console.log(data);
 
     const unArchiveDataset = usePatch<Partial<Dataset>>(apis.datasetsV1Url, {
         query: "unarchive",

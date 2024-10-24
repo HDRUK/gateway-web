@@ -57,6 +57,8 @@ const ResourceTable = ({
         },
     ];
 
+    console.log(selectedResources[ResourceType.DATASET]);
+
     return (
         <Box
             sx={{
