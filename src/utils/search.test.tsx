@@ -1,7 +1,12 @@
 import { faker } from "@faker-js/faker";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { generateDatasetMetadataV1 } from "@/mocks/data/dataset";
-import { getAllParams, getDateRange, getPopulationSize } from "./search";
+import {
+    getAllParams,
+    getDateRange,
+    getPopulationSize,
+    shouldDebounceSearch,
+} from "./search";
 
 describe("Search utils", () => {
     describe("getDateRange", () => {
@@ -130,6 +135,16 @@ describe("Search utils", () => {
             expect(getAllParams(params as ReadonlyURLSearchParams)).toEqual({
                 search_term: searchTerm,
             });
+        });
+    });
+
+    describe("shouldDebounceSearch", () => {
+        it("returns true when there is enough characters", async () => {
+            expect(shouldDebounceSearch("Publ")).toBe(true);
+        });
+
+        it("returns false when there is to few characters", async () => {
+            expect(shouldDebounceSearch("Publ")).toBe(true);
         });
     });
 });

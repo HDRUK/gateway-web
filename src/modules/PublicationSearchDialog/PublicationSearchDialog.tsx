@@ -18,6 +18,7 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { SearchIcon } from "@/consts/icons";
+import { shouldDebounceSearch } from "@/utils/search";
 
 const TRANSLATION_PATH = "modules.dialogs.PublicationsSearchDialog";
 
@@ -84,7 +85,7 @@ const PublicationSearchDialog = ({
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
     >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`, {
-        shouldFetch: searchParams.title?.length > 3,
+        shouldFetch: shouldDebounceSearch(searchParams.title),
     });
 
     const searchValue = watch("search");
