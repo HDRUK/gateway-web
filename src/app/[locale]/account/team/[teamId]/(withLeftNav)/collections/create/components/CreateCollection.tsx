@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Dataset } from "@mui/icons-material";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ import {
 } from "@/interfaces/AddResource";
 import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
-import { Dataset } from "@/interfaces/Dataset";
+import { VersionItem } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
 import { Publication } from "@/interfaces/Publication";
@@ -84,7 +85,7 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     );
 
     const { data: existingCollectionData } = useGet<Collection>(
-        `${apis.collectionsV1Url}/${collectionId}?view_type=mini`,
+        `${apis.collectionsV1Url}/${collectionId}`,
         { shouldFetch: !!collectionId }
     );
 
@@ -113,9 +114,23 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             return;
         }
 
+        const datasetVersionToDataset = dataset_versions => {
+            if (!dataset_versions) return [];
+
+            const temp_datasets = dataset_versions.map(dataset_version => {
+                return {
+                    id: dataset_version.dataset_id,
+                    latest_metadata: { metadata: dataset_version.metadata },
+                };
+            });
+            return temp_datasets;
+        };
+
         const formData = {
             ...existingCollectionData,
-            datasets: existingCollectionData?.dataset_versions,
+            datasets: datasetVersionToDataset(
+                existingCollectionData.dataset_versions
+            ),
             name: existingCollectionData?.name,
             description: existingCollectionData?.description,
             keywords:
@@ -255,14 +270,12 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             dur: formatEntityToIdArray(formData.dur),
             publications: formatEntityToIdArray(formData.publications),
             tools: formatEntityToIdArray(formData.tools),
-            datasets: formData.dataset_versions?.map(dv => dv.dataset_id) || [], // to be fixed - BE returns dataset_versions but posts dataset IDs
+            datasets: formatEntityToIdArray(formData.datasets),
             created_at: formData.created_at?.split(".")[0],
             updated_at: formData.updated_at?.split(".")[0],
             updated_on: formData.updated_on?.split(".")[0],
             user_id: undefined,
         };
-
-        console.log(payload);
 
         if (!collectionId) {
             await createCollection(payload).then(async result => {
