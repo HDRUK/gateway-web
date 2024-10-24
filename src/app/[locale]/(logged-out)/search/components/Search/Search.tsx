@@ -288,6 +288,7 @@ const Search = ({ filters }: SearchProps) => {
     const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
 
     useEffect(() => {
+        console.log("Initial search");
         mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -312,8 +313,10 @@ const Search = ({ filters }: SearchProps) => {
         }
 
         if (queryParams.type !== SearchCategory.PUBLICATIONS) {
+            console.log("SEARCHING NOT PUBLICATIONS");
             mutate();
         } else if (!!queryParams.query && !initialQuery) {
+            console.log("SEARCHING PUBLICATIONS");
             mutate();
         }
     }, [

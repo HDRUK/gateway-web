@@ -83,7 +83,9 @@ const PublicationSearchDialog = ({
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`);
+    >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`, {
+        shouldFetch: searchParams.title.length > 2,
+    });
 
     const searchValue = watch("search");
     const datasetNameValue = watch("datasetName");
