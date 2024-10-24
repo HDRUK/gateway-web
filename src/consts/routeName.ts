@@ -73,4 +73,5 @@ export enum RouteName {
     DATA_CUSTODIAN_THE_ALLIANCE = "/data-custodian/support/the-alliance",
     DATA_CUSTODIAN_TOOLS = "/data-custodian/support/tools",
     DATA_CUSTODIAN_PUBLICATIONS = "/data-custodian/support/publications",
+    MISSIONS_AND_PURPOSE = "/about/our-mission-and-purpose",
 }
