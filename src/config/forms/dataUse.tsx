@@ -334,9 +334,9 @@ const formFields = [
                 multiple: true,
             },
             {
-                label: "Non Gateway Dataset(s) name",
+                label: "Non-Gateway Dataset(s) name",
                 name: "non_gateway_datasets",
-                info: "AWAITING COPY",
+                info: "The name of the dataset(s) being access, where the dataset(s) are not currently listed on the Gateway.",
                 component: inputComponents.Autocomplete,
                 multiple: true,
                 canCreate: true,
