@@ -101,7 +101,9 @@ const DatasetMindMap = ({
                     }
                     href = `${node.data.href}&query=&datasetTitles=${title}&source=${node.data.source}&force`;
                 } else if (node.id === "node-externalPublications") {
-                    href = `${node.data.href}&query=${title}&source=${node.data.source}&pmc=dataset`;
+                    href = `${node.data.href}&query=${encodeURIComponent(
+                        title
+                    )}&source=${node.data.source}&pmc=dataset`;
                 } else if (node.id === "node-coverageCompleteness") {
                     href =
                         data.metadata.metadata?.coverage?.datasetCompleteness;
