@@ -24,7 +24,7 @@ interface ApplicationPayload extends Omit<Application, "permissions"> {
 interface ApplicationForm {
     id: number;
     description: string;
-    notifications: string[] | undefined;
+    notifications: number[] | undefined;
     name: string;
 }
 
