@@ -18,10 +18,7 @@ const NewsEventsPage = async () => {
 
     return (
         <>
-            <Banner
-                title="News and Events"
-                src="/images/banners/release-notes.png"
-            />
+            <Banner title="News and Events" />
             <Container sx={{ background: "white", padding: 0 }}>
                 <Tabs
                     centered
