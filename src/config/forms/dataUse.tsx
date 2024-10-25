@@ -34,6 +34,7 @@ const defaultValues = {
     applicants: [],
     datasets: [],
     keywords: [],
+    non_gateway_datasets: [],
 };
 
 const validationSchema = yup.object({
@@ -331,7 +332,15 @@ const formFields = [
                 info: "The name of the dataset(s) being accessed",
                 component: inputComponents.Autocomplete,
                 multiple: true,
+            },
+            {
+                label: "Non Gateway Dataset(s) name",
+                name: "non_gateway_datasets",
+                info: "AWAITING COPY",
+                component: inputComponents.Autocomplete,
+                multiple: true,
                 canCreate: true,
+                freeSolo: true,
             },
             {
                 label: "Data sensitivity level (optional)",
