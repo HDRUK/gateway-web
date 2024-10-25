@@ -309,7 +309,7 @@ const EditDataUse = () => {
                 }}
             />
         ),
-        [isLoadingDatasets, datasetOptions, datasetSearchCache]
+        [isLoadingDatasets, datasetOptions, datasetSearchCache, existingDataUse]
     );
 
     return (
