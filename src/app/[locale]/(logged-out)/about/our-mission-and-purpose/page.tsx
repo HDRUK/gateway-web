@@ -19,14 +19,7 @@ export default async function MissionsPage() {
 
     return (
         <>
-<<<<<<< HEAD
-            <Banner
-                title="Our Mission and Purpose"
-                src="/images/banners/our-mission-and-purpose.png"
-            />
-=======
             <Banner title="Our Mission and Purpose" />
->>>>>>> origin/dev
             <Container sx={{ background: "white", padding: 10 }}>
                 <div>
                     {!allMissionsAndPurposes.length && (
