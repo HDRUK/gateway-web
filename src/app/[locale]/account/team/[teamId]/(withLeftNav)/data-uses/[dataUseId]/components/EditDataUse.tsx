@@ -111,7 +111,7 @@ const EditDataUse = () => {
     }, [reset, existingDataUse]);
 
     const editDataUse = usePut<Partial<DataUse>>(`${apis.dataUseV1Url}`, {
-        itemName: "Application",
+        itemName: "Data Use",
     });
 
     const getChangedFields = <T extends DataUse>(
