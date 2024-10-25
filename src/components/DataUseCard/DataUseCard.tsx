@@ -28,20 +28,6 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
     const providerName = dataUse.team.name;
     const applicantNames = dataUse.non_gateway_applicants.join(", ");
 
-    const datasetNames: JSX.Element[] = [];
-    dataUse.datasets.forEach((dataset, idx) => {
-        // don't add a comma to the last element
-        datasetNames.push(
-            <>
-                <Link
-                    href={`/${params?.locale}/${RouteName.DATASET_ITEM}/${dataset.id}`}>
-                    {dataset.shortTitle}
-                </Link>
-                {idx + 1 < dataUse.datasets.length && ", "}
-            </>
-        );
-    });
-
     return (
         <Paper data-testid="datause-card" sx={{ mb: 2 }}>
             <Box
@@ -77,8 +63,36 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                                 {
                                     key: "Datasets",
                                     value: (
-                                        <ShowMore maxHeight={18}>
-                                            {datasetNames}
+                                        <ShowMore maxHeight={20}>
+                                            <>
+                                                {dataUse.datasets.map(
+                                                    (dataset, index) => (
+                                                        <Link
+                                                            href={`/${params?.locale}/${RouteName.DATASET_ITEM}/${dataset.id}`}>
+                                                            {dataset.name}
+                                                            {index <
+                                                                dataUse.datasets
+                                                                    .length -
+                                                                    1 && ", "}
+                                                        </Link>
+                                                    )
+                                                )}
+                                                {dataUse.non_gateway_datasets.map(
+                                                    (dataset, index) => (
+                                                        <span>
+                                                            {dataUse.datasets
+                                                                .length &&
+                                                                index === 0 &&
+                                                                ", "}
+                                                            {dataset}
+                                                            {index <
+                                                                dataUse.datasets
+                                                                    .length -
+                                                                    1 && ", "}
+                                                        </span>
+                                                    )
+                                                )}
+                                            </>
                                         </ShowMore>
                                     ),
                                 },
