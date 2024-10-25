@@ -30,6 +30,7 @@ module.exports = {
         "prettier",
         "import",
         "jsx-a11y",
+        "local-rules"
     ],
     extends: [
         "next/core-web-vitals",
@@ -41,6 +42,7 @@ module.exports = {
         "plugin:security/recommended",
         "plugin:react-hooks/recommended",
         "plugin:storybook/recommended",
+        "plugin:local-rules/all"
     ],
     rules: {
         "no-shadow": "off",
@@ -111,5 +113,6 @@ module.exports = {
                 ],
             },
         ],
+        "local-rules/no-data-controller": "error",
     },
 };
