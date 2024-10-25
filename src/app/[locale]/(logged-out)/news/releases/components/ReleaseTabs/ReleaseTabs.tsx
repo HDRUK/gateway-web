@@ -25,7 +25,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
     const [expanded, setExpanded] = useState<string | null>(null);
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
     const currentYear = dayjs().year();
-    const years = rangeRight(currentYear, currentYear + 2).map(String);
+    const years = rangeRight(currentYear, currentYear + 1).map(String);
 
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : null);
@@ -47,10 +47,12 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                                 })}
                             </Box>
                         )}
-                        {releases.map(release => (
+                        {releases.map((release, index) => (
                             <Accordion
                                 key={release.date}
-                                expanded={expanded === release.id}
+                                expanded={
+                                    expanded === release.id || index === 0
+                                }
                                 heading={
                                     <Typography>{release.title}</Typography>
                                 }
