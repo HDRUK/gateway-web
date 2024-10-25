@@ -32,7 +32,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { data: userData } = useGet<CohortRequest>(
         `${apis.cohortRequestsV1Url}/user/${user?.id}`,
         {
-            shouldFetch: !!user?.id
+            shouldFetch: !!user?.id,
         }
     );
 
@@ -55,20 +55,26 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         }
     }, [accessData, isClicked, isLoggedIn]);
 
-    const isDisabled = !(!isLoggedIn || isLoggedIn && userData === null || isLoggedIn && userData?.request_status  === "APPROVED");
-
+    const isDisabled = !(
+        !isLoggedIn ||
+        (isLoggedIn && userData === null) ||
+        (isLoggedIn && userData?.request_status === "APPROVED")
+    );
 
     return (
         <Box sx={{ display: "flex" }}>
-            {isDisabled && t(`notApproved`)}
-            <Button
-                sx={{ mt: 3 }}
-                onClick={() => setIsClicked(true)}
-                data-testid={DATA_TEST_ID}
-                color="greyCustom"
-                disabled={isDisabled}>
-                {ctaLink?.title}
-            </Button>
+            <Tooltip title={isDisabled ? t(`notApproved`) : ""}>
+                <span>
+                    <Button
+                        sx={{ mt: 3 }}
+                        onClick={() => setIsClicked(true)}
+                        data-testid={DATA_TEST_ID}
+                        color="greyCustom"
+                        disabled={isDisabled}>
+                        {ctaLink?.title}
+                    </Button>
+                </span>
+            </Tooltip>
         </Box>
     );
 };
