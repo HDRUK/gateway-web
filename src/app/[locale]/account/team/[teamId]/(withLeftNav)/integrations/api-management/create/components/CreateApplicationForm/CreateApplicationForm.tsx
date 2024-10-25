@@ -54,7 +54,7 @@ const CreateApplicationForm = () => {
                     return {
                         ...field,
                         options: team?.users?.map(teamUser => ({
-                            value: teamUser.email,
+                            value: teamUser.id,
                             label: `${teamUser.firstname} ${teamUser.lastname}`,
                         })),
                     };

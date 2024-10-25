@@ -93,7 +93,7 @@ const EditIntegrationForm = () => {
                 .toString()
                 .padStart(2, "0"),
             notifications: integration?.notifications?.map(
-                (notification: { email: string }) => notification.email
+                (notification: { user_id: number }) => notification.user_id
             ),
         };
 
@@ -172,8 +172,14 @@ const EditIntegrationForm = () => {
                         return {
                             ...field,
                             options: team?.users?.map(teamUser => ({
-                                value: teamUser.email,
-                                label: `${teamUser.firstname} ${teamUser.lastname}`,
+                                value: teamUser.id,
+                                label: `${teamUser.firstname} ${
+                                    teamUser.lastname
+                                } (${
+                                    teamUser.preferred_email === "primary"
+                                        ? teamUser.email
+                                        : teamUser.secondary_email
+                                })`,
                             })),
                         };
                     }
