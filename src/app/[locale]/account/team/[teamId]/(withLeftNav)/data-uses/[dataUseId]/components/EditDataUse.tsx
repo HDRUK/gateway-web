@@ -153,7 +153,9 @@ const EditDataUse = () => {
                 ? dayjs(formData.access_date).format("YYYY-MM-DDThh:mm:ss")
                 : null,
             status,
-            datasets: formData.datasets.map(number => ({ id: number })),
+            datasets: formData.datasets.map(value => ({
+                id: typeof value === "object" ? value.value : value,
+            })),
         };
 
         const formUpdates: Partial<DataUse> = getChangedFields(
@@ -295,12 +297,15 @@ const EditDataUse = () => {
                             (typeof value === "object" ? value.value : value)
                     );
 
-                    return (
-                        get(
-                            option,
-                            "latest_metadata.metadata.metadata.summary.shortTitle"
-                        ) || get(option, "shortTitle")
+                    const optionObjectTitle = get(
+                        option,
+                        "latest_metadata.metadata.metadata.summary.shortTitle"
                     );
+                    const optionFlatTitle = get(option, "shortTitle");
+
+                    return optionObjectTitle
+                        ? optionObjectTitle
+                        : optionFlatTitle;
                 }}
             />
         ),
