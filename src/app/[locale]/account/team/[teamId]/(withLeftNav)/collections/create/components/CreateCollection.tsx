@@ -112,19 +112,19 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             return;
         }
 
-        const datasetVersionToDataset = dataset_versions => {
+        const datasetVersionToDataset = datasetVersions => {
             // this function is a temporary hack and this all needs sorting out
             // GET collections returns `dataset_versions` in a particular format
             // but POST collections is expecting datasets
-            if (!dataset_versions) return [];
+            if (!datasetVersions) return [];
 
-            const temp_datasets = dataset_versions.map(dataset_version => {
+            const tempDatasets = datasetVersions.map(dv => {
                 return {
-                    id: dataset_version.dataset_id,
-                    latest_metadata: { metadata: dataset_version.metadata },
+                    id: dv.dataset_id,
+                    latest_metadata: { metadata: dv.metadata },
                 };
             });
-            return temp_datasets;
+            return tempDatasets;
         };
 
         const formData = {
