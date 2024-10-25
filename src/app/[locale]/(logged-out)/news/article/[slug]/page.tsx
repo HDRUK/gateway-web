@@ -31,10 +31,7 @@ const ArticlePage = async ({ params }: ArticlePageProps) => {
 
     return (
         <>
-            <Banner
-                title={cmsPost.title}
-                src="/images/banners/release-notes.png"
-            />
+            <Banner title={cmsPost.title} />
             <Container sx={{ padding: 10 }} className="wpStyles">
                 {cmsPost?.content && <HTMLContent content={cmsPost?.content} />}
             </Container>
