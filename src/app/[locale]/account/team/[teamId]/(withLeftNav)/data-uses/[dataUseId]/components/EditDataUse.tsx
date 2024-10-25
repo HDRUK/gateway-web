@@ -43,6 +43,10 @@ const EditDataUse = () => {
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.EditDataUse`
     );
 
+    const [datasetSearchCache, setDatasetSearchCache] = useState<
+        DatasetWithTitle[]
+    >([]);
+
     const params = useParams<{
         teamId: string;
         dataUseId: string;
@@ -69,7 +73,7 @@ const EditDataUse = () => {
             value: dataset.id,
         }));
 
-    const { control, handleSubmit, reset, watch } = useForm<DataUse>({
+    const { control, handleSubmit, reset } = useForm<DataUse>({
         mode: "onTouched",
         resolver: yupResolver(dataUseValidationSchema),
         defaultValues: dataUseDefaultValues,
@@ -79,6 +83,8 @@ const EditDataUse = () => {
         if (!existingDataUse) {
             return;
         }
+
+        setDatasetSearchCache(existingDataUse?.datasets as DatasetWithTitle[]);
 
         const formData = {
             ...existingDataUse,
@@ -253,6 +259,11 @@ const EditDataUse = () => {
     const datasetOptions = useMemo(() => {
         if (!datasetData) return [];
 
+        setDatasetSearchCache([
+            ...datasetSearchCache,
+            ...(datasetData as unknown as DatasetWithTitle[]),
+        ]);
+
         return datasetData.map(data => ({
             label: get(
                 data,
@@ -277,20 +288,23 @@ const EditDataUse = () => {
                 getChipLabel={(
                     _: { value: string | number; label: string }[],
                     value: { label: string; value: number } | number
-                ) =>
-                    typeof value === "object"
-                        ? value?.label
-                        : (
-                              existingDataUse?.datasets.find(
-                                  d => (d as DatasetWithTitle).id === value
-                              ) as DatasetWithTitle
-                          )?.shortTitle ||
-                          datasetOptions.find(option => option.value === value)
-                              ?.label
-                }
+                ) => {
+                    const option = datasetSearchCache.find(
+                        d =>
+                            d.id ===
+                            (typeof value === "object" ? value.value : value)
+                    );
+
+                    return (
+                        get(
+                            option,
+                            "latest_metadata.metadata.metadata.summary.shortTitle"
+                        ) || get(option, "shortTitle")
+                    );
+                }}
             />
         ),
-        [isLoadingDatasets, datasetOptions, existingDataUse]
+        [isLoadingDatasets, datasetOptions, datasetSearchCache]
     );
 
     return (
