@@ -1,18 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Accordion should render component 1`] = `
+exports[`Accordion displays accordion arrow on left 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1edk2g9-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded mui-style-kh7pkw-MuiPaper-root-MuiAccordion-root"
   >
     <div
       aria-expanded="false"
-      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-gflo77-MuiButtonBase-root-MuiAccordionSummary-root"
+      class="MuiButtonBase-root MuiAccordionSummary-root mui-style-y29jov-MuiButtonBase-root-MuiAccordionSummary-root"
+      color="primary"
       role="button"
       tabindex="0"
     >
       <div
-        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-c1i83b-MuiAccordionSummary-content"
+        class="MuiAccordionSummary-content mui-style-ng7ca-MuiAccordionSummary-content"
       >
         Accordion Summary
       </div>
@@ -21,7 +22,75 @@ exports[`Accordion should render component 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-8lel2y-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-1m9ymud-MuiSvgIcon-root"
+          data-testid="SortAscIconIcon"
+          fill="none"
+          focusable="false"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            id="chevron"
+          >
+            <path
+              d="M12 16.205C11.768 16.205 11.537 16.125 11.349 15.964L3.59003 9.31404L4.89203 7.79504L12 13.888L19.108 7.79504L20.41 9.31404L12.651 15.964C12.463 16.125 12.232 16.205 12 16.205Z"
+              fill="currentColor"
+              id="Path"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div
+      class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden mui-style-bz4dnt-MuiCollapse-root"
+      style="min-height: 0px;"
+    >
+      <div
+        class="MuiCollapse-wrapper MuiCollapse-vertical mui-style-smkl36-MuiCollapse-wrapper"
+      >
+        <div
+          class="MuiCollapse-wrapperInner MuiCollapse-vertical mui-style-9l5vo-MuiCollapse-wrapperInner"
+        >
+          <div
+            class="MuiAccordion-region"
+            role="region"
+          >
+            <div
+              class="MuiAccordionDetails-root mui-style-15v22id-MuiAccordionDetails-root"
+            >
+              Detail Contents
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Accordion should render component 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded mui-style-77zlwf-MuiPaper-root-MuiAccordion-root"
+  >
+    <div
+      aria-expanded="false"
+      class="MuiButtonBase-root MuiAccordionSummary-root mui-style-cymt5-MuiButtonBase-root-MuiAccordionSummary-root"
+      color="primary"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="MuiAccordionSummary-content mui-style-ng7ca-MuiAccordionSummary-content"
+      >
+        Accordion Summary
+      </div>
+      <div
+        class="MuiAccordionSummary-expandIconWrapper mui-style-yw020d-MuiAccordionSummary-expandIconWrapper"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-1m9ymud-MuiSvgIcon-root"
           data-testid="SortAscIconIcon"
           fill="none"
           focusable="false"

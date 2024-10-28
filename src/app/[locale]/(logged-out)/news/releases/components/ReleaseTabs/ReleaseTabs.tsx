@@ -62,6 +62,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                                 contents={
                                     <HTMLContent content={release.content} />
                                 }
+                                arrowLeft
                             />
                         ))}
                     </div>
