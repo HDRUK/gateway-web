@@ -3,17 +3,16 @@
 exports[`Accordion displays accordion arrow on left 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded mui-style-kh7pkw-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-uq5kdh-MuiPaper-root-MuiAccordion-root"
   >
     <div
       aria-expanded="false"
-      class="MuiButtonBase-root MuiAccordionSummary-root mui-style-y29jov-MuiButtonBase-root-MuiAccordionSummary-root"
-      color="primary"
+      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-2igglv-MuiButtonBase-root-MuiAccordionSummary-root"
       role="button"
       tabindex="0"
     >
       <div
-        class="MuiAccordionSummary-content mui-style-ng7ca-MuiAccordionSummary-content"
+        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-c1i83b-MuiAccordionSummary-content"
       >
         Accordion Summary
       </div>
@@ -22,7 +21,7 @@ exports[`Accordion displays accordion arrow on left 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-1m9ymud-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-8lel2y-MuiSvgIcon-root"
           data-testid="SortAscIconIcon"
           fill="none"
           focusable="false"
@@ -71,17 +70,16 @@ exports[`Accordion displays accordion arrow on left 1`] = `
 exports[`Accordion should render component 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded mui-style-77zlwf-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1edk2g9-MuiPaper-root-MuiAccordion-root"
   >
     <div
       aria-expanded="false"
-      class="MuiButtonBase-root MuiAccordionSummary-root mui-style-cymt5-MuiButtonBase-root-MuiAccordionSummary-root"
-      color="primary"
+      class="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters mui-style-gflo77-MuiButtonBase-root-MuiAccordionSummary-root"
       role="button"
       tabindex="0"
     >
       <div
-        class="MuiAccordionSummary-content mui-style-ng7ca-MuiAccordionSummary-content"
+        class="MuiAccordionSummary-content MuiAccordionSummary-contentGutters mui-style-c1i83b-MuiAccordionSummary-content"
       >
         Accordion Summary
       </div>
@@ -90,7 +88,7 @@ exports[`Accordion should render component 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-1m9ymud-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-8lel2y-MuiSvgIcon-root"
           data-testid="SortAscIconIcon"
           fill="none"
           focusable="false"
