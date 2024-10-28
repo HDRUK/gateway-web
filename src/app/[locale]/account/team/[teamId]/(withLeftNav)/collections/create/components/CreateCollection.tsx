@@ -143,7 +143,7 @@ const CreateCollection = ({
                 existingCollectionData?.keywords?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link,
             collaborators:
-                existingCollectionData?.collaborators?.map(item => item.id) ||
+                existingCollectionData?.users?.slice(1).map(item => item.id) ||
                 [],
         };
         if (formData.image_link) {
@@ -251,7 +251,7 @@ const CreateCollection = ({
                 }
                 return null;
             }),
-        [control, keywordOptions]
+        [control, keywordOptions, userOptions, isLoadingUsers]
     );
     const onSubmit = async (
         formData: Collection,
