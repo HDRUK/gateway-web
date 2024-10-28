@@ -15,12 +15,9 @@ const IntroContent = () => {
                 bgcolor: "transparent",
                 padding: {
                     mobile: `${theme.spacing(3)} ${theme.spacing(2)}`,
-                    tablet: `${theme.spacing(5)} ${theme.spacing(
-                        2
-                    )} ${theme.spacing(3)}`,
-                    desktop: `${theme.spacing(5)} ${theme.spacing(
-                        2
-                    )} ${theme.spacing(3)}`,
+                    [theme.breakpoints.up("mobile")]: `${theme.spacing(
+                        5
+                    )} ${theme.spacing(2)} ${theme.spacing(3)}`,
                 },
             }}>
             <Typography variant="h2">{t("heading")}</Typography>

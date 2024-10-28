@@ -12,7 +12,7 @@ export interface AccordionProps
     contents: string | ReactNode;
     variant?: "underline" | "plain";
     noIndent?: boolean;
-    arrowLeft?: boolean;
+    iconLeft?: boolean;
 }
 
 const Accordion = ({
@@ -20,7 +20,7 @@ const Accordion = ({
     contents,
     variant = "underline",
     noIndent,
-    arrowLeft,
+    iconLeft,
     sx,
     ...restProps
 }: AccordionProps) => {
@@ -56,7 +56,7 @@ const Accordion = ({
                         minHeight: "auto",
                     },
                 }),
-                ...(arrowLeft && {
+                ...(iconLeft && {
                     ".MuiAccordionSummary-root .MuiAccordionSummary-content": {
                         marginLeft: 1,
                     },
@@ -68,7 +68,7 @@ const Accordion = ({
                 expandIcon={
                     <ChevronThinIcon fontSize="medium" color="primary" />
                 }
-                sx={{ ...(arrowLeft && { flexDirection: "row-reverse" }) }}>
+                sx={{ ...(iconLeft && { flexDirection: "row-reverse" }) }}>
                 {heading}
             </MuiAccordionSummary>
             <MuiAccordionDetails>{contents}</MuiAccordionDetails>
