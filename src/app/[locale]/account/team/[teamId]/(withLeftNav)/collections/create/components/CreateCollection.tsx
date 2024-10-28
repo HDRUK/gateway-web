@@ -18,6 +18,7 @@ import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
+import { User } from "@/interfaces/User";
 import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -49,12 +50,17 @@ import { RouteName } from "@/consts/routeName";
 
 interface CollectionCreateProps {
     teamId?: string;
+    userId?: string;
     collectionId?: string;
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
 
-const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
+const CreateCollection = ({
+    teamId,
+    userId,
+    collectionId,
+}: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
@@ -68,7 +74,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const { showBar } = useActionBar();
     const { push } = useRouter();
 
-    const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
+    const COLLECTION_ROUTE = teamId
+        ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
+        : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
@@ -81,6 +89,10 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
     const { data: keywordData } = useGet<Keyword[]>(
         `${apis.keywordsV1Url}?per_page=-1`
+    );
+
+    const { data: userData, isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}`
     );
 
     const { data: existingCollectionData } = useGet<Collection>(
@@ -107,6 +119,17 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         }) as OptionsType[];
     }, [keywordData]);
 
+    const userOptions = useMemo(() => {
+        if (!userData) return [];
+
+        return userData.map(data => {
+            return {
+                value: data.id as ValueType,
+                label: data.name,
+            };
+        }) as OptionsType[];
+    }, [userData]);
+
     useEffect(() => {
         if (!existingCollectionData) {
             return;
@@ -119,6 +142,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link,
+            collaborators:
+                existingCollectionData?.collaborators?.map(item => item.id) ||
+                [],
         };
         if (formData.image_link) {
             setImageUploaded(true);
@@ -192,22 +218,38 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             setValue("datasets", updatedResources as Dataset[]);
         }
     };
+
+    const getOptions = (field: string) => {
+        if (field === "keywords") {
+            return keywordOptions;
+        }
+        return userOptions;
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
-                return (
-                    <InputWrapper
-                        key={field.name}
-                        control={control}
-                        sx={{ mt: 1 }}
-                        {...field}
-                        {...(field.component === inputComponents.Autocomplete
-                            ? {
-                                  options: keywordOptions,
-                              }
-                            : {})}
-                    />
-                );
+                const fieldName = field.name;
+                if (!teamId || fieldName !== "collaborators") {
+                    return (
+                        <InputWrapper
+                            key={field.name}
+                            control={control}
+                            sx={{ mt: 1 }}
+                            {...field}
+                            {...(field.component ===
+                            inputComponents.Autocomplete
+                                ? {
+                                      options: getOptions(fieldName),
+                                      isLoadingOptions:
+                                          fieldName === "collaborators" &&
+                                          isLoadingUsers,
+                                  }
+                                : {})}
+                        />
+                    );
+                }
+                return null;
             }),
         [control, keywordOptions]
     );
@@ -252,16 +294,19 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             enabled: true,
             public: 1,
             team_id: teamId ? +teamId : undefined,
+            user_id: userId,
             keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
             dur: formatEntityToIdArray(formData.dur),
             publications,
             tools: formatEntityToIdArray(formData.tools),
             datasets: formatEntityToIdArray(formData.datasets),
+            collaborators: formData.collaborators,
             created_at: formData.created_at?.split(".")[0],
             updated_at: formData.updated_at?.split(".")[0],
             updated_on: formData.updated_on?.split(".")[0],
         };
+
         if (!collectionId) {
             await createCollection(payload).then(async result => {
                 if (typeof result === "number" && file) {

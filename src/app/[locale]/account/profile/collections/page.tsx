@@ -3,7 +3,7 @@ import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import Collections from "./components/Collections";
+import TeamCollections from "../../team/[teamId]/(withLeftNav)/collections/components/TeamCollections";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Collections",
@@ -21,10 +21,7 @@ export default async function CollectionsPage() {
             permissions={permissions}
             pagePermissions={["collections.read"]}>
             <BoxContainer sx={{ gap: 0 }}>
-                <Collections
-                    permissions={permissions}
-                    userId={userId}
-                />
+                <TeamCollections permissions={permissions} userId={userId} />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

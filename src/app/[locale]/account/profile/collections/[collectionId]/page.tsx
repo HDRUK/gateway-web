@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import CreateCollection from "../create/components";
+import CreateCollection from "../../../team/[teamId]/(withLeftNav)/collections/create/components";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Edit Collection",

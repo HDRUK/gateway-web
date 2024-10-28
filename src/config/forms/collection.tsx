@@ -18,7 +18,10 @@ const validationSchema = yup.object().shape({
     name: yup.string().required().min(2).label("Collection name"),
     keywords: yup.array().of(yup.string()).label("Keywords (optional)"),
     description: yup.string().min(2).max(5000).required().label("Description"),
-    collaborators: yup.array().of(yup.string()).label("Collaborators (optional)"),
+    collaborators: yup
+        .array()
+        .of(yup.string())
+        .label("Collaborators (optional)"),
 });
 
 const formFields = [
@@ -64,7 +67,7 @@ const formFields = [
             options: { value: string | number; label: string }[],
             value: unknown
         ) => options.find(option => option.value === value)?.label,
-    }
+    },
 ];
 
 export {
