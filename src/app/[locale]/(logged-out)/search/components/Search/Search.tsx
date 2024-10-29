@@ -132,6 +132,9 @@ const Search = ({ filters }: SearchProps) => {
             ViewType.TABLE
     );
 
+    const [initialPublicationSearch, setInitialPublicationSearch] =
+        useState<boolean>(false);
+
     const updateQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams?.toString());
@@ -608,12 +611,17 @@ const Search = ({ filters }: SearchProps) => {
 
     // Display Europe PMC Search Modal
     useEffect(() => {
+        if (!initialPublicationSearch && queryParams.pmc === "dataset") {
+            setInitialPublicationSearch(true);
+            return;
+        }
+
         if (queryParams.source === EUROPE_PMC_SOURCE_FIELD) {
             europePmcModalAction();
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [queryParams.source, queryParams.type]);
+    }, [queryParams.source, queryParams.type, queryParams.pmc]);
 
     return (
         <Box

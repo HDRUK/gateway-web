@@ -121,7 +121,7 @@ const ApplicationPermissions = ({
             );
             const payload = {
                 ...application,
-                notifications: application?.notifications?.map(n => n.email),
+                notifications: application?.notifications?.map(n => n.user_id),
                 permissions: permissionIds,
                 enabled: true,
             };

@@ -164,7 +164,9 @@ const FilterPanel = ({
     useEffect(() => {
         if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
             setStaticFilterValues({
-                [STATIC_FILTER_SOURCE]: { GAT: true },
+                [STATIC_FILTER_SOURCE]: {
+                    [getParamString(STATIC_FILTER_SOURCE) || SOURCE_GAT]: true,
+                },
             });
         }
     }, [filterCategory]);
