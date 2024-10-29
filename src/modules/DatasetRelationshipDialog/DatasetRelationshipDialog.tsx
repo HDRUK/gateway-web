@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import MuiDialogContent from "@mui/material/DialogContent";
-import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { Metadata } from "@/interfaces/Dataset";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -24,8 +22,9 @@ import ProvidersDialog from "../ProvidersDialog";
 
 interface LinkageDetails {
     linkage_type: string;
-    id: string;
-    metadata: Metadata;
+    id: number;
+    title: string;
+    shortTitle: string;
 }
 
 interface DatasetRelationshipDialogProps {
@@ -120,11 +119,6 @@ const DatasetRelationshipDialog = ({
                             +linkage.id
                         );
 
-                        const memberOf = get(
-                            linkage,
-                            "metadata.original_metadata.summary.publisher.memberOf"
-                        );
-
                         return (
                             <Box
                                 sx={{
@@ -140,24 +134,14 @@ const DatasetRelationshipDialog = ({
                                     <Link
                                         href={`/${RouteName.DATASET_ITEM}/${linkage.id}`}>
                                         <Typography variant="h3" component="p">
-                                            {get(
-                                                linkage,
-                                                "metadata.metadata.summary.title"
-                                            )}
+                                            {linkage.title}
                                         </Typography>
                                     </Link>
-                                    <Typography>
-                                        {memberOf && `${memberOf} > `}
-                                        {get(
-                                            linkage,
-                                            "metadata.metadata.summary.publisher.publisherName"
-                                        )}
-                                    </Typography>
                                 </div>
                                 <Button
                                     onClick={() =>
                                         handleToggleLibraryItem(
-                                            linkage.id,
+                                            linkage.id.toString(),
                                             isAddedToLibrary
                                         )
                                     }
@@ -166,10 +150,7 @@ const DatasetRelationshipDialog = ({
                                         isAddedToLibrary
                                             ? t("removeFromLibrary")
                                             : `${t("addToLibrary")} for
-                                     ${get(
-                                         linkage,
-                                         "metadata.metadata.summary.shortTitle"
-                                     )}`
+                                     ${linkage.shortTitle}`
                                     }
                                     startIcon={
                                         isAddedToLibrary ? (

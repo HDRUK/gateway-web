@@ -19,10 +19,10 @@ const Linkages = ({ data }: LinkagesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
 
-    const { linked_dataset_versions } = data.versions[0];
+    const { reduced_linked_dataset_versions } = data.versions[0];
 
     const linkageCounts = Object.entries(
-        linked_dataset_versions.reduce<Record<string, number>>(
+        reduced_linked_dataset_versions.reduce<Record<string, number>>(
             (counts, { pivot: { linkage_type } }) => {
                 return {
                     ...counts,
@@ -33,10 +33,11 @@ const Linkages = ({ data }: LinkagesProps) => {
         )
     );
 
-    const linkageDetails = linked_dataset_versions.map(item => ({
+    const linkageDetails = reduced_linked_dataset_versions.map(item => ({
         linkage_type: item.pivot.linkage_type,
         id: item.id,
-        metadata: item.metadata,
+        title: item.title,
+        shortTitle: item.shortTitle,
     }));
 
     if (!linkageCounts.length) {
