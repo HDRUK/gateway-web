@@ -6,6 +6,7 @@ import { EventNode } from "@/interfaces/Events";
 import { NewsNode } from "@/interfaces/News";
 import Box from "@/components/Box";
 import NewsSummaryCard from "@/components/NewsSummaryCard";
+import { RouteName } from "@/consts/routeName";
 
 const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
     const t = useTranslations("pages.home");
@@ -27,22 +28,36 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
             {posts.edges.map(
                 ({
                     node: {
+                        slug,
                         newsFields: { text, headline, date, image, link },
+                        categories,
                     },
-                }) => (
-                    <NewsSummaryCard
-                        variant="feature"
-                        buttonText={t("newsCardButtonText")}
-                        summary={text}
-                        imageLink={image?.node?.mediaItemUrl}
-                        imageAlt={image?.node?.altText}
-                        imageHeight="140px"
-                        headline={headline}
-                        date={date}
-                        url={link.url}
-                        key={`${date}-${link}`}
-                    />
-                )
+                }) => {
+                    const category = categories?.nodes[0].name?.toLowerCase();
+
+                    const url =
+                        link?.url ||
+                        `/${
+                            category === "news"
+                                ? RouteName.NEWS_ARTICLE
+                                : RouteName.EVENT_ARTICLE
+                        }/${slug}`;
+
+                    return (
+                        <NewsSummaryCard
+                            variant="feature"
+                            buttonText={t("newsCardButtonText")}
+                            summary={text}
+                            imageLink={image?.node?.mediaItemUrl}
+                            imageAlt={image?.node?.altText}
+                            imageHeight="140px"
+                            headline={headline}
+                            date={date}
+                            url={url}
+                            key={`${date}-${link}`}
+                        />
+                    );
+                }
             )}
         </Box>
     );

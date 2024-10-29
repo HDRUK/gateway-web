@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Collection } from "@/interfaces/Collection";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
@@ -49,6 +49,7 @@ const TeamCollections = ({
     userId,
 }: TeamCollectionsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const router = useRouter();
     const { showModal } = useModal();
     const searchParams = useSearchParams();
     const tab = searchParams?.get("tab");
@@ -165,7 +166,6 @@ const TeamCollections = ({
         ...(permissions["collections.update"]
             ? [
                   {
-                      // TODO- https://hdruk.atlassian.net/browse/GAT-4350
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
@@ -260,7 +260,8 @@ const TeamCollections = ({
     }));
 
     const handleAdd = () => {
-        // TODO - https://hdruk.atlassian.net/browse/GAT-4350
+        const COLLECTION_CREATE_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`;
+        router.push(COLLECTION_CREATE_ROUTE);
     };
 
     return (

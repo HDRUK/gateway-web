@@ -1,3 +1,4 @@
+import { Collection } from "@/interfaces/Collection";
 import { DataProvider as DataCustodian } from "@/interfaces/DataProvider";
 import { DataUse } from "@/interfaces/DataUse";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
@@ -12,6 +13,7 @@ interface NetworkSummary {
     durs: DataUse[];
     tools: Tool[];
     publications: Publication[];
+    collections: Collection[];
     teams_counts: DataCustodian[];
     img_url?: string;
 }

@@ -1,6 +1,7 @@
 import {
     FILTER_DATA_USE_TITLES,
     FILTER_PUBLISHER_NAME,
+    FILTER_COLLECTION_NAME,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_DATE_RANGE,
     FILTER_ORGANISATION_NAME,
@@ -26,6 +27,9 @@ import { Team } from "./Team";
 
 export interface Aggregations {
     [FILTER_DATA_TYPE]: {
+        buckets: Bucket[];
+    };
+    [FILTER_COLLECTION_NAME]: {
         buckets: Bucket[];
     };
     [FILTER_DATA_USE_TITLES]: {
@@ -88,6 +92,7 @@ export interface SearchResultDataUse extends SearchResultBase {
         description: string;
     };
     team: {
+        id: number;
         member_of: string;
         name: string;
     };
@@ -208,6 +213,7 @@ export interface SearchQueryParams {
     source: string | undefined;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
+    [FILTER_COLLECTION_NAME]: string[] | undefined;
     [FILTER_GEOGRAPHIC_LOCATION]: string[] | undefined;
     [FILTER_DATE_RANGE]: string[] | undefined;
     [FILTER_ORGANISATION_NAME]: string[] | undefined;

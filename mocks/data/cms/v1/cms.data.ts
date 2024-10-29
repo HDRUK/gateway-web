@@ -6,6 +6,62 @@ import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { NewsNode } from "@/interfaces/News";
 import { ReleaseNode } from "@/interfaces/Releases";
 
+const generateEventNode = (date: string, id: string): EventNode => ({
+    node: {
+        slug: `event-${id}`,
+        newsFields: {
+            id,
+            headline: `Event ${id}`,
+            date,
+            text: `Event ${id} text`,
+            link: {
+                url: `http://event/${id}`,
+                title: `Event link ${id}`,
+            },
+            image: {
+                node: {
+                    mediaItemUrl: `http://mediaItem/${id}`,
+                    altText: `Event media title ${id}`,
+                },
+            },
+        },
+    },
+});
+
+const generateNewsNode = (date: string, id: string): EventNode => ({
+    node: {
+        slug: `news-${id}`,
+        newsFields: {
+            id,
+            headline: `News ${id}`,
+            date,
+            text: `News ${id} text`,
+            link: {
+                url: `http://news/${id}`,
+                title: `News link ${id}`,
+            },
+            image: {
+                node: {
+                    mediaItemUrl: `http://mediaItem/${id}`,
+                    altText: `News media title ${id}`,
+                },
+            },
+        },
+    },
+});
+
+const generateReleaseNode = (date: string, id: string): ReleaseNode => ({
+    node: {
+        id,
+        title: `Release ${id}`,
+        date,
+        content: `Release ${id} content`,
+        release: {
+            releaseDate: date,
+        },
+    },
+});
+
 const generateHomepageBannerV1 = (
     data = {}
 ): CMSPostsResponse<HomepageBannerNode> => {
@@ -44,48 +100,24 @@ const generateNewsV1 = (data = {}): CMSPostsResponse<NewsNode> => {
     return {
         posts: {
             edges: [
-                {
-                    node: {
-                        newsFields: {
-                            id: "1",
-                            headline: "News article 1 headline",
-                            link: {
-                                url: "https://www.hdruk.ac.uk/news_1",
-                                title: "read more",
-                            },
-                            text: "News article 1 text",
-                            date: "2024-03-27T00:00:00+00:00",
-                            image: {
-                                node: {
-                                    mediaItemUrl:
-                                        "https://www.hdruk.ac.uk/news_1/img.jpg",
-                                    altText: "",
-                                },
-                            },
-                        },
-                    },
-                },
-                {
-                    node: {
-                        newsFields: {
-                            id: "1",
-                            headline: "News article 2 headline",
-                            link: {
-                                url: "https://www.hdruk.ac.uk/news_2",
-                                title: "read more",
-                            },
-                            text: "News article 2 text",
-                            date: "2024-03-27T00:00:00+00:00",
-                            image: {
-                                node: {
-                                    mediaItemUrl:
-                                        "https://www.hdruk.ac.uk/news_2/img.jpg",
-                                    altText: "",
-                                },
-                            },
-                        },
-                    },
-                },
+                generateNewsNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "1"
+                ),
+                generateNewsNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "2"
+                ),
             ],
         },
         ...data,
@@ -96,48 +128,24 @@ const generateEventsV1 = (data = {}): CMSPostsResponse<EventNode> => {
     return {
         posts: {
             edges: [
-                {
-                    node: {
-                        newsFields: {
-                            id: "1",
-                            headline: "Event article 1 headline",
-                            link: {
-                                url: "https://www.hdruk.ac.uk/event_1",
-                                title: "read more",
-                            },
-                            text: "Event article 1 text",
-                            date: "2024-03-27T00:00:00+00:00",
-                            image: {
-                                node: {
-                                    mediaItemUrl:
-                                        "https://www.hdruk.ac.uk/event_1/img.jpg",
-                                    altText: "",
-                                },
-                            },
-                        },
-                    },
-                },
-                {
-                    node: {
-                        newsFields: {
-                            id: "1",
-                            headline: "Event article 2 headline",
-                            link: {
-                                url: "https://www.hdruk.ac.uk/event_2",
-                                title: "read more",
-                            },
-                            text: "Event article 2 text",
-                            date: "2024-03-27T00:00:00+00:00",
-                            image: {
-                                node: {
-                                    mediaItemUrl:
-                                        "https://www.hdruk.ac.uk/event_2/img.jpg",
-                                    altText: "",
-                                },
-                            },
-                        },
-                    },
-                },
+                generateEventNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "1"
+                ),
+                generateEventNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "2"
+                ),
             ],
         },
         ...data,
@@ -148,45 +156,42 @@ const generateReleaseV1 = (data = {}): CMSPostsResponse<ReleaseNode> => {
     return {
         posts: {
             edges: [
-                {
-                    node: {
-                        date: faker.date
-                            .between(
-                                "2024-01-01T00:00:00.000Z",
-                                "2024-03-01T00:00:00.000Z"
-                            )
-                            .toISOString(),
-                        title: faker.lorem.words(5),
-                        content: faker.lorem.lines(),
-                        id: faker.datatype.string(),
-                    },
-                },
-                {
-                    node: {
-                        date: faker.date
-                            .between(
-                                "2023-01-01T00:00:00.000Z",
-                                "2023-03-01T00:00:00.000Z"
-                            )
-                            .toISOString(),
-                        title: faker.lorem.words(5),
-                        content: faker.lorem.lines(),
-                        id: faker.datatype.string(),
-                    },
-                },
-                {
-                    node: {
-                        date: faker.date
-                            .between(
-                                "2024-01-01T00:00:00.000Z",
-                                "2024-03-01T00:00:00.000Z"
-                            )
-                            .toISOString(),
-                        title: faker.lorem.words(5),
-                        content: faker.lorem.lines(),
-                        id: faker.datatype.string(),
-                    },
-                },
+                generateReleaseNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "1"
+                ),
+                generateReleaseNode(
+                    faker.date
+                        .between(
+                            "2023-01-01T00:00:00.000Z",
+                            "2023-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "2"
+                ),
+                generateReleaseNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "3"
+                ),
+                generateReleaseNode(
+                    faker.date
+                        .between(
+                            "2024-01-01T00:00:00.000Z",
+                            "2024-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "4"
+                ),
             ],
         },
         ...data,
@@ -230,6 +235,8 @@ const generateMissionV1 = (
 const missionV1 = generateMissionV1();
 
 export {
+    generateEventNode,
+    generateReleaseNode,
     generateHomepageBannerV1,
     generateMissionV1,
     generateNewsV1,

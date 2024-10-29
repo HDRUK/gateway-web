@@ -2,7 +2,7 @@ import type { Publication } from "./Publication";
 import type { Team } from "./Team";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
-type CreateOrigin = "FMA" | "MANUAL" | "API";
+type CreateOrigin = "GMI" | "MANUAL" | "API";
 
 interface StructuralMetadataValue {
     name: string;
@@ -125,6 +125,17 @@ interface Metadata {
     };
 }
 
+export interface ReducedLinkedDatasetVersions {
+    id: number;
+    title: string;
+    shortTitle: string;
+    pivot: {
+        dataset_version_source_id: number;
+        dataset_version_target_id: number;
+        linkage_type: string;
+    };
+}
+
 interface LinkedDatasetVersions {
     id: string;
     pivot: {
@@ -147,6 +158,15 @@ interface VersionItem {
     version: number;
     publications: Publication[];
     linked_dataset_versions: LinkedDatasetVersions[];
+    reduced_linked_dataset_versions: ReducedLinkedDatasetVersions[];
+}
+
+export interface ReducedDataset {
+    id: number;
+    dataset_id: number; // always show this
+    shortTitle: string;
+    populationSize: number;
+    datasetType: string;
 }
 
 interface Dataset {
@@ -165,6 +185,7 @@ interface Dataset {
     collections_count: number;
     publications: Publication[];
     team: Team;
+    name?: string;
 }
 
 interface DataCustodianDataset {

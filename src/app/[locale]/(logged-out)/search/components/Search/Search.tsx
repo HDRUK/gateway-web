@@ -47,6 +47,7 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
+    FILTER_COLLECTION_NAME,
     FILTER_CONTAINS_TISSUE,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_SET_TITLES,
@@ -71,6 +72,8 @@ import searchFormConfig, {
     SORT_FIELD,
     TYPE_FIELD,
     VIEW_FIELD,
+    sortByOptionsCollections,
+    sortByOptionsDataProviders,
     sortByOptionsDataUse,
     sortByOptionsDataset,
     sortByOptionsPublications,
@@ -98,6 +101,8 @@ import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
+const GATEWAY_SOURCE_FIELD = "GAT";
+const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
@@ -127,6 +132,9 @@ const Search = ({ filters }: SearchProps) => {
             ViewType.TABLE
     );
 
+    const [initialPublicationSearch, setInitialPublicationSearch] =
+        useState<boolean>(false);
+
     const updateQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams?.toString());
@@ -146,12 +154,13 @@ const Search = ({ filters }: SearchProps) => {
         type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
             SearchCategory.DATASETS,
-        source:
+        [STATIC_FILTER_SOURCE]:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
         [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
+        [FILTER_COLLECTION_NAME]: getParamArray(FILTER_COLLECTION_NAME),
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
@@ -276,10 +285,9 @@ const Search = ({ filters }: SearchProps) => {
             shouldFetch:
                 forceSearch ||
                 queryParams.type !== SearchCategory.PUBLICATIONS ||
-                !!(
-                    queryParams.type === SearchCategory.PUBLICATIONS &&
-                    !!queryParams.query
-                ),
+                queryParams.source === GATEWAY_SOURCE_FIELD ||
+                (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
+                    !!queryParams.query),
         }
     );
 
@@ -289,38 +297,6 @@ const Search = ({ filters }: SearchProps) => {
         mutate();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const [initialCategory, setInitialCategory] = useState<string>();
-    const [initialQuery, setInitialQuery] = useState<string>();
-
-    useEffect(() => {
-        if (!initialCategory) {
-            setInitialCategory(queryParams.type);
-        }
-
-        if (!initialQuery) {
-            setInitialQuery(queryParams.query);
-        }
-    }, [initialCategory, initialQuery, queryParams.type, queryParams.query]);
-
-    // Fire search request when publications query is entered for the first time
-    useEffect(() => {
-        if (initialCategory !== SearchCategory.PUBLICATIONS || initialQuery) {
-            return;
-        }
-
-        if (queryParams.type !== SearchCategory.PUBLICATIONS) {
-            mutate();
-        } else if (!!queryParams.query && !initialQuery) {
-            mutate();
-        }
-    }, [
-        queryParams.query,
-        queryParams.type,
-        initialCategory,
-        initialQuery,
-        mutate,
-    ]);
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
@@ -337,6 +313,7 @@ const Search = ({ filters }: SearchProps) => {
             type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
+            [FILTER_COLLECTION_NAME]: undefined,
             [FILTER_GEOGRAPHIC_LOCATION]: undefined,
             [FILTER_DATE_RANGE]: undefined,
             [FILTER_ORGANISATION_NAME]: undefined,
@@ -352,6 +329,7 @@ const Search = ({ filters }: SearchProps) => {
             [FILTER_TYPE_CATEGORY]: undefined,
             [FILTER_CONTAINS_TISSUE]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
+            [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
         });
     };
 
@@ -534,6 +512,10 @@ const Search = ({ filters }: SearchProps) => {
                 return sortByOptionsTool;
             case SearchCategory.PUBLICATIONS:
                 return sortByOptionsPublications;
+            case SearchCategory.COLLECTIONS:
+                return sortByOptionsCollections;
+            case SearchCategory.DATA_PROVIDERS:
+                return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
         }
@@ -588,18 +570,23 @@ const Search = ({ filters }: SearchProps) => {
         SearchCategory.COLLECTIONS,
     ];
 
-    const showPublicationWelcomeMessage =
-        !forceSearch &&
-        !isSearching &&
-        !queryParams.query &&
-        queryParams.type === SearchCategory.PUBLICATIONS &&
-        (!data?.list?.length || !data?.path?.includes(queryParams.type));
+    const isPublications = useMemo(
+        () => queryParams.type === SearchCategory.PUBLICATIONS,
+        [queryParams.type]
+    );
 
     const isEuropePmcSearch = useMemo(
+        () => queryParams.source === EUROPE_PMC_SOURCE_FIELD,
+        [queryParams.source]
+    );
+
+    const isEuropePmcSearchNoQuery = useMemo(
         () =>
-            queryParams.type === SearchCategory.PUBLICATIONS &&
-            queryParams.source === "FED",
-        [queryParams.source, queryParams.type]
+            !!(
+                queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
+                !queryParams.query
+            ),
+        [queryParams.query, queryParams.source]
     );
 
     const europePmcModalAction = () =>
@@ -623,6 +610,20 @@ const Search = ({ filters }: SearchProps) => {
                 isDataset={queryParams.pmc === "dataset"}
             />
         ));
+
+    // Display Europe PMC Search Modal
+    useEffect(() => {
+        if (!initialPublicationSearch && queryParams.pmc === "dataset") {
+            setInitialPublicationSearch(true);
+            return;
+        }
+
+        if (queryParams.source === EUROPE_PMC_SOURCE_FIELD) {
+            europePmcModalAction();
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [queryParams.source, queryParams.type, queryParams.pmc]);
 
     return (
         <Box
@@ -652,7 +653,7 @@ const Search = ({ filters }: SearchProps) => {
                         isEuropePmcSearch ? europePmcModalAction : undefined
                     }
                     valueOverride={
-                        isEuropePmcSearch ? queryParams.query : undefined
+                        isPublications ? queryParams.query : undefined
                     }
                 />
             </Box>
@@ -759,6 +760,8 @@ const Search = ({ filters }: SearchProps) => {
                             setQueryParams({
                                 ...queryParams,
                                 [filterName]: value,
+                                [FILTER_DATA_SET_TITLES]: undefined,
+                                query: "",
                             });
                             updatePath(filterName, value);
                         }}
@@ -775,7 +778,7 @@ const Search = ({ filters }: SearchProps) => {
                             flexDirection: "column",
                             m: 2,
                         }}>
-                        {!isSearching && (
+                        {!isSearching && !isEuropePmcSearchNoQuery && (
                             <Box
                                 sx={{
                                     display: "flex",
@@ -794,13 +797,11 @@ const Search = ({ filters }: SearchProps) => {
                                                     total={data?.total}
                                                 />
                                             )}
-                                        {data &&
-                                            data.elastic_total > 100 &&
-                                            !showPublicationWelcomeMessage && (
-                                                <ResultLimitText>
-                                                    {t("resultLimit")}
-                                                </ResultLimitText>
-                                            )}
+                                        {data && data.elastic_total > 100 && (
+                                            <ResultLimitText>
+                                                {t("resultLimit")}
+                                            </ResultLimitText>
+                                        )}
                                     </>
                                 </Box>
 
@@ -814,55 +815,6 @@ const Search = ({ filters }: SearchProps) => {
                             </Box>
                         )}
 
-                        {showPublicationWelcomeMessage && (
-                            <Paper sx={{ textAlign: "left", p: 3 }}>
-                                <Typography
-                                    variant="h2"
-                                    style={{ fontWeight: "bolder" }}
-                                    sx={{
-                                        pb: 4,
-                                        borderBottom: 1,
-                                        borderColor: "greyCustom.light",
-                                    }}>
-                                    {t("publicationWelcomeHeader")}
-                                </Typography>
-                                <Typography variant="h3">
-                                    {t.rich("publicationWelcomeText1", {
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        list: chunks => <ul>{chunks}</ul>,
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        item: chunks => <li>{chunks}</li>,
-                                    })}
-                                </Typography>
-                                <Typography
-                                    variant="h3"
-                                    sx={{
-                                        pb: 3,
-                                    }}>
-                                    {t("publicationWelcomeText2")}
-                                </Typography>
-                                <Typography
-                                    variant="h3"
-                                    sx={{
-                                        pb: 3,
-                                    }}>
-                                    {t.rich("publicationWelcomeText3", {
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        link: chunks => (
-                                            <a href="https://europepmc.org/">
-                                                {chunks}
-                                            </a>
-                                        ),
-                                    })}
-                                </Typography>
-                                <Typography variant="h3">
-                                    {t.rich("publicationWelcomeText4", {
-                                        // eslint-disable-next-line react/no-unstable-nested-components
-                                        bold: chunks => <b>{chunks}</b>,
-                                    })}
-                                </Typography>
-                            </Paper>
-                        )}
                         {isSearching && <Loading />}
 
                         {!isSearching &&
@@ -871,7 +823,8 @@ const Search = ({ filters }: SearchProps) => {
                                 !(
                                     queryParams.type ===
                                     SearchCategory.PUBLICATIONS
-                                )) && (
+                                )) &&
+                            !isEuropePmcSearchNoQuery && (
                                 <Paper sx={{ textAlign: "center", p: 5 }}>
                                     <Typography variant="h3">
                                         {t("noResults")}
@@ -879,6 +832,7 @@ const Search = ({ filters }: SearchProps) => {
                                 </Paper>
                             )}
                         {!isSearching &&
+                            !isEuropePmcSearchNoQuery &&
                             !!data?.list?.length &&
                             data?.path?.includes(queryParams.type) && (
                                 <>

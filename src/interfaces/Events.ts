@@ -16,8 +16,15 @@ interface Event {
 }
 
 interface EventNode {
-    slug: string;
-    node: { newsFields: Event };
+    node: {
+        slug: string;
+        newsFields: Event;
+        categories?: {
+            nodes: {
+                name: string;
+            }[];
+        };
+    };
 }
 
 export type { EventNode, Event };

@@ -44,6 +44,7 @@ query GetHomePageQuery {
     posts(first: 4, where:{categoryName: "news,events",  orderby: {field: DATE, order: DESC}}) {
       edges {
         node {
+          slug
           title
           content
           date
@@ -54,7 +55,6 @@ query GetHomePageQuery {
               title
             }
             text
-            content
             date
             image {
               node {
@@ -63,10 +63,15 @@ query GetHomePageQuery {
               }
             }
           }
+          categories {
+            nodes {
+              name
+            }
+          }
+        }
       }
     }
   }
-}
 `;
 
 const GetHomePageBanner = `

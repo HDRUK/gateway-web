@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import dayjs from "dayjs";
 import { rangeRight } from "lodash";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { ReleaseNode } from "@/interfaces/Releases";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -19,16 +21,15 @@ interface ReleaseTabProps {
 const TRANSLATIONS_NAMESPACE_RELEASES = "pages.releases";
 
 const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
+    const searchParams = useSearchParams();
     const [expanded, setExpanded] = useState<string | null>(null);
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
+    const currentYear = dayjs().year();
+    const years = rangeRight(currentYear, currentYear + 1).map(String);
 
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : null);
     };
-
-    const startYear = 2021;
-    const currentYear = new Date().getFullYear();
-    const years = rangeRight(startYear, currentYear + 1).map(String);
 
     const generatedReleases = useMemo(() => {
         return years.map(year => {
@@ -46,10 +47,12 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                                 })}
                             </Box>
                         )}
-                        {releases.map(release => (
+                        {releases.map((release, index) => (
                             <Accordion
                                 key={release.date}
-                                expanded={expanded === release.id}
+                                expanded={
+                                    expanded === release.id || index === 0
+                                }
                                 heading={
                                     <Typography>{release.title}</Typography>
                                 }
@@ -66,7 +69,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
             };
             return hydratedReleases;
         });
-    }, [allReleases, expanded]);
+    }, [allReleases, expanded, years]);
 
     return (
         <Tabs
@@ -75,6 +78,9 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
             tabs={generatedReleases}
             tabBoxSx={{ padding: 0 }}
             rootBoxSx={{ padding: 0 }}
+            defaultSelectedTab={
+                searchParams?.get("year") || currentYear.toString()
+            }
         />
     );
 };

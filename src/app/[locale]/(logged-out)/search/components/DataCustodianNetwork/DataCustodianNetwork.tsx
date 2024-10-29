@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { SearchResultDataCustodianCol } from "@/interfaces/Search";
 import Box from "@/components/Box";
+import CardStacked from "@/components/CardStacked";
 import Typography from "@/components/Typography";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
-import CardStacked from "../CardStacked/CardStacked";
 import ResultsList from "../ResultsList";
 
 interface DataCustodianNetworkProps {

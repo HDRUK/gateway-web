@@ -1,7 +1,7 @@
 import { SearchResultCollection } from "@/interfaces/Search";
+import CardStacked from "@/components/CardStacked";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
-import CardStacked from "../CardStacked/CardStacked";
 
 interface ResultCardProps {
     result: SearchResultCollection;
@@ -12,7 +12,7 @@ const ResultCollectionCard = ({ result }: ResultCardProps) => {
 
     return (
         <CardStacked
-            href={`${RouteName.COLLECTION_ITEM}/${id}`}
+            href={`/${RouteName.COLLECTION_ITEM}/${id}`}
             title={result.name}
             imgUrl={result?.image_link || StaticImages.BASE.placeholder}
         />

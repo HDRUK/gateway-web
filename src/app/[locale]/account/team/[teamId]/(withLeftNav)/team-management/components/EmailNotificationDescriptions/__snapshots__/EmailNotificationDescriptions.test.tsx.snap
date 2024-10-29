@@ -9,10 +9,10 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
       class="MuiBox-root mui-style-v1crop"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-10xzppy-MuiTypography-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1tsvw1-MuiTypography-root"
         >
           Team admins
         </span>
@@ -34,10 +34,10 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
       class="MuiBox-root mui-style-v1crop"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-10xzppy-MuiTypography-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1tsvw1-MuiTypography-root"
         >
           Data access request managers
         </span>
@@ -55,7 +55,7 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
         </li>
       </ul>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium mui-style-7xarjn-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium mui-style-r2y66j-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
@@ -69,10 +69,10 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
       class="MuiBox-root mui-style-v1crop"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-10xzppy-MuiTypography-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1tsvw1-MuiTypography-root"
         >
           Metadata managers
         </span>
@@ -94,10 +94,10 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
       class="MuiBox-root mui-style-v1crop"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-10xzppy-MuiTypography-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1tsvw1-MuiTypography-root"
         >
           Data access request reviewers
         </span>
@@ -116,10 +116,10 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
       class="MuiBox-root mui-style-v1crop"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-10xzppy-MuiTypography-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1tsvw1-MuiTypography-root"
         >
           Metadata editors
         </span>
@@ -138,10 +138,10 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
       class="MuiBox-root mui-style-v1crop"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-lg7nmx-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-10xzppy-MuiTypography-root"
       >
         <span
-          class="MuiTypography-root MuiTypography-body1 mui-style-clfget-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1tsvw1-MuiTypography-root"
         >
           Developers
         </span>

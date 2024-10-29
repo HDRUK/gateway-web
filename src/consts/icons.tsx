@@ -14,8 +14,6 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckIcon from "@mui/icons-material/Check";
 import CheckBoxOutlineBlankSharpIcon from "@mui/icons-material/CheckBoxOutlineBlankSharp";
@@ -146,9 +144,7 @@ export {
     HandymanOutlinedIcon,
     CloudUploadIcon,
     ArticleIcon,
-    BookmarkBorderIcon,
     BookmarkIcon,
-    BookmarksOutlinedIcon,
     StickyNote2OutlinedIcon,
     PersonOutlineOutlinedIcon,
     ControlPointIcon,

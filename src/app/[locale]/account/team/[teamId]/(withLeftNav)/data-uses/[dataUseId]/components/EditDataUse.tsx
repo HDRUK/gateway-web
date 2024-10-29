@@ -55,7 +55,6 @@ const EditDataUse = () => {
         `${apis.dataUseV1Url}/${params?.dataUseId}`,
         { shouldFetch: !!params?.dataUseId }
     );
-
     const existingDataUse = useMemo(() => data?.[0], [data]);
 
     const mapKeywords = (keywords: Keyword[]) =>
@@ -165,6 +164,7 @@ const EditDataUse = () => {
     };
 
     const [keywordOptions, setKeywordsOptions] = useState<string[]>([]);
+    const [outputOptions, setOutputOptions] = useState<string[]>([]);
 
     useEffect(() => {
         if (!keywords) {
@@ -173,6 +173,16 @@ const EditDataUse = () => {
 
         setKeywordsOptions(keywords.map(keyword => keyword.name));
     }, [keywords]);
+
+    const existingResearchLinks = existingDataUse?.non_gateway_outputs;
+
+    useEffect(() => {
+        if (!existingResearchLinks) {
+            return;
+        }
+
+        setOutputOptions(existingResearchLinks);
+    }, [existingResearchLinks]);
 
     useEffect(() => {
         showBar("CreateDataUse", {
@@ -201,6 +211,16 @@ const EditDataUse = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [handleSubmit, params?.teamId, t, existingDataUse]);
+
+    const getOptions = (fieldName: string) => {
+        if (fieldName === "keywords") {
+            return keywordOptions;
+        }
+        if (fieldName === "non_gateway_outputs") {
+            return outputOptions;
+        }
+        return [];
+    };
 
     return (
         <>
@@ -241,10 +261,7 @@ const EditDataUse = () => {
                                             {...field}
                                             {...(field.component ===
                                                 inputComponents.Autocomplete && {
-                                                options:
-                                                    field.name === "keywords"
-                                                        ? keywordOptions
-                                                        : [],
+                                                options: getOptions(field.name),
                                             })}
                                         />
                                     </Box>

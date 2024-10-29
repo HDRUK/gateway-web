@@ -18,6 +18,7 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { SearchIcon } from "@/consts/icons";
+import { hasMinimumSearchCharLength } from "@/utils/search";
 
 const TRANSLATION_PATH = "modules.dialogs.PublicationsSearchDialog";
 
@@ -83,7 +84,9 @@ const PublicationSearchDialog = ({
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`);
+    >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`, {
+        shouldFetch: hasMinimumSearchCharLength(searchParams.title),
+    });
 
     const searchValue = watch("search");
     const datasetNameValue = watch("datasetName");
@@ -107,19 +110,19 @@ const PublicationSearchDialog = ({
     return (
         <Dialog maxWidth="tablet" title="">
             <MuiDialogContent sx={{ p: 10 }}>
+                <Typography sx={{ mb: 4 }}>{t("intro")}</Typography>
+
                 <InputWrapper
                     control={control}
                     {...searchFilter}
                     disabled={!!datasetNameValue?.length}
                 />
-
                 <Typography
                     fontWeight={700}
                     textAlign="center"
                     sx={{ mt: 2, mb: 2 }}>
                     OR
                 </Typography>
-
                 <InputWrapper
                     {...datasetTitleField}
                     control={control}
@@ -147,8 +150,6 @@ const PublicationSearchDialog = ({
                         )
                     }
                 />
-
-                <Typography>({t("helper")})</Typography>
             </MuiDialogContent>
 
             <MuiDialogActions

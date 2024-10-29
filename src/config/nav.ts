@@ -21,7 +21,7 @@ const navItems = [
                 href: "/search?type=datasets",
             },
             {
-                label: "Data Uses",
+                label: "Data Uses / Research Projects",
                 href: "/search?type=dur",
             },
             {
@@ -37,7 +37,7 @@ const navItems = [
                 href: "/search?type=data_providers",
             },
             {
-                label: "Collections/Networks",
+                label: "Collections / Networks",
                 href: "/search?type=collections",
             },
         ],
@@ -80,8 +80,8 @@ const navItems = [
         label: "About",
         subItems: [
             {
-                label: "Our mission and purpose",
-                href: "/about/our-mission-and-purpose",
+                label: "Our Mission and Purpose",
+                href: RouteName.MISSION_AND_PURPOSE,
             },
             {
                 label: "For Researchers and Innovators",
@@ -96,8 +96,8 @@ const navItems = [
                 href: "/about/patients-and-public",
             },
             {
-                label: "The Gateway Team",
-                href: `/${RouteName.MEET_THE_TEAM}`,
+                label: "The Technology Team",
+                href: RouteName.MEET_THE_TEAM,
             },
         ],
     },

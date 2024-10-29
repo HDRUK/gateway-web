@@ -2,9 +2,12 @@ import { render, screen, waitFor } from "@/utils/testUtils";
 import { releaseV1 } from "@/mocks/data/cms";
 import ReleasePage from "./page";
 
+jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
+
 describe("Releases", () => {
     it("should render contents", async () => {
         const Result = await ReleasePage();
+
         render(Result);
 
         await waitFor(() => {

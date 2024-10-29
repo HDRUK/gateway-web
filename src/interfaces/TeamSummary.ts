@@ -7,6 +7,7 @@ import { Tool } from "@/interfaces/Tool";
 interface TeamSummary {
     id: number;
     name: string;
+    member_of: string;
     team_logo: string;
     is_provider: boolean;
     introduction: string | null;
@@ -15,6 +16,8 @@ interface TeamSummary {
     tools: Tool[];
     publications: Publication[];
     collections: Collection[];
+    url: string | null;
+    service: string[] | null;
 }
 
 export type { TeamSummary };
