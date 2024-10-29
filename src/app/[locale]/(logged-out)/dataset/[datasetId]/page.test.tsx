@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { render, screen } from "@/utils/testUtils";
-import DatasetItemPage from "./page";
 import { generatePageDataSetV1 } from "@/mocks/data/dataset";
+import DatasetItemPage from "./page";
 
 const enFile = jest.requireActual("@/config/messages/en.json");
 const getDataSetMock = jest.fn();
