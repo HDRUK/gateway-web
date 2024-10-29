@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { render, screen } from "@/utils/testUtils";
-import { generateDataSetV1 } from "./dataset.data";
 import DatasetItemPage from "./page";
+import { generatePageDataSetV1 } from "@/mocks/data/dataset";
 
 const enFile = jest.requireActual("@/config/messages/en.json");
 const getDataSetMock = jest.fn();
@@ -33,7 +33,7 @@ jest.mock("@/utils/api", () => ({
     getDataset: jest.fn().mockImplementation(() => getDataSetMock()),
 }));
 
-const mockDataSet = generateDataSetV1();
+const mockDataSet = generatePageDataSetV1();
 
 type DataTestScenariosType = {
     description: string;
