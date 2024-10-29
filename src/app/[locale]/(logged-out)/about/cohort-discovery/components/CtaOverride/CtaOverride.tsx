@@ -1,71 +1,80 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import Button from "@/components/Button";
+import Tooltip from "@/components/Tooltip";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { COHORT_DISCOVERY_URL } from "@/consts/application";
-import { getPermissions } from "@/utils/permissions";
 
 export const DATA_TEST_ID = "cta-override-button";
-const COHORT_DISCOVERY_PERMISSION = "GENERAL_ACCESS";
 
 interface accessRequestType {
     redirect_url: string;
 }
 
+const TRANSLATION_PATH_CTAOVERRIDE = "components.CtaOverride";
+
 const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     const { showDialog } = useDialog();
     const { push } = useRouter();
     const { isLoggedIn, user } = useAuth();
-    const permissions = getPermissions(user?.roles);
-
     const [isClicked, setIsClicked] = useState(false);
+    const t = useTranslations(TRANSLATION_PATH_CTAOVERRIDE);
 
-    const handleCtaClick = () => {
-        if (permissions[COHORT_DISCOVERY_PERMISSION]) {
-            push(COHORT_DISCOVERY_URL);
-        } else if (isLoggedIn) {
-            push(ctaLink.url);
-        } else {
-            showDialog(ProvidersDialog, { isProvidersDialog: true });
+    const { data: userData } = useGet<CohortRequest>(
+        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
+        {
+            shouldFetch: !!user?.id,
         }
-    };
+    );
 
     const { data: accessData } = useGet<accessRequestType>(
         `${apis.cohortRequestsV1Url}/access`,
         {
-            shouldFetch: isClicked,
+            shouldFetch: isClicked && userData?.request_status === "APPROVED",
         }
     );
 
-    if (accessData) {
-        push(accessData.redirect_url);
-    }
+    useEffect(() => {
+        if (isClicked) {
+            if (accessData?.redirect_url) {
+                push(accessData?.redirect_url);
+            } else if (isLoggedIn) {
+                push(ctaLink.url);
+            } else {
+                showDialog(ProvidersDialog, { isProvidersDialog: true });
+            }
+        }
+    }, [accessData, isClicked, isLoggedIn]);
+
+    const isDisabled = !(
+        !isLoggedIn ||
+        (isLoggedIn && userData === null) ||
+        (isLoggedIn && userData?.request_status === "APPROVED")
+    );
 
     return (
         <Box sx={{ display: "flex" }}>
-            <Button
-                sx={{ mt: 3 }}
-                onClick={handleCtaClick}
-                data-testid={DATA_TEST_ID}
-                color="greyCustom">
-                {ctaLink?.title}
-            </Button>
-            <Button
-                sx={{ mt: 3, ml: 3 }}
-                onClick={() => {
-                    setIsClicked(true);
-                }}
-                color="greyCustom">
-                Visit Cohort Discovery
-            </Button>
+            <Tooltip title={isDisabled ? t(`notApproved`) : ""}>
+                <span>
+                    <Button
+                        sx={{ mt: 3 }}
+                        onClick={() => setIsClicked(true)}
+                        data-testid={DATA_TEST_ID}
+                        color="greyCustom"
+                        disabled={isDisabled}>
+                        {ctaLink?.title}
+                    </Button>
+                </span>
+            </Tooltip>
         </Box>
     );
 };

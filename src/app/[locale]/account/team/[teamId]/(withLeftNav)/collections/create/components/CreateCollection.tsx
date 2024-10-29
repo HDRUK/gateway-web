@@ -13,7 +13,6 @@ import {
 } from "@/interfaces/AddResource";
 import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
-import { Dataset } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
 import { Publication } from "@/interfaces/Publication";
@@ -99,6 +98,7 @@ const CreateCollection = ({
         `${apis.collectionsV1Url}/${collectionId}`,
         { shouldFetch: !!collectionId }
     );
+
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
         { itemName: "Collection", successNotificationsOn: !file }
@@ -135,8 +135,26 @@ const CreateCollection = ({
             return;
         }
 
+        const datasetVersionToDataset = datasetVersions => {
+            // this function is a temporary hack and this all needs sorting out
+            // GET collections returns `dataset_versions` in a particular format
+            // but POST collections is expecting datasets
+            if (!datasetVersions) return [];
+
+            const tempDatasets = datasetVersions.map(dv => {
+                return {
+                    id: dv.dataset_id,
+                    latest_metadata: { metadata: dv.metadata },
+                };
+            });
+            return tempDatasets;
+        };
+
         const formData = {
             ...existingCollectionData,
+            datasets: datasetVersionToDataset(
+                existingCollectionData.dataset_versions
+            ),
             name: existingCollectionData?.name,
             description: existingCollectionData?.description,
             keywords:
@@ -284,10 +302,6 @@ const CreateCollection = ({
             return keywordArray;
         };
 
-        const publications = formData.publications.map(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ({ updated_at, created_at, ...item }) => item
-        );
         const payload: CollectionSubmission = {
             ...formData,
             status,
@@ -298,13 +312,14 @@ const CreateCollection = ({
             keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
             dur: formatEntityToIdArray(formData.dur),
-            publications,
+            publications: formatEntityToIdArray(formData.publications),
             tools: formatEntityToIdArray(formData.tools),
             datasets: formatEntityToIdArray(formData.datasets),
             collaborators: formData.collaborators,
             created_at: formData.created_at?.split(".")[0],
             updated_at: formData.updated_at?.split(".")[0],
             updated_on: formData.updated_on?.split(".")[0],
+            user_id: undefined,
         };
 
         if (!collectionId) {

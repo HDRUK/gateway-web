@@ -809,7 +809,7 @@
             "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
             "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
-            "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, keywords",
+            "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
             "searchExplainerDataProviders": "Search, for example, by Data Custodian name, Dataset title",
@@ -1274,6 +1274,9 @@
         }
     },
     "components": {
+        "CtaOverride": {
+            "notApproved": "Your request to access Cohort Discovery is still pending, keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen."
+        },
         "CMSBanner": {
             "ariaCloseButtonLabel": "Close banner"
         },
@@ -1495,7 +1498,7 @@
                     "label": "Using a search term, for example, by Publication title, Publication DOI, Dataset DOI, Software title, Data Custodian name, keywords"
                 },
                 "datasetNameField": {
-                    "placeholder": "Dataset name",
+                    "placeholder": "Enter three or more letters to filter dataset names",
                     "label": "Using a Gateway Dataset name, to find publications which may have used a Dataset"
                 },
                 "cancel": "Cancel",

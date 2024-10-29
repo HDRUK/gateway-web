@@ -80,8 +80,8 @@ const navItems = [
         label: "About",
         subItems: [
             {
-                label: "Our mission and purpose",
-                href: "/about/our-mission-and-purpose",
+                label: "Our Mission and Purpose",
+                href: RouteName.MISSION_AND_PURPOSE,
             },
             {
                 label: "For Researchers and Innovators",
@@ -97,7 +97,7 @@ const navItems = [
             },
             {
                 label: "The Technology Team",
-                href: `/${RouteName.MEET_THE_TEAM}`,
+                href: RouteName.MEET_THE_TEAM,
             },
         ],
     },

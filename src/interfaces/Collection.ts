@@ -1,7 +1,7 @@
 import { DataStatus } from "@/consts/application";
 import { Application } from "./Application";
 import { DataUse, ReducedDataUse } from "./DataUse";
-import { Dataset, ReducedDataset } from "./Dataset";
+import { Dataset, ReducedDataset, VersionItem } from "./Dataset";
 import { Publication, ReducedPublication } from "./Publication";
 import { Team } from "./Team";
 import type { ReducedTool, Tool } from "./Tool";
@@ -30,7 +30,8 @@ interface Collection {
     updated_on: string;
     deleted_at: string;
     keywords: string[] | string;
-    datasets: Dataset[];
+    datasets?: Dataset[];
+    dataset_versions?: VersionItem[];
     team: Team;
     users: User[];
     applications: Application[];
@@ -42,6 +43,7 @@ interface Collection {
     team_id?: number;
     user_id?: string;
     image_link: string;
+    user_id?: number;
 }
 
 export interface CollectionSubmission
