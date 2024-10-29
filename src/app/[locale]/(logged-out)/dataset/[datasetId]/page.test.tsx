@@ -1,13 +1,9 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-
-import { render, screen } from "@/utils/testUtils";
-
-import DatasetItemPage from "./page";
-
-import { generateDataSetV1 } from "./dataset.data";
 import { Dataset } from "@/interfaces/Dataset";
-
+import { render, screen } from "@/utils/testUtils";
+import { generateDataSetV1 } from "./dataset.data";
+import DatasetItemPage from "./page";
 
 const enFile = jest.requireActual("@/config/messages/en.json");
 const getDataSetMock = jest.fn();
@@ -34,12 +30,10 @@ jest.mock("next/headers", () => ({
 }));
 
 jest.mock("@/utils/api", () => ({
-    getDataset: jest
-        .fn()
-        .mockImplementation(() => getDataSetMock()),
+    getDataset: jest.fn().mockImplementation(() => getDataSetMock()),
 }));
 
-const mockDataSet = generateDataSetV1()
+const mockDataSet = generateDataSetV1();
 
 type DataTestScenariosType = {
     description: string;
@@ -50,7 +44,7 @@ const dataTestScenarios: DataTestScenariosType[] = [
     {
         description: "a large dataset",
         data: mockDataSet,
-    }
+    },
 ];
 
 describe("DataSetItemPage", () => {
@@ -71,9 +65,11 @@ describe("DataSetItemPage", () => {
             await setup({ datasetId: "123" });
 
             expect(
-                await screen.getByText(mockDataSet.versions[0].metadata.metadata.summary.title, { selector: "h2" })
+                await screen.getByText(
+                    mockDataSet.versions[0].metadata.metadata.summary.title,
+                    { selector: "h2" }
+                )
             ).toBeInTheDocument();
-
         }
     );
 
