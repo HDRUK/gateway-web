@@ -319,7 +319,6 @@ const CreateCollection = ({
             created_at: formData.created_at?.split(".")[0],
             updated_at: formData.updated_at?.split(".")[0],
             updated_on: formData.updated_on?.split(".")[0],
-            user_id: undefined,
         };
 
         if (!collectionId) {
