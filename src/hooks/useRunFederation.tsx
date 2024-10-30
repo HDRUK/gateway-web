@@ -72,7 +72,7 @@ const useRunFederation = ({
     }, [fieldsToWatch]);
 
     useEffect(() => {
-        if (!tested) return;
+        if (!tested && !integration) return;
 
         if (integration?.tested || tested) {
             setRunStatus("TESTED_IS_TRUE");
