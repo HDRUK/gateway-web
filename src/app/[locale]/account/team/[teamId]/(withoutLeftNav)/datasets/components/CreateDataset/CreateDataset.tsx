@@ -24,6 +24,8 @@ import {
     FormHydrationValidation,
 } from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
+import { Team } from "@/interfaces/Team";
+import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -33,6 +35,7 @@ import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePut from "@/hooks/usePut";
@@ -83,6 +86,15 @@ const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
 const DATASET_TYPE = "Dataset type";
+const DATA_CUSTODIAN_ID = "identifier";
+const DATA_CUSTODIAN_NAME = "Name of data provider";
+const DATA_CUSTODIAN_FIELDS = [
+    "Name of data provider",
+    "Organisation Description",
+    "Organisation Logo",
+    "Organisation Membership",
+    "identifier",
+];
 
 const getMetadata = (isDraft: boolean) =>
     isDraft
@@ -96,9 +108,44 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         FormHydrationSchema | undefined
     >();
 
+    const [searchName, setSearchName] = useState("");
+    const searchNameDebounced = useDebounce(searchName, 500);
+
+    const { data: teamData, isLoading: isLoadingTeams } = useGet<Team[]>(
+        `${apis.teamsSearchV1Url}?name=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced,
+        }
+    );
+
     const currentFormJSON = useMemo(() => {
         return formJSONDynamic || formJSON;
     }, [formJSON, formJSONDynamic]);
+
+    const teamOptions = useMemo(() => {
+        const defaultOption =
+            !!currentFormJSON.defaultValues[DATA_CUSTODIAN_ID] &&
+            !!currentFormJSON.defaultValues[DATA_CUSTODIAN_NAME]
+                ? {
+                      value: currentFormJSON.defaultValues[DATA_CUSTODIAN_ID],
+                      label: currentFormJSON.defaultValues[DATA_CUSTODIAN_NAME],
+                  }
+                : {};
+
+        if (!teamData) return !!defaultOption.label ? [defaultOption] : [];
+
+        const hasOption = teamData?.some(
+            data => data.id.toString() === defaultOption.value
+        );
+
+        return [
+            ...(!hasOption && defaultOption.label ? [defaultOption] : []),
+            ...(teamData?.map(data => ({
+                label: data.name,
+                value: data.id,
+            })) || []),
+        ] as OptionsType[];
+    }, [teamData]);
 
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
@@ -150,7 +197,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
         "revision url": "http://www.example.com/",
-        identifier: "226fb3f1-4471-400a-8c39-2b66d46a39b6",
+        identifier: teamId,
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
         "Name of data provider": "--",
@@ -262,20 +309,31 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         defaultValues: defaultFormValues,
     });
 
+    const watchId = watch(DATA_CUSTODIAN_ID);
+    const watchType = watch(DATASET_TYPE);
+
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
-        `${
-            apis.formHydrationV1Url
-        }?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${getValues(
-            DATASET_TYPE
-        )}`,
-        {
-            shouldFetch: !!getValues(DATASET_TYPE),
-        }
+        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`
     );
+
+    const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
+        const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
+            acc[key] = formJSONUpdated.defaultValues[key];
+            return acc;
+        }, {});
+
+        const defaultFormValues = {
+            ...getValues(),
+            ...custodianOverrides,
+        };
+
+        reset(defaultFormValues);
+    };
 
     useEffect(() => {
         if (formJSONUpdated) {
             setFormJSONDynamic(formJSONUpdated);
+            updateDataCustodian(formJSONUpdated);
         } else {
             setFormJSONDynamic(undefined);
         }
@@ -582,6 +640,17 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         );
     }
 
+    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
+
     return (
         <>
             <Link
@@ -610,10 +679,17 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
 
             {currentSectionIndex === 0 && (
                 <IntroScreen
-                    defaultValue={getValues(DATASET_TYPE) || []}
-                    setDatasetType={(value: string[]) =>
-                        setValue(DATASET_TYPE, value)
+                    defaultValue={watchType || []}
+                    setDatasetType={(value: string) => {
+                        setValue(DATASET_TYPE, value);
+                    }}
+                    teamOptions={teamOptions}
+                    handleOnUserInputChange={handleOnUserInputChange}
+                    setDataCustodian={(value: number) =>
+                        setValue(DATA_CUSTODIAN_ID, value)
                     }
+                    defaultTeamId={watchId}
+                    isLoadingTeams={isLoadingTeams}
                 />
             )}
 

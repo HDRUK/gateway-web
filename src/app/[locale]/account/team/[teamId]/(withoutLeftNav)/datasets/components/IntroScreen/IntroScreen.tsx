@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import FormLegend from "@/components/FormLegend";
+import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import {
     ACCOUNT,
@@ -16,6 +20,11 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+
+interface OptionType {
+    label: string;
+    value: string;
+}
 
 const FORM_LEGEND_EXAMPLE = [
     {
@@ -58,10 +67,23 @@ const METADATA_CHECKBOXES = [
 
 interface IntroScreenProps {
     defaultValue: string[];
+    defaultTeamId?: number;
+    teamOptions?: OptionsType[];
+    isLoadingTeams: boolean;
     setDatasetType: (value: string[]) => void;
+    setDataCustodian: (value: number) => void;
+    handleOnUserInputChange: (e: React.ChangeEvent, value: string) => void;
 }
 
-const IntroScreen = ({ defaultValue, setDatasetType }: IntroScreenProps) => {
+const IntroScreen = ({
+    defaultValue,
+    defaultTeamId,
+    teamOptions,
+    isLoadingTeams,
+    setDataCustodian,
+    setDatasetType,
+    handleOnUserInputChange,
+}: IntroScreenProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -77,6 +99,18 @@ const IntroScreen = ({ defaultValue, setDatasetType }: IntroScreenProps) => {
         setDatasetType(updatedCheckboxes);
         setSelectedCheckboxes(updatedCheckboxes);
     };
+
+    const { control, watch } = useForm({
+        defaultValues: { custodianId: defaultTeamId },
+    });
+
+    const watchSort = watch("custodianId");
+
+    useEffect(() => {
+        if (!watchSort) return;
+        setDataCustodian(watchSort);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [watchSort]);
 
     return (
         <Box sx={{ mt: 1.25, display: "flex", justifyContent: "center" }}>
@@ -96,7 +130,7 @@ const IntroScreen = ({ defaultValue, setDatasetType }: IntroScreenProps) => {
                             {t("legendIntro")}
                         </Typography>
                     </Box>
-                    <Box sx={{}}>
+                    <Box>
                         <Typography
                             sx={{
                                 fontSize: "1.25rem",
@@ -106,6 +140,28 @@ const IntroScreen = ({ defaultValue, setDatasetType }: IntroScreenProps) => {
                             {t("progressLegend")}
                         </Typography>
                         <FormLegend items={FORM_LEGEND_EXAMPLE} />
+                    </Box>
+                    <Box>
+                        <Typography
+                            sx={{
+                                fontSize: "1.25rem",
+                                fontWeight: "bold",
+                                mb: 1,
+                            }}>
+                            Data Custodian
+                        </Typography>
+
+                        <InputWrapper
+                            control={control}
+                            name="custodianId"
+                            options={teamOptions}
+                            selectOnFocus={true}
+                            onInputChange={handleOnUserInputChange}
+                            isLoadingOptions={isLoadingTeams}
+                            component={inputComponents.Autocomplete}
+                            disableClearable={true}
+                            filterOptions={(x: OptionType) => x}
+                        />
                     </Box>
                 </Box>
                 <Box sx={{ flex: 1, pt: 4 }}>
