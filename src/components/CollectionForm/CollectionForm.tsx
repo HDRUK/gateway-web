@@ -15,8 +15,10 @@ import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
+import { Option } from "@/interfaces/Option";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
+import { User } from "@/interfaces/User";
 import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -31,12 +33,12 @@ import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
 import AddResourceDialog from "@/modules/AddResourceDialog";
 import useActionBar from "@/hooks/useActionBar";
+import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { inputComponents } from "@/config/forms";
 import {
     collectionDefaultValues,
     collectionFormFields,
@@ -48,14 +50,21 @@ import { RouteName } from "@/consts/routeName";
 
 interface CollectionCreateProps {
     teamId?: string;
+    userId?: string;
     collectionId?: string;
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
 
-const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
+const CollectionForm = ({
+    teamId,
+    userId,
+    collectionId,
+}: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
+    const [searchName, setSearchName] = useState("");
+    const [userOptions, setUserOptions] = useState<Option[]>([]);
     const [file, setFile] = useState<File>();
     const [createdCollectionId, setCreatedCollectionId] = useState<
         string | undefined
@@ -66,8 +75,11 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
+    const searchNameDebounced = useDebounce(searchName, 500);
 
-    const COLLECTION_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`;
+    const COLLECTION_ROUTE = teamId
+        ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
+        : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`;
 
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<Collection>({
@@ -80,6 +92,13 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
 
     const { data: keywordData } = useGet<Keyword[]>(
         `${apis.keywordsV1Url}?per_page=-1`
+    );
+
+    const { data: userData = [], isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced && !teamId,
+        }
     );
 
     const { data: existingCollectionData } = useGet<Collection>(
@@ -107,6 +126,33 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
         }) as OptionsType[];
     }, [keywordData]);
 
+    const updateUserOptions = (
+        prevOptions: Option[],
+        userOptions: Option[]
+    ) => {
+        const existingUserIds = prevOptions.map(option => option.value);
+        const newOptions = userOptions?.filter(
+            option => !existingUserIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length > 0) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const userOptions = userData.map(user => ({
+            value: user.id,
+            label: `${user.name}`,
+        }));
+
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
+    }, [userData]);
+
     useEffect(() => {
         if (!existingCollectionData) {
             return;
@@ -127,6 +173,9 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             return tempDatasets;
         };
 
+        const collaborators =
+            existingCollectionData?.users?.slice(1).map(item => item.id) || [];
+
         const formData = {
             ...existingCollectionData,
             datasets: datasetVersionToDataset(
@@ -137,7 +186,16 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link,
+            collaborators,
         };
+
+        if (collaborators) {
+            const labels = existingCollectionData?.users?.slice(1).map(item => {
+                return { label: item.name, value: item.id };
+            });
+            setUserOptions(labels);
+        }
+
         if (formData.image_link) {
             setImageUploaded(true);
         }
@@ -210,24 +268,52 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             setValue("datasets", updatedResources as Dataset[]);
         }
     };
+
+    const getOptions = (field: string) => {
+        if (field === "keywords") {
+            return keywordOptions;
+        }
+        return userOptions;
+    };
+
+    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
-                return (
-                    <InputWrapper
-                        key={field.name}
-                        control={control}
-                        sx={{ mt: 1 }}
-                        {...field}
-                        {...(field.component === inputComponents.Autocomplete
-                            ? {
-                                  options: keywordOptions,
-                              }
-                            : {})}
-                    />
-                );
+                const fieldName = field.name;
+                if (!teamId || fieldName !== "collaborators") {
+                    return (
+                        <InputWrapper
+                            key={field.name}
+                            control={control}
+                            sx={{ mt: 1 }}
+                            {...field}
+                            {...(field.name === "collaborators" ||
+                            field.name === "keywords"
+                                ? {
+                                      options: getOptions(fieldName),
+                                      onInputChange: handleOnUserInputChange,
+                                      isLoadingOptions:
+                                          fieldName === "collaborators" &&
+                                          isLoadingUsers,
+                                  }
+                                : {})}
+                        />
+                    );
+                }
+                return null;
             }),
-        [control, keywordOptions]
+        [control, keywordOptions, userOptions, isLoadingUsers]
     );
     const onSubmit = async (
         formData: Collection,
@@ -266,16 +352,17 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
             enabled: true,
             public: 1,
             team_id: teamId ? +teamId : undefined,
+            user_id: !teamId ? userId : undefined,
             keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
             dur: formatEntityToIdArray(formData.dur),
             publications: formatEntityToIdArray(formData.publications),
             tools: formatEntityToIdArray(formData.tools),
             datasets: formatEntityToIdArray(formData.datasets),
+            collaborators: formData.collaborators,
             created_at: formData.created_at?.split(".")[0],
             updated_at: formData.updated_at?.split(".")[0],
             updated_on: formData.updated_on?.split(".")[0],
-            user_id: undefined,
         };
 
         if (!collectionId) {
@@ -496,4 +583,4 @@ const CreateCollection = ({ teamId, collectionId }: CollectionCreateProps) => {
     );
 };
 
-export default CreateCollection;
+export default CollectionForm;

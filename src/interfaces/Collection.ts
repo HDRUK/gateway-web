@@ -38,8 +38,10 @@ interface Collection {
     dur: DataUse[];
     tools: Tool[];
     publications: Publication[];
+    collaborators: User[];
     counter?: number;
     team_id?: number;
+    user_id?: string;
     image_link: string;
     user_id?: number;
 }

@@ -82,11 +82,11 @@ const getProfileNav = (permissions: {
             label: "Publications",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
         },
-        // {
-        //     icon: <BookmarksOutlinedIcon />,
-        //     label: "Collections",
-        //     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
-        // },
+        {
+            icon: <BookmarksOutlinedIcon />,
+            label: "Collections",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
+        },
         ...(permissions["dur.update"]
             ? [
                   {
