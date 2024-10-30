@@ -6,7 +6,6 @@ import { VersionItem } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { formatTextDelimiter, getLatestVersions } from "@/utils/dataset";
-import { toTitleCase } from "@/utils/string";
 
 const TRANSLATION_PATH = "pages.tool.components.DatasetsContent";
 
