@@ -74,7 +74,7 @@ const useRunFederation = ({
     useEffect(() => {
         if (!tested) return;
 
-        if (integration?.tested  || tested) {
+        if (integration?.tested || tested) {
             setRunStatus("TESTED_IS_TRUE");
         }
     }, [integration, tested, reset, setValue]);

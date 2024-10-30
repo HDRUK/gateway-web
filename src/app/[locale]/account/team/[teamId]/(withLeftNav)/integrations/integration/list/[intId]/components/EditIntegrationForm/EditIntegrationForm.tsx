@@ -48,7 +48,7 @@ const EditIntegrationForm = () => {
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
         { shouldFetch: !!params?.teamId && !!params?.intId }
     );
-    
+
     const { team } = useGetTeam(params?.teamId as string);
 
     const isEditing = params?.intId;
