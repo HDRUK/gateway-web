@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import { getLatestVersions } from "@/utils/dataset";
+import { formatTextDelimiter, getLatestVersions } from "@/utils/dataset";
 import { toTitleCase } from "@/utils/string";
 
 const TRANSLATION_PATH = "pages.tool.components.DatasetsContent";
@@ -59,7 +59,7 @@ export default function DatasetContent({
                                 })}
                             </div>
                         )}
-                        <div>{toTitleCase(datasetType)}</div>
+                        <div>{formatTextDelimiter(datasetType)}</div>
                     </>
                 )
             )}

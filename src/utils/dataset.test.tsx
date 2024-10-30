@@ -88,5 +88,11 @@ describe("Dataset utils", () => {
                 "Health research, NHS study"
             );
         });
+
+        it("formats with commas only", () => {
+            expect(
+                formatTextDelimiter(" ,, Health research,,,NHS study ,  ")
+            ).toEqual("Health research, NHS study");
+        });
     });
 });
