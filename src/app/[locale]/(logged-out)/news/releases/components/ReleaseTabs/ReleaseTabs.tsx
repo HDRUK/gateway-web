@@ -50,7 +50,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                         {releases.map((release, index) => (
                             <Accordion
                                 key={release.date}
-                                expanded={
+                                defaultExpanded={
                                     expanded === release.id || index === 0
                                 }
                                 heading={
@@ -62,6 +62,7 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                                 contents={
                                     <HTMLContent content={release.content} />
                                 }
+                                iconLeft
                             />
                         ))}
                     </div>
