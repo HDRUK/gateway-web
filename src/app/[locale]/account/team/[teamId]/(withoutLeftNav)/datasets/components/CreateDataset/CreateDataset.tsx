@@ -132,7 +132,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                   }
                 : {};
 
-        if (!teamData) return !!defaultOption.label ? [defaultOption] : [];
+        if (!teamData) return defaultOption.label ? [defaultOption] : [];
 
         const hasOption = teamData?.some(
             data => data.id.toString() === defaultOption.value

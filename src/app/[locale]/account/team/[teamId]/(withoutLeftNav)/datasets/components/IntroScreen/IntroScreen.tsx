@@ -155,11 +155,11 @@ const IntroScreen = ({
                             control={control}
                             name="custodianId"
                             options={teamOptions}
-                            selectOnFocus={true}
+                            selectOnFocus
                             onInputChange={handleOnUserInputChange}
                             isLoadingOptions={isLoadingTeams}
                             component={inputComponents.Autocomplete}
-                            disableClearable={true}
+                            disableClearable
                             filterOptions={(x: OptionType) => x}
                         />
                     </Box>
