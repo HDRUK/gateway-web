@@ -102,8 +102,8 @@ const formatTextDelimiter = (text: string | string[] | number) => {
         ? text.toLocaleString()
         : text
               ?.replaceAll(";", "")
-              .replace(/,+/, ", ")
-              .replace(/^\s*,\s*|\s*,\s*$/, "");
+              .replace(/\s*,+\s*/g, ", ")
+              .replace(/^[\s,]*|[,\s]*$/g, "");
 };
 
 export {
