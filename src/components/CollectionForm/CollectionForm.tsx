@@ -145,7 +145,7 @@ const CollectionForm = ({
     useEffect(() => {
         const userOptions = userData.map(user => ({
             value: user.id,
-            label: `${user.name} (${user.email})`,
+            label: `${user.name}`,
         }));
 
         setUserOptions(prevOptions =>
