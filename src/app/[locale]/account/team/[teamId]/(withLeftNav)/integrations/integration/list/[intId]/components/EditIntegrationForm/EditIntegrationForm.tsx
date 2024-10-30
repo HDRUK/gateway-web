@@ -48,7 +48,7 @@ const EditIntegrationForm = () => {
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
         { shouldFetch: !!params?.teamId && !!params?.intId }
     );
-
+    
     const { team } = useGetTeam(params?.teamId as string);
 
     const isEditing = params?.intId;
@@ -77,6 +77,7 @@ const EditIntegrationForm = () => {
                 run_time_hour: parseInt(getValues("run_time_hour"), 10),
                 notifications: [],
             },
+            tested: getValues("tested"),
             control,
             reset,
             getValues,
