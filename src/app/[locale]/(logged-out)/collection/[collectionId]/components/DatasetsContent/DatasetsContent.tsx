@@ -7,7 +7,6 @@ import { ReducedDataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { formatTextDelimiter } from "@/utils/dataset";
-import { capitalise } from "@/utils/general";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
 
