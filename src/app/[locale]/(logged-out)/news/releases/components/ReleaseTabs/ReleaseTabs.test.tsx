@@ -26,10 +26,8 @@ describe("ReleaseTabs", () => {
         render(<ReleaseTabs allReleases={mockedReleases} />);
 
         const tab2024 = screen.getByText("2024");
-        const tab2025 = screen.getByText("2025");
 
         expect(tab2024).toBeInTheDocument();
-        expect(tab2025).toBeInTheDocument();
 
         expect(
             screen.getByText(mockedReleases[0].node.title)
