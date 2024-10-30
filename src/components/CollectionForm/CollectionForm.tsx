@@ -15,6 +15,7 @@ import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
+import { Option } from "@/interfaces/Option";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import { User } from "@/interfaces/User";
@@ -32,12 +33,12 @@ import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
 import AddResourceDialog from "@/modules/AddResourceDialog";
 import useActionBar from "@/hooks/useActionBar";
+import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { inputComponents } from "@/config/forms";
 import {
     collectionDefaultValues,
     collectionFormFields,
@@ -55,13 +56,15 @@ interface CollectionCreateProps {
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
 
-const CreateCollection = ({
+const CollectionForm = ({
     teamId,
     userId,
     collectionId,
 }: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
+    const [searchName, setSearchName] = useState("");
+    const [userOptions, setUserOptions] = useState<Option[]>([]);
     const [file, setFile] = useState<File>();
     const [createdCollectionId, setCreatedCollectionId] = useState<
         string | undefined
@@ -72,6 +75,7 @@ const CreateCollection = ({
     const { showDialog } = useDialog();
     const { showBar } = useActionBar();
     const { push } = useRouter();
+    const searchNameDebounced = useDebounce(searchName, 500);
 
     const COLLECTION_ROUTE = teamId
         ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
@@ -90,8 +94,11 @@ const CreateCollection = ({
         `${apis.keywordsV1Url}?per_page=-1`
     );
 
-    const { data: userData, isLoading: isLoadingUsers } = useGet<User[]>(
-        `${apis.usersV1Url}`
+    const { data: userData = [], isLoading: isLoadingUsers } = useGet<User[]>(
+        `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced && !teamId,
+        }
     );
 
     const { data: existingCollectionData } = useGet<Collection>(
@@ -119,15 +126,31 @@ const CreateCollection = ({
         }) as OptionsType[];
     }, [keywordData]);
 
-    const userOptions = useMemo(() => {
-        if (!userData) return [];
+    const updateUserOptions = (
+        prevOptions: Option[],
+        userOptions: Option[]
+    ) => {
+        const existingUserIds = prevOptions.map(option => option.value);
+        const newOptions = userOptions?.filter(
+            option => !existingUserIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length > 0) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
 
-        return userData.map(data => {
-            return {
-                value: data.id as ValueType,
-                label: data.name,
-            };
-        }) as OptionsType[];
+    useEffect(() => {
+        const userOptions = userData.map(user => ({
+            value: user.id,
+            label: `${user.name} (${user.email})`,
+        }));
+
+        setUserOptions(prevOptions =>
+            updateUserOptions(prevOptions, userOptions)
+        );
     }, [userData]);
 
     useEffect(() => {
@@ -150,6 +173,9 @@ const CreateCollection = ({
             return tempDatasets;
         };
 
+        const collaborators =
+            existingCollectionData?.users?.slice(1).map(item => item.id) || [];
+
         const formData = {
             ...existingCollectionData,
             datasets: datasetVersionToDataset(
@@ -160,10 +186,16 @@ const CreateCollection = ({
             keywords:
                 existingCollectionData?.keywords?.map(item => item.id) || [],
             image_link: existingCollectionData?.image_link,
-            collaborators:
-                existingCollectionData?.users?.slice(1).map(item => item.id) ||
-                [],
+            collaborators,
         };
+
+        if (collaborators) {
+            const labels = existingCollectionData?.users?.slice(1).map(item => {
+                return { label: item.name, value: item.id };
+            });
+            setUserOptions(labels);
+        }
+
         if (formData.image_link) {
             setImageUploaded(true);
         }
@@ -244,6 +276,17 @@ const CreateCollection = ({
         return userOptions;
     };
 
+    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             collectionFormFields.map(field => {
@@ -255,10 +298,11 @@ const CreateCollection = ({
                             control={control}
                             sx={{ mt: 1 }}
                             {...field}
-                            {...(field.component ===
-                            inputComponents.Autocomplete
+                            {...(field.name === "collaborators" ||
+                            field.name === "keywords"
                                 ? {
                                       options: getOptions(fieldName),
+                                      onInputChange: handleOnUserInputChange,
                                       isLoadingOptions:
                                           fieldName === "collaborators" &&
                                           isLoadingUsers,
@@ -308,7 +352,7 @@ const CreateCollection = ({
             enabled: true,
             public: 1,
             team_id: teamId ? +teamId : undefined,
-            user_id: userId,
+            user_id: !teamId ? userId : undefined,
             keywords: formatKeywords(formData.keywords),
             image_link: formData.image_link,
             dur: formatEntityToIdArray(formData.dur),
@@ -539,4 +583,4 @@ const CreateCollection = ({
     );
 };
 
-export default CreateCollection;
+export default CollectionForm;

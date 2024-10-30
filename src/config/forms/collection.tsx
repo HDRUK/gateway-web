@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { inputComponents } from ".";
 
 const defaultValues = {
@@ -63,10 +64,7 @@ const formFields = [
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
     },
 ];
 

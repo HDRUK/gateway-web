@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
+import CollectionForm from "@/components/CollectionForm";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-import CreateCollection from "../../../team/[teamId]/(withLeftNav)/collections/create/components";
 
 export const metadata = {
     title: "Health Data Research Innovation Gateway - My Account - Edit Collection",
@@ -24,7 +24,7 @@ export default async function CollectionEditPage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["collections.update"]}>
-            <CreateCollection collectionId={collectionId} userId={userId} />
+            <CollectionForm collectionId={collectionId} userId={userId} />
         </ProtectedAccountRoute>
     );
 }
