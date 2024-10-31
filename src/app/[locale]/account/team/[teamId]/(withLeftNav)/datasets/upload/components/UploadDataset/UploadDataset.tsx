@@ -19,7 +19,7 @@ interface UploadDatasetProps {
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
 const TRANSLATION_PATH = "pages.account.team.datasets.components.UploadDataset";
 const FILE_TYPE = ".json";
-const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
+const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.template.json`;
 
 const UploadDataset = ({ teamId }: UploadDatasetProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -40,7 +40,7 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                     <Typography sx={{ mb: 2 }}>{t("downloadInfo")}</Typography>
 
                     <DownloadFile
-                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
+                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/HDRUK/${SCHEMA_VERSION}.template.json`}
                         buttonText={t("downloadButtonText")}
                         buttonSx={{ mb: 0 }}
                         isExternalFile
