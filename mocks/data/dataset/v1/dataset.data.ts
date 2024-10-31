@@ -54,7 +54,7 @@ const generateDatasetMetadataMiniV1 = (): Metadata => {
             description: faker.datatype.string(),
             doiName: faker.datatype.string(),
             keywords: faker.datatype.string(),
-            shortTitle: faker.datatype.string(),
+            shortTitle: faker.datatype.string(3),
             populationSize: faker.datatype.number(),
         },
         provenance: {
@@ -70,7 +70,7 @@ const generateDatasetMetadataV1p1 = (): MetadataMax => {
     return {
         metadata: {
             summary: {
-                title: faker.datatype.string(),
+                title: faker.datatype.string(5),
                 publisher: {
                     name: faker.datatype.string(),
                 },
