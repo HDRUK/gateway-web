@@ -29,13 +29,13 @@ interface useRunFederationProps {
 }
 
 const useRunFederation = async ({
-                                    teamId,
-                                    integration,
-                                    reset,
-                                    control,
-                                    setValue,
-                                    getValues,
-                                }: useRunFederationProps) => {
+    teamId,
+    integration,
+    reset,
+    control,
+    setValue,
+    getValues,
+}: useRunFederationProps) => {
     const [runStatus, setRunStatus] = useState<
         "NOT_RUN" | "IS_RUNNING" | "RUN_COMPLETE" | "TESTED_IS_TRUE"
     >("NOT_RUN");
@@ -100,10 +100,8 @@ const useRunFederation = async ({
             run_time_hour: parseInt(payload.run_time_hour, 10),
         } as Federation;
 
-        await runFederationTest(
-            updatedPayload
-        ).then((res: unknown)=>{
-            const {success} = res as FederationRunResponse
+        await runFederationTest(updatedPayload).then((res: unknown) => {
+            const { success } = res as FederationRunResponse;
             /* Send 'runStatus' to show correct section within run component */
             setRunStatus("RUN_COMPLETE");
 
@@ -113,8 +111,6 @@ const useRunFederation = async ({
             /* Send run response to be rendered within run component */
             setRunResponse(res as FederationRunResponse);
         });
-
-
     };
 
     return {
