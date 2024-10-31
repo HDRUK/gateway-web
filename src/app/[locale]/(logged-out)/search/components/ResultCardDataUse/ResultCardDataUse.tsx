@@ -156,7 +156,8 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                             </Typography>
                                         )}
                                     </>
-                                )) || (
+                                )) ||
+                                    (!!result?.non_gateway_datasets?.length && (
                                         <>
                                             <EllipsisCharacterLimit
                                                 text={
@@ -174,14 +175,13 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                 (
                                                 {
                                                     result.non_gateway_datasets
-                                                        ?.length
+                                                        .length
                                                 }
                                                 )
                                             </Typography>
                                         </>
-                                    ) ||
-                                    (!result.non_gateway_datasets?.length &&
-                                        missingDataComponent)}
+                                    )) ||
+                                    missingDataComponent}
                             </ResultRow>
 
                             <ResultRow>
