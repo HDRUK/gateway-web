@@ -97,12 +97,15 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
 
         if (fieldName === DATASETS_FIELD_NAME) {
             const datasets = get(durValues, DATASETS_FIELD_NAME);
+            return datasets?.map(dataset => dataset.shortTitle).join(", ");
+        }
+
+        if (fieldName === NON_GATEWAY_DATASETS_FIELD_NAME) {
             const nonGatewayDatasets = get(
                 durValues,
                 NON_GATEWAY_DATASETS_FIELD_NAME
             );
-
-            return datasets ? nonGatewayDatasets : EMPTY_VALUE;
+            return nonGatewayDatasets?.join(", ");
         }
 
         return get(durValues, fieldName);
