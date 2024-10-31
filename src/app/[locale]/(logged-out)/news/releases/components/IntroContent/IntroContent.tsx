@@ -2,8 +2,10 @@
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import Box from "@/components/Box";
 import theme from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 
 const TRANSLATIONS_NAMESPACE_RELEASES = "pages.releases";
 
@@ -22,7 +24,19 @@ const IntroContent = () => {
             }}>
             <Typography variant="h2">{t("heading")}</Typography>
             <Typography sx={{ mb: 1 }}>{t("description1")}</Typography>
-            <Typography sx={{ mb: 1 }}>{t("description2")}</Typography>
+
+            <Typography>
+                {t.rich(`description2`, {
+                    // eslint-disable-next-line react/no-unstable-nested-components
+                    researchersLink: chunks => (
+                        <Link href={`${RouteName.RESEARCHERS}`}>{chunks}</Link>
+                    ),
+                    // eslint-disable-next-line react/no-unstable-nested-components
+                    supportLink: chunks => (
+                        <Link href={`/${RouteName.SUPPORT}`}>{chunks}</Link>
+                    ),
+                })}
+            </Typography>
         </Box>
     );
 };
