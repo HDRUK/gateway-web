@@ -80,13 +80,14 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                                                 {dataUse.non_gateway_datasets.map(
                                                     (dataset, index) => (
                                                         <span>
-                                                            {dataUse.datasets
-                                                                .length &&
+                                                            {!!dataUse.datasets
+                                                                ?.length &&
                                                                 index === 0 &&
                                                                 ", "}
                                                             {dataset}
                                                             {index <
-                                                                dataUse.datasets
+                                                                dataUse
+                                                                    .non_gateway_datasets
                                                                     .length -
                                                                     1 && ", "}
                                                         </span>
