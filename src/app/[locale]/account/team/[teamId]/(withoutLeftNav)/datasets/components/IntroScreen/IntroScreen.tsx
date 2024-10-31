@@ -148,7 +148,7 @@ const IntroScreen = ({
                                 fontWeight: "bold",
                                 mb: 1,
                             }}>
-                            Data Custodian
+                            {t("dataCustodian")}
                         </Typography>
 
                         <InputWrapper
