@@ -145,7 +145,7 @@ const CollectionForm = ({
     useEffect(() => {
         const userOptions = userData.map(user => ({
             value: user.id,
-            label: `${user.name}`,
+            label: `${user.name} (${user.email})`,
         }));
 
         setUserOptions(prevOptions =>
@@ -191,7 +191,10 @@ const CollectionForm = ({
 
         if (collaborators) {
             const labels = existingCollectionData?.users?.slice(1).map(item => {
-                return { label: item.name, value: item.id };
+                return {
+                    label: `${item.name} (${item.email})`,
+                    value: item.id,
+                };
             });
             setUserOptions(labels);
         }
