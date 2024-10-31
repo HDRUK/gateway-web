@@ -129,9 +129,7 @@ describe("Nav utils", () => {
             const helpItem = navItems.find(item => item.label === "Help");
 
             expect(helpItem).toBeDefined();
-            expect(helpItem?.href).toBe(
-                `/${RouteName.SUPPORT}`
-            );
+            expect(helpItem?.href).toBe(`/${RouteName.SUPPORT}`);
         });
     });
 });
