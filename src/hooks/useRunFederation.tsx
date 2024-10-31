@@ -102,18 +102,31 @@ const useRunFederation = ({
             run_time_hour: parseInt(payload.run_time_hour, 10),
         } as Federation;
 
-        const response = await runFederationTest(
+        await runFederationTest(
             updatedPayload
-        ) as unknown as FederationRunResponse;
+        ).then(
+         (res: unknown) => { /* Send 'runStatus' to show correct section within run component */
+            const resPayload = res as FederationRunResponse;
+            setRunStatus("RUN_COMPLETE");
+    
+            /* Update 'tested' property on integration form data */
+            setValue("tested", resPayload.success);
+    
+            /* Send run response to be rendered within run component */
+            setRunResponse(resPayload);
+        }
+        ).catch(
+            (e) => { console.log(e) }
+        );
 
-        /* Send 'runStatus' to show correct section within run component */
-        setRunStatus("RUN_COMPLETE");
+        // /* Send 'runStatus' to show correct section within run component */
+        // setRunStatus("RUN_COMPLETE");
 
-        /* Update 'tested' property on integration form data */
-        setValue("tested", response.success);
+        // /* Update 'tested' property on integration form data */
+        // setValue("tested", response.success);
 
-        /* Send run response to be rendered within run component */
-        setRunResponse(response);
+        // /* Send run response to be rendered within run component */
+        // setRunResponse(response);
     };
 
     return {
