@@ -147,10 +147,12 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                     fontWeight: 500,
                                                     ml: 1,
                                                 }}>
-                                                ( (result.datasetTitles?.length
-                                                ?? 0) +
-                                                (result.non_gateway_datasets?.length
-                                                ?? 0) )
+                                                (
+                                                {(result.datasetTitles
+                                                    ?.length ?? 0) +
+                                                    (result.non_gateway_datasets
+                                                        ?.length ?? 0)}
+                                                )
                                             </Typography>
                                         )}
                                     </>
