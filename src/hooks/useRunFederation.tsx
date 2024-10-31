@@ -102,9 +102,9 @@ const useRunFederation = ({
             run_time_hour: parseInt(payload.run_time_hour, 10),
         } as Federation;
 
-        const response = (await runFederationTest(
+        const response = await runFederationTest(
             updatedPayload
-        )) as unknown as FederationRunResponse;
+        ) as unknown as FederationRunResponse;
 
         /* Send 'runStatus' to show correct section within run component */
         setRunStatus("RUN_COMPLETE");
