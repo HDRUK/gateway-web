@@ -68,10 +68,12 @@ const EditDataUse = () => {
         keywords.map(keyword => keyword.name);
 
     const mapDatasets = (datasets: DatasetWithTitle[]) =>
-        datasets.flatMap(dataset => ({
-            label: dataset.shortTitle,
-            value: dataset.id,
-        }));
+        datasets.flatMap(dataset => {
+            return {
+                label: dataset.shortTitle,
+                value: dataset.id,
+            };
+        });
 
     const { control, handleSubmit, reset } = useForm<DataUse>({
         mode: "onTouched",
@@ -303,9 +305,7 @@ const EditDataUse = () => {
                     );
                     const optionFlatTitle = get(option, "shortTitle");
 
-                    return optionObjectTitle
-                        ? optionObjectTitle
-                        : optionFlatTitle;
+                    return optionObjectTitle || optionFlatTitle;
                 }}
             />
         ),

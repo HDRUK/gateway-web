@@ -50,6 +50,13 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
                             }}
                         />
                     ))}
+                    {result.non_gateway_datasets.map(dataset => (
+                        <EllipsisCharacterLimit
+                            text={dataset}
+                            characterLimit={CHARACTER_LIMIT}
+                            isChip
+                        />
+                    ))}
                 </Box>
 
                 <CategoryHeader variant="h3">

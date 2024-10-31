@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Chip } from "@mui/material";
 import { ButtonProps } from "@mui/material/Button";
 import Button from "@/components/Button";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
@@ -8,6 +9,7 @@ interface EllipsisCharacterLimitProps extends ButtonProps {
     text: string;
     characterLimit?: number;
     isButton?: boolean;
+    isChip?: boolean;
     action?: () => void;
 }
 
@@ -33,6 +35,7 @@ const EllipsisCharacterLimit = ({
     text,
     characterLimit = 50,
     isButton = false,
+    isChip = false,
     ...rest
 }: EllipsisCharacterLimitProps) => {
     const formattedText =
@@ -47,7 +50,11 @@ const EllipsisCharacterLimit = ({
             <ConditionalWrapper
                 requiresWrapper={text.length > characterLimit}
                 wrapper={tooltipWrapper(text)}>
-                <span>{formattedText}</span>
+                {isChip ? (
+                    <Chip label={formattedText} sx={{ borderRadius: 1 }} />
+                ) : (
+                    <span>{formattedText}</span>
+                )}
             </ConditionalWrapper>
         </ConditionalWrapper>
     );
