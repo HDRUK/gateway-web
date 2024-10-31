@@ -3,8 +3,8 @@ import { Control, FieldValues, Path, useController } from "react-hook-form";
 import {
     FilterOptionsState,
     InputAdornment,
-    Chip,
     ListItemText,
+    Chip,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,

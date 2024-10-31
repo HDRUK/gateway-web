@@ -69,6 +69,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                             </Link>
                             {((!!result.datasetTitles?.length &&
                                 result.datasetTitles?.length > 1) ||
+                                !!result.non_gateway_datasets?.length ||
                                 leadOrgNames?.length > 1) && (
                                 <Button
                                     onClick={handleShowAll}
@@ -146,12 +147,41 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                     fontWeight: 500,
                                                     ml: 1,
                                                 }}>
-                                                ({result.datasetTitles?.length})
+                                                (
+                                                {(result.datasetTitles
+                                                    ?.length ?? 0) +
+                                                    (result.non_gateway_datasets
+                                                        ?.length ?? 0)}
+                                                )
                                             </Typography>
                                         )}
                                     </>
-                                )) ||
-                                    missingDataComponent}
+                                )) || (
+                                        <>
+                                            <EllipsisCharacterLimit
+                                                text={
+                                                    result
+                                                        .non_gateway_datasets[0]
+                                                }
+                                                characterLimit={CHARACTER_LIMIT}
+                                                isChip
+                                            />
+                                            <Typography
+                                                sx={{
+                                                    fontWeight: 500,
+                                                    ml: 1,
+                                                }}>
+                                                (
+                                                {
+                                                    result.non_gateway_datasets
+                                                        ?.length
+                                                }
+                                                )
+                                            </Typography>
+                                        </>
+                                    ) ||
+                                    (!result.non_gateway_datasets?.length &&
+                                        missingDataComponent)}
                             </ResultRow>
 
                             <ResultRow>

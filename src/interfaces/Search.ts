@@ -101,6 +101,7 @@ export interface SearchResultDataUse extends SearchResultBase {
     publisher: string;
     datasetTitles: string[];
     datasetIds: number[];
+    non_gateway_datasets: string[];
 }
 
 export interface SearchResultPublication extends SearchResultBase {
