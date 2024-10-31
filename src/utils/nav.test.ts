@@ -130,7 +130,7 @@ describe("Nav utils", () => {
 
             expect(helpItem).toBeDefined();
             expect(helpItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.HELP}`
+                `/${RouteName.SUPPORT}`
             );
         });
     });
