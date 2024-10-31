@@ -191,7 +191,10 @@ const CollectionForm = ({
 
         if (collaborators) {
             const labels = existingCollectionData?.users?.slice(1).map(item => {
-                return { label: `${item.name} (${item.email})`, value: item.id };
+                return {
+                    label: `${item.name} (${item.email})`,
+                    value: item.id,
+                };
             });
             setUserOptions(labels);
         }
