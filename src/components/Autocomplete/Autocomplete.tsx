@@ -4,6 +4,7 @@ import {
     FilterOptionsState,
     InputAdornment,
     ListItemText,
+    Chip,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -11,7 +12,6 @@ import MuiAutocomplete, {
 import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
-import Chip from "../Chip";
 import Loading from "../Loading";
 
 export type ValueType = string | number;
