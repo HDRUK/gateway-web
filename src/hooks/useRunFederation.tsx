@@ -79,7 +79,7 @@ const useRunFederation = ({
         }
     }, [integration, tested, reset, setValue]);
 
-    const runFederationTest = usePost<Omit<Federation, "id">>(
+    const runFederationTest = usePost(
         `${apis.teamsV1Url}/${teamId}/federations/test`,
         {
             itemName: "Integration test",
@@ -102,21 +102,23 @@ const useRunFederation = ({
             run_time_hour: parseInt(payload.run_time_hour, 10),
         } as Federation;
 
-        runFederationTest(
+        await runFederationTest(
             updatedPayload
         ).then(
          (res: unknown) => { /* Send 'runStatus' to show correct section within run component */
-            const resPayload = res as FederationRunResponse;
+            const {success} = res as FederationRunResponse;
             setRunStatus("RUN_COMPLETE");
-    
+
             /* Update 'tested' property on integration form data */
-            setValue("tested", resPayload.success);
-    
+            setValue("tested", success);
+
             /* Send run response to be rendered within run component */
-            setRunResponse(resPayload);
+            setRunResponse(res as FederationRunResponse);
         }
         ).catch(
-            (e) => { console.log(e) }
+            (e) => {
+                console.log(e)
+            }
         );
 
         // /* Send 'runStatus' to show correct section within run component */
