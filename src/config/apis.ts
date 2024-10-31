@@ -44,6 +44,7 @@ const apis = {
     toolsV1UrlIP: `${apiV1IPUrl}/tools`,
     teamsV1Url: `${apiV1Url}/teams`,
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
+    teamsSearchV1Url: `${apiV1Url}/teams/search`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,

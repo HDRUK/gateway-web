@@ -203,7 +203,8 @@ async function getFormHydration(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,
     schemaVersion: string,
-    dataTypes?: string[]
+    dataTypes?: string[],
+    teamId?: string
 ): Promise<FormHydrationSchema> {
     return get<FormHydrationSchema>(
         cookieStore,
@@ -211,7 +212,7 @@ async function getFormHydration(
             apis.formHydrationV1UrlIP
         }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
             dataTypes || []
-        }`
+        }${teamId && `&team_id=${teamId}`}`
     );
 }
 
