@@ -26,13 +26,15 @@ interface useRunFederationProps {
         value: string | number | boolean | string[] | undefined
     ) => void;
     getValues: () => void;
+    tested: boolean;
 }
 
-const useRunFederation = async ({
+const useRunFederation = ({
     teamId,
     integration,
     reset,
     control,
+    tested,
     setValue,
     getValues,
 }: useRunFederationProps) => {
@@ -70,14 +72,14 @@ const useRunFederation = async ({
     }, [fieldsToWatch]);
 
     useEffect(() => {
-        if (!integration) return;
+        if (!tested && !integration) return;
 
-        if (integration.tested) {
+        if (integration?.tested || tested) {
             setRunStatus("TESTED_IS_TRUE");
         }
-    }, [integration, reset, setValue]);
+    }, [integration, tested, reset, setValue]);
 
-    const runFederationTest = usePost(
+    const runFederationTest = usePost<Omit<Federation, "id">>(
         `${apis.teamsV1Url}/${teamId}/federations/test`,
         {
             itemName: "Integration test",
@@ -100,17 +102,31 @@ const useRunFederation = async ({
             run_time_hour: parseInt(payload.run_time_hour, 10),
         } as Federation;
 
-        await runFederationTest(updatedPayload).then((res: unknown) => {
-            const { success } = res as FederationRunResponse;
-            /* Send 'runStatus' to show correct section within run component */
+        runFederationTest(
+            updatedPayload
+        ).then(
+         (res: unknown) => { /* Send 'runStatus' to show correct section within run component */
+            const resPayload = res as FederationRunResponse;
             setRunStatus("RUN_COMPLETE");
-
+    
             /* Update 'tested' property on integration form data */
-            setValue("tested", success);
-
+            setValue("tested", resPayload.success);
+    
             /* Send run response to be rendered within run component */
-            setRunResponse(res as FederationRunResponse);
-        });
+            setRunResponse(resPayload);
+        }
+        ).catch(
+            (e) => { console.log(e) }
+        );
+
+        // /* Send 'runStatus' to show correct section within run component */
+        // setRunStatus("RUN_COMPLETE");
+
+        // /* Update 'tested' property on integration form data */
+        // setValue("tested", response.success);
+
+        // /* Send run response to be rendered within run component */
+        // setRunResponse(response);
     };
 
     return {
