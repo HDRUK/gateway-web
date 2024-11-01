@@ -3,11 +3,12 @@ import CollectionForm from "@/components/CollectionForm";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Create Collection",
-    description: "Create a collection",
-};
+export const metadata = metaData({
+    title: "Create Collection - My Account",
+    description: "",
+}, noFollowRobots);
 
 export default async function CollectionCreatePage() {
     const cookieStore = cookies();

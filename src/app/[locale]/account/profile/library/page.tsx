@@ -1,10 +1,10 @@
 import UserLibrary from "./components/UserLibrary";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Library",
+export const metadata = metaData({
+    title: "Library",
     description: "",
-};
-
+}, noFollowRobots);
 export default function LibraryPage() {
     return <UserLibrary />;
 }

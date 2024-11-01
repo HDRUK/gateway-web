@@ -2,12 +2,12 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
 import ReleaseTabs from "./components/ReleaseTabs";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Releases",
+export const metadata = metaData({
+    title: "Releases - About",
     description: "",
-};
-
+});
 const ReleasesPage = async () => {
     const allReleases = await getReleaseNotes();
 

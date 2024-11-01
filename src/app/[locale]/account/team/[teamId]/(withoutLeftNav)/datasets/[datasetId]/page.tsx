@@ -7,12 +7,12 @@ import { getDataset, getFormHydration, getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import EditDataset from "../components/CreateDataset";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Dataset",
-    description: "",
-};
-
+export const metadata = metaData({
+    title: "Dataset - My Account",
+    description: ""
+}, noFollowRobots);
 const SCHEMA_NAME = "HDRUK";
 const SCHEMA_VERSION = "3.0.0";
 

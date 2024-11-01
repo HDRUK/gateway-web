@@ -4,12 +4,13 @@ import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getGlossary } from "@/utils/cms";
 import "@/styles/wpStyles.css";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Glossary",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Glossary",
+        description: ""
+    })
 const GlossaryPage = async () => {
     const cmsPage = await getGlossary();
 

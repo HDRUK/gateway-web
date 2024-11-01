@@ -1,8 +1,14 @@
 import { notFound } from "next/navigation";
 import { getContentPageByParentQuery } from "@/utils/cms";
 import SupportPage from "../components/SupportPage";
+import metaData from "@/utils/metdata";
 
-export default async function Tools() {
+export const metadata = metaData({
+    title: "Publications - Support",
+    description: "",
+});
+
+export default async function Publications() {
     const cmsPage = await getContentPageByParentQuery("GetContentPageQuery", {
         id: "uploading-publications",
         idType: "URI",

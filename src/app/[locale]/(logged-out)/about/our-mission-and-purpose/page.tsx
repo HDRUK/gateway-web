@@ -3,11 +3,14 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
 import { getMissionAndPurposes } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Our Mission and Purpose",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Our Mission and Purpose - About",
+        description: ""
+    })
+
 
 const TRANSLATION_NO_DATA = "noData";
 

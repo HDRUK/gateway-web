@@ -18,11 +18,12 @@ import Linkages from "./components/Linkages";
 import Publications from "./components/Publications";
 import Sources from "./components/Sources";
 import { datasetFields } from "./config";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Dataset",
-    description: "",
-};
+import metaData from "@/utils/metdata";
+export const metadata = metaData(
+    {
+        title: "Dataset",
+        description: ""
+    })
 
 const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",

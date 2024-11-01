@@ -4,12 +4,11 @@ import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import ApiManagement from "./components/ApiManagement";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - API Management",
-    description: "",
-};
-
+import metaData, {noFollowRobots} from "@/utils/metdata";
+export const metadata = metaData({
+    title: "API Management - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function TeamApiManagementPage({
     params,
 }: {

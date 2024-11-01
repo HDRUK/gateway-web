@@ -1,10 +1,10 @@
 import CreatePublication from "../components/CreatePublication";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Publication Create",
-    description: "",
-};
-
+export const metadata = metaData({
+    title: "Publication Create - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function PublicationCreatePage() {
     return <CreatePublication />;
 }

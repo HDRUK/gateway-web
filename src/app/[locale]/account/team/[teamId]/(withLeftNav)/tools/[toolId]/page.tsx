@@ -4,12 +4,12 @@ import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateTool from "../create/components/CreateTool";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Tool Edit",
-    description: "",
-};
-
+export const metadata = metaData({
+    title: "Tool Edit - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function ToolCreatePage({
     params,
 }: {

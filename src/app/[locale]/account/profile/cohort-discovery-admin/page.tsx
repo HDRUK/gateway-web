@@ -9,11 +9,12 @@ import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import CohortTable from "./components/CohortTable";
 import CohortTableDownload from "./components/CohortTableDownload";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Cohort Discovery Admin",
+export const metadata = metaData({
+    title: "Cohort Discovery Admin - My Account",
     description: "",
-};
+}, noFollowRobots);
 
 export default async function CohortDiscoveryAdmin() {
     const cookieStore = cookies();

@@ -5,12 +5,12 @@ import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import UploadDataset from "./components/UploadDataset";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Dataset Upload",
-    description: "",
-};
-
+export const metadata = metaData({
+    title: "Dataset Upload - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function UploadDatasetPage({
     params,
 }: {

@@ -5,11 +5,12 @@ import { getFormHydration, getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateDataset from "../components/CreateDataset";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Dataset Create",
-    description: "",
-};
+export const metadata = metaData({
+    title: "Dataset Create - My Account",
+    description: ""
+}, noFollowRobots);
 
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "2.2.1";

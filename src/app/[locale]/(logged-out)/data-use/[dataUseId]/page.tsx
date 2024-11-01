@@ -10,14 +10,15 @@ import { getDataUse } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DataUseContent from "./components/DataUseContent";
 import { dataUseFields } from "./config";
+import metaData from "@/utils/metdata";
 
 const TRANSLATION_PATH = "pages.dataUse";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Use",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Data Use",
+        description: ""
+    })
 export default async function DataUseItemPage({
     params,
 }: {

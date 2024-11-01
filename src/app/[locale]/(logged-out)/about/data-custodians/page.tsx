@@ -4,12 +4,13 @@ import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getDataCustodians } from "@/utils/cms";
 import "@/styles/wpStyles.css";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Custodians",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Data Custodians",
+        description: ""
+    })
 const DataCustodiansPage = async () => {
     const cmsPage = await getDataCustodians();
 

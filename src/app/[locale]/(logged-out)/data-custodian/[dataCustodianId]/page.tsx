@@ -17,14 +17,16 @@ import { getTeamSummary } from "@/utils/api";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
 import { accordions, dataCustodianFields } from "./config";
+import metaData from "@/utils/metdata";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Custodian",
-    description: "",
-};
 
+export const metadata = metaData(
+    {
+        title: "Data Custodian",
+        description: ""
+    })
 export default async function DataCustodianItemPage({
     params,
 }: {

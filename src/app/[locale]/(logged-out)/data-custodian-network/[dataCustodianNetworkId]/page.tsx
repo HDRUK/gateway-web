@@ -17,8 +17,16 @@ import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
 import IntroductionContent from "./components/IntroductionContent";
 import { accordions } from "./config";
+import metaData from "@/utils/metdata";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
+
+
+export const metadata = metaData(
+    {
+        title: "Data Custodian Network",
+        description: ""
+    })
 
 export default async function DataCustodianNetworkPage({
     params,

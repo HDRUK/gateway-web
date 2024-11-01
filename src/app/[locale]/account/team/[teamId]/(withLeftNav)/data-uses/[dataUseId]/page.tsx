@@ -6,12 +6,11 @@ import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import EditDataUse from "./components";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Data Use Edit",
-    description: "",
-};
-
+import metaData, {noFollowRobots} from "@/utils/metdata";
+export const metadata = metaData({
+    title: "Data Use Edit - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function DataUseEditPage({
     params,
 }: {

@@ -14,14 +14,13 @@ import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
 import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
+import metaData from "@/utils/metdata";
 
 const TRANSLATION_PATH = "pages.tool";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Tool",
+export const metadata = metaData({
+    title: "Tool",
     description: "",
-};
-
+});
 export default async function ToolPage({
     params,
 }: {

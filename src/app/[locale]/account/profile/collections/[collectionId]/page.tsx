@@ -3,11 +3,11 @@ import CollectionForm from "@/components/CollectionForm";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Edit Collection",
-    description: "Edit a collection",
-};
+import metaData, {noFollowRobots} from "@/utils/metdata";
+export const metadata = metaData({
+    title: "Edit Collection - My Account",
+    description: "",
+}, noFollowRobots);
 
 export default async function CollectionEditPage({
     params,

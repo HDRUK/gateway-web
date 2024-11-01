@@ -4,11 +4,12 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import TeamCollections from "../../team/[teamId]/(withLeftNav)/collections/components/TeamCollections";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Collections",
+export const metadata = metaData({
+    title: "Collections - My Account",
     description: "",
-};
+}, noFollowRobots);
 
 export default async function CollectionsPage() {
     const cookieStore = cookies();

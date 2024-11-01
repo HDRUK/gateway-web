@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/api";
 import CreateTool from "../../../team/[teamId]/(withLeftNav)/tools/create/components/CreateTool";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Tool Edit",
-    description: "",
-};
-
+export const metadata = metaData({
+    title: "Tool Edit - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function ToolCreatePage({
     params,
 }: {

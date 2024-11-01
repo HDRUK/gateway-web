@@ -1,10 +1,10 @@
 import SignInDialog from "./components/signIn";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Sign in",
+export const metadata = metaData({
+    title: "Sign in",
     description: "",
-};
-
+}, noFollowRobots); // double check no follow on signin
 const SignInPage = async () => {
     return <SignInDialog />;
 };

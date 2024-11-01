@@ -1,10 +1,9 @@
 import SavedSearches from "./SavedSearches";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Saved Searches",
-    description: "",
-};
-
+import metaData, {noFollowRobots} from "@/utils/metdata";
+export const metadata = metaData({
+    title: "Saved Searches",
+    description: ""
+}, noFollowRobots);
 export default function SavedSearchesPage() {
     return <SavedSearches />;
 }

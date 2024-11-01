@@ -1,10 +1,10 @@
 import Application from "./components/Application";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - DAR Application",
+export const metadata = metaData({
+    title: "DAR Application",
     description: "",
-};
-
+}, noFollowRobots);
 const ApplicationPage = async ({
     params,
 }: {

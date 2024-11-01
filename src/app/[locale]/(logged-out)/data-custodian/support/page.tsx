@@ -1,10 +1,11 @@
 import SupportCentreLinks from "./components/SupportCentreLinks";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Custodians - Support",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Support - Data Custodians",
+        description: ""
+    })
 const SupportCenterPage = () => {
     return <SupportCentreLinks />;
 };

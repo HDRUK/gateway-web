@@ -5,12 +5,11 @@ import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import TeamCollections from "./components/TeamCollections";
-
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Collections",
-    description: "",
-};
-
+import metaData, {noFollowRobots} from "@/utils/metdata";
+export const metadata = metaData({
+    title: "Collections - My Account",
+    description: ""
+}, noFollowRobots);
 export default async function TeamCollectionsPage({
     params,
 }: {

@@ -8,12 +8,12 @@ import DecisionHistory from "./DecisionHistory";
 import Header from "./Header";
 import ReadOnly from "./ReadOnly";
 import StatusForm from "./StatusForm";
+import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Cohort Discovery Manage",
+export const metadata = metaData({
+    title: "Cohort Discovery Manage - My Account",
     description: "",
-};
-
+}, noFollowRobots);
 export default async function CohortDiscoveryManage({
     params,
 }: {
