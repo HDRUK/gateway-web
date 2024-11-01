@@ -1,15 +1,18 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import UserPublications from "@/app/[locale]/account/profile/publications/components/UserPublications";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Publications",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Publications - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function UserPublicationsPage({
     params,
 }: {

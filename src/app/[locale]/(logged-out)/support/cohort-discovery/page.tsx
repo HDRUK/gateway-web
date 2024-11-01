@@ -1,9 +1,15 @@
 import { notFound } from "next/navigation";
 import { getCohortDiscoverySupportPageQuery } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 import SupportPage from "../components/SupportPage";
 import Documentation from "./components/Documentation";
 import Explainer from "./components/Explainer";
 import FAQs from "./components/FAQs";
+
+export const metadata = metaData({
+    title: "Cohort Discovery - Support",
+    description: "",
+});
 
 export default async function CohortDiscovery() {
     const data = await getCohortDiscoverySupportPageQuery();

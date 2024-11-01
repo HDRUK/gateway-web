@@ -12,15 +12,16 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getReducedCollection } from "@/utils/api";
+import metaData from "@/utils/metdata";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
 import { collectionSections } from "./config";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Collection",
+export const metadata = metaData({
+    title: "Collection",
     description: "",
-};
+});
 
 const TRANSLATION_PATH = "pages.collection";
 
@@ -35,7 +36,6 @@ export default async function CollectionItemPage({
     const collection = await getReducedCollection(cookieStore, collectionId, {
         suppressError: true,
     });
-
     if (!collection) notFound();
 
     const {

@@ -4,13 +4,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getHowToSearchPage } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 import "@/styles/wpStyles.css";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - How to search the Gateway",
+export const metadata = metaData({
+    title: "How to search the Gateway",
     description: "",
-};
-
+});
 const HowToSearchPage = async () => {
     const cmsPage = await getHowToSearchPage();
 

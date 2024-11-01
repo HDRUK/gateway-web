@@ -7,17 +7,17 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataUse } from "@/utils/api";
+import metaData from "@/utils/metdata";
 import ActionBar from "./components/ActionBar";
 import DataUseContent from "./components/DataUseContent";
 import { dataUseFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataUse";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Use",
+export const metadata = metaData({
+    title: "Data Use",
     description: "",
-};
-
+});
 export default async function DataUseItemPage({
     params,
 }: {

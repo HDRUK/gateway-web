@@ -3,13 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getPrivacyPolicy } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 import "@/styles/wpStyles.css";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Privacy Policy",
+export const metadata = metaData({
+    title: "Privacy Policy",
     description: "",
-};
-
+});
 const PrivacyPolicyPage = async () => {
     const cmsPage = await getPrivacyPolicy();
 

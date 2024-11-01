@@ -1,12 +1,13 @@
 import CMSPromoTemplate from "@/components/CMSPromoTemplate";
 import Container from "@/components/Container";
 import { getCohortDiscovery } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 import CtaOverride from "./components/CtaOverride";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Cohort Discovery",
+export const metadata = metaData({
+    title: "Cohort Discovery - About",
     description: "",
-};
+});
 
 export default async function CohortDiscoryPage() {
     const cohortDiscovery = await getCohortDiscovery();

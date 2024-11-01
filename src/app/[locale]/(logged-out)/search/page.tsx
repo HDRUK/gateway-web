@@ -1,12 +1,16 @@
 import { cookies } from "next/headers";
 import { Filter } from "@/interfaces/Filter";
 import { getFilters } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import Search from "./components/Search";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Search",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Search",
+        description: "",
+    },
+    noFollowRobots
+); // double check robots for search
 
 let filters: Filter[] | null = null;
 

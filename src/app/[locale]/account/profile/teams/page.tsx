@@ -1,14 +1,17 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import Teams from "./teams";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Teams",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Teams",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function TeamsPage() {
     const cookieStore = cookies();
     const user = await getUser(cookieStore);

@@ -1,15 +1,18 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import TeamManagement from "./components/TeamManagement";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Team Management",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Team Management - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function TeamManagementPage({
     params,
 }: {

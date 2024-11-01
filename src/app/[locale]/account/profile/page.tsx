@@ -1,10 +1,13 @@
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import Profile from "./profile";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Profile",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Profile",
+        description: "",
+    },
+    noFollowRobots
+);
 export default function ProfilePage() {
     return <Profile />;
 }

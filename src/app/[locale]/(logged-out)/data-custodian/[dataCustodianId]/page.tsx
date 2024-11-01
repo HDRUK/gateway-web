@@ -14,17 +14,17 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getTeamSummary } from "@/utils/api";
+import metaData from "@/utils/metdata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
 import { accordions, dataCustodianFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Custodian",
+export const metadata = metaData({
+    title: "Data Custodian",
     description: "",
-};
-
+});
 export default async function DataCustodianItemPage({
     params,
 }: {
