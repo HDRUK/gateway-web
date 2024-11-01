@@ -3,14 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getDataCustodians } from "@/utils/cms";
-import "@/styles/wpStyles.css";
 import metaData from "@/utils/metdata";
+import "@/styles/wpStyles.css";
 
-export const metadata = metaData(
-    {
-        title: "Data Custodians",
-        description: ""
-    })
+export const metadata = metaData({
+    title: "Data Custodians",
+    description: "",
+});
 const DataCustodiansPage = async () => {
     const cmsPage = await getDataCustodians();
 

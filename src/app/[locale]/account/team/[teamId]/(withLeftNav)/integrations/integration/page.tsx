@@ -5,14 +5,17 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "API Management - My Account",
-    description: ""
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "API Management - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function TeamIntegrationsPage({
     params,
 }: {

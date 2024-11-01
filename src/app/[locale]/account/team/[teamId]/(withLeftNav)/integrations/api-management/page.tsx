@@ -1,14 +1,18 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import ApiManagement from "./components/ApiManagement";
-import metaData, {noFollowRobots} from "@/utils/metdata";
-export const metadata = metaData({
-    title: "API Management - My Account",
-    description: ""
-}, noFollowRobots);
+
+export const metadata = metaData(
+    {
+        title: "API Management - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function TeamApiManagementPage({
     params,
 }: {

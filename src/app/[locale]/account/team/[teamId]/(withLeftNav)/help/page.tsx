@@ -3,12 +3,15 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { ACCOUNT, HELP, PAGES, TEAM, TITLE } from "@/consts/translation";
-import metaData, {noFollowRobots} from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "Help - My Account",
-    description: ""
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "Help - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 const TeamHelpPage = () => {
     const t = useTranslations(`${PAGES}.${ACCOUNT}.${TEAM}.${HELP}`);
 

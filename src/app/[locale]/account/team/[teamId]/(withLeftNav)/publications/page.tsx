@@ -1,15 +1,18 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import UserPublications from "@/app/[locale]/account/profile/publications/components/UserPublications";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "Publications - My Account",
-    description: ""
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "Publications - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function UserPublicationsPage({
     params,
 }: {

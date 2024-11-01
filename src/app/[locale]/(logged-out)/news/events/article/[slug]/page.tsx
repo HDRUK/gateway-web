@@ -13,14 +13,10 @@ interface ArticlePageProps {
 
 export async function generateMetadata({ params }: ArticlePageProps) {
     return metaData({
-        title: `Events - ${params.slug.replaceAll(
-            "-",
-            " "
-        )}`,
-        description: ''
+        title: `Events - ${params.slug.replaceAll("-", " ")}`,
+        description: "",
     });
 }
-
 
 const ArticlePage = async ({ params }: ArticlePageProps) => {
     const cmsPost = await getContentPostQuery("getEventsArticle", {

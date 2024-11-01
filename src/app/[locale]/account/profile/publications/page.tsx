@@ -1,12 +1,16 @@
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import UserPublications from "./components/UserPublications";
-import metaData, {noFollowRobots} from "@/utils/metdata";
-export const metadata = metaData({
-    title: "Publications",
-    description: ""
-}, noFollowRobots);
+
+export const metadata = metaData(
+    {
+        title: "Publications",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function UserPublicationsPage() {
     const cookieStore = cookies();

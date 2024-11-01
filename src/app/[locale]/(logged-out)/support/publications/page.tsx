@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getContentPageByParentQuery } from "@/utils/cms";
-import SupportPage from "../components/SupportPage";
 import metaData from "@/utils/metdata";
+import SupportPage from "../components/SupportPage";
 
 export const metadata = metaData({
     title: "Publications - Support",

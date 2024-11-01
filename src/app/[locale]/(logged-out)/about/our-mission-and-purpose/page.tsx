@@ -5,12 +5,10 @@ import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
 import { getMissionAndPurposes } from "@/utils/cms";
 import metaData from "@/utils/metdata";
 
-export const metadata = metaData(
-    {
-        title: "Our Mission and Purpose - About",
-        description: ""
-    })
-
+export const metadata = metaData({
+    title: "Our Mission and Purpose - About",
+    description: "",
+});
 
 const TRANSLATION_NO_DATA = "noData";
 

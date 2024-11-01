@@ -3,17 +3,20 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getCohort, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import DecisionHistory from "./DecisionHistory";
 import Header from "./Header";
 import ReadOnly from "./ReadOnly";
 import StatusForm from "./StatusForm";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "Cohort Discovery Manage - My Account",
-    description: "",
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "Cohort Discovery Manage - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function CohortDiscoveryManage({
     params,
 }: {

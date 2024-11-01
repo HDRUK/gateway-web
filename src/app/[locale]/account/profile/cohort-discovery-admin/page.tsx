@@ -6,15 +6,18 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
 import { COHORT_DISCOVERY_ADMIN } from "@/consts/translation";
 import { getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import CohortTable from "./components/CohortTable";
 import CohortTableDownload from "./components/CohortTableDownload";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "Cohort Discovery Admin - My Account",
-    description: "",
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "Cohort Discovery Admin - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function CohortDiscoveryAdmin() {
     const cookieStore = cookies();

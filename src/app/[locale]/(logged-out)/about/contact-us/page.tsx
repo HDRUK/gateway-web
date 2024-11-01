@@ -2,11 +2,10 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import metaData from "@/utils/metdata";
 
-export const metadata = metaData(
-    {
-        title: "Contact Us - About",
-        description: ""
-    })
+export const metadata = metaData({
+    title: "Contact Us - About",
+    description: "",
+});
 const ReleasesPage = async () => {
     return (
         <>

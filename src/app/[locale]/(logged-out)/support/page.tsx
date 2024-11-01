@@ -1,5 +1,5 @@
-import SupportCentreLinks from "./components/SupportCentreLinks";
 import metaData from "@/utils/metdata";
+import SupportCentreLinks from "./components/SupportCentreLinks";
 
 export const metadata = metaData({
     title: "Support centre",

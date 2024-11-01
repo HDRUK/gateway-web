@@ -10,11 +10,11 @@ import PublicationsContent from "@/components/PublicationsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getTool } from "@/utils/api";
+import metaData from "@/utils/metdata";
 import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
 import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
-import metaData from "@/utils/metdata";
 
 const TRANSLATION_PATH = "pages.tool";
 export const metadata = metaData({

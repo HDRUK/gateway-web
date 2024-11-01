@@ -3,13 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getWorkWithUs } from "@/utils/cms";
-import "@/styles/wpStyles.css";
 import metaData from "@/utils/metdata";
-export const metadata = metaData(
-    {
-        title: "Work With Us",
-        description: ""
-    })
+import "@/styles/wpStyles.css";
+
+export const metadata = metaData({
+    title: "Work With Us",
+    description: "",
+});
 const WorkWithUsPage = async () => {
     const cmsPage = await getWorkWithUs();
 

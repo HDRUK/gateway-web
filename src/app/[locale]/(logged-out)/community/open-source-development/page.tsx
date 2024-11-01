@@ -3,14 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getOpenSourceDevelopment } from "@/utils/cms";
-import "@/styles/wpStyles.css";
 import metaData from "@/utils/metdata";
+import "@/styles/wpStyles.css";
 
-export const metadata = metaData(
-    {
-        title: "Open-Source Development",
-        description: ""
-    })
+export const metadata = metaData({
+    title: "Open-Source Development",
+    description: "",
+});
 const DevelopmentCommunityPage = async () => {
     const cmsPage = await getOpenSourceDevelopment();
 

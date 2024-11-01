@@ -1,15 +1,18 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateDataUse from "./components/CreateDataUse";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "Data Use Create - My Account",
-    description: ""
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "Data Use Create - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function DataUseCreatePage({
     params,
 }: {

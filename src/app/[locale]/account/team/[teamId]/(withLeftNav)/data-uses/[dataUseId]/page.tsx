@@ -3,14 +3,18 @@ import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import EditDataUse from "./components";
-import metaData, {noFollowRobots} from "@/utils/metdata";
-export const metadata = metaData({
-    title: "Data Use Edit - My Account",
-    description: ""
-}, noFollowRobots);
+
+export const metadata = metaData(
+    {
+        title: "Data Use Edit - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function DataUseEditPage({
     params,
 }: {

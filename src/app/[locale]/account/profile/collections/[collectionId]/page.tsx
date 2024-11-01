@@ -2,12 +2,16 @@ import { cookies } from "next/headers";
 import CollectionForm from "@/components/CollectionForm";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
-import metaData, {noFollowRobots} from "@/utils/metdata";
-export const metadata = metaData({
-    title: "Edit Collection - My Account",
-    description: "",
-}, noFollowRobots);
+
+export const metadata = metaData(
+    {
+        title: "Edit Collection - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function CollectionEditPage({
     params,

@@ -1,10 +1,13 @@
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import Application from "./components/Application";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "DAR Application",
-    description: "",
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "DAR Application",
+        description: "",
+    },
+    noFollowRobots
+);
 const ApplicationPage = async ({
     params,
 }: {

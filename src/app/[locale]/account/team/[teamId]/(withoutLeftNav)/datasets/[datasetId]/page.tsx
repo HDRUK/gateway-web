@@ -4,15 +4,18 @@ import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { DataStatus } from "@/consts/application";
 import { getDataset, getFormHydration, getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import EditDataset from "../components/CreateDataset";
-import metaData, {noFollowRobots} from "@/utils/metdata";
 
-export const metadata = metaData({
-    title: "Dataset - My Account",
-    description: ""
-}, noFollowRobots);
+export const metadata = metaData(
+    {
+        title: "Dataset - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 const SCHEMA_NAME = "HDRUK";
 const SCHEMA_VERSION = "3.0.0";
 

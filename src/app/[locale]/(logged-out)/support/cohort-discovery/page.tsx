@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { getCohortDiscoverySupportPageQuery } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 import SupportPage from "../components/SupportPage";
 import Documentation from "./components/Documentation";
 import Explainer from "./components/Explainer";
 import FAQs from "./components/FAQs";
-import metaData from "@/utils/metdata";
 
 export const metadata = metaData({
     title: "Cohort Discovery - Support",
