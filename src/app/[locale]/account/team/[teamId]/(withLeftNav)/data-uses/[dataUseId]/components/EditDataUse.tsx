@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import dayjs from "dayjs";
-import { isEqual } from "lodash";
+import { get, isEqual } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
+import { Dataset } from "@/interfaces/Dataset";
 import { Keyword } from "@/interfaces/Keyword";
 import Accordion from "@/components/Accordion";
+import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import useActionBar from "@/hooks/useActionBar";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
@@ -40,6 +43,10 @@ const EditDataUse = () => {
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.EditDataUse`
     );
 
+    const [datasetSearchCache, setDatasetSearchCache] = useState<
+        DatasetWithTitle[]
+    >([]);
+
     const params = useParams<{
         teamId: string;
         dataUseId: string;
@@ -61,7 +68,12 @@ const EditDataUse = () => {
         keywords.map(keyword => keyword.name);
 
     const mapDatasets = (datasets: DatasetWithTitle[]) =>
-        datasets.flatMap(dataset => dataset.shortTitle);
+        datasets.flatMap(dataset => {
+            return {
+                label: dataset.shortTitle,
+                value: dataset.id,
+            };
+        });
 
     const { control, handleSubmit, reset } = useForm<DataUse>({
         mode: "onTouched",
@@ -73,6 +85,8 @@ const EditDataUse = () => {
         if (!existingDataUse) {
             return;
         }
+
+        setDatasetSearchCache(existingDataUse?.datasets as DatasetWithTitle[]);
 
         const formData = {
             ...existingDataUse,
@@ -99,7 +113,7 @@ const EditDataUse = () => {
     }, [reset, existingDataUse]);
 
     const editDataUse = usePut<Partial<DataUse>>(`${apis.dataUseV1Url}`, {
-        itemName: "Application",
+        itemName: "Data Use",
     });
 
     const getChangedFields = <T extends DataUse>(
@@ -121,6 +135,7 @@ const EditDataUse = () => {
         if (!existingDataUse) {
             return;
         }
+
         const edited = {
             ...formData,
             project_start_date: formData.project_start_date
@@ -139,8 +154,10 @@ const EditDataUse = () => {
             access_date: formData.access_date
                 ? dayjs(formData.access_date).format("YYYY-MM-DDThh:mm:ss")
                 : null,
-            datasets: existingDataUse?.datasets,
             status,
+            datasets: formData.datasets.map(value => ({
+                id: typeof value === "object" ? value.value : value,
+            })),
         };
 
         const formUpdates: Partial<DataUse> = getChangedFields(
@@ -222,6 +239,79 @@ const EditDataUse = () => {
         return [];
     };
 
+    const [query, setQuery] = useState("");
+
+    const [queryParams, setQueryParams] = useState({
+        status: "ACTIVE",
+        searchTitle: "",
+    });
+
+    const filterTitleDebounced = useDebounce(query, 500);
+
+    useEffect(() => {
+        setQueryParams(previous => ({
+            ...previous,
+            title: filterTitleDebounced,
+        }));
+    }, [filterTitleDebounced]);
+
+    const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
+        Dataset[]
+    >(`${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`, {
+        keepPreviousData: true,
+    });
+    const datasetOptions = useMemo(() => {
+        if (!datasetData) return [];
+
+        setDatasetSearchCache([
+            ...datasetSearchCache,
+            ...(datasetData as unknown as DatasetWithTitle[]),
+        ]);
+
+        return datasetData.map(data => ({
+            label: get(
+                data,
+                "latest_metadata.metadata.metadata.summary.shortTitle"
+            ),
+            value: data.id,
+        })) as OptionsType[];
+    }, [datasetData]);
+
+    const datasetField = useCallback(
+        field => (
+            <InputWrapper
+                key={field.name}
+                control={control}
+                {...field}
+                options={isLoadingDatasets ? [] : datasetOptions}
+                onInputChange={(e: ChangeEvent, value: string) => {
+                    if (e?.type !== "change") return;
+                    setQuery(value);
+                }}
+                loading={isLoadingDatasets}
+                getChipLabel={(
+                    _: { value: string | number; label: string }[],
+                    value: { label: string; value: number } | number
+                ) => {
+                    const option = datasetSearchCache.find(
+                        d =>
+                            d.id ===
+                            (typeof value === "object" ? value.value : value)
+                    );
+
+                    const optionObjectTitle = get(
+                        option,
+                        "latest_metadata.metadata.metadata.summary.shortTitle"
+                    );
+                    const optionFlatTitle = get(option, "shortTitle");
+
+                    return optionObjectTitle || optionFlatTitle;
+                }}
+            />
+        ),
+        [isLoadingDatasets, datasetOptions, datasetSearchCache, existingDataUse]
+    );
+
     return (
         <>
             <Box sx={{ bgcolor: "white", mb: 0 }}>
@@ -255,15 +345,21 @@ const EditDataUse = () => {
                                             p: 0,
                                             gridColumn: "span 3",
                                         }}>
-                                        <InputWrapper
-                                            key={field.name}
-                                            control={control}
-                                            {...field}
-                                            {...(field.component ===
-                                                inputComponents.Autocomplete && {
-                                                options: getOptions(field.name),
-                                            })}
-                                        />
+                                        {field.name !== "datasets" ? (
+                                            <InputWrapper
+                                                key={field.name}
+                                                control={control}
+                                                {...field}
+                                                {...(field.component ===
+                                                    inputComponents.Autocomplete && {
+                                                    options: getOptions(
+                                                        field.name
+                                                    ),
+                                                })}
+                                            />
+                                        ) : (
+                                            datasetField(field)
+                                        )}
                                     </Box>
                                 ))}
                             />

@@ -13,6 +13,7 @@ import { GetOptions } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
+import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
@@ -56,10 +57,17 @@ async function getEntityAction(
     return cookieStore.get(config.ENTITY_ACTION_COOKIE.COOKIE_NAME)?.value;
 }
 
-async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+function getUserFromCookie(cookieStore: ReadonlyRequestCookies): User | null {
     const jwt = cookieStore.get(config.JWT_COOKIE);
-    const authUser = getUserFromToken(jwt?.value);
-    return get<AuthUser>(cookieStore, `${apis.usersV1UrlIP}/${authUser?.id}`);
+
+    return getUserFromToken(jwt?.value);
+}
+
+async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
+    return get<AuthUser>(
+        cookieStore,
+        `${apis.usersV1UrlIP}/${getUserFromCookie(cookieStore)?.id}`
+    );
 }
 
 async function getApplication(
@@ -203,7 +211,8 @@ async function getFormHydration(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,
     schemaVersion: string,
-    dataTypes?: string[]
+    dataTypes?: string[],
+    teamId?: string
 ): Promise<FormHydrationSchema> {
     return get<FormHydrationSchema>(
         cookieStore,
@@ -211,7 +220,7 @@ async function getFormHydration(
             apis.formHydrationV1UrlIP
         }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
             dataTypes || []
-        }`
+        }${teamId && `&team_id=${teamId}`}`
     );
 }
 
@@ -230,4 +239,5 @@ export {
     getTeamSummary,
     getTool,
     getUser,
+    getUserFromCookie,
 };

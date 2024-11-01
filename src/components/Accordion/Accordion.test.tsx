@@ -24,4 +24,12 @@ describe("Accordion", () => {
 
         expect(screen.getByText(contents)).toBeInTheDocument();
     });
+
+    it("displays accordion arrow icon on left", async () => {
+        const wrapper = render(
+            <Accordion heading={heading} contents={contents} iconLeft />
+        );
+
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

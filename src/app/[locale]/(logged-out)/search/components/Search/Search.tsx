@@ -258,6 +258,11 @@ const Search = ({ filters }: SearchProps) => {
         updatePath(QUERY_FIELD, "");
     };
 
+    const pickedFilters = pickOnlyFilters(
+        FILTER_TYPE_MAPPING[queryParams.type],
+        queryParams
+    );
+
     const {
         data,
         isLoading: isSearching,
@@ -272,10 +277,7 @@ const Search = ({ filters }: SearchProps) => {
         }`,
         {
             query: queryParams.query,
-            ...pickOnlyFilters(
-                FILTER_TYPE_MAPPING[queryParams.type],
-                queryParams
-            ),
+            ...pickedFilters,
         },
         {
             keepPreviousData: true,
@@ -837,7 +839,12 @@ const Search = ({ filters }: SearchProps) => {
                                     {queryParams.type ===
                                         SearchCategory.COLLECTIONS && (
                                         <>
-                                            <DataCustodianNetwork />
+                                            <DataCustodianNetwork
+                                                searchParams={{
+                                                    query: queryParams.query,
+                                                    ...pickedFilters,
+                                                }}
+                                            />
                                             <Typography
                                                 fontWeight={600}
                                                 sx={{

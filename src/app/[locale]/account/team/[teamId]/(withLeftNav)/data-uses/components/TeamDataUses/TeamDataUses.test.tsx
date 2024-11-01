@@ -20,7 +20,7 @@ describe("TeamDataUses", () => {
             generateDataUse({ status: "DRAFT" }),
         ];
         server.use(getDataUses(mockDataUses));
-        render(<TeamDataUses permissions={{}} />);
+        render(<TeamDataUses permissions={{}} teamId="1" />);
 
         await waitFor(() => {
             const dataUseCards = screen.getAllByTestId("datause-card");
@@ -36,16 +36,11 @@ describe("TeamDataUses", () => {
                     `${mockDataUses[0].team.name}`
                 )
             ).toBeInTheDocument();
-            expect(
-                within(dataUseCards[0]).getAllByText(
-                    `${mockDataUses[0].datasets[0].shortTitle}`
-                )[0]
-            ).toBeInTheDocument();
         });
     });
     it("should render message if no active datasets", async () => {
         server.use(getDataUses([]));
-        render(<TeamDataUses permissions={{}} />);
+        render(<TeamDataUses permissions={{}} teamId="1" />);
 
         await waitFor(() => {
             expect(

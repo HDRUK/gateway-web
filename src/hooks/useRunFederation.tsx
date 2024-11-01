@@ -26,6 +26,7 @@ interface useRunFederationProps {
         value: string | number | boolean | string[] | undefined
     ) => void;
     getValues: () => void;
+    tested: boolean;
 }
 
 const useRunFederation = ({
@@ -33,6 +34,7 @@ const useRunFederation = ({
     integration,
     reset,
     control,
+    tested,
     setValue,
     getValues,
 }: useRunFederationProps) => {
@@ -70,12 +72,12 @@ const useRunFederation = ({
     }, [fieldsToWatch]);
 
     useEffect(() => {
-        if (!integration) return;
+        if (!tested && !integration) return;
 
-        if (integration.tested) {
+        if (integration?.tested || tested) {
             setRunStatus("TESTED_IS_TRUE");
         }
-    }, [integration, reset, setValue]);
+    }, [integration, tested, reset, setValue]);
 
     const runFederationTest = usePost<Omit<Federation, "id">>(
         `${apis.teamsV1Url}/${teamId}/federations/test`,

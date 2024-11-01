@@ -27,8 +27,7 @@ const generateTeam = (): Team => {
     return {
         id: 1,
         name: faker.lorem.sentence(2),
-    }
-
+    };
 };
 
 const generateDataUse = (data = {}): DataUse => {
@@ -38,12 +37,15 @@ const generateDataUse = (data = {}): DataUse => {
         // user_id: faker.datatype.number(),
         status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
         updated_at: faker.date.past(),
-        datasets: Array.from({ length: 3 }).map(() => generateDatasetWithTitleV1("1.1")),
+        datasets: Array.from({ length: 3 }).map(() =>
+            generateDatasetWithTitleV1("1.1")
+        ),
         team: generateTeam(),
         project_title: faker.lorem.sentence(5),
-        non_gateway_applicants: Array.from({ length: 3}).map(() =>
+        non_gateway_applicants: Array.from({ length: 3 }).map(() =>
             faker.name.fullName()
         ),
+        non_gateway_datasets: [],
         ...data,
     };
 };

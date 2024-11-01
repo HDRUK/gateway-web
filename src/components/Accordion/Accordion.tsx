@@ -4,7 +4,7 @@ import MuiAccordion, {
 } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import { ChevronThinIcon } from "@/consts/icons";
+import { ChevronThinIcon } from "@/consts/customIcons";
 
 export interface AccordionProps
     extends Omit<MuiAccordionProps, "children" | "variant"> {
@@ -12,6 +12,7 @@ export interface AccordionProps
     contents: string | ReactNode;
     variant?: "underline" | "plain";
     noIndent?: boolean;
+    iconLeft?: boolean;
 }
 
 const Accordion = ({
@@ -19,6 +20,7 @@ const Accordion = ({
     contents,
     variant = "underline",
     noIndent,
+    iconLeft,
     sx,
     ...restProps
 }: AccordionProps) => {
@@ -54,13 +56,19 @@ const Accordion = ({
                         minHeight: "auto",
                     },
                 }),
+                ...(iconLeft && {
+                    ".MuiAccordionSummary-root .MuiAccordionSummary-content": {
+                        marginLeft: 1,
+                    },
+                }),
                 ...sx,
             }}
             {...restProps}>
             <MuiAccordionSummary
                 expandIcon={
                     <ChevronThinIcon fontSize="medium" color="primary" />
-                }>
+                }
+                sx={{ ...(iconLeft && { flexDirection: "row-reverse" }) }}>
                 {heading}
             </MuiAccordionSummary>
             <MuiAccordionDetails>{contents}</MuiAccordionDetails>
