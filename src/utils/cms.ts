@@ -12,6 +12,7 @@ import {
     PageTemplatePromo,
     PageTemplateRepeat,
 } from "@/interfaces/Cms";
+import { ContributorsAndCollaboratorsNode } from "@/interfaces/ContributorsAndCollaborators";
 import { EventNode } from "@/interfaces/Events";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
@@ -28,6 +29,7 @@ import {
     GetContentPagesByNameQuery,
 } from "@/config/queries/contentPage";
 import { GetContentPostQuery } from "@/config/queries/contentPost";
+import { GetContributorsAndCollaboratorsQuery } from "@/config/queries/contributorsAndCollaborators";
 import { GetEventsQuery } from "@/config/queries/events";
 import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
@@ -142,6 +144,17 @@ const getMeetTheTeam = async () => {
         DEFAULT_OPTIONS,
         true
     );
+
+    return data?.posts?.edges || null;
+};
+
+const getContributorsAndCollaborators = async () => {
+    const data: CMSPostsResponse<ContributorsAndCollaboratorsNode> =
+        await fetchCMS(
+            GetContributorsAndCollaboratorsQuery,
+            DEFAULT_OPTIONS,
+            true
+        );
 
     return data?.posts?.edges || null;
 };
@@ -473,4 +486,5 @@ export {
     getWorkWithUs,
     hasCategoryName,
     substituteEnvLinks,
+    getContributorsAndCollaborators,
 };
