@@ -102,10 +102,9 @@ const CollectionForm = ({
     );
 
     const { data: existingCollectionData } = useGet<Collection>(
-        `${apis.collectionsV1Url}/${collectionId}`,
+        `${apis.collectionsV1Url}/${collectionId}?view_type=mini`,
         { shouldFetch: !!collectionId }
     );
-
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
         { itemName: "Collection", successNotificationsOn: !file }
