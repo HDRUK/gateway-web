@@ -55,6 +55,10 @@ function staticPages(): MetadataRoute.Sitemap[] {
             priority: 1,
         },
         {
+            url: `${domain}/support`,
+            ...staticRoutesConfig,
+        },
+        {
             url: `${domain}/how-to-search`,
             ...staticRoutesConfig,
         },
@@ -64,6 +68,22 @@ function staticPages(): MetadataRoute.Sitemap[] {
         },
         {
             url: `${domain}/terms-and-conditions`,
+            ...staticRoutesConfig,
+        },
+        {
+            url: `${domain}/about/our-mission-and-purpose`,
+            ...staticRoutesConfig,
+        },
+        {
+            url: `${domain}/about/researchers-innovators`,
+            ...staticRoutesConfig,
+        },
+        {
+            url: `${domain}/about/data-custodians`,
+            ...staticRoutesConfig,
+        },
+        {
+            url: `${domain}/about/meet-the-team`,
             ...staticRoutesConfig,
         },
         {
@@ -98,26 +118,7 @@ function staticPages(): MetadataRoute.Sitemap[] {
             url: `${domain}/news/releases`,
             ...staticRoutesConfig,
         },
-        {
-            url: `${domain}/about/our-mission-and-purpose`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/researchers-innovators`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/data-custodians`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/meet-the-team`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/support`,
-            ...staticRoutesConfig,
-        },
+
         {
             url: `${domain}/help/glossary`,
             ...staticRoutesConfig,
