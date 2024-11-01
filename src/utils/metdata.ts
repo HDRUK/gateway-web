@@ -12,7 +12,6 @@ export interface MetaParams {
 const followRobots: Robots = {
     index: true,
     follow: true,
-    nocache: false,
     googleBot: {
         index: true,
         follow: true
@@ -21,7 +20,6 @@ const followRobots: Robots = {
 export const noFollowRobots: Robots = {
     index: false,
     follow: false,
-    nocache: false,
     googleBot: {
         index: false,
         follow: false
