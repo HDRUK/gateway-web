@@ -36,7 +36,7 @@ interface CountStatus {
 
 interface TeamCollectionsProps {
     permissions: { [key: string]: boolean };
-    teamId: string;
+    teamId?: string;
     userId: string;
 }
 
@@ -166,7 +166,9 @@ const TeamCollections = ({
         ...(permissions["collections.update"]
             ? [
                   {
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
+                      href: teamId
+                          ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
+                          : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
                   },
@@ -260,7 +262,9 @@ const TeamCollections = ({
     }));
 
     const handleAdd = () => {
-        const COLLECTION_CREATE_ROUTE = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`;
+        const COLLECTION_CREATE_ROUTE = teamId
+            ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`
+            : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}/${RouteName.CREATE}`;
         router.push(COLLECTION_CREATE_ROUTE);
     };
 

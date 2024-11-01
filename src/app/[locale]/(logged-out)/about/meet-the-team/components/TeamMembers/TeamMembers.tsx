@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { MeetTheTeamNode, TeamMember } from "@/interfaces/MeetTheTeam";
+import { TeamMember } from "@/interfaces/MeetTheTeam";
 import BackButton from "@/components/BackButton";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
@@ -13,13 +13,16 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import TeamModal from "../TeamModal";
 
 interface TeamMembersProps {
-    data: MeetTheTeamNode;
+    title: string;
+    data: {
+        summaryText: string;
+        teamList: TeamMember[];
+    };
 }
 
 const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS = "pages.about";
 
-export default function TeamMembers({ data }: TeamMembersProps) {
-    const { meetTheTeamRepeater, title } = data.node;
+export default function TeamMembers({ title, data }: TeamMembersProps) {
     const [activeTeamMember, setActiveTeamMember] = useState<TeamMember>();
     const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MEMBERS);
     const router = useRouter();
@@ -36,7 +39,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
         router.push("/");
     };
 
-    const content = meetTheTeamRepeater.teamList?.map(teamMember => {
+    const content = data.teamList?.map(teamMember => {
         const { name, jobTitle, image } = teamMember;
 
         return (
@@ -100,9 +103,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
                     label={t("backToHomepage")}
                     onClick={handleBackClick}
                 />
-                <Typography sx={{ mb: 4 }}>
-                    {meetTheTeamRepeater.summaryText}
-                </Typography>
+                <Typography sx={{ mb: 4 }}>{data.summaryText}</Typography>
                 <Box
                     component="ul"
                     sx={{

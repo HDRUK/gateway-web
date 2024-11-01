@@ -3,8 +3,8 @@ import { Control, FieldValues, Path, useController } from "react-hook-form";
 import {
     FilterOptionsState,
     InputAdornment,
-    Chip,
     ListItemText,
+    Chip,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -145,7 +145,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             typeof getChipLabel === "function"
                                 ? getChipLabel(options, option)
                                 : option?.label || `${option}`;
-
                         return (
                             <Chip
                                 label={chipLabel || ""}

@@ -77,6 +77,7 @@ const EditIntegrationForm = () => {
                 run_time_hour: parseInt(getValues("run_time_hour"), 10),
                 notifications: [],
             },
+            tested: getValues("tested"),
             control,
             reset,
             getValues,
