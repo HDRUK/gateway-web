@@ -14,7 +14,7 @@ const followRobots: Robots = {
     follow: true,
     googleBot: {
         index: true,
-        follow: true
+        follow: true,
     },
 };
 export const noFollowRobots: Robots = {
@@ -22,7 +22,7 @@ export const noFollowRobots: Robots = {
     follow: false,
     googleBot: {
         index: false,
-        follow: false
+        follow: false,
     },
 };
 
