@@ -29,6 +29,10 @@ import {
 } from "@/config/forms/cohortTermsAccept";
 import { colors } from "@/config/theme";
 
+interface accessRequestType {
+    redirect_url: string;
+}
+
 const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
 
