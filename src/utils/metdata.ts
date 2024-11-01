@@ -15,11 +15,7 @@ const followRobots: Robots = {
     nocache: false,
     googleBot: {
         index: true,
-        follow: true,
-        noimageindex: false,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
+        follow: true
     },
 };
 export const noFollowRobots: Robots = {
@@ -28,11 +24,7 @@ export const noFollowRobots: Robots = {
     nocache: false,
     googleBot: {
         index: false,
-        follow: false,
-        noimageindex: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
+        follow: false
     },
 };
 
