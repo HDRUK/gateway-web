@@ -15,11 +15,5 @@ export default async function CollectionCreatePage() {
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 
-    return (
-        <ProtectedAccountRoute
-            permissions={permissions}
-            pagePermissions={["collections.create"]}>
-            <CollectionForm userId={userId} />
-        </ProtectedAccountRoute>
-    );
+    return <CollectionForm userId={userId} />;
 }

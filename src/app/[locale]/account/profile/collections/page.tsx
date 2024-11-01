@@ -16,13 +16,16 @@ export default async function CollectionsPage() {
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 
+    // manually add collections permissions for individual users so that they have permissions on their owned tools.
+    ["collections.update", "collections.delete", "collections.create"].forEach(
+        value => {
+            permissions[value] = true;
+        }
+    );
+
     return (
-        <ProtectedAccountRoute
-            permissions={permissions}
-            pagePermissions={["collections.read"]}>
-            <BoxContainer sx={{ gap: 0 }}>
-                <TeamCollections permissions={permissions} userId={userId} />
-            </BoxContainer>
-        </ProtectedAccountRoute>
+        <BoxContainer sx={{ gap: 0 }}>
+            <TeamCollections permissions={permissions} userId={userId} />
+        </BoxContainer>
     );
 }

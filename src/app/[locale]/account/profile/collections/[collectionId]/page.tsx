@@ -20,11 +20,5 @@ export default async function CollectionEditPage({
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 
-    return (
-        <ProtectedAccountRoute
-            permissions={permissions}
-            pagePermissions={["collections.update"]}>
-            <CollectionForm collectionId={collectionId} userId={userId} />
-        </ProtectedAccountRoute>
-    );
+    return <CollectionForm collectionId={collectionId} userId={userId} />;
 }
