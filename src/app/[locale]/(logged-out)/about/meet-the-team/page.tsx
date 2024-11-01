@@ -1,4 +1,4 @@
-import { getMeetTheTeam } from "@/utils/cms";
+import { getContributorsAndCollaborators, getMeetTheTeam } from "@/utils/cms";
 import TeamMembers from "./components/TeamMembers";
 
 export const metadata = {
@@ -7,7 +7,23 @@ export const metadata = {
 };
 
 export default async function MeetTheTeam() {
-    const data = await getMeetTheTeam();
+    const teamData = await getMeetTheTeam().then(data => data[0].node);
+    const stakeholderData = await getContributorsAndCollaborators().then(
+        data => data[0].node
+    );
 
-    return <TeamMembers data={data[0]} />;
+    return (
+        <>
+            <TeamMembers
+                title={teamData.title}
+                data={teamData.meetTheTeamRepeater}
+            />
+            ;
+            <TeamMembers
+                title={stakeholderData.title}
+                data={stakeholderData.contributorsAndCollaborators}
+            />
+            ;
+        </>
+    );
 }
