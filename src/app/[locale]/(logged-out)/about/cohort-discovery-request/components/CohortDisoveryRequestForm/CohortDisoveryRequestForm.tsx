@@ -24,6 +24,10 @@ interface CohortDisoveryRequestFormProps {
     userId: number;
 }
 
+interface accessRequestType {
+    redirect_url: string;
+}
+
 const CohortDisoveryRequestForm = ({
     cmsContent,
     userId,
@@ -39,6 +43,11 @@ const CohortDisoveryRequestForm = ({
         }
     );
 
+    const { data: accessData, isLoading: isAccessLoading } =
+        useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access`, {
+            errorNotificationsOn: false,
+        });
+
     const handleSubmit = () => {
         showDialog(CohortRequestTermsDialog, { cmsContent });
     };
@@ -49,11 +58,15 @@ const CohortDisoveryRequestForm = ({
 
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
-    if (userData?.request_status) {
-        redirect(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+    if (!isUserLoading && !isAccessLoading) {
+        if (accessData?.redirect_url) {
+            redirect(accessData?.redirect_url);
+        } else if (userData?.request_status) {
+            redirect(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+        }
     }
 
-    return !isUserLoading ? (
+    return !isUserLoading && !isAccessLoading ? (
         <BoxContainer
             sx={{
                 p: 4,
