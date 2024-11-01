@@ -36,7 +36,8 @@ const formFields = [
         label: "Description",
         name: "description",
         info: "Up to 5,000 characters",
-        component: inputComponents.TextField,
+        component: inputComponents.TextArea,
+        rows: 20,
         required: true,
     },
     {
