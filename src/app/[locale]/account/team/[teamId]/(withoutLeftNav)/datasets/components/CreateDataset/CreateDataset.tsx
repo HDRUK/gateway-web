@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import dayjs from "dayjs";
 import { get, omit } from "lodash";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
@@ -53,6 +52,7 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+import { getToday } from "@/utils/date";
 import {
     mapExistingDatasetToFormFields,
     formGenerateLegendItems,
@@ -101,7 +101,7 @@ const getMetadata = (isDraft: boolean) =>
         ? "versions[0].metadata.original_metadata"
         : "versions[0].metadata.metadata";
 
-const today = dayjs();
+const today = getToday();
 
 const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
@@ -193,6 +193,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const schemaFields = currentFormJSON.schema_fields;
 
     const defaultFormValues = {
+        ...currentFormJSON.defaultValues,
         "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
@@ -202,10 +203,13 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Last Modified Datetime": today,
         "Name of data provider": "--",
         "Dataset population size": -1,
-        "contact point": user?.email,
         "Follow-up": null,
-        ...currentFormJSON.defaultValues,
+        "contact point":
+            currentFormJSON.defaultValues.contact_point || user?.email, // this is a hidden field and goes no where but it is summary.dataCustodian.contact_point
+        "Contact point": user?.email, // summary.contact_point
     };
+
+    console.log(defaultFormValues);
 
     useEffect(() => {
         if (isLoading || !isEditing) {
@@ -506,6 +510,8 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                       },
                   };
         try {
+            console.log(formPayload);
+            return;
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
