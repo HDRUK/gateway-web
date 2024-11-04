@@ -396,6 +396,31 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
+    const cleanUndefinedObjects = (obj: any) => {
+        if (obj && typeof obj === "object") {
+            Object.keys(obj).forEach(key => {
+                if (typeof obj[key] === "object" && obj[key] !== null) {
+                    cleanUndefinedObjects(obj[key]);
+                    // Check if all keys are undefined and nullify if true
+                    if (
+                        Object.keys(obj[key]).every(
+                            innerKey => obj[key][innerKey] === undefined
+                        ) &&
+                        obj[key].constructor === Object
+                    ) {
+                        obj[key] = null;
+                        console.log(
+                            "Empty object found and nullified at key:",
+                            key
+                        );
+                    }
+                }
+            });
+        }
+    };
+
+    cleanUndefinedObjects(formattedFormData);
+
     return convertRevisionsToArray(formattedFormData);
 };
 

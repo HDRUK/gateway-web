@@ -202,9 +202,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Last Modified Datetime": today,
         "Name of data provider": "--",
         "Dataset population size": -1,
-        "contact point": user?.email,
         "Follow-up": null,
         ...currentFormJSON.defaultValues,
+        "Contact point":
+            currentFormJSON.defaultValues["Contact point"] || user?.email,
     };
 
     useEffect(() => {
@@ -265,14 +266,12 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [guidanceText, setGuidanceText] = useState<string>();
 
     const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
+
     const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
 
-    const createDataset = usePost<NewDataset>(
-        `${postDatasetUrl}?${datasetVersionQuery}`,
-        {
-            itemName: "Dataset",
-        }
-    );
+    const createDataset = usePost<NewDataset>(postDatasetUrl, {
+        itemName: "Dataset",
+    });
 
     const updateDataset = usePut<NewDataset>(apis.datasetsV1Url, {
         itemName: "Dataset",
