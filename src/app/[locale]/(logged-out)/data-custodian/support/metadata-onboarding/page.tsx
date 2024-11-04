@@ -2,11 +2,12 @@ import { notFound } from "next/navigation";
 import { getContentPageByParentQuery } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 import SupportPage from "../components/SupportPage";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Custodian - Metadata Onboarding",
+export const metadata = metaData({
+    title: "Metadata Onboarding - Data Custodians",
     description: "",
-};
+});
 
 const MetadataOnboardingPage = async () => {
     const cmsPage = await getContentPageByParentQuery("MetadataOnboarding", {

@@ -2,11 +2,13 @@ import { notFound } from "next/navigation";
 import { getContentPageByParentQuery } from "@/utils/cms";
 import "@/styles/wpStyles.css";
 import SupportPage from "../components/SupportPage";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Data Custodians - Getting started on the Gateway and managing your Team",
+
+export const metadata = metaData({
+    title: "Getting started on the Gateway and managing your Team - Data Custodian",
     description: "",
-};
+});
 
 const GettingStartedPage = async () => {
     const cmsPage = await getContentPageByParentQuery("GettingStarted", {

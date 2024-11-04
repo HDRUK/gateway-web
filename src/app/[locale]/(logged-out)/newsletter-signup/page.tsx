@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { HUBSPOT_FORM_CREATE } from "@/config/forms/hubspot";
+import { MetaHead } from "@/components/MetaHead";
 
 export default function SignupNewsletter() {
     useEffect(() => {
@@ -22,8 +23,11 @@ export default function SignupNewsletter() {
     }, []);
 
     return (
-        <Box sx={{ m: "0 auto", py: 5, maxWidth: "900px" }}>
-            <div id="newsletterSignupForm" />
-        </Box>
+        <>
+            <MetaHead title="Newsletter signup" description="Newsletter signup"/>
+            <Box sx={{ m: "0 auto", py: 5, maxWidth: "900px" }}>
+                <div id="newsletterSignupForm" />
+            </Box>
+        </>
     );
 }
