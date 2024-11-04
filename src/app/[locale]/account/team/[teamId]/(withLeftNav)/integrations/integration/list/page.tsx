@@ -5,11 +5,16 @@ import { getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import IntegrationList from "./components/IntegrationList";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Integrations",
-    description: "",
-};
+
+export const metadata = metaData(
+    {
+        title: "Integrations - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function TeamIntegrationsListPage({
     params,

@@ -10,11 +10,15 @@ import apis from "@/config/apis";
 import Header from "./Header";
 import LibraryTable from "./LibraryTable";
 import RightPanel from "./RightPanel";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Library",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Library",
+        description: "",
+    },
+    noFollowRobots
+);
 
 const UserLibrary = () => {
     const { data, isLoading, mutate } = useGet<Library[]>(apis.librariesV1Url);

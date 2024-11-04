@@ -5,11 +5,15 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import CreateTeamForm from "../components/CreateTeamForm";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Create Team",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Create Team - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function CreateTeamPage() {
     const cookieStore = cookies();

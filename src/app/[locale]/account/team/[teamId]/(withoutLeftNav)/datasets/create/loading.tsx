@@ -1,10 +1,14 @@
 import BoxContainer from "@/components/BoxContainer";
 import Loading from "@/components/Loading";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Dataset Create",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Dataset Create",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function CreateDatasetPageLoader() {
     return (

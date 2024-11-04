@@ -5,11 +5,15 @@ import { getApplication, getTeam, getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import ApplicationPermissions from "../../../components/ApplicationPermissions";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - API Management - Permissions",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Permissions - API Management",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function TeamApiPermissionsPage({
     params,

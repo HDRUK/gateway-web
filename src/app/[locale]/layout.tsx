@@ -14,12 +14,15 @@ import SWRProvider from "@/providers/SWRProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
 import CMSBanners from "./components/CMSBanners";
 import Organization from "./components/RichResults/Organization";
+import metaData from "@/utils/metdata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway",
-    description:
-        "The Health Data Research Innovation Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
-};
+
+export const metadata = metaData(
+    {
+        title: "Health Data Research Innovation Gateway",
+        description: "The Health Data Research Innovation Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
+    }
+);
 
 const locales = ["en"];
 
