@@ -17,7 +17,7 @@ interface UploadDatasetProps {
 }
 
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
-const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH;
+const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
 const TRANSLATION_PATH = "pages.account.team.datasets.components.UploadDataset";
 const FILE_TYPE = ".json";
 const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.template.json`;
