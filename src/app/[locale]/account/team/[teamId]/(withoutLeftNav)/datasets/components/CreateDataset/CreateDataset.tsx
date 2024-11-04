@@ -202,10 +202,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Last Modified Datetime": today,
         "Name of data provider": "--",
         "Dataset population size": -1,
+        "Contact point": user?.email,
         "Follow-up": null,
         ...currentFormJSON.defaultValues,
-        "Contact point":
-            currentFormJSON.defaultValues["Contact point"] || user?.email,
     };
 
     useEffect(() => {
