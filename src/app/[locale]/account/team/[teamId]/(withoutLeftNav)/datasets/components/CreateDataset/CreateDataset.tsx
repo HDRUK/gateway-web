@@ -190,9 +190,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         StructuralMetadata[]
     >([]);
 
-    const schemaFields = currentFormJSON.schema_fields.filter(
-        t => !t.title.includes("contact point")
-    );
+    const schemaFields = currentFormJSON.schema_fields;
 
     const defaultFormValues = {
         "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
