@@ -1,11 +1,11 @@
 const GetContributorsAndCollaboratorsQuery = `
 query GetContributorsAndCollaborators {
-  posts(where: {name: "meet-the-stakeholders"}) {
+  posts(where: {name: "collaborators-contributors"}) {
     edges {
       node {
         title
         id
-        contributorsAndCollaborators {
+        contributorsCollaborators {
           summaryText
           teamList {
             info

@@ -21,7 +21,7 @@ export default async function MeetTheTeam() {
             ;
             <TeamMembers
                 title={stakeholderData.title}
-                data={stakeholderData.contributorsAndCollaborators}
+                data={stakeholderData.contributorsCollaborators}
             />
             ;
         </>

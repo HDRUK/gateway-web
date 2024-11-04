@@ -13,7 +13,7 @@ interface Stakeholder {
 interface ContributorsAndCollaborators {
     title: string;
     id: string;
-    contributorsAndCollaborators: {
+    contributorsCollaborators: {
         summaryText: string;
         teamList: Stakeholder[];
     };
