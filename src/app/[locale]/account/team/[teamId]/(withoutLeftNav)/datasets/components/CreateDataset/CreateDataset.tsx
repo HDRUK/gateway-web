@@ -202,7 +202,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Last Modified Datetime": today,
         "Name of data provider": "--",
         "Dataset population size": -1,
-        "Contact point": user?.email,
+        "contact point": user?.email,
         "Follow-up": null,
         ...currentFormJSON.defaultValues,
     };
@@ -265,12 +265,14 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [guidanceText, setGuidanceText] = useState<string>();
 
     const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
-
     const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
 
-    const createDataset = usePost<NewDataset>(postDatasetUrl, {
-        itemName: "Dataset",
-    });
+    const createDataset = usePost<NewDataset>(
+        `${postDatasetUrl}?${datasetVersionQuery}`,
+        {
+            itemName: "Dataset",
+        }
+    );
 
     const updateDataset = usePut<NewDataset>(apis.datasetsV1Url, {
         itemName: "Dataset",
@@ -310,17 +312,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
-    // What is going on here? The form has already been fetched client side in page.tsx
-    // - it was passed into this function!
-    // - why are we getting it again!!?
-    // - const formJSON = await getFormHydration(
-    /*
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
         `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`
     );
-    */
-    // keeping this code in just in case, no idea why it was retrieved again as 'formJSONupdated' ?!?
-    const formJSONUpdated = formJSON;
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
