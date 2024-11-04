@@ -7,6 +7,12 @@ dayjs.extend(timezone);
 
 const DEFAULT_TIMEZONE = "UTC";
 
+const getToday = (): string => {
+    return dayjs
+        .tz(new Date(), DEFAULT_TIMEZONE)
+        .format("YYYY-MM-DDTHH:mm:ss[Z]");
+};
+
 const getDayjs = (date: string | Date) => {
     return typeof date === "string"
         ? dayjs.tz(new Date(date), DEFAULT_TIMEZONE)
@@ -32,4 +38,11 @@ const yearToDayJsDate = (year: string) => {
     return dayjs(`${year}-01-01T00:00:00.000Z`);
 };
 
-export { formatDate, differenceInDays, getYear, yearToDayJsDate, getDayjs };
+export {
+    formatDate,
+    differenceInDays,
+    getYear,
+    yearToDayJsDate,
+    getDayjs,
+    getToday,
+};
