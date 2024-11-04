@@ -7,10 +7,10 @@ import Loading from "@/components/Loading";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import Header from "./Header";
 import LibraryTable from "./LibraryTable";
 import RightPanel from "./RightPanel";
-import metaData, { noFollowRobots } from "@/utils/metdata";
 
 export const metadata = metaData(
     {

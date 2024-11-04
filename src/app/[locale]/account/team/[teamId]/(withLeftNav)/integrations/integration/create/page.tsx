@@ -6,11 +6,10 @@ import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateIntegrationForm from "../list/[intId]/components/EditIntegrationForm";
-import metaData, { noFollowRobots } from "@/utils/metdata";
-
 
 export const metadata = metaData(
     {
@@ -19,7 +18,6 @@ export const metadata = metaData(
     },
     noFollowRobots
 );
-
 
 const TRANSLATION_PATH = `pages.account.team.integration.create`;
 

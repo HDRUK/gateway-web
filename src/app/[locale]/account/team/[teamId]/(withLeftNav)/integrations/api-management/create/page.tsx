@@ -16,10 +16,10 @@ import {
     TITLE,
 } from "@/consts/translation";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateApplicationForm from "./components/CreateApplicationForm";
-import metaData, { noFollowRobots } from "@/utils/metdata";
 
 export const metadata = metaData(
     {

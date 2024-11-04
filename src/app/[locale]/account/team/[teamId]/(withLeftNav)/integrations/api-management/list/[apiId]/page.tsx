@@ -2,11 +2,10 @@ import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metdata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import ApplicationTabs from "../../components/ApplicationTabs";
-import metaData, { noFollowRobots } from "@/utils/metdata";
-
 
 export const metadata = metaData(
     {

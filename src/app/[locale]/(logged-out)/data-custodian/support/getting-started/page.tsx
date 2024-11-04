@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation";
 import { getContentPageByParentQuery } from "@/utils/cms";
+import metaData from "@/utils/metdata";
 import "@/styles/wpStyles.css";
 import SupportPage from "../components/SupportPage";
-import metaData from "@/utils/metdata";
-
 
 export const metadata = metaData({
     title: "Getting started on the Gateway and managing your Team - Data Custodian",
