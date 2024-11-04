@@ -115,7 +115,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        /* ...([
+        ...([
             permissions["applications.read"],
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -147,7 +147,7 @@ const getTeamNav = (
                       ],
                   },
               ]
-            : []), */
+            : []),
         ...(permissions["datasets.read"]
             ? [
                   {
