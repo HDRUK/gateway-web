@@ -400,7 +400,6 @@ const mapFormFieldsForSubmission = (
         obj: Record<string, unknown>
     ): Record<string, unknown> | undefined => {
         const newObj = { ...obj };
-        console.log(obj);
         Object.keys(newObj).forEach(key => {
             const value = newObj[key];
             if (
@@ -410,12 +409,10 @@ const mapFormFieldsForSubmission = (
                 !(value instanceof Date)
             ) {
                 if (Object.values(value).every(val => val === undefined)) {
-                    console.log(`making ${key} null`);
                     newObj[key] = null;
                 }
             }
         });
-        console.log(newObj);
         return newObj;
     };
     // this makes sure that any nested objects are not left as {}
