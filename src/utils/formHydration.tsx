@@ -327,7 +327,7 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
 });
 
 const convertRevisionsToArray = (data: {
-    revisions?: Revision | Revision[];
+    revisions: Revision | Revision[] | null;
 }) => {
     return {
         ...data,
@@ -396,32 +396,32 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    const cleanUndefinedObjects = (obj: any) => {
-        if (obj && typeof obj === "object") {
-            Object.keys(obj).forEach(key => {
-                if (typeof obj[key] === "object" && obj[key] !== null) {
-                    cleanUndefinedObjects(obj[key]);
-                    // Check if all keys are undefined and nullify if true
-                    if (
-                        Object.keys(obj[key]).every(
-                            innerKey => obj[key][innerKey] === undefined
-                        ) &&
-                        obj[key].constructor === Object
-                    ) {
-                        obj[key] = null;
-                        console.log(
-                            "Empty object found and nullified at key:",
-                            key
-                        );
-                    }
+    const cleanUndefinedObjects = (obj: Record<string, unknown>) => {
+        const newObj = { ...obj };
+
+        Object.keys(newObj).forEach(key => {
+            if (typeof newObj[key] === "object" && newObj[key] !== null) {
+                const cleaned = cleanUndefinedObjects(
+                    newObj[key] as Record<string, unknown>
+                );
+
+                // If the cleaned result is null (empty object), set the key to null
+                // - this is because the schema doesnt allow {} but either filled object or null
+                if (cleaned === null) {
+                    newObj[key] = null;
+                } else {
+                    newObj[key] = cleaned;
                 }
-            });
-        }
+            }
+        });
+        return newObj;
     };
 
-    cleanUndefinedObjects(formattedFormData);
+    const cleanedFormattedFormData = cleanUndefinedObjects(
+        formattedFormData
+    ) as { revisions: Revision | Revision[] | null };
 
-    return convertRevisionsToArray(formattedFormData);
+    return convertRevisionsToArray(cleanedFormattedFormData);
 };
 
 const mapExistingDatasetToFormFields = (
