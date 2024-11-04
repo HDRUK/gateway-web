@@ -41,8 +41,7 @@ const SubmissionScreen = ({
             return;
         }
         const checkFormValidation = async () => {
-            const isValid = await trigger();
-            setIsValid(isValid);
+            setIsValid(await trigger());
         };
 
         checkFormValidation();
