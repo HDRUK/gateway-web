@@ -190,7 +190,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         StructuralMetadata[]
     >([]);
 
-    const schemaFields = currentFormJSON.schema_fields;
+    const schemaFields = currentFormJSON.schema_fields.filter(
+        t => !t.title.includes("contact point")
+    );
 
     const defaultFormValues = {
         "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
@@ -311,9 +313,17 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
+    // What is going on here? The form has already been fetched client side in page.tsx
+    // - it was passed into this function!
+    // - why are we getting it again!!?
+    // - const formJSON = await getFormHydration(
+    /*
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
         `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`
     );
+    */
+    // keeping this code in just in case, no idea why it was retrieved again as 'formJSONupdated' ?!?
+    const formJSONUpdated = formJSON;
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
@@ -821,6 +831,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                         <Box sx={{ flex: 3, p: 0 }}>
                             <SubmissionScreen
                                 trigger={trigger}
+                                errors={formState.errors}
                                 makeActiveAction={handleMakeActive}
                                 makeActiveDisabled={isSaving}
                             />

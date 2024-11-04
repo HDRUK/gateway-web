@@ -396,27 +396,35 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    const cleanUndefinedObjects = (obj: Record<string, unknown>) => {
-        const newObj = { ...obj };
+    const cleanUndefinedObjects = (
+        obj: Record<string, unknown>
+    ): Record<string, unknown> | undefined => {
+        const newObj: Record<string, unknown> = {};
 
-        Object.keys(newObj).forEach(key => {
-            if (typeof newObj[key] === "object" && newObj[key] !== null) {
-                const cleaned = cleanUndefinedObjects(
-                    newObj[key] as Record<string, unknown>
+        Object.keys(obj).forEach(key => {
+            const value = obj[key];
+
+            if (value && typeof value === "object") {
+                const cleanedValue = cleanUndefinedObjects(
+                    value as Record<string, unknown>
                 );
-
-                // If the cleaned result is null (empty object), set the key to null
-                // - this is because the schema doesnt allow {} but either filled object or null
-                if (cleaned === null) {
+                if (cleanedValue === undefined) {
                     newObj[key] = null;
                 } else {
-                    newObj[key] = cleaned;
+                    newObj[key] = cleanedValue;
                 }
+            } else if (value !== undefined) {
+                newObj[key] = value;
             }
         });
-        return newObj;
+        // If all values in newObj are null, return undefined to indicate that this level is empty
+        const allValuesAreNull = Object.values(newObj).every(
+            val => val === null
+        );
+        return allValuesAreNull ? undefined : newObj;
     };
-
+    // this makes sure that any nested objects are not left as {}
+    // - the schema needs them as either null or filled to be valid
     const cleanedFormattedFormData = cleanUndefinedObjects(
         formattedFormData
     ) as { revisions: Revision | Revision[] | null };
