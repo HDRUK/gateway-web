@@ -399,29 +399,24 @@ const mapFormFieldsForSubmission = (
     const cleanUndefinedObjects = (
         obj: Record<string, unknown>
     ): Record<string, unknown> | undefined => {
-        const newObj: Record<string, unknown> = {};
-
-        Object.keys(obj).forEach(key => {
-            const value = obj[key];
-
-            if (value && typeof value === "object") {
-                const cleanedValue = cleanUndefinedObjects(
-                    value as Record<string, unknown>
-                );
-                if (cleanedValue === undefined) {
+        const newObj = { ...obj };
+        console.log(obj);
+        Object.keys(newObj).forEach(key => {
+            const value = newObj[key];
+            if (
+                value &&
+                typeof value === "object" &&
+                !Array.isArray(value) &&
+                !(value instanceof Date)
+            ) {
+                if (Object.values(value).every(val => val === undefined)) {
+                    console.log(`making ${key} null`);
                     newObj[key] = null;
-                } else {
-                    newObj[key] = cleanedValue;
                 }
-            } else if (value !== undefined) {
-                newObj[key] = value;
             }
         });
-        // If all values in newObj are null, return undefined to indicate that this level is empty
-        const allValuesAreNull = Object.values(newObj).every(
-            val => val === null
-        );
-        return allValuesAreNull ? undefined : newObj;
+        console.log(newObj);
+        return newObj;
     };
     // this makes sure that any nested objects are not left as {}
     // - the schema needs them as either null or filled to be valid
@@ -437,6 +432,7 @@ const mapExistingDatasetToFormFields = (
     metadata: Metadata
 ) => {
     const values = {};
+    console.log(metadata);
 
     // Function to recursively traverse the schema
     function traverseSchema(

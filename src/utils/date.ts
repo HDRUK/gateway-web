@@ -8,7 +8,9 @@ dayjs.extend(timezone);
 const DEFAULT_TIMEZONE = "UTC";
 
 const getToday = (): string => {
-    return dayjs.tz(new Date(), DEFAULT_TIMEZONE).format("YYYY-MM-DD HH:mm:ss");
+    return dayjs
+        .tz(new Date(), DEFAULT_TIMEZONE)
+        .format("YYYY-MM-DDTHH:mm:ss[Z]");
 };
 
 const getDayjs = (date: string | Date) => {

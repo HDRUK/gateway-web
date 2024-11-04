@@ -209,8 +209,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Contact point": user?.email, // summary.contact_point
     };
 
-    console.log(defaultFormValues);
-
     useEffect(() => {
         if (isLoading || !isEditing) {
             return;
@@ -498,20 +496,18 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                           schemaModel: SCHEMA_NAME,
                           schemaVersion: SCHEMA_VERSION,
                           metadata: {
-                              issued: new Date().toString(),
-                              modified: new Date().toString(),
                               observations: [],
                               coverage: null,
                               structuralMetadata: {
                                   tables: structuralMetadata,
                               },
                               ...mappedFormData,
+                              issued: today,
+                              modified: today,
                           },
                       },
                   };
         try {
-            console.log(formPayload);
-            return;
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
