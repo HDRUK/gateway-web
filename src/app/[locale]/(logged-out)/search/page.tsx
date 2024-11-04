@@ -21,12 +21,7 @@ const SearchPage = async () => {
         filters = await fetchFilters();
     }
 
-    // TODO - TEMPORARILY HIDE FILTER
-    const formattedFilters = filters.filter(
-        f => !(f.type === "collection" && f.keys === "publisherName")
-    );
-
-    return <Search filters={formattedFilters} />;
+    return <Search filters={filters} />;
 };
 
 export default SearchPage;
