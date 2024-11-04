@@ -179,8 +179,9 @@
         },
         "releases": {
             "noResults": "There are no releases for {year}",
-            "description1": "The Gateway requires a significant volume of design and development work to deliver our vision and ambition. To achieve this our teams are continually working on the Gateway and deliver major software releases approximately every 4 weeks.",
-            "description2": "On this page we explain what new developments we are currently working on and list the major releases made since the Gateway was released in its current format in June 2020. Clicking on an entry provides further detail about the functionality that the particular release delivered."
+            "heading": "Welcome to our product release page!",
+            "description1": "Here, you can learn more about the Gateway’s newest features, improvements, and updates. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each release to discover how the Gateway is evolving.",
+            "description2": "To learn more about what is planned on our development roadmap please see the 'What next?' section <researchersLink>here</researchersLink>. If you would like to share feedback or suggest improvements to add to the Gateway roadmap, please contact us through our <supportLink>Support Centre</supportLink>."
         },
         "about": {
             "ourMissionAndPurpose": {
@@ -418,6 +419,7 @@
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
                             "uploadSuccess": "Your data has been successfully uploaded",
+                            "dataCustodian": "Data Custodian",
                             "checkboxes": {
                                 "healthAndDisease": "Health and disease",
                                 "healthAndDiseaseTooltip": "Includes any data related to mental health, cardiovascular, cancer, rare diseases, metabolic and endocrine, neurological, reproductive, maternity and neonatology, respiratory, immunity, musculoskeletal, vision, renal and urogenital, oral and gastrointestinal, cognitive function or hearing.",

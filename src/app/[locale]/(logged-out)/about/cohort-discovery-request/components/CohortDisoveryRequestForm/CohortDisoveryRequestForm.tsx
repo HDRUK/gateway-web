@@ -3,13 +3,16 @@
 import { useState } from "react";
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
@@ -18,14 +21,32 @@ const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
 
 interface CohortDisoveryRequestFormProps {
     cmsContent: templateRepeatFields;
+    userId: number;
+}
+
+interface accessRequestType {
+    redirect_url: string;
 }
 
 const CohortDisoveryRequestForm = ({
     cmsContent,
+    userId,
 }: CohortDisoveryRequestFormProps) => {
     const { push } = useRouter();
     const { showDialog } = useDialog();
     const t = useTranslations();
+
+    const { data: userData, isLoading: isUserLoading } = useGet<CohortRequest>(
+        `${apis.cohortRequestsV1Url}/user/${userId}`,
+        {
+            errorNotificationsOn: false,
+        }
+    );
+
+    const { data: accessData, isLoading: isAccessLoading } =
+        useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access`, {
+            errorNotificationsOn: false,
+        });
 
     const handleSubmit = () => {
         showDialog(CohortRequestTermsDialog, { cmsContent });
@@ -37,7 +58,15 @@ const CohortDisoveryRequestForm = ({
 
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
-    return (
+    if (!isUserLoading && !isAccessLoading) {
+        if (accessData?.redirect_url) {
+            redirect(accessData?.redirect_url);
+        } else if (userData?.request_status) {
+            redirect(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+        }
+    }
+
+    return !isUserLoading && !isAccessLoading ? (
         <BoxContainer
             sx={{
                 p: 4,
@@ -118,7 +147,7 @@ const CohortDisoveryRequestForm = ({
                 </Button>
             </Box>
         </BoxContainer>
-    );
+    ) : null;
 };
 
 export default CohortDisoveryRequestForm;

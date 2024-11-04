@@ -82,11 +82,11 @@ const getProfileNav = (permissions: {
             label: "Publications",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
         },
-        // {
-        //     icon: <BookmarksOutlinedIcon />,
-        //     label: "Collections",
-        //     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
-        // },
+        {
+            icon: <BookmarksOutlinedIcon />,
+            label: "Collections",
+            href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
+        },
         ...(permissions["dur.update"]
             ? [
                   {
@@ -115,7 +115,7 @@ const getTeamNav = (
                   },
               ]
             : []),
-        /* ...([
+        ...([
             permissions["applications.read"],
             permissions["integrations.metadata"],
             permissions["integrations.dar"],
@@ -147,7 +147,7 @@ const getTeamNav = (
                       ],
                   },
               ]
-            : []), */
+            : []),
         ...(permissions["datasets.read"]
             ? [
                   {
@@ -233,7 +233,7 @@ const getTeamNav = (
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.HELP}`,
+            href: `/${RouteName.SUPPORT}`,
         },
     ];
 };

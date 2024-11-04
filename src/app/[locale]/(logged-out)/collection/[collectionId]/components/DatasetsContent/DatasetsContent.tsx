@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { ReducedDataset } from "@/interfaces/Dataset";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import { capitalise } from "@/utils/general";
+import { formatTextDelimiter } from "@/utils/dataset";
 
 const TRANSLATION_PATH = "pages.collection.components.DatasetsContent";
 
@@ -49,7 +49,9 @@ export default function DatasetContent({
                                 })}
                             </div>
                         )}
-                        {datasetType && <div>{capitalise(datasetType)}</div>}
+                        {datasetType && (
+                            <div>{formatTextDelimiter(datasetType)}</div>
+                        )}
                     </Fragment>
                 )
             )}
