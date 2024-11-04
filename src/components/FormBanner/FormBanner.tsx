@@ -17,6 +17,7 @@ interface FormBannerProps {
 
 const TRANSLATION_PATH = "components.FormBanner";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
 const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
 export const NAVBAR_ID = "form-navbar";
 
@@ -34,7 +35,7 @@ const FormBanner = ({
             <DetailBanner>
                 <Column justify={Justify.START}>
                     <DownloadFile
-                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
+                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
                         buttonText={t("downloadExample")}
                         buttonSx={{ mb: 0 }}
                         isExternalFile
