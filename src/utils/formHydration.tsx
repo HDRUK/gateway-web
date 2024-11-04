@@ -429,7 +429,6 @@ const mapExistingDatasetToFormFields = (
     metadata: Metadata
 ) => {
     const values = {};
-    console.log(metadata);
 
     // Function to recursively traverse the schema
     function traverseSchema(
