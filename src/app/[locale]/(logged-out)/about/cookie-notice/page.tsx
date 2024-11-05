@@ -3,13 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getCookieNotice } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 import "@/styles/wpStyles.css";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Cookie Notice",
+export const metadata = metaData({
+    title: "Cookie Notice",
     description: "",
-};
-
+});
 const PrivacyPolicyPage = async () => {
     const cmsPage = await getCookieNotice();
 

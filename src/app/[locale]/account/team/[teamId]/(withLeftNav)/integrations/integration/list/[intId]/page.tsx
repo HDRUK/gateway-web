@@ -6,14 +6,18 @@ import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import EditIntegrationForm from "./components/EditIntegrationForm";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Integrations - Integration",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Integration -Integrations",
+        description: "",
+    },
+    noFollowRobots
+);
 
 const TRANSLATION_PATH = `pages.account.team.integration.create`;
 

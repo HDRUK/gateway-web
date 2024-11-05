@@ -7,14 +7,18 @@ import Loading from "@/components/Loading";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import Header from "./Header";
 import LibraryTable from "./LibraryTable";
 import RightPanel from "./RightPanel";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Library",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Library",
+        description: "",
+    },
+    noFollowRobots
+);
 
 const UserLibrary = () => {
     const { data, isLoading, mutate } = useGet<Library[]>(apis.librariesV1Url);

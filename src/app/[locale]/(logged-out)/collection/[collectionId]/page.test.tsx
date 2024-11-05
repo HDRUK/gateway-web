@@ -7,7 +7,7 @@ import {
     generateBadCollectionV1,
     generateCollectionV1,
 } from "@/mocks/data/collections/v1";
-import CollectionItemPage from "./[collectionId]/page";
+import CollectionItemPage from "./page";
 
 const enFile = jest.requireActual("@/config/messages/en.json");
 const getReducedCollectionMock = jest.fn();

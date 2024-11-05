@@ -16,14 +16,18 @@ import {
     TITLE,
 } from "@/consts/translation";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateApplicationForm from "./components/CreateApplicationForm";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - API Management",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "API Management - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function TeamCreatePage({
     params,

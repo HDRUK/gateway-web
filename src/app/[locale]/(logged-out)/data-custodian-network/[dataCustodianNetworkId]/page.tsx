@@ -13,12 +13,18 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
+import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
 import IntroductionContent from "./components/IntroductionContent";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
+
+export const metadata = metaData({
+    title: "Data Custodian Network",
+    description: "",
+});
 
 export default async function DataCustodianNetworkPage({
     params,
