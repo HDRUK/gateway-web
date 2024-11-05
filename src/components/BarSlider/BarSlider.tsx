@@ -150,22 +150,25 @@ const BarSliderContainer = ({
         }
     };
 
-    const humanReadableFormat = (value?: number) => {
-        const units = ['', 'k', 'mn', 'bn'];
+    const humanReadableFormat = (values?: (number | undefined)[]) => {
+        const readableValues = values?.map(value => {
+            const units = ["", "k", "mn", "bn"];
 
-        let unitIndex = 0;
-        let scaledValue = value || 1;
+            let unitIndex = 0;
+            let scaledValue = value || 1;
 
-        while (scaledValue >= 1000 && unitIndex < units.length - 1) {
-            unitIndex += 1;
-            scaledValue /= 1000;
-        }
+            while (scaledValue >= 1000 && unitIndex < units.length - 1) {
+                unitIndex += 1;
+                scaledValue /= 1000;
+            }
 
-        return `${scaledValue} ${units[unitIndex]}`;
-    }
+            return `${scaledValue} ${units[unitIndex]}`;
+        });
+        return readableValues;
+    };
 
     const valueLabelFormat = (value: number) => {
-        const [, high] = [humanReadableFormat(data[value - 1]?.xValue[0]), humanReadableFormat(data[value - 1]?.xValue[1])] || [1, 1];
+        const [, high] = humanReadableFormat(data[value - 1]?.xValue) || [1, 1];
         return high;
     };
 
