@@ -3,7 +3,7 @@ import Container from "@/components/Container";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUserFromCookie } from "@/utils/api";
 import { getCohortTermsAndConditions } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import CohortDisoveryRequestForm from "./components/CohortDisoveryRequestForm";
 
 export const metadata = metaData({

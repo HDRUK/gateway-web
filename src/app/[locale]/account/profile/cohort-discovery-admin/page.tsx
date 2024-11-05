@@ -6,7 +6,7 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import Typography from "@/components/Typography";
 import { COHORT_DISCOVERY_ADMIN } from "@/consts/translation";
 import { getUser } from "@/utils/api";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import CohortTable from "./components/CohortTable";
 import CohortTableDownload from "./components/CohortTableDownload";

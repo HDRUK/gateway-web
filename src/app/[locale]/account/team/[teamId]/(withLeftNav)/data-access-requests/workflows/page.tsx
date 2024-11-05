@@ -10,7 +10,7 @@ import {
     TITLE,
     WORKFLOWS,
 } from "@/consts/translation";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 
 export const metadata = metaData(
     {

@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/api";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import CreateTool from "../../../team/[teamId]/(withLeftNav)/tools/create/components/CreateTool";
 
 export const metadata = metaData(

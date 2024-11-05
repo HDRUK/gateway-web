@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import TeamCollections from "../../team/[teamId]/(withLeftNav)/collections/components/TeamCollections";
 

@@ -1,4 +1,4 @@
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import SavedSearches from "./SavedSearches";
 
 export const metadata = metaData(

@@ -1,4 +1,4 @@
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import SignInDialog from "./components/signIn";
 
 export const metadata = metaData(

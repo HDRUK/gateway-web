@@ -13,7 +13,7 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
 import IntroductionContent from "./components/IntroductionContent";

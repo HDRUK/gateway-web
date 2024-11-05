@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { Filter } from "@/interfaces/Filter";
 import { getFilters } from "@/utils/api";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import Search from "./components/Search";
 
 export const metadata = metaData(

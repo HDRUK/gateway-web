@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 
 export const metadata = metaData(
     {

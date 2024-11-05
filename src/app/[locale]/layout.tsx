@@ -8,7 +8,7 @@ import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { sourceSans3 } from "@/config/fonts";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";

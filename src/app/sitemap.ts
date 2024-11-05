@@ -1,12 +1,28 @@
 import { MetadataRoute } from "next";
-import {
+import sitemapJson from "../seeded/sitemap.json";
+
+interface SiteMapResponse {
+    id: number;
+    updated_at: string;
+}
+
+interface SiteMapJson {
+    collections: SiteMapResponse[];
+    dataCustodians: SiteMapResponse[];
+    dataCustodianNetworks: SiteMapResponse[];
+    dataSets: SiteMapResponse[];
+    durs: SiteMapResponse[];
+    tools: SiteMapResponse[];
+}
+
+const {
     collections,
     dataCustodians,
     dataCustodianNetworks,
     dataSets,
     durs,
     tools,
-} from "../seeded/sitemap.json";
+} = sitemapJson as SiteMapJson;
 
 export const revalidate = 3600;
 

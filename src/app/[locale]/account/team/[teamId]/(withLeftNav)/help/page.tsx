@@ -3,7 +3,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { ACCOUNT, HELP, PAGES, TEAM, TITLE } from "@/consts/translation";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 
 export const metadata = metaData(
     {

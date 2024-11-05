@@ -1,7 +1,7 @@
 import CMSPromoTemplate from "@/components/CMSPromoTemplate";
 import Container from "@/components/Container";
 import { getCohortDiscovery } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import CtaOverride from "./components/CtaOverride";
 
 export const metadata = metaData({

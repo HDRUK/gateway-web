@@ -12,7 +12,7 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getReducedCollection } from "@/utils/api";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import { toTitleCase } from "@/utils/string";
 import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";

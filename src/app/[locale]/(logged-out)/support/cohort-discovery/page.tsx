@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getCohortDiscoverySupportPageQuery } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import SupportPage from "../components/SupportPage";
 import Documentation from "./components/Documentation";
 import Explainer from "./components/Explainer";

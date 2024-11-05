@@ -1,6 +1,6 @@
 import BoxContainer from "@/components/BoxContainer";
 import Loading from "@/components/Loading";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 
 export const metadata = metaData(
     {

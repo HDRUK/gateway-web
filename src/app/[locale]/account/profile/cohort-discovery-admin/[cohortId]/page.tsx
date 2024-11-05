@@ -3,7 +3,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getCohort, getUser } from "@/utils/api";
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import DecisionHistory from "./DecisionHistory";
 import Header from "./Header";

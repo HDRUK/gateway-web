@@ -1,6 +1,6 @@
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 
 export const metadata = metaData({
     title: "Contact Us - About",

@@ -4,7 +4,7 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getHowToSearchPage } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import "@/styles/wpStyles.css";
 
 export const metadata = metaData({

@@ -1,4 +1,4 @@
-import metaData, { noFollowRobots } from "@/utils/metdata";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import Application from "./components/Application";
 
 export const metadata = metaData(

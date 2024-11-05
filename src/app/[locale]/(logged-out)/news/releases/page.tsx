@@ -1,7 +1,7 @@
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { getReleaseNotes } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import ReleaseTabs from "./components/ReleaseTabs";
 
 export const metadata = metaData({

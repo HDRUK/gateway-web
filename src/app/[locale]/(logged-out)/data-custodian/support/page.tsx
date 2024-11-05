@@ -1,4 +1,4 @@
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import SupportCentreLinks from "./components/SupportCentreLinks";
 
 export const metadata = metaData({

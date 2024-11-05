@@ -1,5 +1,5 @@
 import { getContributorsAndCollaborators, getMeetTheTeam } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import TeamMembers from "./components/TeamMembers";
 
 export const metadata = metaData({

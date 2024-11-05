@@ -2,7 +2,7 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import Tabs from "@/components/Tabs";
 import { getEvents, getNews, getSortedNewsEventsByDate } from "@/utils/cms";
-import metaData from "@/utils/metdata";
+import metaData from "@/utils/metadata";
 import Content from "./components/Content";
 
 export const metadata = metaData({
