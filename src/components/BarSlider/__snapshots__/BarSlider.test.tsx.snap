@@ -89,7 +89,7 @@ exports[`BarSlider should render component 1`] = `
           <span
             class="MuiSlider-valueLabelLabel"
           >
-            10000
+            10 k
           </span>
         </span>
       </span>
