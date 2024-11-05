@@ -13,7 +13,7 @@ interface ArticlePageProps {
 
 export async function generateMetadata({ params }: ArticlePageProps) {
     return metaData({
-        title: `News - ${params.slug.replaceAll("-", " ")}`,
+        title: `${params.slug.replaceAll("-", " ")} - News`,
         description: "",
     });
 }

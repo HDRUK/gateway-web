@@ -8,7 +8,7 @@ import { getPermissions } from "@/utils/permissions";
 export const metadata = metaData(
     {
         title: "Edit Collection - My Account",
-        description: "",
+        description: "Edit a collection",
     },
     noFollowRobots
 );

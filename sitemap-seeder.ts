@@ -1,14 +1,22 @@
 import fs from 'fs'
 
-import dotenv from 'dotenv'
+const {NODE_ENV} = process.env
+const endpoint = 'sitemap'
 
-dotenv.config({ path: '.env' })
+let address
+
+if (NODE_ENV === 'development') {
+    // during the loading of docker in tilt, it can't seem to talk to gateway-api so for locally just call dev
+    address = 'https://api.dev.hdruk.cloud/api/v1/'+endpoint
+}
+
+const { NEXT_PUBLIC_API_VERSION, NEXT_PUBLIC_API_V1_URL} = process.env
+
+const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${NEXT_PUBLIC_API_VERSION ?? "v1"}/${endpoint}`;
 
 
-const apiVersion = process.env.NEXT_PUBLIC_API_VERSION ?? "v1";
-const apiV1Url = `${process.env.NEXT_PUBLIC_API_V1_URL}/${apiVersion}`;
 const getSiteMapData:() => Promise<void> = async () => {
-   await fetch(`${apiV1Url}/sitemap`).then(async (res) => {
+   await fetch(siteMapAPI).then(async (res) => {
        if (!res.ok) {
            throw new Error("Failed to fetch data for sitemap");
        }
@@ -25,6 +33,8 @@ const getSiteMapData:() => Promise<void> = async () => {
            }
        )
 
+   }).catch((err)=>{
+    console.log(`failed to call ${siteMapAPI}:`, err)
    });
 }
 

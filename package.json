@@ -97,8 +97,7 @@
         "swr": "^2.1.1",
         "typescript": "4.9.5",
         "yup": "^1.2.0",
-        "tsx": "4.19.2",
-        "dotenv": "16.4.5"
+        "tsx": "4.19.2"
     },
     "devDependencies": {
         "@storybook/addon-essentials": "^7.6.3",

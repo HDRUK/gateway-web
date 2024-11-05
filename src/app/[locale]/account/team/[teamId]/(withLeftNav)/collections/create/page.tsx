@@ -9,7 +9,7 @@ import { getTeamUser } from "@/utils/user";
 export const metadata = metaData(
     {
         title: "Create Collection - My Account",
-        description: "",
+        description: "Create a collection",
     },
     noFollowRobots
 );
