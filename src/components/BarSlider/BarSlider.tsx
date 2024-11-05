@@ -154,7 +154,7 @@ const BarSliderContainer = ({
         const units = ['', 'k', 'mn', 'bn'];
 
         let unitIndex = 0;
-        let scaledValue = value || 0;
+        let scaledValue = value || 1;
 
         while (scaledValue >= 1000 && unitIndex < units.length - 1) {
             unitIndex += 1;
