@@ -12,7 +12,7 @@ if (NODE_ENV === 'development') {
 
 const { NEXT_PUBLIC_API_VERSION, NEXT_PUBLIC_API_V1_URL} = process.env
 
-const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${NEXT_PUBLIC_API_VERSION ?? "v1"}/${endpoint}`;
+const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${NEXT_PUBLIC_API_VERSION}/${endpoint}`;
 
 
 const getSiteMapData:() => Promise<void> = async () => {
