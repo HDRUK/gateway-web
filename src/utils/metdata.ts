@@ -3,6 +3,7 @@ import { Robots } from "next/dist/lib/metadata/types/metadata-types";
 
 export interface MetaParams {
     title: string;
+    isDefault?: boolean;
     url?: string;
     description: string;
     image?: string;
@@ -31,7 +32,9 @@ export default function metaData(
     crawlers: Robots = followRobots
 ): Metadata {
     return {
-        title: `${meta.title} - Health Data Research Innovation Gateway`,
+        title: meta.isDefault
+            ? meta.title
+            : `${meta.title} - Health Data Research Innovation Gateway`,
         // metadataBase: new URL(meta.url), // todo
         description: meta.description,
         robots: crawlers,

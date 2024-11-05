@@ -11,7 +11,7 @@ export const MetaHead = ({
     follow = true,
 }: MetaHeadProps) => (
     <Head>
-        <title>{title}</title>
+        <title>{title} - Health Data Research Innovation Gateway</title>
         <meta name="description" content={description} />
         <meta name="robots" content={follow ? "index, follow" : "noindex"} />
     </Head>
