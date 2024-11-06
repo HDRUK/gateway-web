@@ -5,7 +5,7 @@ import Markdown from "markdown-to-jsx";
 
 export interface MarkdownWithHtmlProps {
     content: string;
-    WrapperComponent?: React.ElementType | React.ReactNode;
+    wrapper?: React.ElementType | React.ReactNode;
     sx?: SxProps;
     overrideLinks?: boolean;
 }
@@ -13,7 +13,7 @@ export interface MarkdownWithHtmlProps {
 export const MarkDownSanitizedWithHtml = ({
     content,
     sx = {},
-    WrapperComponent = "div",
+    wrapper = "div",
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
     const sanitizedContent = DOMPurify.sanitize(content);
@@ -40,7 +40,7 @@ export const MarkDownSanitizedWithHtml = ({
         ...hrefOverride,
     };
 
-    const Wrapper = WrapperComponent as React.ElementType;
+    const Wrapper = wrapper as React.ElementType;
 
     return (
         <Wrapper style={sx}>

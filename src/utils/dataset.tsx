@@ -89,7 +89,7 @@ const formatTextWithLinks = (text: string | string[] | number) => {
             </Link>
         ) : (
             <MarkDownSanitizedWithHtml
-                WrapperComponent="span"
+                wrapper="span"
                 key={segment}
                 content={segment}
             />

@@ -50,7 +50,7 @@ const testCases: TestCase[] = [
         scenario: "should render with a custom wrapper component",
         props: {
             content: "# Custom Wrapper\nTest",
-            WrapperComponent: "section",
+            wrapper: "section",
         },
         expectedTexts: ["Custom Wrapper", "Test"],
         additionalCheck: () => document.querySelector("section") !== null,
@@ -59,7 +59,7 @@ const testCases: TestCase[] = [
         scenario: "should render with a html",
         props: {
             content: "<div id='biscuit'>custard cream</div>",
-            WrapperComponent: "section",
+            wrapper: "section",
         },
         expectedTexts: ["custard cream"],
         additionalCheck: () => document.getElementById("biscuit") !== null,
