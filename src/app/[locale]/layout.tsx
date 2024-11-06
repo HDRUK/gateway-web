@@ -8,6 +8,7 @@ import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { sourceSans3 } from "@/config/fonts";
+import metaData from "@/utils/metadata";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
@@ -15,11 +16,12 @@ import SnackbarProvider from "@/providers/SnackbarProvider";
 import CMSBanners from "./components/CMSBanners";
 import Organization from "./components/RichResults/Organization";
 
-export const metadata = {
+export const metadata = metaData({
     title: "Health Data Research Innovation Gateway",
+    isDefault: true,
     description:
         "The Health Data Research Innovation Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
-};
+});
 
 const locales = ["en"];
 

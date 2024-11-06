@@ -3,13 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getTechnologyEcosystem } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 import "@/styles/wpStyles.css";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - The Technology Ecosystem",
+export const metadata = metaData({
+    title: "The Technology Ecosystem",
     description: "",
-};
-
+});
 const DevelopmentCommunityPage = async () => {
     const cmsPage = await getTechnologyEcosystem();
 

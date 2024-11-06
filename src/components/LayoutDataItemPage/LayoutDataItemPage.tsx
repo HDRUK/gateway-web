@@ -1,11 +1,15 @@
 import { ReactNode } from "react";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Dataset",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Dataset",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export interface LayoutDataItemProps {
     navigation: ReactNode;

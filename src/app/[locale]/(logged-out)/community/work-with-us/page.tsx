@@ -3,13 +3,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getWorkWithUs } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 import "@/styles/wpStyles.css";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Work With Us",
+export const metadata = metaData({
+    title: "Work With Us",
     description: "",
-};
-
+});
 const WorkWithUsPage = async () => {
     const cmsPage = await getWorkWithUs();
 

@@ -2,13 +2,13 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import Tabs from "@/components/Tabs";
 import { getEvents, getNews, getSortedNewsEventsByDate } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 import Content from "./components/Content";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - News - Events",
+export const metadata = metaData({
+    title: "Events - News",
     description: "",
-};
-
+});
 const NewsEventsPage = async () => {
     const newsData = await getNews();
     const eventsData = await getEvents();
