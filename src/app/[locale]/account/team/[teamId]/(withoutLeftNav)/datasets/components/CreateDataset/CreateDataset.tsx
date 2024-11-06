@@ -234,10 +234,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             latestMetadata
         );
 
-        setExistingFormData({
-            ...mappedFormData,
-            identifier: teamId,
-        });
+        setExistingFormData(mappedFormData);
     }, [dataset, isLoading]);
 
     const generateValidationRules = useMemo(
@@ -317,9 +314,30 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
+    // This is a bit of a hack
+    // - the data_custodian_id is coming back as a persistent ID due to a confusing in naming/bug
+    // - we need to make sure therefore that the watchId, from the form, for data custodian identifier
+    //    if an identifier, and not a persistent identifier
+    const watchIdIsNumber = !Number.isNaN(Number(watchId));
+
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
-        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`
+        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
+        {
+            shouldFetch: watchIdIsNumber,
+        }
     );
+
+    const { data: teamIdFromPid } = useGet<number>(
+        `${apis.teamsV1Url}/${watchId}/id`,
+        {
+            shouldFetch: !watchIdIsNumber,
+        }
+    );
+
+    useEffect(() => {
+        if (!teamIdFromPid) return;
+        setValue(DATA_CUSTODIAN_ID, teamIdFromPid);
+    }, [teamIdFromPid]);
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
