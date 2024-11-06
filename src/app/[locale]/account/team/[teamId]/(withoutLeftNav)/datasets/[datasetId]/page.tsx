@@ -3,7 +3,13 @@ import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { DataStatus } from "@/consts/application";
-import { getDataset, getFormHydration, getTeam, getUser } from "@/utils/api";
+import {
+    getDataset,
+    getFormHydration,
+    getTeam,
+    getTeamIdFromPid,
+    getUser,
+} from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -59,12 +65,16 @@ export default async function TeamDatasetPage({
         "summary.dataCustodian.identifier"
     );
 
+    const isNotTeamId = Number.isNaN(Number(dataCustodianIdentifier));
+
     const formJSON = await getFormHydration(
         cookieStore,
         SCHEMA_NAME,
         SCHEMA_VERSION,
         dataTypes,
-        dataCustodianIdentifier
+        isNotTeamId
+            ? await getTeamIdFromPid(cookieStore, dataCustodianIdentifier || "")
+            : dataCustodianIdentifier
     );
 
     return (
