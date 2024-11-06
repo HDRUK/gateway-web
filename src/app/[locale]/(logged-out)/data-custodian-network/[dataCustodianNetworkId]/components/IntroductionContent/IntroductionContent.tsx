@@ -1,10 +1,10 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
+import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";
@@ -26,7 +26,9 @@ export default function IntroductionContent({
             <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
                 "heading"
             )}`}</Typography>
-            {summary && <Markdown sx={{ pb: 1 }}>{summary}</Markdown>}
+            {summary && (
+                <MarkDownSanitzedWithHtml sx={{ pb: 1 }} content={summary} />
+            )}
             <DataCustodianLinks
                 data={{
                     url,

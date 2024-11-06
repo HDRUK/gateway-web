@@ -1,0 +1,43 @@
+import React from "react";
+import { SxProps } from "@mui/material/styles";
+import DOMPurify from "dompurify";
+import Markdown from "markdown-to-jsx";
+
+interface MarkdownWithHtmlProps {
+    content: string;
+    WrapperComponent?: React.ElementType | React.ReactNode;
+    sx?: SxProps;
+}
+
+export const MarkDownSanitzedWithHtml = ({
+    content,
+    sx = {},
+    WrapperComponent = "div",
+}: MarkdownWithHtmlProps) => {
+    const sanitizedContent = DOMPurify.sanitize(content);
+
+    const overrides = {
+        a: {
+            component: ({
+                href,
+                children,
+            }: {
+                href: string;
+                children: React.ReactNode;
+            }) => (
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                    {children}
+                </a>
+            ),
+        },
+    };
+
+    return (
+        <WrapperComponent style={sx}>
+            <Markdown
+                options={{ allowDangerousHtml: true, overrides }}
+                children={sanitizedContent}
+            />
+        </WrapperComponent>
+    );
+};
