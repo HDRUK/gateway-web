@@ -7,37 +7,43 @@ interface MarkdownWithHtmlProps {
     content: string;
     WrapperComponent?: React.ElementType | React.ReactNode;
     sx?: SxProps;
-    overrideLinks?: boolean
+    overrideLinks?: boolean;
 }
 
 export const MarkDownSanitzedWithHtml = ({
     content,
     sx = {},
     WrapperComponent = "div",
-    overrideLinks = true
+    overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
     const sanitizedContent = DOMPurify.sanitize(content);
 
+    const hrefOverride = overrideLinks
+        ? {
+              a: {
+                  component: ({
+                      href,
+                      children,
+                  }: {
+                      href: string;
+                      children: React.ReactNode;
+                  }) => (
+                      <a href={href} target="_blank" rel="noopener noreferrer">
+                          {children}
+                      </a>
+                  ),
+              },
+          }
+        : null;
+
     const overrides = {
-        a: (overrideLinks) ? {
-            component: ({
-                href,
-                children,
-            }: {
-                href: string;
-                children: React.ReactNode;
-            }) => (
-                <a href={href} target="_blank" rel="noopener noreferrer">
-                    {children}
-                </a>
-            ),
-        } : {},
+        ...hrefOverride,
     };
 
     return (
         <WrapperComponent style={sx}>
             <Markdown
-                options={{ allowDangerousHtml: true, overrides }}
+                options={{ disableParsingRawHTML: true, overrides }}
                 children={sanitizedContent}
             />
         </WrapperComponent>
