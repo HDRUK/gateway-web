@@ -364,7 +364,7 @@ class DatasetDetail extends Component {
             linkedDatasets.push({
                 title: relation,
                 info:
-                    relation.slice(0, 46) === 'https://web.www.healthdatagateway.org/dataset/'
+                    relation.slice(0, 46) === 'https://web.old.healthdatagateway.org/dataset/'
                         ? 'Dataset on the gateway'
                         : 'Dataset not on the gateway',
                 type: 'externallink',

@@ -32,7 +32,7 @@ describe('Given the addCmsGatewayHostname helper', () => {
     describe('When it is called with any other hostname', () => {
         it('Then returns the correct url', () => {
             window.location.hostname = 'test';
-            expect(addCmsGatewayHostname('path/to/something')).toEqual('https://web.www.healthdatagateway.org/path/to/something');
+            expect(addCmsGatewayHostname('path/to/something')).toEqual('https://web.old.healthdatagateway.org/path/to/something');
         });
     });
 });
@@ -69,7 +69,7 @@ describe('Given the addCmsGatewayApiHostname helper', () => {
     describe('When it is called with any other hostname', () => {
         it('Then returns the correct url', () => {
             window.location.hostname = 'test';
-            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.www.healthdatagateway.org/path/to/something');
+            expect(addCmsGatewayApiHostname('path/to/something')).toEqual('https://api.old.healthdatagateway.org/path/to/something');
         });
     });
 });

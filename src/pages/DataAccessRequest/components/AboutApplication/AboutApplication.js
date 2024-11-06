@@ -412,7 +412,7 @@ const AboutApplication = props => {
                                             id='infoGovernanceLink'
                                             target='_blank'
                                             rel='noopener noreferrer'
-                                            href='https://web.www.healthdatagateway.org/collection/4782731178031727'>
+                                            href='https://web.old.healthdatagateway.org/collection/4782731178031727'>
                                             Information governance training recognised by some data custodians
                                         </a>
                                     </p>

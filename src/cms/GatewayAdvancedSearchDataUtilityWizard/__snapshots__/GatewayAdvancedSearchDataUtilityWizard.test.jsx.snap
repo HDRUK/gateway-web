@@ -71,7 +71,7 @@ exports[`Given the GatewayAdvancedSearchDataUtilityWizard component When it is r
           >
             <img
               alt="search.advanced.dataUtilityWizard.mediaAlt"
-              src="https://web.www.healthdatagateway.org/"
+              src="https://web.old.healthdatagateway.org/"
             />
           </div>
         </div>

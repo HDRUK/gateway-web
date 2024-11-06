@@ -85,7 +85,7 @@ global.redefineWindow = () => {
                 value: jest.fn(),
             },
             hostname: {
-                value: 'web.www.healthdatagateway.org',
+                value: 'web.old.healthdatagateway.org',
             },
         }
     );
@@ -143,6 +143,6 @@ Object.defineProperty(window, 'location', {
     value: {
         href: 'https://www.healthdatagateway.org',
         assign: jest.fn(),
-        hostname: 'web.www.healthdatagateway.org',
+        hostname: 'web.old.healthdatagateway.org',
     },
 });

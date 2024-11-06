@@ -14,7 +14,7 @@
     <script>
         (function (w, a, y, f) {
             var openAthensId = '5614d0c5-9fbf-46a0-8311-baf34df79bdb';
-            if (window.location.href.includes('.www.')) openAthensId = '57227ab3-80a2-4bbe-a367-04fe13abbddd'
+            if (window.location.href.includes('.old.')) openAthensId = '57227ab3-80a2-4bbe-a367-04fe13abbddd'
             else if (window.location.href.includes('.uat.')) openAthensId = '685d4935-3c71-4716-afdd-9fb92d218ac6'
             else if (window.location.href.includes('.uatbeta.')) openAthensId = '5b5b4f69-c4a4-472f-92fe-e60678da6b04'
             else if (window.location.href.includes('.latest.')) openAthensId = '9e3ed49e-7566-4d2c-925e-6a6a86555d79'
@@ -40,7 +40,7 @@
             // Disable tracking if the opt-out cookie exists.
             window.gaConsent = !(document.cookie.indexOf('ga-disable-UA-166025838-1=true') > -1);
             
-            if (window.location.href.includes('.www.')) { 
+            if (window.location.href.includes('.old.')) { 
                 window.gtmId = 'GTM-NL9B25X';
             }
         })();

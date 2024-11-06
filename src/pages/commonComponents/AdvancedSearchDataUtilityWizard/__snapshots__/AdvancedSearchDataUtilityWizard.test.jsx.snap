@@ -39,7 +39,7 @@ exports[`Given the AdvancedSearchDataUtilityWizard component When it is rendered
         >
           <img
             alt="search.advanced.dataUtilityWizard.mediaAlt"
-            src="https://web.www.healthdatagateway.org/"
+            src="https://web.old.healthdatagateway.org/"
           />
         </div>
         <div
