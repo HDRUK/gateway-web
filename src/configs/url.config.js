@@ -49,7 +49,7 @@ const _buildUrl = urlType => {
 export const getWidgetAPI = () => {
     const { href } = window.location;
     let widgetAPIURL = 'https://dev-datause-widget.dev.hdruk.dev';
-    if (href.includes('.www.')) {
+    if (href.includes('.old.')) {
         widgetAPIURL = 'https://datause-widget.healthdatagateway.org';
     }
     if (href.includes('.uat.')) {
@@ -66,7 +66,7 @@ export const getWidgetAPI = () => {
 
 export const addCmsGatewayApiHostname = path => {
     const { hostname } = window.location;
-    let webHostname = 'https://api.www.healthdatagateway.org';
+    let webHostname = 'https://api.old.healthdatagateway.org';
 
     if (hostname.includes('uat2.')) {
         webHostname = 'https://api.uat2.healthdatagateway.org';
@@ -87,7 +87,7 @@ export const addCmsGatewayApiHostname = path => {
 
 export const addCmsGatewayHostname = path => {
     const { hostname } = window.location;
-    let webHostname = 'https://web.www.healthdatagateway.org';
+    let webHostname = 'https://web.old.healthdatagateway.org';
 
     if (hostname.includes('uat2.')) {
         webHostname = 'https://web.uat2.healthdatagateway.org';
