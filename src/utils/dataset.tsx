@@ -81,7 +81,10 @@ const formatTextWithLinks = (text: string | string[] | number) => {
     // Convert text to an array if it's not already one
     const segments = Array.isArray(text) ? text : text.split(URL_REGEX);
 
-    // Map over the segments to wrap them in the appropriate component
+    // Map over the segments to wrap them in the appropriate component.
+    // We disable this warning as there are legitimate reasons why multiple entries might be identical,
+    // so there's no reasonable way to distinguish them except by index, and the order won't be changing
+    // eslint-disable-next-line react/no-array-index-key
     return segments.map((segment, index) =>
         URL_REGEX.test(segment) ? (
             <Link
