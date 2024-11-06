@@ -82,7 +82,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
               >
                 <img
                   alt="search.advanced.dataUtilityWizard.mediaAlt"
-                  src="https://web.www.healthdatagateway.org/"
+                  src="https://web.old.healthdatagateway.org/"
                 />
               </div>
             </div>
@@ -162,7 +162,7 @@ exports[`Given the GatewayAdvancedSearchBanner component When it is rendered The
               >
                 <img
                   alt="Cohort Discovery feature image"
-                  src="https://web.www.healthdatagateway.org/"
+                  src="https://web.old.healthdatagateway.org/"
                 />
               </div>
             </div>

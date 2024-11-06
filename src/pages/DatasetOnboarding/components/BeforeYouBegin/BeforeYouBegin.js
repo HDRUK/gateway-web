@@ -88,7 +88,7 @@ const Summary = props => {
                                         id='exampleDataset1'
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        href='https://web.www.healthdatagateway.org/dataset/594cfe55-96e3-45ff-874c-2c0006eeb881'>
+                                        href='https://web.old.healthdatagateway.org/dataset/594cfe55-96e3-45ff-874c-2c0006eeb881'>
                                         [COVID-19 Symptom tracker]
                                     </a>
                                 </div>
@@ -97,7 +97,7 @@ const Summary = props => {
                                         id='exampleDataset2'
                                         target='_blank'
                                         rel='noopener noreferrer'
-                                        href='https://web.www.healthdatagateway.org/dataset/31f0148b-f965-4136-ab39-6c5bbbf8c2d9'>
+                                        href='https://web.old.healthdatagateway.org/dataset/31f0148b-f965-4136-ab39-6c5bbbf8c2d9'>
                                         [National COVID-19 Chest Imaging Database]
                                     </a>
                                 </div>
