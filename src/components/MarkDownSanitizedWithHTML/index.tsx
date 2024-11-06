@@ -7,17 +7,19 @@ interface MarkdownWithHtmlProps {
     content: string;
     WrapperComponent?: React.ElementType | React.ReactNode;
     sx?: SxProps;
+    overrideLinks?: boolean
 }
 
 export const MarkDownSanitzedWithHtml = ({
     content,
     sx = {},
     WrapperComponent = "div",
+    overrideLinks = true
 }: MarkdownWithHtmlProps) => {
     const sanitizedContent = DOMPurify.sanitize(content);
 
     const overrides = {
-        a: {
+        a: (overrideLinks) ? {
             component: ({
                 href,
                 children,
@@ -29,7 +31,7 @@ export const MarkDownSanitzedWithHtml = ({
                     {children}
                 </a>
             ),
-        },
+        } : {},
     };
 
     return (
