@@ -84,17 +84,18 @@ const formatTextWithLinks = (text: string | string[] | number) => {
     // Map over the segments to wrap them in the appropriate component.
     // We disable this warning as there are legitimate reasons why multiple entries might be identical,
     // so there's no reasonable way to distinguish them except by index, and the order won't be changing
-    // eslint-disable-next-line react/no-array-index-key
     return segments.map((segment, index) =>
         URL_REGEX.test(segment) ? (
             <Link
                 href={segment}
+                // eslint-disable-next-line react/no-array-index-key
                 key={`segment_${index}`}
                 target="_blank"
                 rel="noopener">
                 {segment}
             </Link>
         ) : (
+            // eslint-disable-next-line react/no-array-index-key
             <Markdown component="span" key={`segment_${index}`}>
                 {segment}
             </Markdown>
