@@ -51,17 +51,12 @@ export default async function TeamDatasetPage({
     const dataTypes =
         get(latestMetadata, "provenance.origin.datasetType") || [];
 
-    const dataCustodianIdentifier = get(
-        latestMetadata,
-        "summary.dataCustodian.identifier"
-    );
-
     const formJSON = await getFormHydration(
         cookieStore,
         SCHEMA_NAME,
         SCHEMA_VERSION,
         dataTypes,
-        dataCustodianIdentifier
+        teamId
     );
 
     return (

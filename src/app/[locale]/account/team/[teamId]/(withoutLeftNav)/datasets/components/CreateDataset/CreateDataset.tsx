@@ -234,7 +234,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             latestMetadata
         );
 
-        setExistingFormData(mappedFormData);
+        setExistingFormData({
+            ...mappedFormData,
+            identifier: teamId,
+        });
     }, [dataset, isLoading]);
 
     const generateValidationRules = useMemo(
