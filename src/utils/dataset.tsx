@@ -82,13 +82,13 @@ const formatTextWithLinks = (text: string | string[] | number) => {
     const segments = Array.isArray(text) ? text : text.split(URL_REGEX);
 
     // Map over the segments to wrap them in the appropriate component
-    return segments.map(segment =>
+    return segments.map((segment, index) =>
         URL_REGEX.test(segment) ? (
-            <Link href={segment} key={segment} target="_blank" rel="noopener">
+            <Link href={segment} key={`segment_${index}`} target="_blank" rel="noopener">
                 {segment}
             </Link>
         ) : (
-            <Markdown component="span" key={segment}>
+            <Markdown component="span" key={`segment_${index}`}>
                 {segment}
             </Markdown>
         )
