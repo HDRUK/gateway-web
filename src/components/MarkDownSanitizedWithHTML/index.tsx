@@ -1,6 +1,6 @@
 import React from "react";
 import { SxProps } from "@mui/material/styles";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
 
 interface MarkdownWithHtmlProps {
