@@ -572,7 +572,7 @@ export const data = [
         title: 'MRC Regulatory Support Centre: Research Data and Confidentiality e-learning - DISCONTINUED',
         provider: 'Medical Research Council',
         description:
-            '** THIS COURSE HAS BEEN DISCONTINUED**\n\nThis MRC course has been discontinued but is still accepted as approved training for researchers to conduct research in the SAIL and EPCC Scotland Trust Research Environments if they have completed it previously.  \n\nCourse Duration: 3 hours online\n\nMRC provides an alternative course that is recognized by SAIL and EPCC Scotland: https://web.www.healthdatagateway.org/course/7853810507803276',
+            '** THIS COURSE HAS BEEN DISCONTINUED**\n\nThis MRC course has been discontinued but is still accepted as approved training for researchers to conduct research in the SAIL and EPCC Scotland Trust Research Environments if they have completed it previously.  \n\nCourse Duration: 3 hours online\n\nMRC provides an alternative course that is recognized by SAIL and EPCC Scotland: https://web.old.healthdatagateway.org/course/7853810507803276',
         myEntity: false,
     },
     {

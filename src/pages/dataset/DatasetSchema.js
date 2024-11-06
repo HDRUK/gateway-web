@@ -7,7 +7,7 @@ const DatasetSchema = ({ data }) => {
             '@context': 'http://schema.org/',
             '@type': 'Dataset',
             identifier: data.pid,
-            url: `https://web.www.healthdatagateway.org/dataset/${data.pid}`,
+            url: `https://web.old.healthdatagateway.org/dataset/${data.pid}`,
             name: data.datasetv2.summary.title,
             description: data.datasetv2.summary.abstract,
             keywords: data.datasetv2.summary.keywords,
