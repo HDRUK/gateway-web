@@ -31,7 +31,7 @@ import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
@@ -816,7 +816,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                 </Typography>
 
                                 {guidanceText && (
-                                    <MarkDownSanitzedWithHtml
+                                    <MarkDownSanitizedWithHtml
                                         content={guidanceText}
                                     />
                                 )}

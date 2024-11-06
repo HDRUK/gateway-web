@@ -3,7 +3,7 @@ import { Team } from "@/interfaces/Team";
 import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
 import FilterPopover from "@/components/FilterPopover";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import ShowMoreTooltip from "@/components/ShowMoreTooltip";
 import SortIcon from "@/components/SortIcon";
 import TickCrossIcon from "@/components/TickCrossIcon";
@@ -81,7 +81,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <MarkDownSanitzedWithHtml
+                <MarkDownSanitizedWithHtml
                     content={`${capitalise(original.member_of)} > ${
                         original.name
                     }`}

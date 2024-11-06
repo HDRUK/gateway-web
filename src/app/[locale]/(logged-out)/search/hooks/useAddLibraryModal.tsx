@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { NewLibrary } from "@/interfaces/Library";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import useAuth from "@/hooks/useAuth";
 import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
@@ -56,7 +56,7 @@ const useAddLibraryModal = ({
                         variant: "outlined",
                     },
                 },
-                content: <MarkDownSanitzedWithHtml content={content} />,
+                content: <MarkDownSanitizedWithHtml content={content} />,
                 onSuccess: () => {
                     onAddLibrary(datasetId).then(() => {
                         onSuccess();

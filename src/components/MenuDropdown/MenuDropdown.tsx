@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
-import { MarkDownSanitzedWithHtml } from "../MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface MenuDropdownProps {
     title?: string;
@@ -71,7 +71,7 @@ function MenuDropdown({
                             key={subItem.label}
                             onClick={() => handleClose()}>
                             <Link underline="none" href={subItem.href}>
-                                <MarkDownSanitzedWithHtml
+                                <MarkDownSanitizedWithHtml
                                     content={subItem.label}
                                     WrapperComponent="span"
                                 />
@@ -98,7 +98,7 @@ function MenuDropdown({
                                 key={menuItem.label}
                                 underline="hover"
                                 href={menuItem.href}>
-                                <MarkDownSanitzedWithHtml
+                                <MarkDownSanitizedWithHtml
                                     content={menuItem.label}
                                     WrapperComponent="span"
                                 />
@@ -114,7 +114,7 @@ function MenuDropdown({
                                 variant="link"
                                 aria-label={ariaLabel}
                                 sx={{ pl: 0 }}>
-                                <MarkDownSanitzedWithHtml
+                                <MarkDownSanitizedWithHtml
                                     content={menuItem.label}
                                     WrapperComponent="span"
                                 />

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
@@ -77,7 +77,7 @@ export default async function CollectionItemPage({
                             <Typography variant="h3" sx={{ mb: 1 }}>
                                 {t("introTitle")}
                             </Typography>
-                            <MarkDownSanitzedWithHtml content={description} />
+                            <MarkDownSanitizedWithHtml content={description} />
                         </Box>
                         <Box>
                             <DatasetsContent

@@ -13,7 +13,7 @@ import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
@@ -215,7 +215,7 @@ const ApplicationSection = ({
                         }}>
                         <Typography variant="h2">Guidance</Typography>
                         {guidanceText && (
-                            <MarkDownSanitzedWithHtml content={guidanceText} />
+                            <MarkDownSanitizedWithHtml content={guidanceText} />
                         )}
                     </Paper>
                 </Box>

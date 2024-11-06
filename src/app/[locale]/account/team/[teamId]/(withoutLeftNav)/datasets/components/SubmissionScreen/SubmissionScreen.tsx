@@ -6,7 +6,7 @@ import { yellow } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
@@ -98,7 +98,7 @@ const SubmissionScreen = ({
                         ) : (
                             <TooltipIcon
                                 content={
-                                    <MarkDownSanitzedWithHtml
+                                    <MarkDownSanitizedWithHtml
                                         content={errorText}
                                     />
                                 }

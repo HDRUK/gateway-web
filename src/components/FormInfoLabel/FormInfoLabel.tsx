@@ -2,7 +2,7 @@ import { FormHelperText } from "@mui/material";
 import Label from "@/components/Label";
 import TooltipIcon from "@/components/TooltipIcon";
 import { colors } from "@/config/theme";
-import { MarkDownSanitzedWithHtml } from "../MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface FormInfoLabelProps {
     horizontalForm?: boolean;
@@ -46,7 +46,7 @@ const FormInfoLabel = ({
                         fontSize: 13,
                         color: colors.grey700,
                     }}>
-                    <MarkDownSanitzedWithHtml content={info} />
+                    <MarkDownSanitizedWithHtml content={info} />
                 </FormHelperText>
             )}
 

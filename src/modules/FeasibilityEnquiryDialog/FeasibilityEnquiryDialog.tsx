@@ -6,7 +6,7 @@ import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Typography from "@/components/Typography";
 import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import useAuth from "@/hooks/useAuth";
@@ -84,7 +84,7 @@ const FeasibilityEnquiryDialog = ({
                         />
                     </Grid>
                     <Grid item tablet={6} mobile={6} desktop={6} sx={{ p: 0 }}>
-                        <MarkDownSanitzedWithHtml
+                        <MarkDownSanitizedWithHtml
                             content={t("helpText")}
                             WrapperComponent={<Typography mb={2} />}
                         />

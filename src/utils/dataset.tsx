@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 import { Dataset, VersionItem } from "@/interfaces/Dataset";
 import Link from "@/components/Link";
-import { MarkDownSanitzedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -88,7 +88,7 @@ const formatTextWithLinks = (text: string | string[] | number) => {
                 {segment}
             </Link>
         ) : (
-            <MarkDownSanitzedWithHtml
+            <MarkDownSanitizedWithHtml
                 WrapperComponent="span"
                 key={segment}
                 content={segment}

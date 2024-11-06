@@ -3,14 +3,14 @@ import { SxProps } from "@mui/material/styles";
 import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
 
-interface MarkdownWithHtmlProps {
+export interface MarkdownWithHtmlProps {
     content: string;
     WrapperComponent?: React.ElementType | React.ReactNode;
     sx?: SxProps;
     overrideLinks?: boolean;
 }
 
-export const MarkDownSanitzedWithHtml = ({
+export const MarkDownSanitizedWithHtml = ({
     content,
     sx = {},
     WrapperComponent = "div",
@@ -40,12 +40,16 @@ export const MarkDownSanitzedWithHtml = ({
         ...hrefOverride,
     };
 
+    const Wrapper = WrapperComponent as React.ElementType;
+
     return (
-        <WrapperComponent style={sx}>
+        <Wrapper style={sx}>
             <Markdown
-                options={{ disableParsingRawHTML: true, overrides }}
-                children={sanitizedContent}
-            />
-        </WrapperComponent>
+                options={{
+                    overrides,
+                }}>
+                {sanitizedContent}
+            </Markdown>
+        </Wrapper>
     );
 };
