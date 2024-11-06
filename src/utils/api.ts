@@ -108,6 +108,13 @@ async function getTeam(
     };
 }
 
+async function getTeamIdFromPid(
+    cookieStore: ReadonlyRequestCookies,
+    teamPid: string
+): Promise<string> {
+    return await get<string>(cookieStore, `${apis.teamsV1UrlIP}/${teamPid}/id`);
+}
+
 async function getTeamSummary(
     cookieStore: ReadonlyRequestCookies,
     teamId: string,
@@ -214,6 +221,13 @@ async function getFormHydration(
     dataTypes?: string[],
     teamId?: string
 ): Promise<FormHydrationSchema> {
+    console.log(
+        `${
+            apis.formHydrationV1UrlIP
+        }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
+            dataTypes || []
+        }${teamId && `&team_id=${teamId}`}`
+    );
     return get<FormHydrationSchema>(
         cookieStore,
         `${
@@ -236,6 +250,7 @@ export {
     getFormHydration,
     getNetworkSummary,
     getTeam,
+    getTeamIdFromPid,
     getTeamSummary,
     getTool,
     getUser,
