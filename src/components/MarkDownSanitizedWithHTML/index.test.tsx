@@ -17,10 +17,9 @@ const testCases: TestCase[] = [
     },
     {
         scenario:
-            "should render links with target='_blank' and rel='noopener noreferrer' when overrideLinks is true",
+            "should render links with target='_blank' and rel='noopener noreferrer' by default",
         props: {
             content: "[Open Link](https://example.com)",
-            overrideLinks: true,
         },
         expectedTexts: ["Open Link"],
         additionalCheck: () =>
@@ -30,6 +29,22 @@ const testCases: TestCase[] = [
             (document.querySelector("a") as HTMLAnchorElement).getAttribute(
                 "rel"
             ) === "noopener noreferrer",
+    },
+    {
+        scenario:
+            "should not render links with target='_blank' and rel='noopener noreferrer' when overrideLinks is false",
+        props: {
+            content: "[Open Link](https://example.com)",
+            overrideLinks: false,
+        },
+        expectedTexts: ["Open Link"],
+        additionalCheck: () =>
+            (document.querySelector("a") as HTMLAnchorElement).getAttribute(
+                "target"
+            ) !== "_blank" &&
+            (document.querySelector("a") as HTMLAnchorElement).getAttribute(
+                "rel"
+            ) !== "noopener noreferrer",
     },
     {
         scenario: "should render with a custom wrapper component",
