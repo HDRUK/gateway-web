@@ -95,11 +95,12 @@ const formatTextWithLinks = (text: string | string[] | number) => {
                 {segment}
             </Link>
         ) : (
-            // eslint-disable-next-line react/no-array-index-key
+           
             <MarkDownSanitizedWithHtml
                 content={segment}
                 wrapper="span"
-                key={`segment_${index}`}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`markdown_${index}`}
             />
         )
     );
