@@ -10,15 +10,8 @@ export interface MarkdownWithHtmlProps {
     overrideLinks?: boolean;
 }
 
-export const MarkDownSanitizedWithHtml = ({
-    content,
-    sx = {},
-    wrapper = "div",
-    overrideLinks = true,
-}: MarkdownWithHtmlProps) => {
-    const sanitizedContent = DOMPurify.sanitize(content);
-
-    const hrefOverride = overrideLinks
+const hrefOverride = (overrideLinks: boolean) => {
+    return overrideLinks
         ? {
               a: {
                   component: ({
@@ -35,9 +28,18 @@ export const MarkDownSanitizedWithHtml = ({
               },
           }
         : null;
+};
+
+export const MarkDownSanitizedWithHtml = ({
+    content,
+    sx = {},
+    wrapper = "div",
+    overrideLinks = true,
+}: MarkdownWithHtmlProps) => {
+    const sanitizedContent = DOMPurify.sanitize(content);
 
     const overrides = {
-        ...hrefOverride,
+        ...hrefOverride(overrideLinks),
     };
 
     const Wrapper = wrapper as React.ElementType;
