@@ -3,13 +3,13 @@ import Container from "@/components/Container";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUserFromCookie } from "@/utils/api";
 import { getCohortTermsAndConditions } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 import CohortDisoveryRequestForm from "./components/CohortDisoveryRequestForm";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Cohort Discovery Request",
+export const metadata = metaData({
+    title: "Cohort Discovery Request - About",
     description: "",
-};
-
+});
 export default async function CohortDiscoryRequestPage() {
     const cookieStore = cookies();
     const user = getUserFromCookie(cookieStore);

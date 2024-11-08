@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import dayjs from "dayjs";
 import { get, omit } from "lodash";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
@@ -53,6 +52,7 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+import { getToday } from "@/utils/date";
 import {
     mapExistingDatasetToFormFields,
     formGenerateLegendItems,
@@ -101,7 +101,7 @@ const getMetadata = (isDraft: boolean) =>
         ? "versions[0].metadata.original_metadata"
         : "versions[0].metadata.metadata";
 
-const today = dayjs();
+const today = getToday();
 
 const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
@@ -193,6 +193,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const schemaFields = currentFormJSON.schema_fields;
 
     const defaultFormValues = {
+        ...currentFormJSON.defaultValues,
         "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
@@ -202,9 +203,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Last Modified Datetime": today,
         "Name of data provider": "--",
         "Dataset population size": -1,
-        "contact point": user?.email,
         "Follow-up": null,
-        ...currentFormJSON.defaultValues,
+        "contact point":
+            currentFormJSON.defaultValues.contact_point || user?.email, // this is a hidden field and goes no where but it is summary.dataCustodian.contact_point
+        "Contact point": user?.email, // summary.contact_point
     };
 
     useEffect(() => {
@@ -312,9 +314,30 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
+    // This is a bit of a hack
+    // - the data_custodian_id is coming back as a persistent ID due to a confusing in naming/bug
+    // - we need to make sure therefore that the watchId, from the form, for data custodian identifier
+    //    if an identifier, and not a persistent identifier
+    const watchIdIsNumber = !Number.isNaN(Number(watchId));
+
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
-        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`
+        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
+        {
+            shouldFetch: watchIdIsNumber,
+        }
     );
+
+    const { data: teamIdFromPid } = useGet<number>(
+        `${apis.teamsV1Url}/${watchId}/id`,
+        {
+            shouldFetch: !watchIdIsNumber,
+        }
+    );
+
+    useEffect(() => {
+        if (!teamIdFromPid) return;
+        setValue(DATA_CUSTODIAN_ID, teamIdFromPid);
+    }, [teamIdFromPid]);
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
@@ -494,14 +517,14 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                           schemaModel: SCHEMA_NAME,
                           schemaVersion: SCHEMA_VERSION,
                           metadata: {
-                              issued: new Date().toString(),
-                              modified: new Date().toString(),
                               observations: [],
                               coverage: null,
                               structuralMetadata: {
                                   tables: structuralMetadata,
                               },
                               ...mappedFormData,
+                              issued: today,
+                              modified: today,
                           },
                       },
                   };
@@ -822,6 +845,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                         <Box sx={{ flex: 3, p: 0 }}>
                             <SubmissionScreen
                                 trigger={trigger}
+                                errors={formState.errors}
                                 makeActiveAction={handleMakeActive}
                                 makeActiveDisabled={isSaving}
                             />

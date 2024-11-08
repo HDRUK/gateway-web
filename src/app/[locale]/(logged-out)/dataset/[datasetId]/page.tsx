@@ -9,6 +9,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { getDataset } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
+import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
 import DatasetMindMap from "./components/DatasetMindMap";
@@ -19,10 +20,10 @@ import Publications from "./components/Publications";
 import Sources from "./components/Sources";
 import { datasetFields } from "./config";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Dataset",
+export const metadata = metaData({
+    title: "Dataset",
     description: "",
-};
+});
 
 const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",
