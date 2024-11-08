@@ -17,26 +17,30 @@ const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${version}/${endpoint}`
 
 
 const getSiteMapData:() => Promise<void> = async () => {
-   await fetch(siteMapAPI).then(async (res) => {
-       if (!res.ok) {
-           throw new Error("Failed to fetch data for sitemap");
-       }
-       console.log('Data okay for sitemap')
-       fs.writeFile(
-           'src/seeded/sitemap.json',
-           JSON.stringify(await res.json()),
-           (err) => {
-               if (err) {
-                   console.log('Error writing file:', err)
-               } else {
-                   console.log('Successfully seeded sitemap data')
-               }
-           }
-       )
 
-   }).catch((err)=>{
+    try {
+        await fetch(siteMapAPI).then(async (res) => {
+            if (!res.ok) {
+                throw new Error("Failed to fetch data for sitemap");
+            }
+            console.log('Data okay for sitemap')
+            fs.writeFile(
+                'src/seeded/sitemap.json',
+                JSON.stringify(await res.json()),
+                (err) => {
+                    if (err) {
+                        console.log('Error writing file:', err)
+                    } else {
+                        console.log('Successfully seeded sitemap data')
+                    }
+                }
+            )
+     
+        })
+    }
+  catch(err) {
     console.log(`failed to call ${siteMapAPI}:`, err)
-   });
+   };
 }
 
 getSiteMapData()
