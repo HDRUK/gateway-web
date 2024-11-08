@@ -1,13 +1,16 @@
 import { cookies } from "next/headers";
 import { getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import Tools from "../../team/[teamId]/(withLeftNav)/tools/components/TeamTools";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - Tools",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Tools",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function TeamsPage() {
     const cookieStore = cookies();
     const user = await getUser(cookieStore);

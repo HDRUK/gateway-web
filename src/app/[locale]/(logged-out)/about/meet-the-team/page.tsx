@@ -1,11 +1,11 @@
 import { getContributorsAndCollaborators, getMeetTheTeam } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 import TeamMembers from "./components/TeamMembers";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - About - Meet the team",
+export const metadata = metaData({
+    title: "Meet the team - About",
     description: "",
-};
-
+});
 export default async function MeetTheTeam() {
     const teamData = await getMeetTheTeam().then(data => data[0].node);
     const stakeholderData = await getContributorsAndCollaborators().then(

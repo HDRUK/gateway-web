@@ -10,12 +10,15 @@ import {
     TEAM,
     TITLE,
 } from "@/consts/translation";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Applications",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Applications - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 const TeamHelpPage = () => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_ACCESS_REQUESTS}.${APPLICATIONS}`

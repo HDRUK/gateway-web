@@ -2,14 +2,18 @@ import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import ApplicationList from "./ApplicationList";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Integrations - Applications List",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Applications List - Integrations",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function TeamApplicationsPage({
     params,

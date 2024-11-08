@@ -327,7 +327,7 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
 });
 
 const convertRevisionsToArray = (data: {
-    revisions?: Revision | Revision[];
+    revisions: Revision | Revision[] | null;
 }) => {
     return {
         ...data,
@@ -396,7 +396,32 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    return convertRevisionsToArray(formattedFormData);
+    const cleanUndefinedObjects = (
+        obj: Record<string, unknown>
+    ): Record<string, unknown> | undefined => {
+        const newObj = { ...obj };
+        Object.keys(newObj).forEach(key => {
+            const value = newObj[key];
+            if (
+                value &&
+                typeof value === "object" &&
+                !Array.isArray(value) &&
+                !(value instanceof Date)
+            ) {
+                if (Object.values(value).every(val => val === undefined)) {
+                    newObj[key] = null;
+                }
+            }
+        });
+        return newObj;
+    };
+    // this makes sure that any nested objects are not left as {}
+    // - the schema needs them as either null or filled to be valid
+    const cleanedFormattedFormData = cleanUndefinedObjects(
+        formattedFormData
+    ) as { revisions: Revision | Revision[] | null };
+
+    return convertRevisionsToArray(cleanedFormattedFormData);
 };
 
 const mapExistingDatasetToFormFields = (

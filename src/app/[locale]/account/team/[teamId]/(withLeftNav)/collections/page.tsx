@@ -2,15 +2,18 @@ import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import TeamCollections from "./components/TeamCollections";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Collections",
-    description: "",
-};
-
+export const metadata = metaData(
+    {
+        title: "Collections - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 export default async function TeamCollectionsPage({
     params,
 }: {
