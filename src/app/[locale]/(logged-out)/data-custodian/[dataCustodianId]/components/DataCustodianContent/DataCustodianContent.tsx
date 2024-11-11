@@ -7,6 +7,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
 import Link from "@/components/Link";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import TooltipIcon from "@/components/TooltipIcon";
@@ -17,7 +18,6 @@ import {
     DataCustodianSection,
     FieldType,
 } from "../../config";
-import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";
