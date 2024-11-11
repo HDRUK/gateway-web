@@ -212,7 +212,6 @@ const CollectionForm = ({
             }
         });
 
-
         reset(formData);
     }, [reset, existingCollectionData]);
 
