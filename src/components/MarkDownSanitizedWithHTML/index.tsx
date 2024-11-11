@@ -33,6 +33,17 @@ const hrefOverride = (overrideLinks: boolean) => {
         : null;
 };
 
+const rawOrHtml = (content: unknown) => {
+    let value;
+    try {
+        const html = JSON.parse(content as string) as JSONContent;
+        value = generateHTML(html, EXTENSIONS);
+    } catch (_e) {
+        value = content;
+    }
+    return value;
+};
+
 export const MarkDownSanitizedWithHtml = ({
     content,
     sx = {},
@@ -40,10 +51,6 @@ export const MarkDownSanitizedWithHtml = ({
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
     const sanitizedContent = DOMPurify.sanitize(content);
-    const html = generateHTML(
-        JSON.parse(sanitizedContent) as JSONContent,
-        EXTENSIONS
-    );
 
     const overrides = {
         ...hrefOverride(overrideLinks),
@@ -58,7 +65,7 @@ export const MarkDownSanitizedWithHtml = ({
                 options={{
                     overrides,
                 }}>
-                {html}
+                {rawOrHtml(sanitizedContent)}
             </Markdown>
         </Wrapper>
     );
