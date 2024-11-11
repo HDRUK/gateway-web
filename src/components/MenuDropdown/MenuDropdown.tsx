@@ -19,6 +19,7 @@ interface MenuDropdownProps {
         divider?: boolean;
         icon?: HTMLElement;
         dialog?;
+        button?;
     }[];
     handleClose: () => void;
     transformOrigin?: null | {
@@ -125,6 +126,22 @@ function MenuDropdown({
                                 sx={{ pl: 0 }}>
                                 {menuItem.label}
                             </Button>
+                        </MenuItem>
+                    );
+                }
+                if (menuItem.button) {
+                    return (
+                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
+                            {menuItem.icon || null}
+                            {menuItem.button}
+                            {/* <Button
+                                onClick={() =>
+                                    handleShowDialog(menuItem.dialog)
+                                }
+                                variant="link"
+                                sx={{ pl: 0 }}>
+                                {menuItem.label}
+                            </Button> */}
                         </MenuItem>
                     );
                 }

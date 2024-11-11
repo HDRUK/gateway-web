@@ -31,7 +31,8 @@ const ActionBar = () => {
 
     const handleDownload = async () => {
         const csvData = dur_content;
-
+        console.log('csvData', csvData);
+        console.log('isDownloading', isDownloading);
         if (csvData) {
             csvData.filename = `dur_${params.dataUseId}.csv`;
             notificationService.apiSuccess(t("downloadStarted"));
@@ -41,8 +42,12 @@ const ActionBar = () => {
 
     const downloadDataUse = async () => {
         setIsDownloading(true);
+        console.log('isDownloading2', isDownloading);
         await handleDownload();
+        console.log('isDownloading3', isDownloading);
         setIsDownloading(false);
+        console.log('isDownloading4', isDownloading);
+
     };
 
     return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { SxProps } from "@mui/material";
 import { FileExport } from "@/interfaces/FileExport";
 import Button from "@/components/Button";
@@ -13,6 +13,7 @@ interface DownloadFileProps {
     isExternalFile?: boolean;
     externalFileName?: string;
     buttonSx?: SxProps;
+    startIcon?: ReactNode;
 }
 
 const DownloadFile = ({
@@ -21,9 +22,10 @@ const DownloadFile = ({
     isExternalFile,
     externalFileName,
     buttonSx,
+    startIcon = <DownloadIcon />,
 }: DownloadFileProps) => {
     const [shouldFetch, setShouldFetch] = useState(false);
-
+    console.log('useGet', shouldFetch);
     const download = useGet<FileExport>(apiPath, {
         shouldFetch,
     });
@@ -42,9 +44,12 @@ const DownloadFile = ({
     };
 
     useEffect(() => {
+        console.log('useEffect 1', download, shouldFetch);
         if (!shouldFetch) return;
+        console.log('useEffect 2', download, shouldFetch);
 
         download.mutate().then(data => {
+            console.log('data', data);
             downloadFile(data);
             setShouldFetch(false);
         });
@@ -59,7 +64,7 @@ const DownloadFile = ({
             }
             sx={{ marginBottom: 2, ...buttonSx }}
             variant="link"
-            startIcon={<DownloadIcon />}>
+            startIcon={startIcon}>
             {buttonText}
         </Button>
     );
