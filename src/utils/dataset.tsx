@@ -78,6 +78,10 @@ const formatTextWithLinks = (text: string | string[] | number) => {
         return text.toLocaleString();
     }
 
+    if (typeof text === "object") {
+        return "";
+    }
+
     // Convert text to an array if it's not already one
     const segments = Array.isArray(text) ? text : text.split(URL_REGEX);
 
@@ -96,14 +100,18 @@ const formatTextWithLinks = (text: string | string[] | number) => {
 };
 
 const formatTextDelimiter = (text: string | string[] | number) => {
-    return Array.isArray(text)
-        ? text.join(", ") // Join array elements with ", " if it's an array
-        : typeof text === "number"
-        ? text.toLocaleString()
-        : text
-              ?.replaceAll(";", "")
-              .replace(/\s*,+\s*/g, ", ")
-              .replace(/^[\s,]*|[,\s]*$/g, "");
+    try {
+        return Array.isArray(text)
+            ? text.join(", ") // Join array elements with ", " if it's an array
+            : typeof text === "number"
+            ? text.toLocaleString()
+            : text
+                  ?.replaceAll(";", "")
+                  .replace(/\s*,+\s*/g, ", ")
+                  .replace(/^[\s,]*|[,\s]*$/g, "");
+    } catch (err) {
+        return text;
+    }
 };
 
 export {
