@@ -64,6 +64,14 @@ const testCases: TestCase[] = [
         expectedTexts: ["custard cream"],
         additionalCheck: () => document.getElementById("biscuit") !== null,
     },
+    {
+        scenario: "should render WYSIWYG",
+        props: {
+            content: "{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I Enjoy Biscuits.\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"PIONEER:\"}]},{\"type\":\"bulletList\",\"content\":[{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"provide accurate, real-time data for custard creams\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"support test case\"}]}]},{\"type\":\"listItem\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"map innovation need.\"}]}]}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Ultimately, PIONEER enables stakeholders to develop, test, and deliver new ways of caring for acutely unwell people, supported with expert patient, health care professional, academic and compute/analytic services.\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"PIONEER is the most complete record of the acute health care journey novation.\"}]},{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"marks\":[{\"type\":\"italic\"}],\"text\":\"More.\"}]}]}",
+        },
+        expectedTexts: ['support test case'],
+
+    }
 ];
 
 describe("MarkDownSanitizedWithHtml", () => {

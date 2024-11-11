@@ -2,6 +2,9 @@ import React from "react";
 import { SxProps } from "@mui/material/styles";
 import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
+import { generateHTML, JSONContent } from "@tiptap/react";
+import { Typography } from "@mui/material";
+import { EXTENSIONS } from "../Wysiwyg/consts";
 
 export interface MarkdownWithHtmlProps {
     content: string;
@@ -25,7 +28,7 @@ const hrefOverride = (overrideLinks: boolean) => {
                           {children}
                       </a>
                   ),
-              },
+              }
           }
         : null;
 };
@@ -37,9 +40,11 @@ export const MarkDownSanitizedWithHtml = ({
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
     const sanitizedContent = DOMPurify.sanitize(content);
+    const html =  generateHTML(JSON.parse(sanitizedContent) as JSONContent, EXTENSIONS)
 
     const overrides = {
         ...hrefOverride(overrideLinks),
+        p: <Typography sx={{ mb: 2 }}/>
     };
 
     const Wrapper = wrapper as React.ElementType;
@@ -50,7 +55,7 @@ export const MarkDownSanitizedWithHtml = ({
                 options={{
                     overrides,
                 }}>
-                {sanitizedContent}
+                {html}
             </Markdown>
         </Wrapper>
     );

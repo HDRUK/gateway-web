@@ -11,13 +11,13 @@ import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
-import { WysiwygOut } from "@/components/Wysiwyg";
 import { formatDate } from "@/utils/date";
 import {
     DataCustodianField,
     DataCustodianSection,
     FieldType,
 } from "../../config";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";
@@ -46,7 +46,7 @@ const DataCustodianContent = ({
 
         switch (type) {
             case FieldType.WYSIWYG:
-                return <WysiwygOut value={val} />;
+                return <MarkDownSanitizedWithHtml content={val} />;
             case FieldType.DATE:
                 return <Typography>{formatDate(val, DATE_FORMAT)}</Typography>;
             case FieldType.LINK:
