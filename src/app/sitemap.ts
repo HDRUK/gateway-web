@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import { MetadataRoute } from "next";
-import * as fs from 'fs';
 import * as path from 'path';
 import sitemapJson from "../seeded/sitemap.json";
 
