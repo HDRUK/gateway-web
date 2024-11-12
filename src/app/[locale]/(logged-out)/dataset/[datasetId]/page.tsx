@@ -43,7 +43,7 @@ export default async function DatasetItemPage({
     params: { datasetId: string };
 }) {
     const { datasetId } = params;
-    console.log('datasetId', datasetId);
+
     const cookieStore = cookies();
     const data = await getDataset(
         cookieStore,
@@ -54,7 +54,7 @@ export default async function DatasetItemPage({
             suppressError: true,
         }
     );
-    console.log('data', data);
+
     if (!data) notFound();
 
     let googleRecommendedDataset: Dataset | undefined;
