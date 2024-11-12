@@ -143,6 +143,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=metadata`
                         )
                     }
+                    style={{ display: "flex", justifyContent: "flex-start" }}
                     variant="link">
                     Metadata
                 </Button>
@@ -158,6 +159,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=observations`
                         )
                     }
+                    style={{ display: "flex", justifyContent: "flex-start" }}
                     variant="link"
                     disabled={
                         dataset.versions[0].metadata?.metadata?.observations
@@ -177,6 +179,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=structural`
                         )
                     }
+                    style={{ display: "flex", justifyContent: "flex-start" }}
                     variant="link"
                     disabled={
                         dataset.versions[0].metadata?.metadata
@@ -236,7 +239,6 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     menuItems={menuItems}
                     anchorElement={anchorElement}
                     title="downloads"
-                    stopPropagation
                 />
             </Box>
         </ActionBarWrapper>
