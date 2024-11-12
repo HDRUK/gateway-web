@@ -2,7 +2,6 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 import { generateHTML, JSONContent } from "@tiptap/react";
-import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
 import { EXTENSIONS } from "../Wysiwyg/consts";
@@ -40,7 +39,7 @@ const rawOrHtml = (content: string) => {
         const html = JSON.parse(content) as JSONContent;
         value = generateHTML(html, EXTENSIONS);
     } catch (_e) {
-        value = parse(content);
+        value = content;
     }
     return value;
 };
