@@ -7,6 +7,7 @@ enum ButtonType {
     UNDO = "undo",
     BULLETED_LIST = "bulletted-list",
     NUMBERED_LIST = "numbered-list",
+    LINK = "link",
 }
 
 export { ButtonType };
