@@ -50,6 +50,7 @@ export const MarkDownSanitizedWithHtml = ({
     wrapper = "div",
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
+    console.log("content", content);
     const sanitizedContent = DOMPurify.sanitize(content);
 
     const overrides = {
