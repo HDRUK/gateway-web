@@ -5,18 +5,21 @@ const {NODE_ENV} = process.env
 const endpoint = 'sitemap'
 
 let address
+let domain
+const locale ='en'
 
 if (NODE_ENV === 'development') {
     // during the loading of docker in tilt, it can't seem to talk to gateway-api so for locally just call dev
     address = 'https://api.dev.hdruk.cloud/api/v1/' + endpoint
+    domain = `https://dev.hdruk.cloud/${locale}`
 }
 
 const { NEXT_PUBLIC_API_VERSION, NEXT_PUBLIC_API_V1_URL, NEXT_PUBLIC_GATEWAY_URL} = process.env
 const version = NEXT_PUBLIC_API_VERSION ?? 'v1'
+domain = domain ??`${NEXT_PUBLIC_GATEWAY_URL}/${locale}`
 
 const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${version}/${endpoint}`;
 
-const domain = `${NEXT_PUBLIC_GATEWAY_URL}/en`;
 const startingDir = "./src/app/[locale]/(logged-out)";
 const fileName = "page";
 const ext = ".tsx";
