@@ -5,6 +5,7 @@ import { generateHTML, JSONContent } from "@tiptap/react";
 import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
 import { EXTENSIONS } from "../Wysiwyg/consts";
+import parse from "html-react-parser";
 
 export interface MarkdownWithHtmlProps {
     content: string;
@@ -33,13 +34,13 @@ const hrefOverride = (overrideLinks: boolean) => {
         : null;
 };
 
-const rawOrHtml = (content: unknown) => {
+const rawOrHtml = (content: string) => {
     let value;
     try {
-        const html = JSON.parse(content as string) as JSONContent;
+        const html = JSON.parse(content) as JSONContent;
         value = generateHTML(html, EXTENSIONS);
     } catch (_e) {
-        value = content;
+        value = parse(content);
     }
     return value;
 };
