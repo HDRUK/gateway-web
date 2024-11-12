@@ -69,8 +69,7 @@ export default async function DatasetItemPage({
     } catch (_e) {
         // Intentionally left empty
     }
-    console.log('here 1');
-    console.log('data', data);
+
     const datasetVersion = data?.versions?.[0];
 
     const datasetStats = pick(datasetVersion, DATASET_STAT_PATHS);
@@ -78,7 +77,7 @@ export default async function DatasetItemPage({
     const populatedSections = datasetFields.filter(section =>
         section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
-    console.log('here 4');
+
     const linkageCounts = {
         tools: data?.tools_count,
         publications: data?.publications_count,
@@ -95,16 +94,18 @@ export default async function DatasetItemPage({
     const activeLinkList = populatedSections.map(section => {
         return { label: section.sectionName };
     });
-    console.log('here 6');
-    const datasetWithName = {...data, name: datasetVersion.metadata?.metadata
-        ?.summary?.title};
+
+    const datasetWithName = {
+        ...data,
+        name: datasetVersion.metadata?.metadata?.summary?.title,
+    };
 
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar dataset={datasetWithName}/>
+                    <ActionBar dataset={datasetWithName} />
                     <Box
                         sx={{
                             display: "flex",
