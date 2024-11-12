@@ -1,20 +1,23 @@
 {
-    "collections": [
-     
-    ],
-    "dataCustodians": [
-     
-    ],
-    "dataCustodianNetworks": [
-      
-    ],
-    "dataSets": [
-     
-    ],
-    "durs": [
-    
-    ],
-    "tools": [
+  "collections": [
    
-    ]
-  }
+  ],
+  "dataCustodians": [
+   
+  ],
+  "dataCustodianNetworks": [
+    
+  ],
+  "dataSets": [
+   
+  ],
+  "durs": [
+  
+  ],
+  "tools": [
+ 
+  ],
+  "static": [
+ 
+  ]
+}
