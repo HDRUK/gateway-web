@@ -71,7 +71,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
             },
         });
 
-        const filename2 = `${datasetId}_${name}_${
+        const filename = `${datasetId}_${name}_${
             url ===
             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=structural`
                 ? "Structural_Metadata"
@@ -84,7 +84,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
         const csvData = {
             content: datasetCsv,
             type: "text/csv; charset=UTF-8",
-            filename: filename2,
+            filename,
         };
 
         if (csvData) {
