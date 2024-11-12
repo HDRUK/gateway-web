@@ -1,7 +1,8 @@
+import * as fs from "fs";
 import { MetadataRoute } from "next";
-import sitemapJson from "../seeded/sitemap.json";
 import * as fs from 'fs';
 import * as path from 'path';
+import sitemapJson from "../seeded/sitemap.json";
 
 interface SiteMapResponse {
     id: number;
@@ -27,7 +28,6 @@ const {
 } = sitemapJson as SiteMapJson;
 
 export const revalidate = 3600;
-
 
 const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
 
@@ -67,52 +67,49 @@ const toolRouteConfig = {
     priority: 0.7,
 };
 
-
-const startingDir = './src/app/[locale]/(logged-out)'
-const fileName = 'page'
-const ext = '.tsx'
-const exclusions = ['search', 'sign-in']
-
+const startingDir = "./src/app/[locale]/(logged-out)";
+const fileName = "page";
+const ext = ".tsx";
+const exclusions = ["search", "sign-in"];
 
 async function findUrlInFiles(
     dir: string = startingDir
-  ): Promise<MetadataRoute.Sitemap[]> {
+): Promise<MetadataRoute.Sitemap[]> {
     let results: MetadataRoute.Sitemap[] = [];
-  
 
     const items = await fs.promises.readdir(dir, { withFileTypes: true });
-  
+
     for (const item of items) {
-      const fullPath = path.join(dir, item.name);
-  
-      if (item.isDirectory()) {
+        const fullPath = path.join(dir, item.name);
 
-        const subDirResults = await findUrlInFiles(fullPath);
-        results = results.concat(subDirResults);
-      } else {
+        if (item.isDirectory()) {
+            const subDirResults = await findUrlInFiles(fullPath);
+            results = results.concat(subDirResults);
+        } else {
+            const fullFileName = fileName + ext;
+            if (item.name === fullFileName && path.extname(item.name) === ext) {
+                const url = fullPath
+                    .replace("src/app/[locale]/(logged-out)", domain)
+                    .replace("/page.tsx", "");
 
-        const fullFileName = fileName + ext
-        if (item.name === fullFileName && path.extname(item.name) === ext) {
-  
-          const url = fullPath.replace('src/app/[locale]/(logged-out)', domain).replace('/page.tsx', '');
-
-          if(url.includes('[') || url.includes('(') || exclusions.includes(item.name.replace('/page.tsx', ''))) {
-              console.log('dynamic route avoided for:', fullPath)
-          } else {
-              results.push({
-                  url,
-                  ...staticRoutesConfig,
-              });
-          }
-          
+                if (
+                    url.includes("[") ||
+                    url.includes("(") ||
+                    exclusions.includes(item.name.replace("/page.tsx", ""))
+                ) {
+                    console.log("dynamic route avoided for:", fullPath);
+                } else {
+                    results.push({
+                        url,
+                        ...staticRoutesConfig,
+                    });
+                }
+            }
         }
-      }
     }
-  
+
     return results;
-  }
-
-
+}
 
 async function staticPages(): Promise<MetadataRoute.Sitemap[]> {
     return [
@@ -121,7 +118,7 @@ async function staticPages(): Promise<MetadataRoute.Sitemap[]> {
             changeFrequency: "Monthly",
             priority: 1,
         },
-        ...await findUrlInFiles()
+        ...(await findUrlInFiles()),
     ];
 }
 
@@ -191,8 +188,5 @@ function seededDataPages(): MetadataRoute.Sitemap[] {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap[]> {
-
-    return [...await staticPages(), ...seededDataPages()];
+    return [...(await staticPages()), ...seededDataPages()];
 }
-
-
