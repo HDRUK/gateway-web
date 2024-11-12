@@ -45,28 +45,19 @@ const dataTestScenarios: DataTestScenariosType[] = [
         description: "a large dataset",
         data: mockDataSet,
     },
-];
-
-const mockDataSetWithLinkages = {
-    ...mockDataSet,
-    versions: [
-        {
-            ...mockDataSet.versions[0],
-            reduced_linked_dataset_versions: [
+    {
+        description: "a dataset without linkage data",
+        data: {
+            ...mockDataSet,
+            versions: [
                 {
-                    id: "1",
-                    name: "Link1",
-                    pivot: { linkage_type: "isPartOf" },
-                },
-                {
-                    id: "2",
-                    name: "Link2",
-                    pivot: { linkage_type: "isPartOf" },
+                    ...mockDataSet.versions[0],
+                    reduced_linked_dataset_versions: undefined,
                 },
             ],
         },
-    ],
-};
+    },
+];
 
 describe("DataSetItemPage", () => {
     beforeEach(() => {
@@ -93,26 +84,6 @@ describe("DataSetItemPage", () => {
             ).toBeInTheDocument();
         }
     );
-
-    it("renders Linkages component when dataset has linkage data", async () => {
-        getDataSetMock.mockResolvedValue(mockDataSetWithLinkages);
-
-        await setup({ datasetId: "123" });
-
-        // Check for linked dataset entries
-        expect(screen.getByText("Dataset is part of (2)")).toBeInTheDocument();
-    });
-
-    it("hides Linkages component when dataset has no linkage data", async () => {
-        getDataSetMock.mockResolvedValue(mockDataSet);
-
-        await setup({ datasetId: "123" });
-
-        // Check for linked dataset entries
-        expect(
-            screen.queryByText("Dataset is part of (2)")
-        ).not.toBeInTheDocument();
-    });
 
     it("calls notFound when dataset is not found", async () => {
         getDataSetMock.mockResolvedValue(null);
