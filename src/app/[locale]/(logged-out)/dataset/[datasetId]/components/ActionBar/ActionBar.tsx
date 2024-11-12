@@ -155,7 +155,11 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=observations`
                         )
                     }
-                    variant="link">
+                    variant="link"
+                    disabled={
+                        dataset.versions[0].metadata?.metadata?.observations
+                            .length === 0
+                    }>
                     Observations
                 </Button>
             ),
@@ -170,7 +174,11 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=structural`
                         )
                     }
-                    variant="link">
+                    variant="link"
+                    disabled={
+                        dataset.versions[0].metadata?.metadata
+                            ?.structuralMetadata?.tables.length === 0
+                    }>
                     Structural Metadata
                 </Button>
             ),
