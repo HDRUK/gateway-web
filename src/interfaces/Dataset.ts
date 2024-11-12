@@ -121,7 +121,7 @@ interface Metadata {
         {
             disambiguatingDescription: string;
             measuredProperty: string;
-            measuredValue: Number;
+            measuredValue: number;
             observationDate: string;
             observedNode: string;
         }

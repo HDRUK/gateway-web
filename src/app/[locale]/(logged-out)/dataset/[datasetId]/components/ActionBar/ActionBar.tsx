@@ -18,8 +18,7 @@ import getRequest from "@/services/api/get";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { DownloadIcon, QuestionAnswerIcon } from "@/consts/icons";
-import { ChevronThinIcon } from "@/consts/icons";
+import { ChevronThinIcon, DownloadIcon, QuestionAnswerIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { downloadFile } from "@/utils/download";
 import { ActionBarWrapper } from "./ActionBar.styles";
@@ -232,7 +231,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     handleClose={() => setAnchorElement(null)}
                     menuItems={menuItems}
                     anchorElement={anchorElement}
-                    title={"downloads"}
+                    title="downloads"
                     stopPropagation
                 />
             </Box>
