@@ -1,12 +1,12 @@
 import { Button, Divider, Grid } from "@mui/material";
 import MuiDialogContent from "@mui/material/DialogContent";
-import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
 import { DatasetEnquiry } from "@/interfaces/Enquiry";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Typography from "@/components/Typography";
 import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import useAuth from "@/hooks/useAuth";
@@ -84,9 +84,10 @@ const FeasibilityEnquiryDialog = ({
                         />
                     </Grid>
                     <Grid item tablet={6} mobile={6} desktop={6} sx={{ p: 0 }}>
-                        <Typography mb={2}>
-                            <Markdown>{t("helpText")}</Markdown>
-                        </Typography>
+                        <MarkDownSanitizedWithHtml
+                            content={t("helpText")}
+                            WrapperComponent={<Typography mb={2} />}
+                        />
                         {mutateLibraries && (
                             <Button
                                 variant="outlined"

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Divider from "@mui/material/Divider";
-import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import {
     DarApplication,
@@ -14,6 +13,7 @@ import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
@@ -214,7 +214,9 @@ const ApplicationSection = ({
                             maxHeight: "100vh",
                         }}>
                         <Typography variant="h2">Guidance</Typography>
-                        {guidanceText && <Markdown>{guidanceText}</Markdown>}
+                        {guidanceText && (
+                            <MarkDownSanitizedWithHtml content={guidanceText} />
+                        )}
                     </Paper>
                 </Box>
             </Container>

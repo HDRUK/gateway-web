@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
-import Markdown from "markdown-to-jsx";
 import { Dataset, VersionItem } from "@/interfaces/Dataset";
 import Link from "@/components/Link";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -95,10 +95,12 @@ const formatTextWithLinks = (text: string | string[] | number) => {
                 {segment}
             </Link>
         ) : (
-            // eslint-disable-next-line react/no-array-index-key
-            <Markdown component="span" key={`segment_${index}`}>
-                {segment}
-            </Markdown>
+            <MarkDownSanitizedWithHtml
+                content={segment}
+                wrapper="span"
+                // eslint-disable-next-line react/no-array-index-key
+                key={`markdown_${index}`}
+            />
         )
     );
 };

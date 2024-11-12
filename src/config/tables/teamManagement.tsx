@@ -2,8 +2,8 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Team } from "@/interfaces/Team";
 import ActionMenu from "@/components/ActionMenu";
 import Box from "@/components/Box";
-import Encoder from "@/components/Encoder";
 import FilterPopover from "@/components/FilterPopover";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import ShowMoreTooltip from "@/components/ShowMoreTooltip";
 import SortIcon from "@/components/SortIcon";
 import TickCrossIcon from "@/components/TickCrossIcon";
@@ -81,8 +81,11 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Encoder
-                    raw={`${capitalise(original.member_of)} > ${original.name}`}
+                <MarkDownSanitizedWithHtml
+                    content={`${capitalise(original.member_of)} > ${
+                        original.name
+                    }`}
+                    WrapperComponent="span"
                 />
             ),
         }),
