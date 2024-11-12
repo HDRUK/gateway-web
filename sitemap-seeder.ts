@@ -16,7 +16,7 @@ if (NODE_ENV === 'development') {
 
 const { NEXT_PUBLIC_API_VERSION, NEXT_PUBLIC_API_V1_URL, NEXT_PUBLIC_GATEWAY_URL} = process.env
 const version = NEXT_PUBLIC_API_VERSION ?? 'v1'
-domain = domain ??`${NEXT_PUBLIC_GATEWAY_URL}/${locale}`
+domain = domain ?? `${NEXT_PUBLIC_GATEWAY_URL}/${locale}`
 
 const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${version}/${endpoint}`;
 
