@@ -33,7 +33,7 @@ interface ActionBarProps {
 const ActionBar = ({ dataset }: ActionBarProps) => {
     const [isDownloading, setIsDownloading] = useState(false);
     const { showDialog } = useDialog();
-    const { id: datasetId } = dataset;
+    const { id: datasetId, name } = dataset;
     const path = usePathname();
 
     const { isLoggedIn } = useAuth();
@@ -56,8 +56,6 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     };
 
     const handleDownload = async (url: string) => {
-        console.log("isDownloading in handleDownload()", isDownloading);
-
         const { content: datasetCsv } = await getRequest<{
             content: string;
             filename: string;
@@ -73,11 +71,14 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
             },
         });
 
-        const filename2 = `dataset_${datasetId}_${
+        const filename2 = `${datasetId}_${name}_${
             url ===
             `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=structural`
-                ? "structuralMetadata"
-                : "other"
+                ? "Structural_Metadata"
+                : url ===
+                  `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=metadata`
+                ? "Metadata"
+                : "Observations"
         }.csv`;
 
         const csvData = {
