@@ -9,7 +9,6 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import Underline from "@tiptap/extension-underline";
-import Link from "@tiptap/extension-link";
 
 const EXTENSIONS = [
     Document,
@@ -23,7 +22,6 @@ const EXTENSIONS = [
     OrderedList,
     BulletList,
     ListItem,
-    Link
 ];
 
 export { EXTENSIONS };
