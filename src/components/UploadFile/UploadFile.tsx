@@ -27,13 +27,17 @@ interface UploadFileProps {
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
-    onFileUploaded?: (uploadResponse?: number | StructuralMetadata[]) => void;
     isUploading?: Dispatch<SetStateAction<boolean>>;
     onBeforeUploadCheck?: (height: number, width: number) => boolean;
     onFileCheckFailed?: () => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
     onFileChange?: (file: File) => void;
+    onFileUploaded?: (
+        uploadResponse?: number | StructuralMetadata[] | string
+    ) => void;
+    onFileUploadError?: () => void;
     showUploadButton?: boolean;
+    triggerFileUpload?: boolean;
     sx?: BoxProps["sx"];
 }
 
@@ -44,13 +48,15 @@ const UploadFile = ({
     allowReuploading,
     acceptedFileTypes = ".xlsx",
     fileSelectButtonText,
-    onFileUploaded,
     isUploading,
     onBeforeUploadCheck,
     onFileCheckFailed,
     onFileCheckSucceeded,
     onFileChange,
+    onFileUploaded,
+    onFileUploadError,
     showUploadButton = true,
+    triggerFileUpload,
     sx,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -86,6 +92,10 @@ const UploadFile = ({
         setPollFileStatus(false);
 
         notificationService.apiError(fileScanStatus?.error || t("error"));
+
+        if (onFileUploadError) {
+            onFileUploadError();
+        }
     };
 
     useEffect(() => {
@@ -94,7 +104,9 @@ const UploadFile = ({
                 isUploading?.(false);
                 setPollFileStatus(false);
 
-                if (
+                if (apiPath?.includes("media")) {
+                    onFileUploaded?.(fileScanStatus?.file_location);
+                } else if (
                     fileScanStatus?.entity_id &&
                     fileScanStatus?.entity_id > 0
                 ) {
@@ -175,6 +187,13 @@ const UploadFile = ({
             onFileCheckFailed?.();
         }
     };
+
+    useEffect(() => {
+        if (triggerFileUpload) {
+            handleSubmit(onSubmit)();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [triggerFileUpload]);
 
     return (
         <Form sx={sx}>
