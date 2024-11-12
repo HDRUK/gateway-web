@@ -13,6 +13,7 @@ import {
 } from "@/interfaces/AddResource";
 import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
+import { VersionItem } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
 import { Option } from "@/interfaces/Option";
@@ -91,7 +92,7 @@ const CollectionForm = ({
         });
 
     const { data: keywordData } = useGet<Keyword[]>(
-        `${apis.keywordsV1Url}?per_page=-1`
+        `${apis.keywordsV1Url}?perPage=-1`
     );
 
     const { data: userData = [], isLoading: isLoadingUsers } = useGet<User[]>(
@@ -105,10 +106,12 @@ const CollectionForm = ({
         `${apis.collectionsV1Url}/${collectionId}?view_type=mini`,
         { shouldFetch: !!collectionId }
     );
+
     const createCollection = usePost<CollectionSubmission>(
         apis.collectionsV1Url,
         { itemName: "Collection", successNotificationsOn: !file }
     );
+
     const editCollection = usePatch<Partial<CollectionSubmission>>(
         apis.collectionsV1Url,
         { itemName: "Collection" }
@@ -157,7 +160,7 @@ const CollectionForm = ({
             return;
         }
 
-        const datasetVersionToDataset = datasetVersions => {
+        const datasetVersionToDataset = (datasetVersions: VersionItem[]) => {
             // this function is a temporary hack and this all needs sorting out
             // GET collections returns `dataset_versions` in a particular format
             // but POST collections is expecting datasets
@@ -201,6 +204,7 @@ const CollectionForm = ({
         if (formData.image_link) {
             setImageUploaded(true);
         }
+
         const propertiesToDelete = ["mongo_object_id", "mongo_id"];
         propertiesToDelete.forEach(key => {
             if (key in formData) {
@@ -210,7 +214,9 @@ const CollectionForm = ({
 
         reset(formData);
     }, [reset, existingCollectionData]);
+
     const watchAll = watch();
+
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
@@ -239,6 +245,7 @@ const CollectionForm = ({
             },
         });
     };
+
     const selectedResources = useMemo(() => {
         return {
             datause: (getValues("dur") as DataUse[]) || [],
@@ -248,6 +255,7 @@ const CollectionForm = ({
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll, getValues]);
+
     const handleRemoveResource = (
         data: ResourceDataType,
         resourceType: ResourceType
@@ -317,6 +325,7 @@ const CollectionForm = ({
             }),
         [control, keywordOptions, userOptions, isLoadingUsers]
     );
+
     const onSubmit = async (
         formData: Collection,
         status?: DataStatus,
@@ -384,6 +393,7 @@ const CollectionForm = ({
 
         push(COLLECTION_ROUTE);
     };
+
     useEffect(() => {
         showBar("CreateCollection", {
             cancelText: t(`${TRANSLATION_PATH_CREATE}.cancel`),
