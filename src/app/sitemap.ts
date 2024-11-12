@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import { MetadataRoute } from "next";
-import * as path from 'path';
+import * as path from "path";
 import sitemapJson from "../seeded/sitemap.json";
 
 interface SiteMapResponse {
@@ -74,40 +74,47 @@ const exclusions = ["search", "sign-in"];
 async function findUrlInFiles(
     dir: string = startingDir
 ): Promise<MetadataRoute.Sitemap[]> {
-    let results: MetadataRoute.Sitemap[] = [];
-
     const items = await fs.promises.readdir(dir, { withFileTypes: true });
 
-    for (const item of items) {
+    const promises = items.map(async item => {
         const fullPath = path.join(dir, item.name);
 
         if (item.isDirectory()) {
-            const subDirResults = await findUrlInFiles(fullPath);
-            results = results.concat(subDirResults);
-        } else {
-            const fullFileName = fileName + ext;
-            if (item.name === fullFileName && path.extname(item.name) === ext) {
-                const url = fullPath
-                    .replace("src/app/[locale]/(logged-out)", domain)
-                    .replace("/page.tsx", "");
-
-                if (
-                    url.includes("[") ||
-                    url.includes("(") ||
-                    exclusions.includes(item.name.replace("/page.tsx", ""))
-                ) {
-                    console.log("dynamic route avoided for:", fullPath);
-                } else {
-                    results.push({
-                        url,
-                        ...staticRoutesConfig,
-                    });
-                }
-            }
+            return findUrlInFiles(fullPath);
         }
-    }
+        const fullFileName = fileName + ext;
+        if (item.name === fullFileName && path.extname(item.name) === ext) {
+            const url = fullPath
+                .replace("src/app/[locale]/(logged-out)", domain)
+                .replace("/page.tsx", "");
 
-    return results;
+            if (
+                url.includes("[") ||
+                url.includes("(") ||
+                exclusions.includes(
+                    fullPath
+                        .replace("src/app/[locale]/(logged-out)", "")
+                        .replace("/page.tsx", "")
+                        .replace("/", "")
+                )
+            ) {
+                console.log("dynamic route avoided for:", fullPath);
+                return [];
+            }
+            return [
+                {
+                    url,
+                    ...staticRoutesConfig,
+                },
+            ];
+        }
+
+        return [];
+    });
+
+    const resolvedResults = await Promise.all(promises);
+
+    return resolvedResults.flat() as MetadataRoute.Sitemap[];
 }
 
 async function staticPages(): Promise<MetadataRoute.Sitemap[]> {
