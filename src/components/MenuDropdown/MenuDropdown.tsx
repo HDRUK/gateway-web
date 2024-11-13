@@ -134,14 +134,6 @@ function MenuDropdown({
                         <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
                             {menuItem.icon || null}
                             {menuItem.button}
-                            {/* <Button
-                                onClick={() =>
-                                    handleShowDialog(menuItem.dialog)
-                                }
-                                variant="link"
-                                sx={{ pl: 0 }}>
-                                {menuItem.label}
-                            </Button> */}
                         </MenuItem>
                     );
                 }
