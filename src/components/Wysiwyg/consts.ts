@@ -4,6 +4,7 @@ import Code from "@tiptap/extension-code";
 import Document from "@tiptap/extension-document";
 import History from "@tiptap/extension-history";
 import Italic from "@tiptap/extension-italic";
+import Link from "@tiptap/extension-link";
 import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -22,6 +23,9 @@ const EXTENSIONS = [
     OrderedList,
     BulletList,
     ListItem,
+    Link.configure({
+        openOnClick: true,
+    }),
 ];
 
 export { EXTENSIONS };
