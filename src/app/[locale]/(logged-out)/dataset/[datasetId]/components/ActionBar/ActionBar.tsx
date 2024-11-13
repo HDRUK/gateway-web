@@ -76,10 +76,10 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
 
         const filename = `${datasetId}_${name}_${
             url ===
-            `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=structural`
+            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=structural`
                 ? "Structural_Metadata"
                 : url ===
-                  `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=metadata`
+                  `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=metadata`
                 ? "Metadata"
                 : "Observations"
         }.csv`;
@@ -140,7 +140,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     onClick={() =>
                         !isDownloading &&
                         downloadDataset(
-                            `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=metadata`
+                            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=metadata`
                         )
                     }
                     style={{ display: "flex", justifyContent: "flex-start" }}
@@ -156,7 +156,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     onClick={() =>
                         !isDownloading &&
                         downloadDataset(
-                            `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=observations`
+                            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=observations`
                         )
                     }
                     style={{ display: "flex", justifyContent: "flex-start" }}
@@ -176,7 +176,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     onClick={() =>
                         !isDownloading &&
                         downloadDataset(
-                            `${apis.datasetsExportV1Url}_single/${datasetId}?download_type=structural`
+                            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=structural`
                         )
                     }
                     style={{ display: "flex", justifyContent: "flex-start" }}
