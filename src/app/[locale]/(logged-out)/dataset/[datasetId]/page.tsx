@@ -95,12 +95,17 @@ export default async function DatasetItemPage({
         return { label: section.sectionName };
     });
 
+    const datasetWithName = {
+        ...data,
+        name: datasetVersion.metadata?.metadata?.summary?.title,
+    };
+
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar dataset={data} />
+                    <ActionBar dataset={datasetWithName} />
                     <Box
                         sx={{
                             display: "flex",

@@ -8,15 +8,21 @@ import { FileExport } from "@/interfaces/FileExport";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import MenuDropdown from "@/components/MenuDropdown";
 import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
-import useGet from "@/hooks/useGet";
+import getRequest from "@/services/api/get";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { DownloadIcon, QuestionAnswerIcon } from "@/consts/icons";
+import { colors } from "@/config/theme";
+import {
+    ChevronThinIcon,
+    DownloadIcon,
+    QuestionAnswerIcon,
+} from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { downloadFile } from "@/utils/download";
 import { ActionBarWrapper } from "./ActionBar.styles";
@@ -30,7 +36,7 @@ interface ActionBarProps {
 const ActionBar = ({ dataset }: ActionBarProps) => {
     const [isDownloading, setIsDownloading] = useState(false);
     const { showDialog } = useDialog();
-    const { id: datasetId } = dataset;
+    const { id: datasetId, name } = dataset;
     const path = usePathname();
 
     const { isLoggedIn } = useAuth();
@@ -52,18 +58,36 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
         metadata: dataset.versions[0].metadata.metadata,
     };
 
-    const { data: datasetCsv } = useGet<{
-        content: string;
-        filename: string;
-        type: string;
-    }>(`${apis.datasetsExportV1Url}/?dataset_id=${datasetId}`, {
-        shouldFetch: !isDownloading,
-    });
+    const handleDownload = async (url: string) => {
+        const { content: datasetCsv } = await getRequest<{
+            content: string;
+            filename: string;
+            type: string;
+        }>(url, {
+            withPagination: false,
+            notificationOptions: {
+                localeKey: "1",
+                itemName: "1",
+                errorNotificationsOn: true,
+                t,
+                action: 1,
+            },
+        });
 
-    const handleDownload = async () => {
+        const filename = `${datasetId}_${name}_${
+            url ===
+            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=structural`
+                ? "Structural_Metadata"
+                : url ===
+                  `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=metadata`
+                ? "Metadata"
+                : "Observations"
+        }.csv`;
+
         const csvData = {
-            ...datasetCsv,
-            filename: `dataset_${datasetId}.csv`,
+            content: datasetCsv,
+            type: "text/csv; charset=UTF-8",
+            filename,
         };
 
         if (csvData) {
@@ -101,10 +125,79 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
         });
     };
 
-    const downloadDataset = async () => {
+    const downloadDataset = async (url: string) => {
         setIsDownloading(true);
-        await handleDownload();
+        const result = await handleDownload(url);
         setIsDownloading(false);
+        return result;
+    };
+
+    const menuItems = [
+        {
+            label: "Metadata",
+            button: (
+                <Button
+                    onClick={() =>
+                        !isDownloading &&
+                        downloadDataset(
+                            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=metadata`
+                        )
+                    }
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                    variant="link">
+                    Metadata
+                </Button>
+            ),
+        },
+        {
+            label: "Observations",
+            button: (
+                <Button
+                    onClick={() =>
+                        !isDownloading &&
+                        downloadDataset(
+                            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=observations`
+                        )
+                    }
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                    variant="link"
+                    disabled={
+                        dataset.versions[0].metadata?.metadata?.observations
+                            .length === 0
+                    }>
+                    Observations
+                </Button>
+            ),
+        },
+        {
+            label: "Structural Metadata",
+            button: (
+                <Button
+                    onClick={() =>
+                        !isDownloading &&
+                        downloadDataset(
+                            `${apis.datasetsExportMetadataV1Url}/${datasetId}?download_type=structural`
+                        )
+                    }
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                    variant="link"
+                    disabled={
+                        dataset.versions[0].metadata?.metadata
+                            ?.structuralMetadata?.tables.length === 0
+                    }>
+                    Structural Metadata
+                </Button>
+            ),
+        },
+    ];
+
+    const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
+        null
+    );
+
+    const handleOpenDropdownMenu = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        setAnchorElement(event.currentTarget);
     };
 
     return (
@@ -128,13 +221,25 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                 </Button>
 
                 <Button
-                    sx={{ display: "none" }} // Hide download button
+                    aria-label={t("downloadMetadata")}
                     variant="text"
-                    startIcon={<DownloadIcon />}
-                    disabled={isDownloading}
-                    onClick={() => !isDownloading && downloadDataset()}>
+                    startIcon={<DownloadIcon sx={{ fill: "primary" }} />}
+                    endIcon={
+                        <ChevronThinIcon
+                            fontSize="medium"
+                            style={{ color: "primary" }}
+                        />
+                    }
+                    sx={{ ml: 2, bgcolor: colors.grey200 }}
+                    onClick={handleOpenDropdownMenu}>
                     {t("downloadMetadata")}
                 </Button>
+                <MenuDropdown
+                    handleClose={() => setAnchorElement(null)}
+                    menuItems={menuItems}
+                    anchorElement={anchorElement}
+                    title="downloads"
+                />
             </Box>
         </ActionBarWrapper>
     );
