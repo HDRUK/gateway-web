@@ -50,6 +50,9 @@ const CreateTeamForm = () => {
     );
     const [fileToBeUploaded, setFileToBeUploaded] = useState<boolean>();
 
+    const [isSaving, setIsSaving] = useState<boolean>();
+    const [triggerFileUpload, setTriggerFileUpload] = useState<boolean>();
+
     const [searchName, setSearchName] = useState("");
     const [userOptions, setUserOptions] = useState<Option[]>([]);
     const searchNameDebounced = useDebounce(searchName, 500);
@@ -88,7 +91,8 @@ const CreateTeamForm = () => {
         },
     });
 
-    const { control, handleSubmit, formState, reset, watch } = methods;
+    const { control, handleSubmit, formState, reset, watch, getValues } =
+        methods;
 
     const updateUserOptions = (
         prevOptions: Option[],
@@ -129,6 +133,7 @@ const CreateTeamForm = () => {
     }, [users]);
 
     const selectedUsers = watch("users");
+
     useEffect(() => {
         if (selectedUsers) {
             setUserOptions(prevOptions => {
@@ -180,46 +185,39 @@ const CreateTeamForm = () => {
     const editTeam = usePatch<Partial<TeamEditForm>>(apis.teamsV1Url);
 
     const submitForm = async (formData: TeamCreateForm | TeamEditForm) => {
-        if (!params?.teamId) {
-            await createTeam({
+        if (isSaving) {
+            return;
+        }
+
+        setIsSaving(true);
+
+        const isCreatingTeam = !params?.teamId;
+
+        if (isCreatingTeam) {
+            const result = await createTeam({
                 ...teamCreateDefaultValues,
                 ...formData,
-            }).then(async result => {
-                if (typeof result === "number" && file) {
-                    setCreatedTeamId(result as string);
-                    setFileToBeUploaded(true);
-                }
             });
+
+            if (typeof result === "number" && file) {
+                setCreatedTeamId(result as string);
+                setFileToBeUploaded(true);
+            } else {
+                push(Routes.ACCOUNT_TEAMS);
+            }
+        } else if (file) {
+            setFileToBeUploaded(true);
         } else {
-            await editTeam(params?.teamId, formData).then(async () => {
-                if (file) {
-                    setFileToBeUploaded(true);
-                }
-            });
-        }
-        setTimeout(() => {
+            await editTeam(params.teamId, formData);
             push(Routes.ACCOUNT_TEAMS);
-        });
-    };
-    const uploadFile = usePost(
-        `${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`,
-        {
-            successNotificationsOn: false,
         }
-    );
+    };
 
     useEffect(() => {
-        const handleFileUploaded = async (file: File) => {
-            const formData = new FormData();
-            formData.append("file", file);
-
-            uploadFile(formData).catch(() => setFile(undefined));
-        };
-
         if (file && fileToBeUploaded && createdTeamId) {
-            handleFileUploaded(file);
+            setTriggerFileUpload(true);
         }
-    }, [createdTeamId, fileToBeUploaded, editTeam, file, uploadFile]);
+    }, [createdTeamId, fileToBeUploaded, editTeam, file]);
 
     const is_question_bank = watch("is_question_bank");
     const questionBankLabel = is_question_bank
@@ -338,6 +336,7 @@ const CreateTeamForm = () => {
                                 }
                                 formControlSx={{ width: "70%", p: 0 }}>
                                 <UploadFile
+                                    apiPath={`${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`}
                                     fileSelectButtonText={t(
                                         `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
                                     )}
@@ -363,8 +362,27 @@ const CreateTeamForm = () => {
                                     onFileCheckFailed={() => {
                                         setFileWarning(true);
                                     }}
+                                    onFileUploaded={async response => {
+                                        if (!createdTeamId) {
+                                            return;
+                                        }
+
+                                        await editTeam(createdTeamId, {
+                                            ...getValues(),
+                                            team_logo: response as string,
+                                        });
+
+                                        push(Routes.ACCOUNT_TEAMS);
+                                    }}
+                                    onFileUploadError={() => {
+                                        setFileToBeUploaded(false);
+                                        setTriggerFileUpload(false);
+                                        setFile(undefined);
+                                        setIsSaving(false);
+                                    }}
                                     sx={{ py: 2 }}
                                     showUploadButton={false}
+                                    triggerFileUpload={triggerFileUpload}
                                 />
                             </FormInputWrapper>
 
@@ -389,10 +407,11 @@ const CreateTeamForm = () => {
                         <Button
                             color="secondary"
                             variant="outlined"
-                            onClick={() => push(Routes.ACCOUNT_TEAMS)}>
+                            onClick={() => push(Routes.ACCOUNT_TEAMS)}
+                            disabled={isSaving}>
                             {t(`${TRANSLATION_PATH_COMMON}.cancel`)}
                         </Button>
-                        <Button type="submit">
+                        <Button type="submit" disabled={isSaving}>
                             {t(
                                 `${TRANSLATION_PATH_COMMON}.${
                                     params?.teamId ? "update" : "publish"
