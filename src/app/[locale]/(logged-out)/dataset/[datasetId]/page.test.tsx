@@ -45,6 +45,18 @@ const dataTestScenarios: DataTestScenariosType[] = [
         description: "a large dataset",
         data: mockDataSet,
     },
+    {
+        description: "a dataset without linkage data",
+        data: {
+            ...mockDataSet,
+            versions: [
+                {
+                    ...mockDataSet.versions[0],
+                    reduced_linked_dataset_versions: undefined,
+                },
+            ],
+        },
+    },
 ];
 
 describe("DataSetItemPage", () => {
