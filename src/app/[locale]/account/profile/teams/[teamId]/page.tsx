@@ -3,13 +3,17 @@ import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import CreateTeamForm from "../components/CreateTeamForm";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - Edit Team",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Edit Team - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function EditTeamPage() {
     const cookieStore = cookies();

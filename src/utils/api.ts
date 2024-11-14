@@ -108,6 +108,13 @@ async function getTeam(
     };
 }
 
+async function getTeamIdFromPid(
+    cookieStore: ReadonlyRequestCookies,
+    teamPid: string
+): Promise<string> {
+    return await get<string>(cookieStore, `${apis.teamsV1UrlIP}/${teamPid}/id`);
+}
+
 async function getTeamSummary(
     cookieStore: ReadonlyRequestCookies,
     teamId: string,
@@ -236,6 +243,7 @@ export {
     getFormHydration,
     getNetworkSummary,
     getTeam,
+    getTeamIdFromPid,
     getTeamSummary,
     getTool,
     getUser,

@@ -213,27 +213,6 @@ const FilterPanel = ({
     }, [filterCategory, filterSourceData, staticFilterValues]);
     const [maximised, setMaximised] = useState<string[]>([]);
 
-    const updateCheckboxes = (
-        updatedCheckbox: { [key: string]: boolean },
-        filterSection: string
-    ) => {
-        const updates = {
-            ...(filterValues[filterSection] || {}),
-            ...updatedCheckbox,
-        };
-
-        const toStringArray = Object.entries(updates)
-            .filter(([, value]) => value === true)
-            .map(([key]) => key);
-
-        setFilterValues({
-            ...filterValues,
-            [filterSection]: updates,
-        });
-
-        setFilterQueryParams(toStringArray, filterSection);
-    };
-
     const handleUpdateMap = (mapValue: SelectedType) => {
         const selectedCountries = Object.keys(mapValue).filter(
             key => mapValue[key]
@@ -299,6 +278,28 @@ const FilterPanel = ({
         });
 
         setFilterQueryParams([], filterSection);
+    };
+
+    const updateCheckboxes = (
+        updatedCheckbox: { [key: string]: boolean },
+        filterSection: string
+    ) => {
+        const updates = {
+            ...(filterValues[filterSection] || {}),
+            ...updatedCheckbox,
+        };
+
+        const selectedKeys = Object.keys(updates).filter(key => updates[key]);
+
+        if (selectedKeys.length) {
+            setFilterValues(prevValues => ({
+                ...prevValues,
+                [filterSection]: updates,
+            }));
+            setFilterQueryParams(selectedKeys, filterSection);
+        } else {
+            resetFilterSection(filterSection);
+        }
     };
 
     const getFilterSortOrder = (
@@ -417,13 +418,6 @@ const FilterPanel = ({
                 );
         }
     };
-
-    // Clear Material Type filter when BioSamples toggled off
-    useEffect(() => {
-        if (!selectedFilters[FILTER_CONTAINS_TISSUE]?.length) {
-            setFilterQueryParams([], FILTER_MATERIAL_TYPE);
-        }
-    }, [selectedFilters[FILTER_CONTAINS_TISSUE]]);
 
     return (
         <>

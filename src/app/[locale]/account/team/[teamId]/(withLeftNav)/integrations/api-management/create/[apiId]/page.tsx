@@ -2,14 +2,18 @@ import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getApplication, getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import EditApplicationForm from "../../components/EditApplicationForm";
 
-export const metadata = {
-    title: "Health Data Research Innovation Gateway - My Account - API Management - Edit",
-    description: "",
-};
+export const metadata = metaData(
+    {
+        title: "Edit - API Management",
+        description: "",
+    },
+    noFollowRobots
+);
 
 export default async function TeamApiEditCreatePage({
     params,

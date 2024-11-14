@@ -5,7 +5,9 @@ WORKDIR /usr/src
 
 COPY . /usr/src
 
-RUN npm install
+ENV NODE_ENV=development
 
+RUN npm install
+RUN npm run seeder
 EXPOSE 3000
 CMD npm run dev

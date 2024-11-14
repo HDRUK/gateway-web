@@ -3,6 +3,7 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { getContentPostQuery, hasCategoryName } from "@/utils/cms";
+import metaData from "@/utils/metadata";
 
 interface ArticlePageProps {
     params: {
@@ -11,12 +12,10 @@ interface ArticlePageProps {
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
-    return {
-        title: `Health Data Research Innovation Gateway - Events - ${params.slug.replaceAll(
-            "-",
-            " "
-        )}`,
-    };
+    return metaData({
+        title: `${params.slug.replaceAll("-", " ")} - Events`,
+        description: "",
+    });
 }
 
 const ArticlePage = async ({ params }: ArticlePageProps) => {
