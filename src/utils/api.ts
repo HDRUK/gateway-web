@@ -232,7 +232,6 @@ export {
     getDataCustodianNetworks,
     getDataset,
     getDataUse,
-    getEntityAction,
     getFilters,
     getFormHydration,
     getNetworkSummary,
