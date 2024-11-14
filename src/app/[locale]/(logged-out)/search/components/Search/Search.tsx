@@ -554,7 +554,6 @@ const Search = ({ filters }: SearchProps) => {
     };
 
     const { setPostLoginActionCookie } = usePostLoginAction({
-        cookieName: config.POST_LOGIN_ACTION_COOKIE,
         onAction: ({ action, data }) => {
             switch (action) {
                 case PostLoginActions.SAVE_SEARCH:
@@ -586,7 +585,7 @@ const Search = ({ filters }: SearchProps) => {
                 />
             ));
         } else {
-            setPostLoginActionCookie("TEST");
+            setPostLoginActionCookie(PostLoginActions.SAVE_SEARCH);
 
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,

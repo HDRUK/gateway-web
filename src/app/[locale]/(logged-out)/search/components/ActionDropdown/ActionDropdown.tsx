@@ -18,7 +18,6 @@ import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
-import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { PostLoginActions } from "@/consts/postLoginActions";
@@ -138,14 +137,7 @@ const ActionDropdown = ({
         localeKey: `updateYourLibrary`,
     });
 
-    const { setPostLoginActionCookie } = usePostLoginActionCookie({
-        cookieName: config.POST_LOGIN_ACTION_COOKIE,
-        onAction: ({ action, data }) => {
-            if (action === PostLoginActions.ADD_LIBRARY) {
-                showLibraryModal({ datasetId: data.datasetId });
-            }
-        },
-    });
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
 
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>

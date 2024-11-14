@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
+import config from "@/config/config";
 import useAuth from "./useAuth";
 
 type PostLoginAction = {
@@ -8,12 +9,10 @@ type PostLoginAction = {
 };
 
 type UsePostLoginActionParams = {
-    cookieName: string;
-    onAction: (action: PostLoginAction) => void;
+    onAction?: (action: PostLoginAction) => void;
 };
 
 export default function usePostLoginAction({
-    cookieName,
     onAction,
 }: UsePostLoginActionParams) {
     const { isLoggedIn } = useAuth();
@@ -24,18 +23,26 @@ export default function usePostLoginAction({
         data?: Record<string, number>
     ) => {
         const cookieValue = JSON.stringify({ action, ...data });
-        Cookies.set(cookieName, cookieValue, { path: "/" });
+        Cookies.set(config.POST_LOGIN_ACTION_COOKIE, cookieValue, {
+            path: "/",
+        });
     };
 
     // Check for the action cookie upon login, perform action, then clear the cookie
     useEffect(() => {
-        const postLoginActionCookie = Cookies.get(cookieName);
+        const postLoginActionCookie = Cookies.get(
+            config.POST_LOGIN_ACTION_COOKIE
+        );
+
         if (postLoginActionCookie && isLoggedIn) {
-            const { action, ...data } = JSON.parse(postLoginActionCookie);
-            onAction({ action, data });
-            Cookies.remove(cookieName, { path: "/" });
+            if (onAction) {
+                const { action, ...data } = JSON.parse(postLoginActionCookie);
+                onAction({ action, data });
+            }
+
+            Cookies.remove(config.POST_LOGIN_ACTION_COOKIE, { path: "/" });
         }
-    }, [cookieName, isLoggedIn, onAction]);
+    }, [isLoggedIn, onAction]);
 
     return { setPostLoginActionCookie };
 }
