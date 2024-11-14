@@ -4,24 +4,24 @@ import useAuth from "./useAuth";
 
 type PostLoginAction = {
     action: string;
-    data: Record<string, string>;
+    data: Record<string, number>;
 };
 
-type UsePostLoginActionCookieParams = {
+type UsePostLoginActionParams = {
     cookieName: string;
     onAction: (action: PostLoginAction) => void;
 };
 
-export default function usePostLoginActionCookie({
+export default function usePostLoginAction({
     cookieName,
     onAction,
-}: UsePostLoginActionCookieParams) {
+}: UsePostLoginActionParams) {
     const { isLoggedIn } = useAuth();
 
     // Set an action in the cookie for post-login handling
     const setPostLoginActionCookie = (
         action: string,
-        data?: Record<string, string>
+        data?: Record<string, number>
     ) => {
         const cookieValue = JSON.stringify({ action, ...data });
         Cookies.set(cookieName, cookieValue, { path: "/" });

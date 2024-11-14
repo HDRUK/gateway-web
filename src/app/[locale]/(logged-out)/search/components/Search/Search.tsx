@@ -41,7 +41,7 @@ import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
-import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
+import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
@@ -492,6 +492,14 @@ const Search = ({ filters }: SearchProps) => {
         }
     };
 
+    const { showLibraryModal } = useAddLibraryModal({
+        onSuccess: () =>
+            router.push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
+            ),
+        onContinue: () => mutateLibraries(),
+    });
+
     const renderResults = () => {
         if (resultsView === ViewType.TABLE) {
             return (
@@ -545,15 +553,7 @@ const Search = ({ filters }: SearchProps) => {
         });
     };
 
-    const { showLibraryModal } = useAddLibraryModal({
-        onSuccess: () =>
-            router.push(
-                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
-            ),
-        onContinue: () => mutateLibraries(),
-    });
-
-    const { setPostLoginActionCookie } = usePostLoginActionCookie({
+    const { setPostLoginActionCookie } = usePostLoginAction({
         cookieName: config.POST_LOGIN_ACTION_COOKIE,
         onAction: ({ action, data }) => {
             switch (action) {
@@ -586,7 +586,7 @@ const Search = ({ filters }: SearchProps) => {
                 />
             ));
         } else {
-            setPostLoginActionCookie(PostLoginActions.SAVE_SEARCH);
+            setPostLoginActionCookie("TEST");
 
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,

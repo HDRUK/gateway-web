@@ -169,7 +169,7 @@ const ActionDropdown = ({
             }
         } else {
             setPostLoginActionCookie(PostLoginActions.ADD_LIBRARY, {
-                datasetId,
+                datasetId: Number(datasetId),
             });
 
             showDialog(ProvidersDialog, {
