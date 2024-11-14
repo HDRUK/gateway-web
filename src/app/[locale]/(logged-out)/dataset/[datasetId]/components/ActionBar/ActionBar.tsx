@@ -121,6 +121,9 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDarEnabled: team.is_question_bank,
+            modalHeader: team.dar_modal_header,
+            modalContent: team.dar_modal_content,
+            isDar: team.is_dar,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
         });
     };

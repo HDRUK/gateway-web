@@ -35,6 +35,43 @@ describe("<DarEnquiryDialog />", () => {
         ).toBeInTheDocument();
     });
 
+    it("has the correct content when modalContent is provided", () => {
+        const modalContent = "This is some lovely content";
+        renderTest({
+            modalContent,
+        });
+
+        expect(screen.getByText(modalContent)).toBeInTheDocument();
+    });
+
+    it("has the correct header when modalHeader is provided", () => {
+        const modalHeader = "This is a lovely header";
+        renderTest({
+            modalHeader,
+        });
+
+        expect(screen.getByText(modalHeader)).toBeInTheDocument();
+    });
+
+    it("does not display Access Information when isDar is false", () => {
+        renderTest({
+            isDar: false,
+        });
+
+        expect(
+            screen.queryByText("Access information")
+        ).not.toBeInTheDocument();
+    });
+
+    it("does display Access Information when isDar is true but isDarEnabled false", () => {
+        renderTest({
+            isDar: true,
+            isDarEnabled: false,
+        });
+
+        expect(screen.queryByText("Access information")).toBeInTheDocument();
+    });
+
     it("calls the feasibility enquiry dialog", () => {
         renderTest();
 
