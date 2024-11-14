@@ -1,9 +1,6 @@
-import { useEffect } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
-import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { KeyedMutator } from "swr";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
@@ -15,15 +12,14 @@ import TooltipIcon from "@/components/TooltipIcon";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import config from "@/config/config";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import ActionDropdown from "../ActionDropdown";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
+    showLibraryModal: (props: { datasetId: number }) => void;
 }
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
@@ -247,39 +243,14 @@ const getColumns = ({
 ];
 
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
-const ResultTable = ({ results }: ResultTableProps) => {
+const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
-    const router = useRouter();
     const { isLoggedIn } = useAuth();
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?perPage=-1`,
         { shouldFetch: isLoggedIn }
     );
-
-    const { showLibraryModal } = useAddLibraryModal({
-        onSuccess: () =>
-            router.push(
-                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
-            ),
-        onContinue: () => mutateLibraries(),
-    });
-
-    const entityActionCookie = Cookies.get(
-        config.ENTITY_ACTION_COOKIE.COOKIE_NAME
-    );
-
-    useEffect(() => {
-        if (entityActionCookie && isLoggedIn) {
-            const { datasetId, action } = JSON.parse(entityActionCookie);
-            if (action === config.ENTITY_ACTION_COOKIE.ACTION_ADD_LIBRARY) {
-                showLibraryModal({ datasetId });
-            }
-            Cookies.remove(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, {
-                path: "/",
-            });
-        }
-    }, [entityActionCookie, showLibraryModal, isLoggedIn]);
 
     const translations = {
         actionLabel: t("action.label"),
