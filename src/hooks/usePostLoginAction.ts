@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import config from "@/config/config";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import useAuth from "./useAuth";
 
 type PostLoginAction = {
@@ -19,7 +20,7 @@ export default function usePostLoginAction({
 
     // Set an action in the cookie for post-login handling
     const setPostLoginActionCookie = (
-        action: string,
+        action: PostLoginActions,
         data?: Record<string, number>
     ) => {
         const cookieValue = JSON.stringify({ action, ...data });
