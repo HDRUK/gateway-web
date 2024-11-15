@@ -54,9 +54,7 @@ describe("<DarEnquiryDialog />", () => {
     });
 
     it("calls the feasibility enquiry dialog", () => {
-        renderTest({
-            isDarEnabled: true,
-        });
+        renderTest();
 
         const feasibilityButton = screen.getByRole("button", {
             name: "Make feasibility enquiry for this dataset",
@@ -68,9 +66,7 @@ describe("<DarEnquiryDialog />", () => {
     });
 
     it("calls the general enquiry dialog", () => {
-        renderTest({
-            isDarEnabled: true,
-        });
+        renderTest();
 
         const generalButton = screen.getByRole("button", {
             name: "Make general enquiry for this dataset",
