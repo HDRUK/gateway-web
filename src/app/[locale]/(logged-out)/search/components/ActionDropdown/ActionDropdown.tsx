@@ -97,7 +97,6 @@ const ActionDropdown = ({
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
-            isDar: team.is_dar,
         });
     };
 

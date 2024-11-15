@@ -128,7 +128,6 @@ const ResultCard = ({
             isDarEnabled: team.is_question_bank,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
-            isDar: team.is_dar,
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,

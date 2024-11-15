@@ -13,7 +13,6 @@ export interface DarEnquiryDialogProps {
     onGeneralEnquiryClick(): void;
     onFeasibilityEnquiryClick(): void;
     isDarEnabled: boolean;
-    isDar: boolean;
     url: string;
     modalHeader: string | null;
     modalContent: string | null;
@@ -27,7 +26,6 @@ const DarEnquiryDialog = ({
     isDarEnabled,
     modalHeader,
     modalContent,
-    isDar,
     url,
 }: DarEnquiryDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -51,8 +49,6 @@ const DarEnquiryDialog = ({
     const dialogContent =
         modalContent ||
         (isDarEnabled ? t("messageEnabled") : t("messageNotEnabled"));
-
-    const isDarAndIsEnabled: boolean = isDarEnabled && isDar;
 
     return (
         <Dialog title={dialogTitle}>
@@ -82,7 +78,7 @@ const DarEnquiryDialog = ({
                 )}
             </MuiDialogContent>
             <MuiDialogActions>
-                {isDarAndIsEnabled && (
+                {isDarEnabled ? (
                     <>
                         <Button
                             variant="outlined"
@@ -96,8 +92,7 @@ const DarEnquiryDialog = ({
                             {t("feasibilityEnquiryButton")}
                         </Button>
                     </>
-                )}
-                {!isDarEnabled && isDar && (
+                ) : (
                     <Button variant="contained" href={`${url}#anchor6`}>
                         {t("accessInformationButton")}
                     </Button>

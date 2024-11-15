@@ -53,27 +53,10 @@ describe("<DarEnquiryDialog />", () => {
         expect(screen.getByText(modalHeader)).toBeInTheDocument();
     });
 
-    it("does not display Access Information when isDar is false", () => {
-        renderTest({
-            isDar: false,
-        });
-
-        expect(
-            screen.queryByText("Access information")
-        ).not.toBeInTheDocument();
-    });
-
-    it("does display Access Information when isDar is true but isDarEnabled false", () => {
-        renderTest({
-            isDar: true,
-            isDarEnabled: false,
-        });
-
-        expect(screen.queryByText("Access information")).toBeInTheDocument();
-    });
-
     it("calls the feasibility enquiry dialog", () => {
-        renderTest({ isDar: true });
+        renderTest({
+            isDarEnabled: true,
+        });
 
         const feasibilityButton = screen.getByRole("button", {
             name: "Make feasibility enquiry for this dataset",
@@ -85,7 +68,9 @@ describe("<DarEnquiryDialog />", () => {
     });
 
     it("calls the general enquiry dialog", () => {
-        renderTest({ isDar: true });
+        renderTest({
+            isDarEnabled: true,
+        });
 
         const generalButton = screen.getByRole("button", {
             name: "Make general enquiry for this dataset",
