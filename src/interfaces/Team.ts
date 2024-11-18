@@ -12,6 +12,10 @@ interface Team {
     is_admin: boolean;
     is_question_bank: boolean;
     member_of: string;
+    is_dar: boolean;
+    dar_modal_header: string | null;
+    dar_modal_content: string | null;
+    dar_modal_footer: string | null;
     contact_point: string;
     updated_at: string;
     application_form_updated_by: string;
