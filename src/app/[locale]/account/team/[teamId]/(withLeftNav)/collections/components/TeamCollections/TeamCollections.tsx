@@ -48,7 +48,6 @@ const TeamCollections = ({
     teamId,
     userId,
 }: TeamCollectionsProps) => {
-    console.log("in TeamCollections");
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
     const { showModal } = useModal();

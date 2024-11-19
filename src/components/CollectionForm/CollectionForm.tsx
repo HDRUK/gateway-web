@@ -78,8 +78,6 @@ const CollectionForm = ({
     const { push } = useRouter();
     const searchNameDebounced = useDebounce(searchName, 500);
 
-    console.log("teamId", teamId);
-    console.log("userId", userId);
     const COLLECTION_ROUTE = teamId
         ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
         : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`;
@@ -97,7 +95,6 @@ const CollectionForm = ({
         `${apis.keywordsV1Url}?perPage=-1`
     );
 
-    console.log("apis.usersV1Url", apis.usersV1Url);
     const { data: userData = [], isLoading: isLoadingUsers } = useGet<User[]>(
         `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
         {
@@ -110,12 +107,6 @@ const CollectionForm = ({
         { shouldFetch: !!collectionId }
     );
 
-    console.log(
-        "create",
-        teamId
-            ? `${apis.teamsV1Url}/${teamId}/collections`
-            : apis.collectionsV2Url
-    );
     const createCollection = usePost<CollectionSubmission>(
         teamId
             ? `${apis.teamsV1Url}/${teamId}/collections`
@@ -204,7 +195,6 @@ const CollectionForm = ({
             collaborators,
         };
 
-        console.log("collaborators", collaborators);
         if (collaborators) {
             const labels = existingCollectionData?.users?.slice(1).map(item => {
                 return {
