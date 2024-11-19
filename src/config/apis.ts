@@ -5,6 +5,12 @@ const apiV1IPUrl =
         ? `${process.env.NEXT_PUBLIC_API_V1_IP_URL}/${apiVersion}`
         : `${process.env.NEXT_PUBLIC_API_V1_URL}/${apiVersion}`;
 
+const apiV2Url = `${process.env.NEXT_PUBLIC_API_V2_URL}/v2`;
+const apiV2IPUrl =
+    process.env.NODE_ENV === "development"
+        ? `${process.env.NEXT_PUBLIC_API_V2_IP_URL}/${apiVersion}`
+        : `${process.env.NEXT_PUBLIC_API_V2_URL}/${apiVersion}`;
+
 const apiServiceUrl = `${process.env.NEXT_PUBLIC_API_V1_URL}/services`;
 
 const apis = {
@@ -51,6 +57,8 @@ const apis = {
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,
     collectionsV1Url: `${apiV1Url}/collections`,
     collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
+    collectionsV2Url: `${apiV2Url}/collections`,
+    collectionsV2UrlIP: `${apiV2IPUrl}/collections`,
     questionBankV1Url: `${apiServiceUrl}/darq`,
     darasV1Url: `${apiServiceUrl}/daras`,
     formHydrationV1Url: `${apiV1Url}/form_hydration`,

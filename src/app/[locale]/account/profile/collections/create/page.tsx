@@ -16,14 +16,9 @@ export const metadata = metaData(
 export default async function CollectionCreatePage() {
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
-    const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 
     return (
-        <ProtectedAccountRoute
-            permissions={permissions}
-            pagePermissions={["collections.create"]}>
-            <CollectionForm userId={userId} />
-        </ProtectedAccountRoute>
+        <CollectionForm userId={userId} />
     );
 }
