@@ -529,6 +529,19 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                       },
                   };
         try {
+            // BES 11/24 Put in as a quick fix for teams with identifier < 2 characters long
+            // This is very schema specific and should be removed once a schema update is made
+            // to allow shorter identifiers.
+            if (
+                formPayload?.metadata?.metadata?.summary?.dataCustodian
+                    ?.identifier.length === 1
+            ) {
+                formPayload.metadata.metadata.summary.dataCustodian.identifier =
+                    formPayload.metadata.metadata.summary.dataCustodian.identifier.padStart(
+                        2,
+                        "0"
+                    );
+            }
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
