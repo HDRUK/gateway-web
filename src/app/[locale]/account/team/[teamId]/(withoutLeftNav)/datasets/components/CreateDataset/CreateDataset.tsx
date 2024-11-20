@@ -542,7 +542,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                         "0"
                     );
             }
-            console.log(formPayload);
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
