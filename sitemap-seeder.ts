@@ -14,11 +14,11 @@ if (NODE_ENV === 'development') {
     domain = `https://dev.hdruk.cloud/${locale}`
 }
 
-const { NEXT_PUBLIC_API_VERSION, NEXT_PUBLIC_API_V1_URL, NEXT_PUBLIC_GATEWAY_URL} = process.env
-const version = NEXT_PUBLIC_API_VERSION ?? 'v1'
+const { NEXT_PUBLIC_API_V1_URL, NEXT_PUBLIC_GATEWAY_URL} = process.env
+
 domain = domain ?? `${NEXT_PUBLIC_GATEWAY_URL}/${locale}`
 
-const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${version}/${endpoint}`;
+const siteMapAPI = address ?? `${NEXT_PUBLIC_API_V1_URL}/${endpoint}`;
 
 const startingDir = "./src/app/[locale]/(logged-out)";
 const fileName = "page";

@@ -1,17 +1,17 @@
-const apiVersion = process.env.NEXT_PUBLIC_API_VERSION || "v1";
-const apiV1Url = `${process.env.NEXT_PUBLIC_API_V1_URL}/${apiVersion}`;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const apiV1Url = process.env.NEXT_PUBLIC_API_V1_URL;
 const apiV1IPUrl =
     process.env.NODE_ENV === "development"
-        ? `${process.env.NEXT_PUBLIC_API_V1_IP_URL}/${apiVersion}`
-        : `${process.env.NEXT_PUBLIC_API_V1_URL}/${apiVersion}`;
+        ? process.env.NEXT_PUBLIC_API_V1_IP_URL
+        : process.env.NEXT_PUBLIC_API_V1_URL;
 
-const apiV2Url = `${process.env.NEXT_PUBLIC_API_V2_URL}/v2`;
+const apiV2Url = process.env.NEXT_PUBLIC_API_V2_URL;
 const apiV2IPUrl =
     process.env.NODE_ENV === "development"
-        ? `${process.env.NEXT_PUBLIC_API_V2_IP_URL}/${apiVersion}`
-        : `${process.env.NEXT_PUBLIC_API_V2_URL}/${apiVersion}`;
+        ? process.env.NEXT_PUBLIC_API_V2_IP_URL
+        : process.env.NEXT_PUBLIC_API_V2_URL;
 
-const apiServiceUrl = `${process.env.NEXT_PUBLIC_API_V1_URL}/services`;
+const apiServiceUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`;
 
 const apis = {
     apiV1Url,
