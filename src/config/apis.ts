@@ -1,4 +1,3 @@
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const apiV1Url = process.env.NEXT_PUBLIC_API_V1_URL;
 const apiV1IPUrl =
     process.env.NODE_ENV === "development"
