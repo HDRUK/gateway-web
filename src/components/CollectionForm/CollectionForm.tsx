@@ -180,7 +180,11 @@ const CollectionForm = ({
         };
 
         const collaborators =
-            existingCollectionData?.users?.slice(1).map(item => item.id) || [];
+            existingCollectionData?.users
+                ?.filter(item => item.pivot.role !== "CREATOR")
+                .map(item => {
+                    return item.id;
+                }) || [];
 
         const formData = {
             ...existingCollectionData,
@@ -196,12 +200,14 @@ const CollectionForm = ({
         };
 
         if (collaborators) {
-            const labels = existingCollectionData?.users?.slice(1).map(item => {
-                return {
-                    label: `${item.name} (${item.email})`,
-                    value: item.id,
-                };
-            });
+            const labels = existingCollectionData?.users
+                ?.filter(item => item.pivot.role !== "CREATOR")
+                .map(item => {
+                    return {
+                        label: `${item.name} (${item.email})`,
+                        value: item.id,
+                    };
+                });
             setUserOptions(labels);
         }
 
