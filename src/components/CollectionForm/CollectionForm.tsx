@@ -108,12 +108,16 @@ const CollectionForm = ({
     );
 
     const createCollection = usePost<CollectionSubmission>(
-        apis.collectionsV1Url,
+        teamId
+            ? `${apis.teamsV1Url}/${teamId}/collections`
+            : apis.collectionsV2Url,
         { itemName: "Collection", successNotificationsOn: !file }
     );
 
     const editCollection = usePatch<Partial<CollectionSubmission>>(
-        apis.collectionsV1Url,
+        teamId
+            ? `${apis.teamsV1Url}/${teamId}/collections`
+            : apis.collectionsV2Url,
         { itemName: "Collection" }
     );
 
