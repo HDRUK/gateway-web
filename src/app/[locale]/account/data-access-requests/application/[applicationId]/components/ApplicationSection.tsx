@@ -18,6 +18,7 @@ import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
+import useChat from "@/hooks/useChat";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
@@ -41,6 +42,14 @@ const ApplicationSection = ({
 }: ApplicationSectionProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
     const { user } = useAuth();
+    const showChat = useChat();
+
+    const handleClickShowChat = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event?.stopPropagation();
+        showChat({ dataset: null, isLoggedIn: true, redirectPath: "/" });
+    };
 
     const [guidanceText, setGuidanceText] = useState<string>(
         t("defaultGuidance")
@@ -226,7 +235,11 @@ const ApplicationSection = ({
                         p: 0,
                         display: "flex",
                         justifyContent: "end",
+                        gap: 1,
                     }}>
+                    <Button color="secondary" onClick={handleClickShowChat}>
+                        {t("chat")}
+                    </Button>
                     <Button
                         onClick={handleSubmit(handleSaveChanges)}
                         type="submit">
