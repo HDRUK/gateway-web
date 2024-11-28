@@ -14,6 +14,8 @@ export interface DarEnquiryDialogProps {
     onFeasibilityEnquiryClick(): void;
     isDarEnabled: boolean;
     url: string;
+    modalHeader: string | null;
+    modalContent: string | null;
 }
 
 const TRANSLATION_PATH = "modules.dialogs.DarEnquiryDialog";
@@ -22,6 +24,8 @@ const DarEnquiryDialog = ({
     onGeneralEnquiryClick,
     onFeasibilityEnquiryClick,
     isDarEnabled,
+    modalHeader,
+    modalContent,
     url,
 }: DarEnquiryDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -39,14 +43,17 @@ const DarEnquiryDialog = ({
         onFeasibilityEnquiryClick();
     };
 
+    const dialogTitle =
+        modalHeader ||
+        (isDarEnabled ? t("titleEnabled") : t("titleNotEnabled"));
+    const dialogContent =
+        modalContent ||
+        (isDarEnabled ? t("messageEnabled") : t("messageNotEnabled"));
+
     return (
-        <Dialog title={isDarEnabled ? t("titleEnabled") : t("titleNotEnabled")}>
+        <Dialog title={dialogTitle}>
             <MuiDialogContent>
-                <Typography mb={2}>
-                    {isDarEnabled
-                        ? t("messageEnabled")
-                        : t("messageNotEnabled")}
-                </Typography>
+                <Typography mb={2}>{dialogContent}</Typography>
                 {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {

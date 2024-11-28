@@ -1,20 +1,6 @@
 import { MetadataRoute } from "next";
 import sitemapJson from "../seeded/sitemap.json";
 
-interface SiteMapResponse {
-    id: number;
-    updated_at: string;
-}
-
-interface SiteMapJson {
-    collections: SiteMapResponse[];
-    dataCustodians: SiteMapResponse[];
-    dataCustodianNetworks: SiteMapResponse[];
-    dataSets: SiteMapResponse[];
-    durs: SiteMapResponse[];
-    tools: SiteMapResponse[];
-}
-
 const {
     collections,
     dataCustodians,
@@ -22,7 +8,7 @@ const {
     dataSets,
     durs,
     tools,
-} = sitemapJson as SiteMapJson;
+} = sitemapJson;
 
 export const revalidate = 3600;
 
@@ -30,155 +16,37 @@ const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
 
 const domain = `${NEXT_PUBLIC_GATEWAY_URL}/en`;
 
-const staticRoutesConfig = {
-    changeFrequency: "Monthly",
-    priority: 0.8,
-};
 const collectionRouteConfig = {
-    changeFrequency: "Weekly",
+    changeFrequency: "weekly",
     priority: 0.9,
 };
 
 const dataCustodiansRouteConfig = {
-    changeFrequency: "Daily",
+    changeFrequency: "daily",
     priority: 0.6,
 };
 
 const dataCustodianNetworksRouteConfig = {
-    changeFrequency: "Weekly",
+    changeFrequency: "weekly",
     priority: 0.9,
 };
 
 const dursRouteConfig = {
-    changeFrequency: "Yearly",
+    changeFrequency: "yearly",
     priority: 0.7,
 };
 
 const dataSetsRouteConfig = {
-    changeFrequency: "Weekly",
+    changeFrequency: "weekly",
     priority: 1,
 };
 
 const toolRouteConfig = {
-    changeFrequency: "Monthly",
+    changeFrequency: "monthly",
     priority: 0.7,
 };
-function staticPages(): MetadataRoute.Sitemap[] {
-    return [
-        {
-            url: domain,
-            changeFrequency: "Monthly",
-            priority: 1,
-        },
-        {
-            url: `${domain}/support`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/how-to-search`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/newsletter-signup`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/terms-and-conditions`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/our-mission-and-purpose`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/researchers-innovators`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/data-custodians`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/meet-the-team`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/cookie-notice`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/privacy-policy`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/about/cohort-discovery`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/community/open-source-development`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/community/technology-ecosystem`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/news/events?tab=news`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/news/events?tab=events`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/news/releases`,
-            ...staticRoutesConfig,
-        },
 
-        {
-            url: `${domain}/help/glossary`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/getting-started`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/metadata-onboarding`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/uploading-data-uses-projects`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/cohort-discovery`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/publications`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/managing`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/enquiry-dar-module`,
-            ...staticRoutesConfig,
-        },
-        {
-            url: `${domain}/data-custodian/support/the-alliance`,
-            ...staticRoutesConfig,
-        },
-    ];
-}
-
-function seededDataPages(): MetadataRoute.Sitemap[] {
+function updateDynamicSeededDataPages(): MetadataRoute.Sitemap[] {
     const collectionPages: MetadataRoute.Sitemap[] = [];
     collections.forEach(data => {
         collectionPages.push({
@@ -244,5 +112,8 @@ function seededDataPages(): MetadataRoute.Sitemap[] {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap[] {
-    return [...staticPages(), ...seededDataPages()];
+    return [
+        ...sitemapJson.static,
+        ...updateDynamicSeededDataPages(),
+    ] as MetadataRoute.Sitemap[];
 }

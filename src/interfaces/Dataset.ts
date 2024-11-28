@@ -117,6 +117,15 @@ interface Metadata {
         isGeneratedUsing: string;
         dataUses: string[];
     };
+    observations?: [
+        {
+            disambiguatingDescription: string;
+            measuredProperty: string;
+            measuredValue: number;
+            observationDate: string;
+            observedNode: string;
+        }
+    ];
     structuralMetadata?: StructuralMetadataPublicSchema;
     revisions: Revision[];
     demographicFrequency: Demographics;

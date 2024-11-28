@@ -95,12 +95,17 @@ export default async function DatasetItemPage({
         return { label: section.sectionName };
     });
 
+    const datasetWithName = {
+        ...data,
+        name: datasetVersion.metadata?.metadata?.summary?.title,
+    };
+
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar dataset={data} />
+                    <ActionBar dataset={datasetWithName} />
                     <Box
                         sx={{
                             display: "flex",
@@ -173,7 +178,9 @@ export default async function DatasetItemPage({
                                 <Sources
                                     data={datasetVersion.metadata.metadata}
                                 />
-                                <Linkages data={data} />
+                                {datasetVersion?.reduced_linked_dataset_versions && (
+                                    <Linkages data={data} />
+                                )}
 
                                 <Publications data={data} />
                             </Box>

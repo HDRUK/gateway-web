@@ -41,6 +41,7 @@ import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
+import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import apis from "@/config/apis";
@@ -81,9 +82,12 @@ import searchFormConfig, {
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
+import { PostLoginActions } from "@/consts/postLoginActions";
+import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
 import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
+import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
@@ -116,6 +120,10 @@ const Search = ({ filters }: SearchProps) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
     const { isLoggedIn } = useAuth();
+
+    const redirectPath = searchParams
+        ? `${pathname}?${searchParams.toString()}`
+        : pathname;
 
     const getParamString = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
@@ -484,10 +492,21 @@ const Search = ({ filters }: SearchProps) => {
         }
     };
 
+    const { showLibraryModal } = useAddLibraryModal({
+        onSuccess: () =>
+            router.push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`
+            ),
+        onContinue: () => mutateLibraries(),
+    });
+
     const renderResults = () => {
         if (resultsView === ViewType.TABLE) {
             return (
-                <ResultsTable results={data?.list as SearchResultDataset[]} />
+                <ResultsTable
+                    results={data?.list as SearchResultDataset[]}
+                    showLibraryModal={showLibraryModal}
+                />
             );
         }
 
@@ -534,6 +553,29 @@ const Search = ({ filters }: SearchProps) => {
         });
     };
 
+    const { setPostLoginActionCookie } = usePostLoginAction({
+        onAction: ({ action, data }) => {
+            switch (action) {
+                case PostLoginActions.SAVE_SEARCH:
+                    showDialog(() => (
+                        <SaveSearchDialog
+                            onSubmit={handleSaveSubmit}
+                            onCancel={() => hideDialog()}
+                        />
+                    ));
+                    break;
+
+                case PostLoginActions.ADD_LIBRARY:
+                    showLibraryModal({ datasetId: data.datasetId });
+                    break;
+
+                default:
+                    console.warn(`Unhandled post login action: ${action}`);
+                    break;
+            }
+        },
+    });
+
     const handleSaveClick = () => {
         if (isLoggedIn) {
             showDialog(() => (
@@ -543,7 +585,12 @@ const Search = ({ filters }: SearchProps) => {
                 />
             ));
         } else {
-            showDialog(ProvidersDialog, { isProvidersDialog: true });
+            setPostLoginActionCookie(PostLoginActions.SAVE_SEARCH);
+
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+                redirectPath,
+            });
         }
     };
 
