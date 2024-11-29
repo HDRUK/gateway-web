@@ -51,12 +51,6 @@ async function getFilters(
     );
 }
 
-async function getEntityAction(
-    cookieStore: ReadonlyRequestCookies
-): Promise<string | undefined> {
-    return cookieStore.get(config.ENTITY_ACTION_COOKIE.COOKIE_NAME)?.value;
-}
-
 function getUserFromCookie(cookieStore: ReadonlyRequestCookies): User | null {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
@@ -238,7 +232,6 @@ export {
     getDataCustodianNetworks,
     getDataset,
     getDataUse,
-    getEntityAction,
     getFilters,
     getFormHydration,
     getNetworkSummary,

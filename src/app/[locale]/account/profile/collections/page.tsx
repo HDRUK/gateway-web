@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
-import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
@@ -21,12 +20,8 @@ export default async function CollectionsPage() {
     const userId = user?.id?.toString();
 
     return (
-        <ProtectedAccountRoute
-            permissions={permissions}
-            pagePermissions={["collections.read"]}>
-            <BoxContainer sx={{ gap: 0 }}>
-                <TeamCollections permissions={permissions} userId={userId} />
-            </BoxContainer>
-        </ProtectedAccountRoute>
+        <BoxContainer sx={{ gap: 0 }}>
+            <TeamCollections permissions={permissions} userId={userId} />
+        </BoxContainer>
     );
 }

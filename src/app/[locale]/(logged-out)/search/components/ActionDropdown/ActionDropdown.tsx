@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button } from "@mui/material";
-import Cookies from "js-cookie";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -17,10 +16,11 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
+import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
-import config from "@/config/config";
 import { colors } from "@/config/theme";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
 
@@ -95,6 +95,8 @@ const ActionDropdown = ({
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDarEnabled: team.is_question_bank,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
+            modalHeader: team.dar_modal_header,
+            modalContent: team.dar_modal_content,
         });
     };
 
@@ -137,6 +139,8 @@ const ActionDropdown = ({
         localeKey: `updateYourLibrary`,
     });
 
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
+
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
@@ -158,10 +162,8 @@ const ActionDropdown = ({
                 setLibraryToggle(false);
             }
         } else {
-            const action = config.ENTITY_ACTION_COOKIE.ACTION_ADD_LIBRARY;
-            const cookieValue = JSON.stringify({ action, datasetId });
-            Cookies.set(config.ENTITY_ACTION_COOKIE.COOKIE_NAME, cookieValue, {
-                path: "/",
+            setPostLoginActionCookie(PostLoginActions.ADD_LIBRARY, {
+                datasetId: Number(datasetId),
             });
 
             showDialog(ProvidersDialog, {

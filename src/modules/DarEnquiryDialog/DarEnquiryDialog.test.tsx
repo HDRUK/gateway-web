@@ -35,6 +35,24 @@ describe("<DarEnquiryDialog />", () => {
         ).toBeInTheDocument();
     });
 
+    it("has the correct content when modalContent is provided", () => {
+        const modalContent = "This is some lovely content";
+        renderTest({
+            modalContent,
+        });
+
+        expect(screen.getByText(modalContent)).toBeInTheDocument();
+    });
+
+    it("has the correct header when modalHeader is provided", () => {
+        const modalHeader = "This is a lovely header";
+        renderTest({
+            modalHeader,
+        });
+
+        expect(screen.getByText(modalHeader)).toBeInTheDocument();
+    });
+
     it("calls the feasibility enquiry dialog", () => {
         renderTest();
 
