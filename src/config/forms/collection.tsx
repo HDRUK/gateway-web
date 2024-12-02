@@ -4,7 +4,7 @@ import { inputComponents } from ".";
 
 const defaultValues = {
     name: "",
-    description: "",
+    description: '{"type":"doc","content":[{"type":"paragraph"}]}',
     id: "",
     image_link: "",
     keywords: [],
@@ -18,7 +18,7 @@ const defaultValues = {
 const validationSchema = yup.object().shape({
     name: yup.string().required().min(2).label("Collection name"),
     keywords: yup.array().of(yup.string()).label("Keywords (optional)"),
-    description: yup.string().optional(),
+    description: yup.string().min(2).max(5000).required().label("Description"),
     collaborators: yup
         .array()
         .of(yup.string())
