@@ -63,6 +63,7 @@ interface Metadata {
         title: string;
         populationSize: number | null;
         publisher: {
+            gatewayId: string | number;
             publisherName: string;
             name?: string;
         };
