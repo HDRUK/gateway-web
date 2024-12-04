@@ -56,7 +56,6 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     }, [accessData, isClicked, isLoggedIn]);
 
     const isDisabled =
-        !isLoggedIn ||
         (isLoggedIn && (userData === undefined || userData === null)) ||
         (isLoggedIn && userData?.request_status !== "APPROVED");
     return (
