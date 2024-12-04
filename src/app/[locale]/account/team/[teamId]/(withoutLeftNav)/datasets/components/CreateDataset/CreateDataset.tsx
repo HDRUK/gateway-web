@@ -135,7 +135,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         if (!teamData) return defaultOption.label ? [defaultOption] : [];
 
         const hasOption = teamData?.some(
-            data => data.id.toString() === defaultOption.value
+            data => data.id.toString() === defaultOption.value?.toString()
         );
 
         return [
@@ -676,16 +676,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         );
     }
 
-    const handleOnUserInputChange = (e: React.ChangeEvent, value: string) => {
-        if (value === "") {
-            setSearchName(value);
-            return;
-        }
-        if (e?.type !== "change") {
-            return;
-        }
-        setSearchName(value);
-    };
+    const handleOnUserInputChange = (value: string) => setSearchName(value);
 
     return (
         <>
@@ -721,9 +712,6 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                     }}
                     teamOptions={teamOptions}
                     handleOnUserInputChange={handleOnUserInputChange}
-                    setDataCustodian={(value: number) =>
-                        setValue(DATA_CUSTODIAN_ID, value)
-                    }
                     defaultTeamId={watchId}
                     isLoadingTeams={isLoadingTeams}
                 />
