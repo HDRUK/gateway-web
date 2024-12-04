@@ -137,16 +137,23 @@ const TeamCollections = ({
     );
 
     const unArchiveCollection = usePatch<Partial<Collection>>(
-        apis.collectionsV1Url,
+        teamId
+            ? `${apis.teamsV1Url}/${teamId}/collections`
+            : apis.collectionsV2Url,
         {
             query: "unarchive",
             localeKey: "archiveCollection",
         }
     );
 
-    const archiveCollection = useDelete(apis.collectionsV1Url, {
-        localeKey: "archiveCollection",
-    });
+    const archiveCollection = useDelete(
+        teamId
+            ? `${apis.teamsV1Url}/${teamId}/collections`
+            : apis.collectionsV2Url,
+        {
+            localeKey: "archiveCollection",
+        }
+    );
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
@@ -154,16 +161,19 @@ const TeamCollections = ({
     }, [queryParams.page]);
 
     const showArchiveButton =
-        tab !== DataStatus.ARCHIVED && permissions["collections.delete"];
+        tab !== DataStatus.ARCHIVED &&
+        (permissions["collections.delete"] || !teamId);
     const showUnarchiveButton =
-        tab === DataStatus.ARCHIVED && permissions["collections.update"];
+        tab === DataStatus.ARCHIVED &&
+        (permissions["collections.update"] || !teamId);
     const showAddNewButton = useMemo(
-        () => permissions["collections.create"],
+        () => permissions["collections.create"] || !teamId,
         [permissions]
     );
+    const showEditButton = permissions["collections.update"] || !teamId;
 
     const actions = [
-        ...(permissions["collections.update"]
+        ...(showEditButton
             ? [
                   {
                       href: teamId

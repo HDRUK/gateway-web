@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
-import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { buildYup } from "schema-to-yup";
@@ -32,6 +31,7 @@ import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
@@ -850,7 +850,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                 </Typography>
 
                                 {guidanceText && (
-                                    <Markdown>{guidanceText}</Markdown>
+                                    <MarkDownSanitizedWithHtml
+                                        content={guidanceText}
+                                    />
                                 )}
                             </Paper>
                         </>

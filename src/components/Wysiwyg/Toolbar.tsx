@@ -5,6 +5,7 @@ import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import LinkIcon from "@mui/icons-material/Link";
 import RedoIcon from "@mui/icons-material/Redo";
 import UndoIcon from "@mui/icons-material/Undo";
 import { IconButton } from "@mui/material";
@@ -30,6 +31,7 @@ function Toolbar({
         ButtonType.UNDERLINE,
         ButtonType.BULLETED_LIST,
         ButtonType.NUMBERED_LIST,
+        ButtonType.LINK,
     ],
 }: ToolbarProps) {
     const toggleBold = useCallback(() => {
@@ -64,6 +66,13 @@ function Toolbar({
 
     const toggleOrderedList = useCallback(() => {
         editor.chain().focus().toggleOrderedList().run();
+    }, [editor]);
+
+    const toggleLink = useCallback(() => {
+        const url = prompt("Enter the URL:");
+        if (url) {
+            editor.chain().focus().setLink({ href: url }).run();
+        }
     }, [editor]);
 
     if (!editor) {
@@ -131,6 +140,13 @@ function Toolbar({
                 <li>
                     <IconButton size="small" onPointerDown={toggleOrderedList}>
                         <FormatListNumberedIcon />
+                    </IconButton>
+                </li>
+            )}
+            {includeButtons.includes(ButtonType.LINK) && (
+                <li>
+                    <IconButton size="small" onPointerDown={toggleLink}>
+                        <LinkIcon />
                     </IconButton>
                 </li>
             )}

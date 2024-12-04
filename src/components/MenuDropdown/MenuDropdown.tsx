@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
-import Encoder from "../Encoder";
+import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface MenuDropdownProps {
     title?: string;
@@ -19,6 +19,7 @@ interface MenuDropdownProps {
         divider?: boolean;
         icon?: HTMLElement;
         dialog?;
+        button?;
     }[];
     handleClose: () => void;
     transformOrigin?: null | {
@@ -71,7 +72,10 @@ function MenuDropdown({
                             key={subItem.label}
                             onClick={() => handleClose()}>
                             <Link underline="none" href={subItem.href}>
-                                <Encoder raw={subItem.label} />
+                                <MarkDownSanitizedWithHtml
+                                    content={subItem.label}
+                                    WrapperComponent="span"
+                                />
                             </Link>
                         </MenuItem>
                     ));
@@ -95,7 +99,10 @@ function MenuDropdown({
                                 key={menuItem.label}
                                 underline="hover"
                                 href={menuItem.href}>
-                                <Encoder raw={menuItem.label} />
+                                <MarkDownSanitizedWithHtml
+                                    content={menuItem.label}
+                                    WrapperComponent="span"
+                                />
                             </Link>
                         </MenuItem>
                     );
@@ -108,7 +115,10 @@ function MenuDropdown({
                                 variant="link"
                                 aria-label={ariaLabel}
                                 sx={{ pl: 0 }}>
-                                <Encoder raw={menuItem.label} />
+                                <MarkDownSanitizedWithHtml
+                                    content={menuItem.label}
+                                    WrapperComponent="span"
+                                />
                             </Button>
                         </MenuItem>
                     );
@@ -125,6 +135,14 @@ function MenuDropdown({
                                 sx={{ pl: 0 }}>
                                 {menuItem.label}
                             </Button>
+                        </MenuItem>
+                    );
+                }
+                if (menuItem.button) {
+                    return (
+                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
+                            {menuItem.icon || null}
+                            {menuItem.button}
                         </MenuItem>
                     );
                 }

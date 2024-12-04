@@ -110,6 +110,7 @@ const AddDatasetDialog = ({
     >(
         `${apis.dataUseV1Url}?${new URLSearchParams({
             project_title: queryParams.title,
+            status: "ACTIVE",
         })}`,
         {
             shouldFetch: resourceType === ResourceType.DATA_USE,

@@ -1,3 +1,7 @@
+.wpStyles {
+    font-size: 16px;
+}
+
 .wpStyles .aligncenter {
     display: block;
     margin-left: auto;
@@ -21,7 +25,6 @@
     border-top: 1px solid #d0d3d4;
     margin: 2em 0;
     padding: 0;
-    width: 50%;
 }
 
 .wpStyles .wp-block-table {

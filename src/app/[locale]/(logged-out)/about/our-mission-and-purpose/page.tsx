@@ -4,6 +4,7 @@ import Container from "@/components/Container";
 import { ABOUT, OUR_MISSION_AND_PURPOSE, PAGES } from "@/consts/translation";
 import { getMissionAndPurposes } from "@/utils/cms";
 import metaData from "@/utils/metadata";
+import "@/styles/wpStyles.css";
 
 export const metadata = metaData({
     title: "Our Mission and Purpose - About",
@@ -21,7 +22,9 @@ export default async function MissionsPage() {
     return (
         <>
             <Banner title="Our Mission and Purpose" />
-            <Container sx={{ background: "white", padding: 10 }}>
+            <Container
+                sx={{ background: "white", padding: 10 }}
+                className="wpStyles">
                 <div>
                     {!allMissionsAndPurposes.length && (
                         <p>{t(TRANSLATION_NO_DATA)}</p>

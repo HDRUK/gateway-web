@@ -67,7 +67,7 @@ const Footer = () => {
             label: t("cookieNotice"),
         },
         {
-            href: `${process.env.NEXT_PUBLIC_API_V1_URL}/documentation`,
+            href: `${process.env.NEXT_PUBLIC_API_BASE_URL}/documentation`,
             label: t("apiDocs"),
         },
     ];

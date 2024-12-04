@@ -83,6 +83,10 @@ export interface SearchResultDataset extends SearchResultBase {
         member_of: string;
         name: string;
         is_question_bank: boolean;
+        is_dar: boolean;
+        dar_modal_header: string | null;
+        dar_modal_content: string | null;
+        dar_modal_footer: string | null;
     };
 }
 

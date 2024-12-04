@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
-import Markdown from "markdown-to-jsx";
 import { Dataset, VersionItem } from "@/interfaces/Dataset";
 import Link from "@/components/Link";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import { getYear } from "./date";
 
 const LEAD_TIME_UNITS = ["WEEK", "WEEKS", "MONTH", "MONTHS"];
@@ -78,6 +78,10 @@ const formatTextWithLinks = (text: string | string[] | number) => {
         return text.toLocaleString();
     }
 
+    if (typeof text === "object") {
+        return "";
+    }
+
     // Convert text to an array if it's not already one
     const segments = Array.isArray(text) ? text : text.split(URL_REGEX);
 
@@ -95,23 +99,29 @@ const formatTextWithLinks = (text: string | string[] | number) => {
                 {segment}
             </Link>
         ) : (
-            // eslint-disable-next-line react/no-array-index-key
-            <Markdown component="span" key={`segment_${index}`}>
-                {segment}
-            </Markdown>
+            <MarkDownSanitizedWithHtml
+                content={segment}
+                wrapper="span"
+                // eslint-disable-next-line react/no-array-index-key
+                key={`markdown_${index}`}
+            />
         )
     );
 };
 
 const formatTextDelimiter = (text: string | string[] | number) => {
-    return Array.isArray(text)
-        ? text.join(", ") // Join array elements with ", " if it's an array
-        : typeof text === "number"
-        ? text.toLocaleString()
-        : text
-              ?.replaceAll(";", "")
-              .replace(/\s*,+\s*/g, ", ")
-              .replace(/^[\s,]*|[,\s]*$/g, "");
+    try {
+        return Array.isArray(text)
+            ? text.join(", ") // Join array elements with ", " if it's an array
+            : typeof text === "number"
+            ? text.toLocaleString()
+            : text
+                  ?.replaceAll(";", "")
+                  .replace(/\s*,+\s*/g, ", ")
+                  .replace(/^[\s,]*|[,\s]*$/g, "");
+    } catch (err) {
+        return text;
+    }
 };
 
 export {

@@ -9,6 +9,7 @@ import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import { RouteName } from "@/consts/routeName";
+import "@/styles/wpStyles.css";
 import ContactSupport from "../ContactSupport";
 
 const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.support";
@@ -34,7 +35,9 @@ export default function SupportPage({
     return (
         <>
             <Banner title={title} />
-            <Container sx={{ background: "white", px: 10, py: 3 }}>
+            <Container
+                sx={{ background: "white", px: 10, py: 3 }}
+                className="wpStyles">
                 <BackButton
                     label={t("backToSupport")}
                     onClick={handleBackClick}
