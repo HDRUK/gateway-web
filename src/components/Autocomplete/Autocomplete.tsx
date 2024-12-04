@@ -124,18 +124,16 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 {...restProps}
                 freeSolo={freeSolo}
                 multiple={multiple}
-                getOptionLabel={(
-                    option: string | { label: string; value: unknown }
-                ) => {
+                getOptionLabel={(option: string) => {
                     if (typeof option === "object") return option?.label;
-                    return option.toString();
+                    return (
+                        options.find(item => item.value === option)?.label ??
+                        option.toString()
+                    );
                 }}
                 {...(!multiple && {
-                    value: field.value
-                        ? options.find(option => {
-                              return field.value === option.value;
-                          }) ?? null
-                        : null,
+                    isOptionEqualToValue: (option, value) =>
+                        option.value === value?.value || option.value === value,
                 })}
                 options={options}
                 disabled={disabled}

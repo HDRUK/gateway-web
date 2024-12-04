@@ -51,8 +51,10 @@ import {
     FILTER_COLLECTION_NAME,
     FILTER_CONTAINS_TISSUE,
     FILTER_DATA_PROVIDER,
+    FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_TYPE,
+    FILTER_DATA_SUBTYPE,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
@@ -174,10 +176,14 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
         [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
         [FILTER_DATA_TYPE]: getParamArray(FILTER_DATA_TYPE),
+        [FILTER_DATA_SUBTYPE]: getParamArray(FILTER_DATA_SUBTYPE),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
         [FILTER_PUBLICATION_TYPE]: getParamArray(FILTER_PUBLICATION_TYPE),
         [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
         [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
+        [FILTER_DATA_CUSTODIAN_NETWORK]: getParamArray(
+            FILTER_DATA_CUSTODIAN_NETWORK
+        ),
         [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
         [FILTER_POPULATION_SIZE]: getParamArray(FILTER_POPULATION_SIZE),
         [FILTER_PROGRAMMING_LANGUAGE]: getParamArray(
@@ -327,10 +333,12 @@ const Search = ({ filters }: SearchProps) => {
             [FILTER_ORGANISATION_NAME]: undefined,
             [FILTER_DATA_SET_TITLES]: undefined,
             [FILTER_DATA_TYPE]: undefined,
+            [FILTER_DATA_SUBTYPE]: undefined,
             [FILTER_PUBLICATION_DATE]: undefined,
             [FILTER_PUBLICATION_TYPE]: undefined,
             [FILTER_SECTOR]: undefined,
             [FILTER_DATA_PROVIDER]: undefined,
+            [FILTER_DATA_CUSTODIAN_NETWORK]: undefined,
             [FILTER_ACCESS_SERVICE]: undefined,
             [FILTER_POPULATION_SIZE]: undefined,
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
@@ -792,10 +800,12 @@ const Search = ({ filters }: SearchProps) => {
                         ) => {
                             // url requires string format, ie "one, two, three"
                             updatePath(filterName, filterValues.join(","));
+                            updatePath(PAGE_FIELD, "1");
 
                             // api requires string[] format, ie ["one", "two", "three"]
                             setQueryParams({
                                 ...queryParams,
+                                page: "1",
                                 [filterName]: filterValues,
                             });
                         }}

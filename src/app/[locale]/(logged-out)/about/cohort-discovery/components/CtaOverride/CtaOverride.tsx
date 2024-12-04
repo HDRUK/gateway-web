@@ -56,8 +56,8 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     }, [accessData, isClicked, isLoggedIn]);
 
     const isDisabled =
-        (isLoggedIn && (userData === undefined || userData === null)) ||
-        (isLoggedIn && userData?.request_status !== "APPROVED");
+        isLoggedIn && userData ? userData.request_status !== "APPROVED" : false;
+
     return (
         <Box sx={{ display: "flex" }}>
             <Tooltip title={isDisabled ? t(`notApproved`) : ""}>

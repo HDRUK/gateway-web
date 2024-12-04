@@ -15,6 +15,7 @@ import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import {
     FILTER_DATA_TYPE,
+    FILTER_DATA_SUBTYPE,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
     FILTER_GEOGRAPHIC_LOCATION,
@@ -33,6 +34,7 @@ import {
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
     FILTER_COLLECTION_NAME,
+    FILTER_DATA_CUSTODIAN_NETWORK,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -67,7 +69,9 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
         FILTER_CONTAINS_TISSUE,
         FILTER_DATA_TYPE,
+        FILTER_DATA_SUBTYPE,
         FILTER_PUBLISHER_NAME,
+        FILTER_DATA_CUSTODIAN_NETWORK,
         FILTER_COLLECTION_NAME,
         FILTER_DATA_USE_TITLES,
         FILTER_MATERIAL_TYPE,
@@ -130,6 +134,7 @@ const FilterPanel = ({
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({
         [FILTER_PUBLISHER_NAME]: {},
+        [FILTER_DATA_CUSTODIAN_NETWORK]: {},
         [FILTER_COLLECTION_NAME]: {},
         [FILTER_DATA_USE_TITLES]: {},
         [FILTER_GEOGRAPHIC_LOCATION]: {},
@@ -141,6 +146,8 @@ const FilterPanel = ({
         [FILTER_TYPE_CATEGORY]: {},
         [FILTER_SECTOR]: {},
         [FILTER_MATERIAL_TYPE]: {},
+        [FILTER_DATA_TYPE]: {},
+        [FILTER_DATA_SUBTYPE]: {},
     });
 
     const [staticFilterValues, setStaticFilterValues] = useState<DefaultValues>(
@@ -181,6 +188,9 @@ const FilterPanel = ({
         [FILTER_PROGRAMMING_LANGUAGE]: string;
         [FILTER_TYPE_CATEGORY]: string;
         [FILTER_MATERIAL_TYPE]: string;
+        [FILTER_DATA_TYPE]: string;
+        [FILTER_DATA_SUBTYPE]: string;
+        [FILTER_DATA_CUSTODIAN_NETWORK]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
@@ -188,7 +198,12 @@ const FilterPanel = ({
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
             [FILTER_ACCESS_SERVICE]: "",
+            [FILTER_PROGRAMMING_LANGUAGE]: "",
+            [FILTER_TYPE_CATEGORY]: "",
             [FILTER_MATERIAL_TYPE]: "",
+            [FILTER_DATA_TYPE]: "",
+            [FILTER_DATA_SUBTYPE]: "",
+            [FILTER_DATA_CUSTODIAN_NETWORK]: "",
         },
     });
     const filterItems = useMemo(() => {
