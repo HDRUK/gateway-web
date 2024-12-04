@@ -50,6 +50,9 @@ import PopulationFilter from "../PopulationFilter";
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
 const FILTER_CATEGORY_PUBLICATIONS = "paper";
+const FILTER_CATEGORY_DURS = "dataUseRegister";
+const FILTER_CATEGORY_TOOLS = "tool";
+const FILTER_CATEGORY_COLLECTIONS = "collection";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
     buckets: [
@@ -221,6 +224,13 @@ const FilterPanel = ({
         if (staticFilterValues.source.FED) {
             formattedFilters = formattedFilters.filter(
                 filterItem => filterItem.label !== FILTER_DATA_SET_TITLES
+            );
+        }
+
+        // If on the 'Data Uses', 'Tools' or 'Collections' tabs then remove the 'Data Custodian Network' filter
+        if ([FILTER_CATEGORY_DURS, FILTER_CATEGORY_TOOLS, FILTER_CATEGORY_COLLECTIONS].includes(filterCategory)) {
+            formattedFilters = formattedFilters.filter(
+                filterItem => filterItem.label !== FILTER_DATA_CUSTODIAN_NETWORK
             );
         }
 
