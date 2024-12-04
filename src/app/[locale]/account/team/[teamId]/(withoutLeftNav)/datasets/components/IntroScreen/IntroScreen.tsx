@@ -71,7 +71,6 @@ interface IntroScreenProps {
     teamOptions?: OptionsType[];
     isLoadingTeams: boolean;
     setDatasetType: (value: string[]) => void;
-    setDataCustodian: (value: number) => void;
     handleOnUserInputChange: (e: React.ChangeEvent, value: string) => void;
 }
 
@@ -80,7 +79,6 @@ const IntroScreen = ({
     defaultTeamId,
     teamOptions,
     isLoadingTeams,
-    setDataCustodian,
     setDatasetType,
     handleOnUserInputChange,
 }: IntroScreenProps) => {
@@ -103,14 +101,6 @@ const IntroScreen = ({
     const { control, watch } = useForm({
         defaultValues: { custodianId: defaultTeamId },
     });
-
-    const watchSort = watch("custodianId");
-
-    useEffect(() => {
-        if (!watchSort) return;
-        setDataCustodian(watchSort);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchSort]);
 
     return (
         <Box sx={{ mt: 1.25, display: "flex", justifyContent: "center" }}>
@@ -158,7 +148,7 @@ const IntroScreen = ({
                             selectOnFocus
                             onInputChange={handleOnUserInputChange}
                             isLoadingOptions={isLoadingTeams}
-                            component={inputComponents.Autocomplete}
+                            component={inputComponents.AutocompleteControlled}
                             disableClearable
                             filterOptions={(x: OptionType) => x}
                         />
