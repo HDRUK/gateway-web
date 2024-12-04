@@ -131,6 +131,10 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         option.toString()
                     );
                 }}
+                {...(!multiple && {
+                    isOptionEqualToValue: (option, value) =>
+                        option.value === value?.value || option.value === value,
+                })}
                 options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) =>
