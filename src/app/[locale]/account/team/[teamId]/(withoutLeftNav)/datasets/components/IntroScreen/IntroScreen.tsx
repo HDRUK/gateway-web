@@ -148,7 +148,7 @@ const IntroScreen = ({
                             selectOnFocus
                             onInputChange={handleOnUserInputChange}
                             isLoadingOptions={isLoadingTeams}
-                            component={inputComponents.AutocompleteControlled}
+                            component={inputComponents.Autocomplete}
                             disableClearable
                             filterOptions={(x: OptionType) => x}
                         />

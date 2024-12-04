@@ -2,7 +2,6 @@ type ComponentTypes =
     | "ToggleDirection"
     | "Switch"
     | "SwitchInline"
-    | "AutocompleteControlled"
     | "Autocomplete"
     | "CheckboxGroup"
     | "CheckboxRow"

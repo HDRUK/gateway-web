@@ -1,7 +1,6 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 
 export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
-    AutocompleteControlled: "AutocompleteControlled",
     Autocomplete: "Autocomplete",
     SwitchInline: "SwitchInline",
     Switch: "Switch",
