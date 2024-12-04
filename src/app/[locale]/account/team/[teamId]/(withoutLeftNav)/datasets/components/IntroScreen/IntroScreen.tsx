@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
@@ -98,7 +98,7 @@ const IntroScreen = ({
         setSelectedCheckboxes(updatedCheckboxes);
     };
 
-    const { control, watch } = useForm({
+    const { control } = useForm({
         defaultValues: { custodianId: defaultTeamId },
     });
 

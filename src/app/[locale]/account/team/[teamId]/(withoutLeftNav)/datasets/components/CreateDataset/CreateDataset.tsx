@@ -676,8 +676,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         );
     }
 
-    const handleOnUserInputChange = (value: string) =>
-        setSearchName(value);
+    const handleOnUserInputChange = (value: string) => setSearchName(value);
 
     return (
         <>
