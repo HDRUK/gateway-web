@@ -10,6 +10,7 @@ export const FILTER_PUBLICATION_LINK_TYPE = "datasetLinkTypes";
 export const FILTER_PROGRAMMING_LANGUAGE = "programmingLanguages";
 export const FILTER_SECTOR = "sector";
 export const FILTER_DATA_PROVIDER = "dataProvider";
+export const FILTER_DATA_CUSTODIAN_NETWORK = "dataProviderColl";
 export const FILTER_CATEGORY = "category";
 export const FILTER_LICENSE = "license";
 export const FILTER_ACCESS_SERVICE = "accessService";
@@ -18,6 +19,7 @@ export const FILTER_TYPE_CATEGORY = "typeCategory";
 export const FILTER_CONTAINS_TISSUE = "containsTissue";
 export const FILTER_MATERIAL_TYPE = "sampleAvailability";
 export const FILTER_DATA_TYPE = "dataType";
+export const FILTER_DATA_SUBTYPE = "dataSubType";
 export const FILTER_COLLECTION_NAME = "collectionName";
 
 export const filtersList = [
@@ -32,6 +34,7 @@ export const filtersList = [
     FILTER_PUBLICATION_LINK_TYPE,
     FILTER_SECTOR,
     FILTER_DATA_PROVIDER,
+    FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_PROGRAMMING_LANGUAGE,
     FILTER_CATEGORY,
     FILTER_LICENSE,
@@ -41,5 +44,6 @@ export const filtersList = [
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
     FILTER_DATA_TYPE,
+    FILTER_DATA_SUBTYPE,
     FILTER_COLLECTION_NAME,
 ];
