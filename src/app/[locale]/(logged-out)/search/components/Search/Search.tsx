@@ -800,10 +800,12 @@ const Search = ({ filters }: SearchProps) => {
                         ) => {
                             // url requires string format, ie "one, two, three"
                             updatePath(filterName, filterValues.join(","));
+                            updatePath(PAGE_FIELD, "1");
 
                             // api requires string[] format, ie ["one", "two", "three"]
                             setQueryParams({
                                 ...queryParams,
+                                page: "1",
                                 [filterName]: filterValues,
                             });
                         }}
