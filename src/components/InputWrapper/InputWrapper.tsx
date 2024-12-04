@@ -21,7 +21,6 @@ import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
 import { Wysiwyg } from "@/components/Wysiwyg";
-import AutocompleteControlled from "../Autocomplete/AutocompleteControlled";
 import SelectMultipleOptions from "../SelectMultipleOptions";
 
 type InputType<TFieldValues extends FieldValues, TName> =
@@ -54,7 +53,6 @@ function InputWrapper<
     ...props
 }: InputWrapperCombinedProps<TFieldValues, TName>) {
     const inputs = {
-        AutocompleteControlled,
         Autocomplete,
         Switch,
         CheckboxGroup,
