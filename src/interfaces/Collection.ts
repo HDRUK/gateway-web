@@ -30,7 +30,7 @@ interface Collection {
     updated_on: string;
     deleted_at: string;
     keywords: string[] | string;
-    datasets?: Dataset[];
+    datasets?: Dataset[] | ReducedDataset[];
     dataset_versions?: VersionItem[];
     team: Team;
     users: User[];

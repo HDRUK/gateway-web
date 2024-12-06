@@ -169,6 +169,8 @@ interface VersionItem {
     publications: Publication[];
     linked_dataset_versions: LinkedDatasetVersions[];
     reduced_linked_dataset_versions: ReducedLinkedDatasetVersions[];
+    shortTitle?: string;
+    dataCustodian?: string;
 }
 
 export interface ReducedDataset {
@@ -177,6 +179,7 @@ export interface ReducedDataset {
     shortTitle: string;
     populationSize: number;
     datasetType: string;
+    dataCustodian: string;
 }
 
 interface Dataset {
