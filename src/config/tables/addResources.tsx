@@ -7,7 +7,7 @@ import {
     SelectedResources,
 } from "@/interfaces/AddResource";
 import { DataUse } from "@/interfaces/DataUse";
-import { Dataset } from "@/interfaces/Dataset";
+import { ReducedDataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import Chip from "@/components/Chip";
@@ -56,7 +56,7 @@ const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
         [ResourceType.DATASET]: () =>
             getLink(
                 `/${RouteName.DATASET_ITEM}/${data.id}`,
-                get(data, TITLE_LOCATION) || (data as Dataset).name
+                get(data, TITLE_LOCATION) || (data as ReducedDataset).shortTitle
             ),
         [ResourceType.DATA_USE]: () =>
             getLink(
