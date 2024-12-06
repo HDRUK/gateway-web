@@ -229,19 +229,6 @@ const CollectionForm = ({
 
     const watchAll = watch();
 
-    const datasetToDatasetVersion = (datasets: ReducedDataset[]) => {
-        if (!datasets) return [];
-
-        const tempDatasetVersions = datasets.map(d => {
-            return {
-                id: d.version_id,
-                dataset_id: d.id,
-                shortTitle: d.shortTitle,
-            };
-        });
-        return tempDatasetVersions;
-    };
-
     const handleAddResource = () => {
         showDialog(AddResourceDialog, {
             setResources: (selectedResources: SelectedResources) => {
@@ -253,7 +240,6 @@ const CollectionForm = ({
                     "datasets",
                     selectedResources[ResourceType.DATASET] as ReducedDataset[]
                 );
-                // setValue("dataset_versions", datasetToDatasetVersion(selectedResources[ResourceType.DATASET]) as VersionItem[]);
                 setValue(
                     "publications",
                     selectedResources[ResourceType.PUBLICATION] as Publication[]
@@ -272,26 +258,7 @@ const CollectionForm = ({
         });
     };
 
-    const datasetVersionToDataset = (datasetVersions: VersionItem[]) => {
-        // this function is a temporary hack and this all needs sorting out
-        // GET collections returns `dataset_versions` in a particular format
-        // but POST collections is expecting datasets
-        if (!datasetVersions) return [];
-
-        const tempDatasets = datasetVersions.map(dv => {
-            return {
-                id: dv.dataset_id,
-                version_id: dv.id,
-                shortTitle: dv.shortTitle,
-            };
-        });
-        return tempDatasets;
-    };
-
-
-
     const selectedResources = useMemo(() => {
-        console.log('memo', getValues("datasets"));
         return {
             datause: (getValues("dur") as DataUse[]) || [],
             publication: (getValues("publications") as Publication[]) || [],
@@ -320,14 +287,7 @@ const CollectionForm = ({
         } else if (resourceType === ResourceType.TOOL) {
             setValue("tools", updatedResources as Tool[]);
         } else if (resourceType === ResourceType.DATASET) {
-            // convert dataset ids to dataset_version_ids
-            // const dataset_id = 
-            // set 
-            // console.log('removed', updatedResources,  datasetToDatasetVersion(updatedResources));
             setValue("datasets", updatedResources as ReducedDataset[]);
-            // setValue("dataset_versions", datasetToDatasetVersion(updatedResources) as ReducedDataset[]);
-            // console.log('getValues("dataset_versions")', getValues("dataset_versions"));
-            // console.log('getValues("datasets")', getValues("datasets"));
         }
     };
 
