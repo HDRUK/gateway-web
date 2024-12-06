@@ -228,7 +228,13 @@ const FilterPanel = ({
         }
 
         // If on the 'Data Uses', 'Tools' or 'Collections' tabs then remove the 'Data Custodian Network' filter
-        if ([FILTER_CATEGORY_DURS, FILTER_CATEGORY_TOOLS, FILTER_CATEGORY_COLLECTIONS].includes(filterCategory)) {
+        if (
+            [
+                FILTER_CATEGORY_DURS,
+                FILTER_CATEGORY_TOOLS,
+                FILTER_CATEGORY_COLLECTIONS,
+            ].includes(filterCategory)
+        ) {
             formattedFilters = formattedFilters.filter(
                 filterItem => filterItem.label !== FILTER_DATA_CUSTODIAN_NETWORK
             );
