@@ -30,7 +30,7 @@ const datasetFields: DatasetSection[] = [
                 type: FieldType.TEXT,
                 label: "DOI for dataset",
                 tooltip:
-                    "DOI for the specific dataset or dataset version. NOTE: This is not the DOI of the publication(s) associated with the dataset, but rather the DOI of the metadata describing the dataset.",
+                    "DOI for the specific dataset or dataset version. NOTE: This is not the DOI of the row level data within a dataset or the publication(s) associated with the dataset, but rather the DOI of the metadata describing the dataset as captured in the Gateway.",
             },
         ],
     },
@@ -52,7 +52,7 @@ const datasetFields: DatasetSection[] = [
                 path: "metadata.metadata.provenance.origin.datasetSubType",
                 type: FieldType.LIST,
                 label: "Dataset sub-type",
-                tooltip: "The sub-type of the dataset content.",
+                tooltip: "The sub-types of topic areas to which the dataset content relates.",
             },
             {
                 path: "metadata.metadata.summary.populationSize",
@@ -136,7 +136,7 @@ const datasetFields: DatasetSection[] = [
                 type: FieldType.TEXT,
                 label: "Biological sample availability",
                 tooltip:
-                    "Type of biospeciment saved from a biological entity, and indication of the specimen availability.",
+                    "Type of specimen saved from a biological entity, and indication of the specimen availability.",
             },
         ],
     },
@@ -184,7 +184,7 @@ const datasetFields: DatasetSection[] = [
                 type: FieldType.TEXT,
                 label: "Citation Requirements",
                 tooltip:
-                    "The text that you would like included as part of any citation that credits this dataset.",
+                    "The text which needs to be included as part of any citation that credits this dataset.",
             },
         ],
     },
