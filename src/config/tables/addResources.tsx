@@ -87,7 +87,9 @@ const getDataProvider = (
     resourceType: ResourceType
 ) => {
     const titleMap = {
-        [ResourceType.DATASET]: () => (data as ReducedDataset)?.dataCustodian || get(data, PUBLISHER_NAME_LOCATION),
+        [ResourceType.DATASET]: () =>
+            (data as ReducedDataset)?.dataCustodian ||
+            get(data, PUBLISHER_NAME_LOCATION),
         [ResourceType.DATA_USE]: () => (data as DataUse)?.team?.name,
         [ResourceType.PUBLICATION]: () => EMPTY_VALUE,
         [ResourceType.TOOL]: () => (data as Tool)?.team?.name || EMPTY_VALUE,
