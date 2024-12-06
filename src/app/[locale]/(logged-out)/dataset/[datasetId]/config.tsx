@@ -52,7 +52,8 @@ const datasetFields: DatasetSection[] = [
                 path: "metadata.metadata.provenance.origin.datasetSubType",
                 type: FieldType.LIST,
                 label: "Dataset sub-type",
-                tooltip: "The sub-types of topic areas to which the dataset content relates.",
+                tooltip:
+                    "The sub-types of topic areas to which the dataset content relates.",
             },
             {
                 path: "metadata.metadata.summary.populationSize",
