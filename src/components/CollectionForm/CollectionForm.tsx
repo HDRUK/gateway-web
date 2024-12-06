@@ -175,6 +175,7 @@ const CollectionForm = ({
                     id: dv.dataset_id,
                     latest_metadata: { metadata: dv.metadata },
                     shortTitle: dv.shortTitle,
+                    dataCustodian: dv.dataCustodian,
                 };
             });
             return tempDatasets;
