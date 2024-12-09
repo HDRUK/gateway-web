@@ -814,7 +814,7 @@
             "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
-            "searchExplainerDataProviders": "Search, for example, by Data Custodian name, Dataset title",
+            "searchExplainerDataProviders": "Search, for example, by Data Custodian, Datasets, Publication, Data Uses, Collection, or Analysis Scripts & Software",
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
