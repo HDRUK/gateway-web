@@ -19,17 +19,32 @@ import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
 import { getUserFromToken } from "@/utils/cookies";
 
+export interface Cache {
+    tag: string;
+    revalidate?: number;
+}
+
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
     url: string,
     options: GetOptions = {
         suppressError: false,
-    }
+    },
+    cache?: Cache
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
+    const nextConfig = {
+        next: cache
+            ? {
+                  tags: [cache.tag],
+                  revalidate: cache.revalidate ? cache.revalidate : 2 * 60 * 60,
+              }
+            : undefined,
+    };
     const res = await fetch(`${url}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
+        ...nextConfig,
     });
 
     if (!res.ok && !options.suppressError) {
@@ -45,9 +60,14 @@ async function get<T>(
 async function getFilters(
     cookieStore: ReadonlyRequestCookies
 ): Promise<Filter[]> {
+    const cache: Cache = {
+        tag: "filters",
+    };
     return get<Filter[]>(
         cookieStore,
-        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`
+        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
+        undefined,
+        cache
     );
 }
 
