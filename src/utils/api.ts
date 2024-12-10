@@ -27,10 +27,10 @@ export interface Cache {
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
     url: string,
+    cache?: Cache,
     options: GetOptions = {
         suppressError: false,
-    },
-    cache?: Cache
+    }
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
@@ -66,7 +66,6 @@ async function getFilters(
     return get<Filter[]>(
         cookieStore,
         `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
-        undefined,
         cache
     );
 }
