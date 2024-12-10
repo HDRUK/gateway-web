@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
         }
 
         if (Array.isArray(tags)) {
-            for (const tag of tags) {
+            tags.forEach(tag => {
                 revalidateTag(tag);
-            }
+            });
         } else {
             revalidateTag(tags);
         }
