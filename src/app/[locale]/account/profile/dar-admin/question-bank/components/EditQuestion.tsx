@@ -42,7 +42,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const defaultValues = useMemo(() => questionDefaultValues, []);
 
     const { data: sectionData } = useGet<QuestionBankSection[]>(
-        `${apis.questionBankV1Url}/sections`
+        `${apis.dataAccessSectionV1Url}`
     );
 
     const { control, handleSubmit, setValue, reset, watch } =
@@ -116,6 +116,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             guidance: formData.guidance,
             title: formData.title,
             section_id: formData.section_id,
+            default: 1, // TODO set this from form? What does this field even do?
             // locked: 0, - consider functionality for unlocking here?
         };
         onSubmit(payload);

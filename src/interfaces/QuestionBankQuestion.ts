@@ -30,19 +30,29 @@ interface QuestionBankQuestion {
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
-    version: number;
-    question_json: FormHydration;
+    latest_version: QuestionBankVersion;
+    versions: QuestionBankVersion[];
     locked: number;
     required: number;
     force_required: number;
     allow_guidance_override: number;
     section_id: number;
     user_id: number;
-    team_id: number;
+}
+
+interface QuestionBankVersion {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    version: number;
+    question_json: string;
+    required: number;
 }
 
 export type {
     QuestionBankQuestion,
     QuestionBankQuestionForm,
     QuestionBankCreateUpdateQuestion,
+    QuestionBankVersion,
 };
