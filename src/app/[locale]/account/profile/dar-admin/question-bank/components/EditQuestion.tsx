@@ -65,7 +65,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         latest_version,
     } = question ?? {};
 
-    const question_json = JSON.parse(latest_version.question_json)
+    const question_json = JSON.parse(latest_version?.question_json || null)
 
     const { title, guidance, field } = question_json ?? {};
 
