@@ -62,8 +62,10 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         required,
         allow_guidance_override,
         force_required,
-        question_json,
+        latest_version,
     } = question ?? {};
+
+    const question_json = JSON.parse(latest_version.question_json)
 
     const { title, guidance, field } = question_json ?? {};
 
