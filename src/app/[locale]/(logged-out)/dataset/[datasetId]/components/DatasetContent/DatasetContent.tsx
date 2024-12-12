@@ -19,7 +19,6 @@ import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
 import {
-    formatTextDelimiter,
     formatTextWithLinks,
     splitStringList,
 } from "@/utils/dataset";
@@ -36,6 +35,7 @@ import {
     ListContainer,
     ObservationTableWrapper,
 } from "./DatasetContent.styles";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 
 const DATE_FORMAT = "DD/MM/YYYY";
 const OBSERVATION_DATE = "observationDate";
@@ -149,13 +149,17 @@ const DatasetContent = ({
             }
 
             default: {
-                return formatTextWithLinks(formatTextDelimiter(value));
+                return (<MarkDownSanitizedWithHtml
+                    content={value}
+                    wrapper="span"
+                />)
             }
         }
     };
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
+            teser
             {populatedSections.map((section, index) => {
                 const id = `anchor-${section.sectionName.replaceAll(
                     /\s/g,
@@ -266,6 +270,7 @@ const DatasetContent = ({
                                                     pb: 2,
                                                 }}
                                                 key={value}>
+                                                    test
                                                 {renderDatasetField(
                                                     field.type,
                                                     value
