@@ -164,8 +164,8 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     style={{ display: "flex", justifyContent: "flex-start" }}
                     variant="link"
                     disabled={
-                        dataset.versions[0].metadata?.metadata?.observations?
-                            .length === 0
+                        dataset.versions[0].metadata?.metadata?.observations
+                            ?.length === 0
                     }>
                     Observations
                 </Button>
