@@ -7,11 +7,11 @@ describe("Question Bank Question Card", () => {
     it("should render the title and guidance from the question JSON", async () => {
         render(<QuestionBankListItem data={mockResult} actions={[]} />);
         expect(
-            screen.getByText(mockResult.question_json.title)
+            screen.getByText(JSON.parse(mockResult.latest_version.question_json).title)
         ).toBeInTheDocument();
 
         expect(
-            screen.getByText(mockResult.question_json.guidance)
+            screen.getByText(JSON.parse(mockResult.latest_version.question_json).guidance)
         ).toBeInTheDocument();
 
         expect(
