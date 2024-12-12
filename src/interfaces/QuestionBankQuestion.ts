@@ -1,5 +1,5 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { FormHydration, FormHydrationField } from "./FormHydration";
+import { FormHydrationField } from "./FormHydration";
 
 interface QuestionBankQuestionForm {
     section_id: number;
@@ -25,6 +25,16 @@ interface QuestionBankCreateUpdateQuestion {
     title: string;
 }
 
+interface QuestionBankVersion {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    version: number;
+    question_json: string;
+    required: number;
+}
+
 interface QuestionBankQuestion {
     id: number;
     created_at: string;
@@ -38,16 +48,6 @@ interface QuestionBankQuestion {
     allow_guidance_override: number;
     section_id: number;
     user_id: number;
-}
-
-interface QuestionBankVersion {
-    id: number;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string | null;
-    version: number;
-    question_json: string;
-    required: number;
 }
 
 export type {
