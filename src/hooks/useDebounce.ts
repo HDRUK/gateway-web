@@ -9,6 +9,8 @@ const useDebounce = (
     const [debouncedValue, setDebouncedValue] = useState(value || "");
 
     useEffect(() => {
+        if (value === null) return undefined;
+
         if (value.length < minLetters && value.length > 0) return undefined;
 
         const handler = setTimeout(() => {
