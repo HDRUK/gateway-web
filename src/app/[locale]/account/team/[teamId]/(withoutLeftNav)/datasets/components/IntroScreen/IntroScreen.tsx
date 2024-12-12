@@ -147,6 +147,7 @@ const IntroScreen = ({
                             options={teamOptions}
                             selectOnFocus
                             onInputChange={handleOnUserInputChange}
+                            extraInfo={t("toolTipText")}
                             isLoadingOptions={isLoadingTeams}
                             component={inputComponents.Autocomplete}
                             disableClearable
