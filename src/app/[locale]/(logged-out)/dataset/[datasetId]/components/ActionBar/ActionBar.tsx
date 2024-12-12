@@ -185,7 +185,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     variant="link"
                     disabled={
                         dataset.versions[0].metadata?.metadata
-                            ?.structuralMetadata?.tables.length === 0
+                            ?.structuralMetadata?.tables?.length === 0
                     }>
                     Structural Metadata
                 </Button>
