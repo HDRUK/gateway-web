@@ -7,7 +7,7 @@ import {
     SelectedResources,
 } from "@/interfaces/AddResource";
 import { DataUse } from "@/interfaces/DataUse";
-import { Dataset } from "@/interfaces/Dataset";
+import { ReducedDataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import Chip from "@/components/Chip";
@@ -56,7 +56,7 @@ const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
         [ResourceType.DATASET]: () =>
             getLink(
                 `/${RouteName.DATASET_ITEM}/${data.id}`,
-                get(data, TITLE_LOCATION) || (data as Dataset).name
+                get(data, TITLE_LOCATION) || (data as ReducedDataset).shortTitle
             ),
         [ResourceType.DATA_USE]: () =>
             getLink(
@@ -87,7 +87,9 @@ const getDataProvider = (
     resourceType: ResourceType
 ) => {
     const titleMap = {
-        [ResourceType.DATASET]: () => get(data, PUBLISHER_NAME_LOCATION),
+        [ResourceType.DATASET]: () =>
+            (data as ReducedDataset)?.dataCustodian ||
+            get(data, PUBLISHER_NAME_LOCATION),
         [ResourceType.DATA_USE]: () => (data as DataUse)?.team?.name,
         [ResourceType.PUBLICATION]: () => EMPTY_VALUE,
         [ResourceType.TOOL]: () => (data as Tool)?.team?.name || EMPTY_VALUE,

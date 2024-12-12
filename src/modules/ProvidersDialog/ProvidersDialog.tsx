@@ -50,7 +50,7 @@ const ProvidersDialog = () => {
                                     label: "Add your collections and other resources",
                                 },
                                 {
-                                    label: "Use the Cohort Discovery advanced search tool",
+                                    label: "Use the Cohort Discovery advanced search tool (requires institutional or Azure logins)",
                                 },
                             ]}
                         />

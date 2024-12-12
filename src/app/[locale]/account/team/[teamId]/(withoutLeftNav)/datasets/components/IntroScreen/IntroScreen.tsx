@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
@@ -71,7 +71,6 @@ interface IntroScreenProps {
     teamOptions?: OptionsType[];
     isLoadingTeams: boolean;
     setDatasetType: (value: string[]) => void;
-    setDataCustodian: (value: number) => void;
     handleOnUserInputChange: (e: React.ChangeEvent, value: string) => void;
 }
 
@@ -80,7 +79,6 @@ const IntroScreen = ({
     defaultTeamId,
     teamOptions,
     isLoadingTeams,
-    setDataCustodian,
     setDatasetType,
     handleOnUserInputChange,
 }: IntroScreenProps) => {
@@ -100,17 +98,9 @@ const IntroScreen = ({
         setSelectedCheckboxes(updatedCheckboxes);
     };
 
-    const { control, watch } = useForm({
+    const { control } = useForm({
         defaultValues: { custodianId: defaultTeamId },
     });
-
-    const watchSort = watch("custodianId");
-
-    useEffect(() => {
-        if (!watchSort) return;
-        setDataCustodian(watchSort);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [watchSort]);
 
     return (
         <Box sx={{ mt: 1.25, display: "flex", justifyContent: "center" }}>
@@ -157,6 +147,7 @@ const IntroScreen = ({
                             options={teamOptions}
                             selectOnFocus
                             onInputChange={handleOnUserInputChange}
+                            extraInfo={t("toolTipText")}
                             isLoadingOptions={isLoadingTeams}
                             component={inputComponents.Autocomplete}
                             disableClearable

@@ -28,7 +28,7 @@ jobs:
               id: getversion
               run: |
                   sed -n 's/^appVersion:\(.*\)/\1/p' < chart/gateway-web/Chart.yaml > version
-                  echo "version=$(sed '/.*\"\(.*\)\".*/ s//\1/g' version)" >> $GITHUB_OUTPUT
+                  echo "version=$(sed '/.*\"\(.*\)\".*/ s//\1/g' version)" >> $GITHUB_OUTPUT 
 
             - name: Google Auth
               id: auth

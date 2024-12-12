@@ -1,9 +1,9 @@
 import { DataUse } from "./DataUse";
-import { Dataset } from "./Dataset";
+import { ReducedDataset } from "./Dataset";
 import { Publication } from "./Publication";
 import { Tool } from "./Tool";
 
-export type ResourceDataType = Dataset | DataUse | Publication | Tool;
+export type ResourceDataType = ReducedDataset | DataUse | Publication | Tool;
 
 export enum ResourceType {
     DATASET = "dataset",
@@ -13,7 +13,7 @@ export enum ResourceType {
 }
 
 export interface SelectedResources {
-    [ResourceType.DATASET]?: Dataset[];
+    [ResourceType.DATASET]?: ReducedDataset[];
     [ResourceType.DATA_USE]?: DataUse[];
     [ResourceType.PUBLICATION]?: Publication[];
     [ResourceType.TOOL]?: Tool[];
