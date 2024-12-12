@@ -159,7 +159,6 @@ const DatasetContent = ({
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
-            teser
             {populatedSections.map((section, index) => {
                 const id = `anchor-${section.sectionName.replaceAll(
                     /\s/g,
@@ -270,7 +269,6 @@ const DatasetContent = ({
                                                     pb: 2,
                                                 }}
                                                 key={value}>
-                                                    test
                                                 {renderDatasetField(
                                                     field.type,
                                                     value
