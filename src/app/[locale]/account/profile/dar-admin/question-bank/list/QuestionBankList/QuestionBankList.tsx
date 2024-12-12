@@ -88,9 +88,7 @@ const QuestionBankList = () => {
     }, [searchParams?.get("tab")]);
 
     const { data, isLoading } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}?${new URLSearchParams(
-            queryParams
-        )}`
+        `${apis.questionBankV1Url}?${new URLSearchParams(queryParams)}`
     );
     if (isLoading) {
         return <Loading />;
