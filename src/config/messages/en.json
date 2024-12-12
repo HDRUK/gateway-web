@@ -407,6 +407,7 @@
                             "previous": "Previous",
                             "welcomeMessage": "Welcome to dataset metadata on-boarding",
                             "legendIntro": "You will see a legend to help you as you on-board your dataset metadata",
+                            "toolTipText": "This has automatically been populated with the name of this Team. To change this, start typing or select a Data Custodian from the drop down list.",
                             "progressLegend": "Progress legend:",
                             "remove": "Remove",
                             "add": "Add another",
