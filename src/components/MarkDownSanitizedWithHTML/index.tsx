@@ -23,11 +23,16 @@ const hrefOverride = (overrideLinks: boolean) => {
                   }: {
                       href: string;
                       children: React.ReactNode;
-                  }) => (
-                      <a href={href} target="_blank" rel="noopener noreferrer">
-                          {children}
-                      </a>
-                  ),
+                  }) => {
+                      return (
+                          <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer">
+                              {children}
+                          </a>
+                      );
+                  },
               },
           }
         : null;
@@ -50,7 +55,6 @@ export const MarkDownSanitizedWithHtml = ({
     wrapper = "div",
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
-    console.log("content", content);
     const sanitizedContent = DOMPurify.sanitize(content);
 
     const overrides = {
