@@ -13,7 +13,7 @@ import {
 } from "@/interfaces/AddResource";
 import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
-import { VersionItem } from "@/interfaces/Dataset";
+import { Dataset, ReducedDataset, VersionItem } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
 import { Keyword } from "@/interfaces/Keyword";
 import { Option } from "@/interfaces/Option";
@@ -174,6 +174,8 @@ const CollectionForm = ({
                 return {
                     id: dv.dataset_id,
                     latest_metadata: { metadata: dv.metadata },
+                    shortTitle: dv.shortTitle,
+                    dataCustodian: dv.dataCustodian,
                 };
             });
             return tempDatasets;
@@ -236,7 +238,7 @@ const CollectionForm = ({
                 );
                 setValue(
                     "datasets",
-                    selectedResources[ResourceType.DATASET] as Dataset[]
+                    selectedResources[ResourceType.DATASET] as ReducedDataset[]
                 );
                 setValue(
                     "publications",
@@ -261,7 +263,7 @@ const CollectionForm = ({
             datause: (getValues("dur") as DataUse[]) || [],
             publication: (getValues("publications") as Publication[]) || [],
             tool: (getValues("tools") as Tool[]) || [],
-            dataset: (getValues("datasets") as Dataset[]) || [],
+            dataset: (getValues("datasets") as ReducedDataset[]) || [],
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [watchAll, getValues]);
@@ -285,7 +287,7 @@ const CollectionForm = ({
         } else if (resourceType === ResourceType.TOOL) {
             setValue("tools", updatedResources as Tool[]);
         } else if (resourceType === ResourceType.DATASET) {
-            setValue("datasets", updatedResources as Dataset[]);
+            setValue("datasets", updatedResources as ReducedDataset[]);
         }
     };
 

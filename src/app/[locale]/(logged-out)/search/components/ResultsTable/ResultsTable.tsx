@@ -24,6 +24,7 @@ interface ResultTableProps {
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
+const PUBLISHERS_ID = "metadata.summary.publisher.gatewayId";
 const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 const ACCESS_SERVICE_PATH =
     "metadata.accessibility.access.accessServiceCategory";
@@ -84,14 +85,31 @@ const getColumns = ({
 
     columnHelper.display({
         id: "dataProvider",
-        cell: ({ row: { original } }) => (
-            <div style={{ textAlign: "center" }}>
-                <EllipsisLineLimit
-                    showToolTip
-                    text={get(original, PUBLISHER_NAME_PATH)}
-                />
-            </div>
-        ),
+        cell: ({ row: { original } }) => {
+            const dataCustodianId = get(original, PUBLISHERS_ID);
+            // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
+            const isNumber = !(typeof dataCustodianId === "string");
+            const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
+
+            return (
+                <div style={{ textAlign: "center" }}>
+                    {isNumber && (
+                        <Link href={linkHref}>
+                            <EllipsisLineLimit
+                                showToolTip
+                                text={get(original, PUBLISHER_NAME_PATH)}
+                            />
+                        </Link>
+                    )}
+                    {!isNumber && (
+                        <EllipsisLineLimit
+                            showToolTip
+                            text={get(original, PUBLISHER_NAME_PATH)}
+                        />
+                    )}
+                </div>
+            );
+        },
         header: () => (
             <TooltipIcon
                 buttonSx={{ p: 0 }}

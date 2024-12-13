@@ -10,6 +10,7 @@ import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
 import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
@@ -199,6 +200,10 @@ const ResultCard = ({
         highlight?.abstract?.[0] ??
         highlight?.description?.[0] ??
         metadata.summary.abstract;
+    const dataCustodianId = metadata.summary.publisher.gatewayId;
+    // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
+    const isNumber = !(typeof dataCustodianId === "string");
+    const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
 
     return (
         <>
@@ -284,22 +289,47 @@ const ResultCard = ({
                             disableTypography
                             secondary={
                                 <section aria-describedby={resultId}>
-                                    <Typography
-                                        // eslint-disable-next-line
+                                    {isNumber && (
+                                        <Link href={linkHref}>
+                                            <Typography
+                                                // eslint-disable-next-line
                                         aria-description="Data Custodian"
-                                        sx={{
-                                            textDecoration: "uppercase",
-                                            fontWeight: 400,
-                                            fontSize: 16,
-                                            color: "black",
-                                            mb: 1.5,
-                                        }}>
-                                        {metadata.summary.publisher.name !==
-                                        undefined
-                                            ? metadata.summary.publisher.name
-                                            : metadata.summary.publisher
-                                                  .publisherName}
-                                    </Typography>
+                                                sx={{
+                                                    textDecoration: "uppercase",
+                                                    fontWeight: 400,
+                                                    fontSize: 16,
+                                                    color: "black",
+                                                    mb: 1.5,
+                                                }}>
+                                                {metadata.summary.publisher
+                                                    .name !== undefined
+                                                    ? metadata.summary.publisher
+                                                          .name
+                                                    : metadata.summary.publisher
+                                                          .publisherName}
+                                            </Typography>
+                                        </Link>
+                                    )}
+
+                                    {!isNumber && (
+                                        <Typography
+                                            // eslint-disable-next-line
+                                        aria-description="Data Custodian"
+                                            sx={{
+                                                textDecoration: "uppercase",
+                                                fontWeight: 400,
+                                                fontSize: 16,
+                                                color: "black",
+                                                mb: 1.5,
+                                            }}>
+                                            {metadata.summary.publisher.name !==
+                                            undefined
+                                                ? metadata.summary.publisher
+                                                      .name
+                                                : metadata.summary.publisher
+                                                      .publisherName}
+                                        </Typography>
+                                    )}
                                     <Highlight
                                         sx={{ mb: 1.5 }}
                                         component="div"

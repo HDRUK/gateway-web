@@ -4,7 +4,7 @@ import { inputComponents } from ".";
 
 const defaultValues = {
     name: "",
-    description: "",
+    description: '{"type":"doc","content":[{"type":"paragraph"}]}',
     id: "",
     image_link: "",
     keywords: [],

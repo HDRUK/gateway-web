@@ -10,21 +10,11 @@ export const metadata = metaData(
         description: "",
     },
     noFollowRobots
-); // double check robots for search
-
-let filters: Filter[] | null = null;
-
-const fetchFilters = async () => {
-    const cookieStore = cookies();
-    const filters = await getFilters(cookieStore);
-    return filters;
-};
+);
 
 const SearchPage = async () => {
-    if (!filters) {
-        filters = await fetchFilters();
-    }
-
+    const cookieStore = cookies();
+    const filters: Filter[] = await getFilters(cookieStore);
     return <Search filters={filters} />;
 };
 
