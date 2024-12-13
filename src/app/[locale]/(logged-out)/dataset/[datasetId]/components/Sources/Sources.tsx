@@ -17,7 +17,8 @@ interface SourcesProps {
 const Sources = ({ data }: SourcesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { datasetType, datasetSubType } = data.provenance.origin;
-    const { collectionSituation } = data.provenance.origin;
+    // This is using HDRUK schema so it's not collectionSituation as in the GWDM case
+    const { collectionSource } = data.provenance.origin;
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
@@ -36,8 +37,8 @@ const Sources = ({ data }: SourcesProps) => {
             <Divider sx={{ my: 1 }} />
             <Typography variant="h4">
                 <b>{`${t("collectionSources")}: `}</b>
-                {collectionSituation
-                    ? formatTextDelimiter(collectionSituation)
+                {collectionSource
+                    ? formatTextDelimiter(collectionSource)
                     : t("noCollectionSources")}
             </Typography>
         </Paper>
