@@ -55,9 +55,7 @@ export const MarkDownSanitizedWithHtml = ({
                 component: CustomLink,
             },
         }),
-        p: {
-            component: (props: any) => <Typography sx={{ mb: 2 }} {...props} />,
-        },
+        p: <Typography sx={{ mb: 2 }} />,
     };
 
     const Wrapper = wrapper as React.ElementType;
