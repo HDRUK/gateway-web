@@ -37,32 +37,34 @@ const Publications = ({ data }: PublicationsProps) => {
                     gap: 2,
                 }}>
                 {publicationAboutThisDataset.map(pub => (
-                    <Card
-                        variant="outlined"
-                        sx={{ p: 1, borderRadius: 2, display: "grid" }}>
-                        <Link
-                            target="_blank"
-                            href={
-                                pub?.url ||
-                                `https://doi.org/${pub?.paper_doi}` ||
-                                ""
-                            }>
+                        <Card
+                            variant="outlined"
+                            sx={{ p: 1, borderRadius: 2, display: "grid" }}>
+                            <Link
+                                target="_blank"
+                                href={
+                                    pub?.url
+                                        ? pub.url
+                                        : pub?.paper_doi
+                                        ? `https://doi.org/${pub.paper_doi}`
+                                        : ""
+                                }>
+                                <EllipsisCharacterLimit
+                                    text={pub.paper_title}
+                                    characterLimit={100}
+                                />
+                            </Link>
                             <EllipsisCharacterLimit
-                                text={pub.paper_title}
-                                characterLimit={100}
+                                text={pub.authors}
+                                characterLimit={50}
                             />
-                        </Link>
-                        <EllipsisCharacterLimit
-                            text={pub.authors}
-                            characterLimit={50}
-                        />
-                        <Typography style={{ fontWeight: "bold" }}>
-                            {pub.journal_name}
-                        </Typography>
-                        <Typography>
-                            Published - {pub.year_of_publication}
-                        </Typography>
-                    </Card>
+                            <Typography style={{ fontWeight: "bold" }}>
+                                {pub.journal_name}
+                            </Typography>
+                            <Typography>
+                                Published - {pub.year_of_publication}
+                            </Typography>
+                        </Card>
                 ))}
             </Box>
         </Paper>
