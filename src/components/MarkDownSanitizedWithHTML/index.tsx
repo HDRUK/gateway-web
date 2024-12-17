@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 import { generateHTML, JSONContent } from "@tiptap/react";
@@ -15,6 +15,18 @@ export interface MarkdownWithHtmlProps {
     overrideLinks?: boolean;
 }
 
+const CustomLink = ({
+    href,
+    children,
+}: {
+    href: string;
+    children: React.ReactNode;
+}) => (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+    </a>
+);
+
 export const MarkDownSanitizedWithHtml = ({
     content,
     sx = {},
@@ -22,11 +34,9 @@ export const MarkDownSanitizedWithHtml = ({
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [parsedContent, setParsedContent] = useState<string>("");
 
-    useEffect(() => {
+    const parsedContent = useMemo(() => {
         let value = content;
-
         try {
             const html = JSON.parse(content) as JSONContent;
             value = generateHTML(html, EXTENSIONS);
@@ -35,24 +45,14 @@ export const MarkDownSanitizedWithHtml = ({
         }
 
         const sanitized = DOMPurify.sanitize(value);
-        setParsedContent(sanitized);
         setIsLoaded(true);
+        return sanitized;
     }, [content]);
 
     const overrides = {
         ...(overrideLinks && {
             a: {
-                component: ({
-                    href,
-                    children,
-                }: {
-                    href: string;
-                    children: React.ReactNode;
-                }) => (
-                    <a href={href} target="_blank" rel="noopener noreferrer">
-                        {children}
-                    </a>
-                ),
+                component: CustomLink,
             },
         }),
         p: {
