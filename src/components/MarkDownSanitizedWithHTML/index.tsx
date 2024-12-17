@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
