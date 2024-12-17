@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 import { generateHTML, JSONContent } from "@tiptap/react";
@@ -15,60 +15,61 @@ export interface MarkdownWithHtmlProps {
     overrideLinks?: boolean;
 }
 
-const hrefOverride = (overrideLinks: boolean) => {
-    return overrideLinks
-        ? {
-              a: {
-                  component: ({
-                      href,
-                      children,
-                  }: {
-                      href: string;
-                      children: React.ReactNode;
-                  }) => (
-                      <a href={href} target="_blank" rel="noopener noreferrer">
-                          {children}
-                      </a>
-                  ),
-              },
-          }
-        : null;
-};
-
-const rawOrHtml = (content: string) => {
-    let value;
-    try {
-        const html = JSON.parse(content) as JSONContent;
-        value = generateHTML(html, EXTENSIONS);
-    } catch (_e) {
-        value = content;
-    }
-    return value;
-};
-
 export const MarkDownSanitizedWithHtml = ({
     content,
     sx = {},
     wrapper = "div",
     overrideLinks = true,
 }: MarkdownWithHtmlProps) => {
-    const sanitizedContent = DOMPurify.sanitize(content);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [parsedContent, setParsedContent] = useState<string>("");
+
+    useEffect(() => {
+        let value = content;
+
+        try {
+            const html = JSON.parse(content) as JSONContent;
+            value = generateHTML(html, EXTENSIONS);
+        } catch (_e) {
+            // If parsing fails, fallback to raw content
+        }
+
+        const sanitized = DOMPurify.sanitize(value);
+        setParsedContent(sanitized);
+        setIsLoaded(true);
+    }, [content]);
 
     const overrides = {
-        ...hrefOverride(overrideLinks),
-        p: <Typography sx={{ mb: 2 }} />,
+        ...(overrideLinks && {
+            a: {
+                component: ({
+                    href,
+                    children,
+                }: {
+                    href: string;
+                    children: React.ReactNode;
+                }) => (
+                    <a href={href} target="_blank" rel="noopener noreferrer">
+                        {children}
+                    </a>
+                ),
+            },
+        }),
+        p: {
+            component: (props: any) => <Typography sx={{ mb: 2 }} {...props} />,
+        },
     };
 
     const Wrapper = wrapper as React.ElementType;
 
+    const styles = {
+        ...sx,
+        ...(isLoaded ? {} : { display: "none" }),
+    };
+
     return (
-        <Wrapper style={sx}>
-            <Markdown
-                options={{
-                    overrides,
-                }}>
-                {rawOrHtml(sanitizedContent)}
-            </Markdown>
+        <Wrapper style={styles}>
+            <Markdown options={{ overrides }}>{parsedContent}</Markdown>
         </Wrapper>
     );
 };
