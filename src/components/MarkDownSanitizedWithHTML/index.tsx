@@ -1,8 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
-import { generateHTML } from "@tiptap/html";
-import { JSONContent } from "@tiptap/react";
+import { generateHTML, JSONContent } from "@tiptap/react";
 import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
 import { EXTENSIONS } from "../Wysiwyg/consts";
