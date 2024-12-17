@@ -2,11 +2,15 @@ import mockRouter from "next-router-mock";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { generateDatasetV1 } from "@/mocks/data/dataset";
 import { getDatasetsV1 } from "@/mocks/handlers/datasets";
+import { getTeamDatasetsV1 } from "@/mocks/handlers/teams";
 import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
 
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 window.scrollTo = jest.fn();
+
+const renderTeamDatasets = () =>
+    render(<TeamDatasets permissions={{}} teamId="1" />);
 
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
@@ -21,8 +25,8 @@ describe("TeamDatasets", () => {
             }),
             generateDatasetV1("1.0", { create_origin: "GMI", status: "DRAFT" }),
         ];
-        server.use(getDatasetsV1(mockDatasets));
-        render(<TeamDatasets permissions={{}} />);
+        server.use(getTeamDatasetsV1(mockDatasets));
+        renderTeamDatasets();
 
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
@@ -56,8 +60,8 @@ describe("TeamDatasets", () => {
         });
     });
     it("should render message if no active datasets", async () => {
-        server.use(getDatasetsV1([]));
-        render(<TeamDatasets permissions={{}} />);
+        server.use(getTeamDatasetsV1([]));
+        renderTeamDatasets();
 
         await waitFor(() => {
             expect(
@@ -83,8 +87,8 @@ describe("TeamDatasets", () => {
                 status: "ACTIVE",
             }),
         ];
-        server.use(getDatasetsV1(mockDatasets));
-        render(<TeamDatasets permissions={{}} />);
+        server.use(getTeamDatasetsV1(mockDatasets));
+        renderTeamDatasets();
 
         await waitFor(() => {
             const datasetCards = screen.getAllByTestId("dataset-card");
