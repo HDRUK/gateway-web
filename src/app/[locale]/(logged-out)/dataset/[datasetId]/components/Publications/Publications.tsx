@@ -42,11 +42,13 @@ const Publications = ({ data }: PublicationsProps) => {
                         sx={{ p: 1, borderRadius: 2, display: "grid" }}>
                         <Link
                             target="_blank"
-                            href={pub?.url
-                                ? pub.url
-                                : pub?.paper_doi
-                                ? `https://doi.org/${pub.paper_doi}`
-                                : ""}>
+                            href={
+                                pub?.url
+                                    ? pub.url
+                                    : pub?.paper_doi
+                                    ? `https://doi.org/${pub.paper_doi}`
+                                    : ""
+                            }>
                             <EllipsisCharacterLimit
                                 text={pub.paper_title}
                                 characterLimit={100}
