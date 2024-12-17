@@ -49,6 +49,7 @@
         "@tiptap/extension-paragraph": "^2.6.6",
         "@tiptap/extension-text": "^2.6.6",
         "@tiptap/extension-underline": "^2.6.6",
+        "@tiptap/html": "^2.10.3",
         "@tiptap/pm": "^2.6.6",
         "@tiptap/react": "^2.6.6",
         "@tiptap/starter-kit": "^2.6.6",
@@ -95,9 +96,9 @@
         "schema-dts": "1.1.2",
         "schema-to-yup": "^1.12.18",
         "swr": "^2.1.1",
+        "tsx": "4.19.2",
         "typescript": "4.9.5",
-        "yup": "^1.2.0",
-        "tsx": "4.19.2"
+        "yup": "^1.2.0"
     },
     "devDependencies": {
         "@storybook/addon-essentials": "^7.6.3",
