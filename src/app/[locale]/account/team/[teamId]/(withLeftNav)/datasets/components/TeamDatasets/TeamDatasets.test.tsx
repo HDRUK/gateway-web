@@ -1,7 +1,6 @@
 import mockRouter from "next-router-mock";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { generateDatasetV1 } from "@/mocks/data/dataset";
-import { getDatasetsV1 } from "@/mocks/handlers/datasets";
 import { getTeamDatasetsV1 } from "@/mocks/handlers/teams";
 import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
