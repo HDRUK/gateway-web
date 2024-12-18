@@ -26,10 +26,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
 
     if (!latestMetadata) return null;
 
-    const {
-        updated_at,
-        gwdmVersion,
-    } = latestMetadata;
+    const { updated_at, gwdmVersion } = latestMetadata;
 
     const title = get(latestMetadata, "summary.title") as unknown as string;
     const publisherName = get(
