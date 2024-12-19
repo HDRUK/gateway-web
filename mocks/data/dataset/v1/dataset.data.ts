@@ -8,7 +8,6 @@ import {
 import { Highlight } from "@/interfaces/HighlightDataset";
 import { SearchResultDataset } from "@/interfaces/Search";
 
-
 const generatePageDataSetV1 = (): Dataset => {
     return {
         id: faker.datatype.number(),
@@ -334,6 +333,36 @@ const generateDatasetV1 = (version = "1.0", data = {}): Dataset => {
     };
 };
 
+const generateDatasetForTeamV1 = (version = "1.0", data = {}): Dataset => {
+    return {
+        id: faker.datatype.number(),
+        team_id: faker.datatype.number(),
+        user_id: faker.datatype.number(),
+        status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
+        create_origin: faker.helpers.arrayElement(["GMI", "API", "MANUAL"]),
+        pid: faker.datatype.uuid(),
+        latest_metadata: {
+            required: {
+                version: faker.datatype.number(),
+            },
+            summary: {
+                title: faker.datatype.string(5),
+                publisher:
+                    version === "1.0"
+                        ? {
+                              publisherName: faker.datatype.string(),
+                          }
+                        : {
+                              name: faker.datatype.string(),
+                          },
+            },
+            gwdmVersion: version,
+        },
+        updated: faker.date.past().toString(),
+        ...data,
+    };
+};
+
 const generateDatasetHighlightsV1 = (): Highlight => {
     return {
         abstract: [faker.datatype.string(), faker.datatype.string()],
@@ -370,6 +399,7 @@ const datasetsV1p1 = Array.from({ length: 3 }).map(() =>
 
 export {
     generateDatasetV1,
+    generateDatasetForTeamV1,
     generateDatasetHighlightsV1,
     generateDatasetMetadataV1,
     generateDatasetMetadataMiniV1,

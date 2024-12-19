@@ -1,6 +1,6 @@
 import mockRouter from "next-router-mock";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
-import { generateDatasetV1 } from "@/mocks/data/dataset";
+import { generateDatasetForTeamV1 } from "@/mocks/data/dataset";
 import { getTeamDatasetsV1 } from "@/mocks/handlers/teams";
 import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
@@ -14,15 +14,18 @@ const renderTeamDatasets = () =>
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
         const mockDatasets = [
-            generateDatasetV1("1.0", {
+            generateDatasetForTeamV1("1.0", {
                 create_origin: "MANUAL",
                 status: "ARCHIVED",
             }),
-            generateDatasetV1("1.0", {
+            generateDatasetForTeamV1("1.1", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetV1("1.0", { create_origin: "GMI", status: "DRAFT" }),
+            generateDatasetForTeamV1("1.0", {
+                create_origin: "GMI",
+                status: "DRAFT",
+            }),
         ];
         server.use(getTeamDatasetsV1(mockDatasets));
         renderTeamDatasets();
@@ -33,17 +36,17 @@ describe("TeamDatasets", () => {
 
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].versions[0].metadata.metadata.summary.title}`
+                    `${mockDatasets[0].latest_metadata.summary.title}`
                 )
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[0].latest_metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].versions[0].metadata.metadata.required.version}`
+                    `${mockDatasets[0].latest_metadata.required.version}`
                 )
             ).toBeInTheDocument();
 
@@ -73,15 +76,15 @@ describe("TeamDatasets", () => {
 
     it("should render all datasets (with different GWDM versions)", async () => {
         const mockDatasets = [
-            generateDatasetV1("1.0", {
+            generateDatasetForTeamV1("1.0", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetV1("1.0", {
+            generateDatasetForTeamV1("1.0", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetV1("1.1", {
+            generateDatasetForTeamV1("1.1", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
@@ -95,19 +98,19 @@ describe("TeamDatasets", () => {
 
             expect(
                 within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].versions[0].metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[0].latest_metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
 
             expect(
                 within(datasetCards[1]).getByText(
-                    `${mockDatasets[1].versions[0].metadata.metadata.summary.publisher.publisherName}`
+                    `${mockDatasets[1].latest_metadata.summary.publisher.publisherName}`
                 )
             ).toBeInTheDocument();
 
             expect(
                 within(datasetCards[2]).getByText(
-                    `${mockDatasets[2].versions[0].metadata.metadata.summary.publisher.name}`
+                    `${mockDatasets[2].latest_metadata.summary.publisher.name}`
                 )
             ).toBeInTheDocument();
         });

@@ -71,8 +71,6 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     );
 
     const [queryParams, setQueryParams] = useState({
-        team_id: `${params?.teamId}`,
-        withTrashed: "true",
         status: "ACTIVE",
         page: "1",
         sort: `${datasetSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
