@@ -356,7 +356,7 @@ const generateDatasetForTeamV1 = (version = "1.0", data = {}): Dataset => {
                               name: faker.datatype.string(),
                           },
             },
-            gwdmVersion: "1.1",
+            gwdmVersion: version,
         },
         updated: faker.date.past().toString(),
         ...data,
