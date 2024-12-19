@@ -350,10 +350,10 @@ const generateDatasetForTeamV1 = (version = "1.0", data = {}): Dataset => {
                 publisher:
                     version === "1.0"
                         ? {
-                              name: faker.datatype.string(),
+                              publisherName: faker.datatype.string(),
                           }
                         : {
-                              publisherName: faker.datatype.string(),
+                              name: faker.datatype.string(),
                           },
             },
             gwdmVersion: "1.1",
