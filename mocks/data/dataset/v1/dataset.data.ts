@@ -8,7 +8,6 @@ import {
 import { Highlight } from "@/interfaces/HighlightDataset";
 import { SearchResultDataset } from "@/interfaces/Search";
 
-
 const generatePageDataSetV1 = (): Dataset => {
     return {
         id: faker.datatype.number(),
@@ -334,7 +333,7 @@ const generateDatasetV1 = (version = "1.0", data = {}): Dataset => {
     };
 };
 
-const generateDatasetForTeamV1 = (data = {}): Dataset => {
+const generateDatasetForTeamV1 = (version = "1.0", data = {}): Dataset => {
     return {
         id: faker.datatype.number(),
         team_id: faker.datatype.number(),
@@ -348,9 +347,14 @@ const generateDatasetForTeamV1 = (data = {}): Dataset => {
             },
             summary: {
                 title: faker.datatype.string(5),
-                publisher: {
-                    name: faker.datatype.string(),
-                },
+                publisher:
+                    version === "1.0"
+                        ? {
+                              name: faker.datatype.string(),
+                          }
+                        : {
+                              publisherName: faker.datatype.string(),
+                          },
             },
             gwdmVersion: "1.1",
         },

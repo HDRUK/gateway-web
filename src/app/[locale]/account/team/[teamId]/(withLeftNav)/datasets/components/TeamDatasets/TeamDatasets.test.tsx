@@ -14,15 +14,18 @@ const renderTeamDatasets = () =>
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
         const mockDatasets = [
-            generateDatasetForTeamV1({
+            generateDatasetForTeamV1("1.0", {
                 create_origin: "MANUAL",
                 status: "ARCHIVED",
             }),
-            generateDatasetForTeamV1({
+            generateDatasetForTeamV1("1.1", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetForTeamV1({ create_origin: "GMI", status: "DRAFT" }),
+            generateDatasetForTeamV1("1.0", {
+                create_origin: "GMI",
+                status: "DRAFT",
+            }),
         ];
         server.use(getTeamDatasetsV1(mockDatasets));
         renderTeamDatasets();
@@ -73,15 +76,15 @@ describe("TeamDatasets", () => {
 
     it("should render all datasets (with different GWDM versions)", async () => {
         const mockDatasets = [
-            generateDatasetForTeamV1({
+            generateDatasetForTeamV1("1.0", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetForTeamV1({
+            generateDatasetForTeamV1("1.0", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
-            generateDatasetForTeamV1({
+            generateDatasetForTeamV1("1.1", {
                 create_origin: "API",
                 status: "ACTIVE",
             }),
