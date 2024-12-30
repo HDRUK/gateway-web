@@ -17,10 +17,10 @@ import CMSBanners from "./components/CMSBanners";
 import Organization from "./components/RichResults/Organization";
 
 export const metadata = metaData({
-    title: "Health Data Research Innovation Gateway",
+    title: "Health Data Research Gateway",
     isDefault: true,
     description:
-        "The Health Data Research Innovation Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
+        "The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
 });
 
 const locales = ["en"];
