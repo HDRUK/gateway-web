@@ -84,8 +84,8 @@ const FilterSection = <
             : !isEmpty(counts)
             ? counts[checkboxes[index].label] || 0
             : checkboxes[index].count;
-        if (formattedRow.count === 0){
-            return null
+        if (formattedRow.count === 0) {
+            return null;
         }
         return (
             <div key={key} style={style}>
