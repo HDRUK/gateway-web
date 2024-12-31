@@ -10,7 +10,7 @@ const Head = ({ title }: HeadProps) => {
             <title>{title}</title>
             <meta
                 name="description"
-                content="The Health Data Research Innovation Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data."
+                content="The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data."
             />
             <meta
                 name="viewport"
