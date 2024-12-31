@@ -846,7 +846,7 @@
                             "dataProviderCollTooltip": "Data Custodians that are linked in some way",
                             "collectionName": "Collection name",
                             "collectionNameTooltip": "Title of collection theme",
-                            "dataUseTitles": "Data Uses / Research projects",
+                            "dataUseTitles": "Data Uses / Research Projects",
                             "dataUseTitlesTooltip": "Public record of data an organisation has shared with other individuals or organisations for the purpose of research",
                             "geographicLocation": "Geographical coverage",
                             "geographicLocationTooltip": "The geographical area covered by the dataset",
