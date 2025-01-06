@@ -58,11 +58,13 @@ const FilterSection = <
     });
 
     const checkboxes = useMemo(() => {
-        return filterItem.buckets.filter(bucket =>
-            bucket?.label
-                .toString()
-                ?.toLowerCase()
-                ?.includes(field.value?.toLowerCase() || "")
+        return filterItem.buckets.filter(
+            bucket =>
+                bucket?.label
+                    ?.toString()
+                    ?.toLowerCase()
+                    ?.includes(field.value?.toLowerCase() || "") &&
+                bucket?.count !== 0
         );
     }, [filterItem.buckets, field.value]);
 
@@ -84,9 +86,6 @@ const FilterSection = <
             : !isEmpty(counts)
             ? counts[checkboxes[index].label] || 0
             : checkboxes[index].count;
-        if (formattedRow.count === 0) {
-            return null;
-        }
         return (
             <div key={key} style={style}>
                 <CheckboxControlled
