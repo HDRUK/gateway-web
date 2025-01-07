@@ -45,7 +45,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
                                 flexDirection: "row",
                                 justifyContent: "space-between",
                             }}>
-                            <EllipsisLineLimit text={label} showToolTip/>
+                            <EllipsisLineLimit text={label} showToolTip />
                             <Typography sx={{ ml: 1 }} fontWeight={400}>
                                 {count}
                             </Typography>
