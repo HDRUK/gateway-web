@@ -79,7 +79,7 @@ async function getKeywords(
     };
     return get<Keyword[]>(
         cookieStore,
-        `${apis.keywordsV1IPUUrl}?perPage=-1`,
+        `${apis.keywordsV1IPUrl}?perPage=-1`,
         cache
     );
 }
