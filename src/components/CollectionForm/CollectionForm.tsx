@@ -356,8 +356,8 @@ const CollectionForm = ({
                         // then use a new keyword
                         if (!clearKeywordsTag) {
                             clearKeywordsTag = true;
-                            keywordArray.push(y);
                         }
+                        keywordArray.push(y);
                     }
                 });
             }
