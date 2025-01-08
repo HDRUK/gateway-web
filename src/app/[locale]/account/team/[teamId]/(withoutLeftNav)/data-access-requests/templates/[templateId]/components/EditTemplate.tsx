@@ -128,20 +128,20 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         };
 
         const extended = isExtendedQuestion(q);
-        const question_json = JSON.parse(q.latest_version.question_json);
+        const questionJson = JSON.parse(q.latest_version.question_json);
 
         return {
             id: q.id,
             boardId,
             order: extended ? q.order : index,
-            title: `${question_json.title}`,
+            title: `${questionJson.title}`,
             guidance:
                 extended && q.allow_guidance_override && q.guidance
                     ? q.guidance
-                    : question_json.guidance || "",
-            original_guidance: question_json.guidance || "",
-            question_json,
-            component: question_json?.field?.component || "",
+                    : questionJson.guidance || "",
+            original_guidance: questionJson.guidance || "",
+            question_json: questionJson,
+            component: questionJson?.field?.component || "",
             required: q.required,
             force_required: q.force_required,
             allow_guidance_override: q.allow_guidance_override,
