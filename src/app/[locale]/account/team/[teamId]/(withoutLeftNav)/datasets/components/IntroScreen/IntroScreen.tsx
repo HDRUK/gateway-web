@@ -103,102 +103,105 @@ const IntroScreen = ({
     });
 
     return (
-        <Box sx={{ mt: 1.25, display: "flex", justifyContent: "center" }}>
+        <>
             <Paper
                 sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    maxWidth: "desktop",
-                    width: "100%",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    padding: 2,
                 }}>
-                <Box sx={{ flex: 2 }}>
-                    <Box>
-                        <Typography variant="h1">
-                            {t("welcomeMessage")}
-                        </Typography>
-                        <Typography sx={{ fontSize: "1.25rem" }}>
-                            {t("legendIntro")}
-                        </Typography>
-                    </Box>
-                    <Box>
-                        <Typography
-                            sx={{
-                                fontSize: "1.25rem",
-                                fontWeight: "bold",
-                                mb: 1,
-                            }}>
-                            {t("progressLegend")}
-                        </Typography>
-                        <FormLegend items={FORM_LEGEND_EXAMPLE} />
-                    </Box>
-                    <Box>
-                        <Typography
-                            sx={{
-                                fontSize: "1.25rem",
-                                fontWeight: "bold",
-                                mb: 1,
-                            }}>
-                            {t("dataCustodian")}
-                        </Typography>
-
-                        <InputWrapper
-                            control={control}
-                            name="custodianId"
-                            options={teamOptions}
-                            selectOnFocus
-                            onInputChange={handleOnUserInputChange}
-                            extraInfo={t("toolTipText")}
-                            isLoadingOptions={isLoadingTeams}
-                            component={inputComponents.Autocomplete}
-                            disableClearable
-                            filterOptions={(x: OptionType) => x}
-                        />
-                    </Box>
+                <Box sx={{ p: 0 }}>
+                    <Typography variant="h1">{t("welcomeMessage")}</Typography>
+                    <Typography sx={{ fontSize: "1.25rem" }}>
+                        {t("legendIntro")}
+                    </Typography>
                 </Box>
-                <Box sx={{ flex: 1, pt: 4 }}>
-                    <Typography variant="h2">{t("checkboxIntro")}</Typography>
-                    <Typography sx={{ color: colors.grey600, pb: 2 }}>
-                        {t("selectAll")}
+                <Box>
+                    <Typography
+                        sx={{
+                            fontSize: "1.25rem",
+                            fontWeight: "bold",
+                            mb: 1,
+                        }}>
+                        {t("progressLegend")}
+                    </Typography>
+                    <FormLegend items={FORM_LEGEND_EXAMPLE} />
+                </Box>
+                <Box>
+                    <Typography
+                        sx={{
+                            fontSize: "1.25rem",
+                            fontWeight: "bold",
+                            mb: 1,
+                        }}>
+                        {t("dataCustodian")}
                     </Typography>
 
-                    {METADATA_CHECKBOXES.map(checkbox => (
-                        <Box
-                            sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "flex-start",
-                                gap: 2,
-                                p: 0,
-                            }}>
-                            <CheckboxControlled
-                                label={t(`${CHECKBOX_PREFIX}.${checkbox}`)}
-                                name={t(`${CHECKBOX_PREFIX}.${checkbox}`)}
-                                sx={{ pt: 0, pb: 0 }}
-                                onChange={(_, value) =>
-                                    updateState(
-                                        t(`${CHECKBOX_PREFIX}.${checkbox}`),
-                                        value
-                                    )
-                                }
-                                checked={
-                                    !!defaultValue.includes(
-                                        t(`${CHECKBOX_PREFIX}.${checkbox}`)
-                                    )
-                                }
-                                formControlSx={{ mb: 2 }}
-                            />
-                            <TooltipIcon
-                                label=""
-                                content={t(
-                                    `${CHECKBOX_PREFIX}.${checkbox}${TOOLTIP_SUFFIX}`
-                                )}
-                                buttonSx={{ p: 0 }}
-                            />
-                        </Box>
-                    ))}
+                    <InputWrapper
+                        control={control}
+                        name="custodianId"
+                        options={teamOptions}
+                        selectOnFocus
+                        onInputChange={handleOnUserInputChange}
+                        extraInfo={t("toolTipText")}
+                        isLoadingOptions={isLoadingTeams}
+                        component={inputComponents.Autocomplete}
+                        disableClearable
+                        filterOptions={(x: OptionType) => x}
+                    />
                 </Box>
             </Paper>
-        </Box>
+
+            <Paper
+                sx={{
+                    flex: 1,
+                    p: 2,
+                    m: 1.5,
+                    alignItems: "center",
+                    wordBreak: "break-word",
+                }}>
+                <Typography variant="h2">{t("checkboxIntro")}</Typography>
+                <Typography sx={{ color: colors.grey600, pb: 2 }}>
+                    {t("selectAll")}
+                </Typography>
+
+                {METADATA_CHECKBOXES.map(checkbox => (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            gap: 2,
+                            p: 0,
+                        }}>
+                        <CheckboxControlled
+                            label={t(`${CHECKBOX_PREFIX}.${checkbox}`)}
+                            name={t(`${CHECKBOX_PREFIX}.${checkbox}`)}
+                            sx={{ pt: 0, pb: 0 }}
+                            onChange={(_, value) =>
+                                updateState(
+                                    t(`${CHECKBOX_PREFIX}.${checkbox}`),
+                                    value
+                                )
+                            }
+                            checked={
+                                !!defaultValue.includes(
+                                    t(`${CHECKBOX_PREFIX}.${checkbox}`)
+                                )
+                            }
+                            formControlSx={{ mb: 2 }}
+                        />
+                        <TooltipIcon
+                            label=""
+                            content={t(
+                                `${CHECKBOX_PREFIX}.${checkbox}${TOOLTIP_SUFFIX}`
+                            )}
+                            buttonSx={{ p: 0 }}
+                        />
+                    </Box>
+                ))}
+            </Paper>
+        </>
     );
 };
 
