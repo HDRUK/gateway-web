@@ -106,9 +106,9 @@ const IntroScreen = ({
         <>
             <Paper
                 sx={{
-                    marginTop: "10px",
-                    marginBottom: "10px",
+                    mt: 1.25,
                     padding: 2,
+                    flex: 2,
                 }}>
                 <Box sx={{ p: 0 }}>
                     <Typography variant="h1">{t("welcomeMessage")}</Typography>
@@ -154,9 +154,9 @@ const IntroScreen = ({
 
             <Paper
                 sx={{
-                    flex: 1,
+                    flex: "1 1 0%",
                     p: 2,
-                    m: 1.5,
+                    m: 1.25,
                     alignItems: "center",
                     wordBreak: "break-word",
                 }}>
