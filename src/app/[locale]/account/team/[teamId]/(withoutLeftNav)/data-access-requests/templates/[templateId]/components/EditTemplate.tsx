@@ -43,13 +43,13 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
-    >(`${apis.questionBankV1Url}/sections`, { keepPreviousData: true });
+    >(`${apis.dataAccessSectionV1Url}`, { keepPreviousData: true });
 
     const {
         data: template,
         isLoading: isLoadingQuestions,
         mutate: mutateTemplate,
-    } = useGet<DarTemplate>(`${apis.darasV1Url}/templates/${templateId}`, {
+    } = useGet<DarTemplate>(`${apis.dataAccessTemplateV1Url}/${templateId}`, {
         keepPreviousData: true,
     });
 
@@ -71,7 +71,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         []
     );
 
-    const updateTemplateQuestions = usePatch(`${apis.darasV1Url}/templates`, {
+    const updateTemplateQuestions = usePatch(apis.dataAccessTemplateV1Url, {
         itemName: "Update Template",
         query: `section_id=${sectionId}`,
     });
@@ -128,19 +128,20 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         };
 
         const extended = isExtendedQuestion(q);
+        const questionJson = JSON.parse(q.latest_version.question_json);
 
         return {
             id: q.id,
             boardId,
             order: extended ? q.order : index,
-            title: `${q.question_json.title}`,
+            title: `${questionJson.title}`,
             guidance:
                 extended && q.allow_guidance_override && q.guidance
                     ? q.guidance
-                    : q.question_json.guidance || "",
-            original_guidance: q.question_json.guidance || "",
-            question_json: q.question_json,
-            component: q.question_json?.field?.component || "",
+                    : questionJson.guidance || "",
+            original_guidance: questionJson.guidance || "",
+            question_json: questionJson,
+            component: questionJson?.field?.component || "",
             required: q.required,
             force_required: q.force_required,
             allow_guidance_override: q.allow_guidance_override,
@@ -156,7 +157,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         const templateQuestionIds = template?.questions.map(q => q.question_id);
 
         const foundTasks =
-            qbQuestions?.list
+            qbQuestions
                 ?.filter(q => q.section_id === sectionId)
                 ?.map((qbQuestion, index) => {
                     const selected =
