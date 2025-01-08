@@ -52,7 +52,7 @@ const ApplicationSection = ({
     };
 
     const updateAnswers = usePost(
-        `${apis.darasV1Url}/applications/${applicationId}/answers?user_id=${user?.id}`,
+        `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
         {
             itemName: "Application answers",
         }

@@ -20,21 +20,20 @@ const Application = ({ applicationId }: ApplicationProps) => {
     const { user } = useAuth();
 
     const { data: sections } = useGet<QuestionBankSection[]>(
-        `${apis.questionBankV1Url}/sections`,
+        `${apis.dataAccessSectionV1Url}`,
         { keepPreviousData: true }
     );
 
     const { data } = useGet<DarApplication>(
-        `${apis.darasV1Url}/applications/${applicationId}`,
+        `${apis.dataAccessApplicationV1Url}/${applicationId}`,
         {
             itemName: "DAR Application",
         }
     );
 
-    // temp measure to send user.id because JWT and authorisation is not availble for DARAS yet
     const { data: userAnswers } = useGet<DarApplicationAnswer[]>(
         user
-            ? `${apis.darasV1Url}/applications/${applicationId}/answers?user_id=${user?.id}`
+            ? `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`
             : null,
         {
             itemName: "DAR Application",
