@@ -44,15 +44,13 @@ const formFields = [
         info: "E.g. NCS; charity; disease",
         name: "keywords",
         component: inputComponents.Autocomplete,
+        canCreate: true,
         multiple: true,
         isOptionEqualToValue: (
             option: { value: string | number; label: string },
             value: string | number
         ) => option.value === value,
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: unknown
-        ) => options.find(option => option.value === value)?.label,
+        getChipLabel,
     },
     {
         label: "Collaborators (optional)",
