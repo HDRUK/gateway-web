@@ -140,7 +140,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
                     ? q.guidance
                     : question_json.guidance || "",
             original_guidance: question_json.guidance || "",
-            question_json: question_json,
+            question_json,
             component: question_json?.field?.component || "",
             required: q.required,
             force_required: q.force_required,
@@ -157,7 +157,8 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         const templateQuestionIds = template?.questions.map(q => q.question_id);
 
         const foundTasks =
-            qbQuestions?.filter(q => q.section_id === sectionId)
+            qbQuestions
+                ?.filter(q => q.section_id === sectionId)
                 ?.map((qbQuestion, index) => {
                     const selected =
                         templateQuestionIds?.includes(qbQuestion.id) ?? false;

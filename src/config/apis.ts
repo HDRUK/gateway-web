@@ -10,8 +10,6 @@ const apiV2IPUrl =
         ? process.env.NEXT_PUBLIC_API_V2_IP_URL
         : process.env.NEXT_PUBLIC_API_V2_URL;
 
-const apiServiceUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`;
-
 const apis = {
     apiV1Url,
     apiV1IPUrl,
