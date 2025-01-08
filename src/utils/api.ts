@@ -8,6 +8,7 @@ import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
+import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { GetOptions } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
@@ -37,7 +38,7 @@ async function get<T>(
     const nextConfig = {
         next: cache
             ? {
-                  tags: [cache.tag],
+                  tags: [cache.tag, "all"],
                   revalidate: cache.revalidate ? cache.revalidate : 2 * 60 * 60,
               }
             : undefined,
@@ -66,6 +67,19 @@ async function getFilters(
     return get<Filter[]>(
         cookieStore,
         `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
+        cache
+    );
+}
+
+async function getKeywords(
+    cookieStore: ReadonlyRequestCookies
+): Promise<Keyword[]> {
+    const cache: Cache = {
+        tag: "keywords",
+    };
+    return get<Keyword[]>(
+        cookieStore,
+        `${apis.keywordsV1IPUUrl}?perPage=-1`,
         cache
     );
 }
@@ -252,6 +266,7 @@ export {
     getDataset,
     getDataUse,
     getFilters,
+    getKeywords,
     getFormHydration,
     getNetworkSummary,
     getTeam,

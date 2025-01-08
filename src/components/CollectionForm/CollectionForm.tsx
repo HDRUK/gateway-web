@@ -15,12 +15,11 @@ import { Collection, CollectionSubmission } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset, ReducedDataset, VersionItem } from "@/interfaces/Dataset";
 import { FileUpload } from "@/interfaces/FileUpload";
-import { Keyword } from "@/interfaces/Keyword";
 import { Option } from "@/interfaces/Option";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import { User } from "@/interfaces/User";
-import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
+import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -48,11 +47,13 @@ import {
 import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { revalidateCache } from "@/app/actions/revalidateCache";
 
 interface CollectionCreateProps {
     teamId?: string;
     userId?: string;
     collectionId?: string;
+    keywordOptions: OptionsType[];
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
@@ -61,6 +62,7 @@ const CollectionForm = ({
     teamId,
     userId,
     collectionId,
+    keywordOptions,
 }: CollectionCreateProps) => {
     const [fileNotUploaded, setFileNotUploaded] = useState(false);
     const [imageUploaded, setImageUploaded] = useState(false);
@@ -91,10 +93,6 @@ const CollectionForm = ({
             },
         });
 
-    const { data: keywordData } = useGet<Keyword[]>(
-        `${apis.keywordsV1Url}?perPage=-1`
-    );
-
     const { data: userData = [], isLoading: isLoadingUsers } = useGet<User[]>(
         `${apis.usersV1Url}?filterNames=${searchNameDebounced}`,
         {
@@ -120,17 +118,6 @@ const CollectionForm = ({
             : apis.collectionsV2Url,
         { itemName: "Collection" }
     );
-
-    const keywordOptions = useMemo(() => {
-        if (!keywordData) return [];
-
-        return keywordData.map(data => {
-            return {
-                value: data.id as ValueType,
-                label: data.name,
-            };
-        }) as OptionsType[];
-    }, [keywordData]);
 
     const updateUserOptions = (
         prevOptions: Option[],
@@ -335,7 +322,7 @@ const CollectionForm = ({
                 }
                 return null;
             }),
-        [control, keywordOptions, userOptions, isLoadingUsers]
+        [control, userOptions, isLoadingUsers]
     );
 
     const onSubmit = async (
@@ -354,16 +341,24 @@ const CollectionForm = ({
             }
             return data?.map(item => ({ id: item?.id }));
         };
+        let clearKeywordsTag = false;
         const formatKeywords = (data: string[] | string) => {
             const keywordArray: string[] = [];
             if (Array.isArray(data)) {
-                keywordOptions?.forEach(x => {
-                    data.forEach(y => {
-                        const number = Number(y);
-                        if (number === x.value) {
-                            keywordArray.push(x.label);
+                data.forEach(y => {
+                    const number = Number(y);
+                    if (Number.isInteger(number)) {
+                        const keyword = keywordOptions.find(
+                            obj => obj.value === number
+                        )!;
+                        keywordArray.push(keyword.label);
+                    } else if (Number.isNaN(number)) {
+                        // then use a new keyword
+                        if (!clearKeywordsTag) {
+                            clearKeywordsTag = true;
+                            keywordArray.push(y);
                         }
-                    });
+                    }
                 });
             }
             return keywordArray;
@@ -402,7 +397,9 @@ const CollectionForm = ({
                 }
             });
         }
-
+        if (clearKeywordsTag) {
+            revalidateCache("keywords");
+        }
         push(COLLECTION_ROUTE);
     };
 
