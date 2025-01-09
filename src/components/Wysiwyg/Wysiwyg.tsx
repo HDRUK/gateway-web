@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { Box } from "@mui/material";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
+import FormError from "../FormError";
 import FormInputWrapper from "../FormInputWrapper";
 import { TextFieldBaseProps } from "../TextFieldBase";
 import Toolbar from "./Toolbar";
@@ -17,7 +18,10 @@ const Wysiwyg = <
 }: TextFieldBaseProps<TFieldValues, TName>) => {
     const { name, label, info } = props;
 
-    const { field } = useController({
+    const {
+        field,
+        fieldState: { error },
+    } = useController({
         name,
         control,
     });
@@ -68,7 +72,8 @@ const Wysiwyg = <
                 <Toolbar editor={editor} />
                 <StyledEditorWrapper>
                     <EditorContent editor={editor} name={name} />
-                </StyledEditorWrapper>
+                    {error && <FormError error={error} />}
+                </StyledEditorWrapper>{" "}
             </Box>
         </FormInputWrapper>
     );
