@@ -73,7 +73,7 @@ const Wysiwyg = <
                 <StyledEditorWrapper>
                     <EditorContent editor={editor} name={name} />
                     {error && <FormError error={error} />}
-                </StyledEditorWrapper>{" "}
+                </StyledEditorWrapper>
             </Box>
         </FormInputWrapper>
     );
