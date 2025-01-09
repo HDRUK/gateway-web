@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import CollectionForm from "@/components/CollectionForm";
-import { getUser } from "@/utils/api";
+import { getKeywords, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 
 export const metadata = metaData(
