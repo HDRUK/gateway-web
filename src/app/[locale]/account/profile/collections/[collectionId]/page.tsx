@@ -20,6 +20,18 @@ export default async function CollectionEditPage({
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
     const userId = user?.id?.toString();
-
-    return <CollectionForm collectionId={collectionId} userId={userId} />;
+    const keywords = await getKeywords(cookieStore);
+    const keywordOptions = keywords.map(data => {
+        return {
+            value: data.id as ValueType,
+            label: data.name,
+        };
+    });
+    return (
+        <CollectionForm
+            collectionId={collectionId}
+            userId={userId}
+            keywordOptions={keywordOptions}
+        />
+    );
 }
