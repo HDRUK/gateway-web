@@ -1,28 +1,27 @@
-import { getUserV1 } from "./user";
+import {
+    getApplicationV1,
+    getApplicationsV1,
+    patchApplicationV1,
+} from "./application/v1";
+import { getAuthInternal } from "./auth";
+import { getCMSReleaseV1 } from "./cms";
+import { getCohortRequestsV1 } from "./cohortRequest";
+import { getDataUses } from "./dataUses";
+import { getDatasetV1, getDatasetsV1 } from "./datasets";
 import {
     getFiltersV1,
     postFilterV1,
     putFilterV1,
     deleteFilterV1,
 } from "./filters";
-import { getLogoutV1, getLogoutInternal } from "./logout";
-import { getAuthInternal } from "./auth";
-import { getTeamV1 } from "./teams";
-import {
-    getApplicationV1,
-    getApplicationsV1,
-    patchApplicationV1,
-} from "./application/v1";
-
 import {
     getIntegrationsV1,
     postIntegrationV1,
     postFederationsTestV1,
 } from "./integration/v1";
-import { getCohortRequestsV1 } from "./cohortRequest";
-import { getCMSReleaseV1 } from "./cms";
-import { getDatasetV1, getDatasetsV1 } from "./datasets";
-import { getDataUses } from "./dataUses";
+import { getLogoutV1, getLogoutInternal } from "./logout";
+import { getTeamDatasetsV1, getTeamV1 } from "./teams";
+import { getUserV1 } from "./user";
 
 export const handlers = [
     getUserV1(),
@@ -34,6 +33,7 @@ export const handlers = [
     getLogoutInternal(),
     getAuthInternal(),
     getTeamV1(),
+    getTeamDatasetsV1(),
     getApplicationV1(),
     getApplicationsV1({}),
     patchApplicationV1(),

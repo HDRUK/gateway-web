@@ -71,7 +71,6 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     );
 
     const [queryParams, setQueryParams] = useState({
-        team_id: `${params?.teamId}`,
         withTrashed: "true",
         status: "ACTIVE",
         page: "1",
@@ -137,7 +136,9 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         isLoading,
         mutate: mutateDatasets,
     } = useGet<PaginationType<Dataset>>(
-        `${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`,
+        `${apis.teamsV1Url}/${teamId}/datasets?${new URLSearchParams(
+            queryParams
+        )}`,
         {
             keepPreviousData: true,
             withPagination: true,
