@@ -157,6 +157,7 @@ const IntroScreen = ({
                     flex: "1 1 0%",
                     p: 2,
                     m: 1.25,
+                    mb: 0,
                     alignItems: "center",
                     wordBreak: "break-word",
                 }}>

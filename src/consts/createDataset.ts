@@ -1,5 +1,5 @@
 const INITIAL_FORM_SECTION = "Welcome and form builder";
-const SUBMISSON_FORM_SECTION = "Submission";
+const SUBMISSON_FORM_SECTION = "Make active";
 const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const DATASET_TYPE = "Dataset type";
 const DATA_CUSTODIAN_ID = "identifier";
