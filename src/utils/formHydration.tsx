@@ -17,6 +17,10 @@ import {
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import InputWrapper from "@/components/InputWrapper";
 import { inputComponents } from "@/config/forms";
+import {
+    INITIAL_FORM_SECTION,
+    SUBMISSON_FORM_SECTION,
+} from "@/consts/createDataset";
 import { getLastSplitPart } from "./string";
 
 type FormValues = Record<string, unknown>;
@@ -154,13 +158,15 @@ const formGetSectionStatus = (
         return LegendStatus.ACTIVE;
     }
     if (
-        !submissionRequested &&
-        formSectionHasAllEmptyFields(
-            schemaFields,
-            section,
-            getValues,
-            dirtyFields
-        )
+        (!submissionRequested &&
+            formSectionHasAllEmptyFields(
+                schemaFields,
+                section,
+                getValues,
+                dirtyFields
+            )) ||
+        section === INITIAL_FORM_SECTION ||
+        section === SUBMISSON_FORM_SECTION
     ) {
         return LegendStatus.UNTOUCHED;
     }
