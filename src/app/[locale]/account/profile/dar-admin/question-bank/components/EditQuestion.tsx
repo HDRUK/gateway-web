@@ -42,7 +42,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const defaultValues = useMemo(() => questionDefaultValues, []);
 
     const { data: sectionData } = useGet<QuestionBankSection[]>(
-        `${apis.questionBankV1Url}/sections`
+        `${apis.dataAccessSectionV1Url}`
     );
 
     const { control, handleSubmit, setValue, reset, watch } =
@@ -62,8 +62,10 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         required,
         allow_guidance_override,
         force_required,
-        question_json,
+        latest_version,
     } = question ?? {};
+
+    const question_json = JSON.parse(latest_version?.question_json || null);
 
     const { title, guidance, field } = question_json ?? {};
 
@@ -116,6 +118,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             guidance: formData.guidance,
             title: formData.title,
             section_id: formData.section_id,
+            default: 1, // TODO set this from form? What does this field even do?
             // locked: 0, - consider functionality for unlocking here?
         };
         onSubmit(payload);

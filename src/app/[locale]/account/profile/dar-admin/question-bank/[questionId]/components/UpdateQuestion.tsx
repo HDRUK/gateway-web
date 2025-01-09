@@ -19,20 +19,20 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
     const [isLocked, setIsLocked] = useState(false);
 
     const { data, isLoading } = useGet<QuestionBankQuestion>(
-        `${apis.questionBankV1Url}/questions/${questionId}`,
+        `${apis.questionBankV1Url}/${questionId}`,
         {
             keepPreviousData: false,
         }
     );
 
     const updateQuestion = usePatch<QuestionBankCreateUpdateQuestion>(
-        `${apis.questionBankV1Url}/questions`,
+        `${apis.questionBankV1Url}`,
         {
             itemName: "Question Bank",
         }
     );
 
-    const lockQuestion = usePatch(`${apis.questionBankV1Url}/questions`, {
+    const lockQuestion = usePatch(`${apis.questionBankV1Url}`, {
         subPath: "lock",
         successNotificationsOn: false,
     });

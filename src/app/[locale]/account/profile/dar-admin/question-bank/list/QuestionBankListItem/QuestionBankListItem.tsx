@@ -21,7 +21,7 @@ interface QuestionCardProps {
 const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
     if (data === undefined) return null;
 
-    const question = data.question_json;
+    const question = JSON.parse(data?.latest_version?.question_json);
 
     const title = question?.title;
     const guidance = question?.guidance;
@@ -90,7 +90,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                                 color: "#868E96",
                             }}>
                             {`Question ID - ${data.id}   Version - ${
-                                data.version
+                                data?.latest_version?.version
                             }   Created - ${formatDate(data.created_at)}`}
                         </Typography>
                         <Typography component="span">{guidance}</Typography>

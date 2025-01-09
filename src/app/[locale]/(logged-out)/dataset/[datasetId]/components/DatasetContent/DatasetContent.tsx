@@ -11,6 +11,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import DemographicsAccordion from "@/components/DemographicsAccordion";
 import Link from "@/components/Link";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
 import Table from "@/components/Table";
@@ -18,11 +19,7 @@ import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
-import {
-    formatTextDelimiter,
-    formatTextWithLinks,
-    splitStringList,
-} from "@/utils/dataset";
+import { formatTextWithLinks, splitStringList } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import {
     DatasetSection,
@@ -149,7 +146,9 @@ const DatasetContent = ({
             }
 
             default: {
-                return formatTextWithLinks(formatTextDelimiter(value));
+                return (
+                    <MarkDownSanitizedWithHtml content={value} wrapper="span" />
+                );
             }
         }
     };
