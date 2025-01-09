@@ -4,44 +4,36 @@ import { SearchResultDataCustodianCol } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CardStacked from "@/components/CardStacked";
 import Typography from "@/components/Typography";
-import useGet from "@/hooks/useGet";
+import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import ResultsList from "../ResultsList";
 
-// interface DataCustodianNetworkProps {
-//     searchParams: {
-//         query?: string;
-//         filters?: unknown;
-//     };
-// }
+interface DataCustodianNetworkProps {
+    searchParams: {
+        query?: string;
+        filters?: unknown;
+    };
+}
 
 const TRANSLATION_PATH = "pages.search";
-// const SEARCH_PER_PAGE = 3;
+const SEARCH_PER_PAGE = 3;
 
-const DataCustodianNetwork = () => {
+const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const { data, mutate } = useGet<SearchResultDataCustodianCol[]>(
-        apis.dataCustodianNetworkV1Url
+    const { data, mutate } = usePostSwr<SearchResultDataCustodianCol[]>(
+        `${apis.searchV1Url}/data_provider_colls?view_type=mini&perPage=${SEARCH_PER_PAGE}`,
+        {
+            query: searchParams.query,
+            filters: searchParams.filters,
+        }
     );
 
     useEffect(() => {
         mutate();
-    }, []);
-
-    // const { data, mutate } = usePostSwr<SearchResultDataCustodianCol[]>(
-    //     `${apis.searchV1Url}/data_provider_colls`,
-    //     {
-    //         query: searchParams.query,
-    //         filters: searchParams.filters,
-    //     }
-    // );
-
-    // useEffect(() => {
-    //     mutate();
-    // }, [searchParams, mutate]);
+    }, [searchParams, mutate]);
 
     if (!data?.length) {
         return null;
