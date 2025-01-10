@@ -4,6 +4,7 @@ import { SearchResultDataCustodianCol } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CardStacked from "@/components/CardStacked";
 import Typography from "@/components/Typography";
+import useGet from "@/hooks/useGet";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
@@ -23,7 +24,13 @@ const SEARCH_PER_PAGE = 3;
 const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const { data, mutate } = usePostSwr<SearchResultDataCustodianCol[]>(
+    const { data: getData, mutate: mutateGet } = useGet<
+        SearchResultDataCustodianCol[]
+    >(apis.dataCustodianNetworkV1Url);
+
+    const { data: postData, mutate: mutatePost } = usePostSwr<
+        SearchResultDataCustodianCol[]
+    >(
         `${apis.searchV1Url}/data_provider_colls?view_type=mini&perPage=${SEARCH_PER_PAGE}`,
         {
             query: searchParams.query,
@@ -32,8 +39,13 @@ const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
     );
 
     useEffect(() => {
-        mutate();
-    }, [searchParams, mutate]);
+        if (searchParams.query !== "") {
+            mutatePost();
+        } else {
+            mutateGet();
+        }
+    }, [searchParams, mutateGet, mutatePost]);
+    const data = postData ?? getData;
 
     if (!data?.length) {
         return null;
