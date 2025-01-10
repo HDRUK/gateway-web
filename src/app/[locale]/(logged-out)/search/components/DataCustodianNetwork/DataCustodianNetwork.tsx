@@ -12,10 +12,24 @@ import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import ResultsList from "../ResultsList";
 
+interface FiltersType {
+    collection: {
+        dataSetTitles?: string[];
+        publisherName?: string[];
+    };
+}
+
+interface DataCustodianNetworkFilterType {
+    dataProviderColl: {
+        dataSetTitles?: string[];
+        publisherName?: string[];
+    };
+}
+
 interface DataCustodianNetworkProps {
     searchParams: {
         query?: string;
-        filters?: unknown;
+        filters?: FiltersType;
     };
 }
 
@@ -43,6 +57,12 @@ const SEARCH_PER_PAGE = 3;
 
 const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    let filters: DataCustodianNetworkFilterType;
+    if (searchParams?.filters && searchParams?.filters?.collection) {
+        filters = {
+            dataProviderColl: searchParams.filters?.collection,
+        };
+    }
     const { data, mutate, isLoading } = usePostSwr<
         SearchResultDataCustodianCol[]
     >(
