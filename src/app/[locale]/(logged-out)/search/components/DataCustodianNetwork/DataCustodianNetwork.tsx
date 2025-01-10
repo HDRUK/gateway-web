@@ -47,7 +47,7 @@ const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
             mutateGet();
         }
     }, [searchParams, mutateGet, mutatePost]);
-    const data = hasQuery ? getData : postData;
+    const data = !hasQuery ? getData : postData;
 
     if (!data?.length) {
         return null;
