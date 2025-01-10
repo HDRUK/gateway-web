@@ -33,53 +33,47 @@ interface DataCustodianNetworkProps {
     };
 }
 
-const SkeletonCard = () => {
-    return (
-        <>
-            {[1, 2, 3].map(item => (
-                <BoxStacked
-                    key={item} // Assign a unique key for each child
-                    sx={{ aspectRatio: "1.9 / 1", minHeight: 130 }}>
-                    <Skeleton
-                        variant="rectangular"
-                        width={300}
-                        height={160}
-                        animation="wave"
-                    />
-                </BoxStacked>
-            ))}
-        </>
-    );
-};
+const SkeletonCard = () => (
+    <>
+        {[1, 2, 3].map(item => (
+            <BoxStacked
+                key={item}
+                sx={{ aspectRatio: "1.9 / 1", minHeight: 130 }}>
+                <Skeleton
+                    variant="rectangular"
+                    width={300}
+                    height={160}
+                    animation="wave"
+                />
+            </BoxStacked>
+        ))}
+    </>
+);
 
 const TRANSLATION_PATH = "pages.search";
 const SEARCH_PER_PAGE = 3;
 
 const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    let filters: DataCustodianNetworkFilterType;
-    if (searchParams?.filters && searchParams?.filters?.collection) {
-        filters = {
-            dataProviderColl: searchParams.filters?.collection,
-        };
-    }
+
+    const dataCustodianFilters: DataCustodianNetworkFilterType | undefined =
+        searchParams?.filters?.collection
+            ? { dataProviderColl: searchParams.filters.collection }
+            : undefined;
+
     const { data, mutate, isLoading } = usePostSwr<
         SearchResultDataCustodianCol[]
     >(
         `${apis.searchV1Url}/data_provider_colls?view_type=mini&perPage=${SEARCH_PER_PAGE}`,
         {
             query: searchParams.query,
-            filters: searchParams.filters,
+            filters: dataCustodianFilters,
         }
     );
 
     useEffect(() => {
         mutate();
     }, [searchParams, mutate]);
-
-    // if (!data?.length) {
-    //     return null;
-    // }
 
     return (
         <Box sx={{ mb: 1, p: 0 }}>
@@ -90,10 +84,13 @@ const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
             </Typography>
             <ResultsList variant="tiled">
                 {isLoading && <SkeletonCard />}
-                {!data?.length && <>No results found</>}
+                {!isLoading && !data?.length && (
+                    <Typography>No results found</Typography>
+                )}
                 {!isLoading &&
                     data?.map((result: SearchResultDataCustodianCol) => (
                         <CardStacked
+                            key={result.id}
                             href={`${RouteName.DATA_CUSTODIAN_NETWORK_ITEM}/${result.id}`}
                             title={result.name}
                             imgUrl={
