@@ -5,6 +5,7 @@ import { SearchResultDataCustodianCol } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxStacked from "@/components/BoxStacked";
 import CardStacked from "@/components/CardStacked";
+import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
@@ -82,12 +83,17 @@ const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
                 sx={{ mt: 1, mb: 1, textDecoration: "underline" }}>
                 {t("dataCustodianNetworks")}
             </Typography>
+            {!isLoading && !data?.length && (
+                <Paper>
+                    <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
+                </Paper>
+            )}
+
             <ResultsList variant="tiled">
                 {isLoading && <SkeletonCard />}
-                {!isLoading && !data?.length && (
-                    <Typography>No results found</Typography>
-                )}
+
                 {!isLoading &&
+                    data?.length &&
                     data?.map((result: SearchResultDataCustodianCol) => (
                         <CardStacked
                             key={result.id}
