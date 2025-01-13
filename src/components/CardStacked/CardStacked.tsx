@@ -13,6 +13,8 @@ export interface CardStackedProps {
     boxStackedProps?: BoxStackedProps;
 }
 
+export const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 };
+
 export default function CardStacked({
     href,
     imgUrl,
@@ -21,9 +23,7 @@ export default function CardStacked({
     chipProps,
 }: CardStackedProps) {
     return (
-        <BoxStacked
-            sx={{ aspectRatio: "1.9 / 1", minHeight: 130 }}
-            {...boxStackedProps}>
+        <BoxStacked sx={boxStackedSX} {...boxStackedProps}>
             <Box
                 component={Link}
                 href={href}
