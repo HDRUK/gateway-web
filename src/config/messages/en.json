@@ -823,6 +823,8 @@
             "downloadResults": "Download results",
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
+            "dur": "Data Uses / Research Projects",
+            "data_providers": "Data Custodians",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Table",
