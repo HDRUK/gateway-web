@@ -15,14 +15,14 @@ import ResultsList from "../ResultsList";
 
 interface FiltersType {
     collection: {
-        dataSetTitles?: string[];
+        datasetTitles?: string[];
         publisherName?: string[];
     };
 }
 
 interface DataCustodianNetworkFilterType {
-    dataProviderColl: {
-        dataSetTitles?: string[];
+    datacustodiannetwork: {
+        datasetTitles?: string[];
         publisherName?: string[];
     };
 }
@@ -59,7 +59,7 @@ const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
 
     const dataCustodianFilters: DataCustodianNetworkFilterType | undefined =
         searchParams?.filters?.collection
-            ? { dataProviderColl: searchParams.filters.collection }
+            ? { datacustodiannetwork: searchParams.filters.collection }
             : undefined;
 
     const { data, mutate, isLoading } = usePostSwr<
