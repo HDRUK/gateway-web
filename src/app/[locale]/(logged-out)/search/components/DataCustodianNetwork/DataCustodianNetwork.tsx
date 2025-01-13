@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultDataCustodianCol } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import BoxStacked from "@/components/BoxStacked";
 import CardStacked from "@/components/CardStacked";
+import CardStackedSkeleton from "@/components/CardStacked/CardStackedSkeleton";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import usePostSwr from "@/hooks/usePostSwr";
@@ -23,44 +22,41 @@ interface FiltersType {
 interface DataCustodianNetworkFilterType {
     datacustodiannetwork: {
         datasetTitles?: string[];
-        publisherName?: string[];
+        publisherNames?: string[];
     };
 }
 
 interface DataCustodianNetworkProps {
-    searchParams: {
+    searchParams?: {
         query?: string;
         filters?: FiltersType;
     };
 }
 
-const SkeletonCard = () => (
-    <>
-        {[1, 2, 3].map(item => (
-            <BoxStacked
-                key={item}
-                sx={{ aspectRatio: "1.9 / 1", minHeight: 130, opacity: "0.5" }}>
-                <Skeleton
-                    variant="rectangular"
-                    width={300}
-                    height={160}
-                    animation="wave"
-                />
-            </BoxStacked>
-        ))}
-    </>
-);
-
 const TRANSLATION_PATH = "pages.search";
 const SEARCH_PER_PAGE = 3;
 
-const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
+const DataCustodianNetwork = ({
+    searchParams = {},
+}: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const dataCustodianFilters: DataCustodianNetworkFilterType | undefined =
-        searchParams?.filters?.collection
-            ? { datacustodiannetwork: searchParams.filters.collection }
-            : undefined;
+    const generateDataCustodianFilters = ():
+        | DataCustodianNetworkFilterType
+        | undefined => {
+        const { filters } = searchParams;
+        if (filters?.collection) {
+            return {
+                datacustodiannetwork: {
+                    datasetTitles: filters.collection.datasetTitles,
+                    publisherNames: filters.collection.publisherName,
+                },
+            };
+        }
+        return undefined;
+    };
+
+    const dataCustodianFilters = generateDataCustodianFilters();
 
     const { data, mutate, isLoading } = usePostSwr<
         SearchResultDataCustodianCol[]
@@ -88,13 +84,11 @@ const DataCustodianNetwork = ({ searchParams }: DataCustodianNetworkProps) => {
                     <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
                 </Paper>
             )}
-
             <ResultsList variant="tiled">
-                {isLoading && <SkeletonCard />}
-
+                {isLoading &&
+                    [1, 2, 3].map(item => <CardStackedSkeleton key={item} />)}
                 {!isLoading &&
-                    data?.length &&
-                    data?.map((result: SearchResultDataCustodianCol) => (
+                    data?.map(result => (
                         <CardStacked
                             key={result.id}
                             href={`${RouteName.DATA_CUSTODIAN_NETWORK_ITEM}/${result.id}`}
