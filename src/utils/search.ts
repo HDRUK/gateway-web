@@ -1,4 +1,4 @@
-import { get, set } from "lodash";
+import { get } from "lodash";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { Metadata } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
