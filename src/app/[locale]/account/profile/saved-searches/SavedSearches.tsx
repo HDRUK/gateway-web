@@ -131,6 +131,7 @@ const SavedSearches = () => {
 
                         const href = getUrlFromSearchParams(
                             search_endpoint,
+                            search_term,
                             formattedFilters,
                             sort_order
                         );
