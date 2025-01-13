@@ -39,7 +39,7 @@ const SkeletonCard = () => (
         {[1, 2, 3].map(item => (
             <BoxStacked
                 key={item}
-                sx={{ aspectRatio: "1.9 / 1", minHeight: 130 }}>
+                sx={{ aspectRatio: "1.9 / 1", minHeight: 130, opacity: "0.5" }}>
                 <Skeleton
                     variant="rectangular"
                     width={300}
