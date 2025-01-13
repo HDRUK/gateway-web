@@ -87,7 +87,9 @@ const getUrlFromSearchParams = (
         params.push(`${key}=${filters[key].join(",")}`);
     });
 
-    return `/${RouteName.SEARCH}?type=${type}&query=${search_term}&${params.join("&")}&sort=${sort}`;
+    return `/${
+        RouteName.SEARCH
+    }?type=${type}&query=${search_term}&${params.join("&")}&sort=${sort}`;
 };
 
 const hasMinimumSearchCharLength = (value: string | null | undefined) => {
