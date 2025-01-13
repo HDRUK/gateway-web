@@ -77,6 +77,7 @@ const getSaveSearchFilters = (
 
 const getUrlFromSearchParams = (
     type: string,
+    search_term: string,
     filters: { [key: string]: string[] },
     sort: string
 ) => {
@@ -86,7 +87,7 @@ const getUrlFromSearchParams = (
         params.push(`${key}=${filters[key].join(",")}`);
     });
 
-    return `/${RouteName.SEARCH}?type=${type}&${params.join("&")}&sort=${sort}`;
+    return `/${RouteName.SEARCH}?type=${type}&query=${search_term}&${params.join("&")}&sort=${sort}`;
 };
 
 const hasMinimumSearchCharLength = (value: string | null | undefined) => {
