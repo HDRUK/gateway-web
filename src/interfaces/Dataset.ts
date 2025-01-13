@@ -190,6 +190,7 @@ interface Dataset {
     pid: string | null;
     versions: VersionItem[];
     updated: string;
+    updated_at: string;
     create_origin: CreateOrigin;
     latest_metadata?: VersionItem;
     durs_count: number;
