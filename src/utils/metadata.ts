@@ -34,7 +34,7 @@ export default function metaData(
     return {
         title: meta.isDefault
             ? meta.title
-            : `${meta.title} - Health Data Research Innovation Gateway`,
+            : `${meta.title} - Health Data Research Gateway`,
         // metadataBase: new URL(meta.url), // todo
         description: meta.description,
         robots: crawlers,

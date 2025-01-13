@@ -15,7 +15,7 @@ const BackButton = ({ questionId }: { questionId: string }) => {
 
     const backHref = `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.LIST}`;
 
-    const unlockQuestion = usePatch(`${apis.questionBankV1Url}/questions`, {
+    const unlockQuestion = usePatch(`${apis.questionBankV1Url}`, {
         subPath: "unlock",
         successNotificationsOn: false,
     });

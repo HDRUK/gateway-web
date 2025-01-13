@@ -13,14 +13,16 @@ export const generateQuestionBankQuestion = () => {
         locked: faker.datatype.number({ min: 0, max: 1 }),
         required: faker.datatype.number({ min: 0, max: 1 }),
         version: faker.datatype.number(),
-        question_json: {
-            title: faker.lorem.word(),
-            guidance: faker.lorem.paragraph(),
-            field: {
-                component: "TextArea",
-                variant: "outlined",
-                name: faker.lorem.text(),
-            },
+        latest_version: {
+            question_json: JSON.stringify({
+                title: faker.lorem.word(),
+                guidance: faker.lorem.paragraph(),
+                field: {
+                    component: "TextArea",
+                    variant: "outlined",
+                    name: faker.lorem.text(),
+                },
+            }),
         },
     };
     return question;

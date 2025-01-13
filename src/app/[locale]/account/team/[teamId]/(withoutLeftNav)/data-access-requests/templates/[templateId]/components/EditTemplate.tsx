@@ -58,7 +58,7 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         isLoading: isLoadingQB,
         mutate: mutateQuestions,
     } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}/questions`,
+        `${apis.questionBankV1Url}`,
         {
             keepPreviousData: true,
         }
