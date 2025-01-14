@@ -223,17 +223,17 @@ const Search = ({ filters }: SearchProps) => {
 
     const removeArrayQueryAndPush = (paramKey: string, paramValue: string) => {
         const currentParams = new URLSearchParams(searchParams?.toString());
-    
+
         const newParams = new URLSearchParams(
-            Array.from(currentParams.entries())
-                .filter(([key, value]) => !(key === paramKey && value === paramValue))
+            Array.from(currentParams.entries()).filter(
+                ([key, value]) => !(key === paramKey && value === paramValue)
+            )
         );
-    
+
         router.push(`?${newParams.toString()}`, {
             scroll: false,
         });
     };
-    
 
     const updatePath = useCallback(
         (key: string, value: string) => {
