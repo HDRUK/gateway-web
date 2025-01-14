@@ -174,7 +174,7 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
-        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
+        [FILTER_DATA_SET_TITLES]: searchParams?.getAll(FILTER_DATA_SET_TITLES),
         [FILTER_DATA_TYPE]: getParamArray(FILTER_DATA_TYPE),
         [FILTER_DATA_SUBTYPE]: getParamArray(FILTER_DATA_SUBTYPE),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
