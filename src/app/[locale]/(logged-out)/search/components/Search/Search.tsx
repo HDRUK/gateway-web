@@ -221,6 +221,22 @@ const Search = ({ filters }: SearchProps) => {
         }
     }, [queryParams.type, resultsView]);
 
+    const removeArrayQueryAndPush = (paramKey: string, paramValue: string) => {
+        const currentParams = new URLSearchParams(searchParams?.toString());
+
+        const newParams = new URLSearchParams();
+        for (const [key, value] of currentParams.entries()) {
+            if (!(key === paramKey && value === paramValue)) {
+                newParams.append(key, value);
+            }
+        }
+
+        router.push(`?${newParams.toString()}`),
+            {
+                scroll: false,
+            };
+    };
+
     const updatePath = useCallback(
         (key: string, value: string) => {
             router.push(`${pathname}?${updateQueryString(key, value)}`, {
@@ -426,7 +442,11 @@ const Search = ({ filters }: SearchProps) => {
         }
 
         setQueryParams({ ...queryParams, [filterType]: filtered });
-        updatePath(filterType, filtered.join(","));
+        if (filterType === FILTER_DATA_SET_TITLES) {
+            removeArrayQueryAndPush(filterType, removedFilter);
+        } else {
+            updatePath(filterType, filtered.join(","));
+        }
     };
 
     const handleChangeView = (viewType: ViewType) => {
