@@ -28,10 +28,6 @@ jobs:
         with:
           ref: main
 
-      - name: Set environment
-        run: |
-          echo "Environment: ${{ matrix.environment }}"
-  
       - name: Read VERSION file
         id: getversion
         run: |
