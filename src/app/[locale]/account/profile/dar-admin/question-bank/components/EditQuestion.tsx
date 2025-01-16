@@ -66,7 +66,7 @@ const question = {
                     label: "Yes",
                     field: {
                         options: [],
-                        component: "textInput",
+                        component: "TextField",
                         validations: [],
                     },
                     title: "ICO registration number",
@@ -77,7 +77,7 @@ const question = {
                     label: "Yes",
                     field: {
                         options: [],
-                        component: "textInput",
+                        component: "TextField",
                         validations: [],
                     },
                     title: "Registered address (line 1)",
@@ -89,7 +89,7 @@ const question = {
                     label: "Yes",
                     field: {
                         options: [],
-                        component: "textInput",
+                        component: "TextField",
                         validations: [],
                     },
                     title: "Registered address (line 2)",
@@ -101,7 +101,7 @@ const question = {
                     label: "Yes",
                     field: {
                         options: [],
-                        component: "textInput",
+                        component: "TextField",
                         validations: [],
                     },
                     title: "City",
@@ -113,7 +113,7 @@ const question = {
                     label: "Yes",
                     field: {
                         options: [],
-                        component: "textInput",
+                        component: "TextField",
                         validations: [],
                     },
                     title: "Postcode",
@@ -125,7 +125,7 @@ const question = {
                     label: "Yes",
                     field: {
                         options: [],
-                        component: "textInput",
+                        component: "TextField",
                         validations: [],
                     },
                     title: "Country",
@@ -136,8 +136,11 @@ const question = {
                 {
                     label: "Yes",
                     field: {
-                        options: [],
-                        component: "checkboxOptionsInput",
+                        options: [
+                            { label: "yes", value: "yes" },
+                            { label: "no", value: "no" },
+                        ],
+                        component: "CheckboxGroup",
                         validations: [],
                     },
                     title: "Organisation type",
