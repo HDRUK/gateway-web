@@ -30,71 +30,83 @@ const Content = ({ data }: ContentProps) => {
     const generatedData = useMemo(() => {
         const years = rangeRight(2024, currentYear + 2).map(String);
 
-        return years.map(year => {
-            const dataByYear = getNewsEventsByYear(data, year);
-            // Next year's tab should only show if it contains an item
-            if (Number(year) === currentYear + 1 && dataByYear.length === 0) {
-                return {};
-            }
-            return {
-                label: year,
-                value: year,
-                content: (
-                    <div>
-                        {!dataByYear.length ? (
-                            <Box component="p" sx={{ px: 2 }}>
-                                {t("noResults", {
-                                    year,
-                                })}
-                            </Box>
-                        ) : (
-                            <Grid container rowSpacing={4} columnSpacing={4}>
-                                {dataByYear.map(item => {
-                                    return (
-                                        <Grid
-                                            item
-                                            desktop={3}
-                                            tablet={4}
-                                            mobile={12}>
-                                            <NewsSummaryCard
-                                                summary={item.newsFields.text}
-                                                imageLink={
-                                                    item.newsFields?.image?.node
-                                                        ?.mediaItemUrl
-                                                }
-                                                imageAlt={
-                                                    item.newsFields?.image?.node
-                                                        ?.altText
-                                                }
-                                                headline={
-                                                    item.newsFields.headline
-                                                }
-                                                date={item.newsFields.date}
-                                                url={
-                                                    item.newsFields?.link
-                                                        ?.url ||
-                                                    `/${
-                                                        tab === "news"
-                                                            ? RouteName.NEWS_ARTICLE
-                                                            : RouteName.EVENT_ARTICLE
-                                                    }/${item.slug}`
-                                                }
-                                                buttonText={
-                                                    item.newsFields?.link
-                                                        ?.title || t("readMore")
-                                                }
-                                                key={item.newsFields.headline}
-                                            />
-                                        </Grid>
-                                    );
-                                })}
-                            </Grid>
-                        )}
-                    </div>
-                ),
-            };
-        })
-        .filter((yearTab: object) => Object.keys(yearTab).length > 0);
+        return years
+            .map(year => {
+                const dataByYear = getNewsEventsByYear(data, year);
+                // Next year's tab should only show if it contains an item
+                if (
+                    Number(year) === currentYear + 1 &&
+                    dataByYear.length === 0
+                ) {
+                    return {};
+                }
+                return {
+                    label: year,
+                    value: year,
+                    content: (
+                        <div>
+                            {!dataByYear.length ? (
+                                <Box component="p" sx={{ px: 2 }}>
+                                    {t("noResults", {
+                                        year,
+                                    })}
+                                </Box>
+                            ) : (
+                                <Grid
+                                    container
+                                    rowSpacing={4}
+                                    columnSpacing={4}>
+                                    {dataByYear.map(item => {
+                                        return (
+                                            <Grid
+                                                item
+                                                desktop={3}
+                                                tablet={4}
+                                                mobile={12}>
+                                                <NewsSummaryCard
+                                                    summary={
+                                                        item.newsFields.text
+                                                    }
+                                                    imageLink={
+                                                        item.newsFields?.image
+                                                            ?.node?.mediaItemUrl
+                                                    }
+                                                    imageAlt={
+                                                        item.newsFields?.image
+                                                            ?.node?.altText
+                                                    }
+                                                    headline={
+                                                        item.newsFields.headline
+                                                    }
+                                                    date={item.newsFields.date}
+                                                    url={
+                                                        item.newsFields?.link
+                                                            ?.url ||
+                                                        `/${
+                                                            tab === "news"
+                                                                ? RouteName.NEWS_ARTICLE
+                                                                : RouteName.EVENT_ARTICLE
+                                                        }/${item.slug}`
+                                                    }
+                                                    buttonText={
+                                                        item.newsFields?.link
+                                                            ?.title ||
+                                                        t("readMore")
+                                                    }
+                                                    key={
+                                                        item.newsFields.headline
+                                                    }
+                                                />
+                                            </Grid>
+                                        );
+                                    })}
+                                </Grid>
+                            )}
+                        </div>
+                    ),
+                };
+            })
+            .filter((yearTab: object) => Object.keys(yearTab).length > 0);
     }, [data]);
 
     return (
