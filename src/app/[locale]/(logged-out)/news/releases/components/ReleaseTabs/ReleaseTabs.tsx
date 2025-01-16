@@ -68,7 +68,6 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
                     </div>
                 ),
             };
-
             return hydratedReleases;
         });
     }, [allReleases, expanded, years]);
