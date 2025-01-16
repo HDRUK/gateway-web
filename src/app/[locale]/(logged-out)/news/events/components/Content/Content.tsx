@@ -28,11 +28,14 @@ const Content = ({ data }: ContentProps) => {
     const tab = params?.get("tab") || "news";
 
     const generatedData = useMemo(() => {
-        const years = rangeRight(currentYear, currentYear + 2).map(String);
+        const years = rangeRight(2024, currentYear + 2).map(String);
 
         return years.map(year => {
             const dataByYear = getNewsEventsByYear(data, year);
-
+            // Next year's tab should only show if it contains an item
+            if (Number(year) === currentYear + 1 && dataByYear.length === 0) {
+                return {};
+            }
             return {
                 label: year,
                 value: year,
@@ -90,7 +93,8 @@ const Content = ({ data }: ContentProps) => {
                     </div>
                 ),
             };
-        });
+        })
+        .filter((yearTab: object) => Object.keys(yearTab).length > 0);
     }, [data]);
 
     return (
