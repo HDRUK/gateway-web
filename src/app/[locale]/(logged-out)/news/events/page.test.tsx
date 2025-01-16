@@ -67,4 +67,27 @@ describe("NewsEvents", () => {
             ).not.toBeInTheDocument();
         });
     });
+
+    it("renders the events content for next year if content is available", async () => {
+        const Result = await NewsEventsPage();
+
+        render(Result);
+
+        act(() => {
+            mockRouter.setCurrentUrl("/news_events?tab=events&year=2025");
+        });
+
+        await waitFor(() => {
+            expect(
+                screen.getByText(
+                    eventsV1.posts.edges[2].node.newsFields.headline
+                )
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByText(
+                    newsV1.posts.edges[2].node.newsFields.headline
+                )
+            ).not.toBeInTheDocument();
+        });
+    });
 });
