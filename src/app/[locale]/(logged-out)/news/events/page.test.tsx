@@ -9,13 +9,17 @@ jest.mock("@/utils/cms", () => ({
     getNews: async () => newsV1.posts.edges,
 }));
 
-jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
+jest.useFakeTimers().setSystemTime(new Date("2025-01-01"));
 
 describe("NewsEvents", () => {
     it("renders the news content", async () => {
         const Result = await NewsEventsPage();
 
         render(Result);
+
+        act(() => {
+            mockRouter.setCurrentUrl("/news_events?tab=news&year=2024");
+        });
 
         await waitFor(() => {
             expect(
@@ -35,7 +39,7 @@ describe("NewsEvents", () => {
         render(Result);
 
         act(() => {
-            mockRouter.setCurrentUrl("/news_events?tab=news&year=2025");
+            mockRouter.setCurrentUrl("/news_events?tab=news");
         });
 
         await waitFor(() => {
@@ -57,12 +61,12 @@ describe("NewsEvents", () => {
         await waitFor(() => {
             expect(
                 screen.getByText(
-                    eventsV1.posts.edges[0].node.newsFields.headline
+                    eventsV1.posts.edges[2].node.newsFields.headline
                 )
             ).toBeInTheDocument();
             expect(
                 screen.queryByText(
-                    newsV1.posts.edges[0].node.newsFields.headline
+                    newsV1.posts.edges[1].node.newsFields.headline
                 )
             ).not.toBeInTheDocument();
         });
@@ -74,18 +78,18 @@ describe("NewsEvents", () => {
         render(Result);
 
         act(() => {
-            mockRouter.setCurrentUrl("/news_events?tab=events&year=2025");
+            mockRouter.setCurrentUrl("/news_events?tab=events&year=2026");
         });
 
         await waitFor(() => {
             expect(
                 screen.getByText(
-                    eventsV1.posts.edges[2].node.newsFields.headline
+                    eventsV1.posts.edges[3].node.newsFields.headline
                 )
             ).toBeInTheDocument();
             expect(
                 screen.queryByText(
-                    newsV1.posts.edges[2].node.newsFields.headline
+                    newsV1.posts.edges[1].node.newsFields.headline
                 )
             ).not.toBeInTheDocument();
         });
