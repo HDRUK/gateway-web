@@ -33,81 +33,128 @@ interface EditQuestionProps {
     question?: QuestionBankQuestion;
 }
 const question = {
-    id: 1897,
-    created_at: "2025-01-14T10:18:10.000000Z",
-    updated_at: "2025-01-14T10:18:10.000000Z",
+    id: 2536,
+    created_at: "2025-01-16T12:21:34.000000Z",
+    updated_at: "2025-01-16T12:21:34.000000Z",
     deleted_at: null,
-    question_id: 1895,
+    question_id: 2537,
     version: 1,
     default: false,
     required: false,
-    options: [
-        {
-            label: "yes",
-            children: [
-                {
-                    label: "yes",
-                    field: {
-                        options: [
-                            { label: "yes", value: "yes" },
-                            { label: "no", value: "no" },
-                        ],
-                        component: "RadioGroup",
-                        validations: [],
-                    },
-                    title: "Are you sure it is?",
-                    guidance: "Second chance to confirm",
-                    required: false,
-                },
-                {
-                    label: "yes",
-                    field: {
-                        component: "TextField",
-                        validations: [],
-                    },
-                    title: "And why do you say that?",
-                    guidance: "Please explain",
-                    required: false,
-                },
-            ],
-        },
-        {
-            label: "no",
-            children: [
-                {
-                    label: "no",
-                    field: {
-                        options: [
-                            { label: "yes", value: "yes" },
-                            { label: "no", value: "no" },
-                        ],
-                        component: "RadioGroup",
-                        validations: [],
-                    },
-                    title: "Are you sure it isn&#039;t?",
-                    guidance: "Second chance to deny",
-                    required: false,
-                },
-                {
-                    label: "no",
-                    field: {
-                        component: "TextField",
-                        validations: [],
-                    },
-                    title: "And why do you say that?",
-                    guidance: "Please explain",
-                    required: false,
-                },
-            ],
-        },
-    ],
+    section_id: 2,
+    user_id: 1,
+    locked: false,
+    archived: false,
+    archived_date: null,
+    force_required: false,
+    allow_guidance_override: true,
+    is_child: 0,
+    question_type: "STANDARD",
     field: {
-        options: ["yes", "no"],
+        options: ["Yes", "No", "Unsure"],
         component: "RadioGroup",
         validations: [],
     },
-    title: "Is this a test?",
-    guidance: "You tell me",
+    title: "Will your organisation act as data controller?",
+    guidance:
+        "Please specify if your organisation will act as a data controller. If your organisation is not the sole data controller, please provide details of other data controllers.",
+    options: [
+        {
+            label: "Yes",
+            children: [
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "textInput",
+                        validations: [],
+                    },
+                    title: "ICO registration number",
+                    guidance: "",
+                    required: false,
+                },
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "textInput",
+                        validations: [],
+                    },
+                    title: "Registered address (line 1)",
+                    guidance:
+                        "Please include the organisation's business address.",
+                    required: false,
+                },
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "textInput",
+                        validations: [],
+                    },
+                    title: "Registered address (line 2)",
+                    guidance:
+                        "Please include the organisation's business address.",
+                    required: false,
+                },
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "textInput",
+                        validations: [],
+                    },
+                    title: "City",
+                    guidance:
+                        "Please specify the city where the organisation is located",
+                    required: false,
+                },
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "textInput",
+                        validations: [],
+                    },
+                    title: "Postcode",
+                    guidance:
+                        "Please include the organisation's business address postcode",
+                    required: false,
+                },
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "textInput",
+                        validations: [],
+                    },
+                    title: "Country",
+                    guidance:
+                        "Please specify the country where the organisation is located.",
+                    required: false,
+                },
+                {
+                    label: "Yes",
+                    field: {
+                        options: [],
+                        component: "checkboxOptionsInput",
+                        validations: [],
+                    },
+                    title: "Organisation type",
+                    guidance: "Please select type of organisation.",
+                    required: false,
+                },
+            ],
+        },
+        {
+            label: "No",
+            children: [],
+        },
+        {
+            label: "Unsure",
+            children: [],
+        },
+    ],
 };
 
 const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement`;

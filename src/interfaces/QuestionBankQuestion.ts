@@ -1,8 +1,7 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { FormHydrationField } from "./FormHydration";
 
-interface QuestionBankQuestionForm {
-    section_id: number;
+interface QBFields {
     guidance: string;
     type: ComponentTypes;
     title: string;
@@ -11,6 +10,15 @@ interface QuestionBankQuestionForm {
         allow_guidance_override: boolean;
         force_required: boolean;
     };
+}
+
+type Nested = {
+    [key: string]: QBFields[];
+};
+
+interface QuestionBankQuestionForm extends QBFields {
+    section_id: number;
+    children: Nested;
 }
 
 interface QuestionBankCreateUpdateQuestion {
@@ -25,14 +33,25 @@ interface QuestionBankCreateUpdateQuestion {
     title: string;
 }
 
-interface QuestionBankVersion {
+interface QuestionBankItem {
     id: number;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
     version: number;
-    question_json: string;
     required: number;
+}
+
+interface QuestionBankChildItem extends QuestionBankItem {
+    pivot: {
+        parent_qbv_id: number;
+        child_qbv_id: number;
+        condition: string;
+    };
+}
+
+interface QuestionBankVersion extends QuestionBankItem {
+    child_versions: QuestionBankChildItem[];
 }
 
 interface QuestionBankQuestion {
