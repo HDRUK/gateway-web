@@ -25,59 +25,52 @@ const ReleaseTabs = ({ allReleases }: ReleaseTabProps) => {
     const [expanded, setExpanded] = useState<string | null>(null);
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
     const currentYear = dayjs().year();
-    const years = rangeRight(2024, currentYear + 2).map(String);
+    const years = rangeRight(2024, currentYear + 1).map(String);
 
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : null);
     };
 
     const generatedReleases = useMemo(() => {
-        return years
-            .map(year => {
-                const releases = getReleaseByYear(allReleases, year);
-                // Next year's tab should only show if it contains a release
-                if (Number(year) === currentYear + 1 && releases.length === 0) {
-                    return {};
-                }
-                const hydratedReleases = {
-                    label: year,
-                    value: year,
-                    content: (
-                        <div>
-                            {!releases.length && (
-                                <Box component="p" sx={{ px: 2 }}>
-                                    {t("noResults", {
-                                        year,
-                                    })}
-                                </Box>
-                            )}
-                            {releases.map((release, index) => (
-                                <Accordion
-                                    key={release.date}
-                                    defaultExpanded={
-                                        expanded === release.id || index === 0
-                                    }
-                                    heading={
-                                        <Typography>{release.title}</Typography>
-                                    }
-                                    onChange={(event, isExpanded) =>
-                                        handleChange(isExpanded, release.id)
-                                    }
-                                    contents={
-                                        <HTMLContent
-                                            content={release.content}
-                                        />
-                                    }
-                                    iconLeft
-                                />
-                            ))}
-                        </div>
-                    ),
-                };
+        return years.map(year => {
+            const releases = getReleaseByYear(allReleases, year);
 
-                return hydratedReleases;
-            })
-            .filter((yearTab: object) => Object.keys(yearTab).length > 0);
+            const hydratedReleases = {
+                label: year,
+                value: year,
+                content: (
+                    <div>
+                        {!releases.length && (
+                            <Box component="p" sx={{ px: 2 }}>
+                                {t("noResults", {
+                                    year,
+                                })}
+                            </Box>
+                        )}
+                        {releases.map((release, index) => (
+                            <Accordion
+                                key={release.date}
+                                defaultExpanded={
+                                    expanded === release.id || index === 0
+                                }
+                                heading={
+                                    <Typography>{release.title}</Typography>
+                                }
+                                onChange={(event, isExpanded) =>
+                                    handleChange(isExpanded, release.id)
+                                }
+                                contents={
+                                    <HTMLContent content={release.content} />
+                                }
+                                iconLeft
+                            />
+                        ))}
+                    </div>
+                ),
+            };
+
+            return hydratedReleases;
+        });
     }, [allReleases, expanded, years]);
 
     return (
