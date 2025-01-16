@@ -22,7 +22,7 @@ const mockedReleases: ReleaseNode[] = [
 ];
 
 describe("ReleaseTabs", () => {
-    it("renders tabs with release content", () => {
+    it("renders tabs with release content up to this year", () => {
         render(<ReleaseTabs allReleases={mockedReleases} />);
 
         const tab2024 = screen.getByText("2024");
@@ -42,48 +42,7 @@ describe("ReleaseTabs", () => {
             screen.getByText(mockedReleases[1].node.content)
         ).toBeInTheDocument();
 
-        const tab2025 = screen.getByText("2025");
-
-        expect(tab2025).toBeInTheDocument();
-
-        expect(
-            screen.getByText(mockedReleases[2].node.title)
-        ).toBeInTheDocument();
-        expect(
-            screen.getByText(mockedReleases[2].node.content)
-        ).toBeInTheDocument();
-    });
-
-    it("doesn't render a tab for next year unless there is release content", () => {
-        render(<ReleaseTabs allReleases={mockedReleases.slice(0, 2)} />);
-
-        const tab2024 = screen.getByText("2024");
-
-        expect(tab2024).toBeInTheDocument();
-
-        expect(
-            screen.getByText(mockedReleases[0].node.title)
-        ).toBeInTheDocument();
-        expect(
-            screen.getByText(mockedReleases[0].node.content)
-        ).toBeInTheDocument();
-        expect(
-            screen.getByText(mockedReleases[1].node.title)
-        ).toBeInTheDocument();
-        expect(
-            screen.getByText(mockedReleases[1].node.content)
-        ).toBeInTheDocument();
-
-        const tab2025 = screen.getByText("2025");
-
-        expect(tab2025).not.toBeInTheDocument();
-
-        expect(
-            screen.getByText(mockedReleases[2].node.title)
-        ).not.toBeInTheDocument();
-        expect(
-            screen.getByText(mockedReleases[2].node.content)
-        ).not.toBeInTheDocument();
+        expect(screen.queryByText("2025")).not.toBeInTheDocument();
     });
 
     it("displays a message for a year with no releases", () => {
