@@ -22,7 +22,7 @@ const mockedReleases: ReleaseNode[] = [
 ];
 
 describe("ReleaseTabs", () => {
-    it("renders tabs with release content", () => {
+    it("renders tabs with release content up to this year", () => {
         render(<ReleaseTabs allReleases={mockedReleases} />);
 
         const tab2024 = screen.getByText("2024");
@@ -35,6 +35,14 @@ describe("ReleaseTabs", () => {
         expect(
             screen.getByText(mockedReleases[0].node.content)
         ).toBeInTheDocument();
+        expect(
+            screen.getByText(mockedReleases[1].node.title)
+        ).toBeInTheDocument();
+        expect(
+            screen.getByText(mockedReleases[1].node.content)
+        ).toBeInTheDocument();
+
+        expect(screen.queryByText("2025")).not.toBeInTheDocument();
     });
 
     it("displays a message for a year with no releases", () => {
