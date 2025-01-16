@@ -13,6 +13,13 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
         allow_guidance_override: false,
         required: false,
     },
+
+    options: [
+        {
+            label: "",
+            children: [],
+        },
+    ],
 };
 
 const supportedComponents = [
@@ -203,6 +210,8 @@ const validationSchema = yup.object().shape({
     component: yup.string().required().label("Type"),
 
     settings: settingsSchema,
+
+    options: yup.array(),
 });
 
 export {

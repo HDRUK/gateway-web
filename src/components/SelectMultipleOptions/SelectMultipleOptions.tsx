@@ -35,12 +35,18 @@ const SelectMultipleOptions = ({
     const handleAdd = () =>
         append(
             isChildOption
-                ? {
-                      label: "",
-                  }
+                ? { label: "", value: "" }
                 : {
                       label: "",
-                      children: [],
+                      children: [
+                          {
+                              label: "",
+                              field: {
+                                  options: [{ label: "", value: "" }],
+                                  component: "CheckboxGroup",
+                              },
+                          },
+                      ],
                   }
         );
 

@@ -35,9 +35,9 @@ const NestedFieldArray = ({ control, index }: NestedFieldArrayProps) => {
                         // Hide additional options if not needed
                         if (
                             !componentsWithOptions.includes(
-                                nestedField.field.component
+                                nestedField?.field?.component
                             ) &&
-                            field.name === "field.options"
+                            field?.name === "field.options"
                         ) {
                             return;
                         }
@@ -57,7 +57,7 @@ const NestedFieldArray = ({ control, index }: NestedFieldArrayProps) => {
                         <IconButton
                             size="large"
                             edge="start"
-                            onClick={() => remove(index)}>
+                            onClick={() => remove(nestedIndex)}>
                             <RemoveIcon />
                         </IconButton>
                     </Box>
