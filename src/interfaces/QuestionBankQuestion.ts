@@ -6,12 +6,10 @@ interface QBFields {
     title: string;
     label: string;
     required: boolean;
-    field: { component: ComponentTypes };
-    settings: {
-        mandatory: boolean;
-        allow_guidance_override: boolean;
-        force_required: boolean;
-    };
+    allow_guidance_override: boolean;
+    force_required: boolean;
+    component: ComponentTypes;
+    options: [];
 }
 
 type Nested = {
@@ -21,6 +19,9 @@ type Nested = {
 interface QuestionBankQuestionForm extends QBFields {
     section_id: number;
     children: QBFields[];
+    default: number;
+    options: [];
+    validations: string[];
 }
 
 interface NestedOption {
@@ -48,14 +49,6 @@ interface QuestionBankItem {
     deleted_at: string | null;
     version: number;
     required: number;
-}
-
-interface QuestionBankChildItem extends QuestionBankItem {
-    pivot: {
-        parent_qbv_id: number;
-        child_qbv_id: number;
-        condition: string;
-    };
 }
 
 interface QuestionBankVersion extends QuestionBankItem {

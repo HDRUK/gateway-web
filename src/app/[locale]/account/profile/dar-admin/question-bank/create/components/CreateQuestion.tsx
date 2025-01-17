@@ -11,7 +11,7 @@ const CreateQuestion = () => {
     const router = useRouter();
 
     const createQuestion = usePost<QuestionBankCreateUpdateQuestion>(
-        `${apis.questionBankV1Url}`,
+        `${apis.questionBankV1Url}/latest`,
         {
             itemName: "Question Bank",
         }

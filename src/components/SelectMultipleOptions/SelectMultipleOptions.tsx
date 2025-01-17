@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Control, useFieldArray } from "react-hook-form";
 import { SxProps } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
+import { inputComponents } from "@/config/forms";
 import { AddIcon, RemoveIcon } from "@/consts/icons";
 import Accordion from "../Accordion";
 import Box from "../Box";
 import BoxContainer from "../BoxContainer";
+import Button from "../Button";
 import Paper from "../Paper";
 import TextField from "../TextField";
 import Typography from "../Typography";
@@ -35,16 +36,17 @@ const SelectMultipleOptions = ({
     const handleAdd = () =>
         append(
             isChildOption
-                ? { label: "", value: "" }
+                ? { label: "" }
                 : {
                       label: "",
                       children: [
                           {
-                              label: "",
-                              field: {
-                                  options: [{ label: "", value: "" }],
-                                  component: "CheckboxGroup",
-                              },
+                              title: "",
+                              component: inputComponents.TextField,
+                              guidance: "",
+                              allow_guidance_override: false,
+                              force_required: false,
+                              validations: [],
                           },
                       ],
                   }
@@ -58,17 +60,20 @@ const SelectMultipleOptions = ({
     };
 
     return (
-        <BoxContainer sx={containerSx}>
+        <BoxContainer>
             {fields.map((option, index) => (
-                <>
+                <Box
+                    sx={{
+                        p: 0,
+                        m: 0,
+                        ...containerSx,
+                        mt: 0,
+                    }}>
                     <Box
                         key={option.value}
                         sx={{
                             display: "flex",
                             flexDirection: "row",
-                            flexWrap: "wrap",
-                            alignItems: "center",
-                            alignContent: "center",
                             p: 0,
                             m: 0,
                         }}>
@@ -98,31 +103,10 @@ const SelectMultipleOptions = ({
                                 placeholder="label"
                             />
                         </Box>
-
-                        <Box sx={{ p: 0, m: 0 }}>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                onClick={() => handleRemove(index)}
-                                disabled={fields.length === 1}>
-                                <RemoveIcon />
-                            </IconButton>
-                        </Box>
-
-                        {index === fields.length - 1 && (
-                            <Box sx={{ p: 0, m: 0 }}>
-                                <IconButton
-                                    size="large"
-                                    edge="start"
-                                    onClick={handleAdd}>
-                                    <AddIcon />
-                                </IconButton>
-                            </Box>
-                        )}
                     </Box>
 
                     {!isChildOption && (
-                        <Box>
+                        <Box sx={{ mb: 0 }}>
                             <Paper>
                                 <Accordion
                                     key={option.label}
@@ -141,13 +125,28 @@ const SelectMultipleOptions = ({
                                             index={index}
                                         />
                                     }
-                                    iconLeft
+                                    sx={{ m: 0, mb: 0, p: 0 }}
                                 />
                             </Paper>
                         </Box>
                     )}
-                </>
+
+                    <Box sx={{ p: 0, m: 0, mt: 2 }}>
+                        <Button
+                            onClick={() => handleRemove(index)}
+                            startIcon={<RemoveIcon />}
+                            sx={{ mt: 0 }}>
+                            Remove option -
+                        </Button>
+                    </Box>
+                </Box>
             ))}
+
+            <Box sx={{ p: 0, mb: 5, mt: 0 }}>
+                <Button onClick={handleAdd} startIcon={<AddIcon />}>
+                    Add additional option
+                </Button>
+            </Box>
         </BoxContainer>
     );
 };
