@@ -84,7 +84,7 @@ interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
     user: AuthUser;
-    defaultTeamId: string;
+    defaultTeamId: number;
 }
 
 type FormValues = Record<string, unknown>;
@@ -110,7 +110,7 @@ const CreateDataset = ({
     >();
 
     const [currentTeamId, setCurrentTeamId] = useState<number>(
-        Number(defaultTeamId)
+        defaultTeamId
     );
 
     const [searchName, setSearchName] = useState("");
@@ -316,7 +316,7 @@ const CreateDataset = ({
         defaultValues: defaultFormValues,
     });
 
-    const watchId = watch(DATA_CUSTODIAN_ID) ?? defaultTeamId;
+    const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
     // This is a bit of a hack
@@ -336,11 +336,6 @@ const CreateDataset = ({
         if (!watchId) return;
         setCurrentTeamId(watchId);
     }, [watchId]);
-
-    // useEffect(() => {
-    //     if (!teamIdFromPid) return;
-    //     setValue(DATA_CUSTODIAN_ID, Number(defaultTeamId));
-    // }, [teamIdFromPid]);
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
