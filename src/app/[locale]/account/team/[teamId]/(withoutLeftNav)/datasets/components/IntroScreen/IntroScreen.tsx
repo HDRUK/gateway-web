@@ -71,6 +71,7 @@ interface IntroScreenProps {
     teamOptions?: OptionsType[];
     isLoadingTeams: boolean;
     setDatasetType: (value: string[]) => void;
+    setDataCustodian: (value: number) => void;
     handleOnUserInputChange: (e: React.ChangeEvent, value: string) => void;
 }
 
@@ -80,6 +81,7 @@ const IntroScreen = ({
     teamOptions,
     isLoadingTeams,
     setDatasetType,
+    setDataCustodian,
     handleOnUserInputChange,
 }: IntroScreenProps) => {
     const t = useTranslations(
@@ -98,15 +100,15 @@ const IntroScreen = ({
         setSelectedCheckboxes(updatedCheckboxes);
     };
 
-    const { control, watch, setValue } = useForm({
+    const { control, watch } = useForm({
         defaultValues: { custodianId: defaultTeamId },
     });
-    const watchCustodian = watch("custodianId");
+    const watchSort = watch("custodianId");
 
     useEffect(() => {
-        if (!watchCustodian) return;
-        setValue("custodianId", watchCustodian);
-    }, [watchCustodian]);
+        if (!watchSort) return;
+        setDataCustodian(watchSort);
+    }, [watchSort]);
     return (
         <>
             <Paper

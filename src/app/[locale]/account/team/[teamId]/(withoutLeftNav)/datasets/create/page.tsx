@@ -47,6 +47,7 @@ export default async function CreateDatasetPage({
                     formJSON={formJSON}
                     teamId={Number(teamId)}
                     user={user}
+                    defaultTeamId={teamId}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>

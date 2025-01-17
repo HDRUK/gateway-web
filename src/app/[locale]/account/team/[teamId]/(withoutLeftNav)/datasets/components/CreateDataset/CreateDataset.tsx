@@ -84,7 +84,7 @@ interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
     user: AuthUser;
-    defaultTeamId: number;
+    defaultTeamId: string;
 }
 
 type FormValues = Record<string, unknown>;
@@ -99,12 +99,7 @@ const getMetadata = (isDraft: boolean) =>
 
 const today = getToday();
 
-const CreateDataset = ({
-    formJSON,
-    teamId,
-    user,
-    defaultTeamId,
-}: CreateDatasetProps) => {
+const CreateDataset = ({ formJSON, teamId, user, defaultTeamId }: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
     >();
@@ -725,7 +720,10 @@ const CreateDataset = ({
                         }}
                         teamOptions={teamOptions}
                         handleOnUserInputChange={handleOnUserInputChange}
-                        defaultTeamId={defaultTeamId}
+                        setDataCustodian={(value: number) =>
+                            setValue(DATA_CUSTODIAN_ID, value)
+                        }
+                        defaultTeamId={watchId ?? defaultTeamId}
                         isLoadingTeams={isLoadingTeams}
                     />
                 )}
