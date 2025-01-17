@@ -109,6 +109,10 @@ const CreateDataset = ({
         FormHydrationSchema | undefined
     >();
 
+    const [currentTeamId, setCurrentTeamId] = useState<number>(
+        Number(defaultTeamId)
+    );
+
     const [searchName, setSearchName] = useState("");
     const searchNameDebounced = useDebounce(searchName, 500);
 
@@ -312,7 +316,7 @@ const CreateDataset = ({
         defaultValues: defaultFormValues,
     });
 
-    const watchId = watch(DATA_CUSTODIAN_ID);
+    const watchId = watch(DATA_CUSTODIAN_ID) ?? defaultTeamId;
     const watchType = watch(DATASET_TYPE);
 
     // This is a bit of a hack
@@ -328,17 +332,15 @@ const CreateDataset = ({
         }
     );
 
-    const { data: teamIdFromPid } = useGet<number>(
-        `${apis.teamsV1Url}/${watchId}/id`,
-        {
-            shouldFetch: !watchIdIsNumber,
-        }
-    );
-
     useEffect(() => {
-        if (!teamIdFromPid) return;
-        setValue(DATA_CUSTODIAN_ID, teamIdFromPid);
-    }, [teamIdFromPid]);
+        if (!watchId) return;
+        setCurrentTeamId(watchId);
+    }, [watchId]);
+
+    // useEffect(() => {
+    //     if (!teamIdFromPid) return;
+    //     setValue(DATA_CUSTODIAN_ID, Number(defaultTeamId));
+    // }, [teamIdFromPid]);
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
@@ -728,7 +730,7 @@ const CreateDataset = ({
                         setDataCustodian={(value: number) =>
                             setValue(DATA_CUSTODIAN_ID, value)
                         }
-                        defaultTeamId={watchId ?? defaultTeamId}
+                        defaultTeamId={currentTeamId}
                         isLoadingTeams={isLoadingTeams}
                     />
                 )}
