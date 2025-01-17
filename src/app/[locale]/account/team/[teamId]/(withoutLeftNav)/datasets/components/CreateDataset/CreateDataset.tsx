@@ -109,9 +109,7 @@ const CreateDataset = ({
         FormHydrationSchema | undefined
     >();
 
-    const [currentTeamId, setCurrentTeamId] = useState<number>(
-        defaultTeamId
-    );
+    const [currentTeamId, setCurrentTeamId] = useState<number>(defaultTeamId);
 
     const [searchName, setSearchName] = useState("");
     const searchNameDebounced = useDebounce(searchName, 500);
