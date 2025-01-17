@@ -99,7 +99,12 @@ const getMetadata = (isDraft: boolean) =>
 
 const today = getToday();
 
-const CreateDataset = ({ formJSON, teamId, user, defaultTeamId }: CreateDatasetProps) => {
+const CreateDataset = ({
+    formJSON,
+    teamId,
+    user,
+    defaultTeamId,
+}: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
     >();
