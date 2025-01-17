@@ -66,15 +66,16 @@ export default async function TeamDatasetPage({
     );
 
     const isNotTeamId = Number.isNaN(Number(dataCustodianIdentifier));
+    const dataCustodianId = isNotTeamId
+        ? await getTeamIdFromPid(cookieStore, dataCustodianIdentifier || "")
+        : dataCustodianIdentifier;
 
     const formJSON = await getFormHydration(
         cookieStore,
         SCHEMA_NAME,
         SCHEMA_VERSION,
         dataTypes,
-        isNotTeamId
-            ? await getTeamIdFromPid(cookieStore, dataCustodianIdentifier || "")
-            : dataCustodianIdentifier
+        dataCustodianId
     );
 
     return (
@@ -86,6 +87,7 @@ export default async function TeamDatasetPage({
                     formJSON={formJSON}
                     teamId={Number(teamId)}
                     user={user}
+                    defaultTeamId={Number(dataCustodianId)}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>
