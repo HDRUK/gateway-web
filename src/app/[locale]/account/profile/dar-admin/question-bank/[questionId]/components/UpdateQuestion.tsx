@@ -19,7 +19,7 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
     const [isLocked, setIsLocked] = useState(false);
 
     const { data, isLoading } = useGet<QuestionBankQuestion>(
-        `${apis.questionBankV1Url}/${questionId}/latest`,
+        `${apis.questionBankV1Url}/${questionId}`,
         {
             keepPreviousData: false,
         }
