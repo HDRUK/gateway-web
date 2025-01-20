@@ -515,6 +515,26 @@ const CreateDataset = ({
                       },
                   };
         try {
+            const observations = formPayload?.metadata?.metadata?.observations;
+            if (Array.isArray(observations)) {
+                const personObservations = observations
+                    .filter(obj => obj.observedNode === "Persons")
+                    .sort(
+                        (a, b) =>
+                            new Date(b.observationDate) -
+                            new Date(a.observationDate)
+                    )
+                    .at(0);
+
+                if (
+                    personObservations &&
+                    formPayload.metadata.metadata.summary
+                ) {
+                    formPayload.metadata.metadata.summary.populationSize =
+                        Number(personObservations.measuredValue);
+                }
+            }
+
             // BES 11/24 Put in as a quick fix for teams with identifier < 2 characters long
             // This is very schema specific and should be removed once a schema update is made
             // to allow shorter identifiers.
