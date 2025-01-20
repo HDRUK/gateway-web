@@ -517,10 +517,10 @@ const CreateDataset = ({
         try {
             const observations = formPayload?.metadata?.metadata?.observations;
             if (Array.isArray(observations)) {
-                const personObservations =
-                    formPayload?.metadata?.metadata?.observations?.find(
-                        obj => obj.observedNode === "Persons"
-                    );
+                const personObservations = 
+                    observations
+                        .filter(obj => obj.observedNode === "Persons")
+                        .pop();
                 if (
                     personObservations &&
                     formPayload.metadata.metadata.summary
