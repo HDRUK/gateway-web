@@ -517,9 +517,16 @@ const CreateDataset = ({
         try {
             const observations = formPayload?.metadata?.metadata?.observations;
             if (Array.isArray(observations)) {
-                const personObservations = formPayload?.metadata?.metadata?.observations?.find(obj => obj.observedNode === 'Persons')
-                if (personObservations) {
-                    formPayload?.metadata?.metadata?.summary?.populationSize = Number(personObservations.measuredValue)
+                const personObservations =
+                    formPayload?.metadata?.metadata?.observations?.find(
+                        obj => obj.observedNode === "Persons"
+                    );
+                if (
+                    personObservations &&
+                    formPayload.metadata.metadata.summary
+                ) {
+                    formPayload.metadata.metadata.summary.populationSize =
+                        Number(personObservations.measuredValue);
                 }
             }
 
