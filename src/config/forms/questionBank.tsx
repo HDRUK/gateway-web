@@ -63,7 +63,7 @@ const formFields = [
     {
         label: "Options",
         name: "options",
-        component: inputComponents.SelectMultipleOptions,
+        component: "FieldArray",
         options: [],
         containerSx: {
             p: 2,
