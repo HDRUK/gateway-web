@@ -6,6 +6,7 @@ import {
     QuestionBankQuestion,
     QuestionBankCreateUpdateQuestion,
 } from "@/interfaces/QuestionBankQuestion";
+import ErrorDisplay from "@/components/ErrorDisplay";
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import apis from "@/config/apis";
@@ -53,9 +54,9 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
             );
         });
 
-    // if (isLocked) {
-    //     return <ErrorDisplay variant={423} />;
-    // }
+    if (isLocked) {
+        return <ErrorDisplay variant={423} />;
+    }
 
     return <EditQuestion onSubmit={onSubmit} question={data} />;
 };

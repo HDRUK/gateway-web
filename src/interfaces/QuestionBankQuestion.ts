@@ -51,10 +51,6 @@ interface QuestionBankItem {
     required: number;
 }
 
-interface QuestionBankVersion extends QuestionBankItem {
-    child_versions: QuestionBankChildItem[];
-}
-
 interface QuestionBankChildItem extends QuestionBankItem {
     pivot: {
         parent_qbv_id: number;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Control, useFieldArray } from "react-hook-form";
-import { SxProps } from "@mui/material";
+import { IconButton, SxProps } from "@mui/material";
 import { inputComponents } from "@/config/forms";
-import { AddIcon, RemoveIcon } from "@/consts/icons";
+import { AddIcon, CloseIcon } from "@/consts/icons";
 import Accordion from "../Accordion";
 import Box from "../Box";
 import BoxContainer from "../BoxContainer";
@@ -88,6 +88,8 @@ const SelectMultipleOptions = ({
                                 m: 0,
                                 py: 0,
                                 px: 1,
+                                justifyContent: "space-between",
+                                width: "100%",
                             }}>
                             <TextField
                                 key={option.value}
@@ -100,8 +102,15 @@ const SelectMultipleOptions = ({
                                 formControlSx={{
                                     marginBottom: 0,
                                 }}
-                                placeholder="label"
+                                placeholder="Option label"
                             />
+
+                            <IconButton
+                                size="large"
+                                onClick={() => handleRemove(index)}
+                                sx={{ mt: 0 }}>
+                                <CloseIcon />
+                            </IconButton>
                         </Box>
                     </Box>
 
@@ -130,21 +139,12 @@ const SelectMultipleOptions = ({
                             </Paper>
                         </Box>
                     )}
-
-                    <Box sx={{ p: 0, m: 0, mt: 2 }}>
-                        <Button
-                            onClick={() => handleRemove(index)}
-                            startIcon={<RemoveIcon />}
-                            sx={{ mt: 0 }}>
-                            Remove option -
-                        </Button>
-                    </Box>
                 </Box>
             ))}
 
             <Box sx={{ p: 0, mb: 5, mt: 0 }}>
                 <Button onClick={handleAdd} startIcon={<AddIcon />}>
-                    Add additional option
+                    Add option
                 </Button>
             </Box>
         </BoxContainer>

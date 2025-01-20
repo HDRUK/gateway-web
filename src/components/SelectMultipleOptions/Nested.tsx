@@ -1,9 +1,10 @@
 import { Control, useFieldArray } from "react-hook-form";
+import { IconButton } from "@mui/material";
 import {
     componentsWithOptions,
     questionFormFields,
 } from "@/config/forms/questionBank";
-import { AddIcon, RemoveIcon } from "@/consts/icons";
+import { AddIcon, CloseIcon } from "@/consts/icons";
 import Box from "../Box";
 import Button from "../Button";
 import InputWrapper from "../InputWrapper";
@@ -25,15 +26,23 @@ const NestedFieldArray = ({ control, index }: NestedFieldArrayProps) => {
 
     return (
         <>
-            <Button
-                onClick={() => append({})}
-                startIcon={<AddIcon />}
-                sx={{ mt: 0, mb: 3 }}>
-                Add nested option
-            </Button>
-
             {nestedFields?.map((nestedField, nestedIndex) => (
-                <>
+                <Box
+                    sx={{
+                        border: 1,
+                        borderColor: "greyCustom.main",
+                        p: 3,
+                        flexGrow: 0,
+                        mb: 2,
+                    }}>
+                    <Box sx={{ p: 0, m: 0, justifySelf: "flex-end" }}>
+                        <IconButton
+                            size="large"
+                            onClick={() => remove(nestedIndex)}
+                            sx={{ mt: 0 }}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
                     {questionFormFields.map(field => {
                         // Hide additional options if not needed
                         if (
@@ -76,17 +85,15 @@ const NestedFieldArray = ({ control, index }: NestedFieldArrayProps) => {
                             />
                         );
                     })}
-
-                    <Box sx={{ p: 0, m: 0 }}>
-                        <Button
-                            onClick={() => remove(nestedIndex)}
-                            startIcon={<RemoveIcon />}
-                            sx={{ mt: 0 }}>
-                            Remove nested option
-                        </Button>
-                    </Box>
-                </>
+                </Box>
             ))}
+
+            <Button
+                onClick={() => append({})}
+                startIcon={<AddIcon />}
+                sx={{ mt: 1 }}>
+                Add nested question
+            </Button>
         </>
     );
 };
