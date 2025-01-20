@@ -201,7 +201,7 @@ const CreateDataset = ({
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
         "revision url": "http://www.example.com/",
-        identifier: teamId,
+        identifier: defaultTeamId,
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
         "Name of data provider": "--",
