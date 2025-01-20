@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { Control, useFieldArray } from "react-hook-form";
+import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
 import { IconButton, SxProps } from "@mui/material";
+import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
+import Accordion from "@/components/Accordion";
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
+import Paper from "@/components/Paper";
+import TextField from "@/components/TextField";
+import Typography from "@/components/Typography";
 import { inputComponents } from "@/config/forms";
 import { AddIcon, CloseIcon } from "@/consts/icons";
-import Accordion from "../Accordion";
-import Box from "../Box";
-import BoxContainer from "../BoxContainer";
-import Button from "../Button";
-import Paper from "../Paper";
-import TextField from "../TextField";
-import Typography from "../Typography";
 import NestedFieldArray from "./Nested";
 
 interface SelectMultipleOptionProps {
     containerSx?: SxProps;
     control: Control;
     name: string;
+    watch: UseFormWatch<QuestionBankQuestionForm>;
 }
 
 const SelectMultipleOptions = ({
@@ -25,32 +27,27 @@ const SelectMultipleOptions = ({
     },
     control,
     name,
+    watch,
 }: SelectMultipleOptionProps) => {
     const { fields, append, remove } = useFieldArray({
         control,
         name,
     });
 
-    const isChildOption = name !== "options";
-
     const handleAdd = () =>
-        append(
-            isChildOption
-                ? { label: "" }
-                : {
-                      label: "",
-                      children: [
-                          {
-                              title: "",
-                              component: inputComponents.TextField,
-                              guidance: "",
-                              allow_guidance_override: false,
-                              force_required: false,
-                              validations: [],
-                          },
-                      ],
-                  }
-        );
+        append({
+            label: "",
+            children: [
+                {
+                    title: "",
+                    component: inputComponents.TextField,
+                    guidance: "",
+                    allow_guidance_override: false,
+                    force_required: false,
+                    validations: [],
+                },
+            ],
+        });
 
     const handleRemove = (indexToRemove: number) => remove(indexToRemove);
 
@@ -114,31 +111,30 @@ const SelectMultipleOptions = ({
                         </Box>
                     </Box>
 
-                    {!isChildOption && (
-                        <Box sx={{ mb: 0 }}>
-                            <Paper>
-                                <Accordion
-                                    key={option.label}
-                                    expanded={expanded === option.label}
-                                    heading={
-                                        <Typography>
-                                            Show nested questions
-                                        </Typography>
-                                    }
-                                    onChange={(_, isExpanded) =>
-                                        handleChange(isExpanded, option.label)
-                                    }
-                                    contents={
-                                        <NestedFieldArray
-                                            control={control}
-                                            index={index}
-                                        />
-                                    }
-                                    sx={{ m: 0, mb: 0, p: 0 }}
-                                />
-                            </Paper>
-                        </Box>
-                    )}
+                    <Box sx={{ mb: 0 }}>
+                        <Paper>
+                            <Accordion
+                                key={option.label}
+                                expanded={expanded === option.label}
+                                heading={
+                                    <Typography>
+                                        Show nested questions
+                                    </Typography>
+                                }
+                                onChange={(_, isExpanded) =>
+                                    handleChange(isExpanded, option.label)
+                                }
+                                contents={
+                                    <NestedFieldArray
+                                        control={control}
+                                        index={index}
+                                        watch={watch}
+                                    />
+                                }
+                                sx={{ m: 0, mb: 0, p: 0 }}
+                            />
+                        </Paper>
+                    </Box>
                 </Box>
             ))}
 
