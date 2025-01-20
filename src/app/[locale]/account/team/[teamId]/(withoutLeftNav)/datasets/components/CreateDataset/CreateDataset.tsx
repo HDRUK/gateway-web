@@ -84,6 +84,7 @@ interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
     user: AuthUser;
+    defaultTeamId: number;
 }
 
 type FormValues = Record<string, unknown>;
@@ -98,10 +99,17 @@ const getMetadata = (isDraft: boolean) =>
 
 const today = getToday();
 
-const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
+const CreateDataset = ({
+    formJSON,
+    teamId,
+    user,
+    defaultTeamId,
+}: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
     >();
+
+    const [currentTeamId, setCurrentTeamId] = useState<number>(defaultTeamId);
 
     const [searchName, setSearchName] = useState("");
     const searchNameDebounced = useDebounce(searchName, 500);
@@ -322,17 +330,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         }
     );
 
-    const { data: teamIdFromPid } = useGet<number>(
-        `${apis.teamsV1Url}/${watchId}/id`,
-        {
-            shouldFetch: !watchIdIsNumber,
-        }
-    );
-
     useEffect(() => {
-        if (!teamIdFromPid) return;
-        setValue(DATA_CUSTODIAN_ID, teamIdFromPid);
-    }, [teamIdFromPid]);
+        if (!watchId) return;
+        setCurrentTeamId(watchId);
+    }, [watchId]);
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
@@ -719,7 +720,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                         }}
                         teamOptions={teamOptions}
                         handleOnUserInputChange={handleOnUserInputChange}
-                        defaultTeamId={watchId}
+                        setDataCustodian={(value: number) =>
+                            setValue(DATA_CUSTODIAN_ID, value)
+                        }
+                        defaultTeamId={currentTeamId}
                         isLoadingTeams={isLoadingTeams}
                     />
                 )}
