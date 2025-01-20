@@ -63,6 +63,7 @@ const SelectMultipleOptions = ({
                                 label=""
                                 sx={{
                                     backgroundColor: "white",
+                                    minWidth: "350px",
                                 }}
                                 formControlSx={{
                                     marginBottom: 0,
