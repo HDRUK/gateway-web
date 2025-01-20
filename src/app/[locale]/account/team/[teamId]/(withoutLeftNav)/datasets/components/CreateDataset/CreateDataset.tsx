@@ -519,7 +519,13 @@ const CreateDataset = ({
             if (Array.isArray(observations)) {
                 const personObservations = observations
                     .filter(obj => obj.observedNode === "Persons")
-                    .pop();
+                    .sort(
+                        (a, b) =>
+                            new Date(b.observationDate) -
+                            new Date(a.observationDate)
+                    )
+                    .at(0);
+
                 if (
                     personObservations &&
                     formPayload.metadata.metadata.summary
