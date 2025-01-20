@@ -44,7 +44,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         `${apis.dataAccessSectionV1Url}`
     );
 
-    const { control, handleSubmit, setValue, reset, watch } =
+    const { control, handleSubmit, reset, watch } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
@@ -91,7 +91,6 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                         <InputWrapper
                             key={sectionField.name}
                             control={control}
-                            setValue={setValue}
                             {...sectionField}
                             options={
                                 sectionData?.map(section => ({
@@ -110,10 +109,10 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                         }}>
                         <FormQuestions
                             control={control}
-                            setValue={setValue}
                             showOptions={componentsWithOptions.includes(
                                 allFields.component
                             )}
+                            watch={watch}
                         />
                     </Paper>
 

@@ -1,20 +1,19 @@
 "use client";
 
 import { useMemo } from "react";
+import { Control, UseFormWatch } from "react-hook-form";
+import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import InputWrapper from "@/components/InputWrapper";
 import { questionFormFields } from "@/config/forms/questionBank";
+import SelectMultipleOptionsNested from "./SelectMultipleOptionsNested";
 
 interface FormQuestionsProps {
-    control: unknown;
-    setValue: unknown;
+    control: Control;
     showOptions: boolean;
+    watch: UseFormWatch<QuestionBankQuestionForm>;
 }
 
-const FormQuestions = ({
-    control,
-    setValue,
-    showOptions,
-}: FormQuestionsProps) => {
+const FormQuestions = ({ control, showOptions, watch }: FormQuestionsProps) => {
     const hydratedFormFields = useMemo(
         () =>
             questionFormFields
@@ -30,15 +29,28 @@ const FormQuestions = ({
 
     return (
         <>
-            {hydratedFormFields.map(field => (
-                <InputWrapper
-                    key={field.name}
-                    control={control}
-                    setValue={setValue}
-                    {...field}
-                    name={field.name}
-                />
-            ))}
+            {hydratedFormFields.map(field => {
+                if (field.component === "FieldArray") {
+                    return (
+                        <SelectMultipleOptionsNested
+                            control={control}
+                            {...field}
+                            name={field.name}
+                            watch={watch}
+                        />
+                    );
+                }
+
+                return (
+                    <InputWrapper
+                        key={field.name}
+                        control={control}
+                        {...field}
+                        name={field.name}
+                        showClearButton={false}
+                    />
+                );
+            })}
         </>
     );
 };
