@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
@@ -71,6 +71,7 @@ interface IntroScreenProps {
     teamOptions?: OptionsType[];
     isLoadingTeams: boolean;
     setDatasetType: (value: string[]) => void;
+    setDataCustodian: (value: number) => void;
     handleOnUserInputChange: (e: React.ChangeEvent, value: string) => void;
 }
 
@@ -80,6 +81,7 @@ const IntroScreen = ({
     teamOptions,
     isLoadingTeams,
     setDatasetType,
+    setDataCustodian,
     handleOnUserInputChange,
 }: IntroScreenProps) => {
     const t = useTranslations(
@@ -98,10 +100,15 @@ const IntroScreen = ({
         setSelectedCheckboxes(updatedCheckboxes);
     };
 
-    const { control } = useForm({
+    const { control, watch } = useForm({
         defaultValues: { custodianId: defaultTeamId },
     });
+    const watchSort = watch("custodianId");
 
+    useEffect(() => {
+        if (!watchSort) return;
+        setDataCustodian(watchSort);
+    }, [watchSort]);
     return (
         <>
             <Paper
