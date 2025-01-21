@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import {
     QuestionBankQuestion,
@@ -23,6 +24,7 @@ import {
     questionValidationSchema,
     sectionField,
 } from "@/config/forms/questionBank";
+import { colors } from "@/config/theme";
 import FormQuestions from "./FormQuestions";
 import PreviewQuestion from "./PreviewQuestion";
 
@@ -44,7 +46,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         `${apis.dataAccessSectionV1Url}`
     );
 
-    const { control, handleSubmit, reset, watch } =
+    const { control, handleSubmit, reset, watch, formState } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
@@ -53,28 +55,14 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const allFields = watch();
 
     useEffect(() => {
-        reset(question);
+        if (question) {
+            reset(question);
+        }
     }, [reset, question, sectionData]);
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         onSubmit(formData);
     };
-
-    const currentFormHydration = useMemo(
-        () => ({
-            ...question,
-            title: allFields.title || "",
-            // field: {
-            //     ...field,
-            //     name: "",
-            //     guidance: allFields.guidance || "",
-            //     component:
-            //         inputComponents[allFields?.type] ||
-            //         inputComponents.RadioGroup,
-            // },
-        }),
-        [allFields, question]
-    );
 
     const tabsList = [
         {
@@ -114,6 +102,13 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                             )}
                             watch={watch}
                         />
+
+                        {typeof formState.errors.options?.message ===
+                            "string" && (
+                            <Typography sx={{ color: colors.red700 }}>
+                                {formState.errors.options?.message}
+                            </Typography>
+                        )}
                     </Paper>
 
                     <Paper
@@ -131,12 +126,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         {
             label: "Preview",
             value: "preview",
-            content: currentFormHydration && (
-                <PreviewQuestion
-                    question={currentFormHydration}
-                    control={control}
-                />
-            ),
+            content: <PreviewQuestion question={allFields} control={control} />,
         },
     ];
 

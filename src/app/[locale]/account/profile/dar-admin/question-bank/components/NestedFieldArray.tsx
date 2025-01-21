@@ -1,5 +1,6 @@
 import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
 import { IconButton } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
@@ -19,7 +20,11 @@ interface NestedFieldArrayProps {
     watch: UseFormWatch<QuestionBankQuestionForm>;
 }
 
+const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement.createPage`;
+
 const NestedFieldArray = ({ control, index, watch }: NestedFieldArrayProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const {
         fields: nestedFields,
         append,
@@ -128,7 +133,7 @@ const NestedFieldArray = ({ control, index, watch }: NestedFieldArrayProps) => {
                 }
                 startIcon={<AddIcon />}
                 sx={{ mt: 1 }}>
-                Add nested question
+                {t("addNested")}
             </Button>
         </>
     );

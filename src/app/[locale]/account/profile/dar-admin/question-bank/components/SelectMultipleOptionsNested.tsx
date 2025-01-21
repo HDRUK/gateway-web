@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
 import { IconButton, SxProps } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -11,7 +12,7 @@ import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { inputComponents } from "@/config/forms";
 import { AddIcon, CloseIcon } from "@/consts/icons";
-import NestedFieldArray from "./Nested";
+import NestedFieldArray from "./NestedFieldArray";
 
 interface SelectMultipleOptionProps {
     containerSx?: SxProps;
@@ -19,6 +20,8 @@ interface SelectMultipleOptionProps {
     name: string;
     watch: UseFormWatch<QuestionBankQuestionForm>;
 }
+
+const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement.createPage`;
 
 const SelectMultipleOptions = ({
     containerSx = {
@@ -29,6 +32,8 @@ const SelectMultipleOptions = ({
     name,
     watch,
 }: SelectMultipleOptionProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const { fields, append, remove } = useFieldArray({
         control,
         name,
@@ -141,7 +146,7 @@ const SelectMultipleOptions = ({
 
             <Box sx={{ p: 0, mb: 5, mt: 0 }}>
                 <Button onClick={handleAdd} startIcon={<AddIcon />}>
-                    Add option
+                    {t("addOption")}
                 </Button>
             </Box>
         </BoxContainer>

@@ -11,7 +11,7 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
     required: false,
     allow_guidance_override: false,
     force_required: false,
-    default: 1,
+    default: true,
     validations: [],
     options: [],
 };
@@ -115,38 +115,59 @@ const settingsSchema = yup.object().shape({
 
 const childSchema = yup.array().of(
     yup.object().shape({
-        label: yup.string().required().label("Question Title"),
-
-        children: yup.array().of(
-            yup.object().shape({
-                title: yup.string().required().label("Question Title"),
-                guidance: yup.string().required().label("Default Guidance"),
-                component: yup.string().required().label("Question Type"),
-                allow_guidance_override: yup
-                    .boolean()
-                    .required()
-                    .label("Allow Guidance Override"),
-                force_required: yup
-                    .boolean()
-                    .required()
-                    .label("Force Required"),
-                validations: yup.array().required(),
-            })
-        ),
+        label: yup.string().required().label("Option label"),
+        children: yup
+            .array()
+            .of(
+                yup.object().shape({
+                    title: yup.string().required().label("Question Title"),
+                    guidance: yup.string().required().label("Default Guidance"),
+                    component: yup.string().required().label("Question Type"),
+                    allow_guidance_override: yup
+                        .boolean()
+                        .required()
+                        .label("Allow Guidance Override"),
+                    force_required: yup
+                        .boolean()
+                        .required()
+                        .label("Force Required"),
+                    validations: yup.array().required(),
+                })
+            )
+            .test(
+                "unique-titles-question",
+                "Each question title must be unique",
+                value => {
+                    if (!value) return true;
+                    const titles = value.map(item => item.title);
+                    const uniqueTitles = new Set(titles);
+                    return uniqueTitles.size === titles.length;
+                }
+            ),
     })
 );
 
 const validationSchema = yup
     .object()
     .shape({
-        default: yup.number(),
+        default: yup.boolean(),
         section_id: yup.string().required().label("Section"),
         title: yup.string().required().label("Question Title"),
         guidance: yup.string().required().label("Default Guidance"),
         component: yup.string().required().label("Question Type"),
         options: yup.array().when("component", {
             is: (component: string) => component === "RadioGroup",
-            then: () => childSchema,
+            then: () =>
+                childSchema.test(
+                    "unique-titles",
+                    "Each option label must be unique",
+                    value => {
+                        if (!value) return true;
+                        const titles = value.map(item => item.label);
+                        const uniqueTitles = new Set(titles);
+                        return uniqueTitles.size === titles.length;
+                    }
+                ),
         }),
         validations: yup.array().required(),
     })

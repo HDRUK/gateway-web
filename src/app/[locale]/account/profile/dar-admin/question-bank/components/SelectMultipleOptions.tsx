@@ -1,5 +1,6 @@
 import { Control, useFieldArray } from "react-hook-form";
 import { IconButton } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -11,10 +12,14 @@ interface SelectMultipleOptionsProps {
     name: string;
 }
 
+const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement.createPage`;
+
 const SelectMultipleOptions = ({
     control,
     name,
 }: SelectMultipleOptionsProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const { fields, append, remove } = useFieldArray({
         control,
         name,
@@ -84,7 +89,7 @@ const SelectMultipleOptions = ({
 
             <Box sx={{ p: 0, mb: 3, mt: 1 }}>
                 <Button onClick={handleAdd} startIcon={<AddIcon />}>
-                    Add option
+                    {t("addOption")}
                 </Button>
             </Box>
         </BoxContainer>
