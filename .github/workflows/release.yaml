@@ -24,7 +24,6 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        id: checkout
         uses: actions/checkout@v4
         with:
           ref: main
