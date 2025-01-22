@@ -227,7 +227,9 @@
                             "text": "This is a page for create a question",
                             "section": "Section",
                             "guidance": "Guidance",
-                            "back": "Back to Question Bank list page"
+                            "back": "Back to Question Bank list page",
+                            "addNested": "Add nested question",
+                            "addOption": "Add option"
                         },
                         "save": "Save Changes",
                         "title": "Question Bank Management",

@@ -21,7 +21,6 @@ import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
 import { Wysiwyg } from "@/components/Wysiwyg";
-import SelectMultipleOptions from "../SelectMultipleOptions";
 
 type InputType<TFieldValues extends FieldValues, TName> =
     | TextFieldBaseProps<TFieldValues, TName>
@@ -66,7 +65,6 @@ function InputWrapper<
         TextArea,
         SwitchInline,
         DatePicker,
-        SelectMultipleOptions,
         Wysiwyg,
     };
 

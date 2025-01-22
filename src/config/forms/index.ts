@@ -14,6 +14,5 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     TextArea: "TextArea",
     ToggleDirection: "ToggleDirection",
     DatePicker: "DatePicker",
-    SelectMultipleOptions: "SelectMultipleOptions",
     Wysiwyg: "Wysiwyg",
 };
