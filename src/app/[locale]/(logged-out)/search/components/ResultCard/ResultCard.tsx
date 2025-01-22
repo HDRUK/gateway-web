@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
+import { isValueNumber } from "@/interfaces/isValueNumber";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
@@ -28,7 +29,6 @@ import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
-import { isValueNumber } from "@/interfaces/isValueNumber";
 
 interface ResultCardProps {
     result: SearchResultDataset;

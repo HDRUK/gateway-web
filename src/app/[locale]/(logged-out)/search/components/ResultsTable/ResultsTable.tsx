@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
+import { isValueNumber } from "@/interfaces/isValueNumber";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
@@ -16,7 +17,6 @@ import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import ActionDropdown from "../ActionDropdown";
-import { isValueNumber } from "@/interfaces/isValueNumber";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
