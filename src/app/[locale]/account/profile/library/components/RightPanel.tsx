@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { FileUploadOutlined } from "@mui/icons-material";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SelectedLibrary } from "@/interfaces/Library";
@@ -36,6 +37,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                     teamId: Number(item.teamId),
                     teamName: item.teamName,
                     teamMemberOf: item.teamMemberOf,
+                    darEnabled: item.darEnabled,
                 };
             });
     }, [selected]);
@@ -110,6 +112,35 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                             disabled={!(selectedDatasets.length > 0)}>
                             <QuestionAnswerIcon sx={{ pr: 1 }} />
                             {t("feasibilityEnquiries.buttonText")}
+                        </Button>
+                    </Tooltip>
+                </Box>
+                <Divider sx={{ my: 2 }} />
+                <Box sx={{ p: 0 }}>
+                    <Typography variant="h2">
+                        {t("dataAccessRequest.title")}
+                    </Typography>
+                    <Typography>{t("dataAccessRequest.text")}</Typography>
+                    <Tooltip
+                        title={
+                            !selectedDatasets.every(
+                                dataset => dataset.darEnabled
+                            )
+                                ? t("dataAccessRequest.buttonTooltipDar")
+                                : selectedDatasets.length > 0
+                                ? ""
+                                : t("dataAccessRequest.buttonTooltip")
+                        }>
+                        <Button
+                            sx={{ mt: 2, width: "100%" }}
+                            disabled={
+                                !(selectedDatasets.length > 0) ||
+                                !selectedDatasets.every(
+                                    dataset => dataset.darEnabled
+                                )
+                            }>
+                            <FileUploadOutlined sx={{ pr: 1 }} />
+                            {t("dataAccessRequest.buttonText")}
                         </Button>
                     </Tooltip>
                 </Box>
