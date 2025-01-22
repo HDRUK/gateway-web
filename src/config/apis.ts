@@ -10,8 +10,6 @@ const apiV2IPUrl =
         ? process.env.NEXT_PUBLIC_API_V2_IP_URL
         : process.env.NEXT_PUBLIC_API_V2_URL;
 
-const apiServiceUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/services`;
-
 const apis = {
     apiV1Url,
     apiV1IPUrl,
@@ -59,12 +57,16 @@ const apis = {
     collectionsV2Url: `${apiV2Url}/collections`,
     collectionsV2UrlIP: `${apiV2IPUrl}/collections`,
     questionBankV1Url: `${apiV1Url}/questions`,
+    dataAccessApplicationV1Url: `${apiV1Url}/dar/applications`,
+    dataAccessApplicationV1UrlIP: `${apiV1IPUrl}/dar/applications`,
     dataAccessSectionV1Url: `${apiV1Url}/dar/sections`,
     dataAccessSectionV1UrlIP: `${apiV1IPUrl}/dar/sections`,
-    darasV1Url: `${apiServiceUrl}/daras`,
+    dataAccessTemplateV1Url: `${apiV1Url}/dar/templates`,
+    dataAccessTemplateV1UrlIP: `${apiV1IPUrl}/dar/templates`,
     formHydrationV1Url: `${apiV1Url}/form_hydration`,
     formHydrationV1UrlIP: `${apiV1IPUrl}/form_hydration`,
     keywordsV1Url: `${apiV1Url}/keywords`,
+    keywordsV1IPUrl: `${apiV1IPUrl}/keywords`,
     categoriesV1Url: `${apiV1Url}/categories`,
     fileUploadV1Url: `${apiV1Url}/files`,
     fileProcessedV1Url: `${apiV1Url}/files/processed`,

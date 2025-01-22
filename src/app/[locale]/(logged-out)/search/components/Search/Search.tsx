@@ -174,7 +174,7 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
-        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
+        [FILTER_DATA_SET_TITLES]: searchParams?.getAll(FILTER_DATA_SET_TITLES),
         [FILTER_DATA_TYPE]: getParamArray(FILTER_DATA_TYPE),
         [FILTER_DATA_SUBTYPE]: getParamArray(FILTER_DATA_SUBTYPE),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
@@ -220,6 +220,20 @@ const Search = ({ filters }: SearchProps) => {
             setResultsView(viewType);
         }
     }, [queryParams.type, resultsView]);
+
+    const removeArrayQueryAndPush = (paramKey: string, paramValue: string) => {
+        const currentParams = new URLSearchParams(searchParams?.toString());
+
+        const newParams = new URLSearchParams(
+            Array.from(currentParams.entries()).filter(
+                ([key, value]) => !(key === paramKey && value === paramValue)
+            )
+        );
+
+        router.push(`?${newParams.toString()}`, {
+            scroll: false,
+        });
+    };
 
     const updatePath = useCallback(
         (key: string, value: string) => {
@@ -426,7 +440,11 @@ const Search = ({ filters }: SearchProps) => {
         }
 
         setQueryParams({ ...queryParams, [filterType]: filtered });
-        updatePath(filterType, filtered.join(","));
+        if (filterType === FILTER_DATA_SET_TITLES) {
+            removeArrayQueryAndPush(filterType, removedFilter);
+        } else {
+            updatePath(filterType, filtered.join(","));
+        }
     };
 
     const handleChangeView = (viewType: ViewType) => {

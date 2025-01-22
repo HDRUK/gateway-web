@@ -18,7 +18,7 @@ const DarTemplatePage = () => {
     }>();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const createNewTemplate = usePost(`${apis.darasV1Url}/templates`, {
+    const createNewTemplate = usePost(apis.dataAccessTemplateV1Url, {
         itemName: "DAR Template",
     });
 
@@ -38,7 +38,7 @@ const DarTemplatePage = () => {
             user_id: "1",
         };
         createNewTemplate(payload).then(res => {
-            const { id: templateId } = res;
+            const templateId = res;
             const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}/${RouteName.EDIT}`;
             router.push(redirectUrl);
         });

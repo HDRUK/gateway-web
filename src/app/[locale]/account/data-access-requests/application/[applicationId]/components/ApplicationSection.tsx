@@ -17,7 +17,6 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
-import useAuth from "@/hooks/useAuth";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
@@ -40,7 +39,6 @@ const ApplicationSection = ({
     sections,
 }: ApplicationSectionProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
-    const { user } = useAuth();
 
     const [guidanceText, setGuidanceText] = useState<string>(
         t("defaultGuidance")
@@ -52,7 +50,7 @@ const ApplicationSection = ({
     };
 
     const updateAnswers = usePost(
-        `${apis.darasV1Url}/applications/${applicationId}/answers?user_id=${user?.id}`,
+        `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
         {
             itemName: "Application answers",
         }

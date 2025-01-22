@@ -17,7 +17,6 @@ import {
     StructuralMetadata,
 } from "@/interfaces/Dataset";
 import {
-    FormHydration,
     FormHydrationSchema,
     FormHydrationValidation,
 } from "@/interfaces/FormHydration";
@@ -43,6 +42,15 @@ import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { DataStatus } from "@/consts/application";
+import {
+    DATA_CUSTODIAN_FIELDS,
+    DATA_CUSTODIAN_ID,
+    DATA_CUSTODIAN_NAME,
+    DATASET_TYPE,
+    INITIAL_FORM_SECTION,
+    STRUCTURAL_METADATA_FORM_SECTION,
+    SUBMISSON_FORM_SECTION,
+} from "@/consts/createDataset";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -76,25 +84,13 @@ interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
     user: AuthUser;
+    defaultTeamId: number;
 }
 
 type FormValues = Record<string, unknown>;
 
-const INITIAL_FORM_SECTION = "Home";
-const SUBMISSON_FORM_SECTION = "Submission";
-const STRUCTURAL_METADATA_FORM_SECTION = "Structural metadata";
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
-const DATASET_TYPE = "Dataset type";
-const DATA_CUSTODIAN_ID = "identifier";
-const DATA_CUSTODIAN_NAME = "Name of data provider";
-const DATA_CUSTODIAN_FIELDS = [
-    "Name of data provider",
-    "Organisation Description",
-    "Organisation Logo",
-    "Organisation Membership",
-    "identifier",
-];
 
 const getMetadata = (isDraft: boolean) =>
     isDraft
@@ -103,10 +99,17 @@ const getMetadata = (isDraft: boolean) =>
 
 const today = getToday();
 
-const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
+const CreateDataset = ({
+    formJSON,
+    teamId,
+    user,
+    defaultTeamId,
+}: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
     >();
+
+    const [currentTeamId, setCurrentTeamId] = useState<number>(defaultTeamId);
 
     const [searchName, setSearchName] = useState("");
     const searchNameDebounced = useDebounce(searchName, 500);
@@ -198,7 +201,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         "Dataset Version": "1.0.0",
         "revision version": "1.0.0",
         "revision url": "http://www.example.com/",
-        identifier: teamId,
+        identifier: defaultTeamId,
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
         "Name of data provider": "--",
@@ -327,17 +330,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
         }
     );
 
-    const { data: teamIdFromPid } = useGet<number>(
-        `${apis.teamsV1Url}/${watchId}/id`,
-        {
-            shouldFetch: !watchIdIsNumber,
-        }
-    );
-
     useEffect(() => {
-        if (!teamIdFromPid) return;
-        setValue(DATA_CUSTODIAN_ID, teamIdFromPid);
-    }, [teamIdFromPid]);
+        if (!watchId) return;
+        setCurrentTeamId(watchId);
+    }, [watchId]);
 
     const updateDataCustodian = (formJSONUpdated: FormHydrationSchema) => {
         const custodianOverrides = DATA_CUSTODIAN_FIELDS.reduce((acc, key) => {
@@ -397,17 +393,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
             return;
         }
 
-        const getFirstNonHiddenSection = (schemaFields: FormHydration[]) => {
-            const nonHiddenField = schemaFields.find(field =>
-                hasVisibleFieldsForLocation(schemaFields, field.location!)
-            );
-            return nonHiddenField && nonHiddenField?.location?.split(".")[0];
-        };
-
-        const initialSection = getFirstNonHiddenSection(schemaFields) || "";
-        setSelectedFormSection(
-            (!isEditing && INITIAL_FORM_SECTION) || initialSection
-        );
+        setSelectedFormSection(INITIAL_FORM_SECTION);
     }, [schemaFields, selectedFormSection]);
 
     useEffect(() => {
@@ -431,7 +417,7 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
     }, [selectedFormSection, isDraft, existingFormData]);
 
     const handleLegendClick = (clickedIndex: number) => {
-        setSelectedFormSection(formSections[clickedIndex + 1]);
+        setSelectedFormSection(formSections[clickedIndex]);
     };
 
     const [navbarHeight, setNavbarHeight] = useState<string>("0");
@@ -529,6 +515,26 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                       },
                   };
         try {
+            const observations = formPayload?.metadata?.metadata?.observations;
+            if (Array.isArray(observations)) {
+                const personObservations = observations
+                    .filter(obj => obj.observedNode === "Persons")
+                    .sort(
+                        (a, b) =>
+                            new Date(b.observationDate) -
+                            new Date(a.observationDate)
+                    )
+                    .at(0);
+
+                if (
+                    personObservations &&
+                    formPayload.metadata.metadata.summary
+                ) {
+                    formPayload.metadata.metadata.summary.populationSize =
+                        Number(personObservations.measuredValue);
+                }
+            }
+
             // BES 11/24 Put in as a quick fix for teams with identifier < 2 characters long
             // This is very schema specific and should be removed once a schema update is made
             // to allow shorter identifiers.
@@ -713,59 +719,57 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                 actionButtonsEnabled={!isSaving}
             />
 
-            {currentSectionIndex === 0 && (
-                <IntroScreen
-                    defaultValue={watchType || []}
-                    setDatasetType={(value: string) => {
-                        setValue(DATASET_TYPE, value);
-                    }}
-                    teamOptions={teamOptions}
-                    handleOnUserInputChange={handleOnUserInputChange}
-                    defaultTeamId={watchId}
-                    isLoadingTeams={isLoadingTeams}
-                />
-            )}
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+                <Box
+                    sx={{
+                        flex: 1,
+                        padding: theme.spacing(1),
+                    }}>
+                    <FormLegend
+                        items={legendItems}
+                        handleClickItem={handleLegendClick}
+                        offsetTop={navbarHeight}
+                    />
+                </Box>
 
-            {currentSectionIndex > 0 && (
-                <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
-                    <Box
-                        sx={{
-                            flex: 1,
-                            padding: theme.spacing(1),
-                        }}>
-                        <FormLegend
-                            items={legendItems.filter(
-                                (item: LegendItem) =>
-                                    item.name !== INITIAL_FORM_SECTION &&
-                                    item.name !== SUBMISSON_FORM_SECTION
+                {currentSectionIndex === 0 && (
+                    <IntroScreen
+                        defaultValue={watchType || []}
+                        setDatasetType={(value: string) => {
+                            setValue(DATASET_TYPE, value);
+                        }}
+                        teamOptions={teamOptions}
+                        handleOnUserInputChange={handleOnUserInputChange}
+                        setDataCustodian={(value: number) =>
+                            setValue(DATA_CUSTODIAN_ID, value)
+                        }
+                        defaultTeamId={currentTeamId}
+                        isLoadingTeams={isLoadingTeams}
+                    />
+                )}
+
+                {currentSectionIndex < formSections.length - 1 &&
+                currentSectionIndex > 0 ? (
+                    <>
+                        <Box sx={{ flex: 2, p: 0 }}>
+                            {isStructuralMetadataSection && (
+                                <StructuralMetadataSection
+                                    selectedFormSection={selectedFormSection}
+                                    structuralMetadata={structuralMetadata}
+                                    fileProcessedAction={(
+                                        metadata: StructuralMetadata[]
+                                    ) => {
+                                        notificationService.apiSuccess(
+                                            t("uploadSuccess")
+                                        );
+                                        setStructuralMetadata(metadata);
+                                    }}
+                                    handleToggleUploading={setIsSaving}
+                                />
                             )}
-                            handleClickItem={handleLegendClick}
-                            offsetTop={navbarHeight}
-                        />
-                    </Box>
 
-                    {currentSectionIndex < formSections.length - 1 ? (
-                        <>
-                            <Box sx={{ flex: 2, p: 0 }}>
-                                {isStructuralMetadataSection && (
-                                    <StructuralMetadataSection
-                                        selectedFormSection={
-                                            selectedFormSection
-                                        }
-                                        structuralMetadata={structuralMetadata}
-                                        fileProcessedAction={(
-                                            metadata: StructuralMetadata[]
-                                        ) => {
-                                            notificationService.apiSuccess(
-                                                t("uploadSuccess")
-                                            );
-                                            setStructuralMetadata(metadata);
-                                        }}
-                                        handleToggleUploading={setIsSaving}
-                                    />
-                                )}
-
-                                {!isStructuralMetadataSection && (
+                            {!isStructuralMetadataSection &&
+                                currentSectionIndex > 0 && (
                                     <Form>
                                         <Paper
                                             sx={{
@@ -833,7 +837,8 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                         </Paper>
                                     </Form>
                                 )}
-                            </Box>
+                        </Box>
+                        {currentSectionIndex > 0 && (
                             <Paper
                                 style={{
                                     flex: 1,
@@ -852,8 +857,10 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                     />
                                 )}
                             </Paper>
-                        </>
-                    ) : (
+                        )}
+                    </>
+                ) : (
+                    currentSectionIndex > 0 && (
                         <Box sx={{ flex: 3, p: 0 }}>
                             <SubmissionScreen
                                 trigger={trigger}
@@ -862,9 +869,9 @@ const CreateDataset = ({ formJSON, teamId, user }: CreateDatasetProps) => {
                                 makeActiveDisabled={isSaving}
                             />
                         </Box>
-                    )}
-                </Box>
-            )}
+                    )
+                )}
+            </Box>
 
             <Box sx={{ padding: theme.spacing(1), margin: theme.spacing(2) }}>
                 <FormFooter>

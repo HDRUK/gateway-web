@@ -146,6 +146,24 @@ const generateEventsV1 = (data = {}): CMSPostsResponse<EventNode> => {
                         .toISOString(),
                     "2"
                 ),
+                generateEventNode(
+                    faker.date
+                        .between(
+                            "2025-01-01T00:00:00.000Z",
+                            "2025-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "3"
+                ),
+                generateEventNode(
+                    faker.date
+                        .between(
+                            "2026-01-01T00:00:00.000Z",
+                            "2026-03-01T00:00:00.000Z"
+                        )
+                        .toISOString(),
+                    "3"
+                ),
             ],
         },
         ...data,

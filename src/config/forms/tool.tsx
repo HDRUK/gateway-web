@@ -90,10 +90,14 @@ const formFields = [
         label: "Category",
         info: "Select from existing list",
         name: "type_category",
-        component: inputComponents.Select,
-        required: true,
-        options: [],
+        component: inputComponents.Autocomplete,
         multiple: true,
+        canCreate: false,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel,
     },
     {
         label: "Description",
@@ -124,10 +128,14 @@ const formFields = [
         label: "Programming language",
         info: "Programming languages, formalisms or frameworks. E.g. Python, RDF, GATE",
         name: "programming_language",
-        component: inputComponents.Select,
-        required: true,
-        options: [],
+        component: inputComponents.Autocomplete,
         multiple: true,
+        canCreate: false,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel,
     },
     {
         label: "Keywords (optional)",

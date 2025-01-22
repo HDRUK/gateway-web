@@ -37,7 +37,7 @@ const TOOLTIP_SUFFIX = "Tooltip";
 const DatasetRelationshipDialog = ({
     linkageDetails,
 }: DatasetRelationshipDialogProps) => {
-    const { showDialog } = useDialog();
+    const { hideDialog, showDialog } = useDialog();
     const { isLoggedIn, user } = useAuth();
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -133,7 +133,10 @@ const DatasetRelationshipDialog = ({
                                 <div>
                                     <Link
                                         href={`/${RouteName.DATASET_ITEM}/${linkage.id}`}>
-                                        <Typography variant="h3" component="p">
+                                        <Typography
+                                            variant="h3"
+                                            component="p"
+                                            onClick={() => hideDialog()}>
                                             {linkage.title}
                                         </Typography>
                                     </Link>
