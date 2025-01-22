@@ -16,6 +16,7 @@ import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import ActionDropdown from "../ActionDropdown";
+import { isValueNumber } from "@/interfaces/isValueNumber";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
@@ -88,7 +89,7 @@ const getColumns = ({
         cell: ({ row: { original } }) => {
             const dataCustodianId = get(original, PUBLISHERS_ID);
             // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
-            const isNumber = !Number.isNaN(dataCustodianId);
+            const isNumber = isValueNumber(dataCustodianId);
             const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
 
             return (

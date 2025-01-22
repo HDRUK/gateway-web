@@ -28,6 +28,7 @@ import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
+import { isValueNumber } from "@/interfaces/isValueNumber";
 
 interface ResultCardProps {
     result: SearchResultDataset;
@@ -202,7 +203,7 @@ const ResultCard = ({
         metadata.summary.abstract;
     const dataCustodianId = metadata.summary.publisher.gatewayId;
     // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
-    const isNumber = !Number.isNaN(dataCustodianId);
+    const isNumber = isValueNumber(dataCustodianId);
     const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
 
     return (
