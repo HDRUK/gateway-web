@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { FileUploadOutlined } from "@mui/icons-material";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -15,6 +16,7 @@ import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
@@ -26,6 +28,7 @@ interface RightPanelProps {
 const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showSidebar } = useSidebar();
+    const router = useRouter();
 
     const selectedDatasets = useMemo(() => {
         return Object.values(selected)
@@ -132,6 +135,11 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 : t("dataAccessRequest.buttonTooltip")
                         }>
                         <Button
+                            onClick={() =>
+                                router.push(
+                                    `/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${RouteName.CREATE}`
+                                )
+                            }
                             sx={{ mt: 2, width: "100%" }}
                             disabled={
                                 !(selectedDatasets.length > 0) ||
