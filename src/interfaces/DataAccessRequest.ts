@@ -7,7 +7,7 @@ interface DarQuestion {
     title: string;
     guidance: string;
     original_guidance: string;
-    required: number;
+    required: boolean;
     force_required: boolean;
     allow_guidance_override?: boolean;
     hasChanged: boolean;
