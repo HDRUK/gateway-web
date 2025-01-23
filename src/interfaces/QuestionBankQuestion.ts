@@ -63,18 +63,18 @@ interface QuestionBankVersion extends QuestionBankItem {
     child_versions: QuestionBankChildItem[];
 }
 
-interface QuestionValidation {
-    message: string;
-    min?: number;
-}
+// interface QuestionValidation {
+//     message: string;
+//     min?: number;
+// }
 
-interface QuestionFields {
-    title: string;
-    guidance: string;
-    options: [];
-    component: string;
-    validations: QuestionValidation[];
-}
+// interface QuestionFields {
+//     title: string;
+//     guidance: string;
+//     options: [];
+//     component: string;
+//     validations: QuestionValidation[];
+// }
 
 interface QuestionBankQuestion extends QBFields {
     question_id: number;

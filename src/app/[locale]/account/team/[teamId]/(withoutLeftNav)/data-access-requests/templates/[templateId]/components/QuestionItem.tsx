@@ -177,7 +177,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                                 alignItems: "top",
                             }}>
                             <IconButton
-                                sx={{ p: 0, m: 0 }}
+                                sx={{ p: 0, m: 0, alignSelf: "flex-start" }}
                                 disabled={!allowEdit}
                                 onClick={() => handleEdit()}>
                                 <EditIcon
