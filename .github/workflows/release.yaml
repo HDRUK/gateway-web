@@ -21,6 +21,7 @@ jobs:
     strategy:
       matrix:
         environment: [preprod, prod]
+    environment: ${{ matrix.environment }} 
     steps:
       - name: Checkout
         id: checkout
