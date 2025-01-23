@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
     QuestionBankQuestion,
@@ -16,9 +15,7 @@ import EditQuestion from "../../components/EditQuestion";
 const UpdateQuestion = ({ questionId }: { questionId: string }) => {
     const router = useRouter();
 
-    const [isLocked, setIsLocked] = useState(false);
-
-    const { data, isLoading } = useGet<QuestionBankQuestion>(
+    const { data } = useGet<QuestionBankQuestion>(
         `${apis.questionBankV1Url}/${questionId}`,
         {
             keepPreviousData: false,
@@ -32,21 +29,6 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
         }
     );
 
-    const lockQuestion = usePatch(`${apis.questionBankV1Url}`, {
-        subPath: "lock",
-        successNotificationsOn: false,
-    });
-
-    useEffect(() => {
-        if (!isLoading) {
-            if (!data?.locked) {
-                lockQuestion(questionId, {});
-            } else {
-                setIsLocked(true);
-            }
-        }
-    }, [isLoading, data, questionId, lockQuestion]);
-
     const onSubmit = async (payload: QuestionBankCreateUpdateQuestion) =>
         updateQuestion(questionId, payload).then(() => {
             router.push(
@@ -54,7 +36,7 @@ const UpdateQuestion = ({ questionId }: { questionId: string }) => {
             );
         });
 
-    if (isLocked) {
+    if (data?.locked) {
         return <ErrorDisplay variant={423} />;
     }
 

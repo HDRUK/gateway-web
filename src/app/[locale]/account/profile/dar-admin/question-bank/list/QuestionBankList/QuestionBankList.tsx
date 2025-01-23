@@ -88,13 +88,13 @@ const QuestionBankList = () => {
     }, [searchParams?.get("tab")]);
 
     const { data, isLoading } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}?${new URLSearchParams(queryParams)}`
+        `${apis.questionBankV1Url}?${new URLSearchParams(queryParams)}`,
+        { withPagination: true }
     );
+
     if (isLoading) {
         return <Loading />;
     }
-
-    const list = data || [];
 
     const tabsList = [
         { label: "Standard", value: "STANDARD" },
@@ -118,13 +118,13 @@ const QuestionBankList = () => {
                         />
                     </Box>
                 </Box>
-                {list?.map(question => (
+                {data?.list?.map(question => (
                     <QuestionListItem
-                        key={question?.id}
+                        key={question.question_id}
                         data={question}
                         actions={actions}
                     />
-                ))}{" "}
+                ))}
             </>
         ),
     }));
