@@ -2,9 +2,11 @@ import * as yup from "yup";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import { colors } from "@/config/theme";
 import { inputComponents } from ".";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
     section_id: 1,
+    team_ids: [],
     title: "",
     guidance: "",
     component: inputComponents.TextField,
@@ -36,6 +38,20 @@ const sectionField = {
     component: inputComponents.Select,
     required: true,
     options: [],
+};
+
+const custodiansField = {
+    label: "Custodian Selection",
+    name: "team_ids",
+    component: inputComponents.Autocomplete,
+    required: true,
+    options: [],
+    multiple: true,
+    isOptionEqualToValue: (
+        option: { value: string | number; label: string },
+        value: string | number
+    ) => option.value === value,
+    getChipLabel,
 };
 
 const formFields = [
@@ -152,6 +168,8 @@ const validationSchema = yup
     .shape({
         default: yup.boolean(),
         section_id: yup.string().required().label("Section"),
+        //TODO: add teams validation here
+        team_ids: yup.array().required().label("Custodian Selection"),
         title: yup.string().required().label("Question Title"),
         guidance: yup.string().required().label("Default Guidance"),
         component: yup.string().required().label("Question Type"),
@@ -175,6 +193,7 @@ const validationSchema = yup
 
 export {
     sectionField,
+    custodiansField,
     defaultValues as questionDefaultValues,
     formFields as questionFormFields,
     validationSchema as questionValidationSchema,

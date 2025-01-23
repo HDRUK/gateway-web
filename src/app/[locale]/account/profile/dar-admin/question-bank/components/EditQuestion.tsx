@@ -23,10 +23,12 @@ import {
     questionDefaultValues,
     questionValidationSchema,
     sectionField,
+    custodiansField,
 } from "@/config/forms/questionBank";
 import { colors } from "@/config/theme";
 import FormQuestions from "./FormQuestions";
 import PreviewQuestion from "./PreviewQuestion";
+import { User } from "@/interfaces/User";
 
 interface EditQuestionProps {
     onSubmit: (
@@ -46,6 +48,15 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         `${apis.dataAccessSectionV1Url}`
     );
 
+    const { data: teams = [] } = useGet<User[]>(
+        `${apis.teamsV1Url}?per_page=1000&`, //is_question_bank=true`, //TODO check which teams should be available and how to paginate
+        {
+            shouldFetch: true,
+            withPagination: true,
+        }
+    );
+    
+    console.log(teams);
     const { control, handleSubmit, reset, watch, formState } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
@@ -84,6 +95,25 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                                 sectionData?.map(section => ({
                                     value: section.id,
                                     label: section.name,
+                                })) || []
+                            }
+                        />
+                    </Paper>
+
+                    <Paper
+                        sx={{
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            padding: 2,
+                        }}>
+                        <InputWrapper
+                            key={custodiansField.name}
+                            control={control}
+                            {...custodiansField}
+                            options={
+                                teams?.list?.map(team => ({
+                                    value: team.id,
+                                    label: team.name,
                                 })) || []
                             }
                         />

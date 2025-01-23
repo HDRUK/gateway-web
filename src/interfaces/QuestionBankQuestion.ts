@@ -18,6 +18,7 @@ type Nested = {
 
 interface QuestionBankQuestionForm extends QBFields {
     section_id: number;
+    team_ids: number[];
     children: QBFields[];
     default: number;
     options: [];
@@ -33,7 +34,7 @@ interface QuestionBankCreateUpdateQuestion {
     required: boolean;
     allow_guidance_override: number;
     force_required: number;
-    team_id?: number;
+    team_ids?: number[];
     user_id?: number;
     section_id: number;
     field: FormHydrationField;
@@ -86,6 +87,7 @@ interface QuestionBankQuestion extends QBFields {
     force_required: boolean;
     allow_guidance_override: boolean;
     section_id: number;
+    team_ids: number[];
     version_id: number;
     user_id: number;
     default: boolean;
