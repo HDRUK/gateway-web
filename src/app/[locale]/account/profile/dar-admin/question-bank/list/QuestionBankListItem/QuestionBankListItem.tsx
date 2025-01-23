@@ -23,7 +23,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
 
     const { title, guidance, component } = data;
 
-    if (!title) return null;
+    if (!title) return;
 
     const hydratedActions = actions.map(action => {
         return {
