@@ -19,11 +19,11 @@ interface QuestionCardProps {
 }
 
 const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
-    if (data === undefined) return null;
+    if (!data) return;
 
     const { title, guidance, component } = data;
 
-    if (!title) return null;
+    if (!title) return;
 
     const hydratedActions = actions.map(action => {
         return {
@@ -58,7 +58,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                             variant="outlined"
                             label={component}
                             color="primary"
-                            sx={{ mx: 2 }}
+                            sx={{ mr: 2 }}
                         />
                         {title}
                     </Typography>
