@@ -366,7 +366,8 @@ const CollectionForm = ({
             }
             return keywordArray;
         };
-
+        console.log(formData.description);
+        console.log(formData.description.length);
         const payload: CollectionSubmission = {
             ...formData,
             status,
