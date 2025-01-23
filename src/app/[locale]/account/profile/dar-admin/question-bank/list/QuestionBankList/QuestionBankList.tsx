@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
@@ -27,13 +26,9 @@ const QuestionBankList = () => {
 
     const searchParams = useSearchParams();
 
-    const [queryParams, setQueryParams] = useState({
-        category: "mandatory",
-        status: "live",
-    });
-    const tab = searchParams?.get("tab");
+    const tab = searchParams?.get("tab") || "standard";
 
-    const showArchiveButton = tab !== "ARCHIVED";
+    const showArchiveButton = tab !== "archived";
 
     const actions = [
         {
@@ -58,37 +53,8 @@ const QuestionBankList = () => {
               ]),
     ];
 
-    useEffect(() => {
-        const getStatusFromTab = (tab: string) => {
-            switch (true) {
-                case tab === "ARCHIVED":
-                    return "archived";
-                default:
-                    return "-archived";
-            }
-        };
-
-        const getCategoryFromTab = (tab: string) => {
-            switch (true) {
-                case tab === "CUSTOM":
-                    return "custom";
-                default:
-                    return "-custom";
-            }
-        };
-
-        setQueryParams(previous => ({
-            ...previous,
-            status: getStatusFromTab(searchParams?.get("tab") || "STANDARD"),
-            category: getCategoryFromTab(
-                searchParams?.get("tab") || "STANDARD"
-            ),
-        }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams?.get("tab")]);
-
     const { data, isLoading } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}?${new URLSearchParams(queryParams)}`,
+        `${apis.questionBankV1Url}/${tab}?is_child=0`,
         { withPagination: true }
     );
 
@@ -97,9 +63,9 @@ const QuestionBankList = () => {
     }
 
     const tabsList = [
-        { label: "Standard", value: "STANDARD" },
-        { label: "Custom", value: "CUSTOM" },
-        { label: "Archived", value: "ARCHIVED" },
+        { label: "Standard", value: "standard" },
+        { label: "Custom", value: "custom" },
+        { label: "Archived", value: "archived" },
     ].map(tabItem => ({
         label: `${tabItem.label} `,
         value: tabItem.value,
