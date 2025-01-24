@@ -18,7 +18,8 @@
         "build-storybook": "storybook build",
         "pre-commit": "npx lint-staged",
         "chromatic": "chromatic --exit-zero-on-changes",
-        "seeder": "tsx ./sitemap-seeder.ts"
+        "seeder": "tsx ./sitemap-seeder.ts",
+        "semantic": "npx semantic-release --dry-run"
     },
     "dependencies": {
         "@dnd-kit/core": "^6.1.0",
@@ -100,6 +101,12 @@
         "yup": "^1.2.0"
     },
     "devDependencies": {
+        "@semantic-release/changelog": "^6.0.3",
+        "@semantic-release/commit-analyzer": "^13.0.0",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "11.0.1",
+        "@semantic-release/npm": "^12.0.1",
+        "@semantic-release/release-notes-generator": "^14.0.1",
         "@storybook/addon-essentials": "^7.6.3",
         "@storybook/addon-interactions": "^7.6.3",
         "@storybook/addon-links": "^7.6.3",
@@ -133,6 +140,7 @@
         "lint-staged": "^13.2.0",
         "next-router-mock": "^0.9.10",
         "prettier": "^2.8.7",
+        "semantic-release": "^24.2.1",
         "storybook": "^7.6.3",
         "storybook-react-i18next": "^2.0.9"
     }
