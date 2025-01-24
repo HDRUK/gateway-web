@@ -65,7 +65,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const allFields = watch();
 
     const checkboxValue = watch("all_custodians");
-    // console.log("checkboxValue", checkboxValue);
+    console.log("teams", teams);
     console.log('formState', formState);
     useEffect(() => {
         if (question) {
@@ -76,7 +76,12 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     console.log(question?.all_custodians);
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
-        onSubmit(formData);
+        const modifiedFormData = {
+            ...formData,
+            team_ids: formData.all_custodians ? [] : formData.team_ids
+        }
+        console.log('modifiedFormData', modifiedFormData);
+        onSubmit(modifiedFormData);
     };
     console.log('all_custodians', getValues("all_custodians"));
     const tabsList = [
