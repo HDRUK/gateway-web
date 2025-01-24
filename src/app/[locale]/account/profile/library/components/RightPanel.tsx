@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
+import { FileUploadOutlined } from "@mui/icons-material";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -14,6 +16,7 @@ import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
@@ -25,6 +28,7 @@ interface RightPanelProps {
 const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showSidebar } = useSidebar();
+    const router = useRouter();
 
     const selectedDatasets = useMemo(() => {
         return Object.values(selected)
@@ -36,6 +40,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                     teamId: Number(item.teamId),
                     teamName: item.teamName,
                     teamMemberOf: item.teamMemberOf,
+                    darEnabled: item.darEnabled,
                 };
             });
     }, [selected]);
@@ -110,6 +115,40 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                             disabled={!(selectedDatasets.length > 0)}>
                             <QuestionAnswerIcon sx={{ pr: 1 }} />
                             {t("feasibilityEnquiries.buttonText")}
+                        </Button>
+                    </Tooltip>
+                </Box>
+                <Divider sx={{ my: 2 }} />
+                <Box sx={{ p: 0 }}>
+                    <Typography variant="h2">
+                        {t("dataAccessRequest.title")}
+                    </Typography>
+                    <Typography>{t("dataAccessRequest.text")}</Typography>
+                    <Tooltip
+                        title={
+                            !selectedDatasets.every(
+                                dataset => dataset.darEnabled
+                            )
+                                ? t("dataAccessRequest.buttonTooltipDar")
+                                : selectedDatasets.length > 0
+                                ? ""
+                                : t("dataAccessRequest.buttonTooltip")
+                        }>
+                        <Button
+                            onClick={() =>
+                                router.push(
+                                    `/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${RouteName.CREATE}`
+                                )
+                            }
+                            sx={{ mt: 2, width: "100%" }}
+                            disabled={
+                                !(selectedDatasets.length > 0) ||
+                                !selectedDatasets.every(
+                                    dataset => dataset.darEnabled
+                                )
+                            }>
+                            <FileUploadOutlined sx={{ pr: 1 }} />
+                            {t("dataAccessRequest.buttonText")}
                         </Button>
                     </Tooltip>
                 </Box>

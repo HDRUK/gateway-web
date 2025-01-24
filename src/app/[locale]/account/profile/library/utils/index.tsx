@@ -31,6 +31,7 @@ const getColumns = ({
                 dataCustodianId,
                 dataCustodian,
                 dataCustodianMemberOf,
+                darEnabled,
             } = row.original;
             return (
                 <div style={{ textAlign: "center" }}>
@@ -45,6 +46,7 @@ const getColumns = ({
                                     teamId: dataCustodianId,
                                     teamName: dataCustodian,
                                     teamMemberOf: dataCustodianMemberOf,
+                                    darEnabled,
                                 },
                             })
                         }

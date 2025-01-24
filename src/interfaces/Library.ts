@@ -19,6 +19,7 @@ interface SelectedLibrary {
         teamId: number;
         teamName: string;
         teamMemberOf: string;
+        darEnabled: boolean;
     };
 }
 
