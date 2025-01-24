@@ -19,6 +19,7 @@ type Nested = {
 interface QuestionBankQuestionForm extends QBFields {
     section_id: number;
     team_ids: number[];
+    all_custodians: boolean;
     children: QBFields[];
     default: number;
     options: [];

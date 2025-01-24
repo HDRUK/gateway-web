@@ -11,6 +11,7 @@ import {
     QuestionBankCreateUpdateQuestion,
 } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
+import { User } from "@/interfaces/User";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -23,12 +24,11 @@ import {
     questionDefaultValues,
     questionValidationSchema,
     sectionField,
-    custodiansField,
+    custodiansFields,
 } from "@/config/forms/questionBank";
 import { colors } from "@/config/theme";
 import FormQuestions from "./FormQuestions";
 import PreviewQuestion from "./PreviewQuestion";
-import { User } from "@/interfaces/User";
 
 interface EditQuestionProps {
     onSubmit: (
@@ -55,7 +55,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
             withPagination: true,
         }
     );
-    
+
     console.log(teams);
     const { control, handleSubmit, reset, watch, formState } =
         useForm<QuestionBankQuestionForm>({
@@ -65,6 +65,8 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
 
     const allFields = watch();
 
+    const checkboxValue = watch("question_type");
+    console.log("checkboxValue", checkboxValue);
     useEffect(() => {
         if (question) {
             reset(question);
@@ -107,15 +109,21 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                             padding: 2,
                         }}>
                         <InputWrapper
-                            key={custodiansField.name}
+                            key={custodiansFields[0].name}
                             control={control}
-                            {...custodiansField}
+                            {...custodiansFields[0]}
+                        />
+                        <InputWrapper
+                            key={custodiansFields[1].name}
+                            control={control}
+                            {...custodiansFields[1]}
                             options={
                                 teams?.list?.map(team => ({
                                     value: team.id,
                                     label: team.name,
                                 })) || []
                             }
+                            disabled={checkboxValue}
                         />
                     </Paper>
 

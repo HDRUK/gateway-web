@@ -40,19 +40,27 @@ const sectionField = {
     options: [],
 };
 
-const custodiansField = {
-    label: "Custodian Selection",
-    name: "team_ids",
-    component: inputComponents.Autocomplete,
-    required: true,
-    options: [],
-    multiple: true,
-    isOptionEqualToValue: (
-        option: { value: string | number; label: string },
-        value: string | number
-    ) => option.value === value,
-    getChipLabel,
-};
+const custodiansFields = [
+    {
+        label: "Available to all Custodians",
+        name: "question_type",
+        component: inputComponents.Checkbox,
+    },
+    {
+        label: "Custodian Selection",
+        name: "team_ids",
+        component: inputComponents.Autocomplete,
+        required: true,
+        options: [],
+        multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel,
+    }
+];
+    
 
 const formFields = [
     {
@@ -170,6 +178,7 @@ const validationSchema = yup
         section_id: yup.string().required().label("Section"),
         //TODO: add teams validation here
         team_ids: yup.array().required().label("Custodian Selection"),
+        all_custodians: yup.boolean(),
         title: yup.string().required().label("Question Title"),
         guidance: yup.string().required().label("Default Guidance"),
         component: yup.string().required().label("Question Type"),
@@ -193,7 +202,7 @@ const validationSchema = yup
 
 export {
     sectionField,
-    custodiansField,
+    custodiansFields,
     defaultValues as questionDefaultValues,
     formFields as questionFormFields,
     validationSchema as questionValidationSchema,
