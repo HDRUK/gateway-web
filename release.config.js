@@ -1,7 +1,7 @@
 module.exports = 
 {
   "branches": [
-    "chore/GAT-6176"
+    "main"
   ],
   "plugins": [
     [
@@ -15,7 +15,6 @@ module.exports =
       }
     ],
     "@semantic-release/github",
-    "@semantic-release/npm",
     [
       "@semantic-release/git",
       {
