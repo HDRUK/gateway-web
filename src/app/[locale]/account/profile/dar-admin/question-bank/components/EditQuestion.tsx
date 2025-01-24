@@ -64,7 +64,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
 
     const allFields = watch();
 
-    // const checkboxValue = watch("all_custodians");
+    const checkboxValue = watch("all_custodians");
     // console.log("checkboxValue", checkboxValue);
     console.log('formState', formState);
     useEffect(() => {
@@ -125,7 +125,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                                     label: team.name,
                                 })) || []
                             }
-                            // disabled={checkboxValue}
+                            disabled={checkboxValue}
                         />
                     </Paper>
 
