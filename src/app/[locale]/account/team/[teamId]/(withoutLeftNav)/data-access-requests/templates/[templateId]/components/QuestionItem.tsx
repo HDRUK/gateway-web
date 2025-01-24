@@ -219,36 +219,32 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                                 }
                                 contents={
                                     option?.children.length ? (
-                                        <>
-                                            {option?.children?.map(child => (
-                                                <Box>
-                                                    <Typography
-                                                        gutterBottom
-                                                        variant="h4"
-                                                        component="p"
-                                                        sx={{ mb: 1 }}>
-                                                        <b>{child.title}</b>
-                                                    </Typography>
-                                                    <Typography
-                                                        sx={{ p: 1, pl: 0 }}
-                                                        gutterBottom
-                                                        variant="h5"
-                                                        component="p">
-                                                        {child.guidance}
-                                                    </Typography>
+                                        option?.children?.map(child => (
+                                            <Box>
+                                                <Typography
+                                                    gutterBottom
+                                                    variant="h4"
+                                                    component="p"
+                                                    sx={{ mb: 1 }}>
+                                                    <b>{child.title}</b>
+                                                </Typography>
+                                                <Typography
+                                                    sx={{ p: 1, pl: 0 }}
+                                                    gutterBottom
+                                                    variant="h5"
+                                                    component="p">
+                                                    {child.guidance}
+                                                </Typography>
 
-                                                    <Typography>
-                                                        <Chip
-                                                            variant="outlined"
-                                                            label={
-                                                                child.component
-                                                            }
-                                                            color="primary"
-                                                        />
-                                                    </Typography>
-                                                </Box>
-                                            ))}
-                                        </>
+                                                <Typography>
+                                                    <Chip
+                                                        variant="outlined"
+                                                        label={child.component}
+                                                        color="primary"
+                                                    />
+                                                </Typography>
+                                            </Box>
+                                        ))
                                     ) : (
                                         <Typography>
                                             {t("noNestedQuestions")}

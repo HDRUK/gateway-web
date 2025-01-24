@@ -7,7 +7,7 @@ import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement.updatePage`;
 
-const BackButton = ({ questionId }: { questionId: string }) => {
+const BackButton = () => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
 

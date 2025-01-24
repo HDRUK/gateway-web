@@ -30,7 +30,7 @@ const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
                     name: title,
                     component,
                     info: guidance,
-                    required: required,
+                    required,
                     ...(question.component === inputComponents.RadioGroup && {
                         radios: options?.map(option => ({
                             label: option.label,
