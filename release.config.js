@@ -27,7 +27,7 @@ module.exports =
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
-  ],
-  dryRun: true,// this will not trigger a release, but will create a changelog
+  ]
+
 }
   
