@@ -7,9 +7,9 @@ interface DarQuestion {
     title: string;
     guidance: string;
     original_guidance: string;
-    required: number;
-    force_required: number;
-    allow_guidance_override?: number;
+    required: boolean;
+    force_required: boolean;
+    allow_guidance_override?: boolean;
     hasChanged: boolean;
     component: string;
     question_json: FormHydration;

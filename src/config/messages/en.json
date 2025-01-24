@@ -691,7 +691,10 @@
                             "questionBank": {
                                 "title": "Question Bank",
                                 "description": "Other available questions you can add from the question bank."
-                            }
+                            },
+                            "noNestedQuestions": "No nested questions",
+                            "forcedRequired": "Forced required question",
+                            "parentQuestionOption": "Parent question option"
                         }
                     }
                 }

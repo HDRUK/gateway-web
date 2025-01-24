@@ -19,13 +19,10 @@ interface QuestionCardProps {
 }
 
 const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
-    if (data === undefined) return null;
+    if (!data) return null;
 
-    const question = JSON.parse(data?.latest_version?.question_json);
+    const { title, guidance, component } = data;
 
-    const title = question?.title;
-    const guidance = question?.guidance;
-    const component = question?.field?.component;
     if (!title) return null;
 
     const hydratedActions = actions.map(action => {
@@ -61,7 +58,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                             variant="outlined"
                             label={component}
                             color="primary"
-                            sx={{ mx: 2 }}
+                            sx={{ mr: 2 }}
                         />
                         {title}
                     </Typography>
@@ -89,15 +86,18 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                             sx={{
                                 color: "#868E96",
                             }}>
-                            {`Question ID - ${data.id}   Version - ${
-                                data?.latest_version?.version
+                            {`Question ID - ${data.question_id}   Version - ${
+                                data.version_id
                             }   Created - ${formatDate(data.created_at)}`}
                         </Typography>
                         <Typography component="span">{guidance}</Typography>
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    <CardActions actions={hydratedActions} id={data.id} />
+                    <CardActions
+                        actions={hydratedActions}
+                        id={data.question_id}
+                    />
                 </Box>
             </Box>
         </Card>

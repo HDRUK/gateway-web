@@ -2,7 +2,9 @@ import { useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { useTranslations } from "next-intl";
 import { DarQuestion } from "@/interfaces/DataAccessRequest";
+import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Chip from "@/components/Chip";
@@ -17,12 +19,15 @@ import {
     RestartAltIcon,
 } from "@/consts/icons";
 
+const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
+
 type QuestionItemProps = {
     task: DarQuestion;
     setTasks: Dispatch<SetStateAction<DarQuestion[]>>;
 };
 
 const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
+    const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
     const { showModal } = useModal();
 
     const [currentTask, setCurrentTask] = useState(task);
@@ -38,11 +43,11 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     });
 
     const allowEditRequired = useMemo(
-        () => currentTask.force_required === 0,
+        () => !currentTask.force_required,
         [currentTask]
     );
     const allowEditGuidance = useMemo(
-        () => currentTask.allow_guidance_override === 1,
+        () => currentTask.allow_guidance_override,
         [currentTask]
     );
     const allowEdit = useMemo(
@@ -129,7 +134,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         });
     };
 
-    const showLock = useMemo(() => currentTask.required === 1, [currentTask]);
+    const showLock = useMemo(() => !!currentTask.required, [currentTask]);
 
     return (
         <Card
@@ -138,8 +143,16 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                 borderColor: !allowEditRequired ? "red" : "lightgrey",
                 borderRadius: 2,
             }}>
-            <CardContent sx={{ p: 0, m: 0, alignItems: "center" }}>
-                <Box sx={{ p: 1, m: 1, ml: 0, width: "100%" }}>
+            <CardContent
+                sx={{
+                    p: 0,
+                    m: 0,
+                    alignItems: "center",
+                    "&:last-child": {
+                        pb: 0,
+                    },
+                }}>
+                <Box sx={{ width: "100%" }}>
                     <Box
                         sx={{
                             display: "flex",
@@ -152,8 +165,8 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             gutterBottom
                             variant="h4"
                             component="div"
-                            sx={{ mb: 1 }}>
-                            <b> {currentTask.title} </b>
+                            sx={{ mb: 1, fontWeight: "bold" }}>
+                            {currentTask.title}
                         </Typography>
 
                         <Box
@@ -164,7 +177,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                                 alignItems: "top",
                             }}>
                             <IconButton
-                                sx={{ p: 0, m: 0 }}
+                                sx={{ p: 0, m: 0, alignSelf: "flex-start" }}
                                 disabled={!allowEdit}
                                 onClick={() => handleEdit()}>
                                 <EditIcon
@@ -180,10 +193,10 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                         </Box>
                     </Box>
                     <Typography
-                        sx={{ p: 1 }}
+                        sx={{ p: 1, pl: 0 }}
                         gutterBottom
                         variant="h5"
-                        component="div">
+                        component="p">
                         {currentTask.guidance}
                     </Typography>
                     <Typography>
@@ -191,14 +204,61 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             variant="outlined"
                             label={currentTask.component}
                             color="primary"
-                            sx={{ mx: 2 }}
                         />
                     </Typography>
+
+                    <Box sx={{ mt: 2, p: 0 }}>
+                        {currentTask?.options?.map(option => (
+                            <Accordion
+                                key={option.label}
+                                heading={
+                                    <Typography>
+                                        {t("parentQuestionOption")}: (
+                                        {option.label})
+                                    </Typography>
+                                }
+                                contents={
+                                    option?.children.length ? (
+                                        option?.children?.map(child => (
+                                            <Box>
+                                                <Typography
+                                                    gutterBottom
+                                                    variant="h4"
+                                                    component="p"
+                                                    sx={{ mb: 1 }}>
+                                                    <b>{child.title}</b>
+                                                </Typography>
+                                                <Typography
+                                                    sx={{ p: 1, pl: 0 }}
+                                                    gutterBottom
+                                                    variant="h5"
+                                                    component="p">
+                                                    {child.guidance}
+                                                </Typography>
+
+                                                <Typography>
+                                                    <Chip
+                                                        variant="outlined"
+                                                        label={child.component}
+                                                        color="primary"
+                                                    />
+                                                </Typography>
+                                            </Box>
+                                        ))
+                                    ) : (
+                                        <Typography>
+                                            {t("noNestedQuestions")}
+                                        </Typography>
+                                    )
+                                }
+                            />
+                        ))}
+                    </Box>
                 </Box>
             </CardContent>
             {showLock && (
                 <TooltipIcon
-                    content={<div>forced required question</div>}
+                    content={<div>{t("forcedRequired")}</div>}
                     icon={<LockIcon sx={{ color: "grey" }} />}
                     label=""
                 />

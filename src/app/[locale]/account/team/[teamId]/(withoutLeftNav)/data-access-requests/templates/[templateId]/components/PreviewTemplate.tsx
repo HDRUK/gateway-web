@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { DarQuestion } from "@/interfaces/DataAccessRequest";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import { inputComponents } from "@/config/forms";
 import { renderFormHydrationField } from "@/utils/formHydration";
 
 interface PreviewTemplateProps {
@@ -20,22 +21,32 @@ const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
                 padding: 2,
             }}>
             {questions.map(question => {
-                const hydration = question.question_json;
-                const { title, guidance } = question;
-                if (!hydration.field) return <Loading />;
+                if (!question) return <Loading />;
 
-                const formField = {
-                    ...hydration.field,
-                    required: question.required === 1,
+                const { title, component, guidance, options, required } =
+                    question;
+
+                const field = {
                     name: title,
+                    component,
                     info: guidance,
+                    required,
+                    ...(question.component === inputComponents.RadioGroup && {
+                        radios: options?.map(option => ({
+                            label: option.label,
+                            value: option.label,
+                        })),
+                    }),
+                    ...(question.component ===
+                        inputComponents.CheckboxGroup && {
+                        checkboxes: options?.map(option => ({
+                            label: option.label,
+                            value: option.label,
+                        })),
+                    }),
                 };
 
-                return renderFormHydrationField(
-                    formField,
-                    control,
-                    hydration.title
-                );
+                return renderFormHydrationField(field, control, title);
             })}
         </Paper>
     );

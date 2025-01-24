@@ -21,7 +21,10 @@ const EditTemplatePage = ({
     return (
         <>
             <BackButton onClick={onClick} label="Back to DAR admin" />
-            <EditTemplate templateId={params.templateId} />
+            <EditTemplate
+                templateId={params.templateId}
+                teamId={params.teamId}
+            />
         </>
     );
 };

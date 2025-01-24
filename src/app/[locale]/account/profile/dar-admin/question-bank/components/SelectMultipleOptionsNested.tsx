@@ -50,6 +50,7 @@ const SelectMultipleOptions = ({
                     allow_guidance_override: false,
                     force_required: false,
                     validations: [],
+                    options: [],
                 },
             ],
         });

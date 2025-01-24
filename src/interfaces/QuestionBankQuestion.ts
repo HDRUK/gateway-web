@@ -2,9 +2,9 @@ import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { FormHydrationField } from "./FormHydration";
 
 interface QBFields {
-    guidance: string;
     title: string;
-    label: string;
+    guidance: string;
+    label?: string;
     required: boolean;
     allow_guidance_override: boolean;
     force_required: boolean;
@@ -63,19 +63,36 @@ interface QuestionBankVersion extends QuestionBankItem {
     child_versions: QuestionBankChildItem[];
 }
 
-interface QuestionBankQuestion {
-    id: number;
+// interface QuestionValidation {
+//     message: string;
+//     min?: number;
+// }
+
+// interface QuestionFields {
+//     title: string;
+//     guidance: string;
+//     options: [];
+//     component: string;
+//     validations: QuestionValidation[];
+// }
+
+interface QuestionBankQuestion extends QBFields {
+    question_id: number;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;
-    latest_version: QuestionBankVersion;
-    versions: QuestionBankVersion[];
-    locked: number;
-    required: number;
-    force_required: number;
-    allow_guidance_override: number;
+    locked: boolean;
+    required: boolean;
+    force_required: boolean;
+    allow_guidance_override: boolean;
     section_id: number;
+    version_id: number;
     user_id: number;
+    default: boolean;
+    archived: boolean;
+    archived_date: string | null;
+    is_child: number;
+    question_type: string;
 }
 
 export type {
