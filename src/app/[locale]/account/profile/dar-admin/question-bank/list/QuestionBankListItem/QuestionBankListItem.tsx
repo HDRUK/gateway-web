@@ -19,11 +19,11 @@ interface QuestionCardProps {
 }
 
 const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
-    if (!data) return;
+    if (!data) return null;
 
     const { title, guidance, component } = data;
 
-    if (!title) return;
+    if (!title) return null;
 
     const hydratedActions = actions.map(action => {
         return {

@@ -6,17 +6,9 @@ describe("Question Bank Question Card", () => {
     const mockResult = generateQuestionBankQuestion();
     it("should render the title and guidance from the question JSON", async () => {
         render(<QuestionBankListItem data={mockResult} actions={[]} />);
-        expect(
-            screen.getByText(
-                JSON.parse(mockResult.latest_version.question_json).title
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByText(mockResult.title)).toBeInTheDocument();
 
-        expect(
-            screen.getByText(
-                JSON.parse(mockResult.latest_version.question_json).guidance
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByText(mockResult.guidance)).toBeInTheDocument();
 
         expect(
             screen.getByText(mockResult.locked ? "Locked" : "Available")
