@@ -16,6 +16,7 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
     default: true,
     validations: [],
     options: [],
+    all_custodians: true,
 };
 
 const supportedComponents = [
@@ -43,7 +44,7 @@ const sectionField = {
 const custodiansFields = [
     {
         label: "Available to all Custodians",
-        name: "question_type",
+        name: "all_custodians",
         component: inputComponents.Checkbox,
     },
     {

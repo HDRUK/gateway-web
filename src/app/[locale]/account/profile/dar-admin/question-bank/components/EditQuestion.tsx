@@ -56,8 +56,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         }
     );
 
-    console.log(teams);
-    const { control, handleSubmit, reset, watch, formState } =
+    const { control, handleSubmit, reset, watch, getValues, formState } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
@@ -65,18 +64,21 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
 
     const allFields = watch();
 
-    const checkboxValue = watch("question_type");
-    console.log("checkboxValue", checkboxValue);
+    // const checkboxValue = watch("all_custodians");
+    // console.log("checkboxValue", checkboxValue);
+    console.log('formState', formState);
     useEffect(() => {
         if (question) {
             reset(question);
         }
     }, [reset, question, sectionData]);
 
+    console.log(question?.all_custodians);
+
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         onSubmit(formData);
     };
-
+    console.log('all_custodians', getValues("all_custodians"));
     const tabsList = [
         {
             label: "Edit",
@@ -123,7 +125,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                                     label: team.name,
                                 })) || []
                             }
-                            disabled={checkboxValue}
+                            // disabled={checkboxValue}
                         />
                     </Paper>
 

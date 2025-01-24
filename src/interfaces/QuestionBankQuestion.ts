@@ -10,6 +10,8 @@ interface QBFields {
     force_required: boolean;
     component: ComponentTypes;
     options: [];
+    all_custodians: boolean;
+    team_ids: number[];
 }
 
 type Nested = {
@@ -42,6 +44,7 @@ interface QuestionBankCreateUpdateQuestion {
     guidance: string;
     title: string;
     options: NestedOption[];
+    all_custodians: boolean;
 }
 
 interface QuestionBankItem {
@@ -95,7 +98,7 @@ interface QuestionBankQuestion extends QBFields {
     archived: boolean;
     archived_date: string | null;
     is_child: number;
-    question_type: string;
+    all_custodians: boolean;
 }
 
 export type {
