@@ -342,7 +342,7 @@
                             },
                             "dataAccessRequest": {
                                 "title": "Data Access Request",
-                                "text": "Start your DAR application, not all Data Custodians on the Gateway have this feature enabled. When DAR is not enabled, raise a feasibility enquiry to contact them directly about datasets.",
+                                "text": "Start your DAR application. Not all Data Custodians on the Gateway have this feature enabled. When DAR is not enabled, raise a feasibility enquiry to contact them directly about datasets.",
                                 "buttonText": "Start a Data Access Request",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template"
