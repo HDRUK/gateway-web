@@ -1,5 +1,5 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { FormHydrationField } from "./FormHydration";
+import { Team } from "./Team";
 
 interface QBFields {
     title: string;
@@ -81,7 +81,7 @@ interface QuestionBankVersion extends QuestionBankItem {
 // }
 
 interface QuestionBankQuestion extends QBFields {
-    teams: any;
+    teams: Team[];
     question_id: number;
     created_at: string;
     updated_at: string;

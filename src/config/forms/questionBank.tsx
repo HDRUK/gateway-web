@@ -1,8 +1,8 @@
 import * as yup from "yup";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { colors } from "@/config/theme";
 import { inputComponents } from ".";
-import { getChipLabel } from "@/components/Autocomplete/utils";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
     section_id: 1,
@@ -59,9 +59,8 @@ const custodiansFields = [
             value: string | number
         ) => option.value === value,
         getChipLabel,
-    }
+    },
 ];
-    
 
 const formFields = [
     {

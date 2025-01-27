@@ -120,7 +120,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         setSearchName(value);
     };
 
-    const { control, handleSubmit, reset, watch, getValues, formState } =
+    const { control, handleSubmit, reset, watch, formState } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
