@@ -1,5 +1,11 @@
-interface GetOptions {
-    suppressError: boolean;
+interface Cache {
+    tag: string;
+    revalidate?: number;
 }
 
-export type { GetOptions };
+interface GetOptions {
+    suppressError?: boolean;
+    cache?: Cache;
+}
+
+export type { GetOptions, Cache };

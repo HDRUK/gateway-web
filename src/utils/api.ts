@@ -10,7 +10,7 @@ import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
-import { GetOptions } from "@/interfaces/Response";
+import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
@@ -20,35 +20,31 @@ import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
 import { getUserFromToken } from "@/utils/cookies";
 
-export interface Cache {
-    tag: string;
-    revalidate?: number;
-}
-
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
     url: string,
-    cache?: Cache,
     options: GetOptions = {
         suppressError: false,
+        cache: undefined,
     }
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
-
-    const nextConfig = {
-        next: cache
-            ? {
+    const { cache, suppressError } = options;
+    const nextConfig = cache
+        ? {
+              next: {
                   tags: [cache.tag, "all"],
-                  revalidate: cache.revalidate ? cache.revalidate : 2 * 60 * 60,
-              }
-            : undefined,
-    };
+                  revalidate: cache.revalidate || 2 * 60 * 60,
+              },
+          }
+        : undefined;
+
     const res = await fetch(`${url}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
         ...nextConfig,
     });
 
-    if (!res.ok && !options.suppressError) {
+    if (!res.ok && !suppressError) {
         // This will activate the closest `error.js` Error Boundary
         throw new Error("Failed to fetch data");
     }
@@ -67,7 +63,7 @@ async function getFilters(
     return get<Filter[]>(
         cookieStore,
         `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
-        cache
+        { cache }
     );
 }
 

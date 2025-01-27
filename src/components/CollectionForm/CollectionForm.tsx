@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
     ResourceDataType,
     ResourceType,
@@ -79,6 +79,9 @@ const CollectionForm = ({
     const { showBar } = useActionBar();
     const { push } = useRouter();
     const searchNameDebounced = useDebounce(searchName, 500);
+    const searchParams = useSearchParams();
+
+    const originalStatus = searchParams?.get("status") ?? DataStatus.ACTIVE;
 
     const COLLECTION_ROUTE = teamId
         ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
@@ -400,7 +403,7 @@ const CollectionForm = ({
         if (clearKeywordsTag) {
             revalidateCache("keywords");
         }
-        push(COLLECTION_ROUTE);
+        push(`${COLLECTION_ROUTE}?tab=${status}`);
     };
 
     useEffect(() => {
@@ -425,7 +428,7 @@ const CollectionForm = ({
                 )();
             },
             onCancel: () => {
-                push(COLLECTION_ROUTE);
+                push(`${COLLECTION_ROUTE}?tab=${originalStatus}`);
             },
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
