@@ -30,14 +30,14 @@ async function get<T>(
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const { cache, suppressError } = options;
-    const nextConfig = {
-        next: cache
-            ? {
+    const nextConfig = cache
+        ? {
+              next: {
                   tags: [cache.tag, "all"],
-                  revalidate: cache.revalidate ? cache.revalidate : 2 * 60 * 60,
-              }
-            : undefined,
-    };
+                  revalidate: cache.revalidate || 2 * 60 * 60,
+              },
+          }
+        : undefined;
 
     const res = await fetch(`${url}`, {
         headers: { Authorization: `Bearer ${jwt?.value}` },
