@@ -20,8 +20,6 @@ import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
 import { getUserFromToken } from "@/utils/cookies";
 
-
-
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
     url: string,
@@ -31,7 +29,7 @@ async function get<T>(
     }
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
-    const {cache, suppressError} = options
+    const { cache, suppressError } = options;
     const nextConfig = {
         next: cache
             ? {
@@ -65,7 +63,7 @@ async function getFilters(
     return get<Filter[]>(
         cookieStore,
         `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
-        {cache}
+        { cache }
     );
 }
 

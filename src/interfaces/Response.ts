@@ -5,7 +5,7 @@ interface Cache {
 
 interface GetOptions {
     suppressError?: boolean;
-    cache?: Cache
+    cache?: Cache;
 }
 
 export type { GetOptions, Cache };
