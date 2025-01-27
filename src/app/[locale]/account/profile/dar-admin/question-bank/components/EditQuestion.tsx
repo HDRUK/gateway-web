@@ -69,7 +69,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         const newOptions = teamOptions?.filter(
             option => !existingTeamIds.includes(option.value)
         );
-        if (newOptions && newOptions.length > 0) {
+        if (newOptions && newOptions.length) {
             return [...prevOptions, ...newOptions].sort((a, b) =>
                 a.label.localeCompare(b.label)
             );
@@ -136,14 +136,12 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         }
     }, [reset, question, sectionData]);
 
-    console.log(question?.all_custodians);
-
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         const modifiedFormData = {
             ...formData,
             team_ids: formData.all_custodians ? [] : formData.team_ids,
         };
-        console.log("modifiedFormData", modifiedFormData);
+
         onSubmit(modifiedFormData);
     };
 

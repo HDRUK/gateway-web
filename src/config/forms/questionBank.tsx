@@ -176,7 +176,6 @@ const validationSchema = yup
     .shape({
         default: yup.boolean(),
         section_id: yup.string().required().label("Section"),
-        //TODO: add teams validation here
         team_ids: yup.array().required().label("Custodian Selection"),
         all_custodians: yup.boolean(),
         title: yup.string().required().label("Question Title"),
