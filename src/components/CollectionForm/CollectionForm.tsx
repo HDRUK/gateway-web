@@ -81,7 +81,7 @@ const CollectionForm = ({
     const searchNameDebounced = useDebounce(searchName, 500);
     const searchParams = useSearchParams();
 
-    const originalStatus = searchParams?.get("status") ?? "ACTIVE";
+    const originalStatus = searchParams?.get("status") ?? DataStatus.ACTIVE;
 
     const COLLECTION_ROUTE = teamId
         ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`
