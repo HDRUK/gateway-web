@@ -1,10 +1,12 @@
 import * as yup from "yup";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { colors } from "@/config/theme";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
     section_id: 1,
+    team_ids: [],
     title: "",
     guidance: "",
     component: inputComponents.TextField,
@@ -14,6 +16,7 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
     default: true,
     validations: [],
     options: [],
+    all_custodians: true,
 };
 
 const supportedComponents = [
@@ -37,6 +40,27 @@ const sectionField = {
     required: true,
     options: [],
 };
+
+const custodiansFields = [
+    {
+        label: "Available to all Custodians",
+        name: "all_custodians",
+        component: inputComponents.Checkbox,
+    },
+    {
+        label: "Custodian Selection",
+        name: "team_ids",
+        component: inputComponents.Autocomplete,
+        required: true,
+        options: [],
+        multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel,
+    },
+];
 
 const formFields = [
     {
@@ -152,6 +176,8 @@ const validationSchema = yup
     .shape({
         default: yup.boolean(),
         section_id: yup.string().required().label("Section"),
+        team_ids: yup.array().required().label("Custodian Selection"),
+        all_custodians: yup.boolean(),
         title: yup.string().required().label("Question Title"),
         guidance: yup.string().required().label("Default Guidance"),
         component: yup.string().required().label("Question Type"),
@@ -175,6 +201,7 @@ const validationSchema = yup
 
 export {
     sectionField,
+    custodiansFields,
     defaultValues as questionDefaultValues,
     formFields as questionFormFields,
     validationSchema as questionValidationSchema,

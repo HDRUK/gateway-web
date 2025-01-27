@@ -1,5 +1,5 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
-import { FormHydrationField } from "./FormHydration";
+import { Team } from "./Team";
 
 interface QBFields {
     title: string;
@@ -10,6 +10,8 @@ interface QBFields {
     force_required: boolean;
     component: ComponentTypes;
     options: [];
+    all_custodians: boolean;
+    team_ids: number[];
 }
 
 type Nested = {
@@ -18,6 +20,8 @@ type Nested = {
 
 interface QuestionBankQuestionForm extends QBFields {
     section_id: number;
+    team_ids: number[];
+    all_custodians: boolean;
     children: QBFields[];
     default: number;
     options: [];
@@ -33,13 +37,13 @@ interface QuestionBankCreateUpdateQuestion {
     required: boolean;
     allow_guidance_override: number;
     force_required: number;
-    team_id?: number;
+    team_ids?: number[];
     user_id?: number;
     section_id: number;
-    field: FormHydrationField;
     guidance: string;
     title: string;
     options: NestedOption[];
+    all_custodians: boolean;
 }
 
 interface QuestionBankItem {
@@ -77,6 +81,7 @@ interface QuestionBankVersion extends QuestionBankItem {
 // }
 
 interface QuestionBankQuestion extends QBFields {
+    teams: Team[];
     question_id: number;
     created_at: string;
     updated_at: string;
@@ -86,13 +91,14 @@ interface QuestionBankQuestion extends QBFields {
     force_required: boolean;
     allow_guidance_override: boolean;
     section_id: number;
+    team_ids: number[];
     version_id: number;
     user_id: number;
     default: boolean;
     archived: boolean;
     archived_date: string | null;
     is_child: number;
-    question_type: string;
+    all_custodians: boolean;
 }
 
 export type {
