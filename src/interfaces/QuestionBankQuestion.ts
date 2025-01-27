@@ -40,7 +40,6 @@ interface QuestionBankCreateUpdateQuestion {
     team_ids?: number[];
     user_id?: number;
     section_id: number;
-    field: FormHydrationField;
     guidance: string;
     title: string;
     options: NestedOption[];
@@ -82,6 +81,7 @@ interface QuestionBankVersion extends QuestionBankItem {
 // }
 
 interface QuestionBankQuestion extends QBFields {
+    teams: any;
     question_id: number;
     created_at: string;
     updated_at: string;

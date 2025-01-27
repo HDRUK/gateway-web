@@ -1,22 +1,24 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { Option } from "@/interfaces/Option";
 import {
     QuestionBankQuestion,
     QuestionBankQuestionForm,
     QuestionBankCreateUpdateQuestion,
 } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
-import { User } from "@/interfaces/User";
+import { Team } from "@/interfaces/Team";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import {
@@ -48,13 +50,75 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         `${apis.dataAccessSectionV1Url}`
     );
 
-    const { data: teams = [] } = useGet<User[]>(
-        `${apis.teamsV1Url}?per_page=1000&`, //is_question_bank=true`, //TODO check which teams should be available and how to paginate
+    const [teamOptions, setTeamOptions] = useState<Option[]>([]);
+    const [searchName, setSearchName] = useState("");
+    const searchNameDebounced = useDebounce(searchName, 500);
+
+    const { data: teamData = [], isLoading: isLoadingTeams } = useGet<Team[]>(
+        `${apis.teamsSearchV1Url}?is_question_bank=true&name=${searchNameDebounced}`,
         {
-            shouldFetch: true,
-            withPagination: true,
+            shouldFetch: !!searchNameDebounced,
         }
     );
+
+    const updateTeamOptions = (
+        prevOptions: Option[],
+        teamOptions: Option[]
+    ) => {
+        const existingTeamIds = prevOptions.map(option => option.value);
+        const newOptions = teamOptions?.filter(
+            option => !existingTeamIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length > 0) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const teamOptions = teamData.map(team => ({
+            value: team.id,
+            label: team.name,
+        }));
+
+        setTeamOptions(prevOptions =>
+            updateTeamOptions(prevOptions, teamOptions)
+        );
+    }, [teamData]);
+
+    useEffect(() => {
+        if (!question) {
+            return;
+        }
+
+        const teams =
+            question?.teams.map(item => {
+                return item.id;
+            }) || [];
+
+        if (teams) {
+            const labels = question?.teams.map(item => {
+                return {
+                    label: item.name,
+                    value: item.id,
+                };
+            });
+            setTeamOptions(labels);
+        }
+    }, [question]);
+
+    const handleOnTeamInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
 
     const { control, handleSubmit, reset, watch, getValues, formState } =
         useForm<QuestionBankQuestionForm>({
@@ -65,8 +129,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const allFields = watch();
 
     const checkboxValue = watch("all_custodians");
-    console.log("teams", teams);
-    console.log('formState', formState);
+
     useEffect(() => {
         if (question) {
             reset(question);
@@ -78,12 +141,12 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         const modifiedFormData = {
             ...formData,
-            team_ids: formData.all_custodians ? [] : formData.team_ids
-        }
-        console.log('modifiedFormData', modifiedFormData);
+            team_ids: formData.all_custodians ? [] : formData.team_ids,
+        };
+        console.log("modifiedFormData", modifiedFormData);
         onSubmit(modifiedFormData);
     };
-    console.log('all_custodians', getValues("all_custodians"));
+
     const tabsList = [
         {
             label: "Edit",
@@ -124,12 +187,9 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                             key={custodiansFields[1].name}
                             control={control}
                             {...custodiansFields[1]}
-                            options={
-                                teams?.list?.map(team => ({
-                                    value: team.id,
-                                    label: team.name,
-                                })) || []
-                            }
+                            onInputChange={handleOnTeamInputChange}
+                            options={teamOptions || []}
+                            isLoadingOptions={isLoadingTeams}
                             disabled={checkboxValue}
                         />
                     </Paper>
