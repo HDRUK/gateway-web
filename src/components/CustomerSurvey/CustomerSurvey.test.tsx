@@ -35,11 +35,9 @@ describe("CustomerSurvey", () => {
 
         await waitFor(() => {
             expect(mockHandleSubmit).toHaveBeenCalledWith({ score: 1 });
-            expect(Cookies.set).toHaveBeenCalledWith(
-                "surveySubmitted",
-                "1",
-                { expires: 30 }
-            );
+            expect(Cookies.set).toHaveBeenCalledWith("surveySubmitted", "1", {
+                expires: 30,
+            });
             expect(
                 screen.queryByText(
                     /How satisfactory is your experience with the Gateway today?/i
@@ -74,11 +72,9 @@ describe("CustomerSurvey", () => {
                     /How satisfactory is your experience with the Gateway today?/i
                 )
             ).toBeNull();
-            expect(Cookies.set).toHaveBeenCalledWith(
-                "surveySubmitted",
-                "1",
-                { expires: 30 }
-            );
+            expect(Cookies.set).toHaveBeenCalledWith("surveySubmitted", "1", {
+                expires: 30,
+            });
         });
     });
 });
