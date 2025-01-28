@@ -71,15 +71,29 @@ const slideIn = keyframes`
   }
 `;
 
+const slideOut = keyframes`
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+`;
+
 interface CustomerSurveyProps {
-    hideOnLoad?: boolean;
+    hideOnLoad: boolean;
 }
 
-const CustomerSurvey = ({ hideOnLoad = true }): CustomerSurveyProps => {
+export default function CustomerSurvey({
+    hideOnLoad = true,
+}: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
+    const [animateOut, setAnimateOut] = useState(false);
 
     const handleSubmit = usePost(apis.customerSatisfactionV1Url, {
         successNotificationsOn: false,
@@ -88,8 +102,11 @@ const CustomerSurvey = ({ hideOnLoad = true }): CustomerSurveyProps => {
     const handleClick = async (score: number) => {
         await handleSubmit({ score });
         Cookies.set(cookieName, score.toString(), { expires: cookieLife });
-        setHideComponent(true);
-        setSubmitted(true);
+        setAnimateOut(true);
+        setTimeout(() => {
+            setHideComponent(true);
+            setSubmitted(true);
+        }, 500);
     };
 
     const checkToHide = useCallback(() => {
@@ -131,7 +148,7 @@ const CustomerSurvey = ({ hideOnLoad = true }): CustomerSurveyProps => {
                 left: `calc(50% - ${boxSize / 2}px)`,
                 width: boxSize,
                 zIndex: 999,
-                animation: `${slideIn} 0.5s ease-out`,
+                animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
             }}>
             <Typography variant="h6" gutterBottom>
                 {t("title")}
@@ -163,6 +180,4 @@ const CustomerSurvey = ({ hideOnLoad = true }): CustomerSurveyProps => {
             </Grid>
         </Box>
     );
-};
-
-export default CustomerSurvey;
+}
