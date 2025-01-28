@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { FileUploadOutlined } from "@mui/icons-material";
 import { Divider } from "@mui/material";
+import { uniq } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SelectedLibrary } from "@/interfaces/Library";
@@ -13,7 +14,9 @@ import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
+import usePost from "@/hooks/usePost";
 import useSidebar from "@/hooks/useSidebar";
+import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -50,6 +53,10 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
         [selected]
     );
 
+    const createNewDARApplication = usePost(apis.dataAccessApplicationV1Url, {
+        successNotificationsOn: false,
+    });
+
     const handleGeneralEnquiries = () => {
         showSidebar({
             title: t("generalEnquiries.sidebarTitle"),
@@ -66,6 +73,22 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
 
     const handleMultiDelete = () => {
         selectedLibraryIds.forEach(id => handleRemove(id));
+    };
+
+    const handleDar = () => {
+        const datasetIds = uniq(
+            selectedDatasets.map(dataset => dataset.datasetId)
+        );
+        const teamsIds = uniq(selectedDatasets.map(dataset => dataset.teamId));
+
+        createNewDARApplication({
+            dataset_ids: datasetIds,
+            team_ids: teamsIds,
+        }).then(res => {
+            const applicationId = res;
+            const redirectUrl = `${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${applicationId}`;
+            router.push(redirectUrl);
+        });
     };
 
     return (
@@ -135,11 +158,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 : t("dataAccessRequest.buttonTooltip")
                         }>
                         <Button
-                            onClick={() =>
-                                router.push(
-                                    `/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${RouteName.CREATE}`
-                                )
-                            }
+                            onClick={handleDar}
                             sx={{ mt: 2, width: "100%" }}
                             disabled={
                                 !(selectedDatasets.length > 0) ||
