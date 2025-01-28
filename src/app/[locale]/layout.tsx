@@ -2,6 +2,7 @@ import { ReactNode, Suspense } from "react";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
+import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
@@ -62,6 +63,7 @@ export default function RootLayout({
                                         {children}
                                         <Footer />
                                     </div>
+                                    <CustomerSurvey />
                                     <Suspense fallback={null}>
                                         <NavigationEvents />
                                     </Suspense>
