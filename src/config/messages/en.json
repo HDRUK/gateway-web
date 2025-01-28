@@ -668,7 +668,16 @@
                     "application": {
                         "create": {
                             "save": "Save Changes",
-                            "defaultGuidance": "Please click on a question to display guidance"
+                            "defaultGuidance": "Please click on a question to display guidance",
+                            "backToManagementPage": "Back to application management page",
+                            "FormBanner": {
+                                "downloadButtonText": "Download application form",
+                                "makeActive": "Submit application",
+                                "saveDraft": "Save as draft",
+                                "completion": "Completion",
+                                "requiredFields": "required fields",
+                                "optionalFields": "optional fields"
+                            }
                         }
                     },
                     "template": {
@@ -1346,7 +1355,7 @@
             "text": "You must be logged in to view this content"
         },
         "FormBanner": {
-            "downloadExample": "Download example",
+            "downloadButtonText": "Download example",
             "makeActive": "Make active",
             "saveDraft": "Save as draft",
             "completion": "Completion",

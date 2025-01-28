@@ -91,6 +91,9 @@ type FormValues = Record<string, unknown>;
 
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
+
+const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
 
 const getMetadata = (isDraft: boolean) =>
     isDraft
@@ -717,6 +720,12 @@ const CreateDataset = ({
                 completionPercentage={requiredPercentage}
                 optionalPercentage={optionalPercentage}
                 actionButtonsEnabled={!isSaving}
+                translationPath="components.FormBanner"
+                downloadDetails={{
+                    name: FILE_DOWNLOAD_NAME,
+                    path: `https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}/docs/HDRUK/${SCHEMA_VERSION}.example.json`,
+                    isExternal: true,
+                }}
             />
 
             <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
