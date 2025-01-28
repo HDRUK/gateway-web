@@ -28,7 +28,8 @@ interface Ratings {
     colour: string;
 }
 
-const COOKIE_NAME = "recommendationSubmitted";
+const cookieName = "surveySubmitted";
+const cookieLife = 30; // days
 
 const ratings: Ratings[] = [
     {
@@ -57,24 +58,28 @@ const ratings: Ratings[] = [
         colour: "#3cb28c",
     },
 ];
+const displayIn = 5000;
+const boxSize = 600;
+const slideIn = keyframes`
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
-const CustomerSurvey = ({ hideOnLoad = true }) => {
+interface CustomerSurveyProps {
+    hideOnLoad?: boolean;
+}
+
+const CustomerSurvey = ({ hideOnLoad = true }): CustomerSurveyProps => {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
-    const displayIn = 5000;
-    const boxSize = 600;
-    const slideIn = keyframes`
-      from {
-        transform: translateY(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    `;
 
     const handleSubmit = usePost(apis.customerSatisfactionV1Url, {
         successNotificationsOn: false,
@@ -82,13 +87,13 @@ const CustomerSurvey = ({ hideOnLoad = true }) => {
 
     const handleClick = async (score: number) => {
         await handleSubmit({ score });
-        Cookies.set(COOKIE_NAME, score.toString(), { expires: 30 });
+        Cookies.set(cookieName, score.toString(), { expires: cookieLife });
         setHideComponent(true);
         setSubmitted(true);
     };
 
     const checkToHide = useCallback(() => {
-        if (!Cookies.get(COOKIE_NAME)) {
+        if (!Cookies.get(cookieName)) {
             setHideComponent(false);
         }
     }, []);
@@ -133,7 +138,7 @@ const CustomerSurvey = ({ hideOnLoad = true }) => {
             </Typography>
             <Grid container spacing={1} justifyContent="center">
                 {ratings.map((obj, index) => {
-                    const { icon:Icon, rating, colour } = obj;
+                    const { icon: Icon, rating, colour } = obj;
                     return (
                         <Grid item key={rating.toString()}>
                             <Tooltip title={t(`tooltip-${index}`)}>
