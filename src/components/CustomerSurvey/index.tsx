@@ -23,7 +23,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 
 interface Ratings {
-    Comonponet: OverridableComponent<SvgIconTypeMap> & { muiName: string };
+    icon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
     rating: number;
     colour: string;
 }
@@ -32,27 +32,27 @@ const COOKIE_NAME = "recommendationSubmitted";
 
 const ratings: Ratings[] = [
     {
-        Comonponet: MoodBadIcon,
+        icon: MoodBadIcon,
         rating: 1,
         colour: "#dc3645",
     },
     {
-        Comonponet: SentimentVeryDissatisfiedIcon,
+        icon: SentimentVeryDissatisfiedIcon,
         rating: 2,
         colour: "#fe7e00",
     },
     {
-        Comonponet: SentimentSatisfiedIcon,
+        icon: SentimentSatisfiedIcon,
         rating: 3,
         colour: "#f0bb24",
     },
     {
-        Comonponet: SentimentSatisfiedAltIcon,
+        icon: SentimentSatisfiedAltIcon,
         rating: 4,
         colour: "#addad9",
     },
     {
-        Comonponet: InsertEmoticonIcon,
+        icon: InsertEmoticonIcon,
         rating: 5,
         colour: "#3cb28c",
     },
@@ -133,12 +133,12 @@ const CustomerSurvey = ({ hideOnLoad = true }) => {
             </Typography>
             <Grid container spacing={1} justifyContent="center">
                 {ratings.map((obj, index) => {
-                    const { Comonponet, rating, colour } = obj;
+                    const { icon:Icon, rating, colour } = obj;
                     return (
                         <Grid item key={rating.toString()}>
                             <Tooltip title={t(`tooltip-${index}`)}>
                                 <IconButton onClick={() => handleClick(rating)}>
-                                    <Comonponet
+                                    <Icon
                                         aria-label={`Rating ${rating}`}
                                         sx={{
                                             cursor: "pointer",
