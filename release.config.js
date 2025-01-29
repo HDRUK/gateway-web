@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-function updateChartYamlVersion(newVersion) {
+export function updateChartYamlVersion(newVersion) {
   const chartFilePath = path.resolve(__dirname, "chart/Chart.yaml");
   const chartContent = fs.readFileSync(chartFilePath, "utf8");
 
@@ -74,7 +74,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        prepareCmd: "node -e 'require(\"./release.config\").updateChartYamlVersion(\"${nextRelease.version}\")'",
+        prepareCmd: "node updateChartVersion.js ${nextRelease.version}",
       },
     ],
   ],
