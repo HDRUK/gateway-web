@@ -15,7 +15,7 @@ module.exports = {
             { type: "chore", section: "🔧 Maintenance", hidden: false },
           ],
         },
-        // writerOpts: {
+         // writerOpts: {
         //   transform: (commit, _context) => {
         //     const jiraBaseUrl = process.env.JIRA_URL;
         //     const jiraRegex = /\b([A-Z]+-\d+)\b/;
@@ -57,12 +57,8 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        prepareCmd: `
-        node updateVersions.js ${nextRelease.version}
-        git add chart/gateway-web/Chart.yaml
-        git add package.json
-      `,
+        prepareCmd: "node updateVersions.js ${nextRelease.version} && git add chart/gateway-web/Chart.yaml package.json",
       },
     ],
-  ]
+  ],
 };
