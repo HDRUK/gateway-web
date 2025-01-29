@@ -15,23 +15,21 @@ module.exports = {
             { type: "chore", section: "🔧 Maintenance", hidden: false },
           ],
         },
-         // writerOpts: {
-        //   transform: (commit, _context) => {
-        //     const jiraBaseUrl = process.env.JIRA_URL;
-        //     const jiraRegex = /\b([A-Z]+-\d+)\b/;
-        //     const match = commit.subject.match(jiraRegex);
+        writerOpts: {
+          transform: (commit, _context) => {
+            if (!commit || !commit.subject) return commit;
 
-        //     if (match) {
-        //       const ticket = match[1];
-        //       commit.subject = commit.subject.replace(
-        //         jiraRegex,
-        //         `[${ticket}](${jiraBaseUrl}${ticket})`
-        //       );
-        //     }
+            const jiraBaseUrl = process.env.JIRA_URL
+            const jiraRegex = /\b([A-Z]+-\d+)\b/g;
+            const newCommit = { ...commit };
+            newCommit.subject = newCommit.subject.replace(
+              jiraRegex,
+              `[$1](${jiraBaseUrl}$1)`
+            );
 
-        //     return commit;
-        //   },
-        // },
+            return newCommit;
+          },
+        },
       },
     ],
     [
