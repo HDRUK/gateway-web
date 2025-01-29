@@ -17,15 +17,24 @@ module.exports = {
         },
         writerOpts: {
           transform: (commit, _context) => {
-            if (!commit || !commit.subject) return commit;
+            if (!commit || typeof commit !== "object") return commit;
 
             const jiraBaseUrl = process.env.JIRA_URL
             const jiraRegex = /\b([A-Z]+-\d+)\b/g;
-            const newCommit = { ...commit };
-            newCommit.subject = newCommit.subject.replace(
-              jiraRegex,
-              `[$1](${jiraBaseUrl}$1)`
-            );
+
+              const newCommit = { ...commit };
+
+            // Ensure the commit has a valid date
+            if (typeof newCommit.date === "string") {
+              newCommit.date = new Date(newCommit.date);
+            }
+
+            if (newCommit.subject && typeof newCommit.subject === "string") {
+              newCommit.subject = newCommit.subject.replace(
+                jiraRegex,
+                `[$1](${jiraBaseUrl}$1)`
+              );
+            }
 
             return newCommit;
           },
