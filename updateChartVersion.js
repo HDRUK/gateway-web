@@ -1,7 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { updateChartYamlVersion } = require("./release.config");
-
 
 const newVersion = process.argv[2];
 if (!newVersion) {
