@@ -1,20 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
-export function updateChartYamlVersion(newVersion) {
-  const chartFilePath = path.resolve(__dirname, "chart/Chart.yaml");
-  const chartContent = fs.readFileSync(chartFilePath, "utf8");
-
-  const updatedContent = chartContent.replace(
-    /^version:\s*[0-9]+\.[0-9]+\.[0-9]+/m,
-    `version: ${newVersion}`
-  );
-
-
-  fs.writeFileSync(chartFilePath, updatedContent, "utf8");
-  console.log(`Updated chart/Chart.yaml to version ${newVersion}`);
-}
-
 module.exports = {
   branches: ["chore/GAT-6176"],
   plugins: [
