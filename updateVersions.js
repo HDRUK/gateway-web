@@ -19,8 +19,18 @@ function updateChartYamlVersion(newVersion) {
     fs.writeFileSync(chartFilePath, updatedContent, "utf8");
     console.log(`Updated chart/Chart.yaml to version ${newVersion}`);
   }
-  
+function updatePackageJsonVersion(newVersion) {
+  const packageJsonPath = path.resolve(__dirname, "package.json");
+  const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
+
+  const packageJson = JSON.parse(packageJsonContent);
+  packageJson.version = newVersion; 
+
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), "utf8");
+  console.log(`Updated package.json to version ${newVersion}`);
+}
 
 
 
 updateChartYamlVersion(newVersion);
+updatePackageJsonVersion(newVersion);
