@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
-import { Divider, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Divider, ListItem, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
@@ -77,10 +77,6 @@ const ResultCard = ({
     const deleteLibrary = useDelete(apis.librariesV1Url, {
         itemName: `Library item`,
     });
-
-    const handleClickItem = useCallback(() => {
-        router.push(`/${RouteName.DATASET_ITEM}/${datasetId}`);
-    }, [datasetId, router]);
 
     const handleClickQuickView = (
         event: React.MouseEvent<HTMLButtonElement>
