@@ -7,8 +7,8 @@ if (!newVersion) {
     process.exit(1);
   }
 function updateChartYamlVersion(newVersion) {
-  const chartFilePath = path.resolve(process.cwd(), "chart/Chart.yaml");
-  const chartContent = fs.readFileSync(chartFilePath, "utf8");
+    const chartFilePath = path.resolve(__dirname, "chart/gateway-web/Chart.yaml");
+    const chartContent = fs.readFileSync(chartFilePath, "utf8");
   
     const updatedContent = chartContent.replace(
       /^version:\s*[0-9]+\.[0-9]+\.[0-9]+/m,
