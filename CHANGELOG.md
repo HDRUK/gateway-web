@@ -1,3 +1,11 @@
+## [1.11.0](https://github.com/HDRUK/gateway-web-2/compare/v1.10.0...v1.11.0) (2025-01-29)
+
+### ✨ Features
+
+* **GAT-0000:** This is a really big change ([64d9393](https://github.com/HDRUK/gateway-web-2/commit/64d9393ad31ac464afe0581a02c559a3dc60b563)), closes [GAT-0000](https://hdruk.atlassian.net/browse/GAT-0000)
+* **GAT-0000:** This is a really big change ([c824bcf](https://github.com/HDRUK/gateway-web-2/commit/c824bcfb4e2f0808df2bb2ae198bb9261bb691c5)), closes [GAT-0000](https://hdruk.atlassian.net/browse/GAT-0000)
+* **GAT-0000:** This is a really big change ([468f9fa](https://github.com/HDRUK/gateway-web-2/commit/468f9faef2e8c9f7bb26a2783358a2d1197329e9)), closes [GAT-0000](https://hdruk.atlassian.net/browse/GAT-0000)
+
 ## [1.10.0](https://github.com/HDRUK/gateway-web-2/compare/v1.9.0...v1.10.0) (2025-01-29)
 
 ### ✨ Features
