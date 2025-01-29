@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/HDRUK/gateway-web-2/compare/v1.6.0...v1.7.0) (2025-01-29)
+
+### ✨ Features
+
+* **GAT-0000:** This is a really big change ([70c3e7d](https://github.com/HDRUK/gateway-web-2/commit/70c3e7d43bfbaccce4f6227471f7754a87db3365))
+* **GAT-0000:** This is a really big change ([32f0d7a](https://github.com/HDRUK/gateway-web-2/commit/32f0d7a4d166c9f19c3c1510f68861aca2d70f7a))
+
 ## [1.6.0](https://github.com/HDRUK/gateway-web-2/compare/v1.5.0...v1.6.0) (2025-01-29)
 
 ### ✨ Features
