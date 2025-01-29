@@ -292,7 +292,9 @@ const ResultCard = ({
                         secondary={
                             <section aria-describedby={resultId}>
                                 {isNumber && (
-                                    <Link href={linkHref}>
+                                    <Link
+                                        href={linkHref}
+                                        sx={{ display: "inline-block" }}>
                                         <Typography
                                             // eslint-disable-next-line
                                             aria-description="Data Custodian"
