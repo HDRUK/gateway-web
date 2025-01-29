@@ -34,7 +34,7 @@ jobs:
       - name: Run Semantic Release
         run: npx semantic-release
         env:
-          JIRA_URL: ${{ vars.JIRA_URLS }}
+          JIRA_URL: ${{ vars.JIRA_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
     needs: semantic
