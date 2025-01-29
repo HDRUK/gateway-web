@@ -14,15 +14,11 @@ env:
   NODE_VERSION: '21'
 
 jobs:
-  build:
+  semantic: 
     permissions:
       contents: write
       id-token: write
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [preprod, prod]
-    environment: ${{ matrix.environment }} 
     steps:
       - name: Checkout
         id: checkout
@@ -42,12 +38,22 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # build:
+  #   permissions:
+  #     contents: write
+  #     id-token: write
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       environment: [preprod, prod]
+  #   environment: ${{ matrix.environment }} 
+
   
-      - name: Read VERSION file
-        id: getversion
-        run: |
-          sed -n 's/^appVersion:\(.*\)/\1/p' < chart/gateway-web/Chart.yaml > version
-          echo "version=$(sed '/.*\"\(.*\)\".*/ s//\1/g' version)" >> $GITHUB_OUTPUT
+      # - name: Read VERSION file
+      #   id: getversion
+      #   run: |
+      #     sed -n 's/^appVersion:\(.*\)/\1/p' < chart/gateway-web/Chart.yaml > version
+      #     echo "version=$(sed '/.*\"\(.*\)\".*/ s//\1/g' version)" >> $GITHUB_OUTPUT
 
       # - name: Google Auth
       #   id: auth
