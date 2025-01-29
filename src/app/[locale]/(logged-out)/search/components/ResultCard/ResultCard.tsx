@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { Divider, ListItem, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
@@ -44,7 +44,6 @@ const ResultCard = ({
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { current: resultId } = useRef(uniqueId("result-title-"));
-    const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { showDialog } = useDialog();
