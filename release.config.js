@@ -34,7 +34,19 @@ module.exports = {
         // },
       },
     ],
+    [
+      "@semantic-release/changelog",
+      {
+        changelogFile: "CHANGELOG.md",
+      },
+    ],
     "@semantic-release/github",
+    [
+      "@semantic-release/exec",
+      {
+        prepareCmd: "node updateVersions.js ${nextRelease.version} && git add chart/gateway-web/Chart.yaml package.json",
+      },
+    ],
     [
       "@semantic-release/git",
       {
@@ -46,19 +58,6 @@ module.exports = {
         ],
         message:
           "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
-      },
-    ],
-    [
-      "@semantic-release/changelog",
-      {
-        changelogFile: "CHANGELOG.md",
-      },
-    ],
-    
-    [
-      "@semantic-release/exec",
-      {
-        prepareCmd: "node updateVersions.js ${nextRelease.version} && git add chart/gateway-web/Chart.yaml package.json",
       },
     ],
   ],
