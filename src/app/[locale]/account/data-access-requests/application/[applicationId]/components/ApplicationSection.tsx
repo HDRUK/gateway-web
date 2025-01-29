@@ -9,18 +9,31 @@ import {
     DarApplicationQuestion,
     DarApplicationAnswer,
 } from "@/interfaces/DataAccessRequest";
+import { FormHydrationField } from "@/interfaces/FormHydration";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import Container from "@/components/Container";
+import FormBanner from "@/components/FormBanner";
+import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { inputComponents } from "@/config/forms";
 import theme from "@/config/theme";
-import { renderFormHydrationField } from "@/utils/formHydration";
+import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
+import {
+    isFirstSection,
+    renderFormHydrationField,
+} from "@/utils/formHydration";
+import {
+    FormFooter,
+    FormFooterItem,
+} from "@/app/[locale]/account/team/[teamId]/(withoutLeftNav)/datasets/components/CreateDataset/CreateDataset.styles";
 
 const EDIT_TEMPLATE_TRANSLATION_PATH =
     "pages.account.team.dar.application.create";
@@ -62,9 +75,14 @@ const ApplicationSection = ({
 
     const questions = data?.questions;
 
+
+    const formatGuidance = (guidance: string) =>
+        guidance.replace(/\\n\\n/g, "\n\n");
+
     const defaultValues = userAnswers?.reduce((acc, a) => {
-        const key = questions?.find(q => q.question_id === a.question_id)
-            ?.latest_version.title;
+        const key = questions?.find(
+            q => q.question_id === a.question_id
+        )?.title;
 
         acc[key] = a.answer;
         return acc;
@@ -75,11 +93,12 @@ const ApplicationSection = ({
     });
 
     const updateGuidanceText = (fieldName: string) => {
-        const guidance = questions
-            ?.find(question => question.latest_version.title === fieldName)
-            ?.guidance?.replaceAll("\\n", "\n");
+        const guidance = questions?.find(
+            question => question.title === fieldName
+        )?.guidance;
+
         if (guidance) {
-            setGuidanceText(guidance);
+            setGuidanceText(formatGuidance(guidance));
         }
     };
 
@@ -93,13 +112,29 @@ const ApplicationSection = ({
 
     const renderQuestions = (filteredData: DarApplicationQuestion[]) => {
         const processedSections = new Set();
+        console.log(filteredData);
+
+        // TODO - move to a util to stop replication
         return filteredData
             ?.map(q => ({
                 section_id: q.section_id,
+                title: q.title || "",
                 field: {
-                    ...q.latest_version.field,
-                    required: q.required,
-                    name: q.latest_version.title,
+                    name: q.title,
+                    component: q.component,
+                    // info: formatGuidance(q?.guidance || ""),
+                    ...(q.component === inputComponents.RadioGroup && {
+                        radios: q?.options?.map(option => ({
+                            label: option.label,
+                            value: option.label,
+                        })),
+                    }),
+                    ...(q.component === inputComponents.CheckboxGroup && {
+                        checkboxes: q?.options?.map(option => ({
+                            label: option.label,
+                            value: option.label,
+                        })),
+                    }),
                 },
             }))
             ?.map(question => {
@@ -113,21 +148,24 @@ const ApplicationSection = ({
                 let sectionData;
                 if (!processedSections.has(sectionId)) {
                     sectionData = (
-                        <Box sx={{ my: 2, p: 0 }}>
-                            <Divider>
+                        <>
+                            <Box sx={{ p: 0 }}>
                                 <Typography variant="h2">
-                                    {sectionName}{" "}
+                                    {sectionName}
                                 </Typography>
-                            </Divider>
-                            {sectionDescription && (
-                                <>
-                                    <Typography sx={{ mb: 2 }}>
-                                        {sectionDescription}
-                                    </Typography>
-                                    <Divider variant="middle" />
-                                </>
-                            )}
-                        </Box>
+                                {sectionDescription && (
+                                    <>
+                                        <Typography sx={{ mb: 2 }}>
+                                            {sectionDescription}
+                                        </Typography>
+                                    </>
+                                )}
+                            </Box>
+                            <Divider
+                                variant="fullWidth"
+                                sx={{ pt: 2, mb: 4 }}
+                            />
+                        </>
                     );
 
                     processedSections.add(sectionId);
@@ -136,8 +174,9 @@ const ApplicationSection = ({
                 return (
                     <>
                         {sectionData}
+
                         {renderFormHydrationField(
-                            question.field,
+                            question.field as FormHydrationField,
                             control,
                             undefined,
                             updateGuidanceText,
@@ -152,7 +191,7 @@ const ApplicationSection = ({
         const answers = Object.keys(formData)
             .map(key => {
                 const question_id = questions?.find(
-                    q => q.latest_version.title === key
+                    q => q.title === key
                 )?.question_id;
                 return { question_id, answer: formData[key] };
             })
@@ -164,27 +203,54 @@ const ApplicationSection = ({
         await updateAnswers(payload);
     };
 
+    const blankFunc = () => {
+        console.log("FIRE");
+    };
+
+    const isDraft = true;
+    const teamId = 1;
+
+    const currentSectionIndex = sectionId
+        ? parentSections.findIndex(section => section.id === sectionId)
+        : 0;
+
     return (
-        <Container maxWidth={false}>
-            <Container
-                maxWidth={false}
+        <BoxContainer sx={{ mt: 1.75 }}>
+            <Link
+                href={`/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}`}
+                underline="hover"
                 sx={{
-                    display: "grid",
-                    gridTemplateColumns: "2fr 5fr 3fr",
-                    gap: 0,
-                    pt: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    pb: 0.5,
+                    pl: 2,
                 }}>
-                <Box sx={{ flex: 3, p: 0 }}>
+                <ArrowBackIosNewIcon fontSize="small" />
+                {t("backToManagementPage")}
+            </Link>
+
+            <FormBanner
+                makeActiveAction={blankFunc}
+                saveAsDraftAction={blankFunc}
+                completionPercentage={100}
+                optionalPercentage={60}
+                actionButtonsEnabled={true}
+                translationPath="pages.account.team.dar.application.create.FormBanner"
+                downloadDetails={{
+                    //TODO when endpoint is available
+                    name: "",
+                    path: "",
+                }}
+            />
+
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+                <Box
+                    sx={{
+                        flex: 1,
+                        padding: theme.spacing(1),
+                    }}>
                     <Sections
-                        containerSx={{
-                            padding: theme.spacing(2),
-                            px: 0,
-                            margin: theme.spacing(1.25),
-                            position: "sticky",
-                            top: theme.spacing(1.25),
-                            overflowY: "auto",
-                            maxHeight: "100vh",
-                        }}
                         handleLegendClick={handleChangeSection}
                         sectionId={sectionId}
                         sections={parentSections || []}
@@ -217,22 +283,59 @@ const ApplicationSection = ({
                         )}
                     </Paper>
                 </Box>
-            </Container>
-            <Paper sx={{ m: 2, p: 2, mb: 5 }}>
-                <Box
-                    sx={{
-                        p: 0,
-                        display: "flex",
-                        justifyContent: "end",
-                    }}>
-                    <Button
-                        onClick={handleSubmit(handleSaveChanges)}
-                        type="submit">
-                        {t("save")}
-                    </Button>
-                </Box>
-            </Paper>
-        </Container>
+            </Box>
+            <Box
+                sx={{
+                    padding: theme.spacing(1),
+                    margin: theme.spacing(2),
+                }}>
+                <FormFooter>
+                    <FormFooterItem>
+                        <Button
+                            onClick={() =>
+                                handleChangeSection(
+                                    parentSections[currentSectionIndex - 1]?.id
+                                )
+                            }
+                            disabled={isFirstSection(currentSectionIndex)}
+                            variant="text"
+                            startIcon={<ArrowBackIosNewIcon />}>
+                            {t("previous")}
+                        </Button>
+                    </FormFooterItem>
+
+                    <FormFooterItem>
+                        <Button
+                            onClick={() =>
+                                handleChangeSection(
+                                    parentSections[currentSectionIndex + 1]?.id
+                                )
+                            }
+                            disabled={
+                                parentSections.length - 1 <= currentSectionIndex
+                            }
+                            endIcon={<ArrowForwardIosIcon />}>
+                            {t("next")}
+                        </Button>
+                    </FormFooterItem>
+                </FormFooter>
+            </Box>
+
+            {/* <Paper sx={{ m: 2, p: 2, mb: 5 }}>
+                    <Box
+                        sx={{
+                            p: 0,
+                            display: "flex",
+                            justifyContent: "end",
+                        }}>
+                        <Button
+                            onClick={handleSubmit(handleSaveChanges)}
+                            type="submit">
+                            {t("save")}
+                        </Button>
+                    </Box>
+                </Paper> */}
+        </BoxContainer>
     );
 };
 

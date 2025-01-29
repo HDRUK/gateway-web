@@ -677,7 +677,9 @@
                                 "completion": "Completion",
                                 "requiredFields": "required fields",
                                 "optionalFields": "optional fields"
-                            }
+                            },
+                            "previous": "Previous",
+                            "next": "Next"
                         }
                     },
                     "template": {
