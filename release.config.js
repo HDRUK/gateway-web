@@ -72,7 +72,7 @@ module.exports = {
           "package.json",
           "package-lock.json",
           "CHANGELOG.md",
-          "chart/Chart.yaml",
+          "chart/gateway-web/Chart.yaml",
         ],
         message:
           "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
