@@ -222,7 +222,11 @@ const ResultCard = ({
                                     marginBottom={2}>
                                     {metadata.summary.shortTitle}
                                 </Link>
-                                <div style={{ textAlign: "end" }}>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        textAlign: "end",
+                                    }}>
                                     <Button
                                         onClick={handleToggleLibraryItem}
                                         variant="outlined"
@@ -241,7 +245,7 @@ const ResultCard = ({
                                                 <BookmarkBorder color="secondary" />
                                             )
                                         }
-                                        sx={{ mb: 1 }}>
+                                        sx={{ alignSelf: "flex-start" }}>
                                         {isLibraryToggled
                                             ? t("removeFromLibrary")
                                             : t("addToLibrary")}
@@ -262,7 +266,11 @@ const ResultCard = ({
                                                 style={{ color: "white" }}
                                             />
                                         }
-                                        sx={{ ml: 2, mb: 1 }}
+                                        sx={{
+                                            ml: 2,
+                                            px: 3,
+                                            alignSelf: "flex-start",
+                                        }}
                                         onClick={handleOpenDropdownMenu}>
                                         {t("actions")}
                                     </Button>
