@@ -136,8 +136,9 @@ const EditDataUse = () => {
             return;
         }
 
-        if (typeof formData?.funders_and_sponsors === 'string') {
-            formData.funders_and_sponsors = formData.funders_and_sponsors.split(',')
+        if (typeof formData?.funders_and_sponsors === "string") {
+            formData.funders_and_sponsors =
+                formData.funders_and_sponsors.split(",");
         }
 
         const edited = {
