@@ -18,7 +18,7 @@ export interface DataUse {
     updated_at: Date | Dayjs | string;
     non_gateway_datasets: string[];
     non_gateway_applicants: string[];
-    funders_and_sponsors: string[];
+    funders_and_sponsors: string[] | string;
     other_approval_committees: string[];
     gateway_outputs_tools: string[];
     gateway_outputs_papers: string[];

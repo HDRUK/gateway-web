@@ -138,6 +138,13 @@ const EditDataUse = () => {
 
         const edited = {
             ...formData,
+            ...(typeof formData?.funders_and_sponsors === "string"
+                ? {
+                      funders_and_sponsors: (
+                          formData.funders_and_sponsors as string
+                      ).split(","),
+                  }
+                : {}),
             project_start_date: formData.project_start_date
                 ? dayjs(formData.project_start_date).format(
                       "YYYY-MM-DDThh:mm:ss"
