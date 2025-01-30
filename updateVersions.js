@@ -11,7 +11,7 @@ function updateChartYamlVersion(newVersion) {
     const chartContent = fs.readFileSync(chartFilePath, "utf8");
   
     const updatedContent = chartContent.replace(
-      /^appVersion:\s*[0-9]+\.[0-9]+\.[0-9]+/m,
+      /^appVersion:\s*"?[0-9]+\.[0-9]+\.[0-9]+"?/m,
       `appVersion: "${newVersion}"`
     );
   
