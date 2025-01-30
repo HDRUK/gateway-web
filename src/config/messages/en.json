@@ -669,7 +669,7 @@
                         "create": {
                             "save": "Save Changes",
                             "defaultGuidance": "Please click on a question to display guidance",
-                            "backToManagementPage": "Back to application management page",
+                            "navigateToDashboard": "Go to DAR dashboard",
                             "FormBanner": {
                                 "downloadButtonText": "Download application form",
                                 "makeActive": "Submit application",
