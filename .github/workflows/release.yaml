@@ -38,6 +38,11 @@ jobs:
           JIRA_URL: ${{ vars.JIRA_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set Git config
+        run: |
+            git config --local user.email "actions@github.com"
+            git config --local user.name "Github Actions"
+
       - name: Fetch latest changes from chore/GAT-6176
         run: |
           git fetch origin chore/GAT-6176
