@@ -1,5 +1,5 @@
 module.exports = {
-  branches: ["chore/GAT-6176"],
+  branches: ["main"],
   plugins: [
     "@semantic-release/commit-analyzer",
     [
