@@ -136,6 +136,10 @@ const EditDataUse = () => {
             return;
         }
 
+        if (typeof formData?.funders_and_sponsors === 'string') {
+            formData.funders_and_sponsors = formData.funders_and_sponsors.split(',')
+        }
+
         const edited = {
             ...formData,
             project_start_date: formData.project_start_date
