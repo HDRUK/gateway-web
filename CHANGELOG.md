@@ -1,3 +1,9 @@
+## [1.6.1](https://github.com/HDRUK/gateway-web-2/compare/v1.6.0...v1.6.1) (2025-01-30)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** fix regex ([3a596c6](https://github.com/HDRUK/gateway-web-2/commit/3a596c66cda049e5feb3f59489d3e1cad3289b79))
+
 ## [1.6.0](https://github.com/HDRUK/gateway-web-2/compare/v1.5.0...v1.6.0) (2025-01-30)
 
 ### ✨ Features
