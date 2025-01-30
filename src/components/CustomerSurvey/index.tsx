@@ -29,7 +29,7 @@ interface Ratings {
 }
 
 const cookieName = "surveySubmitted";
-const cookieLife = 30; // days
+const cookieLife = 90; // days
 
 const ratings: Ratings[] = [
     {
