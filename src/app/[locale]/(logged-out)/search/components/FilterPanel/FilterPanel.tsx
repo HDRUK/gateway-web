@@ -34,6 +34,7 @@ import {
     FILTER_ORGANISATION_NAME,
     FILTER_DATA_SET_TITLES,
     FILTER_COLLECTION_NAME,
+    FILTER_COLLECTION_NAMES,
     FILTER_DATA_CUSTODIAN_NETWORK,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
@@ -88,6 +89,7 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_PUBLISHER_NAME,
         FILTER_SECTOR,
         FILTER_ORGANISATION_NAME,
+        FILTER_COLLECTION_NAMES,
     ],
     collection: [FILTER_PUBLISHER_NAME, FILTER_DATA_SET_TITLES],
     paper: [
@@ -139,6 +141,7 @@ const FilterPanel = ({
         [FILTER_PUBLISHER_NAME]: {},
         [FILTER_DATA_CUSTODIAN_NETWORK]: {},
         [FILTER_COLLECTION_NAME]: {},
+        [FILTER_COLLECTION_NAMES]: {},
         [FILTER_DATA_USE_TITLES]: {},
         [FILTER_GEOGRAPHIC_LOCATION]: {},
         [FILTER_DATE_RANGE]: {},
@@ -185,6 +188,7 @@ const FilterPanel = ({
     const { control, setValue } = useForm<{
         [FILTER_PUBLISHER_NAME]: string;
         [FILTER_COLLECTION_NAME]: string;
+        [FILTER_COLLECTION_NAMES]: string;
         [FILTER_DATA_USE_TITLES]: string;
         [FILTER_SECTOR]: string;
         [FILTER_ACCESS_SERVICE]: string;
@@ -198,6 +202,7 @@ const FilterPanel = ({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
             [FILTER_COLLECTION_NAME]: "",
+            [FILTER_COLLECTION_NAMES]: "",
             [FILTER_DATA_USE_TITLES]: "",
             [FILTER_SECTOR]: "",
             [FILTER_ACCESS_SERVICE]: "",

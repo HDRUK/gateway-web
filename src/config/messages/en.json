@@ -881,7 +881,9 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
+                            "collectionNames": "Collection",
+                            "collectionNamesTooltip": "Filter search results based on Gateway entities that are grouped around a particular topic"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
