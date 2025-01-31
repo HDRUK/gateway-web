@@ -12,6 +12,7 @@ interface FormLegendProps {
     items: LegendItem[];
     offsetTop?: string;
     level?: number;
+    removeMarginLeft?: boolean;
     handleClickItem?: (itemIndex: number) => void;
 }
 
@@ -47,6 +48,7 @@ const FormLegend = ({
     items,
     offsetTop,
     level = 1,
+    removeMarginLeft,
     handleClickItem,
 }: FormLegendProps) => {
     return (
@@ -56,7 +58,11 @@ const FormLegend = ({
             {items.map((item, index) => (
                 <>
                     <ListItemButton
-                        sx={{ marginLeft: `${level * 16}px` }}
+                        sx={{
+                            marginLeft: removeMarginLeft
+                                ? 0
+                                : `${level * 16}px`,
+                        }}
                         key={`${item.name}`}
                         onClick={() =>
                             handleClickItem &&

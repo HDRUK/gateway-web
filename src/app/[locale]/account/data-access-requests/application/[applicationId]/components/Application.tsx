@@ -9,6 +9,7 @@ import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { beforeYouBeginSection } from "@/config/forms/dataAccessApplication";
 import ApplicationSection from "./ApplicationSection";
 
 interface ApplicationProps {
@@ -49,7 +50,7 @@ const Application = ({ applicationId }: ApplicationProps) => {
             applicationId={applicationId}
             data={data}
             userAnswers={userAnswers}
-            sections={sections}
+            sections={[beforeYouBeginSection, ...sections]}
         />
     );
 };

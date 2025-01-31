@@ -667,8 +667,15 @@
                 "dar": {
                     "application": {
                         "create": {
-                            "save": "Save Changes",
-                            "defaultGuidance": "Please click on a question to display guidance"
+                            "darRequest": "Data Access Request",
+                            "lastSaved": "Last saved: {date}",
+                            "questionsAnswered": "{questionCount} questions answered",
+                            "save": "Save now",
+                            "submit": "Submit application",
+                            "defaultGuidance": "Please click on a question to display guidance",
+                            "navigateToDashboard": "Go to DAR dashboard",
+                            "previous": "Previous",
+                            "next": "Next"
                         }
                     },
                     "template": {
