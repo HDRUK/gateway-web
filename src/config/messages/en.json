@@ -670,14 +670,6 @@
                             "save": "Save Changes",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
-                            "FormBanner": {
-                                "downloadButtonText": "Download application form",
-                                "makeActive": "Submit application",
-                                "saveDraft": "Save as draft",
-                                "completion": "Completion",
-                                "requiredFields": "required fields",
-                                "optionalFields": "optional fields"
-                            },
                             "previous": "Previous",
                             "next": "Next"
                         }
@@ -1357,7 +1349,7 @@
             "text": "You must be logged in to view this content"
         },
         "FormBanner": {
-            "downloadButtonText": "Download example",
+            "downloadExample": "Download example",
             "makeActive": "Make active",
             "saveDraft": "Save as draft",
             "completion": "Completion",

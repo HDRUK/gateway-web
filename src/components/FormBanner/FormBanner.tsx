@@ -7,44 +7,36 @@ import Button from "../Button";
 import DownloadFile from "../DownloadFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
 
-type DownloadDetails = {
-    name: string;
-    path: string;
-    isExternal?: boolean;
-};
-
 interface FormBannerProps {
     completionPercentage?: number;
     optionalPercentage?: number;
     actionButtonsEnabled?: boolean;
-    translationPath: string;
-    downloadDetails: DownloadDetails;
     makeActiveAction: () => void;
     saveAsDraftAction: () => void;
 }
 
+const TRANSLATION_PATH = "components.FormBanner";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
+const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
 export const NAVBAR_ID = "form-navbar";
 
 const FormBanner = ({
     completionPercentage = 0,
     optionalPercentage = 0,
     actionButtonsEnabled = true,
-    translationPath,
-    downloadDetails,
     makeActiveAction,
     saveAsDraftAction,
 }: FormBannerProps) => {
-    const t = useTranslations(translationPath);
+    const t = useTranslations(TRANSLATION_PATH);
 
     return (
         <Wrapper id={NAVBAR_ID}>
             <DetailBanner>
                 <Column justify={Justify.START}>
                     <DownloadFile
-                        apiPath={downloadDetails.path}
-                        externalFileName={downloadDetails.name}
-                        isExternalFile={downloadDetails.isExternal}
-                        buttonText={t("downloadButtonText")}
+                        apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
+                        buttonText={t("downloadExample")}
                         buttonSx={{ mb: 0 }}
                     />
                 </Column>
