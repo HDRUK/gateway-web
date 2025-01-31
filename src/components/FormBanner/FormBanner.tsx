@@ -38,6 +38,8 @@ const FormBanner = ({
                         apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
                         buttonText={t("downloadExample")}
                         buttonSx={{ mb: 0 }}
+                        isExternalFile
+                        externalFileName={FILE_DOWNLOAD_NAME}
                     />
                 </Column>
                 <Column>
