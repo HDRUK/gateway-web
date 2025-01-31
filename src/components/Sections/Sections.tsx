@@ -47,7 +47,11 @@ const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {
     }, [sections, sectionId]);
 
     return (
-        <FormLegend items={legendItems} handleClickItem={handleLegendClick} />
+        <FormLegend
+            items={legendItems}
+            handleClickItem={handleLegendClick}
+            removeMarginLeft
+        />
     );
 };
 
