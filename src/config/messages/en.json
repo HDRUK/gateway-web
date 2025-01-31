@@ -672,7 +672,6 @@
                             "questionsAnswered": "{questionCount} questions answered",
                             "save": "Save now",
                             "submit": "Submit application",
-                            "guidance": "Guidance",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",

@@ -56,9 +56,7 @@ const ApplicationSection = ({
 
     const [lastSavedDate, setLastSavedDate] = useState<number>();
 
-    const [guidanceText, setGuidanceText] = useState<string>(
-        t("defaultGuidance")
-    );
+    const [guidanceText, setGuidanceText] = useState<string>();
 
     const [sectionId, setSectionId] = useState(0);
     const handleChangeSection = (sectionId: number) => {
@@ -302,13 +300,19 @@ const ApplicationSection = ({
                         <Box
                             sx={{ flex: 1 }}
                             borderLeft={`1px solid ${theme.palette.divider}`}>
-                            <Typography variant="h2">
-                                {t("guidance")}
-                            </Typography>
-                            {guidanceText && (
+                            {guidanceText ? (
                                 <MarkDownSanitizedWithHtml
                                     content={guidanceText}
                                 />
+                            ) : (
+                                <Typography
+                                    sx={{
+                                        color: theme.palette.grey[500],
+                                        mt: 2,
+                                        textAlign: "center",
+                                    }}>
+                                    {t("defaultGuidance")}
+                                </Typography>
                             )}
                         </Box>
                     </Box>
