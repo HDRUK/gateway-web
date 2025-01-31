@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
 import {
@@ -9,11 +8,12 @@ import {
 import Typography from "@/components/Typography";
 import { LAST_SAVED_DATE_FORMAT } from "@/config/forms/dataAccessApplication";
 import { AccessTimeIcon } from "@/consts/icons";
+import { formatDate } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 
 interface DarFormBannerProps {
-    lastSavedDate?: number;
+    lastSavedDate?: Date;
     projectTitle?: string;
     handleSaveAsDraft: () => void;
 }
@@ -40,7 +40,8 @@ const DarFormBanner = ({
                         <AccessTimeIcon fontSize="small" />
                         <Typography sx={{ display: "flex", ml: 1, mr: 2 }}>
                             {t("lastSaved", {
-                                date: dayjs(lastSavedDate).format(
+                                date: formatDate(
+                                    lastSavedDate,
                                     LAST_SAVED_DATE_FORMAT
                                 ),
                             })}

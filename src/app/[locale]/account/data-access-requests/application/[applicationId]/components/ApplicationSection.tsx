@@ -54,7 +54,7 @@ const ApplicationSection = ({
 
     const [selectedField, setSelectedField] = useState<string>();
 
-    const [lastSavedDate, setLastSavedDate] = useState<number>();
+    const [lastSavedDate, setLastSavedDate] = useState<Date>();
 
     const [guidanceText, setGuidanceText] = useState<string>();
 
@@ -194,7 +194,7 @@ const ApplicationSection = ({
         const saveResponse = await updateAnswers("", { answers });
 
         if (saveResponse) {
-            setLastSavedDate(Date.now());
+            setLastSavedDate(new Date(Date.now()));
         }
     };
 
