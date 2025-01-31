@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
@@ -9,6 +10,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
@@ -25,6 +27,12 @@ const QuestionBankList = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const searchParams = useSearchParams();
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const queryParams = new URLSearchParams();
+    queryParams.append("page", currentPage.toString());
+    queryParams.append("is_child", "0");
+    const qs = queryParams.toString();
 
     const tab = searchParams?.get("tab") || "standard";
 
@@ -54,9 +62,11 @@ const QuestionBankList = () => {
     ];
 
     const { data, isLoading } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}/${tab}?is_child=0`,
+        `${apis.questionBankV1Url}/${tab}?${qs}`,
         { withPagination: true }
     );
+
+    const { lastPage } = data || {};
 
     if (isLoading) {
         return <Loading />;
@@ -91,6 +101,14 @@ const QuestionBankList = () => {
                         actions={actions}
                     />
                 ))}
+                <Pagination
+                    isLoading={isLoading}
+                    page={currentPage}
+                    count={lastPage}
+                    onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+                        setCurrentPage(page)
+                    }
+                />
             </>
         ),
     }));
