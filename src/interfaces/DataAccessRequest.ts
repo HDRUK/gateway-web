@@ -60,6 +60,12 @@ interface DarApplication {
     id: number;
     questions: DarApplicationQuestion[];
     submission_status: string;
+    project_title: string;
+}
+
+interface DarApplicationResponses {
+    [key: number]: string;
+    project_title?: string;
 }
 
 export type {
@@ -69,4 +75,5 @@ export type {
     DarApplicationQuestion,
     DarApplicationAnswer,
     DarApplication,
+    DarApplicationResponses,
 };

@@ -3,44 +3,37 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Divider } from "@mui/material";
-import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import {
     DarApplication,
     DarApplicationQuestion,
     DarApplicationAnswer,
+    DarApplicationResponses,
 } from "@/interfaces/DataAccessRequest";
 import { FormHydrationField } from "@/interfaces/FormHydration";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import {
-    Column,
-    DetailBanner,
-    Justify,
-} from "@/components/FormBanner/FormBanner.styles";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
-import usePut from "@/hooks/usePut";
+import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
-import {
-    darApplicationFormFields,
-    LAST_SAVED_DATE_FORMAT,
-} from "@/config/forms/dataAccessApplication";
+import { darApplicationFormFields } from "@/config/forms/dataAccessApplication";
 import theme from "@/config/theme";
-import { AccessTimeIcon, ArrowBackIosNewIcon } from "@/consts/icons";
+import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     isFirstSection,
     renderFormHydrationField,
 } from "@/utils/formHydration";
+import DarFormBanner from "./DarFormBanner";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 
@@ -72,15 +65,10 @@ const ApplicationSection = ({
         setSectionId(sectionId);
     };
 
-    const updateApplication = usePut(`${apis.dataAccessApplicationV1Url}`, {
-        itemName: "Data Access Request",
-        successNotificationsOn: false,
-    });
-
-    const updateAnswers = usePut(
+    const updateAnswers = usePost(
         `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
         {
-            itemName: "Data Access Request",
+            itemName: "Application answers",
         }
     );
 
@@ -98,12 +86,13 @@ const ApplicationSection = ({
         userAnswers?.map(a => [a.question_id, a.answer])
     );
 
-    const { control, handleSubmit, getValues, watch } = useForm({
-        defaultValues: {
-            ...defaultValues,
-            project_title: data.project_title,
-        },
-    });
+    const { control, handleSubmit, getValues, watch } =
+        useForm<DarApplicationResponses>({
+            defaultValues: {
+                ...defaultValues,
+                project_title: data.project_title,
+            },
+        });
 
     const projectTitle = watch("project_title");
 
@@ -151,7 +140,6 @@ const ApplicationSection = ({
             }))
             ?.map(question => {
                 const section = getSection(question.section_id);
-
                 const { name: sectionName, id: sectionId } = section || {};
 
                 let sectionData;
@@ -195,8 +183,20 @@ const ApplicationSection = ({
             });
     };
 
-    const handleSaveChanges = async formData => {
-        //TODO
+    const handleSaveChanges = async (formData: DarApplicationResponses) => {
+        const answers = Object.keys(formData)
+            .map(key => {
+                const question_id = questions?.find(
+                    q => q.latest_version.title === key
+                )?.question_id;
+                return { question_id, answer: formData[key] };
+            })
+            .filter(a => a.answer !== undefined);
+
+        const payload = {
+            answers,
+        };
+        await updateAnswers(payload);
     };
 
     const handleSaveAsDraft = async () => {
@@ -230,34 +230,11 @@ const ApplicationSection = ({
                 {t("navigateToDashboard")}
             </Link>
 
-            {/* //split to own component */}
-            <DetailBanner sx={{ pt: 2.5, pb: 2.5 }}>
-                <Column justify={Justify.START} sx={{ gap: 2 }}>
-                    <Typography variant="h2" component={"p"} sx={{ m: 0 }}>
-                        {"darRequest"}
-                    </Typography>
-                    <Typography>{projectTitle}</Typography>
-                </Column>
-
-                <Column justify={Justify.END}>
-                    {lastSavedDate && (
-                        <>
-                            <AccessTimeIcon fontSize="small" />
-                            <Typography sx={{ display: "flex", ml: 1, mr: 2 }}>
-                                {t("lastSaved", {
-                                    date: dayjs(lastSavedDate).format(
-                                        LAST_SAVED_DATE_FORMAT
-                                    ),
-                                })}
-                            </Typography>
-                        </>
-                    )}
-
-                    <Button onClick={handleSaveAsDraft} size="small">
-                        {t("save")}
-                    </Button>
-                </Column>
-            </DetailBanner>
+            <DarFormBanner
+                lastSavedDate={lastSavedDate}
+                projectTitle={projectTitle}
+                handleSaveAsDraft={handleSaveAsDraft}
+            />
 
             <Box
                 sx={{
