@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Divider from "@mui/material/Divider";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Divider } from "@mui/material";
+import dayjs from "dayjs";
+import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
+import { buildYup } from "schema-to-yup";
 import {
     DarApplication,
     DarApplicationQuestion,
@@ -14,29 +18,34 @@ import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import FormBanner from "@/components/FormBanner";
+import {
+    Column,
+    DetailBanner,
+    Justify,
+} from "@/components/FormBanner/FormBanner.styles";
+import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
-import usePost from "@/hooks/usePost";
+import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
+import {
+    darApplicationFormFields,
+    darApplicationValidationSchema,
+    LAST_SAVED_DATE_FORMAT,
+} from "@/config/forms/dataAccessApplication";
 import theme from "@/config/theme";
-import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
+import { AccessTimeIcon, ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     isFirstSection,
     renderFormHydrationField,
 } from "@/utils/formHydration";
-import {
-    FormFooter,
-    FormFooterItem,
-} from "@/app/[locale]/account/team/[teamId]/(withoutLeftNav)/datasets/components/CreateDataset/CreateDataset.styles";
 
-const EDIT_TEMPLATE_TRANSLATION_PATH =
-    "pages.account.team.dar.application.create";
+const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 
 interface ApplicationSectionProps {
     applicationId: number;
@@ -51,48 +60,100 @@ const ApplicationSection = ({
     userAnswers,
     sections,
 }: ApplicationSectionProps) => {
-    const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
+    const t = useTranslations(TRANSLATION_PATH);
+
+    const [selectedField, setSelectedField] = useState<string>();
+
+    const [lastSavedDate, setLastSavedDate] = useState<number>();
 
     const [guidanceText, setGuidanceText] = useState<string>(
         t("defaultGuidance")
     );
 
-    const [sectionId, setSectionId] = useState(1);
+    const [sectionId, setSectionId] = useState(0);
     const handleChangeSection = (sectionId: number) => {
         setSectionId(sectionId);
     };
 
-    const updateAnswers = usePost(
+    const updateApplication = usePut(`${apis.dataAccessApplicationV1Url}`, {
+        itemName: "Data Access Request",
+        successNotificationsOn: false,
+    });
+
+    const updateAnswers = usePut(
         `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
         {
-            itemName: "Application answers",
+            itemName: "Data Access Request",
         }
     );
 
     const parentSections = sections?.filter(s => s.parent_section === null);
+
     const getSection = (id: number) => sections?.find(s => s.id === id);
     const getParentSection = (id: number) => getSection(id)?.parent_section;
 
     const questions = data?.questions;
 
-
     const formatGuidance = (guidance: string) =>
         guidance.replace(/\\n\\n/g, "\n\n");
 
-    const defaultValues = userAnswers?.reduce((acc, a) => {
-        const key = questions?.find(
-            q => q.question_id === a.question_id
-        )?.title;
+    const defaultValues = Object.fromEntries(
+        userAnswers?.map(a => [a.question_id, a.answer])
+    );
 
-        acc[key] = a.answer;
-        return acc;
-    }, {});
+    const generateYupSchema = fields => {
+        const schemaConfig = {};
 
-    const { control, handleSubmit } = useForm({
-        defaultValues,
+        const processField = field => {
+            let fieldSchema = {
+                type: "string", // Default type
+                label: field.title,
+                required: !!field.required,
+            };
+
+            if (field.validations?.length) {
+                fieldSchema.errors = {};
+                field.validations.forEach(validation => {
+                    Object.keys(validation).forEach(rule => {
+                        if (rule !== "message") {
+                            fieldSchema[rule] = validation[rule];
+                            fieldSchema.errors[rule] = validation.message;
+                        }
+                    });
+                });
+            }
+
+            schemaConfig[field.question_id] = fieldSchema;
+
+            // Process children recursively if they exist inside options
+            if (field.options?.length) {
+                field.options.forEach(option => {
+                    if (option.children?.length) {
+                        option.children.forEach(processField);
+                    }
+                });
+            }
+        };
+
+        fields.forEach(processField);
+
+        return buildYup({ type: "object", properties: schemaConfig });
+    };
+    const yupSchema = generateYupSchema(data.questions);
+
+    const { control, handleSubmit, getValues, watch } = useForm({
+        defaultValues: {
+            ...defaultValues,
+            project_title: data.project_title,
+        },
+        resolver: yupResolver(darApplicationValidationSchema.concat(yupSchema)),
     });
 
+    const projectTitle = watch("project_title");
+
     const updateGuidanceText = (fieldName: string) => {
+        setSelectedField(fieldName);
+
         const guidance = questions?.find(
             question => question.title === fieldName
         )?.guidance;
@@ -102,27 +163,22 @@ const ApplicationSection = ({
         }
     };
 
-    const clearGuidanceText = () => {
-        setGuidanceText(t("defaultGuidance"));
-    };
-
     const filteredData = questions?.filter(
         d => getParentSection(d.section_id) === sectionId
     );
 
     const renderQuestions = (filteredData: DarApplicationQuestion[]) => {
         const processedSections = new Set();
-        console.log(filteredData);
 
-        // TODO - move to a util to stop replication
         return filteredData
             ?.map(q => ({
                 section_id: q.section_id,
                 title: q.title || "",
+                questionId: q.question_id,
                 field: {
                     name: q.title,
                     component: q.component,
-                    // info: formatGuidance(q?.guidance || ""),
+                    required: q.required,
                     ...(q.component === inputComponents.RadioGroup && {
                         radios: q?.options?.map(option => ({
                             label: option.label,
@@ -136,9 +192,11 @@ const ApplicationSection = ({
                         })),
                     }),
                 },
+                tempOptions: q.options,
             }))
             ?.map(question => {
                 const section = getSection(question.section_id);
+
                 const {
                     name: sectionName,
                     description: sectionDescription,
@@ -149,22 +207,12 @@ const ApplicationSection = ({
                 if (!processedSections.has(sectionId)) {
                     sectionData = (
                         <>
-                            <Box sx={{ p: 0 }}>
-                                <Typography variant="h2">
+                            <Box>
+                                <Typography variant="h3">
                                     {sectionName}
                                 </Typography>
-                                {sectionDescription && (
-                                    <>
-                                        <Typography sx={{ mb: 2 }}>
-                                            {sectionDescription}
-                                        </Typography>
-                                    </>
-                                )}
                             </Box>
-                            <Divider
-                                variant="fullWidth"
-                                sx={{ pt: 2, mb: 4 }}
-                            />
+                            <Divider variant="fullWidth" sx={{ mb: 4 }} />
                         </>
                     );
 
@@ -172,50 +220,51 @@ const ApplicationSection = ({
                 }
 
                 return (
-                    <>
+                    <div key={question.questionId}>
                         {sectionData}
 
-                        {renderFormHydrationField(
-                            question.field as FormHydrationField,
-                            control,
-                            undefined,
-                            updateGuidanceText,
-                            clearGuidanceText
-                        )}
-                    </>
+                        <Box
+                            sx={{
+                                pt: 1,
+                                pb: 0,
+                                backgroundColor:
+                                    question.field.name === selectedField
+                                        ? theme.palette.grey[100]
+                                        : "inherit",
+                            }}>
+                            {renderFormHydrationField(
+                                question.field as FormHydrationField,
+                                control,
+                                question.questionId.toString(),
+                                updateGuidanceText
+                            )}
+                        </Box>
+                    </div>
                 );
             });
     };
 
     const handleSaveChanges = async formData => {
-        const answers = Object.keys(formData)
-            .map(key => {
-                const question_id = questions?.find(
-                    q => q.title === key
-                )?.question_id;
-                return { question_id, answer: formData[key] };
-            })
-            .filter(a => a.answer !== undefined);
-
-        const payload = {
-            answers,
-        };
-        await updateAnswers(payload);
+        //TODO
     };
 
-    const blankFunc = () => {
-        console.log("FIRE");
+    const handleSaveAsDraft = async () => {
+        //TODO
     };
-
-    const isDraft = true;
-    const teamId = 1;
 
     const currentSectionIndex = sectionId
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
 
+    const completedQsCount = `${
+        Object.values(getValues()).filter(value => !isEmpty(value)).length
+    }/${data.questions.length + darApplicationFormFields.length}`;
+
     return (
-        <BoxContainer sx={{ mt: 1.75 }}>
+        <BoxContainer
+            sx={{
+                mt: 1.75,
+            }}>
             <Link
                 href={`/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}`}
                 underline="hover"
@@ -227,28 +276,49 @@ const ApplicationSection = ({
                     pl: 2,
                 }}>
                 <ArrowBackIosNewIcon fontSize="small" />
-                {t("backToManagementPage")}
+                {t("navigateToDashboard")}
             </Link>
 
-            <FormBanner
-                makeActiveAction={blankFunc}
-                saveAsDraftAction={blankFunc}
-                completionPercentage={100}
-                optionalPercentage={60}
-                actionButtonsEnabled={true}
-                translationPath="pages.account.team.dar.application.create.FormBanner"
-                downloadDetails={{
-                    //TODO when endpoint is available
-                    name: "",
-                    path: "",
-                }}
-            />
+            {/* //split to own component */}
+            <DetailBanner sx={{ pt: 2.5, pb: 2.5 }}>
+                <Column justify={Justify.START} sx={{ gap: 2 }}>
+                    <Typography variant="h2" component={"p"} sx={{ m: 0 }}>
+                        {"darRequest"}
+                    </Typography>
+                    <Typography>{projectTitle}</Typography>
+                </Column>
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+                <Column justify={Justify.END}>
+                    {lastSavedDate && (
+                        <>
+                            <AccessTimeIcon fontSize="small" />
+                            <Typography sx={{ display: "flex", ml: 1, mr: 2 }}>
+                                {t("lastSaved", {
+                                    date: dayjs(lastSavedDate).format(
+                                        LAST_SAVED_DATE_FORMAT
+                                    ),
+                                })}
+                            </Typography>
+                        </>
+                    )}
+
+                    <Button onClick={handleSaveAsDraft} size="small">
+                        {t("save")}
+                    </Button>
+                </Column>
+            </DetailBanner>
+
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    p: 0,
+                }}>
                 <Box
                     sx={{
                         flex: 1,
                         padding: theme.spacing(1),
+                        m: 1,
                     }}>
                     <Sections
                         handleLegendClick={handleChangeSection}
@@ -257,54 +327,105 @@ const ApplicationSection = ({
                     />
                 </Box>
 
-                <Box sx={{ flex: 2, p: 0 }}>
-                    <Paper
+                <Paper sx={{ m: 2, flex: 5 }}>
+                    <Box
                         sx={{
-                            my: theme.spacing(1.25),
-                            padding: theme.spacing(2),
+                            display: "flex",
+                            p: 0,
                         }}>
-                        {filteredData && renderQuestions(filteredData)}
-                    </Paper>
-                </Box>
-                <Box sx={{ flex: 1, p: 0 }}>
-                    <Paper
-                        style={{
-                            alignItems: "center",
-                            padding: theme.spacing(2),
-                            margin: theme.spacing(1.25),
-                            position: "sticky",
-                            top: theme.spacing(1.25),
-                            overflowY: "auto",
-                            maxHeight: "100vh",
-                        }}>
-                        <Typography variant="h2">Guidance</Typography>
-                        {guidanceText && (
-                            <MarkDownSanitizedWithHtml content={guidanceText} />
-                        )}
-                    </Paper>
-                </Box>
+                        <Box
+                            sx={{
+                                flex: 2,
+                                p: 0,
+                                overflowY: "auto",
+                                height: "52.5vh",
+                                m: 0,
+                            }}>
+                            {(sectionId === 0 && (
+                                <>
+                                    <Box>
+                                        <Typography variant="h3">
+                                            {sections[sectionId].name}
+                                        </Typography>
+                                        <Typography>
+                                            {sections[sectionId].description}
+                                        </Typography>
+                                    </Box>
+                                    <Divider
+                                        variant="fullWidth"
+                                        sx={{ mb: 4 }}
+                                    />
+
+                                    {darApplicationFormFields.map(field => (
+                                        <div key={field.name}>
+                                            <Box sx={{ pt: 0, pb: 0 }}>
+                                                <InputWrapper
+                                                    key={field.name}
+                                                    control={control}
+                                                    {...field}
+                                                />
+                                            </Box>
+                                        </div>
+                                    ))}
+                                </>
+                            )) ||
+                                renderQuestions(filteredData)}
+                        </Box>
+                        <Box
+                            sx={{ flex: 1 }}
+                            borderLeft={`1px solid ${theme.palette.divider}`}>
+                            <Typography variant="h2">
+                                {t("guidance")}
+                            </Typography>
+                            {guidanceText && (
+                                <MarkDownSanitizedWithHtml
+                                    content={guidanceText}
+                                />
+                            )}
+                        </Box>
+                    </Box>
+                </Paper>
             </Box>
-            <Box
-                sx={{
-                    padding: theme.spacing(1),
-                    margin: theme.spacing(2),
-                }}>
-                <FormFooter>
-                    <FormFooterItem>
+
+            <Paper sx={{ p: 2 }}>
+                <Box
+                    sx={{
+                        p: 0,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        gap: 1,
+                    }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            p: 0,
+                            alignItems: "center",
+                        }}>
+                        <Typography>
+                            {t("questionsAnswered", {
+                                questionCount: completedQsCount,
+                            })}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", p: 0, m: 0, gap: 1 }}>
+                        <Button
+                            onClick={handleSubmit(handleSaveChanges)}
+                            type="submit"
+                            variant="outlined"
+                            color="secondary">
+                            {t("submit")}
+                        </Button>
+
                         <Button
                             onClick={() =>
                                 handleChangeSection(
                                     parentSections[currentSectionIndex - 1]?.id
                                 )
                             }
-                            disabled={isFirstSection(currentSectionIndex)}
-                            variant="text"
-                            startIcon={<ArrowBackIosNewIcon />}>
+                            disabled={isFirstSection(currentSectionIndex)}>
                             {t("previous")}
                         </Button>
-                    </FormFooterItem>
 
-                    <FormFooterItem>
                         <Button
                             onClick={() =>
                                 handleChangeSection(
@@ -313,28 +434,12 @@ const ApplicationSection = ({
                             }
                             disabled={
                                 parentSections.length - 1 <= currentSectionIndex
-                            }
-                            endIcon={<ArrowForwardIosIcon />}>
+                            }>
                             {t("next")}
                         </Button>
-                    </FormFooterItem>
-                </FormFooter>
-            </Box>
-
-            {/* <Paper sx={{ m: 2, p: 2, mb: 5 }}>
-                    <Box
-                        sx={{
-                            p: 0,
-                            display: "flex",
-                            justifyContent: "end",
-                        }}>
-                        <Button
-                            onClick={handleSubmit(handleSaveChanges)}
-                            type="submit">
-                            {t("save")}
-                        </Button>
                     </Box>
-                </Paper> */}
+                </Box>
+            </Paper>
         </BoxContainer>
     );
 };
