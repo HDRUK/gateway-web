@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
-import { buildYup } from "schema-to-yup";
 import {
     DarApplication,
     DarApplicationQuestion,
@@ -34,7 +32,6 @@ import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import {
     darApplicationFormFields,
-    darApplicationValidationSchema,
     LAST_SAVED_DATE_FORMAT,
 } from "@/config/forms/dataAccessApplication";
 import theme from "@/config/theme";
@@ -101,52 +98,11 @@ const ApplicationSection = ({
         userAnswers?.map(a => [a.question_id, a.answer])
     );
 
-    const generateYupSchema = fields => {
-        const schemaConfig = {};
-
-        const processField = field => {
-            let fieldSchema = {
-                type: "string", // Default type
-                label: field.title,
-                required: !!field.required,
-            };
-
-            if (field.validations?.length) {
-                fieldSchema.errors = {};
-                field.validations.forEach(validation => {
-                    Object.keys(validation).forEach(rule => {
-                        if (rule !== "message") {
-                            fieldSchema[rule] = validation[rule];
-                            fieldSchema.errors[rule] = validation.message;
-                        }
-                    });
-                });
-            }
-
-            schemaConfig[field.question_id] = fieldSchema;
-
-            // Process children recursively if they exist inside options
-            if (field.options?.length) {
-                field.options.forEach(option => {
-                    if (option.children?.length) {
-                        option.children.forEach(processField);
-                    }
-                });
-            }
-        };
-
-        fields.forEach(processField);
-
-        return buildYup({ type: "object", properties: schemaConfig });
-    };
-    const yupSchema = generateYupSchema(data.questions);
-
     const { control, handleSubmit, getValues, watch } = useForm({
         defaultValues: {
             ...defaultValues,
             project_title: data.project_title,
         },
-        resolver: yupResolver(darApplicationValidationSchema.concat(yupSchema)),
     });
 
     const projectTitle = watch("project_title");
@@ -192,16 +148,11 @@ const ApplicationSection = ({
                         })),
                     }),
                 },
-                tempOptions: q.options,
             }))
             ?.map(question => {
                 const section = getSection(question.section_id);
 
-                const {
-                    name: sectionName,
-                    description: sectionDescription,
-                    id: sectionId,
-                } = section || {};
+                const { name: sectionName, id: sectionId } = section || {};
 
                 let sectionData;
                 if (!processedSections.has(sectionId)) {
