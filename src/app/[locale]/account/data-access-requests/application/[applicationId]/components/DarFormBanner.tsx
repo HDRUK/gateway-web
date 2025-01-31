@@ -28,7 +28,7 @@ const DarFormBanner = ({
     return (
         <DetailBanner sx={{ pt: 2.5, pb: 2.5 }}>
             <Column justify={Justify.START} sx={{ gap: 2 }}>
-                <Typography variant="h2" component={"p"} sx={{ m: 0 }}>
+                <Typography variant="h2" component="p" sx={{ m: 0 }}>
                     {t("darRequest")}
                 </Typography>
                 {projectTitle && <Typography>{projectTitle}</Typography>}

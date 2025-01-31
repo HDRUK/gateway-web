@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SxProps } from "@mui/material";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import FormLegend from "@/components/FormLegend";
@@ -10,7 +9,6 @@ interface Props {
     sectionId: number;
     sections: QuestionBankSection[];
     handleLegendClick?: (itemIndex: number) => void;
-    containerSx?: SxProps;
 }
 
 const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {

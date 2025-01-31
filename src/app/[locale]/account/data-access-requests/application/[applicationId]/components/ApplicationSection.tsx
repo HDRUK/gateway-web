@@ -22,7 +22,7 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
-import usePost from "@/hooks/usePost";
+import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { darApplicationFormFields } from "@/config/forms/dataAccessApplication";
@@ -63,7 +63,7 @@ const ApplicationSection = ({
         setSectionId(sectionId);
     };
 
-    const updateAnswers = usePost(
+    const updateAnswers = usePut(
         `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
         {
             itemName: "Application answers",
@@ -191,14 +191,15 @@ const ApplicationSection = ({
             })
             .filter(a => a.answer !== undefined);
 
-        const payload = {
-            answers,
-        };
-        await updateAnswers(payload);
+        const saveResponse = await updateAnswers("", { answers });
+
+        if (saveResponse) {
+            setLastSavedDate(Date.now());
+        }
     };
 
     const handleSaveAsDraft = async () => {
-        //TODO
+        console.log("save draft");
     };
 
     const currentSectionIndex = sectionId
