@@ -116,10 +116,27 @@ const getColumns = ({
                     <Typography color="GrayText">
                         {original.user.email}
                     </Typography>
-                    <Typography color="GrayText">
-                        {original.user.secondary_email}
-                    </Typography>
                 </>
+            ),
+        },
+        {
+            id: "secondary_email",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Secondary Email
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.user.secondary_email}
+                </Typography>
             ),
         },
         {
@@ -194,14 +211,6 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Bio
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Sort by sector">
-                        <SortByAlphaIcon />
-                    </IconButton>
                 </Box>
             ),
             cell: ({ row: { original } }) => (
@@ -225,7 +234,7 @@ const getColumns = ({
                         disableRipple
                         size="large"
                         edge="start"
-                        aria-label="Sort by organisation"
+                        aria-label="Sort by domain"
                         onClick={() => setSort(updateSort("domain"))}>
                         <SortByAlphaIcon />
                     </IconButton>
@@ -252,7 +261,7 @@ const getColumns = ({
                         disableRipple
                         size="large"
                         edge="start"
-                        aria-label="Sort by organisation"
+                        aria-label="Sort by link"
                         onClick={() => setSort(updateSort("link"))}>
                         <SortByAlphaIcon />
                     </IconButton>
@@ -273,13 +282,13 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    Orc ID
+                    OrcID
                     <IconButton
                         sx={{ p: 0 }}
                         disableRipple
                         size="large"
                         edge="start"
-                        aria-label="Sort by organisation"
+                        aria-label="Sort by orcid"
                         onClick={() => setSort(updateSort("orcid"))}>
                         <SortByAlphaIcon />
                     </IconButton>
@@ -290,7 +299,7 @@ const getColumns = ({
             ),
         },
         {
-            id: "updated_art",
+            id: "updated_at",
             header: () => (
                 <Box
                     sx={{
@@ -300,21 +309,18 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    Updated At
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Sort by organisation"
-                        onClick={() => setSort(updateSort("updated_art"))}>
-                        <SortByAlphaIcon />
-                    </IconButton>
+                    Profile Updated At
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="updated_at"
+                        ariaLabel="Date requested"
+                    />
                 </Box>
             ),
             cell: ({ row: { original } }) => (
                 <Typography color="GrayText">
-                    `${formatDate(original.user.updated_at, "DD/MM/YYYY")}`,
+                    {formatDate(original.user.updated_at, "DD/MM/YYYY")}
                 </Typography>
             ),
         },

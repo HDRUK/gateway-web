@@ -25,7 +25,7 @@ const CohortTable = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [sort, setSort] = useState({ key: "updated_at", direction: "asc" });
+    const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
     const [requestStatus, setRequestStatus] = useState<CohortRequestStatus>();
 
     const { control, watch, setValue } = useForm({
@@ -66,6 +66,7 @@ const CohortTable = () => {
         translations,
     });
     const tableStyle = {
+        height: "500px",
         width: "100%",
         borderCollapse: "collapse",
         tableLayout: "auto",
