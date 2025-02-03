@@ -166,7 +166,7 @@ const getColumns = ({
             ),
             cell: ({ row: { original } }) => (
                 <Typography color="GrayText">
-                    {original.user.sector.name}
+                    {original.user.sector?.name}
                 </Typography>
             ),
         },
