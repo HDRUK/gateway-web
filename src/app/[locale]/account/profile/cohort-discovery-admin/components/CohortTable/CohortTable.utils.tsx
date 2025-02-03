@@ -116,6 +116,77 @@ const getColumns = ({
                     <Typography color="GrayText">
                         {original.user.email}
                     </Typography>
+                    <Typography color="GrayText">
+                        {original.user.secondary_email}
+                    </Typography>
+                </>
+            ),
+        },
+        {
+            id: "sector",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Sector
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by sector"
+                        onClick={() => {
+                            setSort(updateSort("sector"));
+                        }}>
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <>
+                    
+
+                    <Typography color="GrayText">
+                        {original.user.sector.name}
+                    </Typography>
+                </>
+            ),
+        },
+        {
+            id: "sector",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Bio
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by sector"
+                        >
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <>
+                    
+
+                    <Typography color="GrayText">
+                        {original.user.bio}
+                    </Typography>
                 </>
             ),
         },
@@ -145,6 +216,122 @@ const getColumns = ({
             cell: ({ row: { original } }) => (
                 <Typography color="GrayText">
                     {original.user.organisation}
+                </Typography>
+            ),
+        },
+        {
+            id: "Organisation",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Domain
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by organisation"
+                        onClick={() => setSort(updateSort("domain"))}>
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.user.domain}
+                </Typography>
+            ),
+        },
+        {
+            id: "Organisation",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Link
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by organisation"
+                        onClick={() => setSort(updateSort("link"))}>
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.user.link}
+                </Typography>
+            ),
+        },
+        {
+            id: "Organisation",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Orc ID
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by organisation"
+                        onClick={() => setSort(updateSort("orcid"))}>
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.user.orcid}
+                </Typography>
+            ),
+        },
+        {
+            id: "Organisation",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Updated At
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by organisation"
+                        onClick={() => setSort(updateSort("updated_art"))}>
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                     `${formatDate(original.user.updated_at, "DD/MM/YYYY")}`,
                 </Typography>
             ),
         },

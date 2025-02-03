@@ -65,6 +65,14 @@ const CohortTable = () => {
         requestStatus,
         translations,
     });
+    const tableStyle = {
+        width: '100%',
+        borderCollapse: 'collapse', 
+        tableLayout: 'auto',
+        display: 'block',
+        overflowX: 'auto',
+        whiteSpace: 'nowrap'
+      }
 
     if (!list) return <Loading />;
 
@@ -78,7 +86,7 @@ const CohortTable = () => {
                 />
             </Box>
             <div style={{ marginBlock: 10 }}>
-                <Table<CohortRequest> columns={columns} rows={list} />
+                <Table<CohortRequest> columns={columns} rows={list} style={tableStyle}/>
             </div>
             <Pagination
                 isLoading={isLoading}

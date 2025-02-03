@@ -31,6 +31,7 @@ interface TableProps<T> {
     ) => void;
     hideHeader?: boolean;
     pinHeader?: boolean;
+    style?: CSSProperties
 }
 
 function useSkipper() {
@@ -82,6 +83,7 @@ const Table = <T,>({
     defaultColumn,
     hideHeader,
     pinHeader,
+    style
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
     const table = useReactTable(
@@ -128,7 +130,7 @@ const Table = <T,>({
             ]);
         }
     );
-
+      
     const hasFooterContent = !!table
         .getFooterGroups()
         .map(group =>
@@ -138,7 +140,7 @@ const Table = <T,>({
         .filter(Boolean).length;
 
     return (
-        <table css={styles.table}>
+        <table css={style ?? styles.table}>
             {!hideHeader && (
                 <thead>
                     {table.getHeaderGroups().map(headerGroup => (
