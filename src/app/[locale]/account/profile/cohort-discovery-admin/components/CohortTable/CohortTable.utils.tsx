@@ -229,15 +229,6 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Domain
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Sort by domain"
-                        onClick={() => setSort(updateSort("domain"))}>
-                        <SortByAlphaIcon />
-                    </IconButton>
                 </Box>
             ),
             cell: ({ row: { original } }) => (
@@ -256,15 +247,6 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     Link
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Sort by link"
-                        onClick={() => setSort(updateSort("link"))}>
-                        <SortByAlphaIcon />
-                    </IconButton>
                 </Box>
             ),
             cell: ({ row: { original } }) => (
@@ -283,19 +265,10 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     OrcID
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Sort by orcid"
-                        onClick={() => setSort(updateSort("orcid"))}>
-                        <SortByAlphaIcon />
-                    </IconButton>
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">{original.user.orcid}</Typography>
+                <Typography color="GrayText">{original.user?.orcid}</Typography>
             ),
         },
         {
