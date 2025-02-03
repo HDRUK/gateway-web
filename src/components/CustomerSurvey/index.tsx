@@ -58,7 +58,7 @@ const ratings: Ratings[] = [
         colour: "#3cb28c",
     },
 ];
-const displayIn = 5000;
+const displayIn = 90000;
 const boxSize = 600;
 const slideIn = keyframes`
   from {
