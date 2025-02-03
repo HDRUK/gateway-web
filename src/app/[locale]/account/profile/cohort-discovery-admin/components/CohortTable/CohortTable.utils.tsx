@@ -148,13 +148,9 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <>
-                    
-
-                    <Typography color="GrayText">
-                        {original.user.sector.name}
-                    </Typography>
-                </>
+                <Typography color="GrayText">
+                    {original.user.sector.name}
+                </Typography>
             ),
         },
         {
@@ -174,20 +170,13 @@ const getColumns = ({
                         disableRipple
                         size="large"
                         edge="start"
-                        aria-label="Sort by sector"
-                        >
+                        aria-label="Sort by sector">
                         <SortByAlphaIcon />
                     </IconButton>
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <>
-                    
-
-                    <Typography color="GrayText">
-                        {original.user.bio}
-                    </Typography>
-                </>
+                <Typography color="GrayText">{original.user.bio}</Typography>
             ),
         },
         {
@@ -243,9 +232,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
-                    {original.user.domain}
-                </Typography>
+                <Typography color="GrayText">{original.user.domain}</Typography>
             ),
         },
         {
@@ -272,9 +259,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
-                    {original.user.link}
-                </Typography>
+                <Typography color="GrayText">{original.user.link}</Typography>
             ),
         },
         {
@@ -301,9 +286,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
-                    {original.user.orcid}
-                </Typography>
+                <Typography color="GrayText">{original.user.orcid}</Typography>
             ),
         },
         {
@@ -331,7 +314,7 @@ const getColumns = ({
             ),
             cell: ({ row: { original } }) => (
                 <Typography color="GrayText">
-                     `${formatDate(original.user.updated_at, "DD/MM/YYYY")}`,
+                    `${formatDate(original.user.updated_at, "DD/MM/YYYY")}`,
                 </Typography>
             ),
         },
