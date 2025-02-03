@@ -154,33 +154,7 @@ const getColumns = ({
             ),
         },
         {
-            id: "sector",
-            header: () => (
-                <Box
-                    sx={{
-                        p: 0,
-                        justifyContent: "space-between",
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                    textAlign="left">
-                    Bio
-                    <IconButton
-                        sx={{ p: 0 }}
-                        disableRipple
-                        size="large"
-                        edge="start"
-                        aria-label="Sort by sector">
-                        <SortByAlphaIcon />
-                    </IconButton>
-                </Box>
-            ),
-            cell: ({ row: { original } }) => (
-                <Typography color="GrayText">{original.user.bio}</Typography>
-            ),
-        },
-        {
-            id: "Organisation",
+            id: "organisation",
             header: () => (
                 <Box
                     sx={{
@@ -209,7 +183,33 @@ const getColumns = ({
             ),
         },
         {
-            id: "Organisation",
+            id: "bio",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Bio
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by sector">
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">{original.user.bio}</Typography>
+            ),
+        },
+        {
+            id: "domain",
             header: () => (
                 <Box
                     sx={{
@@ -236,7 +236,7 @@ const getColumns = ({
             ),
         },
         {
-            id: "Organisation",
+            id: "link",
             header: () => (
                 <Box
                     sx={{
@@ -263,7 +263,7 @@ const getColumns = ({
             ),
         },
         {
-            id: "Organisation",
+            id: "orcid",
             header: () => (
                 <Box
                     sx={{
@@ -290,7 +290,7 @@ const getColumns = ({
             ),
         },
         {
-            id: "Organisation",
+            id: "updated_art",
             header: () => (
                 <Box
                     sx={{
