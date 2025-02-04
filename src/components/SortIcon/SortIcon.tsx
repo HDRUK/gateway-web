@@ -26,7 +26,7 @@ const SortIcon = ({
     const Icon = icon || ArrowDropUpIcon;
     return (
         <IconButton
-            sx={{ p: 0 }}
+            sx={{ p: 0, marginLeft: 1 }}
             disableRipple
             size="large"
             edge="start"
