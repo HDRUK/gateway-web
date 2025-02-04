@@ -7,7 +7,6 @@ import MoodBadIcon from "@mui/icons-material/MoodBad";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-
 import {
     Grid,
     Typography,
@@ -56,7 +55,9 @@ interface CustomerSurveyProps {
     hideOnLoad: boolean;
 }
 
-export default function CustomerSurvey({ hideOnLoad = true }: CustomerSurveyProps) {
+export default function CustomerSurvey({
+    hideOnLoad = true,
+}: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
