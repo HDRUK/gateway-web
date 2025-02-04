@@ -22,6 +22,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { colors } from "@/config/theme";
 
 interface Ratings {
     icon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
@@ -33,11 +34,11 @@ const cookieName = "surveySubmitted";
 const cookieLife = 90; // days
 
 const ratings: Ratings[] = [
-    { icon: MoodBadIcon, rating: 1, colour: "#dc3645" },
-    { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: "#fe7e00" },
-    { icon: SentimentSatisfiedIcon, rating: 3, colour: "#f0bb24" },
-    { icon: SentimentSatisfiedAltIcon, rating: 4, colour: "#addad9" },
-    { icon: InsertEmoticonIcon, rating: 5, colour: "#3cb28c" },
+    { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
+    { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: colors.orange },
+    { icon: SentimentSatisfiedIcon, rating: 3, colour: colors.orange200 },
+    { icon: SentimentSatisfiedAltIcon, rating: 4, colour: colors.darkGreen100 },
+    { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
 
 const displayIn = 90000;
@@ -56,7 +57,7 @@ interface CustomerSurveyProps {
 }
 
 export default function CustomerSurvey({
-    hideOnLoad = true,
+    hideOnLoad = false,
 }: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
@@ -125,7 +126,7 @@ export default function CustomerSurvey({
         <Box
             sx={{
                 textAlign: "center",
-                padding: "20px",
+                padding: 2,
                 background: "white",
                 position: "fixed",
                 bottom: 0,
@@ -157,8 +158,8 @@ export default function CustomerSurvey({
                                             color: colour,
                                             minWidth: "75px",
                                             minHeight: "75px",
-                                            margin: "5px",
-                                            fontSize: "16px",
+                                            margin: 1,
+                                            fontSize: 1,
                                             fontWeight: "bold",
                                         }}
                                     />
