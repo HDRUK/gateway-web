@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+
 import {
     Grid,
     Typography,
@@ -32,63 +34,29 @@ const cookieName = "surveySubmitted";
 const cookieLife = 90; // days
 
 const ratings: Ratings[] = [
-    {
-        icon: MoodBadIcon,
-        rating: 1,
-        colour: "#dc3645",
-    },
-    {
-        icon: SentimentVeryDissatisfiedIcon,
-        rating: 2,
-        colour: "#fe7e00",
-    },
-    {
-        icon: SentimentSatisfiedIcon,
-        rating: 3,
-        colour: "#f0bb24",
-    },
-    {
-        icon: SentimentSatisfiedAltIcon,
-        rating: 4,
-        colour: "#addad9",
-    },
-    {
-        icon: InsertEmoticonIcon,
-        rating: 5,
-        colour: "#3cb28c",
-    },
+    { icon: MoodBadIcon, rating: 1, colour: "#dc3645" },
+    { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: "#fe7e00" },
+    { icon: SentimentSatisfiedIcon, rating: 3, colour: "#f0bb24" },
+    { icon: SentimentSatisfiedAltIcon, rating: 4, colour: "#addad9" },
+    { icon: InsertEmoticonIcon, rating: 5, colour: "#3cb28c" },
 ];
+
 const displayIn = 90000;
 const boxSize = 600;
 const slideIn = keyframes`
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 `;
-
 const slideOut = keyframes`
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(100%);
-    opacity: 0;
-  }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
 `;
 
 interface CustomerSurveyProps {
     hideOnLoad: boolean;
 }
 
-export default function CustomerSurvey({
-    hideOnLoad = true,
-}: CustomerSurveyProps) {
+export default function CustomerSurvey({ hideOnLoad = true }: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
@@ -102,6 +70,10 @@ export default function CustomerSurvey({
     const handleClick = async (score: number) => {
         await handleSubmit({ score });
         Cookies.set(cookieName, score.toString(), { expires: cookieLife });
+        dismissSurvey();
+    };
+
+    const dismissSurvey = () => {
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
@@ -109,29 +81,39 @@ export default function CustomerSurvey({
         }, 500);
     };
 
-    const checkToHide = useCallback(() => {
+    const handleClose = () => {
+        setAnimateOut(true);
+        setTimeout(() => {
+            setHideComponent(true);
+            setSubmitted(false);
+        }, 500);
+
+        setTimeout(() => {
+            checkToShowSurvey();
+        }, displayIn);
+    };
+
+    const checkToShowSurvey = useCallback(() => {
         if (!Cookies.get(cookieName)) {
+            setAnimateOut(false);
             setHideComponent(false);
         }
     }, []);
 
-    // Reset on page change
     useEffect(() => {
         setHideComponent(hideOnLoad);
         setSubmitted(false);
     }, [pathname, hideOnLoad]);
 
     useEffect(() => {
-        let intervalId: NodeJS.Timeout;
+        if (!hideComponent) return;
 
-        if (hideComponent) {
-            intervalId = setInterval(checkToHide, displayIn);
-        }
+        const timeoutId = setTimeout(() => {
+            checkToShowSurvey();
+        }, displayIn);
 
-        return () => {
-            if (intervalId) clearInterval(intervalId);
-        };
-    }, [hideComponent, checkToHide]);
+        return () => clearTimeout(timeoutId);
+    }, [hideComponent, checkToShowSurvey]);
 
     if (hideComponent || submitted) {
         return null;
@@ -150,6 +132,12 @@ export default function CustomerSurvey({
                 zIndex: 999,
                 animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
             }}>
+            <IconButton
+                sx={{ position: "absolute", top: 10, right: 10 }}
+                onClick={handleClose}>
+                <CloseIcon />
+            </IconButton>
+
             <Typography variant="h6" gutterBottom>
                 {t("title")}
             </Typography>
