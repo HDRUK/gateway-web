@@ -68,18 +68,18 @@ export default function CustomerSurvey({
         successNotificationsOn: false,
     });
 
-    const handleClick = async (score: number) => {
-        await handleSubmit({ score });
-        Cookies.set(cookieName, score.toString(), { expires: cookieLife });
-        dismissSurvey();
-    };
-
     const dismissSurvey = () => {
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
             setSubmitted(true);
         }, 500);
+    };
+
+    const handleClick = async (score: number) => {
+        await handleSubmit({ score });
+        Cookies.set(cookieName, score.toString(), { expires: cookieLife });
+        dismissSurvey();
     };
 
     const handleClose = () => {
@@ -109,9 +109,7 @@ export default function CustomerSurvey({
     useEffect(() => {
         if (!hideComponent) return;
 
-        const timeoutId = setTimeout(() => {
-            checkToShowSurvey();
-        }, displayIn);
+        const timeoutId = setTimeout(checkToShowSurvey, displayIn);
 
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
