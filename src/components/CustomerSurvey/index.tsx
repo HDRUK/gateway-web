@@ -40,7 +40,7 @@ const ratings: Ratings[] = [
     { icon: InsertEmoticonIcon, rating: 5, colour: "#3cb28c" },
 ];
 
-const displayIn = 5000;
+const displayIn = 90000;
 const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
@@ -82,6 +82,13 @@ export default function CustomerSurvey({
         dismissSurvey();
     };
 
+    const checkToShowSurvey = useCallback(() => {
+        if (!Cookies.get(cookieName)) {
+            setAnimateOut(false);
+            setHideComponent(false);
+        }
+    }, []);
+
     const handleClose = () => {
         setAnimateOut(true);
         setTimeout(() => {
@@ -94,20 +101,16 @@ export default function CustomerSurvey({
         }, displayIn);
     };
 
-    const checkToShowSurvey = useCallback(() => {
-        if (!Cookies.get(cookieName)) {
-            setAnimateOut(false);
-            setHideComponent(false);
-        }
-    }, []);
-
     useEffect(() => {
         setHideComponent(hideOnLoad);
         setSubmitted(false);
     }, [pathname, hideOnLoad]);
 
     useEffect(() => {
-        if (!hideComponent) return;
+        if (!hideComponent)
+            return () => {
+                /** No cleanup needed when hidden */
+            };
 
         const timeoutId = setTimeout(checkToShowSurvey, displayIn);
 
