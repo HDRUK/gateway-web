@@ -30,13 +30,15 @@ interface OptionType {
 
 interface AddDatasetDialogProps {
     onSubmit: (query: string, type: string) => void;
-    defaultQuery?: string | string[];
+    defaultQuery?: string;
+    datasetNamesArray?: string[];
     isDataset: boolean;
 }
 
 const PublicationSearchDialog = ({
     onSubmit,
     defaultQuery,
+    datasetNamesArray,
     isDataset,
 }: AddDatasetDialogProps) => {
     const { hideDialog } = useDialog();
@@ -47,7 +49,8 @@ const PublicationSearchDialog = ({
     const { control, getValues, watch } = useForm({
         defaultValues: {
             search: !isDataset && defaultQuery ? defaultQuery : "",
-            datasetName: isDataset && defaultQuery ? (isArray(defaultQuery) ? defaultQuery : defaultQuery.split(',')) : [],
+            datasetNames:
+                isDataset && datasetNamesArray ? datasetNamesArray : [],
         },
     });
 
@@ -65,24 +68,36 @@ const PublicationSearchDialog = ({
         name: "datasetName",
         placeholder: t("datasetNameField.placeholder"),
         label: t("datasetNameField.label"),
-        // canCreate: false,
+        canCreate: false,
         multiple: true,
         isOptionEqualToValue: (
             option: { value: string | number; label: string },
-            value: string | number
+            value: { value: string | number; label: string }
         ) => {
-            const comp = (option.value === value);
-            // console.log('option.value', option.value);
-            // console.log('value', value);
-            // console.log('comp', comp);
+            const comp = option.value === value.value;
+            console.log("option", option);
+            console.log("option.value", option.value);
+            console.log("value", value);
+            console.log("comp", comp);
             return comp;
         },
-        getChipLabel,
+        getChipLabel: (
+            options: { value: string | number; label: string }[],
+            value: { value: string | number; label: string }
+        ) => {
+            console.log("getChipLabel options", options);
+            console.log("getChipLabel value", value);
+            if (typeof value === "string") {
+                return value;
+            }
+
+            return options.find(option => option.value === value.value)?.label;
+        },
     };
 
     const [searchParams, setSearchParams] = useState({
         status: "ACTIVE",
-        title: isDataset ? getValues("datasetName") : "",
+        title: isDataset ? getValues("datasetNames") : "",
     });
 
     const [query, setQuery] = useState(
@@ -98,31 +113,48 @@ const PublicationSearchDialog = ({
         }));
     }, [filterTitleDebounced]);
 
-    const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
+    const { data: datasetData = [], isLoading: isLoadingDatasets } = useGet<
         Dataset[]
     >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`, {
         shouldFetch: hasMinimumSearchCharLength(searchParams.title),
     });
 
     const searchValue = watch("search");
-    const datasetNameValue = watch("datasetName");
+    const datasetNameValue = watch("datasetNames");
 
-    const datasetOptions = useMemo(() => {
-        if (!datasetData) return [];
+    const [datasetOptions, setDatasetOptions] = useState<OptionsType[]>([]);
 
-        const x = datasetData.map(data => {
+    const updateDatasetOptions = (
+        prevOptions: OptionsType[],
+        datasetOptions: OptionsType[]
+    ) => {
+        const existingDatasetIds = prevOptions.map(option => option.value);
+        const newOptions = datasetOptions?.filter(
+            option => !existingDatasetIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const datasetOptions = datasetData?.map(dataset => {
             const datasetTitle = get(
-                data,
+                dataset,
                 "latest_metadata.metadata.metadata.summary.title"
             );
-
             return {
+                value: dataset.id,
                 label: datasetTitle,
-                value: datasetTitle,
             };
         }) as OptionsType[];
-        // console.log('datasetOptions is being set to', x);
-        return x;
+
+        setDatasetOptions(prevOptions =>
+            updateDatasetOptions(prevOptions, datasetOptions)
+        );
     }, [datasetData]);
 
     return (
@@ -154,7 +186,7 @@ const PublicationSearchDialog = ({
                         }
                         setQuery(value);
                     }}
-                    options={isLoadingDatasets ? [] : datasetOptions}
+                    options={datasetOptions || []}
                     filterOptions={(x: OptionType) => x}
                     loading={isLoadingDatasets}
                     disabled={!!searchValue?.length}
@@ -180,10 +212,11 @@ const PublicationSearchDialog = ({
                         console.log('getValues("datasetName")', getValues("datasetName"));
                         console.log('getValues("search")', getValues("search"));
                         onSubmit(
-                            getValues("datasetName") ||
+                            getValues("datasetNames") ||
                                 getValues("search") ||
                                 "",
-                            searchValue?.length ? "text" : "dataset"
+                            searchValue?.length ? "text" : "dataset",
+                            getValues("datasetNames")
                         );
                         hideDialog();
                     }}>
