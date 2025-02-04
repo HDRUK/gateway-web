@@ -57,7 +57,7 @@ interface CustomerSurveyProps {
 }
 
 export default function CustomerSurvey({
-    hideOnLoad = false,
+    hideOnLoad = true,
 }: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
