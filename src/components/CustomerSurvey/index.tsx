@@ -40,7 +40,7 @@ const ratings: Ratings[] = [
     { icon: InsertEmoticonIcon, rating: 5, colour: "#3cb28c" },
 ];
 
-const displayIn = 90000;
+const displayIn = 5000;
 const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
@@ -148,7 +148,7 @@ export default function CustomerSurvey({
                             <Tooltip title={t(`tooltip-${index}`)}>
                                 <IconButton onClick={() => handleClick(rating)}>
                                     <Icon
-                                        aria-label={`Rating ${rating}`}
+                                        aria-label={t(`tooltip-${index}`)}
                                         sx={{
                                             cursor: "pointer",
                                             color: colour,
