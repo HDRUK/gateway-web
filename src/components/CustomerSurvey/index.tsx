@@ -151,7 +151,7 @@ export default function CustomerSurvey({
                             <Tooltip title={t(`tooltip-${index}`)}>
                                 <IconButton onClick={() => handleClick(rating)}>
                                     <Icon
-                                        aria-label={t(`tooltip-${index}`)}
+                                        aria-label={`Rating ${rating}`}
                                         sx={{
                                             cursor: "pointer",
                                             color: colour,
