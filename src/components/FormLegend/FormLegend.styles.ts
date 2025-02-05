@@ -13,7 +13,9 @@ interface ProgressIconProps {
 const ICON_SIZE = "18px";
 const SVG_SIZE = "13px";
 
-export const Wrapper = styled(Box)<WrapperProps>(({ offsetTop }) => ({
+export const Wrapper = styled(Box, {
+    shouldForwardProp: prop => prop !== "offsetTop",
+})<WrapperProps>(({ offsetTop }) => ({
     position: "sticky",
     top: offsetTop,
     padding: 0,

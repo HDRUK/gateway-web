@@ -675,7 +675,8 @@
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
-                            "next": "Next"
+                            "next": "Next",
+                            "missingRequiredFields": "Please check all required fields have been completed"
                         }
                     },
                     "template": {
