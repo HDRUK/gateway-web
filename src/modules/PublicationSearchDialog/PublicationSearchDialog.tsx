@@ -91,9 +91,7 @@ const PublicationSearchDialog = ({
             ? datasetNamesArray
                 ? datasetNamesArray.join(",")
                 : ""
-            : defaultQuery
-            ? defaultQuery
-            : ""
+            : defaultQuery || ""
     );
 
     const filterTitleDebounced = useDebounce(

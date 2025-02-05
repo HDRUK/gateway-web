@@ -670,13 +670,15 @@ const Search = ({ filters }: SearchProps) => {
     const europePmcModalAction = () =>
         showDialog(() => (
             <PublicationSearchDialog
-                onSubmit={(query: string, type: string, datasetNamesArray: string[]) => {
+                onSubmit={(
+                    query: string,
+                    type: string,
+                    datasetNamesArray: string[]
+                ) => {
                     onQuerySubmit({
                         query,
                     });
-                    setDatasetNamesArray(
-                      datasetNamesArray,  
-                    );
+                    setDatasetNamesArray(datasetNamesArray);
                     setQueryParams({
                         ...queryParams,
                         pmc: type,
