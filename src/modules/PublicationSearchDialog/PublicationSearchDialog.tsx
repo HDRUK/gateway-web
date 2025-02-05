@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CircularProgress, Typography } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
-import { get } from "lodash";
+import { get, isArray } from "lodash";
 import { useTranslations } from "next-intl";
 import { Dataset } from "@/interfaces/Dataset";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
@@ -28,14 +29,20 @@ interface OptionType {
 }
 
 interface AddDatasetDialogProps {
-    onSubmit: (query: string, type: string) => void;
+    onSubmit: (
+        query: string,
+        type: string,
+        datasetNamesArray: string[]
+    ) => void;
     defaultQuery?: string;
+    datasetNamesArray?: string[];
     isDataset: boolean;
 }
 
 const PublicationSearchDialog = ({
     onSubmit,
     defaultQuery,
+    datasetNamesArray,
     isDataset,
 }: AddDatasetDialogProps) => {
     const { hideDialog } = useDialog();
@@ -44,7 +51,8 @@ const PublicationSearchDialog = ({
     const { control, getValues, watch } = useForm({
         defaultValues: {
             search: !isDataset && defaultQuery ? defaultQuery : "",
-            datasetName: isDataset && defaultQuery ? defaultQuery : "",
+            datasetNames:
+                isDataset && datasetNamesArray ? datasetNamesArray : [],
         },
     });
 
@@ -59,21 +67,38 @@ const PublicationSearchDialog = ({
 
     const datasetTitleField = {
         component: inputComponents.Autocomplete,
-        name: "datasetName",
+        name: "datasetNames",
         placeholder: t("datasetNameField.placeholder"),
         label: t("datasetNameField.label"),
+        canCreate: false,
+        multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => {
+            return option.label === value;
+        },
+        getChipLabel,
+        clearIcon: true,
     };
 
     const [searchParams, setSearchParams] = useState({
         status: "ACTIVE",
-        title: isDataset ? getValues("datasetName") : "",
+        title: isDataset ? getValues("datasetNames") : "",
     });
 
     const [query, setQuery] = useState(
-        isDataset && defaultQuery ? defaultQuery : ""
+        isDataset
+            ? datasetNamesArray
+                ? datasetNamesArray.join(",")
+                : ""
+            : defaultQuery || ""
     );
 
-    const filterTitleDebounced = useDebounce(query, 500);
+    const filterTitleDebounced = useDebounce(
+        isArray(query) ? query.join(",") : query,
+        500
+    );
 
     useEffect(() => {
         setSearchParams(previous => ({
@@ -82,29 +107,48 @@ const PublicationSearchDialog = ({
         }));
     }, [filterTitleDebounced]);
 
-    const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
+    const { data: datasetData = [], isLoading: isLoadingDatasets } = useGet<
         Dataset[]
     >(`${apis.datasetsV1Url}?${new URLSearchParams(searchParams)}`, {
         shouldFetch: hasMinimumSearchCharLength(searchParams.title),
     });
 
     const searchValue = watch("search");
-    const datasetNameValue = watch("datasetName");
+    const datasetNameValue = watch("datasetNames");
 
-    const datasetOptions = useMemo(() => {
-        if (!datasetData) return [];
+    const [datasetOptions, setDatasetOptions] = useState<OptionsType[]>([]);
 
-        return datasetData.map(data => {
+    const updateDatasetOptions = (
+        prevOptions: OptionsType[],
+        datasetOptions: OptionsType[]
+    ) => {
+        const existingDatasetIds = prevOptions.map(option => option.label);
+        const newOptions = datasetOptions?.filter(
+            option => !existingDatasetIds.includes(option.label)
+        );
+        if (newOptions && newOptions.length) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const datasetOptions = datasetData?.map(dataset => {
             const datasetTitle = get(
-                data,
+                dataset,
                 "latest_metadata.metadata.metadata.summary.title"
             );
-
             return {
-                label: datasetTitle,
                 value: datasetTitle,
+                label: datasetTitle,
             };
         }) as OptionsType[];
+
+        setDatasetOptions(prevOptions =>
+            updateDatasetOptions(prevOptions, datasetOptions)
+        );
     }, [datasetData]);
 
     return (
@@ -136,7 +180,7 @@ const PublicationSearchDialog = ({
                         }
                         setQuery(value);
                     }}
-                    options={isLoadingDatasets ? [] : datasetOptions}
+                    options={datasetOptions || []}
                     filterOptions={(x: OptionType) => x}
                     loading={isLoadingDatasets}
                     disabled={!!searchValue?.length}
@@ -160,10 +204,11 @@ const PublicationSearchDialog = ({
                 <Button
                     onClick={() => {
                         onSubmit(
-                            getValues("datasetName") ||
+                            getValues("datasetNames") ||
                                 getValues("search") ||
                                 "",
-                            searchValue?.length ? "text" : "dataset"
+                            searchValue?.length ? "text" : "dataset",
+                            getValues("datasetNames")
                         );
                         hideDialog();
                     }}>
