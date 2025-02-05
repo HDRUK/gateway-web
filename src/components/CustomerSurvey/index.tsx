@@ -41,7 +41,7 @@ const ratings: Ratings[] = [
     { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
 
-const displayIn = 180000;
+const displayIn = 150000;
 const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
