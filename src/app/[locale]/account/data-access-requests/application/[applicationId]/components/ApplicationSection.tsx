@@ -31,6 +31,7 @@ import {
     generateYupSchema,
 } from "@/config/forms/dataAccessApplication";
 import theme, { colors } from "@/config/theme";
+import { DarApplicationStatus } from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -43,7 +44,6 @@ import {
     renderFormHydrationField,
 } from "@/utils/formHydration";
 import DarFormBanner from "./DarFormBanner";
-import { DarApplicationStatus } from "@/consts/dataAccess";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 const PROJECT_TITLE_FIELD = "project_title";
@@ -155,7 +155,9 @@ const ApplicationSection = ({
                 ? formData[PROJECT_TITLE_FIELD]
                 : getValues(PROJECT_TITLE_FIELD),
             applicant_id: data.applicant_id,
-            submission_status: formData ? DarApplicationStatus.SUBMITTED : DarApplicationStatus.DRAFT,
+            submission_status: formData
+                ? DarApplicationStatus.SUBMITTED
+                : DarApplicationStatus.DRAFT,
         };
 
         await updateApplication(data.id, applicationData);
@@ -414,6 +416,7 @@ const ApplicationSection = ({
                     <Box
                         sx={{
                             display: "flex",
+                            flexWrap: "wrap",
                             p: 0,
                             m: 0,
                             gap: 1,
@@ -428,7 +431,7 @@ const ApplicationSection = ({
                             </Typography>
                         )}
 
-                        <div>
+                        <Box sx={{ gap: 1, p: 0, display: "flex" }}>
                             <Button
                                 onClick={handleSubmit(handleSave)}
                                 type="submit"
@@ -461,7 +464,7 @@ const ApplicationSection = ({
                                 }>
                                 {t("next")}
                             </Button>
-                        </div>
+                        </Box>
                     </Box>
                 </Box>
             </Paper>
