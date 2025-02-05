@@ -29,7 +29,7 @@ interface OptionType {
 }
 
 interface AddDatasetDialogProps {
-    onSubmit: (query: string, type: string) => void;
+    onSubmit: (query: string, type: string, datasetNamesArray: string[]) => void;
     defaultQuery?: string;
     datasetNamesArray?: string[];
     isDataset: boolean;
@@ -53,7 +53,7 @@ const PublicationSearchDialog = ({
                 isDataset && datasetNamesArray ? datasetNamesArray : [],
         },
     });
-
+    console.log('datasetNamesArray at top', datasetNamesArray);
     const searchFilter = {
         component: inputComponents.TextField,
         variant: "outlined",
@@ -65,34 +65,18 @@ const PublicationSearchDialog = ({
 
     const datasetTitleField = {
         component: inputComponents.Autocomplete,
-        name: "datasetName",
+        name: "datasetNames",
         placeholder: t("datasetNameField.placeholder"),
         label: t("datasetNameField.label"),
         canCreate: false,
         multiple: true,
         isOptionEqualToValue: (
             option: { value: string | number; label: string },
-            value: { value: string | number; label: string }
+            value: string
         ) => {
-            const comp = option.value === value.value;
-            console.log("option", option);
-            console.log("option.value", option.value);
-            console.log("value", value);
-            console.log("comp", comp);
-            return comp;
+            return comp = option.label === value;
         },
-        getChipLabel: (
-            options: { value: string | number; label: string }[],
-            value: { value: string | number; label: string }
-        ) => {
-            console.log("getChipLabel options", options);
-            console.log("getChipLabel value", value);
-            if (typeof value === "string") {
-                return value;
-            }
-
-            return options.find(option => option.value === value.value)?.label;
-        },
+        getChipLabel
     };
 
     const [searchParams, setSearchParams] = useState({
@@ -101,7 +85,7 @@ const PublicationSearchDialog = ({
     });
 
     const [query, setQuery] = useState(
-        isDataset && defaultQuery ? (isArray(defaultQuery) ? defaultQuery : defaultQuery.split(',')) : []
+        isDataset ? (datasetNamesArray ? datasetNamesArray.join(',') : "") : (defaultQuery ? defaultQuery : "")
     );
 
     const filterTitleDebounced = useDebounce(isArray(query) ? query.join(',') : query, 500);
@@ -128,9 +112,9 @@ const PublicationSearchDialog = ({
         prevOptions: OptionsType[],
         datasetOptions: OptionsType[]
     ) => {
-        const existingDatasetIds = prevOptions.map(option => option.value);
+        const existingDatasetIds = prevOptions.map(option => option.label);
         const newOptions = datasetOptions?.filter(
-            option => !existingDatasetIds.includes(option.value)
+            option => !existingDatasetIds.includes(option.label)
         );
         if (newOptions && newOptions.length) {
             return [...prevOptions, ...newOptions].sort((a, b) =>
@@ -147,7 +131,7 @@ const PublicationSearchDialog = ({
                 "latest_metadata.metadata.metadata.summary.title"
             );
             return {
-                value: dataset.id,
+                value: datasetTitle,
                 label: datasetTitle,
             };
         }) as OptionsType[];
@@ -209,7 +193,7 @@ const PublicationSearchDialog = ({
                 </Button>
                 <Button
                     onClick={() => {
-                        console.log('getValues("datasetName")', getValues("datasetName"));
+                        console.log('getValues("datasetNames")', getValues("datasetNames"));
                         console.log('getValues("search")', getValues("search"));
                         onSubmit(
                             getValues("datasetNames") ||
