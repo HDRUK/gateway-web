@@ -79,6 +79,7 @@ const PublicationSearchDialog = ({
             return option.label === value;
         },
         getChipLabel,
+        clearIcon: true,
     };
 
     const [searchParams, setSearchParams] = useState({
