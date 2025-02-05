@@ -20,12 +20,8 @@ const calculateQuestionCount = (
         if (field.options?.length) {
             const selectedOption = parentValues[field.question_id];
 
-            // Find all visible child questions
-            const visibleChildren = field.options.flatMap(
-                option =>
-                    option.children?.filter(
-                        child => selectedOption === option.label
-                    ) || []
+            const visibleChildren = field.options.flatMap(option =>
+                selectedOption === option.label ? option.children || [] : []
             );
 
             questionCount += visibleChildren.length;

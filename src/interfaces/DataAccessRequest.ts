@@ -39,9 +39,11 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
-interface NestedOption {
-    label: string;
-    children: DarApplicationQuestion[];
+interface Validation {
+    message: string;
+    min?: number;
+    max?: number;
+    [key: string]: unknown;
 }
 
 interface DarApplicationQuestion {
@@ -55,14 +57,10 @@ interface DarApplicationQuestion {
     validations: Validation[];
     is_child: number;
     component: ComponentTypes;
-    options: NestedOption[];
-}
-
-interface Validation {
-    message: string;
-    min?: number;
-    max?: number;
-    [key: string]: any;
+    options: {
+        label: string;
+        children: DarApplicationQuestion[];
+    }[];
 }
 
 interface DarApplicationAnswer {

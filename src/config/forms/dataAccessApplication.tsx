@@ -54,12 +54,12 @@ const generateYupSchema = (fields: DarApplicationQuestion[]) => {
     const schemaConfig: Record<number | string, unknown> = {};
 
     const processField = (field: DarApplicationQuestion) => {
-        let fieldSchema: {
+        const fieldSchema: {
             type: string;
             label: string;
             required: boolean;
             errors: Record<string, string>;
-            [key: string]: any;
+            [key: string]: unknown;
         } = {
             type: getFieldType(field.component),
             label: field.title,
