@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { CircularProgress, Typography } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
@@ -29,7 +29,11 @@ interface OptionType {
 }
 
 interface AddDatasetDialogProps {
-    onSubmit: (query: string, type: string, datasetNamesArray: string[]) => void;
+    onSubmit: (
+        query: string,
+        type: string,
+        datasetNamesArray: string[]
+    ) => void;
     defaultQuery?: string;
     datasetNamesArray?: string[];
     isDataset: boolean;
@@ -44,8 +48,6 @@ const PublicationSearchDialog = ({
     const { hideDialog } = useDialog();
     const t = useTranslations(TRANSLATION_PATH);
 
-    console.log('PublicationSearchDialog defaultQuery', defaultQuery);
-    console.log('PublicationSearchDialog isDataset', isDataset);
     const { control, getValues, watch } = useForm({
         defaultValues: {
             search: !isDataset && defaultQuery ? defaultQuery : "",
@@ -53,7 +55,7 @@ const PublicationSearchDialog = ({
                 isDataset && datasetNamesArray ? datasetNamesArray : [],
         },
     });
-    console.log('datasetNamesArray at top', datasetNamesArray);
+
     const searchFilter = {
         component: inputComponents.TextField,
         variant: "outlined",
@@ -74,9 +76,9 @@ const PublicationSearchDialog = ({
             option: { value: string | number; label: string },
             value: string
         ) => {
-            return comp = option.label === value;
+            return option.label === value;
         },
-        getChipLabel
+        getChipLabel,
     };
 
     const [searchParams, setSearchParams] = useState({
@@ -85,10 +87,19 @@ const PublicationSearchDialog = ({
     });
 
     const [query, setQuery] = useState(
-        isDataset ? (datasetNamesArray ? datasetNamesArray.join(',') : "") : (defaultQuery ? defaultQuery : "")
+        isDataset
+            ? datasetNamesArray
+                ? datasetNamesArray.join(",")
+                : ""
+            : defaultQuery
+            ? defaultQuery
+            : ""
     );
 
-    const filterTitleDebounced = useDebounce(isArray(query) ? query.join(',') : query, 500);
+    const filterTitleDebounced = useDebounce(
+        isArray(query) ? query.join(",") : query,
+        500
+    );
 
     useEffect(() => {
         setSearchParams(previous => ({
@@ -193,8 +204,6 @@ const PublicationSearchDialog = ({
                 </Button>
                 <Button
                     onClick={() => {
-                        console.log('getValues("datasetNames")', getValues("datasetNames"));
-                        console.log('getValues("search")', getValues("search"));
                         onSubmit(
                             getValues("datasetNames") ||
                                 getValues("search") ||
