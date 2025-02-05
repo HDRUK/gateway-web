@@ -120,7 +120,58 @@ const getColumns = ({
             ),
         },
         {
-            id: "Organisation",
+            id: "secondary_email",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Secondary Email
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.user.secondary_email}
+                </Typography>
+            ),
+        },
+        {
+            id: "sector",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Sector
+                    <IconButton
+                        sx={{ p: 0 }}
+                        disableRipple
+                        size="large"
+                        edge="start"
+                        aria-label="Sort by sector"
+                        onClick={() => {
+                            setSort(updateSort("sector"));
+                        }}>
+                        <SortByAlphaIcon />
+                    </IconButton>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.user.sector?.name}
+                </Typography>
+            ),
+        },
+        {
+            id: "organisation",
             header: () => (
                 <Box
                     sx={{
@@ -145,6 +196,104 @@ const getColumns = ({
             cell: ({ row: { original } }) => (
                 <Typography color="GrayText">
                     {original.user.organisation}
+                </Typography>
+            ),
+        },
+        {
+            id: "bio",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Bio
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">{original.user.bio}</Typography>
+            ),
+        },
+        {
+            id: "domain",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Domain
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">{original.user.domain}</Typography>
+            ),
+        },
+        {
+            id: "link",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Link
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">{original.user.link}</Typography>
+            ),
+        },
+        {
+            id: "orcid",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    OrcID
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">{original.user?.orcid}</Typography>
+            ),
+        },
+        {
+            id: "updated_at",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Profile Updated At
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="updated_at"
+                        ariaLabel="Date requested"
+                    />
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {formatDate(original.user.updated_at, "DD/MM/YYYY")}
                 </Typography>
             ),
         },

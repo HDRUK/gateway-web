@@ -45,7 +45,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                 <Box
                     sx={{
                         display: "grid",
-                        gridTemplateColumns: "repeat(2, 1fr)",
+                        gridTemplateColumns: "1fr auto",
                     }}>
                     <Typography
                         component="div"
@@ -79,8 +79,9 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                     <Box
                         sx={{
                             display: "grid",
-                            gridTemplateRows: "repeat(2, 1fr)",
+                            gridTemplateRows: "auto 1fr",
                             gridColumn: "span 3",
+                            pt: 0,
                         }}>
                         <Typography
                             sx={{
