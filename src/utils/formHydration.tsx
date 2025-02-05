@@ -280,7 +280,7 @@ const renderFormHydrationField = (
     return (
         <InputWrapper
             name={nameOverride || name}
-            key={name}
+            key={nameOverride || name}
             placeholder={placeholder || ""}
             component={componentType}
             required={required}
