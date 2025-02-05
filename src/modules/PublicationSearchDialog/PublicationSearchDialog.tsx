@@ -74,7 +74,7 @@ const PublicationSearchDialog = ({
         multiple: true,
         isOptionEqualToValue: (
             option: { value: string | number; label: string },
-            value: string
+            value: string | number
         ) => {
             return option.label === value;
         },
