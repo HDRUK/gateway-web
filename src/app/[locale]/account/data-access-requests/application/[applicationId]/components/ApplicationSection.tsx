@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import {
     DarApplication,
-    DarApplicationQuestion,
     DarApplicationAnswer,
     DarApplicationResponses,
+    DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
-import { FormHydrationField } from "@/interfaces/FormHydration";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -24,18 +24,30 @@ import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
-import { inputComponents } from "@/config/forms";
-import { darApplicationFormFields } from "@/config/forms/dataAccessApplication";
-import theme from "@/config/theme";
+import {
+    beforeYouBeginFormFields,
+    darApplicationValidationSchema,
+    excludedQuestionFields,
+    generateYupSchema,
+} from "@/config/forms/dataAccessApplication";
+import theme, { colors } from "@/config/theme";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import {
+    calculateQuestionCount,
+    formatDarQuestion,
+    mapKeysToValues,
+} from "@/utils/dataAccessRequest";
 import {
     isFirstSection,
     renderFormHydrationField,
 } from "@/utils/formHydration";
 import DarFormBanner from "./DarFormBanner";
+import { DarApplicationStatus } from "@/consts/dataAccess";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
+const PROJECT_TITLE_FIELD = "project_title";
+const ERROR_TYPE_REQUIRED = "required";
 
 interface ApplicationSectionProps {
     applicationId: number;
@@ -53,20 +65,23 @@ const ApplicationSection = ({
     const t = useTranslations(TRANSLATION_PATH);
 
     const [selectedField, setSelectedField] = useState<string>();
-
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
-
     const [guidanceText, setGuidanceText] = useState<string>();
-
     const [sectionId, setSectionId] = useState(0);
+
     const handleChangeSection = (sectionId: number) => {
         setSectionId(sectionId);
     };
 
+    const updateApplication = usePut(`${apis.dataAccessApplicationV1Url}`, {
+        itemName: "Data Access Request",
+        successNotificationsOn: false,
+    });
+
     const updateAnswers = usePut(
         `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
         {
-            itemName: "Application answers",
+            itemName: "Data Access Request",
         }
     );
 
@@ -84,15 +99,20 @@ const ApplicationSection = ({
         userAnswers?.map(a => [a.question_id, a.answer])
     );
 
-    const { control, handleSubmit, getValues, watch } =
+    const { control, handleSubmit, getValues, watch, formState } =
         useForm<DarApplicationResponses>({
             defaultValues: {
                 ...defaultValues,
                 project_title: data.project_title,
             },
+            resolver: yupResolver(
+                darApplicationValidationSchema.concat(
+                    generateYupSchema(data.questions)
+                )
+            ),
         });
 
-    const projectTitle = watch("project_title");
+    const projectTitle = watch(PROJECT_TITLE_FIELD);
 
     const updateGuidanceText = (fieldName: string) => {
         setSelectedField(fieldName);
@@ -106,109 +126,159 @@ const ApplicationSection = ({
         }
     };
 
-    const filteredData = questions?.filter(
-        d => getParentSection(d.section_id) === sectionId
+    const filteredData = useMemo(() => {
+        return (
+            questions
+                ?.filter(field => !field.is_child)
+                .map(field => formatDarQuestion(field)) || []
+        );
+    }, [questions, sectionId, getParentSection]);
+
+    const parentFieldNames = useMemo(
+        () =>
+            questions
+                ?.filter(f => f.is_child === 0)
+                .map(f => f.question_id.toString()) || [],
+        [questions]
     );
 
-    const renderQuestions = (filteredData: DarApplicationQuestion[]) => {
-        const processedSections = new Set();
+    const parentValuesArray = watch(parentFieldNames);
 
-        return filteredData
-            ?.map(q => ({
-                section_id: q.section_id,
-                title: q.title || "",
-                questionId: q.question_id,
-                field: {
-                    name: q.title,
-                    component: q.component,
-                    required: q.required,
-                    ...(q.component === inputComponents.RadioGroup && {
-                        radios: q?.options?.map(option => ({
-                            label: option.label,
-                            value: option.label,
-                        })),
-                    }),
-                    ...(q.component === inputComponents.CheckboxGroup && {
-                        checkboxes: q?.options?.map(option => ({
-                            label: option.label,
-                            value: option.label,
-                        })),
-                    }),
-                },
+    const parentValues = useMemo(
+        () => mapKeysToValues(parentFieldNames, parentValuesArray),
+        [parentFieldNames, parentValuesArray]
+    );
+
+    const saveApplication = async (formData?: DarApplicationResponses) => {
+        const applicationData = {
+            project_title: formData
+                ? formData[PROJECT_TITLE_FIELD]
+                : getValues(PROJECT_TITLE_FIELD),
+            applicant_id: data.applicant_id,
+            submission_status: formData ? DarApplicationStatus.SUBMITTED : DarApplicationStatus.DRAFT,
+        };
+
+        await updateApplication(data.id, applicationData);
+
+        const answers = Object.entries(formData ?? getValues())
+            .map(([key, val]) => ({
+                question_id: key,
+                answer: val,
             }))
-            ?.map(question => {
-                const section = getSection(question.section_id);
-                const { name: sectionName, id: sectionId } = section || {};
-
-                let sectionData;
-                if (!processedSections.has(sectionId)) {
-                    sectionData = (
-                        <>
-                            <Box>
-                                <Typography variant="h3">
-                                    {sectionName}
-                                </Typography>
-                            </Box>
-                            <Divider variant="fullWidth" sx={{ mb: 4 }} />
-                        </>
-                    );
-
-                    processedSections.add(sectionId);
-                }
-
-                return (
-                    <div key={question.questionId}>
-                        {sectionData}
-
-                        <Box
-                            sx={{
-                                pt: 1,
-                                pb: 0,
-                                backgroundColor:
-                                    question.field.name === selectedField
-                                        ? theme.palette.grey[100]
-                                        : "inherit",
-                            }}>
-                            {renderFormHydrationField(
-                                question.field as FormHydrationField,
-                                control,
-                                question.questionId.toString(),
-                                updateGuidanceText
-                            )}
-                        </Box>
-                    </div>
-                );
-            });
-    };
-
-    const handleSaveChanges = async (formData: DarApplicationResponses) => {
-        const answers = Object.keys(formData)
-            .map(key => {
-                const question_id = questions?.find(
-                    q => q.latest_version.title === key
-                )?.question_id;
-                return { question_id, answer: formData[key] };
-            })
-            .filter(a => a.answer !== undefined);
+            .filter(
+                a =>
+                    !isEmpty(a.answer) &&
+                    !excludedQuestionFields.includes(a.question_id)
+            );
 
         const saveResponse = await updateAnswers("", { answers });
 
         if (saveResponse) {
-            setLastSavedDate(new Date(Date.now()));
+            setLastSavedDate(new Date());
         }
     };
 
+    const handleSave = async (formData: DarApplicationResponses) => {
+        await saveApplication(formData);
+    };
+
     const handleSaveAsDraft = async () => {
-        console.log("save draft");
+        await saveApplication();
     };
 
     const currentSectionIndex = sectionId
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
 
+    const processedSections = new Set();
+
+    const renderSectionHeader = (field: DarFormattedField) => (
+        <>
+            <Box>
+                <Typography variant="h3">
+                    {getSection(field.section_id)?.name}
+                </Typography>
+            </Box>
+            <Divider variant="fullWidth" sx={{ mb: 4 }} />
+        </>
+    );
+
+    const renderFormFields = () =>
+        filteredData
+            ?.filter(field => getParentSection(field.section_id) === sectionId)
+            .map(field => {
+                if (field.is_child) return null;
+
+                let sectionHeader = null;
+                if (!processedSections.has(field.section_id)) {
+                    processedSections.add(field.section_id);
+                    sectionHeader = renderSectionHeader(field);
+                }
+
+                return (
+                    <Fragment key={field.question_id}>
+                        {sectionHeader}
+                        <Box
+                            sx={{
+                                pt: 1,
+                                pb: 0,
+                                backgroundColor:
+                                    field.name === selectedField
+                                        ? theme.palette.grey[100]
+                                        : "inherit",
+                            }}>
+                            {renderFormHydrationField(
+                                field,
+                                control,
+                                field.question_id.toString(),
+                                updateGuidanceText
+                            )}
+                        </Box>
+
+                        {/* Process child fields when necessary */}
+                        {field.options.flatMap(
+                            option =>
+                                option.children?.map(child =>
+                                    parentValues[field.question_id] ===
+                                    option.label ? (
+                                        <Fragment key={child.question_id}>
+                                            <Box
+                                                sx={{
+                                                    pt: 1,
+                                                    pb: 0,
+                                                    backgroundColor:
+                                                        child.name ===
+                                                        selectedField
+                                                            ? theme.palette
+                                                                  .grey[100]
+                                                            : "inherit",
+                                                }}>
+                                                {renderFormHydrationField(
+                                                    child,
+                                                    control,
+                                                    child.question_id.toString(),
+                                                    updateGuidanceText
+                                                )}
+                                            </Box>
+                                        </Fragment>
+                                    ) : null
+                                ) || []
+                        )}
+                    </Fragment>
+                );
+            });
+
+    const displayedQuestionCount = useMemo(() => {
+        return calculateQuestionCount(filteredData, parentValues);
+    }, [filteredData, parentValues]);
+
     const completedQsCount = `${
         Object.values(getValues()).filter(value => !isEmpty(value)).length
-    }/${data.questions.length + darApplicationFormFields.length}`;
+    }/${data.questions.length + displayedQuestionCount}`;
+
+    const isMissingRequiredFields = Object.values(formState.errors).some(
+        item => item?.type === ERROR_TYPE_REQUIRED
+    );
 
     return (
         <BoxContainer
@@ -259,16 +329,16 @@ const ApplicationSection = ({
                         sx={{
                             display: "flex",
                             p: 0,
+                            height: "52.5vh",
                         }}>
                         <Box
                             sx={{
                                 flex: 2,
                                 p: 0,
                                 overflowY: "auto",
-                                height: "52.5vh",
                                 m: 0,
                             }}>
-                            {(sectionId === 0 && (
+                            {sectionId === 0 ? (
                                 <>
                                     <Box>
                                         <Typography variant="h3">
@@ -283,23 +353,24 @@ const ApplicationSection = ({
                                         sx={{ mb: 4 }}
                                     />
 
-                                    {darApplicationFormFields.map(field => (
-                                        <div key={field.name}>
-                                            <Box sx={{ pt: 0, pb: 0 }}>
-                                                <InputWrapper
-                                                    key={field.name}
-                                                    control={control}
-                                                    {...field}
-                                                />
-                                            </Box>
-                                        </div>
+                                    {beforeYouBeginFormFields.map(field => (
+                                        <Box
+                                            key={field.name}
+                                            sx={{ pt: 0, pb: 0 }}>
+                                            <InputWrapper
+                                                key={field.name}
+                                                control={control}
+                                                {...field}
+                                            />
+                                        </Box>
                                     ))}
                                 </>
-                            )) ||
-                                renderQuestions(filteredData)}
+                            ) : (
+                                renderFormFields()
+                            )}
                         </Box>
                         <Box
-                            sx={{ flex: 1 }}
+                            sx={{ flex: 1, overflowY: "auto" }}
                             borderLeft={`1px solid ${theme.palette.divider}`}>
                             {guidanceText ? (
                                 <MarkDownSanitizedWithHtml
@@ -340,36 +411,57 @@ const ApplicationSection = ({
                             })}
                         </Typography>
                     </Box>
-                    <Box sx={{ display: "flex", p: 0, m: 0, gap: 1 }}>
-                        <Button
-                            onClick={handleSubmit(handleSaveChanges)}
-                            type="submit"
-                            variant="outlined"
-                            color="secondary">
-                            {t("submit")}
-                        </Button>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            p: 0,
+                            m: 0,
+                            gap: 1,
+                            alignItems: "center",
+                        }}>
+                        {isMissingRequiredFields && (
+                            <Typography
+                                sx={{
+                                    color: colors.red700,
+                                }}>
+                                {t("missingRequiredFields")}
+                            </Typography>
+                        )}
 
-                        <Button
-                            onClick={() =>
-                                handleChangeSection(
-                                    parentSections[currentSectionIndex - 1]?.id
-                                )
-                            }
-                            disabled={isFirstSection(currentSectionIndex)}>
-                            {t("previous")}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={handleSubmit(handleSave)}
+                                type="submit"
+                                variant="outlined"
+                                color="secondary">
+                                {t("submit")}
+                            </Button>
 
-                        <Button
-                            onClick={() =>
-                                handleChangeSection(
-                                    parentSections[currentSectionIndex + 1]?.id
-                                )
-                            }
-                            disabled={
-                                parentSections.length - 1 <= currentSectionIndex
-                            }>
-                            {t("next")}
-                        </Button>
+                            <Button
+                                onClick={() =>
+                                    handleChangeSection(
+                                        parentSections[currentSectionIndex - 1]
+                                            ?.id
+                                    )
+                                }
+                                disabled={isFirstSection(currentSectionIndex)}>
+                                {t("previous")}
+                            </Button>
+
+                            <Button
+                                onClick={() =>
+                                    handleChangeSection(
+                                        parentSections[currentSectionIndex + 1]
+                                            ?.id
+                                    )
+                                }
+                                disabled={
+                                    parentSections.length - 1 <=
+                                    currentSectionIndex
+                                }>
+                                {t("next")}
+                            </Button>
+                        </div>
                     </Box>
                 </Box>
             </Paper>

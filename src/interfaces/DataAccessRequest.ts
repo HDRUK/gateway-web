@@ -1,4 +1,5 @@
-import { FormHydration } from "@/interfaces/FormHydration";
+import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import { ComponentTypes } from "./ComponentTypes";
 
 interface DarQuestion {
     id: number | string;
@@ -38,6 +39,11 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
+interface NestedOption {
+    label: string;
+    children: DarApplicationQuestion[];
+}
+
 interface DarApplicationQuestion {
     appliciation_id: number;
     question_id: number;
@@ -46,7 +52,17 @@ interface DarApplicationQuestion {
     required: boolean;
     title: string;
     section_id: number;
-    latest_version: FormHydration;
+    validations: Validation[];
+    is_child: number;
+    component: ComponentTypes;
+    options: NestedOption[];
+}
+
+interface Validation {
+    message: string;
+    min?: number;
+    max?: number;
+    [key: string]: any;
 }
 
 interface DarApplicationAnswer {
@@ -61,11 +77,23 @@ interface DarApplication {
     questions: DarApplicationQuestion[];
     submission_status: string;
     project_title: string;
+    applicant_id: number;
 }
 
 interface DarApplicationResponses {
-    [key: number]: string;
+    [key: string]: string | undefined;
     project_title?: string;
+}
+
+interface DarFormattedField extends FormHydrationField {
+    question_id: number;
+    section_id: number;
+    is_child?: boolean;
+    options: {
+        label: string;
+        value: string;
+        children: DarFormattedField[];
+    }[];
 }
 
 export type {
@@ -76,4 +104,5 @@ export type {
     DarApplicationAnswer,
     DarApplication,
     DarApplicationResponses,
+    DarFormattedField,
 };
