@@ -19,7 +19,7 @@ jobs:
           echo "PR Title: $TITLE"
 
           # Define PR title regex pattern (allows breaking changes with !)
-          if [[ "$TITLE" =~ ^(feat|fix|chore|docs|style|refactor|test|perf)(!?)(\(JIRA-[0-9]+\)): .+$ ]]; then
+          if echo "$TITLE" | grep -E -q "^(feat|fix|chore|docs|style|refactor|test|perf)(!?)\(JIRA-[0-9]+\): .+$"; then
             echo "✅ PR title is valid!"
 
             COMMENT="🎉 **Great job!** Your PR title follows the correct format. 🚀"
