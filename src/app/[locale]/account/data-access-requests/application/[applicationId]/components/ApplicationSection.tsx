@@ -275,6 +275,11 @@ const ApplicationSection = ({
                 );
             });
 
+    const getCompletedVisibleQuestionCount = (
+        visibleQuestionIds: string[]
+    ): number =>
+        visibleQuestionIds.filter(id => !isEmpty(getValues()[id])).length;
+
     const visibleQuestionIds = useMemo(
         () =>
             getVisibleQuestionIds(
@@ -284,11 +289,6 @@ const ApplicationSection = ({
             ),
         [filteredData, parentValues]
     );
-
-    const getCompletedVisibleQuestionCount = (
-        visibleQuestionIds: string[]
-    ): number =>
-        visibleQuestionIds.filter(id => !isEmpty(getValues()[id])).length;
 
     const completedVisibleQuestions = useMemo(
         () => getCompletedVisibleQuestionCount(visibleQuestionIds),
