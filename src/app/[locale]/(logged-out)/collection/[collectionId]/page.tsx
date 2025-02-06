@@ -37,7 +37,7 @@ export default async function CollectionItemPage({
         suppressError: true,
     });
 
-    // Note that the status check is only required under v1 - under v2, we can use 
+    // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
     if (!collection || collection?.status !== "ACTIVE") notFound();
 
