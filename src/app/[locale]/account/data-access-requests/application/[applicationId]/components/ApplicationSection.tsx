@@ -152,6 +152,16 @@ const ApplicationSection = ({
         [parentFieldNames, parentValuesArray]
     );
 
+    const visibleQuestionIds = useMemo(
+        () =>
+            getVisibleQuestionIds(
+                filteredData,
+                parentValues,
+                excludedQuestionFields
+            ),
+        [filteredData, parentValues]
+    );
+
     const saveApplication = async (formData?: DarApplicationResponses) => {
         const applicationData = {
             project_title: formData
@@ -279,16 +289,6 @@ const ApplicationSection = ({
         visibleQuestionIds: string[]
     ): number =>
         visibleQuestionIds.filter(id => !isEmpty(getValues()[id])).length;
-
-    const visibleQuestionIds = useMemo(
-        () =>
-            getVisibleQuestionIds(
-                filteredData,
-                parentValues,
-                excludedQuestionFields
-            ),
-        [filteredData, parentValues]
-    );
 
     const completedVisibleQuestions = useMemo(
         () => getCompletedVisibleQuestionCount(visibleQuestionIds),
