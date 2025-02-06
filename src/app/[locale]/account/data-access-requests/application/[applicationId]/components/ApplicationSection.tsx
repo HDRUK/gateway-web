@@ -116,8 +116,16 @@ const ApplicationSection = ({
             question => question.title === fieldName
         )?.guidance;
 
-        if (guidance) {
-            setGuidanceText(formatGuidance(guidance));
+        if (!guidance) {
+            return;
+        }
+
+        const parsedGuidance = new DOMParser().parseFromString(
+            formatGuidance(guidance),
+            "text/html"
+        );
+        if (parsedGuidance.documentElement.textContent) {
+            setGuidanceText(parsedGuidance.documentElement.innerHTML);
         }
     };
 
