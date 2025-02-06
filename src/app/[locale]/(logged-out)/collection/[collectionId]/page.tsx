@@ -11,6 +11,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
+import { DataStatus } from "@/consts/application";
 import { getReducedCollection } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { toTitleCase } from "@/utils/string";
@@ -39,7 +40,7 @@ export default async function CollectionItemPage({
 
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
-    if (!collection || collection?.status !== "ACTIVE") notFound();
+    if (!collection || collection?.status !== DataStatus.ACTIVE) notFound();
 
     const {
         name,
