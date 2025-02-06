@@ -34,7 +34,9 @@ export default async function ToolPage({
         suppressError: true,
     });
 
-    if (!data) notFound();
+    // Note that the status check is only required under v1 - under v2, we can use 
+    // an endpoint that will not show the data if not active
+    if (!data || data?.status !== "ACTIVE") notFound();
 
     const populatedSections = toolFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))

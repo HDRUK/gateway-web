@@ -36,7 +36,10 @@ export default async function CollectionItemPage({
     const collection = await getReducedCollection(cookieStore, collectionId, {
         suppressError: true,
     });
-    if (!collection) notFound();
+
+    // Note that the status check is only required under v1 - under v2, we can use 
+    // an endpoint that will not show the data if not active
+    if (!collection || collection?.status !== "ACTIVE") notFound();
 
     const {
         name,

@@ -16,6 +16,7 @@ interface ReducedCollection {
     dur: ReducedDataUse[] | [];
     dataset_versions?: ReducedDataset[] | [];
     publications: ReducedPublication[] | [];
+    status: DataStatus | undefined;
 }
 
 interface Collection {
