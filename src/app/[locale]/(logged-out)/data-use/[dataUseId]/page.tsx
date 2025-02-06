@@ -6,6 +6,7 @@ import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { DataStatus } from "@/consts/application";
 import { getDataUse } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -31,7 +32,9 @@ export default async function DataUseItemPage({
         suppressError: true,
     });
 
-    if (!data) notFound();
+    // Note that the status check is only required under v1 - under v2, we can use
+    // an endpoint that will not show the data if not active
+    if (!data || data?.status !== DataStatus.ACTIVE) notFound();
 
     const populatedSections = dataUseFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))

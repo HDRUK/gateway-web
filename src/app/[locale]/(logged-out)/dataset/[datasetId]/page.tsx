@@ -7,6 +7,7 @@ import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import { DataStatus } from "@/consts/application";
 import { getDataset } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
@@ -55,7 +56,9 @@ export default async function DatasetItemPage({
         }
     );
 
-    if (!data) notFound();
+    // Note that the status check is only required under v1 - under v2, we can use
+    // an endpoint that will not show the data if not active
+    if (!data || data?.status !== DataStatus.ACTIVE) notFound();
 
     let googleRecommendedDataset: Dataset | undefined;
 
