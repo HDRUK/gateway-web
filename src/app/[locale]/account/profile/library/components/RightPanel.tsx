@@ -18,10 +18,13 @@ import usePost from "@/hooks/usePost";
 import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
+import { DarApplicationStatus } from "@/consts/dataAccess";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { formatDate, getToday } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
+const DATE_FORMAT_TITLE = "DD/MM/YY HH:mm";
 
 interface RightPanelProps {
     selected: SelectedLibrary;
@@ -84,9 +87,13 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
         createNewDARApplication({
             dataset_ids: datasetIds,
             team_ids: teamsIds,
+            project_title: `${DarApplicationStatus.DRAFT} ${formatDate(
+                getToday(),
+                DATE_FORMAT_TITLE
+            )}`,
         }).then(res => {
             const applicationId = res;
-            const redirectUrl = `${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${applicationId}`;
+            const redirectUrl = `/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${applicationId}`;
             router.push(redirectUrl);
         });
     };
