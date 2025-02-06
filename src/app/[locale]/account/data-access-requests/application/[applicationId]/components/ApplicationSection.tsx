@@ -35,8 +35,8 @@ import { DarApplicationStatus } from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
-    calculateQuestionCount,
     formatDarQuestion,
+    getVisibleQuestionIds,
     mapKeysToValues,
 } from "@/utils/dataAccessRequest";
 import {
@@ -47,7 +47,7 @@ import DarFormBanner from "./DarFormBanner";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 const PROJECT_TITLE_FIELD = "project_title";
-const ERROR_TYPE_REQUIRED = "required";
+const ERROR_TYPE_REQUIRED = ["required", "optionality"];
 
 interface ApplicationSectionProps {
     applicationId: number;
@@ -73,13 +73,8 @@ const ApplicationSection = ({
         setSectionId(sectionId);
     };
 
-    const updateApplication = usePut(`${apis.dataAccessApplicationV1Url}`, {
-        itemName: "Data Access Request",
-        successNotificationsOn: false,
-    });
-
     const updateAnswers = usePut(
-        `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`,
+        `${apis.dataAccessApplicationV1Url}/${applicationId}`,
         {
             itemName: "Data Access Request",
         }
@@ -160,8 +155,6 @@ const ApplicationSection = ({
                 : DarApplicationStatus.DRAFT,
         };
 
-        await updateApplication(data.id, applicationData);
-
         const answers = Object.entries(formData ?? getValues())
             .map(([key, val]) => ({
                 question_id: key,
@@ -170,10 +163,14 @@ const ApplicationSection = ({
             .filter(
                 a =>
                     !isEmpty(a.answer) &&
-                    !excludedQuestionFields.includes(a.question_id)
+                    !excludedQuestionFields.includes(a.question_id) &&
+                    visibleQuestionIds.includes(a.question_id)
             );
 
-        const saveResponse = await updateAnswers("", { answers });
+        const saveResponse = await updateAnswers("", {
+            ...applicationData,
+            answers,
+        });
 
         if (saveResponse) {
             setLastSavedDate(new Date());
@@ -270,16 +267,30 @@ const ApplicationSection = ({
                 );
             });
 
-    const displayedQuestionCount = useMemo(() => {
-        return calculateQuestionCount(filteredData, parentValues);
-    }, [filteredData, parentValues]);
+    const visibleQuestionIds = useMemo(
+        () =>
+            getVisibleQuestionIds(
+                filteredData,
+                parentValues,
+                excludedQuestionFields
+            ),
+        [filteredData, parentValues]
+    );
 
-    const completedQsCount = `${
-        Object.values(getValues()).filter(value => !isEmpty(value)).length
-    }/${data.questions.length + displayedQuestionCount}`;
+    const getCompletedVisibleQuestionCount = (
+        visibleQuestionIds: string[]
+    ): number =>
+        visibleQuestionIds.filter(id => !isEmpty(getValues()[id])).length;
 
-    const isMissingRequiredFields = Object.values(formState.errors).some(
-        item => item?.type === ERROR_TYPE_REQUIRED
+    const completedVisibleQuestions = useMemo(
+        () => getCompletedVisibleQuestionCount(visibleQuestionIds),
+        [visibleQuestionIds, getValues]
+    );
+
+    const completedQsCount = `${completedVisibleQuestions}/${visibleQuestionIds.length}`;
+
+    const isMissingRequiredFields = Object.values(formState.errors).some(item =>
+        ERROR_TYPE_REQUIRED.includes(item?.type as string)
     );
 
     return (

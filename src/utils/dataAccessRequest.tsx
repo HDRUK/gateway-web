@@ -7,28 +7,19 @@ import { inputComponents } from "@/config/forms";
 const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
 
-const calculateQuestionCount = (
+const getVisibleQuestionIds = (
     filteredData: DarFormattedField[],
-    parentValues: {
-        [k: string]: string | undefined;
-    }
-) =>
-    filteredData.reduce((count, field) => {
-        let questionCount = 1;
-
-        // Check if the question has children that should be displayed
-        if (field.options?.length) {
-            const selectedOption = parentValues[field.question_id];
-
-            const visibleChildren = field.options.flatMap(option =>
-                selectedOption === option.label ? option.children || [] : []
-            );
-
-            questionCount += visibleChildren.length;
-        }
-
-        return count + questionCount;
-    }, 0);
+    parentValues: { [k: string]: string | undefined },
+    staticFieldsNames: string[]
+): string[] => [
+    ...filteredData.flatMap(field => [
+        field.question_id.toString(),
+        ...(field.options
+            ?.find(opt => opt.label === parentValues[field.question_id])
+            ?.children.map(child => child.question_id.toString()) || []),
+    ]),
+    ...staticFieldsNames,
+];
 
 const formatDarQuestion = (
     field: DarApplicationQuestion
@@ -63,4 +54,4 @@ const formatDarQuestion = (
     }),
 });
 
-export { calculateQuestionCount, mapKeysToValues, formatDarQuestion };
+export { getVisibleQuestionIds, mapKeysToValues, formatDarQuestion };
