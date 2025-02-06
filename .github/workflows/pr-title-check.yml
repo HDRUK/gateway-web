@@ -1,0 +1,21 @@
+name: PR Title Validation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Title Format
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          echo "PR Title: $TITLE"
+
+          if [[ ! "$TITLE" =~ ^(feat|fix|chore|docs|style|refactor|test|perf)\(GAT-[0-9]+\):\ .+$ ]]; then
+            echo "❌ Invalid PR title format! Use format: feat(JIRA-1234): Your title"
+            exit 1
+          fi
+          
+          echo "✅ PR title is valid!"
