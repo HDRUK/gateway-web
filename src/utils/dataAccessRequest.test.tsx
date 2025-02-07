@@ -4,8 +4,8 @@ import {
 } from "@/interfaces/DataAccessRequest";
 import { inputComponents } from "@/config/forms";
 import {
-    calculateQuestionCount,
     formatDarQuestion,
+    getVisibleQuestionIds,
     mapKeysToValues,
 } from "./dataAccessRequest";
 
@@ -36,8 +36,8 @@ describe("Data Access Request utils", () => {
         });
     });
 
-    describe("calculateQuestionCount", () => {
-        it("counts questions correctly when no children exist", () => {
+    describe("getVisibleQuestionIds", () => {
+        it("returns the question ids when no children exist", () => {
             const filteredData: DarFormattedField[] = [
                 {
                     question_id: 1,
@@ -50,10 +50,18 @@ describe("Data Access Request utils", () => {
             ];
 
             const parentValues = {};
-            expect(calculateQuestionCount(filteredData, parentValues)).toBe(2);
+            const staticFieldsNames: string[] = [];
+
+            expect(
+                getVisibleQuestionIds(
+                    filteredData,
+                    parentValues,
+                    staticFieldsNames
+                )
+            ).toEqual(["1", "2"]);
         });
 
-        it("does not count children if parent value does not match", () => {
+        it("does not include children if parent value does not match", () => {
             const filteredData: DarFormattedField[] = [
                 {
                     question_id: 1,
@@ -68,11 +76,18 @@ describe("Data Access Request utils", () => {
             ];
 
             const parentValues = { "1": "Option B" };
+            const staticFieldsNames: string[] = [];
 
-            expect(calculateQuestionCount(filteredData, parentValues)).toBe(1);
+            expect(
+                getVisibleQuestionIds(
+                    filteredData,
+                    parentValues,
+                    staticFieldsNames
+                )
+            ).toEqual(["1"]);
         });
 
-        it("does count children if parent value matches", () => {
+        it("includes children if parent value matches", () => {
             const filteredData: DarFormattedField[] = [
                 {
                     question_id: 1,
@@ -87,8 +102,15 @@ describe("Data Access Request utils", () => {
             ];
 
             const parentValues = { "1": "Option A" };
+            const staticFieldsNames: string[] = [];
 
-            expect(calculateQuestionCount(filteredData, parentValues)).toBe(2);
+            expect(
+                getVisibleQuestionIds(
+                    filteredData,
+                    parentValues,
+                    staticFieldsNames
+                )
+            ).toEqual(["1", "2"]);
         });
     });
 
