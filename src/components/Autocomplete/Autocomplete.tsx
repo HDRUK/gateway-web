@@ -110,7 +110,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         }
         return filtered;
     };
-
     return (
         <FormInputWrapper
             name={name}
@@ -130,8 +129,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 getOptionLabel={(option: string) => {
                     if (typeof option === "object") return option?.label;
                     return (
-                        options.find(item => item.value === option)?.label ??
-                        option.toString()
+                        options.find(
+                            item => item.value.toString() === option.toString()
+                        )?.label ?? option.toString()
                     );
                 }}
                 {...(!multiple && {
