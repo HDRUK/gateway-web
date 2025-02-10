@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { ListItemButton } from "@mui/material";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { colors } from "@/config/theme";
@@ -12,6 +13,7 @@ interface FormLegendProps {
     items: LegendItem[];
     offsetTop?: string;
     level?: number;
+    removeMarginLeft?: boolean;
     handleClickItem?: (itemIndex: number) => void;
 }
 
@@ -47,6 +49,7 @@ const FormLegend = ({
     items,
     offsetTop,
     level = 1,
+    removeMarginLeft,
     handleClickItem,
 }: FormLegendProps) => {
     return (
@@ -54,9 +57,13 @@ const FormLegend = ({
             offsetTop={offsetTop || "initial"}
             sx={{ justifyContent: "center" }}>
             {items.map((item, index) => (
-                <>
+                <Fragment key={item.name}>
                     <ListItemButton
-                        sx={{ marginLeft: `${level * 16}px` }}
+                        sx={{
+                            marginLeft: removeMarginLeft
+                                ? 0
+                                : `${level * 16}px`,
+                        }}
                         key={`${item.name}`}
                         onClick={() =>
                             handleClickItem &&
@@ -79,7 +86,7 @@ const FormLegend = ({
                             handleClickItem={handleClickItem}
                         />
                     )}
-                </>
+                </Fragment>
             ))}
         </Wrapper>
     );

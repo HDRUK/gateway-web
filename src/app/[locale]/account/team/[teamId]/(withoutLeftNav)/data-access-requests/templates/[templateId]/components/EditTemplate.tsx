@@ -7,7 +7,6 @@ import {
     DarHasQuestion,
     DarTemplate,
 } from "@/interfaces/DataAccessRequest";
-import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
@@ -21,6 +20,7 @@ import Tabs from "@/components/Tabs";
 import TaskBoard from "@/components/TaskBoard";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 import Typography from "@/components/Typography";
+import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -35,11 +35,13 @@ const SELECTED_BOARD_ID = "selectedQuestions";
 const QB_BOARD_ID = "questionBank";
 
 interface EditTemplateProps {
+    teamId: string;
     templateId: string;
 }
 
-const EditTemplate = ({ templateId }: EditTemplateProps) => {
+const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
+    const { user } = useAuth();
 
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
@@ -53,12 +55,17 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         keepPreviousData: true,
     });
 
+    const [sectionId, setSectionId] = useState(1);
+    const [boardSections, setBoardSections] = useState<TaskBoardSectionProps[]>(
+        []
+    );
+
     const {
         data: qbQuestions,
         isLoading: isLoadingQB,
         mutate: mutateQuestions,
-    } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}`,
+    } = useGet<QuestionBankQuestion>(
+        `${apis.apiV1Url}/teams/${teamId}/questions/section/${sectionId}`,
         {
             keepPreviousData: true,
         }
@@ -66,14 +73,8 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const isLoading = isLoadingQuestions || isLoadingQB || isLoadingSections;
 
-    const [sectionId, setSectionId] = useState(1);
-    const [boardSections, setBoardSections] = useState<TaskBoardSectionProps[]>(
-        []
-    );
-
     const updateTemplateQuestions = usePatch(apis.dataAccessTemplateV1Url, {
         itemName: "Update Template",
-        query: `section_id=${sectionId}`,
     });
 
     const [hasChanges, setHasChanges] = useState(false);
@@ -128,23 +129,17 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
         };
 
         const extended = isExtendedQuestion(q);
-        const questionJson = JSON.parse(q.latest_version.question_json);
 
         return {
-            id: q.id,
+            ...q,
+            id: q.question_id,
             boardId,
             order: extended ? q.order : index,
-            title: `${questionJson.title}`,
             guidance:
                 extended && q.allow_guidance_override && q.guidance
                     ? q.guidance
-                    : questionJson.guidance || "",
-            original_guidance: questionJson.guidance || "",
-            question_json: questionJson,
-            component: questionJson?.field?.component || "",
-            required: q.required,
-            force_required: q.force_required,
-            allow_guidance_override: q.allow_guidance_override,
+                    : q.guidance || "",
+            original_guidance: q.guidance || "",
             hasChanged: false,
         };
     };
@@ -246,8 +241,22 @@ const EditTemplate = ({ templateId }: EditTemplateProps) => {
 
     const handleSaveChanges = () => {
         // first board is the select board
-        const tasksInSection = boardSections[0].tasks.map(t => t.task);
-        const payload = { questions: tasksInSection };
+        const tasksInSection = boardSections[0].tasks.map(t => {
+            return {
+                id: t.id,
+                guidance: t.task?.guidance,
+                required: t.task?.required,
+                order: t.task?.order,
+            };
+        });
+
+        const payload = {
+            team_id: teamId,
+            user_id: user?.id.toString(),
+            published: false,
+            locked: false,
+            questions: tasksInSection,
+        };
         updateTemplateQuestions(templateId, payload).then(() =>
             mutateQuestions().then(() =>
                 mutateTemplate().then(() => setHasChanges(false))

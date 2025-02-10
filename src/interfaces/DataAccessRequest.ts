@@ -1,4 +1,5 @@
-import { FormHydration } from "@/interfaces/FormHydration";
+import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import { ComponentTypes } from "./ComponentTypes";
 
 interface DarQuestion {
     id: number | string;
@@ -7,9 +8,9 @@ interface DarQuestion {
     title: string;
     guidance: string;
     original_guidance: string;
-    required: number;
-    force_required: number;
-    allow_guidance_override?: number;
+    required: boolean;
+    force_required: boolean;
+    allow_guidance_override?: boolean;
     hasChanged: boolean;
     component: string;
     question_json: FormHydration;
@@ -38,6 +39,13 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
+interface Validation {
+    message: string;
+    min?: number;
+    max?: number;
+    [key: string]: unknown;
+}
+
 interface DarApplicationQuestion {
     appliciation_id: number;
     question_id: number;
@@ -46,7 +54,13 @@ interface DarApplicationQuestion {
     required: boolean;
     title: string;
     section_id: number;
-    latest_version: FormHydration;
+    validations: Validation[];
+    is_child: number;
+    component: ComponentTypes;
+    options: {
+        label: string;
+        children: DarApplicationQuestion[];
+    }[];
 }
 
 interface DarApplicationAnswer {
@@ -60,6 +74,24 @@ interface DarApplication {
     id: number;
     questions: DarApplicationQuestion[];
     submission_status: string;
+    project_title: string;
+    applicant_id: number;
+}
+
+interface DarApplicationResponses {
+    [key: string]: string | undefined;
+    project_title?: string;
+}
+
+interface DarFormattedField extends FormHydrationField {
+    question_id: number;
+    section_id: number;
+    is_child?: boolean;
+    options: {
+        label: string;
+        value: string;
+        children: DarFormattedField[];
+    }[];
 }
 
 export type {
@@ -69,4 +101,6 @@ export type {
     DarApplicationQuestion,
     DarApplicationAnswer,
     DarApplication,
+    DarApplicationResponses,
+    DarFormattedField,
 };

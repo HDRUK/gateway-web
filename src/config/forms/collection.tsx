@@ -18,7 +18,7 @@ const defaultValues = {
 const validationSchema = yup.object().shape({
     name: yup.string().required().min(2).label("Collection name"),
     keywords: yup.array().of(yup.string()).label("Keywords (optional)"),
-    description: yup.string().min(2).max(5000).required().label("Description"),
+    description: yup.string().min(2).required().label("Description"),
     collaborators: yup
         .array()
         .of(yup.string())
@@ -35,7 +35,6 @@ const formFields = [
     {
         label: "Description",
         name: "description",
-        info: "Up to 5,000 characters",
         component: inputComponents.Wysiwyg,
         required: true,
     },

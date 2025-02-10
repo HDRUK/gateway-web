@@ -227,7 +227,9 @@
                             "text": "This is a page for create a question",
                             "section": "Section",
                             "guidance": "Guidance",
-                            "back": "Back to Question Bank list page"
+                            "back": "Back to Question Bank list page",
+                            "addNested": "Add nested question",
+                            "addOption": "Add option"
                         },
                         "save": "Save Changes",
                         "title": "Question Bank Management",
@@ -337,6 +339,13 @@
                                 "buttonText": "Make a feasibility enquiry",
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "sidebarTitle": "Messages"
+                            },
+                            "dataAccessRequest": {
+                                "title": "Data Access Request",
+                                "text": "Start your DAR application. Not all Data Custodians on the Gateway have this feature enabled. When DAR is not enabled, raise a feasibility enquiry to contact them directly about datasets.",
+                                "buttonText": "Start a Data Access Request",
+                                "buttonTooltip": "Select at least one dataset to enable",
+                                "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template"
                             },
                             "multiDelete": {
                                 "label": "Multi delete"
@@ -658,8 +667,16 @@
                 "dar": {
                     "application": {
                         "create": {
-                            "save": "Save Changes",
-                            "defaultGuidance": "Please click on a question to display guidance"
+                            "darRequest": "Data Access Request",
+                            "lastSaved": "Last saved: {date}",
+                            "questionsAnswered": "{questionCount} questions answered",
+                            "save": "Save now",
+                            "submit": "Submit application",
+                            "defaultGuidance": "Please click on a question to display guidance",
+                            "navigateToDashboard": "Go to DAR dashboard",
+                            "previous": "Previous",
+                            "next": "Next",
+                            "missingRequiredFields": "Please check all required fields have been completed"
                         }
                     },
                     "template": {
@@ -682,7 +699,10 @@
                             "questionBank": {
                                 "title": "Question Bank",
                                 "description": "Other available questions you can add from the question bank."
-                            }
+                            },
+                            "noNestedQuestions": "No nested questions",
+                            "forcedRequired": "Forced required question",
+                            "parentQuestionOption": "Parent question option"
                         }
                     }
                 }
@@ -869,7 +889,9 @@
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed",
                             "sector": "Organisation sector",
-                            "sectorTooltip": "The type of organisation that has signed a contract to access the data"
+                            "sectorTooltip": "The type of organisation that has signed a contract to access the data",
+                            "collectionNames": "Collection",
+                            "collectionNamesTooltip": "Filter search results based on Gateway entities that are grouped around a particular topic"
                         },
                         "paper": {
                             "datasetTitles": "Dataset",
@@ -1283,6 +1305,14 @@
         }
     },
     "components": {
+        "CustomerSurvey": {
+            "title": "How satisfactory is your experience with the Gateway today?",
+            "tooltip-0": "Very Dissatisfied",
+            "tooltip-1": "Dissatisfied",
+            "tooltip-2": "Neutral",
+            "tooltip-3": "Satisfied",
+            "tooltip-4": "Very Satisfied"
+        },
         "CtaOverride": {
             "notApproved": "Your request to access Cohort Discovery is still pending, keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen."
         },

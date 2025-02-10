@@ -1,3 +1,4 @@
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddIcon from "@mui/icons-material/Add";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
@@ -148,4 +149,5 @@ export {
     StickyNote2OutlinedIcon,
     PersonOutlineOutlinedIcon,
     ControlPointIcon,
+    AccessTimeIcon,
 };

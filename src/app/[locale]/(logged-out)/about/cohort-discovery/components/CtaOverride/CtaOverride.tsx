@@ -56,7 +56,9 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     }, [accessData, isClicked, isLoggedIn]);
 
     const isDisabled =
-        isLoggedIn && userData ? userData.request_status !== "APPROVED" : false;
+        isLoggedIn && userData
+            ? !["APPROVED", "REJECTED"].includes(userData.request_status)
+            : false;
 
     return (
         <Box sx={{ display: "flex" }}>

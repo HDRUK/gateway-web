@@ -23,6 +23,8 @@ const apis = {
     authAzureV1Url: `${apiV1Url}/auth/azure`,
     cohortRequestsV1Url: `${apiV1Url}/cohort_requests`,
     cohortRequestsV1UrlIP: `${apiV1IPUrl}/cohort_requests`,
+    customerSatisfactionV1Url: `${apiV1Url}/csat`,
+    customerSatisfactionUrlIP: `${apiV1IPUrl}/csat`,
     logoutV1UrlIP: `${apiV1IPUrl}/logout`,
     usersV1Url: `${apiV1Url}/users`,
     filtersV1Url: `${apiV1Url}/filters`,

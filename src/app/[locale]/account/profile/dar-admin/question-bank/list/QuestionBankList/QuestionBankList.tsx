@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
@@ -10,6 +10,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
+import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
@@ -26,14 +27,16 @@ const QuestionBankList = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const searchParams = useSearchParams();
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const [queryParams, setQueryParams] = useState({
-        category: "mandatory",
-        status: "live",
-    });
-    const tab = searchParams?.get("tab");
+    const queryParams = new URLSearchParams();
+    queryParams.append("page", currentPage.toString());
+    queryParams.append("is_child", "0");
+    const qs = queryParams.toString();
 
-    const showArchiveButton = tab !== "ARCHIVED";
+    const tab = searchParams?.get("tab") || "standard";
+
+    const showArchiveButton = tab !== "archived";
 
     const actions = [
         {
@@ -58,48 +61,21 @@ const QuestionBankList = () => {
               ]),
     ];
 
-    useEffect(() => {
-        const getStatusFromTab = (tab: string) => {
-            switch (true) {
-                case tab === "ARCHIVED":
-                    return "archived";
-                default:
-                    return "-archived";
-            }
-        };
-
-        const getCategoryFromTab = (tab: string) => {
-            switch (true) {
-                case tab === "CUSTOM":
-                    return "custom";
-                default:
-                    return "-custom";
-            }
-        };
-
-        setQueryParams(previous => ({
-            ...previous,
-            status: getStatusFromTab(searchParams?.get("tab") || "STANDARD"),
-            category: getCategoryFromTab(
-                searchParams?.get("tab") || "STANDARD"
-            ),
-        }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams?.get("tab")]);
-
     const { data, isLoading } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}?${new URLSearchParams(queryParams)}`
+        `${apis.questionBankV1Url}/${tab}?${qs}`,
+        { withPagination: true }
     );
+
+    const { lastPage } = data || {};
+
     if (isLoading) {
         return <Loading />;
     }
 
-    const list = data || [];
-
     const tabsList = [
-        { label: "Standard", value: "STANDARD" },
-        { label: "Custom", value: "CUSTOM" },
-        { label: "Archived", value: "ARCHIVED" },
+        { label: "Standard", value: "standard" },
+        { label: "Custom", value: "custom" },
+        { label: "Archived", value: "archived" },
     ].map(tabItem => ({
         label: `${tabItem.label} `,
         value: tabItem.value,
@@ -118,13 +94,21 @@ const QuestionBankList = () => {
                         />
                     </Box>
                 </Box>
-                {list?.map(question => (
+                {data?.list?.map(question => (
                     <QuestionListItem
-                        key={question?.id}
+                        key={question.question_id}
                         data={question}
                         actions={actions}
                     />
-                ))}{" "}
+                ))}
+                <Pagination
+                    isLoading={isLoading}
+                    page={currentPage}
+                    count={lastPage}
+                    onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+                        setCurrentPage(page)
+                    }
+                />
             </>
         ),
     }));

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Option } from "@/interfaces/Option";
 import {
@@ -11,20 +12,24 @@ import {
     QuestionBankCreateUpdateQuestion,
 } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
+import { Team } from "@/interfaces/Team";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
+import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { inputComponents } from "@/config/forms";
 import {
-    questionFormFields,
+    componentsWithOptions,
     questionDefaultValues,
     questionValidationSchema,
-    componentsWithOptions,
+    sectionField,
+    custodiansFields,
 } from "@/config/forms/questionBank";
+import { colors } from "@/config/theme";
+import FormQuestions from "./FormQuestions";
 import PreviewQuestion from "./PreviewQuestion";
 
 interface EditQuestionProps {
@@ -45,137 +50,100 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         `${apis.dataAccessSectionV1Url}`
     );
 
-    const { control, handleSubmit, setValue, reset, watch } =
+    const [teamOptions, setTeamOptions] = useState<Option[]>([]);
+    const [searchName, setSearchName] = useState("");
+    const searchNameDebounced = useDebounce(searchName, 500);
+
+    const { data: teamData = [], isLoading: isLoadingTeams } = useGet<Team[]>(
+        `${apis.teamsSearchV1Url}?is_question_bank=true&name=${searchNameDebounced}`,
+        {
+            shouldFetch: !!searchNameDebounced,
+        }
+    );
+
+    const updateTeamOptions = (
+        prevOptions: Option[],
+        teamOptions: Option[]
+    ) => {
+        const existingTeamIds = prevOptions.map(option => option.value);
+        const newOptions = teamOptions?.filter(
+            option => !existingTeamIds.includes(option.value)
+        );
+        if (newOptions && newOptions.length) {
+            return [...prevOptions, ...newOptions].sort((a, b) =>
+                a.label.localeCompare(b.label)
+            );
+        }
+        return prevOptions;
+    };
+
+    useEffect(() => {
+        const teamOptions = teamData.map(team => ({
+            value: team.id,
+            label: team.name,
+        }));
+
+        setTeamOptions(prevOptions =>
+            updateTeamOptions(prevOptions, teamOptions)
+        );
+    }, [teamData]);
+
+    useEffect(() => {
+        if (!question) {
+            return;
+        }
+
+        const teams =
+            question?.teams.map(item => {
+                return item.id;
+            }) || [];
+
+        if (teams) {
+            const labels = question?.teams.map(item => {
+                return {
+                    label: item.name,
+                    value: item.id,
+                };
+            });
+            setTeamOptions(labels);
+        }
+    }, [question]);
+
+    const handleOnTeamInputChange = (e: React.ChangeEvent, value: string) => {
+        if (value === "") {
+            setSearchName(value);
+            return;
+        }
+        if (e?.type !== "change") {
+            return;
+        }
+        setSearchName(value);
+    };
+
+    const { control, handleSubmit, reset, watch, formState } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
         });
 
-    const [options, setOptions] = useState<Option[]>([
-        { label: "", value: "new-option-1" },
-    ]);
-
     const allFields = watch();
 
-    const {
-        section_id,
-        required,
-        allow_guidance_override,
-        force_required,
-        latest_version,
-    } = question ?? {};
-
-    const question_json = JSON.parse(latest_version?.question_json || null);
-
-    const { title, guidance, field } = question_json ?? {};
+    const checkboxValue = watch("all_custodians");
 
     useEffect(() => {
-        if (!field) return;
-        const options = field?.checkboxes || field?.radios;
-        if (options) {
-            setOptions(options);
+        if (question) {
+            reset(question);
         }
-    }, [field]);
-
-    useEffect(() => {
-        const section = sectionData?.filter(s => s.id === section_id)[0];
-
-        const formData = {
-            section_id: section?.id || 1,
-            title: title || "",
-            guidance: guidance || "",
-            type: field?.component
-                ? inputComponents[field.component]
-                : inputComponents.TextField,
-            settings: {
-                mandatory: !!required,
-                allow_guidance_override: !!allow_guidance_override,
-                force_required: !!force_required,
-            },
-        };
-        reset(formData);
     }, [reset, question, sectionData]);
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
-        const payload = {
-            required: formData.settings.mandatory ? 1 : 0,
-            allow_guidance_override: formData.settings.allow_guidance_override
-                ? 1
-                : 0,
-            force_required: formData.settings.force_required ? 1 : 0,
-            field: {
-                // this will need updating at a future point
-                component: formData.type,
-                name: formData.title,
-                description: formData.guidance,
-                ...(formData.type === inputComponents.CheckboxGroup && {
-                    checkboxes: options.filter(o => o.label),
-                }),
-                ...(formData.type === inputComponents.RadioGroup && {
-                    radios: options.filter(o => o.label),
-                }),
-            },
-            guidance: formData.guidance,
-            title: formData.title,
-            section_id: formData.section_id,
-            default: 1, // TODO set this from form? What does this field even do?
-            // locked: 0, - consider functionality for unlocking here?
+        const modifiedFormData = {
+            ...formData,
+            team_ids: formData.all_custodians ? [] : formData.team_ids,
         };
-        onSubmit(payload);
+
+        onSubmit(modifiedFormData);
     };
-
-    const hydratedFormFields = useMemo(
-        () =>
-            questionFormFields
-                .map(field => {
-                    if (field.name === "type_options") {
-                        const { type } = allFields;
-                        if (!componentsWithOptions.includes(type)) {
-                            return undefined;
-                        }
-
-                        return {
-                            ...field,
-                            setOptions,
-                            options,
-                        };
-                    }
-
-                    if (field.name === "section_id") {
-                        return {
-                            ...field,
-                            options:
-                                sectionData?.map(section => ({
-                                    value: section.id,
-                                    label: section.name,
-                                })) || [],
-                        };
-                    }
-                    return field;
-                })
-                .filter(field => field !== undefined),
-        [sectionData, options, allFields]
-    );
-
-    const currentFormHydration = useMemo(
-        () => ({
-            ...question,
-            title: allFields.title || "",
-            field: {
-                ...field,
-                name: "",
-                guidance: allFields.guidance || "",
-                component: inputComponents[allFields.type],
-                ...(allFields.type === inputComponents.RadioGroup && {
-                    radios: options.filter(o => o.label),
-                }),
-                ...(allFields.type === inputComponents.CheckboxGroup && {
-                    checkboxes: options.filter(o => o.label),
-                }),
-            },
-        }),
-        [allFields, options, question, field]
-    );
 
     const tabsList = [
         {
@@ -189,15 +157,63 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                             marginBottom: "10px",
                             padding: 2,
                         }}>
-                        {hydratedFormFields.map(field => (
-                            <InputWrapper
-                                key={field.name}
-                                control={control}
-                                setValue={setValue}
-                                {...field}
-                            />
-                        ))}
+                        <InputWrapper
+                            key={sectionField.name}
+                            control={control}
+                            {...sectionField}
+                            options={
+                                sectionData?.map(section => ({
+                                    value: section.id,
+                                    label: section.name,
+                                })) || []
+                            }
+                        />
                     </Paper>
+
+                    <Paper
+                        sx={{
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            padding: 2,
+                        }}>
+                        <InputWrapper
+                            key={custodiansFields[0].name}
+                            control={control}
+                            {...custodiansFields[0]}
+                        />
+                        <InputWrapper
+                            key={custodiansFields[1].name}
+                            control={control}
+                            {...custodiansFields[1]}
+                            onInputChange={handleOnTeamInputChange}
+                            options={teamOptions || []}
+                            isLoadingOptions={isLoadingTeams}
+                            disabled={checkboxValue}
+                        />
+                    </Paper>
+
+                    <Paper
+                        sx={{
+                            marginTop: "10px",
+                            marginBottom: "10px",
+                            padding: 2,
+                        }}>
+                        <FormQuestions
+                            control={control}
+                            showOptions={componentsWithOptions.includes(
+                                allFields.component
+                            )}
+                            watch={watch}
+                        />
+
+                        {typeof formState.errors.options?.message ===
+                            "string" && (
+                            <Typography sx={{ color: colors.red700 }}>
+                                {formState.errors.options?.message}
+                            </Typography>
+                        )}
+                    </Paper>
+
                     <Paper
                         sx={{
                             display: "flex",
@@ -213,12 +229,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         {
             label: "Preview",
             value: "preview",
-            content: currentFormHydration && (
-                <PreviewQuestion
-                    question={currentFormHydration}
-                    control={control}
-                />
-            ),
+            content: <PreviewQuestion question={allFields} control={control} />,
         },
     ];
 

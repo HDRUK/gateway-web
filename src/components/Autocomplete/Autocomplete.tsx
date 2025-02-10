@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
+import ClearIcon from "@mui/icons-material/Clear";
 import {
     FilterOptionsState,
     InputAdornment,
@@ -46,6 +47,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     id?: string;
     isLoadingOptions?: boolean;
     noOptionsText?: string;
+    clearIcon?: boolean;
 }
 
 interface SearchOptions {
@@ -74,6 +76,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         isLoadingOptions = false,
         noOptionsText = "No options",
         id,
+        clearIcon = false,
         ...restProps
     } = props;
 
@@ -107,7 +110,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         }
         return filtered;
     };
-
     return (
         <FormInputWrapper
             name={name}
@@ -127,8 +129,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 getOptionLabel={(option: string) => {
                     if (typeof option === "object") return option?.label;
                     return (
-                        options.find(item => item.value === option)?.label ??
-                        option.toString()
+                        options.find(
+                            item => item.value.toString() === option.toString()
+                        )?.label ?? option.toString()
                     );
                 }}
                 {...(!multiple && {
@@ -200,6 +203,14 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         <ListItemText>{item.label}</ListItemText>
                     </li>
                 )}
+                {...(clearIcon && {
+                    renderOption: (props, item, { selected }) => (
+                        <li {...props} key={item.value as string}>
+                            <ListItemText>{item.label}</ListItemText>
+                            {selected && <ClearIcon />}
+                        </li>
+                    ),
+                })}
                 noOptionsText={
                     isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }
