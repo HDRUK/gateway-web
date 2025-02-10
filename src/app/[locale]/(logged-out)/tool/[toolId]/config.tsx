@@ -32,7 +32,7 @@ const toolFields: ToolSection[] = [
         sectionName: "resultsInsights",
         fields: [
             {
-                path: "description", // what is this suppose to be?
+                path: "results_insights",
                 type: FieldType.TEXT,
                 hideTooltip: true,
             },

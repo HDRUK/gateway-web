@@ -6,6 +6,7 @@ import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Link from "@/components/Link";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
@@ -28,7 +29,7 @@ const ToolField = ({ type, value }: ToolFieldProps) => {
         case FieldType.LINK:
             return <Link href={value}>{value}</Link>;
         default:
-            return <Typography>{value}</Typography>;
+            return <MarkDownSanitizedWithHtml content={value} />;
     }
 };
 
