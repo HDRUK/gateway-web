@@ -49,7 +49,7 @@ const SelectMultipleOptions = ({
                     guidance: "",
                     allow_guidance_override: false,
                     force_required: false,
-                    validations: [],
+                    validations: {},
                     options: [],
                 },
             ],

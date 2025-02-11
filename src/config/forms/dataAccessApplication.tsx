@@ -65,18 +65,8 @@ const generateYupSchema = (fields: DarApplicationQuestion[]) => {
             label: field.title,
             required: !!field.required,
             errors: {},
+            ...field.validations,
         };
-
-        if (field.validations?.length) {
-            field.validations.forEach(validation => {
-                Object.keys(validation).forEach(rule => {
-                    if (rule !== "message") {
-                        fieldSchema[rule] = validation[rule];
-                        fieldSchema.errors[rule] = validation.message;
-                    }
-                });
-            });
-        }
 
         schemaConfig[field.question_id] = fieldSchema;
 

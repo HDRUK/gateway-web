@@ -14,7 +14,7 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
     allow_guidance_override: false,
     force_required: false,
     default: true,
-    validations: [],
+    validations: {},
     options: [],
     all_custodians: true,
 };
@@ -31,6 +31,11 @@ const supportedComponents = [
 const componentsWithOptions = [
     inputComponents.RadioGroup,
     inputComponents.CheckboxGroup,
+];
+
+const fieldsWithValidation = [
+    inputComponents.TextField,
+    inputComponents.TextArea,
 ];
 
 const sectionField = {
@@ -95,7 +100,6 @@ const formFields = [
             backgroundColor: colors.purple100,
         },
     },
-
     {
         component: inputComponents.TextArea,
         showClearButton: true,
@@ -106,7 +110,7 @@ const formFields = [
         required: true,
     },
     {
-        label: "Question Settings",
+        label: "Settings",
         name: "settings",
         component: inputComponents.CheckboxGroup,
         nColumns: 5,
@@ -117,14 +121,58 @@ const formFields = [
                 label: "Mandatory",
             },
             {
-                name: "allow_guidance_override",
-                label: "Allow Guidance Override",
-            },
-            {
                 name: "force_required",
                 label: "Force Required",
             },
+            {
+                name: "allow_guidance_override",
+                label: "Allow Guidance Override",
+            },
         ],
+    },
+];
+
+const validationFormFields = [
+    {
+        label: "Minimum length",
+        name: "validations.min",
+        applicableToComponent: [
+            inputComponents.TextField,
+            inputComponents.TextArea,
+        ],
+        type: "number",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Maximum length",
+        name: "validations.max",
+        applicableToComponent: [
+            inputComponents.TextField,
+            inputComponents.TextArea,
+        ],
+        type: "number",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Format",
+        name: "validations.format",
+        applicableToComponent: [inputComponents.TextField],
+        type: "string",
+        component: inputComponents.Select,
+        options: [
+            { label: "", value: "" },
+            { label: "Email address", value: "email" },
+            { label: "Url", value: "url" },
+            { label: "Regex Pattern", value: "pattern" },
+        ],
+    },
+    {
+        label: "Regex Pattern",
+        name: "validations.pattern",
+        applicableToComponent: [inputComponents.TextField],
+        applicableToOption: "pattern",
+        type: "string",
+        component: inputComponents.TextField,
     },
 ];
 
@@ -155,7 +203,6 @@ const childSchema = yup.array().of(
                         .boolean()
                         .required()
                         .label("Force Required"),
-                    validations: yup.array().required(),
                 })
             )
             .test(
@@ -195,7 +242,6 @@ const validationSchema = yup
                     }
                 ),
         }),
-        validations: yup.array().required(),
     })
     .concat(settingsSchema);
 
@@ -204,7 +250,9 @@ export {
     custodiansFields,
     defaultValues as questionDefaultValues,
     formFields as questionFormFields,
+    validationFormFields as questionValidationFormFields,
     validationSchema as questionValidationSchema,
     supportedComponents as questionBankSupportedComponents,
     componentsWithOptions,
+    fieldsWithValidation,
 };
