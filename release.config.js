@@ -25,7 +25,13 @@ module.exports = {
         changelogFile: "CHANGELOG.md",
       }
     ],
-    "@semantic-release/github",
+    [
+      "@semantic-release/github",
+      {
+        successComment: false,
+        failComment: false,
+      }
+    ],
     [
       "@semantic-release/exec",
       {
