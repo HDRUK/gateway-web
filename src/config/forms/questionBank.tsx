@@ -5,7 +5,7 @@ import { colors } from "@/config/theme";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
-    section_id: 1,
+    section_id: 2,
     team_ids: [],
     title: "",
     guidance: "",

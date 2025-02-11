@@ -182,7 +182,7 @@ const ApplicationSection = ({
                 a =>
                     !isEmpty(a.answer) &&
                     !excludedQuestionFields.includes(a.question_id) &&
-                    visibleQuestionIds.includes(a.question_id)
+                    visibleQuestionIds?.includes(a.question_id)
             );
 
         const saveResponse = await updateAnswers("", {

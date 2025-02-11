@@ -165,6 +165,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                                 sectionData?.map(section => ({
                                     value: section.id,
                                     label: section.name,
+                                    isHeader: !section.parent_section,
                                 })) || []
                             }
                         />
