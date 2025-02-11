@@ -142,6 +142,7 @@ const validationFormFields = [
         ],
         type: "number",
         component: inputComponents.TextField,
+        sx: { maxWidth: 220 },
     },
     {
         label: "Maximum length",
@@ -152,6 +153,7 @@ const validationFormFields = [
         ],
         type: "number",
         component: inputComponents.TextField,
+        sx: { maxWidth: 220 },
     },
     {
         label: "Format",
@@ -165,6 +167,7 @@ const validationFormFields = [
             { label: "Url", value: "url" },
             { label: "Regex Pattern", value: "pattern" },
         ],
+        sx: { minWidth: 220, maxWidth: "50%" },
     },
     {
         label: "Regex Pattern",
@@ -173,6 +176,7 @@ const validationFormFields = [
         applicableToOption: "pattern",
         type: "string",
         component: inputComponents.TextField,
+        sx: { minWidth: 220, maxWidth: "50%" },
     },
 ];
 
