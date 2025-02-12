@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
                 name: "A Really Nice Test",
                 description:
                     "Sometimes, on occasion, I have been known to go and partake in a sunday roast with pudding, but never custard.",
-                version: "1.0.4",
+                version: "1.0.5",
                 self: "https://nhse-ics-kms-uat5-ui.metadata.works/api/federation/dataset/7101",
                 source: "",
                 "@schema":
