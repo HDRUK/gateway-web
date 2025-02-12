@@ -1,8 +1,10 @@
 "use client";
 
 import * as React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Alert from "@mui/material/Alert";
 import { GetServerSideProps } from "next";
 import { SignIn } from "@/interfaces/SignIn";
 import Box from "@/components/Box";
@@ -16,9 +18,11 @@ import {
     signInValidationSchema,
 } from "@/config/forms/signIn";
 import messages from "@/config/messages/en.json";
+import { CloseIcon } from "@/consts/icons";
 
 const SignInDialog = () => {
     const signIn = useSignIn();
+    const [hasError, setHasError] = useState(false);
 
     const { control, handleSubmit } = useForm<SignIn>({
         resolver: yupResolver(signInValidationSchema),
@@ -26,7 +30,7 @@ const SignInDialog = () => {
     });
 
     const onFormSubmit = async (data: SignIn) => {
-        await signIn(data);
+        await signIn(data).catch(() => setHasError(true));
     };
 
     return (
@@ -49,6 +53,13 @@ const SignInDialog = () => {
                     />
                 ))}
                 <Button type="submit">Sign in</Button>
+                {hasError && (
+                    <Alert
+                        icon={<CloseIcon fontSize="inherit" />}
+                        severity="error">
+                        Incorrect details
+                    </Alert>
+                )}
             </Box>
         </Container>
     );

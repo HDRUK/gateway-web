@@ -19,6 +19,10 @@ export default async function signIn(
             },
         });
 
+        if (!response.ok) {
+            return res.status(401).json({ error: "Invalid details" });
+        }
+
         const json = await response.json();
 
         const cookie = serialize(config.JWT_COOKIE, json?.access_token, {
@@ -31,8 +35,9 @@ export default async function signIn(
 
         res.setHeader("Set-Cookie", cookie);
 
-        res.status(200).json({ message: "success" });
+        return res.status(200).json({ message: "success" });
     } catch (error) {
         console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" }); // <-- Ensure response is always returned
     }
 }
