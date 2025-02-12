@@ -1,10 +1,10 @@
 export const dataset = {
     "242c84be-a866-ac0c-0000-532000001bbd": {
         identifier: "242c84be-a866-ac0c-0000-532000001bbd",
-        version: "1.0.1",
+        version: "1.0.2",
         revisions: [
             {
-                version: "1.0.1",
+                version: "1.0.2",
                 url: "https://nhse-ics-kms-uat5-ui.metadata.works/browser/dataset?id=7101",
             },
         ],
@@ -190,7 +190,7 @@ export const dataset = {
                 ],
             },
         ],
-    }
+    },
 
     // "242c84be-a866-ac0c-0000-000000001bbe": {
     //     identifier: "242c84be-a866-ac0c-0000-000000001bbe",
