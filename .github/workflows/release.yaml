@@ -49,6 +49,8 @@ jobs:
           git reset --hard origin/main
 
       - name: Merge changes from main to dev
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git fetch origin dev
           git checkout dev
