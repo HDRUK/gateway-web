@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
                 type: "dataset",
                 description:
                     "The reason for the lack of custard is i can never get the amount correct...",
-                version: "1.0.2",
+                version: "1.0.1",
                 self: "https://nhse-ics-kms-uat5-ui.metadata.works/api/federation/dataset/7101",
                 source: "",
                 "@schema":
