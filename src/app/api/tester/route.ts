@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
             },
             {
                 persistentId: "242c84be-a866-ac0c-0000-532000001bbe",
-                name: "Another Really Nice Test",
+                name: "Wait, Another Really Nice Test",
                 type: "dataset",
                 description:
                     "The reason for the lack of custard is i can never get the amount correct...",
