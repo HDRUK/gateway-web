@@ -193,17 +193,17 @@ export const dataset = {
     },
     "242c84be-a866-ac0c-0000-532000001bbc": {
         identifier: "242c84be-a866-ac0c-0000-532000001bbc",
-        version: "1.0.1",
+        version: "1.0.2",
         revisions: [
             {
-                version: "1.0.1",
+                version: "1.0.2",
                 url: "https://nhse-ics-kms-uat5-ui.metadata.works/browser/dataset?id=7101",
             },
         ],
         issued: "2024-03-09T23:22:05+00:00",
         modified: "2024-07-03T09:54:34+00:00",
         summary: {
-            title: "A Really Nice Test",
+            title: "Another Really Nice Test",
             abstract:
                 "Primary Care Consultations information, recording the intereactions that patients with medical staff at GP practices",
             publisher: {
