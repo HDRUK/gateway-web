@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
             {
                 persistentId: "242c84be-a866-ac0c-0000-532000001bbd",
                 name: "A Really Nice Test",
+                type: "This is a dataset",
                 description:
                     "Sometimes, on occasion, I have been known to go and partake in a sunday roast with pudding, but never custard.",
                 version: "1.0.10",
