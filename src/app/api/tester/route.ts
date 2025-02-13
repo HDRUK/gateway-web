@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
                 type: "dataset",
                 description:
                     "Sometimes, on occasion, I have been known to go and partake in a sunday roast with pudding, but never custard.",
-                version: "1.0.11",
+                version: "1.0.12",
                 self: "https://nhse-ics-kms-uat5-ui.metadata.works/api/federation/dataset/7101",
                 source: "",
                 "@schema":
