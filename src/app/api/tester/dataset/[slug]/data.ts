@@ -191,7 +191,198 @@ export const dataset = {
             },
         ],
     },
-
+    "242c84be-a866-ac0c-0000-532000001bbc": {
+        identifier: "242c84be-a866-ac0c-0000-532000001bbc",
+        version: "1.0.1",
+        revisions: [
+            {
+                version: "1.0.1",
+                url: "https://nhse-ics-kms-uat5-ui.metadata.works/browser/dataset?id=7101",
+            },
+        ],
+        issued: "2024-03-09T23:22:05+00:00",
+        modified: "2024-07-03T09:54:34+00:00",
+        summary: {
+            title: "A Really Nice Test",
+            abstract:
+                "Primary Care Consultations information, recording the intereactions that patients with medical staff at GP practices",
+            publisher: {
+                name: "Kent & Medway Data Warehouse",
+                logo: "https://www.kentandmedway.icb.nhs.uk/application/files/cache/thumbnails/b9a92ca7b10d21ae1cdf056d95e99659.png",
+                description: "https://www.kentandmedway.icb.nhs.uk/about-us",
+                contactPoint: ["jamie.byrne@hdruk.ac.uk"],
+                memberOf: "OTHER",
+            },
+            contactPoint: "jamie.byrne@hdruk.ac.uk",
+            keywords: [
+                "General practitioner",
+                "Consultation",
+                "GP   ",
+                "Primary care",
+            ],
+            doiName: "10.81022/kfqp-wq04",
+        },
+        documentation: {
+            description:
+                "Primary Care Consultations information, recording the intereactions that patients with medical staff at GP practices",
+            isPartOf: ["Primary Care Data"],
+        },
+        coverage: {
+            spatial: "Kent and Medway",
+            typicalAgeRange: "0-120",
+            physicalSampleAvailability: ["NOT AVAILABLE"],
+            followup: "UNKNOWN",
+        },
+        provenance: {
+            origin: {
+                purpose: ["CARE"],
+                source: ["EPR"],
+                collectionSituation: ["PRIMARY CARE"],
+            },
+            temporal: {
+                accrualPeriodicity: "STATIC",
+                distributionReleaseDate: "2019-06-24",
+                startDate: "2014-04-01",
+                endDate: "2019-06-24",
+                timeLag: "NOT APPLICABLE",
+            },
+        },
+        accessibility: {
+            usage: {
+                dataUseLimitation: ["RESEARCH SPECIFIC RESTRICTIONS"],
+                dataUseRequirements: [
+                    "ETHICS APPROVAL REQUIRED",
+                    "GEOGRAPHICAL RESTRICTIONS",
+                    "NOT FOR PROFIT USE",
+                    "PROJECT SPECIFIC RESTRICTIONS",
+                    "TIME LIMIT ON USE",
+                    "USER SPECIFIC RESTRICTION",
+                ],
+                resourceCreator: [
+                    "Kent and Mewday ICB",
+                    "Kent and Medway Data Warehouse",
+                ],
+            },
+            access: {
+                accessRights: [],
+                accessService: "  ",
+                accessRequestCost: "To be agreed per project by SDE program",
+                deliveryLeadTime: "1-2 MONTHS",
+                jurisdiction: ["GB-ENG"],
+                dataController: "Kent and Medway ICB",
+                dataProcessor: "Kent and Medway Data Warehouse",
+            },
+            formatAndStandards: {
+                vocabularyEncodingScheme: ["READ", "NHS NATIONAL CODES", "ODS"],
+                conformsTo: ["LOCAL"],
+                language: ["en"],
+                format: ["Text"],
+            },
+        },
+        observations: [
+            {
+                observedNode: "PERSONS",
+                measuredValue: 1350436,
+                disambiguatingDescription: "     ",
+                observationDate: "2019-06-24",
+                measuredProperty: "COUNT",
+            },
+            {
+                observedNode: "EVENTS",
+                measuredValue: 29514552,
+                disambiguatingDescription: "     ",
+                observationDate: "2019-06-24",
+                measuredProperty: "COUNT",
+            },
+        ],
+        structuralMetadata: [
+            {
+                name: "GP Consultations",
+                description: "Primary Care Consultations Table",
+                elements: [
+                    {
+                        name: "Commissioner_Code",
+                        dataType: "String",
+                        description: "Commissioner for the consultation",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Activity_Date",
+                        dataType: "date",
+                        description: "Date of the activity",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Data_Currency",
+                        dataType: "String",
+                        description: "Consultant or home visit",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Current_Practice_Code",
+                        dataType: "String",
+                        description:
+                            "Code for GP practice that is current for the patient from PMI",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Practice_Code",
+                        dataType: "String",
+                        description:
+                            "Code for GP practice that is as at the activity date",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Consultation_Read_Code",
+                        dataType: "String",
+                        description: "Read code of the consultation",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Sex  ",
+                        dataType: "String",
+                        description: "Sex of patient at activity date",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Unique_ID",
+                        dataType: "String",
+                        description:
+                            "Unique reference to the consultation record",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Pseudonymised_NHS_Number",
+                        dataType: "String",
+                        description:
+                            "NHS number of patient, encrypted with 256 bit SHA with salt",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Staff_Member_Type",
+                        dataType: "String",
+                        description:
+                            "Type of staff member who attended patient",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Pseudonymised_Staff_Member",
+                        dataType: "String",
+                        description:
+                            "ID of staff member, encrypted with 256 bit SHA with salt",
+                        sensitive: false,
+                    },
+                    {
+                        name: "Pseudonymised_Registration_Number",
+                        dataType: "String",
+                        description:
+                            "Regstration number of staff member, encrypted with 256 bit SHA with salt",
+                        sensitive: false,
+                    },
+                ],
+            },
+        ],
+    },
     // "242c84be-a866-ac0c-0000-000000001bbe": {
     //     identifier: "242c84be-a866-ac0c-0000-000000001bbe",
     //     version: "1.0.0",
