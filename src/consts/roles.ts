@@ -24,7 +24,7 @@ const rolesMeta: {
         permissions: [],
         tooltipLabel: "Developers",
         tooltipDescription:
-            " can; develop things, this is placeholder text, copy to be added.",
+            " can; create and manage Gateway Apps and Private Apps. This role can only be assigned by Team Admins.",
     },
     [ROLE_CUSTODIAN_TEAM_ADMIN]: {
         label: "Admin",

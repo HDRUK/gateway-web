@@ -18,14 +18,22 @@ type Nested = {
     [key: string]: QBFields[];
 };
 
+type Validations = {
+    min?: number;
+    max?: number;
+    type?: string;
+    format?: string;
+    pattern?: string;
+};
+
 interface QuestionBankQuestionForm extends QBFields {
     section_id: number;
     team_ids: number[];
     all_custodians: boolean;
     children: QBFields[];
-    default: number;
+    default: boolean;
     options: [];
-    validations: string[];
+    validations: Validations;
 }
 
 interface NestedOption {
@@ -66,19 +74,6 @@ interface QuestionBankChildItem extends QuestionBankItem {
 interface QuestionBankVersion extends QuestionBankItem {
     child_versions: QuestionBankChildItem[];
 }
-
-// interface QuestionValidation {
-//     message: string;
-//     min?: number;
-// }
-
-// interface QuestionFields {
-//     title: string;
-//     guidance: string;
-//     options: [];
-//     component: string;
-//     validations: QuestionValidation[];
-// }
 
 interface QuestionBankQuestion extends QBFields {
     teams: Team[];
