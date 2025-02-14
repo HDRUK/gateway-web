@@ -22,7 +22,6 @@ import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import {
-    componentsWithOptions,
     questionDefaultValues,
     questionValidationSchema,
     sectionField,
@@ -120,7 +119,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         setSearchName(value);
     };
 
-    const { control, handleSubmit, reset, watch, formState } =
+    const { control, handleSubmit, reset, resetField, watch, formState } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
@@ -129,12 +128,22 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const allFields = watch();
 
     const checkboxValue = watch("all_custodians");
+    const componentTypeValue = watch("component");
+    const validationFormatValue = watch("validations.format");
 
     useEffect(() => {
         if (question) {
             reset(question);
         }
     }, [reset, question, sectionData]);
+
+    useEffect(() => {
+        resetField("validations");
+    }, [componentTypeValue]);
+
+    useEffect(() => {
+        resetField("validations.pattern");
+    }, [validationFormatValue]);
 
     const submitForm = async (formData: QuestionBankQuestionForm) => {
         const modifiedFormData = {
@@ -200,9 +209,8 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                         }}>
                         <FormQuestions
                             control={control}
-                            showOptions={componentsWithOptions.includes(
-                                allFields.component
-                            )}
+                            componentType={allFields.component}
+                            validationFormat={allFields.validations?.format}
                             watch={watch}
                         />
 
