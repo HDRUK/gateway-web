@@ -136,6 +136,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                 setCreatedDurId(fileId)
                             }
                             isUploading={setIsUploading}
+                            acceptedFileTypes=".xlsx"
                         />
                     </Box>
                 </Paper>

@@ -26,6 +26,8 @@ const supportedComponents = [
     inputComponents.CheckboxGroup,
     inputComponents.SwitchInline,
     inputComponents.DatePicker,
+    inputComponents.FileUpload,
+    inputComponents.FileUploadMultiple,
 ];
 
 const componentsWithOptions = [
@@ -77,7 +79,7 @@ const formFields = [
         name: "component",
         component: inputComponents.RadioGroup,
         radios: Object.values(supportedComponents).map(value => ({
-            label: value,
+            label: value.replace(/([A-Z])/g, " $1").trim(),
             value,
         })),
         isRow: true,

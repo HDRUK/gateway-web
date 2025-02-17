@@ -45,6 +45,9 @@ const getFieldType = (componentType: ComponentTypes): string => {
             return "boolean";
         case "DatePicker":
             return "date";
+        case "FileUpload":
+        case "FileUploadMultiple":
+            return "object";
         default:
             return "string";
     }

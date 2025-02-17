@@ -14,4 +14,9 @@ interface FileUpload {
     structural_metadata?: StructuralMetadata[] | null;
 }
 
-export type { FileUpload };
+type UploadedFileMetadata = {
+    id: string;
+    filename: string;
+};
+
+export type { FileUpload, UploadedFileMetadata };

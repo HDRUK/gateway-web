@@ -155,6 +155,7 @@ const StructuralMetadataSection = ({
                 }
                 isUploading={setIsUploading}
                 allowReuploading
+                acceptedFileTypes=".xlsx"
             />
 
             {isUploading && (

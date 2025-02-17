@@ -46,7 +46,7 @@ const TRANSLATION_PATH = "components.UploadFile";
 const UploadFile = ({
     apiPath,
     allowReuploading,
-    acceptedFileTypes = ".xlsx",
+    acceptedFileTypes,
     fileSelectButtonText,
     isUploading,
     onBeforeUploadCheck,
