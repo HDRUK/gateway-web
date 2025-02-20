@@ -9,9 +9,9 @@ import { KeyedMutator } from "swr";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
-import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
+import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
@@ -48,6 +48,7 @@ const ActionDropdown = ({
     const { _id: datasetId, team } = result;
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
+    const { showDARApplicationModal } = useDataAccessRequest();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -90,13 +91,16 @@ const ActionDropdown = ({
     const handleStartDarRequest = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
-        showDialog(DarEnquiryDialog, {
+        showDARApplicationModal({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDarEnabled: team.is_question_bank,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
+            datasetIds: [+datasetId],
+            teamIds: [team.id],
+            redirectPath: pathname,
         });
     };
 
