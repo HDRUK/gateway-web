@@ -5,7 +5,7 @@ import { colors } from "@/config/theme";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
-    section_id: 1,
+    section_id: 2,
     team_ids: [],
     title: "",
     guidance: "",
@@ -26,6 +26,8 @@ const supportedComponents = [
     inputComponents.CheckboxGroup,
     inputComponents.SwitchInline,
     inputComponents.DatePicker,
+    inputComponents.FileUpload,
+    inputComponents.FileUploadMultiple,
 ];
 
 const componentsWithOptions = [
@@ -82,7 +84,7 @@ const formFields = [
         name: "component",
         component: inputComponents.RadioGroup,
         radios: Object.values(supportedComponents).map(value => ({
-            label: value,
+            label: value.replace(/([A-Z])/g, " $1").trim(),
             value,
         })),
         isRow: true,

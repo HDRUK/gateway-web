@@ -14,4 +14,16 @@ interface FileUpload {
     structural_metadata?: StructuralMetadata[] | null;
 }
 
-export type { FileUpload };
+type UploadedFileMetadata = {
+    id: number;
+    filename: string;
+};
+
+interface FileUploadFields {
+    apiPath: string;
+    allowReuploading: boolean;
+    onFileUploaded: (file: FileUpload) => Promise<void>;
+    onFileRemove: (fileId: number) => Promise<void>;
+}
+
+export type { FileUpload, UploadedFileMetadata, FileUploadFields };

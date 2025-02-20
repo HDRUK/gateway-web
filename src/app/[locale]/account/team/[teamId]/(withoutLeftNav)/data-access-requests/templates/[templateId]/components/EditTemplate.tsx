@@ -65,7 +65,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         isLoading: isLoadingQB,
         mutate: mutateQuestions,
     } = useGet<QuestionBankQuestion>(
-        `${apis.apiV1Url}/teams/${teamId}/questions/section/${sectionId}`,
+        `${apis.apiV1Url}/teams/${teamId}/questions/section/${sectionId}?is_child=0`,
         {
             keepPreviousData: true,
         }

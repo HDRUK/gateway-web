@@ -45,6 +45,9 @@ const getFieldType = (componentType: ComponentTypes): string => {
             return "boolean";
         case "DatePicker":
             return "date";
+        case "FileUpload":
+        case "FileUploadMultiple":
+            return "object";
         default:
             return "string";
     }
@@ -59,13 +62,35 @@ const generateYupSchema = (fields: DarApplicationQuestion[]) => {
             label: string;
             required: boolean;
             errors: Record<string, string>;
-            [key: string]: unknown;
+            properties?: Record<string, unknown>;
         } = {
             type: getFieldType(field.component),
             label: field.title,
             required: !!field.required,
             errors: {},
             ...field.validations,
+            properties:
+                field.component === inputComponents.FileUpload
+                    ? {
+                          value: {
+                              type: "object",
+                              properties: {
+                                  filename: {
+                                      type: "string",
+                                      required: !!field.required,
+                                  },
+                              },
+                              required: !!field.required,
+                          },
+                      }
+                    : field.component === inputComponents.FileUploadMultiple
+                    ? {
+                          value: {
+                              type: "array",
+                              required: !!field.required,
+                          },
+                      }
+                    : undefined,
         };
 
         schemaConfig[field.question_id] = fieldSchema;

@@ -1375,6 +1375,7 @@
             "upload": "Select file",
             "uploadButtonText": "Upload",
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
+            "uploadHelperFilesize": "Cannot exceed 10 mb per file.",
             "uploadImage": "Upload file",
             "error": "An error has occured. Please check your file and try again"
         },
