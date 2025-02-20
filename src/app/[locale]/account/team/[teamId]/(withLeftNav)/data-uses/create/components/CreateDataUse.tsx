@@ -13,6 +13,7 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { DataUse } from "@/interfaces/DataUse";
+import { FileUpload } from "@/interfaces/FileUpload";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -132,8 +133,8 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
-                            onFileUploaded={(fileId: number) =>
-                                setCreatedDurId(fileId)
+                            onFileUploaded={(file: FileUpload) =>
+                                setCreatedDurId(file.id)
                             }
                             isUploading={setIsUploading}
                             acceptedFileTypes=".xlsx"

@@ -15,8 +15,15 @@ interface FileUpload {
 }
 
 type UploadedFileMetadata = {
-    id: string;
+    id: number;
     filename: string;
 };
 
-export type { FileUpload, UploadedFileMetadata };
+interface FileUploadFields {
+    apiPath: string;
+    allowReuploading: boolean;
+    onFileUploaded: (file: FileUpload) => Promise<void>;
+    onFileRemove: (fileId: number) => Promise<void>;
+}
+
+export type { FileUpload, UploadedFileMetadata, FileUploadFields };

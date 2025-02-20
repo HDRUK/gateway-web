@@ -21,6 +21,8 @@ import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
 import { Wysiwyg } from "@/components/Wysiwyg";
+import FileUpload from "../UploadFile";
+import FileUploadMultiple from "../UploadFileMultiple";
 
 type InputType<TFieldValues extends FieldValues, TName> =
     | TextFieldBaseProps<TFieldValues, TName>
@@ -66,6 +68,8 @@ function InputWrapper<
         SwitchInline,
         DatePicker,
         Wysiwyg,
+        FileUpload,
+        FileUploadMultiple,
     };
 
     if (component === "TextTime") {
