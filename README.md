@@ -8,9 +8,9 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
+# or a d
 yarn dev
-# or
+# or a  d
 pnpm dev
 ```
 
