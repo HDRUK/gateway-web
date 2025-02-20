@@ -86,10 +86,7 @@ const RunFederationTest = ({
                             {runResponse.success ? (
                                 <>The test has come back with (0) errors</>
                             ) : (
-                                <>
-                                    The test has come back with a (
-                                    {runResponse.status}) error
-                                </>
+                                <>The test has come back with an error</>
                             )}
                         </Typography>
                         {!runResponse.success && (

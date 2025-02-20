@@ -40,12 +40,13 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
-interface Validation {
-    message: string;
+type Validations = {
     min?: number;
     max?: number;
-    [key: string]: unknown;
-}
+    type?: string;
+    format?: string;
+    pattern?: string;
+};
 
 interface DarApplicationQuestion {
     appliciation_id: number;
@@ -55,7 +56,7 @@ interface DarApplicationQuestion {
     required: boolean;
     title: string;
     section_id: number;
-    validations: Validation[];
+    validations: Validations;
     is_child: number;
     component: ComponentTypes;
     options: {

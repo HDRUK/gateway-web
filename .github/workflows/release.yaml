@@ -36,7 +36,7 @@ jobs:
         run: npx semantic-release
         env:
           JIRA_URL: ${{ vars.JIRA_URL }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Set Git config
         run: |
@@ -49,8 +49,8 @@ jobs:
           git reset --hard origin/main
 
       - name: Merge changes from main to dev
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git fetch origin dev
           git checkout dev
