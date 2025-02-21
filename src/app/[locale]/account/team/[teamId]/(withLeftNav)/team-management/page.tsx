@@ -5,6 +5,7 @@ import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import TeamManagement from "./components/TeamManagement";
+import { ROLE_CUSTODIAN_DEVELOPER } from "@/consts/roles";
 
 export const metadata = metaData(
     {
@@ -26,7 +27,7 @@ export default async function TeamManagementPage({
     const permissions = getPermissions(user.roles, teamUser?.roles);
     const isOnlyDev =
         teamUser?.roles?.length === 1 &&
-        teamUser.roles[0]?.name === "developer";
+        teamUser.roles[0]?.name === ROLE_CUSTODIAN_DEVELOPER;
 
     return (
         <ProtectedAccountRoute
