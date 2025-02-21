@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import { ROLE_CUSTODIAN_DEVELOPER } from "@/consts/roles";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import TeamManagement from "./components/TeamManagement";
-import { ROLE_CUSTODIAN_DEVELOPER } from "@/consts/roles";
 
 export const metadata = metaData(
     {
