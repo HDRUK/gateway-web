@@ -25,6 +25,8 @@ export default async function TeamManagementPage({
     const team = await getTeam(cookieStore, teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
+
+    console.log('teamUserRoles', JSON.stringify(teamUser?.roles))
     const isOnlyDev =
         teamUser?.roles?.length === 1 &&
         teamUser.roles[0]?.name === ROLE_CUSTODIAN_DEVELOPER;
