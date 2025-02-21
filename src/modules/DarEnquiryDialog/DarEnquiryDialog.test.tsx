@@ -65,9 +65,7 @@ describe("<DarEnquiryDialog />", () => {
             isDarEnabled: false,
         });
 
-        const feasibilityButton = screen.getByRole("button", {
-            name: "feasibility enquiry",
-        });
+        const feasibilityButton = screen.getByLabelText("feasibility");
 
         fireEvent.click(feasibilityButton);
 
@@ -79,9 +77,7 @@ describe("<DarEnquiryDialog />", () => {
             isDarEnabled: false,
         });
 
-        const generalButton = screen.getByRole("button", {
-            name: "general enquiry",
-        });
+        const generalButton = screen.getByLabelText("general");
 
         fireEvent.click(generalButton);
 

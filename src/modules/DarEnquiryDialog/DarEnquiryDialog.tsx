@@ -79,6 +79,7 @@ const DarEnquiryDialog = ({
                             // eslint-disable-next-line react/no-unstable-nested-components
                             generalEnquiryLink: () => (
                                 <Button
+                                    aria-label="general"
                                     variant="link"
                                     onClick={handleGeneralEnquiry}>
                                     {t("generalEnquiryLink")}
@@ -87,6 +88,7 @@ const DarEnquiryDialog = ({
                             // eslint-disable-next-line react/no-unstable-nested-components
                             feasabilityEnquiryLink: () => (
                                 <Button
+                                    aria-label="feasibility"
                                     variant="link"
                                     onClick={handleFeasibilityEnquiry}>
                                     {t("feasibilityEnquiryLink")}
