@@ -253,7 +253,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         const payload = {
             team_id: teamId,
             user_id: user?.id.toString(),
-            published: false,
+            published: 1,
             locked: false,
             questions: tasksInSection,
         };
