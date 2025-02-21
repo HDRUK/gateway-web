@@ -20,15 +20,15 @@ export interface DarEnquiryDialogProps {
     }: {
         datasetIds: number[];
         teamIds: number[];
-        redirectPath?: string | null;
+        redirectPath?: string;
     }): void;
     isDarEnabled: boolean;
     url: string;
-    modalHeader: string | null;
-    modalContent: string | null;
+    modalHeader?: string;
+    modalContent?: string;
     datasetIds: number[];
     teamIds: number[];
-    redirectPath?: string | null;
+    redirectPath?: string;
 }
 
 const TRANSLATION_PATH = "modules.dialogs.DarEnquiryDialog";

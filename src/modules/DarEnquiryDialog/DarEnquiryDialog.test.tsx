@@ -3,13 +3,18 @@ import DarEnquiryDialog, { DarEnquiryDialogProps } from "./DarEnquiryDialog";
 
 const mockGeneralEnquiryClick = jest.fn();
 const mockFeasibilityEnquiryClick = jest.fn();
+const mockCreateDARApplication = jest.fn();
 
 const renderTest = (props?: Partial<DarEnquiryDialogProps>) =>
     render(
         <DarEnquiryDialog
             onFeasibilityEnquiryClick={mockFeasibilityEnquiryClick}
             onGeneralEnquiryClick={mockGeneralEnquiryClick}
+            createDARApplication={mockCreateDARApplication}
             isDarEnabled
+            url=""
+            datasetIds={[1]}
+            teamIds={[1]}
             {...props}
         />
     );
@@ -19,7 +24,9 @@ describe("<DarEnquiryDialog />", () => {
         renderTest();
 
         expect(
-            screen.getByText("This feature is temporarily unavailable")
+            screen.getByText(
+                "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page."
+            )
         ).toBeInTheDocument();
     });
 
@@ -54,10 +61,12 @@ describe("<DarEnquiryDialog />", () => {
     });
 
     it("calls the feasibility enquiry dialog", () => {
-        renderTest();
+        renderTest({
+            isDarEnabled: false,
+        });
 
         const feasibilityButton = screen.getByRole("button", {
-            name: "Make feasibility enquiry for this dataset",
+            name: "feasibility enquiry",
         });
 
         fireEvent.click(feasibilityButton);
@@ -66,10 +75,12 @@ describe("<DarEnquiryDialog />", () => {
     });
 
     it("calls the general enquiry dialog", () => {
-        renderTest();
+        renderTest({
+            isDarEnabled: false,
+        });
 
         const generalButton = screen.getByRole("button", {
-            name: "Make general enquiry for this dataset",
+            name: "general enquiry",
         });
 
         fireEvent.click(generalButton);

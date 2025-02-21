@@ -1413,8 +1413,6 @@
                 "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
                 "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
                 "requestAccessButton": "Request Access",
-                "feasibilityEnquiryButton": "Make feasibility enquiry for this dataset",
-                "generalEnquiryButton": "Make general enquiry for this dataset",
                 "accessInformationButton": "Access information",
                 "feasibilityEnquiryLink": "feasibility enquiry",
                 "generalEnquiryLink": "general enquiry"
