@@ -28,7 +28,7 @@ const deleteRequest = async <T>(
                 });
             }
 
-            return json.data;
+            return json.message;
         }
 
         if (!response.ok) {

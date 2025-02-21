@@ -28,6 +28,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
@@ -117,6 +118,7 @@ export {
     ExpandMoreIcon,
     AddIcon,
     DeleteForeverIcon,
+    DeleteForeverOutlinedIcon,
     CheckBoxOutlineBlankSharpIcon,
     CheckBoxSharpIcon,
     IndeterminateCheckBoxSharpIcon,

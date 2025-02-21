@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { FileUpload } from "@/interfaces/FileUpload";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import DownloadFile from "@/components/DownloadFile";
@@ -56,8 +57,8 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={FILE_UPLOAD_URL}
-                            onFileUploaded={(fileId: number) =>
-                                setCreatedDatasetId(fileId)
+                            onFileUploaded={(file: FileUpload) =>
+                                setCreatedDatasetId(file.id)
                             }
                             isUploading={setIsUploading}
                             acceptedFileTypes={FILE_TYPE}

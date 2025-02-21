@@ -1,3 +1,13 @@
+## [0.10.0](https://github.com/HDRUK/gateway-web-2/compare/v0.9.0...v0.10.0) (2025-02-20)
+
+### ✨ Features
+
+* **GAT-6386:** Release v1.5.1 (#1015) ([ca3d56e](https://github.com/HDRUK/gateway-web-2/commit/ca3d56efc870043b5be53f3d64f492aa3b83f579)), closes [GAT-6386](GAT-6386)
+
+### 🐛 Bug Fixes
+
+* **GAT-6386:** Getting GMI working (#1008) ([68145b4](https://github.com/HDRUK/gateway-web-2/commit/68145b499cb84d886a184fc25f7aaecddb0f6ad6)), closes [GAT-6386](GAT-6386)
+
 ## [0.9.0](https://github.com/HDRUK/gateway-web-2/compare/v0.8.0...v0.9.0) (2025-02-10)
 
 ### ✨ Features

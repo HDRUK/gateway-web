@@ -1,5 +1,6 @@
 import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
 import { ComponentTypes } from "./ComponentTypes";
+import { UploadedFileMetadata } from "./FileUpload";
 
 interface DarQuestion {
     id: number | string;
@@ -80,7 +81,11 @@ interface DarApplication {
 }
 
 interface DarApplicationResponses {
-    [key: string]: string | undefined;
+    [key: string]:
+        | string
+        | { value: UploadedFileMetadata }
+        | { value: UploadedFileMetadata[] }
+        | undefined;
     project_title?: string;
 }
 
