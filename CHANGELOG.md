@@ -1,3 +1,10 @@
+## [2.3.0](https://github.com/HDRUK/gateway-web-2/compare/v2.2.0...v2.3.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6216:** Update commit behaviour ([f4cd7e7](https://github.com/HDRUK/gateway-web-2/commit/f4cd7e755bf9b05fc04e7298e58802d4cd665e16)), closes [GAT-6216](GAT-6216)
+* **GAT-6216:** Update commit behaviour (#1023) ([bd28638](https://github.com/HDRUK/gateway-web-2/commit/bd2863816f351339202ba669eb9500eee837d746)), closes [GAT-6216](GAT-6216)
+
 ## [2.2.0](https://github.com/HDRUK/gateway-web-2/compare/v2.1.0...v2.2.0) (2025-02-25)
 
 ### ✨ Features
