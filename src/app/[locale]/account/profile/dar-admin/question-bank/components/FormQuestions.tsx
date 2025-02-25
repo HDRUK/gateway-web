@@ -2,29 +2,46 @@
 
 import { useMemo } from "react";
 import { Control, UseFormWatch } from "react-hook-form";
+import { Divider, Typography } from "@mui/material";
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
+import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
-import { questionFormFields } from "@/config/forms/questionBank";
+import {
+    componentsWithOptions,
+    fieldsWithValidation,
+    questionFormFields,
+    questionValidationFormFields,
+} from "@/config/forms/questionBank";
 import SelectMultipleOptionsNested from "./SelectMultipleOptionsNested";
 
 interface FormQuestionsProps {
     control: Control;
-    showOptions: boolean;
+    componentType: ComponentTypes;
+    validationFormat?: string;
     watch: UseFormWatch<QuestionBankQuestionForm>;
 }
 
-const FormQuestions = ({ control, showOptions, watch }: FormQuestionsProps) => {
+const FormQuestions = ({
+    control,
+    componentType,
+    validationFormat,
+    watch,
+}: FormQuestionsProps) => {
     const hydratedFormFields = useMemo(
         () =>
             questionFormFields
                 .map(field => {
-                    if (field.name === "options" && !showOptions) {
+                    if (
+                        field.name === "options" &&
+                        !componentsWithOptions.includes(componentType)
+                    ) {
                         return undefined;
                     }
                     return field;
                 })
                 .filter(field => field !== undefined),
-        [showOptions]
+        [componentType]
     );
 
     return (
@@ -51,6 +68,32 @@ const FormQuestions = ({ control, showOptions, watch }: FormQuestionsProps) => {
                     />
                 );
             })}
+
+            {fieldsWithValidation.includes(componentType) && (
+                <Box sx={{ p: 0 }}>
+                    <Divider sx={{ mb: 2.5 }} />
+                    <Typography sx={{ mb: 2 }}>Validation</Typography>
+
+                    {questionValidationFormFields
+                        .filter(
+                            field =>
+                                field.applicableToComponent.includes(
+                                    componentType
+                                ) &&
+                                (!field.applicableToOption ||
+                                    validationFormat ===
+                                        field.applicableToOption)
+                        )
+                        .map(field => (
+                            <InputWrapper
+                                key={field.name}
+                                control={control}
+                                {...field}
+                                name={field.name}
+                            />
+                        ))}
+                </Box>
+            )}
         </>
     );
 };
