@@ -1,3 +1,15 @@
+## [2.1.0](https://github.com/HDRUK/gateway-web-2/compare/v2.0.0...v2.1.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6333:** Question bank validation creation (#1007) ([3695766](https://github.com/HDRUK/gateway-web-2/commit/36957661e3c951a898e91dd68a0fe11082947301)), closes [GAT-6333](GAT-6333)
+
+### 🐛 Bug Fixes
+
+* **GAT-5816:** Update team management copy (#1003) ([e2a7ab3](https://github.com/HDRUK/gateway-web-2/commit/e2a7ab341ac57a501897a6eee94c7193d145cf08)), closes [GAT-5816](GAT-5816)
+* **GAT-6216:** Update release workflow with merge conflict fix (#1019) ([126831a](https://github.com/HDRUK/gateway-web-2/commit/126831a9b85e86aadba3c14f77656c1b5cbe3c92))
+* **GAT-6386:** Getting GMI working (#1008) ([2d54a8a](https://github.com/HDRUK/gateway-web-2/commit/2d54a8a4bf540a47d5406d53a1e819720fa49758)), closes [GAT-6386](GAT-6386)
+
 ## [0.10.0](https://github.com/HDRUK/gateway-web-2/compare/v0.9.0...v0.10.0) (2025-02-20)
 
 ### ✨ Features
