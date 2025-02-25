@@ -1,3 +1,10 @@
+## [2.2.0](https://github.com/HDRUK/gateway-web-2/compare/v2.1.0...v2.2.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6216:** Trigger release ([26f5aa1](https://github.com/HDRUK/gateway-web-2/commit/26f5aa1ce0672f77c86af362dfb223b088711027)), closes [GAT-6216](GAT-6216)
+* **GAT-6216:** Trigger release ([d80dd4f](https://github.com/HDRUK/gateway-web-2/commit/d80dd4fb692f7c237fecd823acf9a766a48c25e3)), closes [GAT-6216](GAT-6216)
+
 ## [2.1.0](https://github.com/HDRUK/gateway-web-2/compare/v2.0.0...v2.1.0) (2025-02-25)
 
 ### ✨ Features
