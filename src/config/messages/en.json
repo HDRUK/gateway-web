@@ -383,7 +383,14 @@
                 "dataAccessRequests": {
                     "applications": {
                         "title": "Manage Data Access Requests",
-                        "intro": "View, review and make descisions on Data Access Requests submitted to my Data Custodian."
+                        "intro": "View, review and make descisions on Data Access Requests submitted to my Data Custodian.",
+                        "primaryInvestigator": "Primary investigator",
+                        "organisation": "Organisation",
+                        "datasets": "Datasets",
+                        "lastActivity": "Last activity",
+                        "editApplication": "Add comments or change application status",
+                        "viewApplication": "View application form and any comments",
+                        "daysSinceStart": " days since start"
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"

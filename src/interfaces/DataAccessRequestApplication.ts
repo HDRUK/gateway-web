@@ -29,6 +29,10 @@ interface DataAccessRequestApplication {
         name: string;
         organisation: string;
     };
+    primary_applicant: {
+        name: string | null;
+        organisation: string | null;
+    };
 }
 
 export type { DataAccessRequestApplication };
