@@ -34,12 +34,17 @@ export default function DarStatusTracker({
                     mb: 3,
                 }}>
                 {formattedStatuses.map((status, index) => {
-                    const isActive = status === currentStatus;
-                    const isFuture = statuses.indexOf(currentStatus) < index;
+                    const isActive =
+                        !decisionStatus && status === currentStatus;
+                    const isFuture =
+                        !decisionStatus &&
+                        statuses.indexOf(currentStatus) < index;
+
                     const isWithdrawn =
                         status === DarApplicationApprovalStatus.WITHDRAWN;
                     const isRejected =
-                        status === DarApplicationApprovalStatus.REJECTED;
+                        status === DarApplicationApprovalStatus.REJECTED ||
+                        status === DarApplicationApprovalStatus.DECLINED;
 
                     return (
                         <ListItem
