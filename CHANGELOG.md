@@ -1,3 +1,35 @@
+## [2.3.1](https://github.com/HDRUK/gateway-web-2/compare/v2.3.0...v2.3.1) (2025-02-27)
+
+### 🐛 Bug Fixes
+
+* **GAT-6303:** Allow dev only to see page (#1017) ([4c14b4e](https://github.com/HDRUK/gateway-web-2/commit/4c14b4e362e1c83dec008ca66ee3b54efcef900b)), closes [GAT-6303](GAT-6303)
+
+## [2.3.0](https://github.com/HDRUK/gateway-web-2/compare/v2.2.0...v2.3.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6216:** Update commit behaviour ([f4cd7e7](https://github.com/HDRUK/gateway-web-2/commit/f4cd7e755bf9b05fc04e7298e58802d4cd665e16)), closes [GAT-6216](GAT-6216)
+* **GAT-6216:** Update commit behaviour (#1023) ([bd28638](https://github.com/HDRUK/gateway-web-2/commit/bd2863816f351339202ba669eb9500eee837d746)), closes [GAT-6216](GAT-6216)
+
+## [2.2.0](https://github.com/HDRUK/gateway-web-2/compare/v2.1.0...v2.2.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6216:** Trigger release ([26f5aa1](https://github.com/HDRUK/gateway-web-2/commit/26f5aa1ce0672f77c86af362dfb223b088711027)), closes [GAT-6216](GAT-6216)
+* **GAT-6216:** Trigger release ([d80dd4f](https://github.com/HDRUK/gateway-web-2/commit/d80dd4fb692f7c237fecd823acf9a766a48c25e3)), closes [GAT-6216](GAT-6216)
+
+## [2.1.0](https://github.com/HDRUK/gateway-web-2/compare/v2.0.0...v2.1.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6333:** Question bank validation creation (#1007) ([3695766](https://github.com/HDRUK/gateway-web-2/commit/36957661e3c951a898e91dd68a0fe11082947301)), closes [GAT-6333](GAT-6333)
+
+### 🐛 Bug Fixes
+
+* **GAT-5816:** Update team management copy (#1003) ([e2a7ab3](https://github.com/HDRUK/gateway-web-2/commit/e2a7ab341ac57a501897a6eee94c7193d145cf08)), closes [GAT-5816](GAT-5816)
+* **GAT-6216:** Update release workflow with merge conflict fix (#1019) ([126831a](https://github.com/HDRUK/gateway-web-2/commit/126831a9b85e86aadba3c14f77656c1b5cbe3c92))
+* **GAT-6386:** Getting GMI working (#1008) ([2d54a8a](https://github.com/HDRUK/gateway-web-2/commit/2d54a8a4bf540a47d5406d53a1e819720fa49758)), closes [GAT-6386](GAT-6386)
+
 ## [0.10.0](https://github.com/HDRUK/gateway-web-2/compare/v0.9.0...v0.10.0) (2025-02-20)
 
 ### ✨ Features
