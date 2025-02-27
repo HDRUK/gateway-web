@@ -44,6 +44,22 @@ export default function DarApplicationCard({
     const { push } = useRouter();
     const { showDialog } = useDialog();
 
+    const submissionStatus = useMemo(
+        () =>
+            application.teams.find(
+                team => team.team_id.toString() === params?.teamId
+            )!.submission_status,
+        [application.teams, params?.teamId]
+    );
+
+    const approvalStatus = useMemo(
+        () =>
+            application.teams.find(
+                team => team.team_id.toString() === params?.teamId
+            )!.approval_status,
+        [application.teams, params?.teamId]
+    );
+
     const cardContent = useMemo(
         () => [
             {
@@ -111,9 +127,9 @@ export default function DarApplicationCard({
     );
 
     const actions = [
-        ...((application.submission_status === DarApplicationStatus.SUBMITTED &&
-            !application.approval_status) ||
-        application.submission_status === DarApplicationStatus.FEEDBACK
+        ...((submissionStatus === DarApplicationStatus.SUBMITTED &&
+            !submissionStatus) ||
+        submissionStatus === DarApplicationStatus.FEEDBACK
             ? [
                   {
                       action: (id: number) => {
@@ -155,8 +171,8 @@ export default function DarApplicationCard({
                     </ShowMore>
 
                     <DarStatusTracker
-                        currentStatus={application.submission_status}
-                        decisionStatus={application.approval_status}
+                        currentStatus={submissionStatus}
+                        decisionStatus={approvalStatus}
                         statuses={[
                             DarApplicationStatus.SUBMITTED,
                             DarApplicationStatus.FEEDBACK,

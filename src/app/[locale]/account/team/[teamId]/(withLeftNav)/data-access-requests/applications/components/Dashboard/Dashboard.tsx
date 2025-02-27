@@ -50,6 +50,11 @@ interface CountStatusApproval {
     WITHDRAWN?: number;
 }
 
+interface CountStatusActionRequired {
+    action_required?: number;
+    info_required?: number;
+}
+
 export default function Dashboard() {
     const t = useTranslations(TRANSLATION_PATH);
     const params = useParams<{ teamId: string }>();
@@ -102,8 +107,8 @@ export default function Dashboard() {
             ? ""
             : actionStatus
             ? actionStatus === "APPLICANT"
-                ? "true"
-                : "false"
+                ? "false"
+                : "true"
             : "";
 
     useEffect(() => {
@@ -147,6 +152,10 @@ export default function Dashboard() {
         `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/approval_status`
     );
 
+    const { data: actionRequiredCounts } = useGet<CountStatusActionRequired>(
+        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/action_required`
+    );
+
     const { data, isLoading } = useGet<
         PaginationType<DataAccessRequestApplication>
     >(
@@ -166,17 +175,21 @@ export default function Dashboard() {
 
     const approvalTab = [
         {
-            label: `All (${submissionCounts?.FEEDBACK})`,
+            label: `All (${submissionCounts?.FEEDBACK || 0})`,
             value: "",
             content: null,
         },
         {
-            label: `Action required by Applicant countTODO`,
+            label: `Action required by Applicant (${
+                actionRequiredCounts?.info_required || 0
+            })`,
             value: "APPLICANT",
             content: null,
         },
         {
-            label: `Action required by Custodian countTODO`,
+            label: `Action required by Custodian (${
+                actionRequiredCounts?.action_required || 0
+            })`,
             value: "CUSTODIAN",
             content: null,
         },

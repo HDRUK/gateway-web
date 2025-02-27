@@ -154,6 +154,7 @@ const DatasetQuickViewDialog = ({
                         group={group}
                         push={push}
                         showCustodianName={false}
+                        key={group.custodian_id}
                     />
                 ))}
 
@@ -165,7 +166,11 @@ const DatasetQuickViewDialog = ({
                         </Typography>
 
                         {otherDatasets.map(group => (
-                            <CustodianDatasets group={group} push={push} />
+                            <CustodianDatasets
+                                group={group}
+                                push={push}
+                                key={group.custodian_id}
+                            />
                         ))}
                     </>
                 )}
