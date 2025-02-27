@@ -1,3 +1,9 @@
+## [2.3.1](https://github.com/HDRUK/gateway-web-2/compare/v2.3.0...v2.3.1) (2025-02-27)
+
+### 🐛 Bug Fixes
+
+* **GAT-6303:** Allow dev only to see page (#1017) ([4c14b4e](https://github.com/HDRUK/gateway-web-2/commit/4c14b4e362e1c83dec008ca66ee3b54efcef900b)), closes [GAT-6303](GAT-6303)
+
 ## [2.3.0](https://github.com/HDRUK/gateway-web-2/compare/v2.2.0...v2.3.0) (2025-02-25)
 
 ### ✨ Features
