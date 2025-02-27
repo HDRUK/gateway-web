@@ -173,31 +173,38 @@ export default function DarApplicationCard({
                                 mb: 2,
                             },
                         }}>
-                        {cardContent.map(item => (
-                            <Fragment key="application.id">
-                                <Box
-                                    sx={{
-                                        gridColumn: {
-                                            laptop: "span 1",
-                                        },
-                                        p: 0,
-                                    }}>
-                                    <Typography color={colors.grey600}>
-                                        {item.text}
-                                    </Typography>
-                                </Box>
-                                <Box
-                                    sx={{
-                                        gridColumn: {
-                                            laptop: "span 3",
-                                        },
-                                        p: 0,
-                                        wordWrap: "break-word",
-                                    }}>
-                                    {item.content}
-                                </Box>
-                            </Fragment>
-                        ))}
+                        {cardContent.map(item => {
+                            if (!item.text) {
+                                return null;
+                            }
+
+                            return (
+                                <Fragment
+                                    key={`${application.id}_${item.text}`}>
+                                    <Box
+                                        sx={{
+                                            gridColumn: {
+                                                laptop: "span 1",
+                                            },
+                                            p: 0,
+                                        }}>
+                                        <Typography color={colors.grey600}>
+                                            {item.text}
+                                        </Typography>
+                                    </Box>
+                                    <Box
+                                        sx={{
+                                            gridColumn: {
+                                                laptop: "span 3",
+                                            },
+                                            p: 0,
+                                            wordWrap: "break-word",
+                                        }}>
+                                        {item.content}
+                                    </Box>
+                                </Fragment>
+                            );
+                        })}
                         {application.days_since_submission && (
                             <Box sx={{ pl: 0, pt: 1, pb: 0 }}>
                                 <Typography
