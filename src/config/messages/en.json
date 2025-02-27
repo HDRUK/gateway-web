@@ -122,7 +122,20 @@
         "disabled": "Disabled",
         "enabled": "Enabled",
         "all": "All",
-        "notReported": "Not reported"
+        "notReported": "Not reported",
+        "dar": {
+            "status": {
+                "all": "All",
+                "submitted": "Submitted",
+                "feedback": "In review",
+                "decision": "Decision",
+                "declined": "Declined",
+                "rejected": "Rejected",
+                "approved": "Approved",
+                "approved_comments": "Approved",
+                "withdrawn": "Withdrawn"
+            }
+        }
     },
     "pages": {
         "newsEvents": {
@@ -369,7 +382,8 @@
             "team": {
                 "dataAccessRequests": {
                     "applications": {
-                        "title": "Applications"
+                        "title": "Manage Data Access Requests",
+                        "intro": "View, review and make descisions on Data Access Requests submitted to my Data Custodian."
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
@@ -1511,6 +1525,10 @@
                 "dataType": "Data type",
                 "collectionSource": "Collection source",
                 "noCollectionSource": "No collection sources found"
+            },
+            "DarDatasetQuickView": {
+                "datasets": "Datasets",
+                "otherCustodianDatasets": "Other Custodian Datasets"
             },
             "FeasibilityEnquiryDialog": {
                 "enquire": "Make feasibility enquiry for this dataset only",
