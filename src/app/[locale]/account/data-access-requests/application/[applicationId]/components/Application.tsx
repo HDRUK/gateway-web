@@ -25,19 +25,18 @@ const Application = ({ applicationId }: ApplicationProps) => {
         { keepPreviousData: true }
     );
 
-    const { data } = useGet<DarApplication>(
-        `${apis.dataAccessApplicationV1Url}/${applicationId}`,
-        {
-            itemName: "DAR Application",
-        }
-    );
+    const darApplicationEndpoint = `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`;
+
+    const { data } = useGet<DarApplication>(darApplicationEndpoint, {
+        itemName: "DAR Application",
+        shouldFetch: !!user?.id,
+    });
 
     const { data: userAnswers } = useGet<DarApplicationAnswer[]>(
-        user
-            ? `${apis.dataAccessApplicationV1Url}/${applicationId}/answers`
-            : null,
+        user ? `${darApplicationEndpoint}/answers` : null,
         {
             itemName: "DAR Application",
+            shouldFetch: !!user?.id,
         }
     );
 

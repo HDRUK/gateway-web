@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Typography from "@/components/Typography";
+import useAuth from "@/hooks/useAuth";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
@@ -13,7 +14,8 @@ const TRANSLATION_PATH = `pages.account.team.dar.template`;
 
 const DarTemplatePage = () => {
     const router = useRouter();
-    const { teamId } = useParams<{
+    const { user } = useAuth();
+    const params = useParams<{
         teamId: string;
     }>();
     const t = useTranslations(TRANSLATION_PATH);
@@ -23,19 +25,9 @@ const DarTemplatePage = () => {
     });
 
     const handleCreateTemplate = () => {
-        /*
-        note: 
-            - hardcoding the user_id for the template for now
-               when we update permissions, and permission forwarding from the gateway api
-               then well be able to add user_id to the payload
-            - may be able to get it from the JWT token on the FE
-                - may not need it
-            - update hardcoding of user_id: "1" in the future!
-              this will be possible when the service is authorised
-        */
         const payload = {
-            team_id: teamId,
-            user_id: "1",
+            team_id: params?.teamId,
+            user_id: user?.id,
         };
         createNewTemplate(payload).then(res => {
             const templateId = res;
