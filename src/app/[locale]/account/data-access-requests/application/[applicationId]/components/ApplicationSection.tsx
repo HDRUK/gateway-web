@@ -24,6 +24,7 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
+import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
@@ -68,6 +69,9 @@ const ApplicationSection = ({
     sections,
 }: ApplicationSectionProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { user } = useAuth();
+
+    const darApplicationEndpoint = `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`;
 
     const [selectedField, setSelectedField] = useState<string>();
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
@@ -78,19 +82,13 @@ const ApplicationSection = ({
         setSectionId(sectionId);
     };
 
-    const updateAnswers = usePut(
-        `${apis.dataAccessApplicationV1Url}/${applicationId}`,
-        {
-            itemName: "Data Access Request",
-        }
-    );
+    const updateAnswers = usePut(darApplicationEndpoint, {
+        itemName: "Data Access Request",
+    });
 
-    const removeUploadedFile = useDelete(
-        `${apis.dataAccessApplicationV1Url}/${applicationId}/files`,
-        {
-            itemName: "File",
-        }
-    );
+    const removeUploadedFile = useDelete(`${darApplicationEndpoint}/files`, {
+        itemName: "File",
+    });
 
     const parentSections = sections?.filter(s => s.parent_section === null);
 
