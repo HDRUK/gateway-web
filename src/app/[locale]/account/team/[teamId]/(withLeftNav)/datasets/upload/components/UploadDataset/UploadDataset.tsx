@@ -42,7 +42,6 @@ const UploadDataset = ({ teamId, teamPid }: UploadDatasetProps) => {
                 if (!dataCustodianId) {
                     SetErrorMessage(t("errorNoPid", { teamPid }));
                 } else if (teamPid !== dataCustodianId) {
-                    SetErrorMessage(t("errorNoPid", { teamPid }));
                     SetErrorMessage(
                         t("errorNoMatchingPid", { dataCustodianId, teamPid })
                     );
