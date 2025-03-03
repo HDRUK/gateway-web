@@ -179,7 +179,7 @@ const ApplicationSection = ({
                 : getValues(PROJECT_TITLE_FIELD),
             applicant_id: data.applicant_id,
             submission_status: formData
-                ? DarApplicationStatus.FEEDBACK
+                ? DarApplicationStatus.SUBMITTED
                 : DarApplicationStatus.DRAFT,
         };
 

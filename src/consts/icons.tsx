@@ -55,6 +55,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -71,6 +72,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ViewListIcon from "@mui/icons-material/ViewList";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import WarningIcon from "@mui/icons-material/Warning";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
@@ -152,4 +154,6 @@ export {
     PersonOutlineOutlinedIcon,
     ControlPointIcon,
     AccessTimeIcon,
+    QueryBuilderOutlinedIcon,
+    VisibilityOutlinedIcon,
 };
