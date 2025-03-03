@@ -9,7 +9,6 @@ import {
 } from "@/consts/dataAccess";
 
 interface DarStatusTrackerProps {
-    submissionStatus: DarApplicationStatus;
     approvalStatus?: DarApplicationApprovalStatus;
     statuses: (DarApplicationStatus | DarApplicationApprovalStatus)[];
 }
