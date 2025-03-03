@@ -7,7 +7,7 @@ interface ProtectedAccountRouteProps {
     loggedInOnly?: boolean;
     permissions?: { [key: string]: boolean };
     pagePermissions?: string[];
-    allowDevOnly: boolean;
+    allowDevOnly?: boolean;
     children: ReactNode;
 }
 
