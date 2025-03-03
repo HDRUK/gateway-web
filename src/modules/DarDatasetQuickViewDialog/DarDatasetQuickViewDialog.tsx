@@ -17,7 +17,7 @@ const CHARACTER_LIMIT = 50;
 
 interface DarDatasetQuickViewDialogProps {
     application: DataAccessRequestApplication;
-    teamId: string;
+    teamId?: string;
 }
 type Dataset = {
     dataset_id: number;
@@ -128,7 +128,7 @@ const DatasetQuickViewDialog = ({
     const teamDatasets = useMemo(
         () =>
             groupedDatasets.filter(
-                group => group.custodian_id.toString() === teamId
+                group => group.custodian_id.toString() === teamId?.toString()
             ),
         [groupedDatasets, teamId]
     );
@@ -136,7 +136,7 @@ const DatasetQuickViewDialog = ({
     const otherDatasets = useMemo(
         () =>
             groupedDatasets.filter(
-                group => group.custodian_id.toString() !== teamId
+                group => group.custodian_id.toString() !== teamId?.toString()
             ),
         [groupedDatasets, teamId]
     );
@@ -149,21 +149,26 @@ const DatasetQuickViewDialog = ({
             <MuiDialogContent sx={{ paddingX: 4 }}>
                 <Typography variant="h3">{t("datasets")}</Typography>
 
-                {teamDatasets.map(group => (
-                    <CustodianDatasets
-                        group={group}
-                        push={push}
-                        showCustodianName={false}
-                        key={group.custodian_id}
-                    />
-                ))}
+                {teamId &&
+                    teamDatasets.map(group => (
+                        <CustodianDatasets
+                            group={group}
+                            push={push}
+                            showCustodianName={false}
+                            key={group.custodian_id}
+                        />
+                    ))}
 
                 {!!otherDatasets.length && (
                     <>
-                        <Divider sx={{ mt: 2 }} />
-                        <Typography variant="h3" p={0} mb={2} mt={4}>
-                            {t("otherCustodianDatasets")}
-                        </Typography>
+                        {teamId && (
+                            <>
+                                <Divider sx={{ mt: 2 }} />
+                                <Typography variant="h3" p={0} mb={2} mt={4}>
+                                    {t("otherCustodianDatasets")}
+                                </Typography>
+                            </>
+                        )}
 
                         {otherDatasets.map(group => (
                             <CustodianDatasets

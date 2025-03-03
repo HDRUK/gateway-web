@@ -133,7 +133,8 @@
                 "rejected": "Rejected",
                 "approved": "Approved",
                 "approved_comments": "Approved",
-                "withdrawn": "Withdrawn"
+                "withdrawn": "Withdrawn",
+                "draft": "Draft"
             }
         }
     },
@@ -223,6 +224,22 @@
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",
                     "expiryWarning": "This user access is close to expiration date"
+                },
+                "dataAccessRequests": {
+                    "applications": {
+                        "title": "My Data Access Requests",
+                        "intro": "Manage forms and applications",
+                        "searchPlaceholder": "Enter application title to search",
+                        "primaryInvestigator": "Primary investigator",
+                        "organisation": "Organisation",
+                        "datasets": "Datasets",
+                        "lastActivity": "Last activity",
+                        "editApplication": "Add comments or change application status",
+                        "viewApplication": "View application form and any comments",
+                        "daysSinceStart": " days since start",
+                        "darApplication": "DAR Application #",
+                        "applicationsInGroup": "Applications in the project group"
+                    }
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",
