@@ -16,7 +16,10 @@ import Typography from "@/components/Typography";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
-import { DarApplicationStatus } from "@/consts/dataAccess";
+import {
+    DarApplicationApprovalStatus,
+    DarApplicationStatus,
+} from "@/consts/dataAccess";
 import {
     EditIcon,
     QueryBuilderOutlinedIcon,
@@ -127,9 +130,9 @@ export default function DarApplicationCard({
     );
 
     const actions = [
-        ...((submissionStatus === DarApplicationStatus.SUBMITTED &&
-            !submissionStatus) ||
-        submissionStatus === DarApplicationStatus.FEEDBACK
+        ...(submissionStatus === DarApplicationStatus.SUBMITTED &&
+        (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
+            !approvalStatus)
             ? [
                   {
                       action: (id: number) => {
@@ -171,11 +174,11 @@ export default function DarApplicationCard({
                     </ShowMore>
 
                     <DarStatusTracker
-                        currentStatus={submissionStatus}
-                        decisionStatus={approvalStatus}
+                        submissionStatus={submissionStatus}
+                        approvalStatus={approvalStatus}
                         statuses={[
                             DarApplicationStatus.SUBMITTED,
-                            DarApplicationStatus.FEEDBACK,
+                            DarApplicationApprovalStatus.FEEDBACK,
                         ]}
                     />
 
@@ -221,7 +224,7 @@ export default function DarApplicationCard({
                                 </Fragment>
                             );
                         })}
-                        {application.days_since_submission && (
+                        {!!application.days_since_submission && (
                             <Box sx={{ pl: 0, pt: 1, pb: 0 }}>
                                 <Typography
                                     sx={{

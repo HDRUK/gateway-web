@@ -9,20 +9,34 @@ import {
 } from "@/consts/dataAccess";
 
 interface DarStatusTrackerProps {
-    currentStatus: DarApplicationStatus;
-    decisionStatus?: DarApplicationApprovalStatus;
-    statuses: DarApplicationStatus[];
+    submissionStatus: DarApplicationStatus;
+    approvalStatus?: DarApplicationApprovalStatus;
+    statuses: (DarApplicationStatus | DarApplicationApprovalStatus)[];
 }
 
 const TRANSLATION_PATH = "common.dar.status";
 
 export default function DarStatusTracker({
-    currentStatus,
-    decisionStatus,
+    approvalStatus,
     statuses,
 }: DarStatusTrackerProps) {
     const t = useTranslations(TRANSLATION_PATH);
-    const formattedStatuses = [...statuses, decisionStatus || "Decision"];
+    const formattedStatuses = [
+        ...statuses,
+        approvalStatus &&
+        approvalStatus !== DarApplicationApprovalStatus.FEEDBACK
+            ? approvalStatus
+            : "Decision",
+    ];
+
+    const activeIndex =
+        approvalStatus === DarApplicationApprovalStatus.FEEDBACK
+            ? formattedStatuses.findIndex(
+                  item => item === DarApplicationApprovalStatus.FEEDBACK
+              )
+            : approvalStatus
+            ? formattedStatuses.length
+            : 0;
 
     return (
         <nav aria-label="Application Progress">
@@ -34,11 +48,8 @@ export default function DarStatusTracker({
                     mb: 3,
                 }}>
                 {formattedStatuses.map((status, index) => {
-                    const isActive =
-                        !decisionStatus && status === currentStatus;
-                    const isFuture =
-                        !decisionStatus &&
-                        statuses.indexOf(currentStatus) < index;
+                    const isActive = index === activeIndex;
+                    const isFuture = index > activeIndex;
 
                     const isWithdrawn =
                         status === DarApplicationApprovalStatus.WITHDRAWN;

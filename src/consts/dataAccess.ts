@@ -1,10 +1,10 @@
 export enum DarApplicationStatus {
     SUBMITTED = "SUBMITTED",
     DRAFT = "DRAFT",
-    FEEDBACK = "FEEDBACK",
 }
 
 export enum DarApplicationApprovalStatus {
+    FEEDBACK = "FEEDBACK",
     APPROVED = "APPROVED",
     DECLINED = "DECLINED",
     WITHDRAWN = "WITHDRAWN",

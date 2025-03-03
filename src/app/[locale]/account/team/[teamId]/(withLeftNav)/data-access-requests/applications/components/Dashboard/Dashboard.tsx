@@ -35,12 +35,10 @@ const STATUS = "status";
 const SUBMISSION_STATUS = [
     DarApplicationStatus.SUBMITTED,
     DarApplicationStatus.DRAFT,
-    DarApplicationStatus.FEEDBACK,
 ];
 
 interface CountStatusSubmission {
     DRAFT?: number;
-    FEEDBACK?: number;
     SUBMITTED?: number;
 }
 
@@ -48,6 +46,7 @@ interface CountStatusApproval {
     APPROVED?: number;
     REJECTED?: number;
     WITHDRAWN?: number;
+    FEEDBACK?: number;
 }
 
 interface CountStatusActionRequired {
@@ -100,10 +99,10 @@ export default function Dashboard() {
     }, [searchParams]);
 
     const formatActionRequiredParam = (
-        submissionStatus: string,
+        statusParam: string,
         actionStatus: string
     ) =>
-        submissionStatus !== DarApplicationStatus.FEEDBACK
+        statusParam !== DarApplicationApprovalStatus.FEEDBACK
             ? ""
             : actionStatus
             ? actionStatus === "APPLICANT"
@@ -137,7 +136,7 @@ export default function Dashboard() {
         setQueryParams(previous => ({
             ...previous,
             action_required: formatActionRequiredParam(
-                previous.submission_status,
+                previous.approval_status,
                 actionParam
             ),
         }));
@@ -165,17 +164,9 @@ export default function Dashboard() {
         { keepPreviousData: true, withPagination: true }
     );
 
-    const totalDARCount = useMemo(
-        () =>
-            (submissionCounts?.SUBMITTED ?? 0) +
-            (submissionCounts?.DRAFT ?? 0) +
-            (submissionCounts?.FEEDBACK ?? 0),
-        [submissionCounts]
-    );
-
     const approvalTab = [
         {
-            label: `All (${submissionCounts?.FEEDBACK || 0})`,
+            label: `All (${approvalCounts?.FEEDBACK || 0})`,
             value: "",
             content: null,
         },
@@ -196,7 +187,7 @@ export default function Dashboard() {
     ];
 
     const tabList = [
-        { label: `All (${totalDARCount})`, value: "" },
+        { label: `All (${submissionCounts?.SUBMITTED ?? 0})`, value: "" },
         {
             label: `${capitalise(DarApplicationStatus.SUBMITTED)} (${
                 submissionCounts?.SUBMITTED || 0
@@ -204,8 +195,8 @@ export default function Dashboard() {
             value: DarApplicationStatus.SUBMITTED,
         },
         {
-            label: `In review (${submissionCounts?.FEEDBACK || 0})`,
-            value: DarApplicationStatus.FEEDBACK,
+            label: `In review (${approvalCounts?.FEEDBACK || 0})`,
+            value: DarApplicationApprovalStatus.FEEDBACK,
         },
         {
             label: `${capitalise(DarApplicationApprovalStatus.APPROVED)} (${
@@ -232,7 +223,7 @@ export default function Dashboard() {
             <Loading />
         ) : (
             <>
-                {statusParam === DarApplicationStatus.FEEDBACK && (
+                {statusParam === DarApplicationApprovalStatus.FEEDBACK && (
                     <Tabs
                         tabs={approvalTab}
                         tabBoxSx={{
@@ -295,7 +286,8 @@ export default function Dashboard() {
                     borderTop: `1px solid ${colors.grey200}`,
                     "& .MuiTabs-root": {
                         mb:
-                            statusParam === DarApplicationStatus.FEEDBACK
+                            statusParam ===
+                            DarApplicationApprovalStatus.FEEDBACK
                                 ? 0
                                 : 1,
                     },
