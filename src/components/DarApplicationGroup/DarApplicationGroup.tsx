@@ -67,7 +67,7 @@ export default function DarApplicationGroup({
                 <Accordion
                     variant="plain"
                     noIndent
-                    heading={""}
+                    heading=""
                     expandIcon={ArrowDropDownIcon}
                     contents={item.teams?.map((team, index) => (
                         <DarApplicationCard

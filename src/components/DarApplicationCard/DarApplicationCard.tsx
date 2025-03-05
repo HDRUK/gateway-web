@@ -118,7 +118,7 @@ export default function DarApplicationCard({
                                 onClick={() =>
                                     showDialog(DarDatasetQuickViewDialog, {
                                         application,
-                                        teamId: teamId,
+                                        teamId,
                                     })
                                 }
                                 sx={{ minWidth: "auto" }}>
