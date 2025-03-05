@@ -63,7 +63,9 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             alignItems: "center",
                             textAlign: "center",
                             color: colors.white,
-                            backgroundImage: hasImage && `url(${image_link})`,
+                            ...(hasImage
+                                ? { backgroundImage: `url("${image_link}")` }
+                                : {}),
                             background:
                                 !hasImage &&
                                 `linear-gradient(to right, ${theme.palette.secondary.main},${theme.palette.primary.main})`,
