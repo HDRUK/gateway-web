@@ -2,7 +2,7 @@
 
 import { Fragment, useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -34,33 +34,38 @@ const DATE_FORMAT = "DD MMMM YYYY HH:mm";
 
 interface DarApplicationCardProps {
     application: DataAccessRequestApplication;
+    teamId?: string;
+    teamIndex?: number;
 }
 
 export default function DarApplicationCard({
     application,
+    teamId,
+    teamIndex,
 }: DarApplicationCardProps) {
     const t = useTranslations(TRANSLATION_PATH);
-    const params = useParams<{
-        teamId: string;
-    }>();
 
     const { push } = useRouter();
     const { showDialog } = useDialog();
 
     const submissionStatus = useMemo(
         () =>
-            application.teams.find(
-                team => team.team_id.toString() === params?.teamId
-            )!.submission_status,
-        [application.teams, params?.teamId]
+            teamId
+                ? application.teams.find(
+                      team => team.team_id.toString() === teamId
+                  )!.submission_status
+                : application.teams[teamIndex || 0]!.submission_status,
+        [application.teams, teamId]
     );
 
     const approvalStatus = useMemo(
         () =>
-            application.teams.find(
-                team => team.team_id.toString() === params?.teamId
-            )!.approval_status,
-        [application.teams, params?.teamId]
+            teamId
+                ? application.teams.find(
+                      team => team.team_id.toString() === teamId
+                  )!.approval_status
+                : application.teams[teamIndex || 0]!.approval_status,
+        [application.teams, teamId]
     );
 
     const cardContent = useMemo(
@@ -92,12 +97,18 @@ export default function DarApplicationCard({
                         sx={{ display: "flex", alignItems: "center", p: 0 }}
                         gap={1}>
                         <EllipsisCharacterLimit
-                            text={application.datasets[0].dataset_title}
+                            text={
+                                application.datasets[teamIndex || 0]
+                                    .dataset_title
+                            }
                             isButton
                             characterLimit={CHARACTER_LIMIT}
                             onClick={() =>
                                 push(
-                                    `/${RouteName.DATASET_ITEM}/${application.datasets[0].dataset_id}`
+                                    `/${RouteName.DATASET_ITEM}/${
+                                        application.datasets[teamIndex || 0]
+                                            .dataset_id
+                                    }`
                                 )
                             }
                         />
@@ -107,7 +118,7 @@ export default function DarApplicationCard({
                                 onClick={() =>
                                     showDialog(DarDatasetQuickViewDialog, {
                                         application,
-                                        teamId: params?.teamId,
+                                        teamId: teamId,
                                     })
                                 }
                                 sx={{ minWidth: "auto" }}>
@@ -126,7 +137,7 @@ export default function DarApplicationCard({
                 ),
             },
         ],
-        [application, params?.teamId, push, showDialog, t]
+        [application, teamId, push, showDialog, t]
     );
 
     const actions = [
@@ -137,7 +148,9 @@ export default function DarApplicationCard({
                   {
                       action: (id: number) => {
                           push(
-                              `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${id}`
+                              teamId
+                                  ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${id}`
+                                  : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}/${id}`
                           );
                       },
                       icon: EditIcon,
@@ -148,7 +161,9 @@ export default function DarApplicationCard({
                   {
                       action: (id: number) => {
                           push(
-                              `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${id}`
+                              teamId
+                                  ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${id}`
+                                  : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}/${id}`
                           );
                       },
                       icon: VisibilityOutlinedIcon,
@@ -175,10 +190,18 @@ export default function DarApplicationCard({
 
                     <DarStatusTracker
                         approvalStatus={approvalStatus}
-                        statuses={[
-                            DarApplicationStatus.SUBMITTED,
-                            DarApplicationApprovalStatus.FEEDBACK,
-                        ]}
+                        statuses={
+                            teamId
+                                ? [
+                                      DarApplicationStatus.SUBMITTED,
+                                      DarApplicationApprovalStatus.FEEDBACK,
+                                  ]
+                                : [
+                                      DarApplicationStatus.DRAFT,
+                                      DarApplicationStatus.SUBMITTED,
+                                      DarApplicationApprovalStatus.FEEDBACK,
+                                  ]
+                        }
                     />
 
                     <BoxContainer

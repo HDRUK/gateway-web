@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
+import Dashboard from "@/components/DarDashboard";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import apis from "@/config/apis";
 import { getUser } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
-import Dashboard from "./components/Dashboard";
 
 export const metadata = metaData({
     title: "Applications - My Account",
@@ -24,7 +25,10 @@ const DARApplicationsPage = async () => {
                 "data-access-applications.provider.read",
                 "data-access-applications.review.read",
             ]}>
-            <Dashboard userId={userId} />
+            <Dashboard
+                translationPath="pages.account.profile.dataAccessRequests.applications"
+                darApiPath={`${apis.usersV1Url}/${userId}/dar/applications`}
+            />
         </ProtectedAccountRoute>
     );
 };

@@ -9,6 +9,7 @@ import Dialog from "@/components/Dialog";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
+import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = "modules.dialogs.DarDatasetQuickView";
@@ -36,12 +37,14 @@ interface CustodianDatasetsProps {
     group: DatasetGroup;
     showCustodianName?: boolean;
     push: (url: string) => void;
+    hideModal: () => void;
 }
 
 const CustodianDatasets: FC<CustodianDatasetsProps> = ({
     group,
     showCustodianName = true,
     push,
+    hideModal,
 }) => {
     return (
         <Box key={group.custodian_id} sx={{ pl: 0, pr: 0 }}>
@@ -57,11 +60,12 @@ const CustodianDatasets: FC<CustodianDatasetsProps> = ({
                         text={dataset.dataset_name}
                         isButton
                         characterLimit={CHARACTER_LIMIT}
-                        onClick={() =>
+                        onClick={() => {
+                            hideModal();
                             push(
                                 `/${RouteName.DATASET_ITEM}/${dataset.dataset_id}`
-                            )
-                        }
+                            );
+                        }}
                     />
                 ))}
             </Box>
@@ -76,6 +80,7 @@ const DatasetQuickViewDialog = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
     const { push } = useRouter();
+    const { hideModal } = useModal();
 
     const formattedTitle =
         application.project_title.length > TITLE_CHARACTER_LIMIT
@@ -154,6 +159,7 @@ const DatasetQuickViewDialog = ({
                         <CustodianDatasets
                             group={group}
                             push={push}
+                            hideModal={hideModal}
                             showCustodianName={false}
                             key={group.custodian_id}
                         />
@@ -174,6 +180,7 @@ const DatasetQuickViewDialog = ({
                             <CustodianDatasets
                                 group={group}
                                 push={push}
+                                hideModal={hideModal}
                                 key={group.custodian_id}
                             />
                         ))}
