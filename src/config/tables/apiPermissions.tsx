@@ -8,8 +8,8 @@ const columnHelper = createColumnHelper<{ name: string; label: string }>();
 
 const getColumns = <T extends FieldValues>(
     control: Control<T>,
-    setValue: (name: string, value: any) => void,
-    watch: (name: string) => any
+    setValue: (name: string, value: boolean) => void,
+    watch: (name: string) => boolean
 ): ColumnDef<{ name: string; label: string }>[] => {
     return [
         columnHelper.display({
