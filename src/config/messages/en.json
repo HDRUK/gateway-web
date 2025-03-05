@@ -557,7 +557,9 @@
                             "downloadButtonText": "Download metadata template",
                             "successMessage": "Dataset successfully created",
                             "upload": "Upload",
-                            "returnButtonText": "View dataset in 'Drafts' tab"
+                            "returnButtonText": "View dataset in 'Drafts' tab",
+                            "errorNoMatchingPid": "The summary.dataCustodian.identifier is: {dataCustodianId} which does not match your teams identifier: {teamPid}.",
+                            "errorNoPid": "Missing summary.dataCustodian.identifier your teams identifier is: {teamPid} please add in, this identifier before uploading."
                         }
                     }
                 },
