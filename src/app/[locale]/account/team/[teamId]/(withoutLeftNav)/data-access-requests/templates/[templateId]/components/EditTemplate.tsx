@@ -75,6 +75,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
 
     const updateTemplateQuestions = usePatch(apis.dataAccessTemplateV1Url, {
         itemName: "Update Template",
+        query: `section_id=${sectionId}`,
     });
 
     const [hasChanges, setHasChanges] = useState(false);
@@ -156,11 +157,12 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 ?.filter(q => q.section_id === sectionId)
                 ?.map((qbQuestion, index) => {
                     const selected =
-                        templateQuestionIds?.includes(qbQuestion.id) ?? false;
+                        templateQuestionIds?.includes(qbQuestion.question_id) ??
+                        false;
                     let templateQuestion;
                     if (selected) {
                         templateQuestion = template?.questions.find(
-                            tq => tq.question_id === qbQuestion.id
+                            tq => tq.question_id === qbQuestion.question_id
                         );
                     }
                     const question = {
