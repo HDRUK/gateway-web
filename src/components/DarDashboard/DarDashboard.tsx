@@ -251,7 +251,8 @@ export default function DarDashboard({
                 </Box>
 
                 {data?.list?.map(item => {
-                    const isTeamApplication = item.teams.length > 1;
+                    const isTeamApplication =
+                        !params?.teamId && item.teams.length > 1;
 
                     if (isTeamApplication) {
                         return <DarApplicationGroup item={item} />;
