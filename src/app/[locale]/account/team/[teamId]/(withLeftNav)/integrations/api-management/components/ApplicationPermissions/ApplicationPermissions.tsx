@@ -61,10 +61,11 @@ const ApplicationPermissions = ({
     const { mutate } = useSWRConfig();
 
     /* Pass default values and validation to react-hook-form */
-    const { control, handleSubmit, reset, formState } = useForm({
-        defaultValues: appPermissionsDefaultValues,
-        resolver: yupResolver(appPermissionsValidationSchema),
-    });
+    const { control, handleSubmit, reset, formState, setValue, watch } =
+        useForm({
+            defaultValues: appPermissionsDefaultValues,
+            resolver: yupResolver(appPermissionsValidationSchema),
+        });
 
     /* Launch ActionBar if there are form changes  */
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
@@ -110,7 +111,7 @@ const ApplicationPermissions = ({
 
     /* Memoise columns using 'getColumns' from form config  */
     const columns = useMemo(() => {
-        return getColumns<AppPermissionDefaultValues>(control);
+        return getColumns<AppPermissionDefaultValues>(control, setValue, watch);
     }, [control]);
 
     const onSubmit = useCallback(

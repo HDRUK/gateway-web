@@ -7,7 +7,9 @@ import { capitalise } from "@/utils/general";
 const columnHelper = createColumnHelper<{ name: string; label: string }>();
 
 const getColumns = <T extends FieldValues>(
-    control: Control<T>
+    control: Control<T>,
+    setValue: (name: string, value: boolean) => void,
+    watch: (name: string) => boolean
 ): ColumnDef<{ name: string; label: string }>[] => {
     return [
         columnHelper.display({
@@ -17,7 +19,7 @@ const getColumns = <T extends FieldValues>(
                     Scope
                 </Box>
             ),
-            cell: ({ row: { original } }) => `${original.label}`,
+            cell: ({ row: { original } }) => original.label,
         }),
         ...["create", "read", "update", "delete"].map(key =>
             columnHelper.display({
@@ -28,12 +30,43 @@ const getColumns = <T extends FieldValues>(
                     </Box>
                 ),
                 cell: ({ row: { original } }) => {
+                    const readFieldName = `${original.name}.read`;
+
+                    const handleChange = (checked: boolean) => {
+                        setValue(`${original.name}.${key}`, checked);
+
+                        if (key !== "read") {
+                            if (checked) {
+                                setValue(readFieldName, true);
+                            } else {
+                                const createChecked = watch(
+                                    `${original.name}.create`
+                                );
+                                const updateChecked = watch(
+                                    `${original.name}.update`
+                                );
+                                const deleteChecked = watch(
+                                    `${original.name}.delete`
+                                );
+
+                                if (
+                                    !createChecked &&
+                                    !updateChecked &&
+                                    !deleteChecked
+                                ) {
+                                    setValue(readFieldName, false);
+                                }
+                            }
+                        }
+                    };
+
                     return (
                         <Checkbox
                             size="large"
                             control={control}
                             name={`${original.name}.${key}`}
                             formControlSx={{ mb: 0 }}
+                            onChange={(_, checked) => handleChange(checked)}
                         />
                     );
                 },
