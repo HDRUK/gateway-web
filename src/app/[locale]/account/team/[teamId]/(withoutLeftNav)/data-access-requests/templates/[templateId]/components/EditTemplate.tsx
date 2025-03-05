@@ -75,6 +75,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
 
     const updateTemplateQuestions = usePatch(apis.dataAccessTemplateV1Url, {
         itemName: "Update Template",
+        query: `section_id=${sectionId}`,
     });
 
     const [hasChanges, setHasChanges] = useState(false);
