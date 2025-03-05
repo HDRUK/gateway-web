@@ -1,4 +1,3 @@
-import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 import {
     SortableContext,
@@ -43,7 +42,7 @@ const TaskBoardSection = ({
                     items={tasks}
                     strategy={verticalListSortingStrategy}>
                     <div ref={setNodeRef}>
-                        {tasks.map(task => (
+                        {tasks?.map(task => (
                             <Box
                                 key={task.id}
                                 sx={{
