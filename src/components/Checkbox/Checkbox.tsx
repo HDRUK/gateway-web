@@ -67,7 +67,7 @@ const Checkbox = <
                         id={id || name}
                         {...rest}
                         {...fieldProps}
-                        onChange={onChange}
+                        {...(onChange ? { onChange } : {})}
                     />
                 }
                 label={
