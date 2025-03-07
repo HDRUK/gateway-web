@@ -4,6 +4,7 @@ import MuiAccordion, {
 } from "@mui/material/Accordion";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import { IconType } from "@/interfaces/Ui";
 import { ChevronThinIcon } from "@/consts/customIcons";
 
 export interface AccordionProps
@@ -13,6 +14,7 @@ export interface AccordionProps
     variant?: "underline" | "plain";
     noIndent?: boolean;
     iconLeft?: boolean;
+    expandIcon?: IconType;
 }
 
 const Accordion = ({
@@ -21,9 +23,12 @@ const Accordion = ({
     variant = "underline",
     noIndent,
     iconLeft,
+    expandIcon,
     sx,
     ...restProps
 }: AccordionProps) => {
+    const Icon = expandIcon || ChevronThinIcon;
+
     return (
         <MuiAccordion
             sx={{
@@ -66,10 +71,21 @@ const Accordion = ({
             {...restProps}>
             <MuiAccordionSummary
                 expandIcon={
-                    <ChevronThinIcon fontSize="medium" color="primary" />
+                    <Icon
+                        fontSize={!heading ? "large" : "medium"}
+                        color="primary"
+                        sx={!heading ? { width: "100%" } : {}}
+                    />
                 }
-                sx={{ ...(iconLeft && { flexDirection: "row-reverse" }) }}>
-                {heading}
+                sx={{
+                    ...(iconLeft && { flexDirection: "row-reverse" }),
+                    ...(!heading && {
+                        ".MuiAccordionSummary-expandIconWrapper": {
+                            width: "100%",
+                        },
+                    }),
+                }}>
+                {heading && heading}
             </MuiAccordionSummary>
             <MuiAccordionDetails>{contents}</MuiAccordionDetails>
         </MuiAccordion>

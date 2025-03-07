@@ -8,6 +8,8 @@ import { useParams, useSearchParams } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
+import DarApplicationCard from "@/components/DarApplicationCard";
+import DarApplicationGroup from "@/components/DarApplicationGroup";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
@@ -15,7 +17,6 @@ import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
 import {
     darDashboardDefaultValues,
     darDashboardSearchFilter,
@@ -27,9 +28,6 @@ import {
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { capitalise } from "@/utils/general";
-import DarApplicationCard from "../DarApplicationCard";
-
-const TRANSLATION_PATH = "pages.account.team.dataAccessRequests.applications";
 
 const STATUS = "status";
 const SUBMISSION_STATUS = [
@@ -53,9 +51,16 @@ interface CountStatusActionRequired {
     action_required?: number;
     info_required?: number;
 }
+interface DarDashboardProps {
+    translationPath: string;
+    darApiPath: string;
+}
 
-export default function Dashboard() {
-    const t = useTranslations(TRANSLATION_PATH);
+export default function DarDashboard({
+    translationPath,
+    darApiPath,
+}: DarDashboardProps) {
+    const t = useTranslations(translationPath);
     const params = useParams<{ teamId: string }>();
     const searchParams = useSearchParams();
 
@@ -144,25 +149,23 @@ export default function Dashboard() {
     }, [actionParam]);
 
     const { data: submissionCounts } = useGet<CountStatusSubmission>(
-        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/submission_status`
+        `${darApiPath}/count/submission_status`
     );
 
     const { data: approvalCounts } = useGet<CountStatusApproval>(
-        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/approval_status`
+        `${darApiPath}/count/approval_status`
     );
 
     const { data: actionRequiredCounts } = useGet<CountStatusActionRequired>(
-        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/action_required`
+        `${darApiPath}/count/action_required`
     );
 
     const { data, isLoading } = useGet<
         PaginationType<DataAccessRequestApplication>
-    >(
-        `${apis.teamsV1Url}/${
-            params?.teamId
-        }/dar/applications?${new URLSearchParams(queryParams)}`,
-        { keepPreviousData: true, withPagination: true }
-    );
+    >(`${darApiPath}?${new URLSearchParams(queryParams)}`, {
+        keepPreviousData: true,
+        withPagination: true,
+    });
 
     const approvalTab = [
         {
@@ -247,9 +250,22 @@ export default function Dashboard() {
                     />
                 </Box>
 
-                {data?.list?.map(item => (
-                    <DarApplicationCard application={item} key={item.id} />
-                ))}
+                {data?.list?.map(item => {
+                    const isTeamApplication =
+                        !params?.teamId && item.teams.length > 1;
+
+                    if (isTeamApplication) {
+                        return <DarApplicationGroup item={item} />;
+                    }
+
+                    return (
+                        <DarApplicationCard
+                            application={item}
+                            key={item.id}
+                            teamId={params?.teamId}
+                        />
+                    );
+                })}
             </>
         ),
     }));

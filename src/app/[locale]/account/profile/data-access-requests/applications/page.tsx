@@ -2,27 +2,20 @@ import { cookies } from "next/headers";
 import Dashboard from "@/components/DarDashboard";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import apis from "@/config/apis";
-import { getTeam, getUser } from "@/utils/api";
+import { getUser } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
-import { getTeamUser } from "@/utils/user";
 
 export const metadata = metaData({
     title: "Applications - My Account",
     description: "",
 });
 
-const DARApplicationsPage = async ({
-    params,
-}: {
-    params: { teamId: string };
-}) => {
-    const { teamId } = params;
+const DARApplicationsPage = async () => {
     const cookieStore = cookies();
     const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
-    const teamUser = getTeamUser(team?.users, user?.id);
-    const permissions = getPermissions(user.roles, teamUser?.roles);
+    const permissions = getPermissions(user.roles);
+    const userId = user?.id?.toString();
 
     return (
         <ProtectedAccountRoute
@@ -33,8 +26,8 @@ const DARApplicationsPage = async ({
                 "data-access-applications.review.read",
             ]}>
             <Dashboard
-                translationPath="pages.account.team.dataAccessRequests.applications"
-                darApiPath={`${apis.teamsV1Url}/${teamId}/dar/applications`}
+                translationPath="pages.account.profile.dataAccessRequests.applications"
+                darApiPath={`${apis.usersV1Url}/${userId}/dar/applications`}
             />
         </ProtectedAccountRoute>
     );

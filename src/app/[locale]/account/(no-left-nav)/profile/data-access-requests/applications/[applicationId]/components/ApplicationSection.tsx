@@ -338,7 +338,7 @@ const ApplicationSection = ({
                 mt: 1.75,
             }}>
             <Link
-                href={`/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}`}
+                href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`}
                 underline="hover"
                 sx={{
                     display: "flex",
