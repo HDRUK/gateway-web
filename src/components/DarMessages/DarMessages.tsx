@@ -114,7 +114,6 @@ const DarMessages = ({
 
         reset();
         mutateReviews();
-        console.log(getValues("comment"));
     };
 
     const commentsEndRef = useRef<HTMLDivElement | null>(null);
