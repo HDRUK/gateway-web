@@ -208,6 +208,7 @@ const DarMessages = ({
                         !!reviewComments &&
                         reviewComments.map(review => (
                             <Box
+                                key={review.id}
                                 sx={{
                                     borderRadius: theme.spacing(1),
                                     backgroundColor: review.user_id
