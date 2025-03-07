@@ -399,7 +399,7 @@ const ApplicationSection = ({
             }
         }
 
-        setSectionId(0);
+        return setSectionId(0);
     }, [data, teamId, actionRequiredApplicant]);
 
     if (sectionId === undefined) {
