@@ -1,3 +1,5 @@
+import { IconType } from "./Ui";
+
 export enum LegendStatus {
     VALID,
     OPTIONAL_REMAIN,
@@ -11,4 +13,5 @@ export type LegendItem = {
     status: LegendStatus;
     subItems?: LegendItem[];
     id?: number;
+    icon?: IconType;
 };

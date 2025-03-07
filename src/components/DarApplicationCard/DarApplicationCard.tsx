@@ -140,6 +140,19 @@ export default function DarApplicationCard({
         [application, teamId, push, showDialog, t]
     );
 
+    const actionButtonHref = (id: number) =>
+        teamId
+            ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
+                  RouteName.DATA_ACCESS_REQUESTS
+              }/${RouteName.APPLICATION}/${id}?teamId=${
+                  teamId || application.teams[teamIndex || 0].team_id
+              }`
+            : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${
+                  RouteName.DATA_ACCESS_REQUESTS
+              }/${RouteName.APPLICATIONS}/${id}?teamId=${
+                  teamId || application.teams[teamIndex || 0].team_id
+              }`;
+
     const actions = [
         ...(submissionStatus === DarApplicationStatus.SUBMITTED &&
         (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
@@ -147,11 +160,7 @@ export default function DarApplicationCard({
             ? [
                   {
                       action: (id: number) => {
-                          push(
-                              teamId
-                                  ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${id}`
-                                  : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}/${id}`
-                          );
+                          push(actionButtonHref(id));
                       },
                       icon: EditIcon,
                       label: t("editApplication"),
@@ -160,11 +169,7 @@ export default function DarApplicationCard({
             : [
                   {
                       action: (id: number) => {
-                          push(
-                              teamId
-                                  ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${id}`
-                                  : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}/${id}`
-                          );
+                          push(actionButtonHref(id));
                       },
                       icon: VisibilityOutlinedIcon,
                       label: t("viewApplication"),

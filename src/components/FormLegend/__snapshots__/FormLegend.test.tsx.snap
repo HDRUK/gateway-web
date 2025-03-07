@@ -26,7 +26,7 @@ exports[`FormLegend should render legend 1`] = `
         </svg>
       </span>
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-1mg2mqv-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-18b1v8w-MuiTypography-root"
       >
         Item1
       </p>

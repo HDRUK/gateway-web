@@ -56,38 +56,65 @@ const FormLegend = ({
         <Wrapper
             offsetTop={offsetTop || "initial"}
             sx={{ justifyContent: "center" }}>
-            {items.map((item, index) => (
-                <Fragment key={item.name}>
-                    <ListItemButton
-                        sx={{
-                            marginLeft: removeMarginLeft
-                                ? 0
-                                : `${level * 16}px`,
-                        }}
-                        key={`${item.name}`}
-                        onClick={() =>
-                            handleClickItem &&
-                            (item.id
-                                ? handleClickItem(item.id)
-                                : handleClickItem(index))
-                        }>
-                        <LegendIcon
-                            iconColour={getBackgroundColour(item.status)}>
-                            {getIcon(item.status)}
-                        </LegendIcon>
-                        <Typography>
-                            {capitalise(splitCamelcase(item.name))}
-                        </Typography>
-                    </ListItemButton>
-                    {item.subItems && (
-                        <FormLegend
-                            items={item.subItems}
-                            level={level + 1}
-                            handleClickItem={handleClickItem}
-                        />
-                    )}
-                </Fragment>
-            ))}
+            {items.map((item, index) => {
+                const Icon = item.icon;
+
+                return (
+                    <Fragment key={item.name}>
+                        <ListItemButton
+                            sx={{
+                                marginLeft: removeMarginLeft
+                                    ? 0
+                                    : `${level * 16}px`,
+                            }}
+                            key={`${item.name}`}
+                            onClick={() =>
+                                handleClickItem &&
+                                (item.id
+                                    ? handleClickItem(item.id)
+                                    : handleClickItem(index))
+                            }>
+                            {Icon ? (
+                                <Icon
+                                    sx={{
+                                        mr: 1.25,
+                                        width: "18px",
+                                        height: "18px",
+                                        color:
+                                            item.status === LegendStatus.ACTIVE
+                                                ? colors.purple500
+                                                : colors.grey700,
+                                    }}
+                                />
+                            ) : (
+                                <LegendIcon
+                                    iconColour={getBackgroundColour(
+                                        item.status
+                                    )}>
+                                    {getIcon(item.status)}
+                                </LegendIcon>
+                            )}
+
+                            <Typography
+                                sx={{
+                                    fontWeight:
+                                        item.status === LegendStatus.ACTIVE
+                                            ? 600
+                                            : "normal",
+                                }}>
+                                {capitalise(splitCamelcase(item.name))}
+                            </Typography>
+                        </ListItemButton>
+                        {item.subItems && (
+                            <FormLegend
+                                items={item.subItems}
+                                level={level + 1}
+                                handleClickItem={handleClickItem}
+                            />
+                        )}
+                    </Fragment>
+                );
+            })}
         </Wrapper>
     );
 };

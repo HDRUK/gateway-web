@@ -21,6 +21,7 @@ export interface ModalProps {
     invertCloseIconBehaviour?: boolean;
     styleProps?: DialogProps;
     tertiaryButton?: { onAction: (props: unknown) => void; buttonText: string };
+    autoCloseTimeout?: number;
 }
 
 const Modal = () => {
@@ -41,7 +42,12 @@ const Modal = () => {
         invertCloseIconBehaviour,
         title,
         styleProps = {},
+        autoCloseTimeout,
     } = dialogProps as unknown as ModalProps;
+
+    if (autoCloseTimeout) {
+        setTimeout(() => hideModal(), autoCloseTimeout);
+    }
 
     const handleClose = () => {
         if (typeof onCancel === "function" && !invertCloseIconBehaviour) {

@@ -108,6 +108,17 @@ const generateYupSchema = (fields: DarApplicationQuestion[]) => {
     return buildYup({ type: "object", properties: schemaConfig });
 };
 
+const messageSection: QuestionBankSection = {
+    id: 99,
+    name: "Messages",
+    created_at: "",
+    updated_at: "",
+    deleted_at: null,
+    description: null,
+    parent_section: null,
+    order: 9,
+};
+
 export {
     validationSchema as darApplicationValidationSchema,
     beforeYouBeginFormFields,
@@ -115,4 +126,5 @@ export {
     excludedQuestionFields,
     LAST_SAVED_DATE_FORMAT,
     generateYupSchema,
+    messageSection,
 };
