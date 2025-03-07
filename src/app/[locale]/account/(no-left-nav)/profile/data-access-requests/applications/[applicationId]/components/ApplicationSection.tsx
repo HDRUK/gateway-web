@@ -1,31 +1,35 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import {
     DarApplication,
     DarApplicationAnswer,
     DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
+import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { FileUploadFields } from "@/interfaces/FileUpload";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import DarMessages from "@/components/DarMessages";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
+import Loading from "@/components/Loading";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
+import useGet from "@/hooks/useGet";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
@@ -34,9 +38,13 @@ import {
     darApplicationValidationSchema,
     excludedQuestionFields,
     generateYupSchema,
+    messageSection,
 } from "@/config/forms/dataAccessApplication";
 import theme, { colors } from "@/config/theme";
-import { DarApplicationStatus } from "@/consts/dataAccess";
+import {
+    DarApplicationApprovalStatus,
+    DarApplicationStatus,
+} from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -76,7 +84,7 @@ const ApplicationSection = ({
     const [selectedField, setSelectedField] = useState<string>();
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
     const [guidanceText, setGuidanceText] = useState<string>();
-    const [sectionId, setSectionId] = useState(0);
+    const [sectionId, setSectionId] = useState<number | undefined>(undefined);
 
     const handleChangeSection = (sectionId: number) => {
         setSectionId(sectionId);
@@ -89,8 +97,6 @@ const ApplicationSection = ({
     const removeUploadedFile = useDelete(`${darApplicationEndpoint}/files`, {
         itemName: "File",
     });
-
-    const parentSections = sections?.filter(s => s.parent_section === null);
 
     const getSection = (id: number) => sections?.find(s => s.id === id);
     const getParentSection = (id: number) => getSection(id)?.parent_section;
@@ -213,10 +219,6 @@ const ApplicationSection = ({
         await saveApplication();
     };
 
-    const currentSectionIndex = sectionId
-        ? parentSections.findIndex(section => section.id === sectionId)
-        : 0;
-
     const processedSections = new Set();
 
     const renderSectionHeader = (field: DarFormattedField) => (
@@ -232,7 +234,37 @@ const ApplicationSection = ({
 
     const params = useParams<{
         applicationId: string;
+        teamId?: string;
     }>();
+
+    const searchParams = useSearchParams();
+    const teamId = searchParams?.get("teamId");
+
+    const isResearcher = !params?.teamId;
+
+    const {
+        data: reviews,
+        mutate: mutateReviews,
+        isLoading: loadingReviews,
+    } = useGet<DarReviewsResponse[]>(
+        isResearcher
+            ? `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}/reviews`
+            : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/reviews`,
+        { keepPreviousData: true, errorNotificationsOn: false }
+    );
+
+    const parentSections = useMemo(() => {
+        const filteredSections =
+            sections?.filter(s => s.parent_section === null) || [];
+
+        return (isResearcher && reviews?.length) || !isResearcher
+            ? [...filteredSections, messageSection]
+            : filteredSections;
+    }, [sections, isResearcher, reviews]);
+
+    const currentSectionIndex = sectionId
+        ? parentSections.findIndex(section => section.id === sectionId)
+        : 0;
 
     const renderFormFields = () =>
         filteredData
@@ -332,6 +364,48 @@ const ApplicationSection = ({
         ERROR_TYPE_REQUIRED.includes(item?.type as string)
     );
 
+    const reviewComments = useMemo(
+        () => !!reviews?.length && reviews[0].comments,
+        [reviews]
+    );
+
+    const actionRequiredApplicant = useMemo(() => {
+        if (reviews === undefined) {
+            return undefined;
+        }
+
+        return (
+            reviewComments && !reviewComments[reviewComments.length - 1].user_id
+        );
+    }, [reviews]);
+
+    // If applicant action required, jump to messages section
+    useEffect(() => {
+        if (!data || actionRequiredApplicant === undefined) {
+            return;
+        }
+
+        if (teamId) {
+            const teamApplication = data.teams.find(
+                team => team.team_id.toString() === teamId
+            );
+
+            if (
+                teamApplication?.approval_status ===
+                    DarApplicationApprovalStatus.FEEDBACK &&
+                actionRequiredApplicant
+            ) {
+                return setSectionId(messageSection.id);
+            }
+        }
+
+        setSectionId(0);
+    }, [data, teamId, actionRequiredApplicant]);
+
+    if (sectionId === undefined) {
+        return <Loading />;
+    }
+
     return (
         <BoxContainer
             sx={{
@@ -417,28 +491,47 @@ const ApplicationSection = ({
                                         </Box>
                                     ))}
                                 </>
+                            ) : parentSections.find(
+                                  section => section.id === sectionId
+                              )?.name === messageSection.name ? (
+                                <DarMessages
+                                    applicationId={applicationId}
+                                    teamId={teamId!}
+                                    reviews={reviews}
+                                    mutateReviews={mutateReviews}
+                                    loadingReviews={loadingReviews}
+                                    reviewComments={reviewComments}
+                                    actionRequiredApplicant={
+                                        actionRequiredApplicant
+                                    }
+                                />
                             ) : (
                                 renderFormFields()
                             )}
                         </Box>
-                        <Box
-                            sx={{ flex: 1, overflowY: "auto" }}
-                            borderLeft={`1px solid ${theme.palette.divider}`}>
-                            {guidanceText ? (
-                                <MarkDownSanitizedWithHtml
-                                    content={guidanceText}
-                                />
-                            ) : (
-                                <Typography
-                                    sx={{
-                                        color: theme.palette.grey[500],
-                                        mt: 2,
-                                        textAlign: "center",
-                                    }}>
-                                    {t("defaultGuidance")}
-                                </Typography>
-                            )}
-                        </Box>
+
+                        {parentSections.find(
+                            section => section.id === sectionId
+                        )?.name !== messageSection.name && (
+                            <Box
+                                sx={{ flex: 1, overflowY: "auto" }}
+                                borderLeft={`1px solid ${theme.palette.divider}`}>
+                                {guidanceText ? (
+                                    <MarkDownSanitizedWithHtml
+                                        content={guidanceText}
+                                    />
+                                ) : (
+                                    <Typography
+                                        sx={{
+                                            color: theme.palette.grey[500],
+                                            mt: 2,
+                                            textAlign: "center",
+                                        }}>
+                                        {t("defaultGuidance")}
+                                    </Typography>
+                                )}
+                            </Box>
+                        )}
                     </Box>
                 </Paper>
             </Box>

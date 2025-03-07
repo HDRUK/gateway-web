@@ -710,7 +710,7 @@
                             "darRequest": "Data Access Request",
                             "lastSaved": "Last saved: {date}",
                             "questionsAnswered": "{questionCount} questions answered",
-                            "save": "Save now",
+                            "save": "Save draft",
                             "submit": "Submit application",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
@@ -1433,6 +1433,17 @@
             "entities": "Entities",
             "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
+        },
+        "DataAccessMessages": {
+            "modalTitle": "Success!",
+            "modalContent": "Your message has been successfully submitted. Please allow some time for a response. Thank you for your patience!",
+            "actionRequiredBy": "Action required by ",
+            "messagingDashboard": "Messaging Dashboard",
+            "messagingContent": "This is where you can securely communicate with the Data Custodian. View all messages in one place, track discussions and ensure a smooth data access process here. Both the Data Custodian and applicants can see messages.",
+            "reply": "Reply",
+            "replyInfo": "Type your reply below.",
+            "send": "Send",
+            "status": "Status"
         }
     },
     "modules": {
