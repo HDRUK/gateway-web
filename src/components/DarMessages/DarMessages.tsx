@@ -85,12 +85,11 @@ const DarMessages = ({
         }
     );
 
-    const { control, reset, setValue, getValues, watch } =
-        useForm<DarMessageForm>({
-            defaultValues: {
-                comment: "",
-            },
-        });
+    const { control, reset, getValues, watch } = useForm<DarMessageForm>({
+        defaultValues: {
+            comment: "",
+        },
+    });
 
     const commentText = watch("comment");
 

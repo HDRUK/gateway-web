@@ -382,7 +382,7 @@ const ApplicationSection = ({
     // If applicant action required, jump to messages section
     useEffect(() => {
         if (!data || actionRequiredApplicant === undefined) {
-            return;
+            return undefined;
         }
 
         if (teamId) {
