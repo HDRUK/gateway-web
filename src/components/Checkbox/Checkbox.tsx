@@ -17,6 +17,10 @@ export interface CheckboxProps<TFieldValues extends FieldValues, TName>
     formControlSx?: SxProps;
     count?: number;
     id?: string;
+    onChange?: (
+        event: React.ChangeEvent<HTMLInputElement>,
+        checked: boolean
+    ) => void;
 }
 
 const Checkbox = <
@@ -35,6 +39,7 @@ const Checkbox = <
         formControlSx,
         count,
         id,
+        onChange,
         ...rest
     } = props;
 
@@ -62,6 +67,7 @@ const Checkbox = <
                         id={id || name}
                         {...rest}
                         {...fieldProps}
+                        {...(onChange ? { onChange } : {})}
                     />
                 }
                 label={

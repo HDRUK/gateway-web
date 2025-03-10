@@ -12,6 +12,8 @@ type ComponentTypes =
     | "TextTime"
     | "TextArea"
     | "DatePicker"
-    | "Wysiwyg";
+    | "Wysiwyg"
+    | "FileUpload"
+    | "FileUploadMultiple";
 
 export type { ComponentTypes };

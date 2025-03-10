@@ -31,7 +31,7 @@ export default async function UploadDatasetPage({
             permissions={permissions}
             pagePermissions={["datasets.create"]}>
             <BoxContainer sx={{ mt: "14px" }}>
-                <UploadDataset teamId={teamId} />
+                <UploadDataset teamId={teamId} teamPid={team.pid} />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

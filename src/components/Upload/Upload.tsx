@@ -3,7 +3,7 @@ import { FormControl, FormControlLabel, Stack, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import theme from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 import { UploadFileIcon } from "@/consts/icons";
 
 export interface UploadProps extends InputProps {
@@ -88,7 +88,9 @@ const Upload = (props: UploadProps) => {
                             startIcon={<UploadFileIcon color="primary" />}>
                             {label}
                         </Button>
-                        <Typography color="GrayText">{helperText}</Typography>
+                        <Typography color={colors.grey600}>
+                            {helperText}
+                        </Typography>
                     </Stack>
                 }
             />

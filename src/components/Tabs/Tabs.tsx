@@ -35,6 +35,7 @@ export interface TabProps {
     renderTabContent?: boolean;
     persistParams?: boolean;
     defaultSelectedTab?: string;
+    tabVariant?: string;
     handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
@@ -78,6 +79,7 @@ const Tabs = ({
     renderTabContent = true,
     persistParams = true,
     defaultSelectedTab,
+    tabVariant = "",
     handleChange,
 }: TabProps) => {
     const searchParams = useSearchParams();
@@ -96,6 +98,8 @@ const Tabs = ({
                         ...tabBoxSx,
                     }}>
                     <MuiTabList
+                        variant={tabVariant}
+                        scrollButtons="auto"
                         sx={{ mb: variant === TabVariant.STANDARD ? 1 : 0 }}
                         centered={centered}
                         onChange={handleChange}>

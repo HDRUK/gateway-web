@@ -6,12 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import {
     DarApplication,
     DarApplicationAnswer,
     DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
+import { FileUploadFields } from "@/interfaces/FileUpload";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -22,8 +24,11 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
+import useAuth from "@/hooks/useAuth";
+import useDelete from "@/hooks/useDelete";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
+import { inputComponents } from "@/config/forms";
 import {
     beforeYouBeginFormFields,
     darApplicationValidationSchema,
@@ -35,6 +40,7 @@ import { DarApplicationStatus } from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
+    createFileUploadConfig,
     formatDarQuestion,
     getVisibleQuestionIds,
     mapKeysToValues,
@@ -63,6 +69,9 @@ const ApplicationSection = ({
     sections,
 }: ApplicationSectionProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { user } = useAuth();
+
+    const darApplicationEndpoint = `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`;
 
     const [selectedField, setSelectedField] = useState<string>();
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
@@ -73,12 +82,13 @@ const ApplicationSection = ({
         setSectionId(sectionId);
     };
 
-    const updateAnswers = usePut(
-        `${apis.dataAccessApplicationV1Url}/${applicationId}`,
-        {
-            itemName: "Data Access Request",
-        }
-    );
+    const updateAnswers = usePut(darApplicationEndpoint, {
+        itemName: "Data Access Request",
+    });
+
+    const removeUploadedFile = useDelete(`${darApplicationEndpoint}/files`, {
+        itemName: "File",
+    });
 
     const parentSections = sections?.filter(s => s.parent_section === null);
 
@@ -94,7 +104,7 @@ const ApplicationSection = ({
         userAnswers?.map(a => [a.question_id, a.answer])
     );
 
-    const { control, handleSubmit, getValues, watch, formState } =
+    const { control, handleSubmit, getValues, watch, formState, setValue } =
         useForm<DarApplicationResponses>({
             defaultValues: {
                 ...defaultValues,
@@ -182,7 +192,7 @@ const ApplicationSection = ({
                 a =>
                     !isEmpty(a.answer) &&
                     !excludedQuestionFields.includes(a.question_id) &&
-                    visibleQuestionIds.includes(a.question_id)
+                    visibleQuestionIds?.includes(a.question_id)
             );
 
         const saveResponse = await updateAnswers("", {
@@ -220,6 +230,10 @@ const ApplicationSection = ({
         </>
     );
 
+    const params = useParams<{
+        applicationId: string;
+    }>();
+
     const renderFormFields = () =>
         filteredData
             ?.filter(field => getParentSection(field.section_id) === sectionId)
@@ -230,6 +244,22 @@ const ApplicationSection = ({
                 if (!processedSections.has(field.section_id)) {
                     processedSections.add(field.section_id);
                     sectionHeader = renderSectionHeader(field);
+                }
+
+                let fileUploadFields: FileUploadFields | undefined;
+
+                if (
+                    field.component === inputComponents.FileUpload ||
+                    field.component === inputComponents.FileUploadMultiple
+                ) {
+                    fileUploadFields = createFileUploadConfig(
+                        field.question_id.toString(),
+                        field.component,
+                        params!.applicationId,
+                        setValue,
+                        getValues,
+                        removeUploadedFile
+                    );
                 }
 
                 return (
@@ -248,7 +278,8 @@ const ApplicationSection = ({
                                 field,
                                 control,
                                 field.question_id.toString(),
-                                updateGuidanceText
+                                updateGuidanceText,
+                                fileUploadFields
                             )}
                         </Box>
 

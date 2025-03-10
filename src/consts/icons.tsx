@@ -28,6 +28,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import DescriptionIcon from "@mui/icons-material/Description";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
@@ -54,6 +55,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -70,6 +72,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ViewListIcon from "@mui/icons-material/ViewList";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import WarningIcon from "@mui/icons-material/Warning";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
@@ -117,6 +120,7 @@ export {
     ExpandMoreIcon,
     AddIcon,
     DeleteForeverIcon,
+    DeleteForeverOutlinedIcon,
     CheckBoxOutlineBlankSharpIcon,
     CheckBoxSharpIcon,
     IndeterminateCheckBoxSharpIcon,
@@ -150,4 +154,6 @@ export {
     PersonOutlineOutlinedIcon,
     ControlPointIcon,
     AccessTimeIcon,
+    QueryBuilderOutlinedIcon,
+    VisibilityOutlinedIcon,
 };

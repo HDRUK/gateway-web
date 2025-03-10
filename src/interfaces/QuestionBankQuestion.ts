@@ -43,8 +43,8 @@ interface NestedOption {
 
 interface QuestionBankCreateUpdateQuestion {
     required: boolean;
-    allow_guidance_override: number;
-    force_required: number;
+    allow_guidance_override: boolean;
+    force_required: boolean;
     team_ids?: number[];
     user_id?: number;
     section_id: number;

@@ -1,8 +1,18 @@
+import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import {
     DarApplicationQuestion,
+    DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
+import {
+    FileUploadFields,
+    UploadedFileMetadata,
+} from "@/interfaces/FileUpload";
+import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
+
+const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 
 const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
@@ -54,4 +64,61 @@ const formatDarQuestion = (
     }),
 });
 
-export { getVisibleQuestionIds, mapKeysToValues, formatDarQuestion };
+const createFileUploadConfig = (
+    questionId: string,
+    component: ComponentTypes,
+    applicationId: string,
+    setValue: UseFormSetValue<DarApplicationResponses>,
+    getValues: UseFormGetValues<DarApplicationResponses>,
+    removeUploadedFile: (id: number | string) => Promise<unknown>
+): FileUploadFields => {
+    return {
+        apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
+        onFileUploaded: async response => {
+            const newFile = { filename: response.filename, id: response.id };
+
+            if (component === inputComponents.FileUpload) {
+                setValue(
+                    questionId,
+                    { value: newFile },
+                    { shouldValidate: true }
+                );
+            } else {
+                const prev = getValues(questionId);
+                const prevValue =
+                    prev && typeof prev === "object"
+                        ? Array.isArray(prev.value)
+                            ? prev.value
+                            : [prev.value]
+                        : [];
+
+                setValue(
+                    questionId,
+                    { value: [...prevValue, newFile] },
+                    { shouldValidate: true }
+                );
+            }
+        },
+        onFileRemove: async fileId => {
+            const prev = getValues(questionId);
+            const response = await removeUploadedFile(fileId);
+
+            if (response && prev && typeof prev === "object") {
+                const prevValue = prev.value as UploadedFileMetadata[];
+                setValue(
+                    questionId,
+                    { value: prevValue.filter(v => v.id !== fileId) },
+                    { shouldValidate: true }
+                );
+            }
+        },
+        allowReuploading: true,
+    };
+};
+
+export {
+    getVisibleQuestionIds,
+    mapKeysToValues,
+    formatDarQuestion,
+    createFileUploadConfig,
+};
