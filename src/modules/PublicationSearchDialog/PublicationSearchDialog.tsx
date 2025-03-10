@@ -204,7 +204,8 @@ const PublicationSearchDialog = ({
                 <Button
                     onClick={() => {
                         onSubmit(
-                            getValues("datasetNames") ||
+                            (getValues("datasetNames").length &&
+                                getValues("datasetNames")) ||
                                 getValues("search") ||
                                 "",
                             searchValue?.length ? "text" : "dataset",
