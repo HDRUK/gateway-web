@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import FormLegend from "@/components/FormLegend";
+import { MessagesIcon } from "@/consts/customIcons";
 
 interface Props {
     sectionId: number;
@@ -34,6 +35,7 @@ const Sections = ({ sections, sectionId, handleLegendClick }: Props) => {
                             ? LegendStatus.ACTIVE
                             : LegendStatus.UNTOUCHED,
                 })),
+                icon: s.name === "Messages" ? MessagesIcon : undefined,
             };
         };
         const data =
