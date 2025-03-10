@@ -135,13 +135,20 @@ const EditDataUse = () => {
         if (!existingDataUse) {
             return;
         }
-
+name
         const edited = {
             ...formData,
             ...(typeof formData?.funders_and_sponsors === "string"
                 ? {
                       funders_and_sponsors: (
                           formData.funders_and_sponsors as string
+                      ).split(","),
+                  }
+                : {}),
+            ...(typeof formData?.other_approval_committees === "string"
+                ? {
+                    other_approval_committees: (
+                          formData.other_approval_committees as string
                       ).split(","),
                   }
                 : {}),
