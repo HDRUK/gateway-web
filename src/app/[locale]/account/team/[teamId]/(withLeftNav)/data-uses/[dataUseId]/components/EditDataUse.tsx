@@ -146,7 +146,7 @@ const EditDataUse = () => {
                 : {}),
             ...(typeof formData?.other_approval_committees === "string"
                 ? {
-                    other_approval_committees: (
+                      other_approval_committees: (
                           formData.other_approval_committees as string
                       ).split(","),
                   }
