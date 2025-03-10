@@ -135,7 +135,6 @@ const EditDataUse = () => {
         if (!existingDataUse) {
             return;
         }
-name
         const edited = {
             ...formData,
             ...(typeof formData?.funders_and_sponsors === "string"
