@@ -14,6 +14,7 @@ export interface FormHydrationField {
     placeholder?: string | null;
     showClearButton?: boolean;
     info?: string | null;
+    disabled?: boolean;
 }
 
 export interface FormHydrationItems {

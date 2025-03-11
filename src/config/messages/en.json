@@ -716,7 +716,8 @@
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
                             "next": "Next",
-                            "missingRequiredFields": "Please check all required fields have been completed"
+                            "missingRequiredFields": "Please check all required fields have been completed",
+                            "manage": "Manage application status"
                         }
                     },
                     "template": {
@@ -1596,6 +1597,17 @@
                 },
                 "cancel": "Cancel",
                 "search": "Search"
+            },
+            "DarManageDialog": {
+                "darRequest": "Data Access Request",
+                "draftDesc": "Change status to DRAFT",
+                "draftButtonText": "Draft",
+                "approvedDesc": "Change status to APPROVED",
+                "approvedButtonText": "Approve",
+                "rejectedDesc": "Change status to REJECTED",
+                "rejectedButtonText": "Reject",
+                "changeStatus": "Change Application Status",
+                "intro": "Use the options below to log your decision about this application."
             }
         }
     },

@@ -144,7 +144,7 @@ export default function DarApplicationCard({
         teamId
             ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
                   RouteName.DATA_ACCESS_REQUESTS
-              }/${RouteName.APPLICATION}/${id}?teamId=${
+              }/${RouteName.APPLICATIONS}/${id}?teamId=${
                   teamId || application.teams[teamIndex || 0].team_id
               }`
             : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${
