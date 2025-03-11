@@ -125,7 +125,8 @@ const DarManageDialog = ({
                                     backgroundColor: colors.grey100,
                                     p: 4,
                                     pb: 2,
-                                }}>
+                                }}
+                                key={section.name}>
                                 <Typography
                                     fontSize={20}
                                     color={colors.purple700}

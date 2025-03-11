@@ -52,7 +52,10 @@ const DarFormBanner = ({
                 )}
 
                 {buttonAction && buttonText && (
-                    <Button onClick={buttonAction} size="small">
+                    <Button
+                        onClick={buttonAction}
+                        size="small"
+                        color="greyCustom">
                         {t(buttonText)}
                     </Button>
                 )}
