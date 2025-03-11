@@ -717,7 +717,8 @@
                             "previous": "Previous",
                             "next": "Next",
                             "missingRequiredFields": "Please check all required fields have been completed",
-                            "manage": "Manage application status"
+                            "manage": "Manage application status",
+                            "submittedOn": "Application submitted on {date}"
                         }
                     },
                     "template": {

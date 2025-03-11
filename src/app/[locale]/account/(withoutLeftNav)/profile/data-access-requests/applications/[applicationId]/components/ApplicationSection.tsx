@@ -42,6 +42,7 @@ import {
     darApplicationValidationSchema,
     excludedQuestionFields,
     generateYupSchema,
+    LAST_SAVED_DATE_FORMAT,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
 import theme, { colors } from "@/config/theme";
@@ -57,6 +58,7 @@ import {
     getVisibleQuestionIds,
     mapKeysToValues,
 } from "@/utils/dataAccessRequest";
+import { formatDate } from "@/utils/date";
 import {
     isFirstSection,
     renderFormHydrationField,
@@ -611,26 +613,39 @@ const ApplicationSection = ({
                                 })}
                             </Typography>
                         ) : (
-                            teamApplication?.approval_status && (
-                                <Chip
-                                    label={commonT(
-                                        teamApplication.approval_status.toLowerCase()
-                                    )}
-                                    color={
-                                        teamApplication.approval_status ===
-                                        DarApplicationApprovalStatus.REJECTED
-                                            ? "error"
-                                            : [
-                                                  DarApplicationApprovalStatus.APPROVED,
-                                                  DarApplicationApprovalStatus.APPROVED_COMMENTS,
-                                              ].includes(
-                                                  teamApplication.approval_status
-                                              )
-                                            ? "success"
-                                            : "warningCustom"
-                                    }
-                                />
-                            )
+                            <>
+                                {teamApplication?.approval_status && (
+                                    <Chip
+                                        label={commonT(
+                                            teamApplication.approval_status.toLowerCase()
+                                        )}
+                                        sx={{ mr: 1 }}
+                                        color={
+                                            teamApplication.approval_status ===
+                                            DarApplicationApprovalStatus.REJECTED
+                                                ? "error"
+                                                : [
+                                                      DarApplicationApprovalStatus.APPROVED,
+                                                      DarApplicationApprovalStatus.APPROVED_COMMENTS,
+                                                  ].includes(
+                                                      teamApplication.approval_status
+                                                  )
+                                                ? "success"
+                                                : "warningCustom"
+                                        }
+                                    />
+                                )}
+                                {teamApplication?.submission_date && (
+                                    <Typography>
+                                        {t("submittedOn", {
+                                            date: formatDate(
+                                                teamApplication.submission_date,
+                                                LAST_SAVED_DATE_FORMAT
+                                            ),
+                                        })}
+                                    </Typography>
+                                )}
+                            </>
                         )}
                     </Box>
                     <Box
