@@ -71,24 +71,27 @@ export default function DarApplicationCard({
     const cardContent = useMemo(
         () => [
             {
-                ...(application.primary_applicant?.name && {
-                    text: t("primaryInvestigator"),
-                    content: (
-                        <Typography>
-                            {application.primary_applicant?.name}
-                        </Typography>
-                    ),
-                }),
+                ...(application.primary_applicant?.name &&
+                    typeof application.primary_applicant?.name === "string" && {
+                        text: t("primaryInvestigator"),
+                        content: (
+                            <Typography>
+                                {application.primary_applicant?.name}
+                            </Typography>
+                        ),
+                    }),
             },
             {
-                ...(application.primary_applicant?.organisation && {
-                    text: t("organisation"),
-                    content: (
-                        <Typography>
-                            {application.primary_applicant?.organisation}
-                        </Typography>
-                    ),
-                }),
+                ...(application.primary_applicant?.organisation &&
+                    typeof application.primary_applicant?.organisation ===
+                        "string" && {
+                        text: t("organisation"),
+                        content: (
+                            <Typography>
+                                {application.primary_applicant?.organisation}
+                            </Typography>
+                        ),
+                    }),
             },
             {
                 text: t("datasets"),
