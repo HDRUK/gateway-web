@@ -99,7 +99,7 @@ const EditIntegrationForm = () => {
         };
 
         const federationFields = pick(
-            getValues(),
+            formData,
             watchFederationKeys
         ) as unknown as Federation;
 
