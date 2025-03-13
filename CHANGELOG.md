@@ -1,3 +1,9 @@
+## [2.4.1](https://github.com/HDRUK/gateway-web-2/compare/v2.4.0...v2.4.1) (2025-03-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-6522:** Fix issue where empty dataset array was being passed (#1038) ([798cce4](https://github.com/HDRUK/gateway-web-2/commit/798cce480a26aa28d4330b614e3ba77b8e3ac2bf))
+
 ## [2.4.0](https://github.com/HDRUK/gateway-web-2/compare/v2.3.1...v2.4.0) (2025-03-10)
 
 ### ✨ Features
