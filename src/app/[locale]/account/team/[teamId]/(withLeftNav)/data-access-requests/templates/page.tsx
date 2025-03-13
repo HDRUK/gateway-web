@@ -31,7 +31,7 @@ const DarTemplatePage = () => {
         };
         createNewTemplate(payload).then(res => {
             const templateId = res;
-            const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}/${RouteName.EDIT}`;
+            const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}`;
             router.push(redirectUrl);
         });
     };
@@ -55,7 +55,11 @@ const DarTemplatePage = () => {
                 />
                 <ImageMediaCard
                     img=""
-                    href="/to-be-implemented"
+                    onClick={() =>
+                        router.push(
+                            `${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`
+                        )
+                    }
                     description={t("manage.description")}
                     buttonText={t("manage.label")}
                 />
