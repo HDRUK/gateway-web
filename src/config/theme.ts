@@ -270,7 +270,8 @@ const theme = createTheme({
                     props: { color: "greyCustom" },
                     style: {
                         color: colors.grey800,
-                        borderColor: palette.greyCustom.main,
+                        borderColor: palette.greyCustom.light,
+                        background: palette.greyCustom.light,
                         "&:active": {
                             background: palette.greyCustom.main,
                         },
@@ -643,7 +644,7 @@ const theme = createTheme({
                 {
                     props: { color: "warningCustom" },
                     style: {
-                        background: colors.amber500,
+                        background: colors.orange300,
                     },
                 },
             ],

@@ -716,7 +716,9 @@
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
                             "next": "Next",
-                            "missingRequiredFields": "Please check all required fields have been completed"
+                            "missingRequiredFields": "Please check all required fields have been completed",
+                            "manage": "Manage application status",
+                            "submittedOn": "Application submitted on {date}"
                         }
                     },
                     "template": {
@@ -1597,6 +1599,20 @@
                 },
                 "cancel": "Cancel",
                 "search": "Search"
+            },
+            "DarManageDialog": {
+                "darRequest": "Data Access Request",
+                "draftDesc": "Change status to DRAFT",
+                "draftInfo": "Provide clear guidance to the applicant for the changes required before the applicant re-submits the DAR application for reviews. Changing the status to DRAFT allows the applicant to edit the content of the application form.",
+                "draftButtonText": "Draft",
+                "approvedDesc": "Change status to APPROVED",
+                "approvedInfo": "Any comments or conditions of approval.",
+                "approvedButtonText": "Approve",
+                "rejectedDesc": "Change status to REJECTED",
+                "rejectedInfo": "Any comments or notes regarding the rejection.",
+                "rejectedButtonText": "Reject",
+                "changeStatus": "Change Application Status",
+                "intro": "Use the options below to log your decision about this application."
             }
         }
     },
