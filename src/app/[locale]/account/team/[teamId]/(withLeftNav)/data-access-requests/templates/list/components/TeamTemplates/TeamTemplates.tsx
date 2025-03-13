@@ -60,10 +60,18 @@ const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
             };
         });
 
-        const test = { ...selectedTemplate, questions: formattedQuestions };
+        const duplicatedTemplate = {
+            ...selectedTemplate,
+            questions: formattedQuestions,
+        };
 
         await createTemplate({
-            ...omit(test, ["id", "updated_at", "created_at", "deleted_at"]),
+            ...omit(duplicatedTemplate, [
+                "id",
+                "updated_at",
+                "created_at",
+                "deleted_at",
+            ]),
         }).then(res =>
             push(
                 `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${res}`
