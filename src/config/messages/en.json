@@ -733,7 +733,8 @@
                         },
                         "edit": {
                             "title": "Edit a template",
-                            "save": "Save Changes",
+                            "save": "Make active",
+                            "saveDraft": "Save as draft",
                             "selectedQuestions": {
                                 "title": "Selected Questions",
                                 "description": "Currently selected questions for your DAR template."
