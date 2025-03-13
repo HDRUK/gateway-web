@@ -16,8 +16,19 @@ describe("ResultCard", () => {
                     highlight: mockHighlight,
                     metadata: mockResult,
                     _id: "1",
+                    team: {
+                        id: 1,
+                        member_of: "",
+                        name: "",
+                        is_question_bank: false,
+                        is_dar: false,
+                        dar_modal_header: null,
+                        dar_modal_content: null,
+                        dar_modal_footer: null,
+                    },
                 }}
                 libraryData={[]}
+                mutateLibraries={jest.fn()}
             />
         );
 
@@ -27,7 +38,9 @@ describe("ResultCard", () => {
             "YYYY"
         )}-${formatDate(mockResult.provenance.temporal.endDate || "", "YYYY")}`;
 
-        expect(screen.getByText(mockHighlight.abstract[0])).toBeInTheDocument();
+        expect(
+            screen.getByText(mockHighlight.abstract![0])
+        ).toBeInTheDocument();
         expect(
             screen.getByText(mockResult.summary.publisher.publisherName)
         ).toBeInTheDocument();
