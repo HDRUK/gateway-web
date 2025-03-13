@@ -18,12 +18,11 @@ import TemplateList from "../TemplateList";
 
 interface TeamTemplatesProps {
     permissions?: { [key: string]: boolean };
-    teamId?: string;
 }
 
 const TRANSLATION_PATH = `pages.account.team.dar.template.list`;
 
-const TeamTemplates = ({ permissions, teamId }: TeamTemplatesProps) => {
+const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { push } = useRouter();
     const params = useParams<{ teamId: string }>();
@@ -112,7 +111,6 @@ const TeamTemplates = ({ permissions, teamId }: TeamTemplatesProps) => {
 
             <TemplateList
                 {...data}
-                key={"active"}
                 list={data?.list}
                 currentPage={parseInt(queryParams.page, 10)}
                 setCurrentPage={page =>

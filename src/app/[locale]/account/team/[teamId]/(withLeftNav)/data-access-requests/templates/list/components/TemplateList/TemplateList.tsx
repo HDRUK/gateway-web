@@ -58,8 +58,8 @@ const TemplateList = ({
             {isLoading && <Loading />}
 
             {!isLoading &&
-                (list || []).map((template, index) => (
-                    <Paper sx={{ mb: 2 }}>
+                (list || []).map(template => (
+                    <Paper sx={{ mb: 2 }} key={template.id}>
                         <Box
                             sx={{
                                 display: "grid",
