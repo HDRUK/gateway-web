@@ -64,6 +64,8 @@ export default function DarDashboard({
 }: DarDashboardProps) {
     const t = useTranslations(translationPath);
     const params = useParams<{ teamId: string }>();
+    const isResearcher = !params?.teamId;
+
     const searchParams = useSearchParams();
 
     const { control, watch, setValue } = useForm({
@@ -214,6 +216,14 @@ export default function DarDashboard({
 
     const tabList = [
         { label: `All (${submissionCounts?.SUBMITTED ?? 0})`, value: "" },
+        isResearcher
+            ? {
+                  label: `${capitalise(DarApplicationStatus.DRAFT)} (${
+                      submissionCounts?.DRAFT || 0
+                  })`,
+                  value: DarApplicationStatus.DRAFT,
+              }
+            : {},
         {
             label: `${capitalise(DarApplicationStatus.SUBMITTED)} (${
                 submissionCounts?.SUBMITTED || 0
@@ -242,65 +252,74 @@ export default function DarDashboard({
             })`,
             value: DarApplicationApprovalStatus.WITHDRAWN,
         },
-    ].map(tab => ({
-        label: `${tab.label}`,
-        value: tab.value,
-        content: isLoading ? (
-            <Loading />
-        ) : (
-            <>
-                {statusParam === DarApplicationApprovalStatus.FEEDBACK && (
-                    <Tabs
-                        tabs={approvalTab}
-                        tabBoxSx={{
-                            padding: 0,
-                            background: colors.white,
-                        }}
-                        rootBoxSx={{
-                            padding: 0,
-                            borderTop: `1px solid ${colors.grey200}`,
-                            mb: 1,
-                        }}
-                        paramName="action"
-                        tabVariant="scrollable"
-                    />
-                )}
+    ]
+        .filter(tab => tab.label)
+        .map(tab => ({
+            label: `${tab.label}`,
+            value: tab.value,
+            content: isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    {statusParam === DarApplicationApprovalStatus.FEEDBACK && (
+                        <Tabs
+                            tabs={approvalTab}
+                            tabBoxSx={{
+                                padding: 0,
+                                background: colors.white,
+                            }}
+                            rootBoxSx={{
+                                padding: 0,
+                                borderTop: `1px solid ${colors.grey200}`,
+                                mb: 1,
+                            }}
+                            paramName="action"
+                            tabVariant="scrollable"
+                        />
+                    )}
 
-                <Box sx={{ display: "flex", p: 0, justifyContent: "flex-end" }}>
-                    <InputWrapper
-                        control={control}
-                        {...darDashboardSortField}
-                    />
-                </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            p: 0,
+                            justifyContent: "flex-end",
+                        }}>
+                        <InputWrapper
+                            control={control}
+                            {...darDashboardSortField}
+                        />
+                    </Box>
 
-                {data?.list?.map(item => {
-                    const isTeamApplication =
-                        !params?.teamId && item.teams.length > 1;
+                    {data?.list?.map(item => {
+                        const isTeamApplication =
+                            !params?.teamId && item.teams.length > 1;
 
-                    if (isTeamApplication) {
+                        if (isTeamApplication) {
+                            return (
+                                <DarApplicationGroup
+                                    item={item}
+                                    key={item.id}
+                                    deleteApplication={handleDeleteApplication}
+                                    withdrawApplication={
+                                        handleWithdrawApplication
+                                    }
+                                />
+                            );
+                        }
+
                         return (
-                            <DarApplicationGroup
-                                item={item}
+                            <DarApplicationCard
+                                application={item}
                                 key={item.id}
+                                teamId={params?.teamId}
                                 deleteApplication={handleDeleteApplication}
                                 withdrawApplication={handleWithdrawApplication}
                             />
                         );
-                    }
-
-                    return (
-                        <DarApplicationCard
-                            application={item}
-                            key={item.id}
-                            teamId={params?.teamId}
-                            deleteApplication={handleDeleteApplication}
-                            withdrawApplication={handleWithdrawApplication}
-                        />
-                    );
-                })}
-            </>
-        ),
-    }));
+                    })}
+                </>
+            ),
+        }));
 
     return (
         <>
