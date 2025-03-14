@@ -584,7 +584,7 @@ const EyeIcon = createSvgIcon(
     "EyeIcon"
 );
 
-const EditIcon = createSvgIcon(
+const DarEditIcon = createSvgIcon(
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -598,7 +598,7 @@ const EditIcon = createSvgIcon(
             fill="currentColor"
         />
     </svg>,
-    "EditIcon"
+    "DarEditIcon"
 );
 
 export {
@@ -629,5 +629,5 @@ export {
     WithdrawIcon,
     DeleteIcon,
     EyeIcon,
-    EditIcon,
+    DarEditIcon,
 };

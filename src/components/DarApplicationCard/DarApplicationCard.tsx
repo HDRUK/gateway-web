@@ -17,7 +17,7 @@ import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
-import { EditIcon } from "@/consts/customIcons";
+import { DarEditIcon } from "@/consts/customIcons";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
@@ -180,7 +180,7 @@ export default function DarApplicationCard({
                       action: (id: number) => {
                           push(actionButtonHref(id));
                       },
-                      icon: EditIcon,
+                      icon: DarEditIcon,
                       label: t("editApplication"),
                   },
               ]
