@@ -313,6 +313,9 @@ const theme = createTheme({
                     "&:hover": {
                         borderWidth: 2,
                     },
+                    "&.Mui-disabled": {
+                        borderWidth: 2,
+                    },
                     borderWidth: 2,
                     textTransform: "none",
                     borderColor:
@@ -325,6 +328,9 @@ const theme = createTheme({
                     return {
                         color: colors.grey800,
                         borderWidth: 2,
+                        "&.Mui-disabled": {
+                            borderWidth: 2,
+                        },
                         "&:hover": {
                             color: colors.white,
                             background:

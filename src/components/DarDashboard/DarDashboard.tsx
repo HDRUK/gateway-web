@@ -16,7 +16,9 @@ import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
+import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
 import {
     darDashboardDefaultValues,
     darDashboardSearchFilter,
@@ -160,12 +162,33 @@ export default function DarDashboard({
         `${darApiPath}/count/action_required`
     );
 
-    const { data, isLoading } = useGet<
-        PaginationType<DataAccessRequestApplication>
-    >(`${darApiPath}?${new URLSearchParams(queryParams)}`, {
-        keepPreviousData: true,
-        withPagination: true,
+    const {
+        data,
+        isLoading,
+        mutate: mutateApplications,
+    } = useGet<PaginationType<DataAccessRequestApplication>>(
+        `${darApiPath}?${new URLSearchParams(queryParams)}`,
+        {
+            keepPreviousData: true,
+            withPagination: true,
+        }
+    );
+
+    const deleteApplication = useDelete(darApiPath, {
+        itemName: t("dataAccessRequests"),
     });
+
+    const updateApplication = usePatch(darApiPath, {
+        itemName: t("dataAccessRequests"),
+    });
+
+    const handleDeleteApplication = (id: number) =>
+        deleteApplication(id).then(() => mutateApplications());
+
+    const handleWithdrawApplication = (id: number) =>
+        updateApplication(id, {
+            approval_status: DarApplicationApprovalStatus.WITHDRAWN,
+        }).then(() => mutateApplications());
 
     const approvalTab = [
         {
@@ -255,7 +278,14 @@ export default function DarDashboard({
                         !params?.teamId && item.teams.length > 1;
 
                     if (isTeamApplication) {
-                        return <DarApplicationGroup item={item} />;
+                        return (
+                            <DarApplicationGroup
+                                item={item}
+                                key={item.id}
+                                deleteApplication={handleDeleteApplication}
+                                withdrawApplication={handleWithdrawApplication}
+                            />
+                        );
                     }
 
                     return (
@@ -263,6 +293,8 @@ export default function DarDashboard({
                             application={item}
                             key={item.id}
                             teamId={params?.teamId}
+                            deleteApplication={handleDeleteApplication}
+                            withdrawApplication={handleWithdrawApplication}
                         />
                     );
                 })}
