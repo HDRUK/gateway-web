@@ -295,13 +295,23 @@ export default function DarDashboard({
                             !params?.teamId && item.teams.length > 1;
 
                         if (isTeamApplication) {
-                            return <DarApplicationGroup item={item} />;
+                            return (
+                                <DarApplicationGroup
+                                    item={item}
+                                    deleteApplication={handleDeleteApplication}
+                                    withdrawApplication={
+                                        handleWithdrawApplication
+                                    }
+                                />
+                            );
                         }
 
                         return (
                             <DarApplicationCard
                                 application={item}
                                 key={item.id}
+                                deleteApplication={handleDeleteApplication}
+                                withdrawApplication={handleWithdrawApplication}
                                 teamId={params?.teamId}
                             />
                         );
