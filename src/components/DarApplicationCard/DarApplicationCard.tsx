@@ -2,7 +2,7 @@
 
 import { Fragment, useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -13,17 +13,20 @@ import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
+import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
+import { EditIcon } from "@/consts/customIcons";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import {
-    EditIcon,
     QueryBuilderOutlinedIcon,
-    VisibilityOutlinedIcon,
+    WithdrawIcon,
+    DeleteIcon,
+    EyeIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
@@ -36,17 +39,23 @@ interface DarApplicationCardProps {
     application: DataAccessRequestApplication;
     teamId?: string;
     teamIndex?: number;
+    deleteApplication: (id: number) => void;
+    withdrawApplication: (id: number) => void;
 }
 
 export default function DarApplicationCard({
     application,
     teamId,
     teamIndex,
+    deleteApplication,
+    withdrawApplication,
 }: DarApplicationCardProps) {
     const t = useTranslations(TRANSLATION_PATH);
-
+    const params = useParams<{ teamId: string }>();
     const { push } = useRouter();
     const { showDialog } = useDialog();
+
+    const isResearcher = !params?.teamId;
 
     const submissionStatus = useMemo(
         () =>
@@ -156,10 +165,16 @@ export default function DarApplicationCard({
                   teamId || application.teams[teamIndex || 0].team_id
               }`;
 
+    const canEdit = isResearcher
+        ? submissionStatus === DarApplicationStatus.DRAFT ||
+          (submissionStatus === DarApplicationStatus.SUBMITTED &&
+              !approvalStatus)
+        : submissionStatus === DarApplicationStatus.SUBMITTED &&
+          (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
+              !approvalStatus);
+
     const actions = [
-        ...(submissionStatus === DarApplicationStatus.SUBMITTED &&
-        (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
-            !approvalStatus)
+        ...(canEdit
             ? [
                   {
                       action: (id: number) => {
@@ -174,10 +189,39 @@ export default function DarApplicationCard({
                       action: (id: number) => {
                           push(actionButtonHref(id));
                       },
-                      icon: VisibilityOutlinedIcon,
+                      icon: EyeIcon,
                       label: t("viewApplication"),
                   },
               ]),
+        ...(isResearcher && submissionStatus === DarApplicationStatus.DRAFT
+            ? [
+                  {
+                      action: (id: number) =>
+                          showDialog(DarApplicationActionDialog, {
+                              action: () => deleteApplication(id),
+                              title: t("deleteTitle"),
+                              intro: t("deleteIntro"),
+                          }),
+                      icon: DeleteIcon,
+                      label: t("deleteApplication"),
+                  },
+              ]
+            : []),
+        ...(isResearcher &&
+        approvalStatus === DarApplicationApprovalStatus.FEEDBACK
+            ? [
+                  {
+                      action: (id: number) =>
+                          showDialog(DarApplicationActionDialog, {
+                              action: () => withdrawApplication(id),
+                              title: t("withdrawTitle"),
+                              intro: t("withdrawIntro"),
+                          }),
+                      icon: WithdrawIcon,
+                      label: t("withdrawApplication"),
+                  },
+              ]
+            : []),
     ];
 
     return (
@@ -280,6 +324,8 @@ export default function DarApplicationCard({
                         sx={{
                             p: 0,
                             borderLeft: `solid 1px ${colors.grey600}`,
+                            display: "flex",
+                            flexDirection: "column",
                         }}>
                         <CardActions actions={actions} id={+application.id} />
                     </Box>

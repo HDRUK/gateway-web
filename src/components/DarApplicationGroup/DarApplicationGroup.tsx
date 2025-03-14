@@ -17,10 +17,14 @@ const TRANSLATION_PATH =
 
 interface DarApplicationGroupProps {
     item: DataAccessRequestApplication;
+    deleteApplication: (id: number) => void;
+    withdrawApplication: (id: number) => void;
 }
 
 export default function DarApplicationGroup({
     item,
+    deleteApplication,
+    withdrawApplication,
 }: DarApplicationGroupProps) {
     const t = useTranslations(TRANSLATION_PATH);
     const [expanded, setExpanded] = useState<string[]>([]);
@@ -74,6 +78,8 @@ export default function DarApplicationGroup({
                             application={item}
                             key={`${team.id}_${item.appliciation_id}`}
                             teamIndex={index}
+                            deleteApplication={deleteApplication}
+                            withdrawApplication={withdrawApplication}
                         />
                     ))}
                     onChange={() =>
