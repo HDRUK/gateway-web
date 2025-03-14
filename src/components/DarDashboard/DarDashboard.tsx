@@ -298,6 +298,7 @@ export default function DarDashboard({
                             return (
                                 <DarApplicationGroup
                                     item={item}
+                                    key={item.id}
                                     deleteApplication={handleDeleteApplication}
                                     withdrawApplication={
                                         handleWithdrawApplication
@@ -310,9 +311,9 @@ export default function DarDashboard({
                             <DarApplicationCard
                                 application={item}
                                 key={item.id}
+                                teamId={params?.teamId}
                                 deleteApplication={handleDeleteApplication}
                                 withdrawApplication={handleWithdrawApplication}
-                                teamId={params?.teamId}
                             />
                         );
                     })}
