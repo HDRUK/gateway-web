@@ -29,7 +29,7 @@ const DarApplicationActionDialog = ({
     const [confirmed, setConfirmed] = useState<boolean>();
 
     const handleAction = () => {
-        action && action();
+        action();
         hideDialog();
     };
 
