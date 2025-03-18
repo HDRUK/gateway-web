@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { PaginationType } from "@/interfaces/Pagination";
+import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
@@ -102,6 +103,7 @@ const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
 
     return (
         <>
+            <BackButton label={t("back")} />
             <Paper>
                 <Box
                     sx={{

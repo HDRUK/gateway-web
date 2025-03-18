@@ -753,6 +753,7 @@
                             "published": "Published",
                             "lastActivity": "Last activity",
                             "numberOfQuestions": "Number of questions",
+                            "back": "Back to DAR template management",
                             "actions": {
                                 "edit": {
                                     "label": "Edit template"

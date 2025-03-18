@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -31,7 +30,6 @@ export default async function DARTemplateListPage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["data-access-template.update"]}>
-            <BackButton label="Back to DAR template management" />
             <TeamTemplates permissions={permissions} />
         </ProtectedAccountRoute>
     );
