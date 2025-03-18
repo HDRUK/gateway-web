@@ -19,6 +19,7 @@ import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import Chip from "@/components/Chip";
 import DarMessages from "@/components/DarMessages";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
@@ -27,9 +28,12 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
+import DarManageDialog from "@/modules/DarManageDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
@@ -38,6 +42,7 @@ import {
     darApplicationValidationSchema,
     excludedQuestionFields,
     generateYupSchema,
+    LAST_SAVED_DATE_FORMAT,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
 import theme, { colors } from "@/config/theme";
@@ -53,6 +58,7 @@ import {
     getVisibleQuestionIds,
     mapKeysToValues,
 } from "@/utils/dataAccessRequest";
+import { formatDate } from "@/utils/date";
 import {
     isFirstSection,
     renderFormHydrationField,
@@ -77,9 +83,24 @@ const ApplicationSection = ({
     sections,
 }: ApplicationSectionProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { user } = useAuth();
+    const commonT = useTranslations("common.dar.status");
 
-    const darApplicationEndpoint = `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`;
+    const { user } = useAuth();
+    const { showDialog } = useDialog();
+
+    const searchParams = useSearchParams();
+    const teamId = searchParams?.get("teamId");
+
+    const params = useParams<{
+        applicationId: string;
+        teamId?: string;
+    }>();
+
+    const isResearcher = !params?.teamId;
+
+    const darApplicationEndpoint = isResearcher
+        ? `${apis.usersV1Url}/${user?.id}/dar/applications`
+        : `${apis.teamsV1Url}/${params?.teamId}/dar/applications`;
 
     const [selectedField, setSelectedField] = useState<string>();
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
@@ -90,13 +111,21 @@ const ApplicationSection = ({
         setSectionId(sectionId);
     };
 
+    const updateApplication = usePatch(darApplicationEndpoint, {
+        itemName: "Data Access Request",
+        successNotificationsOn: false,
+    });
+
     const updateAnswers = usePut(darApplicationEndpoint, {
         itemName: "Data Access Request",
     });
 
-    const removeUploadedFile = useDelete(`${darApplicationEndpoint}/files`, {
-        itemName: "File",
-    });
+    const removeUploadedFile = useDelete(
+        `${darApplicationEndpoint}/${applicationId}/files`,
+        {
+            itemName: "File",
+        }
+    );
 
     const getSection = (id: number) => sections?.find(s => s.id === id);
     const getParentSection = (id: number) => getSection(id)?.parent_section;
@@ -201,7 +230,7 @@ const ApplicationSection = ({
                     visibleQuestionIds?.includes(a.question_id)
             );
 
-        const saveResponse = await updateAnswers("", {
+        const saveResponse = await updateAnswers(applicationId, {
             ...applicationData,
             answers,
         });
@@ -219,6 +248,10 @@ const ApplicationSection = ({
         await saveApplication();
     };
 
+    const handleManageApplication = () => {
+        showDialog(DarManageDialog, { darApplicationEndpoint, applicationId });
+    };
+
     const processedSections = new Set();
 
     const renderSectionHeader = (field: DarFormattedField) => (
@@ -232,24 +265,12 @@ const ApplicationSection = ({
         </>
     );
 
-    const params = useParams<{
-        applicationId: string;
-        teamId?: string;
-    }>();
-
-    const searchParams = useSearchParams();
-    const teamId = searchParams?.get("teamId");
-
-    const isResearcher = !params?.teamId;
-
     const {
         data: reviews,
         mutate: mutateReviews,
         isLoading: loadingReviews,
     } = useGet<DarReviewsResponse[]>(
-        isResearcher
-            ? `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}/reviews`
-            : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/reviews`,
+        `${darApplicationEndpoint}/${applicationId}/reviews`,
         { keepPreviousData: true, errorNotificationsOn: false }
     );
 
@@ -307,7 +328,7 @@ const ApplicationSection = ({
                                         : "inherit",
                             }}>
                             {renderFormHydrationField(
-                                field,
+                                { ...field, disabled: !isResearcher },
                                 control,
                                 field.question_id.toString(),
                                 updateGuidanceText,
@@ -334,7 +355,10 @@ const ApplicationSection = ({
                                                             : "inherit",
                                                 }}>
                                                 {renderFormHydrationField(
-                                                    child,
+                                                    {
+                                                        ...child,
+                                                        disabled: !isResearcher,
+                                                    },
                                                     control,
                                                     child.question_id.toString(),
                                                     updateGuidanceText
@@ -379,28 +403,47 @@ const ApplicationSection = ({
         );
     }, [reviews]);
 
+    const teamApplication = useMemo(() => {
+        return data.teams.find(team => team.team_id.toString() === teamId);
+    }, [data, teamId]);
+
     // If applicant action required, jump to messages section
     useEffect(() => {
-        if (!data || actionRequiredApplicant === undefined) {
+        if (!teamApplication || actionRequiredApplicant === undefined) {
             return undefined;
         }
 
-        if (teamId) {
-            const teamApplication = data.teams.find(
-                team => team.team_id.toString() === teamId
-            );
-
-            if (
-                teamApplication?.approval_status ===
-                    DarApplicationApprovalStatus.FEEDBACK &&
-                actionRequiredApplicant
-            ) {
-                return setSectionId(messageSection.id);
-            }
+        if (
+            teamApplication?.approval_status ===
+                DarApplicationApprovalStatus.FEEDBACK &&
+            ((isResearcher && actionRequiredApplicant) ||
+                (!isResearcher && !actionRequiredApplicant))
+        ) {
+            return setSectionId(messageSection.id);
         }
 
         return setSectionId(0);
-    }, [data, teamId, actionRequiredApplicant]);
+    }, [teamApplication, actionRequiredApplicant]);
+
+    // If team and no approval status, set to feedback
+    useEffect(() => {
+        if (teamApplication && params?.teamId) {
+            if (!teamApplication?.approval_status) {
+                updateApplication(applicationId, {
+                    approval_status: DarApplicationApprovalStatus.FEEDBACK,
+                });
+            }
+        }
+    }, [teamApplication, teamId]);
+
+    // Set initial last saved date
+    useEffect(() => {
+        if (!teamApplication) {
+            return;
+        }
+
+        setLastSavedDate(new Date(teamApplication.updated_at));
+    }, [teamApplication]);
 
     if (sectionId === undefined) {
         return <Loading />;
@@ -412,7 +455,11 @@ const ApplicationSection = ({
                 mt: 1.75,
             }}>
             <Link
-                href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`}
+                href={
+                    isResearcher
+                        ? `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+                        : `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+                }
                 underline="hover"
                 sx={{
                     display: "flex",
@@ -428,7 +475,15 @@ const ApplicationSection = ({
             <DarFormBanner
                 lastSavedDate={lastSavedDate}
                 projectTitle={projectTitle}
-                handleSaveAsDraft={handleSaveAsDraft}
+                buttonText={isResearcher ? "save" : "manage"}
+                buttonAction={
+                    isResearcher
+                        ? handleSaveAsDraft
+                        : teamApplication?.approval_status ===
+                          DarApplicationApprovalStatus.FEEDBACK
+                        ? handleManageApplication
+                        : undefined
+                }
             />
 
             <Box
@@ -487,6 +542,7 @@ const ApplicationSection = ({
                                                 key={field.name}
                                                 control={control}
                                                 {...field}
+                                                disabled={!isResearcher}
                                             />
                                         </Box>
                                     ))}
@@ -550,11 +606,47 @@ const ApplicationSection = ({
                             p: 0,
                             alignItems: "center",
                         }}>
-                        <Typography>
-                            {t("questionsAnswered", {
-                                questionCount: completedQsCount,
-                            })}
-                        </Typography>
+                        {isResearcher ? (
+                            <Typography>
+                                {t("questionsAnswered", {
+                                    questionCount: completedQsCount,
+                                })}
+                            </Typography>
+                        ) : (
+                            <>
+                                {teamApplication?.approval_status && (
+                                    <Chip
+                                        label={commonT(
+                                            teamApplication.approval_status.toLowerCase()
+                                        )}
+                                        sx={{ mr: 1 }}
+                                        color={
+                                            teamApplication.approval_status ===
+                                            DarApplicationApprovalStatus.REJECTED
+                                                ? "error"
+                                                : [
+                                                      DarApplicationApprovalStatus.APPROVED,
+                                                      DarApplicationApprovalStatus.APPROVED_COMMENTS,
+                                                  ].includes(
+                                                      teamApplication.approval_status
+                                                  )
+                                                ? "success"
+                                                : "warningCustom"
+                                        }
+                                    />
+                                )}
+                                {teamApplication?.submission_date && (
+                                    <Typography>
+                                        {t("submittedOn", {
+                                            date: formatDate(
+                                                teamApplication.submission_date,
+                                                LAST_SAVED_DATE_FORMAT
+                                            ),
+                                        })}
+                                    </Typography>
+                                )}
+                            </>
+                        )}
                     </Box>
                     <Box
                         sx={{
@@ -575,13 +667,15 @@ const ApplicationSection = ({
                         )}
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
-                            <Button
-                                onClick={handleSubmit(handleSave)}
-                                type="submit"
-                                variant="outlined"
-                                color="secondary">
-                                {t("submit")}
-                            </Button>
+                            {isResearcher && (
+                                <Button
+                                    onClick={handleSubmit(handleSave)}
+                                    type="submit"
+                                    variant="outlined"
+                                    color="secondary">
+                                    {t("submit")}
+                                </Button>
+                            )}
 
                             <Button
                                 onClick={() =>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import {
     DarApplication,
     DarApplicationAnswer,
@@ -17,26 +18,34 @@ interface ApplicationProps {
 }
 
 const Application = ({ applicationId }: ApplicationProps) => {
+    const params = useParams<{
+        teamId: string;
+    }>();
+
     // note: this wont be needed when we setup JWT for DARAS
     const { user } = useAuth();
+
+    const isResearcher = !params?.teamId;
 
     const { data: sections } = useGet<QuestionBankSection[]>(
         `${apis.dataAccessSectionV1Url}`,
         { keepPreviousData: true }
     );
 
-    const darApplicationEndpoint = `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`;
+    const darApplicationEndpoint = isResearcher
+        ? `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`
+        : `${apis.teamsV1Url}/${params?.teamId}/dar/applications/${applicationId}`;
 
     const { data } = useGet<DarApplication>(darApplicationEndpoint, {
         itemName: "DAR Application",
-        shouldFetch: !!user?.id,
+        shouldFetch: !!user?.id || !!params?.teamId,
     });
 
     const { data: userAnswers } = useGet<DarApplicationAnswer[]>(
         user ? `${darApplicationEndpoint}/answers` : null,
         {
             itemName: "DAR Application",
-            shouldFetch: !!user?.id,
+            shouldFetch: !!user?.id || !!params?.teamId,
         }
     );
 

@@ -52,6 +52,7 @@ export interface UploadFileProps {
     name?: string;
     control: Control;
     allowMultipleFiles?: boolean;
+    disabled?: boolean;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -77,6 +78,7 @@ const UploadFile = ({
     name = "upload",
     control,
     allowMultipleFiles,
+    disabled = false,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -260,6 +262,7 @@ const UploadFile = ({
 
     return (
         <FormInputWrapper
+            disabled={disabled}
             formControlSx={sx}
             label={label}
             required={required}
@@ -269,6 +272,7 @@ const UploadFile = ({
                     <>
                         <Upload
                             inputRef={ref}
+                            disabled={disabled}
                             control={uploadFileControl}
                             label={fileSelectButtonText || t("upload")}
                             name="upload"

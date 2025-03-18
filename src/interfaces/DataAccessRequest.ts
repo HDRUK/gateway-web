@@ -90,6 +90,7 @@ interface DarApplication {
         submission_status: DarApplicationStatus;
         team_id: number;
         updated_at: string;
+        submission_date: string;
     }[];
 }
 

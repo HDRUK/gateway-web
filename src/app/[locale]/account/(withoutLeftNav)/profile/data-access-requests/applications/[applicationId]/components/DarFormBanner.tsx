@@ -15,13 +15,15 @@ const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 interface DarFormBannerProps {
     lastSavedDate?: Date;
     projectTitle?: string;
-    handleSaveAsDraft: () => void;
+    buttonText?: string;
+    buttonAction?: () => Promise<void> | void | undefined;
 }
 
 const DarFormBanner = ({
     lastSavedDate,
     projectTitle,
-    handleSaveAsDraft,
+    buttonText,
+    buttonAction,
 }: DarFormBannerProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -49,9 +51,14 @@ const DarFormBanner = ({
                     </>
                 )}
 
-                <Button onClick={handleSaveAsDraft} size="small">
-                    {t("save")}
-                </Button>
+                {buttonAction && buttonText && (
+                    <Button
+                        onClick={buttonAction}
+                        size="small"
+                        color="greyCustom">
+                        {t(buttonText)}
+                    </Button>
+                )}
             </Column>
         </DetailBanner>
     );
