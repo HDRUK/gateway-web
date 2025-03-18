@@ -19,8 +19,10 @@ import Typography from "@/components/Typography";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import useActionBar from "@/hooks/useActionBar";
 import useGet from "@/hooks/useGet";
+import useModal from "@/hooks/useModal";
 import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import {
     AppPermissionDefaultValues,
@@ -58,6 +60,7 @@ const ApplicationPermissions = ({
         apiId: string;
     }>();
     const t = useTranslations(TRANSLATION_PATH);
+    const { showModal } = useModal();
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
@@ -108,7 +111,7 @@ const ApplicationPermissions = ({
         {
             itemName: "Application",
             /* Custom api success message set within `api.json` */
-            localeKey: "applicationPermission",
+            localeKey: !isTabView ? "applicationPermission" : "",
         }
     );
 
@@ -178,7 +181,7 @@ const ApplicationPermissions = ({
                 ...application,
                 notifications: application?.notifications?.map(n => n.user_id),
                 permissions: permissionIds,
-                enabled: true,
+                enabled: !isTabView ? true : application?.enabled,
             };
 
             await updateApplication(`${application?.id}`, payload);
@@ -186,6 +189,12 @@ const ApplicationPermissions = ({
             /* When this component is part of tabs view reset the 'application' cache */
             if (isTabView) {
                 mutate(`${apis.applicationsV1Url}/${application?.id}`);
+
+                notificationService.apiWarning(t("warning"), {
+                    autoHideDuration: 5000,
+                    persist: false,
+                    title: "",
+                });
             }
 
             /* Only redirect when this component is part of the "Create" journey */
@@ -222,18 +231,25 @@ const ApplicationPermissions = ({
 
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
         if (formState.isDirty && !store.isVisible) {
-            showBar("PermissionChanges", {
-                component: ChangesActionBar,
-                cancelText: "Discard",
-                confirmText: "Save",
-                changeCount: 1,
-                onSuccess: () => {
-                    handleSubmit(onSubmit)();
-                },
-                onCancel: () => {
-                    reset(originalFormValues);
-                },
-            });
+            !isTabView
+                ? handleSubmit(onSubmit)()
+                : showBar("PermissionChanges", {
+                      component: ChangesActionBar,
+                      cancelText: t("discard"),
+                      confirmText: t("save"),
+                      changeCount: 1,
+                      onSuccess: () =>
+                          showModal({
+                              title: t("modalTitle"),
+                              content: t("modalContent"),
+                              confirmText: t("save"),
+                              cancelText: t("cancel"),
+                              onSuccess: handleSubmit(onSubmit),
+                          }),
+                      onCancel: () => {
+                          reset(originalFormValues);
+                      },
+                  });
         }
         if (!formState.isDirty && store.isVisible) {
             hideBar();
@@ -249,6 +265,7 @@ const ApplicationPermissions = ({
         reset,
         showBar,
         store.isVisible,
+        showModal,
     ]);
 
     return (
