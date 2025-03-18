@@ -753,6 +753,24 @@
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
                             "parentQuestionOption": "Parent question option"
+                        },
+                        "list": {
+                            "title": "Manage Data Access Request Templates",
+                            "intro": "View, edit or create new Data Access Request Templates",
+                            "cardTitle": "DAR template created {createdAt}",
+                            "noTemplates": "No templates found for your team.",
+                            "published": "Published",
+                            "lastActivity": "Last activity",
+                            "numberOfQuestions": "Number of questions",
+                            "back": "Back to DAR template management",
+                            "actions": {
+                                "edit": {
+                                    "label": "Edit template"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate template"
+                                }
+                            }
                         }
                     }
                 }

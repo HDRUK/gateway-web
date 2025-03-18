@@ -365,8 +365,14 @@ const generateDatasetForTeamV1 = (version = "1.0", data = {}): Dataset => {
 
 const generateDatasetHighlightsV1 = (): Highlight => {
     return {
-        abstract: [faker.datatype.string(), faker.datatype.string()],
-        description: [faker.datatype.string(), faker.datatype.string()],
+        abstract: [
+            faker.random.alphaNumeric(10),
+            faker.random.alphaNumeric(10),
+        ],
+        description: [
+            faker.random.alphaNumeric(10),
+            faker.random.alphaNumeric(10),
+        ],
     };
 };
 
