@@ -6,10 +6,16 @@ import { capitalise } from "@/utils/general";
 
 const columnHelper = createColumnHelper<{ name: string; label: string }>();
 
+interface ColumnReadState {
+    collections: boolean;
+    tools: boolean;
+    datasets: boolean;
+    dur: boolean;
+}
+
 const getColumns = <T extends FieldValues>(
     control: Control<T>,
-    setValue: (name: string, value: boolean) => void,
-    watch: (name: string) => boolean
+    columnReadDisabled: ColumnReadState
 ): ColumnDef<{ name: string; label: string }>[] => {
     return [
         columnHelper.display({
@@ -29,47 +35,20 @@ const getColumns = <T extends FieldValues>(
                         {capitalise(key)}
                     </Box>
                 ),
-                cell: ({ row: { original } }) => {
-                    const readFieldName = `${original.name}.read`;
-
-                    const handleChange = (checked: boolean) => {
-                        setValue(`${original.name}.${key}`, checked);
-
-                        if (key !== "read") {
-                            if (checked) {
-                                setValue(readFieldName, true);
-                            } else {
-                                const createChecked = watch(
-                                    `${original.name}.create`
-                                );
-                                const updateChecked = watch(
-                                    `${original.name}.update`
-                                );
-                                const deleteChecked = watch(
-                                    `${original.name}.delete`
-                                );
-
-                                if (
-                                    !createChecked &&
-                                    !updateChecked &&
-                                    !deleteChecked
-                                ) {
-                                    setValue(readFieldName, false);
-                                }
-                            }
+                cell: ({ row: { original } }) => (
+                    <Checkbox
+                        size="large"
+                        control={control}
+                        name={`${original.name}.${key}`}
+                        formControlSx={{ mb: 0 }}
+                        disabled={
+                            key === "read" &&
+                            columnReadDisabled[
+                                original.name as keyof typeof columnReadDisabled
+                            ]
                         }
-                    };
-
-                    return (
-                        <Checkbox
-                            size="large"
-                            control={control}
-                            name={`${original.name}.${key}`}
-                            formControlSx={{ mb: 0 }}
-                            onChange={(_, checked) => handleChange(checked)}
-                        />
-                    );
-                },
+                    />
+                ),
             })
         ),
     ];

@@ -19,8 +19,10 @@ import Typography from "@/components/Typography";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import useActionBar from "@/hooks/useActionBar";
 import useGet from "@/hooks/useGet";
+import useModal from "@/hooks/useModal";
 import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import {
     AppPermissionDefaultValues,
@@ -39,6 +41,9 @@ interface ApplicationPermissionsProps {
     isTabView?: boolean;
     application?: Application;
 }
+
+type ReadKey = "datasets.read" | "dur.read" | "tools.read" | "collections.read";
+
 const TRANSLATION_PATH = `pages.account.team.integrations.apiManagement.manage.permissions`;
 
 const ApplicationPermissions = ({
@@ -55,6 +60,7 @@ const ApplicationPermissions = ({
         apiId: string;
     }>();
     const t = useTranslations(TRANSLATION_PATH);
+    const { showModal } = useModal();
 
     const { data: permissions } = useGet<Permission[]>(apis.permissionsV1Url);
 
@@ -105,14 +111,65 @@ const ApplicationPermissions = ({
         {
             itemName: "Application",
             /* Custom api success message set within `api.json` */
-            localeKey: "applicationPermission",
+            localeKey: !isTabView ? "applicationPermission" : "",
         }
     );
 
+    const collectionsFields = watch([
+        "collections.create",
+        "collections.delete",
+        "collections.update",
+    ]);
+
+    const toolsFields = watch(["tools.create", "tools.delete", "tools.update"]);
+
+    const datasetsFields = watch([
+        "datasets.create",
+        "datasets.delete",
+        "datasets.update",
+    ]);
+
+    const durFields = watch(["dur.create", "dur.delete", "dur.update"]);
+
+    const fieldGroups = {
+        collections: collectionsFields,
+        tools: toolsFields,
+        datasets: datasetsFields,
+        dur: durFields,
+    };
+
+    // Auto set read permission to true if create, update or delete checked
+    useEffect(() => {
+        Object.entries(fieldGroups)
+            .filter(([, fields]) => fields.some(Boolean))
+            .forEach(([key]) => {
+                const readKey = `${key}.read` as ReadKey;
+                setValue(readKey, true);
+            });
+    }, [
+        collectionsFields,
+        toolsFields,
+        datasetsFields,
+        durFields,
+        formState.dirtyFields,
+    ]);
+
+    const columnReadDisabled = useMemo(() => {
+        return {
+            collections: collectionsFields.some(v => v === true),
+            tools: toolsFields.some(v => v === true),
+            datasets: datasetsFields.some(v => v === true),
+            dur: durFields.some(v => v === true),
+        };
+    }, [collectionsFields, toolsFields, datasetsFields, durFields]);
+
     /* Memoise columns using 'getColumns' from form config  */
     const columns = useMemo(() => {
-        return getColumns<AppPermissionDefaultValues>(control, setValue, watch);
-    }, [control]);
+        return getColumns<AppPermissionDefaultValues>(
+            control,
+            columnReadDisabled
+        );
+    }, [control, columnReadDisabled]);
 
     const onSubmit = useCallback(
         async (updatedPermissions: AppPermissionDefaultValues) => {
@@ -124,7 +181,7 @@ const ApplicationPermissions = ({
                 ...application,
                 notifications: application?.notifications?.map(n => n.user_id),
                 permissions: permissionIds,
-                enabled: true,
+                enabled: !isTabView ? true : application?.enabled,
             };
 
             await updateApplication(`${application?.id}`, payload);
@@ -132,6 +189,12 @@ const ApplicationPermissions = ({
             /* When this component is part of tabs view reset the 'application' cache */
             if (isTabView) {
                 mutate(`${apis.applicationsV1Url}/${application?.id}`);
+
+                notificationService.apiWarning(t("warning"), {
+                    autoHideDuration: 5000,
+                    persist: false,
+                    title: "",
+                });
             }
 
             /* Only redirect when this component is part of the "Create" journey */
@@ -170,12 +233,17 @@ const ApplicationPermissions = ({
         if (formState.isDirty && !store.isVisible) {
             showBar("PermissionChanges", {
                 component: ChangesActionBar,
-                cancelText: "Discard",
-                confirmText: "Save",
+                cancelText: t("discard"),
+                confirmText: t("save"),
                 changeCount: 1,
-                onSuccess: () => {
-                    handleSubmit(onSubmit)();
-                },
+                onSuccess: () =>
+                    showModal({
+                        title: t("modalTitle"),
+                        content: t("modalContent"),
+                        confirmText: t("save"),
+                        cancelText: t("cancel"),
+                        onSuccess: handleSubmit(onSubmit),
+                    }),
                 onCancel: () => {
                     reset(originalFormValues);
                 },
@@ -195,6 +263,7 @@ const ApplicationPermissions = ({
         reset,
         showBar,
         store.isVisible,
+        showModal,
     ]);
 
     return (

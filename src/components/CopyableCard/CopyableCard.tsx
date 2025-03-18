@@ -14,7 +14,7 @@ const CopyableCard = ({ label, description, value }: CopyableCardProps) => {
         <Card
             sx={{
                 display: "grid",
-                gridTemplateColumns: "2fr 2fr",
+                gridTemplateColumns: { laptop: "2fr 2fr" },
             }}>
             <Box>
                 <Typography
