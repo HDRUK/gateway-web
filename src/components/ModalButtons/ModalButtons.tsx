@@ -40,8 +40,8 @@ const ModalButtons = ({
             onSuccess(props);
         }
 
-        {
-            shouldHideModal && hideModal();
+        if (shouldHideModal) {
+            hideModal();
         }
     };
 
@@ -50,8 +50,8 @@ const ModalButtons = ({
             onCancel(props);
         }
 
-        {
-            shouldHideModal && hideModal();
+        if (shouldHideModal) {
+            hideModal();
         }
     };
 
@@ -60,8 +60,8 @@ const ModalButtons = ({
             tertiaryButton.onAction(props);
         }
 
-        {
-            shouldHideModal && hideModal();
+        if (shouldHideModal) {
+            hideModal();
         }
     };
 

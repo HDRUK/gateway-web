@@ -141,7 +141,7 @@ const ApplicationPermissions = ({
     // Auto set read permission to true if create, update or delete checked
     useEffect(() => {
         Object.entries(fieldGroups)
-            .filter(([_, fields]) => fields.some(Boolean))
+            .filter(([, fields]) => fields.some(Boolean))
             .forEach(([key]) => {
                 const readKey = `${key}.read` as ReadKey;
                 setValue(readKey, true);
@@ -231,25 +231,23 @@ const ApplicationPermissions = ({
 
         /* Only call `showBar` if form is `isDirty` ActionBar is not visible */
         if (formState.isDirty && !store.isVisible) {
-            !isTabView
-                ? handleSubmit(onSubmit)()
-                : showBar("PermissionChanges", {
-                      component: ChangesActionBar,
-                      cancelText: t("discard"),
-                      confirmText: t("save"),
-                      changeCount: 1,
-                      onSuccess: () =>
-                          showModal({
-                              title: t("modalTitle"),
-                              content: t("modalContent"),
-                              confirmText: t("save"),
-                              cancelText: t("cancel"),
-                              onSuccess: handleSubmit(onSubmit),
-                          }),
-                      onCancel: () => {
-                          reset(originalFormValues);
-                      },
-                  });
+            showBar("PermissionChanges", {
+                component: ChangesActionBar,
+                cancelText: t("discard"),
+                confirmText: t("save"),
+                changeCount: 1,
+                onSuccess: () =>
+                    showModal({
+                        title: t("modalTitle"),
+                        content: t("modalContent"),
+                        confirmText: t("save"),
+                        cancelText: t("cancel"),
+                        onSuccess: handleSubmit(onSubmit),
+                    }),
+                onCancel: () => {
+                    reset(originalFormValues);
+                },
+            });
         }
         if (!formState.isDirty && store.isVisible) {
             hideBar();
