@@ -1,28 +1,36 @@
+import { useTranslations } from "next-intl";
 import { Application } from "@/interfaces/Application";
+import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Button from "@/components/Button";
+import Card from "@/components/Card";
 import CopyableCard from "@/components/CopyableCard";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 
 interface ApplicationAuthDetailsProps {
     application?: Application;
+    handleGenerateId: () => void;
 }
+
+const TRANSLATION_PATH = `pages.account.team.integrations.apiManagement`;
 
 const ApplicationAuthDetails = ({
     application,
+    handleGenerateId,
 }: ApplicationAuthDetailsProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const credentials = [
         {
-            label: "App ID",
+            label: t("appId"),
             value: application?.app_id,
-            description:
-                "This is your App's unique ID. You will need it to make certain API calls.",
+            description: t("appDescription"),
         },
         {
-            label: "Client ID",
+            label: t("clientId"),
             value: application?.client_id,
-            description:
-                "This is your App's unique client ID. You will need it to make certain API calls.",
+            description: t("clientDescription"),
         },
     ];
 
@@ -34,14 +42,31 @@ const ApplicationAuthDetails = ({
                     marginBottom: "10px",
                     padding: 2,
                 }}>
-                <Typography variant="h2">Authentication credentials</Typography>
-                <Typography>
-                    These authentication credentials determine how your Private
-                    App interacts with HDR UK Gateway and its permissions.
-                </Typography>
+                <Typography variant="h2">{t("authTitle")}</Typography>
+                <Typography>{t("authIntro")}</Typography>
             </Paper>
 
             <BoxContainer>
+                <Card
+                    sx={{
+                        display: "grid",
+                        gridTemplateColumns: { laptop: "3fr 1fr" },
+                    }}>
+                    <Box>
+                        <Typography
+                            sx={{
+                                fontWeight: 600,
+                            }}>
+                            {t("authSettingsTitle")}
+                        </Typography>
+                        <Typography>{t("authSettingsIntro")}</Typography>
+                    </Box>
+                    <Box sx={{ justifySelf: { laptop: "flex-end" } }}>
+                        <Button onClick={handleGenerateId}>
+                            {t("generateClientId")}
+                        </Button>
+                    </Box>
+                </Card>
                 {credentials.map(cred => (
                     <CopyableCard key={cred.label} {...cred} />
                 ))}

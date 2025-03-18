@@ -54,24 +54,26 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-        ...(permissions["question-bank.update"]
-            ? [
-                  {
-                      icon: <DescriptionIcon />,
-                      label: "Data Access Requests",
-                      subItems: [
-                          ...(permissions["question-bank.update"]
-                              ? [
-                                    {
-                                        label: "Question Bank",
-                                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
-                                    },
-                                ]
-                              : []),
-                      ],
-                  },
-              ]
-            : []),
+
+        {
+            icon: <DescriptionIcon />,
+            label: "Data Access Requests",
+            subItems: [
+                {
+                    label: "My Data Access Requests",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
+                },
+                ...(permissions["question-bank.update"]
+                    ? [
+                          {
+                              label: "Question Bank",
+                              href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
+                          },
+                      ]
+                    : []),
+            ],
+        },
+
         {
             icon: <ToolIcon />,
             label: "Analysis Scripts & Software",
@@ -157,43 +159,43 @@ const getTeamNav = (
                   },
               ]
             : []),
-        // ...([
-        //     permissions["data-access-template.read"],
-        //     permissions["data-access-applications.provider.read"],
-        //     permissions["data-access-applications.review.read"],
-        // ].some(isTrue => isTrue)
-        //     ? [
-        //           {
-        //               icon: <DescriptionIcon />,
-        //               label: "Data Access Requests",
-        //               subItems: [
-        //                   ...(permissions["data-access-template.read"]
-        //                       ? [
-        //                             {
-        //                                 label: "Manage Templates",
-        //                                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
-        //                             },
-        //                         ]
-        //                       : []),
-        //                   ...([
-        //                       permissions[
-        //                           "data-access-applications.provider.read"
-        //                       ],
-        //                       permissions[
-        //                           "data-access-applications.review.read"
-        //                       ],
-        //                   ].some(isTrue => isTrue)
-        //                       ? [
-        //                             {
-        //                                 label: "Applications",
-        //                                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
-        //                             },
-        //                         ]
-        //                       : []),
-        //               ],
-        //           },
-        //       ]
-        //     : []),
+        ...([
+            permissions["data-access-template.read"],
+            permissions["data-access-applications.provider.read"],
+            permissions["data-access-applications.review.read"],
+        ].some(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <DescriptionIcon />,
+                      label: "Data Access Requests",
+                      subItems: [
+                          ...(permissions["data-access-template.read"]
+                              ? [
+                                    {
+                                        label: "Manage Templates",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
+                                    },
+                                ]
+                              : []),
+                          ...([
+                              permissions[
+                                  "data-access-applications.provider.read"
+                              ],
+                              permissions[
+                                  "data-access-applications.review.read"
+                              ],
+                          ].some(isTrue => isTrue)
+                              ? [
+                                    {
+                                        label: "Applications",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
+                                    },
+                                ]
+                              : []),
+                      ],
+                  },
+              ]
+            : []),
         ...(permissions["papers.read"]
             ? [
                   {

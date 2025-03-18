@@ -97,7 +97,7 @@ describe("RunFederationTest", () => {
             const completeText = screen.getAllByText("Complete");
             const errorText = screen.getByText("Failed");
             const errorMessage = screen.getByText(
-                "The test has come back with a (404) error"
+                "The test has come back with an error"
             );
             expect(completeText).toHaveLength(1);
             expect(errorText).toBeInTheDocument();

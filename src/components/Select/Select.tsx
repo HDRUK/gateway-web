@@ -5,6 +5,7 @@ import {
     Select as MuiSelect,
     MenuItem,
     SxProps,
+    ListSubheader,
 } from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
@@ -18,6 +19,7 @@ export interface SelectOptionsType {
     label: string;
     labelComponent?: ReactNode;
     icon?: IconType;
+    isHeader?: boolean;
 }
 
 export interface SelectProps<TFieldValues extends FieldValues, TName> {
@@ -122,30 +124,35 @@ const Select = <
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
                 {...rest}>
-                {options?.map(option => (
-                    <MenuItem
-                        color="secondary"
-                        sx={{
-                            ...(invertListItem && {
-                                background: theme => theme.palette.primary.main,
-                                color: "white",
-                            }),
-                        }}
-                        key={option.value}
-                        value={option.value}>
-                        <SelectMenuItem
-                            multiple={multiple}
-                            itemValue={option.value}
-                            value={fieldProps.value}
-                            hasCheckbox={hasCheckbox}
-                            iconRight={iconRight}
-                            icon={icon || option.icon}
-                            label={limitLabelLength(option.label)}
-                            labelComponent={option.labelComponent}
-                            invertListItem={invertListItem}
-                        />
-                    </MenuItem>
-                ))}
+                {options?.map(option =>
+                    option.isHeader ? (
+                        <ListSubheader>{option.label}</ListSubheader>
+                    ) : (
+                        <MenuItem
+                            color="secondary"
+                            sx={{
+                                ...(invertListItem && {
+                                    background: theme =>
+                                        theme.palette.primary.main,
+                                    color: "white",
+                                }),
+                            }}
+                            key={option.value}
+                            value={option.value}>
+                            <SelectMenuItem
+                                multiple={multiple}
+                                itemValue={option.value}
+                                value={fieldProps.value}
+                                hasCheckbox={hasCheckbox}
+                                iconRight={iconRight}
+                                icon={icon || option.icon}
+                                label={limitLabelLength(option.label)}
+                                labelComponent={option.labelComponent}
+                                invertListItem={invertListItem}
+                            />
+                        </MenuItem>
+                    )
+                )}
             </MuiSelect>
         </FormInputWrapper>
     );

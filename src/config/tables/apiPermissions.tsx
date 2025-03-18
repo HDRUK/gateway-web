@@ -6,8 +6,16 @@ import { capitalise } from "@/utils/general";
 
 const columnHelper = createColumnHelper<{ name: string; label: string }>();
 
+interface ColumnReadState {
+    collections: boolean;
+    tools: boolean;
+    datasets: boolean;
+    dur: boolean;
+}
+
 const getColumns = <T extends FieldValues>(
-    control: Control<T>
+    control: Control<T>,
+    columnReadDisabled: ColumnReadState
 ): ColumnDef<{ name: string; label: string }>[] => {
     return [
         columnHelper.display({
@@ -17,7 +25,7 @@ const getColumns = <T extends FieldValues>(
                     Scope
                 </Box>
             ),
-            cell: ({ row: { original } }) => `${original.label}`,
+            cell: ({ row: { original } }) => original.label,
         }),
         ...["create", "read", "update", "delete"].map(key =>
             columnHelper.display({
@@ -27,16 +35,20 @@ const getColumns = <T extends FieldValues>(
                         {capitalise(key)}
                     </Box>
                 ),
-                cell: ({ row: { original } }) => {
-                    return (
-                        <Checkbox
-                            size="large"
-                            control={control}
-                            name={`${original.name}.${key}`}
-                            formControlSx={{ mb: 0 }}
-                        />
-                    );
-                },
+                cell: ({ row: { original } }) => (
+                    <Checkbox
+                        size="large"
+                        control={control}
+                        name={`${original.name}.${key}`}
+                        formControlSx={{ mb: 0 }}
+                        disabled={
+                            key === "read" &&
+                            columnReadDisabled[
+                                original.name as keyof typeof columnReadDisabled
+                            ]
+                        }
+                    />
+                ),
             })
         ),
     ];

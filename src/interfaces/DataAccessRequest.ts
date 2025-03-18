@@ -1,5 +1,10 @@
 import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import {
+    DarApplicationApprovalStatus,
+    DarApplicationStatus,
+} from "@/consts/dataAccess";
 import { ComponentTypes } from "./ComponentTypes";
+import { UploadedFileMetadata } from "./FileUpload";
 
 interface DarQuestion {
     id: number | string;
@@ -39,12 +44,13 @@ interface DarTemplate {
     questions: DarHasQuestion[];
 }
 
-interface Validation {
-    message: string;
+type Validations = {
     min?: number;
     max?: number;
-    [key: string]: unknown;
-}
+    type?: string;
+    format?: string;
+    pattern?: string;
+};
 
 interface DarApplicationQuestion {
     appliciation_id: number;
@@ -54,7 +60,7 @@ interface DarApplicationQuestion {
     required: boolean;
     title: string;
     section_id: number;
-    validations: Validation[];
+    validations: Validations;
     is_child: number;
     component: ComponentTypes;
     options: {
@@ -73,13 +79,27 @@ interface DarApplicationAnswer {
 interface DarApplication {
     id: number;
     questions: DarApplicationQuestion[];
-    submission_status: string;
     project_title: string;
     applicant_id: number;
+    teams: {
+        approval_status: DarApplicationApprovalStatus;
+        created_at: string;
+        dar_application_id: number;
+        id: number;
+        review_id: number;
+        submission_status: DarApplicationStatus;
+        team_id: number;
+        updated_at: string;
+        submission_date: string;
+    }[];
 }
 
 interface DarApplicationResponses {
-    [key: string]: string | undefined;
+    [key: string]:
+        | string
+        | { value: UploadedFileMetadata }
+        | { value: UploadedFileMetadata[] }
+        | undefined;
     project_title?: string;
 }
 

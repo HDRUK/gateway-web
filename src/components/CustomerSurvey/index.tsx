@@ -150,7 +150,9 @@ export default function CustomerSurvey({
                     return (
                         <Grid item key={rating.toString()}>
                             <Tooltip title={t(`tooltip-${index}`)}>
-                                <IconButton onClick={() => handleClick(rating)}>
+                                <IconButton
+                                    onClick={() => handleClick(rating)}
+                                    id={`feedback-${rating}`}>
                                     <Icon
                                         aria-label={`Rating ${rating}`}
                                         sx={{

@@ -9,7 +9,7 @@ describe("LeftNav", () => {
             <LeftNav permissions={{ "cohort.read": false }} />
         );
 
-        expect(getAllByRole("button")).toHaveLength(6);
+        expect(getAllByRole("button")).toHaveLength(7);
 
         expect(getByText("Your Profile")).toBeInTheDocument();
     });
@@ -20,7 +20,7 @@ describe("LeftNav", () => {
             <LeftNav permissions={{ "cohort.read": true }} />
         );
 
-        expect(getAllByRole("button")).toHaveLength(7);
+        expect(getAllByRole("button")).toHaveLength(8);
 
         expect(getByText("Your Profile")).toBeInTheDocument();
         expect(getByText("Cohort Discovery Admin")).toBeInTheDocument();

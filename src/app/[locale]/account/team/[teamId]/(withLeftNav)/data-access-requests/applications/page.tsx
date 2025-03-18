@@ -1,36 +1,43 @@
-import { useTranslations } from "next-intl";
-import Box from "@/components/Box";
-import Paper from "@/components/Paper";
-import Typography from "@/components/Typography";
-import {
-    ACCOUNT,
-    APPLICATIONS,
-    DATA_ACCESS_REQUESTS,
-    PAGES,
-    TEAM,
-    TITLE,
-} from "@/consts/translation";
-import metaData, { noFollowRobots } from "@/utils/metadata";
+import { cookies } from "next/headers";
+import Dashboard from "@/components/DarDashboard";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import apis from "@/config/apis";
+import { getTeam, getUser } from "@/utils/api";
+import metaData from "@/utils/metadata";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 
-export const metadata = metaData(
-    {
-        title: "Applications - My Account",
-        description: "",
-    },
-    noFollowRobots
-);
-const TeamHelpPage = () => {
-    const t = useTranslations(
-        `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_ACCESS_REQUESTS}.${APPLICATIONS}`
-    );
+export const metadata = metaData({
+    title: "Applications - My Account",
+    description: "",
+});
+
+const DARApplicationsPage = async ({
+    params,
+}: {
+    params: { teamId: string };
+}) => {
+    const { teamId } = params;
+    const cookieStore = cookies();
+    const user = await getUser(cookieStore);
+    const team = await getTeam(cookieStore, teamId);
+    const teamUser = getTeamUser(team?.users, user?.id);
+    const permissions = getPermissions(user.roles, teamUser?.roles);
 
     return (
-        <Paper>
-            <Box>
-                <Typography variant="h2">{t(TITLE)}</Typography>
-            </Box>
-        </Paper>
+        <ProtectedAccountRoute
+            permissions={permissions}
+            pagePermissions={[
+                "data-access-template.read",
+                "data-access-applications.provider.read",
+                "data-access-applications.review.read",
+            ]}>
+            <Dashboard
+                translationPath="pages.account.team.dataAccessRequests.applications"
+                darApiPath={`${apis.teamsV1Url}/${teamId}/dar/applications`}
+            />
+        </ProtectedAccountRoute>
     );
 };
 
-export default TeamHelpPage;
+export default DARApplicationsPage;

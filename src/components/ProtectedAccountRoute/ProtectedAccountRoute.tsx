@@ -7,6 +7,7 @@ interface ProtectedAccountRouteProps {
     loggedInOnly?: boolean;
     permissions?: { [key: string]: boolean };
     pagePermissions?: string[];
+    allowDevOnly?: boolean;
     children: ReactNode;
 }
 
@@ -14,6 +15,7 @@ const ProtectedAccountRoute = async ({
     loggedInOnly,
     permissions,
     pagePermissions,
+    allowDevOnly = false,
     children,
 }: ProtectedAccountRouteProps) => {
     if (loggedInOnly) return children;
@@ -22,7 +24,7 @@ const ProtectedAccountRoute = async ({
     const userHasPermission =
         permissions && hasPermissions(permissions, pagePermissions);
 
-    if (!userHasPermission) {
+    if (!userHasPermission && !allowDevOnly) {
         redirect(RouteName.ERROR_403);
     }
 

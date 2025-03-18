@@ -38,7 +38,7 @@ export const Column = styled("div")<ColumnProps>(({ emphasis, justify }) => ({
     justifyContent: "center",
     gap: emphasis ? theme.spacing(0.5) : "initial",
     "> p": { fontWeight: emphasis ? 600 : "inherit" },
-    " > button": { color: colors.white },
+    "> .MuiButton-text, .MuiButton-link": { color: colors.white },
     [theme.breakpoints.up("laptop")]: {
         justifyContent: justify || "center",
     },

@@ -1,15 +1,18 @@
 import { Control, useFieldArray, UseFormWatch } from "react-hook-form";
-import { IconButton } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
+import Typography from "@/components/Typography";
 import { inputComponents } from "@/config/forms";
 import {
     componentsWithOptions,
+    fieldsWithValidation,
     questionFormFields,
+    questionValidationFormFields,
 } from "@/config/forms/questionBank";
 import { AddIcon, CloseIcon } from "@/consts/icons";
 import SelectMultipleOptions from "./SelectMultipleOptions";
@@ -41,6 +44,11 @@ const NestedFieldArray = ({ control, index, watch }: NestedFieldArrayProps) => {
                     `options.${index}.children.${nestedIndex}.component`,
                     nestedFields
                 ) as unknown as ComponentTypes;
+
+                const nestedValidationFormat = watch(
+                    `options.${index}.children.${nestedIndex}.validations.format`,
+                    nestedFields
+                );
 
                 return (
                     <Box
@@ -116,6 +124,34 @@ const NestedFieldArray = ({ control, index, watch }: NestedFieldArrayProps) => {
                                 />
                             );
                         })}
+
+                        {fieldsWithValidation.includes(nestedComponentType) && (
+                            <Box sx={{ p: 0 }}>
+                                <Divider sx={{ mb: 2.5 }} />
+                                <Typography sx={{ mb: 2 }}>
+                                    Validation
+                                </Typography>
+
+                                {questionValidationFormFields
+                                    .filter(
+                                        field =>
+                                            field.applicableToComponent.includes(
+                                                nestedComponentType
+                                            ) &&
+                                            (!field.applicableToOption ||
+                                                nestedValidationFormat ===
+                                                    field.applicableToOption)
+                                    )
+                                    .map(field => (
+                                        <InputWrapper
+                                            key={field.name}
+                                            control={control}
+                                            {...field}
+                                            name={`options.${index}.children.${nestedIndex}.${field.name}`}
+                                        />
+                                    ))}
+                            </Box>
+                        )}
                     </Box>
                 );
             })}
@@ -128,7 +164,7 @@ const NestedFieldArray = ({ control, index, watch }: NestedFieldArrayProps) => {
                         guidance: "",
                         allow_guidance_override: false,
                         force_required: false,
-                        validations: [],
+                        validations: {},
                         options: [],
                     })
                 }

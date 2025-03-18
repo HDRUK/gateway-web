@@ -5,7 +5,7 @@ import { colors } from "@/config/theme";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
-    section_id: 1,
+    section_id: 2,
     team_ids: [],
     title: "",
     guidance: "",
@@ -14,7 +14,7 @@ const defaultValues: Partial<QuestionBankQuestionForm> = {
     allow_guidance_override: false,
     force_required: false,
     default: true,
-    validations: [],
+    validations: {},
     options: [],
     all_custodians: true,
 };
@@ -26,11 +26,18 @@ const supportedComponents = [
     inputComponents.CheckboxGroup,
     inputComponents.SwitchInline,
     inputComponents.DatePicker,
+    inputComponents.FileUpload,
+    inputComponents.FileUploadMultiple,
 ];
 
 const componentsWithOptions = [
     inputComponents.RadioGroup,
     inputComponents.CheckboxGroup,
+];
+
+const fieldsWithValidation = [
+    inputComponents.TextField,
+    inputComponents.TextArea,
 ];
 
 const sectionField = {
@@ -77,7 +84,7 @@ const formFields = [
         name: "component",
         component: inputComponents.RadioGroup,
         radios: Object.values(supportedComponents).map(value => ({
-            label: value,
+            label: value.replace(/([A-Z])/g, " $1").trim(),
             value,
         })),
         isRow: true,
@@ -95,7 +102,6 @@ const formFields = [
             backgroundColor: colors.purple100,
         },
     },
-
     {
         component: inputComponents.TextArea,
         showClearButton: true,
@@ -106,7 +112,7 @@ const formFields = [
         required: true,
     },
     {
-        label: "Question Settings",
+        label: "Settings",
         name: "settings",
         component: inputComponents.CheckboxGroup,
         nColumns: 5,
@@ -117,14 +123,62 @@ const formFields = [
                 label: "Mandatory",
             },
             {
-                name: "allow_guidance_override",
-                label: "Allow Guidance Override",
-            },
-            {
                 name: "force_required",
                 label: "Force Required",
             },
+            {
+                name: "allow_guidance_override",
+                label: "Allow Guidance Override",
+            },
         ],
+    },
+];
+
+const validationFormFields = [
+    {
+        label: "Minimum length",
+        name: "validations.min",
+        applicableToComponent: [
+            inputComponents.TextField,
+            inputComponents.TextArea,
+        ],
+        type: "number",
+        component: inputComponents.TextField,
+        sx: { maxWidth: 220 },
+    },
+    {
+        label: "Maximum length",
+        name: "validations.max",
+        applicableToComponent: [
+            inputComponents.TextField,
+            inputComponents.TextArea,
+        ],
+        type: "number",
+        component: inputComponents.TextField,
+        sx: { maxWidth: 220 },
+    },
+    {
+        label: "Format",
+        name: "validations.format",
+        applicableToComponent: [inputComponents.TextField],
+        type: "string",
+        component: inputComponents.Select,
+        options: [
+            { label: "", value: "" },
+            { label: "Email address", value: "email" },
+            { label: "Url", value: "url" },
+            { label: "Regex Pattern", value: "pattern" },
+        ],
+        sx: { minWidth: 220, maxWidth: "50%" },
+    },
+    {
+        label: "Regex Pattern",
+        name: "validations.pattern",
+        applicableToComponent: [inputComponents.TextField],
+        applicableToOption: "pattern",
+        type: "string",
+        component: inputComponents.TextField,
+        sx: { minWidth: 220, maxWidth: "50%" },
     },
 ];
 
@@ -155,7 +209,6 @@ const childSchema = yup.array().of(
                         .boolean()
                         .required()
                         .label("Force Required"),
-                    validations: yup.array().required(),
                 })
             )
             .test(
@@ -195,7 +248,6 @@ const validationSchema = yup
                     }
                 ),
         }),
-        validations: yup.array().required(),
     })
     .concat(settingsSchema);
 
@@ -204,7 +256,9 @@ export {
     custodiansFields,
     defaultValues as questionDefaultValues,
     formFields as questionFormFields,
+    validationFormFields as questionValidationFormFields,
     validationSchema as questionValidationSchema,
     supportedComponents as questionBankSupportedComponents,
     componentsWithOptions,
+    fieldsWithValidation,
 };

@@ -1,3 +1,72 @@
+## [2.4.1](https://github.com/HDRUK/gateway-web-2/compare/v2.4.0...v2.4.1) (2025-03-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-6522:** Fix issue where empty dataset array was being passed (#1038) ([798cce4](https://github.com/HDRUK/gateway-web-2/commit/798cce480a26aa28d4330b614e3ba77b8e3ac2bf))
+
+## [2.4.0](https://github.com/HDRUK/gateway-web-2/compare/v2.3.1...v2.4.0) (2025-03-10)
+
+### ✨ Features
+
+* **GAT-6232:** Add Data Custodian DAR Application Dashboard (#1025) ([9dced2e](https://github.com/HDRUK/gateway-web-2/commit/9dced2eafdd891eaf2b07d43ff123ae8713d0150)), closes [GAT-6232](GAT-6232)
+* **GAT-6255:** Add DAR file and multi file upload (#1011) ([4cb5194](https://github.com/HDRUK/gateway-web-2/commit/4cb51945f7db0901c100a700cccb99bc152345d3)), closes [GAT-6255](GAT-6255)
+* **GAT-6272:** Add logic for creating new DAR enquiry (#1016) ([fb191b9](https://github.com/HDRUK/gateway-web-2/commit/fb191b98e8a952472edd377f2eff9356ac3ad0ef)), closes [GAT-6272](GAT-6272)
+* **GAT-6272:** Update DAR application creation to new endpoints (#1026) ([6655aa5](https://github.com/HDRUK/gateway-web-2/commit/6655aa5b7220aca338b65e9db0a5516d53163b18)), closes [GAT-6272](GAT-6272)
+* **GAT-6525:** - Added ID's for tracking (#1034) ([2c88e02](https://github.com/HDRUK/gateway-web-2/commit/2c88e0214d56d5b8ec322431fe8bf9fb49254938)), closes [GAT-6525](GAT-6525)
+
+### 🐛 Bug Fixes
+
+* **GAT-6215:** Correctly display images with spaces in filenames (#1028) ([c86db61](https://github.com/HDRUK/gateway-web-2/commit/c86db61828e47f6e4c8fa56ef0464ce8cef04c25)), closes [GAT-6215](GAT-6215)
+* **GAT-6216:** Update release workflow with merge conflict fix (#1019) ([5ac1dd3](https://github.com/HDRUK/gateway-web-2/commit/5ac1dd3fdc3d51c6787612c3e13192ebb7de6bc6))
+* **GAT-6261:** validate pid in metadata (#1027) ([9da169b](https://github.com/HDRUK/gateway-web-2/commit/9da169b13fcb3fbc6de0b6f56641011e5cb4bdc6)), closes [GAT-6261](GAT-6261)
+* **GAT-6303:** Allow dev only to see page (#1017) ([a05a192](https://github.com/HDRUK/gateway-web-2/commit/a05a192eb5ac4953b5bc4294cdc8a6dbb4c1d8c2)), closes [GAT-6303](GAT-6303)
+* **GAT-6400:** Fix checkboxes (#1033) ([3420acb](https://github.com/HDRUK/gateway-web-2/commit/3420acbff314a6cee28af95db117e276fa17a3f0))
+* **GAT-6400:** Tick readonly when others selected (#1031) ([0d85630](https://github.com/HDRUK/gateway-web-2/commit/0d8563092964b1cbe5da1ba586e31634e47af6ca)), closes [GAT-6400](GAT-6400)
+* **GAT-6406:** Allow minutes (#1032) ([ffcb2f8](https://github.com/HDRUK/gateway-web-2/commit/ffcb2f86545ef7bac16999950b44e4f56bfcfbe0)), closes [GAT-6406](GAT-6406)
+* **GAT-6465:** UI being wiped when saving template (#1030) ([0b2ad5f](https://github.com/HDRUK/gateway-web-2/commit/0b2ad5f283746aea6ad505efe88f40f6644936f3)), closes [GAT-6465](GAT-6465)
+
+## [2.3.1](https://github.com/HDRUK/gateway-web-2/compare/v2.3.0...v2.3.1) (2025-02-27)
+
+### 🐛 Bug Fixes
+
+* **GAT-6303:** Allow dev only to see page (#1017) ([4c14b4e](https://github.com/HDRUK/gateway-web-2/commit/4c14b4e362e1c83dec008ca66ee3b54efcef900b)), closes [GAT-6303](GAT-6303)
+
+## [2.3.0](https://github.com/HDRUK/gateway-web-2/compare/v2.2.0...v2.3.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6216:** Update commit behaviour ([f4cd7e7](https://github.com/HDRUK/gateway-web-2/commit/f4cd7e755bf9b05fc04e7298e58802d4cd665e16)), closes [GAT-6216](GAT-6216)
+* **GAT-6216:** Update commit behaviour (#1023) ([bd28638](https://github.com/HDRUK/gateway-web-2/commit/bd2863816f351339202ba669eb9500eee837d746)), closes [GAT-6216](GAT-6216)
+
+## [2.2.0](https://github.com/HDRUK/gateway-web-2/compare/v2.1.0...v2.2.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6216:** Trigger release ([26f5aa1](https://github.com/HDRUK/gateway-web-2/commit/26f5aa1ce0672f77c86af362dfb223b088711027)), closes [GAT-6216](GAT-6216)
+* **GAT-6216:** Trigger release ([d80dd4f](https://github.com/HDRUK/gateway-web-2/commit/d80dd4fb692f7c237fecd823acf9a766a48c25e3)), closes [GAT-6216](GAT-6216)
+
+## [2.1.0](https://github.com/HDRUK/gateway-web-2/compare/v2.0.0...v2.1.0) (2025-02-25)
+
+### ✨ Features
+
+* **GAT-6333:** Question bank validation creation (#1007) ([3695766](https://github.com/HDRUK/gateway-web-2/commit/36957661e3c951a898e91dd68a0fe11082947301)), closes [GAT-6333](GAT-6333)
+
+### 🐛 Bug Fixes
+
+* **GAT-5816:** Update team management copy (#1003) ([e2a7ab3](https://github.com/HDRUK/gateway-web-2/commit/e2a7ab341ac57a501897a6eee94c7193d145cf08)), closes [GAT-5816](GAT-5816)
+* **GAT-6216:** Update release workflow with merge conflict fix (#1019) ([126831a](https://github.com/HDRUK/gateway-web-2/commit/126831a9b85e86aadba3c14f77656c1b5cbe3c92))
+* **GAT-6386:** Getting GMI working (#1008) ([2d54a8a](https://github.com/HDRUK/gateway-web-2/commit/2d54a8a4bf540a47d5406d53a1e819720fa49758)), closes [GAT-6386](GAT-6386)
+
+## [0.10.0](https://github.com/HDRUK/gateway-web-2/compare/v0.9.0...v0.10.0) (2025-02-20)
+
+### ✨ Features
+
+* **GAT-6386:** Release v1.5.1 (#1015) ([ca3d56e](https://github.com/HDRUK/gateway-web-2/commit/ca3d56efc870043b5be53f3d64f492aa3b83f579)), closes [GAT-6386](GAT-6386)
+
+### 🐛 Bug Fixes
+
+* **GAT-6386:** Getting GMI working (#1008) ([68145b4](https://github.com/HDRUK/gateway-web-2/commit/68145b499cb84d886a184fc25f7aaecddb0f6ad6)), closes [GAT-6386](GAT-6386)
+
 ## [0.9.0](https://github.com/HDRUK/gateway-web-2/compare/v0.8.0...v0.9.0) (2025-02-10)
 
 ### ✨ Features

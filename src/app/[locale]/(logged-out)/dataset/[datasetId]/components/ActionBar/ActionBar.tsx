@@ -9,9 +9,8 @@ import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import MenuDropdown from "@/components/MenuDropdown";
-import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import useAuth from "@/hooks/useAuth";
-import useDialog from "@/hooks/useDialog";
+import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import getRequest from "@/services/api/get";
@@ -35,13 +34,13 @@ interface ActionBarProps {
 
 const ActionBar = ({ dataset }: ActionBarProps) => {
     const [isDownloading, setIsDownloading] = useState(false);
-    const { showDialog } = useDialog();
     const { id: datasetId, name } = dataset;
     const path = usePathname();
 
     const { isLoggedIn } = useAuth();
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
+    const { showDARApplicationModal } = useDataAccessRequest();
 
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -117,13 +116,16 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     const handleStartDarRequest = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
 
-        showDialog(DarEnquiryDialog, {
+        showDARApplicationModal({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDarEnabled: team.is_question_bank,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
+            datasetIds: [datasetId],
+            teamIds: [team.id],
+            redirectPath: path,
         });
     };
 

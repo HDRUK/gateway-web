@@ -8,7 +8,7 @@ export const metadata = metaData(
     },
     noFollowRobots
 );
-const ApplicationPage = async ({
+const DarApplicationPage = async ({
     params,
 }: {
     params: { applicationId: number };
@@ -16,4 +16,4 @@ const ApplicationPage = async ({
     return <Application applicationId={params.applicationId} />;
 };
 
-export default ApplicationPage;
+export default DarApplicationPage;

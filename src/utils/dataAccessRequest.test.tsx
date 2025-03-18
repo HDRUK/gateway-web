@@ -125,7 +125,7 @@ describe("Data Access Request utils", () => {
                 section_id: 1,
                 guidance: "",
                 order: 1,
-                validations: [],
+                validations: {},
                 is_child: 0,
                 options: [],
             };
@@ -152,7 +152,7 @@ describe("Data Access Request utils", () => {
                 section_id: 5,
                 guidance: "",
                 order: 6,
-                validations: [],
+                validations: {},
                 is_child: 0,
                 options: [
                     { label: "Yes", children: {} },

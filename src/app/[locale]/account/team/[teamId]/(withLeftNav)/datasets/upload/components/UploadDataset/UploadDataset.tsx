@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Alert from "@mui/material/Alert";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { FileUpload } from "@/interfaces/FileUpload";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import DownloadFile from "@/components/DownloadFile";
@@ -14,6 +16,7 @@ import { RouteName } from "@/consts/routeName";
 
 interface UploadDatasetProps {
     teamId: string;
+    teamPid: string;
 }
 
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
@@ -22,10 +25,34 @@ const TRANSLATION_PATH = "pages.account.team.datasets.components.UploadDataset";
 const FILE_TYPE = ".json";
 const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.template.json`;
 
-const UploadDataset = ({ teamId }: UploadDatasetProps) => {
+const UploadDataset = ({ teamId, teamPid }: UploadDatasetProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const [errorMessage, SetErrorMessage] = useState<string>("");
 
     const { push } = useRouter();
+
+    const checkIfPidMatches = (file: unknown) => {
+        SetErrorMessage("");
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            try {
+                const jsonData = JSON.parse(event.target.result);
+                const dataCustodianId =
+                    jsonData.summary?.dataCustodian?.identifier;
+                if (!dataCustodianId) {
+                    SetErrorMessage(t("errorNoPid", { teamPid }));
+                } else if (teamPid !== dataCustodianId) {
+                    SetErrorMessage(
+                        t("errorNoMatchingPid", { dataCustodianId, teamPid })
+                    );
+                }
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+            }
+        };
+
+        reader.readAsText(file);
+    };
 
     const [createdDatasetId, setCreatedDatasetId] = useState<number>();
     const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -56,12 +83,17 @@ const UploadDataset = ({ teamId }: UploadDatasetProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={FILE_UPLOAD_URL}
-                            onFileUploaded={(fileId: number) =>
-                                setCreatedDatasetId(fileId)
+                            onFileUploaded={(file: FileUpload) =>
+                                setCreatedDatasetId(file.id)
                             }
+                            onFileChange={checkIfPidMatches}
                             isUploading={setIsUploading}
                             acceptedFileTypes={FILE_TYPE}
+                            showUploadButton={errorMessage === ""}
                         />
+                        {errorMessage !== "" && (
+                            <Alert severity="error">{errorMessage}</Alert>
+                        )}
                     </Box>
                 </Paper>
             )}

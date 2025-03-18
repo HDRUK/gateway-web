@@ -62,6 +62,13 @@ const useRunFederation = ({
 
     useEffect(() => {
         const updatedForm = pick(getValues(), watchFederationKeys);
+
+        // Set initial tested config
+        if (!testedConfig) {
+            setTestedConfig(updatedForm as unknown as Federation);
+            return;
+        }
+
         const configChanges = !isEqual(updatedForm, testedConfig);
         if (configChanges) {
             setRunStatus("NOT_RUN");
@@ -69,11 +76,11 @@ const useRunFederation = ({
             setValue("enabled", false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fieldsToWatch]);
+    }, [fieldsToWatch, testedConfig]);
 
     useEffect(() => {
         if (!tested && !integration) return;
-
+        if (runStatus !== "NOT_RUN") return;
         if (integration?.tested || tested) {
             setRunStatus("TESTED_IS_TRUE");
         }

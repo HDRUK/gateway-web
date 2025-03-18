@@ -122,7 +122,21 @@
         "disabled": "Disabled",
         "enabled": "Enabled",
         "all": "All",
-        "notReported": "Not reported"
+        "notReported": "Not reported",
+        "dar": {
+            "status": {
+                "all": "All",
+                "submitted": "Submitted",
+                "feedback": "In review",
+                "decision": "Decision",
+                "declined": "Declined",
+                "rejected": "Rejected",
+                "approved": "Approved",
+                "approved_comments": "Approved",
+                "withdrawn": "Withdrawn",
+                "draft": "Draft"
+            }
+        }
     },
     "pages": {
         "newsEvents": {
@@ -210,6 +224,23 @@
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",
                     "expiryWarning": "This user access is close to expiration date"
+                },
+                "dataAccessRequests": {
+                    "applications": {
+                        "title": "My Data Access Requests",
+                        "intro": "Manage forms and applications",
+                        "searchPlaceholder": "Enter application title to search",
+                        "primaryInvestigator": "Primary investigator",
+                        "organisation": "Organisation",
+                        "datasets": "Datasets",
+                        "lastActivity": "Last activity",
+                        "editApplication": "Add comments or change application status",
+                        "viewApplication": "View application form and any comments",
+                        "daysSinceStart": " days since start",
+                        "darApplication": "DAR Application #",
+                        "applicationsInGroup": "Applications in the project group",
+                        "dataAccessRequests": "Data Access Request"
+                    }
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",
@@ -369,7 +400,21 @@
             "team": {
                 "dataAccessRequests": {
                     "applications": {
-                        "title": "Applications"
+                        "title": "Manage Data Access Requests",
+                        "intro": "View, review and make descisions on Data Access Requests submitted to my Data Custodian.",
+                        "primaryInvestigator": "Primary investigator",
+                        "organisation": "Organisation",
+                        "datasets": "Datasets",
+                        "lastActivity": "Last activity",
+                        "editApplication": "Add comments or change application status",
+                        "viewApplication": "View application form and any comments",
+                        "deleteApplication": "Delete application",
+                        "withdrawApplication": "Withdraw application",
+                        "daysSinceStart": " days since start",
+                        "deleteTitle": "Are you sure you want to delete this application?",
+                        "deleteIntro": "This action is permanent, and the information cannot be recovered.",
+                        "withdrawTitle": "Are you sure you want to withdraw this application?",
+                        "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian."
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
@@ -536,7 +581,9 @@
                             "downloadButtonText": "Download metadata template",
                             "successMessage": "Dataset successfully created",
                             "upload": "Upload",
-                            "returnButtonText": "View dataset in 'Drafts' tab"
+                            "returnButtonText": "View dataset in 'Drafts' tab",
+                            "errorNoMatchingPid": "The summary.dataCustodian.identifier is: {dataCustodianId} which does not match your teams identifier: {teamPid}.",
+                            "errorNoPid": "Missing summary.dataCustodian.identifier your teams identifier is: {teamPid} please add in, this identifier before uploading."
                         }
                     }
                 },
@@ -659,9 +706,28 @@
                             "permissions": {
                                 "title": "Permissions",
                                 "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
-                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App."
+                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App.",
+                                "warning": "We recommend you update your client ID across all software using this Private App.",
+                                "modalTitle": "Are you sure you want to change permissions?",
+                                "modalContent": "When permissions are changed a notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers. We recommend you generate a new client ID on the 'Authentication' tab.",
+                                "save": "Save",
+                                "cancel": "Exit without saving",
+                                "discard": "Discard"
                             }
-                        }
+                        },
+                        "generateIdTitle": "Are you sure you want to generate a new client ID?",
+                        "generateIdMessage": "Saving a new client ID for this Private App will cause any current integrations to fail until you update your system with the new client ID. A notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers.",
+                        "generateIdConfirm": "Generate new client ID",
+                        "generateIdCancel": "Exit without generating",
+                        "appId": "App ID",
+                        "appDescription": "This is your App's unique ID. You will need it to make certain API calls.",
+                        "clientId": "Client ID",
+                        "clientDescription": "This is your App's unique client ID. You will need it to make certain API calls.",
+                        "authTitle": "Authentication credentials",
+                        "authIntro": "These authentication credentials determine how your Private App interacts with HDR UK Gateway and its permissions.",
+                        "authSettingsTitle": "Authentication settings",
+                        "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
+                        "generateClientId": "Generate new client ID"
                     }
                 },
                 "dar": {
@@ -670,13 +736,15 @@
                             "darRequest": "Data Access Request",
                             "lastSaved": "Last saved: {date}",
                             "questionsAnswered": "{questionCount} questions answered",
-                            "save": "Save now",
+                            "save": "Save draft",
                             "submit": "Submit application",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
                             "next": "Next",
-                            "missingRequiredFields": "Please check all required fields have been completed"
+                            "missingRequiredFields": "Please check all required fields have been completed",
+                            "manage": "Manage application status",
+                            "submittedOn": "Application submitted on {date}"
                         }
                     },
                     "template": {
@@ -691,7 +759,8 @@
                         },
                         "edit": {
                             "title": "Edit a template",
-                            "save": "Save Changes",
+                            "save": "Make active",
+                            "saveDraft": "Save as draft",
                             "selectedQuestions": {
                                 "title": "Selected Questions",
                                 "description": "Currently selected questions for your DAR template."
@@ -703,6 +772,24 @@
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
                             "parentQuestionOption": "Parent question option"
+                        },
+                        "list": {
+                            "title": "Manage Data Access Request Templates",
+                            "intro": "View, edit or create new Data Access Request Templates",
+                            "cardTitle": "DAR template created {createdAt}",
+                            "noTemplates": "No templates found for your team.",
+                            "published": "Published",
+                            "lastActivity": "Last activity",
+                            "numberOfQuestions": "Number of questions",
+                            "back": "Back to DAR template management",
+                            "actions": {
+                                "edit": {
+                                    "label": "Edit template"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate template"
+                                }
+                            }
                         }
                     }
                 }
@@ -1138,7 +1225,7 @@
                 "ActionBar": {
                     "contact": "Contact Data Custodian",
                     "label": "Back to search results",
-                    "submitApplication": "Submit an application",
+                    "submitApplication": "Start a Data Access Request",
                     "downloadMetadata": "Download data",
                     "downloadStarted": "Your download has started",
                     "feasibilityEnquiryButtonText": "Make a feasibility enquiry",
@@ -1375,6 +1462,7 @@
             "upload": "Select file",
             "uploadButtonText": "Upload",
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
+            "uploadHelperFilesize": "Cannot exceed 10 mb per file.",
             "uploadImage": "Upload file",
             "error": "An error has occured. Please check your file and try again"
         },
@@ -1392,6 +1480,17 @@
             "entities": "Entities",
             "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
+        },
+        "DataAccessMessages": {
+            "modalTitle": "Success!",
+            "modalContent": "Your message has been successfully submitted. Please allow some time for a response. Thank you for your patience!",
+            "actionRequiredBy": "Action required by ",
+            "messagingDashboard": "Messaging Dashboard",
+            "messagingContent": "This is where you can securely communicate with the Data Custodian. View all messages in one place, track discussions and ensure a smooth data access process here. Both the Data Custodian and applicants can see messages.",
+            "reply": "Reply",
+            "replyInfo": "Type your reply below.",
+            "send": "Send",
+            "status": "Status"
         }
     },
     "modules": {
@@ -1407,13 +1506,11 @@
         },
         "dialogs": {
             "DarEnquiryDialog": {
-                "titleEnabled": "This feature is temporarily unavailable",
-                "messageEnabled": "In the meantime, you can still contact the Data Custodian via the general enquiry or feasibility enquiry form to discuss your requirements and guide you through their Data Access Request process.",
+                "titleEnabled": "Start a Data Access Request",
                 "titleNotEnabled": "Data access requests not enabled for this Data Custodian",
                 "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
                 "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
-                "feasibilityEnquiryButton": "Make feasibility enquiry for this dataset",
-                "generalEnquiryButton": "Make general enquiry for this dataset",
+                "requestAccessButton": "Request Access",
                 "accessInformationButton": "Access information",
                 "feasibilityEnquiryLink": "feasibility enquiry",
                 "generalEnquiryLink": "general enquiry"
@@ -1513,6 +1610,10 @@
                 "collectionSource": "Collection source",
                 "noCollectionSource": "No collection sources found"
             },
+            "DarDatasetQuickView": {
+                "datasets": "Datasets",
+                "otherCustodianDatasets": "Other Custodian Datasets"
+            },
             "FeasibilityEnquiryDialog": {
                 "enquire": "Make feasibility enquiry for this dataset only",
                 "addToLibrary": "Add to library and continue searching",
@@ -1542,7 +1643,31 @@
                 },
                 "cancel": "Cancel",
                 "search": "Search"
+            },
+            "DarManageDialog": {
+                "darRequest": "Data Access Request",
+                "draftDesc": "Change status to DRAFT",
+                "draftInfo": "Provide clear guidance to the applicant for the changes required before the applicant re-submits the DAR application for reviews. Changing the status to DRAFT allows the applicant to edit the content of the application form.",
+                "draftButtonText": "Draft",
+                "approvedDesc": "Change status to APPROVED",
+                "approvedInfo": "Any comments or conditions of approval.",
+                "approvedButtonText": "Approve",
+                "rejectedDesc": "Change status to REJECTED",
+                "rejectedInfo": "Any comments or notes regarding the rejection.",
+                "rejectedButtonText": "Reject",
+                "changeStatus": "Change Application Status",
+                "intro": "Use the options below to log your decision about this application."
+            },
+            "DarActionDialog": {
+                "actionPermanent": "I unerstand this action is permanent",
+                "yes": "Yes",
+                "no": "No"
             }
+        }
+    },
+    "hooks": {
+        "UseDataAccessRequest": {
+            "failedToCreate": "Failed to create DAR application"
         }
     }
 }

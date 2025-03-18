@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { get, isArray, isEmpty, isObject, set } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Metadata, Revision } from "@/interfaces/Dataset";
+import { FileUploadFields } from "@/interfaces/FileUpload";
 import {
     FormHydration,
     FormHydrationField,
@@ -272,7 +273,8 @@ const renderFormHydrationField = (
     { name, required, component, placeholder, ...rest }: FormHydrationField,
     control: Control<FormValues>,
     nameOverride?: string,
-    setActiveField?: (fieldName: string) => void
+    setActiveField?: (fieldName: string) => void,
+    fileUploadFields?: FileUploadFields
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
     const { options } = rest;
@@ -315,6 +317,7 @@ const renderFormHydrationField = (
             onFocus={() => setActiveField && setActiveField(name)}
             {...rest}
             label={name || ""}
+            {...fileUploadFields}
         />
     );
 };

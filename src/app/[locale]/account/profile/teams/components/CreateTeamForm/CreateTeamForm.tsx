@@ -369,7 +369,7 @@ const CreateTeamForm = () => {
 
                                         await editTeam(createdTeamId, {
                                             ...getValues(),
-                                            team_logo: response as string,
+                                            team_logo: response.file_location,
                                         });
 
                                         push(Routes.ACCOUNT_TEAMS);

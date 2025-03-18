@@ -30,7 +30,7 @@ describe("delete", () => {
                 },
             }
         );
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("success");
         expect(apiUtils.successNotification).not.toHaveBeenCalled();
         expect(apiUtils.errorNotification).not.toHaveBeenCalled();
     });
