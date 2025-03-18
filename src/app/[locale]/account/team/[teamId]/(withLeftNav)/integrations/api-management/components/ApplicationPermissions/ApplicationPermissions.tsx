@@ -39,6 +39,9 @@ interface ApplicationPermissionsProps {
     isTabView?: boolean;
     application?: Application;
 }
+
+type ReadKey = "datasets.read" | "dur.read" | "tools.read" | "collections.read";
+
 const TRANSLATION_PATH = `pages.account.team.integrations.apiManagement.manage.permissions`;
 
 const ApplicationPermissions = ({
@@ -109,10 +112,61 @@ const ApplicationPermissions = ({
         }
     );
 
+    const collectionsFields = watch([
+        "collections.create",
+        "collections.delete",
+        "collections.update",
+    ]);
+
+    const toolsFields = watch(["tools.create", "tools.delete", "tools.update"]);
+
+    const datasetsFields = watch([
+        "datasets.create",
+        "datasets.delete",
+        "datasets.update",
+    ]);
+
+    const durFields = watch(["dur.create", "dur.delete", "dur.update"]);
+
+    const fieldGroups = {
+        collections: collectionsFields,
+        tools: toolsFields,
+        datasets: datasetsFields,
+        dur: durFields,
+    };
+
+    // Auto set read permission to true if create, update or delete checked
+    useEffect(() => {
+        Object.entries(fieldGroups)
+            .filter(([_, fields]) => fields.some(Boolean))
+            .forEach(([key]) => {
+                const readKey = `${key}.read` as ReadKey;
+                setValue(readKey, true);
+            });
+    }, [
+        collectionsFields,
+        toolsFields,
+        datasetsFields,
+        durFields,
+        formState.dirtyFields,
+    ]);
+
+    const columnReadDisabled = useMemo(() => {
+        return {
+            collections: collectionsFields.some(v => v === true),
+            tools: toolsFields.some(v => v === true),
+            datasets: datasetsFields.some(v => v === true),
+            dur: durFields.some(v => v === true),
+        };
+    }, [collectionsFields, toolsFields, datasetsFields, durFields]);
+
     /* Memoise columns using 'getColumns' from form config  */
     const columns = useMemo(() => {
-        return getColumns<AppPermissionDefaultValues>(control, setValue, watch);
-    }, [control]);
+        return getColumns<AppPermissionDefaultValues>(
+            control,
+            columnReadDisabled
+        );
+    }, [control, columnReadDisabled]);
 
     const onSubmit = useCallback(
         async (updatedPermissions: AppPermissionDefaultValues) => {
