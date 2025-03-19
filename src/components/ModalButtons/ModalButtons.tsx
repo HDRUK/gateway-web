@@ -18,6 +18,7 @@ export interface ModalButtonProps {
         buttonText: string;
         buttonProps?: ButtonProps;
     };
+    shouldHideModal?: boolean;
 }
 
 const ModalButtons = ({
@@ -30,6 +31,7 @@ const ModalButtons = ({
     confirmText = "Confirm",
     confirmType = "button" as ConfirmType,
     tertiaryButton,
+    shouldHideModal = true,
 }: ModalButtonProps) => {
     const { hideDialog: hideModal } = useDialog();
 
@@ -37,21 +39,30 @@ const ModalButtons = ({
         if (typeof onSuccess === "function") {
             onSuccess(props);
         }
-        hideModal();
+
+        if (shouldHideModal) {
+            hideModal();
+        }
     };
 
     const handleCancel = (props: unknown) => {
         if (typeof onCancel === "function") {
             onCancel(props);
         }
-        hideModal();
+
+        if (shouldHideModal) {
+            hideModal();
+        }
     };
 
     const handleTertiary = (props: unknown) => {
         if (typeof tertiaryButton?.onAction === "function") {
             tertiaryButton.onAction(props);
         }
-        hideModal();
+
+        if (shouldHideModal) {
+            hideModal();
+        }
     };
 
     return (

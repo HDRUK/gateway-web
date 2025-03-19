@@ -706,9 +706,28 @@
                             "permissions": {
                                 "title": "Permissions",
                                 "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
-                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App."
+                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App.",
+                                "warning": "We recommend you update your client ID across all software using this Private App.",
+                                "modalTitle": "Are you sure you want to change permissions?",
+                                "modalContent": "When permissions are changed a notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers. We recommend you generate a new client ID on the 'Authentication' tab.",
+                                "save": "Save",
+                                "cancel": "Exit without saving",
+                                "discard": "Discard"
                             }
-                        }
+                        },
+                        "generateIdTitle": "Are you sure you want to generate a new client ID?",
+                        "generateIdMessage": "Saving a new client ID for this Private App will cause any current integrations to fail until you update your system with the new client ID. A notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers.",
+                        "generateIdConfirm": "Generate new client ID",
+                        "generateIdCancel": "Exit without generating",
+                        "appId": "App ID",
+                        "appDescription": "This is your App's unique ID. You will need it to make certain API calls.",
+                        "clientId": "Client ID",
+                        "clientDescription": "This is your App's unique client ID. You will need it to make certain API calls.",
+                        "authTitle": "Authentication credentials",
+                        "authIntro": "These authentication credentials determine how your Private App interacts with HDR UK Gateway and its permissions.",
+                        "authSettingsTitle": "Authentication settings",
+                        "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
+                        "generateClientId": "Generate new client ID"
                     }
                 },
                 "dar": {
@@ -753,6 +772,24 @@
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
                             "parentQuestionOption": "Parent question option"
+                        },
+                        "list": {
+                            "title": "Manage Data Access Request Templates",
+                            "intro": "View, edit or create new Data Access Request Templates",
+                            "cardTitle": "DAR template created {createdAt}",
+                            "noTemplates": "No templates found for your team.",
+                            "published": "Published",
+                            "lastActivity": "Last activity",
+                            "numberOfQuestions": "Number of questions",
+                            "back": "Back to DAR template management",
+                            "actions": {
+                                "edit": {
+                                    "label": "Edit template"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate template"
+                                }
+                            }
                         }
                     }
                 }

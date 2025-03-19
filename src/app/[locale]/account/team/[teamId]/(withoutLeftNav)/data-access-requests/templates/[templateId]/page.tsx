@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
 import { RouteName } from "@/consts/routeName";
-import EditTemplate from "../components/EditTemplate";
+import EditTemplate from "./components/EditTemplate";
 
 const EditTemplatePage = ({
     params,
