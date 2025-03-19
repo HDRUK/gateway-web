@@ -1,4 +1,4 @@
-[![LICENCE](https://img.shields.io/github/license/HDRUK/gateway-web-2)](https://github.com/HDRUK/gateway-web-2/blob/dev/LICENSE)
+[![LICENCE](https://img.shields.io/github/license/HDRUK/gateway-web)](https://github.com/HDRUK/gateway-web/blob/dev/LICENSE)
 [![Support](https://img.shields.io/badge/Supported%20By-HDR%20UK-blue)](https://hdruk.ac.uk)
 
 # HDR UK Gateway - Frontend (Next.js)
@@ -32,7 +32,7 @@ git clone https://github.com/HDRUK/gateway-web-2
 
 #### 2️⃣ Navigate to the project directory
 ```bash
-cd gateway-web-2
+cd gateway-web
 ```
 
 #### 3️⃣ Set up environment variables
