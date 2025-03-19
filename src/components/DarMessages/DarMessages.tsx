@@ -130,7 +130,7 @@ const DarMessages = ({
     return (
         <Box sx={{ height: "100%", p: 0 }}>
             <Box sx={{ p: 3 }}>
-                {actionRequiredApplicant !== undefined && (
+                {actionRequiredApplicant !== undefined && reviewComments && (
                     <>
                         <Typography
                             variant="h2"

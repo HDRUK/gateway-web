@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
     DarApplication,
     DarApplicationAnswer,
@@ -63,6 +63,7 @@ import {
     isFirstSection,
     renderFormHydrationField,
 } from "@/utils/formHydration";
+import notFound from "@/app/not-found";
 import DarFormBanner from "./DarFormBanner";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
@@ -87,6 +88,7 @@ const ApplicationSection = ({
 
     const { user } = useAuth();
     const { showDialog } = useDialog();
+    const { push } = useRouter();
 
     const searchParams = useSearchParams();
     const teamId = searchParams?.get("teamId");
@@ -213,9 +215,7 @@ const ApplicationSection = ({
                 ? formData[PROJECT_TITLE_FIELD]
                 : getValues(PROJECT_TITLE_FIELD),
             applicant_id: data.applicant_id,
-            submission_status: formData
-                ? DarApplicationStatus.SUBMITTED
-                : DarApplicationStatus.DRAFT,
+            submission_status: DarApplicationStatus.DRAFT,
         };
 
         const answers = Object.entries(formData ?? getValues())
@@ -230,14 +230,22 @@ const ApplicationSection = ({
                     visibleQuestionIds?.includes(a.question_id)
             );
 
-        const saveResponse = await updateAnswers(applicationId, {
+        await updateAnswers(applicationId, {
             ...applicationData,
             answers,
         });
 
-        if (saveResponse) {
-            setLastSavedDate(new Date());
+        if (formData) {
+            await updateApplication(applicationId, {
+                submission_status: DarApplicationStatus.SUBMITTED,
+            });
+
+            push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+            );
         }
+
+        setLastSavedDate(new Date());
     };
 
     const handleSave = async (formData: DarApplicationResponses) => {
@@ -409,11 +417,16 @@ const ApplicationSection = ({
 
     // If applicant action required, jump to messages section
     useEffect(() => {
-        if (!teamApplication || actionRequiredApplicant === undefined) {
+        if (sectionId) {
+            return undefined;
+        }
+
+        if (!teamApplication && actionRequiredApplicant === undefined) {
             return undefined;
         }
 
         if (
+            reviews?.length &&
             teamApplication?.approval_status ===
                 DarApplicationApprovalStatus.FEEDBACK &&
             ((isResearcher && actionRequiredApplicant) ||
@@ -444,6 +457,10 @@ const ApplicationSection = ({
 
         setLastSavedDate(new Date(teamApplication.updated_at));
     }, [teamApplication]);
+
+    if (!teamApplication && teamId) {
+        notFound();
+    }
 
     if (sectionId === undefined) {
         return <Loading />;
