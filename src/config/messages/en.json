@@ -414,7 +414,8 @@
                         "deleteTitle": "Are you sure you want to delete this application?",
                         "deleteIntro": "This action is permanent, and the information cannot be recovered.",
                         "withdrawTitle": "Are you sure you want to withdraw this application?",
-                        "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian."
+                        "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian.",
+                        "dataAccessRequests": "Data Access Request"
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
@@ -1659,7 +1660,7 @@
                 "intro": "Use the options below to log your decision about this application."
             },
             "DarActionDialog": {
-                "actionPermanent": "I unerstand this action is permanent",
+                "actionPermanent": "I understand this action is permanent",
                 "yes": "Yes",
                 "no": "No"
             }
