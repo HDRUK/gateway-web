@@ -215,9 +215,7 @@ const ApplicationSection = ({
                 ? formData[PROJECT_TITLE_FIELD]
                 : getValues(PROJECT_TITLE_FIELD),
             applicant_id: data.applicant_id,
-            submission_status:
-                teamApplication?.submission_status ||
-                DarApplicationStatus.DRAFT,
+            submission_status: DarApplicationStatus.DRAFT,
         };
 
         const answers = Object.entries(formData ?? getValues())
@@ -237,19 +235,17 @@ const ApplicationSection = ({
             answers,
         });
 
-        await updateApplication(applicationId, {
-            submission_status: formData
-                ? DarApplicationStatus.SUBMITTED
-                : DarApplicationStatus.DRAFT,
-        });
-
-        setLastSavedDate(new Date());
-
         if (formData) {
+            await updateApplication(applicationId, {
+                submission_status: DarApplicationStatus.SUBMITTED,
+            });
+
             push(
                 `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
             );
         }
+
+        setLastSavedDate(new Date());
     };
 
     const handleSave = async (formData: DarApplicationResponses) => {
@@ -422,7 +418,7 @@ const ApplicationSection = ({
     // If applicant action required, jump to messages section
     useEffect(() => {
         if (sectionId) {
-            return;
+            return undefined;
         }
 
         if (!teamApplication && actionRequiredApplicant === undefined) {
