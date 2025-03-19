@@ -1,5 +1,5 @@
 {
-  "name": "gateway-web-2",
+  "name": "gateway-web",
   "version": "2.4.1",
   "private": true,
   "scripts": {
