@@ -11,6 +11,7 @@ import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { beforeYouBeginSection } from "@/config/forms/dataAccessApplication";
+import notFound from "@/app/not-found";
 import ApplicationSection from "./ApplicationSection";
 
 interface ApplicationProps {
@@ -36,9 +37,10 @@ const Application = ({ applicationId }: ApplicationProps) => {
         ? `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`
         : `${apis.teamsV1Url}/${params?.teamId}/dar/applications/${applicationId}`;
 
-    const { data } = useGet<DarApplication>(darApplicationEndpoint, {
+    const { data, isLoading } = useGet<DarApplication>(darApplicationEndpoint, {
         itemName: "DAR Application",
         shouldFetch: !!user?.id || !!params?.teamId,
+        errorNotificationsOn: false,
     });
 
     const { data: userAnswers } = useGet<DarApplicationAnswer[]>(
@@ -46,11 +48,16 @@ const Application = ({ applicationId }: ApplicationProps) => {
         {
             itemName: "DAR Application",
             shouldFetch: !!user?.id || !!params?.teamId,
+            errorNotificationsOn: false,
         }
     );
 
     if (!(data && userAnswers && sections)) {
         return <Loading />;
+    }
+
+    if (!data && !isLoading) {
+        notFound();
     }
 
     return (
