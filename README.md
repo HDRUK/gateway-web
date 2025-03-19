@@ -27,7 +27,7 @@ Ensure you have the following installed:
 #### 1️⃣ Clone the repository
 Open a terminal and execute:
 ```bash
-git clone https://github.com/HDRUK/gateway-web-2
+git clone https://github.com/HDRUK/gateway-web
 ```
 
 #### 2️⃣ Navigate to the project directory
