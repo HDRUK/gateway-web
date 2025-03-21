@@ -68,11 +68,14 @@ const createFileUploadConfig = (
     questionId: string,
     component: ComponentTypes,
     applicationId: string,
+    fileDownloadApiPath: string | undefined,
+    isResearcher: boolean,
     setValue: UseFormSetValue<DarApplicationResponses>,
     getValues: UseFormGetValues<DarApplicationResponses>,
-    removeUploadedFile: (id: number | string) => Promise<unknown>
+    removeUploadedFile?: (id: number | string) => Promise<unknown>
 ): FileUploadFields => {
     return {
+        fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
             const newFile = { filename: response.filename, id: response.id };
@@ -99,20 +102,24 @@ const createFileUploadConfig = (
                 );
             }
         },
-        onFileRemove: async fileId => {
-            const prev = getValues(questionId);
-            const response = await removeUploadedFile(fileId);
+        ...(isResearcher &&
+            removeUploadedFile && {
+                onFileRemove: async fileId => {
+                    const prev = getValues(questionId);
+                    const response = await removeUploadedFile(fileId);
 
-            if (response && prev && typeof prev === "object") {
-                const prevValue = prev.value as UploadedFileMetadata[];
-                setValue(
-                    questionId,
-                    { value: prevValue.filter(v => v.id !== fileId) },
-                    { shouldValidate: true }
-                );
-            }
-        },
+                    if (response && prev && typeof prev === "object") {
+                        const prevValue = prev.value as UploadedFileMetadata[];
+                        setValue(
+                            questionId,
+                            { value: prevValue.filter(v => v.id !== fileId) },
+                            { shouldValidate: true }
+                        );
+                    }
+                },
+            }),
         allowReuploading: true,
+        hideUpload: !isResearcher,
     };
 };
 

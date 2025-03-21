@@ -104,6 +104,10 @@ const ApplicationSection = ({
         ? `${apis.usersV1Url}/${user?.id}/dar/applications`
         : `${apis.teamsV1Url}/${params?.teamId}/dar/applications`;
 
+    const teamApplication = useMemo(() => {
+        return data.teams.find(team => team.team_id.toString() === teamId);
+    }, [data, teamId]);
+
     const [selectedField, setSelectedField] = useState<string>();
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
     const [guidanceText, setGuidanceText] = useState<string>();
@@ -313,13 +317,22 @@ const ApplicationSection = ({
                     field.component === inputComponents.FileUpload ||
                     field.component === inputComponents.FileUploadMultiple
                 ) {
+                    const fileDownloadApiPath = isResearcher
+                        ? `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}/files`
+                        : `${apis.teamsV1Url}/${params?.teamId}/dar/applications/${applicationId}/files`;
+
                     fileUploadFields = createFileUploadConfig(
                         field.question_id.toString(),
                         field.component,
                         params!.applicationId,
+                        fileDownloadApiPath,
+                        isResearcher,
                         setValue,
                         getValues,
-                        removeUploadedFile
+                        teamApplication?.submission_status !==
+                            DarApplicationStatus.SUBMITTED
+                            ? removeUploadedFile
+                            : undefined
                     );
                 }
 
@@ -410,10 +423,6 @@ const ApplicationSection = ({
             reviewComments && !reviewComments[reviewComments.length - 1].user_id
         );
     }, [reviews]);
-
-    const teamApplication = useMemo(() => {
-        return data.teams.find(team => team.team_id.toString() === teamId);
-    }, [data, teamId]);
 
     // If applicant action required, jump to messages section
     useEffect(() => {
