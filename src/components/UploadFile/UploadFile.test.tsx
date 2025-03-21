@@ -37,7 +37,7 @@ describe("UploadFile Component", () => {
                 onFileRemove={onFileRemove}
                 fileDownloadApiPath="/file/download"
                 label="Uploaded File"
-                allowMultipleFiles={true}
+                allowMultipleFiles
             />
         );
 
@@ -59,7 +59,7 @@ describe("UploadFile Component", () => {
                 onFileRemove={onFileRemove}
                 fileDownloadApiPath="/file/download"
                 label="Uploaded File"
-                allowMultipleFiles={true}
+                allowMultipleFiles
             />
         );
 
@@ -81,7 +81,7 @@ describe("UploadFile Component", () => {
                 onFileRemove={onFileRemove}
                 fileDownloadApiPath="/file/download"
                 label="Uploaded File"
-                allowMultipleFiles={false}
+                allowMultipleFiles
             />
         );
 
@@ -96,7 +96,7 @@ describe("UploadFile Component", () => {
                 onFileRemove={onFileRemove}
                 fileDownloadApiPath="/file/download"
                 label="Uploaded File"
-                allowMultipleFiles={true}
+                allowMultipleFiles
             />
         );
 
