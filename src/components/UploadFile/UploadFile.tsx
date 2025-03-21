@@ -21,8 +21,8 @@ export type EventUploadedImage = {
     height: number;
 };
 
-type UploadFormData = {
-    upload: string;
+export type UploadFormData = {
+    upload: object;
 };
 
 export interface UploadFileProps {
@@ -336,6 +336,7 @@ const UploadFile = ({
                                         )}
                                         {onFileRemove && (
                                             <IconButton
+                                                aria-label={`Remove file ${file.filename}`}
                                                 onClick={() =>
                                                     onFileRemove(file.id)
                                                 }>

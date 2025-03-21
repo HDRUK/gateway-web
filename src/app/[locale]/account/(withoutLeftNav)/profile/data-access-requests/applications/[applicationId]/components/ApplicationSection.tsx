@@ -105,7 +105,7 @@ const ApplicationSection = ({
         : `${apis.teamsV1Url}/${params?.teamId}/dar/applications`;
 
     const teamApplication = useMemo(() => {
-        return data.teams.find(team => team.team_id.toString() === teamId);
+        return data?.teams?.find(team => team.team_id.toString() === teamId);
     }, [data, teamId]);
 
     const [selectedField, setSelectedField] = useState<string>();
