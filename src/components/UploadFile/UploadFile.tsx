@@ -322,7 +322,8 @@ const UploadFile = ({
                                             justifyContent: "space-between",
                                             pl: 0,
                                             pb: 0,
-                                        }}>
+                                        }}
+                                        key={file.id}>
                                         {fileDownloadApiPath ? (
                                             <Link
                                                 href={`${fileDownloadApiPath}/${file.id}/download`}
