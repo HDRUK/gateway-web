@@ -72,7 +72,7 @@ const useDataAccessRequest = () => {
                     }
 
                     const applicationId = res;
-                    const redirectUrl = `/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATION}/${applicationId}`;
+                    const redirectUrl = `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}/${applicationId}`;
                     router.push(redirectUrl);
                 })
                 .catch(() => {
