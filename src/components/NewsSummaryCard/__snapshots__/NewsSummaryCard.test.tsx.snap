@@ -27,22 +27,20 @@ exports[`NewsSummaryCard should render component 1`] = `
       <div
         class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-1n7om1r-MuiTypography-root"
       >
-        <div
-          class="LinesEllipsis  "
+        <p
+          class="MuiTypography-root MuiTypography-body1 mui-style-yyl2fl-MuiTypography-root"
         >
           This is a headline
-          <wbr />
-        </div>
+        </p>
       </div>
       <div
         class="MuiTypography-root MuiTypography-body2 mui-style-1qlfv52-MuiTypography-root"
       >
-        <div
-          class="LinesEllipsis  "
+        <p
+          class="MuiTypography-root MuiTypography-body1 mui-style-o2cank-MuiTypography-root"
         >
           Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
-          <wbr />
-        </div>
+        </p>
       </div>
       <div
         class="MuiBox-root mui-style-164r41r"

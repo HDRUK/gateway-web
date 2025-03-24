@@ -33,6 +33,8 @@ const EllipsisLineLimit = ({
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
+                    fontSize: "inherit",
+                    fontWeight: "inherit",
                 }}>
                 {text}
             </Typography>
