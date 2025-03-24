@@ -38,6 +38,15 @@ export default async function CreateDatasetPage({
         teamId
     );
 
+    if (formJSON) {
+        // here be dragons
+        // for some reason reeact-form-hook does not like Organisation Logo containing a space...
+        // its not even used in the form... we just store it then and pass it back to the api... its just not happy about it.. the poor thing...
+        const orgImage = formJSON.defaultValues["Organisation Logo"] as string;
+        if (orgImage) {
+            formJSON.defaultValues["Organisation Logo"] = encodeURI(orgImage);
+        }
+    }
     return (
         <ProtectedAccountRoute
             permissions={permissions}
