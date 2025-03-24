@@ -59,10 +59,10 @@ const Upload = (props: UploadProps) => {
             <FormControlLabel
                 control={
                     <Input
+                        aria-label={label}
                         inputProps={{
                             accept: acceptFileTypes,
                         }}
-                        id="file-upload"
                         type="file"
                         {...rest}
                         {...fieldProps}
