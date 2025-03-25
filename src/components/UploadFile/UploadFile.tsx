@@ -9,6 +9,8 @@ import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { DeleteForeverOutlinedIcon } from "@/consts/icons";
+import { ImageValidationError } from "@/consts/image";
+import { validateImageDimensions } from "@/utils/imageValidation";
 import Button from "../Button";
 import FormInputWrapper from "../FormInputWrapper";
 import Link from "../Link";
@@ -31,8 +33,7 @@ export interface UploadFileProps {
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
     isUploading?: Dispatch<SetStateAction<boolean>>;
-    onBeforeUploadCheck?: (height: number, width: number) => boolean;
-    onFileCheckFailed?: () => void;
+    onFileCheckFailed?: (reason?: ImageValidationError) => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
     onFileChange?: (file: File) => void;
     onFileUploaded?: (uploadResponse?: FileUpload) => void;
@@ -59,7 +60,6 @@ const UploadFile = ({
     acceptedFileTypes,
     fileSelectButtonText,
     isUploading,
-    onBeforeUploadCheck,
     onFileCheckFailed,
     onFileCheckSucceeded,
     onFileChange,
@@ -166,39 +166,6 @@ const UploadFile = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileId, fileScanStatus]);
 
-    const imageValidation = async (file: File) => {
-        try {
-            await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    const image = new Image();
-                    image.src = e?.target?.result as string;
-                    image.onload = function () {
-                        if (onBeforeUploadCheck) {
-                            const checked = onBeforeUploadCheck(
-                                image.height,
-                                image.width
-                            );
-                            return checked
-                                ? resolve(null)
-                                : reject(
-                                      new Error(
-                                          "The image does not pass it's checks"
-                                      )
-                                  );
-                        }
-
-                        return resolve(true);
-                    };
-                };
-            });
-            return true;
-        } catch (_) {
-            return false;
-        }
-    };
-
     const onSubmit = async () => {
         if (!file) {
             return;
@@ -278,15 +245,24 @@ const UploadFile = ({
                                 name="upload"
                                 uploadSx={{ display: "none" }}
                                 acceptFileTypes={acceptedFileTypes}
-                                onFileChange={(file: File) => {
+                                onFileChange={async (file: File) => {
+                                    if (!file) {
+                                        return;
+                                    }
+
                                     if (file.type.startsWith("image/")) {
-                                        imageValidation(file).then(result => {
-                                            setFile(file);
-                                            onFileChange?.(file);
-                                            if (!result) {
-                                                onFileCheckFailed?.();
-                                            }
-                                        });
+                                        validateImageDimensions(file)
+                                            .then(() => {
+                                                setFile(file);
+                                                onFileChange?.(file);
+                                            })
+                                            .catch(
+                                                (
+                                                    reason: ImageValidationError
+                                                ) => {
+                                                    onFileCheckFailed?.(reason);
+                                                }
+                                            );
                                     } else {
                                         setFile(file);
                                         onFileChange?.(file);
