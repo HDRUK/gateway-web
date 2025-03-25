@@ -110,6 +110,7 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_GEOGRAPHIC_LOCATION,
     ],
 };
+const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
@@ -123,6 +124,7 @@ const FilterPanel = ({
     aggregations,
     updateStaticFilter,
     getParamString,
+    showEuropePmcModal,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
@@ -134,6 +136,7 @@ const FilterPanel = ({
     aggregations?: Aggregations;
     updateStaticFilter: (filterSection: string, value: string) => void;
     getParamString: (paramName: string) => string | null;
+    showEuropePmcModal: () => void;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     // filterValues controls the selected values of each filter
@@ -380,11 +383,15 @@ const FilterPanel = ({
                     <FilterSectionRadio
                         filterItem={filterItem}
                         handleRadioChange={value => {
-                            setStaticFilterValues({
-                                ...staticFilterValues,
+                            setStaticFilterValues(prev => ({
+                                ...prev,
                                 [label]: { [value]: true },
-                            });
+                            }));
                             updateStaticFilter(label, value);
+
+                            if (value === EUROPE_PMC_SOURCE_FIELD) {
+                                showEuropePmcModal();
+                            }
                         }}
                         value={
                             Object.keys(

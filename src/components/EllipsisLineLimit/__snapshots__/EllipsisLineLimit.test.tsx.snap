@@ -2,11 +2,10 @@
 
 exports[`EllipsisLineLimit should render component 1`] = `
 <div>
-  <div
-    class="LinesEllipsis  "
+  <p
+    class="MuiTypography-root MuiTypography-body1 mui-style-yyl2fl-MuiTypography-root"
   >
     Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
-    <wbr />
-  </div>
+  </p>
 </div>
 `;
