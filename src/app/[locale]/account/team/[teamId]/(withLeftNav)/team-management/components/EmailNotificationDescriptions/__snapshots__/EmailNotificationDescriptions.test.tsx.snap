@@ -55,7 +55,7 @@ exports[`EmailNotificationDescriptions should render component 1`] = `
         </li>
       </ul>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium mui-style-r2y66j-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium MuiButton-root MuiButton-link MuiButton-linkPrimary MuiButton-sizeMedium MuiButton-linkSizeMedium mui-style-qjcj8p-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >

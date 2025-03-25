@@ -7,12 +7,16 @@ import Button from "@/components/Button";
 interface ApiWarningProps extends CustomContentProps {
     id: string;
     showDismissButton?: boolean;
+    title: string;
     action: ReactNode;
     message: string;
 }
 
 const ApiWarning = React.forwardRef<HTMLDivElement, ApiWarningProps>(
-    ({ id, message, action, showDismissButton = true }, ref) => {
+    (
+        { id, message, action, showDismissButton = true, title = "Warning" },
+        ref
+    ) => {
         const handleDismiss = useCallback(() => {
             closeSnackbar(id);
         }, [id]);
@@ -27,14 +31,16 @@ const ApiWarning = React.forwardRef<HTMLDivElement, ApiWarningProps>(
                         color: "#856505",
                         fontSize: "14px",
                     }}>
-                    <CardHeader
-                        title="Warning"
-                        subheaderTypographyProps={{
-                            color: "#856505",
-                            fontSize: "14px",
-                        }}
-                        titleTypographyProps={{ fontSize: "18px" }}
-                    />
+                    {title && (
+                        <CardHeader
+                            title={title}
+                            subheaderTypographyProps={{
+                                color: "#856505",
+                                fontSize: "14px",
+                            }}
+                            titleTypographyProps={{ fontSize: "18px" }}
+                        />
+                    )}
                     <CardContent>{message}</CardContent>
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (

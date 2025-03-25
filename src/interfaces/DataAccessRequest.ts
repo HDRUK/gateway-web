@@ -1,4 +1,8 @@
 import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
+import {
+    DarApplicationApprovalStatus,
+    DarApplicationStatus,
+} from "@/consts/dataAccess";
 import { ComponentTypes } from "./ComponentTypes";
 import { UploadedFileMetadata } from "./FileUpload";
 
@@ -75,9 +79,19 @@ interface DarApplicationAnswer {
 interface DarApplication {
     id: number;
     questions: DarApplicationQuestion[];
-    submission_status: string;
     project_title: string;
     applicant_id: number;
+    teams: {
+        approval_status: DarApplicationApprovalStatus;
+        created_at: string;
+        dar_application_id: number;
+        id: number;
+        review_id: number;
+        submission_status: DarApplicationStatus;
+        team_id: number;
+        updated_at: string;
+        submission_date: string;
+    }[];
 }
 
 interface DarApplicationResponses {

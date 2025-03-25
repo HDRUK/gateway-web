@@ -9,6 +9,7 @@ import Dialog from "@/components/Dialog";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
+import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = "modules.dialogs.DarDatasetQuickView";
@@ -17,7 +18,7 @@ const CHARACTER_LIMIT = 50;
 
 interface DarDatasetQuickViewDialogProps {
     application: DataAccessRequestApplication;
-    teamId: string;
+    teamId?: string;
 }
 type Dataset = {
     dataset_id: number;
@@ -36,12 +37,14 @@ interface CustodianDatasetsProps {
     group: DatasetGroup;
     showCustodianName?: boolean;
     push: (url: string) => void;
+    hideModal: () => void;
 }
 
 const CustodianDatasets: FC<CustodianDatasetsProps> = ({
     group,
     showCustodianName = true,
     push,
+    hideModal,
 }) => {
     return (
         <Box key={group.custodian_id} sx={{ pl: 0, pr: 0 }}>
@@ -57,11 +60,12 @@ const CustodianDatasets: FC<CustodianDatasetsProps> = ({
                         text={dataset.dataset_name}
                         isButton
                         characterLimit={CHARACTER_LIMIT}
-                        onClick={() =>
+                        onClick={() => {
+                            hideModal();
                             push(
                                 `/${RouteName.DATASET_ITEM}/${dataset.dataset_id}`
-                            )
-                        }
+                            );
+                        }}
                     />
                 ))}
             </Box>
@@ -76,6 +80,7 @@ const DatasetQuickViewDialog = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
     const { push } = useRouter();
+    const { hideModal } = useModal();
 
     const formattedTitle =
         application.project_title.length > TITLE_CHARACTER_LIMIT
@@ -128,7 +133,7 @@ const DatasetQuickViewDialog = ({
     const teamDatasets = useMemo(
         () =>
             groupedDatasets.filter(
-                group => group.custodian_id.toString() === teamId
+                group => group.custodian_id.toString() === teamId?.toString()
             ),
         [groupedDatasets, teamId]
     );
@@ -136,7 +141,7 @@ const DatasetQuickViewDialog = ({
     const otherDatasets = useMemo(
         () =>
             groupedDatasets.filter(
-                group => group.custodian_id.toString() !== teamId
+                group => group.custodian_id.toString() !== teamId?.toString()
             ),
         [groupedDatasets, teamId]
     );
@@ -149,26 +154,33 @@ const DatasetQuickViewDialog = ({
             <MuiDialogContent sx={{ paddingX: 4 }}>
                 <Typography variant="h3">{t("datasets")}</Typography>
 
-                {teamDatasets.map(group => (
-                    <CustodianDatasets
-                        group={group}
-                        push={push}
-                        showCustodianName={false}
-                        key={group.custodian_id}
-                    />
-                ))}
+                {teamId &&
+                    teamDatasets.map(group => (
+                        <CustodianDatasets
+                            group={group}
+                            push={push}
+                            hideModal={hideModal}
+                            showCustodianName={false}
+                            key={group.custodian_id}
+                        />
+                    ))}
 
                 {!!otherDatasets.length && (
                     <>
-                        <Divider sx={{ mt: 2 }} />
-                        <Typography variant="h3" p={0} mb={2} mt={4}>
-                            {t("otherCustodianDatasets")}
-                        </Typography>
+                        {teamId && (
+                            <>
+                                <Divider sx={{ mt: 2 }} />
+                                <Typography variant="h3" p={0} mb={2} mt={4}>
+                                    {t("otherCustodianDatasets")}
+                                </Typography>
+                            </>
+                        )}
 
                         {otherDatasets.map(group => (
                             <CustodianDatasets
                                 group={group}
                                 push={push}
+                                hideModal={hideModal}
                                 key={group.custodian_id}
                             />
                         ))}

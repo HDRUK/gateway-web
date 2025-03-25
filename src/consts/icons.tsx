@@ -35,6 +35,7 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import DownloadIcon from "@mui/icons-material/Download";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import EditIcon from "@mui/icons-material/Edit";
+import ErrorIcon from "@mui/icons-material/Error";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -156,4 +157,5 @@ export {
     AccessTimeIcon,
     QueryBuilderOutlinedIcon,
     VisibilityOutlinedIcon,
+    ErrorIcon,
 };

@@ -8,14 +8,17 @@ import { useParams, useSearchParams } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
+import DarApplicationCard from "@/components/DarApplicationCard";
+import DarApplicationGroup from "@/components/DarApplicationGroup";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
+import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
-import apis from "@/config/apis";
+import usePatch from "@/hooks/usePatch";
 import {
     darDashboardDefaultValues,
     darDashboardSearchFilter,
@@ -27,9 +30,6 @@ import {
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { capitalise } from "@/utils/general";
-import DarApplicationCard from "../DarApplicationCard";
-
-const TRANSLATION_PATH = "pages.account.team.dataAccessRequests.applications";
 
 const STATUS = "status";
 const SUBMISSION_STATUS = [
@@ -53,10 +53,19 @@ interface CountStatusActionRequired {
     action_required?: number;
     info_required?: number;
 }
+interface DarDashboardProps {
+    translationPath: string;
+    darApiPath: string;
+}
 
-export default function Dashboard() {
-    const t = useTranslations(TRANSLATION_PATH);
+export default function DarDashboard({
+    translationPath,
+    darApiPath,
+}: DarDashboardProps) {
+    const t = useTranslations(translationPath);
     const params = useParams<{ teamId: string }>();
+    const isResearcher = !params?.teamId;
+
     const searchParams = useSearchParams();
 
     const { control, watch, setValue } = useForm({
@@ -144,25 +153,44 @@ export default function Dashboard() {
     }, [actionParam]);
 
     const { data: submissionCounts } = useGet<CountStatusSubmission>(
-        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/submission_status`
+        `${darApiPath}/count/submission_status`
     );
 
     const { data: approvalCounts } = useGet<CountStatusApproval>(
-        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/approval_status`
+        `${darApiPath}/count/approval_status`
     );
 
     const { data: actionRequiredCounts } = useGet<CountStatusActionRequired>(
-        `${apis.teamsV1Url}/${params?.teamId}/dar/applications/count/action_required`
+        `${darApiPath}/count/action_required`
     );
 
-    const { data, isLoading } = useGet<
-        PaginationType<DataAccessRequestApplication>
-    >(
-        `${apis.teamsV1Url}/${
-            params?.teamId
-        }/dar/applications?${new URLSearchParams(queryParams)}`,
-        { keepPreviousData: true, withPagination: true }
+    const {
+        data,
+        isLoading,
+        mutate: mutateApplications,
+    } = useGet<PaginationType<DataAccessRequestApplication>>(
+        `${darApiPath}?${new URLSearchParams(queryParams)}`,
+        {
+            keepPreviousData: true,
+            withPagination: true,
+        }
     );
+
+    const deleteApplication = useDelete(darApiPath, {
+        itemName: t("dataAccessRequests"),
+    });
+
+    const updateApplication = usePatch(darApiPath, {
+        itemName: t("dataAccessRequests"),
+    });
+
+    const handleDeleteApplication = (id: number) =>
+        deleteApplication(id).then(() => mutateApplications());
+
+    const handleWithdrawApplication = (id: number) =>
+        updateApplication(id, {
+            approval_status: DarApplicationApprovalStatus.WITHDRAWN,
+        }).then(() => mutateApplications());
 
     const approvalTab = [
         {
@@ -188,6 +216,14 @@ export default function Dashboard() {
 
     const tabList = [
         { label: `All (${submissionCounts?.SUBMITTED ?? 0})`, value: "" },
+        isResearcher
+            ? {
+                  label: `${capitalise(DarApplicationStatus.DRAFT)} (${
+                      submissionCounts?.DRAFT || 0
+                  })`,
+                  value: DarApplicationStatus.DRAFT,
+              }
+            : {},
         {
             label: `${capitalise(DarApplicationStatus.SUBMITTED)} (${
                 submissionCounts?.SUBMITTED || 0
@@ -216,43 +252,74 @@ export default function Dashboard() {
             })`,
             value: DarApplicationApprovalStatus.WITHDRAWN,
         },
-    ].map(tab => ({
-        label: `${tab.label}`,
-        value: tab.value,
-        content: isLoading ? (
-            <Loading />
-        ) : (
-            <>
-                {statusParam === DarApplicationApprovalStatus.FEEDBACK && (
-                    <Tabs
-                        tabs={approvalTab}
-                        tabBoxSx={{
-                            padding: 0,
-                            background: colors.white,
-                        }}
-                        rootBoxSx={{
-                            padding: 0,
-                            borderTop: `1px solid ${colors.grey200}`,
-                            mb: 1,
-                        }}
-                        paramName="action"
-                        tabVariant="scrollable"
-                    />
-                )}
+    ]
+        .filter(tab => tab.label)
+        .map(tab => ({
+            label: `${tab.label}`,
+            value: tab.value,
+            content: isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    {statusParam === DarApplicationApprovalStatus.FEEDBACK && (
+                        <Tabs
+                            tabs={approvalTab}
+                            tabBoxSx={{
+                                padding: 0,
+                                background: colors.white,
+                            }}
+                            rootBoxSx={{
+                                padding: 0,
+                                borderTop: `1px solid ${colors.grey200}`,
+                                mb: 1,
+                            }}
+                            paramName="action"
+                            tabVariant="scrollable"
+                        />
+                    )}
 
-                <Box sx={{ display: "flex", p: 0, justifyContent: "flex-end" }}>
-                    <InputWrapper
-                        control={control}
-                        {...darDashboardSortField}
-                    />
-                </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            p: 0,
+                            justifyContent: "flex-end",
+                        }}>
+                        <InputWrapper
+                            control={control}
+                            {...darDashboardSortField}
+                        />
+                    </Box>
 
-                {data?.list?.map(item => (
-                    <DarApplicationCard application={item} key={item.id} />
-                ))}
-            </>
-        ),
-    }));
+                    {data?.list?.map(item => {
+                        const isTeamApplication =
+                            !params?.teamId && item.teams.length > 1;
+
+                        if (isTeamApplication) {
+                            return (
+                                <DarApplicationGroup
+                                    item={item}
+                                    key={item.id}
+                                    deleteApplication={handleDeleteApplication}
+                                    withdrawApplication={
+                                        handleWithdrawApplication
+                                    }
+                                />
+                            );
+                        }
+
+                        return (
+                            <DarApplicationCard
+                                application={item}
+                                key={item.id}
+                                teamId={params?.teamId}
+                                deleteApplication={handleDeleteApplication}
+                                withdrawApplication={handleWithdrawApplication}
+                            />
+                        );
+                    })}
+                </>
+            ),
+        }));
 
     return (
         <>

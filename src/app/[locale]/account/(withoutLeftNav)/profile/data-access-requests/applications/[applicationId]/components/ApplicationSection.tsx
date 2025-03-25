@@ -1,31 +1,39 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
     DarApplication,
     DarApplicationAnswer,
     DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
+import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { FileUploadFields } from "@/interfaces/FileUpload";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
+import Chip from "@/components/Chip";
+import DarMessages from "@/components/DarMessages";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
+import Loading from "@/components/Loading";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
+import DarManageDialog from "@/modules/DarManageDialog";
 import useAuth from "@/hooks/useAuth";
 import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
+import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
@@ -34,9 +42,14 @@ import {
     darApplicationValidationSchema,
     excludedQuestionFields,
     generateYupSchema,
+    LAST_SAVED_DATE_FORMAT,
+    messageSection,
 } from "@/config/forms/dataAccessApplication";
 import theme, { colors } from "@/config/theme";
-import { DarApplicationStatus } from "@/consts/dataAccess";
+import {
+    DarApplicationApprovalStatus,
+    DarApplicationStatus,
+} from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -45,10 +58,12 @@ import {
     getVisibleQuestionIds,
     mapKeysToValues,
 } from "@/utils/dataAccessRequest";
+import { formatDate } from "@/utils/date";
 import {
     isFirstSection,
     renderFormHydrationField,
 } from "@/utils/formHydration";
+import notFound from "@/app/not-found";
 import DarFormBanner from "./DarFormBanner";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
@@ -69,28 +84,50 @@ const ApplicationSection = ({
     sections,
 }: ApplicationSectionProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { user } = useAuth();
+    const commonT = useTranslations("common.dar.status");
 
-    const darApplicationEndpoint = `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}`;
+    const { user } = useAuth();
+    const { showDialog } = useDialog();
+    const { push } = useRouter();
+
+    const searchParams = useSearchParams();
+    const teamId = searchParams?.get("teamId");
+
+    const params = useParams<{
+        applicationId: string;
+        teamId?: string;
+    }>();
+
+    const isResearcher = !params?.teamId;
+
+    const darApplicationEndpoint = isResearcher
+        ? `${apis.usersV1Url}/${user?.id}/dar/applications`
+        : `${apis.teamsV1Url}/${params?.teamId}/dar/applications`;
 
     const [selectedField, setSelectedField] = useState<string>();
     const [lastSavedDate, setLastSavedDate] = useState<Date>();
     const [guidanceText, setGuidanceText] = useState<string>();
-    const [sectionId, setSectionId] = useState(0);
+    const [sectionId, setSectionId] = useState<number | undefined>(undefined);
 
     const handleChangeSection = (sectionId: number) => {
         setSectionId(sectionId);
     };
 
+    const updateApplication = usePatch(darApplicationEndpoint, {
+        itemName: "Data Access Request",
+        successNotificationsOn: false,
+    });
+
     const updateAnswers = usePut(darApplicationEndpoint, {
         itemName: "Data Access Request",
     });
 
-    const removeUploadedFile = useDelete(`${darApplicationEndpoint}/files`, {
-        itemName: "File",
-    });
-
-    const parentSections = sections?.filter(s => s.parent_section === null);
+    const removeUploadedFile = useDelete(
+        `${darApplicationEndpoint}/${applicationId}/files`,
+        {
+            itemName: "File",
+        }
+    );
 
     const getSection = (id: number) => sections?.find(s => s.id === id);
     const getParentSection = (id: number) => getSection(id)?.parent_section;
@@ -178,9 +215,7 @@ const ApplicationSection = ({
                 ? formData[PROJECT_TITLE_FIELD]
                 : getValues(PROJECT_TITLE_FIELD),
             applicant_id: data.applicant_id,
-            submission_status: formData
-                ? DarApplicationStatus.SUBMITTED
-                : DarApplicationStatus.DRAFT,
+            submission_status: DarApplicationStatus.DRAFT,
         };
 
         const answers = Object.entries(formData ?? getValues())
@@ -195,14 +230,22 @@ const ApplicationSection = ({
                     visibleQuestionIds?.includes(a.question_id)
             );
 
-        const saveResponse = await updateAnswers("", {
+        await updateAnswers(applicationId, {
             ...applicationData,
             answers,
         });
 
-        if (saveResponse) {
-            setLastSavedDate(new Date());
+        if (formData) {
+            await updateApplication(applicationId, {
+                submission_status: DarApplicationStatus.SUBMITTED,
+            });
+
+            push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+            );
         }
+
+        setLastSavedDate(new Date());
     };
 
     const handleSave = async (formData: DarApplicationResponses) => {
@@ -213,9 +256,9 @@ const ApplicationSection = ({
         await saveApplication();
     };
 
-    const currentSectionIndex = sectionId
-        ? parentSections.findIndex(section => section.id === sectionId)
-        : 0;
+    const handleManageApplication = () => {
+        showDialog(DarManageDialog, { darApplicationEndpoint, applicationId });
+    };
 
     const processedSections = new Set();
 
@@ -230,9 +273,27 @@ const ApplicationSection = ({
         </>
     );
 
-    const params = useParams<{
-        applicationId: string;
-    }>();
+    const {
+        data: reviews,
+        mutate: mutateReviews,
+        isLoading: loadingReviews,
+    } = useGet<DarReviewsResponse[]>(
+        `${darApplicationEndpoint}/${applicationId}/reviews`,
+        { keepPreviousData: true, errorNotificationsOn: false }
+    );
+
+    const parentSections = useMemo(() => {
+        const filteredSections =
+            sections?.filter(s => s.parent_section === null) || [];
+
+        return (isResearcher && reviews?.length) || !isResearcher
+            ? [...filteredSections, messageSection]
+            : filteredSections;
+    }, [sections, isResearcher, reviews]);
+
+    const currentSectionIndex = sectionId
+        ? parentSections.findIndex(section => section.id === sectionId)
+        : 0;
 
     const renderFormFields = () =>
         filteredData
@@ -275,7 +336,7 @@ const ApplicationSection = ({
                                         : "inherit",
                             }}>
                             {renderFormHydrationField(
-                                field,
+                                { ...field, disabled: !isResearcher },
                                 control,
                                 field.question_id.toString(),
                                 updateGuidanceText,
@@ -302,7 +363,10 @@ const ApplicationSection = ({
                                                             : "inherit",
                                                 }}>
                                                 {renderFormHydrationField(
-                                                    child,
+                                                    {
+                                                        ...child,
+                                                        disabled: !isResearcher,
+                                                    },
                                                     control,
                                                     child.question_id.toString(),
                                                     updateGuidanceText
@@ -332,13 +396,87 @@ const ApplicationSection = ({
         ERROR_TYPE_REQUIRED.includes(item?.type as string)
     );
 
+    const reviewComments = useMemo(
+        () => !!reviews?.length && reviews[0].comments,
+        [reviews]
+    );
+
+    const actionRequiredApplicant = useMemo(() => {
+        if (reviews === undefined) {
+            return undefined;
+        }
+
+        return (
+            reviewComments && !reviewComments[reviewComments.length - 1].user_id
+        );
+    }, [reviews]);
+
+    const teamApplication = useMemo(() => {
+        return data.teams.find(team => team.team_id.toString() === teamId);
+    }, [data, teamId]);
+
+    // If applicant action required, jump to messages section
+    useEffect(() => {
+        if (sectionId) {
+            return undefined;
+        }
+
+        if (!teamApplication && actionRequiredApplicant === undefined) {
+            return undefined;
+        }
+
+        if (
+            reviews?.length &&
+            teamApplication?.approval_status ===
+                DarApplicationApprovalStatus.FEEDBACK &&
+            ((isResearcher && actionRequiredApplicant) ||
+                (!isResearcher && !actionRequiredApplicant))
+        ) {
+            return setSectionId(messageSection.id);
+        }
+
+        return setSectionId(0);
+    }, [teamApplication, actionRequiredApplicant]);
+
+    // If team and no approval status, set to feedback
+    useEffect(() => {
+        if (teamApplication && params?.teamId) {
+            if (!teamApplication?.approval_status) {
+                updateApplication(applicationId, {
+                    approval_status: DarApplicationApprovalStatus.FEEDBACK,
+                });
+            }
+        }
+    }, [teamApplication, teamId]);
+
+    // Set initial last saved date
+    useEffect(() => {
+        if (!teamApplication) {
+            return;
+        }
+
+        setLastSavedDate(new Date(teamApplication.updated_at));
+    }, [teamApplication]);
+
+    if (!teamApplication && teamId) {
+        notFound();
+    }
+
+    if (sectionId === undefined) {
+        return <Loading />;
+    }
+
     return (
         <BoxContainer
             sx={{
                 mt: 1.75,
             }}>
             <Link
-                href={`/${RouteName.ACCOUNT}/${RouteName.DATA_ACCESS_REQUESTS}`}
+                href={
+                    isResearcher
+                        ? `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+                        : `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
+                }
                 underline="hover"
                 sx={{
                     display: "flex",
@@ -354,7 +492,15 @@ const ApplicationSection = ({
             <DarFormBanner
                 lastSavedDate={lastSavedDate}
                 projectTitle={projectTitle}
-                handleSaveAsDraft={handleSaveAsDraft}
+                buttonText={isResearcher ? "save" : "manage"}
+                buttonAction={
+                    isResearcher
+                        ? handleSaveAsDraft
+                        : teamApplication?.approval_status ===
+                          DarApplicationApprovalStatus.FEEDBACK
+                        ? handleManageApplication
+                        : undefined
+                }
             />
 
             <Box
@@ -413,32 +559,52 @@ const ApplicationSection = ({
                                                 key={field.name}
                                                 control={control}
                                                 {...field}
+                                                disabled={!isResearcher}
                                             />
                                         </Box>
                                     ))}
                                 </>
+                            ) : parentSections.find(
+                                  section => section.id === sectionId
+                              )?.name === messageSection.name ? (
+                                <DarMessages
+                                    applicationId={applicationId}
+                                    teamId={teamId!}
+                                    reviews={reviews}
+                                    mutateReviews={mutateReviews}
+                                    loadingReviews={loadingReviews}
+                                    reviewComments={reviewComments}
+                                    actionRequiredApplicant={
+                                        actionRequiredApplicant
+                                    }
+                                />
                             ) : (
                                 renderFormFields()
                             )}
                         </Box>
-                        <Box
-                            sx={{ flex: 1, overflowY: "auto" }}
-                            borderLeft={`1px solid ${theme.palette.divider}`}>
-                            {guidanceText ? (
-                                <MarkDownSanitizedWithHtml
-                                    content={guidanceText}
-                                />
-                            ) : (
-                                <Typography
-                                    sx={{
-                                        color: theme.palette.grey[500],
-                                        mt: 2,
-                                        textAlign: "center",
-                                    }}>
-                                    {t("defaultGuidance")}
-                                </Typography>
-                            )}
-                        </Box>
+
+                        {parentSections.find(
+                            section => section.id === sectionId
+                        )?.name !== messageSection.name && (
+                            <Box
+                                sx={{ flex: 1, overflowY: "auto" }}
+                                borderLeft={`1px solid ${theme.palette.divider}`}>
+                                {guidanceText ? (
+                                    <MarkDownSanitizedWithHtml
+                                        content={guidanceText}
+                                    />
+                                ) : (
+                                    <Typography
+                                        sx={{
+                                            color: theme.palette.grey[500],
+                                            mt: 2,
+                                            textAlign: "center",
+                                        }}>
+                                        {t("defaultGuidance")}
+                                    </Typography>
+                                )}
+                            </Box>
+                        )}
                     </Box>
                 </Paper>
             </Box>
@@ -457,11 +623,47 @@ const ApplicationSection = ({
                             p: 0,
                             alignItems: "center",
                         }}>
-                        <Typography>
-                            {t("questionsAnswered", {
-                                questionCount: completedQsCount,
-                            })}
-                        </Typography>
+                        {isResearcher ? (
+                            <Typography>
+                                {t("questionsAnswered", {
+                                    questionCount: completedQsCount,
+                                })}
+                            </Typography>
+                        ) : (
+                            <>
+                                {teamApplication?.approval_status && (
+                                    <Chip
+                                        label={commonT(
+                                            teamApplication.approval_status.toLowerCase()
+                                        )}
+                                        sx={{ mr: 1 }}
+                                        color={
+                                            teamApplication.approval_status ===
+                                            DarApplicationApprovalStatus.REJECTED
+                                                ? "error"
+                                                : [
+                                                      DarApplicationApprovalStatus.APPROVED,
+                                                      DarApplicationApprovalStatus.APPROVED_COMMENTS,
+                                                  ].includes(
+                                                      teamApplication.approval_status
+                                                  )
+                                                ? "success"
+                                                : "warningCustom"
+                                        }
+                                    />
+                                )}
+                                {teamApplication?.submission_date && (
+                                    <Typography>
+                                        {t("submittedOn", {
+                                            date: formatDate(
+                                                teamApplication.submission_date,
+                                                LAST_SAVED_DATE_FORMAT
+                                            ),
+                                        })}
+                                    </Typography>
+                                )}
+                            </>
+                        )}
                     </Box>
                     <Box
                         sx={{
@@ -482,13 +684,15 @@ const ApplicationSection = ({
                         )}
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
-                            <Button
-                                onClick={handleSubmit(handleSave)}
-                                type="submit"
-                                variant="outlined"
-                                color="secondary">
-                                {t("submit")}
-                            </Button>
+                            {isResearcher && (
+                                <Button
+                                    onClick={handleSubmit(handleSave)}
+                                    type="submit"
+                                    variant="outlined"
+                                    color="secondary">
+                                    {t("submit")}
+                                </Button>
+                            )}
 
                             <Button
                                 onClick={() =>

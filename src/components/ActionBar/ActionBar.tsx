@@ -48,6 +48,7 @@ const ActionBar = () => {
                     confirmText={confirmText}
                     cancelText={cancelText}
                     confirmType={confirmType}
+                    shouldHideModal={false}
                 />
             </ButtonWrapper>
         </Wrapper>

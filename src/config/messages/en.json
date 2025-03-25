@@ -133,7 +133,8 @@
                 "rejected": "Rejected",
                 "approved": "Approved",
                 "approved_comments": "Approved",
-                "withdrawn": "Withdrawn"
+                "withdrawn": "Withdrawn",
+                "draft": "Draft"
             }
         }
     },
@@ -223,6 +224,23 @@
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",
                     "expiryWarning": "This user access is close to expiration date"
+                },
+                "dataAccessRequests": {
+                    "applications": {
+                        "title": "My Data Access Requests",
+                        "intro": "Manage forms and applications",
+                        "searchPlaceholder": "Enter application title to search",
+                        "primaryInvestigator": "Primary investigator",
+                        "organisation": "Organisation",
+                        "datasets": "Datasets",
+                        "lastActivity": "Last activity",
+                        "editApplication": "Add comments or change application status",
+                        "viewApplication": "View application form and any comments",
+                        "daysSinceStart": " days since start",
+                        "darApplication": "DAR Application #",
+                        "applicationsInGroup": "Applications in the project group",
+                        "dataAccessRequests": "Data Access Request"
+                    }
                 },
                 "darAdmin": {
                     "title": "Data Access Request Admin",
@@ -390,7 +408,14 @@
                         "lastActivity": "Last activity",
                         "editApplication": "Add comments or change application status",
                         "viewApplication": "View application form and any comments",
-                        "daysSinceStart": " days since start"
+                        "deleteApplication": "Delete application",
+                        "withdrawApplication": "Withdraw application",
+                        "daysSinceStart": " days since start",
+                        "deleteTitle": "Are you sure you want to delete this application?",
+                        "deleteIntro": "This action is permanent, and the information cannot be recovered.",
+                        "withdrawTitle": "Are you sure you want to withdraw this application?",
+                        "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian.",
+                        "dataAccessRequests": "Data Access Request"
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
@@ -682,9 +707,28 @@
                             "permissions": {
                                 "title": "Permissions",
                                 "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
-                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App."
+                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App.",
+                                "warning": "We recommend you update your client ID across all software using this Private App.",
+                                "modalTitle": "Are you sure you want to change permissions?",
+                                "modalContent": "When permissions are changed a notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers. We recommend you generate a new client ID on the 'Authentication' tab.",
+                                "save": "Save",
+                                "cancel": "Exit without saving",
+                                "discard": "Discard"
                             }
-                        }
+                        },
+                        "generateIdTitle": "Are you sure you want to generate a new client ID?",
+                        "generateIdMessage": "Saving a new client ID for this Private App will cause any current integrations to fail until you update your system with the new client ID. A notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers.",
+                        "generateIdConfirm": "Generate new client ID",
+                        "generateIdCancel": "Exit without generating",
+                        "appId": "App ID",
+                        "appDescription": "This is your App's unique ID. You will need it to make certain API calls.",
+                        "clientId": "Client ID",
+                        "clientDescription": "This is your App's unique client ID. You will need it to make certain API calls.",
+                        "authTitle": "Authentication credentials",
+                        "authIntro": "These authentication credentials determine how your Private App interacts with HDR UK Gateway and its permissions.",
+                        "authSettingsTitle": "Authentication settings",
+                        "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
+                        "generateClientId": "Generate new client ID"
                     }
                 },
                 "dar": {
@@ -693,13 +737,15 @@
                             "darRequest": "Data Access Request",
                             "lastSaved": "Last saved: {date}",
                             "questionsAnswered": "{questionCount} questions answered",
-                            "save": "Save now",
+                            "save": "Save draft",
                             "submit": "Submit application",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
                             "next": "Next",
-                            "missingRequiredFields": "Please check all required fields have been completed"
+                            "missingRequiredFields": "Please check all required fields have been completed",
+                            "manage": "Manage application status",
+                            "submittedOn": "Application submitted on {date}"
                         }
                     },
                     "template": {
@@ -714,7 +760,8 @@
                         },
                         "edit": {
                             "title": "Edit a template",
-                            "save": "Save Changes",
+                            "save": "Make active",
+                            "saveDraft": "Save as draft",
                             "selectedQuestions": {
                                 "title": "Selected Questions",
                                 "description": "Currently selected questions for your DAR template."
@@ -726,6 +773,24 @@
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
                             "parentQuestionOption": "Parent question option"
+                        },
+                        "list": {
+                            "title": "Manage Data Access Request Templates",
+                            "intro": "View, edit or create new Data Access Request Templates",
+                            "cardTitle": "DAR template created {createdAt}",
+                            "noTemplates": "No templates found for your team.",
+                            "published": "Published",
+                            "lastActivity": "Last activity",
+                            "numberOfQuestions": "Number of questions",
+                            "back": "Back to DAR template management",
+                            "actions": {
+                                "edit": {
+                                    "label": "Edit template"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate template"
+                                }
+                            }
                         }
                     }
                 }
@@ -1416,6 +1481,17 @@
             "entities": "Entities",
             "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
+        },
+        "DataAccessMessages": {
+            "modalTitle": "Success!",
+            "modalContent": "Your message has been successfully submitted. Please allow some time for a response. Thank you for your patience!",
+            "actionRequiredBy": "Action required by ",
+            "messagingDashboard": "Messaging Dashboard",
+            "messagingContent": "This is where you can securely communicate with the Data Custodian. View all messages in one place, track discussions and ensure a smooth data access process here. Both the Data Custodian and applicants can see messages.",
+            "reply": "Reply",
+            "replyInfo": "Type your reply below.",
+            "send": "Send",
+            "status": "Status"
         }
     },
     "modules": {
@@ -1568,6 +1644,25 @@
                 },
                 "cancel": "Cancel",
                 "search": "Search"
+            },
+            "DarManageDialog": {
+                "darRequest": "Data Access Request",
+                "draftDesc": "Change status to DRAFT",
+                "draftInfo": "Provide clear guidance to the applicant for the changes required before the applicant re-submits the DAR application for reviews. Changing the status to DRAFT allows the applicant to edit the content of the application form.",
+                "draftButtonText": "Draft",
+                "approvedDesc": "Change status to APPROVED",
+                "approvedInfo": "Any comments or conditions of approval.",
+                "approvedButtonText": "Approve",
+                "rejectedDesc": "Change status to REJECTED",
+                "rejectedInfo": "Any comments or notes regarding the rejection.",
+                "rejectedButtonText": "Reject",
+                "changeStatus": "Change Application Status",
+                "intro": "Use the options below to log your decision about this application."
+            },
+            "DarActionDialog": {
+                "actionPermanent": "I understand this action is permanent",
+                "yes": "Yes",
+                "no": "No"
             }
         }
     },

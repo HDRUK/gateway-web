@@ -112,6 +112,7 @@ export const colors = {
     orange: "#FE9A2D",
     orange300: "#F9B475",
     orange200: "#F0BB24",
+    green50: "#E2F3F0",
     green100: "#B8E2D8",
     green400: "#3DB28C",
     green700: "#2c8267",
@@ -269,7 +270,8 @@ const theme = createTheme({
                     props: { color: "greyCustom" },
                     style: {
                         color: colors.grey800,
-                        borderColor: palette.greyCustom.main,
+                        borderColor: palette.greyCustom.light,
+                        background: palette.greyCustom.light,
                         "&:active": {
                             background: palette.greyCustom.main,
                         },
@@ -311,6 +313,9 @@ const theme = createTheme({
                     "&:hover": {
                         borderWidth: 2,
                     },
+                    "&.Mui-disabled": {
+                        borderWidth: 2,
+                    },
                     borderWidth: 2,
                     textTransform: "none",
                     borderColor:
@@ -323,6 +328,9 @@ const theme = createTheme({
                     return {
                         color: colors.grey800,
                         borderWidth: 2,
+                        "&.Mui-disabled": {
+                            borderWidth: 2,
+                        },
                         "&:hover": {
                             color: colors.white,
                             background:
@@ -642,7 +650,7 @@ const theme = createTheme({
                 {
                     props: { color: "warningCustom" },
                     style: {
-                        background: colors.amber500,
+                        background: colors.orange300,
                     },
                 },
             ],
