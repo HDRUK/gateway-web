@@ -246,6 +246,10 @@ const UploadFile = ({
                                 uploadSx={{ display: "none" }}
                                 acceptFileTypes={acceptedFileTypes}
                                 onFileChange={async (file: File) => {
+                                    if (!file) {
+                                        return;
+                                    }
+
                                     if (file.type.startsWith("image/")) {
                                         validateImageDimensions(file)
                                             .then(() => {
