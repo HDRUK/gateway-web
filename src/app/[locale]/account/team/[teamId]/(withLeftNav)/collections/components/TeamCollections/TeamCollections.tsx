@@ -155,15 +155,6 @@ const TeamCollections = ({
         }
     );
 
-    // const archiveCollection = useDelete(
-    //     teamId
-    //         ? `${apis.teamsV1Url}/${teamId}/collections`
-    //         : apis.collectionsV2Url,
-    //     {
-    //         localeKey: "archiveCollection",
-    //     }
-    // );
-
     useEffect(() => {
         window.scrollTo({ top: 0 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
