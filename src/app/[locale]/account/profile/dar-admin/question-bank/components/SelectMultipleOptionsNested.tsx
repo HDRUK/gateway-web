@@ -66,6 +66,7 @@ const SelectMultipleOptions = ({
         <BoxContainer>
             {fields.map((option, index) => (
                 <Box
+                    key={option.value}
                     sx={{
                         p: 0,
                         m: 0,
@@ -73,7 +74,6 @@ const SelectMultipleOptions = ({
                         mt: 0,
                     }}>
                     <Box
-                        key={option.value}
                         sx={{
                             display: "flex",
                             flexDirection: "row",
