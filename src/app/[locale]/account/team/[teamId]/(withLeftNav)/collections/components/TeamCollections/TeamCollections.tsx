@@ -12,7 +12,6 @@ import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
-import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
