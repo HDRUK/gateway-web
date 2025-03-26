@@ -50,6 +50,7 @@ const FormQuestions = ({
                 if (field.component === "FieldArray") {
                     return (
                         <SelectMultipleOptionsNested
+                            key={field.name}
                             control={control}
                             {...field}
                             name={field.name}
