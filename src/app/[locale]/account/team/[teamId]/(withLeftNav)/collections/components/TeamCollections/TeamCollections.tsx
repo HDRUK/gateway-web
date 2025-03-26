@@ -231,8 +231,8 @@ const TeamCollections = ({
                   {
                       action: async (id: number) => {
                           await archiveCollection(id, {
-                            status: DataStatus.ARCHIVED,
-                            });
+                              status: DataStatus.ARCHIVED,
+                          });
                           mutateCollections();
                           mutateCount();
                       },
