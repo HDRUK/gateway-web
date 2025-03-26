@@ -146,14 +146,24 @@ const TeamCollections = ({
         }
     );
 
-    const archiveCollection = useDelete(
+    const archiveCollection = usePatch<Partial<Collection>>(
         teamId
             ? `${apis.teamsV1Url}/${teamId}/collections`
             : apis.collectionsV2Url,
         {
+            query: "archive",
             localeKey: "archiveCollection",
         }
     );
+
+    // const archiveCollection = useDelete(
+    //     teamId
+    //         ? `${apis.teamsV1Url}/${teamId}/collections`
+    //         : apis.collectionsV2Url,
+    //     {
+    //         localeKey: "archiveCollection",
+    //     }
+    // );
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
@@ -220,7 +230,9 @@ const TeamCollections = ({
             ? [
                   {
                       action: async (id: number) => {
-                          await archiveCollection(id);
+                          await archiveCollection(id, {
+                            status: DataStatus.ARCHIVED,
+                            });
                           mutateCollections();
                           mutateCount();
                       },
