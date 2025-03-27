@@ -36,6 +36,7 @@ import {
     FILTER_COLLECTION_NAME,
     FILTER_COLLECTION_NAMES,
     FILTER_DATA_CUSTODIAN_NETWORK,
+    FILTER_FORMAT_STANDARDS,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -74,6 +75,7 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_CONTAINS_TISSUE,
         FILTER_DATA_TYPE,
         FILTER_DATA_SUBTYPE,
+        FILTER_FORMAT_STANDARDS,
         FILTER_PUBLISHER_NAME,
         FILTER_DATA_CUSTODIAN_NETWORK,
         FILTER_COLLECTION_NAME,
@@ -157,6 +159,7 @@ const FilterPanel = ({
         [FILTER_MATERIAL_TYPE]: {},
         [FILTER_DATA_TYPE]: {},
         [FILTER_DATA_SUBTYPE]: {},
+        [FILTER_FORMAT_STANDARDS]: {},
     });
 
     const [staticFilterValues, setStaticFilterValues] = useState<DefaultValues>(
@@ -201,6 +204,7 @@ const FilterPanel = ({
         [FILTER_DATA_TYPE]: string;
         [FILTER_DATA_SUBTYPE]: string;
         [FILTER_DATA_CUSTODIAN_NETWORK]: string;
+        [FILTER_FORMAT_STANDARDS]: string;
     }>({
         defaultValues: {
             [FILTER_PUBLISHER_NAME]: "",
@@ -215,6 +219,7 @@ const FilterPanel = ({
             [FILTER_DATA_TYPE]: "",
             [FILTER_DATA_SUBTYPE]: "",
             [FILTER_DATA_CUSTODIAN_NETWORK]: "",
+            [FILTER_FORMAT_STANDARDS]: "",
         },
     });
     const filterItems = useMemo(() => {
