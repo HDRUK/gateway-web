@@ -29,6 +29,8 @@ exports[`Footer should render component 1`] = `
             <a
               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
               href="https://x.com/HDR_UK"
+              rel="noopener"
+              target="_blank"
             >
               <span
                 class="mui-style-172hjuw"
@@ -54,6 +56,8 @@ exports[`Footer should render component 1`] = `
             <a
               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
               href="https://www.linkedin.com/company/hdruk/mycompany/"
+              rel="noopener"
+              target="_blank"
             >
               <span
                 class="mui-style-172hjuw"
@@ -94,6 +98,8 @@ exports[`Footer should render component 1`] = `
               <a
                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
                 href="https://www.hdruk.ac.uk/"
+                rel="noopener"
+                target="_blank"
               >
                 Visit the HDR UK Site
               </a>
@@ -132,6 +138,8 @@ exports[`Footer should render component 1`] = `
               <a
                 class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1xcyhb2-MuiTypography-root-MuiLink-root"
                 href="http://localhost:8000/api/documentation"
+                rel="noopener"
+                target="_blank"
               >
                 API docs
               </a>
