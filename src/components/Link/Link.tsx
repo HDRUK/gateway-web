@@ -15,13 +15,16 @@ const Link = ({
     variant,
     ...props
 }: LinkProps) => {
+    const isExternal = href.startsWith("http");
+
     return (
         <MuiLink
             href={href}
             passHref={passHref}
             component={NextLink}
-            variant={variant}
-            {...props}>
+            {...(variant && { variant })}
+            {...props}
+            {...(isExternal && { target: "_blank", rel: "noopener" })}>
             {children}
         </MuiLink>
     );

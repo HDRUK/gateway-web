@@ -198,8 +198,8 @@
         },
         "releases": {
             "noResults": "There are no releases for {year}",
-            "heading": "Welcome to our product release page!",
-            "description1": "Here, you can learn more about the Gateway’s newest features, improvements, and updates. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each release to discover how the Gateway is evolving.",
+            "heading": "Welcome to our Gateway release summary page!",
+            "description1": "Here, you can learn more about the Gateway's newest features, improvements, and updates, through periodic summaries that are designed to be more digestible than our full ticket by ticket release notes. If you are interested in the detail, our full release notes can be accessed <githubLink>here</githubLink>. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each <githubLink>detailed release</githubLink> to discover how the Gateway is evolving, or await the higher level summaries that we aim to publish every eight weeks (covering the previous four releases).",
             "description2": "To learn more about what is planned on our development roadmap please see the 'What next?' section <researchersLink>here</researchersLink>. If you would like to share feedback or suggest improvements to add to the Gateway roadmap, please contact us through our <supportLink>Support Centre</supportLink>."
         },
         "about": {
