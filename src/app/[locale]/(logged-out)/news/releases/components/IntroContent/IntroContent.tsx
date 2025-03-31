@@ -2,15 +2,33 @@
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import Box from "@/components/Box";
+import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+
+const richTextComponents = {
+    researchersLink: (chunks: React.ReactNode) => (
+        <Link href={RouteName.RESEARCHERS}>{chunks}</Link>
+    ),
+    supportLink: (chunks: React.ReactNode) => (
+        <Link href={`/${RouteName.SUPPORT}`}>{chunks}</Link>
+    ),
+    githubLink: (chunks: React.ReactNode) => (
+        <Link
+            href="https://github.com/HDRUK/gateway-api/blob/dev/CHANGELOG.md"
+            target="_blank"
+            rel="noopener noreferrer">
+            {chunks}
+        </Link>
+    ),
+};
 
 const TRANSLATIONS_NAMESPACE_RELEASES = "pages.releases";
 
 const IntroContent = () => {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_RELEASES);
+
     return (
         <Box
             sx={{
@@ -23,19 +41,12 @@ const IntroContent = () => {
                 },
             }}>
             <Typography variant="h2">{t("heading")}</Typography>
-            <Typography sx={{ mb: 1 }}>{t("description1")}</Typography>
 
+            <Typography sx={{ mb: 1 }}>
+                {t.rich("description1", richTextComponents)}
+            </Typography>
             <Typography>
-                {t.rich(`description2`, {
-                    // eslint-disable-next-line react/no-unstable-nested-components
-                    researchersLink: chunks => (
-                        <Link href={`${RouteName.RESEARCHERS}`}>{chunks}</Link>
-                    ),
-                    // eslint-disable-next-line react/no-unstable-nested-components
-                    supportLink: chunks => (
-                        <Link href={`/${RouteName.SUPPORT}`}>{chunks}</Link>
-                    ),
-                })}
+                {t.rich("description2", richTextComponents)}
             </Typography>
         </Box>
     );
