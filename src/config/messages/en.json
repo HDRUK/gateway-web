@@ -971,7 +971,9 @@
                             "containsTissue": "Datasets with BioSamples",
                             "containsTissueTooltip": "Restrict your search result to datasets with BioSamples",
                             "sampleAvailability": "Material type",
-                            "sampleAvailabilityTooltip": "BioSamples associated with the dataset"
+                            "sampleAvailabilityTooltip": "BioSamples associated with the dataset",
+                            "formatAndStandards": "Data Standard",
+                            "formatAndStandardsTooltip": "Standardised data models the dataset is stored in or transformed to, such as OMOP or FHIR."
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",
