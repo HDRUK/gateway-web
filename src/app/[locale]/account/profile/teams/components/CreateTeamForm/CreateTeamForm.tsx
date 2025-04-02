@@ -158,6 +158,7 @@ const CreateTeamForm = () => {
             contact_point,
             is_question_bank,
             team_logo,
+            dar_modal_content,
         } = existingTeamData;
 
         const teamData = {
@@ -167,6 +168,7 @@ const CreateTeamForm = () => {
             is_question_bank,
             users: teamAdmins.map(user => user.id),
             contact_point: contact_point ?? "",
+            dar_modal_content,
         };
 
         if (team_logo) {
