@@ -324,7 +324,7 @@ const CreateDataset = ({
     const watchIdIsNumber = !Number.isNaN(Number(watchId));
 
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
-        `http://localhost:3000/api/tester`,
+        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
         {
             shouldFetch: watchIdIsNumber,
         }
