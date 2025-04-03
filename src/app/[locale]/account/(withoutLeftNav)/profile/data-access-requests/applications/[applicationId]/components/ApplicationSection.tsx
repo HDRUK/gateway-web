@@ -111,7 +111,6 @@ const ApplicationSection = ({
     const [guidanceText, setGuidanceText] = useState<string>();
     const [sectionId, setSectionId] = useState<number>(initialSectionId);
 
-    console.log(sectionId);
     const handleChangeSection = (sectionId?: number) => {
         if (sectionId === undefined) {
             return;
