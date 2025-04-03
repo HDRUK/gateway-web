@@ -13,6 +13,7 @@ export const StaticImages = {
             collections: "collections.png",
             phenotypes: "phenotypes.png",
             courses: "courses.png",
+            dar: "dar.png",
             welcome_image: "welcome-image.png",
         },
         "landing_page"
