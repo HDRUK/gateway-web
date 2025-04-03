@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { revalidateTag } from "next/cache";
 import { useParams, useSearchParams } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import { PaginationType } from "@/interfaces/Pagination";
@@ -25,6 +26,7 @@ import {
     darDashboardSortField,
 } from "@/config/forms/dataAccessApplicationDashboard";
 import { colors } from "@/config/theme";
+import { CACHE_DAR_APPLICATION } from "@/consts/cache";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
@@ -190,7 +192,10 @@ export default function DarDashboard({
     const handleWithdrawApplication = (id: number) =>
         updateApplication(id, {
             approval_status: DarApplicationApprovalStatus.WITHDRAWN,
-        }).then(() => mutateApplications());
+        }).then(() => {
+            mutateApplications();
+            revalidateTag(`${CACHE_DAR_APPLICATION}${id}`);
+        });
 
     const approvalTab = [
         {

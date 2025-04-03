@@ -28,7 +28,7 @@ const TEXT_AREA_EXPANDED = "160px";
 const TRANSLATION_PATH = "components.DataAccessMessages";
 
 interface DarMessagesProps {
-    applicationId: number;
+    applicationId: string;
     teamId: string;
     teamName?: string;
     reviews: DarReviewsResponse[] | undefined;

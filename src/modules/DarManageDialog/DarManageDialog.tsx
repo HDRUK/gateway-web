@@ -12,7 +12,6 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
-import usePatch from "@/hooks/usePatch";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import {
@@ -20,6 +19,7 @@ import {
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { RouteName } from "@/consts/routeName";
+import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 
 enum CommentType {
     DRAFT = "draftComment",
@@ -32,8 +32,8 @@ type StatusSection = {
     description: string;
     label: string;
     buttonText: string;
-    status: DarApplicationStatus | DarApplicationApprovalStatus;
-    comment: string;
+    payload: object;
+    redirectUrl: string;
 };
 
 interface ManageForm {
@@ -49,16 +49,12 @@ interface DarManageDialogProps {
 
 const TRANSLATION_PATH = "modules.dialogs.DarManageDialog";
 
-const DarManageDialog = ({
-    darApplicationEndpoint,
-    applicationId,
-}: DarManageDialogProps) => {
+const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { hideModal } = useModal();
     const { push } = useRouter();
-    const params = useParams<{
-        teamId?: string;
-    }>();
+
+    const params = useParams<{ teamId: string }>();
 
     const { control, watch } = useForm<ManageForm>({
         defaultValues: {
@@ -72,37 +68,22 @@ const DarManageDialog = ({
     const approvedComment = watch(CommentType.APPROVE);
     const rejectedComment = watch(CommentType.REJECT);
 
-    const updateApplication = usePatch(darApplicationEndpoint, {
-        itemName: t("darRequest"),
-    });
+    const PATH_REDIRECT = `/${RouteName.ACCOUNT}/${
+        RouteName.TEAM
+    }/${params?.teamId!}/${RouteName.DATA_ACCESS_REQUESTS}/${
+        RouteName.APPLICATIONS
+    }`;
 
-    const handleSetStatus = async (
-        comment: string,
-        status: DarApplicationStatus | DarApplicationApprovalStatus
-    ) => {
-        const statusKey =
-            status === DarApplicationStatus.DRAFT
-                ? "submission_status"
-                : "approval_status";
-
-        const applicationStatus =
-            comment && status === DarApplicationApprovalStatus.APPROVED
-                ? DarApplicationApprovalStatus.APPROVED_COMMENTS
-                : status;
-
-        const updateResponse = await updateApplication(applicationId, {
-            [statusKey]: applicationStatus,
-            ...(comment && { comment }),
-        });
+    const handleSetStatus = async (payload: any, redirectUrl: string) => {
+        const updateResponse = await updateDarApplicationTeamAction(
+            applicationId,
+            params?.teamId!,
+            payload
+        );
 
         hideModal();
 
         if (updateResponse) {
-            const queryParam = statusKey === "approval_status" ? status : "";
-            const redirectUrl =
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/` +
-                `${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}?status=${queryParam}`;
-
             push(redirectUrl);
         }
     };
@@ -113,24 +94,36 @@ const DarManageDialog = ({
             description: t("draftDesc"),
             label: t("draftInfo"),
             buttonText: t("draftButtonText"),
-            status: DarApplicationStatus.DRAFT,
-            comment: draftComment,
+            payload: {
+                approval_status: null,
+                submission_status: DarApplicationStatus.DRAFT,
+                ...(draftComment && { draftComment }),
+            },
+            redirectUrl: PATH_REDIRECT,
         },
         {
             name: CommentType.APPROVE,
             description: t("approvedDesc"),
             label: t("approvedInfo"),
             buttonText: t("approvedButtonText"),
-            status: DarApplicationApprovalStatus.APPROVED,
-            comment: approvedComment,
+            payload: {
+                approval_status: approvedComment
+                    ? DarApplicationApprovalStatus.APPROVED_COMMENTS
+                    : DarApplicationApprovalStatus.APPROVED,
+                ...(approvedComment && { approvedComment }),
+            },
+            redirectUrl: `${PATH_REDIRECT}?status=${DarApplicationApprovalStatus.APPROVED}`,
         },
         {
             name: CommentType.REJECT,
             description: t("rejectedDesc"),
             label: t("rejectedInfo"),
             buttonText: t("rejectedButtonText"),
-            status: DarApplicationApprovalStatus.REJECTED,
-            comment: rejectedComment,
+            payload: {
+                approval_status: DarApplicationApprovalStatus.REJECTED,
+                ...(rejectedComment && { rejectedComment }),
+            },
+            redirectUrl: `${PATH_REDIRECT}?status=${DarApplicationApprovalStatus.REJECTED}`,
         },
     ];
 
@@ -166,8 +159,8 @@ const DarManageDialog = ({
                                 <Button
                                     onClick={() =>
                                         handleSetStatus(
-                                            section.comment,
-                                            section.status
+                                            section.payload,
+                                            section.redirectUrl
                                         )
                                     }>
                                     {section.buttonText}

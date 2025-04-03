@@ -1,8 +1,18 @@
+"use server";
+
+import { revalidateTag } from "next/cache";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { redirect } from "next/navigation";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import { ReducedCollection } from "@/interfaces/Collection";
+import { DarApplicationAnswer } from "@/interfaces/DataAccessRequest";
+import {
+    DarTeamApplication,
+    DataAccessRequestApplication,
+} from "@/interfaces/DataAccessRequestApplication";
+import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
@@ -10,6 +20,7 @@ import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
+import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
@@ -18,7 +29,72 @@ import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
+import {
+    CACHE_DAR,
+    CACHE_DAR_SECTIONS,
+    CACHE_DAR_APPLICATION,
+    CACHE_DAR_ANSWERS,
+    CACHE_DAR_APPLICATION_ANSWERS,
+    CACHE_DAR_REVIEWS,
+} from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
+
+const ERROR_RESPONSE_STATUS = [400, 401, 403, 404, 423, 500];
+type Payload<T> = T | (() => BodyInit & T);
+
+async function request<T>(
+    cookieStore: ReadonlyRequestCookies,
+    method: string,
+    url: string,
+    options?: GetOptions,
+    payload?: Payload<T>,
+    tagsToRevalidate?: string[]
+) {
+    try {
+        const jwt = cookieStore.get(config.JWT_COOKIE);
+        const { suppressError = false, cache = undefined } = options || {};
+        const nextConfig = cache
+            ? {
+                  next: {
+                      tags: [...cache.tags, "all"],
+                      revalidate: cache.revalidate || 2 * 60 * 60,
+                  },
+              }
+            : undefined;
+
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${jwt?.value}`,
+                "Content-Type": "application/json",
+            },
+            ...nextConfig,
+            method,
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            if (suppressError) {
+                return null;
+            }
+
+            if (ERROR_RESPONSE_STATUS.includes(response.status)) {
+                redirect(`/error/${response.status}`);
+            }
+        }
+
+        if (tagsToRevalidate?.length) {
+            for (const tag of tagsToRevalidate) {
+                revalidateTag(tag);
+            }
+        }
+
+        const json = await response.json();
+        return json.data;
+    } catch (error) {
+        console.error("Network error:", error);
+        return null;
+    }
+}
 
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
@@ -28,40 +104,50 @@ async function get<T>(
         cache: undefined,
     }
 ): Promise<T> {
-    const jwt = cookieStore.get(config.JWT_COOKIE);
-    const { cache, suppressError } = options;
-    const nextConfig = cache
-        ? {
-              next: {
-                  tags: [cache.tag, "all"],
-                  revalidate: cache.revalidate || 2 * 60 * 60,
-              },
-          }
-        : undefined;
+    return await request(cookieStore, "GET", url, options);
+}
 
-    const res = await fetch(`${url}`, {
-        headers: { Authorization: `Bearer ${jwt?.value}` },
-        ...nextConfig,
-    });
+async function patch<T>(
+    cookieStore: ReadonlyRequestCookies,
+    url: string,
+    payload: unknown,
+    tagsToRevalidate?: string[]
+): Promise<T> {
+    return await request(
+        cookieStore,
+        "PATCH",
+        url,
+        undefined,
+        payload,
+        tagsToRevalidate
+    );
+}
 
-    if (!res.ok && !suppressError) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error("Failed to fetch data");
-    }
-
-    const { data } = await res.json();
-
-    return data;
+async function put<T>(
+    cookieStore: ReadonlyRequestCookies,
+    url: string,
+    payload: unknown,
+    tagsToRevalidate?: string[]
+): Promise<T> {
+    return await request(
+        cookieStore,
+        "PUT",
+        url,
+        undefined,
+        payload,
+        tagsToRevalidate
+    );
 }
 
 async function getFilters(
     cookieStore: ReadonlyRequestCookies
 ): Promise<Filter[]> {
     const cache: Cache = {
-        tag: "filters",
+        tags: ["filters"],
     };
     return get<Filter[]>(
         cookieStore,
+
         `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
         { cache }
     );
@@ -71,7 +157,7 @@ async function getKeywords(
     cookieStore: ReadonlyRequestCookies
 ): Promise<Keyword[]> {
     const cache: Cache = {
-        tag: "keywords",
+        tags: ["keywords"],
     };
     return get<Keyword[]>(
         cookieStore,
@@ -254,6 +340,177 @@ async function getFormHydration(
     );
 }
 
+async function getDarSections(
+    cookieStore: ReadonlyRequestCookies
+): Promise<QuestionBankSection[]> {
+    return get<QuestionBankSection[]>(
+        cookieStore,
+        apis.dataAccessSectionV1UrlIP,
+        {
+            cache: {
+                tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
+                revalidate: 4 * 60 * 60,
+            },
+        }
+    );
+}
+
+async function getDarTeamApplication(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    teamId: string
+): Promise<DataAccessRequestApplication | null> {
+    return get<DataAccessRequestApplication>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}`,
+        {
+            cache: {
+                tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],
+            },
+        }
+    );
+}
+
+async function getDarApplicationUser(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    userId: string
+): Promise<DataAccessRequestApplication | null> {
+    return get<DataAccessRequestApplication>(
+        cookieStore,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
+        {
+            cache: {
+                tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],
+            },
+        }
+    );
+}
+
+async function getDarAnswersTeam(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    teamId: string
+): Promise<DarApplicationAnswer[]> {
+    return get<DarApplicationAnswer[]>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`,
+        {
+            cache: {
+                tags: [
+                    CACHE_DAR,
+                    CACHE_DAR_ANSWERS,
+                    `${CACHE_DAR_APPLICATION_ANSWERS}${applicationId}`,
+                ],
+            },
+        }
+    );
+}
+
+async function getDarAnswersUser(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    userId: string
+): Promise<DarApplicationAnswer[]> {
+    return get<DarApplicationAnswer[]>(
+        cookieStore,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}/answers`,
+        {
+            cache: {
+                tags: [
+                    CACHE_DAR,
+                    CACHE_DAR_ANSWERS,
+                    `${CACHE_DAR_APPLICATION_ANSWERS}${applicationId}`,
+                ],
+            },
+        }
+    );
+}
+
+async function getDarReviewsTeam(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    teamId: string
+): Promise<DarReviewsResponse[]> {
+    return get<DarReviewsResponse[]>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/reviews`,
+        {
+            cache: {
+                tags: [
+                    CACHE_DAR,
+                    CACHE_DAR_REVIEWS,
+                    `${CACHE_DAR_REVIEWS}${applicationId}`,
+                ],
+                revalidate: 60 * 30,
+            },
+        }
+    );
+}
+
+async function getDarReviewsUser(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    userId: string
+): Promise<DarReviewsResponse[]> {
+    return get<DarReviewsResponse[]>(
+        cookieStore,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}/reviews`,
+        {
+            cache: {
+                tags: [
+                    CACHE_DAR,
+                    CACHE_DAR_REVIEWS,
+                    `${CACHE_DAR_REVIEWS}${applicationId}`,
+                ],
+                revalidate: 60 * 30,
+            },
+        }
+    );
+}
+
+async function updateDarApplicationTeam(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    teamId: string,
+    body: unknown
+): Promise<DarTeamApplication> {
+    return patch<DarTeamApplication>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}`,
+        body,
+        [`${CACHE_DAR_APPLICATION}${applicationId}`]
+    );
+}
+
+async function updateDarApplicationUser(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    userId: string,
+    body: Partial<DarTeamApplication>
+): Promise<DarTeamApplication> {
+    return patch<DarTeamApplication>(
+        cookieStore,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
+        body,
+        [`${CACHE_DAR_APPLICATION}${applicationId}`]
+    );
+}
+
+async function updateDarAnswers(
+    cookieStore: ReadonlyRequestCookies,
+    applicationId: string,
+    userId: string,
+    body: Partial<DataAccessRequestApplication>
+): Promise<Partial<DataAccessRequestApplication>> {
+    return put<Partial<DataAccessRequestApplication>>(
+        cookieStore,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
+        body,
+        [`${CACHE_DAR_APPLICATION_ANSWERS}${applicationId}`]
+    );
+}
+
 export {
     getApplication,
     getCohort,
@@ -271,4 +528,14 @@ export {
     getTool,
     getUser,
     getUserFromCookie,
+    getDarSections,
+    getDarTeamApplication,
+    getDarApplicationUser,
+    getDarAnswersTeam,
+    getDarAnswersUser,
+    getDarReviewsTeam,
+    getDarReviewsUser,
+    updateDarApplicationTeam,
+    updateDarAnswers,
+    updateDarApplicationUser,
 };

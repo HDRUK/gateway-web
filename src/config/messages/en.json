@@ -743,6 +743,8 @@
                             "questionsAnswered": "{questionCount} questions answered",
                             "save": "Save draft",
                             "submit": "Submit application",
+                            "nameApplication": "Name your application",
+                            "guidance": "Guidance",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
