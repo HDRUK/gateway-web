@@ -52,16 +52,4 @@ let nextConfig = withNextIntl({
     },
 });
 
-if (process.env.NODE_ENV === "development") {
-    nextConfig = {
-        ...nextConfig,
-
-        logging: {
-            fetches: {
-                fullUrl: true,
-            },
-        },
-    };
-}
-
 module.exports = nextConfig;
