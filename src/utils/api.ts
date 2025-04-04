@@ -95,9 +95,9 @@ async function patch<T>(
     }
 
     if (tagsToRevalidate?.length) {
-        for (const tag of tagsToRevalidate) {
+        tagsToRevalidate.forEach(tag => {
             revalidateTag(tag);
-        }
+        });
     }
 
     const { data } = await res.json();
@@ -126,9 +126,9 @@ async function put<T>(
     }
 
     if (tagsToRevalidate?.length) {
-        for (const tag of tagsToRevalidate) {
+        tagsToRevalidate.forEach(tag => {
             revalidateTag(tag);
-        }
+        });
     }
 
     const { data } = await res.json();
@@ -157,9 +157,9 @@ async function post<T>(
     }
 
     if (tagsToRevalidate?.length) {
-        for (const tag of tagsToRevalidate) {
+        tagsToRevalidate.forEach(tag => {
             revalidateTag(tag);
-        }
+        });
     }
 
     const { data } = await res.json();

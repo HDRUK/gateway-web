@@ -19,7 +19,6 @@ interface Options<T> {
     action?: ReactNode;
     refreshInterval?: number;
     fallbackData?: T;
-    revalidateOnMount?: boolean;
 }
 
 const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
@@ -33,13 +32,9 @@ const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
         withPagination = false,
         refreshInterval = false,
         fallbackData,
-        revalidateOnMount,
-        // fallbackData = "TESTEVRG",
     } = options || {};
 
     const t = useTranslations("api");
-
-    // console.log("fallbackData", fallbackData);
 
     const fetcher = async (url: string | null): Promise<T | undefined> => {
         if (!url) return undefined;

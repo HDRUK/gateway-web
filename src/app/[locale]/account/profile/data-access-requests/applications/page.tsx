@@ -18,7 +18,7 @@ const DARApplicationsPage = async () => {
         <Dashboard
             translationPath="pages.account.profile.dataAccessRequests.applications"
             darApiPath={`${apis.usersV1Url}/${userId}/dar/applications`}
-            isResearcher={true}
+            isResearcher
             userId={userId}
         />
     );

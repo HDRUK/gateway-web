@@ -3,7 +3,8 @@
 import { useForm } from "react-hook-form";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
+import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -43,7 +44,6 @@ interface ManageForm {
 }
 
 interface DarManageDialogProps {
-    darApplicationEndpoint: string;
     applicationId: string;
 }
 
@@ -55,6 +55,10 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
     const { push } = useRouter();
 
     const params = useParams<{ teamId: string }>();
+
+    if (!params?.teamId) {
+        notFound();
+    }
 
     const { control, watch } = useForm<ManageForm>({
         defaultValues: {
@@ -68,16 +72,15 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
     const approvedComment = watch(CommentType.APPROVE);
     const rejectedComment = watch(CommentType.REJECT);
 
-    const PATH_REDIRECT = `/${RouteName.ACCOUNT}/${
-        RouteName.TEAM
-    }/${params?.teamId!}/${RouteName.DATA_ACCESS_REQUESTS}/${
-        RouteName.APPLICATIONS
-    }`;
+    const PATH_REDIRECT = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`;
 
-    const handleSetStatus = async (payload: any, redirectUrl: string) => {
+    const handleSetStatus = async (
+        payload: Partial<DarTeamApplication>,
+        redirectUrl: string
+    ) => {
         const updateResponse = await updateDarApplicationTeamAction(
             applicationId,
-            params?.teamId!,
+            params.teamId,
             payload
         );
 

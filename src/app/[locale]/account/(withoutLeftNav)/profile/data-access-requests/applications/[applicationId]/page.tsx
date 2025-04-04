@@ -58,7 +58,9 @@ export default async function DarApplicationPage({
         redirect("/error/401");
     }
 
-    let sections, userAnswers, reviews;
+    let sections;
+    let userAnswers;
+    let reviews;
     try {
         [sections, userAnswers, reviews] = await Promise.all([
             getDarSections(cookieStore),
@@ -139,7 +141,7 @@ export default async function DarApplicationPage({
             userAnswers={userAnswers}
             sections={formattedSections}
             initialSectionId={sectionId}
-            isResearcher={true}
+            isResearcher
             teamApplication={teamApplication}
             parentSections={parentSections}
             actionRequiredApplicant={actionRequiredApplicant}
