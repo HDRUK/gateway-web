@@ -22,7 +22,7 @@ import { createDarApplicationReviewAction } from "@/app/actions/createDarApplica
 
 const DATE_FORMAT = "DD MMM YYYY HH:mm";
 const ICON_SIZE = "20px";
-const MESSAGE_HEADER = "155px";
+const MESSAGE_HEADER = "245px";
 const TEXT_AREA_MINIMISED = "43px";
 const TEXT_AREA_EXPANDED = "160px";
 const TRANSLATION_PATH = "components.DataAccessMessages";
@@ -160,7 +160,7 @@ const DarMessages = ({
     );
 
     return (
-        <Box sx={{ height: "100%", minHeight: "52.5vh", p: 0 }}>
+        <Box sx={{ height: "100%", p: 0 }}>
             <Box sx={{ p: 3 }}>
                 {actionRequiredApplicant !== undefined && reviewComments && (
                     <>

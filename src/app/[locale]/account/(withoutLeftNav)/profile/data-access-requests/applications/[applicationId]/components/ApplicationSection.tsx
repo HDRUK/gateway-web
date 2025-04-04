@@ -494,7 +494,14 @@ const ApplicationSection = ({
                     />
                 </Box>
 
-                <Paper sx={{ m: 2, flex: 5 }}>
+                <Paper
+                    sx={{
+                        m: 2,
+                        flex: 5,
+                        height: "65vh",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}>
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
                         <>
@@ -516,12 +523,8 @@ const ApplicationSection = ({
                         sx={{
                             display: "flex",
                             p: 0,
-                            height:
-                                parentSections.find(
-                                    section => section.id === sectionId
-                                )?.name !== messageSection.name
-                                    ? "52.5vh"
-                                    : "70vh",
+                            overflowY: "auto",
+                            flex: 1,
                         }}>
                         <Box
                             sx={{
