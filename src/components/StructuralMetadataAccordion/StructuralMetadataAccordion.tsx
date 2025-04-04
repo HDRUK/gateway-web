@@ -1,6 +1,13 @@
 "use client";
 
-import { List, ListItem } from "@mui/material";
+import {
+    TableHead,
+    TableRow,
+    Table,
+    TableCell,
+    TableBody,
+    TableContainer,
+} from "@mui/material";
 import { flatMap, groupBy, map } from "lodash";
 import { useTranslations } from "next-intl";
 import {
@@ -13,6 +20,7 @@ import Box from "@/components/Box";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
+import { formatTextWithLinks } from "@/utils/dataset";
 
 type GroupByResult<T> = {
     [key: string]: T[];
@@ -109,65 +117,49 @@ const StructuralMetadataAccordion = ({
                         </Box>
                     }
                     contents={
-                        <List sx={{ p: 0 }}>
-                            <ListItem
-                                key={`${item}.header`}
-                                sx={{
-                                    display: "flex",
-                                    pl: 0,
-                                    pr: 0,
-                                }}>
-                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
-                                    {t("columnName")}
-                                </Typography>
-                                <Typography
+                        <TableContainer
+                            sx={{
+                                maxWidth: "100%",
+                                overflowX: "auto",
+                                height: "55vh",
+                            }}
+                            aria-label={`${item?.name} table`}>
+                            <Table stickyHeader>
+                                <TableHead sx={{ whiteSpace: "nowrap" }}>
+                                    <TableRow key={`${item}.header`}>
+                                        <TableCell>{t("columnName")}</TableCell>
+                                        <TableCell>{t("dataType")}</TableCell>
+                                        <TableCell>{t("columnDesc")}</TableCell>
+                                        <TableCell>{t("sensitive")}</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody
                                     sx={{
-                                        flex: 1,
-                                        fontWeight: 500,
+                                        color: colors.grey600,
                                     }}>
-                                    {t("dataType")}
-                                </Typography>
-                                <Typography sx={{ flex: 1, fontWeight: 500 }}>
-                                    {t("columnDesc")}
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        flex: 1,
-                                        fontWeight: 500,
-                                    }}>
-                                    {t("sensitive")}
-                                </Typography>
-                            </ListItem>
-                            {item.rows.map((row, index) => (
-                                <ListItem
-                                    key={row.name}
-                                    divider={index < item.rows.length - 1}
-                                    sx={{
-                                        display: "flex",
-                                        pl: 0,
-                                        pr: 0,
-                                    }}>
-                                    <Typography sx={{ flex: 1 }}>
-                                        {row.name}
-                                    </Typography>
-                                    <Typography
-                                        sx={{ flex: 1, color: colors.grey600 }}>
-                                        {row.dataType}
-                                    </Typography>
-                                    <Typography
-                                        sx={{ flex: 1, color: colors.grey600 }}>
-                                        {row.description}
-                                    </Typography>
-                                    <Typography
-                                        sx={{
-                                            flex: 1,
-                                            color: colors.grey600,
-                                        }}>
-                                        {row.sensitive}
-                                    </Typography>
-                                </ListItem>
-                            ))}
-                        </List>
+                                    {item?.rows.map(row => (
+                                        <TableRow key={row.name}>
+                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell>
+                                                {formatTextWithLinks(
+                                                    row.dataType
+                                                )}
+                                            </TableCell>
+                                            <TableCell>
+                                                {formatTextWithLinks(
+                                                    row.description
+                                                )}
+                                            </TableCell>
+                                            <TableCell>
+                                                {formatTextWithLinks(
+                                                    row.sensitive
+                                                )}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     }
                 />
             ))}
