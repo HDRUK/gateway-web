@@ -43,17 +43,27 @@ export default async function DarApplicationPage({
         redirect(RouteName.ERROR_403);
     }
 
-    let darApplication = await getDarTeamApplication(
-        cookieStore,
-        applicationId,
-        teamId
-    );
+    let darApplication;
+    try {
+        darApplication = await getDarTeamApplication(
+            cookieStore,
+            applicationId,
+            teamId
+        );
+    } catch {
+        redirect("/error/401");
+    }
 
-    const [sections, userAnswers, reviews] = await Promise.all([
-        getDarSections(cookieStore),
-        getDarAnswersTeam(cookieStore, applicationId, teamId),
-        getDarReviewsTeam(cookieStore, applicationId, teamId),
-    ]);
+    let sections, userAnswers, reviews;
+    try {
+        [sections, userAnswers, reviews] = await Promise.all([
+            getDarSections(cookieStore),
+            getDarAnswersTeam(cookieStore, applicationId, teamId),
+            getDarReviewsTeam(cookieStore, applicationId, teamId),
+        ]);
+    } catch {
+        redirect("/error/401");
+    }
 
     if (!darApplication || !sections) {
         return notFound();

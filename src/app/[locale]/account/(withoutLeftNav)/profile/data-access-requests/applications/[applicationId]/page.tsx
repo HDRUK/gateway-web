@@ -47,17 +47,27 @@ export default async function DarApplicationPage({
 
     const userId = user!.id.toString();
 
-    let darApplication = await getDarApplicationUser(
-        cookieStore,
-        applicationId,
-        userId
-    );
+    let darApplication;
+    try {
+        darApplication = await getDarApplicationUser(
+            cookieStore,
+            applicationId,
+            userId
+        );
+    } catch {
+        redirect("/error/401");
+    }
 
-    const [sections, userAnswers, reviews] = await Promise.all([
-        getDarSections(cookieStore),
-        getDarAnswersUser(cookieStore, applicationId, userId),
-        getDarReviewsUser(cookieStore, applicationId, userId),
-    ]);
+    let sections, userAnswers, reviews;
+    try {
+        [sections, userAnswers, reviews] = await Promise.all([
+            getDarSections(cookieStore),
+            getDarAnswersUser(cookieStore, applicationId, userId),
+            getDarReviewsUser(cookieStore, applicationId, userId),
+        ]);
+    } catch {
+        redirect("/error/401");
+    }
 
     if (!darApplication || !sections) {
         return notFound();
