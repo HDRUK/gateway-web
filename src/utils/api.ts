@@ -125,7 +125,6 @@ async function put<T>(
 
     if (tagsToRevalidate?.length) {
         revalidateCache(tagsToRevalidate);
-
     }
 
     const { data } = await res.json();
