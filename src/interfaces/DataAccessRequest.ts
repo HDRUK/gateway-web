@@ -81,6 +81,7 @@ interface DarApplication {
     questions: DarApplicationQuestion[];
     project_title: string;
     applicant_id: number;
+    submission_date: string;
     teams: {
         approval_status: DarApplicationApprovalStatus;
         created_at: string;
@@ -90,7 +91,6 @@ interface DarApplication {
         submission_status: DarApplicationStatus;
         team_id: number;
         updated_at: string;
-        submission_date: string;
     }[];
 }
 

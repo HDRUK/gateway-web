@@ -50,6 +50,7 @@ export interface UploadFileProps {
     disabled?: boolean;
     fileDownloadApiPath?: string;
     hideUpload?: boolean;
+    skipImageValidation?: boolean;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -77,6 +78,7 @@ const UploadFile = ({
     disabled = false,
     fileDownloadApiPath,
     hideUpload = false,
+    skipImageValidation = false,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -250,7 +252,10 @@ const UploadFile = ({
                                         return;
                                     }
 
-                                    if (file.type.startsWith("image/")) {
+                                    if (
+                                        !skipImageValidation &&
+                                        file.type.startsWith("image/")
+                                    ) {
                                         validateImageDimensions(file)
                                             .then(() => {
                                                 setFile(file);
