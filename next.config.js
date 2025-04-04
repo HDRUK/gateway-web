@@ -2,7 +2,7 @@ const withNextIntl = require("next-intl/plugin")();
 
 /** @type {import('next').NextConfig} */
 
-const nextConfig = withNextIntl({
+let nextConfig = withNextIntl({
     reactStrictMode: true,
     swcMinify: true,
     env: {
@@ -51,5 +51,17 @@ const nextConfig = withNextIntl({
         ignoreBuildErrors: true,
     },
 });
+
+if (process.env.NODE_ENV === "development") {
+    nextConfig = {
+        ...nextConfig,
+
+        logging: {
+            fetches: {
+                fullUrl: true,
+            },
+        },
+    };
+}
 
 module.exports = nextConfig;

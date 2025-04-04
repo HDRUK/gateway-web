@@ -3,6 +3,7 @@
 import { revalidateTag } from "next/cache";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
@@ -38,6 +39,7 @@ import {
 } from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
 
+const ERROR_RESPONSE_STATUS = [400, 401, 403, 404, 423, 500];
 type Payload<T> = T | (() => BodyInit & T);
 
 async function get<T>(
@@ -65,6 +67,10 @@ async function get<T>(
     });
 
     if (!res.ok && !suppressError) {
+        if (ERROR_RESPONSE_STATUS.includes(res.status)) {
+            return redirect(`/error/${res.status}`);
+        }
+
         // This will activate the closest `error.js` Error Boundary
         throw new Error("Failed to fetch data");
     }
