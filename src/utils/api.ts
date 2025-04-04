@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { Application } from "@/interfaces/Application";
@@ -37,6 +36,7 @@ import {
     CACHE_DAR_REVIEWS,
 } from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
+import { revalidateCache } from "./revalidateCache";
 
 type Payload<T> = T | (() => BodyInit & T);
 
@@ -95,9 +95,7 @@ async function patch<T>(
     }
 
     if (tagsToRevalidate?.length) {
-        tagsToRevalidate.forEach(tag => {
-            revalidateTag(tag);
-        });
+        revalidateCache(tagsToRevalidate);
     }
 
     const { data } = await res.json();
@@ -126,9 +124,8 @@ async function put<T>(
     }
 
     if (tagsToRevalidate?.length) {
-        tagsToRevalidate.forEach(tag => {
-            revalidateTag(tag);
-        });
+        revalidateCache(tagsToRevalidate);
+
     }
 
     const { data } = await res.json();
@@ -157,9 +154,7 @@ async function post<T>(
     }
 
     if (tagsToRevalidate?.length) {
-        tagsToRevalidate.forEach(tag => {
-            revalidateTag(tag);
-        });
+        revalidateCache(tagsToRevalidate);
     }
 
     const { data } = await res.json();
