@@ -21,7 +21,6 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
-import DarMessages from "@/components/DarMessages";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
@@ -31,7 +30,6 @@ import Typography from "@/components/Typography";
 import DarManageDialog from "@/modules/DarManageDialog";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
-import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
@@ -66,6 +64,7 @@ import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicati
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
 import DarFormBanner from "./DarFormBanner";
+import DarMessages from "./DarMessages";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 const PROJECT_TITLE_FIELD = "project_title";
@@ -82,6 +81,7 @@ interface ApplicationSectionProps {
     initialSectionId: number;
     isResearcher: boolean;
     parentSections: QuestionBankSection[];
+    reviews: DarReviewsResponse[];
 }
 
 const ApplicationSection = ({
@@ -95,6 +95,7 @@ const ApplicationSection = ({
     initialSectionId,
     isResearcher,
     parentSections,
+    reviews,
 }: ApplicationSectionProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const commonT = useTranslations("common.dar.status");
@@ -296,19 +297,6 @@ const ApplicationSection = ({
         </>
     );
 
-    const {
-        data: reviews,
-        mutate: mutateReviews,
-        isLoading: loadingReviews,
-    } = useGet<DarReviewsResponse[]>(
-        `${darApplicationEndpoint}/${applicationId}/reviews`,
-        {
-            keepPreviousData: true,
-            errorNotificationsOn: false,
-            shouldFetch: !!userId,
-        }
-    );
-
     const currentSectionIndex = sectionId
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
@@ -435,21 +423,6 @@ const ApplicationSection = ({
     const isMissingRequiredFields = Object.values(formState.errors).some(item =>
         ERROR_TYPE_REQUIRED.includes(item?.type as string)
     );
-
-    const reviewComments = useMemo(
-        () => !!reviews?.length && reviews[0].comments,
-        [reviews]
-    );
-
-    const actionRequiredApplicant = useMemo(() => {
-        if (reviews === undefined) {
-            return undefined;
-        }
-
-        return (
-            reviewComments && !reviewComments[reviewComments.length - 1].user_id
-        );
-    }, [reviews]);
 
     // Set initial last saved date
     useEffect(() => {
@@ -590,19 +563,19 @@ const ApplicationSection = ({
                                         </Box>
                                     ))}
                                 </>
-                            ) : parentSections.find(
+                            ) : reviews &&
+                              parentSections.find(
                                   section => section.id === sectionId
                               )?.name === messageSection.name ? (
                                 <DarMessages
                                     applicationId={applicationId}
                                     teamId={teamId}
-                                    reviews={reviews}
-                                    mutateReviews={mutateReviews}
-                                    loadingReviews={loadingReviews}
-                                    reviewComments={reviewComments}
-                                    actionRequiredApplicant={
-                                        actionRequiredApplicant
+                                    userId={userId}
+                                    initialReviews={reviews}
+                                    darApplicationEndpoint={
+                                        darApplicationEndpoint
                                     }
+                                    isResearcher={isResearcher}
                                 />
                             ) : (
                                 renderFormFields()
@@ -672,7 +645,10 @@ const ApplicationSection = ({
                             p: 0,
                             alignItems: "center",
                         }}>
-                        {isResearcher ? (
+                        {isResearcher &&
+                        !teamApplication?.approval_status &&
+                        teamApplication?.submission_status ===
+                            DarApplicationStatus.DRAFT ? (
                             <Typography>
                                 {t("questionsAnswered", {
                                     questionCount: completedQsCount,
@@ -705,7 +681,7 @@ const ApplicationSection = ({
                                     <Typography>
                                         {t("submittedOn", {
                                             date: formatDate(
-                                                teamApplication.submission_date,
+                                                data.submission_date,
                                                 LAST_SAVED_DATE_FORMAT
                                             ),
                                         })}
@@ -734,7 +710,9 @@ const ApplicationSection = ({
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
                             {isResearcher &&
-                                teamApplication?.approval_status === null && (
+                                teamApplication?.approval_status === null &&
+                                teamApplication.submission_status ===
+                                    DarApplicationStatus.DRAFT && (
                                     <Button
                                         onClick={handleSubmit(handleSave)}
                                         type="submit"

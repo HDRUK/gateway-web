@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { revalidateTag } from "next/cache";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
@@ -19,19 +18,19 @@ import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
-import usePatch from "@/hooks/usePatch";
 import {
     darDashboardDefaultValues,
     darDashboardSearchFilter,
     darDashboardSortField,
 } from "@/config/forms/dataAccessApplicationDashboard";
 import { colors } from "@/config/theme";
-import { CACHE_DAR_APPLICATION } from "@/consts/cache";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { capitalise } from "@/utils/general";
+import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
+import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 
 const STATUS = "status";
 const SUBMISSION_STATUS = [
@@ -58,15 +57,19 @@ interface CountStatusActionRequired {
 interface DarDashboardProps {
     translationPath: string;
     darApiPath: string;
+    isResearcher: boolean;
+    userId?: string;
+    teamId?: string;
 }
 
 export default function DarDashboard({
     translationPath,
     darApiPath,
+    isResearcher,
+    userId,
+    teamId,
 }: DarDashboardProps) {
     const t = useTranslations(translationPath);
-    const params = useParams<{ teamId: string }>();
-    const isResearcher = !params?.teamId;
 
     const searchParams = useSearchParams();
 
@@ -182,20 +185,21 @@ export default function DarDashboard({
         itemName: t("dataAccessRequests"),
     });
 
-    const updateApplication = usePatch(darApiPath, {
-        itemName: t("dataAccessRequests"),
-    });
-
     const handleDeleteApplication = (id: number) =>
         deleteApplication(id).then(() => mutateApplications());
 
-    const handleWithdrawApplication = (id: number) =>
-        updateApplication(id, {
-            approval_status: DarApplicationApprovalStatus.WITHDRAWN,
-        }).then(() => {
-            mutateApplications();
-            revalidateTag(`${CACHE_DAR_APPLICATION}${id}`);
-        });
+    const handleWithdrawApplication = async (id: number) =>
+        isResearcher
+            ? await updateDarApplicationUserAction(id.toString(), userId!, {
+                  approval_status: DarApplicationApprovalStatus.WITHDRAWN,
+              }).then(() => {
+                  mutateApplications();
+              })
+            : await updateDarApplicationTeamAction(id.toString(), teamId!, {
+                  approval_status: DarApplicationApprovalStatus.WITHDRAWN,
+              }).then(() => {
+                  mutateApplications();
+              });
 
     const approvalTab = [
         {
@@ -297,7 +301,7 @@ export default function DarDashboard({
 
                     {data?.list?.map(item => {
                         const isTeamApplication =
-                            !params?.teamId && item.teams.length > 1;
+                            teamId && item.teams.length > 1;
 
                         if (isTeamApplication) {
                             return (
@@ -316,7 +320,7 @@ export default function DarDashboard({
                             <DarApplicationCard
                                 application={item}
                                 key={item.id}
-                                teamId={params?.teamId}
+                                teamId={teamId}
                                 deleteApplication={handleDeleteApplication}
                                 withdrawApplication={handleWithdrawApplication}
                             />

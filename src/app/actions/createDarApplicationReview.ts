@@ -1,15 +1,19 @@
 "use server";
 
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
-import { updateDarAnswers } from "@/utils/api";
+import { createDarApplicationReview } from "@/utils/api";
 
-export const updateDarApplicationAnswersAction = async (
+export const createDarApplicationReviewAction = async (
     applicationId: string,
-    userId: string,
+    teamId: string,
     payload: Partial<DataAccessRequestApplication>
 ) => {
     try {
-        const res = await updateDarAnswers(applicationId, userId, payload);
+        const res = await createDarApplicationReview(
+            applicationId,
+            teamId,
+            payload
+        );
         return res;
     } catch (e) {
         console.error(e);

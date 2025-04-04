@@ -10,7 +10,6 @@ interface DarTeamApplication {
     id: number;
     review_id: number;
     submission_status: DarApplicationStatus;
-    submission_date: string;
     team_id: number;
     updated_at: string;
 }

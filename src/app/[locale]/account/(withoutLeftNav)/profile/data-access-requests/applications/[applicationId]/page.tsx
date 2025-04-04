@@ -84,7 +84,7 @@ export default async function DarApplicationPage({
         !teamApplication?.approval_status &&
         teamApplication?.submission_status === DarApplicationStatus.SUBMITTED
     ) {
-        await updateDarApplicationUser(cookieStore, applicationId, userId, {
+        await updateDarApplicationUser(applicationId, userId, {
             submission_status: DarApplicationStatus.DRAFT,
         });
 
@@ -132,6 +132,8 @@ export default async function DarApplicationPage({
             isResearcher={true}
             teamApplication={teamApplication}
             parentSections={parentSections}
+            actionRequiredApplicant={actionRequiredApplicant}
+            reviews={reviews}
         />
     );
 }

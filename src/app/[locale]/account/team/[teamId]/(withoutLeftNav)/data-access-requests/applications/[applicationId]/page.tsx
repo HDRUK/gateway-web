@@ -85,7 +85,7 @@ export default async function DarApplicationPage({
 
     // If no approval status, set to feedback
     if (!teamApplication?.approval_status) {
-        await updateDarApplicationTeam(cookieStore, applicationId, teamId, {
+        await updateDarApplicationTeam(applicationId, teamId, {
             approval_status: DarApplicationApprovalStatus.FEEDBACK,
         });
 
@@ -117,6 +117,7 @@ export default async function DarApplicationPage({
             reviews={reviews}
             isResearcher={isResearcher}
             teamApplication={teamApplication}
+            actionRequiredApplicant={actionRequiredApplicant}
         />
     );
 }

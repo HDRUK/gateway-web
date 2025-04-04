@@ -9,7 +9,7 @@ interface Response<T> {
     mutate: KeyedMutator<T | undefined>;
 }
 
-interface Options {
+interface Options<T> {
     localeKey?: string;
     withPagination?: boolean;
     shouldFetch?: boolean;
@@ -18,9 +18,11 @@ interface Options {
     itemName?: string;
     action?: ReactNode;
     refreshInterval?: number;
+    fallbackData?: T;
+    revalidateOnMount?: boolean;
 }
 
-const useGet = <T>(url: string | null, options?: Options): Response<T> => {
+const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
     const {
         localeKey,
         itemName,
@@ -30,9 +32,14 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
         shouldFetch = true,
         withPagination = false,
         refreshInterval = false,
+        fallbackData,
+        revalidateOnMount,
+        // fallbackData = "TESTEVRG",
     } = options || {};
 
     const t = useTranslations("api");
+
+    // console.log("fallbackData", fallbackData);
 
     const fetcher = async (url: string | null): Promise<T | undefined> => {
         if (!url) return undefined;
@@ -59,7 +66,7 @@ const useGet = <T>(url: string | null, options?: Options): Response<T> => {
     const { data, mutate, isLoading } = useSWR<T | undefined>(
         shouldFetch ? url : null,
         fetcher,
-        { keepPreviousData, refreshInterval }
+        { keepPreviousData, refreshInterval, fallbackData }
     );
 
     return {
