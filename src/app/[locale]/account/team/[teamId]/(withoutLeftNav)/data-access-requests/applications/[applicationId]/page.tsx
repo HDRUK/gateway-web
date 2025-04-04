@@ -1,14 +1,18 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
     beforeYouBeginSection,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
 import { DarApplicationApprovalStatus } from "@/consts/dataAccess";
+import { RouteName } from "@/consts/routeName";
 import {
     getDarAnswersTeam,
     getDarReviewsTeam,
     getDarSections,
     getDarTeamApplication,
+    getUser,
     updateDarApplicationTeam,
 } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -33,6 +37,11 @@ export default async function DarApplicationPage({
     const { applicationId, teamId } = params;
 
     const cookieStore = cookies();
+    const user = await getUser(cookieStore);
+
+    if (!user) {
+        redirect(RouteName.ERROR_403);
+    }
 
     let darApplication = await getDarTeamApplication(
         cookieStore,
@@ -106,18 +115,20 @@ export default async function DarApplicationPage({
     }
 
     return (
-        <ApplicationSection
-            teamId={teamId}
-            applicationId={applicationId}
-            data={darApplication}
-            userAnswers={userAnswers}
-            parentSections={parentSections}
-            sections={formattedSections}
-            initialSectionId={sectionId}
-            reviews={reviews}
-            isResearcher={isResearcher}
-            teamApplication={teamApplication}
-            actionRequiredApplicant={actionRequiredApplicant}
-        />
+        <ProtectedAccountRoute loggedInOnly>
+            <ApplicationSection
+                teamId={teamId}
+                applicationId={applicationId}
+                data={darApplication}
+                userAnswers={userAnswers}
+                parentSections={parentSections}
+                sections={formattedSections}
+                initialSectionId={sectionId}
+                reviews={reviews}
+                isResearcher={isResearcher}
+                teamApplication={teamApplication}
+                actionRequiredApplicant={actionRequiredApplicant}
+            />
+        </ProtectedAccountRoute>
     );
 }

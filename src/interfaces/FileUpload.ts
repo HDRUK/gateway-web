@@ -12,6 +12,7 @@ interface FileUpload {
     entity_type: string | null;
     entity_id: number | null;
     structural_metadata?: StructuralMetadata[] | null;
+    skipImageValidation: boolean;
 }
 
 type UploadedFileMetadata = {

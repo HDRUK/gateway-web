@@ -120,6 +120,7 @@ const createFileUploadConfig = (
             }),
         allowReuploading: true,
         hideUpload: !isResearcher,
+        skipImageValidation: true,
     };
 };
 
