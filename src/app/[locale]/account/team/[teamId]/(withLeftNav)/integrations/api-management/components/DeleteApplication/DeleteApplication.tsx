@@ -24,8 +24,8 @@ const DeleteApplication = ({ applicationId }: { applicationId: number }) => {
             <Box sx={{ flex: 1, p: 0 }}>
                 <Typography variant="h3">Delete this app</Typography>
                 <Typography>
-                    Permanently delete this Custom Integration from your management
-                    page. This act is irreversible.
+                    Permanently delete this Custom Integration from your
+                    management page. This act is irreversible.
                 </Typography>
             </Box>
             <Box
