@@ -45,7 +45,7 @@ export default async function DarApplicationPage({
         redirect("/error/401");
     }
 
-    const userId = user!.id.toString();
+    const userId = user.id.toString();
 
     let darApplication;
     try {

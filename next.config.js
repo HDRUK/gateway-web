@@ -2,7 +2,7 @@ const withNextIntl = require("next-intl/plugin")();
 
 /** @type {import('next').NextConfig} */
 
-let nextConfig = withNextIntl({
+const nextConfig = withNextIntl({
     reactStrictMode: true,
     swcMinify: true,
     env: {
