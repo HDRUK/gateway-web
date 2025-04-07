@@ -112,7 +112,7 @@ export default async function DarApplicationPage({
         );
     }
 
-    if (!teamApplication) {
+    if (!teamApplication && teamId) {
         return notFound();
     }
 

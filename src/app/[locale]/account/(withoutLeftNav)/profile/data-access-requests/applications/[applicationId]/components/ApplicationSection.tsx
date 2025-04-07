@@ -71,7 +71,7 @@ const PROJECT_TITLE_FIELD = "project_title";
 const ERROR_TYPE_REQUIRED = ["required", "optionality"];
 
 interface ApplicationSectionProps {
-    teamId: string;
+    teamId?: string;
     userId: string;
     applicationId: string;
     data: DarApplication;
@@ -238,7 +238,8 @@ const ApplicationSection = ({
                     ? updateDarApplicationUserAction(applicationId, userId, {
                           submission_status: DarApplicationStatus.SUBMITTED,
                       })
-                    : updateDarApplicationTeamAction(applicationId, teamId, {
+                    : teamId &&
+                      updateDarApplicationTeamAction(applicationId, teamId, {
                           submission_status: DarApplicationStatus.SUBMITTED,
                       }),
             ]);
@@ -358,6 +359,7 @@ const ApplicationSection = ({
                                     disabled:
                                         !isResearcher ||
                                         (isResearcher &&
+                                            teamApplication &&
                                             teamApplication?.approval_status !==
                                                 null),
                                 },
@@ -392,6 +394,7 @@ const ApplicationSection = ({
                                                         disabled:
                                                             !isResearcher ||
                                                             (isResearcher &&
+                                                                teamApplication &&
                                                                 teamApplication?.approval_status !==
                                                                     null),
                                                     },
@@ -558,6 +561,7 @@ const ApplicationSection = ({
                                                     disabled={
                                                         !isResearcher ||
                                                         (isResearcher &&
+                                                            teamApplication &&
                                                             teamApplication?.approval_status !==
                                                                 null)
                                                     }
