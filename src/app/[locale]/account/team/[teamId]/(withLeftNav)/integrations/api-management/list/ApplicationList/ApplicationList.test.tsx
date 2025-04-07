@@ -41,13 +41,13 @@ describe("ApplicationList", () => {
             expect(screen.getByText(data[1].name)).toBeInTheDocument();
             expect(screen.getByText(data[2].name)).toBeInTheDocument();
             expect(
-                screen.getByText(`Private App ID: ${data[0].app_id}`)
+                screen.getByText(`Custom Integration ID: ${data[0].app_id}`)
             ).toBeInTheDocument();
             expect(
-                screen.getByText(`Private App ID: ${data[1].app_id}`)
+                screen.getByText(`Custom Integration ID: ${data[1].app_id}`)
             ).toBeInTheDocument();
             expect(
-                screen.getByText(`Private App ID: ${data[2].app_id}`)
+                screen.getByText(`Custom Integration ID: ${data[2].app_id}`)
             ).toBeInTheDocument();
         });
     });

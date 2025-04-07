@@ -93,7 +93,7 @@ describe("Nav utils", () => {
             expect(integrationsItem?.subItems).toBeDefined();
 
             const apiManagementItem = integrationsItem?.subItems?.find(
-                item => item.label === "Private apps"
+                item => item.label === "Custom Integrations"
             );
 
             expect(apiManagementItem).toBeDefined();
@@ -115,7 +115,7 @@ describe("Nav utils", () => {
             expect(integrationsItem?.subItems).toBeDefined();
 
             const integrationItem = integrationsItem?.subItems?.find(
-                item => item.label === "Gateway apps"
+                item => item.label === "Predefined Integrations"
             );
 
             expect(integrationItem).toBeDefined();

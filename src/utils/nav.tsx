@@ -130,7 +130,7 @@ const getTeamNav = (
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "Private apps",
+                                        label: "Custom Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
@@ -141,7 +141,7 @@ const getTeamNav = (
                           ].some(isTrue => isTrue)
                               ? [
                                     {
-                                        label: "Gateway apps",
+                                        label: "Predefined Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
                                     },
                                 ]
