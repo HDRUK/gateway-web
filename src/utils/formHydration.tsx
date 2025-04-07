@@ -279,6 +279,10 @@ const renderFormHydrationField = (
     const componentType = inputComponents[component as ComponentTypes];
     const { options } = rest;
 
+    if (!componentType) {
+        return;
+    }
+
     return (
         <InputWrapper
             name={nameOverride || name}
