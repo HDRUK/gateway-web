@@ -468,7 +468,9 @@ const ApplicationSection = ({
                 projectTitle={projectTitle}
                 buttonText={isResearcher ? "save" : "manage"}
                 buttonAction={
-                    isResearcher && teamApplication?.approval_status === null
+                    isResearcher &&
+                    (!teamApplication ||
+                        teamApplication?.approval_status === null)
                         ? handleSaveAsDraft
                         : !isResearcher &&
                           teamApplication?.approval_status ===

@@ -519,7 +519,10 @@ async function updateDarAnswers(
     return put<Partial<DataAccessRequestApplication>>(
         `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
         body,
-        [`${CACHE_DAR_ANSWERS}${applicationId}`]
+        [
+            `${CACHE_DAR_ANSWERS}${applicationId}`,
+            `${CACHE_DAR_APPLICATION}${applicationId}`,
+        ]
     );
 }
 
