@@ -1,34 +1,122 @@
-## Health Data Research Innovation Gateway
+[![LICENCE](https://img.shields.io/github/license/HDRUK/gateway-web)](https://github.com/HDRUK/gateway-web/blob/dev/LICENSE)
+[![Support](https://img.shields.io/badge/Supported%20By-HDR%20UK-blue)](https://hdruk.ac.uk)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# HDR UK Gateway - Frontend (Next.js)
 
-## Getting Started 
+Welcome to the HDR UK Gateway Frontend, a **Next.js** React application that powers the user interface of the **HDR UK Gateway**. This application facilitates seamless interaction with the [Gateway API](https://github.com/HDRUK/gateway-api-2) using:
 
-First, run the development server:
+- **[fetch](https://nextjs.org/docs/app/api-reference/functions/fetch)** for efficient server-side communication.
+- **[SWR](https://swr.vercel.app/)** for optimized client-side data fetching and state management.
+- **[i18next](https://www.i18next.com/)** for internationalization and multi-language support.
+- **[Jest](https://jestjs.io/)** for unit and snapshot testing.
 
+This project utilizes the **App Router** of Next.js, providing improved performance and flexibility over the traditional Pages Router.
+
+## 🚀 Getting Started
+
+Follow these steps to install and run the project on your local machine.
+
+### Prerequisites
+Ensure you have the following installed:
+- **Node.js** (Latest LTS version recommended)
+- **npm** or **yarn** (Package manager)
+- **Git** (For cloning the repository)
+
+### Installation & Setup
+
+#### 1️⃣ Clone the repository
+Open a terminal and execute:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/HDRUK/gateway-web
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2️⃣ Navigate to the project directory
+```bash
+cd gateway-web
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### 3️⃣ Set up environment variables
+Create a `.env.local` file and populate it with appropriate values, using `.env.example` as a reference.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+#### 4️⃣ Install dependencies
+Run the following command to install the required packages:
+```bash
+npm install
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### 5️⃣ Start the development server
+Once dependencies are installed, start the application using:
+```bash
+npm run dev
+```
+By default, the application will be available at **[http://localhost:3000](http://localhost:3000)**.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🛠 Available Scripts
 
-## Learn More
+In the project directory, you can run the following commands:
 
-To learn more about Next.js, take a look at the following resources:
+- **`npm run dev`** – Starts the development server.
+- **`npm run build`** – Builds the application for production.
+- **`npm start`** – Runs the compiled production build.
+- **`npm run lint`** – Runs ESLint to check for code quality issues.
+- **`npm run lint:fix`** – Runs ESLint to automatically fix simple lint issues.
+- **`npm test`** – Runs the Jest test suite.
+- **`npm test:snapshot`** – Runs the Jest test suite to update snapshots.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For a full list of scripts, run `npm run`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 📂 Project Structure
+A brief overview of the project's folder structure:
+```
+├── app/                # Next.js pages/api routes/actions
+├── components/         # Reusable React components
+├── config/             # Reusable configuration throughout the gateway
+├── const/              # Constant values
+├── hooks/              # React hooks
+├── interfaces/         # Types and interfaces
+├── modules/            # Module components
+├── pages/api           # Legacy APIs that need adapting to App Router APIs
+├── providers/          # Provider Wrappers, such as SWR, Snackbars...
+├── public/             # Static assets (images, fonts, etc.)
+├── seeded/             # Any seeded data during the build process, such as sitemap
+├── services/           # Services and clients such as API calls
+├── styles/             # Global styles and theme settings
+├── types/              # Types and interfaces
+├── utils/              # Helper functions and utilities
+├── .env.local.example  # Sample environment variables file
+├── next.config.js      # Next.js configuration
+├── package.json        # Project dependencies and scripts
+└── README.md           # Project documentation
+```
+
+## 🧩 Internationalization (i18next)
+
+This project uses **[i18next](https://www.i18next.com/)** for multilingual support, allowing for seamless language switching and localization. Translations are managed within the `/src/config/messages/` directory and integrated using the `i18next` library.
+
+
+## 🧪 Testing with Jest
+
+We use **[Jest](https://jestjs.io/)** for unit testing and **React Testing Library** for component testing. Snapshot testing is included to ensure UI consistency.
+
+To run tests:
+```bash
+npm test
+```
+
+To update snapshots:
+```bash
+npm test:snapshot
+```
+
+## 📖 Additional Resources
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://reactjs.org/docs)
+- [SWR Documentation](https://swr.vercel.app/)
+- [i18next Documentation](https://www.i18next.com/)
+- [Jest Documentation](https://jestjs.io/)
+- [HDR UK Gateway API](https://github.com/HDRUK/gateway-api-2)
+
+---
+
+For further support, please reach out via [HDR UK](https://healthdatagateway.org/en) or raise a [bug](https://hdruk.atlassian.net/servicedesk/customer/portal/7/group/14/create/34) or even better raise a PR!
+

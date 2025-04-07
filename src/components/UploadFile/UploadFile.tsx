@@ -1,13 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useController, Control, useForm, FieldError } from "react-hook-form";
-import {
-    IconButton,
-    List,
-    ListItem,
-    Stack,
-    SxProps,
-    Typography,
-} from "@mui/material";
+import { IconButton, List, ListItem, Stack, SxProps } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { FileUpload, UploadedFileMetadata } from "@/interfaces/FileUpload";
@@ -15,11 +8,14 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { DeleteForeverOutlinedIcon } from "@/consts/icons";
+import { ImageValidationError } from "@/consts/image";
+import { validateImageDimensions } from "@/utils/imageValidation";
 import Button from "../Button";
 import FormInputWrapper from "../FormInputWrapper";
+import Link from "../Link";
 import Loading from "../Loading";
+import Typography from "../Typography";
 import Upload from "../Upload";
 
 export type EventUploadedImage = {
@@ -27,8 +23,8 @@ export type EventUploadedImage = {
     height: number;
 };
 
-type UploadFormData = {
-    upload: string;
+export type UploadFormData = {
+    upload: object;
 };
 
 export interface UploadFileProps {
@@ -37,8 +33,7 @@ export interface UploadFileProps {
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
     isUploading?: Dispatch<SetStateAction<boolean>>;
-    onBeforeUploadCheck?: (height: number, width: number) => boolean;
-    onFileCheckFailed?: () => void;
+    onFileCheckFailed?: (reason?: ImageValidationError) => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
     onFileChange?: (file: File) => void;
     onFileUploaded?: (uploadResponse?: FileUpload) => void;
@@ -53,6 +48,8 @@ export interface UploadFileProps {
     control: Control;
     allowMultipleFiles?: boolean;
     disabled?: boolean;
+    fileDownloadApiPath?: string;
+    hideUpload?: boolean;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -63,7 +60,6 @@ const UploadFile = ({
     acceptedFileTypes,
     fileSelectButtonText,
     isUploading,
-    onBeforeUploadCheck,
     onFileCheckFailed,
     onFileCheckSucceeded,
     onFileChange,
@@ -79,6 +75,8 @@ const UploadFile = ({
     control,
     allowMultipleFiles,
     disabled = false,
+    fileDownloadApiPath,
+    hideUpload = false,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -106,8 +104,8 @@ const UploadFile = ({
 
     const value = fieldProps.value?.value;
     const existingFilename = !allowMultipleFiles && value?.filename;
-    const existingFileArray: UploadedFileMetadata[] =
-        allowMultipleFiles && Array.isArray(value) ? value : [];
+
+    const existingFileArray: UploadedFileMetadata[] = [].concat(value || []);
 
     const { data: fileScanStatus } = useGet<FileUpload>(
         `${apis.fileUploadV1Url}/${fileId}`,
@@ -154,6 +152,7 @@ const UploadFile = ({
 
                 if (allowReuploading) {
                     setFileId(undefined);
+                    setFile(undefined);
                 }
 
                 if (allowMultipleFiles) {
@@ -166,39 +165,6 @@ const UploadFile = ({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileId, fileScanStatus]);
-
-    const imageValidation = async (file: File) => {
-        try {
-            await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    const image = new Image();
-                    image.src = e?.target?.result as string;
-                    image.onload = function () {
-                        if (onBeforeUploadCheck) {
-                            const checked = onBeforeUploadCheck(
-                                image.height,
-                                image.width
-                            );
-                            return checked
-                                ? resolve(null)
-                                : reject(
-                                      new Error(
-                                          "The image does not pass it's checks"
-                                      )
-                                  );
-                        }
-
-                        return resolve(true);
-                    };
-                };
-            });
-            return true;
-        } catch (_) {
-            return false;
-        }
-    };
 
     const onSubmit = async () => {
         if (!file) {
@@ -270,40 +236,51 @@ const UploadFile = ({
             <Stack spacing={0}>
                 {!fileId && (
                     <>
-                        <Upload
-                            inputRef={ref}
-                            disabled={disabled}
-                            control={uploadFileControl}
-                            label={fileSelectButtonText || t("upload")}
-                            name="upload"
-                            uploadSx={{ display: "none" }}
-                            acceptFileTypes={acceptedFileTypes}
-                            onFileChange={(file: File) => {
-                                if (file.type.startsWith("image/")) {
-                                    imageValidation(file).then(result => {
+                        {!hideUpload && (
+                            <Upload
+                                inputRef={ref}
+                                disabled={disabled}
+                                control={uploadFileControl}
+                                label={fileSelectButtonText || t("upload")}
+                                name="upload"
+                                uploadSx={{ display: "none" }}
+                                acceptFileTypes={acceptedFileTypes}
+                                onFileChange={async (file: File) => {
+                                    if (!file) {
+                                        return;
+                                    }
+
+                                    if (file.type.startsWith("image/")) {
+                                        validateImageDimensions(file)
+                                            .then(() => {
+                                                setFile(file);
+                                                onFileChange?.(file);
+                                            })
+                                            .catch(
+                                                (
+                                                    reason: ImageValidationError
+                                                ) => {
+                                                    onFileCheckFailed?.(reason);
+                                                }
+                                            );
+                                    } else {
                                         setFile(file);
                                         onFileChange?.(file);
-                                        if (!result) {
-                                            onFileCheckFailed?.();
-                                        }
-                                    });
-                                } else {
-                                    setFile(file);
-                                    onFileChange?.(file);
+                                    }
+                                }}
+                                helperText={
+                                    file?.name ||
+                                    (acceptedFileTypes
+                                        ? t("uploadHelper", {
+                                              fileType: acceptedFileTypes,
+                                          })
+                                        : t("uploadHelperFilesize"))
                                 }
-                            }}
-                            helperText={
-                                file?.name ||
-                                existingFilename ||
-                                (acceptedFileTypes
-                                    ? t("uploadHelper", {
-                                          fileType: acceptedFileTypes,
-                                      })
-                                    : t("uploadHelperFilesize"))
-                            }
-                        />
-
-                        {showUploadButton && (
+                                fileName={file?.name || existingFilename}
+                                fileDownloadApiPath={fileDownloadApiPath}
+                            />
+                        )}
+                        {showUploadButton && !hideUpload && (
                             <Button
                                 onClick={handleSubmit(onSubmit)}
                                 sx={{ maxWidth: 150 }}
@@ -312,33 +289,39 @@ const UploadFile = ({
                             </Button>
                         )}
 
-                        {allowMultipleFiles && (
-                            <List sx={{ mt: 2, mb: 2 }}>
-                                {!!existingFileArray?.length &&
-                                    existingFileArray?.map(file => (
-                                        <ListItem
-                                            sx={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                            }}>
-                                            <Typography
-                                                sx={{
-                                                    color: colors.grey600,
-                                                }}>
+                        {!!existingFileArray?.length && (
+                            <List sx={{ mt: 2, mb: 1 }}>
+                                {existingFileArray?.map(file => (
+                                    <ListItem
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            pl: 0,
+                                            pb: 0,
+                                        }}
+                                        key={file.id}>
+                                        {fileDownloadApiPath ? (
+                                            <Link
+                                                href={`${fileDownloadApiPath}/${file.id}/download`}
+                                                sx={{ pt: 1, pb: 1 }}>
+                                                {file.filename}
+                                            </Link>
+                                        ) : (
+                                            <Typography sx={{ pt: 1, pb: 1 }}>
                                                 {file.filename}
                                             </Typography>
+                                        )}
+                                        {onFileRemove && (
                                             <IconButton
+                                                aria-label={`Remove file ${file.filename}`}
                                                 onClick={() =>
-                                                    (onFileRemove &&
-                                                        onFileRemove(
-                                                            file.id
-                                                        )) ||
-                                                    undefined
+                                                    onFileRemove(file.id)
                                                 }>
                                                 <DeleteForeverOutlinedIcon color="primary" />
                                             </IconButton>
-                                        </ListItem>
-                                    ))}
+                                        )}
+                                    </ListItem>
+                                ))}
                             </List>
                         )}
                     </>

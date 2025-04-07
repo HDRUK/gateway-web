@@ -1,91 +1,56 @@
 "use client";
 
-import { useMemo } from "react";
 import { Control } from "react-hook-form";
-import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
-import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
+import { Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+import {
+    QuestionBankQuestion,
+    QuestionBankQuestionForm,
+} from "@/interfaces/QuestionBankQuestion";
 import Paper from "@/components/Paper";
-import { inputComponents } from "@/config/forms";
-import { componentsWithOptions } from "@/config/forms/questionBank";
+import { formatDarQuestion } from "@/utils/dataAccessRequest";
 import { renderFormHydrationField } from "@/utils/formHydration";
 
+const TRANSLATION_PATH = `pages.account.profile.darAdmin.qbManagement.createPage`;
+
 interface PreviewQuestionProps {
-    question: FormHydration;
+    question: QuestionBankQuestion;
     control: Control<QuestionBankQuestionForm>;
 }
 
-const formatNestedFields = data =>
-    data.options.map(option => ({
-        active_when: option.label,
-        fields: option.children.map(child => ({
-            component: child.component,
-            info: child.guidance || "",
-            name: child.title || "",
-            ...(child.component === inputComponents.RadioGroup && {
-                radios: child?.options?.map(option => ({
-                    label: option.label,
-                    value: option.label,
-                })),
-            }),
-            ...(child.component === inputComponents.CheckboxGroup && {
-                checkboxes: child?.options?.map(option => ({
-                    label: option.label,
-                    value: option.label,
-                })),
-            }),
-        })),
-    }));
-
 const PreviewQuestion = ({ question, control }: PreviewQuestionProps) => {
-    const formattedQuestion = useMemo(() => {
-        return {
-            title: question.title || "",
-            field: {
-                name: question.title,
-                component: question.component,
-                info: question?.guidance || "",
-                ...(question.component === inputComponents.RadioGroup && {
-                    radios: question?.options?.map(option => ({
-                        label: option.label,
-                        value: option.label,
-                    })),
-                }),
-                ...(question.component === inputComponents.CheckboxGroup && {
-                    checkboxes: question?.options?.map(option => ({
-                        label: option.label,
-                        value: option.label,
-                    })),
-                }),
-            },
-            nested: formatNestedFields(question),
-        };
-    }, [question]);
+    const t = useTranslations(TRANSLATION_PATH);
+    const formattedQuestion = question.title && formatDarQuestion(question);
+    const optionValue = question[question.title];
 
     return (
         <Paper
             sx={{
-                my: 2,
+                marginTop: "10px",
+                marginBottom: "10px",
                 padding: 2,
             }}>
-            {formattedQuestion?.field &&
-                renderFormHydrationField(
-                    formattedQuestion.field as FormHydrationField,
-                    control,
-                    question.title
-                )}
+            {!formattedQuestion ? (
+                <Typography>{t("noPreview")}</Typography>
+            ) : (
+                <>
+                    {renderFormHydrationField(
+                        { ...formattedQuestion },
+                        control
+                    )}
 
-            {/* //todo - get current val to decide what field to show */}
-            {componentsWithOptions.includes(
-                formattedQuestion?.field.component
-            ) &&
-                !!formattedQuestion.nested?.length &&
-                formattedQuestion.nested[1]?.fields?.map(field =>
-                    renderFormHydrationField(
-                        field as FormHydrationField,
-                        control,
-                        field.title
-                    )
-                )}
+                    {formattedQuestion.options?.map(option =>
+                        option.children?.map(child =>
+                            child.name && optionValue === option.label
+                                ? renderFormHydrationField(
+                                      { ...child },
+                                      control
+                                  )
+                                : null
+                        )
+                    )}
+                </>
+            )}
         </Paper>
     );
 };

@@ -236,6 +236,9 @@ const DatasetContent = ({
                                                 ),
                                                 showConfirm: false,
                                                 showCancel: false,
+                                                styleProps: {
+                                                    maxWidth: "laptop",
+                                                },
                                             })
                                         }>
                                         Open table

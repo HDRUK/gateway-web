@@ -30,19 +30,22 @@ import {
     teamFormFields,
     teamValidationSchema,
 } from "@/config/forms/team";
+import { ImageValidationError } from "@/consts/image";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { Routes } from "@/consts/routes";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
+const TRANSLATION_PATH_ERROR = "error";
 
 const CreateTeamForm = () => {
     const params = useParams<{
         teamId: string;
     }>();
     const t = useTranslations();
-    const [fileWarning, setFileWarning] = useState(false);
+    const [fileNotUploadedMessage, setFileNotUploadedMessage] =
+        useState<string>();
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
     const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
@@ -155,6 +158,7 @@ const CreateTeamForm = () => {
             contact_point,
             is_question_bank,
             team_logo,
+            dar_modal_content,
         } = existingTeamData;
 
         const teamData = {
@@ -164,6 +168,7 @@ const CreateTeamForm = () => {
             is_question_bank,
             users: teamAdmins.map(user => user.id),
             contact_point: contact_point ?? "",
+            dar_modal_content,
         };
 
         if (team_logo) {
@@ -325,12 +330,10 @@ const CreateTeamForm = () => {
                                           )
                                 }
                                 error={
-                                    fileWarning
+                                    fileNotUploadedMessage
                                         ? {
                                               type: "",
-                                              message: t(
-                                                  `${TRANSLATION_PATH_CREATE}.aspectRatioError`
-                                              ),
+                                              message: fileNotUploadedMessage,
                                           }
                                         : undefined
                                 }
@@ -341,26 +344,29 @@ const CreateTeamForm = () => {
                                         `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
                                     )}
                                     acceptedFileTypes=".jpg,.png"
-                                    onBeforeUploadCheck={(
-                                        height: number,
-                                        width: number
-                                    ) => {
-                                        const aspectRatio =
-                                            (width || 0) / (height || 0);
-                                        return (
-                                            aspectRatio <= 2.5 &&
-                                            aspectRatio >= 1.5
-                                        );
-                                    }}
                                     onFileChange={(file: File) => {
                                         setFile(file);
-                                        setFileWarning(false);
+                                        setFileNotUploadedMessage(undefined);
                                     }}
                                     onFileCheckSucceeded={() => {
                                         setImageUploaded(true);
                                     }}
-                                    onFileCheckFailed={() => {
-                                        setFileWarning(true);
+                                    onFileCheckFailed={(
+                                        reason?: ImageValidationError
+                                    ) => {
+                                        const errorMessages = {
+                                            [ImageValidationError.RATIO]: `${TRANSLATION_PATH_ERROR}.imageAspectRatio`,
+                                            [ImageValidationError.SIZE]: `${TRANSLATION_PATH_ERROR}.imageDimensions`,
+                                            default: `${TRANSLATION_PATH_ERROR}.image`,
+                                        };
+
+                                        setFileNotUploadedMessage(
+                                            t(
+                                                errorMessages[
+                                                    reason as ImageValidationError
+                                                ] || errorMessages.default
+                                            )
+                                        );
                                     }}
                                     onFileUploaded={async response => {
                                         if (!createdTeamId) {

@@ -46,6 +46,7 @@ import {
 } from "@/config/forms/collection";
 import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
+import { ImageValidationError } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
 import { revalidateCache } from "@/app/actions/revalidateCache";
 
@@ -57,6 +58,7 @@ interface CollectionCreateProps {
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
+const TRANSLATION_PATH_ERROR = "error";
 
 const CollectionForm = ({
     teamId,
@@ -64,7 +66,8 @@ const CollectionForm = ({
     collectionId,
     keywordOptions,
 }: CollectionCreateProps) => {
-    const [fileNotUploaded, setFileNotUploaded] = useState(false);
+    const [fileNotUploadedMessage, setFileNotUploadedMessage] =
+        useState<string>();
     const [imageUploaded, setImageUploaded] = useState(false);
     const [searchName, setSearchName] = useState("");
     const [userOptions, setUserOptions] = useState<Option[]>([]);
@@ -469,6 +472,7 @@ const CollectionForm = ({
         editCollection,
         file,
         uploadFile,
+        fileNotUploadedMessage,
     ]);
 
     return (
@@ -515,12 +519,10 @@ const CollectionForm = ({
                                           )
                                 }
                                 error={
-                                    fileNotUploaded
+                                    fileNotUploadedMessage
                                         ? {
                                               type: "",
-                                              message: t(
-                                                  `${TRANSLATION_PATH_CREATE}.aspectRatioError`
-                                              ),
+                                              message: fileNotUploadedMessage,
                                           }
                                         : undefined
                                 }
@@ -530,27 +532,30 @@ const CollectionForm = ({
                                         `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
                                     )}
                                     acceptedFileTypes=".jpg,.png"
-                                    onBeforeUploadCheck={(
-                                        height: number,
-                                        width: number
-                                    ) => {
-                                        const aspectRatio =
-                                            (width || 0) / (height || 0);
-                                        return (
-                                            aspectRatio <= 2.5 &&
-                                            aspectRatio >= 1.5
-                                        );
-                                    }}
                                     onFileChange={(file: File) => {
-                                        setFileNotUploaded(false);
+                                        setFileNotUploadedMessage(undefined);
                                         setFile(file);
                                     }}
                                     onFileCheckSucceeded={() => {
-                                        setFileNotUploaded(false);
+                                        setFileNotUploadedMessage(undefined);
                                         setImageUploaded(true);
                                     }}
-                                    onFileCheckFailed={() => {
-                                        setFileNotUploaded(true);
+                                    onFileCheckFailed={(
+                                        reason?: ImageValidationError
+                                    ) => {
+                                        const errorMessages = {
+                                            [ImageValidationError.RATIO]: `${TRANSLATION_PATH_ERROR}.imageAspectRatio`,
+                                            [ImageValidationError.SIZE]: `${TRANSLATION_PATH_ERROR}.imageDimensions`,
+                                            default: `${TRANSLATION_PATH_ERROR}.image`,
+                                        };
+
+                                        setFileNotUploadedMessage(
+                                            t(
+                                                errorMessages[
+                                                    reason as ImageValidationError
+                                                ] || errorMessages.default
+                                            )
+                                        );
                                     }}
                                     sx={{ py: 2 }}
                                     showUploadButton={false}

@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+    startTransition,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import { FieldValues } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
 import Cookies from "js-cookie";
@@ -143,9 +149,6 @@ const Search = ({ filters }: SearchProps) => {
             ViewType.TABLE
     );
 
-    const [initialPublicationSearch, setInitialPublicationSearch] =
-        useState<boolean>(false);
-
     const updateQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams?.toString());
@@ -241,8 +244,10 @@ const Search = ({ filters }: SearchProps) => {
 
     const updatePath = useCallback(
         (key: string, value: string) => {
-            router.push(`${pathname}?${updateQueryString(key, value)}`, {
-                scroll: false,
+            startTransition(() => {
+                router.push(`${pathname}?${updateQueryString(key, value)}`, {
+                    scroll: false,
+                });
             });
         },
         [pathname, router, updateQueryString]
@@ -667,11 +672,11 @@ const Search = ({ filters }: SearchProps) => {
         [queryParams.query, queryParams.source]
     );
 
-    const europePmcModalAction = () =>
-        showDialog(() => (
+    const PublicationSearchDialogMemoised = useMemo(() => {
+        return () => (
             <PublicationSearchDialog
                 onSubmit={(
-                    query: string,
+                    query: string | string[],
                     type: string,
                     datasetNamesArray: string[]
                 ) => {
@@ -683,31 +688,23 @@ const Search = ({ filters }: SearchProps) => {
                         ...queryParams,
                         pmc: type,
                         query,
+                        source: EUROPE_PMC_SOURCE_FIELD,
                     });
                     updatePathMultiple({
                         pmc: type,
                         query,
+                        source: EUROPE_PMC_SOURCE_FIELD,
                     });
                 }}
                 defaultQuery={queryParams.query}
                 datasetNamesArray={datasetNamesArray}
                 isDataset={queryParams.pmc === "dataset"}
             />
-        ));
+        );
+    }, [datasetNamesArray, onQuerySubmit, queryParams, updatePathMultiple]);
 
-    // Display Europe PMC Search Modal
-    useEffect(() => {
-        if (!initialPublicationSearch && queryParams.pmc === "dataset") {
-            setInitialPublicationSearch(true);
-            return;
-        }
-
-        if (queryParams.source === EUROPE_PMC_SOURCE_FIELD) {
-            europePmcModalAction();
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [queryParams.source, queryParams.type, queryParams.pmc]);
+    const europePmcModalAction = () =>
+        showDialog(PublicationSearchDialogMemoised);
 
     return (
         <Box
@@ -852,6 +849,7 @@ const Search = ({ filters }: SearchProps) => {
                             updatePath(filterName, value);
                         }}
                         getParamString={getParamString}
+                        showEuropePmcModal={europePmcModalAction}
                     />
                 </Box>
                 <Box

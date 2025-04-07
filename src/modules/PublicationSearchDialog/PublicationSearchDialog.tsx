@@ -30,7 +30,7 @@ interface OptionType {
 
 interface AddDatasetDialogProps {
     onSubmit: (
-        query: string,
+        query: string | string[],
         type: string,
         datasetNamesArray: string[]
     ) => void;

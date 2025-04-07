@@ -126,7 +126,9 @@ const Select = <
                 {...rest}>
                 {options?.map(option =>
                     option.isHeader ? (
-                        <ListSubheader>{option.label}</ListSubheader>
+                        <ListSubheader key={option.label}>
+                            {option.label}
+                        </ListSubheader>
                     ) : (
                         <MenuItem
                             color="secondary"
