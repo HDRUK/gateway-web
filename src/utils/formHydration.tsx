@@ -280,7 +280,7 @@ const renderFormHydrationField = (
     const { options } = rest;
 
     if (!componentType) {
-        return;
+        return null;
     }
 
     return (
