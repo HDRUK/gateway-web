@@ -381,6 +381,8 @@ const ApplicationSection = ({
                                                 sx={{
                                                     pt: 1,
                                                     pb: 0,
+                                                    pl: 3,
+                                                    pr: 3,
                                                     backgroundColor:
                                                         child.name ===
                                                         selectedField
