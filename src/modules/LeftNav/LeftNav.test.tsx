@@ -53,10 +53,10 @@ describe("LeftNav", () => {
             within(buttons[1]).getByText("Integrations")
         ).toBeInTheDocument();
         expect(
-            within(buttons[2]).getByText("Private apps")
+            within(buttons[2]).getByText("Custom Integrations")
         ).toBeInTheDocument();
         expect(
-            within(buttons[3]).getByText("Gateway apps")
+            within(buttons[3]).getByText("Predefined Integrations")
         ).toBeInTheDocument();
         expect(within(buttons[4]).getByText("Help")).toBeInTheDocument();
     });
