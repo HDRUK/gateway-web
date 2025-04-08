@@ -176,7 +176,8 @@ const DarMessages = ({
                                 color: colors.grey700,
                                 mb: 3,
                             }}>
-                            {actionRequiredApplicant ? (
+                            {(actionRequiredApplicant && isResearcher) ||
+                            (!actionRequiredApplicant && !isResearcher) ? (
                                 <ErrorIcon
                                     sx={{
                                         pr: 1,

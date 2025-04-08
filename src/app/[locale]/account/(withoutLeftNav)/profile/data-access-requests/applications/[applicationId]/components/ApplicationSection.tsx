@@ -472,7 +472,9 @@ const ApplicationSection = ({
                 buttonAction={
                     isResearcher &&
                     (!teamApplication ||
-                        teamApplication?.approval_status === null)
+                        (teamApplication?.approval_status === null &&
+                            teamApplication.submission_status !==
+                                DarApplicationStatus.SUBMITTED))
                         ? handleSaveAsDraft
                         : !isResearcher &&
                           teamApplication?.approval_status ===
@@ -721,9 +723,11 @@ const ApplicationSection = ({
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
                             {isResearcher &&
-                                teamApplication?.approval_status === null &&
-                                teamApplication.submission_status ===
-                                    DarApplicationStatus.DRAFT && (
+                                (!teamApplication ||
+                                    (teamApplication?.approval_status ===
+                                        null &&
+                                        teamApplication.submission_status !==
+                                            DarApplicationStatus.SUBMITTED)) && (
                                     <Button
                                         onClick={handleSubmit(handleSave)}
                                         type="submit"
