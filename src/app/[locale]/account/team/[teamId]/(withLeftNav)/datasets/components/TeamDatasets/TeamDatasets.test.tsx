@@ -57,7 +57,9 @@ describe("TeamDatasets", () => {
                 within(datasetCards[1]).getByText(`API created dataset`)
             ).toBeInTheDocument();
             expect(
-                within(datasetCards[2]).getByText(`Gateway App created dataset`)
+                within(datasetCards[2]).getByText(
+                    `Predefined Integration created dataset`
+                )
             ).toBeInTheDocument();
         });
     });

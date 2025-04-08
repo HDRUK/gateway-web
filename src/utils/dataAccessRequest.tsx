@@ -11,6 +11,8 @@ import {
 } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
+import { CACHE_DAR_ANSWERS } from "@/consts/cache";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 
@@ -101,6 +103,8 @@ const createFileUploadConfig = (
                     { shouldValidate: true }
                 );
             }
+
+            revalidateCacheAction(`${CACHE_DAR_ANSWERS}${applicationId}`);
         },
         ...(isResearcher &&
             removeUploadedFile && {
@@ -116,10 +120,15 @@ const createFileUploadConfig = (
                             { shouldValidate: true }
                         );
                     }
+
+                    revalidateCacheAction(
+                        `${CACHE_DAR_ANSWERS}${applicationId}`
+                    );
                 },
             }),
         allowReuploading: true,
         hideUpload: !isResearcher,
+        skipImageValidation: true,
     };
 };
 

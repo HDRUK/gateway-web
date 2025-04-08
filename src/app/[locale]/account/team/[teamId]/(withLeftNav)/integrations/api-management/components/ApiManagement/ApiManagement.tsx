@@ -42,13 +42,13 @@ const ApiManagement = () => {
                     img={StaticImages.TEAM_INTEGRATIONS.createPrivateApp}
                     href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}`}
                     description="Create authentication keys and link to the Gateway"
-                    buttonText="Create Private App"
+                    buttonText="Create Custom Integrations"
                 />
                 <ImageMediaCard
                     img={StaticImages.TEAM_INTEGRATIONS.managePrivateApps}
                     href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`}
-                    description="Manage your Private Apps"
-                    buttonText="Manage Private Apps"
+                    description="Manage your Custom Integrations"
+                    buttonText="Manage Custom Integrations"
                 />
             </Box>
             <Typography sx={{ fontSize: "20px" }}>

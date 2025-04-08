@@ -9,6 +9,7 @@ import {
 } from "@/consts/dataAccess";
 
 interface DarStatusTrackerProps {
+    submissionStatus: DarApplicationStatus;
     approvalStatus?: DarApplicationApprovalStatus;
     statuses: (DarApplicationStatus | DarApplicationApprovalStatus)[];
 }
@@ -16,6 +17,7 @@ interface DarStatusTrackerProps {
 const TRANSLATION_PATH = "common.dar.status";
 
 export default function DarStatusTracker({
+    submissionStatus,
     approvalStatus,
     statuses,
 }: DarStatusTrackerProps) {
@@ -35,6 +37,10 @@ export default function DarStatusTracker({
               )
             : approvalStatus
             ? formattedStatuses.length
+            : submissionStatus === DarApplicationStatus.SUBMITTED
+            ? formattedStatuses.findIndex(
+                  item => item === DarApplicationStatus.SUBMITTED
+              )
             : 0;
 
     return (

@@ -34,7 +34,7 @@ const validationSchema = yup
 
 const formFields = [
     {
-        label: "Private App name",
+        label: "Custom Integration name",
         name: "name",
         component: inputComponents.TextField,
         required: true,
@@ -61,7 +61,7 @@ const formFields = [
         ) => option.value === value,
         getChipLabel,
         component: inputComponents.Autocomplete,
-        info: "Identify which team members should receive notifications related to this Private App. Select from the drop-down list.",
+        info: "Identify which team members should receive notifications related to this Custom Integration. Select from the drop-down list.",
     },
 ];
 

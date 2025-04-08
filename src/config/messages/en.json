@@ -67,7 +67,7 @@
         "applicationPermission": {
             "success": {
                 "put": {
-                    "message": "Private App created and enabled"
+                    "message": "Custom Integration created and enabled"
                 }
             }
         },
@@ -696,32 +696,32 @@
                     "create": {
                         "title": "Integration",
                         "text": "Input and edit the authentication information for the Gateway system to use for the integration.",
-                        "helper": "Entities created via a Gateway App integration can only be managed (updated or deleted/archived) via the Gateway App integration. Entities created via another method (manual, API integration) cannot be managed via the Gateway App integration."
+                        "helper": "Entities created via a Predefined Integration can only be managed (updated or deleted/archived) via the Predefined Integration. Entities created via another method (manual, API integration) cannot be managed via the Predefined Integration."
                     }
                 },
                 "integrations": {
                     "apiManagement": {
                         "howTo": "How to setup and manage integrations",
-                        "cannotCreate": "Please note that HDR UK cannot create Private Apps on behalf of users.",
+                        "cannotCreate": "Please note that HDR UK cannot create Custom Integrations on behalf of users.",
                         "create": {
-                            "title": "Private apps",
-                            "text": "Use this form to create your Private App on the Gateway"
+                            "title": "Custom Integrations",
+                            "text": "Use this form to create your Custom Integration on the Gateway"
                         },
                         "manage": {
                             "permissions": {
                                 "title": "Permissions",
                                 "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
-                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App.",
-                                "warning": "We recommend you update your client ID across all software using this Private App.",
+                                "helper": "Entities created via a Custom Integration can only be managed (updated or deleted/archived) via the Custom Integration. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Custom Integration.",
+                                "warning": "We recommend you update your client ID across all software using this Custom Integration.",
                                 "modalTitle": "Are you sure you want to change permissions?",
-                                "modalContent": "When permissions are changed a notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers. We recommend you generate a new client ID on the 'Authentication' tab.",
+                                "modalContent": "When permissions are changed a notification is sent to all notification contacts set for this Custom Integration, as well as Team Administrators and Developers. We recommend you generate a new client ID on the 'Authentication' tab.",
                                 "save": "Save",
                                 "cancel": "Exit without saving",
                                 "discard": "Discard"
                             }
                         },
                         "generateIdTitle": "Are you sure you want to generate a new client ID?",
-                        "generateIdMessage": "Saving a new client ID for this Private App will cause any current integrations to fail until you update your system with the new client ID. A notification is sent to all notification contacts set for this Private App, as well as Team Administrators and Developers.",
+                        "generateIdMessage": "Saving a new client ID for this Custom Integration will cause any current integrations to fail until you update your system with the new client ID. A notification is sent to all notification contacts set for this Custom Integration, as well as Team Administrators and Developers.",
                         "generateIdConfirm": "Generate new client ID",
                         "generateIdCancel": "Exit without generating",
                         "appId": "App ID",
@@ -729,7 +729,7 @@
                         "clientId": "Client ID",
                         "clientDescription": "This is your App's unique client ID. You will need it to make certain API calls.",
                         "authTitle": "Authentication credentials",
-                        "authIntro": "These authentication credentials determine how your Private App interacts with HDR UK Gateway and its permissions.",
+                        "authIntro": "These authentication credentials determine how your Custom Integration interacts with HDR UK Gateway and its permissions.",
                         "authSettingsTitle": "Authentication settings",
                         "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
                         "generateClientId": "Generate new client ID"
@@ -743,6 +743,8 @@
                             "questionsAnswered": "{questionCount} questions answered",
                             "save": "Save draft",
                             "submit": "Submit application",
+                            "nameApplication": "Name your application",
+                            "guidance": "Guidance",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
@@ -811,7 +813,7 @@
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
+                "text": "Explore Datasets & BioSamples from across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
             },
             "dur": {
                 "label": "Data Uses / Research Projects",
@@ -908,7 +910,7 @@
         },
         "search": {
             "datasets": "Datasets & BioSamples",
-            "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
+            "datasetsTooltip": "Explore Datasets & BioSamples from across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
             "dataUse": "Data Uses /\n\nResearch Projects",
             "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
