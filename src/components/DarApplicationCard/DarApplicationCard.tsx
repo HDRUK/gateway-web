@@ -241,6 +241,7 @@ export default function DarApplicationCard({
                     </ShowMore>
 
                     <DarStatusTracker
+                        submissionStatus={submissionStatus}
                         approvalStatus={approvalStatus}
                         statuses={
                             teamId

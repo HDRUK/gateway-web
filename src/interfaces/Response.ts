@@ -1,5 +1,5 @@
 interface Cache {
-    tag: string;
+    tags: string[];
     revalidate?: number;
 }
 
