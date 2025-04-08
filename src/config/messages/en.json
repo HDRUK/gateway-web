@@ -811,7 +811,7 @@
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
+                "text": "Explore Datasets & BioSamples from across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
             },
             "dur": {
                 "label": "Data Uses / Research Projects",
@@ -908,7 +908,7 @@
         },
         "search": {
             "datasets": "Datasets & BioSamples",
-            "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
+            "datasetsTooltip": "Explore Datasets & BioSamples from across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
             "dataUse": "Data Uses /\n\nResearch Projects",
             "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
