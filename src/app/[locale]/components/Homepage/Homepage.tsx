@@ -13,13 +13,13 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
-import InfoHoverPanel from "@/components/InfoHoverPanel";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import { StaticImages } from "@/config/images";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import InfoHoverPanel from "@/app/[locale]/components/InfoHoverPanel";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
@@ -66,6 +66,15 @@ const services = [
         image: StaticImages.LANDING_PAGE.collections,
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
+
+    // {
+    //     id: "diseaseAtlas",
+    //     image: "/images/homepage/welcome-image.jpg",
+    //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
+    // },
+];
+
+const connectedResources = [
     {
         id: "phenotypes",
         image: StaticImages.LANDING_PAGE.phenotypes,
@@ -76,12 +85,16 @@ const services = [
         image: StaticImages.LANDING_PAGE.courses,
         href: "https://hdruklearn.org/",
     },
-
-    // {
-    //     id: "diseaseAtlas",
-    //     image: "/images/homepage/welcome-image.jpg",
-    //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
-    // },
+    {
+        id: "omicsPred",
+        image: "",
+        href: "https://www.omicspred.org",
+    },
+    {
+        id: "pgsCatalog",
+        image: "",
+        href: "https://www.pgscatalog.org",
+    },
 ];
 
 interface HomePageProps {
@@ -125,6 +138,13 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         ? services.map(service => ({ ...service, text: t("touchDevice") }))
         : services;
 
+    const responsiveServicesConnected = isTouchDevice
+        ? connectedResources.map(service => ({
+              ...service,
+              text: t("touchDevice"),
+          }))
+        : connectedResources;
+
     const items = [
         {
             title: t("helpLinks.item1.title"),
@@ -144,11 +164,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         <>
             <Box
                 sx={{
-                    background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
+                    background: {
+                        tablet: `linear-gradient(170deg, transparent 60%, ${colors.darkGreen50} calc(60% + 1px))`,
+                        desktop: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
+                    },
                 }}>
                 <Container>
                     <InfoHoverPanel
                         items={responsiveServices}
+                        itemsResources={responsiveServicesConnected}
                         defaultImageSrc={
                             StaticImages.LANDING_PAGE.welcome_image
                         }

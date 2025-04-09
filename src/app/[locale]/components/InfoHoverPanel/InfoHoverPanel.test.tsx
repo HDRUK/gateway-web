@@ -17,7 +17,13 @@ describe("InfoHoverPanel", () => {
     ];
 
     it("should render default", async () => {
-        render(<InfoHoverPanel defaultImageSrc="" items={items} />);
+        render(
+            <InfoHoverPanel
+                defaultImageSrc=""
+                items={items}
+                itemsResources={items}
+            />
+        );
         expect(screen.getByText("Datasets & BioSamples")).toBeInTheDocument();
         expect(
             screen.getByText("Data Uses / Research Projects")
@@ -31,7 +37,13 @@ describe("InfoHoverPanel", () => {
     });
 
     it("should change on hover default", async () => {
-        render(<InfoHoverPanel defaultImageSrc="" items={items} />);
+        render(
+            <InfoHoverPanel
+                defaultImageSrc=""
+                items={items}
+                itemsResources={items}
+            />
+        );
 
         const dur = screen.getByText("Data Uses / Research Projects");
         userEvent.hover(dur);

@@ -803,7 +803,6 @@
             }
         },
         "home": {
-            "flashyText": "Explore the different functionalities of the Gateway",
             "touchDevice": "Explore the different functionalities of the Gateway",
             "seeNow": "See now",
             "meetTheTeam": "Meet the Team",
@@ -864,6 +863,16 @@
                 "label": "Courses",
                 "title": "Courses",
                 "text": "Discover training materials and resources to enhance your data science skills for health data research. Learn at your pace and achieve CPD certificates to show case your personal development."
+            },
+            "omicsPred": {
+                "label": "OmicsPred",
+                "title": "OmicsPred",
+                "text": "An atlas of genetic scores for prediction of multi-omics data."
+            },
+            "pgsCatalog": {
+                "label": "PGS Catalog",
+                "title": "PGS Catalog",
+                "text": "An open database of polygenic scores and the relevant metadata required for accurate application and evaluation."
             },
             "helpLinks": {
                 "item1": {
