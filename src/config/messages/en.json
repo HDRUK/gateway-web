@@ -925,7 +925,7 @@
             "dataCustodianNetworksTooltip": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network.",
             "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
-            "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
+            "searchExplainerDataUse": "Search, for example, by project title, lay or technical summary, funders and sponsors, keywords",
             "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
