@@ -235,7 +235,7 @@ const getTeamNav = (
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
-            href: `/${RouteName.SUPPORT}`,
+            href: RouteName.DATA_CUSTODIAN_SUPPORT,
         },
     ];
 };
