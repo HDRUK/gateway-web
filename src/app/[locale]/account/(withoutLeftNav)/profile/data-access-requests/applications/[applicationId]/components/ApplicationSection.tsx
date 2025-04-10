@@ -157,7 +157,7 @@ const ApplicationSection = ({
     const updateGuidanceText = (fieldName: string) => {
         setSelectedField(fieldName);
 
-        const guidance = questions?.find(
+        const guidance = [...questions, ...beforeYouBeginFormFields]?.find(
             question => question.title === fieldName
         )?.guidance;
 
@@ -570,6 +570,11 @@ const ApplicationSection = ({
                                                             teamApplication &&
                                                             teamApplication?.approval_status !==
                                                                 null)
+                                                    }
+                                                    onFocus={() =>
+                                                        updateGuidanceText(
+                                                            field.name
+                                                        )
                                                     }
                                                 />
                                             </Box>
