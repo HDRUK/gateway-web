@@ -46,7 +46,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
     const defaultValues = useMemo(() => questionDefaultValues, []);
 
     const { data: sectionData } = useGet<QuestionBankSection[]>(
-        `${apis.dataAccessSectionV1Url}`
+        `${apis.dataAccessSectionV1Url}?per_page=-1`
     );
 
     const [teamOptions, setTeamOptions] = useState<Option[]>([]);
