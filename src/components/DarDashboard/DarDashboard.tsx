@@ -38,22 +38,18 @@ const SUBMISSION_STATUS = [
     DarApplicationStatus.DRAFT,
 ];
 
-interface CountStatusSubmission {
-    DRAFT?: number;
-    SUBMITTED?: number;
+interface CountStatus {
+    ALL: number;
+    APPROVED: number;
+    DRAFT: number;
+    FEEDBACK: number;
+    REJECTED: number;
+    SUBMITTED: number;
+    WITHDRAWN: number;
+    action_required: number;
+    info_required: number;
 }
 
-interface CountStatusApproval {
-    APPROVED?: number;
-    REJECTED?: number;
-    WITHDRAWN?: number;
-    FEEDBACK?: number;
-}
-
-interface CountStatusActionRequired {
-    action_required?: number;
-    info_required?: number;
-}
 interface DarDashboardProps {
     translationPath: string;
     darApiPath: string;
@@ -157,17 +153,7 @@ export default function DarDashboard({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actionParam]);
 
-    const { data: submissionCounts } = useGet<CountStatusSubmission>(
-        `${darApiPath}/count/submission_status`
-    );
-
-    const { data: approvalCounts } = useGet<CountStatusApproval>(
-        `${darApiPath}/count/approval_status`
-    );
-
-    const { data: actionRequiredCounts } = useGet<CountStatusActionRequired>(
-        `${darApiPath}/count/action_required`
-    );
+    const { data: counts } = useGet<CountStatus>(`${darApiPath}/count`);
 
     const {
         data,
@@ -203,20 +189,20 @@ export default function DarDashboard({
 
     const approvalTab = [
         {
-            label: `All (${approvalCounts?.FEEDBACK || 0})`,
+            label: `All (${counts?.FEEDBACK || 0})`,
             value: "",
             content: null,
         },
         {
             label: `Action required by Applicant (${
-                actionRequiredCounts?.info_required || 0
+                counts?.info_required || 0
             })`,
             value: "APPLICANT",
             content: null,
         },
         {
             label: `Action required by Custodian (${
-                actionRequiredCounts?.action_required || 0
+                counts?.action_required || 0
             })`,
             value: "CUSTODIAN",
             content: null,
@@ -224,40 +210,40 @@ export default function DarDashboard({
     ];
 
     const tabList = [
-        { label: `All (${submissionCounts?.SUBMITTED ?? 0})`, value: "" },
+        { label: `All (${counts?.ALL ?? 0})`, value: "" },
         isResearcher
             ? {
                   label: `${capitalise(DarApplicationStatus.DRAFT)} (${
-                      submissionCounts?.DRAFT || 0
+                      counts?.DRAFT || 0
                   })`,
                   value: DarApplicationStatus.DRAFT,
               }
             : {},
         {
             label: `${capitalise(DarApplicationStatus.SUBMITTED)} (${
-                submissionCounts?.SUBMITTED || 0
+                counts?.SUBMITTED || 0
             })`,
             value: DarApplicationStatus.SUBMITTED,
         },
         {
-            label: `In review (${approvalCounts?.FEEDBACK || 0})`,
+            label: `In review (${counts?.FEEDBACK || 0})`,
             value: DarApplicationApprovalStatus.FEEDBACK,
         },
         {
             label: `${capitalise(DarApplicationApprovalStatus.APPROVED)} (${
-                approvalCounts?.APPROVED || 0
+                counts?.APPROVED || 0
             })`,
             value: DarApplicationApprovalStatus.APPROVED,
         },
         {
             label: `${capitalise(DarApplicationApprovalStatus.REJECTED)} (${
-                approvalCounts?.REJECTED || 0
+                counts?.REJECTED || 0
             })`,
             value: DarApplicationApprovalStatus.REJECTED,
         },
         {
             label: `${capitalise(DarApplicationApprovalStatus.WITHDRAWN)} (${
-                approvalCounts?.WITHDRAWN || 0
+                counts?.WITHDRAWN || 0
             })`,
             value: DarApplicationApprovalStatus.WITHDRAWN,
         },
