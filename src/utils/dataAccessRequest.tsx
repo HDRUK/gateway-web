@@ -11,6 +11,8 @@ import {
 } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
+import { CACHE_DAR_ANSWERS } from "@/consts/cache";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 
@@ -68,11 +70,14 @@ const createFileUploadConfig = (
     questionId: string,
     component: ComponentTypes,
     applicationId: string,
+    fileDownloadApiPath: string | undefined,
+    isResearcher: boolean,
     setValue: UseFormSetValue<DarApplicationResponses>,
     getValues: UseFormGetValues<DarApplicationResponses>,
-    removeUploadedFile: (id: number | string) => Promise<unknown>
+    removeUploadedFile?: (id: number | string) => Promise<unknown>
 ): FileUploadFields => {
     return {
+        fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
             const newFile = { filename: response.filename, id: response.id };
@@ -98,21 +103,32 @@ const createFileUploadConfig = (
                     { shouldValidate: true }
                 );
             }
-        },
-        onFileRemove: async fileId => {
-            const prev = getValues(questionId);
-            const response = await removeUploadedFile(fileId);
 
-            if (response && prev && typeof prev === "object") {
-                const prevValue = prev.value as UploadedFileMetadata[];
-                setValue(
-                    questionId,
-                    { value: prevValue.filter(v => v.id !== fileId) },
-                    { shouldValidate: true }
-                );
-            }
+            revalidateCacheAction(`${CACHE_DAR_ANSWERS}${applicationId}`);
         },
+        ...(isResearcher &&
+            removeUploadedFile && {
+                onFileRemove: async fileId => {
+                    const prev = getValues(questionId);
+                    const response = await removeUploadedFile(fileId);
+
+                    if (response && prev && typeof prev === "object") {
+                        const prevValue = prev.value as UploadedFileMetadata[];
+                        setValue(
+                            questionId,
+                            { value: prevValue.filter(v => v.id !== fileId) },
+                            { shouldValidate: true }
+                        );
+                    }
+
+                    revalidateCacheAction(
+                        `${CACHE_DAR_ANSWERS}${applicationId}`
+                    );
+                },
+            }),
         allowReuploading: true,
+        hideUpload: !isResearcher,
+        skipImageValidation: true,
     };
 };
 

@@ -12,7 +12,6 @@ import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
-import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -146,11 +145,12 @@ const TeamCollections = ({
         }
     );
 
-    const archiveCollection = useDelete(
+    const archiveCollection = usePatch<Partial<Collection>>(
         teamId
             ? `${apis.teamsV1Url}/${teamId}/collections`
             : apis.collectionsV2Url,
         {
+            query: "archive",
             localeKey: "archiveCollection",
         }
     );
@@ -220,7 +220,9 @@ const TeamCollections = ({
             ? [
                   {
                       action: async (id: number) => {
-                          await archiveCollection(id);
+                          await archiveCollection(id, {
+                              status: DataStatus.ARCHIVED,
+                          });
                           mutateCollections();
                           mutateCount();
                       },

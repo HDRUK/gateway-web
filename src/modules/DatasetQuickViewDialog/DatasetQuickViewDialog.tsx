@@ -48,7 +48,7 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                         <EllipsisCharacterLimit
                             key={word}
                             text={word}
-                            isButton
+                            isChip
                             characterLimit={CHARACTER_LIMIT}
                         />
                     ))}

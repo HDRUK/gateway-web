@@ -1,3 +1,53 @@
+## [2.6.0](https://github.com/HDRUK/gateway-web/compare/v2.5.0...v2.6.0) (2025-04-07)
+
+### ✨ Features
+
+* **GAT-5639:** related entities deleted when collection archived (#1058) ([c80044e](https://github.com/HDRUK/gateway-web/commit/c80044ea968b9d8a2adc495133a84e508c9e4b21)), closes [GAT-5639](GAT-5639)
+* **GAT-5690:** Improve structural metadata display (#1062) ([560aae9](https://github.com/HDRUK/gateway-web/commit/560aae959b8d310eb88ae54b679eae784ab4784e)), closes [GAT-5690](GAT-5690)
+* **GAT-6177:** Nav changes for Detailed Release Notes (#1059) ([0b58e07](https://github.com/HDRUK/gateway-web/commit/0b58e0732cfaabf1d1c098741ecc2befbcc662d0)), closes [GAT-6177](GAT-6177)
+* **GAT-6432:** Typo (#1067) ([f567837](https://github.com/HDRUK/gateway-web/commit/f567837ba0939b517011af2a8b8af84c4e196e92)), closes [GAT-6432](GAT-6432)
+* **GAT-6509:** Add new filter to Datasets & BioSamples search filter for Data Standard (#1060) ([8899293](https://github.com/HDRUK/gateway-web/commit/88992930d3ec7daa64c7ed2a622fb3482f123c39)), closes [GAT-6509](GAT-6509)
+* **GAT-6594:** Add file download list with links (#1052) ([d84b26b](https://github.com/HDRUK/gateway-web/commit/d84b26b0b72814655c568582c448aa4f9e3cc788)), closes [GAT-6594](GAT-6594)
+* **GAT-6619:** DAR completed application submission (#1051) ([2440529](https://github.com/HDRUK/gateway-web/commit/2440529f032de37b3b07967518b6a9fa81cfa8ba)), closes [GAT-6619](GAT-6619)
+* **GAT-6633:** Add dar_modal_content to teams form (#1061) ([eb8c758](https://github.com/HDRUK/gateway-web/commit/eb8c7581620dc216c998ddd379b7aa08a414e740)), closes [GAT-6633](GAT-6633)
+
+### 🐛 Bug Fixes
+
+* **GAT-6521:** Add image dimension validation (#1056) ([ae07015](https://github.com/HDRUK/gateway-web/commit/ae070157cf9bfe0202a855d793f86e04c6db8d30)), closes [GAT-6521](GAT-6521)
+* **GAT-6579:** Fix dar question creation preview logic (#1057) ([7e207bf](https://github.com/HDRUK/gateway-web/commit/7e207bfeb7d2b9f838533eca141ad47f50f4f5fe))
+* **GAT-6610:** Fix publication search modal displaying twice (#1054) ([15fbdab](https://github.com/HDRUK/gateway-web/commit/15fbdab43103a68f59b771fd64422e6f225d6957))
+* **GAT-6618:** Only hide action bar when page url is changed (#1048) ([3543a60](https://github.com/HDRUK/gateway-web/commit/3543a601639336d1d89bd697e97dd9c85f1429c3)), closes [GAT-6618](GAT-6618)
+* **GAT-6652:** Manual metadata on-boarding form takes ~30 minutes to load (#1053) ([a9e9936](https://github.com/HDRUK/gateway-web/commit/a9e9936ef6c1f90126f1615808d1465b7c828b69)), closes [GAT-6652](GAT-6652)
+* **GAT-6652:** Manual metadata on-boarding form takes ~30 minutes to load (#1063) ([cf0d9aa](https://github.com/HDRUK/gateway-web/commit/cf0d9aaf134060938c7f0f36d92a41fb77cb930a)), closes [GAT-6652](GAT-6652)
+* **GAT-6680:** Correct field array deletion (#1065) ([ddc4bde](https://github.com/HDRUK/gateway-web/commit/ddc4bde9e19fe1107ff799e7414cf6258b979eb9)), closes [GAT-6680](GAT-6680)
+
+## [2.5.0](https://github.com/HDRUK/gateway-web/compare/v2.4.1...v2.5.0) (2025-03-25)
+
+### ✨ Features
+
+* **GAT-5910:** Add DAR dashboard for researcher (#1029) ([21fcba4](https://github.com/HDRUK/gateway-web/commit/21fcba4ded83b76510fa1ab1797c107b35963387)), closes [GAT-5910](GAT-5910)
+* **GAT-6150:** Allow API client ID to be regenerated (#1047) ([2a47e27](https://github.com/HDRUK/gateway-web/commit/2a47e2792c16fa04df7a608fd962e1d7f6f97b62)), closes [GAT-6150](GAT-6150)
+* **GAT-6393:** DAR Messaging UI (#1035) ([d6aae0b](https://github.com/HDRUK/gateway-web/commit/d6aae0b0f6240d288212125c9d8ea3c00c325ac4)), closes [GAT-6393](GAT-6393)
+* **GAT-6462:** Add dar application quick action buttons (#1045) ([1056024](https://github.com/HDRUK/gateway-web/commit/1056024338657da41c54cb459b64c679f6d9cf3f)), closes [GAT-6462](GAT-6462)
+* **GAT-6466:** Add dar template list (#1043) ([e5e3bf9](https://github.com/HDRUK/gateway-web/commit/e5e3bf9f244fd74d8a4432d94271fc8afbb5d30f)), closes [GAT-6466](GAT-6466)
+* **GAT-6469:** Data Custodian DAR Application View (#1040) ([57b21f5](https://github.com/HDRUK/gateway-web/commit/57b21f5d1a785b224ac1e1dc88984c5f1cd46df6)), closes [GAT-6469](GAT-6469)
+* **GAT-6619:** DAR completed application submission (#1051) ([9798390](https://github.com/HDRUK/gateway-web/commit/9798390a2e190b089b7535b53d8a487b42fa358d)), closes [GAT-6619](GAT-6619)
+
+### 🐛 Bug Fixes
+
+* **GAT-5910:** Add researcher draft tab (#1046) ([11920a1](https://github.com/HDRUK/gateway-web/commit/11920a1be0cba168e68a5f485599248b1b04d6c0)), closes [GAT-5910](GAT-5910)
+* **GAT-6424:** funders_and_sponsors as array (#1037) ([09bf9e8](https://github.com/HDRUK/gateway-web/commit/09bf9e8afd91984ea4654859b69b684b4f0e7bae)), closes [GAT-6424](GAT-6424)
+* **GAT-6425:** Set initial enabled state for integration correctly (#1036) ([c7de373](https://github.com/HDRUK/gateway-web/commit/c7de373dcb1b497f4d3edaf7a282f083ec4de67d)), closes [GAT-6425](GAT-6425)
+* **GAT-6467:** Enable save as draft on DAR template editor (#1042) ([bee573b](https://github.com/HDRUK/gateway-web/commit/bee573bfa70128e13b61c700230d3aacd9ad30ea)), closes [GAT-6467](GAT-6467)
+* **GAT-6522:** Fix issue where empty dataset array was being passed (#1038) ([81b0b14](https://github.com/HDRUK/gateway-web/commit/81b0b143a175214720480a9c037758f278ad4ab8))
+* **GAT-6618:** Only hide action bar when page url is changed (#1048) ([7f2c8c5](https://github.com/HDRUK/gateway-web/commit/7f2c8c54f8547ca54fce6e9fc15d639e48043234)), closes [GAT-6618](GAT-6618)
+
+## [2.4.1](https://github.com/HDRUK/gateway-web-2/compare/v2.4.0...v2.4.1) (2025-03-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-6522:** Fix issue where empty dataset array was being passed (#1038) ([798cce4](https://github.com/HDRUK/gateway-web-2/commit/798cce480a26aa28d4330b614e3ba77b8e3ac2bf))
+
 ## [2.4.0](https://github.com/HDRUK/gateway-web-2/compare/v2.3.1...v2.4.0) (2025-03-10)
 
 ### ✨ Features

@@ -55,8 +55,6 @@ const SelectMultipleOptions = ({
             ],
         });
 
-    const handleRemove = (indexToRemove: number) => remove(indexToRemove);
-
     const [expanded, setExpanded] = useState<string | false>("panel1");
     const handleChange = (isExpanded: boolean, panel: string) => {
         setExpanded(isExpanded ? panel : false);
@@ -66,6 +64,7 @@ const SelectMultipleOptions = ({
         <BoxContainer>
             {fields.map((option, index) => (
                 <Box
+                    key={option.id}
                     sx={{
                         p: 0,
                         m: 0,
@@ -73,7 +72,6 @@ const SelectMultipleOptions = ({
                         mt: 0,
                     }}>
                     <Box
-                        key={option.value}
                         sx={{
                             display: "flex",
                             flexDirection: "row",
@@ -111,7 +109,7 @@ const SelectMultipleOptions = ({
 
                             <IconButton
                                 size="large"
-                                onClick={() => handleRemove(index)}
+                                onClick={() => remove(index)}
                                 sx={{ mt: 0 }}>
                                 <CloseIcon />
                             </IconButton>

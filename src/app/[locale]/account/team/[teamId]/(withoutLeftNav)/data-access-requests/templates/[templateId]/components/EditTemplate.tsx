@@ -10,8 +10,6 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
-import Box from "@/components/Box";
-import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
@@ -20,6 +18,7 @@ import Tabs from "@/components/Tabs";
 import TaskBoard from "@/components/TaskBoard";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 import Typography from "@/components/Typography";
+import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
@@ -81,6 +80,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
     const [hasChanges, setHasChanges] = useState(false);
 
     const { showModal } = useModal();
+    const { showBar } = useActionBar();
 
     const anchoredErrorCallback = () => {
         notificationService.error(
@@ -226,24 +226,24 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
 
     useEffect(() => {
         if (isLoading) return;
-        const currentTasks = boardSections[0].tasks;
+        const currentTasks = boardSections[0]?.tasks;
         const initialTasks = initialSelectBoard.tasks;
 
         // check if the selected tasks and their order have changed
         const tasksAreUnchanged =
-            initialTasks.length === currentTasks.length &&
+            initialTasks.length === currentTasks?.length &&
             initialTasks.every((value: TaskItem, index: number) => {
                 const currentTask = currentTasks[index];
                 return value.id === currentTask.id;
             });
 
-        const anyTaskChanged = currentTasks.some(t => t.task?.hasChanged);
+        const anyTaskChanged = currentTasks?.some(t => t.task?.hasChanged);
         setHasChanges(!tasksAreUnchanged || anyTaskChanged);
     }, [boardSections, isLoading]);
 
-    const handleSaveChanges = () => {
+    const handleSaveChanges = (isPublished: boolean) => {
         // first board is the select board
-        const tasksInSection = boardSections[0].tasks.map(t => {
+        const tasksInSection = boardSections[0]?.tasks.map(t => {
             return {
                 id: t.id,
                 guidance: t.task?.guidance,
@@ -255,7 +255,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         const payload = {
             team_id: teamId,
             user_id: user?.id.toString(),
-            published: 1,
+            published: isPublished ? 1 : 0,
             locked: false,
             questions: tasksInSection,
         };
@@ -266,30 +266,35 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         );
     };
 
+    useEffect(() => {
+        showBar("CreateTool", {
+            confirmText: t("save"),
+            tertiaryButton: {
+                onAction: () => handleSaveChanges(false),
+                buttonText: t("saveDraft"),
+                buttonProps: {
+                    color: "secondary",
+                    variant: "outlined",
+                },
+            },
+            onSuccess: () => {
+                handleSaveChanges(true);
+            },
+            showCancel: false,
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [boardSections]);
+
     const tabsList = tasks.length > 0 && [
         {
             label: "Select Questions",
             value: "select",
             content: tasks.length > 0 && (
-                <>
-                    <TaskBoard
-                        boardSections={boardSections}
-                        setBoardSections={setBoardSections}
-                        anchoredErrorCallback={anchoredErrorCallback}
-                    />
-                    <Paper sx={{ m: 2, p: 2, mb: 5 }}>
-                        <Box
-                            sx={{
-                                p: 0,
-                                display: "flex",
-                                justifyContent: "end",
-                            }}>
-                            <Button onClick={handleSaveChanges} type="submit">
-                                {t("save")}
-                            </Button>
-                        </Box>
-                    </Paper>
-                </>
+                <TaskBoard
+                    boardSections={boardSections}
+                    setBoardSections={setBoardSections}
+                    anchoredErrorCallback={anchoredErrorCallback}
+                />
             ),
         },
         {

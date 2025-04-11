@@ -270,7 +270,8 @@ const theme = createTheme({
                     props: { color: "greyCustom" },
                     style: {
                         color: colors.grey800,
-                        borderColor: palette.greyCustom.main,
+                        borderColor: palette.greyCustom.light,
+                        background: palette.greyCustom.light,
                         "&:active": {
                             background: palette.greyCustom.main,
                         },
@@ -312,6 +313,9 @@ const theme = createTheme({
                     "&:hover": {
                         borderWidth: 2,
                     },
+                    "&.Mui-disabled": {
+                        borderWidth: 2,
+                    },
                     borderWidth: 2,
                     textTransform: "none",
                     borderColor:
@@ -324,6 +328,9 @@ const theme = createTheme({
                     return {
                         color: colors.grey800,
                         borderWidth: 2,
+                        "&.Mui-disabled": {
+                            borderWidth: 2,
+                        },
                         "&:hover": {
                             color: colors.white,
                             background:
@@ -643,7 +650,7 @@ const theme = createTheme({
                 {
                     props: { color: "warningCustom" },
                     style: {
-                        background: colors.amber500,
+                        background: colors.orange300,
                     },
                 },
             ],

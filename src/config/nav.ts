@@ -67,8 +67,12 @@ const navItems = [
                 href: "/news/events?tab=events",
             },
             {
-                label: "Gateway Releases",
+                label: "Release Note Summaries",
                 href: "/news/releases",
+            },
+            {
+                label: "Detailed Release Notes",
+                href: "https://github.com/HDRUK/gateway-api/blob/dev/CHANGELOG.md",
             },
             {
                 label: "Newsletter",

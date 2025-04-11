@@ -1,24 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Divider, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
-import { KeyedMutator } from "swr";
-import { DarMessage, DarReviewsResponse } from "@/interfaces/DataAccessReview";
+import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
+import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
-import usePost from "@/hooks/usePost";
-import usePut from "@/hooks/usePut";
-import apis from "@/config/apis";
+import notificationService from "@/services/notification";
 import { inputComponents } from "@/config/forms";
 import theme, { colors } from "@/config/theme";
 import { CheckCircleIcon, ErrorIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
+import { addDarApplicationCommentTeamAction } from "@/app/actions/addDarApplicationCommentTeam";
+import { addDarApplicationCommentUserAction } from "@/app/actions/addDarApplicationCommentUser";
+import { createDarApplicationReviewAction } from "@/app/actions/createDarApplicationReview";
 
 const DATE_FORMAT = "DD MMM YYYY HH:mm";
 const ICON_SIZE = "20px";
@@ -28,14 +28,13 @@ const TEXT_AREA_EXPANDED = "160px";
 const TRANSLATION_PATH = "components.DataAccessMessages";
 
 interface DarMessagesProps {
-    applicationId: number;
-    teamId: string;
+    applicationId: string;
+    teamId?: string;
+    userId?: string;
     teamName?: string;
-    reviews: DarReviewsResponse[] | undefined;
-    mutateReviews: KeyedMutator<DarReviewsResponse[] | undefined>;
-    loadingReviews: boolean;
-    reviewComments: false | DarMessage[];
-    actionRequiredApplicant?: boolean;
+    initialReviews: DarReviewsResponse[];
+    isResearcher: boolean;
+    darApplicationEndpoint: string;
 }
 
 interface DarMessageForm {
@@ -52,36 +51,30 @@ const searchFilter = {
 const DarMessages = ({
     applicationId,
     teamId,
+    userId,
     teamName,
-    reviews,
-    mutateReviews,
-    loadingReviews,
-    reviewComments,
-    actionRequiredApplicant,
+    initialReviews,
+    isResearcher,
+    darApplicationEndpoint,
 }: DarMessagesProps) => {
     const { user } = useAuth();
     const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
-    const params = useParams<{
-        teamId: string;
-    }>();
+    const [shouldRefetch, setShouldRefetch] = useState(false);
 
-    const isResearcher = !params?.teamId;
-
-    const startReview = usePost(
-        `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/reviews`,
+    const {
+        data: reviews,
+        mutate: mutateReviews,
+        isLoading: loadingReviews,
+    } = useGet<DarReviewsResponse[]>(
+        `${darApplicationEndpoint}/${applicationId}/reviews`,
         {
-            successNotificationsOn: false,
-        }
-    );
-
-    const addComment = usePut(
-        isResearcher
-            ? `${apis.usersV1Url}/${user?.id}/dar/applications/${applicationId}/reviews`
-            : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/reviews`,
-        {
-            successNotificationsOn: false,
+            keepPreviousData: true,
+            errorNotificationsOn: false,
+            fallbackData: initialReviews,
+            revalidateOnMount: false,
+            shouldFetch: shouldRefetch,
         }
     );
 
@@ -94,26 +87,53 @@ const DarMessages = ({
     const commentText = watch("comment");
 
     const sendMessage = async () => {
+        let response;
+
         if (!reviews?.length && !isResearcher) {
-            await startReview({ comment: getValues("comment") });
+            response = await createDarApplicationReviewAction(
+                applicationId,
+                teamId!,
+                {
+                    comment: getValues("comment"),
+                }
+            );
         }
 
         if (reviews?.length) {
-            await addComment(reviews[0].comments[0].review_id, {
-                comment: getValues("comment"),
-            });
+            response = isResearcher
+                ? await addDarApplicationCommentUserAction(
+                      applicationId,
+                      reviews[0].comments[0].review_id.toString(),
+                      userId!,
+                      {
+                          comment: getValues("comment"),
+                      }
+                  )
+                : await addDarApplicationCommentTeamAction(
+                      applicationId,
+                      reviews[0].comments[0].review_id.toString(),
+                      teamId!,
+                      {
+                          comment: getValues("comment"),
+                      }
+                  );
         }
 
-        showModal({
-            showCancel: false,
-            showConfirm: false,
-            autoCloseTimeout: 5000,
-            title: t("modalTitle"),
-            content: t("modalContent"),
-        });
+        if (response) {
+            showModal({
+                showCancel: false,
+                showConfirm: false,
+                autoCloseTimeout: 5000,
+                title: t("modalTitle"),
+                content: t("modalContent"),
+            });
 
-        reset();
-        mutateReviews();
+            reset();
+            mutateReviews();
+            setShouldRefetch(true);
+        } else {
+            notificationService.apiError("ERROR");
+        }
     };
 
     const commentsEndRef = useRef<HTMLDivElement | null>(null);
@@ -127,10 +147,22 @@ const DarMessages = ({
 
     const [isInputHovered, setIsInputHovered] = useState<boolean>();
 
+    const reviewComments = useMemo(
+        () => !!reviews?.length && reviews[0].comments,
+        [reviews]
+    );
+
+    const actionRequiredApplicant = useMemo(
+        () =>
+            reviewComments &&
+            !reviewComments[reviewComments.length - 1].user_id,
+        [reviewComments]
+    );
+
     return (
         <Box sx={{ height: "100%", p: 0 }}>
             <Box sx={{ p: 3 }}>
-                {actionRequiredApplicant !== undefined && (
+                {actionRequiredApplicant !== undefined && reviewComments && (
                     <>
                         <Typography
                             variant="h2"
@@ -144,7 +176,8 @@ const DarMessages = ({
                                 color: colors.grey700,
                                 mb: 3,
                             }}>
-                            {actionRequiredApplicant ? (
+                            {(actionRequiredApplicant && isResearcher) ||
+                            (!actionRequiredApplicant && !isResearcher) ? (
                                 <ErrorIcon
                                     sx={{
                                         pr: 1,

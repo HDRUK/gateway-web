@@ -67,7 +67,7 @@
         "applicationPermission": {
             "success": {
                 "put": {
-                    "message": "Private App created and enabled"
+                    "message": "Custom Integration created and enabled"
                 }
             }
         },
@@ -105,6 +105,11 @@
                 }
             }
         }
+    },
+    "error": {
+        "image": "An error occured when reading your file.",
+        "imageAspectRatio": "File needs to be of approximately of aspect ratio 2:1 (width:height).",
+        "imageDimensions": "File needs to be at least 600px wide, by 300px high."
     },
     "common": {
         "companyNameShort": "HDR UK",
@@ -193,8 +198,8 @@
         },
         "releases": {
             "noResults": "There are no releases for {year}",
-            "heading": "Welcome to our product release page!",
-            "description1": "Here, you can learn more about the Gateway’s newest features, improvements, and updates. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each release to discover how the Gateway is evolving.",
+            "heading": "Welcome to our Gateway release summary page!",
+            "description1": "Here, you can learn more about the Gateway's newest features, improvements, and updates, through periodic summaries that are designed to be more digestible than our full ticket by ticket release notes. If you are interested in the detail, our full release notes can be accessed <githubLink>here</githubLink>. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each <githubLink>detailed release</githubLink> to discover how the Gateway is evolving, or await the higher level summaries that we aim to publish every eight weeks (covering the previous four releases).",
             "description2": "To learn more about what is planned on our development roadmap please see the 'What next?' section <researchersLink>here</researchersLink>. If you would like to share feedback or suggest improvements to add to the Gateway roadmap, please contact us through our <supportLink>Support Centre</supportLink>."
         },
         "about": {
@@ -238,7 +243,8 @@
                         "viewApplication": "View application form and any comments",
                         "daysSinceStart": " days since start",
                         "darApplication": "DAR Application #",
-                        "applicationsInGroup": "Applications in the project group"
+                        "applicationsInGroup": "Applications in the project group",
+                        "dataAccessRequests": "Data Access Request"
                     }
                 },
                 "darAdmin": {
@@ -259,7 +265,8 @@
                             "guidance": "Guidance",
                             "back": "Back to Question Bank list page",
                             "addNested": "Add nested question",
-                            "addOption": "Add option"
+                            "addOption": "Add option",
+                            "noPreview": "No question to preview"
                         },
                         "save": "Save Changes",
                         "title": "Question Bank Management",
@@ -304,7 +311,6 @@
                         "title": "Add Team’s details",
                         "text": "Add details of the data publisher team you want to create on the Gateway",
                         "aspectRatioInfo": "Please note the aspect ratio of the image should be approximately 2:1 (width:height)",
-                        "aspectRatioError": "Warning: File should approximately have an aspect ratio of 2:1 (width:height)",
                         "addImageSuccess": "Image Uploaded",
                         "fileSelectButtonText": "Choose logo"
                     },
@@ -407,7 +413,14 @@
                         "lastActivity": "Last activity",
                         "editApplication": "Add comments or change application status",
                         "viewApplication": "View application form and any comments",
-                        "daysSinceStart": " days since start"
+                        "deleteApplication": "Delete application",
+                        "withdrawApplication": "Withdraw application",
+                        "daysSinceStart": " days since start",
+                        "deleteTitle": "Are you sure you want to delete this application?",
+                        "deleteIntro": "This action is permanent, and the information cannot be recovered.",
+                        "withdrawTitle": "Are you sure you want to withdraw this application?",
+                        "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian.",
+                        "dataAccessRequests": "Data Access Request"
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
@@ -608,7 +621,6 @@
                         "addImages": "Collection image cover (recommended)",
                         "addImagesInfo": "Upload an image W700 x H350 (1:0.5). If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
                         "addImageSuccess": "Image uploaded",
-                        "aspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height)",
                         "fileSelectButtonText": "Upload file",
                         "addResources": "Add resources",
                         "addResourcesInfo": "Link resources in the Gateway to your Collection",
@@ -684,24 +696,43 @@
                     "create": {
                         "title": "Integration",
                         "text": "Input and edit the authentication information for the Gateway system to use for the integration.",
-                        "helper": "Entities created via a Gateway App integration can only be managed (updated or deleted/archived) via the Gateway App integration. Entities created via another method (manual, API integration) cannot be managed via the Gateway App integration."
+                        "helper": "Entities created via a Predefined Integration can only be managed (updated or deleted/archived) via the Predefined Integration. Entities created via another method (manual, API integration) cannot be managed via the Predefined Integration."
                     }
                 },
                 "integrations": {
                     "apiManagement": {
                         "howTo": "How to setup and manage integrations",
-                        "cannotCreate": "Please note that HDR UK cannot create Private Apps on behalf of users.",
+                        "cannotCreate": "Please note that HDR UK cannot create Custom Integrations on behalf of users.",
                         "create": {
-                            "title": "Private apps",
-                            "text": "Use this form to create your Private App on the Gateway"
+                            "title": "Custom Integrations",
+                            "text": "Use this form to create your Custom Integration on the Gateway"
                         },
                         "manage": {
                             "permissions": {
                                 "title": "Permissions",
                                 "intro": "Use this form to assign the appropriate permissions for secure integration. Your App will only be allowed to use APIs for the permissions you have defined. App permissions are the responsibility of your ‘team’.",
-                                "helper": "Entities created via a Private App can only be managed (updated or deleted/archived) via the Private App. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Private App."
+                                "helper": "Entities created via a Custom Integration can only be managed (updated or deleted/archived) via the Custom Integration. Entities created via another method (manual, HDR UK Datasets Integration) cannot be managed via the Custom Integration.",
+                                "warning": "We recommend you update your client ID across all software using this Custom Integration.",
+                                "modalTitle": "Are you sure you want to change permissions?",
+                                "modalContent": "When permissions are changed a notification is sent to all notification contacts set for this Custom Integration, as well as Team Administrators and Developers. We recommend you generate a new client ID on the 'Authentication' tab.",
+                                "save": "Save",
+                                "cancel": "Exit without saving",
+                                "discard": "Discard"
                             }
-                        }
+                        },
+                        "generateIdTitle": "Are you sure you want to generate a new client ID?",
+                        "generateIdMessage": "Saving a new client ID for this Custom Integration will cause any current integrations to fail until you update your system with the new client ID. A notification is sent to all notification contacts set for this Custom Integration, as well as Team Administrators and Developers.",
+                        "generateIdConfirm": "Generate new client ID",
+                        "generateIdCancel": "Exit without generating",
+                        "appId": "App ID",
+                        "appDescription": "This is your App's unique ID. You will need it to make certain API calls.",
+                        "clientId": "Client ID",
+                        "clientDescription": "This is your App's unique client ID. You will need it to make certain API calls.",
+                        "authTitle": "Authentication credentials",
+                        "authIntro": "These authentication credentials determine how your Custom Integration interacts with HDR UK Gateway and its permissions.",
+                        "authSettingsTitle": "Authentication settings",
+                        "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
+                        "generateClientId": "Generate new client ID"
                     }
                 },
                 "dar": {
@@ -712,11 +743,15 @@
                             "questionsAnswered": "{questionCount} questions answered",
                             "save": "Save draft",
                             "submit": "Submit application",
+                            "nameApplication": "Name your application",
+                            "guidance": "Guidance",
                             "defaultGuidance": "Please click on a question to display guidance",
                             "navigateToDashboard": "Go to DAR dashboard",
                             "previous": "Previous",
                             "next": "Next",
-                            "missingRequiredFields": "Please check all required fields have been completed"
+                            "missingRequiredFields": "Please check all required fields have been completed",
+                            "manage": "Manage application status",
+                            "submittedOn": "Application submitted on {date}"
                         }
                     },
                     "template": {
@@ -731,7 +766,8 @@
                         },
                         "edit": {
                             "title": "Edit a template",
-                            "save": "Save Changes",
+                            "save": "Make active",
+                            "saveDraft": "Save as draft",
                             "selectedQuestions": {
                                 "title": "Selected Questions",
                                 "description": "Currently selected questions for your DAR template."
@@ -743,6 +779,24 @@
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
                             "parentQuestionOption": "Parent question option"
+                        },
+                        "list": {
+                            "title": "Manage Data Access Request Templates",
+                            "intro": "View, edit or create new Data Access Request Templates",
+                            "cardTitle": "DAR template created {createdAt}",
+                            "noTemplates": "No templates found for your team.",
+                            "published": "Published",
+                            "lastActivity": "Last activity",
+                            "numberOfQuestions": "Number of questions",
+                            "back": "Back to DAR template management",
+                            "actions": {
+                                "edit": {
+                                    "label": "Edit template"
+                                },
+                                "duplicate": {
+                                    "label": "Duplicate template"
+                                }
+                            }
                         }
                     }
                 }
@@ -759,7 +813,7 @@
             "datasets": {
                 "label": "Datasets & BioSamples",
                 "title": "Datasets & BioSamples",
-                "text": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
+                "text": "Explore Datasets & BioSamples from across the UK and beyond and then navigate their associated content, such as, metadata, data provenance, and demographics or Gateway entities, such as, linked Datasets, Publications, and Analysis Scripts & Software."
             },
             "dur": {
                 "label": "Data Uses / Research Projects",
@@ -861,7 +915,7 @@
         },
         "search": {
             "datasets": "Datasets & BioSamples",
-            "datasetsTooltip": "Explore Datasets & BioSamples from the across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
+            "datasetsTooltip": "Explore Datasets & BioSamples from across the UK and beyond and then navigate their associated resources, such as, metadata, linked datasets, data provenance, Publications, Analysis Scripts & Software, and demographics.",
             "dataUse": "Data Uses /\n\nResearch Projects",
             "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
@@ -876,7 +930,7 @@
             "dataCustodianNetworksTooltip": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network.",
             "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
-            "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
+            "searchExplainerDataUse": "Search, for example, by project title, lay or technical summary, funders and sponsors, keywords",
             "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
@@ -924,7 +978,9 @@
                             "containsTissue": "Datasets with BioSamples",
                             "containsTissueTooltip": "Restrict your search result to datasets with BioSamples",
                             "sampleAvailability": "Material type",
-                            "sampleAvailabilityTooltip": "BioSamples associated with the dataset"
+                            "sampleAvailabilityTooltip": "BioSamples associated with the dataset",
+                            "formatAndStandards": "Data Standard",
+                            "formatAndStandardsTooltip": "Standardised data models the dataset is stored in or transformed to, such as OMOP or FHIR."
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",
@@ -1601,6 +1657,25 @@
                 },
                 "cancel": "Cancel",
                 "search": "Search"
+            },
+            "DarManageDialog": {
+                "darRequest": "Data Access Request",
+                "draftDesc": "Change status to DRAFT",
+                "draftInfo": "Provide clear guidance to the applicant for the changes required before the applicant re-submits the DAR application for reviews. Changing the status to DRAFT allows the applicant to edit the content of the application form.",
+                "draftButtonText": "Draft",
+                "approvedDesc": "Change status to APPROVED",
+                "approvedInfo": "Any comments or conditions of approval.",
+                "approvedButtonText": "Approve",
+                "rejectedDesc": "Change status to REJECTED",
+                "rejectedInfo": "Any comments or notes regarding the rejection.",
+                "rejectedButtonText": "Reject",
+                "changeStatus": "Change Application Status",
+                "intro": "Use the options below to log your decision about this application."
+            },
+            "DarActionDialog": {
+                "actionPermanent": "I understand this action is permanent",
+                "yes": "Yes",
+                "no": "No"
             }
         }
     },

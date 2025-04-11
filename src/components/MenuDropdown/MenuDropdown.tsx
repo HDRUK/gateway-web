@@ -71,7 +71,9 @@ function MenuDropdown({
                             sx={{ maxWidth: 250 }}
                             key={subItem.label}
                             onClick={() => handleClose()}>
-                            <Link underline="none" href={subItem.href}>
+                            <Link
+                                sx={{ textDecoration: "none" }}
+                                href={subItem.href}>
                                 <MarkDownSanitizedWithHtml
                                     content={subItem.label}
                                     WrapperComponent="span"
