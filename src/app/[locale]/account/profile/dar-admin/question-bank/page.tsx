@@ -22,13 +22,13 @@ const QuestionBankAdminPage = () => {
 
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImageMediaCard
-                    img=""
+                    img="/images/dar/question-create.png"
                     href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.CREATE}`}
                     description={t("create.description")}
                     buttonText={t("create.label")}
                 />
                 <ImageMediaCard
-                    img=""
+                    img="/images/dar/question-edit.png"
                     href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.LIST}`}
                     description={t("manage.description")}
                     buttonText={t("manage.label")}
