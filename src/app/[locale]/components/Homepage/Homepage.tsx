@@ -76,7 +76,12 @@ const services = [
         image: StaticImages.LANDING_PAGE.courses,
         href: "https://hdruklearn.org/",
     },
-
+    {
+        id: "dar",
+        image: StaticImages.LANDING_PAGE.dar,
+        href: "/account/profile/data-access-requests/applications",
+        loggedIn: true,
+    },
     // {
     //     id: "diseaseAtlas",
     //     image: "/images/homepage/welcome-image.jpg",
