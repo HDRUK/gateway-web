@@ -865,6 +865,11 @@
                 "title": "Courses",
                 "text": "Discover training materials and resources to enhance your data science skills for health data research. Learn at your pace and achieve CPD certificates to show case your personal development."
             },
+            "dar": {
+                "label": "My Data Access Requests",
+                "title": "My Data Access Requests",
+                "text": "Complete, submit and track the status of data access requests to one or more Data Custodians."
+            },
             "helpLinks": {
                 "item1": {
                     "title": "Support Centre",
