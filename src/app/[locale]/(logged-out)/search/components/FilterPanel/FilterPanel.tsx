@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
@@ -13,6 +14,7 @@ import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import useGTMEvent from "@/hooks/useGTMEvent";
 import {
     FILTER_DATA_TYPE,
     FILTER_DATA_SUBTYPE,
@@ -141,6 +143,9 @@ const FilterPanel = ({
     showEuropePmcModal: () => void;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
+    const searchParams = useSearchParams();
+    const fireGTMEvent = useGTMEvent();
+
     // filterValues controls the selected values of each filter
     const [filterValues, setFilterValues] = useState<DefaultValues>({
         [FILTER_PUBLISHER_NAME]: {},
@@ -334,6 +339,19 @@ const FilterPanel = ({
         };
 
         const selectedKeys = Object.keys(updates).filter(key => updates[key]);
+
+        const [key, value] = Object.entries(updatedCheckbox)[0];
+        if (key) {
+            const status = value ? "filter_applied" : "filter_removed";
+            const searchTerm = searchParams?.get("query") || "";
+
+            fireGTMEvent({
+                event: status,
+                filter_name: t(filterSection),
+                filter_value: key,
+                search_term: searchTerm,
+            });
+        }
 
         if (selectedKeys.length) {
             setFilterValues(prevValues => ({
