@@ -9,6 +9,7 @@ import { ReducedCollection } from "@/interfaces/Collection";
 import {
     DarApplicationAnswer,
     DarTemplate,
+    DarTemplateCountResponse,
 } from "@/interfaces/DataAccessRequest";
 import {
     DarTeamApplication,
@@ -424,8 +425,8 @@ async function getDarAnswersTeam(
     cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     teamId: string
-): Promise<DarApplicationAnswer[]> {
-    return get<DarApplicationAnswer[]>(
+): Promise<DarTemplateCountResponse> {
+    return get<DarTemplateCountResponse>(
         cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`,
         {
@@ -595,6 +596,15 @@ async function getDarTemplates(
     );
 }
 
+async function getDarTemplatesCount(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<DarTemplateCountResponse> {
+    return get<DarTemplateCountResponse>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/templates/count/published`
+    );
+}
 export {
     getApplication,
     getCohort,
@@ -626,4 +636,5 @@ export {
     updateDarApplicationCommentTeam,
     updateDarApplicationCommentUser,
     getDarTemplates,
+    getDarTemplatesCount,
 };

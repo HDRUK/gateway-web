@@ -1,6 +1,12 @@
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { getDarTemplates, getTeam, getUser } from "@/utils/api";
+import {
+    getDarTemplates,
+    getDarTemplatesCount,
+    getTeam,
+    getUser,
+} from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -29,27 +35,26 @@ export default async function DARTemplateListPage({
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
     const queryPublished = new URLSearchParams();
-    const queryDraft = new URLSearchParams();
 
     if (searchParams.page) {
         queryPublished.set("page", searchParams.page.toString());
-        queryDraft.set("page", searchParams.page.toString());
     }
 
-    queryPublished.set("published", "1");
-    queryDraft.set("published", "0");
+    if (searchParams.published) {
+        queryPublished.set("published", searchParams.published.toString());
+    }
 
-    const darTemplatesPublished = await getDarTemplates(
+    const darTemplateData = await getDarTemplates(
         cookieStore,
         teamId,
         queryPublished.toString()
     );
 
-    const darTemplatesDraft = await getDarTemplates(
-        cookieStore,
-        teamId,
-        queryDraft.toString()
-    );
+    const darTemplatesCount = await getDarTemplatesCount(cookieStore, teamId);
+
+    if (!darTemplateData) {
+        notFound();
+    }
 
     return (
         <ProtectedAccountRoute
@@ -57,13 +62,9 @@ export default async function DARTemplateListPage({
             pagePermissions={["data-access-template.update"]}>
             <TeamTemplates
                 permissions={permissions}
-                templateData={
-                    searchParams?.published === "1"
-                        ? darTemplatesPublished
-                        : darTemplatesDraft
-                }
-                countActive={darTemplatesPublished.active_count}
-                countDraft={darTemplatesDraft.non_active_count}
+                templateData={darTemplateData}
+                countActive={darTemplatesCount.active_count}
+                countDraft={darTemplatesCount.non_active_count}
                 teamId={teamId}
             />
         </ProtectedAccountRoute>

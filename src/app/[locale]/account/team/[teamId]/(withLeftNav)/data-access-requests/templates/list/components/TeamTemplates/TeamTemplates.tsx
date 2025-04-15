@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { omit } from "lodash";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { PaginationType } from "@/interfaces/Pagination";
 import BackButton from "@/components/BackButton";
@@ -21,7 +20,7 @@ import TemplateList from "../TemplateList";
 interface TeamTemplatesProps {
     permissions?: { [key: string]: boolean };
     teamId: string;
-    templateData: PaginationType<DarTemplate>;
+    templateData: PaginationType<DarTemplate[]>;
     countActive: number;
     countDraft: number;
 }
@@ -37,14 +36,11 @@ const TeamTemplates = ({
 }: TeamTemplatesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { push } = useRouter();
+    const searchParams = useSearchParams();
 
     const createTemplate = usePost(apis.dataAccessTemplateV1Url, {
         itemName: "DAR Template",
         successNotificationsOn: false,
-    });
-
-    const [queryParams, setQueryParams] = useState({
-        page: "1",
     });
 
     const handleDuplicateTemplate = async (selectedId: number) => {
@@ -103,14 +99,12 @@ const TeamTemplates = ({
 
     const tabsList = [
         {
-            // label: capitalise(DataStatus.ACTIVE),
-            label: "Active",
+            label: t("active"),
             value: "1",
             dsCount: countActive,
         },
         {
-            // label: capitalise(DataStatus.DRAFT),
-            label: "Draft",
+            label: t("draft"),
             value: "0",
             dsCount: countDraft,
         },
@@ -120,12 +114,13 @@ const TeamTemplates = ({
         content: (
             <TemplateList
                 list={templateData.list}
-                setCurrentPage={page =>
-                    setQueryParams({
-                        ...queryParams,
-                        page: page.toString(),
-                    })
-                }
+                setCurrentPage={page => {
+                    const params = new URLSearchParams(
+                        searchParams?.toString()
+                    );
+                    params.set("page", page.toString());
+                    push(`?${params.toString()}`);
+                }}
                 isLoading={false}
                 actions={actions}
                 from={templateData.from}
