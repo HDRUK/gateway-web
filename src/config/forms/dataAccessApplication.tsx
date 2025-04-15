@@ -20,13 +20,16 @@ const beforeYouBeginSection: QuestionBankSection = {
 };
 
 const validationSchema = yup.object({
-    project_title: yup.string().required().label("Project title"),
+    project_title: yup.string().required().label("Application title"),
 });
 
 const beforeYouBeginFormFields = [
     {
-        label: "Project title",
+        label: "Application title",
         name: "project_title",
+        title: "project_title",
+        guidance:
+            "This can be your project name or anything that helps the custodian identify your application.",
         component: inputComponents.TextField,
         required: true,
     },
