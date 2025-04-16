@@ -6,6 +6,7 @@ type GTMEvent = {
 const useGTMEvent = () => {
     return (eventData: GTMEvent) => {
         if (typeof window !== "undefined" && window.dataLayer) {
+            console.log(eventData);
             window.dataLayer.push(eventData);
         }
     };

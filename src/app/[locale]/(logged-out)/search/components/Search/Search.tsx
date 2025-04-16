@@ -10,6 +10,7 @@ import {
 import { FieldValues } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
 import Cookies from "js-cookie";
+import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -18,7 +19,6 @@ import {
     SavedSearchPayload,
     SearchCategory,
     SearchPaginationType,
-    SearchQueryParams,
     SearchResult,
     SearchResultCollection,
     SearchResultDataProvider,
@@ -45,6 +45,7 @@ import SaveSearchDialog, {
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
@@ -74,6 +75,7 @@ import {
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
     FILTER_TYPE_CATEGORY,
+    filtersList,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     PAGE_FIELD,
@@ -128,6 +130,12 @@ const Search = ({ filters }: SearchProps) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
+    const fireGTMEvent = useGTMEvent();
+
+    const tFilters = useTranslations(
+        "pages.search.components.FilterPanel.filters"
+    );
+
     const { isLoggedIn } = useAuth();
 
     const redirectPath = searchParams
@@ -327,6 +335,37 @@ const Search = ({ filters }: SearchProps) => {
                     !!queryParams.query),
         }
     );
+
+    type FilterValue = string | number | boolean | string[] | undefined | null;
+
+    interface SearchQueryParams {
+        query?: string;
+        page?: string;
+        per_page?: string;
+        sort?: string;
+        type?: string;
+        [key: string]: FilterValue;
+    }
+
+    const cleanSearchFilters = (
+        input: SearchQueryParams,
+        validKeys: readonly string[]
+    ): Partial<Record<string, Exclude<FilterValue, undefined | null | "">>> => {
+        return Object.entries(input).reduce((acc, [key, value]) => {
+            if (!validKeys.includes(key)) return acc;
+            if (value === false || isEmpty(value)) return acc;
+
+            acc[key] = value as Exclude<FilterValue, undefined | null | "">;
+            return acc;
+        }, {} as Partial<Record<string, Exclude<FilterValue, undefined | null | "">>>);
+    };
+    console.log(cleanSearchFilters(queryParams, filtersList));
+
+    fireGTMEvent({
+        event: "filters",
+        filter_list: cleanSearchFilters(queryParams, filtersList),
+        search_term: queryParams.query || "",
+    });
 
     const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
 
