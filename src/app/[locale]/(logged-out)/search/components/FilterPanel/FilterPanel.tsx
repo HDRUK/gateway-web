@@ -347,7 +347,7 @@ const FilterPanel = ({
 
             fireGTMEvent({
                 event: status,
-                filter_name: t(filterSection),
+                filter_name: filterSection,
                 filter_value: key,
                 search_term: searchTerm,
             });
