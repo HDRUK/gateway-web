@@ -352,7 +352,7 @@ const Search = ({ filters }: SearchProps) => {
     fireGTMEvent({
         event: "search_performed",
         search_term: queryParams.query || "",
-        ...cleanSearchFilters(queryParams, filtersList),
+        filter_list: cleanSearchFilters(queryParams, filtersList),
     });
 
     const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);

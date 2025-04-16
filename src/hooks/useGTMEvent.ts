@@ -1,6 +1,6 @@
 type GTMEvent = {
     event: string;
-    [key: string]: string;
+    [key: string]: string | object;
 };
 
 const useGTMEvent = () => {
