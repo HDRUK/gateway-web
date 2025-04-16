@@ -6,7 +6,11 @@ import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import { ReducedCollection } from "@/interfaces/Collection";
-import { DarApplicationAnswer } from "@/interfaces/DataAccessRequest";
+import {
+    DarApplicationAnswer,
+    DarTemplate,
+    DarTemplateCountResponse,
+} from "@/interfaces/DataAccessRequest";
 import {
     DarTeamApplication,
     DataAccessRequestApplication,
@@ -19,6 +23,7 @@ import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
+import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
@@ -46,6 +51,7 @@ async function get<T>(
     options: GetOptions = {
         suppressError: false,
         cache: undefined,
+        withPagination: false,
     }
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
@@ -69,8 +75,18 @@ async function get<T>(
         throw new Error("Failed to fetch data");
     }
 
-    const { data } = await res.json();
-    return data;
+    const json = await res.json();
+    if (!options.withPagination) return json.data;
+
+    const { data, current_page, last_page, next_page_url, ...rest } = json;
+
+    return {
+        list: data,
+        currentPage: current_page,
+        lastPage: last_page,
+        nextPageUrl: next_page_url,
+        ...rest,
+    };
 }
 
 async function patch<T>(
@@ -409,8 +425,8 @@ async function getDarAnswersTeam(
     cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     teamId: string
-): Promise<DarApplicationAnswer[]> {
-    return get<DarApplicationAnswer[]>(
+): Promise<DarTemplateCountResponse> {
+    return get<DarTemplateCountResponse>(
         cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`,
         {
@@ -564,6 +580,31 @@ async function updateDarApplicationCommentUser(
     );
 }
 
+async function getDarTemplates(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    query: string
+): Promise<PaginationType<DarTemplate[]>> {
+    return get<PaginationType<DarTemplate[]>>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/templates${
+            query ? `?${query}` : ""
+        }`,
+        {
+            withPagination: true,
+        }
+    );
+}
+
+async function getDarTemplatesCount(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string
+): Promise<DarTemplateCountResponse> {
+    return get<DarTemplateCountResponse>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/templates/count/published`
+    );
+}
 export {
     getApplication,
     getCohort,
@@ -594,4 +635,6 @@ export {
     createDarApplicationReview,
     updateDarApplicationCommentTeam,
     updateDarApplicationCommentUser,
+    getDarTemplates,
+    getDarTemplatesCount,
 };
