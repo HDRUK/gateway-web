@@ -133,9 +133,11 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                         <Typography variant="h2">{t("upload")}</Typography>
                         <UploadFile
                             apiPath={`${apis.fileUploadV1Url}?entity_flag=dur-from-upload&team_id=${teamId}`}
-                            onFileUploaded={(file: FileUpload) =>
-                                setCreatedDurId(file.id)
-                            }
+                            onFileUploaded={(file: FileUpload | undefined) => {
+                                if (file && file.entity_id) {
+                                    setCreatedDurId(file.entity_id);
+                                }
+                            }}
                             isUploading={setIsUploading}
                             acceptedFileTypes=".xlsx"
                         />
