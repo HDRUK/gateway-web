@@ -1,4 +1,4 @@
-import { pick } from "lodash";
+import { isEmpty, pick } from "lodash";
 import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import {
@@ -125,6 +125,22 @@ const formatBucketCounts = (buckets?: Bucket[]): { [key: string]: number } => {
     return transformedData;
 };
 
+const cleanSearchFilters = (
+    input: SearchQueryParams,
+    validKeys: string[]
+): Record<string, string> => {
+    return Object.entries(input).reduce<Record<string, string>>(
+        (acc, [key, value]) => {
+            if (!validKeys.includes(key)) return acc;
+            if (value === false || isEmpty(value)) return acc;
+
+            acc[key] = value;
+            return acc;
+        },
+        {}
+    );
+};
+
 export {
     formatBucketCounts,
     getAllSelectedFilters,
@@ -132,4 +148,5 @@ export {
     isQueryEmpty,
     pickOnlyFilters,
     transformQueryFiltersToForm,
+    cleanSearchFilters,
 };

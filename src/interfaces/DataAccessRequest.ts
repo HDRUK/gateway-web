@@ -76,6 +76,11 @@ interface DarApplicationAnswer {
     answer: string;
 }
 
+interface DarTemplateCountResponse {
+    active_count: number;
+    non_active_count: number;
+}
+
 interface DarApplication {
     id: number;
     questions: DarApplicationQuestion[];
@@ -123,4 +128,5 @@ export type {
     DarApplication,
     DarApplicationResponses,
     DarFormattedField,
+    DarTemplateCountResponse,
 };
