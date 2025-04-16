@@ -10,7 +10,6 @@ import {
 import { FieldValues } from "react-hook-form";
 import { Box, Typography } from "@mui/material";
 import Cookies from "js-cookie";
-import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
@@ -97,7 +96,11 @@ import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
-import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
+import {
+    cleanSearchFilters,
+    getAllSelectedFilters,
+    pickOnlyFilters,
+} from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import DataCustodianNetwork from "../DataCustodianNetwork";
@@ -333,27 +336,13 @@ const Search = ({ filters }: SearchProps) => {
         }
     );
 
-    type FilterValue = string | number | boolean | string[] | undefined | null;
-
-    const cleanSearchFilters = (
-        input: SearchQueryParams,
-        validKeys: string[]
-    ): Partial<Record<string, Exclude<FilterValue, undefined | null | "">>> => {
-        return Object.entries(input).reduce((acc, [key, value]) => {
-            if (!validKeys.includes(key)) return acc;
-            if (value === false || isEmpty(value)) return acc;
-
-            acc[key] = value as Exclude<FilterValue, undefined | null | "">;
-            return acc;
-        }, {} as Partial<Record<string, Exclude<FilterValue, undefined | null | "">>>);
-    };
-    console.log(cleanSearchFilters(queryParams, filtersList));
-
-    fireGTMEvent({
-        event: "search_performed",
-        search_term: queryParams.query || "",
-        filter_list: cleanSearchFilters(queryParams, filtersList),
-    });
+    useEffect(() => {
+        fireGTMEvent({
+            event: "search_performed",
+            search_term: queryParams.query || "",
+            filter_list: cleanSearchFilters(queryParams, filtersList),
+        });
+    }, [queryParams]);
 
     const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
 
