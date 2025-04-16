@@ -19,6 +19,7 @@ import {
     SavedSearchPayload,
     SearchCategory,
     SearchPaginationType,
+    SearchQueryParams,
     SearchResult,
     SearchResultCollection,
     SearchResultDataProvider,
@@ -131,10 +132,6 @@ const Search = ({ filters }: SearchProps) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
-
-    const tFilters = useTranslations(
-        "pages.search.components.FilterPanel.filters"
-    );
 
     const { isLoggedIn } = useAuth();
 
@@ -338,18 +335,9 @@ const Search = ({ filters }: SearchProps) => {
 
     type FilterValue = string | number | boolean | string[] | undefined | null;
 
-    interface SearchQueryParams {
-        query?: string;
-        page?: string;
-        per_page?: string;
-        sort?: string;
-        type?: string;
-        [key: string]: FilterValue;
-    }
-
     const cleanSearchFilters = (
         input: SearchQueryParams,
-        validKeys: readonly string[]
+        validKeys: string[]
     ): Partial<Record<string, Exclude<FilterValue, undefined | null | "">>> => {
         return Object.entries(input).reduce((acc, [key, value]) => {
             if (!validKeys.includes(key)) return acc;
@@ -362,9 +350,9 @@ const Search = ({ filters }: SearchProps) => {
     console.log(cleanSearchFilters(queryParams, filtersList));
 
     fireGTMEvent({
-        event: "filters",
-        filter_list: cleanSearchFilters(queryParams, filtersList),
+        event: "search_performed",
         search_term: queryParams.query || "",
+        ...cleanSearchFilters(queryParams, filtersList),
     });
 
     const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
