@@ -796,7 +796,9 @@
                                 "duplicate": {
                                     "label": "Duplicate template"
                                 }
-                            }
+                            },
+                            "draft": "Draft",
+                            "active": "Active"
                         }
                     }
                 }
