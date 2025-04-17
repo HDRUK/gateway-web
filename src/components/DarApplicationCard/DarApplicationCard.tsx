@@ -62,8 +62,8 @@ export default function DarApplicationCard({
             teamId
                 ? application.teams.find(
                       team => team.team_id.toString() === teamId
-                  )!.submission_status
-                : application.teams[teamIndex || 0]!.submission_status,
+                  )?.submission_status
+                : application.teams[teamIndex || 0]?.submission_status,
         [application.teams, teamId]
     );
 
@@ -72,8 +72,8 @@ export default function DarApplicationCard({
             teamId
                 ? application.teams.find(
                       team => team.team_id.toString() === teamId
-                  )!.approval_status
-                : application.teams[teamIndex || 0]!.approval_status,
+                  )?.approval_status
+                : application.teams[teamIndex || 0]?.approval_status,
         [application.teams, teamId]
     );
 

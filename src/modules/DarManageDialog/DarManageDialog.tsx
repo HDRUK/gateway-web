@@ -13,13 +13,17 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
+import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import { CACHE_DAR_REVIEWS } from "@/consts/cache";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { RouteName } from "@/consts/routeName";
+import { setTemporaryCookie } from "@/utils/cookies";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 
 enum CommentType {
@@ -78,11 +82,19 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
         payload: Partial<DarTeamApplication>,
         redirectUrl: string
     ) => {
+        setTemporaryCookie(
+            config.DAR_UPDATE_SUPPRESS_COOKIE,
+            Date.now().toString(),
+            60
+        );
+
         const updateResponse = await updateDarApplicationTeamAction(
             applicationId,
             params.teamId,
             payload
         );
+
+        revalidateCacheAction(`${CACHE_DAR_REVIEWS}${applicationId}`);
 
         hideModal();
 
@@ -100,7 +112,7 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
             payload: {
                 approval_status: null,
                 submission_status: DarApplicationStatus.DRAFT,
-                ...(draftComment && { draftComment }),
+                ...(draftComment && { comment: draftComment }),
             },
             redirectUrl: PATH_REDIRECT,
         },
@@ -113,7 +125,7 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
                 approval_status: approvedComment
                     ? DarApplicationApprovalStatus.APPROVED_COMMENTS
                     : DarApplicationApprovalStatus.APPROVED,
-                ...(approvedComment && { approvedComment }),
+                ...(approvedComment && { comment: approvedComment }),
             },
             redirectUrl: `${PATH_REDIRECT}?status=${DarApplicationApprovalStatus.APPROVED}`,
         },
@@ -124,7 +136,7 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
             buttonText: t("rejectedButtonText"),
             payload: {
                 approval_status: DarApplicationApprovalStatus.REJECTED,
-                ...(rejectedComment && { rejectedComment }),
+                ...(rejectedComment && { comment: rejectedComment }),
             },
             redirectUrl: `${PATH_REDIRECT}?status=${DarApplicationApprovalStatus.REJECTED}`,
         },
