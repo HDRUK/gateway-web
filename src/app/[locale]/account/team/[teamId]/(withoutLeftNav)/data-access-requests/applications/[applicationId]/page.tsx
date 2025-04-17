@@ -104,8 +104,10 @@ export default async function DarApplicationPage({
         sectionId = messageSection.id;
     }
 
+    const suppress = cookieStore.get("dar-update-suppress");
+
     // If no approval status, set to feedback
-    if (!teamApplication?.approval_status) {
+    if (!teamApplication?.approval_status && !suppress) {
         await updateDarApplicationTeam(applicationId, teamId, {
             approval_status: DarApplicationApprovalStatus.FEEDBACK,
         });

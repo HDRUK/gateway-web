@@ -91,10 +91,13 @@ export default async function DarApplicationPage({
         team => team.team_id === +teamId
     );
 
+    const suppress = cookieStore.get("dar-update-suppress");
+
     // If no approval status and submitted, set to draft
     if (
         !teamApplication?.approval_status &&
-        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED
+        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED &&
+        !suppress
     ) {
         await updateDarApplicationUser(applicationId, userId, {
             submission_status: DarApplicationStatus.DRAFT,

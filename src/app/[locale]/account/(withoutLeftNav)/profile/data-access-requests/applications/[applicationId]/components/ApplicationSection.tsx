@@ -32,6 +32,7 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import {
     beforeYouBeginFormFields,
@@ -48,6 +49,7 @@ import {
 } from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon, HelpOutlineIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { setTemporaryCookie } from "@/utils/cookies";
 import {
     createFileUploadConfig,
     formatDarQuestion,
@@ -229,6 +231,12 @@ const ApplicationSection = ({
             );
 
         if (formData) {
+            setTemporaryCookie(
+                config.DAR_UPDATE_SUPPRESS_COOKIE,
+                Date.now().toString(),
+                60
+            );
+
             const [resAnswers, resApplication] = await Promise.all([
                 updateDarApplicationAnswersAction(applicationId, userId, {
                     ...applicationData,

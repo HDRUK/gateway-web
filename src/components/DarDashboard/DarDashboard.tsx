@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Typography } from "@mui/material";
+import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
@@ -18,6 +19,7 @@ import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
+import config from "@/config/config";
 import {
     darDashboardDefaultValues,
     darDashboardSearchFilter,
@@ -29,6 +31,7 @@ import {
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { capitalise } from "@/utils/general";
+import { clearCookieAction } from "@/app/actions/clearCookieAction";
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 
@@ -68,6 +71,12 @@ export default function DarDashboard({
     const t = useTranslations(translationPath);
 
     const searchParams = useSearchParams();
+
+    useEffect(() => {
+        if (Cookies.get(config.DAR_UPDATE_SUPPRESS_COOKIE)) {
+            clearCookieAction(config.DAR_UPDATE_SUPPRESS_COOKIE);
+        }
+    }, [Cookies]);
 
     const { control, watch, setValue } = useForm({
         defaultValues: darDashboardDefaultValues,
@@ -162,8 +171,8 @@ export default function DarDashboard({
     } = useGet<PaginationType<DataAccessRequestApplication>>(
         `${darApiPath}?${new URLSearchParams(queryParams)}`,
         {
-            keepPreviousData: true,
             withPagination: true,
+            revalidateOnMount: true,
         }
     );
 
