@@ -14,12 +14,12 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "*.druk.cloud",
+                hostname: "*.hdruk.cloud",
                 pathname: "/**",
             },
             {
                 protocol: "http",
-                hostname: "*.druk.cloud",
+                hostname: "*.hdruk.cloud",
                 pathname: "/**",
             },
         ],
