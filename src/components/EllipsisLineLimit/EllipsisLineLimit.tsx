@@ -1,4 +1,4 @@
-import { memo, ReactNode } from "react";
+import { ElementType, memo, ReactNode } from "react";
 import Tooltip from "@/components/Tooltip";
 import ConditionalWrapper from "../ConditionalWrapper";
 import Typography from "../Typography";
@@ -7,6 +7,7 @@ interface EllipsisLineLimitProps {
     text: string;
     maxLine?: number;
     showToolTip?: boolean;
+    component?: ElementType;
 }
 
 const tooltipWrapper = (text: string) => (children: ReactNode) => {
@@ -21,12 +22,14 @@ const EllipsisLineLimit = ({
     text,
     maxLine = 2,
     showToolTip = false,
+    component = "p",
 }: EllipsisLineLimitProps) => {
     return (
         <ConditionalWrapper
             requiresWrapper={showToolTip}
             wrapper={tooltipWrapper(text)}>
             <Typography
+                component={component}
                 sx={{
                     display: "-webkit-box",
                     WebkitLineClamp: maxLine,

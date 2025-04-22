@@ -44,7 +44,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
 
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
-    >(`${apis.dataAccessSectionV1Url}`, { keepPreviousData: true });
+    >(`${apis.dataAccessSectionV1Url}?per_page=-1`, { keepPreviousData: true });
 
     const {
         data: template,

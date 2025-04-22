@@ -26,6 +26,7 @@ interface FileUploadFields {
     hideUpload: boolean;
     onFileUploaded: (file: FileUpload) => Promise<void>;
     onFileRemove?: (fileId: number) => Promise<void>;
+    skipImageValidation: boolean;
 }
 
 export type { FileUpload, UploadedFileMetadata, FileUploadFields };

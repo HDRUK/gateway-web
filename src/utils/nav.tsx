@@ -130,7 +130,7 @@ const getTeamNav = (
                           ...(permissions["applications.read"]
                               ? [
                                     {
-                                        label: "Private apps",
+                                        label: "Custom Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
@@ -141,7 +141,7 @@ const getTeamNav = (
                           ].some(isTrue => isTrue)
                               ? [
                                     {
-                                        label: "Gateway apps",
+                                        label: "Predefined Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
                                     },
                                 ]
@@ -235,7 +235,7 @@ const getTeamNav = (
         {
             icon: <HelpOutlineOutlinedIcon />,
             label: "Help",
-            href: `/${RouteName.SUPPORT}`,
+            href: RouteName.DATA_CUSTODIAN_SUPPORT,
         },
     ];
 };

@@ -48,7 +48,7 @@ import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
 import { ImageValidationError } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
-import { revalidateCache } from "@/app/actions/revalidateCache";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 interface CollectionCreateProps {
     teamId?: string;
@@ -404,7 +404,7 @@ const CollectionForm = ({
             });
         }
         if (clearKeywordsTag) {
-            revalidateCache("keywords");
+            revalidateCacheAction("keywords");
         }
         push(`${COLLECTION_ROUTE}?tab=${status}`);
     };

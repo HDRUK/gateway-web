@@ -48,13 +48,13 @@ const DarTemplatePage = () => {
 
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImageMediaCard
-                    img=""
+                    img="/images/dar/template-create.png"
                     onClick={handleCreateTemplate}
                     description={t("create.description")}
                     buttonText={t("create.label")}
                 />
                 <ImageMediaCard
-                    img=""
+                    img="/images/dar/template-edit.png"
                     onClick={() =>
                         router.push(
                             `${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`

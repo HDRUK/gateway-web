@@ -36,7 +36,7 @@ const SelectMultipleOptions = ({
         <BoxContainer sx={{ mb: 2 }}>
             {fields.map((option, index) => (
                 <Box
-                    key={option.value}
+                    key={option.id}
                     sx={{
                         p: 0,
                         m: 0,

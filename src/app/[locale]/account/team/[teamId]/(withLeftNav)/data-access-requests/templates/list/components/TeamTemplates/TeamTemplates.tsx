@@ -1,54 +1,50 @@
 "use client";
 
-import { useState } from "react";
 import { omit } from "lodash";
 import { useTranslations } from "next-intl";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { PaginationType } from "@/interfaces/Pagination";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { colors } from "@/config/theme";
 import { ContentCopyIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import TemplateList from "../TemplateList";
 
 interface TeamTemplatesProps {
     permissions?: { [key: string]: boolean };
+    teamId: string;
+    templateData: PaginationType<DarTemplate[]>;
+    countActive: number;
+    countDraft: number;
 }
 
 const TRANSLATION_PATH = `pages.account.team.dar.template.list`;
 
-const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
+const TeamTemplates = ({
+    permissions,
+    templateData,
+    countActive,
+    countDraft,
+    teamId,
+}: TeamTemplatesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { push } = useRouter();
-    const params = useParams<{ teamId: string }>();
+    const searchParams = useSearchParams();
 
     const createTemplate = usePost(apis.dataAccessTemplateV1Url, {
         itemName: "DAR Template",
         successNotificationsOn: false,
     });
 
-    const [queryParams, setQueryParams] = useState({
-        page: "1",
-    });
-
-    const { data, isLoading } = useGet<PaginationType<DarTemplate>>(
-        `${apis.teamsV1Url}/${
-            params?.teamId
-        }/dar/templates?${new URLSearchParams(queryParams)}`,
-        {
-            keepPreviousData: true,
-            withPagination: true,
-        }
-    );
-
     const handleDuplicateTemplate = async (selectedId: number) => {
-        const selectedTemplate = data?.list.find(
+        const selectedTemplate = templateData?.list.find(
             item => item.id === selectedId
         );
 
@@ -75,7 +71,7 @@ const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
             ]),
         }).then(res =>
             push(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${res}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${res}`
             )
         );
     };
@@ -84,7 +80,7 @@ const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
         ...(permissions?.["data-access-template.update"]
             ? [
                   {
-                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
                   },
@@ -100,6 +96,41 @@ const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
               ]
             : []),
     ];
+
+    const tabsList = [
+        {
+            label: t("active"),
+            value: "1",
+            dsCount: countActive,
+        },
+        {
+            label: t("draft"),
+            value: "0",
+            dsCount: countDraft,
+        },
+    ].map(tabItem => ({
+        label: `${tabItem.label} (${tabItem.dsCount})`,
+        value: tabItem.value,
+        content: (
+            <TemplateList
+                list={templateData.list}
+                setCurrentPage={page => {
+                    const params = new URLSearchParams(
+                        searchParams?.toString()
+                    );
+                    params.set("page", page.toString());
+                    push(`?${params.toString()}`);
+                }}
+                isLoading={false}
+                actions={actions}
+                from={templateData.from}
+                to={templateData.to}
+                lastPage={templateData.lastPage}
+                currentPage={templateData.currentPage}
+                total={templateData.total}
+            />
+        ),
+    }));
 
     return (
         <>
@@ -119,18 +150,12 @@ const TeamTemplates = ({ permissions }: TeamTemplatesProps) => {
                 </Box>
             </Paper>
 
-            <TemplateList
-                {...data}
-                list={data?.list}
-                currentPage={parseInt(queryParams.page, 10)}
-                setCurrentPage={page =>
-                    setQueryParams({
-                        ...queryParams,
-                        page: page.toString(),
-                    })
-                }
-                isLoading={isLoading}
-                actions={actions}
+            <Tabs
+                centered
+                tabs={tabsList}
+                tabBoxSx={{ padding: 0, background: colors.white }}
+                rootBoxSx={{ padding: 0 }}
+                paramName="published"
             />
         </>
     );
