@@ -5,12 +5,11 @@ import {
     DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
-import {
-    FileUploadFields,
-    UploadedFileMetadata,
-} from "@/interfaces/FileUpload";
+import { FileUploadFields } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
+import { CACHE_DAR_ANSWERS } from "@/consts/cache";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 
@@ -101,6 +100,8 @@ const createFileUploadConfig = (
                     { shouldValidate: true }
                 );
             }
+
+            revalidateCacheAction(`${CACHE_DAR_ANSWERS}${applicationId}`);
         },
         ...(isResearcher &&
             removeUploadedFile && {
@@ -109,17 +110,24 @@ const createFileUploadConfig = (
                     const response = await removeUploadedFile(fileId);
 
                     if (response && prev && typeof prev === "object") {
-                        const prevValue = prev.value as UploadedFileMetadata[];
-                        setValue(
-                            questionId,
-                            { value: prevValue.filter(v => v.id !== fileId) },
-                            { shouldValidate: true }
-                        );
+                        const prevValue = prev.value;
+                        if (Array.isArray(prevValue)) {
+                            setValue(questionId, {
+                                value: prevValue.filter(v => v.id !== fileId),
+                            });
+                        } else {
+                            setValue(questionId, undefined);
+                        }
                     }
+
+                    revalidateCacheAction(
+                        `${CACHE_DAR_ANSWERS}${applicationId}`
+                    );
                 },
             }),
         allowReuploading: true,
         hideUpload: !isResearcher,
+        skipImageValidation: true,
     };
 };
 

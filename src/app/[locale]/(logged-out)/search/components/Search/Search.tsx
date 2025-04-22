@@ -45,6 +45,7 @@ import SaveSearchDialog, {
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
@@ -74,6 +75,7 @@ import {
     FILTER_PUBLISHER_NAME,
     FILTER_SECTOR,
     FILTER_TYPE_CATEGORY,
+    filtersList,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     PAGE_FIELD,
@@ -94,7 +96,11 @@ import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
-import { getAllSelectedFilters, pickOnlyFilters } from "@/utils/filters";
+import {
+    cleanSearchFilters,
+    getAllSelectedFilters,
+    pickOnlyFilters,
+} from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import DataCustodianNetwork from "../DataCustodianNetwork";
@@ -128,6 +134,8 @@ const Search = ({ filters }: SearchProps) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
+    const fireGTMEvent = useGTMEvent();
+
     const { isLoggedIn } = useAuth();
 
     const redirectPath = searchParams
@@ -327,6 +335,14 @@ const Search = ({ filters }: SearchProps) => {
                     !!queryParams.query),
         }
     );
+
+    useEffect(() => {
+        fireGTMEvent({
+            event: "search_performed",
+            search_term: queryParams.query || "",
+            filter_list: cleanSearchFilters(queryParams, filtersList),
+        });
+    }, [queryParams]);
 
     const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
 

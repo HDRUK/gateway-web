@@ -30,7 +30,7 @@ const getRoleOptions = () => {
             labelComponent: (
                 <LabelAndDescription
                     label="Team Developer"
-                    description="Can create and manage Gateway Apps, Private Apps, and automated data synchronisation."
+                    description="Can create and manage Predefined Integrations, Custom Integrations, and automated data synchronisation."
                 />
             ),
             permissions: ["team-members.update", "roles.cta.update"],
