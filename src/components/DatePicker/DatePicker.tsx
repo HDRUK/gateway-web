@@ -24,6 +24,7 @@ export interface DatePickerProps<TFieldValue extends FieldValues, TName> {
     isRow?: boolean;
     control: Control<TFieldValue>;
     formControlSx?: SxProps;
+    onFocus?: () => void;
 }
 const DatePicker = <
     TFieldValues extends FieldValues,
@@ -38,6 +39,7 @@ const DatePicker = <
     info,
     extraInfo,
     required = false,
+    onFocus,
     ...rest
 }: DatePickerProps<TFieldValues, TName>) => {
     const {
@@ -60,14 +62,23 @@ const DatePicker = <
             <Controller
                 control={control}
                 name={name}
-                render={({ field }) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
                         adapterLocale="en-gb">
                         <MuiDatePicker
                             format="DD/MM/YYYY"
-                            {...field}
-                            value={getDayjs(field.value)}
+                            value={getDayjs(value)}
+                            onChange={date => {
+                                onChange(date);
+                            }}
+                            slotProps={{
+                                textField: {
+                                    onBlur,
+                                    error: !!error,
+                                    onFocus: () => onFocus && onFocus(),
+                                },
+                            }}
                             {...rest}
                         />
                     </LocalizationProvider>
