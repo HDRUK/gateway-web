@@ -22,6 +22,21 @@ const nextConfig = withNextIntl({
                 hostname: "*.hdruk.cloud",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+                pathname: "/hdr-gw-wordpress-dev/**",
+            },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+                pathname: "/hdr-gw-wordpress-preprod/**",
+            },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+                pathname: "/hdr-gw-wordpress-prod/**",
+            },
         ],
     },
     async redirects() {
