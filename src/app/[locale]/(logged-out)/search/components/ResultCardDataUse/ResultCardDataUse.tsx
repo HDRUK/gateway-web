@@ -49,6 +49,15 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
     // eslint-disable-next-line no-underscore-dangle
     const resultId = result._id;
 
+    const hasMultipleLeadOrgs = leadOrgNames?.length > 1;
+
+    const totalDatasets =
+        (result.datasetTitles?.length || 0) +
+        (result.non_gateway_datasets?.length || 0);
+
+    const hasGatewayDatasets = !!result.datasetTitles?.length;
+    const hasNonGatewayDatasets = !!result.non_gateway_datasets?.length;
+
     return (
         <>
             <ListItem sx={{ p: 0 }} alignItems="flex-start">
@@ -67,16 +76,14 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                     showToolTip
                                 />
                             </Link>
-                            {((!!result.datasetTitles?.length &&
-                                result.datasetTitles?.length > 1) ||
-                                !!result.non_gateway_datasets?.length ||
-                                leadOrgNames?.length > 1) && (
+                            {(totalDatasets > 1 || hasMultipleLeadOrgs) && (
                                 <Button
                                     onClick={handleShowAll}
                                     size="small"
                                     variant="outlined"
                                     color="secondary"
-                                    style={{
+                                    sx={{
+                                        ml: 1,
                                         flexShrink: 0,
                                         alignSelf: "flex-start",
                                     }}>
@@ -124,7 +131,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                     />
                                 </ResultRowCategory>
 
-                                {(!!result.datasetTitles?.length && (
+                                {hasGatewayDatasets ? (
                                     <>
                                         <ResultButtonWrap>
                                             <EllipsisCharacterLimit
@@ -141,37 +148,25 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                 }
                                             />
                                         </ResultButtonWrap>
-                                        {result.datasetTitles?.length > 1 && (
+                                        {totalDatasets > 1 && (
                                             <Typography
-                                                sx={{
-                                                    fontWeight: 500,
-                                                    ml: 1,
-                                                }}>
-                                                (
-                                                {(result.datasetTitles
-                                                    ?.length ?? 0) +
-                                                    (result.non_gateway_datasets
-                                                        ?.length ?? 0)}
-                                                )
+                                                sx={{ fontWeight: 500, ml: 1 }}>
+                                                ({totalDatasets})
                                             </Typography>
                                         )}
                                     </>
-                                )) ||
-                                    (!!result?.non_gateway_datasets?.length && (
-                                        <>
-                                            <EllipsisCharacterLimit
-                                                text={
-                                                    result
-                                                        .non_gateway_datasets[0]
-                                                }
-                                                characterLimit={CHARACTER_LIMIT}
-                                                isChip
-                                            />
+                                ) : hasNonGatewayDatasets ? (
+                                    <>
+                                        <EllipsisCharacterLimit
+                                            text={
+                                                result.non_gateway_datasets[0]
+                                            }
+                                            characterLimit={CHARACTER_LIMIT}
+                                            isChip
+                                        />
+                                        {totalDatasets > 1 && (
                                             <Typography
-                                                sx={{
-                                                    fontWeight: 500,
-                                                    ml: 1,
-                                                }}>
+                                                sx={{ fontWeight: 500, ml: 1 }}>
                                                 (
                                                 {
                                                     result.non_gateway_datasets
@@ -179,9 +174,11 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                                 }
                                                 )
                                             </Typography>
-                                        </>
-                                    )) ||
-                                    missingDataComponent}
+                                        )}
+                                    </>
+                                ) : (
+                                    missingDataComponent
+                                )}
                             </ResultRow>
 
                             <ResultRow>
