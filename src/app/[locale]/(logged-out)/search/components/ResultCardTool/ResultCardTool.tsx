@@ -56,7 +56,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                             fontSize={16}
                             fontWeight={600}>
                             <EllipsisLineLimit
-                                text={`${name}${name}`}
+                                text={name}
                                 component="span"
                             />
                         </Link>
