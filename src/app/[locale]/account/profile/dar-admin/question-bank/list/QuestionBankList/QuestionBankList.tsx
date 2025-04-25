@@ -39,6 +39,18 @@ const QuestionBankList = () => {
 
     const showArchiveButton = tab !== "archived";
 
+    const {
+        data,
+        isLoading,
+        mutate: mutateQuestions,
+    } = useGet<PaginationType<QuestionBankQuestion>>(
+        `${apis.questionBankV1Url}/${tab}?${qs}`,
+        {
+            keepPreviousData: true,
+            withPagination: true,
+        }
+    );
+
     const unArchiveQuestion = usePatch<Partial<QuestionBankQuestion>>(
         apis.questionBankV1Url,
         {
@@ -47,7 +59,7 @@ const QuestionBankList = () => {
     );
 
     const archiveQuestion = usePatch<Partial<QuestionBankQuestion>>(
-        apis.questionBankV1Url, 
+        apis.questionBankV1Url,
         {
             subPath: "archive",
         }
@@ -63,8 +75,8 @@ const QuestionBankList = () => {
             ? [
                   {
                       action: async (id: number) => {
-                        await archiveQuestion(id, {});
-                        mutateQuestions();
+                          await archiveQuestion(id, {});
+                          mutateQuestions();
                       },
                       icon: ArchiveIcon,
                       label: t("actions.archive.label"),
@@ -73,22 +85,14 @@ const QuestionBankList = () => {
             : [
                   {
                       action: async (id: number) => {
-                        await unArchiveQuestion(id, {});
-                        mutateQuestions();
+                          await unArchiveQuestion(id, {});
+                          mutateQuestions();
                       },
                       icon: UnarchiveIcon,
                       label: t("actions.unarchive.label"),
                   },
               ]),
     ];
-
-    const { data, isLoading, mutate: mutateQuestions } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}/${tab}?${qs}`,
-        {
-            keepPreviousData: true,
-            withPagination: true ,
-        }
-    );
 
     const { lastPage } = data || {};
 
