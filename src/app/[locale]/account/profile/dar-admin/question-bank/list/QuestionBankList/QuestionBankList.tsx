@@ -16,6 +16,7 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
 import apis from "@/config/apis";
 import { ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -38,6 +39,32 @@ const QuestionBankList = () => {
 
     const showArchiveButton = tab !== "archived";
 
+    const {
+        data,
+        isLoading,
+        mutate: mutateQuestions,
+    } = useGet<PaginationType<QuestionBankQuestion>>(
+        `${apis.questionBankV1Url}/${tab}?${qs}`,
+        {
+            keepPreviousData: true,
+            withPagination: true,
+        }
+    );
+
+    const unArchiveQuestion = usePatch<Partial<QuestionBankQuestion>>(
+        apis.questionBankV1Url,
+        {
+            subPath: "unarchive",
+        }
+    );
+
+    const archiveQuestion = usePatch<Partial<QuestionBankQuestion>>(
+        apis.questionBankV1Url,
+        {
+            subPath: "archive",
+        }
+    );
+
     const actions = [
         {
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
@@ -47,24 +74,25 @@ const QuestionBankList = () => {
         ...(showArchiveButton
             ? [
                   {
-                      href: `/to-be-implemented`,
+                      action: async (id: number) => {
+                          await archiveQuestion(id, {});
+                          mutateQuestions();
+                      },
                       icon: ArchiveIcon,
-                      label: t("archive.label"),
+                      label: t("actions.archive.label"),
                   },
               ]
             : [
                   {
-                      href: `/to-be-implemented`,
+                      action: async (id: number) => {
+                          await unArchiveQuestion(id, {});
+                          mutateQuestions();
+                      },
                       icon: UnarchiveIcon,
-                      label: t("unarchive.label"),
+                      label: t("actions.unarchive.label"),
                   },
               ]),
     ];
-
-    const { data, isLoading } = useGet<PaginationType<QuestionBankQuestion>>(
-        `${apis.questionBankV1Url}/${tab}?${qs}`,
-        { withPagination: true }
-    );
 
     const { lastPage } = data || {};
 
