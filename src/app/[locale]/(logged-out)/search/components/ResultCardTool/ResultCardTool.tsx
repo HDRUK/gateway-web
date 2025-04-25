@@ -55,10 +55,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                             href={`/${RouteName.TOOL_ITEM}/${toolId}`}
                             fontSize={16}
                             fontWeight={600}>
-                            <EllipsisLineLimit
-                                text={`${name}${name}`}
-                                component="span"
-                            />
+                            <EllipsisLineLimit text={name} component="span" />
                         </Link>
                         {description && (
                             <Button
