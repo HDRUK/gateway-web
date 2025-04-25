@@ -295,10 +295,10 @@ export default function DarDashboard({
                     </Box>
 
                     {data?.list?.map(item => {
-                        const isTeamApplication =
-                            teamId && item.teams.length > 1;
+                        const isMultiTeamApplication =
+                            userId && item.teams.length > 1;
 
-                        if (isTeamApplication) {
+                        if (isMultiTeamApplication) {
                             return (
                                 <DarApplicationGroup
                                     item={item}

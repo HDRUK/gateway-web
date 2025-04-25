@@ -84,7 +84,10 @@ const getUrlFromSearchParams = (
     const params = new URLSearchParams();
 
     params.set("type", type);
-    params.set("query", search_term);
+
+    if (search_term) {
+        params.set("query", search_term);
+    }
 
     Object.keys(filters).forEach((key: string) => {
         params.set(key, filters[key].join(","));
