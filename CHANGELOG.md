@@ -1,3 +1,10 @@
+## [2.7.1](https://github.com/HDRUK/gateway-web/compare/v2.7.0...v2.7.1) (2025-04-28)
+
+### 🐛 Bug Fixes
+
+* **GAT-6951:** more domains (#1093) ([0e2f447](https://github.com/HDRUK/gateway-web/commit/0e2f447f517cd8828c4a04af29f0265e57747542)), closes [GAT-6951](GAT-6951)
+* **GAT-6951:** only allow images from our lovely domain (#1087) ([12c9f63](https://github.com/HDRUK/gateway-web/commit/12c9f63aa5cce2c43543db422b01fead83f872ab)), closes [GAT-6951](GAT-6951)
+
 ## [2.7.0](https://github.com/HDRUK/gateway-web/compare/v2.6.0...v2.7.0) (2025-04-22)
 
 ### ✨ Features
