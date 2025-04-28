@@ -344,7 +344,10 @@ const Search = ({ filters }: SearchProps) => {
         });
     }, [queryParams]);
 
-    const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
+    const saveSearchQuery = usePost<SavedSearchPayload>(
+        apis.saveSearchesV1Url,
+        { itemName: "Saved search" }
+    );
 
     useEffect(() => {
         mutate();
