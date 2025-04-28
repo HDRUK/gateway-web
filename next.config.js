@@ -14,13 +14,28 @@ const nextConfig = withNextIntl({
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "**",
+                hostname: "*.hdruk.cloud",
                 pathname: "/**",
             },
             {
                 protocol: "http",
-                hostname: "**",
+                hostname: "*.hdruk.cloud",
                 pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+                pathname: "/hdr-gw-wordpress-dev/**",
+            },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+                pathname: "/hdr-gw-wordpress-preprod/**",
+            },
+            {
+                protocol: "https",
+                hostname: "storage.googleapis.com",
+                pathname: "/hdr-gw-wordpress-prod/**",
             },
         ],
     },
