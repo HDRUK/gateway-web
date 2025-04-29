@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FileExport } from "@/interfaces/FileExport";
+import { SearchCategory } from "@/interfaces/Search";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -11,12 +12,14 @@ import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { DownloadIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 import { downloadFile } from "@/utils/download";
 import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataUse.components.ActionBar";
 
 const ActionBar = () => {
+    const router = useRouter();
     const params = useParams<{
         dataUseId: string;
     }>();
@@ -47,7 +50,15 @@ const ActionBar = () => {
 
     return (
         <ActionBarWrapper>
-            <BackButton label={t("label")} style={{ margin: 0 }} />
+            <BackButton
+                label={t("label")}
+                style={{ margin: 0 }}
+                onClick={() =>
+                    router.push(
+                        `/${RouteName.SEARCH}?type=${SearchCategory.DATA_USE}`
+                    )
+                }
+            />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
                 <Button

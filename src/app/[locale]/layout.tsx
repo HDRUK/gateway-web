@@ -15,6 +15,7 @@ import DialogProvider from "@/providers/DialogProvider";
 import SWRProvider from "@/providers/SWRProvider";
 import SnackbarProvider from "@/providers/SnackbarProvider";
 import CMSBanners from "./components/CMSBanners";
+import PageTracker from "./components/PageTracker";
 import Organization from "./components/RichResults/Organization";
 
 export const metadata = metaData({
@@ -66,6 +67,7 @@ export default function RootLayout({
                                     <CustomerSurvey />
                                     <Suspense fallback={null}>
                                         <NavigationEvents />
+                                        <PageTracker />
                                     </Suspense>
                                 </ActionBarProvider>
                                 {/* ProvidersDialog has to remain in DOM */}

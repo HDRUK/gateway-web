@@ -20,6 +20,7 @@ import {
     FILTER_TYPE_CATEGORY,
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
+    FILTER_FORMAT_STANDARDS,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
 import { Metadata } from "./Dataset";
@@ -250,6 +251,7 @@ export interface SearchQueryParams {
     [FILTER_CONTAINS_TISSUE]: string[] | undefined;
     [FILTER_MATERIAL_TYPE]: string[] | undefined;
     [PMC_TYPE_FIELD]: string | undefined;
+    [FILTER_FORMAT_STANDARDS]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };
