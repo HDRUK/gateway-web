@@ -84,11 +84,13 @@ const connectedResources = [
         id: "courses",
         image: StaticImages.LANDING_PAGE.courses,
         href: "https://hdruklearn.org/",
+        externalUrl: true,
     },
     {
         id: "phenotypes",
         image: StaticImages.LANDING_PAGE.phenotypes,
         href: "https://phenotypes.healthdatagateway.org/",
+        externalUrl: true,
     },
 ];
 
