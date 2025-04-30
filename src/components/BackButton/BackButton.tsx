@@ -19,7 +19,7 @@ const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
         const previousPage = getPreviousPage();
 
         if (previousPage) {
-            router.push(previousPage);
+            router.back();
         } else if (onClick) {
             onClick();
         }
