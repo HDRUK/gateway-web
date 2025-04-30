@@ -796,7 +796,9 @@
                                 "duplicate": {
                                     "label": "Duplicate template"
                                 }
-                            }
+                            },
+                            "draft": "Draft",
+                            "active": "Active"
                         }
                     }
                 }
@@ -864,6 +866,11 @@
                 "title": "Courses",
                 "text": "Discover training materials and resources to enhance your data science skills for health data research. Learn at your pace and achieve CPD certificates to show case your personal development."
             },
+            "dar": {
+                "label": "My Data Access Requests",
+                "title": "My Data Access Requests",
+                "text": "Complete, submit and track the status of data access requests to one or more Data Custodians."
+            },
             "helpLinks": {
                 "item1": {
                     "title": "Support Centre",
@@ -924,7 +931,7 @@
             "dataCustodianNetworksTooltip": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network.",
             "collectionsHeader": "Collections",
             "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
-            "searchExplainerDataUse": "Search, for example, by lead organisation, Data Custodian, project title, funders, sponsors, keywords",
+            "searchExplainerDataUse": "Search, for example, by project title, lay or technical summary, funders and sponsors, keywords",
             "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",

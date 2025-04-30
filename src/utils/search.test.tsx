@@ -5,6 +5,7 @@ import {
     getAllParams,
     getDateRange,
     getPopulationSize,
+    getUrlFromSearchParams,
     hasMinimumSearchCharLength,
 } from "./search";
 
@@ -145,6 +146,60 @@ describe("Search utils", () => {
 
         it("returns false when there is too few characters", async () => {
             expect(hasMinimumSearchCharLength("Pu")).toBe(false);
+        });
+    });
+
+    describe("getUrlFromSearchParams", () => {
+        const basePath = "/search";
+
+        it("build URL with parameters", () => {
+            const url = getUrlFromSearchParams(
+                "dataset",
+                "cancer",
+                {
+                    tags: ["health"],
+                    access: ["open"],
+                },
+                "title:asc"
+            );
+
+            expect(url).toBe(
+                `${basePath}?type=dataset&query=cancer&tags=health&access=open&sort=title%3Aasc`
+            );
+        });
+
+        it("handles empty query", () => {
+            const url = getUrlFromSearchParams(
+                "dataset",
+                "",
+                {
+                    tags: ["health"],
+                },
+                "title:asc"
+            );
+
+            expect(url).toBe(
+                `${basePath}?type=dataset&tags=health&sort=title%3Aasc`
+            );
+        });
+
+        it("handles empty filters", () => {
+            const url = getUrlFromSearchParams(
+                "dataset",
+                "cancer",
+                {},
+                "title:asc"
+            );
+
+            expect(url).toBe(
+                `${basePath}?type=dataset&query=cancer&sort=title%3Aasc`
+            );
+        });
+
+        it("handles empty query and filters", () => {
+            const url = getUrlFromSearchParams("datause", "", {}, "title:asc");
+
+            expect(url).toBe(`${basePath}?type=datause&sort=title%3Aasc`);
         });
     });
 });

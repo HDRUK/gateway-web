@@ -5,10 +5,7 @@ import {
     DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
-import {
-    FileUploadFields,
-    UploadedFileMetadata,
-} from "@/interfaces/FileUpload";
+import { FileUploadFields } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { CACHE_DAR_ANSWERS } from "@/consts/cache";
@@ -113,12 +110,14 @@ const createFileUploadConfig = (
                     const response = await removeUploadedFile(fileId);
 
                     if (response && prev && typeof prev === "object") {
-                        const prevValue = prev.value as UploadedFileMetadata[];
-                        setValue(
-                            questionId,
-                            { value: prevValue.filter(v => v.id !== fileId) },
-                            { shouldValidate: true }
-                        );
+                        const prevValue = prev.value;
+                        if (Array.isArray(prevValue)) {
+                            setValue(questionId, {
+                                value: prevValue.filter(v => v.id !== fileId),
+                            });
+                        } else {
+                            setValue(questionId, undefined);
+                        }
                     }
 
                     revalidateCacheAction(
