@@ -14,6 +14,7 @@ import useModal from "@/hooks/useModal";
 import notificationService from "@/services/notification";
 import { inputComponents } from "@/config/forms";
 import theme, { colors } from "@/config/theme";
+import { DarApplicationApprovalStatus } from "@/consts/dataAccess";
 import { CheckCircleIcon, ErrorIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import { addDarApplicationCommentTeamAction } from "@/app/actions/addDarApplicationCommentTeam";
@@ -35,6 +36,7 @@ interface DarMessagesProps {
     initialReviews: DarReviewsResponse[];
     isResearcher: boolean;
     darApplicationEndpoint: string;
+    approvalStatus?: DarApplicationApprovalStatus;
 }
 
 interface DarMessageForm {
@@ -56,6 +58,7 @@ const DarMessages = ({
     initialReviews,
     isResearcher,
     darApplicationEndpoint,
+    approvalStatus,
 }: DarMessagesProps) => {
     const { user } = useAuth();
     const t = useTranslations(TRANSLATION_PATH);
@@ -283,48 +286,54 @@ const DarMessages = ({
                     <div ref={commentsEndRef} />
                 </Box>
 
-                <Divider />
+                {(!approvalStatus ||
+                    approvalStatus ===
+                        DarApplicationApprovalStatus.FEEDBACK) && (
+                    <>
+                        <Divider />
 
-                <BoxContainer>
-                    <Box sx={{ pb: 0, pt: 4 }}>
-                        <Typography>{t("reply")}</Typography>
-                        <Typography>{t("replyInfo")}</Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            gap: 2,
-                            pt: 0,
-                            pb: 0,
-                            width: "100%",
-                        }}>
-                        <InputWrapper
-                            control={control}
-                            {...searchFilter}
-                            formControlSx={{ flexGrow: 1, mb: 0 }}
-                            onFocus={() => setIsInputHovered(true)}
-                            onBlur={() => setIsInputHovered(false)}
-                            sx={{
-                                height: isInputHovered
-                                    ? TEXT_AREA_EXPANDED
-                                    : TEXT_AREA_MINIMISED,
-                                transition: "all 0.2s ease",
-                                ">textarea": {
-                                    height: "100% !important",
-                                },
-                            }}
-                        />
-                        <Button
-                            onClick={sendMessage}
-                            disabled={!commentText.length}
-                            sx={{
-                                alignSelf: "flex-end",
-                                height: TEXT_AREA_MINIMISED,
-                            }}>
-                            {t("send")}
-                        </Button>
-                    </Box>
-                </BoxContainer>
+                        <BoxContainer>
+                            <Box sx={{ pb: 0, pt: 4 }}>
+                                <Typography>{t("reply")}</Typography>
+                                <Typography>{t("replyInfo")}</Typography>
+                            </Box>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    gap: 2,
+                                    pt: 0,
+                                    pb: 0,
+                                    width: "100%",
+                                }}>
+                                <InputWrapper
+                                    control={control}
+                                    {...searchFilter}
+                                    formControlSx={{ flexGrow: 1, mb: 0 }}
+                                    onFocus={() => setIsInputHovered(true)}
+                                    onBlur={() => setIsInputHovered(false)}
+                                    sx={{
+                                        height: isInputHovered
+                                            ? TEXT_AREA_EXPANDED
+                                            : TEXT_AREA_MINIMISED,
+                                        transition: "all 0.2s ease",
+                                        ">textarea": {
+                                            height: "100% !important",
+                                        },
+                                    }}
+                                />
+                                <Button
+                                    onClick={sendMessage}
+                                    disabled={!commentText.length}
+                                    sx={{
+                                        alignSelf: "flex-end",
+                                        height: TEXT_AREA_MINIMISED,
+                                    }}>
+                                    {t("send")}
+                                </Button>
+                            </Box>
+                        </BoxContainer>
+                    </>
+                )}
             </Box>
         </Box>
     );
