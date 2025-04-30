@@ -162,56 +162,62 @@ const DarMessages = ({
         [reviewComments]
     );
 
+    const applicationInProgress =
+        !approvalStatus ||
+        approvalStatus === DarApplicationApprovalStatus.FEEDBACK;
+
     return (
         <Box sx={{ height: "100%", p: 0 }}>
             <Box sx={{ p: 3 }}>
-                {actionRequiredApplicant !== undefined && reviewComments && (
-                    <>
-                        <Typography
-                            variant="h2"
-                            component="p"
-                            color={colors.purple500}>
-                            {t("status")}
-                        </Typography>
-                        <Typography
-                            sx={{
-                                display: "flex",
-                                color: colors.grey700,
-                                mb: 3,
-                            }}>
-                            {(actionRequiredApplicant && isResearcher) ||
-                            (!actionRequiredApplicant && !isResearcher) ? (
-                                <ErrorIcon
-                                    sx={{
-                                        pr: 1,
-                                        color: colors.amber500,
-                                        height: ICON_SIZE,
-                                        width: ICON_SIZE,
-                                        p: 0,
-                                        mr: 1,
-                                    }}
-                                    fontSize="large"
-                                />
-                            ) : (
-                                <CheckCircleIcon
-                                    sx={{
-                                        pr: 1,
-                                        color: colors.green400,
-                                        height: ICON_SIZE,
-                                        width: ICON_SIZE,
-                                        p: 0,
-                                        mr: 1,
-                                    }}
-                                    fontSize="large"
-                                />
-                            )}
-                            {t("actionRequiredBy")}
-                            {actionRequiredApplicant
-                                ? "Applicant"
-                                : "Custodian"}
-                        </Typography>
-                    </>
-                )}
+                {applicationInProgress &&
+                    actionRequiredApplicant !== undefined &&
+                    reviewComments && (
+                        <>
+                            <Typography
+                                variant="h2"
+                                component="p"
+                                color={colors.purple500}>
+                                {t("status")}
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    display: "flex",
+                                    color: colors.grey700,
+                                    mb: 3,
+                                }}>
+                                {(actionRequiredApplicant && isResearcher) ||
+                                (!actionRequiredApplicant && !isResearcher) ? (
+                                    <ErrorIcon
+                                        sx={{
+                                            pr: 1,
+                                            color: colors.amber500,
+                                            height: ICON_SIZE,
+                                            width: ICON_SIZE,
+                                            p: 0,
+                                            mr: 1,
+                                        }}
+                                        fontSize="large"
+                                    />
+                                ) : (
+                                    <CheckCircleIcon
+                                        sx={{
+                                            pr: 1,
+                                            color: colors.green400,
+                                            height: ICON_SIZE,
+                                            width: ICON_SIZE,
+                                            p: 0,
+                                            mr: 1,
+                                        }}
+                                        fontSize="large"
+                                    />
+                                )}
+                                {t("actionRequiredBy")}
+                                {actionRequiredApplicant
+                                    ? "Applicant"
+                                    : "Custodian"}
+                            </Typography>
+                        </>
+                    )}
 
                 <Typography variant="h2" component="p" color={colors.purple500}>
                     {t("messagingDashboard")}
@@ -286,9 +292,7 @@ const DarMessages = ({
                     <div ref={commentsEndRef} />
                 </Box>
 
-                {(!approvalStatus ||
-                    approvalStatus ===
-                        DarApplicationApprovalStatus.FEEDBACK) && (
+                {applicationInProgress && (
                     <>
                         <Divider />
 
