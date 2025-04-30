@@ -331,8 +331,9 @@ const theme = createTheme({
                         "&.Mui-disabled": {
                             borderWidth: 2,
                         },
-                        "&:hover": {
+                        "&:hover, &:focus": {
                             color: colors.white,
+                            borderColor: _theme.palette.primary.main,
                             background:
                                 ownerState.color === "inherit"
                                     ? _theme.palette.primary.main

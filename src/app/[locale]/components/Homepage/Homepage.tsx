@@ -13,13 +13,13 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
-import InfoHoverPanel from "@/components/InfoHoverPanel";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import { StaticImages } from "@/config/images";
 import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import InfoHoverPanel from "@/app/[locale]/components/InfoHoverPanel";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
@@ -67,16 +67,6 @@ const services = [
         href: `/search?type=${SearchCategory.COLLECTIONS}`,
     },
     {
-        id: "phenotypes",
-        image: StaticImages.LANDING_PAGE.phenotypes,
-        href: "https://phenotypes.healthdatagateway.org/",
-    },
-    {
-        id: "courses",
-        image: StaticImages.LANDING_PAGE.courses,
-        href: "https://hdruklearn.org/",
-    },
-    {
         id: "dar",
         image: StaticImages.LANDING_PAGE.dar,
         href: "/account/profile/data-access-requests/applications",
@@ -87,6 +77,21 @@ const services = [
     //     image: "/images/homepage/welcome-image.jpg",
     //     href: "https://www.hdruk.ac.uk/research/research-data-infrastructure/disease-atlas/",
     // },
+];
+
+const connectedResources = [
+    {
+        id: "courses",
+        image: StaticImages.LANDING_PAGE.courses,
+        href: "https://hdruklearn.org/",
+        externalUrl: true,
+    },
+    {
+        id: "phenotypes",
+        image: StaticImages.LANDING_PAGE.phenotypes,
+        href: "https://phenotypes.healthdatagateway.org/",
+        externalUrl: true,
+    },
 ];
 
 interface HomePageProps {
@@ -130,6 +135,13 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         ? services.map(service => ({ ...service, text: t("touchDevice") }))
         : services;
 
+    const responsiveServicesConnected = isTouchDevice
+        ? connectedResources.map(service => ({
+              ...service,
+              text: t("touchDevice"),
+          }))
+        : connectedResources;
+
     const items = [
         {
             title: t("helpLinks.item1.title"),
@@ -149,11 +161,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         <>
             <Box
                 sx={{
-                    background: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
+                    background: {
+                        tablet: `linear-gradient(170deg, transparent 60%, ${colors.darkGreen50} calc(60% + 1px))`,
+                        desktop: `linear-gradient(170deg, transparent 72%, ${colors.darkGreen50} calc(72% + 1px))`,
+                    },
                 }}>
                 <Container>
                     <InfoHoverPanel
                         items={responsiveServices}
+                        itemsResources={responsiveServicesConnected}
                         defaultImageSrc={
                             StaticImages.LANDING_PAGE.welcome_image
                         }

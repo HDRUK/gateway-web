@@ -13,7 +13,9 @@ type ButtonBaseProps = Pick<
     | "disableRipple"
     | "startIcon"
     | "endIcon"
->;
+    | "href"
+    | "component"
+> & { target?: string; rel?: string };
 export type ButtonProps = ButtonBaseProps &
     ComponentPropsWithoutRef<"button"> & {
         isLoading?: boolean;

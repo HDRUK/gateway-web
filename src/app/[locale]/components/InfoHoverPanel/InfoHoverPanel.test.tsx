@@ -15,9 +15,22 @@ describe("InfoHoverPanel", () => {
             href: "/search?type=dur",
         },
     ];
+    const itemResourcess = [
+        {
+            id: "test",
+            image: "/images/homepage/welcome-image.jpg",
+            href: "/search?type=test",
+        },
+    ];
 
     it("should render default", async () => {
-        render(<InfoHoverPanel defaultImageSrc="" items={items} />);
+        render(
+            <InfoHoverPanel
+                defaultImageSrc=""
+                items={items}
+                itemsResources={itemResourcess}
+            />
+        );
         expect(screen.getByText("Datasets & BioSamples")).toBeInTheDocument();
         expect(
             screen.getByText("Data Uses / Research Projects")
@@ -31,7 +44,13 @@ describe("InfoHoverPanel", () => {
     });
 
     it("should change on hover default", async () => {
-        render(<InfoHoverPanel defaultImageSrc="" items={items} />);
+        render(
+            <InfoHoverPanel
+                defaultImageSrc=""
+                items={items}
+                itemsResources={itemResourcess}
+            />
+        );
 
         const dur = screen.getByText("Data Uses / Research Projects");
         userEvent.hover(dur);
