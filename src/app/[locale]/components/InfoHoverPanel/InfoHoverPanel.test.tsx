@@ -15,13 +15,20 @@ describe("InfoHoverPanel", () => {
             href: "/search?type=dur",
         },
     ];
+    const itemResourcess = [
+        {
+            id: "test",
+            image: "/images/homepage/welcome-image.jpg",
+            href: "/search?type=test",
+        },
+    ];
 
     it("should render default", async () => {
         render(
             <InfoHoverPanel
                 defaultImageSrc=""
                 items={items}
-                itemsResources={items}
+                itemsResources={itemResourcess}
             />
         );
         expect(screen.getByText("Datasets & BioSamples")).toBeInTheDocument();
@@ -41,7 +48,7 @@ describe("InfoHoverPanel", () => {
             <InfoHoverPanel
                 defaultImageSrc=""
                 items={items}
-                itemsResources={items}
+                itemsResources={itemResourcess}
             />
         );
 
