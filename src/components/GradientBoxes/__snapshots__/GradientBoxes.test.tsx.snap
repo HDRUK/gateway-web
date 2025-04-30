@@ -3,7 +3,7 @@
 exports[`GradientBoxes should render title 1`] = `
 <div>
   <div
-    class="MuiBox-root mui-style-1y4d2m4"
+    class="MuiBox-root mui-style-11fnh3v"
   >
     <div
       class="MuiBox-root mui-style-uiqv5c"
@@ -31,7 +31,7 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-aikkl4-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-yfwv8x-MuiTypography-root"
       >
         <p
           class="MuiTypography-root MuiTypography-body1 mui-style-o2cank-MuiTypography-root"
@@ -66,7 +66,7 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-aikkl4-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-yfwv8x-MuiTypography-root"
       >
         <p
           class="MuiTypography-root MuiTypography-body1 mui-style-o2cank-MuiTypography-root"
@@ -101,7 +101,7 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-aikkl4-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-yfwv8x-MuiTypography-root"
       >
         <p
           class="MuiTypography-root MuiTypography-body1 mui-style-o2cank-MuiTypography-root"

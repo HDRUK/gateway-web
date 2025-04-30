@@ -21,6 +21,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
             sx={{
                 display: { tablet: "flex" },
                 justifyContent: "center",
+                p: 0,
             }}
             gap={2}>
             {items.map(item => (
@@ -58,7 +59,6 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                     </Link>
 
                     <Typography
-                        sx={{ display: { mobile: "none", desktop: "block" } }}
                         fontSize={16}
                         mt={1}
                         color="white"

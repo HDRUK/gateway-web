@@ -56,6 +56,8 @@ export default function DarApplicationCard({
     const { showDialog } = useDialog();
 
     const isResearcher = !params?.teamId;
+    const groupTeamId =
+        teamIndex !== undefined && application.teams[teamIndex].team_id;
 
     const submissionStatus = useMemo(
         () =>
@@ -64,7 +66,7 @@ export default function DarApplicationCard({
                       team => team.team_id.toString() === teamId
                   )?.submission_status
                 : application.teams[teamIndex || 0]?.submission_status,
-        [application.teams, teamId]
+        [application.teams, teamId, teamIndex]
     );
 
     const approvalStatus = useMemo(
@@ -74,7 +76,7 @@ export default function DarApplicationCard({
                       team => team.team_id.toString() === teamId
                   )?.approval_status
                 : application.teams[teamIndex || 0]?.approval_status,
-        [application.teams, teamId]
+        [application.teams, teamId, teamIndex]
     );
 
     const cardContent = useMemo(
@@ -110,16 +112,29 @@ export default function DarApplicationCard({
                         gap={1}>
                         <EllipsisCharacterLimit
                             text={
-                                application.datasets[teamIndex || 0]
-                                    .dataset_title
+                                groupTeamId
+                                    ? application.datasets.find(
+                                          dataset =>
+                                              dataset.custodian.id ===
+                                              groupTeamId
+                                      )?.dataset_title
+                                    : application.datasets[teamIndex || 0]
+                                          .dataset_title
                             }
                             isButton
                             characterLimit={CHARACTER_LIMIT}
                             onClick={() =>
                                 push(
                                     `/${RouteName.DATASET_ITEM}/${
-                                        application.datasets[teamIndex || 0]
-                                            .dataset_id
+                                        groupTeamId
+                                            ? application.datasets.find(
+                                                  dataset =>
+                                                      dataset.custodian.id ===
+                                                      groupTeamId
+                                              )?.dataset_id
+                                            : application.datasets[
+                                                  teamIndex || 0
+                                              ].dataset_id
                                     }`
                                 )
                             }
@@ -130,7 +145,7 @@ export default function DarApplicationCard({
                                 onClick={() =>
                                     showDialog(DarDatasetQuickViewDialog, {
                                         application,
-                                        teamId,
+                                        teamId: teamId || groupTeamId,
                                     })
                                 }
                                 sx={{ minWidth: "auto" }}>
@@ -149,7 +164,7 @@ export default function DarApplicationCard({
                 ),
             },
         ],
-        [application, teamId, push, showDialog, t]
+        [application, t, groupTeamId, teamIndex, push, showDialog, teamId]
     );
 
     const actionButtonHref = (id: number) =>
