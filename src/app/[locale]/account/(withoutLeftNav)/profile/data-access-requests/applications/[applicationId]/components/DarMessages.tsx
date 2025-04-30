@@ -61,8 +61,6 @@ const DarMessages = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
-    const [shouldRefetch, setShouldRefetch] = useState(false);
-
     const {
         data: reviews,
         mutate: mutateReviews,
@@ -74,7 +72,6 @@ const DarMessages = ({
             errorNotificationsOn: false,
             fallbackData: initialReviews,
             revalidateOnMount: false,
-            shouldFetch: shouldRefetch,
         }
     );
 
@@ -130,7 +127,6 @@ const DarMessages = ({
 
             reset();
             mutateReviews();
-            setShouldRefetch(true);
         } else {
             notificationService.apiError("ERROR");
         }
