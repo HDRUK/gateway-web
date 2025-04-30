@@ -161,7 +161,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 sx={{
                     background: {
                         tablet: `linear-gradient(170deg, transparent 60%, ${colors.darkGreen50} calc(60% + 1px))`,
-                        desktop: `linear-gradient(170deg, transparent 70%, ${colors.darkGreen50} calc(70% + 1px))`,
+                        desktop: `linear-gradient(170deg, transparent 72%, ${colors.darkGreen50} calc(72% + 1px))`,
                     },
                 }}>
                 <Container>
