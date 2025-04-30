@@ -602,6 +602,9 @@ const ApplicationSection = ({
                                         darApplicationEndpoint
                                     }
                                     isResearcher={isResearcher}
+                                    approvalStatus={
+                                        teamApplication?.approval_status
+                                    }
                                 />
                             ) : (
                                 renderFormFields()
