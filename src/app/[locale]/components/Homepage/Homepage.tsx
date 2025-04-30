@@ -76,24 +76,14 @@ const services = [
 
 const connectedResources = [
     {
-        id: "phenotypes",
-        image: StaticImages.LANDING_PAGE.phenotypes,
-        href: "https://phenotypes.healthdatagateway.org/",
-    },
-    {
         id: "courses",
         image: StaticImages.LANDING_PAGE.courses,
         href: "https://hdruklearn.org/",
     },
     {
-        id: "omicsPred",
-        image: "",
-        href: "https://www.omicspred.org",
-    },
-    {
-        id: "pgsCatalog",
-        image: "",
-        href: "https://www.pgscatalog.org",
+        id: "phenotypes",
+        image: StaticImages.LANDING_PAGE.phenotypes,
+        href: "https://phenotypes.healthdatagateway.org/",
     },
 ];
 
