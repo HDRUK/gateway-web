@@ -35,6 +35,7 @@ const defaultValues = {
     datasets: [],
     keywords: [],
     non_gateway_datasets: [],
+    non_gateway_applicants: [],
 };
 
 const validationSchema = yup.object({

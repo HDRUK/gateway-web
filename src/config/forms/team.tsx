@@ -11,6 +11,7 @@ const defaultValues: TeamEditForm = {
     users: [],
     is_question_bank: false,
     introduction: "",
+    dar_modal_content: "",
 };
 
 const createDefaultValues: TeamCreateForm = {
@@ -26,6 +27,7 @@ const createDefaultValues: TeamCreateForm = {
     uses_5_safes: true,
     is_question_bank: false,
     introduction: "",
+    dar_modal_content: "",
 };
 
 const validationSchema = yup.object({
@@ -38,6 +40,7 @@ const validationSchema = yup.object({
         .min(1, "Team admin(s) is a required field")
         .of(yup.number())
         .label("Team admin(s)"),
+    dar_modal_content: yup.string().nullable().label("Dar modal content"),
 });
 
 const questionBankField = {
@@ -100,6 +103,11 @@ const formFields = [
         name: "service",
         info: "Provide a valid URL to services offered.",
         component: inputComponents.TextField,
+    },
+    {
+        label: "DAR modal content",
+        name: "dar_modal_content",
+        component: inputComponents.Wysiwyg,
     },
 ];
 

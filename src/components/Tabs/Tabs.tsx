@@ -46,22 +46,26 @@ const CustomLink = forwardRef<
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { persist, ...rest } = props;
+
+    const currentQuery = searchParams?.entries()
+        ? Object.fromEntries(searchParams.entries())
+        : {};
+
+    currentQuery[props.param] = props.href;
+
+    if ("page" in currentQuery) {
+        currentQuery.page = "1";
+    }
+
     return (
         <Link
             ref={ref}
             passHref
             {...rest}
+            scroll={false}
             href={{
                 pathname,
-                query:
-                    searchParams?.entries() && persist
-                        ? {
-                              ...Object.fromEntries(searchParams?.entries()),
-                              [props.param]: props.href,
-                          }
-                        : {
-                              [props.param]: props.href,
-                          },
+                query: persist ? currentQuery : { [props.param]: props.href },
             }}>
             {props.children}
         </Link>

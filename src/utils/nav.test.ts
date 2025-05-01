@@ -93,7 +93,7 @@ describe("Nav utils", () => {
             expect(integrationsItem?.subItems).toBeDefined();
 
             const apiManagementItem = integrationsItem?.subItems?.find(
-                item => item.label === "Private apps"
+                item => item.label === "Custom Integrations"
             );
 
             expect(apiManagementItem).toBeDefined();
@@ -115,7 +115,7 @@ describe("Nav utils", () => {
             expect(integrationsItem?.subItems).toBeDefined();
 
             const integrationItem = integrationsItem?.subItems?.find(
-                item => item.label === "Gateway apps"
+                item => item.label === "Predefined Integrations"
             );
 
             expect(integrationItem).toBeDefined();
@@ -129,7 +129,7 @@ describe("Nav utils", () => {
             const helpItem = navItems.find(item => item.label === "Help");
 
             expect(helpItem).toBeDefined();
-            expect(helpItem?.href).toBe(`/${RouteName.SUPPORT}`);
+            expect(helpItem?.href).toBe(RouteName.DATA_CUSTODIAN_SUPPORT);
         });
     });
 });

@@ -21,9 +21,12 @@ type UploadedFileMetadata = {
 
 interface FileUploadFields {
     apiPath: string;
+    fileDownloadApiPath: string | undefined;
     allowReuploading: boolean;
+    hideUpload: boolean;
     onFileUploaded: (file: FileUpload) => Promise<void>;
-    onFileRemove: (fileId: number) => Promise<void>;
+    onFileRemove?: (fileId: number) => Promise<void>;
+    skipImageValidation: boolean;
 }
 
 export type { FileUpload, UploadedFileMetadata, FileUploadFields };

@@ -63,6 +63,7 @@ const defaultProps = {
     aggregations: {} as Aggregations,
     updateStaticFilter: jest.fn(),
     getParamString: jest.fn(),
+    showEuropePmcModal: jest.fn(),
 };
 
 const testCases = [

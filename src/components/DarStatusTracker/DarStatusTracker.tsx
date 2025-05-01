@@ -9,6 +9,7 @@ import {
 } from "@/consts/dataAccess";
 
 interface DarStatusTrackerProps {
+    submissionStatus: DarApplicationStatus;
     approvalStatus?: DarApplicationApprovalStatus;
     statuses: (DarApplicationStatus | DarApplicationApprovalStatus)[];
 }
@@ -16,6 +17,7 @@ interface DarStatusTrackerProps {
 const TRANSLATION_PATH = "common.dar.status";
 
 export default function DarStatusTracker({
+    submissionStatus,
     approvalStatus,
     statuses,
 }: DarStatusTrackerProps) {
@@ -35,6 +37,10 @@ export default function DarStatusTracker({
               )
             : approvalStatus
             ? formattedStatuses.length
+            : submissionStatus === DarApplicationStatus.SUBMITTED
+            ? formattedStatuses.findIndex(
+                  item => item === DarApplicationStatus.SUBMITTED
+              )
             : 0;
 
     return (
@@ -88,13 +94,14 @@ export default function DarStatusTracker({
                                         : "transparent",
                                     p: 0,
                                     zIndex: 2,
-                                    bgcolor: isRejected
-                                        ? colors.red600
-                                        : isFuture || isWithdrawn
-                                        ? colors.grey500
-                                        : isActive
-                                        ? colors.white
-                                        : colors.green400,
+                                    bgcolor:
+                                        isRejected || isWithdrawn
+                                            ? colors.red600
+                                            : isFuture
+                                            ? colors.grey500
+                                            : isActive
+                                            ? colors.white
+                                            : colors.green400,
                                 }}>
                                 <Box
                                     sx={{

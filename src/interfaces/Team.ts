@@ -37,6 +37,7 @@ interface TeamEditForm
         | "is_question_bank"
         | "team_logo"
         | "introduction"
+        | "dar_modal_content"
     > {
     users: number[];
 }
@@ -56,6 +57,7 @@ interface TeamCreateForm
         | "is_question_bank"
         | "team_logo"
         | "introduction"
+        | "dar_modal_content"
     > {
     users: number[];
 }

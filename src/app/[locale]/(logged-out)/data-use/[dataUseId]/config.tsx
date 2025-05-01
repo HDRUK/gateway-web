@@ -45,7 +45,7 @@ const dataUseFields: DataUseSection[] = [
 
             {
                 path: "non_gateway_applicants",
-                type: FieldType.TEXT,
+                type: FieldType.LIST_TEXT,
             },
             {
                 path: "funders_and_sponsors",

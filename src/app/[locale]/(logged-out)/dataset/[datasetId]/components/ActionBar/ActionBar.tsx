@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileExport } from "@/interfaces/FileExport";
+import { SearchCategory } from "@/interfaces/Search";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -33,6 +34,7 @@ interface ActionBarProps {
 }
 
 const ActionBar = ({ dataset }: ActionBarProps) => {
+    const router = useRouter();
     const [isDownloading, setIsDownloading] = useState(false);
     const { id: datasetId, name } = dataset;
     const path = usePathname();
@@ -206,7 +208,15 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
 
     return (
         <ActionBarWrapper>
-            <BackButton label={t("label")} style={{ margin: 0 }} />
+            <BackButton
+                label={t("label")}
+                style={{ margin: 0 }}
+                onClick={() =>
+                    router.push(
+                        `/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`
+                    )
+                }
+            />
 
             <Box sx={{ display: "flex", gap: 1, p: 0 }}>
                 <Button onClick={handleGeneralEnquiryClick}>

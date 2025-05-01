@@ -129,7 +129,7 @@ const EditApplicationForm = ({
                     marginBottom: "10px",
                     marginTop: "10px",
                 }}>
-                <Typography variant="h2">Private Apps</Typography>
+                <Typography variant="h2">Custom Integrations</Typography>
                 <Typography>
                     Use this form to create, update and manage your api on the
                     Gateway

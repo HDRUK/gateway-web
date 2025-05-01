@@ -1,5 +1,5 @@
-import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateCache } from "@/utils/revalidateCache";
 
 interface RevalidateRequestBody {
     tags: string | string[];
@@ -14,14 +14,8 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
+        revalidateCache(tags);
 
-        if (Array.isArray(tags)) {
-            tags.forEach(tag => {
-                revalidateTag(tag);
-            });
-        } else {
-            revalidateTag(tags);
-        }
         return NextResponse.json(
             {
                 message: `Revalidated ${

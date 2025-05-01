@@ -35,6 +35,8 @@ const DARApplicationsPage = async ({
             <Dashboard
                 translationPath="pages.account.team.dataAccessRequests.applications"
                 darApiPath={`${apis.teamsV1Url}/${teamId}/dar/applications`}
+                isResearcher={false}
+                teamId={teamId}
             />
         </ProtectedAccountRoute>
     );

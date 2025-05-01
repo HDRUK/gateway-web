@@ -1,16 +1,14 @@
-import { ReactNode, useState } from "react";
-import LinesEllipsis from "react-lines-ellipsis";
-import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
-import ConditionalWrapper from "@/components/ConditionalWrapper";
+import { ElementType, memo, ReactNode } from "react";
 import Tooltip from "@/components/Tooltip";
+import ConditionalWrapper from "../ConditionalWrapper";
+import Typography from "../Typography";
 
 interface EllipsisLineLimitProps {
     text: string;
     maxLine?: number;
     showToolTip?: boolean;
+    component?: ElementType;
 }
-
-const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 
 const tooltipWrapper = (text: string) => (children: ReactNode) => {
     return (
@@ -24,28 +22,27 @@ const EllipsisLineLimit = ({
     text,
     maxLine = 2,
     showToolTip = false,
+    component = "p",
 }: EllipsisLineLimitProps) => {
-    const [isClamped, setIsClamped] = useState(false);
-
-    const handleReflow = (rleState: { clamped: boolean }) => {
-        const { clamped } = rleState;
-        setIsClamped(clamped);
-    };
-
     return (
         <ConditionalWrapper
-            requiresWrapper={isClamped && showToolTip}
+            requiresWrapper={showToolTip}
             wrapper={tooltipWrapper(text)}>
-            <ResponsiveEllipsis
-                text={text}
-                maxLine={maxLine}
-                ellipsis="..."
-                trimRight
-                basedOn="letters"
-                onReflow={handleReflow}
-            />
+            <Typography
+                component={component}
+                sx={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: maxLine,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    fontSize: "inherit",
+                    fontWeight: "inherit",
+                }}>
+                {text}
+            </Typography>
         </ConditionalWrapper>
     );
 };
 
-export default EllipsisLineLimit;
+export default memo(EllipsisLineLimit);
