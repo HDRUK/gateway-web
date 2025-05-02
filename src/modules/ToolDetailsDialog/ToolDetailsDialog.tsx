@@ -3,6 +3,8 @@ import { useTranslations } from "next-intl";
 import { SearchResultTool } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
+import HTMLContent from "@/components/HTMLContent";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import { CategoryHeader } from "./ToolDetailsDialog.styles";
 
 interface ToolDetailsDialogProps {
@@ -23,7 +25,7 @@ const ToolDetailsDialog = ({ result }: ToolDetailsDialogProps) => {
                 <Box
                     sx={{ display: "flex", flexWrap: "wrap", p: 0, mb: 2 }}
                     gap={1}>
-                    {description}
+                    <MarkDownSanitizedWithHtml content={description} />
                 </Box>
 
                 <CategoryHeader variant="h3">{t("keywords")}</CategoryHeader>
