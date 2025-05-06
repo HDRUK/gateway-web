@@ -6,18 +6,18 @@ const getReleaseByYear = <T>(releases: T, year: string) => {
     return releases
         .map(release => release.node)
         .sort((a, b) => {
-            return getDayjs(a.release?.releaseDate).isBefore(
+            return getDayjs(a.release?.releaseDate)?.isBefore(
                 getDayjs(b.release.releaseDate)
             )
-                ? -1
-                : 1;
+                ? 1
+                : -1;
         })
         .filter(release => {
             const releaseDate = release.release?.releaseDate;
 
             if (!releaseDate) return false;
 
-            return getYear(releaseDate).toString() === year;
+            return getYear(releaseDate)?.toString() === year;
         }) as (typeof releases)[number]["node"][];
 };
 

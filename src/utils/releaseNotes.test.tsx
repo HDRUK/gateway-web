@@ -15,8 +15,8 @@ describe("ReleaseNotes utils", () => {
         const result = getReleaseByYear(mockedReleases, "2024");
 
         expect(result).toEqual([
-            mockedReleases[0].node,
             mockedReleases[1].node,
+            mockedReleases[0].node,
         ]);
     });
 

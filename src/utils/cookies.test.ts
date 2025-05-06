@@ -1,11 +1,21 @@
 /* eslint-disable no-underscore-dangle */
+import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import { getUserFromToken } from "@/utils/cookies";
+import { getUserFromToken, setTemporaryCookie } from "@/utils/cookies";
 import { generateUserV1 } from "@/mocks/data";
 
 const generatedUser = generateUserV1();
 
 jest.mock("jwt-decode", () => jest.fn());
+
+jest.mock("js-cookie", () => {
+    return {
+        __esModule: true,
+        default: {
+            set: jest.fn(),
+        },
+    };
+});
 
 describe("Cookies utils", () => {
     describe("getUserFromToken", () => {
@@ -30,6 +40,21 @@ describe("Cookies utils", () => {
 
             const user = getUserFromToken("encryptedTokenValue");
             expect(user).toEqual(generatedUser);
+        });
+    });
+
+    describe("setTemporaryCookie", () => {
+        it("should set a cookie with calculated expiry in days", () => {
+            const name = "test-cookie";
+            const value = "123";
+            const seconds = 60;
+
+            setTemporaryCookie(name, value, seconds);
+
+            const expectedExpiryInDays = seconds / (24 * 60 * 60);
+            expect(Cookies.set).toHaveBeenCalledWith(name, value, {
+                expires: expectedExpiryInDays,
+            });
         });
     });
 });

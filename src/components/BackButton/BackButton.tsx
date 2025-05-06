@@ -3,6 +3,7 @@
 import { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
+import { getPreviousPage } from "@/hooks/useTrackPreviousPage";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 
 interface BackButtonProps {
@@ -15,12 +16,19 @@ const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
     const router = useRouter();
 
     const handleClick = () => {
-        if (onClick) {
-            onClick();
-        } else {
+        const previousPage = getPreviousPage();
+
+        if (previousPage) {
             router.back();
+        } else if (onClick) {
+            onClick();
         }
     };
+
+    // Hide button if there's no way to go back
+    if (!onClick && !getPreviousPage()) {
+        return null;
+    }
 
     return (
         <Button

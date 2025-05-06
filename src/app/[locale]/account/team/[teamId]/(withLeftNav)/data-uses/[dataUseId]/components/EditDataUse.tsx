@@ -193,15 +193,22 @@ const EditDataUse = () => {
         );
     };
 
-    const [keywordOptions, setKeywordsOptions] = useState<string[]>([]);
-    const [outputOptions, setOutputOptions] = useState<string[]>([]);
+    const [keywordOptions, setKeywordsOptions] = useState<OptionsType[]>([]);
+    const [outputOptions, setOutputOptions] = useState<OptionsType[]>([]);
 
     useEffect(() => {
         if (!keywords) {
             return;
         }
 
-        setKeywordsOptions(keywords.map(keyword => keyword.name));
+        setKeywordsOptions(
+            keywords.map(data => {
+                return {
+                    label: data.name,
+                    value: data.name,
+                };
+            }) as OptionsType[]
+        );
     }, [keywords]);
 
     const existingResearchLinks = existingDataUse?.non_gateway_outputs;
@@ -211,7 +218,14 @@ const EditDataUse = () => {
             return;
         }
 
-        setOutputOptions(existingResearchLinks);
+        setOutputOptions(
+            existingResearchLinks.map(data => {
+                return {
+                    label: data,
+                    value: data,
+                };
+            }) as OptionsType[]
+        );
     }, [existingResearchLinks]);
 
     useEffect(() => {

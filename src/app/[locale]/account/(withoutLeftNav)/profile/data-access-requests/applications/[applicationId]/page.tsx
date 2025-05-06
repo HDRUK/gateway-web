@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
 import {
     beforeYouBeginSection,
     messageSection,
@@ -91,25 +92,23 @@ export default async function DarApplicationPage({
         team => team.team_id === +teamId
     );
 
+    const suppress = cookieStore.get("dar-update-suppress");
+
     // If no approval status and submitted, set to draft
     if (
         !teamApplication?.approval_status &&
-        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED
+        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED &&
+        !suppress
     ) {
         await updateDarApplicationUser(applicationId, userId, {
             submission_status: DarApplicationStatus.DRAFT,
         });
 
-        // Refetch application
-        darApplication = await getDarApplicationUser(
-            cookieStore,
-            applicationId,
-            userId
-        );
-
-        teamApplication = darApplication?.teams?.find(
-            team => team.team_id === +teamId
-        );
+        // Find the specific team and override its submission_status
+        teamApplication = {
+            ...darApplication?.teams?.find(team => team.team_id === +teamId),
+            submission_status: DarApplicationStatus.DRAFT,
+        } as DarTeamApplication;
     }
 
     if (!teamApplication && teamId) {

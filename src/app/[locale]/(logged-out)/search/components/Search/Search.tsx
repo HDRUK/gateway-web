@@ -64,6 +64,7 @@ import {
     FILTER_DATA_SUBTYPE,
     FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
+    FILTER_FORMAT_STANDARDS,
     FILTER_GEOGRAPHIC_LOCATION,
     FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
@@ -187,7 +188,7 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
         [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
         [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
-        [FILTER_DATA_SET_TITLES]: searchParams?.getAll(FILTER_DATA_SET_TITLES),
+        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
         [FILTER_DATA_TYPE]: getParamArray(FILTER_DATA_TYPE),
         [FILTER_DATA_SUBTYPE]: getParamArray(FILTER_DATA_SUBTYPE),
         [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
@@ -205,6 +206,7 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
         [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
         [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
+        [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
     });
 
     const [datasetNamesArray, setDatasetNamesArray] = useState<string[]>([]);
@@ -344,7 +346,10 @@ const Search = ({ filters }: SearchProps) => {
         });
     }, [queryParams]);
 
-    const saveSearchQuery = usePost<SavedSearchPayload>(apis.saveSearchesV1Url);
+    const saveSearchQuery = usePost<SavedSearchPayload>(
+        apis.saveSearchesV1Url,
+        { itemName: "Saved search" }
+    );
 
     useEffect(() => {
         mutate();
@@ -360,9 +365,10 @@ const Search = ({ filters }: SearchProps) => {
     // Reset query param state when tab is changed
     const resetQueryParamState = (selectedType: SearchCategory) => {
         setQueryParams({
-            ...queryParams,
+            query: queryParams.query,
             sort: searchFormConfig.defaultValues.sort,
             page: "1",
+            per_page: "25",
             type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
@@ -386,6 +392,8 @@ const Search = ({ filters }: SearchProps) => {
             [FILTER_CONTAINS_TISSUE]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
+            [PMC_TYPE_FIELD]: undefined,
+            [FILTER_FORMAT_STANDARDS]: undefined,
         });
     };
 
@@ -841,13 +849,15 @@ const Search = ({ filters }: SearchProps) => {
                             filterName: string
                         ) => {
                             // url requires string format, ie "one, two, three"
-                            updatePath(filterName, filterValues.join(","));
-                            updatePath(PAGE_FIELD, "1");
+                            updatePathMultiple({
+                                [filterName]: filterValues.join(","),
+                                [PAGE_FIELD]: "1",
+                            });
 
                             // api requires string[] format, ie ["one", "two", "three"]
                             setQueryParams({
                                 ...queryParams,
-                                page: "1",
+                                [PAGE_FIELD]: "1",
                                 [filterName]: filterValues,
                             });
                         }}

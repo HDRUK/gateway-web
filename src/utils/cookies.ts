@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import { User } from "@/interfaces/User";
 
@@ -22,4 +23,9 @@ const getUserFromToken = (token: string | undefined): null | User => {
     return response?.user;
 };
 
-export { getUserFromToken };
+const setTemporaryCookie = (name: string, value: string, seconds: number) => {
+    const expiresInDays = seconds / (24 * 60 * 60); // convert seconds to days
+    Cookies.set(name, value, { expires: expiresInDays });
+};
+
+export { getUserFromToken, setTemporaryCookie };
