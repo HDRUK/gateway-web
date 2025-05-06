@@ -2,6 +2,7 @@ import { isEmpty, pick } from "lodash";
 import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import {
+    FILTER_COHORT_DISCOVERY,
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
     filtersList,
@@ -86,6 +87,11 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                       FILTER_CONTAINS_TISSUE
                   )
                       ? { [FILTER_CONTAINS_TISSUE]: [true] }
+                      : {}),
+                  ...(filterQueries?.[FILTER_COHORT_DISCOVERY]?.includes(
+                      FILTER_COHORT_DISCOVERY
+                  )
+                      ? { [FILTER_COHORT_DISCOVERY]: [true] }
                       : {}),
                   [FILTER_MATERIAL_TYPE]: !filterQueries?.[
                       FILTER_CONTAINS_TISSUE
