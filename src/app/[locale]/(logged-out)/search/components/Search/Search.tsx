@@ -77,6 +77,7 @@ import {
     FILTER_SECTOR,
     FILTER_TYPE_CATEGORY,
     filtersList,
+    FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     PAGE_FIELD,
@@ -207,6 +208,7 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
         [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
         [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
+        [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
     });
 
     const [datasetNamesArray, setDatasetNamesArray] = useState<string[]>([]);
@@ -394,6 +396,7 @@ const Search = ({ filters }: SearchProps) => {
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
             [PMC_TYPE_FIELD]: undefined,
             [FILTER_FORMAT_STANDARDS]: undefined,
+            [FILTER_COHORT_DISCOVERY]: undefined,
         });
     };
 
