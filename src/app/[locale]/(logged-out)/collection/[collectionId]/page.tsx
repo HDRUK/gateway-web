@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
+import HTMLContent from "@/components/HTMLContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import PublicationsContent from "@/components/PublicationsContent";
@@ -69,7 +70,7 @@ export default async function CollectionItemPage({
                             src={image_link || StaticImages.BASE.placeholder}
                         />
                         <Typography variant="h1" sx={{ ml: 2 }}>
-                            {name}
+                            <HTMLContent content={name} />
                         </Typography>
                     </Box>
 
