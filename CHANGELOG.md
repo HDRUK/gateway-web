@@ -1,3 +1,30 @@
+## [2.8.0](https://github.com/HDRUK/gateway-web/compare/v2.7.1...v2.8.0) (2025-05-06)
+
+### ✨ Features
+
+* **GAT-6526:** Homepage design tweaks (#1103) ([ea11e50](https://github.com/HDRUK/gateway-web/commit/ea11e50a8e7850c02960b9da2420efe527741811)), closes [GAT-6526](GAT-6526)
+* **GAT-6910:** Add additional wordpress pages (#1098) ([87a819e](https://github.com/HDRUK/gateway-web/commit/87a819e1e52cc954ad14fa69fe9918184bae8053)), closes [GAT-6910](GAT-6910)
+
+### 🐛 Bug Fixes
+
+* **GAT-5471:** Fix back links across site (#1100) ([ffd865b](https://github.com/HDRUK/gateway-web/commit/ffd865b7ec2c116e63dcbecca11edb9b2f59d2cb))
+* **GAT-5471:** Small tweak to fix back behaviour (#1101) ([8ded534](https://github.com/HDRUK/gateway-web/commit/8ded534cbb6a498042b2c31989d5baed3a2f9dce))
+* **GAT-5695:** Update quick view logic (#1091) ([a0203f0](https://github.com/HDRUK/gateway-web/commit/a0203f08b16ac982cfe7a4bc64f4a300fdc2d67b)), closes [GAT-5695](GAT-5695)
+* **GAT-6394:** Datepicker improvements (#1092) ([9dd4f68](https://github.com/HDRUK/gateway-web/commit/9dd4f685598e73eea28859c6054599a02d558588)), closes [GAT-6394](GAT-6394)
+* **GAT-6631:** DAR cleanup (#1084) ([6c971a3](https://github.com/HDRUK/gateway-web/commit/6c971a30006f1a0454919b1936c24aa5500760e0)), closes [GAT-6631](GAT-6631)
+* **GAT-6632:** Tweaks to DAR application status changes (#1085) ([508acf1](https://github.com/HDRUK/gateway-web/commit/508acf167e6a5755aaa1f01840753f19383869b1)), closes [GAT-6632](GAT-6632)
+* **GAT-6688:** Handle empty saved search query (#1086) ([30b80cc](https://github.com/HDRUK/gateway-web/commit/30b80cc71d8d368f54c95755582848c3089a5e10)), closes [GAT-6688](GAT-6688)
+* **GAT-6726:** Implement question archiving (#1094) ([21d8841](https://github.com/HDRUK/gateway-web/commit/21d884131f5881535db27287610660abbae248ec)), closes [GAT-6726](GAT-6726)
+* **GAT-6760:** Populate autocomplete options correctly (#1089) ([1bea99f](https://github.com/HDRUK/gateway-web/commit/1bea99fa68d0a8ff53eaa637367183ee73aa67a2)), closes [GAT-6760](GAT-6760)
+* **GAT-6949:** Correct logic when dar group displays (#1090) ([8ec695f](https://github.com/HDRUK/gateway-web/commit/8ec695f51b3d3bd6d35beb8de09c28b6391ab9fd)), closes [GAT-6949](GAT-6949)
+* **GAT-6951:** more domains (#1093) ([5f33c0b](https://github.com/HDRUK/gateway-web/commit/5f33c0b3bc9bdb1cdb6aa2306354ede1231ce1a3)), closes [GAT-6951](GAT-6951)
+* **GAT-6951:** only allow images from our lovely domain (#1087) ([c49200b](https://github.com/HDRUK/gateway-web/commit/c49200b5aba9f5b6e7ca86ecda1f758ec0e59c58)), closes [GAT-6951](GAT-6951)
+* **GAT-6957:** Fix Tool card title rendering. (#1095) ([b26cd89](https://github.com/HDRUK/gateway-web/commit/b26cd8930309bc48f582deb8bda77ad206809b40))
+* **GAT-6977:** Sort by latest release first (#1099) ([0c5ffed](https://github.com/HDRUK/gateway-web/commit/0c5ffed9aa3593fe272d0683ed599039d0ea8055)), closes [GAT-6977](GAT-6977)
+* **GAT-6979:** Correct display of group datasets (#1102) ([6992e08](https://github.com/HDRUK/gateway-web/commit/6992e08498903ef4b684a2f627b6f2aeb2c9ea6c)), closes [GAT-6979](GAT-6979)
+* **GAT-6980:** Ensure messages refresh when new message added (#1105) ([33c61cb](https://github.com/HDRUK/gateway-web/commit/33c61cb3816e48b676a09b15176723bb4ae91e6c)), closes [GAT-6980](GAT-6980)
+* **GAT-6983:** Hide dar message reply box based on approval status (#1104) ([fed1f9c](https://github.com/HDRUK/gateway-web/commit/fed1f9cf1deb6241702a3818a9354cc530b4940c)), closes [GAT-6983](GAT-6983)
+
 ## [2.7.1](https://github.com/HDRUK/gateway-web/compare/v2.7.0...v2.7.1) (2025-04-28)
 
 ### 🐛 Bug Fixes
