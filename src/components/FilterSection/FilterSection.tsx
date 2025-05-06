@@ -18,6 +18,7 @@ import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
+import HTMLContent from "../HTMLContent";
 
 interface FilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
@@ -92,10 +93,12 @@ const FilterSection = <
         key: string;
         style: CSSProperties;
     }) => {
-        const formattedRow = cloneDeep(checkboxes[index]);
+        const { label, ...formattedRow } = cloneDeep(checkboxes[index]);
+
         return (
             <div key={key} style={style}>
                 <CheckboxControlled
+                    label={<HTMLContent content={label} />}
                     {...formattedRow}
                     formControlSx={{ pl: 1, pr: 1 }}
                     checked={
