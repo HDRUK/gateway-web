@@ -1,6 +1,9 @@
 import { Metadata } from "next";
 import { Robots } from "next/dist/lib/metadata/types/metadata-types";
 
+const { BLOCK_ROBOTS } = process.env;
+const isBlocked = BLOCK_ROBOTS === "true";
+
 export interface MetaParams {
     title: string;
     isDefault?: boolean;
@@ -11,13 +14,14 @@ export interface MetaParams {
 }
 
 const followRobots: Robots = {
-    index: true,
-    follow: true,
+    index: !isBlocked,
+    follow: !isBlocked,
     googleBot: {
-        index: true,
-        follow: true,
+        index: !isBlocked,
+        follow: !isBlocked,
     },
 };
+
 export const noFollowRobots: Robots = {
     index: false,
     follow: false,
