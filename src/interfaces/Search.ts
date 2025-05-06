@@ -21,6 +21,7 @@ import {
     FILTER_CONTAINS_TISSUE,
     FILTER_MATERIAL_TYPE,
     FILTER_FORMAT_STANDARDS,
+    FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
 import { Metadata } from "./Dataset";
@@ -252,6 +253,7 @@ export interface SearchQueryParams {
     [FILTER_MATERIAL_TYPE]: string[] | undefined;
     [PMC_TYPE_FIELD]: string | undefined;
     [FILTER_FORMAT_STANDARDS]: string[] | undefined;
+    [FILTER_COHORT_DISCOVERY]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };
