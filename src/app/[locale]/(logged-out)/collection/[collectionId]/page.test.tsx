@@ -92,7 +92,7 @@ describe("CollectionItemPage", () => {
             await setup({ collectionId: "123" });
 
             expect(
-                await screen.getByText(data.name, { selector: "h1" })
+                await screen.getByText(data.name, { selector: "h1 > div" })
             ).toBeInTheDocument();
             expect(await screen.findByText("Description")).toBeInTheDocument();
         }
