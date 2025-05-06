@@ -492,7 +492,6 @@ const FilterPanel = ({
         <>
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
-                console.log(label);
 
                 if (
                     filterItem.label === FILTER_CONTAINS_TISSUE ||
