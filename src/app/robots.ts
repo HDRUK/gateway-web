@@ -1,14 +1,25 @@
 import type { MetadataRoute } from "next";
 
-const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
+const { BLOCK_ROBOTS } = process.env;
+const isBlocked = BLOCK_ROBOTS === "true";
 
 export default function robots(): MetadataRoute.Robots {
+    if (isBlocked) {
+        return {
+            rules: {
+                userAgent: "*",
+                disallow: "/",
+            },
+            sitemap: "",
+        };
+    }
+
     return {
         rules: {
             userAgent: "*",
             allow: "/",
-            disallow: ["/account/", "/sign-in", "/search"],
+            disallow: "/private/",
         },
-        sitemap: `${NEXT_PUBLIC_GATEWAY_URL}/sitemap.xml`,
+        sitemap: `${process.env.NEXT_PUBLIC_GATEWAY_URL}/sitemap.xml`,
     };
 }
