@@ -3,7 +3,6 @@ import { useTranslations } from "next-intl";
 import { SearchResultTool } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
-import HTMLContent from "@/components/HTMLContent";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import { CategoryHeader } from "./ToolDetailsDialog.styles";
 
