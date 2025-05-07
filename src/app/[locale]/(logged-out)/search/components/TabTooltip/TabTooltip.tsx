@@ -11,12 +11,7 @@ const TabTooltip = ({ children, content }: TabTooltipProps) => {
     return (
         <Box sx={{ display: "flex", gap: 1 }}>
             {children}
-            <TooltipIcon
-                content={content}
-                label=""
-                buttonSx={{ p: 0 }}
-                size="small"
-            />
+            <TooltipIcon content={content} buttonSx={{ p: 0 }} size="small" />
         </Box>
     );
 };
