@@ -90,7 +90,9 @@ const DatasetMindMap = ({
                         hidden = true;
                         emptyNodes.push(node.id);
                     }
-                    href = `${node.data.href}&datasetTitles=${title}`;
+                    href = `${
+                        node.data.href
+                    }&datasetTitles=${encodeURIComponent(title)}`;
                 } else if (node.id === "node-dataCustodian") {
                     href = `/data-custodian/${teamId}`;
                 } else if (node.id === "node-curatedPublications") {
