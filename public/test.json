@@ -1,7 +1,7 @@
 {
     "features":{
         "SDEConciergeServiceEnquiry": {
-            "enabled": false
+            "enabled": true
         }
     }
 }
