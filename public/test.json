@@ -1,25 +1,7 @@
 {
-
     "features":{
-        "createDatasets": {
-            "enabled": true
-        },
-        "upload": {
+        "SDEConciergeServiceEnquiry": {
             "enabled": false
-        },
-        "gmi": {
-            "enabled": true,
-            "features": {
-                "auth": {
-                    "enabled": true
-                },
-                "no-auth": {
-                    "enabled": false
-                },
-                "privateApps":{
-                  "enabled": false
-                }
-            }
         }
     }
 }
