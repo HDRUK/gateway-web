@@ -47,7 +47,9 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
         if (isClicked) {
             if (accessData?.redirect_url) {
                 push(accessData?.redirect_url);
+                console.log('accessData?.redirect_url', accessData?.redirect_url)
             } else if (isLoggedIn) {
+                console.log('ctaLink.url)', ctaLink.url)
                 push(ctaLink.url);
             } else {
                 showDialog(ProvidersDialog, { isProvidersDialog: true });

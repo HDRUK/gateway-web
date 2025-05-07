@@ -60,6 +60,7 @@ const CohortDisoveryRequestForm = ({
 
     if (!isUserLoading && !isAccessLoading) {
         if (accessData?.redirect_url) {
+            console.log('accessData?.redirect_url', accessData?.redirect_url)
             redirect(accessData?.redirect_url);
         } else if (
             userData?.request_status &&
