@@ -1,0 +1,25 @@
+{
+
+    "features":{
+        "createDatasets": {
+            "enabled": true
+        },
+        "upload": {
+            "enabled": false
+        },
+        "gmi": {
+            "enabled": true,
+            "features": {
+                "auth": {
+                    "enabled": true
+                },
+                "no-auth": {
+                    "enabled": false
+                },
+                "privateApps":{
+                  "enabled": false
+                }
+            }
+        }
+    }
+}
