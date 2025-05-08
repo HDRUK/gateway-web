@@ -428,6 +428,12 @@ const theme = createTheme({
                     "&.MuiCheckbox-colorError": {
                         color: palette.error.main,
                     },
+                    "&.Mui-focusVisible": {
+                        span: {
+                            outline: `2px solid ${colors.purple500}`,
+                            border: `1px solid ${colors.white}`,
+                        },
+                    },
                 },
             },
         },
