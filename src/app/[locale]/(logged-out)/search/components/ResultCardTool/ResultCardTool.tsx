@@ -5,6 +5,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import ToolDetailsDialog from "@/modules/ToolDetailsDialog";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
@@ -77,7 +78,15 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                 secondary={
                     <ToolDescription
                         maxLine={2}
-                        text={description || t("notAvailable")}
+                        text={
+                            description ? (
+                                <MarkDownSanitizedWithHtml
+                                    content={description}
+                                />
+                            ) : (
+                                t("notAvailable")
+                            )
+                        }
                     />
                 }
             />

@@ -1,4 +1,9 @@
-import { formatDate, differenceInDays, yearToDayJsDate } from "./date";
+import {
+    formatDate,
+    differenceInDays,
+    yearToDayJsDate,
+    getTZDate,
+} from "./date";
 
 describe("Date utils", () => {
     it("should return default formatted date", async () => {
@@ -28,6 +33,18 @@ describe("Date utils", () => {
     it("should return full date for a year", async () => {
         expect(yearToDayJsDate("2022").format()).toEqual(
             "2022-01-01T00:00:00+00:00"
+        );
+    });
+
+    it("should return utc date with no timezone specified", async () => {
+        expect(getTZDate("2022-04-01").format()).toEqual(
+            "2022-04-01T00:00:00Z"
+        );
+    });
+
+    it("should return tz date with timezone specified", async () => {
+        expect(getTZDate("2022-04-01", "Europe/London").format()).toEqual(
+            "2022-04-01T01:00:00+01:00"
         );
     });
 });
