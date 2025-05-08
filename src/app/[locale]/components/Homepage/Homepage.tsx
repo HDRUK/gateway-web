@@ -92,6 +92,18 @@ const connectedResources = [
         href: "https://phenotypes.healthdatagateway.org/",
         externalUrl: true,
     },
+    {
+        id: "omics",
+        image: StaticImages.LANDING_PAGE.omics_pred,
+        href: "https://www.omicspred.org/",
+        externalUrl: true,
+    },
+    {
+        id: "pgs_catalog",
+        image: StaticImages.LANDING_PAGE.pgs_catalog,
+        href: "https://www.pgscatalog.org/",
+        externalUrl: true,
+    },
 ];
 
 interface HomePageProps {
