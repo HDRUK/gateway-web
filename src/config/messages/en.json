@@ -1030,6 +1030,8 @@
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
                             "typeCategoryTooltip": "Categorisation based on where in the research journey an Analysis Script & Software is used",
+                            "dataProvider": "Data Custodian",
+                            "dataProviderTooltip": "Individual or organisation providing metadata on the Gateway",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
