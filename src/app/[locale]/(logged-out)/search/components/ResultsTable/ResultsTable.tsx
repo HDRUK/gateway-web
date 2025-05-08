@@ -14,6 +14,7 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { formatTextDelimiter } from "@/utils/dataset";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import ActionDropdown from "../ActionDropdown";
 
@@ -182,7 +183,7 @@ const getColumns = ({
         id: "conformsTo",
         cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
-                {get(original, CONFORMS_TO_PATH)}
+                {formatTextDelimiter(get(original, CONFORMS_TO_PATH))}
             </div>
         ),
         header: () => (
