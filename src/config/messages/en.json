@@ -879,7 +879,7 @@
             "pgs_catalog": {
                 "label": "Polygenic Score Catalog",
                 "title": "Polygenic Score Catalog",
-                "text": "An open database of polygenetic scores and the relevant metadata required for accurate application and evaluation."
+                "text": "An open database of polygenic scores and the relevant metadata required for accurate application and evaluation."
             },
             "helpLinks": {
                 "item1": {
