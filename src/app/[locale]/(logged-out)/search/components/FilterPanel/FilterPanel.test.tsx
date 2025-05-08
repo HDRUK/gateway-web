@@ -112,7 +112,9 @@ describe("FilterPanel", () => {
         render(<FilterPanel {...publicationProps} />);
 
         expect(
-            screen.getByRole("button", { name: "datasetTitles" })
+            screen.getByRole("button", {
+                name: "datasetTitles",
+            })
         ).toBeInTheDocument();
 
         const radioButton = screen.getByText("Search Online Publications");

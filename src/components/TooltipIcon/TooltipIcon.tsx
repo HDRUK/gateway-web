@@ -1,10 +1,6 @@
 import { ReactNode } from "react";
-import { Box, IconButton, SxProps } from "@mui/material";
-import Tooltip from "@/components/Tooltip";
-import theme, { colors } from "@/config/theme";
+import { Box, IconButton, SxProps, Tooltip } from "@mui/material";
 import { InfoIcon } from "@/consts/icons";
-
-const TOOLTIP_WIDTH = "395px";
 
 interface TooltipIconProps {
     label?: ReactNode;
@@ -32,21 +28,7 @@ const TooltipIcon = ({
             justifyContent="space-between"
             sx={boxSx}>
             {label}
-            <Tooltip
-                title={content}
-                slotProps={{
-                    tooltip: {
-                        sx: {
-                            borderRadius: 0,
-                            background: colors.grey900,
-                            color: colors.white,
-                            padding: 2,
-                            maxWidth: TOOLTIP_WIDTH,
-                            margin: 0,
-                            fontSize: theme.typography.body1,
-                        },
-                    },
-                }}>
+            <Tooltip title={content}>
                 <IconButton sx={{ ...buttonSx }}>
                     {icon || (
                         <InfoIcon
