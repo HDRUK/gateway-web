@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import { DownloadIcon } from "@/consts/icons";
 import { ButtonProps } from "../Button/Button";
 
-type DownloadButtonProps = ButtonProps;
+export type DownloadButtonProps = ButtonProps;
 
 const DownloadButton = ({
     children,
