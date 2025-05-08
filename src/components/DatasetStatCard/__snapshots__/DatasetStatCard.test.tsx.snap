@@ -16,32 +16,28 @@ exports[`DatasetStatCard should match snapshot 1`] = `
       <div
         class="MuiBox-root mui-style-1lekzkb"
       >
-        <span
+        <button
           aria-label="helper"
-          class=""
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-9elblb-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
+          tabindex="0"
+          type="button"
         >
-          <button
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-9elblb-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-slk7cj-MuiSvgIcon-root"
+            data-testid="InfoIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-slk7cj-MuiSvgIcon-root"
-              data-testid="InfoIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-              />
-            </svg>
-            <span
-              class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
             />
-          </button>
-        </span>
+          </svg>
+          <span
+            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
       </div>
     </div>
     <div
