@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FileUpload } from "@/interfaces/FileUpload";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
-import DownloadFile from "@/components/DownloadFile";
+import DownloadExternalFile from "@/components/DownloadExternalFile";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
@@ -67,12 +67,10 @@ const UploadDataset = ({ teamId, teamPid }: UploadDatasetProps) => {
                     <Typography variant="h2">{t("downloadTitle")}</Typography>
                     <Typography sx={{ mb: 2 }}>{t("downloadInfo")}</Typography>
 
-                    <DownloadFile
+                    <DownloadExternalFile
                         apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}/docs/HDRUK/${SCHEMA_VERSION}.template.json`}
                         buttonText={t("downloadButtonText")}
-                        buttonSx={{ mb: 0 }}
-                        isExternalFile
-                        externalFileName={FILE_DOWNLOAD_NAME}
+                        fileName={FILE_DOWNLOAD_NAME}
                     />
                 </Box>
             </Paper>
