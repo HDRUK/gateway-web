@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
 import { User } from "@/interfaces/User";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
-import Tooltip from "@/components/Tooltip";
 
 interface TableActionCellProps {
     user: User;
