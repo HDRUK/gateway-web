@@ -203,6 +203,23 @@ const theme = createTheme({
                 },
             ],
         },
+        MuiMenuItem: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    "&:focus": {
+                        backgroundColor: colors.white,
+
+                        ".MuiTouchRipple-root": {
+                            outline: `3px solid ${theme.palette.primary.main}`,
+                            margin: "3px",
+                        },
+                    },
+                    "&:hover": {
+                        backgroundColor: theme.palette.grey[200],
+                    },
+                }),
+            },
+        },
         MuiButtonBase: {
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => {
