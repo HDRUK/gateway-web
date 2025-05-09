@@ -1,6 +1,6 @@
 import { MouseEvent, MouseEventHandler } from "react";
 import { Menu, MenuItem } from "@mui/material";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import useDialog from "@/hooks/useDialog";
 import theme, { colors } from "@/config/theme";
 import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
@@ -39,8 +39,6 @@ function MenuDropdown({
     title,
     stopPropagation,
 }: MenuDropdownProps) {
-    const router = useRouter();
-
     const { showDialog } = useDialog();
 
     const handleShowDialog = dialog => {
@@ -75,8 +73,9 @@ function MenuDropdown({
                             key={subItem.label}
                             onClick={() => {
                                 handleClose();
-                                router.push(subItem.href);
-                            }}>
+                            }}
+                            component={Link}
+                            href={subItem.href}>
                             <MarkDownSanitizedWithHtml
                                 content={subItem.label}
                                 wrapper="span"
@@ -107,7 +106,6 @@ function MenuDropdown({
                 if (menuItem.href) {
                     onClick = () => {
                         handleClose();
-                        menuItem.href && router.push(menuItem.href);
                     };
                 } else if (menuItem.action) {
                     onClick = menuItem.action;
@@ -127,7 +125,11 @@ function MenuDropdown({
                         key={menuItem.label}
                         sx={commonSx}
                         onClick={onClick}
-                        aria-label={ariaLabel}>
+                        aria-label={ariaLabel}
+                        {...(menuItem.href && {
+                            component: Link,
+                            href: menuItem.href,
+                        })}>
                         {menuItem.icon || null}
                         {content}
                     </MenuItem>
