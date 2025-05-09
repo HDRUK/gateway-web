@@ -1,6 +1,6 @@
 import { ListItemText, styled } from "@mui/material";
-import Link from "next/link";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
+import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 
@@ -12,13 +12,11 @@ export const PublicationTitleWrapper = styled("div")(({ theme }) => ({
     marginBottom: theme.spacing(1),
 }));
 
-export const PublicationTitle = styled(Link)(({ theme }) => ({
+export const PublicationTitle = styled(Link)(({}) => ({
     width: "100%",
-    color: "#475da7",
     fontWeight: 600,
     fontSize: 16,
     display: "flex",
-    marginBottom: 2,
 }));
 
 export const PublicationYear = styled(Typography)(({ theme }) => ({
