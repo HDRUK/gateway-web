@@ -120,8 +120,6 @@ const StructuralMetadataAccordion = ({
                         <TableContainer
                             sx={{
                                 maxWidth: "100%",
-                                overflowX: "auto",
-                                height: "55vh",
                             }}
                             aria-label={`${item?.name} table`}>
                             <Table stickyHeader>
