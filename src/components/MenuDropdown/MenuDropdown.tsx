@@ -1,9 +1,8 @@
 import { MouseEvent } from "react";
 import { Menu, MenuItem } from "@mui/material";
-import Button from "@/components/Button";
-import Link from "@/components/Link";
+import { useRouter } from "next/navigation";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface MenuDropdownProps {
@@ -42,6 +41,8 @@ function MenuDropdown({
     title,
     stopPropagation,
 }: MenuDropdownProps) {
+    const router = useRouter();
+
     const { showDialog } = useDialog();
 
     const handleShowDialog = dialog => {
@@ -68,17 +69,19 @@ function MenuDropdown({
                 if (menuItem.subItems) {
                     return menuItem.subItems.map(subItem => (
                         <MenuItem
-                            sx={{ maxWidth: 250 }}
+                            sx={{
+                                maxWidth: 250,
+                                color: theme.palette.primary.main,
+                            }}
                             key={subItem.label}
-                            onClick={() => handleClose()}>
-                            <Link
-                                sx={{ textDecoration: "none" }}
-                                href={subItem.href}>
-                                <MarkDownSanitizedWithHtml
-                                    content={subItem.label}
-                                    WrapperComponent="span"
-                                />
-                            </Link>
+                            onClick={() => {
+                                handleClose();
+                                router.push(subItem.href);
+                            }}>
+                            <MarkDownSanitizedWithHtml
+                                content={subItem.label}
+                                wrapper="span"
+                            />
                         </MenuItem>
                     ));
                 }
@@ -92,51 +95,47 @@ function MenuDropdown({
                                 maxWidth: 250,
                                 textWrap: "initial",
                                 borderBottom: `${colors.grey300} 1px solid`,
+                                color: theme.palette.primary.main,
                             }}
                             key={menuItem.label}
-                            onClick={() => handleClose()}>
+                            onClick={() => {
+                                handleClose();
+                                menuItem.href && router.push(menuItem.href);
+                            }}
+                            aria-label={ariaLabel}>
                             {menuItem.icon || null}
-                            <Link
-                                aria-label={ariaLabel}
-                                key={menuItem.label}
-                                underline="hover"
-                                href={menuItem.href}>
-                                <MarkDownSanitizedWithHtml
-                                    content={menuItem.label}
-                                    WrapperComponent="span"
-                                />
-                            </Link>
+                            <MarkDownSanitizedWithHtml
+                                content={menuItem.label}
+                                wrapper="span"
+                            />
                         </MenuItem>
                     );
                 if (menuItem.action) {
                     return (
-                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
+                        <MenuItem
+                            key={menuItem.label}
+                            sx={{
+                                maxWidth: 250,
+                                color: theme.palette.primary.main,
+                            }}
+                            onClick={menuItem.action}
+                            aria-label={ariaLabel}>
                             {menuItem.icon || null}
-                            <Button
-                                onClick={menuItem.action}
-                                variant="link"
-                                aria-label={ariaLabel}
-                                sx={{ pl: 0 }}>
-                                <MarkDownSanitizedWithHtml
-                                    content={menuItem.label}
-                                    WrapperComponent="span"
-                                />
-                            </Button>
+                            <MarkDownSanitizedWithHtml
+                                content={menuItem.label}
+                                wrapper="span"
+                            />
                         </MenuItem>
                     );
                 }
                 if (menuItem.dialog) {
                     return (
-                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
+                        <MenuItem
+                            key={menuItem.label}
+                            sx={{ maxWidth: 250 }}
+                            onClick={() => handleShowDialog(menuItem.dialog)}>
                             {menuItem.icon || null}
-                            <Button
-                                onClick={() =>
-                                    handleShowDialog(menuItem.dialog)
-                                }
-                                variant="link"
-                                sx={{ pl: 0 }}>
-                                {menuItem.label}
-                            </Button>
+                            <span>{menuItem.label}</span>
                         </MenuItem>
                     );
                 }
