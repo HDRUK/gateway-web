@@ -14,10 +14,11 @@ export const PublicationTitleWrapper = styled("div")(({ theme }) => ({
 
 export const PublicationTitle = styled(Link)(({ theme }) => ({
     width: "100%",
-    color: theme.palette.primary.main,
-    fontWeight: 500,
+    color: "#475da7",
+    fontWeight: 600,
     fontSize: 16,
     display: "flex",
+    marginBottom: 2,
 }));
 
 export const PublicationYear = styled(Typography)(({ theme }) => ({
