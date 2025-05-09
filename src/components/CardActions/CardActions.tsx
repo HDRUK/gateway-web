@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { IconType } from "@/interfaces/Ui";
 import Link from "@/components/Link";
-import Tooltip from "@/components/Tooltip";
 import { DataStatus } from "@/consts/application";
 import ConditionalWrapper from "../ConditionalWrapper";
 
@@ -56,28 +55,32 @@ const CardActions = ({ actions, id, status }: CardActionsProps) => {
         <>
             {actions.map(({ icon: Icon, href, label, disabled, action }) => (
                 <Tooltip key={label} placement="left" title={label}>
-                    <ConditionalWrapper
-                        requiresWrapper={!!href && !disabled}
-                        wrapper={linkWrapper({
-                            href,
-                            id,
-                            status,
-                            label,
-                        })}>
-                        <IconButton
-                            {...(action &&
-                                !disabled && {
-                                    onClick: () => {
-                                        action(id);
-                                    },
-                                })}
-                            disableRipple
-                            size="large"
-                            disabled={disabled}
-                            aria-label={label}>
-                            <Icon color={disabled ? "disabled" : "primary"} />
-                        </IconButton>
-                    </ConditionalWrapper>
+                    <div>
+                        <ConditionalWrapper
+                            requiresWrapper={!!href && !disabled}
+                            wrapper={linkWrapper({
+                                href,
+                                id,
+                                status,
+                                label,
+                            })}>
+                            <IconButton
+                                {...(action &&
+                                    !disabled && {
+                                        onClick: () => {
+                                            action(id);
+                                        },
+                                    })}
+                                disableRipple
+                                size="large"
+                                disabled={disabled}
+                                aria-label={label}>
+                                <Icon
+                                    color={disabled ? "disabled" : "primary"}
+                                />
+                            </IconButton>
+                        </ConditionalWrapper>
+                    </div>
                 </Tooltip>
             ))}
         </>

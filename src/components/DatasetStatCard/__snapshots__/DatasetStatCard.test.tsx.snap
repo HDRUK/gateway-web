@@ -17,7 +17,9 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         class="MuiBox-root mui-style-1lekzkb"
       >
         <button
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-17wis5z-MuiButtonBase-root-MuiIconButton-root"
+          aria-label="helper"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-9elblb-MuiButtonBase-root-MuiIconButton-root"
+          data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
         >
@@ -32,6 +34,9 @@ exports[`DatasetStatCard should match snapshot 1`] = `
               d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
             />
           </svg>
+          <span
+            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
+          />
         </button>
       </div>
     </div>
