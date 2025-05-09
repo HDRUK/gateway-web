@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { Tooltip } from "@mui/material";
 import { CtaLink } from "@/interfaces/Cms";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import Button from "@/components/Button";
-import Tooltip from "@/components/Tooltip";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
