@@ -12,7 +12,7 @@ export const PublicationTitleWrapper = styled("div")(({ theme }) => ({
     marginBottom: theme.spacing(1),
 }));
 
-export const PublicationTitle = styled(Link)(({}) => ({
+export const PublicationTitle = styled(Link)(() => ({
     width: "100%",
     fontWeight: 600,
     fontSize: 16,
