@@ -1,5 +1,5 @@
 import { ElementType, memo, ReactNode } from "react";
-import Tooltip from "@/components/Tooltip";
+import { Tooltip } from "@mui/material";
 import ConditionalWrapper from "../ConditionalWrapper";
 import Typography from "../Typography";
 

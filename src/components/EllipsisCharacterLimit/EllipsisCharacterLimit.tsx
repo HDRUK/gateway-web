@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
-import { Chip } from "@mui/material";
+import { Chip, Tooltip } from "@mui/material";
 import { ButtonProps } from "@mui/material/Button";
 import Button from "@/components/Button";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
-import Tooltip from "@/components/Tooltip";
 
 interface EllipsisCharacterLimitProps extends ButtonProps {
     text: string;

@@ -1,11 +1,9 @@
-import { ReactNode, useState } from "react";
-import { Box, IconButton, SxProps } from "@mui/material";
-import Popover from "@mui/material/Popover";
-import { colors } from "@/config/theme";
+import { ReactNode } from "react";
+import { Box, IconButton, SxProps, Tooltip } from "@mui/material";
 import { InfoIcon } from "@/consts/icons";
 
 interface TooltipIconProps {
-    label: ReactNode;
+    label?: ReactNode;
     content: ReactNode;
     icon?: ReactNode;
     size?: "medium" | "small" | "inherit" | "large";
@@ -23,17 +21,6 @@ const TooltipIcon = ({
     buttonSx,
     invertColor,
 }: TooltipIconProps) => {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handlePopoverClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
     return (
         <Box
             display="flex"
@@ -41,43 +28,17 @@ const TooltipIcon = ({
             justifyContent="space-between"
             sx={boxSx}>
             {label}
-            <IconButton
-                disableRipple
-                sx={{ ...buttonSx }}
-                onMouseEnter={handlePopoverOpen}
-                onMouseLeave={handlePopoverClose}>
-                {icon || (
-                    <InfoIcon
-                        color={!invertColor ? "primary" : "inherit"}
-                        sx={{ color: `${invertColor && "#E9ECF4"}` }}
-                        fontSize={size}
-                    />
-                )}
-            </IconButton>
-            <Popover
-                id="tooltip"
-                sx={{
-                    pointerEvents: "none",
-                }}
-                open={open}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "center",
-                }}
-                onClose={handlePopoverClose}
-                disableRestoreFocus>
-                <Box
-                    sx={{
-                        color: "white",
-                        background: colors.grey900,
-                        padding: "15px",
-                        maxWidth: "395px",
-                        margin: 0,
-                    }}>
-                    {content}
-                </Box>
-            </Popover>
+            <Tooltip title={content}>
+                <IconButton sx={{ ...buttonSx }}>
+                    {icon || (
+                        <InfoIcon
+                            color={!invertColor ? "primary" : "inherit"}
+                            sx={{ color: `${invertColor && "#E9ECF4"}` }}
+                            fontSize={size}
+                        />
+                    )}
+                </IconButton>
+            </Tooltip>
         </Box>
     );
 };
