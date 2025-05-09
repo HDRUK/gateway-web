@@ -9,7 +9,7 @@ export const metadata = metaData({
     description: "",
 });
 
-export default async function CohortDiscoryPage() {
+export default async function CohortDiscoveryPage() {
     const cohortDiscovery = await getCohortDiscovery();
 
     return (
