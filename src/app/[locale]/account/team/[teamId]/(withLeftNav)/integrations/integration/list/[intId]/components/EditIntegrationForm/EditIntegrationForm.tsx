@@ -18,7 +18,6 @@ import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import RunFederationTest from "@/components/RunFederationTest";
 import Switch from "@/components/Switch";
-import Tooltip from "@/components/Tooltip";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
@@ -227,22 +226,19 @@ const EditIntegrationForm = () => {
                     }}>
                     <Paper sx={{ p: 1 }}>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Tooltip
-                                placement="bottom"
+                            <Switch
+                                unCheckedLabel="Disabled"
+                                checkedLabel="Enabled"
+                                disabled={!tested}
+                                control={control}
+                                name="enabled"
+                                formControlSx={{ mb: 0 }}
                                 title={
                                     tested
                                         ? ""
                                         : "You must run a successful test before you can Enable the integration."
-                                }>
-                                <Switch
-                                    unCheckedLabel="Disabled"
-                                    checkedLabel="Enabled"
-                                    disabled={!tested}
-                                    control={control}
-                                    name="enabled"
-                                    formControlSx={{ mb: 0 }}
-                                />
-                            </Tooltip>
+                                }
+                            />
                         </Box>
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>

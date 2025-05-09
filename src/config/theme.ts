@@ -193,6 +193,19 @@ const theme = createTheme({
     },
     palette,
     components: {
+        MuiTooltip: {
+            styleOverrides: {
+                tooltip: ({ theme }) => ({
+                    borderRadius: 0,
+                    background: colors.grey900,
+                    color: colors.white,
+                    padding: theme.spacing(2),
+                    maxWidth: "395px",
+                    margin: 0,
+                    fontSize: theme.typography.body1.fontSize,
+                }),
+            },
+        },
         MuiSvgIcon: {
             variants: [
                 {

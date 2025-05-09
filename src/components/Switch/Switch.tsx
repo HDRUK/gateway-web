@@ -1,8 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { Control, FieldValues, Path, useController } from "react-hook-form";
-import { Stack, Typography, FormControl, SxProps } from "@mui/material";
+import {
+    Stack,
+    Typography,
+    FormControl,
+    SxProps,
+    Tooltip,
+} from "@mui/material";
 import MuiSwitch, { SwitchProps as MuiSwitchProps } from "@mui/material/Switch";
-import Tooltip from "@/components/Tooltip";
 
 export interface SwitchProps<TFieldValues extends FieldValues, TName>
     extends Omit<MuiSwitchProps, "name"> {
@@ -50,17 +55,19 @@ const Switch = <
             error={!!error}>
             <Stack direction="row" spacing={1} alignItems="center">
                 <Typography>{unCheckedLabel}</Typography>
-                <Tooltip title={title} variant="formTitle">
-                    <MuiSwitch
-                        size={size}
-                        disableRipple
-                        {...rest}
-                        {...fieldProps}
-                        disabled={disabled}
-                        checked={fieldProps.value}
-                        inputRef={ref}
-                        sx={{ ...switchSx }}
-                    />
+                <Tooltip title={title}>
+                    <span>
+                        <MuiSwitch
+                            size={size}
+                            disableRipple
+                            {...rest}
+                            {...fieldProps}
+                            disabled={disabled}
+                            checked={fieldProps.value}
+                            inputRef={ref}
+                            sx={{ ...switchSx }}
+                        />
+                    </span>
                 </Tooltip>
                 <Typography>{checkedLabel}</Typography>
             </Stack>
