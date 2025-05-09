@@ -12,6 +12,8 @@ import { Box, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { PageTemplatePromo } from "@/interfaces/Cms";
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
@@ -119,7 +121,6 @@ import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
@@ -140,7 +141,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
 
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, user } = useAuth();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -513,6 +514,20 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         setIsDownloading(false);
     };
 
+    const { data: userData } = useGet<CohortRequest>(
+        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
+        {
+            shouldFetch: !!user?.id,
+        }
+    );
+
+    const isCohortDiscoveryDisabled =
+        isLoggedIn && userData
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
+                  userData.request_status
+              )
+            : false;
+
     const renderResultCard = (result: SearchResult) => {
         const { _id: resultId } = result;
 
@@ -524,6 +539,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         key={resultId}
                         mutateLibraries={mutateLibraries}
                         libraryData={libraryData}
+                        isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
+                        cohortDiscovery={cohortDiscovery}
                     />
                 );
             case SearchCategory.PUBLICATIONS:
