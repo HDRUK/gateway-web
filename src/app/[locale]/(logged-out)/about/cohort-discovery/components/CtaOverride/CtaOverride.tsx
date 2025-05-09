@@ -57,7 +57,9 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
 
     const isDisabled =
         isLoggedIn && userData
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(userData.request_status)
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
+                  userData.request_status
+              )
             : false;
 
     return (
