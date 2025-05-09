@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Tooltip } from "@mui/material";
 import { CtaLink } from "@/interfaces/Cms";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import Button from "@/components/Button";
