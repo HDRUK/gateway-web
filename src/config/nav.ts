@@ -72,7 +72,7 @@ const navItems = [
             },
             {
                 label: "Detailed Release Notes",
-                href: "https://github.com/HDRUK/gateway-api/blob/dev/CHANGELOG.md",
+                href: "https://github.com/HDRUK/gateway-api/blob/dev/change-log-locations.md",
             },
             {
                 label: "Newsletter",
