@@ -49,6 +49,7 @@ function MenuDropdown({
 
     return (
         <Menu
+            disableAutoFocusItem
             anchorEl={anchorElement}
             transformOrigin={
                 transformOrigin || { horizontal: "left", vertical: "top" }
