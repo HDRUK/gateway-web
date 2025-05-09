@@ -69,6 +69,8 @@ function MenuDropdown({
                             sx={{
                                 maxWidth: 250,
                                 color: theme.palette.primary.main,
+                                textWrap: "initial",
+                                borderBottom: `${colors.grey300} 1px solid`,
                             }}
                             key={subItem.label}
                             onClick={() => {
@@ -86,13 +88,6 @@ function MenuDropdown({
                 const ariaLabel = title
                     ? `${menuItem.label} for ${title}`
                     : undefined;
-
-                let commonSx = {
-                    maxWidth: 250,
-                    color: theme.palette.primary.main,
-                    textWrap: "initial",
-                    borderBottom: `${colors.grey300} 1px solid`,
-                };
 
                 let onClick: MouseEventHandler<HTMLElement> | undefined;
 
@@ -123,7 +118,12 @@ function MenuDropdown({
                 return (
                     <MenuItem
                         key={menuItem.label}
-                        sx={commonSx}
+                        sx={{
+                            maxWidth: 250,
+                            color: theme.palette.primary.main,
+                            textWrap: "initial",
+                            borderBottom: `${colors.grey300} 1px solid`,
+                        }}
                         onClick={onClick}
                         aria-label={ariaLabel}
                         {...(menuItem.href && {
