@@ -119,6 +119,7 @@ import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
@@ -127,9 +128,10 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
+    cohortDiscovery: PageTemplatePromo;
 }
 
-const Search = ({ filters }: SearchProps) => {
+const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
@@ -569,6 +571,7 @@ const Search = ({ filters }: SearchProps) => {
                 <ResultsTable
                     results={data?.list as SearchResultDataset[]}
                     showLibraryModal={showLibraryModal}
+                    cohortDiscovery={cohortDiscovery}
                 />
             );
         }
