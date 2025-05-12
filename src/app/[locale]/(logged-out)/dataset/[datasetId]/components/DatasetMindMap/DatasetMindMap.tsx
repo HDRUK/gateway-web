@@ -20,6 +20,7 @@ const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
     teamId: number;
+    isCohortDiscovery: boolean;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
     hasDemographics: boolean;
@@ -29,6 +30,7 @@ interface DatasetMindMapProps extends ReactFlowProps {
 const DatasetMindMap = ({
     data,
     teamId,
+    isCohortDiscovery,
     populatedSections,
     linkageCounts,
     panOnDrag = false,
@@ -111,6 +113,13 @@ const DatasetMindMap = ({
                         data.metadata.metadata?.coverage?.datasetCompleteness;
 
                     if (!href) {
+                        emptyNodes.push(node.id);
+                        hidden = true;
+                    }
+                } else if (node.id === "node-cohortDiscovery") {
+                    href = node.data.href;
+
+                    if (!href || !isCohortDiscovery) {
                         emptyNodes.push(node.id);
                         hidden = true;
                     }

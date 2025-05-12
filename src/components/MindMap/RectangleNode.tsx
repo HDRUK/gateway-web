@@ -1,4 +1,4 @@
-import { Handle, Position, NodeProps } from "reactflow";
+import { Handle, Position, NodeProps } from "@xyflow/react";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { LaunchIcon } from "@/consts/icons";
