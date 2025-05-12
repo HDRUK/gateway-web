@@ -1429,7 +1429,7 @@
             "tooltip-3": "Satisfied",
             "tooltip-4": "Very Satisfied"
         },
-        "CtaOverride": {
+        "CohortDiscoveryButton": {
             "notApproved": "Your request to access Cohort Discovery is still pending, keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen."
         },
         "CMSBanner": {
