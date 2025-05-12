@@ -12,7 +12,7 @@ type Story = StoryObj<typeof LogoSlider>;
 
 export const Default: Story = {
     args: {
-        images: [
+        logos: [
             {
                 alt: "Microsoft",
                 imageSrc: "/images/logos/microsoft-logo.png",
