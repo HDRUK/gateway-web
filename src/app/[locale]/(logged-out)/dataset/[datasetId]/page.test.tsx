@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { render, screen } from "@/utils/testUtils";
 import { generatePageDataSetV1 } from "@/mocks/data/dataset";
@@ -63,6 +63,8 @@ describe("DataSetItemPage", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         (cookies as jest.Mock).mockReturnValue({});
+        const mockPush = jest.fn();
+        (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
     });
 
     const setup = async (params: { datasetId: string }) => {
