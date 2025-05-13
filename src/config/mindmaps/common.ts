@@ -1,6 +1,6 @@
 import { Position } from "@xyflow/react";
-import theme from "@/config/theme";
 import { CtaLink } from "@/interfaces/Cms";
+import theme from "@/config/theme";
 
 export interface NodeValue {
     name: string;
@@ -8,7 +8,8 @@ export interface NodeValue {
     href?: string;
     source?: string;
     hidden?: boolean;
-    ctaLink: CtaLink | null,
+    cohort?: boolean;
+    ctaLink: CtaLink | null;
 }
 
 export const nodeValueToRectNode = (
@@ -16,7 +17,7 @@ export const nodeValueToRectNode = (
     index: number,
     nNodes: number,
     centerX: number,
-    centerY: number,
+    centerY: number
 ) => {
     const initialRad = 0.05 * Math.PI;
     const angleRad = initialRad + (index * 2 * Math.PI) / nNodes;
@@ -46,7 +47,7 @@ export const nodeValueToRectNode = (
 
     return {
         id: `node-${node.name}`,
-        type: node.name === "cohortDiscovery" ? "cohort" : "rect",
+        type: "rect",
         position: { x, y },
         origin: origin,
         data: {
@@ -58,7 +59,8 @@ export const nodeValueToRectNode = (
             href: node.href,
             hidden: node.hidden,
             source: node.source,
-            ctaLink: node.name === "cohortDiscovery" ? node.ctaLink : null,
+            cohort: node.cohort,
+            ctaLink: node.ctaLink,
         },
     };
 };

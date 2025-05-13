@@ -74,6 +74,7 @@ const DatasetMindMap = ({
                 let href = null;
                 let action = null;
                 let hidden = false;
+                let cohort = false;
                 const { title } = data.metadata.metadata.summary;
 
                 if (node.id === "node-synthetic") {
@@ -122,6 +123,7 @@ const DatasetMindMap = ({
                     }
                 } else if (node.id === "node-cohortDiscovery") {
                     href = node.data.href;
+                    cohort = node.data.cohort;
 
                     if (!isCohortDiscovery) {
                         emptyNodes.push(node.id);
@@ -159,6 +161,7 @@ const DatasetMindMap = ({
                         href,
                         action,
                         hidden,
+                        cohort,
                     },
                 };
             })

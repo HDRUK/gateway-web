@@ -17,6 +17,7 @@ interface accessRequestType {
 
 interface CohortDiscoveryButtonProps {
     ctaLink: CtaLink;
+    showDatasetExplanatoryTooltip: boolean | null;
     color?: string | null;
 }
 
@@ -26,6 +27,7 @@ const TRANSLATION_PATH_CTAOVERRIDE = "components.CohortDiscoveryButton";
 
 const CohortDiscoveryButton = ({
     ctaLink,
+    showDatasetExplanatoryTooltip = false,
     color = undefined,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
@@ -68,8 +70,18 @@ const CohortDiscoveryButton = ({
               )
             : false;
 
+    const isApproved =
+        isLoggedIn && userData && userData.request_status === "APPROVED";
+
     return (
-        <Tooltip title={isDisabled ? t(`notApproved`) : ""}>
+        <Tooltip
+            title={
+                isDisabled
+                    ? t(`notApproved`)
+                    : showDatasetExplanatoryTooltip && isApproved
+                    ? t("explanatoryTooltip")
+                    : ""
+            }>
             <span>
                 <Button
                     onClick={() => setIsClicked(true)}

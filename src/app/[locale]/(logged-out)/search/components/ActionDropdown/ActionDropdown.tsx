@@ -138,6 +138,7 @@ const ActionDropdown = ({
                               ctaLink={
                                   cohortDiscovery.template.promofields.ctaLink
                               }
+                              showDatasetExplanatoryTooltip={true}
                               variant="link"
                           />
                       ),
