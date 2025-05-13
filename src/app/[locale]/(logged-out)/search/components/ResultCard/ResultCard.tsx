@@ -161,7 +161,7 @@ const ResultCard = ({
                               ctaLink={
                                   cohortDiscovery.template.promofields.ctaLink
                               }
-                              showDatasetExplanatoryTooltip={true}
+                              showDatasetExplanatoryTooltip
                               variant="link"
                           />
                       ),

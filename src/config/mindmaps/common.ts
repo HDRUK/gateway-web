@@ -49,7 +49,7 @@ export const nodeValueToRectNode = (
         id: `node-${node.name}`,
         type: "rect",
         position: { x, y },
-        origin: origin,
+        origin,
         data: {
             id: index,
             name: node.name,

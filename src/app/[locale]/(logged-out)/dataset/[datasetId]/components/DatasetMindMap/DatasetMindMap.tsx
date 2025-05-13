@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { ReactFlowProps } from "reactflow";
 import { useTranslations } from "next-intl";
+import { ReactFlowProps } from "@xyflow/react";
 import { CtaLink } from "@/interfaces/Cms";
 import { VersionItem } from "@/interfaces/Dataset";
 import MindMap from "@/components/MindMap/MindMap";
@@ -65,7 +65,7 @@ const DatasetMindMap = ({
             outerNodeValues.map(node => ({
                 ...node,
                 label: t(node.name),
-                ctaLink: ctaLink,
+                ctaLink,
             }))
         );
 

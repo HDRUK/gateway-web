@@ -78,7 +78,7 @@ const RectangleNode = ({
                     }}>
                     <CohortDiscoveryButton
                         ctaLink={ctaLink}
-                        showDatasetExplanatoryTooltip={true}
+                        showDatasetExplanatoryTooltip
                         variant="link"
                     />
                 </div>

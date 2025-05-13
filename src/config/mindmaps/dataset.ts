@@ -3,7 +3,7 @@ import { nodeValueToRectNode } from "./common";
 const centerX = 0;
 const centerY = 0;
 
-// If adding more nodes here, consider increasing spacingFactor in 
+// If adding more nodes here, consider increasing spacingFactor in
 // common.ts to avoid vertical overlap of nodes.
 const outerNodeValues = [
     {
