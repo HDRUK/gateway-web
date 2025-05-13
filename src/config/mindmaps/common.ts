@@ -34,10 +34,13 @@ export const nodeValueToRectNode = (
     }
 
     // calculate the position of the box
+    const spacingFactor = 0.4; // If extra nodes are added in future, increase this spacingFactor to stop nodes overlapping vertically
     const x = centerX + radius * Math.sin(angleRad);
     const y =
         centerY +
-        (Math.abs(index - (nNodes - 1) / 2) - nNodes / 4) * radius * 0.4;
+        (Math.abs(index - (nNodes - 1) / 2) - nNodes / 4) *
+            radius *
+            spacingFactor;
 
     return {
         id: `node-${node.name}`,
