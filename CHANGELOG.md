@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/HDRUK/gateway-web/compare/v2.8.0...v2.8.1) (2025-05-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-7112:** Allow user through to Cohort Discovery T & Cs when previous request has expired (#1122) ([2e98ff4](https://github.com/HDRUK/gateway-web/commit/2e98ff46aff8e7a273c5f3d2567c66217e5e4571)), closes [GAT-7112](GAT-7112)
+* **GAT-7118:** dataset_versions could be null (#1125) ([10c594a](https://github.com/HDRUK/gateway-web/commit/10c594a3a35dfce5156b4909a02abe7d4a8c0025)), closes [GAT-7118](GAT-7118)
+
 ## [2.8.0](https://github.com/HDRUK/gateway-web/compare/v2.7.1...v2.8.0) (2025-05-06)
 
 ### ✨ Features
