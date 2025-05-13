@@ -16,6 +16,8 @@ interface DarTeamApplication {
 
 interface DataAccessRequestApplication {
     id: string;
+    project_id?: string;
+    submission_status?: DarApplicationStatus;
     appliciation_id: number;
     created_at: string;
     updated_at: string;
