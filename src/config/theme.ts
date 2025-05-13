@@ -193,6 +193,19 @@ const theme = createTheme({
     },
     palette,
     components: {
+        MuiIconButton: {
+            styleOverrides: {
+                root: ({ theme }) => {
+                    return {
+                        "&.Mui-focusVisible > .MuiSvgIcon-root": {
+                            outline: `2px solid ${theme.palette.primary.main}`,
+                            outlineOffset: 2,
+                            borderRadius: "50%",
+                        },
+                    };
+                },
+            },
+        },
         MuiTooltip: {
             styleOverrides: {
                 tooltip: ({ theme }) => ({
