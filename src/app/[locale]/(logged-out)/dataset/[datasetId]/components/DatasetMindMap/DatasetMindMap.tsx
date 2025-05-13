@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { useTranslations } from "next-intl";
 import { ReactFlowProps } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import { CtaLink } from "@/interfaces/Cms";
 import { VersionItem } from "@/interfaces/Dataset";
 import MindMap from "@/components/MindMap/MindMap";
