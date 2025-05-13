@@ -29,7 +29,7 @@ const TooltipIcon = ({
             sx={boxSx}>
             {label}
             <Tooltip title={content}>
-                <IconButton sx={{ ...buttonSx }}>
+                <IconButton sx={{ ...buttonSx }} disableRipple>
                     {icon || (
                         <InfoIcon
                             color={!invertColor ? "primary" : "inherit"}
