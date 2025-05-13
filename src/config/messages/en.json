@@ -420,7 +420,8 @@
                         "deleteIntro": "This action is permanent, and the information cannot be recovered.",
                         "withdrawTitle": "Are you sure you want to withdraw this application?",
                         "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian.",
-                        "dataAccessRequests": "Data Access Request"
+                        "dataAccessRequests": "Data Access Request",
+                        "noDatasetTitle": "No title"
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
