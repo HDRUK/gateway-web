@@ -9,6 +9,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import CircleNode from "./CircleNode";
+import CohortDiscoveryNode from "./CohortDiscoveryNode";
 import MindMapEdge from "./MindMapEdge";
 import RectangleNode from "./RectangleNode";
 
@@ -26,7 +27,7 @@ const MindMap = ({
     connectionLineStyle,
     ...rest
 }: MindMapProps) => {
-    const nodeTypes = { circle: CircleNode, rect: RectangleNode };
+    const nodeTypes = { circle: CircleNode, rect: RectangleNode, cohort: CohortDiscoveryNode };
 
     const edgeTypes = {
         mindmap: MindMapEdge,

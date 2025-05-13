@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { ReactFlowProps } from "reactflow";
 import { useTranslations } from "next-intl";
+import { CtaLink } from "@/interfaces/Cms";
 import { VersionItem } from "@/interfaces/Dataset";
 import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
@@ -21,6 +22,7 @@ interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
     teamId: number;
     isCohortDiscovery: boolean;
+    ctaLink?: CtaLink;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
     hasDemographics: boolean;
@@ -31,6 +33,7 @@ const DatasetMindMap = ({
     data,
     teamId,
     isCohortDiscovery,
+    ctaLink,
     populatedSections,
     linkageCounts,
     panOnDrag = false,
@@ -62,6 +65,7 @@ const DatasetMindMap = ({
             outerNodeValues.map(node => ({
                 ...node,
                 label: t(node.name),
+                ctaLink: ctaLink,
             }))
         );
 
@@ -119,7 +123,7 @@ const DatasetMindMap = ({
                 } else if (node.id === "node-cohortDiscovery") {
                     href = node.data.href;
 
-                    if (!href || !isCohortDiscovery) {
+                    if (!isCohortDiscovery) {
                         emptyNodes.push(node.id);
                         hidden = true;
                     }

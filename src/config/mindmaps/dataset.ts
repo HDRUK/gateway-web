@@ -41,7 +41,7 @@ const outerNodeValues = [
     },
     {
         name: "cohortDiscovery",
-        href: "www.example.com",
+        cohort: true,
     },
     {
         name: "demographics",

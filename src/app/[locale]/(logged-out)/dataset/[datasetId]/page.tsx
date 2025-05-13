@@ -20,6 +20,7 @@ import Linkages from "./components/Linkages";
 import Publications from "./components/Publications";
 import Sources from "./components/Sources";
 import { datasetFields } from "./config";
+import { getCohortDiscovery } from "@/utils/cms";
 
 export const metadata = metaData({
     title: "Dataset",
@@ -72,6 +73,8 @@ export default async function DatasetItemPage({
     } catch (_e) {
         // Intentionally left empty
     }
+
+    const cohortDiscovery = data?.is_cohort_discovery ? await getCohortDiscovery() : null;
 
     const datasetVersion = data?.versions?.[0];
 
@@ -152,6 +155,7 @@ export default async function DatasetItemPage({
                                     data={datasetVersion}
                                     teamId={data?.team_id}
                                     isCohortDiscovery={data?.is_cohort_discovery}
+                                    ctaLink={cohortDiscovery?.template?.promofields?.ctaLink || null}
                                     populatedSections={populatedSections}
                                     linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
