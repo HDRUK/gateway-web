@@ -33,11 +33,10 @@ const RectangleNode = ({
         <div
             style={{
                 color: "white",
-                background: href
-                    ? color
-                    : action
-                    ? color
-                    : theme.palette.greyCustom.main,
+                background:
+                    href || action || cohort
+                        ? color
+                        : theme.palette.greyCustom.main,
                 padding: "14px",
                 ...nodeSx,
                 opacity: hidden ? 0 : 1,
@@ -70,18 +69,13 @@ const RectangleNode = ({
                     {label}
                 </Button>
             ) : cohort ? (
-                <div
-                    id={id}
-                    style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                    }}>
-                    <CohortDiscoveryButton
-                        ctaLink={ctaLink}
-                        showDatasetExplanatoryTooltip
-                        variant="link"
-                    />
-                </div>
+                <CohortDiscoveryButton
+                    ctaLink={ctaLink}
+                    showDatasetExplanatoryTooltip
+                    color="inherit"
+                    variant="text"
+                    sx={{ p: 0, lineHeight: "inherit" }}
+                />
             ) : (
                 <div id={id}>{label}</div>
             )}
