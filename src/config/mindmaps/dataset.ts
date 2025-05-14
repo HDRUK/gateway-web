@@ -29,6 +29,10 @@ const outerNodeValues = [
         href: "/search?type=collections",
     },
     {
+        name: "cohortDiscovery",
+        cohort: true,
+    },
+    {
         name: "coverageCompleteness",
         href: "/search?type=publications",
     },
@@ -38,10 +42,6 @@ const outerNodeValues = [
     {
         name: "structuralMetadata",
         href: "scrollTo:Structural Metadata",
-    },
-    {
-        name: "cohortDiscovery",
-        cohort: true,
     },
     {
         name: "demographics",
