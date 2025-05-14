@@ -64,7 +64,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.documentation.associatedMedia",
-                type: FieldType.TEXT,
+                type: FieldType.LINK_LIST,
                 label: "Associated media",
                 tooltip:
                     "Media that might provide additional context for researchers wanting to understand more about the dataset and its relevance to their research question.",
