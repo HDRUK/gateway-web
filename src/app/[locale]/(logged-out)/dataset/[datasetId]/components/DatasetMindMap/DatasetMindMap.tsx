@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import { ReactFlowProps } from "reactflow";
+import { ReactFlowProps } from "@xyflow/react";
 import { useTranslations } from "next-intl";
+import { CtaLink } from "@/interfaces/Cms";
 import { VersionItem } from "@/interfaces/Dataset";
 import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
@@ -20,6 +21,8 @@ const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
 interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
     teamId: number;
+    isCohortDiscovery: boolean;
+    ctaLink?: CtaLink;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
     hasDemographics: boolean;
@@ -29,6 +32,8 @@ interface DatasetMindMapProps extends ReactFlowProps {
 const DatasetMindMap = ({
     data,
     teamId,
+    isCohortDiscovery,
+    ctaLink,
     populatedSections,
     linkageCounts,
     panOnDrag = false,
@@ -60,6 +65,7 @@ const DatasetMindMap = ({
             outerNodeValues.map(node => ({
                 ...node,
                 label: t(node.name),
+                ctaLink,
             }))
         );
 
@@ -68,6 +74,7 @@ const DatasetMindMap = ({
                 let href = null;
                 let action = null;
                 let hidden = false;
+                let cohort = false;
                 const { title } = data.metadata.metadata.summary;
 
                 if (node.id === "node-synthetic") {
@@ -114,6 +121,14 @@ const DatasetMindMap = ({
                         emptyNodes.push(node.id);
                         hidden = true;
                     }
+                } else if (node.id === "node-cohortDiscovery") {
+                    href = node.data.href;
+                    cohort = node.data.cohort;
+
+                    if (!isCohortDiscovery) {
+                        emptyNodes.push(node.id);
+                        hidden = true;
+                    }
                 } else if (node.data.href?.includes("scrollTo:")) {
                     if (
                         (hasStructuralMetadata &&
@@ -146,6 +161,7 @@ const DatasetMindMap = ({
                         href,
                         action,
                         hidden,
+                        cohort,
                     },
                 };
             })

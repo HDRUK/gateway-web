@@ -1,4 +1,4 @@
-import { Handle, Position, NodeProps } from "reactflow";
+import { Handle, Position, NodeProps } from "@xyflow/react";
 import theme from "@/config/theme";
 import EllipsisLineLimit from "../EllipsisLineLimit";
 

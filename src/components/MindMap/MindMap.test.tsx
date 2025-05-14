@@ -1,4 +1,4 @@
-import { Position } from "reactflow";
+import { Position } from "@xyflow/react";
 import MindMap from "@/components/MindMap";
 import { render, screen } from "@/utils/testUtils";
 

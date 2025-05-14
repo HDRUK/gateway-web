@@ -9,6 +9,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
 import { getDataset } from "@/utils/api";
+import { getCohortDiscovery } from "@/utils/cms";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -72,6 +73,10 @@ export default async function DatasetItemPage({
     } catch (_e) {
         // Intentionally left empty
     }
+
+    const cohortDiscovery = data?.is_cohort_discovery
+        ? await getCohortDiscovery()
+        : null;
 
     const datasetVersion = data?.versions?.[0];
 
@@ -151,6 +156,13 @@ export default async function DatasetItemPage({
                                 <DatasetMindMap
                                     data={datasetVersion}
                                     teamId={data?.team_id}
+                                    isCohortDiscovery={
+                                        data?.is_cohort_discovery
+                                    }
+                                    ctaLink={
+                                        cohortDiscovery?.template?.promofields
+                                            ?.ctaLink || null
+                                    }
                                     populatedSections={populatedSections}
                                     linkageCounts={linkageCounts}
                                     hasStructuralMetadata={
