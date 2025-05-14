@@ -1,7 +1,8 @@
-import { Handle, Position, NodeProps } from "reactflow";
+import { Handle, Position, NodeProps } from "@xyflow/react";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { LaunchIcon } from "@/consts/icons";
+import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 import Button from "../Button";
 
 export interface RectangleNodeData {
@@ -15,7 +16,18 @@ export interface RectangleNodeData {
 }
 
 const RectangleNode = ({
-    data: { id, label, href, nodeSx, position, color, hidden, action },
+    data: {
+        id,
+        label,
+        href,
+        nodeSx,
+        position,
+        color,
+        hidden,
+        action,
+        cohort,
+        ctaLink,
+    },
 }: NodeProps<RectangleNodeData>) => {
     return (
         <div
@@ -57,6 +69,19 @@ const RectangleNode = ({
                     sx={{ p: 0, lineHeight: "inherit" }}>
                     {label}
                 </Button>
+            ) : cohort ? (
+                <div
+                    id={id}
+                    style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                    }}>
+                    <CohortDiscoveryButton
+                        ctaLink={ctaLink}
+                        showDatasetExplanatoryTooltip
+                        variant="link"
+                    />
+                </div>
             ) : (
                 <div id={id}>{label}</div>
             )}
