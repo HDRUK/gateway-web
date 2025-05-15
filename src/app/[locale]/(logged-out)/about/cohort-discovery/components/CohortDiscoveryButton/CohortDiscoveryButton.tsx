@@ -80,13 +80,12 @@ const CohortDiscoveryButton = ({
     return (
         <Tooltip
             title={
-                tooltipOverride
-                    ? tooltipOverride
-                    : isDisabled
+                tooltipOverride ||
+                (isDisabled
                     ? t(`notApproved`)
                     : showDatasetExplanatoryTooltip && isApproved
                     ? t("explanatoryTooltip")
-                    : ""
+                    : "")
             }>
             <span>
                 <Button
