@@ -6,6 +6,7 @@ import { Divider, Tooltip } from "@mui/material";
 import { uniq } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -17,15 +18,21 @@ import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
 interface RightPanelProps {
     selected: SelectedLibrary;
     handleRemove: (id: string) => void;
+    cohortDiscovery: PageTemplatePromo;
 }
 
-const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
+const RightPanel = ({
+    selected,
+    handleRemove,
+    cohortDiscovery,
+}: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showSidebar } = useSidebar();
     const { createDARApplication } = useDataAccessRequest();
@@ -42,6 +49,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                     teamName: item.teamName,
                     teamMemberOf: item.teamMemberOf,
                     darEnabled: item.darEnabled,
+                    cohortEnabled: item.cohortEnabled,
                 };
             });
     }, [selected]);
@@ -167,6 +175,37 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                             </Button>
                         </div>
                     </Tooltip>
+                </Box>
+                <Divider sx={{ my: 2 }} />
+                <Box sx={{ p: 0 }}>
+                    <Typography variant="h2">
+                        {t("cohortDiscovery.title")}
+                    </Typography>
+                    <Typography>{t("cohortDiscovery.text")}</Typography>
+                    <div>
+                        <CohortDiscoveryButton
+                            sx={{ mt: 2, width: "100%" }}
+                            disabledOuter={
+                                !(selectedDatasets.length > 0) ||
+                                !selectedDatasets.every(
+                                    dataset => dataset.cohortEnabled
+                                )
+                            }
+                            ctaLink={
+                                cohortDiscovery?.template?.promofields?.ctaLink
+                            }
+                            showDatasetExplanatoryTooltip
+                            tooltipOverride={
+                                !selectedDatasets.every(
+                                    dataset => dataset.cohortEnabled
+                                )
+                                    ? t("cohortDiscovery.buttonTooltipCohort")
+                                    : selectedDatasets.length > 0
+                                    ? ""
+                                    : t("cohortDiscovery.buttonTooltip")
+                            }
+                        />
+                    </div>
                 </Box>
                 {selectedDatasets.length > 1 && (
                     <>
