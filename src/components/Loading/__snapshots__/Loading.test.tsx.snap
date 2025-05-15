@@ -6,8 +6,10 @@ exports[`Loading should render component 1`] = `
     class="MuiBox-root mui-style-1c3tbzi"
   >
     <span
+      aria-label="Loading"
+      aria-live="polite"
       class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary mui-style-waivou-MuiCircularProgress-root"
-      role="progressbar"
+      role="status"
       style="width: 48px; height: 48px;"
     >
       <svg
