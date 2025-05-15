@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-import { Box } from "@mui/material";
-import TooltipIcon from "@/components/TooltipIcon";
+import { Box, Tooltip } from "@mui/material";
 
 interface TabTooltipProps {
     children: ReactNode;
@@ -10,8 +9,13 @@ interface TabTooltipProps {
 const TabTooltip = ({ children, content }: TabTooltipProps) => {
     return (
         <Box sx={{ display: "flex", gap: 1 }}>
-            {children}
-            <TooltipIcon content={content} buttonSx={{ p: 0 }} size="small" />
+            <Tooltip
+                title={content}
+                // content={content}
+                buttonSx={{ p: 0 }}
+                size="small">
+                {children}
+            </Tooltip>
         </Box>
     );
 };

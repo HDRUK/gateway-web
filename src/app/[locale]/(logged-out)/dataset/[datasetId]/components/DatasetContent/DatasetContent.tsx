@@ -303,6 +303,7 @@ const DatasetContent = ({
                                                             p: 0,
                                                             mr: 1,
                                                         }}
+                                                        size={"inherit"}
                                                     />
                                                 ) : (
                                                     field.label

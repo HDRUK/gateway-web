@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Tooltip } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -560,15 +561,17 @@ const FilterPanel = ({
                                     width: "100%",
                                     pr: 3.25,
                                 }}>
-                                <Typography fontWeight="400" fontSize={20}>
-                                    {t(label)}
-                                </Typography>
-                                <TooltipIcon
+                                <Tooltip title={t(`${label}`)} >
+                                    <Typography component="div" fontWeight="400" fontSize={20}>
+                                        {`hello ${t(label)}`}
+                                    </Typography>
+                                </Tooltip>
+                                {/* <TooltipIcon
                                     content={t(`${label}${TOOLTIP_SUFFIX}`)}
                                     label=""
                                     buttonSx={{ p: 0 }}
-                                    size="small"
-                                />
+                                    size="small" */}
+                                {/* /> */}
                             </Box>
                         }
                         onChange={() =>

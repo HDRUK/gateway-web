@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-import { Box, IconButton, SxProps, Tooltip } from "@mui/material";
-import { InfoIcon } from "@/consts/icons";
+import { Box, SxProps, Tooltip, Typography } from "@mui/material";
 
 interface TooltipIconProps {
     label?: ReactNode;
@@ -15,11 +14,8 @@ interface TooltipIconProps {
 const TooltipIcon = ({
     label,
     content,
-    icon,
     size = "medium",
     boxSx,
-    buttonSx,
-    invertColor,
 }: TooltipIconProps) => {
     return (
         <Box
@@ -27,17 +23,16 @@ const TooltipIcon = ({
             alignItems="center"
             justifyContent="space-between"
             sx={boxSx}>
-            {label}
             <Tooltip title={content}>
-                <IconButton sx={{ ...buttonSx }} disableRipple>
-                    {icon || (
-                        <InfoIcon
-                            color={!invertColor ? "primary" : "inherit"}
-                            sx={{ color: `${invertColor && "#E9ECF4"}` }}
-                            fontSize={size}
-                        />
-                    )}
-                </IconButton>
+                <Typography
+                    sx={{
+                        fontSize: size,
+                        fontWeight: 600,
+                        textDecoration: "underline",
+                        textDecorationStyle: "dashed",
+                    }}>
+                    {label || "p"}
+                </Typography>
             </Tooltip>
         </Box>
     );
