@@ -29,7 +29,6 @@ import {
 } from "../../config";
 import {
     DatasetButtonItem,
-    DatasetFieldItem,
     DatasetFieldWrapper,
     ListContainer,
     ObservationTableWrapper,
