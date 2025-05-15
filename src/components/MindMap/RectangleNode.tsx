@@ -29,7 +29,8 @@ const RectangleNode = ({
         ctaLink,
     },
 }: NodeProps<RectangleNodeData>) => {
-    if (hidden) return;
+    if (hidden) return null;
+
     return (
         <div
             style={{
