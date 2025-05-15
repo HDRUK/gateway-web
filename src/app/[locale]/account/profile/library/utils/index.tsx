@@ -32,6 +32,7 @@ const getColumns = ({
                 dataCustodian,
                 dataCustodianMemberOf,
                 darEnabled,
+                cohortEnabled,
             } = row.original;
             return (
                 <div style={{ textAlign: "center" }}>
@@ -47,6 +48,7 @@ const getColumns = ({
                                     teamName: dataCustodian,
                                     teamMemberOf: dataCustodianMemberOf,
                                     darEnabled,
+                                    cohortEnabled,
                                 },
                             })
                         }
@@ -96,6 +98,21 @@ const getColumns = ({
                 content={translations.darEnabled}
             />
         ),
+        size: 100,
+    }),
+
+    columnHelper.display({
+        id: "cohortEnabled",
+        cell: ({
+            row: {
+                original: { cohortEnabled },
+            },
+        }) => (
+            <div style={{ textAlign: "center" }}>
+                {cohortEnabled ? <CheckIcon color="primary" /> : "-"}
+            </div>
+        ),
+        header: () => <span>{translations.cohortEnabled}</span>,
         size: 100,
     }),
 
