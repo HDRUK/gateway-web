@@ -922,8 +922,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
                     }}
-                    component={"section"}
-                    aria-describedby="result-summary">
+                    component={"section"}>
                     <Box
                         sx={{
                             display: "flex",
@@ -1024,7 +1023,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         </>
                                     )}
 
-                                    <div ref={resultsRef}>
+                                    <div
+                                        ref={resultsRef}
+                                        aria-describedby="result-summary">
                                         {renderResults()}
                                     </div>
 
