@@ -383,6 +383,13 @@
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template"
                             },
+                            "cohortDiscovery": {
+                                "title": "Cohort Discovery",
+                                "text": "Start a Cohort Discovery request. Not all Datasets on the Gateway have this feature enabled. You will also need to have Cohort Discovery access approved for your account.",
+                                "buttonText": "Start a Cohort Discovery request",
+                                "buttonTooltip": "Select at least one dataset to enable.",
+                                "buttonTooltipCohort": "You have selected dataset(s) that do not support Cohort Discovery."
+                            },
                             "multiDelete": {
                                 "label": "Multi delete"
                             }
@@ -390,6 +397,9 @@
                     },
                     "name": {
                         "label": "Name"
+                    },
+                    "cohortEnabled": {
+                        "label": "Cohort Discovery Enabled"
                     },
                     "darEnabled": {
                         "label": "Data Access Request Enabled"
