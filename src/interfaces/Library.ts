@@ -21,6 +21,7 @@ interface SelectedLibrary {
         teamName: string;
         teamMemberOf: string;
         darEnabled: boolean;
+        cohortEnabled: boolean;
     };
 }
 

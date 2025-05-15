@@ -19,6 +19,8 @@ interface CohortDiscoveryButtonProps {
     ctaLink: CtaLink;
     showDatasetExplanatoryTooltip: boolean | null;
     color?: string | null;
+    tooltipOverride?: string | null;
+    disabledOuter?: boolean;
 }
 
 export const DATA_TEST_ID = "cohort-discovery-button";
@@ -29,6 +31,8 @@ const CohortDiscoveryButton = ({
     ctaLink,
     showDatasetExplanatoryTooltip = false,
     color = undefined,
+    tooltipOverride = "",
+    disabledOuter = false,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
     const { showDialog } = useDialog();
@@ -76,7 +80,9 @@ const CohortDiscoveryButton = ({
     return (
         <Tooltip
             title={
-                isDisabled
+                tooltipOverride
+                    ? tooltipOverride
+                    : isDisabled
                     ? t(`notApproved`)
                     : showDatasetExplanatoryTooltip && isApproved
                     ? t("explanatoryTooltip")
@@ -87,7 +93,7 @@ const CohortDiscoveryButton = ({
                     onClick={() => setIsClicked(true)}
                     data-testid={DATA_TEST_ID}
                     color={color}
-                    disabled={isDisabled}
+                    disabled={disabledOuter || isDisabled}
                     {...restProps}>
                     {ctaLink?.title}
                 </Button>
