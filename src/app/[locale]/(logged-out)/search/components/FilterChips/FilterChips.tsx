@@ -1,10 +1,9 @@
-import { ChipProps } from "@mui/material";
+import { ChipProps, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
-import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import { isQueryEmpty } from "@/utils/filters";
 

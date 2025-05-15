@@ -18,7 +18,7 @@ interface PublicationsProps {
 const Publications = ({ data }: PublicationsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const publicationAboutThisDataset = data.publications.filter(
-        pub => pub.dataset_versions[0].link_type === "ABOUT"
+        pub => pub.dataset_versions?.[0].link_type === "ABOUT"
     );
 
     if (publicationAboutThisDataset.length === 0) {

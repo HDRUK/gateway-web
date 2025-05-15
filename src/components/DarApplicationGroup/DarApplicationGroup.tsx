@@ -47,7 +47,7 @@ export default function DarApplicationGroup({
                     fontSize={32}
                     fontWeight={600}>
                     {t("darApplication")}
-                    {item.id}
+                    {item.project_id}
                 </Typography>
                 <ShowMore maxHeight={24}>
                     <Typography fontSize={16}>{item.project_title}</Typography>

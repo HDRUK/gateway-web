@@ -150,22 +150,24 @@ export default function CustomerSurvey({
                     return (
                         <Grid item key={rating.toString()}>
                             <Tooltip title={t(`tooltip-${index}`)}>
-                                <IconButton
-                                    onClick={() => handleClick(rating)}
-                                    id={`feedback-${rating}`}>
-                                    <Icon
-                                        aria-label={`Rating ${rating}`}
-                                        sx={{
-                                            cursor: "pointer",
-                                            color: colour,
-                                            minWidth: "75px",
-                                            minHeight: "75px",
-                                            margin: 1,
-                                            fontSize: 1,
-                                            fontWeight: "bold",
-                                        }}
-                                    />
-                                </IconButton>
+                                <div>
+                                    <IconButton
+                                        onClick={() => handleClick(rating)}
+                                        id={`feedback-${rating}`}>
+                                        <Icon
+                                            aria-label={`Rating ${rating}`}
+                                            sx={{
+                                                cursor: "pointer",
+                                                color: colour,
+                                                minWidth: "75px",
+                                                minHeight: "75px",
+                                                margin: 1,
+                                                fontSize: 1,
+                                                fontWeight: "bold",
+                                            }}
+                                        />
+                                    </IconButton>
+                                </div>
                             </Tooltip>
                         </Grid>
                     );

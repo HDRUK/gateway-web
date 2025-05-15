@@ -2,6 +2,8 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
+import { PageTemplatePromo } from "@/interfaces/Cms";
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -14,12 +16,14 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { formatTextDelimiter } from "@/utils/dataset";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import ActionDropdown from "../ActionDropdown";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
     showLibraryModal: (props: { datasetId: number }) => void;
+    cohortDiscovery: PageTemplatePromo;
 }
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
@@ -38,11 +42,15 @@ const getColumns = ({
     libraryData,
     showLibraryModal,
     mutateLibraries,
+    isCohortDiscoveryDisabled,
+    cohortDiscovery,
 }: {
     translations: { [id: string]: string };
-    libraryData: Library[];
+    libraryData?: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
     mutateLibraries: KeyedMutator<Library[]>;
+    isCohortDiscoveryDisabled: boolean;
+    cohortDiscovery: PageTemplatePromo;
 }) => [
     columnHelper.display({
         id: "actions",
@@ -55,6 +63,8 @@ const getColumns = ({
                         libraryData={libraryData}
                         showLibraryModal={showLibraryModal}
                         mutateLibraries={mutateLibraries}
+                        isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
+                        cohortDiscovery={cohortDiscovery}
                     />
                 </div>
             );
@@ -182,7 +192,7 @@ const getColumns = ({
         id: "conformsTo",
         cell: ({ row: { original } }) => (
             <div style={{ textAlign: "center" }}>
-                {get(original, CONFORMS_TO_PATH)}
+                {formatTextDelimiter(get(original, CONFORMS_TO_PATH))}
             </div>
         ),
         header: () => (
@@ -261,14 +271,32 @@ const getColumns = ({
 ];
 
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
-const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
+const ResultTable = ({
+    results,
+    showLibraryModal,
+    cohortDiscovery,
+}: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, user } = useAuth();
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?perPage=-1`,
         { shouldFetch: isLoggedIn }
     );
+
+    const { data: userData } = useGet<CohortRequest>(
+        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
+        {
+            shouldFetch: !!user?.id,
+        }
+    );
+
+    const isCohortDiscoveryDisabled =
+        isLoggedIn && userData
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
+                  userData.request_status
+              )
+            : false;
 
     const translations = {
         actionLabel: t("action.label"),
@@ -308,6 +336,8 @@ const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
                     libraryData,
                     showLibraryModal,
                     mutateLibraries,
+                    isCohortDiscoveryDisabled,
+                    cohortDiscovery,
                 })}
                 rows={results}
             />

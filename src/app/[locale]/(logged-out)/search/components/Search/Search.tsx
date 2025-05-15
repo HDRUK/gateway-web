@@ -12,6 +12,8 @@ import { Box, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { PageTemplatePromo } from "@/interfaces/Cms";
+import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
@@ -77,6 +79,7 @@ import {
     FILTER_SECTOR,
     FILTER_TYPE_CATEGORY,
     filtersList,
+    FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
 import searchFormConfig, {
     PAGE_FIELD,
@@ -126,9 +129,10 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
+    cohortDiscovery: PageTemplatePromo;
 }
 
-const Search = ({ filters }: SearchProps) => {
+const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const router = useRouter();
@@ -137,7 +141,7 @@ const Search = ({ filters }: SearchProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
 
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, user } = useAuth();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -207,6 +211,7 @@ const Search = ({ filters }: SearchProps) => {
         [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
         [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
         [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
+        [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
     });
 
     const [datasetNamesArray, setDatasetNamesArray] = useState<string[]>([]);
@@ -394,6 +399,7 @@ const Search = ({ filters }: SearchProps) => {
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
             [PMC_TYPE_FIELD]: undefined,
             [FILTER_FORMAT_STANDARDS]: undefined,
+            [FILTER_COHORT_DISCOVERY]: undefined,
         });
     };
 
@@ -508,6 +514,20 @@ const Search = ({ filters }: SearchProps) => {
         setIsDownloading(false);
     };
 
+    const { data: userData } = useGet<CohortRequest>(
+        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
+        {
+            shouldFetch: !!user?.id,
+        }
+    );
+
+    const isCohortDiscoveryDisabled =
+        isLoggedIn && userData
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
+                  userData.request_status
+              )
+            : false;
+
     const renderResultCard = (result: SearchResult) => {
         const { _id: resultId } = result;
 
@@ -519,6 +539,8 @@ const Search = ({ filters }: SearchProps) => {
                         key={resultId}
                         mutateLibraries={mutateLibraries}
                         libraryData={libraryData}
+                        isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
+                        cohortDiscovery={cohortDiscovery}
                     />
                 );
             case SearchCategory.PUBLICATIONS:
@@ -566,6 +588,7 @@ const Search = ({ filters }: SearchProps) => {
                 <ResultsTable
                     results={data?.list as SearchResultDataset[]}
                     showLibraryModal={showLibraryModal}
+                    cohortDiscovery={cohortDiscovery}
                 />
             );
         }

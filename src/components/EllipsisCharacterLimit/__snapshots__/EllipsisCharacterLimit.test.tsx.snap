@@ -8,9 +8,7 @@ exports[`EllipsisCharacterLimit should render component 1`] = `
     data-mui-internal-clone-element="true"
   >
     <span>
-      <span>
-        Cras ut sem eu ligula tincidunt aliquet. Lorem ips...
-      </span>
+      Cras ut sem eu ligula tincidunt aliquet. Lorem ips...
     </span>
   </span>
 </div>

@@ -31,6 +31,7 @@ const LibraryTable = ({
         datasetId: item.dataset_id,
         name: item.dataset_name,
         darEnabled: item.data_provider_dar_enabled,
+        cohortEnabled: item.dataset_is_cohort_discovery,
         dataCustodian: item.data_provider_name,
         entityType: "Dataset", // will we update in the future with other entities?
         dataCustodianId: item.data_provider_id,
@@ -42,6 +43,7 @@ const LibraryTable = ({
         darEnabled: t("darEnabled.label"),
         dataCustodian: t("dataCustodian.label"),
         entityType: t("entityType.label"),
+        cohortEnabled: t("cohortEnabled.label"),
     };
 
     return (

@@ -1,9 +1,8 @@
-import { MouseEvent } from "react";
+import { MouseEvent, MouseEventHandler } from "react";
 import { Menu, MenuItem } from "@mui/material";
-import Button from "@/components/Button";
-import Link from "@/components/Link";
+import Link from "next/link";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface MenuDropdownProps {
@@ -12,9 +11,7 @@ interface MenuDropdownProps {
     menuItems: {
         label: string;
         href?: string;
-        action?: (
-            e: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>
-        ) => void;
+        action?: MouseEventHandler<HTMLElement>;
         subItems?: { label: string; href: string }[];
         divider?: boolean;
         icon?: HTMLElement;
@@ -50,6 +47,7 @@ function MenuDropdown({
 
     return (
         <Menu
+            disableAutoFocusItem
             anchorEl={anchorElement}
             transformOrigin={
                 transformOrigin || { horizontal: "left", vertical: "top" }
@@ -57,7 +55,7 @@ function MenuDropdown({
             anchorOrigin={
                 anchorOrigin || { horizontal: "left", vertical: "bottom" }
             }
-            onClose={(event: React.MouseEvent<HTMLElement>) => {
+            onClose={(event: MouseEvent<HTMLElement>) => {
                 if (stopPropagation) {
                     event.stopPropagation();
                 }
@@ -68,88 +66,74 @@ function MenuDropdown({
                 if (menuItem.subItems) {
                     return menuItem.subItems.map(subItem => (
                         <MenuItem
-                            sx={{ maxWidth: 250 }}
+                            sx={{
+                                maxWidth: 250,
+                                color: theme.palette.primary.main,
+                                textWrap: "initial",
+                                borderBottom: `${colors.grey300} 1px solid`,
+                            }}
                             key={subItem.label}
-                            onClick={() => handleClose()}>
-                            <Link
-                                sx={{ textDecoration: "none" }}
-                                href={subItem.href}>
-                                <MarkDownSanitizedWithHtml
-                                    content={subItem.label}
-                                    WrapperComponent="span"
-                                />
-                            </Link>
+                            onClick={() => {
+                                handleClose();
+                            }}
+                            component={Link}
+                            href={subItem.href}>
+                            <MarkDownSanitizedWithHtml
+                                content={subItem.label}
+                                wrapper="span"
+                            />
                         </MenuItem>
                     ));
                 }
                 const ariaLabel = title
                     ? `${menuItem.label} for ${title}`
                     : undefined;
-                if (menuItem.href)
-                    return (
-                        <MenuItem
-                            sx={{
-                                maxWidth: 250,
-                                textWrap: "initial",
-                                borderBottom: `${colors.grey300} 1px solid`,
-                            }}
-                            key={menuItem.label}
-                            onClick={() => handleClose()}>
-                            {menuItem.icon || null}
-                            <Link
-                                aria-label={ariaLabel}
-                                key={menuItem.label}
-                                underline="hover"
-                                href={menuItem.href}>
-                                <MarkDownSanitizedWithHtml
-                                    content={menuItem.label}
-                                    WrapperComponent="span"
-                                />
-                            </Link>
-                        </MenuItem>
-                    );
-                if (menuItem.action) {
-                    return (
-                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
-                            {menuItem.icon || null}
-                            <Button
-                                onClick={menuItem.action}
-                                variant="link"
-                                aria-label={ariaLabel}
-                                sx={{ pl: 0 }}>
-                                <MarkDownSanitizedWithHtml
-                                    content={menuItem.label}
-                                    WrapperComponent="span"
-                                />
-                            </Button>
-                        </MenuItem>
-                    );
-                }
-                if (menuItem.dialog) {
-                    return (
-                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
-                            {menuItem.icon || null}
-                            <Button
-                                onClick={() =>
-                                    handleShowDialog(menuItem.dialog)
-                                }
-                                variant="link"
-                                sx={{ pl: 0 }}>
-                                {menuItem.label}
-                            </Button>
-                        </MenuItem>
-                    );
-                }
-                if (menuItem.button) {
-                    return (
-                        <MenuItem key={menuItem.label} sx={{ maxWidth: 250 }}>
-                            {menuItem.icon || null}
-                            {menuItem.button}
-                        </MenuItem>
-                    );
+
+                let onClick: MouseEventHandler<HTMLElement> | undefined;
+
+                let content = (
+                    <MarkDownSanitizedWithHtml
+                        content={menuItem.label}
+                        wrapper="span"
+                    />
+                );
+
+                if (menuItem.href) {
+                    onClick = () => {
+                        handleClose();
+                    };
+                } else if (menuItem.action) {
+                    onClick = menuItem.action;
+                } else if (menuItem.dialog) {
+                    onClick = () => {
+                        handleClose();
+                        handleShowDialog(menuItem.dialog);
+                    };
+                } else if (menuItem.button) {
+                    content = menuItem.button;
+                } else {
+                    return null;
                 }
 
-                return null;
+                return (
+                    <MenuItem
+                        key={menuItem.label}
+                        sx={{
+                            maxWidth: 250,
+                            color: theme.palette.primary.main,
+                            textWrap: "initial",
+                            borderBottom: `${colors.grey300} 1px solid`,
+                        }}
+                        onClick={onClick}
+                        aria-label={ariaLabel}
+                        {...(menuItem.href && {
+                            component: Link,
+                            href: menuItem.href,
+                        })}>
+                        {menuItem.icon || null}
+                        {content}
+                    </MenuItem>
+                );
             })}
         </Menu>
     );

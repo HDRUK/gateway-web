@@ -26,6 +26,8 @@ interface Team {
     notifications: Notification[];
     team_logo?: string;
     introduction: string;
+    url?: string;
+    service?: string;
 }
 
 interface TeamEditForm

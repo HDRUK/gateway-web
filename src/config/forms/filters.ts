@@ -17,6 +17,7 @@ export const FILTER_ACCESS_SERVICE = "accessService";
 export const FILTER_POPULATION_SIZE = "populationSize";
 export const FILTER_TYPE_CATEGORY = "typeCategory";
 export const FILTER_CONTAINS_TISSUE = "containsTissue";
+export const FILTER_COHORT_DISCOVERY = "isCohortDiscovery";
 export const FILTER_MATERIAL_TYPE = "sampleAvailability";
 export const FILTER_DATA_TYPE = "dataType";
 export const FILTER_DATA_SUBTYPE = "dataSubType";
@@ -44,6 +45,7 @@ export const filtersList = [
     FILTER_POPULATION_SIZE,
     FILTER_TYPE_CATEGORY,
     FILTER_CONTAINS_TISSUE,
+    FILTER_COHORT_DISCOVERY,
     FILTER_MATERIAL_TYPE,
     FILTER_DATA_TYPE,
     FILTER_DATA_SUBTYPE,
