@@ -100,6 +100,21 @@ const getColumns = ({
     }),
 
     columnHelper.display({
+        id: "cohortEnabled",
+        cell: ({
+            row: {
+                original: { cohortEnabled },
+            },
+        }) => (
+            <div style={{ textAlign: "center" }}>
+                {cohortEnabled ? <CheckIcon color="primary" /> : "-"}
+            </div>
+        ),
+        header: () => <span>{translations.cohortEnabled}</span>,
+        size: 100,
+    }),
+
+    columnHelper.display({
         id: "dataCustodian",
         cell: ({
             row: {

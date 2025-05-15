@@ -9,6 +9,7 @@ interface Library {
     data_provider_dar_enabled: boolean;
     data_provider_name: string;
     data_provider_member_of: string;
+    dataset_is_cohort_discovery: boolean;
 }
 
 interface SelectedLibrary {
@@ -28,6 +29,7 @@ interface LibraryListItem {
     datasetId: number;
     name: string;
     darEnabled: boolean;
+    cohortEnabled: boolean;
     dataCustodian: string;
     entityType: string;
     dataCustodianId: number;

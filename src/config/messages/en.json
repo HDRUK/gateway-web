@@ -391,6 +391,9 @@
                     "name": {
                         "label": "Name"
                     },
+                    "cohortEnabled": {
+                        "label": "Cohort Discovery Enabled"
+                    },
                     "darEnabled": {
                         "label": "Data Access Request Enabled"
                     },
