@@ -29,6 +29,9 @@ const RectangleNode = ({
         ctaLink,
     },
 }: NodeProps<RectangleNodeData>) => {
+    if (hidden) {
+        return;
+    }
     return (
         <div
             style={{
@@ -49,15 +52,14 @@ const RectangleNode = ({
                     underline="none"
                     color="inherit"
                     target="_blank"
-                    rel="noopener noreferrer">
-                    <div
-                        id={id}
-                        style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                        }}>
-                        {label} <LaunchIcon fontSize="small" />
-                    </div>
+                    rel="noopener noreferrer"
+                    id={id}
+                    style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                    }}>
+                    {label}
+                    <LaunchIcon fontSize="small" />
                 </Link>
             ) : action ? (
                 <Button
