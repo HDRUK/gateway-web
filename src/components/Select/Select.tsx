@@ -117,10 +117,10 @@ const Select = <
                 error={!!error}
                 disabled={disabled}
                 input={<OutlinedInput />}
+                inputProps={{ id, name, "aria-label": label }}
                 renderValue={selected =>
                     renderValue(selected, options, !!multiple)
                 }
-                id={id || name}
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
                 {...rest}>

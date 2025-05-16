@@ -29,15 +29,16 @@ const RectangleNode = ({
         ctaLink,
     },
 }: NodeProps<RectangleNodeData>) => {
+    if (hidden) return null;
+
     return (
         <div
             style={{
                 color: "white",
-                background: href
-                    ? color
-                    : action
-                    ? color
-                    : theme.palette.greyCustom.main,
+                background:
+                    href || action || cohort
+                        ? color
+                        : theme.palette.greyCustom.main,
                 padding: "14px",
                 ...nodeSx,
                 opacity: hidden ? 0 : 1,
@@ -50,15 +51,14 @@ const RectangleNode = ({
                     underline="none"
                     color="inherit"
                     target="_blank"
-                    rel="noopener noreferrer">
-                    <div
-                        id={id}
-                        style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                        }}>
-                        {label} <LaunchIcon fontSize="small" />
-                    </div>
+                    rel="noopener noreferrer"
+                    id={id}
+                    style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                    }}>
+                    {label}
+                    <LaunchIcon fontSize="small" />
                 </Link>
             ) : action ? (
                 <Button
@@ -70,18 +70,13 @@ const RectangleNode = ({
                     {label}
                 </Button>
             ) : cohort ? (
-                <div
-                    id={id}
-                    style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                    }}>
-                    <CohortDiscoveryButton
-                        ctaLink={ctaLink}
-                        showDatasetExplanatoryTooltip
-                        variant="link"
-                    />
-                </div>
+                <CohortDiscoveryButton
+                    ctaLink={ctaLink}
+                    showDatasetExplanatoryTooltip
+                    color="inherit"
+                    variant="text"
+                    sx={{ p: 0, lineHeight: "inherit" }}
+                />
             ) : (
                 <div id={id}>{label}</div>
             )}

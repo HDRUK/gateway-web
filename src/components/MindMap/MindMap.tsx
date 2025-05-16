@@ -53,6 +53,7 @@ const MindMap = ({
             proOptions={proOptions}
             fitView
             {...rest}
+            disableKeyboardA11y
         />
     );
 };
