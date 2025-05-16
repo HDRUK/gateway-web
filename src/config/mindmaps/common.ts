@@ -50,10 +50,6 @@ export const nodeValueToRectNode = (
         type: "rect",
         position: { x, y },
         origin,
-        selectable: false,
-        draggable: false,
-        interactive: false,
-        edgesFocusable: false,
         focusable: false,
         data: {
             id: index,
