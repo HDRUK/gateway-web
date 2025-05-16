@@ -7,6 +7,7 @@ import Button from "@/components/Button";
 import GradientBanner from "@/components/GradientBanner";
 import HTMLContent from "@/components/HTMLContent";
 import Link from "@/components/Link";
+import useImageLightbox from "@/hooks/useCMSLightBoxImages";
 import "@/styles/wpStyles.css";
 
 const CMSPromoTemplate = ({
@@ -16,6 +17,7 @@ const CMSPromoTemplate = ({
     content: PageTemplatePromo;
     ctaOverrideComponent?: ReactElement;
 }) => {
+    useImageLightbox(["bottomPanel"]);
     const {
         template: { promofields },
     } = content;
@@ -74,6 +76,7 @@ const CMSPromoTemplate = ({
             </Box>
             {promofields.bottomPanel && (
                 <Box
+                    id="bottomPanel"
                     sx={{
                         display: "flex",
                         bgcolor: "white",

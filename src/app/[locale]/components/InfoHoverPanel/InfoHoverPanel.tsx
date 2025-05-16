@@ -106,7 +106,6 @@ const InfoHoverPanel = ({
                 sx={{ mt: "2rem" }}
             />
             <Box
-                maxWidth={1192}
                 sx={{
                     mt: 2,
                     gap: 1,
