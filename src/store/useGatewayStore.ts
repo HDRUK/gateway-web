@@ -6,12 +6,12 @@ export interface LightBoxImage {
     sizes?: string;
     title?: string;
 }
-export interface DTAState {
+interface GatewayState {
     lightBoxImage: LightBoxImage | undefined;
     SetLightBoxImage: (param: LightBoxImage | undefined) => void;
 }
 
-export const useGatewayStore = create<DTAState>(set => ({
+export const useGatewayStore = create<GatewayState>(set => ({
     lightBoxImage: undefined,
     SetLightBoxImage: param => {
         set({
