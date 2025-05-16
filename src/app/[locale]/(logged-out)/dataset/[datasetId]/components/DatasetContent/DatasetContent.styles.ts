@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Chip from "@/components/Chip";
 
 export const ObservationTableWrapper = styled(Box)(({ theme }) => ({
@@ -16,6 +17,14 @@ export const DatasetFieldWrapper = styled(Box)(() => ({
 }));
 
 export const DatasetFieldItem = styled(Chip)(() => ({
+    textOverflow: "ellipsis",
+    maxWidth: 200,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    marginBottom: "4px",
+}));
+
+export const DatasetButtonItem = styled(Button)(() => ({
     textOverflow: "ellipsis",
     maxWidth: 200,
     overflow: "hidden",
