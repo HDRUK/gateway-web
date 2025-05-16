@@ -14,6 +14,7 @@ const useImageLightbox = (containerIds: string[]) => {
             const images = Array.from(container.querySelectorAll("img"));
 
             images.forEach(img => {
+                const image = img as HTMLImageElement;
                 const getHighestSrcFromSrcset = (
                     srcset: string | null
                 ): string => {
@@ -45,15 +46,15 @@ const useImageLightbox = (containerIds: string[]) => {
                     }
                 };
 
-                img.style.cursor = "pointer";
-                img.tabIndex = 0;
+                image.style.cursor = "pointer";
+                image.tabIndex = 0;
 
-                img.addEventListener("click", handleClick);
-                img.addEventListener("keydown", handleKeydown);
+                image.addEventListener("click", handleClick);
+                image.addEventListener("keydown", handleKeydown);
 
                 cleanupCallbacks.push(() => {
-                    img.removeEventListener("click", handleClick);
-                    img.removeEventListener("keydown", handleKeydown);
+                    image.removeEventListener("click", handleClick);
+                    image.removeEventListener("keydown", handleKeydown);
                 });
             });
         });
