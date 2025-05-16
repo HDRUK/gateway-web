@@ -924,7 +924,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
                     }}
-                    component={"section"}>
+                    component="section">
                     <Box
                         sx={{
                             display: "flex",
