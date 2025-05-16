@@ -3,7 +3,9 @@
 exports[`DatasetStatCard should match snapshot 1`] = `
 <div>
   <div
+    aria-describedby="desc-undefined"
     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-1tdwrob-MuiPaper-root-MuiCard-root"
+    tabindex="0"
   >
     <div
       class="mui-style-1hyoz7m"
@@ -70,6 +72,12 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         />
       </div>
     </div>
+    <span
+      id="desc-undefined"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+    >
+      helper
+    </span>
   </div>
 </div>
 `;

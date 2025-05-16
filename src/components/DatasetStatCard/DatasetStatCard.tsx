@@ -1,6 +1,7 @@
 "use client";
 
 import Typography from "@mui/material/Typography";
+import { visuallyHidden } from "@mui/utils";
 import { hasValidValue } from "@/utils/dataset";
 import TooltipIcon from "../TooltipIcon";
 import {
@@ -106,9 +107,7 @@ const DatasetStatCard = ({
             </InfoWrapper>
 
             {/* this be a description for screen readers */}
-            <span
-                id={descriptionId}
-                style={{ position: "absolute", left: "-9999px" }}>
+            <span id={descriptionId} style={visuallyHidden}>
                 {helperText || `${title} statistic card`}
             </span>
         </StatCard>
