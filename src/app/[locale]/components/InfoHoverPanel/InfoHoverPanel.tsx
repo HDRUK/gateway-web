@@ -135,6 +135,7 @@ const InfoHoverPanel = ({
                 Connected Resources
             </Typography>
             <Box
+                maxWidth={1192}
                 sx={{
                     mt: 2,
                     gap: 1,
