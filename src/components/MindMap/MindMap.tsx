@@ -1,12 +1,13 @@
 "use client";
 
-import ReactFlow, {
+import {
+    ReactFlow,
     Node,
     Edge,
     ConnectionLineType,
     ReactFlowProps,
-} from "reactflow";
-import "reactflow/dist/style.css";
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import CircleNode from "./CircleNode";
 import MindMapEdge from "./MindMapEdge";
 import RectangleNode from "./RectangleNode";
@@ -52,6 +53,7 @@ const MindMap = ({
             proOptions={proOptions}
             fitView
             {...rest}
+            disableKeyboardA11y
         />
     );
 };

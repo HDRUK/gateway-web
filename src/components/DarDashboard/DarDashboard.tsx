@@ -296,7 +296,10 @@ export default function DarDashboard({
 
                     {data?.list?.map(item => {
                         const isMultiTeamApplication =
-                            userId && item.teams.length > 1;
+                            userId &&
+                            item.teams?.length > 1 &&
+                            item.submission_status !==
+                                DarApplicationStatus.DRAFT;
 
                         if (isMultiTeamApplication) {
                             return (

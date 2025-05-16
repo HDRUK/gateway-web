@@ -1,4 +1,3 @@
-import React from "react";
 import type { Preview } from "@storybook/react";
 import { withActionBar } from "./withActionBar.decorator";
 import { withDialog } from "./withDialog.decorator";

@@ -1,4 +1,5 @@
-import { Position } from "reactflow";
+import { Position } from "@xyflow/react";
+import { CtaLink } from "@/interfaces/Cms";
 import theme from "@/config/theme";
 
 export interface NodeValue {
@@ -7,6 +8,8 @@ export interface NodeValue {
     href?: string;
     source?: string;
     hidden?: boolean;
+    cohort?: boolean;
+    ctaLink: CtaLink | null;
 }
 
 export const nodeValueToRectNode = (
@@ -16,48 +19,38 @@ export const nodeValueToRectNode = (
     centerX: number,
     centerY: number
 ) => {
-    const initialRad = 0.5;
+    const initialRad = 0.05 * Math.PI;
     const angleRad = initialRad + (index * 2 * Math.PI) / nNodes;
 
     let position; // connector position
-    const radius = index % 2 ? 100 : 190; // distance away from the center
-
-    switch (true) {
-        case angleRad > 1.25 * Math.PI:
-            position = Position.Right;
-            break;
-        case angleRad > 0.75 * Math.PI:
-            position = Position.Bottom;
-            break;
-        case angleRad > 0.25 * Math.PI:
-            position = Position.Left;
-            break;
-        default:
-            position = Position.Top;
-    }
-
-    // correct for the length of the text box
-    // rough guess that the length is 2.5 as long as the number of characters in the label
-    let correctionX = node.label ? 4.5 * node.label.length : 100;
+    let origin; // origin of node for positioning
+    const radius = 140; // distance away from the center
     let color = theme.palette.secondary.main;
-    if (angleRad > Math.PI) {
-        // need to subtract this if it's on the left side of the inner node
-        correctionX *= -1;
-        // also switch the color
+
+    if (angleRad <= 2 * Math.PI && angleRad > 1 * Math.PI) {
+        origin = [1, 0.5];
+        position = Position.Right;
         color = theme.palette.primary.main;
+    } else {
+        origin = [0, 0.5];
+        position = Position.Left;
     }
 
-    // calculate the x position of the box
-    // - make a correction to the x position due to the box shape
-    const x = centerX + radius * Math.sin(angleRad) + correctionX;
-    // calculate the y position of the box
-    // - dont bother making a small correction for the y position due to box shape
-    const y = centerY + radius * Math.cos(angleRad);
+    // calculate the position of the box
+    const spacingFactor = 0.4; // If extra nodes are added in future, increase this spacingFactor to stop nodes overlapping vertically
+    const x = centerX + radius * Math.sin(angleRad);
+    const y =
+        centerY +
+        (Math.abs(index - (nNodes - 1) / 2) - nNodes / 4) *
+            radius *
+            spacingFactor;
 
     return {
         id: `node-${node.name}`,
         type: "rect",
         position: { x, y },
+        origin,
+        focusable: false,
         data: {
             id: index,
             name: node.name,
@@ -67,6 +60,8 @@ export const nodeValueToRectNode = (
             href: node.href,
             hidden: node.hidden,
             source: node.source,
+            cohort: node.cohort,
+            ctaLink: node.ctaLink,
         },
     };
 };

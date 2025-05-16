@@ -193,6 +193,32 @@ const theme = createTheme({
     },
     palette,
     components: {
+        MuiIconButton: {
+            styleOverrides: {
+                root: ({ theme }) => {
+                    return {
+                        "&.Mui-focusVisible > .MuiSvgIcon-root": {
+                            outline: `2px solid ${theme.palette.primary.main}`,
+                            outlineOffset: 2,
+                            borderRadius: "50%",
+                        },
+                    };
+                },
+            },
+        },
+        MuiTooltip: {
+            styleOverrides: {
+                tooltip: ({ theme }) => ({
+                    borderRadius: 0,
+                    background: colors.grey900,
+                    color: colors.white,
+                    padding: theme.spacing(2),
+                    maxWidth: "395px",
+                    margin: 0,
+                    fontSize: theme.typography.body1.fontSize,
+                }),
+            },
+        },
         MuiSvgIcon: {
             variants: [
                 {
@@ -202,6 +228,23 @@ const theme = createTheme({
                     },
                 },
             ],
+        },
+        MuiMenuItem: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    "&:focus": {
+                        backgroundColor: colors.white,
+
+                        ".MuiTouchRipple-root": {
+                            outline: `3px solid ${theme.palette.primary.main}`,
+                            margin: "3px",
+                        },
+                    },
+                    "&:hover": {
+                        backgroundColor: theme.palette.grey[200],
+                    },
+                }),
+            },
         },
         MuiButtonBase: {
             styleOverrides: {

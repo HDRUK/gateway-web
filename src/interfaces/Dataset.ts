@@ -200,6 +200,7 @@ interface Dataset {
     publications: Publication[];
     team: Team;
     name?: string;
+    is_cohort_discovery: boolean;
 }
 
 interface DataCustodianDataset {

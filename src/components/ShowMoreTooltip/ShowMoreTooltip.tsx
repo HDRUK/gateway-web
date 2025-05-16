@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
+import { Tooltip } from "@mui/material";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
-import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 

@@ -383,6 +383,13 @@
                                 "buttonTooltip": "Select at least one dataset to enable",
                                 "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template"
                             },
+                            "cohortDiscovery": {
+                                "title": "Cohort Discovery",
+                                "text": "Start a Cohort Discovery request. Not all Datasets on the Gateway have this feature enabled. You will also need to have Cohort Discovery access approved for your account.",
+                                "buttonText": "Start a Cohort Discovery request",
+                                "buttonTooltip": "Select at least one dataset to enable.",
+                                "buttonTooltipCohort": "You have selected dataset(s) that do not support Cohort Discovery."
+                            },
                             "multiDelete": {
                                 "label": "Multi delete"
                             }
@@ -390,6 +397,9 @@
                     },
                     "name": {
                         "label": "Name"
+                    },
+                    "cohortEnabled": {
+                        "label": "Cohort Discovery Enabled"
                     },
                     "darEnabled": {
                         "label": "Data Access Request Enabled"
@@ -420,7 +430,8 @@
                         "deleteIntro": "This action is permanent, and the information cannot be recovered.",
                         "withdrawTitle": "Are you sure you want to withdraw this application?",
                         "withdrawIntro": "This action is permanent, and the application cannot be opened for editing or resubmitted to a Data Custodian.",
-                        "dataAccessRequests": "Data Access Request"
+                        "dataAccessRequests": "Data Access Request",
+                        "noDatasetTitle": "No title"
                     },
                     "manageTemplates": {
                         "title": "Manage Templates"
@@ -1040,6 +1051,8 @@
                             "programmingLanguagesTooltip": "Programming language used in developing an analysis script or software",
                             "typeCategory": "Tool type",
                             "typeCategoryTooltip": "Categorisation based on where in the research journey an Analysis Script & Software is used",
+                            "dataProvider": "Data Custodian",
+                            "dataProviderTooltip": "Individual or organisation providing metadata on the Gateway",
                             "datasetTitles": "Dataset",
                             "datasetTitlesTooltip": "The name of the dataset(s) being accessed"
                         }
@@ -1279,6 +1292,7 @@
                     "dataCustodian": "Data Custodian",
                     "structuralMetadata": "Data variables",
                     "demographics": "Explore demographics",
+                    "cohortDiscovery": "Access Cohort Discovery",
                     "curatedPublications": "Publications using this dataset (curated)",
                     "externalPublications": "Publications using this dataset (external search)",
                     "coverageCompleteness": "Coverage and completeness"
@@ -1427,8 +1441,9 @@
             "tooltip-3": "Satisfied",
             "tooltip-4": "Very Satisfied"
         },
-        "CtaOverride": {
-            "notApproved": "Your request to access Cohort Discovery is still pending, keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen."
+        "CohortDiscoveryButton": {
+            "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
+            "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries."
         },
         "CMSBanner": {
             "ariaCloseButtonLabel": "Close banner"

@@ -1,67 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SxProps } from "@mui/material";
 import { FileExport } from "@/interfaces/FileExport";
-import Button from "@/components/Button";
 import useGet from "@/hooks/useGet";
-import notificationService from "@/services/notification";
-import { DownloadIcon } from "@/consts/icons";
-import { downloadExternalFile, downloadFile } from "@/utils/download";
+import { downloadFile } from "@/utils/download";
+import DownloadButton from "../DownloadButton";
 
-interface DownloadFileProps {
+export interface DownloadFileProps {
     apiPath: string;
     buttonText: string;
-    isExternalFile?: boolean;
-    externalFileName?: string;
     buttonSx?: SxProps;
 }
 
-const DownloadFile = ({
-    apiPath,
-    buttonText,
-    isExternalFile,
-    externalFileName,
-    buttonSx,
-}: DownloadFileProps) => {
-    const [shouldFetch, setShouldFetch] = useState(false);
-
+const DownloadFile = ({ apiPath, buttonText, buttonSx }: DownloadFileProps) => {
+    const [isFetched, setIsFetched] = useState(false);
     const download = useGet<FileExport>(apiPath, {
-        shouldFetch,
+        shouldFetch: !isFetched,
     });
 
-    const handleExternalFileDownload = async () => {
-        if (!externalFileName) {
-            return;
-        }
-        const response = await fetch(apiPath);
-        if (!response.ok) {
-            notificationService.apiError("Failed to download file");
-            return;
-        }
-
-        downloadExternalFile(response, externalFileName);
-    };
-
-    useEffect(() => {
-        if (!shouldFetch) return;
-
+    const handleDownload = () => {
         download.mutate().then(data => {
             downloadFile(data);
-            setShouldFetch(false);
+            setIsFetched(true);
         });
-    }, [download, shouldFetch]);
+    };
 
     return (
-        <Button
-            onClick={() =>
-                !isExternalFile
-                    ? setShouldFetch(true)
-                    : handleExternalFileDownload()
-            }
-            sx={{ marginBottom: 2, ...buttonSx }}
-            variant="link"
-            startIcon={<DownloadIcon />}>
+        <DownloadButton onClick={handleDownload} sx={buttonSx}>
             {buttonText}
-        </Button>
+        </DownloadButton>
     );
 };
 

@@ -2,7 +2,7 @@ export enum FieldType {
     TEXT = "text",
     LIST = "list",
     DATE = "date",
-    TAG = "tag",
+    TAG_LIST = "tag-list",
     LINK_LIST = "link-list",
 }
 interface DatasetField {
@@ -64,7 +64,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.documentation.associatedMedia",
-                type: FieldType.TEXT,
+                type: FieldType.LINK_LIST,
                 label: "Associated media",
                 tooltip:
                     "Media that might provide additional context for researchers wanting to understand more about the dataset and its relevance to their research question.",
@@ -83,7 +83,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.summary.keywords",
-                type: FieldType.LIST,
+                type: FieldType.TAG_LIST,
             },
         ],
     },
@@ -146,7 +146,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.structuralMetadata.tables",
-                type: FieldType.TAG,
+                type: FieldType.TAG_LIST,
             },
         ],
     },

@@ -2,15 +2,15 @@
 
 import { useMemo } from "react";
 import { FileUploadOutlined } from "@mui/icons-material";
-import { Divider } from "@mui/material";
+import { Divider, Tooltip } from "@mui/material";
 import { uniq } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
-import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
@@ -18,15 +18,21 @@ import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
 interface RightPanelProps {
     selected: SelectedLibrary;
     handleRemove: (id: string) => void;
+    cohortDiscovery: PageTemplatePromo;
 }
 
-const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
+const RightPanel = ({
+    selected,
+    handleRemove,
+    cohortDiscovery,
+}: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showSidebar } = useSidebar();
     const { createDARApplication } = useDataAccessRequest();
@@ -43,6 +49,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                     teamName: item.teamName,
                     teamMemberOf: item.teamMemberOf,
                     darEnabled: item.darEnabled,
+                    cohortEnabled: item.cohortEnabled,
                 };
             });
     }, [selected]);
@@ -103,13 +110,15 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 ? ""
                                 : t("generalEnquiries.buttonTooltip")
                         }>
-                        <Button
-                            onClick={handleGeneralEnquiries}
-                            sx={{ mt: 2, width: "100%" }}
-                            disabled={!(selectedDatasets.length > 0)}>
-                            <QuestionAnswerIcon sx={{ pr: 1 }} />
-                            {t("generalEnquiries.buttonText")}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={handleGeneralEnquiries}
+                                sx={{ mt: 2, width: "100%" }}
+                                disabled={!(selectedDatasets.length > 0)}>
+                                <QuestionAnswerIcon sx={{ pr: 1 }} />
+                                {t("generalEnquiries.buttonText")}
+                            </Button>
+                        </div>
                     </Tooltip>
                 </Box>
                 <Divider sx={{ my: 2 }} />
@@ -124,13 +133,15 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 ? ""
                                 : t("feasibilityEnquiries.buttonTooltip")
                         }>
-                        <Button
-                            onClick={handleFeasibilityEnquiries}
-                            sx={{ mt: 2, width: "100%" }}
-                            disabled={!(selectedDatasets.length > 0)}>
-                            <QuestionAnswerIcon sx={{ pr: 1 }} />
-                            {t("feasibilityEnquiries.buttonText")}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={handleFeasibilityEnquiries}
+                                sx={{ mt: 2, width: "100%" }}
+                                disabled={!(selectedDatasets.length > 0)}>
+                                <QuestionAnswerIcon sx={{ pr: 1 }} />
+                                {t("feasibilityEnquiries.buttonText")}
+                            </Button>
+                        </div>
                     </Tooltip>
                 </Box>
                 <Divider sx={{ my: 2 }} />
@@ -149,19 +160,52 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 ? ""
                                 : t("dataAccessRequest.buttonTooltip")
                         }>
-                        <Button
-                            onClick={handleDar}
+                        <div>
+                            <Button
+                                onClick={handleDar}
+                                sx={{ mt: 2, width: "100%" }}
+                                disabled={
+                                    !(selectedDatasets.length > 0) ||
+                                    !selectedDatasets.every(
+                                        dataset => dataset.darEnabled
+                                    )
+                                }>
+                                <FileUploadOutlined sx={{ pr: 1 }} />
+                                {t("dataAccessRequest.buttonText")}
+                            </Button>
+                        </div>
+                    </Tooltip>
+                </Box>
+                <Divider sx={{ my: 2 }} />
+                <Box sx={{ p: 0 }}>
+                    <Typography variant="h2">
+                        {t("cohortDiscovery.title")}
+                    </Typography>
+                    <Typography>{t("cohortDiscovery.text")}</Typography>
+                    <div>
+                        <CohortDiscoveryButton
                             sx={{ mt: 2, width: "100%" }}
-                            disabled={
+                            disabledOuter={
                                 !(selectedDatasets.length > 0) ||
                                 !selectedDatasets.every(
-                                    dataset => dataset.darEnabled
+                                    dataset => dataset.cohortEnabled
                                 )
-                            }>
-                            <FileUploadOutlined sx={{ pr: 1 }} />
-                            {t("dataAccessRequest.buttonText")}
-                        </Button>
-                    </Tooltip>
+                            }
+                            ctaLink={
+                                cohortDiscovery?.template?.promofields?.ctaLink
+                            }
+                            showDatasetExplanatoryTooltip
+                            tooltipOverride={
+                                !selectedDatasets.every(
+                                    dataset => dataset.cohortEnabled
+                                )
+                                    ? t("cohortDiscovery.buttonTooltipCohort")
+                                    : selectedDatasets.length > 0
+                                    ? ""
+                                    : t("cohortDiscovery.buttonTooltip")
+                            }
+                        />
+                    </div>
                 </Box>
                 {selectedDatasets.length > 1 && (
                     <>

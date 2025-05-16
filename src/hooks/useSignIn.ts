@@ -1,29 +1,37 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSWRConfig } from "swr";
 import { SignIn } from "@/interfaces/SignIn";
 import useDialog from "@/hooks/useDialog";
-import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 
 const useSignIn = () => {
     const { hideDialog } = useDialog();
     const router = useRouter();
-    const { mutate } = useSWRConfig();
-
-    const signIn = usePost<SignIn>(apis.signInInternalUrl, {
-        localeKey: "auth",
-        successNotificationsOn: false,
-    });
 
     return async (data: SignIn) => {
-        await signIn(data);
-        hideDialog();
-        setTimeout(() => {
+        try {
+            const response = await fetch(apis.signInInternalUrl, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || "Sign-in failed");
+            }
+
+            hideDialog();
+
             router.push("/account/profile");
-            mutate(apis.authInternalUrl);
-        }, 500);
+        } catch (error) {
+            console.error("Sign-in failed:", error);
+            throw error;
+        }
     };
 };
 

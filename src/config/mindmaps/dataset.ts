@@ -3,6 +3,8 @@ import { nodeValueToRectNode } from "./common";
 const centerX = 0;
 const centerY = 0;
 
+// If adding more nodes here, consider increasing spacingFactor in
+// common.ts to avoid vertical overlap of nodes.
 const outerNodeValues = [
     {
         name: "tools",
@@ -25,6 +27,10 @@ const outerNodeValues = [
     {
         name: "collections",
         href: "/search?type=collections",
+    },
+    {
+        name: "cohortDiscovery",
+        cohort: true,
     },
     {
         name: "coverageCompleteness",
@@ -59,7 +65,7 @@ const rootNode = {
 
 const getOuterNodes = nodes =>
     nodes.map((node, index) =>
-        nodeValueToRectNode(node, index - 1, nodes.length, centerX, centerY)
+        nodeValueToRectNode(node, index, nodes.length, centerX, centerY)
     );
 
 const initialEdges = outerNodeValues.map((node, index) => ({
