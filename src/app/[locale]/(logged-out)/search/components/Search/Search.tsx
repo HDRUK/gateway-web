@@ -583,18 +583,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         onContinue: () => mutateLibraries(),
     });
 
-    const renderResults = () => {
-        if (resultsView === ViewType.TABLE) {
-            return (
-                <ResultsTable
-                    results={data?.list as SearchResultDataset[]}
-                    showLibraryModal={showLibraryModal}
-                    cohortDiscovery={cohortDiscovery}
-                />
-            );
-        }
-
-        return (
+    const renderResults = () =>
+        resultsView === ViewType.TABLE ? (
+            <ResultsTable
+                results={data?.list as SearchResultDataset[]}
+                showLibraryModal={showLibraryModal}
+                cohortDiscovery={cohortDiscovery}
+            />
+        ) : (
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
@@ -605,7 +601,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 {data?.list.map(result => renderResultCard(result))}
             </ResultsList>
         );
-    };
 
     const getSortOptions = () => {
         switch (queryParams.type) {
@@ -905,13 +900,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
-                    }}>
+                    }}
+                    component="section">
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             m: 2,
-                        }}>
+                        }}
+                        aria-busy={isSearching}>
                         {!isSearching && !isEuropePmcSearchNoQuery && (
                             <Box
                                 sx={{
@@ -919,24 +916,24 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     justifyContent: "space-between",
                                     alignItems: "center",
                                 }}>
-                                <Box sx={{ display: "flex" }}>
-                                    <>
-                                        {data?.path?.includes(
-                                            queryParams.type
-                                        ) &&
-                                            !!data?.elastic_total && (
-                                                <ShowingXofX
-                                                    to={data?.to}
-                                                    from={data?.from}
-                                                    total={data?.total}
-                                                />
-                                            )}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
+                                <Box
+                                    sx={{ display: "flex" }}
+                                    id="result-summary"
+                                    role="alert"
+                                    aria-live="polite">
+                                    {data?.path?.includes(queryParams.type) &&
+                                        !!data?.elastic_total && (
+                                            <ShowingXofX
+                                                to={data?.to}
+                                                from={data?.from}
+                                                total={data?.total}
+                                            />
                                         )}
-                                    </>
+                                    {data && data.elastic_total > 100 && (
+                                        <ResultLimitText>
+                                            {t("resultLimit")}
+                                        </ResultLimitText>
+                                    )}
                                 </Box>
 
                                 {queryParams.type ===
@@ -949,7 +946,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             </Box>
                         )}
 
-                        {isSearching && <Loading />}
+                        {isSearching && (
+                            <Loading ariaLabel={t("loadingAriaLabel")} />
+                        )}
 
                         {!isSearching &&
                             !data?.list?.length &&
@@ -959,8 +958,12 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     SearchCategory.PUBLICATIONS
                                 )) &&
                             !isEuropePmcSearchNoQuery && (
-                                <Paper sx={{ textAlign: "center", p: 5 }}>
-                                    <Typography variant="h3">
+                                <Paper
+                                    sx={{ textAlign: "center", p: 5 }}
+                                    role="status"
+                                    aria-live="polite"
+                                    id="result-summary">
+                                    <Typography variant="h3" role="alert">
                                         {t("noResults")}
                                     </Typography>
                                 </Paper>
@@ -990,9 +993,29 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             </Typography>
                                         </>
                                     )}
+
                                     <div aria-describedby="result-summary">
                                         {renderResults()}
                                     </div>
+
+                                    <Pagination
+                                        isLoading={isSearching}
+                                        page={parseInt(queryParams.page, 10)}
+                                        count={data?.lastPage}
+                                        onChange={(
+                                            e: React.ChangeEvent<unknown>,
+                                            page: number
+                                        ) => {
+                                            setQueryParams({
+                                                ...queryParams,
+                                                page: page.toString(),
+                                            });
+                                            updatePath(
+                                                PAGE_FIELD,
+                                                page.toString()
+                                            );
+                                        }}
+                                    />
                                 </>
                             )}
                         <Pagination
