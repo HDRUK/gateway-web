@@ -35,6 +35,8 @@ const DatasetStatCard = ({
     enableScroll,
     targetScroll,
 }: DatasetStatCardProps) => {
+    const descriptionId = `desc-${targetScroll}`;
+
     const handleScroll = () => {
         document?.getElementById(targetScroll)!.scrollIntoView({
             behavior: "smooth",
@@ -42,9 +44,19 @@ const DatasetStatCard = ({
         });
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (enableScroll && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            handleScroll();
+        }
+    };
+
     return (
         <StatCard
-            onClick={enableScroll ? () => handleScroll() : undefined}
+            tabIndex={0}
+            onClick={enableScroll ? handleScroll : undefined}
+            onKeyDown={handleKeyDown}
+            aria-describedby={descriptionId}
             sx={{
                 ...(enableScroll ? { cursor: "pointer" } : {}),
             }}>
@@ -92,6 +104,13 @@ const DatasetStatCard = ({
                     </StatImageWrapper>
                 )}
             </InfoWrapper>
+
+            {/* this be a description for screen readers */}
+            <span
+                id={descriptionId}
+                style={{ position: "absolute", left: "-9999px" }}>
+                {helperText || `${title} statistic card`}
+            </span>
         </StatCard>
     );
 };
