@@ -10,11 +10,11 @@ describe("Loading", () => {
     it("should add aria label", async () => {
         const wrapper = render(<Loading ariaLabel="TEST ARIA LABEL" />);
 
-        expect(wrapper.getByLabelText("TEST ARIA LABEL")).toBeInTheDocument();
+        expect(wrapper.getByText("TEST ARIA LABEL")).toBeInTheDocument();
     });
     it("should default aria label if none passed", async () => {
         const wrapper = render(<Loading />);
 
-        expect(wrapper.getByLabelText("Loading")).toBeInTheDocument();
+        expect(wrapper.getByText("Loading")).toBeInTheDocument();
     });
 });

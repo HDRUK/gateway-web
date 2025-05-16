@@ -915,29 +915,25 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     justifyContent: "space-between",
                                     alignItems: "center",
                                 }}>
-                                {!!data?.list?.length && (
-                                    <Box
-                                        sx={{ display: "flex" }}
-                                        id="result-summary"
-                                        role="alert"
-                                        aria-live="polite">
-                                        {data?.path?.includes(
-                                            queryParams.type
-                                        ) &&
-                                            !!data?.elastic_total && (
-                                                <ShowingXofX
-                                                    to={data?.to}
-                                                    from={data?.from}
-                                                    total={data?.total}
-                                                />
-                                            )}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
+                                <Box
+                                    sx={{ display: "flex" }}
+                                    id="result-summary"
+                                    role="alert"
+                                    aria-live="polite">
+                                    {data?.path?.includes(queryParams.type) &&
+                                        !!data?.elastic_total && (
+                                            <ShowingXofX
+                                                to={data?.to}
+                                                from={data?.from}
+                                                total={data?.total}
+                                            />
                                         )}
-                                    </Box>
-                                )}
+                                    {data && data.elastic_total > 100 && (
+                                        <ResultLimitText>
+                                            {t("resultLimit")}
+                                        </ResultLimitText>
+                                    )}
+                                </Box>
 
                                 {queryParams.type ===
                                     SearchCategory.DATASETS && (
