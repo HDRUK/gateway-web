@@ -23,6 +23,7 @@ import {
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultCollection,
     SearchResultDataProvider,
     SearchResultDataUse,
     SearchResultDataset,
@@ -111,6 +112,7 @@ import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
 import ResultCard from "../ResultCard";
+import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
