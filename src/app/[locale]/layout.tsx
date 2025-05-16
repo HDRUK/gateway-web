@@ -4,6 +4,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
+import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
@@ -60,6 +61,7 @@ export default function RootLayout({
                                             minHeight: "100vh",
                                         }}>
                                         <SupportPopOut />
+                                        <LightBox />
                                         <CMSBanners />
                                         {children}
                                         <Footer />
