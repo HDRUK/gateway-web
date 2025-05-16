@@ -5,7 +5,6 @@ import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
@@ -65,10 +64,21 @@ export default async function RootLayout({
                                     <LightBox />
                                     <CMSBanners />
                                     <SnackbarProvider />
-                                    <Header />
-
-                                    {children}
-                                    <Footer />
+                                    <div
+                                        style={{
+                                            width: "100%",
+                                            fontFamily:
+                                                sourceSans3.style.fontFamily,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            minHeight: "100vh",
+                                        }}>
+                                        <SupportPopOut />
+                                        <LightBox />
+                                        <CMSBanners />
+                                        {children}
+                                        <Footer />
+                                    </div>
                                     <CustomerSurvey />
                                     <Suspense fallback={null}>
                                         <NavigationEvents />

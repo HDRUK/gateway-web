@@ -53,7 +53,7 @@ const slideOut = keyframes`
 `;
 
 interface CustomerSurveyProps {
-    hideOnLoad: boolean;
+    hideOnLoad?: boolean;
 }
 
 export default function CustomerSurvey({
