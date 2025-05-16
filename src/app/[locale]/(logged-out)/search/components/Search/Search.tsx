@@ -5,7 +5,6 @@ import {
     useCallback,
     useEffect,
     useMemo,
-    useRef,
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
@@ -362,26 +361,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const resultsRef = useRef<HTMLDivElement | null>(null);
-
-    // Change current focus when search is complete
-    useEffect(() => {
-        if (resultsRef.current) {
-            resultsRef.current.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-            resultsRef.current.tabIndex = -1;
-
-            resultsRef.current.focus({ preventScroll: true });
-
-            setTimeout(
-                () => resultsRef.current?.removeAttribute("tabindex"),
-                1000
-            );
-        }
-    }, [data]);
-
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?perPage=-1`,
@@ -603,27 +582,24 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         onContinue: () => mutateLibraries(),
     });
 
-    const renderResults = () => (
-        <div ref={resultsRef}>
-            {resultsView === ViewType.TABLE ? (
-                <ResultsTable
-                    results={data?.list as SearchResultDataset[]}
-                    showLibraryModal={showLibraryModal}
-                    cohortDiscovery={cohortDiscovery}
-                />
-            ) : (
-                <ResultsList
-                    variant={
-                        queryParams.type === SearchCategory.COLLECTIONS ||
-                        queryParams.type === SearchCategory.DATA_PROVIDERS
-                            ? "tiled"
-                            : "list"
-                    }>
-                    {data?.list.map(result => renderResultCard(result))}
-                </ResultsList>
-            )}
-        </div>
-    );
+    const renderResults = () =>
+        resultsView === ViewType.TABLE ? (
+            <ResultsTable
+                results={data?.list as SearchResultDataset[]}
+                showLibraryModal={showLibraryModal}
+                cohortDiscovery={cohortDiscovery}
+            />
+        ) : (
+            <ResultsList
+                variant={
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    queryParams.type === SearchCategory.DATA_PROVIDERS
+                        ? "tiled"
+                        : "list"
+                }>
+                {data?.list.map(result => renderResultCard(result))}
+            </ResultsList>
+        );
 
     const getSortOptions = () => {
         switch (queryParams.type) {
@@ -930,7 +906,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             display: "flex",
                             flexDirection: "column",
                             m: 2,
-                        }}>
+                        }}
+                        aria-busy={isSearching}>
                         {!isSearching && !isEuropePmcSearchNoQuery && (
                             <Box
                                 sx={{
@@ -941,29 +918,24 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                 {!!data?.list?.length && (
                                     <Box
                                         sx={{ display: "flex" }}
-                                        id="result-summary">
-                                        <>
-                                            {data?.path?.includes(
-                                                queryParams.type
-                                            ) &&
-                                                !!data?.elastic_total && (
-                                                    <Box
-                                                        role="status"
-                                                        aria-live="polite">
-                                                        <ShowingXofX
-                                                            to={data?.to}
-                                                            from={data?.from}
-                                                            total={data?.total}
-                                                        />
-                                                    </Box>
-                                                )}
-                                            {data &&
-                                                data.elastic_total > 100 && (
-                                                    <ResultLimitText>
-                                                        {t("resultLimit")}
-                                                    </ResultLimitText>
-                                                )}
-                                        </>
+                                        id="result-summary"
+                                        role="alert"
+                                        aria-live="polite">
+                                        {data?.path?.includes(
+                                            queryParams.type
+                                        ) &&
+                                            !!data?.elastic_total && (
+                                                <ShowingXofX
+                                                    to={data?.to}
+                                                    from={data?.from}
+                                                    total={data?.total}
+                                                />
+                                            )}
+                                        {data && data.elastic_total > 100 && (
+                                            <ResultLimitText>
+                                                {t("resultLimit")}
+                                            </ResultLimitText>
+                                        )}
                                     </Box>
                                 )}
 
@@ -994,7 +966,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     role="status"
                                     aria-live="polite"
                                     id="result-summary">
-                                    <Typography variant="h3">
+                                    <Typography variant="h3" role="alert">
                                         {t("noResults")}
                                     </Typography>
                                 </Paper>
@@ -1025,9 +997,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         </>
                                     )}
 
-                                    <div
-                                        ref={resultsRef}
-                                        aria-describedby="result-summary">
+                                    <div aria-describedby="result-summary">
                                         {renderResults()}
                                     </div>
 

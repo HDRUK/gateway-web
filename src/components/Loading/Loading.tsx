@@ -1,4 +1,5 @@
 import { CircularProgress } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import Box from "@/components/Box";
 
 interface LoadingProps {
@@ -8,14 +9,13 @@ interface LoadingProps {
 
 const Loading = ({ size = 48, ariaLabel = "Loading" }: LoadingProps) => {
     return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <CircularProgress
-                size={size}
-                color="secondary"
-                aria-live="polite"
-                aria-label={ariaLabel}
-                role="status"
-            />
+        <Box
+            sx={{ display: "flex", justifyContent: "center" }}
+            aria-live="polite">
+            <CircularProgress size={size} color="secondary" role="status" />
+            <span style={visuallyHidden} role="alert">
+                {ariaLabel}
+            </span>
         </Box>
     );
 };
