@@ -50,6 +50,7 @@ export const nodeValueToRectNode = (
         type: "rect",
         position: { x, y },
         origin,
+        focusable: false,
         data: {
             id: index,
             name: node.name,
