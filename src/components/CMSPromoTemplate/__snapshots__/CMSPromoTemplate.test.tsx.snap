@@ -138,6 +138,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
     </div>
     <div
       class="MuiBox-root mui-style-gfthyi"
+      id="bottomPanel"
     >
       <div
         class="MuiBox-root mui-style-1t3222e"
