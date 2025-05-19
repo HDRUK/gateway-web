@@ -45,12 +45,8 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             unit: t("populationUnit"),
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
-            targetScroll: "anchor-Documentation",
-            enableScroll: populationStat
-                ? populationStat.toString() === "-1"
-                    ? false
-                    : !!populationStat
-                : false,
+            targetScroll: "anchor-Observations",
+            enableScroll: !!populationStat,
         },
         {
             title: t("yearTitle"),
