@@ -23,9 +23,11 @@ import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
+import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import CohortDiscoveryButton from "../../../about/cohort-discovery/components/CohortDiscoveryButton";
@@ -180,6 +182,8 @@ const ResultCard = ({
             : []),
     ];
 
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
+
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
@@ -215,6 +219,10 @@ const ResultCard = ({
                 }
             }
         } else {
+            setPostLoginActionCookie(PostLoginActions.ADD_LIBRARY, {
+                datasetId: Number(datasetId),
+            });
+
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,
                 redirectPath,
