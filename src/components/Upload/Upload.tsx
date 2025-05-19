@@ -13,7 +13,6 @@ export interface UploadProps extends InputProps {
     control: Control;
     helperText?: string;
     acceptFileTypes?: string;
-    uploadSx?: SxProps;
     formControlSx?: SxProps;
     onFileChange?: (file: File) => void;
     onFocus?: () => void;
@@ -27,7 +26,6 @@ const Upload = (props: UploadProps) => {
         name,
         helperText,
         formControlSx,
-        uploadSx,
         onFileChange,
         onFocus,
         ...rest

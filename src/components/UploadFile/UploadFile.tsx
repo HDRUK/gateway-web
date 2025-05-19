@@ -248,7 +248,6 @@ const UploadFile = ({
                                 control={uploadFileControl}
                                 label={fileSelectButtonText || t("upload")}
                                 name={name}
-                                uploadSx={{ display: "none" }}
                                 acceptFileTypes={acceptedFileTypes}
                                 onFileChange={async (file: File) => {
                                     if (!file) {
