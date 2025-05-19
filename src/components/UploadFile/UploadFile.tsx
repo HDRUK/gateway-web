@@ -51,6 +51,7 @@ export interface UploadFileProps {
     fileDownloadApiPath?: string;
     hideUpload?: boolean;
     skipImageValidation?: boolean;
+    onFocus?: () => void;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -79,6 +80,7 @@ const UploadFile = ({
     fileDownloadApiPath,
     hideUpload = false,
     skipImageValidation = false,
+    onFocus,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -234,6 +236,7 @@ const UploadFile = ({
             formControlSx={sx}
             label={label}
             required={required}
+            name={name}
             error={error && formatErrorMessage(error, label)}>
             <Stack spacing={0}>
                 {!fileId && (
@@ -244,7 +247,7 @@ const UploadFile = ({
                                 disabled={disabled}
                                 control={uploadFileControl}
                                 label={fileSelectButtonText || t("upload")}
-                                name="upload"
+                                name={name}
                                 uploadSx={{ display: "none" }}
                                 acceptFileTypes={acceptedFileTypes}
                                 onFileChange={async (file: File) => {
@@ -283,6 +286,7 @@ const UploadFile = ({
                                 }
                                 fileName={file?.name || existingFilename}
                                 fileDownloadApiPath={fileDownloadApiPath}
+                                onFocus={() => onFocus && onFocus()}
                             />
                         )}
                         {showUploadButton && !hideUpload && (
