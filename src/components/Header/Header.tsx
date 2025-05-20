@@ -44,7 +44,7 @@ function Header() {
             <Container maxWidth="desktop">
                 <Toolbar
                     component="nav"
-                    aria-label="HDR Gateway"
+                    aria-label="HDR UK Gateway"
                     disableGutters
                     sx={{
                         pt: 1,
@@ -64,7 +64,7 @@ function Header() {
                             priority
                             width={110}
                             height={50}
-                            alt="HDR Gateway logo"
+                            alt="HDR UK Gateway"
                         />
                     </Link>
                     <Box
