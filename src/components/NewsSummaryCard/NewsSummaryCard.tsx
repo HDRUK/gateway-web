@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { Box, Button, CardActions } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -32,8 +33,12 @@ const NewsSummaryCard = ({
     imageAlt,
     imageHeight = "225px",
 }: NewsSummaryCardProps) => {
+    const id = useId();
+
     return (
         <Card
+            component="article"
+            aria-describedby={id}
             sx={{
                 width: "100%",
                 maxWidth: { tablet: 345 },
@@ -46,12 +51,13 @@ const NewsSummaryCard = ({
                 image={imageLink}
                 alt={imageAlt}
             />
-            <DateBox>
+            <DateBox aria-label={formatDate(date, "DD MMMM YYYY")}>
                 <div>{formatDate(date, "MMM")}</div>
                 <div>{formatDate(date, "DD")}</div>
             </DateBox>
             <CardContent>
                 <Typography
+                    id={id}
                     gutterBottom
                     fontSize={20}
                     variant="h5"
