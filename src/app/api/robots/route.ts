@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 export const dynamic = "force-dynamic";
 const { BLOCK_ROBOTS } = process.env;
 const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
