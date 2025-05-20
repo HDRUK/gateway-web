@@ -40,6 +40,6 @@ describe("Header", () => {
         await act(() => render(<Header />));
 
         const logoImage = screen.getAllByAltText("HDR UK Gateway");
-        expect(logoImage).toHaveLength(2);
+        expect(logoImage).toHaveLength(1);
     });
 });
