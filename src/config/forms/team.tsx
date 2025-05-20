@@ -58,7 +58,7 @@ const formFields = [
     {
         label: "Organisation name",
         name: "name",
-        info: "Please ensure the name matches the standard format for organsitation names",
+        info: "Please ensure the name matches the standard format for organisation names",
         component: inputComponents.TextArea,
         required: true,
     },

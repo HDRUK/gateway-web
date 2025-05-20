@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { colors } from "@/config/theme";
 import Button from "../Button";
-import DownloadFile from "../DownloadFile";
+import DownloadExternalFile from "../DownloadExternalFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
 
 interface FormBannerProps {
@@ -34,12 +34,10 @@ const FormBanner = ({
         <Wrapper id={NAVBAR_ID}>
             <DetailBanner>
                 <Column justify={Justify.START}>
-                    <DownloadFile
+                    <DownloadExternalFile
                         apiPath={`https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}/docs/HDRUK/${SCHEMA_VERSION}.example.json`}
                         buttonText={t("downloadExample")}
-                        buttonSx={{ mb: 0 }}
-                        isExternalFile
-                        externalFileName={FILE_DOWNLOAD_NAME}
+                        fileName={FILE_DOWNLOAD_NAME}
                     />
                 </Column>
                 <Column>

@@ -117,9 +117,9 @@ export default function DarApplicationCard({
                                           dataset =>
                                               dataset.custodian.id ===
                                               groupTeamId
-                                      )?.dataset_title
+                                      )?.dataset_title || t("noDatasetTitle")
                                     : application.datasets[teamIndex || 0]
-                                          .dataset_title
+                                          ?.dataset_title || t("noDatasetTitle")
                             }
                             isButton
                             characterLimit={CHARACTER_LIMIT}

@@ -15,6 +15,8 @@ export const StaticImages = {
             courses: "courses.png",
             dar: "dar.png",
             welcome_image: "welcome-image.png",
+            omics_pred: "omicspred.png",
+            pgs_catalog: "pgscatalog.png",
         },
         "landing_page"
     ),

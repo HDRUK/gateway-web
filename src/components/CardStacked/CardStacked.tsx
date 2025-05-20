@@ -4,6 +4,7 @@ import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
 import Chip, { ChipProps } from "@/components/Chip";
 import { colors } from "@/config/theme";
+import HTMLContent from "../HTMLContent";
 
 export interface CardStackedProps {
     href: string;
@@ -43,7 +44,7 @@ export default function CardStacked({
                     role="heading"
                     aria-level={3}
                     size="small"
-                    label={title}
+                    label={<HTMLContent content={title} />}
                     sx={{
                         backgroundColor: colors.grey600,
                         color: colors.white,

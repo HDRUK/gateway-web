@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { FileUploadOutlined } from "@mui/icons-material";
-import { Divider } from "@mui/material";
+import { Divider, Tooltip } from "@mui/material";
 import { uniq } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -10,7 +10,6 @@ import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
-import Tooltip from "@/components/Tooltip";
 import Typography from "@/components/Typography";
 import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
@@ -103,13 +102,15 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 ? ""
                                 : t("generalEnquiries.buttonTooltip")
                         }>
-                        <Button
-                            onClick={handleGeneralEnquiries}
-                            sx={{ mt: 2, width: "100%" }}
-                            disabled={!(selectedDatasets.length > 0)}>
-                            <QuestionAnswerIcon sx={{ pr: 1 }} />
-                            {t("generalEnquiries.buttonText")}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={handleGeneralEnquiries}
+                                sx={{ mt: 2, width: "100%" }}
+                                disabled={!(selectedDatasets.length > 0)}>
+                                <QuestionAnswerIcon sx={{ pr: 1 }} />
+                                {t("generalEnquiries.buttonText")}
+                            </Button>
+                        </div>
                     </Tooltip>
                 </Box>
                 <Divider sx={{ my: 2 }} />
@@ -124,13 +125,15 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 ? ""
                                 : t("feasibilityEnquiries.buttonTooltip")
                         }>
-                        <Button
-                            onClick={handleFeasibilityEnquiries}
-                            sx={{ mt: 2, width: "100%" }}
-                            disabled={!(selectedDatasets.length > 0)}>
-                            <QuestionAnswerIcon sx={{ pr: 1 }} />
-                            {t("feasibilityEnquiries.buttonText")}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={handleFeasibilityEnquiries}
+                                sx={{ mt: 2, width: "100%" }}
+                                disabled={!(selectedDatasets.length > 0)}>
+                                <QuestionAnswerIcon sx={{ pr: 1 }} />
+                                {t("feasibilityEnquiries.buttonText")}
+                            </Button>
+                        </div>
                     </Tooltip>
                 </Box>
                 <Divider sx={{ my: 2 }} />
@@ -149,18 +152,20 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 ? ""
                                 : t("dataAccessRequest.buttonTooltip")
                         }>
-                        <Button
-                            onClick={handleDar}
-                            sx={{ mt: 2, width: "100%" }}
-                            disabled={
-                                !(selectedDatasets.length > 0) ||
-                                !selectedDatasets.every(
-                                    dataset => dataset.darEnabled
-                                )
-                            }>
-                            <FileUploadOutlined sx={{ pr: 1 }} />
-                            {t("dataAccessRequest.buttonText")}
-                        </Button>
+                        <div>
+                            <Button
+                                onClick={handleDar}
+                                sx={{ mt: 2, width: "100%" }}
+                                disabled={
+                                    !(selectedDatasets.length > 0) ||
+                                    !selectedDatasets.every(
+                                        dataset => dataset.darEnabled
+                                    )
+                                }>
+                                <FileUploadOutlined sx={{ pr: 1 }} />
+                                {t("dataAccessRequest.buttonText")}
+                            </Button>
+                        </div>
                     </Tooltip>
                 </Box>
                 {selectedDatasets.length > 1 && (

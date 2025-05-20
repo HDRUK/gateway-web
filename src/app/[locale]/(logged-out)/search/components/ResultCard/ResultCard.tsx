@@ -6,6 +6,7 @@ import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -23,24 +24,30 @@ import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
+import CohortDiscoveryButton from "../../../about/cohort-discovery/components/CohortDiscoveryButton";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 
 interface ResultCardProps {
     result: SearchResultDataset;
     libraryData: Library[];
     mutateLibraries: KeyedMutator<Library[]>;
+    isCohortDiscoveryDisabled: boolean;
+    cohortDiscovery: PageTemplatePromo;
 }
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";
+const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 
 const ResultCard = ({
     result,
     libraryData,
     mutateLibraries,
+    isCohortDiscoveryDisabled,
+    cohortDiscovery,
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { current: resultId } = useRef(uniqueId("result-title-"));
@@ -130,6 +137,8 @@ const ResultCard = ({
         });
     };
 
+    const isCohortDiscovery = get(result, COHORT_DISCOVERY_PATH);
+
     const menuItems = [
         {
             label: "General enquiry",
@@ -143,6 +152,32 @@ const ResultCard = ({
             label: "Start a Data Access Request",
             action: handleStartDarRequest,
         },
+        ...(isCohortDiscovery
+            ? [
+                  {
+                      label: "Start a Cohort Discovery query",
+                      button: (
+                          <CohortDiscoveryButton
+                              ctaLink={
+                                  cohortDiscovery.template.promofields.ctaLink
+                              }
+                              showDatasetExplanatoryTooltip
+                              variant="link"
+                          />
+                      ),
+                      icon: (
+                          <CohortIcon
+                              color={
+                                  !isCohortDiscoveryDisabled
+                                      ? "primary"
+                                      : "greyCustom"
+                              }
+                              sx={{ mr: 1 }}
+                          />
+                      ),
+                  },
+              ]
+            : []),
     ];
 
     const handleToggleLibraryItem = async (

@@ -6,6 +6,7 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import MenuDropdown from "@/components/MenuDropdown";
@@ -19,25 +20,31 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { SpeechBubbleIcon } from "@/consts/customIcons";
+import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
+import CohortDiscoveryButton from "../../../about/cohort-discovery/components/CohortDiscoveryButton";
 
 interface ResultRowProps {
     result: SearchResultDataset;
-    libraryData: Library[];
+    libraryData?: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
     mutateLibraries: KeyedMutator<Library[]>;
+    isCohortDiscoveryDisabled: boolean;
+    cohortDiscovery: PageTemplatePromo;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
+const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 
 const ActionDropdown = ({
     result,
     libraryData,
     showLibraryModal,
     mutateLibraries,
+    isCohortDiscoveryDisabled,
+    cohortDiscovery,
 }: ResultRowProps) => {
     const title = get(result, "metadata.summary.title");
     const t = useTranslations(TRANSLATION_PATH);
@@ -104,6 +111,8 @@ const ActionDropdown = ({
         });
     };
 
+    const isCohortDiscovery = get(result, COHORT_DISCOVERY_PATH);
+
     const menuItems = [
         {
             label: "General enquiry",
@@ -120,6 +129,32 @@ const ActionDropdown = ({
             action: handleStartDarRequest,
             icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
         },
+        ...(isCohortDiscovery
+            ? [
+                  {
+                      label: "Start a Cohort Discovery query",
+                      button: (
+                          <CohortDiscoveryButton
+                              ctaLink={
+                                  cohortDiscovery.template.promofields.ctaLink
+                              }
+                              showDatasetExplanatoryTooltip
+                              variant="link"
+                          />
+                      ),
+                      icon: (
+                          <CohortIcon
+                              color={
+                                  !isCohortDiscoveryDisabled
+                                      ? "primary"
+                                      : "greyCustom"
+                              }
+                              sx={{ mr: 1 }}
+                          />
+                      ),
+                  },
+              ]
+            : []),
     ];
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);

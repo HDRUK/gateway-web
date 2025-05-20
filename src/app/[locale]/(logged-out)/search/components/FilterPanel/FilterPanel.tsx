@@ -39,6 +39,8 @@ import {
     FILTER_COLLECTION_NAMES,
     FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_FORMAT_STANDARDS,
+    FILTER_COHORT_DISCOVERY,
+    FILTER_DATA_PROVIDER,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
@@ -75,6 +77,7 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
         FILTER_CONTAINS_TISSUE,
+        FILTER_COHORT_DISCOVERY,
         FILTER_DATA_TYPE,
         FILTER_DATA_SUBTYPE,
         FILTER_FORMAT_STANDARDS,
@@ -87,6 +90,7 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_DATE_RANGE,
         FILTER_POPULATION_SIZE,
         FILTER_GEOGRAPHIC_LOCATION,
+        FILTER_COHORT_DISCOVERY,
     ],
     dataUseRegister: [
         FILTER_DATA_SET_TITLES,
@@ -104,6 +108,7 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
     ],
     tool: [
         FILTER_TYPE_CATEGORY,
+        FILTER_DATA_PROVIDER,
         FILTER_DATA_SET_TITLES,
         FILTER_PROGRAMMING_LANGUAGE,
         FILTER_LICENSE,
@@ -490,7 +495,10 @@ const FilterPanel = ({
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
 
-                if (filterItem.label === FILTER_CONTAINS_TISSUE) {
+                if (
+                    filterItem.label === FILTER_CONTAINS_TISSUE ||
+                    filterItem.label === FILTER_COHORT_DISCOVERY
+                ) {
                     return (
                         <FilterSectionInlineSwitch
                             key={filterItem.label}

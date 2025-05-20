@@ -8,7 +8,7 @@ describe("ResultCardCollection", () => {
 
         render(<ResultCardCollection result={mockResult} />);
 
-        expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
+        expect(screen.getByRole("heading", { level: 3 }).textContent).toEqual(
             mockResult.name
         );
     });

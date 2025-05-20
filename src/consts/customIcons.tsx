@@ -51,13 +51,14 @@ const MetadataOnboardingIcon = createSvgIcon(
 
 const CheckboxCheckedIcon = styled(CheckboxIcon)(({ theme, size }) => ({
     backgroundColor: theme.palette.secondary.main,
-    borderWidth: 0,
+    borderWidth: 1,
+    borderColor: "transparent",
     "&::before": {
         display: "block",
         width: sizeMappings[size],
         height: sizeMappings[size],
         backgroundImage:
-            "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
+            "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath" +
             " fill-rule='evenodd' clip-rule='evenodd' d='M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' fill='%23fff'/%3E%3C/svg%3E\")",
         content: '""',
     },
@@ -68,13 +69,14 @@ const CheckboxCheckedIcon = styled(CheckboxIcon)(({ theme, size }) => ({
 
 const CheckboxIndeterminateIcon = styled(CheckboxIcon)(({ theme, size }) => ({
     backgroundColor: theme.palette.secondary.main,
-    borderWidth: 0,
+    borderWidth: 1,
+    borderColor: "transparent",
     "&::before": {
         display: "block",
         width: sizeMappings[size],
         height: sizeMappings[size],
         backgroundImage:
-            "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath" +
+            "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath" +
             " fill-rule='evenodd' clip-rule='evenodd' d='M21 3H3v18h18V3zm-4 10H7v-2h10v2z' fill='%23fff'/%3E%3C/svg%3E\")",
         content: '""',
     },
