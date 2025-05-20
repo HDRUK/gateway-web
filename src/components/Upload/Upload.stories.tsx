@@ -34,7 +34,6 @@ const WrapperComponent = () => {
                     control={control}
                     label="Upload"
                     name="upload"
-                    uploadSx={{ display: "none" }}
                     acceptFileTypes=".csv"
                     onFileChange={(file: File) => console.log(file)}
                     helperText="Must be a .csv file, cannot exceed 10 mb per file."
