@@ -676,8 +676,9 @@ const ApplicationSection = ({
                         }}>
                         {isResearcher &&
                         !teamApplication?.approval_status &&
-                        teamApplication?.submission_status ===
-                            DarApplicationStatus.DRAFT ? (
+                        (teamApplication?.submission_status ===
+                            DarApplicationStatus.DRAFT ||
+                            !teamApplication?.submission_status) ? (
                             <Typography>
                                 {t("questionsAnswered", {
                                     questionCount: completedQsCount,
