@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { Box, Button, CardActions } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -8,7 +9,6 @@ import { formatDate } from "@/utils/date";
 import EllipsisLineLimit from "../EllipsisLineLimit";
 import Link from "../Link";
 import { DateBox } from "./NewsSummaryCard.styles";
-import { useId } from "react";
 
 interface NewsSummaryCardProps {
     buttonText: string;
@@ -33,11 +33,11 @@ const NewsSummaryCard = ({
     imageAlt,
     imageHeight = "225px",
 }: NewsSummaryCardProps) => {
-    const id = useId()
+    const id = useId();
 
     return (
         <Card
-            component='article'
+            component="article"
             aria-describedby={id}
             sx={{
                 width: "100%",
