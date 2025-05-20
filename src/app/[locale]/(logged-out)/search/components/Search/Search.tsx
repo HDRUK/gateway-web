@@ -121,6 +121,7 @@ import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
+import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
@@ -582,6 +583,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         onContinue: () => mutateLibraries(),
     });
 
+    const showFeasibilityEnquiryForm = useFeasibilityEnquiry();
+
     const renderResults = () =>
         resultsView === ViewType.TABLE ? (
             <ResultsTable
@@ -633,6 +636,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const { setPostLoginActionCookie } = usePostLoginAction({
         onAction: ({ action, data }) => {
+            console.log('setPostLoginActionCookie onAction')
             switch (action) {
                 case PostLoginActions.SAVE_SEARCH:
                     showDialog(() => (
@@ -647,6 +651,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     showLibraryModal({ datasetId: data.datasetId });
                     break;
 
+                case PostLoginActions.OPEN_FEASIBILITY_ENQUIRY:
+                    console.log('usePostLoginAction OPEN_FEASIBILITY_ENQUIRY');
+                    showFeasibilityEnquiryForm({
+                        isLoggedIn: true,
+                        dataset: data.dataset,
+                        redirectPath,
+                        mutateLibraries,
+                    });
+                    break;
                 default:
                     console.warn(`Unhandled post login action: ${action}`);
                     break;

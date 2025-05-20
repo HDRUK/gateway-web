@@ -25,14 +25,14 @@ const useFeasibilityEnquiry = () => {
             mutateLibraries,
         }: UseFeasibilityEnquiryProps) => {
             const { _id, team, metadata } = dataset;
-
-            if (!isLoggedIn) {
-                showDialog(ProvidersDialog, {
-                    isProvidersDialog: true,
-                    redirectPath,
-                });
-            } else {
-                const dataset: DatasetEnquiry = {
+            console.log('dataset', dataset);
+            // if (!isLoggedIn) {
+            //     showDialog(ProvidersDialog, {
+            //         isProvidersDialog: true,
+            //         redirectPath,
+            //     });
+            // } else {
+                const dataset2: DatasetEnquiry = {
                     datasetId: Number(_id),
                     name: metadata.summary.title,
                     teamId: team.id,
@@ -41,10 +41,10 @@ const useFeasibilityEnquiry = () => {
                 };
 
                 showDialog(FeasibilityEnquiryDialog, {
-                    result: dataset,
+                    result: dataset2,
                     mutateLibraries,
                 });
-            }
+            // }
         },
         [showDialog]
     );

@@ -86,13 +86,44 @@ const ActionDropdown = ({
         event?: React.MouseEvent<HTMLElement>
     ) => {
         event?.stopPropagation();
+        console.log("handleFeasibilityEnquiryClick");
 
-        showFeasibilityEnquiry({
-            dataset: result,
-            isLoggedIn,
-            mutateLibraries,
-            redirectPath,
-        });
+        if (isLoggedIn) {
+            console.log("handleFeasibilityEnquiryClick isLoggedIn");
+
+            showFeasibilityEnquiry({
+                dataset: result,
+                isLoggedIn,
+                mutateLibraries,
+                redirectPath,
+            });
+        } else {
+            console.log("handleFeasibilityEnquiryClick not isLoggedIn");
+            console.log('result', result);
+            setPostLoginActionCookie(
+                PostLoginActions.OPEN_FEASIBILITY_ENQUIRY,
+                {
+                    dataset:  {
+                        _id: result._id,
+                        metadata: {
+                            summary: {
+                                title: result.metadata.summary.title
+                            },
+                        },
+                        team: {
+                            id: result.team.id,
+                            name: result.team.name,
+                            member_of: result.team.member_of
+                        }
+                    },
+                }
+            );
+
+            showDialog(ProvidersDialog, {
+                isProvidersDialog: true,
+                redirectPath,
+            });
+        }
     };
 
     const handleStartDarRequest = (event: React.MouseEvent<HTMLElement>) => {
