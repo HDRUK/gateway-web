@@ -4,12 +4,12 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { sourceSans3 } from "@/config/fonts";
 import metaData from "@/utils/metadata";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import DialogProvider from "@/providers/DialogProvider";
@@ -50,22 +50,14 @@ export default function RootLayout({
                         <ThemeRegistry>
                             <DialogProvider>
                                 <ActionBarProvider>
+                                    <SupportPopOut />
+                                    <LightBox />
+                                    <CMSBanners />
                                     <SnackbarProvider />
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            fontFamily:
-                                                sourceSans3.style.fontFamily,
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            minHeight: "100vh",
-                                        }}>
-                                        <SupportPopOut />
-                                        <LightBox />
-                                        <CMSBanners />
-                                        {children}
-                                        <Footer />
-                                    </div>
+                                    <Header />
+
+                                    {children}
+                                    <Footer />
                                     <CustomerSurvey />
                                     <Suspense fallback={null}>
                                         <NavigationEvents />
