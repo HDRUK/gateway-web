@@ -34,39 +34,11 @@ export const tabsStyle = {
                 maxWidth: "250px",
                 minHeight: "40px",
                 padding: "6px",
-
-                "&:focus,&:hover, &:active": {
-                    background: colors.white,
-                    borderBottom: `3px solid ${colors.green400}`,
-                },
-
-                "&t:active:not(.Mui-selected)": {
-                    borderBottom: `3px solid ${colors.green400}`,
-                },
                 "&:focus:not(.Mui-selected), &:hover:not(.Mui-selected), &.Mui-focusVisible:not(.Mui-selected)":
                     {
                         background: colors.green100,
                         color: "inherit",
                     },
-            },
-        }),
-
-    normal: () =>
-        css({
-            "&.MuiTab-root": {
-                "&.Mui-selected": {
-                    borderBottom: `3px solid ${colors.green400}`,
-                    boxShadow: "inherit",
-                },
-
-                "&:focus, &:hover, &:active": {
-                    background: colors.green100,
-                    borderBottom: `3px solid ${colors.green400}`,
-                },
-
-                "&t:active:not(.Mui-selected)": {
-                    borderBottom: `3px solid ${colors.green400}`,
-                },
             },
         }),
 };
