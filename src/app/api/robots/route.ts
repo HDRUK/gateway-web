@@ -15,10 +15,10 @@ const body = isBlocked
   : [
       'User-agent: *',
       'Allow: /',
-      'Disallow: /account/',
+      'Disallow: /accountssssssss/',
       'Disallow: /sign-in',
       'Disallow: /search',
-      `Sitemap: ${NEXT_PUBLIC_GATEWAY_URL}/sitemap.xml`
+      `Sitemap: ${NEXT_PUBLIC_GATEWAY_URL}/sitemapssssssssssssssss.xml`
     ].join('\n');
 
   return new NextResponse(body, {
