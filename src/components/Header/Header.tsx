@@ -14,16 +14,14 @@ import MenuDropdown from "@/components/MenuDropdown";
 import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
+import { useIsHomePage } from "@/hooks/useIsHomePage";
 import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
 import { colors } from "@/config/theme";
 import { MenuIcon } from "@/consts/icons";
 
-interface HeaderProps {
-    isHome?: boolean;
-}
-
-function Header({ isHome = false }: HeaderProps) {
+function Header() {
+    const isHome = useIsHomePage();
     const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
     const HOTJAR_VERSION = 6;
     const isTablet = useMediaQuery("(min-width:640px)");
@@ -46,6 +44,8 @@ function Header({ isHome = false }: HeaderProps) {
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>
             <Container maxWidth="desktop">
                 <Toolbar
+                    component="nav"
+                    aria-label="HDR UK Gateway"
                     disableGutters
                     sx={{
                         pt: 1,
@@ -70,7 +70,7 @@ function Header({ isHome = false }: HeaderProps) {
                             priority
                             width={110}
                             height={50}
-                            alt="HDR Gateway logo"
+                            alt="HDR UK Gateway"
                         />
                     </Link>
                     <Box

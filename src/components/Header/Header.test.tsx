@@ -39,7 +39,7 @@ describe("Header", () => {
     it("logo image is rendered", async () => {
         await act(() => render(<Header />));
 
-        const logoImage = screen.getAllByAltText("HDR Gateway logo");
-        expect(logoImage).toHaveLength(2);
+        const logoImage = screen.getAllByAltText("HDR UK Gateway");
+        expect(logoImage).toHaveLength(1);
     });
 });

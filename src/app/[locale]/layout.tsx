@@ -5,11 +5,12 @@ import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { sourceSans3 } from "@/config/fonts";
 import metaData from "@/utils/metadata";
 import { isAliasesEnabled, isSDEConciergeServiceEnquiryEnabled } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
@@ -58,26 +59,25 @@ export default async function RootLayout({
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <SWRProvider>
                         <ThemeRegistry>
-                            <FeatureProvider feature={features}>
-                                <DialogProvider>
-                                    <ActionBarProvider>
-                                        <SupportPopOut />
-                                        <LightBox />
-                                        <CMSBanners />
-                                        <SnackbarProvider />
-                                        <Header />
-                                        {children}
-                                        <Footer />
-                                        <CustomerSurvey />
-                                        <Suspense fallback={null}>
-                                            <NavigationEvents />
-                                            <PageTracker />
-                                        </Suspense>
-                                    </ActionBarProvider>
-                                    {/* ProvidersDialog has to remain in DOM */}
-                                    <ProvidersDialog />
-                                </DialogProvider>
-                            </FeatureProvider>
+                            <DialogProvider>
+                                <ActionBarProvider>
+                                    <SupportPopOut />
+                                    <LightBox />
+                                    <CMSBanners />
+                                    <SnackbarProvider />
+                                    <Header />
+
+                                    {children}
+                                    <Footer />
+                                    <CustomerSurvey />
+                                    <Suspense fallback={null}>
+                                        <NavigationEvents />
+                                        <PageTracker />
+                                    </Suspense>
+                                </ActionBarProvider>
+                                {/* ProvidersDialog has to remain in DOM */}
+                                <ProvidersDialog />
+                            </DialogProvider>
                         </ThemeRegistry>
                     </SWRProvider>
                 </NextIntlClientProvider>
