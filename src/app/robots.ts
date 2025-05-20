@@ -8,6 +8,7 @@ console.log('isBlocked', isBlocked)
 
 export default function robots(): MetadataRoute.Robots {
     if (isBlocked) {
+        console.log('iamhit')
         return {
             rules: {
                 userAgent: "*",
@@ -16,7 +17,7 @@ export default function robots(): MetadataRoute.Robots {
             sitemap: "",
         };
     }
-
+console.log('iamhit2')
     return {
         rules: {
             userAgent: "*",
