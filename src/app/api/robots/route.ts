@@ -4,6 +4,7 @@ export async function GET() {
   const BLOCK_ROBOTS = process.env.BLOCK_ROBOTS;
   const NEXT_PUBLIC_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
   const isBlocked = BLOCK_ROBOTS === 'true';
+  console.log('isBlocked', isBlocked)
 
 const body = isBlocked
   ? [
