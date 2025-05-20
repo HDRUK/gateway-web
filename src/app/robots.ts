@@ -3,6 +3,9 @@ import type { MetadataRoute } from "next";
 const { BLOCK_ROBOTS, NEXT_PUBLIC_GATEWAY_URL } = process.env;
 const isBlocked = BLOCK_ROBOTS === "true";
 
+console.log('BLOCK_ROBOTS', BLOCK_ROBOTS)
+console.log('isBlocked', isBlocked)
+
 export default function robots(): MetadataRoute.Robots {
     if (isBlocked) {
         return {
