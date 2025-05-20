@@ -12,10 +12,10 @@ export async function GET() {
         : [
               "User-agent: *",
               "Allow: /",
-              "Disallow: /accountssssssss/",
+              "Disallow: /account/",
               "Disallow: /sign-in",
               "Disallow: /search",
-              `Sitemap: ${NEXT_PUBLIC_GATEWAY_URL}/sitemapssssssssssssssss.xml`,
+              `Sitemap: ${NEXT_PUBLIC_GATEWAY_URL}/sitemap.xml`,
           ].join("\n");
 
     return new NextResponse(body, {
