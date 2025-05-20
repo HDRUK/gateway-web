@@ -1,6 +1,4 @@
 import { Box } from "@mui/material";
-import Container from "@/components/Container";
-import Header from "@/components/Header";
 import { getHomePage, getSortedNewsEventsByDate } from "@/utils/cms";
 import Homepage from "./components/Homepage";
 
