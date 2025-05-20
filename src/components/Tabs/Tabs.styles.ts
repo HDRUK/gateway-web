@@ -32,10 +32,11 @@ export const tabsStyle = {
                 minHeight: "40px",
                 padding: "6px",
 
-                "&:focus:not(.Mui-selected), &:hover:not(.Mui-selected)": {
-                    background: colors.green100,
-                    color: "inherit",
-                },
+                "&:focus:not(.Mui-selected), &:hover:not(.Mui-selected), &.Mui-focusVisible:not(.Mui-selected)":
+                    {
+                        background: colors.green100,
+                        color: "inherit",
+                    },
             },
         }),
 };
