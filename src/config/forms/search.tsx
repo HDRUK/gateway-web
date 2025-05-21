@@ -161,6 +161,7 @@ const searchFormConfig = {
         component: inputComponents.Select,
         name: SORT_FIELD,
         label: "",
+        ariaLabel: "Sort by"
     },
 };
 

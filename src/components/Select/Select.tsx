@@ -23,6 +23,7 @@ export interface SelectOptionsType {
 }
 
 export interface SelectProps<TFieldValues extends FieldValues, TName> {
+    ariaLabel?: string
     label: string;
     info?: string;
     extraInfo?: string;
@@ -87,6 +88,7 @@ const Select = <
     disabled = false,
     invertListItem = false,
     id,
+    ariaLabel,
     ...rest
 }: SelectProps<TFieldValues, TName>) => {
     const {
@@ -117,7 +119,7 @@ const Select = <
                 error={!!error}
                 disabled={disabled}
                 input={<OutlinedInput />}
-                inputProps={{ id, name, "aria-label": label }}
+                inputProps={{ id, name, "aria-label": ariaLabel ?? label }}
                 renderValue={selected =>
                     renderValue(selected, options, !!multiple)
                 }
