@@ -240,9 +240,9 @@ const theme = createTheme({
                     "&:focus": {
                         backgroundColor: colors.white,
 
-                        ".MuiTouchRipple-root": {
+                        "&.Mui-focusVisible": {
                             outline: `3px solid ${theme.palette.primary.main}`,
-                            margin: "3px",
+                            outlineOffset: "-3px",
                         },
                     },
                     "&:hover": {
@@ -252,6 +252,9 @@ const theme = createTheme({
             },
         },
         MuiButtonBase: {
+            defaultProps: {
+                disableRipple: true,
+            },
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => {
                     const ownerStateProps = (
@@ -313,6 +316,9 @@ const theme = createTheme({
             },
         },
         MuiButton: {
+            defaultProps: {
+                disableElevation: true,
+            },
             variants: [
                 {
                     props: { color: "greyCustom" },
@@ -371,6 +377,10 @@ const theme = createTheme({
                             ? _theme.palette.primary.main
                             : _theme.palette[ownerState.color || "primary"]
                                   ?.main,
+                    "&.Mui-focusVisible:not(.MuiIconButton-root)": {
+                        outline: `2px solid ${_theme.palette.primary.main}`,
+                        outlineOffset: 2,
+                    },
                 }),
                 outlined: ({ ownerState, theme: _theme }) => {
                     return {
@@ -390,6 +400,11 @@ const theme = createTheme({
                                       ]?.main,
                         },
                     };
+                },
+                text: {
+                    "&.Mui-focusVisible:not(.MuiIconButton-root)": {
+                        outlineOffset: "-2px",
+                    },
                 },
             },
         },
