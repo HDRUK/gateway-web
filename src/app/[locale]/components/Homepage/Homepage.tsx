@@ -29,7 +29,7 @@ const services = [
     {
         id: SearchCategory.DATASETS,
         image: StaticImages.LANDING_PAGE.datasets,
-        href: `/search?type=${SearchCategory.DATASETS}&query=gp+out`,
+        href: `/search?type=${SearchCategory.DATASETS}`,
     },
     {
         id: SearchCategory.DATA_USE,
