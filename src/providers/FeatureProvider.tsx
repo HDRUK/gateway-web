@@ -15,7 +15,7 @@ interface ProviderProps {
 function FeatureProvider({ children, feature }: Readonly<ProviderProps>) {
     const value = useMemo(() => feature, [feature]);
     return (
-        <FeatureContext.Provider value={value as any}>
+        <FeatureContext.Provider value={value as unknown as string}>
             {children}
         </FeatureContext.Provider>
     );
