@@ -1,4 +1,5 @@
 import { ReactNode, Suspense } from "react";
+import visuallyHidden from "@mui/utils/visuallyHidden";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
@@ -76,6 +77,9 @@ export default async function RootLayout({
                                     </ActionBarProvider>
                                     {/* ProvidersDialog has to remain in DOM */}
                                     <ProvidersDialog />
+                                    <div tabIndex={0} style={visuallyHidden}>
+                                        end of page
+                                    </div>
                                 </DialogProvider>
                             </FeatureProvider>
                         </ThemeRegistry>
