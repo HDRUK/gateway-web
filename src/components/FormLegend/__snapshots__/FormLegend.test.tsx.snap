@@ -30,9 +30,6 @@ exports[`FormLegend should render legend 1`] = `
       >
         Item1
       </p>
-      <span
-        class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-      />
     </div>
   </div>
 </div>
