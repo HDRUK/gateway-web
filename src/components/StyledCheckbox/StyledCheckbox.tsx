@@ -9,14 +9,17 @@ import {
 } from "@/consts/icons";
 
 export interface StyledCheckboxProps extends MuiCheckboxProps {
-    size: "small" | "medium" | "large";
+    size?: "small" | "medium" | "large";
     iconSx?: SxProps;
 }
 
-const StyledCheckbox = ({ size, iconSx, ...rest }: StyledCheckboxProps) => {
+const StyledCheckbox = ({
+    size = "small",
+    iconSx,
+    ...rest
+}: StyledCheckboxProps) => {
     return (
         <MuiCheckbox
-            disableRipple
             icon={<CheckboxIcon sx={{ ...iconSx }} size={size} />}
             checkedIcon={<CheckboxCheckedIcon sx={{ ...iconSx }} size={size} />}
             indeterminateIcon={

@@ -447,6 +447,9 @@ const theme = createTheme({
             },
         },
         MuiCheckbox: {
+            defaultProps: {
+                disableRipple: true,
+            },
             variants: [
                 {
                     props: { size: "large" },
