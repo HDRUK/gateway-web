@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import MuiSwitch from "@mui/material/Switch";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
@@ -23,7 +24,7 @@ const FilterSectionInlineSwitch = ({
     handleRadioChange,
 }: FilterSectionInlineSwitchProps) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
-
+    const id = useId();
     const { label } = filterItem;
 
     return (
@@ -33,7 +34,11 @@ const FilterSectionInlineSwitch = ({
                 justifyContent: "space-between",
                 alignItems: "center",
             }}>
-            <Typography fontWeight="400" fontSize="20px">
+            <Typography
+                fontWeight="400"
+                fontSize="20px"
+                component="label"
+                for={id}>
                 {t(label)}
             </Typography>
             <Box
@@ -49,6 +54,7 @@ const FilterSectionInlineSwitch = ({
                     content={t(`${label}${TOOLTIP_SUFFIX}`)}
                 />
                 <MuiSwitch
+                    id={id}
                     disableRipple
                     onChange={handleRadioChange}
                     checked={!!selectedFilters[filterItem.label]?.length}
