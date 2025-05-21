@@ -10,34 +10,23 @@ exports[`CheckboxRow should render component 1`] = `
     >
       Name
     </p>
-    <div
-      class="MuiFormControl-root MuiFormControl-fullWidth mui-style-2dhluk-MuiFormControl-root"
+    <span
+      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-k4ahjr-MuiButtonBase-root-MuiCheckbox-root"
+      control="[object Object]"
+      formcontrolsx="[object Object]"
+      label="checkbox label"
     >
-      <label
-        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-1mbnhdb-MuiFormControlLabel-root"
-      >
-        <span
-          class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-1y1d3h6-MuiButtonBase-root-MuiCheckbox-root"
-        >
-          <input
-            class="PrivateSwitchBase-input mui-style-1m9pwf3"
-            data-indeterminate="false"
-            id="fieldName"
-            name="fieldName"
-            type="checkbox"
-          />
-          <span
-            class="mui-style-f6vn6k"
-            font-size="medium"
-          />
-        </span>
-        <span
-          class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-1mg2mqv-MuiTypography-root"
-        >
-          checkbox label
-        </span>
-      </label>
-    </div>
+      <input
+        class="PrivateSwitchBase-input mui-style-1m9pwf3"
+        data-indeterminate="false"
+        name="fieldName"
+        type="checkbox"
+      />
+      <span
+        class="mui-style-f6vn6k"
+        font-size="medium"
+      />
+    </span>
   </div>
 </div>
 `;
