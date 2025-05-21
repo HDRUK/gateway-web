@@ -85,7 +85,7 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
                                     disableRipple
                                     size="large"
                                     edge="start"
-                                    aria-label="Remove row"
+                                    aria-label="Remove team member"
                                     onClick={() => remove(index)}>
                                     <RemoveIcon />
                                 </IconButton>
@@ -94,7 +94,7 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
                                 disableRipple
                                 size="large"
                                 edge="start"
-                                aria-label="Remove row"
+                                aria-label="Add team member"
                                 onClick={() =>
                                     append({
                                         userId: undefined,
