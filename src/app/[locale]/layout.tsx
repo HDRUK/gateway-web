@@ -77,14 +77,14 @@ export default async function RootLayout({
                                     </ActionBarProvider>
                                     {/* ProvidersDialog has to remain in DOM */}
                                     <ProvidersDialog />
-                                    {
-                                        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                                        <div
-                                            tabIndex={0}
-                                            style={visuallyHidden}>
-                                            end of page
-                                        </div>
-                                    }
+
+                                    <div
+                                        role="note"
+                                        // eslint-disable-next-line
+                                        tabIndex={0}
+                                        style={visuallyHidden}>
+                                        end of page
+                                    </div>
                                 </DialogProvider>
                             </FeatureProvider>
                         </ThemeRegistry>
