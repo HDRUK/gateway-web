@@ -3,7 +3,7 @@ import { createGatewayFlagAdapter } from "./gatewayFlagAdapter";
 jest.mock("@/config/apis", () => ({
     __esModule: true,
     default: {
-        enablebFeatures: "http://localhost/mock-api",
+        enabledFeatures: "http://localhost/mock-api",
     },
 }));
 
