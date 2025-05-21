@@ -16,7 +16,6 @@ interface CardActionsProps {
 
 const CardActions = ({ actions, id, status }: CardActionsProps) => {
     return actions.map(({ icon: Icon, href, label, disabled, action }) => {
-        console.log(label);
         const searchParams = new URLSearchParams();
 
         if (href) {
