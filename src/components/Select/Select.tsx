@@ -23,7 +23,7 @@ export interface SelectOptionsType {
 }
 
 export interface SelectProps<TFieldValues extends FieldValues, TName> {
-    ariaLabel?: string
+    ariaLabel?: string;
     label: string;
     info?: string;
     extraInfo?: string;
