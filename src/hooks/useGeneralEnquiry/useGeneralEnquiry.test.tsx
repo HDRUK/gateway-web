@@ -1,4 +1,7 @@
-import { renderHook } from "@/utils/testUtils";
+import Cookies from "js-cookie";
+import config from "@/config/config";
+import { PostLoginActions } from "@/consts/postLoginActions";
+import { renderHook, waitFor } from "@/utils/testUtils";
 import { datasetSearchResultV1 } from "@/mocks/data";
 import useGeneralEnquiry from "./useGeneralEnquiry";
 
@@ -20,6 +23,8 @@ jest.mock("@/hooks/useSidebar", () => () => ({
     showSidebar: mockShowSidebar,
 }));
 
+jest.mock("js-cookie");
+
 describe("useGeneralEnquiry", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -40,7 +45,7 @@ describe("useGeneralEnquiry", () => {
         }
     });
 
-    it("shows the provider modal", () => {
+    it("shows the provider modal", async () => {
         const { result } = renderHook(() => useGeneralEnquiry());
 
         if (result.current) {
@@ -56,5 +61,25 @@ describe("useGeneralEnquiry", () => {
         } else {
             fail("No callback was returned");
         }
+
+        const { _id, team } = datasetSearchResultV1;
+
+        await waitFor(() => {
+            expect(Cookies.set).toHaveBeenCalledWith(
+                config.POST_LOGIN_ACTION_COOKIE,
+                JSON.stringify({
+                    action: PostLoginActions.OPEN_GENERAL_ENQUIRY,
+                    dataset: {
+                        datasetId: Number(_id) || null,
+                        teamId: team.id,
+                        teamName: team.name,
+                        teamMemberOf: team.member_of,
+                    },
+                }),
+                {
+                    path: "/",
+                }
+            );
+        });
     });
 });

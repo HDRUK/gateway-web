@@ -40,12 +40,15 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
+import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
+import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDialog from "@/hooks/useDialog";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
@@ -53,6 +56,7 @@ import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import {
@@ -140,8 +144,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
+    const { showDARApplicationModal } = useDataAccessRequest();
 
     const { isLoggedIn, user } = useAuth();
+    const { showSidebar } = useSidebar();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -647,6 +653,26 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     showLibraryModal({ datasetId: data.datasetId });
                     break;
 
+                case PostLoginActions.OPEN_GENERAL_ENQUIRY:
+                    showSidebar({
+                        title: "Messages",
+                        content: (
+                            <GeneralEnquirySidebar datasets={[data.dataset]} />
+                        ),
+                    });
+                    break;
+
+                case PostLoginActions.OPEN_FEASIBILITY_ENQUIRY:
+                    showDialog(FeasibilityEnquiryDialog, {
+                        result: data.dataset,
+                        mutateLibraries,
+                    });
+                    break;
+                case PostLoginActions.START_DAR_REQUEST:
+                    showDARApplicationModal({
+                        ...data,
+                    });
+                    break;
                 default:
                     console.warn(`Unhandled post login action: ${action}`);
                     break;
