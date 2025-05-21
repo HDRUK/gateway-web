@@ -14,7 +14,6 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
-import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";

@@ -115,8 +115,7 @@ const useDataAccessRequest = () => {
                 });
             }
 
-            if (isDarEnabled) {
-                //} && !modalContent) {
+            if (isDarEnabled && !modalContent) {
                 return createDARApplication({
                     datasetIds,
                     teamIds,
