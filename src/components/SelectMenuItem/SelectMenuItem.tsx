@@ -1,9 +1,9 @@
 import { ReactNode, useMemo } from "react";
 import { SvgIconComponent } from "@mui/icons-material";
 import { ListItemIcon, ListItemText } from "@mui/material";
-import CheckBox from "@mui/material/Checkbox";
 import { IconType } from "@/interfaces/Ui";
 import { ValueType } from "../Autocomplete/Autocomplete";
+import StyledCheckbox from "../StyledCheckbox";
 
 interface SelectMenuItemProps {
     iconRight?: boolean;
@@ -58,7 +58,9 @@ const SelectMenuItem = ({
                         />
                     </ListItemIcon>
                 )}
-                {hasCheckbox && <CheckBox checked={isChecked} sx={{ mr: 2 }} />}
+                {hasCheckbox && (
+                    <StyledCheckbox checked={isChecked} sx={{ mr: 2 }} />
+                )}
                 <ListItemText> {labelComponent || label}</ListItemText>
             </>
         );
@@ -66,7 +68,9 @@ const SelectMenuItem = ({
 
     return (
         <>
-            {hasCheckbox && <CheckBox checked={isChecked} sx={{ mr: 2 }} />}
+            {hasCheckbox && (
+                <StyledCheckbox checked={isChecked} sx={{ mr: 2 }} />
+            )}
             <ListItemText> {label}</ListItemText>
             {icon && (
                 <ListItemIcon sx={{ marginRight: "-20px" }}>
