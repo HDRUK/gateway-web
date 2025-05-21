@@ -40,6 +40,8 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
+import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
@@ -47,13 +49,13 @@ import SaveSearchDialog, {
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
-import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import {
@@ -122,7 +124,6 @@ import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
-import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
@@ -144,6 +145,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const fireGTMEvent = useGTMEvent();
 
     const { isLoggedIn, user } = useAuth();
+    const { showSidebar } = useSidebar();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -584,8 +586,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         onContinue: () => mutateLibraries(),
     });
 
-    const showFeasibilityEnquiryForm = useFeasibilityEnquiry();
-
     const renderResults = () =>
         resultsView === ViewType.TABLE ? (
             <ResultsTable
@@ -652,9 +652,19 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     showLibraryModal({ datasetId: data.datasetId });
                     break;
 
+                case PostLoginActions.OPEN_GENERAL_ENQUIRY:
+                    console.log("usePostLoginAction OPEN_GENERAL_ENQUIRY");
+                    showSidebar({
+                        title: "Messages",
+                        content: (
+                            <GeneralEnquirySidebar datasets={[data.dataset]} />
+                        ),
+                    });
+                    break;
+
                 case PostLoginActions.OPEN_FEASIBILITY_ENQUIRY:
                     console.log("usePostLoginAction OPEN_FEASIBILITY_ENQUIRY");
-                    console.log('data', data);
+                    console.log("data", data);
                     // const dataset2: DatasetEnquiry = {
                     //     datasetId: Number(_id),
                     //     name: metadata.summary.title,

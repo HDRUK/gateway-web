@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import config from "@/config/config";
 import { PostLoginActions } from "@/consts/postLoginActions";
-import { act, renderHook, waitFor } from "@/utils/testUtils";
+import { renderHook, waitFor } from "@/utils/testUtils";
 import { datasetSearchResultV1 } from "@/mocks/data";
 import useFeasibilityEnquiry from "./useFeasibilityEnquiry";
 
