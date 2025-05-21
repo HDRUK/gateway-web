@@ -18,6 +18,7 @@ import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
+import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
@@ -62,6 +63,7 @@ const ResultCard = ({
     const { _id: datasetId, metadata, team } = result;
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
+    const { showDARApplicationModal } = useDataAccessRequest();
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -129,13 +131,16 @@ const ResultCard = ({
         event.stopPropagation();
         setAnchorElement(null);
 
-        showDialog(DarEnquiryDialog, {
-            isDarEnabled: team.is_question_bank,
-            modalHeader: team.dar_modal_header,
-            modalContent: team.dar_modal_content,
+        showDARApplicationModal({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
+            isDarEnabled: team.is_question_bank,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
+            modalHeader: team.dar_modal_header,
+            modalContent: team.dar_modal_content,
+            datasetIds: [+datasetId],
+            teamIds: [team.id],
+            redirectPath: pathname,
         });
     };
 
