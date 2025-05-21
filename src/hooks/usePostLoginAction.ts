@@ -6,7 +6,7 @@ import useAuth from "./useAuth";
 
 type PostLoginAction = {
     action: string;
-    data: Record<string, number | number[]>;
+    data: Record<string, number>;
 };
 
 type UsePostLoginActionParams = {
@@ -21,7 +21,7 @@ export default function usePostLoginAction({
     // Set an action in the cookie for post-login handling
     const setPostLoginActionCookie = (
         action: PostLoginActions,
-        data?: Record<string, number | number[]>
+        data?: Record<string, number>
     ) => {
         const cookieValue = JSON.stringify({ action, ...data });
         console.log(

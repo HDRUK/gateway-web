@@ -48,7 +48,7 @@ const useFeasibilityEnquiry = () => {
                     redirectPath,
                 });
             } else {
-                const dataset2: DatasetEnquiry = {
+                const dataset: DatasetEnquiry = {
                     datasetId: Number(_id),
                     name: metadata.summary.title,
                     teamId: team.id,
@@ -57,7 +57,7 @@ const useFeasibilityEnquiry = () => {
                 };
 
                 showDialog(FeasibilityEnquiryDialog, {
-                    result: dataset2,
+                    result: dataset,
                     mutateLibraries,
                 });
             }
