@@ -24,11 +24,6 @@ export default function usePostLoginAction({
         data?: Record<string, number>
     ) => {
         const cookieValue = JSON.stringify({ action, ...data });
-        console.log(
-            "setPostLoginActionCookie",
-            config.POST_LOGIN_ACTION_COOKIE,
-            cookieValue
-        );
         Cookies.set(config.POST_LOGIN_ACTION_COOKIE, cookieValue, {
             path: "/",
         });
