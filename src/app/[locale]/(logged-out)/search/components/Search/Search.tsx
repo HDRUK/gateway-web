@@ -47,6 +47,7 @@ import SaveSearchDialog, {
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
@@ -121,7 +122,7 @@ import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
-import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
@@ -636,7 +637,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const { setPostLoginActionCookie } = usePostLoginAction({
         onAction: ({ action, data }) => {
-            console.log('setPostLoginActionCookie onAction')
+            console.log("setPostLoginActionCookie onAction");
             switch (action) {
                 case PostLoginActions.SAVE_SEARCH:
                     showDialog(() => (
@@ -652,13 +653,26 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     break;
 
                 case PostLoginActions.OPEN_FEASIBILITY_ENQUIRY:
-                    console.log('usePostLoginAction OPEN_FEASIBILITY_ENQUIRY');
-                    showFeasibilityEnquiryForm({
-                        isLoggedIn: true,
-                        dataset: data.dataset,
-                        redirectPath,
+                    console.log("usePostLoginAction OPEN_FEASIBILITY_ENQUIRY");
+                    console.log('data', data);
+                    // const dataset2: DatasetEnquiry = {
+                    //     datasetId: Number(_id),
+                    //     name: metadata.summary.title,
+                    //     teamId: team.id,
+                    //     teamName: team.name,
+                    //     teamMemberOf: team.member_of,
+                    // };
+
+                    showDialog(FeasibilityEnquiryDialog, {
+                        result: data.dataset,
                         mutateLibraries,
                     });
+                    // showFeasibilityEnquiryForm({
+                    //     isLoggedIn: true,
+                    //     dataset: data.dataset,
+                    //     redirectPath,
+                    //     mutateLibraries,
+                    // });
                     break;
                 default:
                     console.warn(`Unhandled post login action: ${action}`);

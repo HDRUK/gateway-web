@@ -24,7 +24,11 @@ export default function usePostLoginAction({
         data?: Record<string, number | number[]>
     ) => {
         const cookieValue = JSON.stringify({ action, ...data });
-        console.log('setPostLoginActionCookie', config.POST_LOGIN_ACTION_COOKIE, cookieValue);
+        console.log(
+            "setPostLoginActionCookie",
+            config.POST_LOGIN_ACTION_COOKIE,
+            cookieValue
+        );
         Cookies.set(config.POST_LOGIN_ACTION_COOKIE, cookieValue, {
             path: "/",
         });
@@ -32,22 +36,27 @@ export default function usePostLoginAction({
 
     // Check for the action cookie upon login, perform action, then clear the cookie
     useEffect(() => {
-
-        console.log('usePostLoginAction useEffect', config.POST_LOGIN_ACTION_COOKIE);
-        console.log('all', Cookies.get());
+        // console.log(
+        //     "usePostLoginAction useEffect",
+        //     config.POST_LOGIN_ACTION_COOKIE
+        // );
+        // console.log("all", Cookies.get());
         const postLoginActionCookie = Cookies.get(
             config.POST_LOGIN_ACTION_COOKIE
         );
-        console.log('postLoginActionCookie', postLoginActionCookie);
+        // console.log("postLoginActionCookie", postLoginActionCookie);
+        // console.log("onAction", onAction);
         if (postLoginActionCookie && isLoggedIn) {
             if (onAction) {
+                console.log("if onAction", onAction);
                 const { action, ...data } = JSON.parse(postLoginActionCookie);
-                console.log('usePostLoginAction action', action);
-                console.log('usePostLoginAction data', data);
+                console.log("usePostLoginAction action", action);
+                console.log("usePostLoginAction data", data);
                 onAction({ action, data });
-            }
 
-            Cookies.remove(config.POST_LOGIN_ACTION_COOKIE, { path: "/" });
+                console.log("remove");
+                Cookies.remove(config.POST_LOGIN_ACTION_COOKIE, { path: "/" });
+            }
         }
     }, [isLoggedIn, onAction]);
 

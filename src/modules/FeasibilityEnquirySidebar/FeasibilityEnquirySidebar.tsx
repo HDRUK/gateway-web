@@ -30,6 +30,7 @@ const FeasibilityEnquirySidebar = ({
 }: {
     datasets: DatasetEnquiry[];
 }) => {
+    console.log('FeasibilityEnquirySidebar', datasets);
     const { hideSidebar } = useSidebar();
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -49,6 +50,7 @@ const FeasibilityEnquirySidebar = ({
     });
 
     const hydratedFormFields = useMemo(() => {
+        console.log('hydratedFormFields', feasibilityEnquiryFormFields, datasets);
         return feasibilityEnquiryFormFields.map(field => {
             if (field.name === "organisation") {
                 return {
