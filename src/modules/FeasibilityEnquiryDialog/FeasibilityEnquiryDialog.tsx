@@ -32,8 +32,6 @@ const FeasibilityEnquiryDialog = ({
     const { user } = useAuth();
 
     const handleFeasibilityEnquiries = () => {
-        console.log('FeasibilityEnquiryDialog handleFeasibilityEnquiries');
-        console.log('result', result);
         showSidebar({
             title: "Messages",
             content: <FeasibilityEnquirySidebar datasets={[result]} />,

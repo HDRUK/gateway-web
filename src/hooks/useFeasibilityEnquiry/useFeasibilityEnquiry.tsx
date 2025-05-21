@@ -28,11 +28,8 @@ const useFeasibilityEnquiry = () => {
             mutateLibraries,
         }: UseFeasibilityEnquiryProps) => {
             const { _id, team, metadata } = dataset;
-            console.log("dataset", dataset);
+
             if (!isLoggedIn) {
-                console.log("useFeasibilityEnquiry not isLoggedIn");
-                const result = dataset;
-                console.log("result", result);
                 setPostLoginActionCookie(
                     PostLoginActions.OPEN_FEASIBILITY_ENQUIRY,
                     {

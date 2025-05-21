@@ -40,7 +40,6 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
-import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import ProvidersDialog from "@/modules/ProvidersDialog";
@@ -640,7 +639,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const { setPostLoginActionCookie } = usePostLoginAction({
         onAction: ({ action, data }) => {
-            console.log("setPostLoginActionCookie onAction");
             switch (action) {
                 case PostLoginActions.SAVE_SEARCH:
                     showDialog(() => (
