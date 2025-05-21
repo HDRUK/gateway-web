@@ -1,4 +1,7 @@
-import { renderHook } from "@/utils/testUtils";
+import Cookies from "js-cookie";
+import config from "@/config/config";
+import { PostLoginActions } from "@/consts/postLoginActions";
+import { act, renderHook, waitFor } from "@/utils/testUtils";
 import { datasetSearchResultV1 } from "@/mocks/data";
 import useFeasibilityEnquiry from "./useFeasibilityEnquiry";
 
@@ -14,6 +17,8 @@ const mockedCommonArgs = {
 jest.mock("@/hooks/useDialog", () => () => ({
     showDialog: mockShowDialog,
 }));
+
+jest.mock("js-cookie");
 
 describe("useFeasibilityEnquiry", () => {
     beforeEach(() => {
@@ -47,7 +52,7 @@ describe("useFeasibilityEnquiry", () => {
         }
     });
 
-    it("shows the provider modal", () => {
+    it("shows the provider modal when not logged in, and sets post-login action cookie", async () => {
         const { result } = renderHook(() => useFeasibilityEnquiry());
 
         if (result.current) {
@@ -63,5 +68,26 @@ describe("useFeasibilityEnquiry", () => {
         } else {
             fail("No callback was returned");
         }
+
+        const { _id, team, metadata } = datasetSearchResultV1;
+
+        await waitFor(() => {
+            expect(Cookies.set).toHaveBeenCalledWith(
+                config.POST_LOGIN_ACTION_COOKIE,
+                JSON.stringify({
+                    action: PostLoginActions.OPEN_FEASIBILITY_ENQUIRY,
+                    dataset: {
+                        datasetId: Number(_id),
+                        name: metadata.summary.title,
+                        teamId: team.id,
+                        teamName: team.name,
+                        teamMemberOf: team.member_of,
+                    },
+                }),
+                {
+                    path: "/",
+                }
+            );
+        });
     });
 });
