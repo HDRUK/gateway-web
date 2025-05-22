@@ -1,7 +1,7 @@
+import { Card } from "@mui/material";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
-import Card from "@/components/Card";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";

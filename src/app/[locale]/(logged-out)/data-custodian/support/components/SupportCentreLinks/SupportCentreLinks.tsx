@@ -2,7 +2,6 @@
 
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
@@ -24,53 +23,56 @@ const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.dataCustodianSupport";
 
 export default function MeetTheTeam() {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
-    const router = useRouter();
 
     const data = [
         {
             heading: t("gettingStartedTitle"),
             link: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
-            icon: <DataCustodiansIcon />,
+            icon: <DataCustodiansIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("metadataOnboardingTitle"),
             link: RouteName.DATA_CUSTODIAN_METADATA_ONBOARDING,
-            icon: <MetadataOnboardingIcon />,
+            icon: (
+                <MetadataOnboardingIcon aria-hidden="true" focusable="false" />
+            ),
         },
         {
             heading: t("uploadingDataUsesProjectsTitle"),
             link: RouteName.DATA_CUSTODIAN_UPLOADING_DATAUSES_PROJECTS,
-            icon: <DataUseIcon />,
+            icon: <DataUseIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("onboardingCohortDiscoveryTitle"),
             link: RouteName.DATA_CUSTODIAN_COHORT_DISCOVERY,
-            icon: <CohortDiscoveryIcon />,
+            icon: <CohortDiscoveryIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("uploadingToolsTitle"),
             link: RouteName.DATA_CUSTODIAN_TOOLS,
-            icon: <ToolIcon />,
+            icon: <ToolIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("uploadingPublicationsTitle"),
             link: RouteName.DATA_CUSTODIAN_PUBLICATIONS,
-            icon: <PublicationIcon />,
+            icon: <PublicationIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("managingCollectionsTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_COLLECTIONS,
-            icon: <CollectionsIcon />,
+            icon: <CollectionsIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("managingEnquiryDarTitle"),
             link: RouteName.DATA_CUSTODIAN_MANAGING_ENQUIRY,
-            icon: <DataAccessRequestIcon />,
+            icon: (
+                <DataAccessRequestIcon aria-hidden="true" focusable="false" />
+            ),
         },
         {
             heading: t("theAllianceTitle"),
             link: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
-            icon: <TheAllianceIcon />,
+            icon: <TheAllianceIcon aria-hidden="true" focusable="false" />,
         },
     ];
 
@@ -95,11 +97,8 @@ export default function MeetTheTeam() {
                             desktop={3}
                             sx={{ p: 0 }}
                             key={link}>
-                            <FeatureCard
-                                role="button"
-                                icon={icon}
-                                onClick={() => router.push(link)}>
-                                <FeatureCardHeading>
+                            <FeatureCard icon={icon} href={link}>
+                                <FeatureCardHeading sx={{ overflow: "hidden" }}>
                                     {heading}
                                 </FeatureCardHeading>
                             </FeatureCard>

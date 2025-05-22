@@ -1,5 +1,5 @@
+import { Card } from "@mui/material";
 import Box from "@/components/Box";
-import Card from "@/components/Card";
 import CopyTextButton from "@/components/CopyTextButton";
 import Typography from "@/components/Typography";
 
