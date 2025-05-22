@@ -2,8 +2,8 @@
 
 import { ReactNode } from "react";
 import { Typography } from "@mui/material";
-import Button from "@/components/Button";
 import Link from "next/link";
+import Button from "@/components/Button";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -46,19 +46,19 @@ export default function NewsletterSignup({
                     {description}
                 </Typography>
                 <Button
-                        component={Link}
-                        href={RouteName.NEWSLETTER_SIGNUP}
-                        sx={{
-                            color: "#fff",
-                            [theme.breakpoints.up(810)]: {
-                                height: "60px",
-                                minWidth: "149px",
-                            },
-                            fontSize: "20px",
-                        }}
-                        title="Sign up for newsletter">
-                        Join
-                    </Button>
+                    component={Link}
+                    href={RouteName.NEWSLETTER_SIGNUP}
+                    sx={{
+                        color: "#fff",
+                        [theme.breakpoints.up(810)]: {
+                            height: "60px",
+                            minWidth: "149px",
+                        },
+                        fontSize: "20px",
+                    }}
+                    title="Sign up for newsletter">
+                    Join
+                </Button>
             </StyledNewsletterSignupCta>
         </StyledNewsletterSignup>
     );
