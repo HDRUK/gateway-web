@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useId } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
@@ -64,6 +64,7 @@ export default function CustomerSurvey({
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
     const [animateOut, setAnimateOut] = useState(false);
+    const id = useId();
 
     const handleSubmit = usePost(apis.customerSatisfactionV1Url, {
         successNotificationsOn: false,
@@ -124,6 +125,7 @@ export default function CustomerSurvey({
 
     return (
         <Box
+            aria-describedby={id}
             sx={{
                 textAlign: "center",
                 padding: 2,
@@ -137,11 +139,12 @@ export default function CustomerSurvey({
             }}>
             <IconButton
                 sx={{ position: "absolute", top: 10, right: 10 }}
+                aria-label="Close survey"
                 onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
 
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom id={id}>
                 {t("title")}
             </Typography>
             <Grid container spacing={1} justifyContent="center">

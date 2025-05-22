@@ -1,4 +1,5 @@
 import { ReactNode, Suspense } from "react";
+import visuallyHidden from "@mui/utils/visuallyHidden";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import { notFound } from "next/navigation";
@@ -63,16 +64,24 @@ export default function RootLayout({
                                         <CMSBanners />
                                         {children}
                                         <Footer />
+                                        <CustomerSurvey />
+                                        <Suspense fallback={null}>
+                                            <NavigationEvents />
+                                            <PageTracker />
+                                        </Suspense>
+                                    </ActionBarProvider>
+                                    {/* ProvidersDialog has to remain in DOM */}
+                                    <ProvidersDialog />
+
+                                    <div
+                                        role="note"
+                                        // eslint-disable-next-line
+                                        tabIndex={0}
+                                        style={visuallyHidden}>
+                                        end of page
                                     </div>
-                                    <CustomerSurvey />
-                                    <Suspense fallback={null}>
-                                        <NavigationEvents />
-                                        <PageTracker />
-                                    </Suspense>
-                                </ActionBarProvider>
-                                {/* ProvidersDialog has to remain in DOM */}
-                                <ProvidersDialog />
-                            </DialogProvider>
+                                </DialogProvider>
+                            </FeatureProvider>
                         </ThemeRegistry>
                     </SWRProvider>
                 </NextIntlClientProvider>
