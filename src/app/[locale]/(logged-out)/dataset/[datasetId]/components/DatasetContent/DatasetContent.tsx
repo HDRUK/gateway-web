@@ -174,7 +174,10 @@ const DatasetContent = ({
                                 pl: 0,
                                 pr: 0,
                             }}>
-                            <Typography variant="h2">
+                            <Typography
+                                variant="h2"
+                                aria-live="polite"
+                                tabIndex={-1}>
                                 {section.sectionName}
                             </Typography>
 
