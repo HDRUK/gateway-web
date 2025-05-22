@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useId, useMemo, useState } from "react";
 import {
     Box,
     Collapse,
@@ -42,6 +42,14 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
     const trimmedPathname = getTrimmedpathname(params?.locale || "", pathname);
     const [expandedSection, setExpandedSection] = useState("");
 
+    const baseId = useId();
+
+    const itemIds = useMemo(() => {
+        return Object.fromEntries(
+            navItems.map((item, index) => [item.label, `${baseId}-${index}`])
+        );
+    }, [navItems, baseId]);
+
     const toggleMenu = (item: LeftNavItem) => {
         const isOpen = isExpanded(item, expandedSection, trimmedPathname);
         if (isOpen && expandedSection !== item.label) return;
@@ -60,8 +68,7 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                     );
 
                     return !item.subItems ? (
-                        <ListItemButton
-                            component={Link}
+                        <Link
                             key={item.label}
                             href={item.href || ""}
                             passHref
@@ -77,57 +84,55 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                             <ListItemButton
                                 onClick={() => toggleMenu(item)}
                                 component="button"
-                                sx={{ width: "100%", paddingLeft: 1 }}>
+                                sx={{ width: "100%", paddingLeft: 1 }}
+                                aria-expanded={expanded}
+                                aria-controls={sectionId}
+                                id={`toggle-${sectionId}`}>
                                 <ListItemIcon sx={{ minWidth: "40px" }}>
                                     {item.icon}
                                 </ListItemIcon>
                                 <ListItemText primary={item.label} />
-                                {item.subItems &&
-                                isExpanded(
-                                    item,
-                                    expandedSection,
-                                    trimmedPathname
-                                ) ? (
+                                {expanded ? (
                                     <ExpandLessIcon color="primary" />
                                 ) : (
                                     <ExpandMoreIcon color="primary" />
                                 )}
                             </ListItemButton>
+
                             <Collapse
-                                in={isExpanded(
-                                    item,
-                                    expandedSection,
-                                    trimmedPathname
-                                )}
+                                in={expanded}
                                 timeout="auto"
-                                unmountOnExit>
+                                unmountOnExit
+                                id={sectionId}
+                                role="region"
+                                aria-labelledby={`toggle-${sectionId}`}>
                                 <List component="div" disablePadding>
                                     {item.subItems.map(subItem => (
-                                        <ListItemButton
-                                            component={Link}
+                                        <Link
+                                            sx={{ color: colors.grey700 }}
+                                            underline="none"
                                             key={subItem.label}
                                             href={subItem.href}
-                                            passHref
-                                            selected={trimmedPathname.includes(
-                                                subItem.href
-                                            )}
-                                            sx={{
-                                                pl: 4,
-                                                color: colors.grey700,
-                                            }}>
-                                            <ListItemText
-                                                sx={{
-                                                    paddingLeft: "17px",
-                                                }}
-                                                primary={subItem.label}
-                                            />
-                                        </ListItemButton>
+                                            passHref>
+                                            <ListItemButton
+                                                selected={trimmedPathname.includes(
+                                                    subItem.href
+                                                )}
+                                                sx={{ pl: 4 }}>
+                                                <ListItemText
+                                                    sx={{
+                                                        paddingLeft: "17px",
+                                                    }}
+                                                    primary={subItem.label}
+                                                />
+                                            </ListItemButton>
+                                        </Link>
                                     ))}
                                 </List>
                             </Collapse>
                         </Fragment>
-                    )
-                )}
+                    );
+                })}
             </List>
         </Box>
     );
