@@ -402,6 +402,15 @@ const datasetFields: DatasetSection[] = [
             },
         ],
     },
+    {
+        sectionName: "Tools",
+        fields: [
+            {
+                path: "metadata.metadata.enrichmentAndLinkage.tools",
+                type: FieldType.LIST,
+            },
+        ],
+    },
 ];
 
 export interface Observation {
