@@ -3,7 +3,6 @@
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import { FeatureCard, FeatureCardHeading } from "@/components/FeatureCard";
@@ -22,43 +21,44 @@ const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.support";
 
 export default function MeetTheTeam() {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
-    const router = useRouter();
 
     const data = [
         {
             heading: t("searchTitle"),
             link: RouteName.HOW_TO_SEARCH,
-            icon: <SearchIcon />,
+            icon: <SearchIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("durTitle"),
             link: RouteName.SUPPORT_DUR,
-            icon: <DataUseIcon />,
+            icon: <DataUseIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("cohortDiscoveryTitle"),
             link: RouteName.SUPPORT_COHORT_DISCOVERY,
-            icon: <CohortDiscoveryIcon />,
+            icon: <CohortDiscoveryIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("toolsTitle"),
             link: RouteName.SUPPORT_TOOLS,
-            icon: <ToolIcon />,
+            icon: <ToolIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("uploadingPublicationsTitle"),
             link: RouteName.SUPPORT_PUBLICATIONS,
-            icon: <PublicationIcon />,
+            icon: <PublicationIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("exploringCollectionsTitle"),
             link: RouteName.SUPPORT_COLLECTIONS,
-            icon: <CollectionsIcon />,
+            icon: <CollectionsIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("darTitle"),
             link: RouteName.SUPPORT_DAR,
-            icon: <DataAccessRequestIcon />,
+            icon: (
+                <DataAccessRequestIcon aria-hidden="true" focusable="false" />
+            ),
         },
     ];
 
@@ -79,11 +79,9 @@ export default function MeetTheTeam() {
                             desktop={3}
                             sx={{ p: 0 }}
                             key={link}>
-                            <FeatureCard
-                                role="button"
-                                icon={icon}
-                                onClick={() => router.push(link)}>
-                                <FeatureCardHeading>
+                            <FeatureCard icon={icon} href={link}>
+                                <FeatureCardHeading
+                                    sx={{ overflow: "hidden", pb: 1 }}>
                                     {heading}
                                 </FeatureCardHeading>
                             </FeatureCard>
