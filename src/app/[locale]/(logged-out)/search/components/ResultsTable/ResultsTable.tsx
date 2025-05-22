@@ -6,6 +6,7 @@ import { PageTemplatePromo } from "@/interfaces/Cms";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
+import { isValueNumber } from "@/interfaces/isValueNumber";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
@@ -98,7 +99,7 @@ const getColumns = ({
         cell: ({ row: { original } }) => {
             const dataCustodianId = get(original, PUBLISHERS_ID);
             // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
-            const isNumber = !Number.isNaN(dataCustodianId);
+            const isNumber = isValueNumber(dataCustodianId);
             const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
 
             return (
