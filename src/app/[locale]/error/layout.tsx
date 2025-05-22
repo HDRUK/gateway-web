@@ -8,7 +8,6 @@ export default async function LoggedInLayout({
 }) {
     return (
         <>
-            <Header />
             <Box
                 component="main"
                 sx={{ flexGrow: 1, display: "flex", width: "100vw" }}>
