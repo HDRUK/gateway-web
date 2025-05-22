@@ -1,9 +1,9 @@
+import { Card } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Application } from "@/interfaces/Application";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import Card from "@/components/Card";
 import CopyableCard from "@/components/CopyableCard";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";

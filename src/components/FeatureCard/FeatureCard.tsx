@@ -1,28 +1,30 @@
 import { ReactNode } from "react";
-import { Box, CardProps, useTheme } from "@mui/material";
-import Card from "../Card";
+import { Box, Card, CardProps, useTheme } from "@mui/material";
+import Link from "next/link";
 
-export interface FeatureCarProps extends CardProps {
+export interface FeatureCardProps extends CardProps {
     icon: ReactNode;
+    href: string;
 }
 
 export default function FeatureCard({
     sx,
     icon,
     children,
-    onClick,
+    href,
     ...restProps
-}: FeatureCarProps) {
+}: FeatureCardProps) {
     const theme = useTheme();
 
     return (
         <Card
             sx={{
                 textAlign: "center",
-                ...(onClick && { cursor: "pointer" }),
+                textDecoration: "none",
                 ...sx,
             }}
-            onClick={onClick}
+            component={Link}
+            href={href}
             {...restProps}>
             <Box
                 sx={{

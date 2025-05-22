@@ -17,11 +17,13 @@ export default function MeetTheTeam() {
                 {t("title")}
             </Typography>
             <Typography sx={{ mb: 3 }}>{t("content")}</Typography>
-            <Link href={`mailto:${CONTACT_EMAIL_ADDRESS}`} passHref>
-                <Button variant="outlined" color="secondary">
-                    {t("contactButton")}
-                </Button>
-            </Link>
+            <Button
+                variant="outlined"
+                color="secondary"
+                component={Link}
+                href={`mailto:${CONTACT_EMAIL_ADDRESS}`}>
+                {t("contactButton")}
+            </Button>
         </Box>
     );
 }
