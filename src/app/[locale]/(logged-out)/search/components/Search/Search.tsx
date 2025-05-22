@@ -1022,27 +1022,23 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     <div aria-describedby="result-summary">
                                         {renderResults()}
                                     </div>
-
-                                    <Pagination
-                                        isLoading={isSearching}
-                                        page={parseInt(queryParams.page, 10)}
-                                        count={data?.lastPage}
-                                        onChange={(
-                                            e: React.ChangeEvent<unknown>,
-                                            page: number
-                                        ) => {
-                                            setQueryParams({
-                                                ...queryParams,
-                                                page: page.toString(),
-                                            });
-                                            updatePath(
-                                                PAGE_FIELD,
-                                                page.toString()
-                                            );
-                                        }}
-                                    />
                                 </>
                             )}
+                        <Pagination
+                            isLoading={isSearching}
+                            page={parseInt(queryParams.page, 10)}
+                            count={data?.lastPage}
+                            onChange={(
+                                e: React.ChangeEvent<unknown>,
+                                page: number
+                            ) => {
+                                setQueryParams({
+                                    ...queryParams,
+                                    page: page.toString(),
+                                });
+                                updatePath(PAGE_FIELD, page.toString());
+                            }}
+                        />
                     </Box>
                 </Box>
             </BoxContainer>

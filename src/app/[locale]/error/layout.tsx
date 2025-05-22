@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import Header from "@/components/Header";
 
 export default async function LoggedInLayout({
     children,
@@ -7,13 +6,10 @@ export default async function LoggedInLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
-            <Header />
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, display: "flex", width: "100vw" }}>
-                {children}
-            </Box>
-        </>
+        <Box
+            component="main"
+            sx={{ flexGrow: 1, display: "flex", width: "100vw" }}>
+            {children}
+        </Box>
     );
 }
