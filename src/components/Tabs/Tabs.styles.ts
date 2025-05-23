@@ -36,7 +36,7 @@ export const tabsStyle = {
                 padding: "6px",
 
                 "&:focus,&:hover, &:active": {
-                    background: colors.green100,
+                    background: colors.white,
                     borderBottom: `3px solid ${colors.green400}`,
                 },
 
@@ -45,6 +45,7 @@ export const tabsStyle = {
                 },
                 "&:focus:not(.Mui-selected), &:hover:not(.Mui-selected), &.Mui-focusVisible:not(.Mui-selected)":
                     {
+                        background: colors.green100,
                         color: "inherit",
                     },
             },
