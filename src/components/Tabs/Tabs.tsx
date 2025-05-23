@@ -25,6 +25,7 @@ export enum TabVariant {
 }
 
 export interface TabProps {
+    ariaLabel?: string;
     tabs: Tab[];
     introContent?: ReactNode;
     centered?: boolean;
@@ -84,11 +85,11 @@ const Tabs = ({
     persistParams = true,
     defaultSelectedTab,
     tabVariant = "",
+    ariaLabel,
     handleChange,
 }: TabProps) => {
     const searchParams = useSearchParams();
     const currentTab = searchParams?.get(paramName);
-
     const selectedTab = currentTab || defaultSelectedTab || tabs[0].value;
 
     return (
@@ -102,13 +103,20 @@ const Tabs = ({
                         ...tabBoxSx,
                     }}>
                     <MuiTabList
+                        aria-label={ariaLabel ?? "tab navigation"}
                         variant={tabVariant}
                         scrollButtons="auto"
-                        sx={{ mb: variant === TabVariant.STANDARD ? 1 : 0 }}
+                        sx={{
+                            mb: variant === TabVariant.STANDARD ? 1 : 0,
+                            ".MuiTabs-indicator": {
+                                display: "none",
+                            },
+                        }}
                         centered={centered}
                         onChange={handleChange}>
                         {tabs.map(tab => (
                             <MuiTab<ElementType>
+                                id={`tab-${tab.value}`}
                                 component={CustomLink}
                                 disableRipple
                                 color="secondary"
@@ -117,8 +125,9 @@ const Tabs = ({
                                 value={tab.value}
                                 label={tab.label}
                                 css={
-                                    variant === TabVariant.LARGE &&
-                                    tabsStyle.tab
+                                    variant === TabVariant.LARGE
+                                        ? tabsStyle.tab
+                                        : tabsStyle.normal
                                 }
                                 param={paramName}
                                 persist={persistParams}
@@ -130,6 +139,7 @@ const Tabs = ({
                 {renderTabContent &&
                     tabs.map(tab => (
                         <MuiTabPanel
+                            aria-labelledby={`tab-${tab.value}`}
                             sx={{ padding: 0 }}
                             key={tab.value}
                             value={tab.value}>
