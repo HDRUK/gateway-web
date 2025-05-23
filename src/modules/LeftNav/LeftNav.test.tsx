@@ -9,10 +9,10 @@ describe("LeftNav", () => {
             <LeftNav permissions={{ "cohort.read": false }} />
         );
 
-        expect(getAllByRole("button")).toHaveLength(7);
-
+        expect(getAllByRole("link")).toHaveLength(6);
         expect(getByText("Your Profile")).toBeInTheDocument();
     });
+
     it("renders the profile navigation with Cohort Admin", () => {
         mockRouter.push("/initial-path");
 
@@ -20,8 +20,7 @@ describe("LeftNav", () => {
             <LeftNav permissions={{ "cohort.read": true }} />
         );
 
-        expect(getAllByRole("button")).toHaveLength(8);
-
+        expect(getAllByRole("link")).toHaveLength(7);
         expect(getByText("Your Profile")).toBeInTheDocument();
         expect(getByText("Cohort Discovery Admin")).toBeInTheDocument();
     });
@@ -43,21 +42,18 @@ describe("LeftNav", () => {
             />
         );
 
-        const buttons = getAllByRole("button");
-        expect(getAllByRole("button")).toHaveLength(5);
+        const links = getAllByRole("link");
+        expect(links).toHaveLength(4);
 
         expect(
-            within(buttons[0]).getByText("Team Management")
+            within(links[0]).getByText("Team Management")
         ).toBeInTheDocument();
         expect(
-            within(buttons[1]).getByText("Integrations")
+            within(links[1]).getByText("Custom Integrations")
         ).toBeInTheDocument();
         expect(
-            within(buttons[2]).getByText("Custom Integrations")
+            within(links[2]).getByText("Predefined Integrations")
         ).toBeInTheDocument();
-        expect(
-            within(buttons[3]).getByText("Predefined Integrations")
-        ).toBeInTheDocument();
-        expect(within(buttons[4]).getByText("Help")).toBeInTheDocument();
+        expect(within(links[3]).getByText("Help")).toBeInTheDocument();
     });
 });
