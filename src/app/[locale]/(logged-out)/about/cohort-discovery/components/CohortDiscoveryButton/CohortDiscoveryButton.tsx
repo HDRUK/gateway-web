@@ -56,6 +56,11 @@ const CohortDiscoveryButton = ({
         }
     );
 
+    const openAthensInvalid =
+        isLoggedIn &&
+        user?.provider === "open-athens" &&
+        !user?.secondary_email;
+
     useEffect(() => {
         if (isClicked) {
             if (accessData?.redirect_url) {
@@ -82,11 +87,6 @@ const CohortDiscoveryButton = ({
 
     const isApproved =
         isLoggedIn && userData && userData.request_status === "APPROVED";
-
-    const openAthensInvalid =
-        isLoggedIn &&
-        user?.provider === "open-athens" &&
-        !user?.secondary_email;
 
     return (
         <Tooltip
