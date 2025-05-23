@@ -67,7 +67,7 @@ const SwitchInline = <
                             inputRef={ref}
                             sx={{ ...switchSx, mb: 0 }}
                             inputProps={{
-                                "aria-label": label ?? title,
+                                "aria-label": label,
                                 "aria-describedby": extraInfo
                                     ? `${name}-description`
                                     : undefined,
@@ -75,19 +75,23 @@ const SwitchInline = <
                         />
                     </span>
                 </Tooltip>
-                <Stack>
-                    {label && (
-                        <Typography id={`${name}-label`}>{label}</Typography>
-                    )}
-                    {extraInfo && (
-                        <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            id={`${name}-description`}>
-                            {extraInfo}
-                        </Typography>
-                    )}
-                </Stack>
+                {(label || extraInfo) && (
+                    <Stack>
+                        {label && (
+                            <Typography id={`${name}-label`}>
+                                {label}
+                            </Typography>
+                        )}
+                        {extraInfo && (
+                            <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                id={`${name}-description`}>
+                                {extraInfo}
+                            </Typography>
+                        )}
+                    </Stack>
+                )}
             </Stack>
         </FormControl>
     );
