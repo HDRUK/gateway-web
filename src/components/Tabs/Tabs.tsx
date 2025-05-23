@@ -109,7 +109,10 @@ const Tabs = ({
                         sx={{
                             mb: variant === TabVariant.STANDARD ? 1 : 0,
                             ".MuiTabs-indicator": {
-                                display: "none",
+                                display:
+                                    variant !== TabVariant.STANDARD
+                                        ? "none"
+                                        : "block",
                             },
                         }}
                         centered={centered}
