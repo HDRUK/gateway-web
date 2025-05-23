@@ -9,9 +9,9 @@ import {
     ListItemIcon,
     ListItemText,
 } from "@mui/material";
+import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
-import Link from "@/components/Link";
 import { colors } from "@/config/theme";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 import { getTrimmedpathname } from "@/utils/general";
@@ -68,21 +68,18 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                     );
 
                     return !item.subItems ? (
-                        <Link
+                        <ListItemButton
+                            component={Link}
                             key={item.label}
                             href={item.href || ""}
                             passHref
-                            underline="none"
-                            sx={{ color: colors.grey700 }}>
-                            <ListItemButton
-                                selected={item.href === trimmedPathname}
-                                sx={{ paddingLeft: 1 }}>
-                                <ListItemIcon sx={{ minWidth: "40px" }}>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.label} />
-                            </ListItemButton>
-                        </Link>
+                            selected={item.href === trimmedPathname}
+                            sx={{ paddingLeft: 1, color: colors.grey700 }}>
+                            <ListItemIcon sx={{ minWidth: "40px" }}>
+                                {item.icon}
+                            </ListItemIcon>
+                            <ListItemText primary={item.label} />
+                        </ListItemButton>
                     ) : (
                         <Fragment key={item.label}>
                             <ListItemButton
@@ -112,25 +109,25 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
                                 aria-labelledby={`toggle-${sectionId}`}>
                                 <List component="div" disablePadding>
                                     {item.subItems.map(subItem => (
-                                        <Link
-                                            sx={{ color: colors.grey700 }}
-                                            underline="none"
+                                        <ListItemButton
+                                            component={Link}
                                             key={subItem.label}
                                             href={subItem.href}
-                                            passHref>
-                                            <ListItemButton
-                                                selected={trimmedPathname.includes(
-                                                    subItem.href
-                                                )}
-                                                sx={{ pl: 4 }}>
-                                                <ListItemText
-                                                    sx={{
-                                                        paddingLeft: "17px",
-                                                    }}
-                                                    primary={subItem.label}
-                                                />
-                                            </ListItemButton>
-                                        </Link>
+                                            passHref
+                                            selected={trimmedPathname.includes(
+                                                subItem.href
+                                            )}
+                                            sx={{
+                                                pl: 4,
+                                                color: colors.grey700,
+                                            }}>
+                                            <ListItemText
+                                                sx={{
+                                                    paddingLeft: "17px",
+                                                }}
+                                                primary={subItem.label}
+                                            />
+                                        </ListItemButton>
                                     ))}
                                 </List>
                             </Collapse>
