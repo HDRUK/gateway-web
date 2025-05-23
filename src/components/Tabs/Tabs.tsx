@@ -104,7 +104,15 @@ const Tabs = ({
                     <MuiTabList
                         variant={tabVariant}
                         scrollButtons="auto"
-                        sx={{ mb: variant === TabVariant.STANDARD ? 1 : 0 }}
+                        sx={{
+                            mb: variant === TabVariant.STANDARD ? 1 : 0,
+                            ".MuiTabs-indicator": {
+                                display:
+                                    variant !== TabVariant.STANDARD
+                                        ? "none"
+                                        : "block",
+                            },
+                        }}
                         centered={centered}
                         onChange={handleChange}>
                         {tabs.map(tab => (
