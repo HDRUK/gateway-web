@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Stack, Typography } from "@mui/material";
 import { pick } from "lodash";
 import { useParams, useRouter } from "next/navigation";
 import { Federation } from "@/interfaces/Federation";
@@ -17,7 +18,7 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import RunFederationTest from "@/components/RunFederationTest";
-import Switch from "@/components/Switch";
+import SwitchInline from "@/components/SwitchInline";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
@@ -242,7 +243,6 @@ const EditIntegrationForm = () => {
                                             ? ""
                                             : "You must run a successful test before you can Enable the integration."
                                     }
-                                    aria-label="Integration status"
                                 />
                                 <Typography>Enabled</Typography>
                             </Stack>
