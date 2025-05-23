@@ -1,6 +1,7 @@
 import { Control, FieldValues, Path, useController } from "react-hook-form";
 import {
     FormControl,
+    FormControlLabel,
     Stack,
     Switch,
     SwitchProps,
@@ -50,45 +51,53 @@ const SwitchInline = <
 
     return (
         <FormControl
-            component="fieldset"
             fullWidth
-            sx={{ m: 0, mb: 2, ...formControlSx }}
+            sx={{ m: 0, mb: 2, ...formControlSx, ml: 0, mr: 0 }}
             error={!!error}>
-            <Stack direction="row" spacing={2} alignItems="center">
-                <Tooltip title={title}>
-                    <span>
-                        <Switch
-                            size={size}
-                            disableRipple
-                            {...rest}
-                            {...fieldProps}
-                            disabled={disabled}
-                            checked={fieldProps.value}
-                            inputRef={ref}
-                            sx={{ ...switchSx, mb: 0 }}
-                            inputProps={{
-                                "aria-label": label ?? title,
-                                "aria-describedby": extraInfo
-                                    ? `${name}-description`
-                                    : undefined,
-                            }}
-                        />
-                    </span>
-                </Tooltip>
-                <Stack>
-                    {label && (
-                        <Typography id={`${name}-label`}>{label}</Typography>
-                    )}
-                    {extraInfo && (
-                        <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            id={`${name}-description`}>
-                            {extraInfo}
-                        </Typography>
-                    )}
-                </Stack>
-            </Stack>
+            <FormControlLabel
+                componentsProps={{
+                    typography: {
+                        ml: 2,
+                    },
+                }}
+                sx={{
+                    m: 0,
+                }}
+                control={
+                    <Tooltip title={title}>
+                        <span>
+                            <Switch
+                                size={size}
+                                disableRipple
+                                {...rest}
+                                {...fieldProps}
+                                disabled={disabled}
+                                checked={fieldProps.value}
+                                inputRef={ref}
+                                sx={{ ...switchSx, mb: 0 }}
+                                inputProps={{
+                                    "aria-describedby": extraInfo
+                                        ? `${name}-description`
+                                        : undefined,
+                                }}
+                            />
+                        </span>
+                    </Tooltip>
+                }
+                label={
+                    <Stack>
+                        {label}
+                        {extraInfo && (
+                            <Typography
+                                variant="body2"
+                                color="textSecondary"
+                                id={`${name}-description`}>
+                                {extraInfo}
+                            </Typography>
+                        )}
+                    </Stack>
+                }
+            />
         </FormControl>
     );
 };

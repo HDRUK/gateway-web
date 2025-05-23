@@ -243,6 +243,7 @@ const EditIntegrationForm = () => {
                                             ? ""
                                             : "You must run a successful test before you can Enable the integration."
                                     }
+                                    aria-label="Integration status"
                                 />
                                 <Typography>Enabled</Typography>
                             </Stack>

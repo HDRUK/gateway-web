@@ -290,19 +290,11 @@ const CreateTeamForm = () => {
                             <InputWrapper
                                 control={control}
                                 {...questionBankField}
-                                checkedLabel={
-                                    <>
-                                        {t(
-                                            `${TRANSLATION_PATH_COMMON}.questionBank`
-                                        )}
-                                        <Typography
-                                            component="span"
-                                            sx={{ fontWeight: "bold" }}>
-                                            {" "}
-                                            {questionBankLabel.toLowerCase()}
-                                        </Typography>
-                                    </>
-                                }
+                                label={t(
+                                    `${TRANSLATION_PATH_COMMON}.questionBank`
+                                )}
+                                extraInfo={questionBankLabel}
+                                formControlSx={{ mb: 0 }}
                             />
                         </Box>
                     </Box>
