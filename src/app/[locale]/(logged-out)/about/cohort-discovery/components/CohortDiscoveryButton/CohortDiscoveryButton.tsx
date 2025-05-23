@@ -10,6 +10,7 @@ import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { RouteName } from "@/consts/routeName";
 
 interface accessRequestType {
     redirect_url: string;
@@ -60,12 +61,17 @@ const CohortDiscoveryButton = ({
             if (accessData?.redirect_url) {
                 push(accessData?.redirect_url);
             } else if (isLoggedIn) {
-                push(ctaLink.url);
+                // check that if the user is using OpenAthens, that they have provided a secondary email, and
+                if (openAthensInvalid) {
+                    push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
+                } else {
+                    push(ctaLink.url);
+                }
             } else {
                 showDialog(ProvidersDialog, { isProvidersDialog: true });
             }
         }
-    }, [accessData, isClicked, isLoggedIn]);
+    }, [userData, accessData, isClicked, isLoggedIn]);
 
     const isDisabled =
         isLoggedIn && userData
@@ -77,12 +83,19 @@ const CohortDiscoveryButton = ({
     const isApproved =
         isLoggedIn && userData && userData.request_status === "APPROVED";
 
+    const openAthensInvalid =
+        isLoggedIn &&
+        user?.provider === "open-athens" &&
+        !user?.secondary_email;
+
     return (
         <Tooltip
             title={
                 tooltipOverride ||
                 (isDisabled
                     ? t(`notApproved`)
+                    : openAthensInvalid
+                    ? t("setSecondaryEmail")
                     : showDatasetExplanatoryTooltip && isApproved
                     ? t("explanatoryTooltip")
                     : "")
