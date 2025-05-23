@@ -55,14 +55,12 @@ function DesktopNav() {
                             key={item.label}
                             sx={{
                                 color: colors.white,
-                                "&:focus": {
+                                "&:focus&.Mui-focusVisible": {
+                                    outlineColor: `${colors.white} !important`,
+                                    borderRadius: 0,
+                                    textDecoration: "underline",
                                     svg: {
                                         color: colors.white,
-                                    },
-                                    "&.Mui-focusVisible": {
-                                        outlineColor: `${colors.white} !important`,
-                                        borderRadius: 0,
-                                        textDecoration: "underline",
                                     },
                                 },
                             }}
