@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Stack, Typography } from "@mui/material";
 import { pick } from "lodash";
 import { useParams, useRouter } from "next/navigation";
 import { Federation } from "@/interfaces/Federation";
@@ -17,7 +18,7 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import RunFederationTest from "@/components/RunFederationTest";
-import Switch from "@/components/Switch";
+import SwitchInline from "@/components/SwitchInline";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
@@ -226,19 +227,25 @@ const EditIntegrationForm = () => {
                     }}>
                     <Paper sx={{ p: 1 }}>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Switch
-                                unCheckedLabel="Disabled"
-                                checkedLabel="Enabled"
-                                disabled={!tested}
-                                control={control}
-                                name="enabled"
-                                formControlSx={{ mb: 0 }}
-                                title={
-                                    tested
-                                        ? ""
-                                        : "You must run a successful test before you can Enable the integration."
-                                }
-                            />
+                            <Stack
+                                direction="row"
+                                spacing={2}
+                                alignItems="center"
+                                sx={{ display: "flex" }}>
+                                <Typography>Disabled</Typography>
+                                <SwitchInline
+                                    disabled={!tested}
+                                    control={control}
+                                    name="enabled"
+                                    formControlSx={{ mb: 0 }}
+                                    title={
+                                        tested
+                                            ? ""
+                                            : "You must run a successful test before you can Enable the integration."
+                                    }
+                                />
+                                <Typography>Enabled</Typography>
+                            </Stack>
                         </Box>
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
