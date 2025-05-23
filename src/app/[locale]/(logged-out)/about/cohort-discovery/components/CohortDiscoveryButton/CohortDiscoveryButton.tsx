@@ -66,7 +66,8 @@ const CohortDiscoveryButton = ({
             if (accessData?.redirect_url) {
                 push(accessData?.redirect_url);
             } else if (isLoggedIn) {
-                // check that if the user is using OpenAthens, that they have provided a secondary email, and
+                // check that if the user is using OpenAthens, that they have provided a secondary email,
+                // and send them to set it if not
                 if (openAthensInvalid) {
                     push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
                 } else {
