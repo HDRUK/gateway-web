@@ -1,9 +1,9 @@
 "use client";
 
+import { Card } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
-import Card from "@/components/Card";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";

@@ -10,7 +10,6 @@ interface PaginationProps extends MuiPaginationProps {
 }
 
 const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
-    if (isLoading) return null;
     return (
         <Box sx={{ p: 0, display: "flex", justifyContent: "center" }}>
             <MuiPagination
@@ -22,6 +21,7 @@ const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
                             next: ArrowRightIcon,
                         }}
                         {...item}
+                        disabled={isLoading}
                     />
                 )}
                 {...rest}
