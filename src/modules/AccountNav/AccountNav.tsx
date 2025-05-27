@@ -10,6 +10,7 @@ import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
+import { colors } from "@/config/theme";
 
 const AccountNav = () => {
     const { showDialog } = useDialog();
@@ -41,7 +42,13 @@ const AccountNav = () => {
                         disableRipple
                         sx={{
                             marginLeft: "5px",
-                            color: "white",
+                            color: colors.white,
+
+                            "&:focus&.Mui-focusVisible": {
+                                outlineColor: colors.white,
+                                borderRadius: 0,
+                                textDecoration: "underline",
+                            },
                         }}
                         variant="text"
                         onClick={handleOpenNav}>
