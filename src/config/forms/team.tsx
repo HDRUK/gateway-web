@@ -47,7 +47,7 @@ const validationSchema = yup.object({
 
 const questionBankField = {
     name: "is_question_bank",
-    component: inputComponents.Switch,
+    component: inputComponents.SwitchInline,
 };
 
 const formFields = [
