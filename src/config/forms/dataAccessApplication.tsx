@@ -43,7 +43,6 @@ const getFieldType = (componentType: ComponentTypes): string => {
     switch (componentType) {
         case "CheckboxGroup":
         case "CheckboxRow":
-        case "Switch":
         case "SwitchInline":
             return "boolean";
         case "DatePicker":
