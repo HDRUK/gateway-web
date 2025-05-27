@@ -12,7 +12,6 @@ import DatePicker from "@/components/DatePicker";
 import RadioGroup from "@/components/RadioGroup";
 import Select from "@/components/Select";
 import { SelectProps } from "@/components/Select/Select";
-import Switch from "@/components/Switch";
 import SwitchInline from "@/components/SwitchInline";
 import TextArea from "@/components/TextArea";
 import { TextAreaProps } from "@/components/TextArea/TextArea";
@@ -55,7 +54,6 @@ function InputWrapper<
 }: InputWrapperCombinedProps<TFieldValues, TName>) {
     const inputs = {
         Autocomplete,
-        Switch,
         CheckboxGroup,
         CheckboxRow,
         Checkbox,
