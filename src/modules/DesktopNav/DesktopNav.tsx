@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import navItems from "@/config/nav";
+import { colors } from "@/config/theme";
 import { ExpandMoreIcon } from "@/consts/icons";
 
 function DesktopNav() {
@@ -52,7 +53,17 @@ function DesktopNav() {
                             variant="text"
                             disableRipple
                             key={item.label}
-                            sx={{ color: "white" }}
+                            sx={{
+                                color: colors.white,
+                                "&:focus&.Mui-focusVisible": {
+                                    outlineColor: `${colors.white} !important`,
+                                    borderRadius: 0,
+                                    textDecoration: "underline",
+                                    svg: {
+                                        color: colors.white,
+                                    },
+                                },
+                            }}
                             endIcon={
                                 <ExpandMoreIcon
                                     color={isHome ? "primary" : "secondary"}
@@ -68,11 +79,22 @@ function DesktopNav() {
                         </Button>
                     </Fragment>
                 ) : (
-                    <Link passHref key={item.label} href={item.href}>
-                        <Button sx={{ color: "white" }} variant="link">
-                            {item.label}
-                        </Button>
-                    </Link>
+                    <Button
+                        sx={{
+                            color: "white",
+                            "&:focus&.Mui-focusVisible": {
+                                outlineColor: colors.white,
+                                outlineOffset: "3px",
+                                borderRadius: 0,
+                                textDecoration: "underline",
+                            },
+                        }}
+                        variant="link"
+                        component={Link}
+                        key={item.label}
+                        href={item.href}>
+                        {item.label}
+                    </Button>
                 );
             })}
             <MenuDropdown

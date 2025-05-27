@@ -13,6 +13,7 @@ export const tabsStyle = {
             minHeight: "40px",
         },
     }),
+
     tab: () =>
         css({
             "&.MuiTab-root.Mui-selected": {
@@ -37,6 +38,25 @@ export const tabsStyle = {
                         background: colors.green100,
                         color: "inherit",
                     },
+            },
+        }),
+
+    normal: () =>
+        css({
+            "&.MuiTab-root": {
+                "&.Mui-selected": {
+                    borderBottom: `3px solid ${colors.green400}`,
+                    boxShadow: "inherit",
+                },
+
+                "&:focus, &:hover": {
+                    background: colors.green100,
+                    borderBottom: `3px solid ${colors.green400}`,
+                },
+
+                "&t:active:not(.Mui-selected)": {
+                    borderBottom: `3px solid ${colors.green400}`,
+                },
             },
         }),
 };
