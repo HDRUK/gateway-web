@@ -67,10 +67,8 @@ const formFields = [
 
 const editFormFields = [
     {
-        unCheckedLabel: "Disabled",
-        checkedLabel: "Enabled",
         name: "enabled",
-        component: inputComponents.Switch,
+        component: inputComponents.SwitchInline,
         formControlSx: { alignItems: "center" },
         required: true,
     },

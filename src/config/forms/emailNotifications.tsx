@@ -54,7 +54,7 @@ const formSections = [
                 name: "user_notification_status",
                 label: "Send email notifications to:",
                 extraInfo:
-                    "You must have this togggle activated in order to receive team related notifications.",
+                    "You must have this toggle activated in order to receive team related notifications.",
                 component: inputComponents.SwitchInline,
                 required: true,
             },
