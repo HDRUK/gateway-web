@@ -16,6 +16,7 @@ import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
+import { colors } from "@/config/theme";
 import { MenuIcon } from "@/consts/icons";
 
 interface HeaderProps {
@@ -58,6 +59,11 @@ function Header({ isHome = false }: HeaderProps) {
                         sx={{
                             display: { mobile: "none", desktop: "flex" },
                             mr: 1,
+                            "&:focus&.Mui-focusVisible": {
+                                borderRadius: 0,
+                                outline: `2px solid ${colors.white}`,
+                                outlineOffset: "3px",
+                            },
                         }}>
                         <Image
                             src={StaticImages.BASE.logo}
@@ -77,7 +83,14 @@ function Header({ isHome = false }: HeaderProps) {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit">
+                            color="inherit"
+                            sx={{
+                                "&:focus&.Mui-focusVisible": {
+                                    borderRadius: 0,
+                                    outline: `2px solid ${colors.white}`,
+                                    outlineOffset: "3px",
+                                },
+                            }}>
                             <MenuIcon htmlColor="white" />
                         </IconButton>
 
@@ -101,6 +114,11 @@ function Header({ isHome = false }: HeaderProps) {
                             position: { mobile: "relative" },
                             left: { mobile: "-24px", tablet: 0 },
                             display: { tablet: "flex", desktop: "none" },
+                            "&:focus&.Mui-focusVisible": {
+                                borderRadius: 0,
+                                outline: `2px solid ${colors.white}`,
+                                outlineOffset: "3px",
+                            },
                         }}>
                         <Image
                             src={StaticImages.BASE.logo}
