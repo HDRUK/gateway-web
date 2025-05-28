@@ -1,8 +1,10 @@
+import { Fragment } from "react";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
+import Chip from "@/components/Chip";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
@@ -86,6 +88,18 @@ export default async function DataCustodianItemPage({
                             data={data}
                             populatedSections={populatedSections}
                         />
+                        <Fragment key="custodian_alias">
+                            <Typography variant="h3">{t("aliases")}</Typography>
+                            <Box sx={{ p: 0, pb: 1 }}>
+                                {data.aliases?.map(alias => (
+                                    <Chip
+                                        label={alias.name}
+                                        key={alias.id}
+                                        color="alias"
+                                    />
+                                ))}
+                            </Box>
+                        </Fragment>
                         <DatasetsContent
                             datasets={data.datasets}
                             anchorIndex={populatedSections.length + 1}

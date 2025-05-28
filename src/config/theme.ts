@@ -77,6 +77,7 @@ declare module "@mui/material/Switch" {
 declare module "@mui/material/Chip" {
     interface ChipPropsColorOverrides {
         warningCustom: true;
+        alias: true;
     }
 }
 
@@ -174,6 +175,10 @@ const palette = {
         light: "#E9DB5D",
         dark: "#A29415",
         contrastText: colors.black,
+    },
+    alias: {
+        backgroundColor: colors.grey700,
+        contrastText: colors.white,
     },
 };
 
@@ -720,6 +725,13 @@ const theme = createTheme({
                     props: { color: "warningCustom" },
                     style: {
                         background: colors.orange300,
+                    },
+                },
+                {
+                    props: { color: "alias" },
+                    style: {
+                        backgroundColor: palette.alias.backgroundColor,
+                        color: palette.alias.contrastText,
                     },
                 },
             ],
