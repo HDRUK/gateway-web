@@ -41,7 +41,11 @@ const setCache = async (): Promise<Record<string, boolean>> => {
         cacheTimestamp = Date.now();
         return flattenFlags(json);
     } catch (err) {
-        console.error("Error fetching feature flags:", err);
+        console.error(
+            "Error fetching feature flags:, will retry after cache is stale",
+            err
+        );
+        cacheTimestamp = Date.now();
         return {};
     }
 };
@@ -61,7 +65,7 @@ export function createGatewayFlagAdapter() {
                 if (!cache || isCacheStale()) {
                     cache = await setCache();
                 }
-                return cache[key] as ValueType;
+                return (cache[key] as ValueType) ?? (false as ValueType);
             },
         };
     };
