@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { isArray } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { Alias } from "@/interfaces/Alias";
@@ -223,7 +222,7 @@ const CreateTeamForm = () => {
         );
 
         // Throw on failure to save alias
-        if (!result || (isArray(result) && result[0] === null)) {
+        if (!result || (Array.isArray(result) && result[0] === null)) {
             throw new Error(`Failed to create Aliases`);
         }
 
