@@ -59,13 +59,13 @@ describe("createGatewayFlagAdapter", () => {
         });
 
         const result = await adapter.decide({ key: "NonExistent" });
-        expect(result).toBe(undefined);
+        expect(result).toBe(false);
     });
 
     it("handles network error gracefully", async () => {
         (fetch as jest.Mock).mockRejectedValueOnce(new Error("Network Error"));
 
         const result = await adapter.decide({ key: "NonExistent" });
-        expect(result).toBe(undefined);
+        expect(result).toBe(false);
     });
 });
