@@ -791,7 +791,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 );
             }
         }
-        return <></>;
     };
     return (
         <Box
