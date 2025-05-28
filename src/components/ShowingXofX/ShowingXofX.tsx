@@ -9,7 +9,8 @@ interface ShowingXofXProps {
 const ShowingXofX = ({ from, to, total }: ShowingXofXProps) => {
     return (
         <Typography sx={{ p: 0, mb: 1 }}>
-            Showing {from || 0}-{to || 0} of {total || 0} results
+            Showing {from || 0}-{to || 0}
+            {total && <> of {total} results</>}
         </Typography>
     );
 };
