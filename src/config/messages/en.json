@@ -1445,6 +1445,7 @@
         },
         "CohortDiscoveryButton": {
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
+            "setSecondaryEmail": "You are logged in via OpenAthens, which generates a primary email address in your profile that cannot be used for Cohort Discovery. This button will now send you to your profile page to please set your secondary email address. This must be an institutional email address. Please return here after setting and saving a secondary email address.",
             "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries."
         },
         "CMSBanner": {
