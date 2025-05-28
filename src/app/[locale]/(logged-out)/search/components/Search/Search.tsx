@@ -778,17 +778,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const getXofX = () => {
         // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
         // to make it seem more consistent
-        if (data && data.elastic_total > 100 && data.total <= 100) {
-            return <ShowingXofX to={data?.to} from={data?.from} />;
-        } else {
-            return (
-                <ShowingXofX
-                    to={data?.to}
-                    from={data?.from}
-                    total={data?.total}
-                />
-            );
-        }
+        return data && data.elastic_total > 100 && data.total <= 100 ? (
+            <ShowingXofX to={data?.to} from={data?.from} />
+        ) : (
+            <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
+        );
     };
     return (
         <Box
