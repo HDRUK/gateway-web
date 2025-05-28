@@ -779,7 +779,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
         // to make it seem more consistent
         return data && data.elastic_total > 100 && data.total <= 100 ? (
-            <ShowingXofX to={data?.to} from={data?.from} hideTotal={true} />
+            <ShowingXofX to={data?.to} from={data?.from} hideTotal />
         ) : (
             <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
         );
