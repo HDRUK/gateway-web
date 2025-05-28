@@ -169,49 +169,60 @@ const DarMessages = ({
                     actionRequiredApplicant !== undefined &&
                     reviewComments && (
                         <>
-                            <Typography
-                                variant="h2"
-                                component="p"
-                                color={colors.purple500}>
-                                {t("status")}
-                            </Typography>
-                            <Typography
+                            <Box
                                 sx={{
                                     display: "flex",
-                                    color: colors.grey700,
+                                    alignItems: "center",
+                                    p: 0,
+                                    gap: 2,
                                     mb: 3,
                                 }}>
-                                {(actionRequiredApplicant && isResearcher) ||
-                                (!actionRequiredApplicant && !isResearcher) ? (
-                                    <ErrorIcon
-                                        sx={{
-                                            pr: 1,
-                                            color: colors.amber500,
-                                            height: ICON_SIZE,
-                                            width: ICON_SIZE,
-                                            p: 0,
-                                            mr: 1,
-                                        }}
-                                        fontSize="large"
-                                    />
-                                ) : (
-                                    <CheckCircleIcon
-                                        sx={{
-                                            pr: 1,
-                                            color: colors.green400,
-                                            height: ICON_SIZE,
-                                            width: ICON_SIZE,
-                                            p: 0,
-                                            mr: 1,
-                                        }}
-                                        fontSize="large"
-                                    />
-                                )}
-                                {t("actionRequiredBy")}
-                                {actionRequiredApplicant
-                                    ? "Applicant"
-                                    : "Custodian"}
-                            </Typography>
+                                <Typography
+                                    variant="h2"
+                                    component="p"
+                                    color={colors.purple500}
+                                    sx={{ m: 0 }}>
+                                    {t("status")}
+                                </Typography>
+                                <Typography
+                                    sx={{
+                                        display: "flex",
+                                        color: colors.grey700,
+                                    }}>
+                                    {(actionRequiredApplicant &&
+                                        isResearcher) ||
+                                    (!actionRequiredApplicant &&
+                                        !isResearcher) ? (
+                                        <ErrorIcon
+                                            sx={{
+                                                pr: 1,
+                                                color: colors.amber500,
+                                                height: ICON_SIZE,
+                                                width: ICON_SIZE,
+                                                p: 0,
+                                                mr: 1,
+                                            }}
+                                            fontSize="large"
+                                        />
+                                    ) : (
+                                        <CheckCircleIcon
+                                            sx={{
+                                                pr: 1,
+                                                color: colors.green400,
+                                                height: ICON_SIZE,
+                                                width: ICON_SIZE,
+                                                p: 0,
+                                                mr: 1,
+                                            }}
+                                            fontSize="large"
+                                        />
+                                    )}
+                                    {t("actionRequiredBy")}
+                                    {actionRequiredApplicant
+                                        ? "Applicant"
+                                        : "Custodian"}
+                                </Typography>
+                            </Box>
                         </>
                     )}
 
