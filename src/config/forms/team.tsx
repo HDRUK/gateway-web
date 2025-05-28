@@ -12,6 +12,7 @@ const defaultValues: TeamEditForm = {
     is_question_bank: false,
     introduction: "",
     dar_modal_content: "",
+    aliases: [],
 };
 
 const createDefaultValues: TeamCreateForm = {
@@ -28,6 +29,7 @@ const createDefaultValues: TeamCreateForm = {
     is_question_bank: false,
     introduction: "",
     dar_modal_content: "",
+    aliases: [],
 };
 
 const validationSchema = yup.object({
@@ -61,6 +63,20 @@ const formFields = [
         info: "Please ensure the name matches the standard format for organisation names",
         component: inputComponents.TextArea,
         required: true,
+    },
+    {
+        label: "Organisation aliases",
+        name: "aliases",
+        info: "Input alternative names the organisation is known by - these help users find the Team when searching the Gateway",
+        component: inputComponents.Autocomplete,
+        options: [],
+        canCreate: true,
+        multiple: true,
+        isOptionEqualToValue: (
+            option: { value: string | number; label: string },
+            value: string | number
+        ) => option.value === value,
+        getChipLabel,
     },
     {
         label: "Member of",

@@ -1166,6 +1166,7 @@
             "publications": "Publications",
             "tools": "Tools",
             "serviceOfferings": "Service offerings",
+            "aliases": "Aliases",
             "components": {
                 "DataCustodianLinks": {
                     "usefulLinks": "Useful links:"
