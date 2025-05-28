@@ -1,22 +1,21 @@
 import createIntlMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { v4 } from "uuid";
 import conf from "@/config/config";
 import { getUserFromToken } from "@/utils/cookies";
-import { RouteName } from "./consts/routeName";
 import { sessionCookie } from "./config/session";
-import { v4 } from 'uuid'
+import { RouteName } from "./consts/routeName";
 import Log from "./utils/logger";
 
-
-const logger =  new Log() 
+const logger = new Log();
 
 export function middleware(request: NextRequest) {
     try {
         const token = request.cookies.get(conf.JWT_COOKIE)?.value;
         const authUser = getUserFromToken(token);
-        const session = request.cookies.get(sessionCookie)?.value
-       
+        const session = request.cookies.get(sessionCookie)?.value;
+
         if (
             request.nextUrl.pathname.startsWith(
                 `/${RouteName.EN}/${RouteName.ACCOUNT}/`
@@ -44,13 +43,13 @@ export function middleware(request: NextRequest) {
 
         const response = handleI18nRouting(request);
         if (!session) {
-            const id = v4()
+            const id = v4();
             response.cookies.set(sessionCookie, id, {
-            secure: true,
-            sameSite: 'strict'
-            })
-            
-            logger.info('new session set', id, 'session')
+                secure: true,
+                sameSite: "strict",
+            });
+
+            logger.info("new session set", id, "session");
         }
         // Remove the JWT cookie if the token exists but the user is not authenticated
         if (!authUser && token) {

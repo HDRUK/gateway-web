@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
 import { serialize } from "cookie";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import apis from "@/config/apis";
 import config from "@/config/config";
-import { extractSubdomain } from "@/utils/general";
-import { cookies } from "next/headers";
 import { sessionCookie } from "@/config/session";
+import { extractSubdomain } from "@/utils/general";
 import Log from "@/utils/logger";
 
 let logger: Log | undefined;
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const cookieStore = await cookies();
     const session = cookieStore.get(sessionCookie);
-    
+
     if (!session?.value) {
         return NextResponse.json({ error: "no session" }, { status: 401 });
     }
@@ -33,7 +33,10 @@ export async function POST(req: NextRequest) {
         });
 
         if (!response.ok) {
-            return NextResponse.json({ error: "Invalid details" }, { status: 401 });
+            return NextResponse.json(
+                { error: "Invalid details" },
+                { status: 401 }
+            );
         }
 
         const json = await response.json();
@@ -52,6 +55,9 @@ export async function POST(req: NextRequest) {
         return res;
     } catch (error) {
         logger!.error(error as string, session, "signIn");
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 }); // <-- Ensure response is always returned
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        ); // <-- Ensure response is always returned
     }
 }

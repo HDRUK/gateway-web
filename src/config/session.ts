@@ -1,1 +1,1 @@
-export const sessionCookie: string = 'hdr-session'
+export const sessionCookie = "hdr-session";
