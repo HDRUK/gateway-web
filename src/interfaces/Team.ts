@@ -1,5 +1,6 @@
 import { Notification } from "@/interfaces/Notification";
 import { User } from "@/interfaces/User";
+import { Alias } from "./Alias";
 
 interface Team {
     id: number;
@@ -28,6 +29,7 @@ interface Team {
     introduction: string;
     url?: string;
     service?: string;
+    aliases?: Alias[];
 }
 
 interface TeamEditForm
@@ -42,6 +44,7 @@ interface TeamEditForm
         | "dar_modal_content"
     > {
     users: number[];
+    aliases: number[];
 }
 
 interface TeamCreateForm
@@ -62,6 +65,7 @@ interface TeamCreateForm
         | "dar_modal_content"
     > {
     users: number[];
+    aliases: number[];
 }
 
 export type { Team, TeamEditForm, TeamCreateForm };
