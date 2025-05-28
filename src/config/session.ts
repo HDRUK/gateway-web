@@ -1,0 +1,1 @@
+export const sessionCookie: string = 'hdr-session'
