@@ -284,9 +284,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
-        setQueryParams({ ...queryParams, ...data });
+        setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
 
         updatePath(QUERY_FIELD, data.query);
+        updatePath(PAGE_FIELD, "1");
     };
 
     const onSortChange = async (selectedValue: string) => {
