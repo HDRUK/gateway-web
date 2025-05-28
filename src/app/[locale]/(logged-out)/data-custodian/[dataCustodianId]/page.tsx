@@ -90,7 +90,7 @@ export default async function DataCustodianItemPage({
                         />
                         <Fragment key="custodian_alias">
                             <Typography variant="h3">{t("aliases")}</Typography>
-                            <Box sx={{ p: 0, pb: 1 }}>
+                            <Box sx={{ p: 0, pb: 1, display: "flex" }} gap={1}>
                                 {data.aliases?.map(alias => (
                                     <Chip
                                         label={alias.name}
