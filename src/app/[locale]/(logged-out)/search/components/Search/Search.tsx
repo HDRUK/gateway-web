@@ -776,20 +776,18 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         showDialog(PublicationSearchDialogMemoised);
 
     const getXofX = () => {
-        if (data && data.path?.includes(queryParams.type)) {
-            // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
-            // to make it seem more consistent
-            if (data.elastic_total > 100 && data.total <= 100) {
-                return <ShowingXofX to={data?.to} from={data?.from} />;
-            } else {
-                return (
-                    <ShowingXofX
-                        to={data?.to}
-                        from={data?.from}
-                        total={data?.total}
-                    />
-                );
-            }
+        // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
+        // to make it seem more consistent
+        if (data && data.elastic_total > 100 && data.total <= 100) {
+            return <ShowingXofX to={data?.to} from={data?.from} />;
+        } else {
+            return (
+                <ShowingXofX
+                    to={data?.to}
+                    from={data?.from}
+                    total={data?.total}
+                />
+            );
         }
     };
     return (
@@ -964,7 +962,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     id="result-summary"
                                     role="alert"
                                     aria-live="polite">
-                                    {getXofX()}
+                                    {data &&
+                                        data.path?.includes(queryParams.type) &&
+                                        getXofX()}
                                     {data && data.elastic_total > 100 && (
                                         <ResultLimitText>
                                             {t("resultLimit")}
