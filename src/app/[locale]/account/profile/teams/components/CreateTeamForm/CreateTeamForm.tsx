@@ -213,36 +213,30 @@ const CreateTeamForm = () => {
     });
 
     const saveAliases = async (formData: TeamCreateForm | TeamEditForm) => {
-        try {
-            const newAliasNames = formData.aliases.filter(
-                alias => typeof alias === "string"
-            ) as string[];
+        const newAliasNames = formData.aliases.filter(
+            alias => typeof alias === "string"
+        ) as string[];
 
-            // Create new aliases (POST requests)
-            const result = await Promise.all(
-                newAliasNames.map(name => addAlias({ name }))
-            );
+        // Create new aliases (POST requests)
+        const result = await Promise.all(
+            newAliasNames.map(name => addAlias({ name }))
+        );
 
-            // Throw on failure to save alias
-            if (!result || (isArray(result) && result[0] === null)) {
-                throw new Error(`Failed to create Aliases`);
-            }
-
-            // Refetch alias list
-            const updatedAliases = await mutateAliases();
-
-            // Rebuild formData.aliases as full alias objects
-            return formData.aliases.map(alias => {
-                if (typeof alias === "string") {
-                    return (
-                        updatedAliases?.find(a => a.name === alias)?.id ?? alias
-                    );
-                }
-                return alias;
-            });
-        } catch (error) {
-            throw error;
+        // Throw on failure to save alias
+        if (!result || (isArray(result) && result[0] === null)) {
+            throw new Error(`Failed to create Aliases`);
         }
+
+        // Refetch alias list
+        const updatedAliases = await mutateAliases();
+
+        // Rebuild formData.aliases as full alias objects
+        return formData.aliases.map(alias => {
+            if (typeof alias === "string") {
+                return updatedAliases?.find(a => a.name === alias)?.id ?? alias;
+            }
+            return alias;
+        });
     };
 
     const submitForm = async (formData: TeamCreateForm | TeamEditForm) => {
