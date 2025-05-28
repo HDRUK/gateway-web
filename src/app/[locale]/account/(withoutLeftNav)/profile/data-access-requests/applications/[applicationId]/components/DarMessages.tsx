@@ -279,9 +279,12 @@ const DarMessages = ({
                                         )}
                                     </Typography>
                                 </Box>
-                                <Typography sx={{ pt: 1 }}>
-                                    {review.comment}
-                                </Typography>
+                                <Typography
+                                    sx={{ pt: 1 }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: review.comment,
+                                    }}
+                                />
                             </Box>
                         ))
                     )}
