@@ -775,6 +775,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);
 
+    const getXofX = () => {
+        // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
+        // to make it seem more consistent
+        return data && data.elastic_total > 100 && data.total <= 100 ? (
+            <ShowingXofX to={data?.to} from={data?.from} hideTotal />
+        ) : (
+            <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
+        );
+    };
     return (
         <Box
             display={{
@@ -947,14 +956,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     id="result-summary"
                                     role="alert"
                                     aria-live="polite">
-                                    {data?.path?.includes(queryParams.type) &&
-                                        !!data?.elastic_total && (
-                                            <ShowingXofX
-                                                to={data?.to}
-                                                from={data?.from}
-                                                total={data?.total}
-                                            />
-                                        )}
+                                    {data &&
+                                        data.path?.includes(queryParams.type) &&
+                                        getXofX()}
                                     {data && data.elastic_total > 100 && (
                                         <ResultLimitText>
                                             {t("resultLimit")}

@@ -112,7 +112,7 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
             payload: {
                 approval_status: null,
                 submission_status: DarApplicationStatus.DRAFT,
-                ...(draftComment && { comment: draftComment }),
+                comment: draftComment || t("defaultDraftMessage"),
             },
             redirectUrl: PATH_REDIRECT,
         },
