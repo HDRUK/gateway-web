@@ -1701,7 +1701,8 @@
                 "rejectedInfo": "Any comments or notes regarding the rejection.",
                 "rejectedButtonText": "Reject",
                 "changeStatus": "Change Application Status",
-                "intro": "Use the options below to log your decision about this application."
+                "intro": "Use the options below to log your decision about this application.",
+                "defaultDraftMessage": "This is an automated notification that the application has been changed from 'In review' to 'Draft' status. No comment has been added by the Data Custodian."
             },
             "DarActionDialog": {
                 "actionPermanent": "I understand this action is permanent",
