@@ -56,7 +56,6 @@ interface CollectionCreateProps {
 }
 
 const TRANSLATION_PATH_CREATE = "pages.account.team.collections.create";
-const TRANSLATION_PATH_ERROR = "error";
 
 const CollectionForm = ({
     teamId,
