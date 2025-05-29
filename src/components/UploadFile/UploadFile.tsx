@@ -8,7 +8,7 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 import { DeleteForeverOutlinedIcon } from "@/consts/icons";
 import { ImageValidationError } from "@/consts/image";
 import { validateImageDimensions } from "@/utils/imageValidation";
@@ -239,7 +239,13 @@ const UploadFile = ({
     return (
         <FormInputWrapper
             disabled={disabled}
-            formControlSx={sx}
+            formControlSx={{
+                ...sx,
+                ".Mui-focused + div button": {
+                    outline: `2px solid ${theme.palette.primary.main}`,
+                    outlineOffset: "2px",
+                },
+            }}
             label={label}
             required={required}
             name={name}
