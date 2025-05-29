@@ -13,8 +13,8 @@ const getTZDate = (date: string | Date, timezone?: string) => {
     return dayjs(date).tz(timezone);
 };
 
-const getToday = (): string => {
-    return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ss[Z]");
+const getToday = (timezone?: string): string => {
+    return getTZDate(new Date(), timezone).format("YYYY-MM-DDTHH:mm:ss[Z]");
 };
 
 const getDayjs = (date: string | Date) => {
@@ -40,6 +40,8 @@ const yearToDayJsDate = (year: string) => {
     return dayjs(`${year}-01-01T00:00:00.000Z`);
 };
 
+const getTZ = dayjs.tz.guess();
+
 export {
     formatDate,
     differenceInDays,
@@ -48,4 +50,5 @@ export {
     getDayjs,
     getToday,
     getTZDate,
+    getTZ,
 };
