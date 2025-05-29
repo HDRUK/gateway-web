@@ -8,9 +8,11 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { colors } from "@/config/theme";
 import { DeleteForeverOutlinedIcon } from "@/consts/icons";
 import { ImageValidationError } from "@/consts/image";
 import { validateImageDimensions } from "@/utils/imageValidation";
+import { sanitiseString } from "@/utils/sanitiseString";
 import Button from "../Button";
 import FormInputWrapper from "../FormInputWrapper";
 import Link from "../Link";
@@ -88,6 +90,7 @@ const UploadFile = ({
     const [fileId, setFileId] = useState<number>();
     const [pollFileStatus, setPollFileStatus] = useState<boolean>(false);
     const [hasError, setHasError] = useState<boolean>();
+    const [hasSanitisedFilename, setHasSantisedFilename] = useState(false);
 
     const { handleSubmit, control: uploadFileControl } =
         useForm<UploadFormData>({
@@ -250,18 +253,35 @@ const UploadFile = ({
                                 name={name}
                                 acceptFileTypes={acceptedFileTypes}
                                 onFileChange={async (file: File) => {
+                                    setHasSantisedFilename(false);
+
                                     if (!file) {
                                         return;
                                     }
 
+                                    // Santise filename
+                                    const sanitisedFilename = sanitiseString(
+                                        file.name
+                                    );
+
+                                    if (sanitisedFilename !== file.name) {
+                                        setHasSantisedFilename(true);
+                                    }
+
+                                    const formattedFile = new File(
+                                        [file],
+                                        sanitisedFilename,
+                                        { type: file.type }
+                                    );
+
                                     if (
                                         !skipImageValidation &&
-                                        file.type.startsWith("image/")
+                                        formattedFile.type.startsWith("image/")
                                     ) {
-                                        validateImageDimensions(file)
+                                        validateImageDimensions(formattedFile)
                                             .then(() => {
-                                                setFile(file);
-                                                onFileChange?.(file);
+                                                setFile(formattedFile);
+                                                onFileChange?.(formattedFile);
                                             })
                                             .catch(
                                                 (
@@ -271,8 +291,8 @@ const UploadFile = ({
                                                 }
                                             );
                                     } else {
-                                        setFile(file);
-                                        onFileChange?.(file);
+                                        setFile(formattedFile);
+                                        onFileChange?.(formattedFile);
                                     }
                                 }}
                                 helperText={
@@ -331,6 +351,19 @@ const UploadFile = ({
                                     </ListItem>
                                 ))}
                             </List>
+                        )}
+
+                        {hasSanitisedFilename && (
+                            <Typography
+                                sx={{
+                                    mb: 2,
+                                    fontWeight: 700,
+                                    color: colors.grey700,
+                                }}
+                                role="status"
+                                aria-live="polite">
+                                {t("sanitisedFilename")}
+                            </Typography>
                         )}
                     </>
                 )}

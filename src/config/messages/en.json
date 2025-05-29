@@ -1508,7 +1508,8 @@
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
             "uploadHelperFilesize": "Cannot exceed 10 mb per file.",
             "uploadImage": "Upload file",
-            "error": "An error has occured. Please check your file and try again"
+            "error": "An error has occured. Please check your file and try again",
+            "sanitisedFilename": "Note: all spaces and special characters will be removed from the file name."
         },
         "StructuralMetadataAccordion": {
             "columnName": "Column name",
