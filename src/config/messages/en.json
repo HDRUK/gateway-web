@@ -1189,7 +1189,8 @@
                 },
                 "ActionBar": {
                     "label": "Back",
-                    "enquire": "Make a general enquiry"
+                    "enquire": "Make a general enquiry",
+                    "cohortDiscovery": "Start a Cohort Discovery query"
                 },
                 "CollectionsContent": {
                     "heading": "Collections ({ length })"

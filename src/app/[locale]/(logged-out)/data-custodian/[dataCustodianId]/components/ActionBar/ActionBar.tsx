@@ -11,6 +11,7 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
 import { ActionBarWrapper } from "./ActionBar.styles";
+import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";
 interface ActionBarProps {
@@ -61,6 +62,14 @@ const ActionBar = ({ team }: ActionBarProps) => {
                     onClick={handleGeneralEnquiryClick}
                     startIcon={<SpeechBubbleIcon />}>
                     {t("enquire")}
+                </Button>
+                <CohortDiscoveryButton />
+                <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleGeneralEnquiryClick}
+                    startIcon={<SpeechBubbleIcon />}>
+                    {t("cohortDiscovery")}
                 </Button>
             </Box>
         </ActionBarWrapper>
