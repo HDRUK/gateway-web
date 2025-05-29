@@ -25,7 +25,6 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
 import Form from "@/components/Form";
-import FormInputWrapper from "@/components/FormInputWrapper";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import ResourceTable from "@/components/ResourceTable";
@@ -46,7 +45,6 @@ import {
 } from "@/config/forms/collection";
 import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
-import { ImageValidationError } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
@@ -66,8 +64,6 @@ const CollectionForm = ({
     collectionId,
     keywordOptions,
 }: CollectionCreateProps) => {
-    const [fileNotUploadedMessage, setFileNotUploadedMessage] =
-        useState<string>();
     const [imageUploaded, setImageUploaded] = useState(false);
     const [searchName, setSearchName] = useState("");
     const [userOptions, setUserOptions] = useState<Option[]>([]);
@@ -472,7 +468,6 @@ const CollectionForm = ({
         editCollection,
         file,
         uploadFile,
-        fileNotUploadedMessage,
     ]);
 
     return (
@@ -505,7 +500,19 @@ const CollectionForm = ({
                                 p: 2,
                                 gap: 4,
                             }}>
-                            <FormInputWrapper
+                            <UploadFile
+                                fileSelectButtonText={t(
+                                    `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                )}
+                                acceptedFileTypes=".jpg,.png"
+                                onFileChange={(file: File) => {
+                                    setFile(file);
+                                }}
+                                onFileCheckSucceeded={() => {
+                                    setImageUploaded(true);
+                                }}
+                                sx={{ width: "70%", p: 0, py: 2 }}
+                                showUploadButton={false}
                                 label={t(
                                     `${TRANSLATION_PATH_CREATE}.addImages`
                                 )}
@@ -518,49 +525,7 @@ const CollectionForm = ({
                                               `${TRANSLATION_PATH_CREATE}.addImagesInfo`
                                           )
                                 }
-                                error={
-                                    fileNotUploadedMessage
-                                        ? {
-                                              type: "",
-                                              message: fileNotUploadedMessage,
-                                          }
-                                        : undefined
-                                }
-                                formControlSx={{ width: "70%", p: 0 }}>
-                                <UploadFile
-                                    fileSelectButtonText={t(
-                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
-                                    )}
-                                    acceptedFileTypes=".jpg,.png"
-                                    onFileChange={(file: File) => {
-                                        setFileNotUploadedMessage(undefined);
-                                        setFile(file);
-                                    }}
-                                    onFileCheckSucceeded={() => {
-                                        setFileNotUploadedMessage(undefined);
-                                        setImageUploaded(true);
-                                    }}
-                                    onFileCheckFailed={(
-                                        reason?: ImageValidationError
-                                    ) => {
-                                        const errorMessages = {
-                                            [ImageValidationError.RATIO]: `${TRANSLATION_PATH_ERROR}.imageAspectRatio`,
-                                            [ImageValidationError.SIZE]: `${TRANSLATION_PATH_ERROR}.imageDimensions`,
-                                            default: `${TRANSLATION_PATH_ERROR}.image`,
-                                        };
-
-                                        setFileNotUploadedMessage(
-                                            t(
-                                                errorMessages[
-                                                    reason as ImageValidationError
-                                                ] || errorMessages.default
-                                            )
-                                        );
-                                    }}
-                                    sx={{ py: 2 }}
-                                    showUploadButton={false}
-                                />
-                            </FormInputWrapper>
+                            />
 
                             {existingCollectionData?.image_link && (
                                 <Box sx={{ width: "30%" }}>

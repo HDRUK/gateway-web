@@ -30,12 +30,11 @@ export type UploadFormData = {
 };
 
 export interface UploadFileProps {
-    apiPath?: string;
+    apiPath: string;
     allowReuploading?: boolean;
     acceptedFileTypes?: string;
     fileSelectButtonText?: string;
     isUploading?: Dispatch<SetStateAction<boolean>>;
-    onFileCheckFailed?: (reason?: ImageValidationError) => void;
     onFileCheckSucceeded?: (response: FileUpload) => void;
     onFileChange?: (file: File) => void;
     onFileUploaded?: (uploadResponse?: FileUpload) => void;
@@ -54,6 +53,7 @@ export interface UploadFileProps {
     hideUpload?: boolean;
     skipImageValidation?: boolean;
     onFocus?: () => void;
+    info?: string;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -64,7 +64,6 @@ const UploadFile = ({
     acceptedFileTypes,
     fileSelectButtonText,
     isUploading,
-    onFileCheckFailed,
     onFileCheckSucceeded,
     onFileChange,
     onFileUploaded,
@@ -83,14 +82,15 @@ const UploadFile = ({
     hideUpload = false,
     skipImageValidation = false,
     onFocus,
+    info,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const [file, setFile] = useState<File>();
     const [fileId, setFileId] = useState<number>();
     const [pollFileStatus, setPollFileStatus] = useState<boolean>(false);
-    const [hasError, setHasError] = useState<boolean>();
     const [hasSanitisedFilename, setHasSantisedFilename] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<FieldError>();
 
     const { handleSubmit, control: uploadFileControl } =
         useForm<UploadFormData>({
@@ -112,6 +112,12 @@ const UploadFile = ({
     const value = fieldProps.value?.value;
     const existingFilename = !allowMultipleFiles && value?.filename;
 
+    const errorMessages = {
+        [ImageValidationError.RATIO]: t("imageAspectRatioError"),
+        [ImageValidationError.SIZE]: t("imageDimensionsError"),
+        default: t("imageError"),
+    };
+
     const existingFileArray: UploadedFileMetadata[] = [].concat(value || []);
 
     const { data: fileScanStatus } = useGet<FileUpload>(
@@ -127,7 +133,6 @@ const UploadFile = ({
     });
 
     const handleError = () => {
-        setHasError(true);
         setFileId(undefined);
         setFile(undefined);
         isUploading?.(false);
@@ -185,7 +190,6 @@ const UploadFile = ({
             const uploadedFileStatus = (await uploadFile(formData).catch(() =>
                 handleError()
             )) as FileUpload;
-            setHasError(false);
 
             if (uploadedFileStatus) {
                 const fileId = uploadedFileStatus.id;
@@ -196,8 +200,7 @@ const UploadFile = ({
             }
             onFileCheckSucceeded?.(uploadedFileStatus);
         } catch {
-            setHasError(true);
-            onFileCheckFailed?.();
+            handleError();
         }
     };
 
@@ -240,7 +243,8 @@ const UploadFile = ({
             label={label}
             required={required}
             name={name}
-            error={error && formatErrorMessage(error, label)}>
+            error={error ? formatErrorMessage(error, label) : errorMessage}
+            info={info}>
             <Stack spacing={0}>
                 {!fileId && (
                     <>
@@ -253,11 +257,12 @@ const UploadFile = ({
                                 name={name}
                                 acceptFileTypes={acceptedFileTypes}
                                 onFileChange={async (file: File) => {
-                                    setHasSantisedFilename(false);
-
                                     if (!file) {
                                         return;
                                     }
+
+                                    setHasSantisedFilename(false);
+                                    setErrorMessage(undefined);
 
                                     // Santise filename
                                     const sanitisedFilename = sanitiseString(
@@ -287,7 +292,19 @@ const UploadFile = ({
                                                 (
                                                     reason: ImageValidationError
                                                 ) => {
-                                                    onFileCheckFailed?.(reason);
+                                                    const message =
+                                                        errorMessages[
+                                                            reason as ImageValidationError
+                                                        ] ||
+                                                        errorMessages.default;
+
+                                                    const fieldError: FieldError =
+                                                        {
+                                                            type: "manual",
+                                                            message,
+                                                        };
+
+                                                    setErrorMessage(fieldError);
                                                 }
                                             );
                                     } else {
@@ -356,7 +373,7 @@ const UploadFile = ({
                         {hasSanitisedFilename && (
                             <Typography
                                 sx={{
-                                    mb: 2,
+                                    mb: 1,
                                     fontWeight: 700,
                                     color: colors.grey700,
                                 }}
@@ -367,7 +384,7 @@ const UploadFile = ({
                         )}
                     </>
                 )}
-                {fileId && !hasError && pollFileStatus && <Loading />}
+                {fileId && pollFileStatus && <Loading />}
             </Stack>
         </FormInputWrapper>
     );

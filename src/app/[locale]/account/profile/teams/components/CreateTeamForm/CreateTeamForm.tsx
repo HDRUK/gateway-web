@@ -11,7 +11,6 @@ import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
-import FormInputWrapper from "@/components/FormInputWrapper";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
@@ -30,22 +29,18 @@ import {
     teamFormFields,
     teamValidationSchema,
 } from "@/config/forms/team";
-import { ImageValidationError } from "@/consts/image";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { Routes } from "@/consts/routes";
 
 const TRANSLATION_PATH_CREATE = "pages.account.profile.teams.create";
 const TRANSLATION_PATH_EDIT = "pages.account.profile.teams.edit";
 const TRANSLATION_PATH_COMMON = "common";
-const TRANSLATION_PATH_ERROR = "error";
 
 const CreateTeamForm = () => {
     const params = useParams<{
         teamId: string;
     }>();
     const t = useTranslations();
-    const [fileNotUploadedMessage, setFileNotUploadedMessage] =
-        useState<string>();
     const [imageUploaded, setImageUploaded] = useState(false);
     const [file, setFile] = useState<File>();
     const [createdTeamId, setCreatedTeamId] = useState<string | undefined>(
@@ -314,7 +309,39 @@ const CreateTeamForm = () => {
                                 p: 0,
                                 gap: 4,
                             }}>
-                            <FormInputWrapper
+                            <UploadFile
+                                apiPath={`${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`}
+                                fileSelectButtonText={t(
+                                    `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
+                                )}
+                                acceptedFileTypes=".jpg,.png"
+                                onFileChange={(file: File) => {
+                                    setFile(file);
+                                }}
+                                onFileCheckSucceeded={() => {
+                                    setImageUploaded(true);
+                                }}
+                                onFileUploaded={async response => {
+                                    if (!createdTeamId) {
+                                        return;
+                                    }
+
+                                    await editTeam(createdTeamId, {
+                                        ...getValues(),
+                                        team_logo: response?.file_location,
+                                    });
+
+                                    push(Routes.ACCOUNT_TEAMS);
+                                }}
+                                onFileUploadError={() => {
+                                    setFileToBeUploaded(false);
+                                    setTriggerFileUpload(false);
+                                    setFile(undefined);
+                                    setIsSaving(false);
+                                }}
+                                sx={{ width: "70%", p: 0, py: 2 }}
+                                showUploadButton={false}
+                                triggerFileUpload={triggerFileUpload}
                                 label="Logo"
                                 info={
                                     imageUploaded
@@ -325,68 +352,7 @@ const CreateTeamForm = () => {
                                               `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
                                           )
                                 }
-                                error={
-                                    fileNotUploadedMessage
-                                        ? {
-                                              type: "",
-                                              message: fileNotUploadedMessage,
-                                          }
-                                        : undefined
-                                }
-                                formControlSx={{ width: "70%", p: 0 }}>
-                                <UploadFile
-                                    apiPath={`${apis.fileUploadV1Url}?entity_flag=teams-media&team_id=${createdTeamId}`}
-                                    fileSelectButtonText={t(
-                                        `${TRANSLATION_PATH_CREATE}.fileSelectButtonText`
-                                    )}
-                                    acceptedFileTypes=".jpg,.png"
-                                    onFileChange={(file: File) => {
-                                        setFile(file);
-                                        setFileNotUploadedMessage(undefined);
-                                    }}
-                                    onFileCheckSucceeded={() => {
-                                        setImageUploaded(true);
-                                    }}
-                                    onFileCheckFailed={(
-                                        reason?: ImageValidationError
-                                    ) => {
-                                        const errorMessages = {
-                                            [ImageValidationError.RATIO]: `${TRANSLATION_PATH_ERROR}.imageAspectRatio`,
-                                            [ImageValidationError.SIZE]: `${TRANSLATION_PATH_ERROR}.imageDimensions`,
-                                            default: `${TRANSLATION_PATH_ERROR}.image`,
-                                        };
-
-                                        setFileNotUploadedMessage(
-                                            t(
-                                                errorMessages[
-                                                    reason as ImageValidationError
-                                                ] || errorMessages.default
-                                            )
-                                        );
-                                    }}
-                                    onFileUploaded={async response => {
-                                        if (!createdTeamId) {
-                                            return;
-                                        }
-
-                                        await editTeam(createdTeamId, {
-                                            ...getValues(),
-                                            team_logo: response.file_location,
-                                        });
-
-                                        push(Routes.ACCOUNT_TEAMS);
-                                    }}
-                                    onFileUploadError={() => {
-                                        setFileToBeUploaded(false);
-                                        setTriggerFileUpload(false);
-                                        setFile(undefined);
-                                        setIsSaving(false);
-                                    }}
-                                    sx={{ py: 2 }}
-                                    showUploadButton={false}
-                                    triggerFileUpload={triggerFileUpload}
-                                />
-                            </FormInputWrapper>
+                            />
 
                             {existingTeamData?.team_logo && (
                                 <Box sx={{ width: "30%" }}>
