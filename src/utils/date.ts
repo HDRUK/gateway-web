@@ -14,7 +14,7 @@ const getTZDate = (date: string | Date, timezone?: string) => {
 };
 
 const getToday = (): string => {
-    return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ss[Z]");
+    return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ssZ");
 };
 
 const getDayjs = (date: string | Date) => {
