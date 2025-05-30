@@ -58,6 +58,6 @@ describe("CopyableCard", () => {
             mockApplication.app_id
         );
 
-        expect(notificationService.success).toBeCalledWith("Link copied");
+        expect(notificationService.apiSuccess).toBeCalledWith("Link copied");
     });
 });

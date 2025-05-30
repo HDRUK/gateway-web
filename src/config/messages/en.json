@@ -106,11 +106,6 @@
             }
         }
     },
-    "error": {
-        "image": "An error occured when reading your file.",
-        "imageAspectRatio": "File needs to be of approximately of aspect ratio 2:1 (width:height).",
-        "imageDimensions": "File needs to be at least 600px wide, by 300px high."
-    },
     "common": {
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
@@ -1511,7 +1506,11 @@
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
             "uploadHelperFilesize": "Cannot exceed 10 mb per file.",
             "uploadImage": "Upload file",
-            "error": "An error has occured. Please check your file and try again"
+            "error": "An error has occured. Please check your file and try again",
+            "sanitisedFilename": "Note: all spaces and special characters will be removed from the file name.",
+            "imageError": "An error occured when reading your file.",
+            "imageAspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height).",
+            "imageDimensionsError": "File needs to be at least 600px wide, by 300px high."
         },
         "StructuralMetadataAccordion": {
             "columnName": "Column name",
@@ -1703,7 +1702,8 @@
                 "rejectedInfo": "Any comments or notes regarding the rejection.",
                 "rejectedButtonText": "Reject",
                 "changeStatus": "Change Application Status",
-                "intro": "Use the options below to log your decision about this application."
+                "intro": "Use the options below to log your decision about this application.",
+                "defaultDraftMessage": "This is an automated notification that the application has been changed from 'In review' to 'Draft' status. No comment has been added by the Data Custodian."
             },
             "DarActionDialog": {
                 "actionPermanent": "I understand this action is permanent",
