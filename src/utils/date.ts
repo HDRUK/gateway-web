@@ -5,6 +5,8 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+const USER_TIMEZONE = typeof window !== "undefined" ? dayjs.tz.guess() : "UTC";
+
 const getTZDate = (date: string | Date, timezone?: string) => {
     const resolvedTZ = timezone ?? USER_TIMEZONE;
 
@@ -41,8 +43,6 @@ const getYear = (date: string | Date) => {
 const yearToDayJsDate = (year: string) => {
     return dayjs(`${year}-01-01T00:00:00.000Z`);
 };
-
-const USER_TIMEZONE = typeof window !== "undefined" ? dayjs.tz.guess() : "UTC";
 
 export {
     formatDate,
