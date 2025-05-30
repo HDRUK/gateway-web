@@ -12,7 +12,7 @@ const copyToClipboard = (str: string | undefined) => {
     navigator.clipboard.writeText(str || "");
 
     // note: "Copied to clipboard" would better?
-    notificationService.success("Link copied");
+    notificationService.apiSuccess("Link copied");
 };
 
 const CopyTextButton = (props: CopyTextButtonProps) => {
