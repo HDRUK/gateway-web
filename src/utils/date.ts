@@ -13,8 +13,8 @@ const getTZDate = (date: string | Date, timezone?: string) => {
     return dayjs(date).tz(timezone);
 };
 
-const getToday = (timezone?: string): string => {
-    return getTZDate(new Date(), timezone).format("YYYY-MM-DDTHH:mm:ss[Z]");
+const getToday = (): string => {
+    return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ss[Z]");
 };
 
 const getDayjs = (date: string | Date, timezone?: string) => {
