@@ -6,11 +6,13 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const getTZDate = (date: string | Date, timezone?: string) => {
-    if (!timezone) {
-        return dayjs(date).tz(USER_TIMEZONE);
+    const resolvedTZ = timezone ?? USER_TIMEZONE;
+
+    if (resolvedTZ === "UTC") {
+        return dayjs(date).utc();
     }
 
-    return dayjs(date).tz(timezone);
+    return dayjs(date).tz(resolvedTZ);
 };
 
 const getToday = (): string => {
