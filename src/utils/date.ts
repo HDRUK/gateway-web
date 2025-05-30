@@ -17,16 +17,12 @@ const getToday = (): string => {
     return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ss[Z]");
 };
 
-const getDayjs = (date: string | Date, timezone?: string) => {
+const getDayjs = (date: string | Date, timezone: string = USER_TIMEZONE) => {
     return date ? getTZDate(date, timezone) : null;
 };
 
-const formatDate = (
-    date: string | Date,
-    formatStr = "DD MMM YYYY",
-    timezone?: string
-) => {
-    const convertedDate1 = getDayjs(date, timezone);
+const formatDate = (date: string | Date, formatStr = "DD MMM YYYY") => {
+    const convertedDate1 = getDayjs(date);
     return convertedDate1?.format(formatStr);
 };
 
