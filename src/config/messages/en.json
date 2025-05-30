@@ -1190,7 +1190,8 @@
                 "ActionBar": {
                     "label": "Back",
                     "enquire": "Make a general enquiry",
-                    "cohortDiscovery": "Start a Cohort Discovery query"
+                    "cohortDiscoveryEnabled": "Start a Cohort Discovery query",
+                    "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
                 },
                 "CollectionsContent": {
                     "heading": "Collections ({ length })"

@@ -15,7 +15,12 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
-import { getTeamSummary } from "@/utils/api";
+import {
+    getDataCustodianNetworks,
+    getDataset,
+    getTeamSummary,
+} from "@/utils/api";
+import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -42,6 +47,19 @@ export default async function DataCustodianItemPage({
     });
 
     if (!data) notFound();
+
+    const cohortDiscovery = await getCohortDiscovery();
+
+    let enableCohortDiscovery = false;
+
+    for (const dataset of data.datasets) {
+        const datasetInfo = await getDataset(
+            cookieStore,
+            dataset.id.toString()
+        );
+        enableCohortDiscovery =
+            enableCohortDiscovery || datasetInfo.is_cohort_discovery;
+    }
 
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
@@ -77,6 +95,8 @@ export default async function DataCustodianItemPage({
                             name: data.name,
                             member_of: data.member_of,
                         }}
+                        cohortDiscovery={cohortDiscovery}
+                        cohortDiscoveryEnabled={enableCohortDiscovery}
                     />
                     <Box
                         sx={{

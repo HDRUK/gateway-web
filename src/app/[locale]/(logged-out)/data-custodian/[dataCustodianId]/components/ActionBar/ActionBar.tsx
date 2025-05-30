@@ -3,6 +3,7 @@
 import { Box, Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import { Team } from "@/interfaces/Team";
 import BackButton from "@/components/BackButton";
@@ -10,15 +11,21 @@ import useAuth from "@/hooks/useAuth";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
-import { ActionBarWrapper } from "./ActionBar.styles";
 import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
+import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";
 interface ActionBarProps {
     team: Pick<Team, "id" | "name" | "member_of">;
+    cohortDiscovery: PageTemplatePromo | null;
+    cohortDiscoveryEnabled: boolean;
 }
 
-const ActionBar = ({ team }: ActionBarProps) => {
+const ActionBar = ({
+    team,
+    cohortDiscovery,
+    cohortDiscoveryEnabled,
+}: ActionBarProps) => {
     const router = useRouter();
     const path = usePathname();
     const { isLoggedIn } = useAuth();
@@ -63,14 +70,20 @@ const ActionBar = ({ team }: ActionBarProps) => {
                     startIcon={<SpeechBubbleIcon />}>
                     {t("enquire")}
                 </Button>
-                <CohortDiscoveryButton />
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleGeneralEnquiryClick}
-                    startIcon={<SpeechBubbleIcon />}>
-                    {t("cohortDiscovery")}
-                </Button>
+                {cohortDiscovery?.template?.promofields?.ctaLink && (
+                    <CohortDiscoveryButton
+                        ctaLink={
+                            cohortDiscovery?.template?.promofields?.ctaLink
+                        }
+                        disabledOuter={!cohortDiscoveryEnabled}
+                        tooltipOverride={
+                            cohortDiscoveryEnabled
+                                ? ""
+                                : t("cohortDiscoveryDisabled")
+                        }
+                        showDatasetExplanatoryTooltip
+                    />
+                )}
             </Box>
         </ActionBarWrapper>
     );
