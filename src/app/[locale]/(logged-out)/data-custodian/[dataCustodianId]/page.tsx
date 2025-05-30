@@ -46,11 +46,9 @@ export default async function DataCustodianItemPage({
 
     const cohortDiscovery = await getCohortDiscovery();
 
-    const promises = [];
-
-    for (const dataset of data.datasets) {
-        promises.push(getDataset(cookieStore, dataset.id.toString()));
-    }
+    const promises = data.datasets.map(x =>
+        getDataset(cookieStore, x.id.toString())
+    );
 
     const datasets = await Promise.all(promises);
 
