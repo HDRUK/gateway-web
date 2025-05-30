@@ -43,8 +43,8 @@ describe("Date utils", () => {
     });
 
     it("should return tz date with timezone specified", async () => {
-        expect(getTZDate("2022-04-01", "Europe/London").format()).toEqual(
-            "2022-04-01T01:00:00+01:00"
-        );
+        expect(
+            getTZDate("2022-04-01T00:00:00Z", "Europe/London").format()
+        ).toEqual("2022-04-01T01:00:00+01:00");
     });
 });

@@ -7,7 +7,7 @@ dayjs.extend(timezone);
 
 const getTZDate = (date: string | Date, timezone?: string) => {
     if (!timezone) {
-        return dayjs(date).utc();
+        return dayjs(date).tz(USER_TIMEZONE);
     }
 
     return dayjs(date).tz(timezone);
@@ -17,8 +17,8 @@ const getToday = (): string => {
     return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ss[Z]");
 };
 
-const getDayjs = (date: string | Date, timezone: string = USER_TIMEZONE) => {
-    return date ? getTZDate(date, timezone) : null;
+const getDayjs = (date: string | Date) => {
+    return date ? getTZDate(date) : null;
 };
 
 const formatDate = (date: string | Date, formatStr = "DD MMM YYYY") => {
