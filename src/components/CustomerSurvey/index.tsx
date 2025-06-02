@@ -3,7 +3,12 @@
 import { useEffect, useState, useCallback, useId } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import CloseIcon from "@mui/icons-material/Close";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import MoodBadIcon from "@mui/icons-material/MoodBad";
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import {
     Grid,
     Typography,
@@ -14,12 +19,6 @@ import {
     Box,
     Button,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import MoodBadIcon from "@mui/icons-material/MoodBad";
-import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
@@ -33,20 +32,20 @@ import { colors } from "@/config/theme";
 import InputWrapper from "../InputWrapper";
 
 interface Ratings {
-  icon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
-  rating: number;
-  colour: string;
+    icon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
+    rating: number;
+    colour: string;
 }
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
 
 const ratings: Ratings[] = [
-  { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
-  { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: colors.orange },
-  { icon: SentimentSatisfiedIcon, rating: 3, colour: colors.orange200 },
-  { icon: SentimentSatisfiedAltIcon, rating: 4, colour: colors.darkGreen100 },
-  { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
+    { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
+    { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: colors.orange },
+    { icon: SentimentSatisfiedIcon, rating: 3, colour: colors.orange200 },
+    { icon: SentimentSatisfiedAltIcon, rating: 4, colour: colors.darkGreen100 },
+    { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
 
 const displayIn = 100;
@@ -61,193 +60,210 @@ const slideOut = keyframes`
 `;
 
 interface CustomerSurveyProps {
-  hideOnLoad?: boolean;
+    hideOnLoad?: boolean;
 }
 
 const surveySchema = yup.object({
-  reason: yup.string().max(500, "Max 500 characters"),
-  score: yup.number().required(),
+    reason: yup.string().max(500, "Max 500 characters"),
+    score: yup.number().required(),
 });
 
 export default function CustomerSurvey({
     hideOnLoad = true,
 }: CustomerSurveyProps) {
-  const t = useTranslations("components.CustomerSurvey");
-  const pathname = usePathname();
-  const [hideComponent, setHideComponent] = useState(hideOnLoad);
-  const [submitted, setSubmitted] = useState(false);
-  const [animateOut, setAnimateOut] = useState(false);
-  const [step, setStep] = useState<"rating" | "reason">("rating");
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  const id = useId();
-  const reason = {
-    label: "Feedback",
-    info: "What is the reason for your rating?",
-    name: "reason",
-    component: inputComponents.TextArea,
-    limit: 500,
-  };
-  const post = usePost(apis.customerSatisfactionV1Url, {
-    successNotificationsOn: false,
-  });
-  const patch = usePatch(apis.customerSatisfactionV1Url);
+    const t = useTranslations("components.CustomerSurvey");
+    const pathname = usePathname();
+    const [hideComponent, setHideComponent] = useState(hideOnLoad);
+    const [submitted, setSubmitted] = useState(false);
+    const [animateOut, setAnimateOut] = useState(false);
+    const [step, setStep] = useState<"rating" | "reason">("rating");
+    const [sessionId, setSessionId] = useState<string | null>(null);
+    const id = useId();
+    const reason = {
+        label: "Feedback",
+        info: "What is the reason for your rating?",
+        name: "reason",
+        component: inputComponents.TextArea,
+        limit: 500,
+    };
+    const post = usePost(apis.customerSatisfactionV1Url, {
+        successNotificationsOn: false,
+    });
+    const patch = usePatch(apis.customerSatisfactionV1Url, {
+        successNotificationsOn: false,
+    });
 
-  const {
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    mode: "onTouched",
-    resolver: yupResolver(surveySchema),
-    defaultValues: {
-      reason: "",
-      score: null,
-    },
-  });
+    const {
+        control,
+        handleSubmit,
+        watch,
+        setValue,
+        formState: { errors },
+    } = useForm({
+        mode: "onTouched",
+        resolver: yupResolver(surveySchema),
+        defaultValues: {
+            reason: "",
+            score: null,
+        },
+    });
 
-  const selectedScore = watch("score");
+    const selectedScore = watch("score");
 
-  const dismissSurvey = () => {
-    setAnimateOut(true);
-    setTimeout(() => {
-      setHideComponent(true);
-      setSubmitted(true);
-    }, 500);
-  };
+    const dismissSurvey = () => {
+        setAnimateOut(true);
+        setTimeout(() => {
+            setHideComponent(true);
+            setSubmitted(true);
+        }, 500);
+    };
 
-  const handleClick = async (score: number) => {
-    try {
-      const response = await post({ score });
-      const id = response?.id;
-      if (id) {
-        setSessionId(id);
-        Cookies.set(cookieName, JSON.stringify({ score, id }), { expires: cookieLife });
-        setValue("score", score);
-        setStep("reason");
-      }
-    } catch (error) {
-      console.error("Failed to submit score", error);
-    }
-  };
+    const handleClick = async (score: number) => {
+        const cookie = Cookies.get(cookieName);
 
-  const onSubmit = async (data: { reason: string; score: number }) => {
-    if (!sessionId) return;
-    try {
-      await patch(`${sessionId}`, { reason: data.reason });
-      Cookies.remove(cookieName);
-      dismissSurvey();
-    } catch (error) {
-      console.error("Failed to submit reason", error);
-    }
-  };
+        if (cookie) {
+            const { score: storedScore } = JSON.parse(cookie);
 
-  const handleClose = () => {
-    Cookies.remove(cookieName);
-    setAnimateOut(true);
-    setTimeout(() => {
-      setHideComponent(true);
-      setSubmitted(false);
-    }, 500);
-  };
+            if (storedScore === score) return;
 
-  const checkToShowSurvey = useCallback(() => {
-    const cookie = Cookies.get(cookieName);
-    if (cookie) {
-      const { id, score } = JSON.parse(cookie);
-      setSessionId(id);
-      setValue("score", score);
-      setStep("reason");
-      setAnimateOut(false);
-      setHideComponent(false);
-    } else {
-      setAnimateOut(false);
-      setHideComponent(false);
-    }
-  }, [setValue]);
+            setValue("score", score);
+            return;
+        }
 
-  useEffect(() => {
-    setHideComponent(hideOnLoad);
-    setSubmitted(false);
-  }, [pathname, hideOnLoad]);
+        try {
+            const response = await post({ score });
+            const id = response?.id;
+            if (id) {
+                Cookies.set(cookieName, JSON.stringify({ score, id }), {
+                    expires: cookieLife,
+                });
+                setSessionId(id);
+                setValue("score", score);
+                setStep("reason");
+            }
+        } catch (error) {
+            console.error("Failed to submit score", error);
+        }
+    };
 
-  useEffect(() => {
-    if (!hideComponent) return;
-    const timeoutId = setTimeout(checkToShowSurvey, displayIn);
-    return () => clearTimeout(timeoutId);
-  }, [hideComponent, checkToShowSurvey]);
+    const onSubmit = async ({ reason, score }) => {
+        if (!sessionId) return;
+        try {
+            await patch(`${sessionId}`, { reason, score });
+            Cookies.remove(cookieName);
+            dismissSurvey();
+        } catch (error) {
+            console.error("Failed to submit reason", error);
+        }
+    };
 
-  if (hideComponent || submitted) return null;
+    const handleClose = () => {
+        Cookies.remove(cookieName);
+        setAnimateOut(true);
+        setTimeout(() => {
+            setHideComponent(true);
+            setSubmitted(false);
+        }, 500);
+    };
 
-  return (
-    <Box
-      aria-describedby={id}
-      sx={{
-        textAlign: "center",
-        padding: 2,
-        background: "white",
-        position: "fixed",
-        bottom: 0,
-        left: `calc(50% - ${boxSize / 2}px)`,
-        width: boxSize,
-        zIndex: 999,
-        animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
-      }}
-    >
-      <IconButton sx={{ position: "absolute", top: 10, right: 10 }} onClick={handleClose}>
-        <CloseIcon />
-      </IconButton>
+    const checkToShowSurvey = useCallback(() => {
+        const cookie = Cookies.get(cookieName);
+        if (cookie) {
+            const { id, score } = JSON.parse(cookie);
+            setSessionId(id);
+            setValue("score", score);
+            setStep("reason");
+            setAnimateOut(false);
+            setHideComponent(false);
+        } else {
+            setAnimateOut(false);
+            setHideComponent(false);
+        }
+    }, [setValue]);
 
-      <Typography variant="h6" gutterBottom id={id}>
-        {t("title")}
-      </Typography>
+    useEffect(() => {
+        setHideComponent(hideOnLoad);
+        setSubmitted(false);
+    }, [pathname, hideOnLoad]);
 
-      <Grid container spacing={1} justifyContent="center">
-        {ratings.map(({ icon: Icon, rating, colour }, index) => (
-          <Grid item key={rating}>
-            <Tooltip title={t(`tooltip-${index}`)}>
-              <div>
-                <IconButton
-                  onClick={() => handleClick(rating)}
-                  id={`feedback-${rating}`}
-                  sx={{
-                    border: selectedScore === rating ? `2px solid ${colour}` : "",
-                  }}
-                >
-                  <Icon
-                    aria-label={`Rating ${rating}`}
-                    sx={{
-                      cursor: "pointer",
-                      color: colour,
-                      minWidth: "70px",
-                      minHeight: "70px",
-                      margin: 1,
-                      fontSize: 1,
-                      fontWeight: "bold",
-                    }}
-                  />
-                </IconButton>
-              </div>
-            </Tooltip>
-          </Grid>
-        ))}
-      </Grid>
+    useEffect(() => {
+        if (!hideComponent) return;
+        const timeoutId = setTimeout(checkToShowSurvey, displayIn);
+        return () => clearTimeout(timeoutId);
+    }, [hideComponent, checkToShowSurvey]);
 
-      {step === "reason" && (
-        <Box mt={2} component="form" onSubmit={handleSubmit(onSubmit)}>
-          <InputWrapper control={control} {...reason} />
+    if (hideComponent || submitted) return null;
 
-          <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            type="submit"
-            disabled={!watch("reason")?.trim()}
-          >
-            {t("submit")}
-          </Button>
+    return (
+        <Box
+            aria-describedby={id}
+            sx={{
+                textAlign: "center",
+                padding: 2,
+                background: "white",
+                position: "fixed",
+                bottom: 0,
+                left: `calc(50% - ${boxSize / 2}px)`,
+                width: boxSize,
+                zIndex: 999,
+                animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
+            }}>
+            <IconButton
+                sx={{ position: "absolute", top: 10, right: 10 }}
+                onClick={handleClose}>
+                <CloseIcon />
+            </IconButton>
+
+            <Typography variant="h6" gutterBottom id={id}>
+                {t("title")}
+            </Typography>
+
+            <Grid container spacing={1} justifyContent="center">
+                {ratings.map(({ icon: Icon, rating, colour }, index) => (
+                    <Grid item key={rating}>
+                        <Tooltip title={t(`tooltip-${index}`)}>
+                            <div>
+                                <IconButton
+                                    onClick={() => handleClick(rating)}
+                                    id={`feedback-${rating}`}
+                                    sx={{
+                                        border:
+                                            selectedScore === rating
+                                                ? `2px solid ${colour}`
+                                                : "",
+                                    }}>
+                                    <Icon
+                                        aria-label={`Rating ${rating}`}
+                                        sx={{
+                                            cursor: "pointer",
+                                            color: colour,
+                                            minWidth: "70px",
+                                            minHeight: "70px",
+                                            margin: 1,
+                                            fontSize: 1,
+                                            fontWeight: "bold",
+                                        }}
+                                    />
+                                </IconButton>
+                            </div>
+                        </Tooltip>
+                    </Grid>
+                ))}
+            </Grid>
+
+            {step === "reason" && (
+                <Box mt={2} component="form" onSubmit={handleSubmit(onSubmit)}>
+                    <InputWrapper control={control} {...reason} />
+
+                    <Button
+                        variant="contained"
+                        sx={{ mt: 2 }}
+                        type="submit"
+                        disabled={!watch("reason")?.trim()}>
+                        {t("submit")}
+                    </Button>
+                </Box>
+            )}
         </Box>
-      )}
-    </Box>
-  );
+    );
 }
