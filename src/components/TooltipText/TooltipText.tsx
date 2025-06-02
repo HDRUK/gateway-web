@@ -1,42 +1,37 @@
 import { ReactNode } from "react";
-import { Box, SxProps, Tooltip, Typography } from "@mui/material";
+import { SxProps, Tooltip, Typography } from "@mui/material";
 
 interface TooltipTextProps {
     label?: ReactNode;
     content: ReactNode;
     size?: "medium" | "small" | "inherit" | "large";
-    boxSx?: SxProps;
+    sx?: SxProps;
 }
 
 const TooltipText = ({
     label,
     content,
     size = "medium",
-    boxSx,
+    sx,
     ...restProps
 }: TooltipTextProps) => {
     return (
-        <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={boxSx}>
-            <Tooltip describeChild title={content}>
-                <Typography
-                    data-testid="tooltipText"
-                    sx={{
-                        fontSize: size,
-                        fontWeight: 600,
-                        textDecoration: "underline",
-                        textDecorationStyle: "dashed",
-                        textDecorationThickness: "1px",
-                        textUnderlineOffset: 5,
-                    }}
-                    {...restProps}>
-                    {label}
-                </Typography>
-            </Tooltip>
-        </Box>
+        <Tooltip describeChild tabIndex={0} title={content}>
+            <Typography
+                data-testid="tooltipText"
+                sx={{
+                    fontSize: size,
+                    fontWeight: 600,
+                    textDecoration: "underline",
+                    textDecorationStyle: "dashed",
+                    textDecorationThickness: "1px",
+                    textUnderlineOffset: 5,
+                    ...sx,
+                }}
+                {...restProps}>
+                {label}
+            </Typography>
+        </Tooltip>
     );
 };
 
