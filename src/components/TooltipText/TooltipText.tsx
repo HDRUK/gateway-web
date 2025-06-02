@@ -13,6 +13,7 @@ const TooltipText = ({
     content,
     size = "medium",
     boxSx,
+    ...restProps
 }: TooltipTextProps) => {
     return (
         <Box
@@ -30,7 +31,8 @@ const TooltipText = ({
                         textDecorationStyle: "dashed",
                         textDecorationThickness: "1px",
                         textUnderlineOffset: 5,
-                    }}>
+                    }}
+                    {...restProps}>
                     {label}
                 </Typography>
             </Tooltip>

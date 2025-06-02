@@ -17,7 +17,7 @@ import {
 } from "@/interfaces/Dataset";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
-import TooltipIcon from "@/components/TooltipIcon";
+import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { formatTextWithLinks } from "@/utils/dataset";
@@ -100,20 +100,13 @@ const StructuralMetadataAccordion = ({
                             sx={{
                                 p: 0,
                                 display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
                                 width: "100%",
                             }}>
-                            <Typography variant="h4" sx={{ m: 0 }}>
-                                {item.name}
-                            </Typography>
-                            {item.description && (
-                                <TooltipIcon
-                                    buttonSx={{ p: 0, pr: 2 }}
-                                    content={item.description}
-                                    label=""
-                                />
-                            )}
+                            <TooltipText
+                                content={item?.description}
+                                label={item?.name}
+                                variant="h4"
+                            />
                         </Box>
                     }
                     contents={
