@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -10,7 +11,6 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
-import TooltipIcon from "@/components/TooltipIcon";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -121,12 +121,9 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.dataProviderLabel}
-                size="small"
-                content={translations.dataProviderTooltip}
-            />
+            <Tooltip title={translations.dataProviderTooltip} tabIndex={0}>
+                {translations.dataProviderLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -142,12 +139,9 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.populationSizeLabel}
-                content={translations.populationSizeTooltip}
-            />
+            <Tooltip title={translations.populationSizeTooltip} tabIndex={0}>
+                {translations.populationSizeLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -160,12 +154,11 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.dateRangePublisherLabel}
-                content={translations.dateRangePublisherTooltip}
-            />
+            <Tooltip
+                title={translations.dateRangePublisherTooltip}
+                tabIndex={0}>
+                {translations.dateRangePublisherLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -178,12 +171,9 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.accessServiceLabel}
-                size="small"
-                content={translations.accessServiceTooltip}
-            />
+            <Tooltip title={translations.accessServiceTooltip} tabIndex={0}>
+                {translations.accessServiceLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -196,12 +186,9 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.dataStandardLabel}
-                content={translations.dataStandardTooltip}
-            />
+            <Tooltip title={translations.dataStandardTooltip} tabIndex={0}>
+                {translations.dataStandardLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -217,12 +204,9 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.cohortDiscoveryLabel}
-                size="small"
-                content={translations.cohortDiscoveryTooltip}
-            />
+            <Tooltip title={translations.cohortDiscoveryTooltip} tabIndex={0}>
+                {translations.cohortDiscoveryLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -238,12 +222,9 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.containsTissueLabel}
-                size="small"
-                content={translations.containsTissueTooltip}
-            />
+            <Tooltip title={translations.containsTissueTooltip} tabIndex={0}>
+                {translations.containsTissueLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -259,12 +240,11 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.hasTechnicalMetadataLabel}
-                size="small"
-                content={translations.hasTechnicalMetadataTooltip}
-            />
+            <Tooltip
+                title={translations.hasTechnicalMetadataTooltip}
+                tabIndex={0}>
+                {translations.hasTechnicalMetadataLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
