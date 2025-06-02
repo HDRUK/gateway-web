@@ -18,7 +18,6 @@ import {
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import TooltipText from "@/components/TooltipText";
-import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { formatTextWithLinks } from "@/utils/dataset";
 
