@@ -21,7 +21,7 @@ const TooltipText = ({
             alignItems="center"
             justifyContent="space-between"
             sx={boxSx}>
-            <Tooltip title={content}>
+            <Tooltip describeChild title={content}>
                 <Typography
                     data-testid="tooltipText"
                     sx={{
