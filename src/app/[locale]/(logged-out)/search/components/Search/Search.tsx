@@ -180,7 +180,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     // This can be removed when search endpoint has been updated to use data_custodians
     const getSearchType = (searchCategory: SearchCategory) => {
-        if (searchCategory === SearchCategory.DATA_PROVIDERS) {
+        if (searchCategory === SearchCategory.DATA_CUSTODIANS) {
             return SearchCategory.DATA_PROVIDERS_LEGACY;
         }
 
@@ -463,7 +463,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     {t("dataProviders")}
                 </TabTooltip>
             ),
-            value: SearchCategory.DATA_PROVIDERS,
+            value: SearchCategory.DATA_CUSTODIANS,
             content: "",
         },
         {
@@ -573,7 +573,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         result={result as SearchResultCollection}
                     />
                 );
-            case SearchCategory.DATA_PROVIDERS:
+            case SearchCategory.DATA_CUSTODIANS:
                 return (
                     <ResultCardDataProvider
                         result={result as SearchResultDataProvider}
@@ -610,7 +610,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    queryParams.type === SearchCategory.DATA_PROVIDERS
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS
                         ? "tiled"
                         : "list"
                 }>
@@ -628,7 +628,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 return sortByOptionsPublications;
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
-            case SearchCategory.DATA_PROVIDERS:
+            case SearchCategory.DATA_CUSTODIANS:
                 return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
@@ -717,8 +717,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 return t("searchExplainerDataUse");
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
-            case SearchCategory.DATA_PROVIDERS:
-                return t("searchExplainerDataProviders");
+            case SearchCategory.DATA_CUSTODIANS:
+                return t("searchExplainerDataCustodians");
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
+                return t("searchExplainerDataCustodians");
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
             default:
@@ -728,7 +730,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const excludedDownloadSearchCategories = [
         SearchCategory.PUBLICATIONS,
-        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.DATA_CUSTODIANS,
         SearchCategory.COLLECTIONS,
     ];
 

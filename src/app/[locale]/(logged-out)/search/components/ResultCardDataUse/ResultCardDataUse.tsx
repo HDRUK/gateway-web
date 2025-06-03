@@ -192,7 +192,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                                 </ResultRowCategory>
                                 {(!!result?.team?.name && (
                                     <Link
-                                        href={`${RouteName.DATA_PROVIDERS_ITEM}/${result.team.id}`}>
+                                        href={`${RouteName.DATA_CUSTODIANS_ITEM}/${result.team.id}`}>
                                         {`${result.team?.member_of} > `}
                                         <EllipsisCharacterLimit
                                             text={result.team.name}

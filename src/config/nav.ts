@@ -35,7 +35,7 @@ const navItems = [
             },
             {
                 label: "Data Custodians",
-                href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
+                href: `/search?type=${SearchCategory.DATA_CUSTODIANS}`,
             },
             {
                 label: "Collections / Networks",
