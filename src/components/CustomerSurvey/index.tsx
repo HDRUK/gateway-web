@@ -48,7 +48,7 @@ const ratings: Ratings[] = [
     { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
 
-const displayIn = 100;
+const displayIn = 150000;
 const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
@@ -223,8 +223,8 @@ export default function CustomerSurvey({
                                             sx={{
                                                 cursor: "pointer",
                                                 color: colour,
-                                                minWidth: "70px",
-                                                minHeight: "70px",
+                                                minWidth: "75px",
+                                                minHeight: "75px",
                                                 margin: 1,
                                                 fontSize: 1,
                                                 fontWeight: "bold",
