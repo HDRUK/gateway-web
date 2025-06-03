@@ -38,7 +38,7 @@ const TeamTemplates = ({
     const { push, replace } = useRouter();
     const searchParams = useSearchParams();
 
-    // Set a default value for search params if not specified
+    // Set a default value for published if not specified
     if (!searchParams?.get("published")) {
         replace(
             `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/list?published=1`
