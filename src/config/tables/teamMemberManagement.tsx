@@ -1,9 +1,10 @@
 /* eslint-disable */
 import { useMemo } from "react";
-import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { Box, FormControlLabel, FormGroup } from "@mui/material";
 import { Table, createColumnHelper } from "@tanstack/react-table";
 import { IconType } from "@/interfaces/Ui";
 import { User } from "@/interfaces/User";
+import StyledCheckbox from "@/components/StyledCheckbox";
 import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
 import {
@@ -81,10 +82,9 @@ const CheckboxesCell = ({
                     label={rolesMeta[checkbox.name].label}
                     title={checkbox.title}
                     control={
-                        <Checkbox
+                        <StyledCheckbox
                             disabled={checkbox.disabled}
                             sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
-                            disableRipple
                             name={checkbox.name}
                             checked={checkbox.value}
                             value={checkbox.value}

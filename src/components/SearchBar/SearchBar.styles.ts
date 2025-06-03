@@ -2,9 +2,9 @@ import { styled } from "@mui/material";
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import Link from "@/components/Link";
-import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
+import TextFieldBase from "../TextFieldBase";
 
 export const FormWrapper = styled(Box)(() => ({
     display: "flex",
@@ -31,7 +31,7 @@ export const InputWrapper = styled(Box)(() => ({
     "& div": { margin: 0 },
 }));
 
-export const SearchInput = styled(TextField)(({ theme }) => ({
+export const SearchInput = styled(TextFieldBase)(({ theme }) => ({
     fontSize: "1.5rem",
     marginBottom: 0,
     "& fieldset": { border: "none" },

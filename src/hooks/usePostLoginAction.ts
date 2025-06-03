@@ -39,9 +39,9 @@ export default function usePostLoginAction({
             if (onAction) {
                 const { action, ...data } = JSON.parse(postLoginActionCookie);
                 onAction({ action, data });
-            }
 
-            Cookies.remove(config.POST_LOGIN_ACTION_COOKIE, { path: "/" });
+                Cookies.remove(config.POST_LOGIN_ACTION_COOKIE, { path: "/" });
+            }
         }
     }, [isLoggedIn, onAction]);
 

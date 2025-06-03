@@ -262,18 +262,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                     transform: "none",
                                 },
                             }}>
-                            <Link
-                                href={RouteName.NEWS_EVENTS}
-                                color="primary"
-                                passHref>
-                                <Button
-                                    variant="text"
-                                    endIcon={
-                                        <ArrowForwardIosIcon color="primary" />
-                                    }>
-                                    {t("newsEvents.seeAllLink")}
-                                </Button>
-                            </Link>
+                            <Button
+                                variant="text"
+                                component={Link}
+                                endIcon={
+                                    <ArrowForwardIosIcon color="primary" />
+                                }
+                                href={RouteName.NEWS_EVENTS}>
+                                {t("newsEvents.seeAllLink")}
+                            </Button>
                         </Box>
                     </Box>
                     <NewsSection posts={posts} />

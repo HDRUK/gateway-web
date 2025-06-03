@@ -1,3 +1,4 @@
+import { InputHTMLAttributes } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { SerializedStyles } from "@emotion/react";
 import {
@@ -30,6 +31,7 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     formControlSx?: SxProps;
     css?: SerializedStyles;
     id?: string;
+    inputProps?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 const TextFieldBase = <

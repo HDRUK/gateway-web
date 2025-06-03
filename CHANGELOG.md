@@ -1,3 +1,38 @@
+## [2.9.0](https://github.com/HDRUK/gateway-web/compare/v2.8.1...v2.9.0) (2025-05-20)
+
+### ✨ Features
+
+* **GAT-4070:** Add Data Custodian filter to Tools search (#1118) ([15680ca](https://github.com/HDRUK/gateway-web/commit/15680caeb4801b3ac5fc100b34b9ed8939588fac)), closes [GAT-4070](GAT-4070)
+* **GAT-5701:** Added light and dark favicons (#1114) ([068f2c2](https://github.com/HDRUK/gateway-web/commit/068f2c282497abf61012b25308103a4b474e4057)), closes [GAT-5701](GAT-5701)
+* **GAT-5724:** Add Cohort Discovery button to MindMap (#1132) ([eefb2e6](https://github.com/HDRUK/gateway-web/commit/eefb2e6405562a860787426d8b7db685d5f0e792)), closes [GAT-5724](GAT-5724)
+* **GAT-5724:** Move Cohort Discovery button, and change its color to match the correct scheme. (#1133) ([6378f67](https://github.com/HDRUK/gateway-web/commit/6378f6701716b6213108f20cfcfa546c6a6e339a)), closes [GAT-5724](GAT-5724)
+* **GAT-5790:** Add Cohort Discovery button to Datasets list and table views (#1127) ([71d8e3a](https://github.com/HDRUK/gateway-web/commit/71d8e3a7d60e4f085f65356645060ba07345a06f)), closes [GAT-5790](GAT-5790)
+* **GAT-6209:** Changed styling of publication titles in search (#1123) ([6fb8fba](https://github.com/HDRUK/gateway-web/commit/6fb8fba0915475a43b23216776c54fffeb6fa57d)), closes [GAT-6209](GAT-6209)
+* **GAT-6510:** Add cohort discovery filter (#1111) ([bd8b2af](https://github.com/HDRUK/gateway-web/commit/bd8b2af8c88053dceee58da47fd07fa7374682e8)), closes [GAT-6510](GAT-6510)
+* **GAT-6731:** update link to central change log location (#1126) ([9bce842](https://github.com/HDRUK/gateway-web/commit/9bce842d8d8952d191d0cdbeafd0a31daeebc28f)), closes [GAT-6731](GAT-6731)
+* **GAT-6734:** disable robots (#1110) ([74b02b0](https://github.com/HDRUK/gateway-web/commit/74b02b023171c318cf607d784070cf80c1c9471f)), closes [GAT-6734](GAT-6734)
+* **GAT-6765:** Improve the logo slider accesibility (#1128) ([730de5b](https://github.com/HDRUK/gateway-web/commit/730de5b740d27a1422bfab204158a6e0fed7c073)), closes [GAT-6765](GAT-6765)
+* **GAT-6781:** Add checkbox focus to filters (#1115) ([4502ca6](https://github.com/HDRUK/gateway-web/commit/4502ca63fce7d1936bf15d5babb0b29a1e2137de)), closes [GAT-6781](GAT-6781)
+* **GAT-6784:** Add accessible tooltips (#1117) ([43c3b7c](https://github.com/HDRUK/gateway-web/commit/43c3b7c0933b0821486b874080d9f513e1877a86)), closes [GAT-6784](GAT-6784)
+* **GAT-6785:** Accessibility fixes on menu component (#1124) ([bc26ebf](https://github.com/HDRUK/gateway-web/commit/bc26ebf595ffd047714d3abecb721e3b1913c36d))
+* **GAT-6823:** Improve tooltip accessibility styling (#1130) ([9638693](https://github.com/HDRUK/gateway-web/commit/96386935b601c9a2464a68a58b401da040aff2d0)), closes [GAT-6823](GAT-6823)
+* **GAT-7001:** Added OmicsPred and PGS buttons to home page (#1119) ([811d3c4](https://github.com/HDRUK/gateway-web/commit/811d3c4ad5b6eee8d77d6b8573540fbfe7859858)), closes [GAT-7001](GAT-7001)
+* **GAT-7124:** DAR Amendments from testing (#1131) ([4f27460](https://github.com/HDRUK/gateway-web/commit/4f27460faa2e2708a169af402a6ed2e7326f109e)), closes [GAT-7124](GAT-7124)
+
+### 🐛 Bug Fixes
+
+* **GAT-4811:** format list (#1107) ([39c2962](https://github.com/HDRUK/gateway-web/commit/39c29622c83fe00586151b2125a9744d30c1171f)), closes [GAT-4811](GAT-4811)
+* **GAT-5854:** website and service urls (#1116) ([dc669b9](https://github.com/HDRUK/gateway-web/commit/dc669b9fc7fd1d279bed1f3db82e8d6e20155421)), closes [GAT-5854](GAT-5854)
+* **GAT-5970:** html entities in collection names (#1106) ([3597a44](https://github.com/HDRUK/gateway-web/commit/3597a44c647484003941276e0aa8e79422edd507)), closes [GAT-5970](GAT-5970)
+* **GAT-6475:** char encoding (#1108) ([eb78a60](https://github.com/HDRUK/gateway-web/commit/eb78a6082b398bb7d1398ce4739243269984e534)), closes [GAT-6475](GAT-6475)
+* **GAT-6667:** fix download links (#1120) ([facbc91](https://github.com/HDRUK/gateway-web/commit/facbc9165626bba4b64743723dd47664f98cee2e))
+* **GAT-6761:** utc / tz issues (#1112) ([14c9fea](https://github.com/HDRUK/gateway-web/commit/14c9fea93088d0c5b63a9d72145188db1b9b045d)), closes [GAT-6761](GAT-6761)
+* **GAT-6852:** gap between structural metadata sections (#1121) ([ece018c](https://github.com/HDRUK/gateway-web/commit/ece018cadb6be3ce03fa21973f8eea859244bbc9)), closes [GAT-6852](GAT-6852)
+* **GAT-6995:** Encode dataset title for url (#1113) ([2e2036d](https://github.com/HDRUK/gateway-web/commit/2e2036d62a2688bc9081abcd2691282cdff82c68)), closes [GAT-6995](GAT-6995)
+* **GAT-7083:** link list (#1134) ([22fcd94](https://github.com/HDRUK/gateway-web/commit/22fcd9448244189a5d7d3d25aa1a021b68912684)), closes [GAT-7083](GAT-7083)
+* **GAT-7112:** Allow user through to Cohort Discovery T & Cs when previous request has expired (#1122) ([7094c03](https://github.com/HDRUK/gateway-web/commit/7094c03bd7abc09da88f241f52d829d7e10ce08f)), closes [GAT-7112](GAT-7112)
+* **GAT-7118:** dataset_versions could be null (#1125) ([1cad126](https://github.com/HDRUK/gateway-web/commit/1cad1269875e4c54e67acbca0b4ed528e5056d0c)), closes [GAT-7118](GAT-7118)
+
 ## [2.8.1](https://github.com/HDRUK/gateway-web/compare/v2.8.0...v2.8.1) (2025-05-13)
 
 ### 🐛 Bug Fixes

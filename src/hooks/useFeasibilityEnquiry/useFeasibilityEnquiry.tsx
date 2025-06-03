@@ -6,6 +6,8 @@ import { SearchResultDataset } from "@/interfaces/Search";
 import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useDialog from "@/hooks/useDialog";
+import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
+import { PostLoginActions } from "@/consts/postLoginActions";
 
 interface UseFeasibilityEnquiryProps {
     isLoggedIn: boolean;
@@ -16,6 +18,7 @@ interface UseFeasibilityEnquiryProps {
 
 const useFeasibilityEnquiry = () => {
     const { showDialog } = useDialog();
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
 
     return useCallback(
         ({
@@ -27,6 +30,19 @@ const useFeasibilityEnquiry = () => {
             const { _id, team, metadata } = dataset;
 
             if (!isLoggedIn) {
+                setPostLoginActionCookie(
+                    PostLoginActions.OPEN_FEASIBILITY_ENQUIRY,
+                    {
+                        dataset: {
+                            datasetId: Number(_id),
+                            name: metadata.summary.title,
+                            teamId: team.id,
+                            teamName: team.name,
+                            teamMemberOf: team.member_of,
+                        },
+                    }
+                );
+
                 showDialog(ProvidersDialog, {
                     isProvidersDialog: true,
                     redirectPath,

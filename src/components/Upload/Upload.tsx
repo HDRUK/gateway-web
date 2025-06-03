@@ -1,10 +1,11 @@
 import { Control, useController } from "react-hook-form";
 import { FormControl, FormControlLabel, Stack, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
-import Button from "@/components/Button";
-import Typography from "@/components/Typography";
+import { visuallyHidden } from "@mui/utils";
 import theme, { colors } from "@/config/theme";
 import { UploadFileIcon } from "@/consts/icons";
+import Button from "../Button";
+import Typography from "../Typography";
 
 export interface UploadProps extends InputProps {
     label: string;
@@ -12,9 +13,9 @@ export interface UploadProps extends InputProps {
     control: Control;
     helperText?: string;
     acceptFileTypes?: string;
-    uploadSx?: SxProps;
     formControlSx?: SxProps;
     onFileChange?: (file: File) => void;
+    onFocus?: () => void;
 }
 
 const Upload = (props: UploadProps) => {
@@ -25,8 +26,8 @@ const Upload = (props: UploadProps) => {
         name,
         helperText,
         formControlSx,
-        uploadSx,
         onFileChange,
+        onFocus,
         ...rest
     } = props;
 
@@ -67,9 +68,11 @@ const Upload = (props: UploadProps) => {
                         {...rest}
                         {...fieldProps}
                         inputRef={ref}
-                        sx={{ ...uploadSx }}
+                        sx={visuallyHidden}
                         value={value?.fileName}
                         onChange={handleFileUploadChange}
+                        onFocus={() => onFocus && onFocus()}
+                        id={name}
                     />
                 }
                 label={
@@ -85,7 +88,8 @@ const Upload = (props: UploadProps) => {
                                 pointerEvents: "none",
                                 backgroundColor: theme.palette.grey[200],
                             }}
-                            startIcon={<UploadFileIcon color="primary" />}>
+                            startIcon={<UploadFileIcon color="primary" />}
+                            tabIndex={-1}>
                             {label}
                         </Button>
                         <Typography color={colors.grey600}>
@@ -93,6 +97,7 @@ const Upload = (props: UploadProps) => {
                         </Typography>
                     </Stack>
                 }
+                disableTypography
             />
         </FormControl>
     );

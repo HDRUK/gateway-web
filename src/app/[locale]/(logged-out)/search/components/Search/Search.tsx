@@ -40,12 +40,15 @@ import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
 import ToggleTabs from "@/components/ToggleTabs";
+import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
+import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
+import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDialog from "@/hooks/useDialog";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
@@ -53,6 +56,7 @@ import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
+import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import {
@@ -140,8 +144,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
+    const { showDARApplicationModal } = useDataAccessRequest();
 
     const { isLoggedIn, user } = useAuth();
+    const { showSidebar } = useSidebar();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -284,9 +290,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     };
 
     const onQuerySubmit = async (data: FieldValues) => {
-        setQueryParams({ ...queryParams, ...data });
+        setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
 
         updatePath(QUERY_FIELD, data.query);
+        updatePath(PAGE_FIELD, "1");
     };
 
     const onSortChange = async (selectedValue: string) => {
@@ -582,18 +589,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         onContinue: () => mutateLibraries(),
     });
 
-    const renderResults = () => {
-        if (resultsView === ViewType.TABLE) {
-            return (
-                <ResultsTable
-                    results={data?.list as SearchResultDataset[]}
-                    showLibraryModal={showLibraryModal}
-                    cohortDiscovery={cohortDiscovery}
-                />
-            );
-        }
-
-        return (
+    const renderResults = () =>
+        resultsView === ViewType.TABLE ? (
+            <ResultsTable
+                results={data?.list as SearchResultDataset[]}
+                showLibraryModal={showLibraryModal}
+                cohortDiscovery={cohortDiscovery}
+            />
+        ) : (
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
@@ -604,7 +607,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 {data?.list.map(result => renderResultCard(result))}
             </ResultsList>
         );
-    };
 
     const getSortOptions = () => {
         switch (queryParams.type) {
@@ -652,6 +654,26 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     showLibraryModal({ datasetId: data.datasetId });
                     break;
 
+                case PostLoginActions.OPEN_GENERAL_ENQUIRY:
+                    showSidebar({
+                        title: "Messages",
+                        content: (
+                            <GeneralEnquirySidebar datasets={[data.dataset]} />
+                        ),
+                    });
+                    break;
+
+                case PostLoginActions.OPEN_FEASIBILITY_ENQUIRY:
+                    showDialog(FeasibilityEnquiryDialog, {
+                        result: data.dataset,
+                        mutateLibraries,
+                    });
+                    break;
+                case PostLoginActions.START_DAR_REQUEST:
+                    showDARApplicationModal({
+                        ...data,
+                    });
+                    break;
                 default:
                     console.warn(`Unhandled post login action: ${action}`);
                     break;
@@ -753,6 +775,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);
 
+    const getXofX = () => {
+        // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
+        // to make it seem more consistent
+        return data && data.elastic_total > 100 && data.total <= 100 ? (
+            <ShowingXofX to={data?.to} from={data?.from} hideTotal />
+        ) : (
+            <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
+        );
+    };
     return (
         <Box
             display={{
@@ -904,13 +935,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 <Box
                     sx={{
                         gridColumn: { tablet: "span 5", laptop: "span 5" },
-                    }}>
+                    }}
+                    component="section">
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             m: 2,
-                        }}>
+                        }}
+                        aria-busy={isSearching}>
                         {!isSearching && !isEuropePmcSearchNoQuery && (
                             <Box
                                 sx={{
@@ -918,24 +951,19 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     justifyContent: "space-between",
                                     alignItems: "center",
                                 }}>
-                                <Box sx={{ display: "flex" }}>
-                                    <>
-                                        {data?.path?.includes(
-                                            queryParams.type
-                                        ) &&
-                                            !!data?.elastic_total && (
-                                                <ShowingXofX
-                                                    to={data?.to}
-                                                    from={data?.from}
-                                                    total={data?.total}
-                                                />
-                                            )}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
-                                        )}
-                                    </>
+                                <Box
+                                    sx={{ display: "flex" }}
+                                    id="result-summary"
+                                    role="alert"
+                                    aria-live="polite">
+                                    {data &&
+                                        data.path?.includes(queryParams.type) &&
+                                        getXofX()}
+                                    {data && data.elastic_total > 100 && (
+                                        <ResultLimitText>
+                                            {t("resultLimit")}
+                                        </ResultLimitText>
+                                    )}
                                 </Box>
 
                                 {queryParams.type ===
@@ -948,7 +976,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             </Box>
                         )}
 
-                        {isSearching && <Loading />}
+                        {isSearching && (
+                            <Loading ariaLabel={t("loadingAriaLabel")} />
+                        )}
 
                         {!isSearching &&
                             !data?.list?.length &&
@@ -958,8 +988,12 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     SearchCategory.PUBLICATIONS
                                 )) &&
                             !isEuropePmcSearchNoQuery && (
-                                <Paper sx={{ textAlign: "center", p: 5 }}>
-                                    <Typography variant="h3">
+                                <Paper
+                                    sx={{ textAlign: "center", p: 5 }}
+                                    role="status"
+                                    aria-live="polite"
+                                    id="result-summary">
+                                    <Typography variant="h3" role="alert">
                                         {t("noResults")}
                                     </Typography>
                                 </Paper>
@@ -990,27 +1024,26 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         </>
                                     )}
 
-                                    {renderResults()}
-                                    <Pagination
-                                        isLoading={isSearching}
-                                        page={parseInt(queryParams.page, 10)}
-                                        count={data?.lastPage}
-                                        onChange={(
-                                            e: React.ChangeEvent<unknown>,
-                                            page: number
-                                        ) => {
-                                            setQueryParams({
-                                                ...queryParams,
-                                                page: page.toString(),
-                                            });
-                                            updatePath(
-                                                PAGE_FIELD,
-                                                page.toString()
-                                            );
-                                        }}
-                                    />
+                                    <div aria-describedby="result-summary">
+                                        {renderResults()}
+                                    </div>
                                 </>
                             )}
+                        <Pagination
+                            isLoading={isSearching}
+                            page={parseInt(queryParams.page, 10)}
+                            count={data?.lastPage}
+                            onChange={(
+                                e: React.ChangeEvent<unknown>,
+                                page: number
+                            ) => {
+                                setQueryParams({
+                                    ...queryParams,
+                                    page: page.toString(),
+                                });
+                                updatePath(PAGE_FIELD, page.toString());
+                            }}
+                        />
                     </Box>
                 </Box>
             </BoxContainer>

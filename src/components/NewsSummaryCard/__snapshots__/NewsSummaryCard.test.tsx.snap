@@ -2,7 +2,8 @@
 
 exports[`NewsSummaryCard should render component 1`] = `
 <div>
-  <div
+  <article
+    aria-describedby=":r0:"
     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-120eg3o-MuiPaper-root-MuiCard-root"
   >
     <img
@@ -12,6 +13,7 @@ exports[`NewsSummaryCard should render component 1`] = `
       src="/images/account/teams/integrations/create.jpg"
     />
     <div
+      aria-label="01 January 2023"
       class="mui-style-1sn3vv7"
     >
       <div>
@@ -26,6 +28,7 @@ exports[`NewsSummaryCard should render component 1`] = `
     >
       <div
         class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-1n7om1r-MuiTypography-root"
+        id=":r0:"
       >
         <p
           class="MuiTypography-root MuiTypography-body1 mui-style-yyl2fl-MuiTypography-root"
@@ -55,6 +58,6 @@ exports[`NewsSummaryCard should render component 1`] = `
         </a>
       </div>
     </div>
-  </div>
+  </article>
 </div>
 `;

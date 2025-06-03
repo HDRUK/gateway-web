@@ -70,11 +70,12 @@ const SearchBar = ({
                     <SearchInput
                         control={control}
                         name={queryName}
-                        placeholder={queryPlaceholder}
                         label=""
+                        placeholder={queryPlaceholder}
                         sx={{
                             borderBottom: "1px solid #3DB28C",
                         }}
+                        inputProps={{ "aria-label": "Search" }}
                     />
                 </InputWrapper>
                 <IconButton
