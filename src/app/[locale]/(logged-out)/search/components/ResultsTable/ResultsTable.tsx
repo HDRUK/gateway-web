@@ -121,8 +121,11 @@ const getColumns = ({
             );
         },
         header: () => (
-            <Tooltip title={translations.dataProviderTooltip} tabIndex={0}>
-                {translations.dataProviderLabel}
+            <Tooltip
+                describeChild
+                title={translations.dataProviderTooltip}
+                tabIndex={0}>
+                <span>{translations.dataProviderLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -139,8 +142,11 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <Tooltip title={translations.populationSizeTooltip} tabIndex={0}>
-                {translations.populationSizeLabel}
+            <Tooltip
+                describeChild
+                title={translations.populationSizeTooltip}
+                tabIndex={0}>
+                <span>{translations.populationSizeLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -155,9 +161,10 @@ const getColumns = ({
         ),
         header: () => (
             <Tooltip
+                describeChild
                 title={translations.dateRangePublisherTooltip}
                 tabIndex={0}>
-                {translations.dateRangePublisherLabel}
+                <span>{translations.dateRangePublisherLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -171,8 +178,11 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <Tooltip title={translations.accessServiceTooltip} tabIndex={0}>
-                {translations.accessServiceLabel}
+            <Tooltip
+                describeChild
+                title={translations.accessServiceTooltip}
+                tabIndex={0}>
+                <span>{translations.accessServiceLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -186,8 +196,11 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <Tooltip title={translations.dataStandardTooltip} tabIndex={0}>
-                {translations.dataStandardLabel}
+            <Tooltip
+                describeChild
+                title={translations.dataStandardTooltip}
+                tabIndex={0}>
+                <span>{translations.dataStandardLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -204,8 +217,11 @@ const getColumns = ({
             );
         },
         header: () => (
-            <Tooltip title={translations.cohortDiscoveryTooltip} tabIndex={0}>
-                {translations.cohortDiscoveryLabel}
+            <Tooltip
+                describeChild
+                title={translations.cohortDiscoveryTooltip}
+                tabIndex={0}>
+                <span>{translations.cohortDiscoveryLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -222,8 +238,11 @@ const getColumns = ({
             );
         },
         header: () => (
-            <Tooltip title={translations.containsTissueTooltip} tabIndex={0}>
-                {translations.containsTissueLabel}
+            <Tooltip
+                describeChild
+                title={translations.containsTissueTooltip}
+                tabIndex={0}>
+                <span>{translations.containsTissueLabel}</span>
             </Tooltip>
         ),
         size: 120,
@@ -241,9 +260,10 @@ const getColumns = ({
         },
         header: () => (
             <Tooltip
+                describeChild
                 title={translations.hasTechnicalMetadataTooltip}
                 tabIndex={0}>
-                {translations.hasTechnicalMetadataLabel}
+                <span>{translations.hasTechnicalMetadataLabel}</span>
             </Tooltip>
         ),
         size: 120,
