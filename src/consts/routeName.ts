@@ -14,7 +14,7 @@ export enum RouteName {
     DATA_ACCESS_REQUESTS = "data-access-requests",
     DAR_TEMPLATES = "templates",
     DATASET_ITEM = "dataset",
-    DATA_PROVIDERS = "data-providers",
+    DATA_PROVIDERS = "data-custodians",
     DATA_PROVIDERS_ITEM = "data-custodian",
     COLLECTIONS = "collections",
     COLLECTION_ITEM = "collection",

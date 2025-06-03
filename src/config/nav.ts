@@ -1,3 +1,4 @@
+import { SearchCategory } from "@/interfaces/Search";
 import { RouteName } from "@/consts/routeName";
 
 const navItems = [
@@ -18,27 +19,27 @@ const navItems = [
             },
             {
                 label: "Datasets & BioSamples",
-                href: "/search?type=datasets",
+                href: `/search?type=${SearchCategory.DATASETS}`,
             },
             {
                 label: "Data Uses / Research Projects",
-                href: "/search?type=dur",
+                href: `/search?type=${SearchCategory.DATA_USE}`,
             },
             {
                 label: "Analysis Scripts & Software",
-                href: "/search?type=tools",
+                href: `/search?type=${SearchCategory.TOOLS}`,
             },
             {
                 label: "Publications",
-                href: "/search?type=publications",
+                href: `/search?type=${SearchCategory.PUBLICATIONS}`,
             },
             {
                 label: "Data Custodians",
-                href: "/search?type=data_providers",
+                href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
             },
             {
                 label: "Collections / Networks",
-                href: "/search?type=collections",
+                href: `/search?type=${SearchCategory.COLLECTIONS}`,
             },
         ],
     },

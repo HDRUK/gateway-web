@@ -180,11 +180,12 @@ export interface SearchForm {
 
 export enum SearchCategory {
     COLLECTIONS = "collections",
-    DATA_PROVIDERS = "data_providers",
+    DATA_PROVIDERS = "data_custodians",
     DATASETS = "datasets",
     DATA_USE = "dur",
     TOOLS = "tools",
     PUBLICATIONS = "publications",
+    DATA_PROVIDERS_LEGACY = "data_providers",
 }
 
 export interface SavedSearchPayload {
