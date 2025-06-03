@@ -1439,6 +1439,7 @@
             "tooltip-2": "Neutral",
             "tooltip-3": "Satisfied",
             "tooltip-4": "Very Satisfied",
+            "label": "What is the reason for your rating?",
             "submit": "Submit",
             "success": "Thank you for your feedback"
         },

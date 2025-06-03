@@ -82,7 +82,7 @@ export default function CustomerSurvey({
     const [sessionId, setSessionId] = useState<string | null>(null);
     const id = useId();
     const reason = {
-        label: "What is the reason for your rating?",
+        label: t('label'),
         name: "reason",
         component: inputComponents.TextArea,
         limit: 500,
