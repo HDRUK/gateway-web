@@ -76,12 +76,13 @@ export default function CustomerSurvey({
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
     const [animateOut, setAnimateOut] = useState(false);
-    const [step, setStep] = useState<"rating" | "reason">("rating");
+    const [step, setStep] = useState<"rating" | "reason" | "complete">(
+        "rating"
+    );
     const [sessionId, setSessionId] = useState<string | null>(null);
     const id = useId();
     const reason = {
-        label: "Feedback",
-        info: "What is the reason for your rating?",
+        label: "What is the reason for your rating?",
         name: "reason",
         component: inputComponents.TextArea,
         limit: 500,
@@ -93,13 +94,7 @@ export default function CustomerSurvey({
         successNotificationsOn: false,
     });
 
-    const {
-        control,
-        handleSubmit,
-        watch,
-        setValue,
-        formState: { errors },
-    } = useForm({
+    const { control, handleSubmit, watch, setValue } = useForm({
         mode: "onTouched",
         resolver: yupResolver(surveySchema),
         defaultValues: {
@@ -150,36 +145,26 @@ export default function CustomerSurvey({
         if (!sessionId) return;
         try {
             await patch(`${sessionId}`, { reason, score });
-            Cookies.remove(cookieName);
-            dismissSurvey();
+            setStep("complete");
+            setTimeout(dismissSurvey, 2000);
         } catch (error) {
             console.error("Failed to submit reason", error);
         }
     };
 
     const handleClose = () => {
-        Cookies.remove(cookieName);
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
             setSubmitted(false);
         }, 500);
     };
-
     const checkToShowSurvey = useCallback(() => {
-        const cookie = Cookies.get(cookieName);
-        if (cookie) {
-            const { id, score } = JSON.parse(cookie);
-            setSessionId(id);
-            setValue("score", score);
-            setStep("reason");
-            setAnimateOut(false);
-            setHideComponent(false);
-        } else {
+        if (!Cookies.get(cookieName)) {
             setAnimateOut(false);
             setHideComponent(false);
         }
-    }, [setValue]);
+    }, []);
 
     useEffect(() => {
         setHideComponent(hideOnLoad);
@@ -218,38 +203,40 @@ export default function CustomerSurvey({
                 {t("title")}
             </Typography>
 
-            <Grid container spacing={1} justifyContent="center">
-                {ratings.map(({ icon: Icon, rating, colour }, index) => (
-                    <Grid item key={rating}>
-                        <Tooltip title={t(`tooltip-${index}`)}>
-                            <div>
-                                <IconButton
-                                    onClick={() => handleClick(rating)}
-                                    id={`feedback-${rating}`}
-                                    sx={{
-                                        border:
-                                            selectedScore === rating
-                                                ? `2px solid ${colour}`
-                                                : "",
-                                    }}>
-                                    <Icon
-                                        aria-label={`Rating ${rating}`}
+            {step === "rating" && (
+                <Grid container spacing={1} justifyContent="center">
+                    {ratings.map(({ icon: Icon, rating, colour }, index) => (
+                        <Grid item key={rating}>
+                            <Tooltip title={t(`tooltip-${index}`)}>
+                                <div>
+                                    <IconButton
+                                        onClick={() => handleClick(rating)}
+                                        id={`feedback-${rating}`}
                                         sx={{
-                                            cursor: "pointer",
-                                            color: colour,
-                                            minWidth: "70px",
-                                            minHeight: "70px",
-                                            margin: 1,
-                                            fontSize: 1,
-                                            fontWeight: "bold",
-                                        }}
-                                    />
-                                </IconButton>
-                            </div>
-                        </Tooltip>
-                    </Grid>
-                ))}
-            </Grid>
+                                            border:
+                                                selectedScore === rating
+                                                    ? `2px solid ${colour}`
+                                                    : "",
+                                        }}>
+                                        <Icon
+                                            aria-label={`Rating ${rating}`}
+                                            sx={{
+                                                cursor: "pointer",
+                                                color: colour,
+                                                minWidth: "70px",
+                                                minHeight: "70px",
+                                                margin: 1,
+                                                fontSize: 1,
+                                                fontWeight: "bold",
+                                            }}
+                                        />
+                                    </IconButton>
+                                </div>
+                            </Tooltip>
+                        </Grid>
+                    ))}
+                </Grid>
+            )}
 
             {step === "reason" && (
                 <Box mt={2} component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -260,9 +247,13 @@ export default function CustomerSurvey({
                         sx={{ mt: 2 }}
                         type="submit"
                         disabled={!watch("reason")?.trim()}>
-                        {t("submit")}
+                        Submit
                     </Button>
                 </Box>
+            )}
+
+            {step === "complete" && (
+                <Typography>Thank you for your feedback</Typography>
             )}
         </Box>
     );
