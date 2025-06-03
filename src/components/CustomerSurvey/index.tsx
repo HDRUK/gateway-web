@@ -48,7 +48,7 @@ const ratings: Ratings[] = [
     { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
 
-const displayIn = 150000;
+const displayIn = 100;
 const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
@@ -172,7 +172,10 @@ export default function CustomerSurvey({
     }, [pathname, hideOnLoad]);
 
     useEffect(() => {
-        if (!hideComponent) return;
+        if (!hideComponent)
+            return () => {
+                /** No cleanup needed when hidden */
+            };
         const timeoutId = setTimeout(checkToShowSurvey, displayIn);
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
@@ -247,14 +250,12 @@ export default function CustomerSurvey({
                         sx={{ mt: 2 }}
                         type="submit"
                         disabled={!watch("reason")?.trim()}>
-                        Submit
+                        {t("submit")}
                     </Button>
                 </Box>
             )}
 
-            {step === "complete" && (
-                <Typography>Thank you for your feedback</Typography>
-            )}
+            {step === "complete" && <Typography>{t("success")}</Typography>}
         </Box>
     );
 }
