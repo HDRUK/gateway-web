@@ -14,15 +14,14 @@ import MenuDropdown from "@/components/MenuDropdown";
 import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
+import { useIsHomePage } from "@/hooks/useIsHomePage";
 import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
+import { colors } from "@/config/theme";
 import { MenuIcon } from "@/consts/icons";
 
-interface HeaderProps {
-    isHome?: boolean;
-}
-
-function Header({ isHome = false }: HeaderProps) {
+function Header() {
+    const isHome = useIsHomePage();
     const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
     const HOTJAR_VERSION = 6;
     const isTablet = useMediaQuery("(min-width:640px)");
@@ -45,6 +44,8 @@ function Header({ isHome = false }: HeaderProps) {
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>
             <Container maxWidth="desktop">
                 <Toolbar
+                    component="nav"
+                    aria-label="HDR UK Gateway"
                     disableGutters
                     sx={{
                         pt: 1,
@@ -58,13 +59,18 @@ function Header({ isHome = false }: HeaderProps) {
                         sx={{
                             display: { mobile: "none", desktop: "flex" },
                             mr: 1,
+                            "&:focus&.Mui-focusVisible": {
+                                borderRadius: 0,
+                                outline: `2px solid ${colors.white}`,
+                                outlineOffset: "3px",
+                            },
                         }}>
                         <Image
                             src={StaticImages.BASE.logo}
                             priority
                             width={110}
                             height={50}
-                            alt="HDR Gateway logo"
+                            alt="HDR UK Gateway"
                         />
                     </Link>
                     <Box
@@ -77,7 +83,14 @@ function Header({ isHome = false }: HeaderProps) {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit">
+                            color="inherit"
+                            sx={{
+                                "&:focus&.Mui-focusVisible": {
+                                    borderRadius: 0,
+                                    outline: `2px solid ${colors.white}`,
+                                    outlineOffset: "3px",
+                                },
+                            }}>
                             <MenuIcon htmlColor="white" />
                         </IconButton>
 
@@ -101,6 +114,11 @@ function Header({ isHome = false }: HeaderProps) {
                             position: { mobile: "relative" },
                             left: { mobile: "-24px", tablet: 0 },
                             display: { tablet: "flex", desktop: "none" },
+                            "&:focus&.Mui-focusVisible": {
+                                borderRadius: 0,
+                                outline: `2px solid ${colors.white}`,
+                                outlineOffset: "3px",
+                            },
                         }}>
                         <Image
                             src={StaticImages.BASE.logo}

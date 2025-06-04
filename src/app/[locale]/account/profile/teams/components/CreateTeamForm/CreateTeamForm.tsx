@@ -5,9 +5,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+import { Alias } from "@/interfaces/Alias";
 import { Option } from "@/interfaces/Option";
 import { Team, TeamEditForm, TeamCreateForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
+import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -22,6 +24,7 @@ import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import {
     questionBankField,
@@ -85,6 +88,17 @@ const CreateTeamForm = () => {
             shouldFetch: !!searchNameDebounced,
         }
     );
+
+    const {
+        data: aliasesData = [],
+        isLoading: isLoadingAliases,
+        mutate: mutateAliases,
+    } = useGet<Alias[]>(`${apis.aliasesV1Url}?perPage=-1`);
+
+    const addAlias = usePost<Alias>(apis.aliasesV1Url, {
+        successNotificationsOn: false,
+        errorNotificationsOn: false,
+    });
 
     const methods = useForm<TeamEditForm | TeamCreateForm>({
         mode: "onTouched",
@@ -161,6 +175,7 @@ const CreateTeamForm = () => {
             dar_modal_content,
             url,
             service,
+            aliases,
         } = existingTeamData;
 
         const teamData = {
@@ -173,6 +188,7 @@ const CreateTeamForm = () => {
             dar_modal_content,
             url,
             service,
+            aliases: aliases?.map(alias => alias.id),
         };
 
         if (team_logo) {
@@ -191,7 +207,36 @@ const CreateTeamForm = () => {
         successNotificationsOn: !file,
     });
 
-    const editTeam = usePatch<Partial<TeamEditForm>>(apis.teamsV1Url);
+    const editTeam = usePatch<Partial<TeamEditForm>>(apis.teamsV1Url, {
+        itemName: "Team",
+    });
+
+    const saveAliases = async (formData: TeamCreateForm | TeamEditForm) => {
+        const newAliasNames = formData.aliases.filter(
+            alias => typeof alias === "string"
+        ) as string[];
+
+        // Create new aliases (POST requests)
+        const result = await Promise.all(
+            newAliasNames.map(name => addAlias({ name }))
+        );
+
+        // Throw on failure to save alias
+        if (!result || (Array.isArray(result) && result[0] === null)) {
+            throw new Error(`Failed to create Aliases`);
+        }
+
+        // Refetch alias list
+        const updatedAliases = await mutateAliases();
+
+        // Rebuild formData.aliases as full alias objects
+        return formData.aliases.map(alias => {
+            if (typeof alias === "string") {
+                return updatedAliases?.find(a => a.name === alias)?.id ?? alias;
+            }
+            return alias;
+        });
+    };
 
     const submitForm = async (formData: TeamCreateForm | TeamEditForm) => {
         if (isSaving) {
@@ -200,25 +245,46 @@ const CreateTeamForm = () => {
 
         setIsSaving(true);
 
-        const isCreatingTeam = !params?.teamId;
+        try {
+            const updatedAliases = await saveAliases(formData);
 
-        if (isCreatingTeam) {
-            const result = await createTeam({
-                ...teamCreateDefaultValues,
+            const formattedFormData = {
                 ...formData,
-            });
+                aliases: updatedAliases,
+            };
 
-            if (typeof result === "number" && file) {
-                setCreatedTeamId(result as string);
+            const isCreatingTeam = !params?.teamId;
+            let result;
+
+            if (isCreatingTeam) {
+                result = await createTeam({
+                    ...teamCreateDefaultValues,
+                    ...formattedFormData,
+                });
+
+                if (result) {
+                    if (typeof result === "number" && file) {
+                        setCreatedTeamId(result as string);
+                        setFileToBeUploaded(true);
+                    } else {
+                        push(Routes.ACCOUNT_TEAMS);
+                    }
+                } else {
+                    setIsSaving(false);
+                }
+            } else if (file) {
                 setFileToBeUploaded(true);
             } else {
-                push(Routes.ACCOUNT_TEAMS);
+                result = await editTeam(params.teamId, formattedFormData);
+                if (result) {
+                    push(Routes.ACCOUNT_TEAMS);
+                } else {
+                    setIsSaving(false);
+                }
             }
-        } else if (file) {
-            setFileToBeUploaded(true);
-        } else {
-            await editTeam(params.teamId, formData);
-            push(Routes.ACCOUNT_TEAMS);
+        } catch (error) {
+            notificationService.apiError("Failed to save team");
+            setIsSaving(false);
         }
     };
 
@@ -244,6 +310,24 @@ const CreateTeamForm = () => {
         setSearchName(value);
     };
 
+    const aliasOptions = useMemo(() => {
+        if (!aliasesData) return [];
+
+        return aliasesData.map(data => {
+            return {
+                label: data.name,
+                value: data.id,
+            };
+        }) as OptionsType[];
+    }, [aliasesData]);
+
+    const getOptions = (field: string) => {
+        if (field === "aliases") {
+            return aliasOptions;
+        }
+        return userOptions;
+    };
+
     const hydratedFormFields = useMemo(
         () =>
             teamFormFields.map(field => {
@@ -255,9 +339,18 @@ const CreateTeamForm = () => {
                         options: userOptions,
                     };
                 }
+                if (field.name === "aliases") {
+                    return {
+                        ...field,
+                        options: getOptions("aliases"),
+                        isLoadingOptions: isLoadingAliases,
+                        chipColor: "alias",
+                    };
+                }
+
                 return field;
             }),
-        [userOptions, isLoadingUsers]
+        [isLoadingUsers, userOptions, getOptions, isLoadingAliases]
     );
 
     if (isLoading) {
@@ -290,19 +383,11 @@ const CreateTeamForm = () => {
                             <InputWrapper
                                 control={control}
                                 {...questionBankField}
-                                checkedLabel={
-                                    <>
-                                        {t(
-                                            `${TRANSLATION_PATH_COMMON}.questionBank`
-                                        )}
-                                        <Typography
-                                            component="span"
-                                            sx={{ fontWeight: "bold" }}>
-                                            {" "}
-                                            {questionBankLabel.toLowerCase()}
-                                        </Typography>
-                                    </>
-                                }
+                                label={t(
+                                    `${TRANSLATION_PATH_COMMON}.questionBank`
+                                )}
+                                extraInfo={questionBankLabel}
+                                formControlSx={{ mb: 0 }}
                             />
                         </Box>
                     </Box>

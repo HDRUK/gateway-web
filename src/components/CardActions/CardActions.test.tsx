@@ -1,4 +1,3 @@
-import React from "react";
 import CardActions from "@/components/CardActions";
 import { ArchiveIcon, EditIcon } from "@/consts/icons";
 import { render, screen } from "@/utils/testUtils";
@@ -22,7 +21,7 @@ describe("CardActions", () => {
     it("should render href action", async () => {
         const { container } = render(<CardActions id={1} actions={actions} />);
 
-        const buttons = screen.getAllByRole("button");
+        const buttons = screen.getAllByRole("link");
         expect(buttons[0]).toHaveAttribute("aria-label", "First item");
 
         const linkElement = container.querySelector("a");
@@ -34,7 +33,7 @@ describe("CardActions", () => {
         render(<CardActions id={1} actions={actions} />);
 
         const buttons = screen.getAllByRole("button");
-        expect(buttons[1]).toHaveAttribute("aria-label", "Second item");
+        expect(buttons[0]).toHaveAttribute("aria-label", "Second item");
 
         expect(screen.getByTestId("ArchiveIcon"));
     });
@@ -42,7 +41,7 @@ describe("CardActions", () => {
         render(<CardActions id={1} actions={actions} />);
 
         const buttons = screen.getAllByRole("button");
-        buttons[1].click();
+        buttons[0].click();
 
         expect(mockAction).toHaveBeenCalledWith(1);
     });

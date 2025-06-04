@@ -28,7 +28,7 @@ import {
     observationTableColumns,
 } from "../../config";
 import {
-    DatasetFieldItem,
+    DatasetButtonItem,
     DatasetFieldWrapper,
     ListContainer,
     ObservationTableWrapper,
@@ -96,25 +96,24 @@ const DatasetContent = ({
                     <Typography>{formatDate(value, DATE_FORMAT)}</Typography>
                 );
             }
-            case FieldType.TAG: {
-                const tagList = splitStringList(value);
+            case FieldType.TAG_LIST: {
+                const tagList = value;
 
                 return (
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
-                            <DatasetFieldItem
+                            <DatasetButtonItem
                                 color="success"
                                 size="small"
-                                label={tag}
                                 onClick={() =>
                                     router.push(
                                         `/${RouteName.SEARCH}?type=${
                                             SearchCategory.DATASETS
                                         }&query=${encodeURIComponent(tag)}`
                                     )
-                                }
-                                key={tag}
-                            />
+                                }>
+                                {tag}
+                            </DatasetButtonItem>
                         ))}
                     </DatasetFieldWrapper>
                 );
@@ -175,7 +174,10 @@ const DatasetContent = ({
                                 pl: 0,
                                 pr: 0,
                             }}>
-                            <Typography variant="h2">
+                            <Typography
+                                variant="h2"
+                                aria-live="polite"
+                                tabIndex={-1}>
                                 {section.sectionName}
                             </Typography>
 

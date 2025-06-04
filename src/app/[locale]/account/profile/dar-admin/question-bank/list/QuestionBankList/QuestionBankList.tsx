@@ -8,7 +8,6 @@ import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
-import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
@@ -148,10 +147,10 @@ const QuestionBankList = () => {
                     <Box sx={{ paddingBottom: 2 }}>
                         <Typography variant="h2">{t("title")}</Typography>
                         <Typography>{t("text")}</Typography>
-                        <Link
+                        <Button
                             href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.CREATE}`}>
-                            <Button> {t("create.label")} </Button>
-                        </Link>
+                            {t("create.label")}
+                        </Button>
                     </Box>
                 </BoxContainer>
             </Paper>

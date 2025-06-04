@@ -10,6 +10,7 @@ import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { RouteName } from "@/consts/routeName";
 
 interface accessRequestType {
     redirect_url: string;
@@ -19,6 +20,8 @@ interface CohortDiscoveryButtonProps {
     ctaLink: CtaLink;
     showDatasetExplanatoryTooltip: boolean | null;
     color?: string | null;
+    tooltipOverride?: string | null;
+    disabledOuter?: boolean;
 }
 
 export const DATA_TEST_ID = "cohort-discovery-button";
@@ -29,6 +32,8 @@ const CohortDiscoveryButton = ({
     ctaLink,
     showDatasetExplanatoryTooltip = false,
     color = undefined,
+    tooltipOverride = "",
+    disabledOuter = false,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
     const { showDialog } = useDialog();
@@ -51,17 +56,28 @@ const CohortDiscoveryButton = ({
         }
     );
 
+    const openAthensInvalid =
+        isLoggedIn &&
+        user?.provider === "open-athens" &&
+        !user?.secondary_email;
+
     useEffect(() => {
         if (isClicked) {
             if (accessData?.redirect_url) {
                 push(accessData?.redirect_url);
             } else if (isLoggedIn) {
-                push(ctaLink.url);
+                // check that if the user is using OpenAthens, that they have provided a secondary email,
+                // and send them to set it if not
+                if (openAthensInvalid) {
+                    push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
+                } else {
+                    push(ctaLink.url);
+                }
             } else {
                 showDialog(ProvidersDialog, { isProvidersDialog: true });
             }
         }
-    }, [accessData, isClicked, isLoggedIn]);
+    }, [userData, accessData, isClicked, isLoggedIn]);
 
     const isDisabled =
         isLoggedIn && userData
@@ -76,18 +92,21 @@ const CohortDiscoveryButton = ({
     return (
         <Tooltip
             title={
-                isDisabled
+                tooltipOverride ||
+                (isDisabled
                     ? t(`notApproved`)
+                    : openAthensInvalid
+                    ? t("setSecondaryEmail")
                     : showDatasetExplanatoryTooltip && isApproved
                     ? t("explanatoryTooltip")
-                    : ""
+                    : "")
             }>
             <span>
                 <Button
                     onClick={() => setIsClicked(true)}
                     data-testid={DATA_TEST_ID}
                     color={color}
-                    disabled={isDisabled}
+                    disabled={disabledOuter || isDisabled}
                     {...restProps}>
                     {ctaLink?.title}
                 </Button>

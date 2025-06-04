@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useDialog from "@/hooks/useDialog";
+import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { DarApplicationStatus } from "@/consts/dataAccess";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { formatDate, getToday } from "@/utils/date";
 import useAuth from "../useAuth";
@@ -39,6 +41,7 @@ const useDataAccessRequest = () => {
     const { isLoggedIn } = useAuth();
     const { showDialog } = useDialog();
     const t = useTranslations(TRANSLATION_PATH);
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
 
     const createNewDARApplication = usePost(apis.dataAccessApplicationV1Url, {
         successNotificationsOn: false,
@@ -95,6 +98,17 @@ const useDataAccessRequest = () => {
             redirectPath,
         }: ShowDARApplicationModalProps) => {
             if (!isLoggedIn) {
+                setPostLoginActionCookie(PostLoginActions.START_DAR_REQUEST, {
+                    onGeneralEnquiryClick,
+                    onFeasibilityEnquiryClick,
+                    isDarEnabled,
+                    modalHeader,
+                    modalContent,
+                    url,
+                    datasetIds,
+                    teamIds,
+                    redirectPath,
+                });
                 return showDialog(ProvidersDialog, {
                     isProvidersDialog: true,
                     redirectPath,

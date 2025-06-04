@@ -13,6 +13,7 @@ const apiV2IPUrl =
 const apis = {
     apiV1Url,
     apiV1IPUrl,
+    enabledFeatures: `${apiV1IPUrl}/feature-flags/enabled`,
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",
@@ -78,6 +79,7 @@ const apis = {
     programmingLanguagesV1Url: `${apiV1Url}/programming_languages`,
     enquiryThreadsV1Url: `${apiV1Url}/enquiry_threads`,
     doiSearchV1Url: `${apiV1Url}/search/doi`,
+    aliasesV1Url: `${apiV1Url}/aliases`,
 };
 
 export default apis;

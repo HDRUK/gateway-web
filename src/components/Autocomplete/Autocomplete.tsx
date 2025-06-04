@@ -6,6 +6,7 @@ import {
     InputAdornment,
     ListItemText,
     Chip,
+    ChipPropsColorOverrides,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -48,6 +49,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     isLoadingOptions?: boolean;
     noOptionsText?: string;
     clearIcon?: boolean;
+    chipColor?: keyof ChipPropsColorOverrides;
 }
 
 interface SearchOptions {
@@ -77,6 +79,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         noOptionsText = "No options",
         id,
         clearIcon = false,
+        chipColor,
         ...restProps
     } = props;
 
@@ -150,6 +153,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             <Chip
                                 label={chipLabel || ""}
                                 size="small"
+                                {...(chipColor ? { color: chipColor } : {})}
                                 {...getTagProps({ index })}
                             />
                         );

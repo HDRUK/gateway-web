@@ -1,10 +1,10 @@
 "use client";
 
+import { Card } from "@mui/material";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Application } from "@/interfaces/Application";
 import Box from "@/components/Box";
-import Card from "@/components/Card";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";

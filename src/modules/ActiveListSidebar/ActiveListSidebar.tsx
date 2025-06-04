@@ -41,9 +41,11 @@ const ActiveListSidebar = ({
     }, [searchParams]);
 
     const handleScroll = useCallback((id: number) => {
-        const section = document.querySelector(`#anchor${id}`);
+        const section = document.querySelector<HTMLElement>(`#anchor${id}`);
+        const heading = section?.querySelector<HTMLElement>("h2");
         if (section) {
             section.scrollIntoView({ behavior: "smooth", block: "start" });
+            heading?.focus({ preventScroll: true });
             setActiveItem(id);
             if (!isDatasetPage) {
                 setTimeout(() => {

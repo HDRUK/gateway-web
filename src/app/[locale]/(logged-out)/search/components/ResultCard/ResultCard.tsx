@@ -14,18 +14,20 @@ import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
-import DarEnquiryDialog from "@/modules/DarEnquiryDialog";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
+import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
+import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import CohortDiscoveryButton from "../../../about/cohort-discovery/components/CohortDiscoveryButton";
@@ -60,6 +62,7 @@ const ResultCard = ({
     const { _id: datasetId, metadata, team } = result;
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
+    const { showDARApplicationModal } = useDataAccessRequest();
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -127,13 +130,16 @@ const ResultCard = ({
         event.stopPropagation();
         setAnchorElement(null);
 
-        showDialog(DarEnquiryDialog, {
-            isDarEnabled: team.is_question_bank,
-            modalHeader: team.dar_modal_header,
-            modalContent: team.dar_modal_content,
+        showDARApplicationModal({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
+            isDarEnabled: team.is_question_bank,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
+            modalHeader: team.dar_modal_header,
+            modalContent: team.dar_modal_content,
+            datasetIds: [+datasetId],
+            teamIds: [team.id],
+            redirectPath: pathname,
         });
     };
 
@@ -180,6 +186,8 @@ const ResultCard = ({
             : []),
     ];
 
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
+
     const handleToggleLibraryItem = async (
         event: React.MouseEvent<HTMLElement>
     ) => {
@@ -215,6 +223,10 @@ const ResultCard = ({
                 }
             }
         } else {
+            setPostLoginActionCookie(PostLoginActions.ADD_LIBRARY, {
+                datasetId: Number(datasetId),
+            });
+
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,
                 redirectPath,

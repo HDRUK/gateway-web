@@ -78,14 +78,11 @@ exports[`CMSPromoTemplate should render content 1`] = `
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-10x3ova-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation mui-style-648l9b-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
           Button title
-          <span
-            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </a>
     </div>
@@ -125,19 +122,17 @@ exports[`CMSPromoTemplate should render content 1`] = `
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-10x3ova-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation mui-style-648l9b-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
           Button title
-          <span
-            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </a>
     </div>
     <div
       class="MuiBox-root mui-style-gfthyi"
+      id="bottomPanel"
     >
       <div
         class="MuiBox-root mui-style-1t3222e"
@@ -164,14 +159,11 @@ exports[`CMSPromoTemplate should render content 1`] = `
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium mui-style-10x3ova-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation mui-style-648l9b-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
           Button title
-          <span
-            class="MuiTouchRipple-root mui-style-8je8zh-MuiTouchRipple-root"
-          />
         </button>
       </a>
     </div>

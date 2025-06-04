@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library, SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Loading from "@/components/Loading";
@@ -20,7 +21,11 @@ export const metadata = metaData(
     noFollowRobots
 );
 
-const UserLibrary = () => {
+interface UserLibraryProps {
+    cohortDiscovery: PageTemplatePromo;
+}
+
+const UserLibrary = ({ cohortDiscovery }: UserLibraryProps) => {
     const { data, isLoading, mutate } = useGet<Library[]>(apis.librariesV1Url);
     const [selected, setSelected] = useState<SelectedLibrary>({});
 
@@ -64,6 +69,7 @@ const UserLibrary = () => {
                     <RightPanel
                         selected={selected}
                         handleRemove={handleRemove}
+                        cohortDiscovery={cohortDiscovery}
                     />
                 </Box>
             </Box>
