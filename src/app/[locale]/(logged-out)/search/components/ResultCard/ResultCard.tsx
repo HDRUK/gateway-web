@@ -245,7 +245,7 @@ const ResultCard = ({
     const dataCustodianId = metadata.summary.publisher.gatewayId;
     // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
     const isNumber = !Number.isNaN(dataCustodianId);
-    const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
+    const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
 
     return (
         <>
