@@ -881,9 +881,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         marginBottom: 1,
                     }}
                     rootBoxSx={{ padding: 0 }}
-                    variant={TabVariant.LARGE}
+                    variant={TabVariant.STANDARD}
                     paramName={TYPE_FIELD}
                     persistParams={false}
+                    tabVariant="scrollable"
                     handleChange={(_, value) =>
                         resetQueryParamState(value as SearchCategory)
                     }
