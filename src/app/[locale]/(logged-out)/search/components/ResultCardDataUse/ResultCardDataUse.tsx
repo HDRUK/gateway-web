@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
-import TooltipIcon from "@/components/TooltipIcon";
+import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import DataUseDetailsDialog from "@/modules/DataUseDetailsDialog";
 import useDialog from "@/hooks/useDialog";
@@ -102,7 +102,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                         <>
                             <ResultRow>
                                 <ResultRowCategory>
-                                    <TooltipIcon
+                                    <TooltipText
                                         content={t(
                                             `leadOrganisation${TOOLTIP_SUFFIX}`
                                         )}
@@ -125,7 +125,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
                             <ResultRow>
                                 <ResultRowCategory>
-                                    <TooltipIcon
+                                    <TooltipText
                                         content={t(`datasets${TOOLTIP_SUFFIX}`)}
                                         label={t("datasets")}
                                     />
@@ -183,7 +183,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
                             <ResultRow>
                                 <ResultRowCategory>
-                                    <TooltipIcon
+                                    <TooltipText
                                         content={t(
                                             `dataCustodian${TOOLTIP_SUFFIX}`
                                         )}
