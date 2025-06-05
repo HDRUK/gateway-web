@@ -1,3 +1,51 @@
+## [2.10.0](https://github.com/HDRUK/gateway-web/compare/v2.9.0...v2.10.0) (2025-06-04)
+
+### ✨ Features
+
+* **GAT-4346:** Dataset metadata keywords render as actionable buttons (#1139) ([a2c1693](https://github.com/HDRUK/gateway-web/commit/a2c1693f3df1b27b6658f5b77ed563f32411f8d2)), closes [GAT-4346](GAT-4346)
+* **GAT-5791:** Add Access Cohort Discovery to Library (#1136) ([ce9a92c](https://github.com/HDRUK/gateway-web/commit/ce9a92c76dd498b81e2cc0ffbb0ffad5a45f3cb8)), closes [GAT-5791](GAT-5791)
+* **GAT-6490:** Retain search keywords, filters and action for re-loading after sign-in (#1159) ([8ad326c](https://github.com/HDRUK/gateway-web/commit/8ad326c2cd53681cf5d3303ae7829b468049dd98)), closes [GAT-6490](GAT-6490)
+* **GAT-6767:** No nav element (#1148) ([987006d](https://github.com/HDRUK/gateway-web/commit/987006da0d24c96060b52ac95ac0fdbafea7ab9d)), closes [GAT-6767](GAT-6767)
+* **GAT-6768:** Dates read out as 3 words on SR (#1152) ([06cd231](https://github.com/HDRUK/gateway-web/commit/06cd2311f31f47bd60ecf6efb76d33de806025f7)), closes [GAT-6768](GAT-6768)
+* **GAT-6769:** Accessible customer survey (#1160) ([7c82c8e](https://github.com/HDRUK/gateway-web/commit/7c82c8e773474aa4eae7ca835d91cc6819bf3b46)), closes [GAT-6769](GAT-6769)
+* **GAT-6774:** label for switches in filter (#1153) ([f02cc34](https://github.com/HDRUK/gateway-web/commit/f02cc3474360c53069d3e5e95abead3b42fcb51c)), closes [GAT-6774](GAT-6774)
+* **GAT-6775:** sort labels (#1154) ([dbb7b98](https://github.com/HDRUK/gateway-web/commit/dbb7b9838d3213dbc6d469d6c330c87b561d77e3)), closes [GAT-6775](GAT-6775)
+* **GAT-6780:** Add a focus state to search tab (#1150) ([19fca8e](https://github.com/HDRUK/gateway-web/commit/19fca8e055a6f140eebbb2fa9cb46c6980bd44d4)), closes [GAT-6780](GAT-6780)
+* **GAT-6786:** pagination search shifts focus (#1163) ([c8c1f9c](https://github.com/HDRUK/gateway-web/commit/c8c1f9c986a2db2c8692a54cbfac402a65a1cbd9)), closes [GAT-6786](GAT-6786)
+* **GAT-6804:** Lightbox for CMS scripts (#1144) ([df18cf7](https://github.com/HDRUK/gateway-web/commit/df18cf7f299cdc960078425dfe3fc53f8cdf14b1)), closes [GAT-6804](GAT-6804)
+* **GAT-6818:** made stat cards great again (#1141) ([a0a0cce](https://github.com/HDRUK/gateway-web/commit/a0a0cce92433f5ffa57e67f8dec53a1ca2fd0ae3)), closes [GAT-6818](GAT-6818)
+* **GAT-6818:** made stat cards great again round 2 (#1143) ([d1631f8](https://github.com/HDRUK/gateway-web/commit/d1631f85bdd4cda0a520e7b04c358e9491d00268)), closes [GAT-6818](GAT-6818)
+* **GAT-6820:** shift focus to scrollable content (#1164) ([cb896be](https://github.com/HDRUK/gateway-web/commit/cb896bef9475b37ccfc337253fd1ba9d60266836)), closes [GAT-6820](GAT-6820)
+* **GAT-6825:** Improvements to buttons (#1156) ([bd8bea0](https://github.com/HDRUK/gateway-web/commit/bd8bea083763d4d82ed331a32a1cb95d918fc0f8)), closes [GAT-6825](GAT-6825)
+* **GAT-6827:** double tab on left nav (#1166) ([dbcb0c9](https://github.com/HDRUK/gateway-web/commit/dbcb0c9489087a212b36f0a1b6a47eb947d73ef8)), closes [GAT-6827](GAT-6827)
+* **GAT-6828:** Fix aria labels (#1157) ([2958164](https://github.com/HDRUK/gateway-web/commit/29581641d8b8f2fac48cb149b05f0268f470f026))
+* **GAT-6829:** Fix checkbox focus state (#1158) ([804e368](https://github.com/HDRUK/gateway-web/commit/804e36829209b8e7e384bc409e9c5e05bfe9d05c))
+* **GAT-6830:**  aria tags for collapse left nav (#1162) ([ae7ad1d](https://github.com/HDRUK/gateway-web/commit/ae7ad1debfa8df25accb0b7eb5d5e05138f4dfd1)), closes [GAT-6830](GAT-6830)
+* **GAT-6831:** Combine switch and switch inline components (#1169) ([1951707](https://github.com/HDRUK/gateway-web/commit/1951707e9c475465e3040dd1a1a3b9d926ecd04a)), closes [GAT-6831](GAT-6831)
+* **GAT-6831:** Combine switch and switch inline components pt 2 (#1170) ([645157e](https://github.com/HDRUK/gateway-web/commit/645157e268af88811d709ffc67710a6790431761)), closes [GAT-6831](GAT-6831)
+* **GAT-6831:** Tweaks to remove switch references (#1173) ([2b1105c](https://github.com/HDRUK/gateway-web/commit/2b1105c079eee10e93e145e0306b44e395aa850b)), closes [GAT-6831](GAT-6831)
+* **GAT-6840:** Switch support page to use links (#1165) ([3a347d1](https://github.com/HDRUK/gateway-web/commit/3a347d1ea3ca603ecb1817084687fb3cdb853969)), closes [GAT-6840](GAT-6840)
+* **GAT-6843:** focus styles for tabs (#1168) ([2289e90](https://github.com/HDRUK/gateway-web/commit/2289e9097c5c989d5c1e536b1c14128992c4c2b4)), closes [GAT-6843](GAT-6843)
+* **GAT-6843:** focus styles for tabs (#1172) ([c2df77e](https://github.com/HDRUK/gateway-web/commit/c2df77e441c8a887f1b468508f51b6754b8ebc26)), closes [GAT-6843](GAT-6843)
+* **GAT-6924:** Add team alias creation and display (#1176) ([16792f8](https://github.com/HDRUK/gateway-web/commit/16792f8d42e2975264aae926437b44f4c662e1bf)), closes [GAT-6924](GAT-6924)
+* **GAT-6930:** Search result accesibility (#1138) ([ab0315a](https://github.com/HDRUK/gateway-web/commit/ab0315a2bac6ceecbd7bb8a4ebdb2f532c2aba65)), closes [GAT-6930](GAT-6930)
+* **GAT-7191:** Correct focus state of header nav menu (#1167) ([edcebf9](https://github.com/HDRUK/gateway-web/commit/edcebf950bd523bd55f19b25cb57181a8e8395da)), closes [GAT-7191](GAT-7191)
+* **GAT-7195:** feature flagging for FE (#1155) ([35f52c4](https://github.com/HDRUK/gateway-web/commit/35f52c453f168b1f7f33a4906a129c046232739a)), closes [GAT-7195](GAT-7195)
+
+### 🐛 Bug Fixes
+
+* **GAT-6379:** Sign in giving undefined when details incorrect (#1009) ([af69e38](https://github.com/HDRUK/gateway-web/commit/af69e38272c0f76bed1906d3f938b00de124f2f5)), closes [GAT-6379](GAT-6379)
+* **GAT-6734:** robots.txt (#1149) ([b831519](https://github.com/HDRUK/gateway-web/commit/b83151994aae1906388f05e2b5558e4a051e92ab)), closes [GAT-6734](GAT-6734)
+* **GAT-6767:** double header on error pages (#1161) ([32abdf7](https://github.com/HDRUK/gateway-web/commit/32abdf7e2c8fd042f4cc97b184a5517ab07be31a)), closes [GAT-6767](GAT-6767)
+* **GAT-6810:** Missing label on selects (#1135) ([fb251ad](https://github.com/HDRUK/gateway-web/commit/fb251adc99e3340224caaad38579ee6a999a16c8)), closes [GAT-6810](GAT-6810)
+* **GAT-6819:** mind map tabbing for accessibility (#1137) ([010b462](https://github.com/HDRUK/gateway-web/commit/010b462ead6b3618595792d6a98a42e217499eb4)), closes [GAT-6819](GAT-6819)
+* **GAT-6819:** mind map tabbing, remove props that broke mouse (#1140) ([a63d411](https://github.com/HDRUK/gateway-web/commit/a63d4117d2e9092a32b43f56220ebbe0d1b7b084)), closes [GAT-6819](GAT-6819)
+* **GAT-6873:** Update population size anchor reference (#1145) ([dd421e4](https://github.com/HDRUK/gateway-web/commit/dd421e415b37ed820eee8a790ab180e41ae7cb8c)), closes [GAT-6873](GAT-6873)
+* **GAT-6947:** Show guidance for file upload component (#1147) ([ad10dc3](https://github.com/HDRUK/gateway-web/commit/ad10dc39b157f04fffb859ede94f7f02bdf19a1b)), closes [GAT-6947](GAT-6947)
+* **GAT-6948:** Show question count when no dar application status (#1146) ([2f23034](https://github.com/HDRUK/gateway-web/commit/2f23034680a539bd2ff86de6c0faa7d0b0754b45)), closes [GAT-6948](GAT-6948)
+* **GAT-7195:** Web can carry on if feature flags fail (#1175) ([51357cb](https://github.com/HDRUK/gateway-web/commit/51357cb5b7c366f13af617339df8a47ac472f381)), closes [GAT-7195](GAT-7195)
+* **GAT-7267:** Add logic to force an OpenAthens user who hasn't set their secondary email to do so before they can register for Cohort Discovery. (#1171) ([0b97a88](https://github.com/HDRUK/gateway-web/commit/0b97a8849ee7bfa2145e34204492e5fb28801a4f)), closes [GAT-7267](GAT-7267)
+
 ## [2.9.0](https://github.com/HDRUK/gateway-web/compare/v2.8.1...v2.9.0) (2025-05-20)
 
 ### ✨ Features
