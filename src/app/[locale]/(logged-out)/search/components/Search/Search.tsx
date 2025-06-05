@@ -327,7 +327,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&per_page=${
             queryParams.per_page
         }&page=${queryParams.page}&sort=${queryParams.sort}${
             queryParams.type === SearchCategory.PUBLICATIONS
@@ -370,7 +370,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=-1`,
+        `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
 

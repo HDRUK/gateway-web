@@ -184,7 +184,7 @@ async function getFilters(
     };
     return get<Filter[]>(
         cookieStore,
-        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
+        `${apis.filtersV1UrlIP}?per_page=${FILTERS_PER_PAGE}`,
         { cache }
     );
 }
@@ -195,7 +195,7 @@ async function getKeywords(
     const cache: Cache = {
         tags: ["keywords"],
     };
-    return get<Keyword[]>(cookieStore, `${apis.keywordsV1IPUrl}?perPage=-1`, {
+    return get<Keyword[]>(cookieStore, `${apis.keywordsV1IPUrl}?per_page=-1`, {
         cache,
     });
 }
