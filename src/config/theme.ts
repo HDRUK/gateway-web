@@ -716,6 +716,9 @@ const theme = createTheme({
                         backgroundColor: palette.error.main,
                         opacity: 1,
                     },
+                    "& .Mui-focusVisible": {
+                        outline: `3px solid ${palette.primary.main}`,
+                    },
                 },
             },
         },
