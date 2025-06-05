@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback, useId } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
@@ -15,14 +17,19 @@ import {
     IconButton,
     keyframes,
     Box,
+    Button,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import * as yup from "yup";
+import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import InputWrapper from "../InputWrapper";
 
 interface Ratings {
     icon: OverridableComponent<SvgIconTypeMap> & { muiName: string };
@@ -30,7 +37,7 @@ interface Ratings {
     colour: string;
 }
 
-const cookieName = "surveySubmitted";
+const cookieName = "surveySession";
 const cookieLife = 90; // days
 
 const ratings: Ratings[] = [
@@ -56,6 +63,11 @@ interface CustomerSurveyProps {
     hideOnLoad?: boolean;
 }
 
+const surveySchema = yup.object({
+    reason: yup.string().max(500, "Max 500 characters"),
+    score: yup.number().required(),
+});
+
 export default function CustomerSurvey({
     hideOnLoad = true,
 }: CustomerSurveyProps) {
@@ -64,11 +76,34 @@ export default function CustomerSurvey({
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
     const [animateOut, setAnimateOut] = useState(false);
+    const [step, setStep] = useState<"rating" | "reason" | "complete">(
+        "rating"
+    );
+    const [sessionId, setSessionId] = useState<string | null>(null);
     const id = useId();
-
-    const handleSubmit = usePost(apis.customerSatisfactionV1Url, {
+    const reason = {
+        label: t("label"),
+        name: "reason",
+        component: inputComponents.TextArea,
+        limit: 500,
+    };
+    const post = usePost(apis.customerSatisfactionV1Url, {
         successNotificationsOn: false,
     });
+    const patch = usePatch(apis.customerSatisfactionV1Url, {
+        successNotificationsOn: false,
+    });
+
+    const { control, handleSubmit, watch, setValue } = useForm({
+        mode: "onTouched",
+        resolver: yupResolver(surveySchema),
+        defaultValues: {
+            reason: "",
+            score: null,
+        },
+    });
+
+    const selectedScore = watch("score");
 
     const dismissSurvey = () => {
         setAnimateOut(true);
@@ -79,17 +114,43 @@ export default function CustomerSurvey({
     };
 
     const handleClick = async (score: number) => {
-        await handleSubmit({ score });
-        Cookies.set(cookieName, score.toString(), { expires: cookieLife });
-        dismissSurvey();
+        const cookie = Cookies.get(cookieName);
+
+        if (cookie) {
+            const { score: storedScore } = JSON.parse(cookie);
+
+            if (storedScore === score) return;
+
+            setValue("score", score);
+            return;
+        }
+
+        try {
+            const response = await post({ score });
+            const id = response?.id;
+            if (id) {
+                Cookies.set(cookieName, JSON.stringify({ score, id }), {
+                    expires: cookieLife,
+                });
+                setSessionId(id);
+                setValue("score", score);
+                setStep("reason");
+            }
+        } catch (error) {
+            console.error("Failed to submit score", error);
+        }
     };
 
-    const checkToShowSurvey = useCallback(() => {
-        if (!Cookies.get(cookieName)) {
-            setAnimateOut(false);
-            setHideComponent(false);
+    const onSubmit = async ({ reason, score }) => {
+        if (!sessionId) return;
+        try {
+            await patch(`${sessionId}`, { reason, score });
+            setStep("complete");
+            setTimeout(dismissSurvey, 2000);
+        } catch (error) {
+            console.error("Failed to submit reason", error);
         }
-    }, []);
+    };
 
     const handleClose = () => {
         setAnimateOut(true);
@@ -97,11 +158,13 @@ export default function CustomerSurvey({
             setHideComponent(true);
             setSubmitted(false);
         }, 500);
-
-        setTimeout(() => {
-            checkToShowSurvey();
-        }, displayIn);
     };
+    const checkToShowSurvey = useCallback(() => {
+        if (!Cookies.get(cookieName)) {
+            setAnimateOut(false);
+            setHideComponent(false);
+        }
+    }, []);
 
     useEffect(() => {
         setHideComponent(hideOnLoad);
@@ -113,15 +176,11 @@ export default function CustomerSurvey({
             return () => {
                 /** No cleanup needed when hidden */
             };
-
         const timeoutId = setTimeout(checkToShowSurvey, displayIn);
-
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
 
-    if (hideComponent || submitted) {
-        return null;
-    }
+    if (hideComponent || submitted) return null;
 
     return (
         <Box
@@ -139,7 +198,6 @@ export default function CustomerSurvey({
             }}>
             <IconButton
                 sx={{ position: "absolute", top: 10, right: 10 }}
-                aria-label="Close survey"
                 onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
@@ -147,16 +205,22 @@ export default function CustomerSurvey({
             <Typography variant="h6" gutterBottom id={id}>
                 {t("title")}
             </Typography>
-            <Grid container spacing={1} justifyContent="center">
-                {ratings.map((obj, index) => {
-                    const { icon: Icon, rating, colour } = obj;
-                    return (
-                        <Grid item key={rating.toString()}>
+
+            {step === "rating" && (
+                <Grid container spacing={1} justifyContent="center">
+                    {ratings.map(({ icon: Icon, rating, colour }, index) => (
+                        <Grid item key={rating}>
                             <Tooltip title={t(`tooltip-${index}`)}>
                                 <div>
                                     <IconButton
                                         onClick={() => handleClick(rating)}
-                                        id={`feedback-${rating}`}>
+                                        id={`feedback-${rating}`}
+                                        sx={{
+                                            border:
+                                                selectedScore === rating
+                                                    ? `2px solid ${colour}`
+                                                    : "",
+                                        }}>
                                         <Icon
                                             aria-label={`Rating ${rating}`}
                                             sx={{
@@ -173,9 +237,25 @@ export default function CustomerSurvey({
                                 </div>
                             </Tooltip>
                         </Grid>
-                    );
-                })}
-            </Grid>
+                    ))}
+                </Grid>
+            )}
+
+            {step === "reason" && (
+                <Box mt={2} component="form" onSubmit={handleSubmit(onSubmit)}>
+                    <InputWrapper control={control} {...reason} />
+
+                    <Button
+                        variant="contained"
+                        sx={{ mt: 2 }}
+                        type="submit"
+                        disabled={!watch("reason")?.trim()}>
+                        {t("submit")}
+                    </Button>
+                </Box>
+            )}
+
+            {step === "complete" && <Typography>{t("success")}</Typography>}
         </Box>
     );
 }
