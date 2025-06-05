@@ -14,7 +14,12 @@ const GradientBanner = ({ title }: GradientBannerProps) => {
                 textAlign: "center",
                 background: `linear-gradient(to right, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
             }}>
-            <Typography fontSize={28} m={0} variant="h2" color="white">
+            <Typography
+                fontSize={28}
+                m={0}
+                variant="h2"
+                component="h1"
+                color="white">
                 {title}
             </Typography>
         </Box>
