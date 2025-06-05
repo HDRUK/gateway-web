@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import { Box, Divider } from "@mui/material";
-import { usePathname } from "next/navigation";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
@@ -9,8 +8,6 @@ import { colors } from "@/config/theme";
 import { ExpandMoreIcon } from "@/consts/icons";
 
 function DesktopNav() {
-    const path = usePathname();
-
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
