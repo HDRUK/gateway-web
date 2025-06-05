@@ -1,6 +1,5 @@
 import { Fragment, useState } from "react";
 import { Box, Divider } from "@mui/material";
-import { usePathname } from "next/navigation";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
@@ -9,8 +8,6 @@ import { colors } from "@/config/theme";
 import { ExpandMoreIcon } from "@/consts/icons";
 
 function DesktopNav() {
-    const path = usePathname();
-
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -25,8 +22,6 @@ function DesktopNav() {
         setMenuItems(subItems);
         setAnchorElement(event);
     };
-
-    const isHome = path?.split("/").filter(Boolean).length === 1;
 
     return (
         <Box
@@ -65,9 +60,7 @@ function DesktopNav() {
                                 },
                             }}
                             endIcon={
-                                <ExpandMoreIcon
-                                    color={isHome ? "primary" : "secondary"}
-                                />
+                                <ExpandMoreIcon sx={{ color: colors.white }} />
                             }
                             onClick={(event: React.MouseEvent<HTMLElement>) =>
                                 handleOpenNav(
