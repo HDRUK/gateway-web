@@ -57,7 +57,7 @@ const DarTemplatePage = () => {
                     img="/images/dar/template-edit.png"
                     onClick={() =>
                         router.push(
-                            `${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`
+                            `${RouteName.DAR_TEMPLATES}/${RouteName.LIST}/?published=1`
                         )
                     }
                     description={t("manage.description")}

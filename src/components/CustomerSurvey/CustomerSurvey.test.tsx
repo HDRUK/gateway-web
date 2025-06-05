@@ -26,7 +26,7 @@ describe("CustomerSurvey", () => {
     });
 
     it("submits the survey and hides the component", async () => {
-        const mockHandleSubmit = jest.fn();
+        const mockHandleSubmit = jest.fn().mockResolvedValue({ id: 1 });
         usePost.mockReturnValue(mockHandleSubmit);
         render(<CustomerSurvey hideOnLoad={false} />);
 
@@ -35,9 +35,13 @@ describe("CustomerSurvey", () => {
 
         await waitFor(() => {
             expect(mockHandleSubmit).toHaveBeenCalledWith({ score: 1 });
-            expect(Cookies.set).toHaveBeenCalledWith("surveySubmitted", "1", {
-                expires: 90,
-            });
+            expect(Cookies.set).toHaveBeenCalledWith(
+                "surveySession",
+                '{"score":1,"id":1}',
+                {
+                    expires: 90,
+                }
+            );
             expect(
                 screen.queryByText(
                     /How satisfactory is your experience with the Gateway today?/i
@@ -59,6 +63,8 @@ describe("CustomerSurvey", () => {
     });
 
     it("sets the cookie and hides the survey when clicked", async () => {
+        const mockHandleSubmit = jest.fn().mockResolvedValue({ id: 1 });
+        usePost.mockReturnValue(mockHandleSubmit);
         render(<CustomerSurvey hideOnLoad={false} />);
 
         Cookies.get.mockReturnValue(initialCookies);
@@ -72,9 +78,13 @@ describe("CustomerSurvey", () => {
                     /How satisfactory is your experience with the Gateway today?/i
                 )
             ).toBeNull();
-            expect(Cookies.set).toHaveBeenCalledWith("surveySubmitted", "1", {
-                expires: 90,
-            });
+            expect(Cookies.set).toHaveBeenCalledWith(
+                "surveySession",
+                '{"score":1,"id":1}',
+                {
+                    expires: 90,
+                }
+            );
         });
     });
 });

@@ -52,9 +52,9 @@ const services = [
         href: `/search?type=${SearchCategory.PUBLICATIONS}`,
     },
     {
-        id: "dataProviders",
+        id: "dataCustodians",
         image: StaticImages.LANDING_PAGE.data_custodians,
-        href: `/search?type=${SearchCategory.DATA_PROVIDERS}`,
+        href: `/search?type=${SearchCategory.DATA_CUSTODIANS}`,
     },
     {
         id: "dataCustodianNetworks",
