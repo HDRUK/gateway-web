@@ -1438,7 +1438,10 @@
             "tooltip-1": "Dissatisfied",
             "tooltip-2": "Neutral",
             "tooltip-3": "Satisfied",
-            "tooltip-4": "Very Satisfied"
+            "tooltip-4": "Very Satisfied",
+            "label": "What is the reason for your rating?",
+            "submit": "Submit",
+            "success": "Thank you for your feedback"
         },
         "CohortDiscoveryButton": {
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
