@@ -125,7 +125,7 @@ const getColumns = ({
                 describeChild
                 title={translations.dataProviderTooltip}
                 tabIndex={0}>
-                <span>{translations.dataProviderLabel}</span>
+                <>{translations.dataProviderLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -146,7 +146,7 @@ const getColumns = ({
                 describeChild
                 title={translations.populationSizeTooltip}
                 tabIndex={0}>
-                <span>{translations.populationSizeLabel}</span>
+                <>{translations.populationSizeLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -164,7 +164,7 @@ const getColumns = ({
                 describeChild
                 title={translations.dateRangePublisherTooltip}
                 tabIndex={0}>
-                <span>{translations.dateRangePublisherLabel}</span>
+                <>{translations.dateRangePublisherLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -182,7 +182,7 @@ const getColumns = ({
                 describeChild
                 title={translations.accessServiceTooltip}
                 tabIndex={0}>
-                <span>{translations.accessServiceLabel}</span>
+                <>{translations.accessServiceLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -200,7 +200,7 @@ const getColumns = ({
                 describeChild
                 title={translations.dataStandardTooltip}
                 tabIndex={0}>
-                <span>{translations.dataStandardLabel}</span>
+                <>{translations.dataStandardLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -221,7 +221,7 @@ const getColumns = ({
                 describeChild
                 title={translations.cohortDiscoveryTooltip}
                 tabIndex={0}>
-                <span>{translations.cohortDiscoveryLabel}</span>
+                <>{translations.cohortDiscoveryLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -242,7 +242,7 @@ const getColumns = ({
                 describeChild
                 title={translations.containsTissueTooltip}
                 tabIndex={0}>
-                <span>{translations.containsTissueLabel}</span>
+                <>{translations.containsTissueLabel}</>
             </Tooltip>
         ),
         size: 120,
@@ -263,7 +263,7 @@ const getColumns = ({
                 describeChild
                 title={translations.hasTechnicalMetadataTooltip}
                 tabIndex={0}>
-                <span>{translations.hasTechnicalMetadataLabel}</span>
+                <>{translations.hasTechnicalMetadataLabel}</>
             </Tooltip>
         ),
         size: 120,
