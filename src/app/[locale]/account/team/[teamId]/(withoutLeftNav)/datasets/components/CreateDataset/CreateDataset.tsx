@@ -387,7 +387,7 @@ const CreateDataset = ({
                 hasVisibleFieldsForLocation(schemaFields, location)
             )
         )
-        .concat([STRUCTURAL_METADATA_FORM_SECTION, SUBMISSON_FORM_SECTION]);
+        .concat([SUBMISSON_FORM_SECTION]);
 
     const currentSectionIndex = selectedFormSection
         ? formSections.indexOf(selectedFormSection)
@@ -763,91 +763,87 @@ const CreateDataset = ({
                 currentSectionIndex > 0 ? (
                     <>
                         <Box sx={{ flex: 2, p: 0 }}>
-                            {isStructuralMetadataSection && (
-                                <StructuralMetadataSection
-                                    selectedFormSection={selectedFormSection}
-                                    structuralMetadata={structuralMetadata}
-                                    fileProcessedAction={(
-                                        metadata: StructuralMetadata[]
-                                    ) => {
-                                        notificationService.apiSuccess(
-                                            t("uploadSuccess")
-                                        );
-                                        setStructuralMetadata(metadata);
-                                    }}
-                                    handleToggleUploading={setIsSaving}
-                                />
-                            )}
+                            <Form>
+                                <Paper
+                                    sx={{
+                                        marginTop: "10px",
+                                        marginBottom: "10px",
+                                        padding: 2,
+                                    }}>
+                                    <Typography variant="h2">
+                                        {capitalise(
+                                            splitCamelcase(selectedFormSection)
+                                        )}
+                                    </Typography>
 
-                            {!isStructuralMetadataSection &&
-                                currentSectionIndex > 0 && (
-                                    <Form>
-                                        <Paper
-                                            sx={{
-                                                marginTop: "10px",
-                                                marginBottom: "10px",
-                                                padding: 2,
-                                            }}>
-                                            <Typography variant="h2">
-                                                {capitalise(
-                                                    splitCamelcase(
-                                                        selectedFormSection
+                                    {isStructuralMetadataSection && (
+                                        <StructuralMetadataSection
+                                            structuralMetadata={
+                                                structuralMetadata
+                                            }
+                                            fileProcessedAction={(
+                                                metadata: StructuralMetadata[]
+                                            ) => {
+                                                notificationService.apiSuccess(
+                                                    t("uploadSuccess")
+                                                );
+                                                setStructuralMetadata(metadata);
+                                            }}
+                                            handleToggleUploading={setIsSaving}
+                                        />
+                                    )}
+
+                                    {currentSectionIndex > 0 && (
+                                        <Box sx={{ p: 0 }}>
+                                            {selectedFormSection &&
+                                                schemaFields
+                                                    .filter(
+                                                        schemaField =>
+                                                            !schemaField.field
+                                                                ?.hidden
                                                     )
-                                                )}
-                                            </Typography>
-
-                                            <Box sx={{ p: 0 }}>
-                                                {selectedFormSection &&
-                                                    schemaFields
-                                                        .filter(
-                                                            schemaField =>
-                                                                !schemaField
-                                                                    .field
-                                                                    ?.hidden
+                                                    .filter(({ location }) =>
+                                                        location?.startsWith(
+                                                            selectedFormSection
                                                         )
-                                                        .filter(
-                                                            ({ location }) =>
-                                                                location?.startsWith(
-                                                                    selectedFormSection
+                                                    )
+                                                    .map(fieldParent => {
+                                                        const {
+                                                            field,
+                                                            fields,
+                                                        } = fieldParent;
+
+                                                        return fields?.length ? (
+                                                            <FormFieldArray
+                                                                control={
+                                                                    control
+                                                                }
+                                                                formArrayValues={
+                                                                    getValues(
+                                                                        fieldParent.title
+                                                                    ) as unknown as FormValues[]
+                                                                }
+                                                                fieldParent={
+                                                                    fieldParent
+                                                                }
+                                                                setSelectedField={
+                                                                    updateGuidanceText
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            field &&
+                                                                renderFormHydrationField(
+                                                                    field,
+                                                                    control,
+                                                                    undefined,
+                                                                    updateGuidanceText
                                                                 )
-                                                        )
-                                                        .map(fieldParent => {
-                                                            const {
-                                                                field,
-                                                                fields,
-                                                            } = fieldParent;
-
-                                                            return fields?.length ? (
-                                                                <FormFieldArray
-                                                                    control={
-                                                                        control
-                                                                    }
-                                                                    formArrayValues={
-                                                                        getValues(
-                                                                            fieldParent.title
-                                                                        ) as unknown as FormValues[]
-                                                                    }
-                                                                    fieldParent={
-                                                                        fieldParent
-                                                                    }
-                                                                    setSelectedField={
-                                                                        updateGuidanceText
-                                                                    }
-                                                                />
-                                                            ) : (
-                                                                field &&
-                                                                    renderFormHydrationField(
-                                                                        field,
-                                                                        control,
-                                                                        undefined,
-                                                                        updateGuidanceText
-                                                                    )
-                                                            );
-                                                        })}
-                                            </Box>
-                                        </Paper>
-                                    </Form>
-                                )}
+                                                        );
+                                                    })}
+                                        </Box>
+                                    )}
+                                </Paper>
+                            </Form>
                         </Box>
                         {currentSectionIndex > 0 && (
                             <Paper
