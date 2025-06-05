@@ -26,8 +26,6 @@ function DesktopNav() {
         setAnchorElement(event);
     };
 
-    const isHome = path?.split("/").filter(Boolean).length === 1;
-
     return (
         <Box
             sx={{
@@ -65,9 +63,7 @@ function DesktopNav() {
                                 },
                             }}
                             endIcon={
-                                <ExpandMoreIcon 
-                                   sx={{color: colors.white}}
-                                />
+                                <ExpandMoreIcon sx={{ color: colors.white }} />
                             }
                             onClick={(event: React.MouseEvent<HTMLElement>) =>
                                 handleOpenNav(
