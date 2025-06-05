@@ -65,8 +65,8 @@ function DesktopNav() {
                                 },
                             }}
                             endIcon={
-                                <ExpandMoreIcon
-                                    color={isHome ? "primary" : "secondary"}
+                                <ExpandMoreIcon 
+                                   sx={{color: colors.white}}
                                 />
                             }
                             onClick={(event: React.MouseEvent<HTMLElement>) =>
