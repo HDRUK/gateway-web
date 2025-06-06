@@ -574,6 +574,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     />
                 );
             case SearchCategory.DATA_CUSTODIANS:
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return (
                     <ResultCardDataProvider
                         result={result as SearchResultDataProvider}
@@ -610,7 +611,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    queryParams.type === SearchCategory.DATA_CUSTODIANS
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS ||
+                    queryParams.type === SearchCategory.DATA_PROVIDERS_LEGACY
                         ? "tiled"
                         : "list"
                 }>
@@ -629,6 +631,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
             case SearchCategory.DATA_CUSTODIANS:
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
@@ -718,7 +721,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
             case SearchCategory.DATA_CUSTODIANS:
-                return t("searchExplainerDataCustodians");
             case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return t("searchExplainerDataCustodians");
             case SearchCategory.TOOLS:
@@ -731,6 +733,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const excludedDownloadSearchCategories = [
         SearchCategory.PUBLICATIONS,
         SearchCategory.DATA_CUSTODIANS,
+        SearchCategory.DATA_PROVIDERS_LEGACY,
         SearchCategory.COLLECTIONS,
     ];
 
