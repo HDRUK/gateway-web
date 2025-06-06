@@ -19,15 +19,21 @@ const SearchPage = async () => {
     const filters: Filter[] = await getFilters(cookieStore);
     const cohortDiscovery = await getCohortDiscovery();
 
-    filters.forEach(filter => {
+    const adjustedFilters = filters.map(filter => {
         if (filter.keys === FILTER_DATA_SUBTYPE) {
-            filter.buckets = filter.buckets.filter(
-                bucket => bucket.key !== "Not applicable"
-            );
+            return {
+                ...filter,
+                buckets: filter.buckets.filter(
+                    bucket => bucket.key !== "Not applicable"
+                ),
+            };
         }
+        return filter;
     });
 
-    return <Search filters={filters} cohortDiscovery={cohortDiscovery} />;
+    return (
+        <Search filters={adjustedFilters} cohortDiscovery={cohortDiscovery} />
+    );
 };
 
 export default SearchPage;
