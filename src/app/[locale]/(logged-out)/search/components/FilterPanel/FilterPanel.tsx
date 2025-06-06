@@ -526,13 +526,6 @@ const FilterPanel = ({
                 ) {
                     return null;
                 }
-
-                if (filterItem.label === FILTER_DATA_SUBTYPE) {
-                    filterItem.buckets = filterItem.buckets.filter(
-                        item => item.value !== "Not applicable"
-                    );
-                }
-
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
 
                 return (
