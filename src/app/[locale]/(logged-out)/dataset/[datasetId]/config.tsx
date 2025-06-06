@@ -71,7 +71,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.structuralMetadata.syntheticDataWebLink",
-                type: FieldType.TEXT,
+                type: FieldType.LINK_LIST,
                 label: "Synthetic data web link",
                 tooltip:
                     "Website with information on your synthetic dataset creation, or the location where a synthetic version of the dataset can be accessed.",
