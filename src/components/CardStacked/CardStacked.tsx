@@ -41,8 +41,6 @@ export default function CardStacked({
                     backgroundPosition: "center",
                 }}>
                 <Chip
-                    role="heading"
-                    aria-level={3}
                     size="small"
                     label={<HTMLContent content={title} />}
                     sx={{
