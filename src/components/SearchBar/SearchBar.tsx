@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { CloseIcon, HelpIcon, SearchIcon } from "@/consts/icons";
+import theme from "@/config/theme";
+import { SearchIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ExplainerLink,
@@ -19,7 +19,6 @@ interface SearchBarProps {
     submitAction: (fieldValues: FieldValues) => void;
     inputOverrideAction?: () => void;
     valueOverride?: string;
-    isDisabled: boolean;
     defaultValue?: string;
     queryName: string;
     queryPlaceholder: string;
@@ -27,9 +26,8 @@ interface SearchBarProps {
 export const TEST_ID_WRAPPER = "search-bar";
 export const TEST_ID_RESET_BUTTON = "reset-btn";
 
-const SEARCH_ICON_SIZE = "48px";
-const CROSS_ICON_SIZE = "60px";
-const HELP_ICON_SIZE = "12px";
+const SEARCH_ICON_SIZE = "32px";
+const CROSS_ICON_SIZE = "32px";
 const TRANSLATION_PATH = "pages.search";
 
 const SearchBar = ({
@@ -38,7 +36,6 @@ const SearchBar = ({
     submitAction,
     inputOverrideAction,
     valueOverride,
-    isDisabled,
     defaultValue,
     queryName,
     queryPlaceholder,
@@ -55,14 +52,16 @@ const SearchBar = ({
 
     return (
         <FormWrapper data-testid={TEST_ID_WRAPPER}>
+            {explainerText && (
+                <>
+                    <ExplainerText>{explainerText}</ExplainerText>
+                    <ExplainerLink href={`/${RouteName.HOW_TO_SEARCH}`}>
+                        {t("howToSearch")}
+                    </ExplainerLink>
+                </>
+            )}
+
             <SearchForm onSubmit={handleSubmit(submitAction)}>
-                <SearchIcon
-                    color="primary"
-                    sx={{
-                        height: SEARCH_ICON_SIZE,
-                        width: SEARCH_ICON_SIZE,
-                    }}
-                />
                 <InputWrapper
                     onClick={() =>
                         inputOverrideAction && inputOverrideAction()
@@ -73,39 +72,20 @@ const SearchBar = ({
                         label=""
                         placeholder={queryPlaceholder}
                         sx={{
-                            borderBottom: "1px solid #3DB28C",
+                            border: `2px solid ${theme.palette.greyCustom.main}`,
                         }}
-                        inputProps={{ "aria-label": "Search" }}
+                        inputProps={{
+                            "aria-label": "Search",
+                        }}
+                        icon={SearchIcon}
+                        startAdornmentSize={SEARCH_ICON_SIZE}
+                        showClearButton
+                        clearButtonSize={CROSS_ICON_SIZE}
+                        resetAction={resetAction}
+                        setValue={setValue}
                     />
                 </InputWrapper>
-                <IconButton
-                    aria-label="search"
-                    onClick={() => {
-                        reset({ [queryName]: "" });
-                        resetAction();
-                    }}
-                    disabled={isDisabled}
-                    data-testid={TEST_ID_RESET_BUTTON}>
-                    <CloseIcon
-                        sx={{ height: CROSS_ICON_SIZE, width: CROSS_ICON_SIZE }}
-                    />
-                </IconButton>
             </SearchForm>
-
-            {explainerText && (
-                <ExplainerText>
-                    {explainerText}
-                    <ExplainerLink href={`/${RouteName.HOW_TO_SEARCH}`}>
-                        {t("howToSearch")}
-                        <HelpIcon
-                            sx={{
-                                height: HELP_ICON_SIZE,
-                                width: HELP_ICON_SIZE,
-                            }}
-                        />
-                    </ExplainerLink>
-                </ExplainerText>
-            )}
         </FormWrapper>
     );
 };

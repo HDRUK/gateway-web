@@ -10,15 +10,20 @@ export const FormWrapper = styled(Box)(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    minHeight: "135px",
-    maxWidth: "1000px",
+    // minHeight: "135px",
+    maxWidth: "768px",
     width: "100%",
+    padding: 0,
+    paddingBottom: 5,
+    paddingTop: 0,
 }));
 
 export const SearchForm = styled(Form)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     gap: theme.spacing(1),
+    marginTop: 8,
+    marginBottom: 18,
 
     [theme.breakpoints.up("tablet")]: {
         gap: theme.spacing(6),
@@ -32,30 +37,22 @@ export const InputWrapper = styled(Box)(() => ({
 }));
 
 export const SearchInput = styled(TextFieldBase)(({ theme }) => ({
-    fontSize: "1.5rem",
+    fontSize: "1.25rem",
     marginBottom: 0,
+    paddingBottom: 8,
+    paddingTop: 8,
+    backgroundColor: "white",
+
     "& fieldset": { border: "none" },
     "& input": { padding: 0 },
-
-    [theme.breakpoints.up("tablet")]: {
-        fontSize: "2rem",
-    },
 }));
 
 export const ExplainerText = styled(Typography)(({ theme }) => ({
-    color: colors.grey600,
+    color: colors.grey100,
     fontSize: "1rem",
-    marginLeft: "57px",
-
-    [theme.breakpoints.up("tablet")]: {
-        marginLeft: "97px",
-    },
 }));
 
 export const ExplainerLink = styled(Link)(({ theme }) => ({
     display: "inline-block",
-
-    [theme.breakpoints.up("tablet")]: {
-        marginLeft: theme.spacing(1),
-    },
+    color: colors.grey100,
 }));
