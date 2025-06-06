@@ -168,17 +168,11 @@ export default function DarApplicationCard({
     );
 
     const actionButtonHref = (id: number) =>
-        teamId
-            ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${
-                  RouteName.DATA_ACCESS_REQUESTS
-              }/${RouteName.APPLICATIONS}/${id}?teamId=${
-                  teamId || application.teams[teamIndex || 0].team_id
-              }`
-            : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${
-                  RouteName.DATA_ACCESS_REQUESTS
-              }/${RouteName.APPLICATIONS}/${id}?teamId=${
-                  teamId || application.teams[teamIndex || 0].team_id
-              }`;
+        `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${
+            RouteName.DATA_ACCESS_REQUESTS
+        }/${RouteName.APPLICATIONS}/${id}?teamId=${
+            teamId || application.teams[teamIndex || 0].team_id
+        }`;
 
     const canEdit = isResearcher
         ? submissionStatus === DarApplicationStatus.DRAFT ||
