@@ -48,6 +48,7 @@ export default function CardStacked({
                         color: colors.white,
                         maxWidth: "220px",
                     }}
+                    data-testid="grid-chip"
                     {...chipProps}
                 />
             </Box>
