@@ -31,6 +31,9 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     formControlSx?: SxProps;
     css?: SerializedStyles;
     id?: string;
+    startAdornmentSize?: string;
+    clearButtonSize?: string;
+    resetAction?: () => void;
     inputProps?: InputHTMLAttributes<HTMLInputElement>;
 }
 
@@ -59,6 +62,9 @@ const TextFieldBase = <
         showClearButton = false,
         formControlSx,
         id,
+        startAdornmentSize,
+        clearButtonSize,
+        resetAction = null,
         ...inputProps
     } = props;
     const Icon = icon;
@@ -101,7 +107,12 @@ const TextFieldBase = <
                     Icon && {
                         startAdornment: (
                             <InputAdornment position="start">
-                                <Icon fontSize="small" color="primary" />
+                                <Icon
+                                    sx={{
+                                        fontSize: startAdornmentSize ?? "small",
+                                    }}
+                                    color="primary"
+                                />
                             </InputAdornment>
                         ),
                     })}
@@ -115,9 +126,14 @@ const TextFieldBase = <
                                     if (typeof setValue === "function") {
                                         setValue(fieldProps.name, "");
                                     }
+                                    if (resetAction) {
+                                        resetAction();
+                                    }
                                 }}
                                 edge="end">
-                                <CancelIcon color="disabled" fontSize="small" />
+                                <CancelIcon
+                                    fontSize={clearButtonSize ?? "small"}
+                                />
                             </IconButton>
                         </InputAdornment>
                     ),
