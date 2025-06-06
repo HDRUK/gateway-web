@@ -42,7 +42,7 @@ const SearchBar = ({
 }: SearchBarProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const { control, handleSubmit, reset, setValue } = useForm({
+    const { control, handleSubmit, setValue } = useForm({
         defaultValues: { [queryName]: defaultValue },
     });
 

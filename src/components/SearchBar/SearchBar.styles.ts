@@ -36,7 +36,7 @@ export const InputWrapper = styled(Box)(() => ({
     "& div": { margin: 0 },
 }));
 
-export const SearchInput = styled(TextFieldBase)(({ theme }) => ({
+export const SearchInput = styled(TextFieldBase)(() => ({
     fontSize: "1.25rem",
     marginBottom: 0,
     paddingBottom: 8,
@@ -47,12 +47,12 @@ export const SearchInput = styled(TextFieldBase)(({ theme }) => ({
     "& input": { padding: 0 },
 }));
 
-export const ExplainerText = styled(Typography)(({ theme }) => ({
+export const ExplainerText = styled(Typography)(() => ({
     color: colors.grey100,
     fontSize: "1rem",
 }));
 
-export const ExplainerLink = styled(Link)(({ theme }) => ({
+export const ExplainerLink = styled(Link)(() => ({
     display: "inline-block",
     color: colors.grey100,
 }));
