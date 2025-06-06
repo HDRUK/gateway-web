@@ -88,7 +88,7 @@ const CreateTeamForm = () => {
         data: aliasesData = [],
         isLoading: isLoadingAliases,
         mutate: mutateAliases,
-    } = useGet<Alias[]>(`${apis.aliasesV1Url}?perPage=-1`);
+    } = useGet<Alias[]>(`${apis.aliasesV1Url}?per_page=-1`);
 
     const addAlias = usePost<Alias>(apis.aliasesV1Url, {
         successNotificationsOn: false,
