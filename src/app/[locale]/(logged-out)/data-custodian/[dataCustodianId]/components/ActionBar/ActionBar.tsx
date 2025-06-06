@@ -57,7 +57,7 @@ const ActionBar = ({
                 style={{ margin: 0 }}
                 onClick={() =>
                     router.push(
-                        `/${RouteName.SEARCH}?type=${SearchCategory.DATA_PROVIDERS}`
+                        `/${RouteName.SEARCH}?type=${SearchCategory.DATA_CUSTODIANS}`
                     )
                 }
             />

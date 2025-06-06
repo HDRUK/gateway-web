@@ -8,7 +8,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
-import TooltipIcon from "@/components/TooltipIcon";
+import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
 import { ToolSection, FieldType } from "../../config";
@@ -102,7 +102,7 @@ const ToolContent = ({
                                     <BoxContainer
                                         sx={{
                                             gridTemplateColumns: {
-                                                desktop: "repeat(3, 1fr)",
+                                                desktop: "repeat(4, 1fr)",
                                             },
                                             gap: 1,
                                             "&:not(:last-of-type)": {
@@ -118,7 +118,7 @@ const ToolContent = ({
                                                 p: 0,
                                             }}>
                                             {!field.hideTooltip ? (
-                                                <TooltipIcon
+                                                <TooltipText
                                                     content={t(
                                                         `${label}${TOOLTIP_SUFFIX}`
                                                     )}

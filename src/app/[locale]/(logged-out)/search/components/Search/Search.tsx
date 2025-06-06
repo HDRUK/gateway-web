@@ -178,15 +178,25 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         [searchParams]
     );
 
+    // This can be removed when search endpoint has been updated to use data_custodians
+    const getSearchType = (searchCategory: SearchCategory) => {
+        if (searchCategory === SearchCategory.DATA_CUSTODIANS) {
+            return SearchCategory.DATA_PROVIDERS_LEGACY;
+        }
+
+        return searchCategory;
+    };
+
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
         page: getParamString(PAGE_FIELD) || "1",
         per_page: "25",
-        type:
+        type: getSearchType(
             (getParamString(TYPE_FIELD) as SearchCategory) ||
-            SearchCategory.DATASETS,
+                SearchCategory.DATASETS
+        ),
         [STATIC_FILTER_SOURCE]:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
@@ -381,7 +391,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             sort: searchFormConfig.defaultValues.sort,
             page: "1",
             per_page: "25",
-            type: selectedType,
+            type: getSearchType(selectedType),
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
             [FILTER_COLLECTION_NAME]: undefined,
@@ -453,7 +463,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     {t("dataProviders")}
                 </TabTooltip>
             ),
-            value: SearchCategory.DATA_PROVIDERS,
+            value: SearchCategory.DATA_CUSTODIANS,
             content: "",
         },
         {
@@ -563,7 +573,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         result={result as SearchResultCollection}
                     />
                 );
-            case SearchCategory.DATA_PROVIDERS:
+            case SearchCategory.DATA_CUSTODIANS:
                 return (
                     <ResultCardDataProvider
                         result={result as SearchResultDataProvider}
@@ -600,7 +610,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    queryParams.type === SearchCategory.DATA_PROVIDERS
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS
                         ? "tiled"
                         : "list"
                 }>
@@ -618,7 +628,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 return sortByOptionsPublications;
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
-            case SearchCategory.DATA_PROVIDERS:
+            case SearchCategory.DATA_CUSTODIANS:
                 return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
@@ -707,8 +717,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 return t("searchExplainerDataUse");
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
-            case SearchCategory.DATA_PROVIDERS:
-                return t("searchExplainerDataProviders");
+            case SearchCategory.DATA_CUSTODIANS:
+                return t("searchExplainerDataCustodians");
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
+                return t("searchExplainerDataCustodians");
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
             default:
@@ -718,7 +730,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const excludedDownloadSearchCategories = [
         SearchCategory.PUBLICATIONS,
-        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.DATA_CUSTODIANS,
         SearchCategory.COLLECTIONS,
     ];
 
