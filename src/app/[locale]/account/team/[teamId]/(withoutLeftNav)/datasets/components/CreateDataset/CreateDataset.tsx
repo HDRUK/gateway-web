@@ -48,6 +48,7 @@ import {
     DATA_CUSTODIAN_NAME,
     DATASET_TYPE,
     INITIAL_FORM_SECTION,
+    PATIENT_PATHWAY_DESCRIPTION,
     STRUCTURAL_METADATA_FORM_SECTION,
     SUBMISSON_FORM_SECTION,
 } from "@/consts/createDataset";
@@ -316,6 +317,13 @@ const CreateDataset = ({
 
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
+
+    const patientPathway = watch(PATIENT_PATHWAY_DESCRIPTION);
+    useEffect(() => {
+        if (patientPathway === "") {
+            setValue(PATIENT_PATHWAY_DESCRIPTION, undefined);
+        }
+    }, [patientPathway, setValue]);
 
     // This is a bit of a hack
     // - the data_custodian_id is coming back as a persistent ID due to a confusing in naming/bug
