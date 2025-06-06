@@ -10,7 +10,7 @@ describe("ResultCardDataProvider", () => {
             <ResultCardDataProvider imgUrl="/sample.jpg" result={mockResult} />
         );
 
-        expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
+        expect(screen.getByTestId("grid-chip")).toHaveTextContent(
             mockResult.name
         );
     });
