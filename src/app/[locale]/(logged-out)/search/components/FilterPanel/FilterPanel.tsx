@@ -526,7 +526,6 @@ const FilterPanel = ({
                 ) {
                     return null;
                 }
-
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
 
                 return (
