@@ -170,9 +170,7 @@ export default function DarApplicationCard({
     const actionButtonHref = (id: number) =>
         `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${
             RouteName.DATA_ACCESS_REQUESTS
-        }/${RouteName.APPLICATIONS}/${id}?teamId=${
-            teamId || application.teams[teamIndex || 0].team_id
-        }`;
+        }/${RouteName.APPLICATIONS}/${id}`;
 
     const canEdit = isResearcher
         ? submissionStatus === DarApplicationStatus.DRAFT ||
