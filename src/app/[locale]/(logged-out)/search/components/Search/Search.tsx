@@ -10,6 +10,7 @@ import {
 import { FieldValues } from "react-hook-form";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { Box, Typography, useTheme } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -150,6 +151,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isTablet = useMediaQuery(theme.breakpoints.only("tablet"));
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -1010,28 +1013,30 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         Save search
                                     </Button>
                                     {queryParams.type ===
-                                        SearchCategory.DATASETS && (
-                                        <Button
-                                            variant="outlined"
-                                            color="secondary"
-                                            onClick={handleToggleView}
-                                            startIcon={
-                                                resultsView ===
-                                                ViewType.LIST ? (
-                                                    <FormatListBulletedIcon color="secondary" />
-                                                ) : (
-                                                    <TableIcon color="secondary" />
-                                                )
-                                            }>
-                                            {resultsView === ViewType.LIST
-                                                ? t(
-                                                      "components.Search.toggleLabelTable"
-                                                  )
-                                                : t(
-                                                      "components.Search.toggleLabelList"
-                                                  )}
-                                        </Button>
-                                    )}
+                                        SearchCategory.DATASETS &&
+                                        !isMobile &&
+                                        !isTablet && (
+                                            <Button
+                                                variant="outlined"
+                                                color="secondary"
+                                                onClick={handleToggleView}
+                                                startIcon={
+                                                    resultsView ===
+                                                    ViewType.LIST ? (
+                                                        <FormatListBulletedIcon color="secondary" />
+                                                    ) : (
+                                                        <TableIcon color="secondary" />
+                                                    )
+                                                }>
+                                                {resultsView === ViewType.LIST
+                                                    ? t(
+                                                          "components.Search.toggleLabelTable"
+                                                      )
+                                                    : t(
+                                                          "components.Search.toggleLabelList"
+                                                      )}
+                                            </Button>
+                                        )}
                                 </Box>
                             </ActionBar>
                         )}
