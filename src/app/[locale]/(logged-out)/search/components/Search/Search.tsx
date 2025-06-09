@@ -608,7 +608,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     });
 
     const renderResults = () =>
-        resultsView === ViewType.TABLE ? (
+        resultsView === ViewType.TABLE && !isMobile && !isTablet ? (
             <ResultsTable
                 results={data?.list as SearchResultDataset[]}
                 showLibraryModal={showLibraryModal}
@@ -1018,7 +1018,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             startIcon={
                                                 <BookmarkBorder color="primary" />
                                             }>
-                                            Save search
+                                            {t("saveSearch")}
                                         </Button>
                                         {queryParams.type ===
                                             SearchCategory.DATASETS && (
@@ -1074,7 +1074,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                 </IconButton>
                                             </Tooltip>
                                         )}
-                                        <Tooltip title={"Save search"}>
+                                        <Tooltip title={t("saveSearch")}>
                                             <IconButton
                                                 color="primary"
                                                 disabled={hasNotSearched()}

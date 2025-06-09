@@ -963,6 +963,7 @@
             "dur": "Data Uses / Research Projects",
             "data_custodians": "Data Custodians",
             "loadingAriaLabel": "Loading search results",
+            "saveSearch": "Save search",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Switch to table view",
