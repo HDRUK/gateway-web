@@ -47,6 +47,7 @@ function MenuDropdown({
 
     return (
         <Menu
+            disableScrollLock
             disableAutoFocusItem
             anchorEl={anchorElement}
             transformOrigin={
