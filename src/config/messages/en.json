@@ -965,8 +965,8 @@
             "loadingAriaLabel": "Loading search results",
             "components": {
                 "Search": {
-                    "toggleLabelTable": "Table",
-                    "toggleLabelList": "List"
+                    "toggleLabelTable": "Switch to table view",
+                    "toggleLabelList": "Switch to list view"
                 },
                 "FilterPanel": {
                     "clearFilter": "Clear filter",
