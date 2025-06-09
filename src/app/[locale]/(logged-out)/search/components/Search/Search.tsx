@@ -8,7 +8,7 @@ import {
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -148,6 +148,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
+    const theme = useTheme();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -301,9 +302,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const onQuerySubmit = async (data: FieldValues) => {
         setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
-
-        updatePath(QUERY_FIELD, data.query);
-        updatePath(PAGE_FIELD, "1");
+        updatePathMultiple({
+            [QUERY_FIELD]: data.query,
+            [PAGE_FIELD]: "1",
+        });
     };
 
     const onSortChange = async (selectedValue: string) => {
@@ -808,28 +810,46 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             }}>
             <Box
                 sx={{
-                    backgroundColor: "white",
                     width: "100%",
-                    paddingRight: 6,
-                    paddingLeft: 6,
                     display: "flex",
                     justifyContent: "center",
+                    background: `linear-gradient(97.46deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
                 }}>
-                <SearchBar
-                    defaultValue={queryParams.query}
-                    explainerText={getExplainerText()}
-                    resetAction={() => resetQueryInput()}
-                    isDisabled={!queryParams.query}
-                    submitAction={onQuerySubmit}
-                    queryPlaceholder={t("searchPlaceholder")}
-                    queryName={QUERY_FIELD}
-                    inputOverrideAction={
-                        isEuropePmcSearch ? europePmcModalAction : undefined
-                    }
-                    valueOverride={
-                        isPublications ? queryParams.query : undefined
-                    }
-                />
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        maxWidth: "768px",
+                        marginX: 1,
+                        flexGrow: 1,
+                    }}>
+                    <Typography
+                        variant="h1"
+                        color="white"
+                        sx={{
+                            marginTop: 4,
+                            marginBottom: 0.5,
+                            fontSize: "40px",
+                        }}>
+                        {t("searchHeader")}
+                    </Typography>
+                    <SearchBar
+                        defaultValue={queryParams.query}
+                        explainerText={getExplainerText()}
+                        resetAction={() => resetQueryInput()}
+                        isDisabled={!queryParams.query}
+                        submitAction={onQuerySubmit}
+                        queryPlaceholder={t("searchPlaceholder")}
+                        queryName={QUERY_FIELD}
+                        inputOverrideAction={
+                            isEuropePmcSearch ? europePmcModalAction : undefined
+                        }
+                        valueOverride={
+                            isPublications ? queryParams.query : undefined
+                        }
+                    />
+                </Box>
             </Box>
             <ActionBar>
                 <Box sx={{ flex: 1, p: 0 }}>
