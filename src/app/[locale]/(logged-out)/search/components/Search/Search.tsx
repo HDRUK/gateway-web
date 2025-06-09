@@ -826,7 +826,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     <Typography
                         variant="h1"
                         color="white"
-                        sx={{ marginTop: 3, marginBottom: 0.5 }}>
+                        sx={{
+                            marginTop: 4,
+                            marginBottom: 0.5,
+                            fontSize: "40px",
+                        }}>
                         {t("searchHeader")}
                     </Typography>
                     <SearchBar

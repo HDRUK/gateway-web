@@ -55,4 +55,5 @@ export const ExplainerText = styled(Typography)(() => ({
 export const ExplainerLink = styled(Link)(() => ({
     display: "inline-block",
     color: colors.grey100,
+    fontSize: "1rem",
 }));
