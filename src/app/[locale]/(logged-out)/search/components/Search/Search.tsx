@@ -821,6 +821,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         flexDirection: "column",
                         maxWidth: "768px",
                         marginX: 1,
+                        flexGrow: 1,
                     }}>
                     <Typography
                         variant="h1"
