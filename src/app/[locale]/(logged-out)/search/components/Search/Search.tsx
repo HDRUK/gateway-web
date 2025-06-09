@@ -8,7 +8,7 @@ import {
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -99,7 +99,7 @@ import searchFormConfig, {
     sortByOptionsPublications,
     sortByOptionsTool,
 } from "@/config/forms/search";
-import theme, { colors } from "@/config/theme";
+import { colors } from "@/config/theme";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
@@ -148,6 +148,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
+    const theme = useTheme();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
