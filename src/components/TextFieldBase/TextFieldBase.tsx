@@ -122,6 +122,7 @@ const TextFieldBase = <
                             <IconButton
                                 disableRipple
                                 aria-label="clear text"
+                                data-testid="reset-btn"
                                 onClick={() => {
                                     if (typeof setValue === "function") {
                                         setValue(fieldProps.name, "");
