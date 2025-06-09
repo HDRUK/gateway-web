@@ -8,8 +8,9 @@ import {
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
+import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography, useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
@@ -979,43 +980,48 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         )}
                                     </Box>
                                 </Box>
-                                <Box sx={{ display: "flex", gap: 2 }}>
-                                    <Box sx={{ p: 0 }}>
-                                        <Sort
-                                            sortName={SORT_FIELD}
-                                            defaultValue={queryParams.sort}
-                                            submitAction={onSortChange}
-                                            sortOptions={getSortOptions()}
-                                        />
-                                    </Box>
-                                    {!excludedDownloadSearchCategories.includes(
-                                        queryParams.type
-                                    ) && (
+                                {!isMobile && !isTablet && (
+                                    <Box sx={{ display: "flex", gap: 2 }}>
+                                        <Box sx={{ p: 0 }}>
+                                            <Sort
+                                                sortName={SORT_FIELD}
+                                                defaultValue={queryParams.sort}
+                                                submitAction={onSortChange}
+                                                sortOptions={getSortOptions()}
+                                            />
+                                        </Box>
+                                        {!excludedDownloadSearchCategories.includes(
+                                            queryParams.type
+                                        ) && (
+                                            <Button
+                                                onClick={() =>
+                                                    !isDownloading &&
+                                                    downloadSearchResults()
+                                                }
+                                                variant="contained"
+                                                color="greyCustom"
+                                                startIcon={
+                                                    <DownloadIcon color="primary" />
+                                                }
+                                                disabled={
+                                                    isDownloading ||
+                                                    !data?.list?.length
+                                                }>
+                                                {t("downloadResults")}
+                                            </Button>
+                                        )}
                                         <Button
-                                            onClick={() =>
-                                                !isDownloading &&
-                                                downloadSearchResults()
-                                            }
-                                            variant="text"
-                                            startIcon={<DownloadIcon />}
-                                            disabled={
-                                                isDownloading ||
-                                                !data?.list?.length
+                                            variant="contained"
+                                            color="greyCustom"
+                                            disabled={hasNotSearched()}
+                                            onClick={handleSaveClick}
+                                            startIcon={
+                                                <BookmarkBorder color="primary" />
                                             }>
-                                            {t("downloadResults")}
+                                            Save search
                                         </Button>
-                                    )}
-                                    <Button
-                                        variant="outlined"
-                                        color="secondary"
-                                        disabled={hasNotSearched()}
-                                        onClick={handleSaveClick}>
-                                        Save search
-                                    </Button>
-                                    {queryParams.type ===
-                                        SearchCategory.DATASETS &&
-                                        !isMobile &&
-                                        !isTablet && (
+                                        {queryParams.type ===
+                                            SearchCategory.DATASETS && (
                                             <Button
                                                 variant="outlined"
                                                 color="secondary"
@@ -1023,9 +1029,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                 startIcon={
                                                     resultsView ===
                                                     ViewType.LIST ? (
-                                                        <FormatListBulletedIcon color="secondary" />
+                                                        <FormatListBulletedIcon color="inherit" />
                                                     ) : (
-                                                        <TableIcon color="secondary" />
+                                                        <TableIcon color="inherit" />
                                                     )
                                                 }>
                                                 {resultsView === ViewType.LIST
@@ -1037,7 +1043,47 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                       )}
                                             </Button>
                                         )}
-                                </Box>
+                                    </Box>
+                                )}
+                                {(isMobile || isTablet) && (
+                                    <Box sx={{ display: "flex", gap: 2 }}>
+                                        <Box sx={{ p: 0 }}>
+                                            <Sort
+                                                sortName={SORT_FIELD}
+                                                defaultValue={queryParams.sort}
+                                                submitAction={onSortChange}
+                                                sortOptions={getSortOptions()}
+                                            />
+                                        </Box>
+                                        {!excludedDownloadSearchCategories.includes(
+                                            queryParams.type
+                                        ) && (
+                                            <Tooltip
+                                                title={t("downloadResults")}>
+                                                <IconButton
+                                                    color="primary"
+                                                    onClick={() =>
+                                                        !isDownloading &&
+                                                        downloadSearchResults()
+                                                    }
+                                                    disabled={
+                                                        isDownloading ||
+                                                        !data?.list?.length
+                                                    }>
+                                                    <DownloadIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        )}
+                                        <Tooltip title={"Save search"}>
+                                            <IconButton
+                                                color="primary"
+                                                disabled={hasNotSearched()}
+                                                onClick={handleSaveClick}>
+                                                <BookmarkBorder />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
+                                )}
                             </ActionBar>
                         )}
 
