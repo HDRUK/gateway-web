@@ -153,7 +153,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showSidebar } = useSidebar();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
-    const isTablet = useMediaQuery(theme.breakpoints.only("tablet"));
+    const isTabletOrLaptop = useMediaQuery(
+        theme.breakpoints.between("tablet", "desktop")
+    );
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -608,7 +610,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     });
 
     const renderResults = () =>
-        resultsView === ViewType.TABLE && !isMobile && !isTablet ? (
+        resultsView === ViewType.TABLE && !isMobile && !isTabletOrLaptop ? (
             <ResultsTable
                 results={data?.list as SearchResultDataset[]}
                 showLibraryModal={showLibraryModal}
@@ -961,132 +963,147 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         }}
                         aria-busy={isSearching}>
                         {!isSearching && !isEuropePmcSearchNoQuery && (
-                            <ActionBar>
-                                <Box sx={{ flex: 1, p: 0 }}>
-                                    <Box
-                                        sx={{ display: "flex" }}
-                                        id="result-summary"
-                                        role="alert"
-                                        aria-live="polite">
-                                        {data &&
-                                            data.path?.includes(
-                                                queryParams.type
-                                            ) &&
-                                            getXofX()}
-                                        {data && data.elastic_total > 100 && (
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
-                                        )}
-                                    </Box>
+                            <>
+                                <Box
+                                    sx={{ display: "flex", paddingX: "1em" }}
+                                    id="result-summary2"
+                                    role="alert"
+                                    aria-live="polite">
+                                    {data && data.elastic_total > 100 && (
+                                        <ResultLimitText>
+                                            {t("resultLimit")}
+                                        </ResultLimitText>
+                                    )}
                                 </Box>
-                                {!isMobile && !isTablet && (
-                                    <Box sx={{ display: "flex", gap: 2 }}>
-                                        <Box sx={{ p: 0 }}>
-                                            <Sort
-                                                sortName={SORT_FIELD}
-                                                defaultValue={queryParams.sort}
-                                                submitAction={onSortChange}
-                                                sortOptions={getSortOptions()}
-                                                iconised={false}
-                                            />
+                                <ActionBar>
+                                    <Box sx={{ flex: 1, p: 0 }}>
+                                        <Box
+                                            sx={{ display: "flex" }}
+                                            id="result-summary"
+                                            role="alert"
+                                            aria-live="polite">
+                                            {data &&
+                                                data.path?.includes(
+                                                    queryParams.type
+                                                ) &&
+                                                getXofX()}
                                         </Box>
-                                        {!excludedDownloadSearchCategories.includes(
-                                            queryParams.type
-                                        ) && (
-                                            <Button
-                                                onClick={() =>
-                                                    !isDownloading &&
-                                                    downloadSearchResults()
-                                                }
-                                                variant="contained"
-                                                color="greyCustom"
-                                                startIcon={
-                                                    <DownloadIcon color="primary" />
-                                                }
-                                                disabled={
-                                                    isDownloading ||
-                                                    !data?.list?.length
-                                                }>
-                                                {t("downloadResults")}
-                                            </Button>
-                                        )}
-                                        <Button
-                                            variant="contained"
-                                            color="greyCustom"
-                                            disabled={hasNotSearched()}
-                                            onClick={handleSaveClick}
-                                            startIcon={
-                                                <BookmarkBorder color="primary" />
-                                            }>
-                                            {t("saveSearch")}
-                                        </Button>
-                                        {queryParams.type ===
-                                            SearchCategory.DATASETS && (
-                                            <Button
-                                                variant="outlined"
-                                                color="secondary"
-                                                onClick={handleToggleView}
-                                                startIcon={
-                                                    resultsView ===
-                                                    ViewType.LIST ? (
-                                                        <FormatListBulletedIcon color="inherit" />
-                                                    ) : (
-                                                        <TableIcon color="inherit" />
-                                                    )
-                                                }>
-                                                {resultsView === ViewType.LIST
-                                                    ? t(
-                                                          "components.Search.toggleLabelTable"
-                                                      )
-                                                    : t(
-                                                          "components.Search.toggleLabelList"
-                                                      )}
-                                            </Button>
-                                        )}
                                     </Box>
-                                )}
-                                {(isMobile || isTablet) && (
-                                    <Box sx={{ display: "flex", gap: 2 }}>
-                                        <Box sx={{ p: 0 }}>
-                                            <Sort
-                                                sortName={SORT_FIELD}
-                                                defaultValue={queryParams.sort}
-                                                submitAction={onSortChange}
-                                                sortOptions={getSortOptions()}
-                                                iconised={true}
-                                            />
-                                        </Box>
-                                        {!excludedDownloadSearchCategories.includes(
-                                            queryParams.type
-                                        ) && (
-                                            <Tooltip
-                                                title={t("downloadResults")}>
-                                                <IconButton
-                                                    color="primary"
+                                    {!isMobile && !isTabletOrLaptop && (
+                                        <Box sx={{ display: "flex", gap: 2 }}>
+                                            <Box sx={{ p: 0 }}>
+                                                <Sort
+                                                    sortName={SORT_FIELD}
+                                                    defaultValue={
+                                                        queryParams.sort
+                                                    }
+                                                    submitAction={onSortChange}
+                                                    sortOptions={getSortOptions()}
+                                                    iconised={false}
+                                                />
+                                            </Box>
+                                            {!excludedDownloadSearchCategories.includes(
+                                                queryParams.type
+                                            ) && (
+                                                <Button
                                                     onClick={() =>
                                                         !isDownloading &&
                                                         downloadSearchResults()
+                                                    }
+                                                    variant="contained"
+                                                    color="greyCustom"
+                                                    startIcon={
+                                                        <DownloadIcon color="primary" />
                                                     }
                                                     disabled={
                                                         isDownloading ||
                                                         !data?.list?.length
                                                     }>
-                                                    <DownloadIcon />
+                                                    {t("downloadResults")}
+                                                </Button>
+                                            )}
+                                            <Button
+                                                variant="contained"
+                                                color="greyCustom"
+                                                disabled={hasNotSearched()}
+                                                onClick={handleSaveClick}
+                                                startIcon={
+                                                    <BookmarkBorder color="primary" />
+                                                }>
+                                                {t("saveSearch")}
+                                            </Button>
+                                            {queryParams.type ===
+                                                SearchCategory.DATASETS && (
+                                                <Button
+                                                    variant="outlined"
+                                                    color="secondary"
+                                                    onClick={handleToggleView}
+                                                    startIcon={
+                                                        resultsView ===
+                                                        ViewType.LIST ? (
+                                                            <FormatListBulletedIcon color="inherit" />
+                                                        ) : (
+                                                            <TableIcon color="inherit" />
+                                                        )
+                                                    }>
+                                                    {resultsView ===
+                                                    ViewType.LIST
+                                                        ? t(
+                                                              "components.Search.toggleLabelTable"
+                                                          )
+                                                        : t(
+                                                              "components.Search.toggleLabelList"
+                                                          )}
+                                                </Button>
+                                            )}
+                                        </Box>
+                                    )}
+                                    {(isMobile || isTabletOrLaptop) && (
+                                        <Box sx={{ display: "flex", gap: 2 }}>
+                                            <Box sx={{ p: 0 }}>
+                                                <Sort
+                                                    sortName={SORT_FIELD}
+                                                    defaultValue={
+                                                        queryParams.sort
+                                                    }
+                                                    submitAction={onSortChange}
+                                                    sortOptions={getSortOptions()}
+                                                    iconised={true}
+                                                />
+                                            </Box>
+                                            {!excludedDownloadSearchCategories.includes(
+                                                queryParams.type
+                                            ) && (
+                                                <Tooltip
+                                                    title={t(
+                                                        "downloadResults"
+                                                    )}>
+                                                    <IconButton
+                                                        color="primary"
+                                                        onClick={() =>
+                                                            !isDownloading &&
+                                                            downloadSearchResults()
+                                                        }
+                                                        disabled={
+                                                            isDownloading ||
+                                                            !data?.list?.length
+                                                        }>
+                                                        <DownloadIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
+                                            <Tooltip title={t("saveSearch")}>
+                                                <IconButton
+                                                    color="primary"
+                                                    disabled={hasNotSearched()}
+                                                    onClick={handleSaveClick}>
+                                                    <BookmarkBorder />
                                                 </IconButton>
                                             </Tooltip>
-                                        )}
-                                        <Tooltip title={t("saveSearch")}>
-                                            <IconButton
-                                                color="primary"
-                                                disabled={hasNotSearched()}
-                                                onClick={handleSaveClick}>
-                                                <BookmarkBorder />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Box>
-                                )}
-                            </ActionBar>
+                                        </Box>
+                                    )}
+                                </ActionBar>
+                            </>
                         )}
 
                         {isSearching && (

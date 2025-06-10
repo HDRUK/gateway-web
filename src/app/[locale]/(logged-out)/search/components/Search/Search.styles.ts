@@ -16,6 +16,5 @@ export const ActionBar = styled(Box)(({ theme }) => ({
 }));
 
 export const ResultLimitText = styled(Typography)(({ theme }) => ({
-    marginLeft: theme.spacing(1),
     fontWeight: 500,
 }));
