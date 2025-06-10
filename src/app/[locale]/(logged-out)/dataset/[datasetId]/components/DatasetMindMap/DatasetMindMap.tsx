@@ -78,16 +78,9 @@ const DatasetMindMap = ({
                 const { title } = data.metadata.metadata.summary;
 
                 if (node.id === "node-synthetic") {
-                    const syntheticLinks =
-                        data.metadata?.metadata?.structuralMetadata
-                            ?.syntheticDataWebLink;
-
-                    if (
-                        Array.isArray(syntheticLinks) &&
-                        syntheticLinks.length > 0
-                    ) {
-                        href = syntheticLinks[0];
-                    }
+                    href =
+                        data.metadata.metadata?.structuralMetadata
+                            ?.syntheticDataWebLink[0];
 
                     if (!href) {
                         emptyNodes.push(node.id);
