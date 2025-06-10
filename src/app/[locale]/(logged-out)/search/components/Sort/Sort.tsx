@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { IconButton, Menu, MenuItem, Tooltip, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { IconType } from "@/interfaces/Ui";
 import InputWrapper from "@/components/InputWrapper";
@@ -32,6 +32,7 @@ const Sort = ({
     iconised,
 }: SortProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const theme = useTheme();
 
     const { control, watch, reset, setValue } = useForm({
         defaultValues: {
@@ -75,6 +76,7 @@ const Sort = ({
                 options={options}
                 formControlSx={{
                     marginBottom: 0,
+                    backgroundColor: theme.palette.common.white,
                 }}
             />
         );
