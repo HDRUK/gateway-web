@@ -102,7 +102,7 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { InfoIcon, TableIcon } from "@/consts/icons";
+import { TableIcon } from "@/consts/icons";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
@@ -1041,9 +1041,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                     startIcon={
                                                         resultsView ===
                                                         ViewType.LIST ? (
-                                                            <FormatListBulletedIcon color="inherit" />
+                                                            <FormatListBulletedIcon color="success" />
                                                         ) : (
-                                                            <TableIcon color="inherit" />
+                                                            <TableIcon color="success" />
                                                         )
                                                     }>
                                                     {resultsView ===
