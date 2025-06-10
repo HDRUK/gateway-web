@@ -1,3 +1,10 @@
+## [2.11.0](https://github.com/HDRUK/gateway-web/compare/v2.10.0...v2.11.0) (2025-06-10)
+
+### ✨ Features
+
+* **GAT-7092:** Add synthetic web link to structural metadata (#1196) ([124a2ee](https://github.com/HDRUK/gateway-web/commit/124a2eeba9ab2035636693e7fb95f00abca7889d)), closes [GAT-7092](GAT-7092)
+* **GAT-7092:** Synthetic data web link tweaks (#1202) ([7d99fe4](https://github.com/HDRUK/gateway-web/commit/7d99fe4db242e5a1d038a924076c9c2b6881ea80)), closes [GAT-7092](GAT-7092)
+
 ## [2.10.0](https://github.com/HDRUK/gateway-web/compare/v2.9.0...v2.10.0) (2025-06-04)
 
 ### ✨ Features
