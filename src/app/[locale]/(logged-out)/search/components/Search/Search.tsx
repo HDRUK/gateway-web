@@ -1060,17 +1060,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     )}
                                     {(isMobile || isTabletOrLaptop) && (
                                         <Box sx={{ display: "flex", gap: 2 }}>
-                                            <Box sx={{ p: 0 }}>
-                                                <Sort
-                                                    sortName={SORT_FIELD}
-                                                    defaultValue={
-                                                        queryParams.sort
-                                                    }
-                                                    submitAction={onSortChange}
-                                                    sortOptions={getSortOptions()}
-                                                    iconised={true}
-                                                />
-                                            </Box>
+                                            <Sort
+                                                sortName={SORT_FIELD}
+                                                defaultValue={queryParams.sort}
+                                                submitAction={onSortChange}
+                                                sortOptions={getSortOptions()}
+                                                iconised={true}
+                                            />
+
                                             {!excludedDownloadSearchCategories.includes(
                                                 queryParams.type
                                             ) && (

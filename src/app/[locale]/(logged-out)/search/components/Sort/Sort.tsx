@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { IconType } from "@/interfaces/Ui";
 import InputWrapper from "@/components/InputWrapper";
 import searchFormConfig from "@/config/forms/search";
-import { DownloadIcon } from "@/consts/icons";
+
+const TRANSLATION_PATH = "pages.search.components.Sort";
 
 type Options = {
     label: string;
@@ -29,6 +31,8 @@ const Sort = ({
     sortOptions,
     iconised,
 }: SortProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     const { control, watch, reset, setValue } = useForm({
         defaultValues: {
             [sortName]: defaultValue,
@@ -77,16 +81,21 @@ const Sort = ({
     } else {
         return (
             <>
-                <IconButton
-                    aria-controls="sort-menu"
-                    aria-haspopup="true"
-                    onClick={handleClick}
-                    aria-label="Open to show sort options"
-                    title="Open to show sort options">
-                    {options.map(option =>
-                        option.value === watchSort ? <option.icon /> : undefined
-                    )}
-                </IconButton>
+                <Tooltip title={t("sortOptions")}>
+                    <IconButton
+                        aria-controls="sort-menu"
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                        aria-label="Open to show sort options"
+                        title="Open to show sort options">
+                        {options.map(option =>
+                            option.value === watchSort ? (
+                                <option.icon />
+                            ) : undefined
+                        )}
+                    </IconButton>
+                </Tooltip>
+
                 <Menu
                     id="sort-menu"
                     anchorEl={anchorEl}
