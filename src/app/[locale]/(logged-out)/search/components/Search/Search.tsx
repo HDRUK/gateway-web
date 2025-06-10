@@ -102,7 +102,7 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { TableIcon } from "@/consts/icons";
+import { InfoIcon, TableIcon } from "@/consts/icons";
 import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
@@ -988,6 +988,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                 defaultValue={queryParams.sort}
                                                 submitAction={onSortChange}
                                                 sortOptions={getSortOptions()}
+                                                iconised={false}
                                             />
                                         </Box>
                                         {!excludedDownloadSearchCategories.includes(
@@ -1053,6 +1054,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                 defaultValue={queryParams.sort}
                                                 submitAction={onSortChange}
                                                 sortOptions={getSortOptions()}
+                                                iconised={true}
                                             />
                                         </Box>
                                         {!excludedDownloadSearchCategories.includes(
