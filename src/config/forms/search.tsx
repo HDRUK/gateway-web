@@ -1,4 +1,10 @@
-import { AddIcon, DownloadIcon, InfoIcon } from "@/consts/icons";
+import {
+    SortAlphabeticalAscIcon,
+    SortAlphabeticalDescIcon,
+    SortDateAscIcon,
+    SortDateDescIcon,
+    SortRelevanceIcon,
+} from "@/consts/icons";
 import { inputComponents } from ".";
 
 export const QUERY_FIELD = "query";
@@ -13,27 +19,27 @@ export const sortByOptionsDataset = [
     {
         label: "Sort by most relevant",
         value: "score:desc",
-        icon: DownloadIcon,
+        icon: SortRelevanceIcon,
     },
     {
         label: "Sort alphabetically by title (A-Z)",
         value: "title:asc",
-        icon: InfoIcon,
+        icon: SortAlphabeticalAscIcon,
     },
     {
         label: "Sort alphabetically by title (Z-A)",
         value: "title:desc",
-        icon: InfoIcon,
+        icon: SortAlphabeticalDescIcon,
     },
     {
         label: "Sort by most recently updated",
         value: "updated_at:desc",
-        icon: AddIcon,
+        icon: SortDateDescIcon,
     },
     {
         label: "Sort by least recently updated",
         value: "updated_at:asc",
-        icon: AddIcon,
+        icon: SortDateAscIcon,
     },
 ];
 

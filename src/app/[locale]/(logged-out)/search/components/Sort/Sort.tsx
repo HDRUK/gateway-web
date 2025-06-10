@@ -101,7 +101,7 @@ const Sort = ({
                                 onClick={handleCloseInner}
                                 key={item.label}
                                 value={item.value}>
-                                {item.label}
+                                <item.icon sx={{ mr: 1 }} /> {item.label}
                             </MenuItem>
                         );
                     })}

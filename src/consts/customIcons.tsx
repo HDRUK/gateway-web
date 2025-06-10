@@ -627,6 +627,81 @@ const TableIcon = createSvgIcon(
     "TableIcon"
 );
 
+const SortRelevanceIcon = createSvgIcon(
+    <svg
+        width="20"
+        height="18"
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M17 14H20L16 18L12 14H15V0H17M0 14H10V16H0M4 2V4H0V2M0 8H7V10H0V8Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortRelevanceIcon"
+);
+
+const SortAlphabeticalAscIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 17H22L18 21L14 17H17V3H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3ZM9 7H7V5H9V7Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortAlphabeticalAscIcon"
+);
+
+const SortAlphabeticalDescIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 7H22L18 3L14 7H17V21H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3ZM9 7H7V5H9V7Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortAlphabeticalDescIcon"
+);
+
+const SortDateAscIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 7H16L20 3L24 7H21V21H19V7ZM8 16H11V13H8V16ZM13 5H12V3H10V5H6V3H4V5H3C1.89 5 1 5.89 1 7V18C1 19.11 1.89 20 3 20H13C14.11 20 15 19.11 15 18V7C15 5.89 14.11 5 13 5ZM3 18V11H13V18H3Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortDateAscIcon"
+);
+
+const SortDateDescIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M21 17H24L20 21L16 17H19V3H21V17ZM8 16H11V13H8V16ZM13 5H12V3H10V5H6V3H4V5H3C1.89 5 1 5.89 1 7V18C1 19.11 1.89 20 3 20H13C14.11 20 15 19.11 15 18V7C15 5.89 14.11 5 13 5ZM3 18V11H13V18H3Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortDateDescIcon"
+);
+
 export {
     BookmarksOutlinedIcon,
     BookmarkBorderIcon,
@@ -657,4 +732,9 @@ export {
     EyeIcon,
     DarEditIcon,
     TableIcon,
+    SortRelevanceIcon,
+    SortAlphabeticalAscIcon,
+    SortAlphabeticalDescIcon,
+    SortDateAscIcon,
+    SortDateDescIcon,
 };
