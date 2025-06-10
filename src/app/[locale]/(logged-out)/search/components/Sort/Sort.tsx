@@ -83,7 +83,9 @@ const Sort = ({
                     onClick={handleClick}
                     aria-label="Open to show sort options"
                     title="Open to show sort options">
-                    <DownloadIcon />
+                    {options.map(option =>
+                        option.value === watchSort ? <option.icon /> : undefined
+                    )}
                 </IconButton>
                 <Menu
                     id="sort-menu"
