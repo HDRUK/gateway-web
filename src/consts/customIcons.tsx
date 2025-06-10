@@ -608,15 +608,15 @@ const TableIcon = createSvgIcon(
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        fill="none"
+        fill="white"
         xmlns="http://www.w3.org/2000/svg">
         <path
             id="Path"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M19.68 19.6H4.32C3.92 19.6 3.6 19.28 3.6 18.88V5.11999C3.6 4.71999 3.92 4.39999 4.32 4.39999H19.68C20.08 4.39999 20.4 4.71999 20.4 5.11999V18.8C20.4 19.28 20.08 19.6 19.68 19.6Z"
             stroke="currentColor"
-            stroke-linejoin="round"
+            strokeLinejoin="round"
         />
         <path
             id="Shape"

@@ -102,8 +102,12 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { TableIcon } from "@/consts/icons";
-import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
+import {
+    AppsIcon,
+    DownloadIcon,
+    TableIcon,
+    ViewListIcon,
+} from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
@@ -518,21 +522,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         updatePath(VIEW_FIELD, viewType);
         Cookies.set(config.VIEW_TYPE, viewType);
     };
-
-    const toggleButtons = [
-        {
-            icon: AppsIcon,
-            value: ViewType.TABLE,
-            label: t("components.Search.toggleLabelTable"),
-            onClick: () => handleChangeView(ViewType.TABLE),
-        },
-        {
-            icon: ViewListIcon,
-            value: ViewType.LIST,
-            label: t("components.Search.toggleLabelList"),
-            onClick: () => handleChangeView(ViewType.LIST),
-        },
-    ];
 
     const downloadSearchResults = async () => {
         setIsDownloading(true);
@@ -1065,7 +1054,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                                 defaultValue={queryParams.sort}
                                                 submitAction={onSortChange}
                                                 sortOptions={getSortOptions()}
-                                                iconised={true}
+                                                iconised
                                             />
 
                                             {!excludedDownloadSearchCategories.includes(

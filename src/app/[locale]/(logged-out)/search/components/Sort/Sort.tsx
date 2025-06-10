@@ -80,48 +80,45 @@ const Sort = ({
                 }}
             />
         );
-    } else {
-        return (
-            <>
-                <Tooltip title={t("sortOptions")}>
-                    <IconButton
-                        aria-controls="sort-menu"
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                        aria-label="Open to show sort options"
-                        title="Open to show sort options">
-                        {options.map(option =>
-                            option.value === watchSort ? (
-                                <option.icon />
-                            ) : undefined
-                        )}
-                    </IconButton>
-                </Tooltip>
-
-                <Menu
-                    id="sort-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}>
-                    {options.map(item => {
-                        const handleCloseInner = () => {
-                            setValue(sortName, item.value);
-                            handleClose();
-                        };
-                        return (
-                            <MenuItem
-                                onClick={handleCloseInner}
-                                key={item.label}
-                                value={item.value}>
-                                <item.icon sx={{ mr: 1 }} /> {item.label}
-                            </MenuItem>
-                        );
-                    })}
-                </Menu>
-            </>
-        );
     }
+    return (
+        <>
+            <Tooltip title={t("sortOptions")}>
+                <IconButton
+                    aria-controls="sort-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    aria-label="Open to show sort options"
+                    title="Open to show sort options">
+                    {options.map(option =>
+                        option.value === watchSort ? <option.icon /> : undefined
+                    )}
+                </IconButton>
+            </Tooltip>
+
+            <Menu
+                id="sort-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}>
+                {options.map(item => {
+                    const handleCloseInner = () => {
+                        setValue(sortName, item.value);
+                        handleClose();
+                    };
+                    return (
+                        <MenuItem
+                            onClick={handleCloseInner}
+                            key={item.label}
+                            value={item.value}>
+                            <item.icon sx={{ mr: 1 }} /> {item.label}
+                        </MenuItem>
+                    );
+                })}
+            </Menu>
+        </>
+    );
 };
 
 export default Sort;

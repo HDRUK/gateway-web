@@ -15,6 +15,6 @@ export const ActionBar = styled(Box)(({ theme }) => ({
     },
 }));
 
-export const ResultLimitText = styled(Typography)(({ theme }) => ({
+export const ResultLimitText = styled(Typography)(() => ({
     fontWeight: 500,
 }));
