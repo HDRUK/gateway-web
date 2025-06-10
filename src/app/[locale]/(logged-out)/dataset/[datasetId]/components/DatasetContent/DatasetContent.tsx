@@ -93,8 +93,11 @@ const DatasetContent = ({
                 );
             }
             case FieldType.TAG_LIST: {
-                const tagList = value;
+                let tagList: string[] | string = value;
 
+                if (typeof tagList === "string") {
+                    tagList = tagList.split(",");
+                }
                 return (
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
