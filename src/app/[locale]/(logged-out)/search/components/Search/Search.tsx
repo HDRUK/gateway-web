@@ -857,16 +857,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     />
                 </Box>
             </Box>
-            <ActionBar>
-                <Box sx={{ flex: 1, p: 0 }}>
-                    <FilterChips
-                        label={t("filtersApplied")}
-                        selectedFilters={selectedFilters}
-                        handleDelete={removeFilter}
-                        filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
-                    />
-                </Box>
-            </ActionBar>
+
             <Box
                 sx={{
                     width: "100%",
@@ -956,6 +947,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             m: 2,
                         }}
                         aria-busy={isSearching}>
+                        <FilterChips
+                            label={t("filtersApplied")}
+                            selectedFilters={selectedFilters}
+                            handleDelete={removeFilter}
+                            filterCategory={
+                                FILTER_TYPE_MAPPING[queryParams.type]
+                            }
+                        />
                         {!isSearching && !isEuropePmcSearchNoQuery && (
                             <>
                                 <Box
