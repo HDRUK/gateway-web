@@ -397,7 +397,7 @@ async function getAllDarSections(
         `${apis.dataAccessSectionV1UrlIP}?page=-1`,
         {
             cache: {
-                tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
+                tags: [CACHE_DAR, CACHE_DAR_SECTIONS, CACHE_DAR_REVIEWS],
                 revalidate: 4 * 60 * 60,
             },
         }
