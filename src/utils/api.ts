@@ -387,7 +387,8 @@ async function getDarSections(
             },
         }
     );
-},
+}
+
 async function getAllDarSections(
     cookieStore: ReadonlyRequestCookies
 ): Promise<QuestionBankSection[]> {
