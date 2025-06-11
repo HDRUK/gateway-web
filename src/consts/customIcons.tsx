@@ -603,6 +603,105 @@ const DarEditIcon = createSvgIcon(
     "DarEditIcon"
 );
 
+const TableIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="white"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            id="Path"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M19.68 19.6H4.32C3.92 19.6 3.6 19.28 3.6 18.88V5.11999C3.6 4.71999 3.92 4.39999 4.32 4.39999H19.68C20.08 4.39999 20.4 4.71999 20.4 5.11999V18.8C20.4 19.28 20.08 19.6 19.68 19.6Z"
+            stroke="currentColor"
+            strokeLinejoin="round"
+        />
+        <path
+            id="Shape"
+            d="M3.6 7.09999C3.32386 7.09999 3.1 7.32385 3.1 7.59999C3.1 7.87613 3.32386 8.09999 3.6 8.09999V7.09999ZM20.4 8.09999C20.6761 8.09999 20.9 7.87613 20.9 7.59999C20.9 7.32385 20.6761 7.09999 20.4 7.09999V8.09999ZM9.7 7.59999C9.7 7.32385 9.47614 7.09999 9.2 7.09999C8.92386 7.09999 8.7 7.32385 8.7 7.59999H9.7ZM8.7 19.6C8.7 19.8761 8.92386 20.1 9.2 20.1C9.47614 20.1 9.7 19.8761 9.7 19.6H8.7ZM15.3 7.59999C15.3 7.32385 15.0761 7.09999 14.8 7.09999C14.5239 7.09999 14.3 7.32385 14.3 7.59999H15.3ZM14.3 19.6C14.3 19.8761 14.5239 20.1 14.8 20.1C15.0761 20.1 15.3 19.8761 15.3 19.6H14.3ZM3.6 11.1C3.32386 11.1 3.1 11.3238 3.1 11.6C3.1 11.8761 3.32386 12.1 3.6 12.1V11.1ZM20.4 12.1C20.6761 12.1 20.9 11.8761 20.9 11.6C20.9 11.3238 20.6761 11.1 20.4 11.1V12.1ZM3.6 15.1C3.32386 15.1 3.1 15.3238 3.1 15.6C3.1 15.8761 3.32386 16.1 3.6 16.1V15.1ZM20.4 16.1C20.6761 16.1 20.9 15.8761 20.9 15.6C20.9 15.3238 20.6761 15.1 20.4 15.1V16.1ZM3.6 8.09999H20.4V7.09999H3.6V8.09999ZM8.7 7.59999V19.6H9.7V7.59999H8.7ZM14.3 7.59999V19.6H15.3V7.59999H14.3ZM3.6 12.1H20.4V11.1H3.6V12.1ZM3.6 16.1H20.4V15.1H3.6V16.1Z"
+            fill="currentColor"
+        />
+    </svg>,
+    "TableIcon"
+);
+
+const SortRelevanceIcon = createSvgIcon(
+    <svg
+        width="20"
+        height="18"
+        viewBox="0 0 20 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M17 14H20L16 18L12 14H15V0H17M0 14H10V16H0M4 2V4H0V2M0 8H7V10H0V8Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortRelevanceIcon"
+);
+
+const SortAlphabeticalAscIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 17H22L18 21L14 17H17V3H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3ZM9 7H7V5H9V7Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortAlphabeticalAscIcon"
+);
+
+const SortAlphabeticalDescIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 7H22L18 3L14 7H17V21H19M11 13V15L7.67 19H11V21H5V19L8.33 15H5V13M9 3H7C5.9 3 5 3.9 5 5V11H7V9H9V11H11V5C11 3.9 10.11 3 9 3ZM9 7H7V5H9V7Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortAlphabeticalDescIcon"
+);
+
+const SortDateAscIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M19 7H16L20 3L24 7H21V21H19V7ZM8 16H11V13H8V16ZM13 5H12V3H10V5H6V3H4V5H3C1.89 5 1 5.89 1 7V18C1 19.11 1.89 20 3 20H13C14.11 20 15 19.11 15 18V7C15 5.89 14.11 5 13 5ZM3 18V11H13V18H3Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortDateAscIcon"
+);
+
+const SortDateDescIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M21 17H24L20 21L16 17H19V3H21V17ZM8 16H11V13H8V16ZM13 5H12V3H10V5H6V3H4V5H3C1.89 5 1 5.89 1 7V18C1 19.11 1.89 20 3 20H13C14.11 20 15 19.11 15 18V7C15 5.89 14.11 5 13 5ZM3 18V11H13V18H3Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "SortDateDescIcon"
+);
+
 export {
     BookmarksOutlinedIcon,
     BookmarkBorderIcon,
@@ -632,4 +731,10 @@ export {
     DeleteIcon,
     EyeIcon,
     DarEditIcon,
+    TableIcon,
+    SortRelevanceIcon,
+    SortAlphabeticalAscIcon,
+    SortAlphabeticalDescIcon,
+    SortDateAscIcon,
+    SortDateDescIcon,
 };

@@ -561,6 +561,7 @@ const FilterPanel = ({
                                 }}>
                                 <Tooltip
                                     describeChild
+                                    placement="right"
                                     title={t(`${label}${TOOLTIP_SUFFIX}`)}>
                                     <div>
                                         <Typography
