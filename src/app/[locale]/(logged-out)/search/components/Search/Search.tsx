@@ -8,7 +8,7 @@ import {
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -148,6 +148,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
+    const theme = useTheme();
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -178,15 +179,25 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         [searchParams]
     );
 
+    // This can be removed when search endpoint has been updated to use data_custodians
+    const getSearchType = (searchCategory: SearchCategory) => {
+        if (searchCategory === SearchCategory.DATA_CUSTODIANS) {
+            return SearchCategory.DATA_PROVIDERS_LEGACY;
+        }
+
+        return searchCategory;
+    };
+
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
         page: getParamString(PAGE_FIELD) || "1",
         per_page: "25",
-        type:
+        type: getSearchType(
             (getParamString(TYPE_FIELD) as SearchCategory) ||
-            SearchCategory.DATASETS,
+                SearchCategory.DATASETS
+        ),
         [STATIC_FILTER_SOURCE]:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
@@ -291,9 +302,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const onQuerySubmit = async (data: FieldValues) => {
         setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
-
-        updatePath(QUERY_FIELD, data.query);
-        updatePath(PAGE_FIELD, "1");
+        updatePathMultiple({
+            [QUERY_FIELD]: data.query,
+            [PAGE_FIELD]: "1",
+        });
     };
 
     const onSortChange = async (selectedValue: string) => {
@@ -327,7 +339,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         isLoading: isSearching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
-        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&perPage=${
+        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&per_page=${
             queryParams.per_page
         }&page=${queryParams.page}&sort=${queryParams.sort}${
             queryParams.type === SearchCategory.PUBLICATIONS
@@ -370,7 +382,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=-1`,
+        `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
 
@@ -381,7 +393,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             sort: searchFormConfig.defaultValues.sort,
             page: "1",
             per_page: "25",
-            type: selectedType,
+            type: getSearchType(selectedType),
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
             [FILTER_COLLECTION_NAME]: undefined,
@@ -453,7 +465,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     {t("dataProviders")}
                 </TabTooltip>
             ),
-            value: SearchCategory.DATA_PROVIDERS,
+            value: SearchCategory.DATA_CUSTODIANS,
             content: "",
         },
         {
@@ -563,7 +575,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         result={result as SearchResultCollection}
                     />
                 );
-            case SearchCategory.DATA_PROVIDERS:
+            case SearchCategory.DATA_CUSTODIANS:
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return (
                     <ResultCardDataProvider
                         result={result as SearchResultDataProvider}
@@ -600,7 +613,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    queryParams.type === SearchCategory.DATA_PROVIDERS
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS ||
+                    queryParams.type === SearchCategory.DATA_PROVIDERS_LEGACY
                         ? "tiled"
                         : "list"
                 }>
@@ -618,7 +632,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 return sortByOptionsPublications;
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
-            case SearchCategory.DATA_PROVIDERS:
+            case SearchCategory.DATA_CUSTODIANS:
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
@@ -707,8 +722,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 return t("searchExplainerDataUse");
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
-            case SearchCategory.DATA_PROVIDERS:
-                return t("searchExplainerDataProviders");
+            case SearchCategory.DATA_CUSTODIANS:
+            case SearchCategory.DATA_PROVIDERS_LEGACY:
+                return t("searchExplainerDataCustodians");
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
             default:
@@ -718,7 +734,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const excludedDownloadSearchCategories = [
         SearchCategory.PUBLICATIONS,
-        SearchCategory.DATA_PROVIDERS,
+        SearchCategory.DATA_CUSTODIANS,
+        SearchCategory.DATA_PROVIDERS_LEGACY,
         SearchCategory.COLLECTIONS,
     ];
 
@@ -793,28 +810,46 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             }}>
             <Box
                 sx={{
-                    backgroundColor: "white",
                     width: "100%",
-                    paddingRight: 6,
-                    paddingLeft: 6,
                     display: "flex",
                     justifyContent: "center",
+                    background: `linear-gradient(97.46deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
                 }}>
-                <SearchBar
-                    defaultValue={queryParams.query}
-                    explainerText={getExplainerText()}
-                    resetAction={() => resetQueryInput()}
-                    isDisabled={!queryParams.query}
-                    submitAction={onQuerySubmit}
-                    queryPlaceholder={t("searchPlaceholder")}
-                    queryName={QUERY_FIELD}
-                    inputOverrideAction={
-                        isEuropePmcSearch ? europePmcModalAction : undefined
-                    }
-                    valueOverride={
-                        isPublications ? queryParams.query : undefined
-                    }
-                />
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        maxWidth: "768px",
+                        marginX: 1,
+                        flexGrow: 1,
+                    }}>
+                    <Typography
+                        variant="h1"
+                        color="white"
+                        sx={{
+                            marginTop: 4,
+                            marginBottom: 0.5,
+                            fontSize: "40px",
+                        }}>
+                        {t("searchHeader")}
+                    </Typography>
+                    <SearchBar
+                        defaultValue={queryParams.query}
+                        explainerText={getExplainerText()}
+                        resetAction={() => resetQueryInput()}
+                        isDisabled={!queryParams.query}
+                        submitAction={onQuerySubmit}
+                        queryPlaceholder={t("searchPlaceholder")}
+                        queryName={QUERY_FIELD}
+                        inputOverrideAction={
+                            isEuropePmcSearch ? europePmcModalAction : undefined
+                        }
+                        valueOverride={
+                            isPublications ? queryParams.query : undefined
+                        }
+                    />
+                </Box>
             </Box>
             <ActionBar>
                 <Box sx={{ flex: 1, p: 0 }}>

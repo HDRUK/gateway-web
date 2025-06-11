@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Tooltip } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -12,7 +13,6 @@ import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
 import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
-import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import {
@@ -526,7 +526,6 @@ const FilterPanel = ({
                 ) {
                     return null;
                 }
-
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
 
                 return (
@@ -560,15 +559,17 @@ const FilterPanel = ({
                                     width: "100%",
                                     pr: 3.25,
                                 }}>
-                                <Typography fontWeight="400" fontSize={20}>
-                                    {t(label)}
-                                </Typography>
-                                <TooltipIcon
-                                    content={t(`${label}${TOOLTIP_SUFFIX}`)}
-                                    label=""
-                                    buttonSx={{ p: 0 }}
-                                    size="small"
-                                />
+                                <Tooltip
+                                    describeChild
+                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                    <div>
+                                        <Typography
+                                            fontWeight="400"
+                                            fontSize={20}>
+                                            {t(label)}
+                                        </Typography>
+                                    </div>
+                                </Tooltip>
                             </Box>
                         }
                         onChange={() =>

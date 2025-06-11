@@ -48,6 +48,7 @@ import {
     DATA_CUSTODIAN_NAME,
     DATASET_TYPE,
     INITIAL_FORM_SECTION,
+    PATIENT_PATHWAY_DESCRIPTION,
     STRUCTURAL_METADATA_FORM_SECTION,
     SUBMISSON_FORM_SECTION,
 } from "@/consts/createDataset";
@@ -317,6 +318,13 @@ const CreateDataset = ({
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
+    const patientPathway = watch(PATIENT_PATHWAY_DESCRIPTION);
+    useEffect(() => {
+        if (patientPathway === "") {
+            setValue(PATIENT_PATHWAY_DESCRIPTION, undefined);
+        }
+    }, [patientPathway, setValue]);
+
     // This is a bit of a hack
     // - the data_custodian_id is coming back as a persistent ID due to a confusing in naming/bug
     // - we need to make sure therefore that the watchId, from the form, for data custodian identifier
@@ -387,7 +395,7 @@ const CreateDataset = ({
                 hasVisibleFieldsForLocation(schemaFields, location)
             )
         )
-        .concat([STRUCTURAL_METADATA_FORM_SECTION, SUBMISSON_FORM_SECTION]);
+        .concat([SUBMISSON_FORM_SECTION]);
 
     const currentSectionIndex = selectedFormSection
         ? formSections.indexOf(selectedFormSection)
@@ -763,91 +771,87 @@ const CreateDataset = ({
                 currentSectionIndex > 0 ? (
                     <>
                         <Box sx={{ flex: 2, p: 0 }}>
-                            {isStructuralMetadataSection && (
-                                <StructuralMetadataSection
-                                    selectedFormSection={selectedFormSection}
-                                    structuralMetadata={structuralMetadata}
-                                    fileProcessedAction={(
-                                        metadata: StructuralMetadata[]
-                                    ) => {
-                                        notificationService.apiSuccess(
-                                            t("uploadSuccess")
-                                        );
-                                        setStructuralMetadata(metadata);
-                                    }}
-                                    handleToggleUploading={setIsSaving}
-                                />
-                            )}
+                            <Form>
+                                <Paper
+                                    sx={{
+                                        marginTop: "10px",
+                                        marginBottom: "10px",
+                                        padding: 2,
+                                    }}>
+                                    <Typography variant="h2">
+                                        {capitalise(
+                                            splitCamelcase(selectedFormSection)
+                                        )}
+                                    </Typography>
 
-                            {!isStructuralMetadataSection &&
-                                currentSectionIndex > 0 && (
-                                    <Form>
-                                        <Paper
-                                            sx={{
-                                                marginTop: "10px",
-                                                marginBottom: "10px",
-                                                padding: 2,
-                                            }}>
-                                            <Typography variant="h2">
-                                                {capitalise(
-                                                    splitCamelcase(
-                                                        selectedFormSection
+                                    {isStructuralMetadataSection && (
+                                        <StructuralMetadataSection
+                                            structuralMetadata={
+                                                structuralMetadata
+                                            }
+                                            fileProcessedAction={(
+                                                metadata: StructuralMetadata[]
+                                            ) => {
+                                                notificationService.apiSuccess(
+                                                    t("uploadSuccess")
+                                                );
+                                                setStructuralMetadata(metadata);
+                                            }}
+                                            handleToggleUploading={setIsSaving}
+                                        />
+                                    )}
+
+                                    {currentSectionIndex > 0 && (
+                                        <Box sx={{ p: 0 }}>
+                                            {selectedFormSection &&
+                                                schemaFields
+                                                    .filter(
+                                                        schemaField =>
+                                                            !schemaField.field
+                                                                ?.hidden
                                                     )
-                                                )}
-                                            </Typography>
-
-                                            <Box sx={{ p: 0 }}>
-                                                {selectedFormSection &&
-                                                    schemaFields
-                                                        .filter(
-                                                            schemaField =>
-                                                                !schemaField
-                                                                    .field
-                                                                    ?.hidden
+                                                    .filter(({ location }) =>
+                                                        location?.startsWith(
+                                                            selectedFormSection
                                                         )
-                                                        .filter(
-                                                            ({ location }) =>
-                                                                location?.startsWith(
-                                                                    selectedFormSection
+                                                    )
+                                                    .map(fieldParent => {
+                                                        const {
+                                                            field,
+                                                            fields,
+                                                        } = fieldParent;
+
+                                                        return fields?.length ? (
+                                                            <FormFieldArray
+                                                                control={
+                                                                    control
+                                                                }
+                                                                formArrayValues={
+                                                                    getValues(
+                                                                        fieldParent.title
+                                                                    ) as unknown as FormValues[]
+                                                                }
+                                                                fieldParent={
+                                                                    fieldParent
+                                                                }
+                                                                setSelectedField={
+                                                                    updateGuidanceText
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            field &&
+                                                                renderFormHydrationField(
+                                                                    field,
+                                                                    control,
+                                                                    undefined,
+                                                                    updateGuidanceText
                                                                 )
-                                                        )
-                                                        .map(fieldParent => {
-                                                            const {
-                                                                field,
-                                                                fields,
-                                                            } = fieldParent;
-
-                                                            return fields?.length ? (
-                                                                <FormFieldArray
-                                                                    control={
-                                                                        control
-                                                                    }
-                                                                    formArrayValues={
-                                                                        getValues(
-                                                                            fieldParent.title
-                                                                        ) as unknown as FormValues[]
-                                                                    }
-                                                                    fieldParent={
-                                                                        fieldParent
-                                                                    }
-                                                                    setSelectedField={
-                                                                        updateGuidanceText
-                                                                    }
-                                                                />
-                                                            ) : (
-                                                                field &&
-                                                                    renderFormHydrationField(
-                                                                        field,
-                                                                        control,
-                                                                        undefined,
-                                                                        updateGuidanceText
-                                                                    )
-                                                            );
-                                                        })}
-                                            </Box>
-                                        </Paper>
-                                    </Form>
-                                )}
+                                                        );
+                                                    })}
+                                        </Box>
+                                    )}
+                                </Paper>
+                            </Form>
                         </Box>
                         {currentSectionIndex > 0 && (
                             <Paper

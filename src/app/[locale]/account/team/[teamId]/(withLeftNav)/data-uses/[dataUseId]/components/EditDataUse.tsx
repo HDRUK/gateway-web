@@ -55,7 +55,7 @@ const EditDataUse = () => {
     const { showBar } = useActionBar();
 
     const { data: keywords } = useGet<Keyword[]>(
-        `${apis.keywordsV1Url}?perPage=-1`
+        `${apis.keywordsV1Url}?per_page=-1`
     );
 
     const { data } = useGet<DataUse[]>(

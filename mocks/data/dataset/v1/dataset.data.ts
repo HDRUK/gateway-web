@@ -170,7 +170,7 @@ const generatePageDataSetV1 = (): Dataset => {
                                     ],
                                 },
                             ],
-                            syntheticDataWebLink: null,
+                            syntheticDataWebLink: [],
                         },
                     },
                 },

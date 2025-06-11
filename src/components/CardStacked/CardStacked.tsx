@@ -41,8 +41,6 @@ export default function CardStacked({
                     backgroundPosition: "center",
                 }}>
                 <Chip
-                    role="heading"
-                    aria-level={3}
                     size="small"
                     label={<HTMLContent content={title} />}
                     sx={{
@@ -50,6 +48,7 @@ export default function CardStacked({
                         color: colors.white,
                         maxWidth: "220px",
                     }}
+                    data-testid="grid-chip"
                     {...chipProps}
                 />
             </Box>
