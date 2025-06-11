@@ -102,12 +102,7 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import {
-    AppsIcon,
-    DownloadIcon,
-    TableIcon,
-    ViewListIcon,
-} from "@/consts/icons";
+import { DownloadIcon, TableIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
