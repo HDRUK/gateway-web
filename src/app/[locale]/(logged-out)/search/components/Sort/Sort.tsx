@@ -81,6 +81,12 @@ const Sort = ({
             />
         );
     }
+
+    const handleCloseInner = (item: Options) => {
+        setValue(sortName, item.value);
+        handleClose();
+    };
+
     return (
         <>
             <Tooltip title={t("sortOptions")}>
@@ -103,13 +109,9 @@ const Sort = ({
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
                 {options.map(item => {
-                    const handleCloseInner = () => {
-                        setValue(sortName, item.value);
-                        handleClose();
-                    };
                     return (
                         <MenuItem
-                            onClick={handleCloseInner}
+                            onClick={() => handleCloseInner(item)}
                             key={item.label}
                             value={item.value}>
                             <item.icon sx={{ mr: 1 }} /> {item.label}
