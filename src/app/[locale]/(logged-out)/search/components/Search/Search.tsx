@@ -861,21 +861,30 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <Box
                 sx={{
                     width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "white",
                 }}>
                 <Tabs
                     centered
                     tabs={categoryTabs}
                     tabBoxSx={{
-                        paddingLeft: 4,
-                        paddingRight: 4,
-                        borderBottom: `1px solid ${colors.green400}`,
-                        marginBottom: 1,
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                        // borderBottom: `1px solid ${colors.green400}`,
+                        // marginBottom: 1,
                     }}
                     rootBoxSx={{ padding: 0 }}
-                    variant={TabVariant.STANDARD}
+                    variant={TabVariant.SEARCH}
+                    sx={{}}
                     paramName={TYPE_FIELD}
                     persistParams={false}
                     tabVariant="scrollable"
+                    // sx={{
+                    //     [`& .${tabsClasses.scroller}`]: {
+                    //         "&.MuiTabs-scrollableX": { flexGrow: "0" },
+                    //     },
+                    // }}
                     handleChange={(_, value) =>
                         resetQueryParamState(value as SearchCategory)
                     }
@@ -969,18 +978,16 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     )}
                                 </Box>
                                 <ActionBar>
-                                    <Box sx={{ flex: 1, p: 0 }}>
-                                        <Box
-                                            sx={{ display: "flex" }}
-                                            id="result-summary"
-                                            role="alert"
-                                            aria-live="polite">
-                                            {data &&
-                                                data.path?.includes(
-                                                    queryParams.type
-                                                ) &&
-                                                getXofX()}
-                                        </Box>
+                                    <Box
+                                        sx={{ display: "flex" }}
+                                        id="result-summary"
+                                        role="alert"
+                                        aria-live="polite">
+                                        {data &&
+                                            data.path?.includes(
+                                                queryParams.type
+                                            ) &&
+                                            getXofX()}
                                     </Box>
                                     {!isMobile && !isTabletOrLaptop && (
                                         <Box sx={{ display: "flex", gap: 2 }}>

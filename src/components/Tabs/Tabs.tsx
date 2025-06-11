@@ -22,6 +22,7 @@ export enum TabVariant {
     STANDARD = "standard",
     LARGE = "large",
     SLIM = "slim",
+    SEARCH = "search",
 }
 
 export interface TabProps {
@@ -95,17 +96,22 @@ const Tabs = ({
     return (
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>
             <MuiTabContext value={selectedTab}>
-                <Paper
-                    css={variant === TabVariant.LARGE && tabsStyle.tabList}
+                <Box
+                    // css={variant === TabVariant.LARGE && tabsStyle.tabList}
                     sx={{
-                        paddingBottom: 0,
+                        padding: 0,
                         background: "none",
+                        sx: {
+                            //TODO: only apply when needed
+                            display: "flex",
+                            justifyContent: "center",
+                        },
                         ...tabBoxSx,
                     }}>
                     <MuiTabList
                         aria-label={ariaLabel ?? "tab navigation"}
                         variant={tabVariant}
-                        scrollButtons="auto"
+                        scrollButtons={true}
                         sx={{
                             mb: variant === TabVariant.STANDARD ? 1 : 0,
                             ".MuiTabs-indicator": {
@@ -128,8 +134,8 @@ const Tabs = ({
                                 value={tab.value}
                                 label={tab.label}
                                 css={
-                                    variant === TabVariant.LARGE
-                                        ? tabsStyle.tab
+                                    variant === TabVariant.SEARCH
+                                        ? tabsStyle.search
                                         : tabsStyle.normal
                                 }
                                 param={paramName}
@@ -137,7 +143,7 @@ const Tabs = ({
                             />
                         ))}
                     </MuiTabList>
-                </Paper>
+                </Box>
                 {introContent}
                 {renderTabContent &&
                     tabs.map(tab => (
