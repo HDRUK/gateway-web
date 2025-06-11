@@ -9,9 +9,9 @@ import {
 import { DarApplicationApprovalStatus } from "@/consts/dataAccess";
 import { RouteName } from "@/consts/routeName";
 import {
+    getAllDarSections,
     getDarAnswersTeam,
     getDarReviewsTeam,
-    getDarSections,
     getDarTeamApplication,
     getUser,
     updateDarApplicationTeam,
@@ -60,7 +60,7 @@ export default async function DarApplicationPage({
     let reviews;
     try {
         [sections, userAnswers, reviews] = await Promise.all([
-            getDarSections(cookieStore),
+            getAllDarSections(cookieStore),
             getDarAnswersTeam(cookieStore, applicationId, teamId),
             getDarReviewsTeam(cookieStore, applicationId, teamId),
         ]);
