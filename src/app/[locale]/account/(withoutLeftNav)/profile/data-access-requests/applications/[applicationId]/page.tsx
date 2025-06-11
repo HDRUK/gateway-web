@@ -16,6 +16,7 @@ import {
     getDarReviewsUser,
     getUserFromCookie,
     updateDarApplicationUser,
+    getAllDarSections,
 } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import notFound from "@/app/not-found";
@@ -60,17 +61,20 @@ export default async function DarApplicationPage({
     }
 
     let sections;
+    let testSections;
     let userAnswers;
     let reviews;
     try {
-        [sections, userAnswers, reviews] = await Promise.all([
+        [sections, testSections, userAnswers, reviews] = await Promise.all([
             getDarSections(cookieStore),
+            getAllDarSections(cookieStore),
             getDarAnswersUser(cookieStore, applicationId, userId),
             getDarReviewsUser(cookieStore, applicationId, userId),
         ]);
     } catch {
         redirect("/error/401");
     }
+    console.log('<<<<<', testSections)
     console.log('<<<<<', sections)
 
     if (!darApplication || !sections) {
