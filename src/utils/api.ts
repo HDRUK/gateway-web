@@ -379,7 +379,7 @@ async function getDarSections(
 ): Promise<QuestionBankSection[]> {
     return get<QuestionBankSection[]>(
         cookieStore,
-        apis.dataAccessSectionV1UrlIP,
+        `${apis.dataAccessSectionV1UrlIP}?page=-1`,
         {
             cache: {
                 tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
