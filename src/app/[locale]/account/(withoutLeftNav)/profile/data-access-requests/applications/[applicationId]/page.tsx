@@ -10,7 +10,6 @@ import {
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import {
-    getDarSections,
     getDarAnswersUser,
     getDarApplicationUser,
     getDarReviewsUser,
