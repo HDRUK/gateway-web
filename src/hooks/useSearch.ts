@@ -18,7 +18,7 @@ const useSearch = (
     const t = useTranslations(TRANSLATION_PATH);
 
     const submitPostRequest = usePost(
-        `${apis.searchV1Url}/${searchType}?perPage=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
+        `${apis.searchV1Url}/${searchType}?per_page=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
         {
             successNotificationsOn: false,
         }

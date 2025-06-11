@@ -8,14 +8,13 @@ import {
     useState,
     useEffect,
 } from "react";
-import { colors } from "@mui/material";
+import { colors, Divider } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { range } from "lodash";
 import { useTranslations } from "next-intl";
 import { StructuralMetadata } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import DownloadFile from "@/components/DownloadFile";
-import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
 import Table from "@/components/Table";
 import Typography from "@/components/Typography";
@@ -29,12 +28,10 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
-import { capitalise, splitCamelcase } from "@/utils/general";
 
 const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset.structuralMetadata`;
 
 interface StructuralMetadataProps {
-    selectedFormSection: string;
     structuralMetadata?: StructuralMetadata[];
     fileProcessedAction: (metadata: StructuralMetadata[]) => void;
     handleToggleUploading: (isUploading: boolean) => void;
@@ -72,7 +69,6 @@ const renderTableHeader = (headerText: string) => (
 );
 
 const StructuralMetadataSection = ({
-    selectedFormSection,
     structuralMetadata,
     fileProcessedAction,
     handleToggleUploading,
@@ -114,16 +110,7 @@ const StructuralMetadataSection = ({
     }, [isUploading]);
 
     return (
-        <Paper
-            sx={{
-                marginTop: 1.25,
-                marginBottom: 1.25,
-                padding: 2,
-            }}>
-            <Typography variant="h2">
-                {capitalise(splitCamelcase(selectedFormSection))}
-            </Typography>
-
+        <>
             <Box sx={{ p: 0, mb: 3 }}>
                 <Typography sx={{ mb: 2 }}>{t("intro")}</Typography>
                 <Table columns={getColumns()} rows={range(0, 6)} />
@@ -170,7 +157,9 @@ const StructuralMetadataSection = ({
                     />
                 </Box>
             )}
-        </Paper>
+
+            <Divider sx={{ mb: 3 }} />
+        </>
     );
 };
 

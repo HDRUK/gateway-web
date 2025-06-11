@@ -41,7 +41,7 @@ export default function DataCustodianContent({
                 }) => (
                     <Fragment key="data-custodian">
                         <Link
-                            href={`/${RouteName.DATA_PROVIDERS_ITEM}/${id}`}
+                            href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}
                             style={{ textDecoration: "none" }}>
                             {name}
                         </Link>

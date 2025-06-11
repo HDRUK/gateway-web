@@ -49,17 +49,20 @@ const CohortDiscoveryButton = ({
         }
     );
 
-    const { data: accessData } = useGet<accessRequestType>(
-        `${apis.cohortRequestsV1Url}/access`,
-        {
-            shouldFetch: isClicked && userData?.request_status === "APPROVED",
-        }
-    );
-
     const openAthensInvalid =
         isLoggedIn &&
         user?.provider === "open-athens" &&
         !user?.secondary_email;
+
+    const { data: accessData } = useGet<accessRequestType>(
+        `${apis.cohortRequestsV1Url}/access`,
+        {
+            shouldFetch:
+                isClicked &&
+                !openAthensInvalid &&
+                userData?.request_status === "APPROVED",
+        }
+    );
 
     useEffect(() => {
         if (isClicked) {

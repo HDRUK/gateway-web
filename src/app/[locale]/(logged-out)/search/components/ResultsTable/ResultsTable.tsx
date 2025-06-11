@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -10,7 +11,6 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
-import TooltipIcon from "@/components/TooltipIcon";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -99,7 +99,7 @@ const getColumns = ({
             const dataCustodianId = get(original, PUBLISHERS_ID);
             // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
             const isNumber = !Number.isNaN(dataCustodianId);
-            const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
+            const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
 
             return (
                 <div style={{ textAlign: "center" }}>
@@ -121,12 +121,12 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.dataProviderLabel}
-                size="small"
-                content={translations.dataProviderTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.dataProviderTooltip}
+                tabIndex={0}>
+                {translations.dataProviderLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -142,12 +142,12 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.populationSizeLabel}
-                content={translations.populationSizeTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.populationSizeTooltip}
+                tabIndex={0}>
+                {translations.populationSizeLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -160,12 +160,12 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.dateRangePublisherLabel}
-                content={translations.dateRangePublisherTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.dateRangePublisherTooltip}
+                tabIndex={0}>
+                {translations.dateRangePublisherLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -178,12 +178,12 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.accessServiceLabel}
-                size="small"
-                content={translations.accessServiceTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.accessServiceTooltip}
+                tabIndex={0}>
+                {translations.accessServiceLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -196,12 +196,12 @@ const getColumns = ({
             </div>
         ),
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                size="small"
-                label={translations.dataStandardLabel}
-                content={translations.dataStandardTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.dataStandardTooltip}
+                tabIndex={0}>
+                {translations.dataStandardLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -217,12 +217,12 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.cohortDiscoveryLabel}
-                size="small"
-                content={translations.cohortDiscoveryTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.cohortDiscoveryTooltip}
+                tabIndex={0}>
+                {translations.cohortDiscoveryLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -238,12 +238,12 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.containsTissueLabel}
-                size="small"
-                content={translations.containsTissueTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.containsTissueTooltip}
+                tabIndex={0}>
+                {translations.containsTissueLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -259,12 +259,12 @@ const getColumns = ({
             );
         },
         header: () => (
-            <TooltipIcon
-                buttonSx={{ p: 0 }}
-                label={translations.hasTechnicalMetadataLabel}
-                size="small"
-                content={translations.hasTechnicalMetadataTooltip}
-            />
+            <Tooltip
+                describeChild
+                title={translations.hasTechnicalMetadataTooltip}
+                tabIndex={0}>
+                {translations.hasTechnicalMetadataLabel}
+            </Tooltip>
         ),
         size: 120,
     }),
@@ -280,7 +280,7 @@ const ResultTable = ({
     const { isLoggedIn, user } = useAuth();
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
-        `${apis.librariesV1Url}?perPage=-1`,
+        `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
 

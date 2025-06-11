@@ -104,7 +104,7 @@ interface Metadata {
             endDate: string | undefined;
         };
     };
-    linkage: {
+    enrichmentAndLinkage: {
         associatedMedia: string;
         isReferenceIn: string;
         tools: string[];

@@ -34,7 +34,7 @@ exports[`TextField should render icon 1`] = `
           </span>
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-1w5vzi1-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-6o2j41-MuiSvgIcon-root"
             data-testid="AddAPhotoIcon"
             focusable="false"
             viewBox="0 0 24 24"

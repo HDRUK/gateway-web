@@ -9,7 +9,7 @@ import BoxContainer from "@/components/BoxContainer";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
-import TooltipIcon from "@/components/TooltipIcon";
+import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
@@ -171,7 +171,7 @@ const DataUseContent = ({
                                         <BoxContainer
                                             sx={{
                                                 gridTemplateColumns: {
-                                                    desktop: "repeat(3, 1fr)",
+                                                    desktop: "repeat(4, 1fr)",
                                                 },
                                                 gap: 1,
                                                 "&:not(:last-of-type)": {
@@ -187,7 +187,7 @@ const DataUseContent = ({
                                                     p: 0,
                                                 }}>
                                                 {!field.hideTooltip ? (
-                                                    <TooltipIcon
+                                                    <TooltipText
                                                         content={t(
                                                             `${label}${TOOLTIP_SUFFIX}`
                                                         )}

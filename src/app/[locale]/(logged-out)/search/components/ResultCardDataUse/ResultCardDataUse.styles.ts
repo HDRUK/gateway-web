@@ -5,6 +5,7 @@ export const ResultRow = styled("div")(({ theme }) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 8,
 
     "&:first-of-type": {
         marginTop: theme.spacing(2),

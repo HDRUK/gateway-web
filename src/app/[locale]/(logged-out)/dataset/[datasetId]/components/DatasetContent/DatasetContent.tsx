@@ -15,7 +15,7 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import StructuralMetadataAccordion from "@/components/StructuralMetadataAccordion";
 import Table from "@/components/Table";
-import TooltipIcon from "@/components/TooltipIcon";
+import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
@@ -57,11 +57,7 @@ const getColumns = (notReportedText: string) =>
                     </p>
                 ),
             header: () => (
-                <TooltipIcon
-                    content={column.tooltip}
-                    label={column.header}
-                    buttonSx={{ p: 0 }}
-                />
+                <TooltipText content={column.tooltip} label={column.header} />
             ),
         })
     );
@@ -97,8 +93,11 @@ const DatasetContent = ({
                 );
             }
             case FieldType.TAG_LIST: {
-                const tagList = value;
+                let tagList: string[] | string = value;
 
+                if (typeof tagList === "string") {
+                    tagList = tagList.split(",");
+                }
                 return (
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
@@ -298,13 +297,9 @@ const DatasetContent = ({
                                                     p: 0,
                                                 }}>
                                                 {field.tooltip ? (
-                                                    <TooltipIcon
+                                                    <TooltipText
                                                         content={field.tooltip}
                                                         label={field.label}
-                                                        buttonSx={{
-                                                            p: 0,
-                                                            mr: 1,
-                                                        }}
                                                     />
                                                 ) : (
                                                     field.label
