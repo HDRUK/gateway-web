@@ -141,6 +141,7 @@ interface SearchProps {
 const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -248,12 +249,20 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const allSearchParams = getAllParams(searchParams);
     const forceSearch = searchParams?.get("force") !== null;
 
-    const hasNotSearched = () => {
+    useEffect(() => {
         const keys = Object.keys(allSearchParams).filter(
             (key: string) => allSearchParams[key] !== ""
         );
-        return keys.length === 1 && keys[0] === "type";
-    };
+
+        // In the Datasets view, "view" parameter is used to switch between
+        // list and table view but is not a search parameter
+        setHasSearched(
+            !(
+                keys.length <= 2 &&
+                keys.every(element => ["type", "view"].includes(element))
+            )
+        );
+    }, [allSearchParams]);
 
     useEffect(() => {
         const viewType =
@@ -1009,7 +1018,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             <Button
                                                 variant="contained"
                                                 color="greyCustom"
-                                                disabled={hasNotSearched()}
+                                                disabled={!hasSearched}
                                                 onClick={handleSaveClick}
                                                 startIcon={
                                                     <BookmarkBorder color="primary" />
@@ -1076,7 +1085,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             <Tooltip title={t("saveSearch")}>
                                                 <IconButton
                                                     color="primary"
-                                                    disabled={hasNotSearched()}
+                                                    disabled={!hasSearched}
                                                     onClick={handleSaveClick}>
                                                     <BookmarkBorder />
                                                 </IconButton>
