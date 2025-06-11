@@ -379,6 +379,20 @@ async function getDarSections(
 ): Promise<QuestionBankSection[]> {
     return get<QuestionBankSection[]>(
         cookieStore,
+        apis.dataAccessSectionV1UrlIP,
+        {
+            cache: {
+                tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
+                revalidate: 4 * 60 * 60,
+            },
+        }
+    );
+},
+async function getAllDarSections(
+    cookieStore: ReadonlyRequestCookies
+): Promise<QuestionBankSection[]> {
+    return get<QuestionBankSection[]>(
+        cookieStore,
         `${apis.dataAccessSectionV1UrlIP}?page=-1`,
         {
             cache: {
@@ -623,6 +637,7 @@ export {
     getUser,
     getUserFromCookie,
     getDarSections,
+    getAllDarSections,
     getDarTeamApplication,
     getDarApplicationUser,
     getDarAnswersTeam,
