@@ -74,8 +74,8 @@ export default async function DarApplicationPage({
     } catch {
         redirect("/error/401");
     }
-    console.log('<<<<<', testSections)
-    console.log('<<<<<', sections)
+    console.log("<<<<<", testSections);
+    console.log("<<<<<", sections);
 
     if (!darApplication || !sections) {
         return notFound();
