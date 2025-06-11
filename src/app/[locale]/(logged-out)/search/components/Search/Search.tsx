@@ -10,7 +10,15 @@ import {
 import { FieldValues } from "react-hook-form";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { Box, IconButton, Tooltip, Typography, useTheme } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    Menu,
+    MenuItem,
+    Tooltip,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
@@ -101,8 +109,7 @@ import searchFormConfig, {
     sortByOptionsPublications,
     sortByOptionsTool,
 } from "@/config/forms/search";
-import { colors } from "@/config/theme";
-import { DownloadIcon, TableIcon } from "@/consts/icons";
+import { ChevronThinIcon, DownloadIcon, TableIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
@@ -494,6 +501,17 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         },
     ];
 
+    const categoryDropdowns = {
+        [SearchCategory.DATASETS]: t("datasets"),
+        [SearchCategory.DATA_USE]: t("dataUse"),
+        [SearchCategory.TOOLS]: t("tools"),
+        [SearchCategory.PUBLICATIONS]: t("publications"),
+        [SearchCategory.DATA_CUSTODIANS]: t("dataProviders"),
+        // This can be removed when search endpoint has been updated to use data_custodians
+        [SearchCategory.DATA_PROVIDERS_LEGACY]: t("dataProviders"),
+        [SearchCategory.COLLECTIONS]: t("collections"),
+    };
+
     const removeFilter = (
         filterType: keyof SearchQueryParams,
         removedFilter: string
@@ -798,6 +816,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const handleClick = e => {
+        setAnchorEl(e.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const getXofX = () => {
         // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
         // to make it seem more consistent
@@ -807,6 +833,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
         );
     };
+
     return (
         <Box
             display={{
@@ -865,30 +892,62 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     alignItems: "center",
                     backgroundColor: "white",
                 }}>
-                <Tabs
-                    centered
-                    tabs={categoryTabs}
-                    tabBoxSx={{
-                        paddingLeft: "5px",
-                        paddingRight: "5px",
-                        // borderBottom: `1px solid ${colors.green400}`,
-                        // marginBottom: 1,
-                    }}
-                    rootBoxSx={{ padding: 0 }}
-                    variant={TabVariant.SEARCH}
-                    sx={{}}
-                    paramName={TYPE_FIELD}
-                    persistParams={false}
-                    tabVariant="scrollable"
-                    // sx={{
-                    //     [`& .${tabsClasses.scroller}`]: {
-                    //         "&.MuiTabs-scrollableX": { flexGrow: "0" },
-                    //     },
-                    // }}
-                    handleChange={(_, value) =>
-                        resetQueryParamState(value as SearchCategory)
-                    }
-                />
+                {!isMobile && (
+                    <Tabs
+                        centered
+                        tabs={categoryTabs}
+                        tabBoxSx={{
+                            paddingLeft: "5px",
+                            paddingRight: "5px",
+                        }}
+                        rootBoxSx={{ padding: 0 }}
+                        variant={TabVariant.SEARCH}
+                        paramName={TYPE_FIELD}
+                        persistParams={false}
+                        tabVariant="scrollable"
+                        handleChange={(_, value) => {
+                            resetQueryParamState(value as SearchCategory);
+                        }}
+                    />
+                )}
+                {isMobile && (
+                    <>
+                        <Button
+                            aria-controls="tab-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                            aria-label="Open to show search type options"
+                            title="Open to show search type options"
+                            color="secondary"
+                            sx={{ backgroundColor: "white" }}
+                            endIcon={<ChevronThinIcon />}>
+                            {categoryDropdowns[queryParams.type]}
+                        </Button>
+                        <Menu
+                            id="tab-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}>
+                            {categoryTabs.map(item => {
+                                return (
+                                    <MenuItem
+                                        onClick={() => {
+                                            resetQueryParamState(
+                                                item.value as SearchCategory
+                                            );
+                                            updatePath("type", item.value);
+                                            handleClose();
+                                        }}
+                                        key={item.label}
+                                        value={item.value}>
+                                        {item.label}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Menu>
+                    </>
+                )}
             </Box>
             <BoxContainer
                 sx={{
