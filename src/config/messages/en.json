@@ -963,10 +963,11 @@
             "dur": "Data Uses / Research Projects",
             "data_custodians": "Data Custodians",
             "loadingAriaLabel": "Loading search results",
+            "saveSearch": "Save search",
             "components": {
                 "Search": {
-                    "toggleLabelTable": "Table",
-                    "toggleLabelList": "List"
+                    "toggleLabelTable": "Switch to table view",
+                    "toggleLabelList": "Switch to list view"
                 },
                 "FilterPanel": {
                     "clearFilter": "Clear filter",
@@ -1137,6 +1138,9 @@
                     "feasibilityEnquiries": {
                         "sidebarTitle": "Messages"
                     }
+                },
+                "Sort": {
+                    "sortOptions": "Sort options"
                 }
             },
             "hooks": {

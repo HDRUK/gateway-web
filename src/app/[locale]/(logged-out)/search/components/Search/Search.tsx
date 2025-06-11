@@ -8,7 +8,10 @@ import {
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
-import { Box, Typography, useTheme } from "@mui/material";
+import { BookmarkBorder } from "@mui/icons-material";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import { Box, IconButton, Tooltip, Typography, useTheme } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -39,7 +42,6 @@ import SearchBar from "@/components/SearchBar";
 import ShowingXofX from "@/components/ShowingXofX";
 import Tabs from "@/components/Tabs";
 import { TabVariant } from "@/components/Tabs/Tabs";
-import ToggleTabs from "@/components/ToggleTabs";
 import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import ProvidersDialog from "@/modules/ProvidersDialog";
@@ -100,7 +102,7 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { AppsIcon, DownloadIcon, ViewListIcon } from "@/consts/icons";
+import { DownloadIcon, TableIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
@@ -139,6 +141,7 @@ interface SearchProps {
 const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
+    const [hasSearched, setHasSearched] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -149,6 +152,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isTabletOrLaptop = useMediaQuery(
+        theme.breakpoints.between("tablet", "desktop")
+    );
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -242,12 +249,20 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const allSearchParams = getAllParams(searchParams);
     const forceSearch = searchParams?.get("force") !== null;
 
-    const hasNotSearched = () => {
+    useEffect(() => {
         const keys = Object.keys(allSearchParams).filter(
             (key: string) => allSearchParams[key] !== ""
         );
-        return keys.length === 1 && keys[0] === "type";
-    };
+
+        // In the Datasets view, "view" parameter is used to switch between
+        // list and table view but is not a search parameter
+        setHasSearched(
+            !(
+                keys.length <= 2 &&
+                keys.every(element => ["type", "view"].includes(element))
+            )
+        );
+    }, [allSearchParams]);
 
     useEffect(() => {
         const viewType =
@@ -512,21 +527,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         Cookies.set(config.VIEW_TYPE, viewType);
     };
 
-    const toggleButtons = [
-        {
-            icon: AppsIcon,
-            value: ViewType.TABLE,
-            label: t("components.Search.toggleLabelTable"),
-            onClick: () => handleChangeView(ViewType.TABLE),
-        },
-        {
-            icon: ViewListIcon,
-            value: ViewType.LIST,
-            label: t("components.Search.toggleLabelList"),
-            onClick: () => handleChangeView(ViewType.LIST),
-        },
-    ];
-
     const downloadSearchResults = async () => {
         setIsDownloading(true);
         await handleDownload();
@@ -603,7 +603,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     });
 
     const renderResults = () =>
-        resultsView === ViewType.TABLE ? (
+        resultsView === ViewType.TABLE && !isMobile && !isTabletOrLaptop ? (
             <ResultsTable
                 results={data?.list as SearchResultDataset[]}
                 showLibraryModal={showLibraryModal}
@@ -712,6 +712,12 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 redirectPath,
             });
         }
+    };
+
+    const handleToggleView = () => {
+        return resultsView === ViewType.LIST
+            ? handleChangeView(ViewType.TABLE)
+            : handleChangeView(ViewType.LIST);
     };
 
     const getExplainerText = () => {
@@ -860,36 +866,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
                     />
                 </Box>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                    <Box sx={{ p: 0 }}>
-                        <Sort
-                            sortName={SORT_FIELD}
-                            defaultValue={queryParams.sort}
-                            submitAction={onSortChange}
-                            sortOptions={getSortOptions()}
-                        />
-                    </Box>
-                    {!excludedDownloadSearchCategories.includes(
-                        queryParams.type
-                    ) && (
-                        <Button
-                            onClick={() =>
-                                !isDownloading && downloadSearchResults()
-                            }
-                            variant="text"
-                            startIcon={<DownloadIcon />}
-                            disabled={isDownloading || !data?.list?.length}>
-                            {t("downloadResults")}
-                        </Button>
-                    )}
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        disabled={hasNotSearched()}
-                        onClick={handleSaveClick}>
-                        Save search
-                    </Button>
-                </Box>
             </ActionBar>
             <Box
                 sx={{
@@ -980,35 +956,144 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         }}
                         aria-busy={isSearching}>
                         {!isSearching && !isEuropePmcSearchNoQuery && (
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                }}>
+                            <>
                                 <Box
-                                    sx={{ display: "flex" }}
-                                    id="result-summary"
+                                    sx={{ display: "flex", paddingX: "1em" }}
+                                    id="result-summary2"
                                     role="alert"
                                     aria-live="polite">
-                                    {data &&
-                                        data.path?.includes(queryParams.type) &&
-                                        getXofX()}
                                     {data && data.elastic_total > 100 && (
                                         <ResultLimitText>
                                             {t("resultLimit")}
                                         </ResultLimitText>
                                     )}
                                 </Box>
+                                <ActionBar>
+                                    <Box sx={{ flex: 1, p: 0 }}>
+                                        <Box
+                                            sx={{ display: "flex" }}
+                                            id="result-summary"
+                                            role="alert"
+                                            aria-live="polite">
+                                            {data &&
+                                                data.path?.includes(
+                                                    queryParams.type
+                                                ) &&
+                                                getXofX()}
+                                        </Box>
+                                    </Box>
+                                    {!isMobile && !isTabletOrLaptop && (
+                                        <Box sx={{ display: "flex", gap: 2 }}>
+                                            <Box sx={{ p: 0 }}>
+                                                <Sort
+                                                    sortName={SORT_FIELD}
+                                                    defaultValue={
+                                                        queryParams.sort
+                                                    }
+                                                    submitAction={onSortChange}
+                                                    sortOptions={getSortOptions()}
+                                                    iconised={false}
+                                                />
+                                            </Box>
+                                            {!excludedDownloadSearchCategories.includes(
+                                                queryParams.type
+                                            ) && (
+                                                <Button
+                                                    onClick={() =>
+                                                        !isDownloading &&
+                                                        downloadSearchResults()
+                                                    }
+                                                    variant="contained"
+                                                    color="greyCustom"
+                                                    startIcon={
+                                                        <DownloadIcon color="primary" />
+                                                    }
+                                                    disabled={
+                                                        isDownloading ||
+                                                        !data?.list?.length
+                                                    }>
+                                                    {t("downloadResults")}
+                                                </Button>
+                                            )}
+                                            <Button
+                                                variant="contained"
+                                                color="greyCustom"
+                                                disabled={!hasSearched}
+                                                onClick={handleSaveClick}
+                                                startIcon={
+                                                    <BookmarkBorder color="primary" />
+                                                }>
+                                                {t("saveSearch")}
+                                            </Button>
+                                            {queryParams.type ===
+                                                SearchCategory.DATASETS && (
+                                                <Button
+                                                    variant="outlined"
+                                                    color="secondary"
+                                                    onClick={handleToggleView}
+                                                    startIcon={
+                                                        resultsView ===
+                                                        ViewType.LIST ? (
+                                                            <FormatListBulletedIcon color="success" />
+                                                        ) : (
+                                                            <TableIcon color="success" />
+                                                        )
+                                                    }>
+                                                    {resultsView ===
+                                                    ViewType.LIST
+                                                        ? t(
+                                                              "components.Search.toggleLabelTable"
+                                                          )
+                                                        : t(
+                                                              "components.Search.toggleLabelList"
+                                                          )}
+                                                </Button>
+                                            )}
+                                        </Box>
+                                    )}
+                                    {(isMobile || isTabletOrLaptop) && (
+                                        <Box sx={{ display: "flex", gap: 2 }}>
+                                            <Sort
+                                                sortName={SORT_FIELD}
+                                                defaultValue={queryParams.sort}
+                                                submitAction={onSortChange}
+                                                sortOptions={getSortOptions()}
+                                                iconised
+                                            />
 
-                                {queryParams.type ===
-                                    SearchCategory.DATASETS && (
-                                    <ToggleTabs<ViewType>
-                                        selected={resultsView as ViewType}
-                                        buttons={toggleButtons}
-                                    />
-                                )}
-                            </Box>
+                                            {!excludedDownloadSearchCategories.includes(
+                                                queryParams.type
+                                            ) && (
+                                                <Tooltip
+                                                    title={t(
+                                                        "downloadResults"
+                                                    )}>
+                                                    <IconButton
+                                                        color="primary"
+                                                        onClick={() =>
+                                                            !isDownloading &&
+                                                            downloadSearchResults()
+                                                        }
+                                                        disabled={
+                                                            isDownloading ||
+                                                            !data?.list?.length
+                                                        }>
+                                                        <DownloadIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            )}
+                                            <Tooltip title={t("saveSearch")}>
+                                                <IconButton
+                                                    color="primary"
+                                                    disabled={!hasSearched}
+                                                    onClick={handleSaveClick}>
+                                                    <BookmarkBorder />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Box>
+                                    )}
+                                </ActionBar>
+                            </>
                         )}
 
                         {isSearching && (
