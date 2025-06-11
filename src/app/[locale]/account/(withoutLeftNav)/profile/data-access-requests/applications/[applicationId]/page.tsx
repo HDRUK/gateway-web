@@ -61,12 +61,10 @@ export default async function DarApplicationPage({
     }
 
     let sections;
-    let testSections;
     let userAnswers;
     let reviews;
     try {
-        [sections, testSections, userAnswers, reviews] = await Promise.all([
-            getDarSections(cookieStore),
+        [sections, userAnswers, reviews] = await Promise.all([
             getAllDarSections(cookieStore),
             getDarAnswersUser(cookieStore, applicationId, userId),
             getDarReviewsUser(cookieStore, applicationId, userId),
@@ -74,8 +72,6 @@ export default async function DarApplicationPage({
     } catch {
         redirect("/error/401");
     }
-    console.log("<<<<<", testSections);
-    console.log("<<<<<", sections);
 
     if (!darApplication || !sections) {
         return notFound();
