@@ -19,10 +19,8 @@ export interface Tab {
 }
 
 export enum TabVariant {
-    STANDARD = "standard",
-    LARGE = "large",
-    SLIM = "slim",
     SEARCH = "search",
+    STANDARD = "standard",
 }
 
 export interface TabProps {
