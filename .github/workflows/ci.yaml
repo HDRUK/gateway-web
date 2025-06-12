@@ -6,10 +6,24 @@ on:
       - dev
       - staging
       - main
+    paths:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - 'package.json'
+      - 'jest.config.*'
+      - '.github/workflows/**'
   pull_request:
     branches:
       - main
       - dev
+    paths:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - 'package.json'
+      - 'jest.config.*'
+      - '.github/workflows/**'
 
 env:
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
@@ -40,14 +54,24 @@ jobs:
         id: npminstall
         run: npm ci
 
-      - name: Run lint
-        id: runlint
-        run: "npm run lint"
+      - name: Check if code changed
+        id: codecheck
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1 || echo "Base ref not found, using HEAD only"
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- '*.js' '*.ts' '*.tsx' 'package.json' 'jest.config.*')
+          echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
+          if [ -z "$CHANGED" ]; then
+            echo "No relevant code changes detected."
+          else
+            echo "Changes detected in:"
+            echo "$CHANGED"
+          fi
 
       - name: Restore Jest cache
+        if: steps.codecheck.outputs.changed_files != ''
         uses: actions/cache@v4
         with:
-          path: |
+         path: |
             .jest-cache/
             node_modules/.cache/jest
           key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
@@ -55,11 +79,17 @@ jobs:
             ${{ runner.os }}-jest-
 
       - name: List Jest cache contents
+        if: steps.codecheck.outputs.changed_files != ''
         run: ls -la .jest-cache || echo "No Jest cache found"
 
+      - name: Run lint
+        id: runlint
+        if: steps.codecheck.outputs.changed_files != ''
+        run: npm run lint
+
       - name: Run unit tests
-        id: unittests
-        run: "npm run test:ci"
+        if: steps.codecheck.outputs.changed_files != ''
+        run: npm run test:ci
 
       - name: Run Notification
         id: runnotificationsent
