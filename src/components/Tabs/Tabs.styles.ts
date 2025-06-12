@@ -2,6 +2,10 @@ import { css } from "@emotion/react";
 import { colors } from "@/config/theme";
 
 export const tabsStyle = {
+    searchTabList: css({
+        boxShadow: "none",
+    }),
+
     normal: () =>
         css({
             "&.MuiTab-root": {

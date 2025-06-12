@@ -96,16 +96,14 @@ const Tabs = ({
     return (
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>
             <MuiTabContext value={selectedTab}>
-                <Box
-                    // css={variant === TabVariant.LARGE && tabsStyle.tabList}
+                <Paper
+                    css={
+                        variant === TabVariant.SEARCH && tabsStyle.searchTabList
+                    }
                     sx={{
                         padding: 0,
                         background: "none",
-                        sx: {
-                            //TODO: only apply when needed
-                            display: "flex",
-                            justifyContent: "center",
-                        },
+
                         ...tabBoxSx,
                     }}>
                     <MuiTabList
@@ -143,7 +141,7 @@ const Tabs = ({
                             />
                         ))}
                     </MuiTabList>
-                </Box>
+                </Paper>
                 {introContent}
                 {renderTabContent &&
                     tabs.map(tab => (
