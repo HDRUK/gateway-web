@@ -66,14 +66,12 @@ jobs:
           fi
 
           CHANGED=$(git diff --name-only $BASE HEAD -- '*.js' '*.ts' '*.tsx' 'package.json' 'jest.config.*')
-          echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
+          echo "$CHANGED"
+          
+          # Store as comma-separated list
+          CHANGED_CSV=$(echo "$CHANGED" | paste -sd "," -)
 
-          if [ -z "$CHANGED" ]; then
-            echo "No relevant code changes detected."
-          else
-            echo "Changes detected in:"
-            echo "$CHANGED"
-          fi
+          echo "changed_files=$CHANGED_CSV" >> $GITHUB_OUTPUT
 
       - name: Restore Jest cache
         if: steps.codecheck.outputs.changed_files != ''
