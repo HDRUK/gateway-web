@@ -40,19 +40,20 @@ jobs:
         id: npminstall
         run: npm ci
 
+      - name: Run lint
+        id: runlint
+        run: "npm run lint"
+
       - name: Restore Jest cache
         uses: actions/cache@v4
         with:
-          path: 
-             .jest-cache/
-             node_modules/.cache/jest
+          path: .jest-cache/
           key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
           restore-keys: |
             ${{ runner.os }}-jest-
 
-      - name: Run lint
-        id: runlint
-        run: "npm run lint"
+      - name: List Jest cache contents
+        run: ls -la .jest-cache || echo "No Jest cache found"
 
       - name: Run unit tests
         id: unittests
