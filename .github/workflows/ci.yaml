@@ -71,12 +71,12 @@ jobs:
         if: steps.codecheck.outputs.changed_files != ''
         uses: actions/cache@v4
         with:
-         path: |
-            .jest-cache/
-            node_modules/.cache/jest
-          key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
-          restore-keys: |
-            ${{ runner.os }}-jest-
+            path: |
+              .jest-cache/
+              node_modules/.cache/jest
+            key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
+            restore-keys: |
+              ${{ runner.os }}-jest-
 
       - name: List Jest cache contents
         if: steps.codecheck.outputs.changed_files != ''
