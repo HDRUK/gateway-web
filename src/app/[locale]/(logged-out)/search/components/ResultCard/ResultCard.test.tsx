@@ -7,9 +7,13 @@ import {
 import ResultCard from "./ResultCard";
 
 describe("ResultCard", () => {
-    const mockResult = generateDatasetMetadataMiniV1();
-    const mockHighlight = generateDatasetHighlightsV1();
-    it("should render with all data", async () => {
+    const defaultMockResult = generateDatasetMetadataMiniV1();
+    const defaultMockHighlight = generateDatasetHighlightsV1();
+
+    const renderResultCard = (
+        mockResult = defaultMockResult,
+        mockHighlight = defaultMockHighlight
+    ) => {
         render(
             <ResultCard
                 result={{
@@ -31,21 +35,28 @@ describe("ResultCard", () => {
                 mutateLibraries={jest.fn()}
             />
         );
+    };
 
-        const populationSize = `Dataset population size: ${mockResult.summary.populationSize?.toLocaleString()}`;
+    it("should render with all data", async () => {
+        const populationSize = `Dataset population size: ${defaultMockResult.summary.populationSize?.toLocaleString()}`;
         const formattedDate = `Date range: ${formatDate(
-            mockResult.provenance.temporal.startDate || "",
+            defaultMockResult.provenance.temporal.startDate || "",
             "YYYY"
-        )}-${formatDate(mockResult.provenance.temporal.endDate || "", "YYYY")}`;
+        )}-${formatDate(
+            defaultMockResult.provenance.temporal.endDate || "",
+            "YYYY"
+        )}`;
+
+        renderResultCard(); // Reuse mockResult and mockHighlight here
 
         expect(
-            screen.getByText(mockHighlight.abstract![0])
+            screen.getByText(defaultMockHighlight.abstract![0])
         ).toBeInTheDocument();
         expect(
-            screen.getByText(mockResult.summary.publisher.publisherName)
+            screen.getByText(defaultMockResult.summary.publisher.publisherName)
         ).toBeInTheDocument();
         expect(
-            screen.getByText(mockResult.summary.shortTitle)
+            screen.getByText(defaultMockResult.summary.shortTitle)
         ).toBeInTheDocument();
         expect(
             screen.getByText(populationSize, { exact: false })
@@ -54,10 +65,10 @@ describe("ResultCard", () => {
             screen.getByText(formattedDate, { exact: false })
         ).toBeInTheDocument();
     });
+
     it("should render n/a when no date", async () => {
-        const mockResult = generateDatasetMetadataMiniV1();
-        const mockWithoutData = {
-            ...mockResult,
+        const mockResultWithoutDate = {
+            ...defaultMockResult,
             provenance: {
                 temporal: {
                     endDate: undefined,
@@ -65,55 +76,23 @@ describe("ResultCard", () => {
                 },
             },
         };
-        render(
-            <ResultCard
-                result={{
-                    highlight: {
-                        abstract: ["string"],
-                        description: ["string"],
-                    },
-                    metadata: mockWithoutData,
-                    _id: "1",
-                    team: {
-                        id: 1,
-                        member_of: "",
-                        name: "",
-                        is_question_bank: false,
-                        is_dar: false,
-                        dar_modal_header: null,
-                        dar_modal_content: null,
-                        dar_modal_footer: null,
-                    },
-                }}
-                libraryData={[]}
-                mutateLibraries={jest.fn()}
-            />
-        );
+
+        renderResultCard(mockResultWithoutDate);
+
         expect(screen.getByText(`Date range: n/a`)).toBeInTheDocument();
     });
+
     it("should render `not reported` when no population", async () => {
-        const mockResult = generateDatasetMetadataMiniV1();
-        const mockWithoutData = {
-            ...mockResult,
+        const mockResultWithoutPopulation = {
+            ...defaultMockResult,
             summary: {
-                ...mockResult.summary,
+                ...defaultMockResult.summary,
                 populationSize: null,
             },
         };
-        render(
-            <ResultCard
-                result={{
-                    highlight: {
-                        abstract: ["string"],
-                        description: ["string"],
-                    },
-                    metadata: mockWithoutData,
-                    _id: "1",
-                }}
-                libraryData={[]}
-                mutateLibraries={jest.fn()}
-            />
-        );
+
+        renderResultCard(mockResultWithoutPopulation);
+
         expect(
             screen.getByText(`Dataset population size: not reported`)
         ).toBeInTheDocument();
