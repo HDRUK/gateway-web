@@ -109,7 +109,7 @@ const Tabs = ({
                     <MuiTabList
                         aria-label={ariaLabel ?? "tab navigation"}
                         variant={tabVariant}
-                        scrollButtons={true}
+                        scrollButtons="auto"
                         sx={{
                             mb: variant === TabVariant.STANDARD ? 1 : 0,
                             ".MuiTabs-indicator": {
