@@ -18,7 +18,7 @@ env:
 jobs:
   test:
     timeout-minutes: 10
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     environment: |-
       ${{
          github.ref_name == 'dev' && 'dev'
@@ -31,9 +31,24 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: NPM install
+      - name: Use Node.js and cache dependencies
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+
+      - name: Install dependencies
         id: npminstall
-        run: "npm install"
+        run: npm ci
+
+      - name: Cache Jest cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .jest-cache/
+            node_modules/.cache/jest
+          key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
+          restore-keys: |
+            ${{ runner.os }}-jest-
 
       - name: Run lint
         id: runlint
