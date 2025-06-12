@@ -34,8 +34,7 @@ const customJestConfig = {
         "<rootDir>/node_modules",
         "<rootDir>/mocks",
         "<rootDir>/src/config",
-    ],
-    cacheDirectory: ".jest-cache"
+    ]
 };
 
 module.exports = createJestConfig(customJestConfig);
