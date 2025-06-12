@@ -56,7 +56,7 @@ jobs:
 
       - name: Run unit tests
         id: unittests
-        run: "npm run test"
+        run: "npm run test:ci"
 
       - name: Run Notification
         id: runnotificationsent

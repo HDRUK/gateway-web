@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint ",
     "lint:fix": "next lint --fix",
+    "test:ci": "TZ=UTC jest --detectOpenHandles --forceExit",
     "test": "TZ=UTC jest --clearCache && jest --detectOpenHandles --forceExit",
     "test:snapshot": "npm run test -- -u",
     "test:watch": "TZ=UTC jest --watch",
