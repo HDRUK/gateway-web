@@ -164,6 +164,12 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const isTabletOrLaptop = useMediaQuery(
         theme.breakpoints.between("tablet", "desktop")
     );
+    // This is a bit hacky because this is the exact width of the tabs with content,
+    // so it's susceptible to changes in font size or content.
+    // This is required because there's a documented feature (i.e. bug) in MUI Tabs
+    // that they can't simultaneously support centering AND scroll bars, so we have
+    // to do it ourselves.
+    const scrollableTabs = useMediaQuery("(max-width:1372px)");
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -895,17 +901,18 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 }}>
                 {!isMobile && (
                     <Tabs
-                        centered
                         tabs={categoryTabs}
                         tabBoxSx={{
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
+                            paddingLeft: !scrollableTabs ? "45px" : "5px",
+                            paddingRight: !scrollableTabs ? "45px" : "5px",
                         }}
                         rootBoxSx={{ padding: 0 }}
                         variant={TabVariant.SEARCH}
                         paramName={TYPE_FIELD}
                         persistParams={false}
-                        tabVariant="scrollable"
+                        tabVariant={scrollableTabs ? "scrollable" : "standard"}
+                        scrollButtons="on"
+                        centered={!scrollableTabs}
                         handleChange={(_, value) => {
                             resetQueryParamState(value as SearchCategory);
                         }}
