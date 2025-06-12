@@ -57,9 +57,17 @@ jobs:
       - name: Check if code changed
         id: codecheck
         run: |
-          git fetch origin ${{ github.base_ref }} --depth=1 || echo "Base ref not found, using HEAD only"
-          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- '*.js' '*.ts' '*.tsx' 'package.json' 'jest.config.*')
+          echo "Detecting code changes..."
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch origin ${{ github.base_ref }} --depth=1
+            BASE=origin/${{ github.base_ref }}
+          else
+            BASE=$(git rev-parse HEAD~1)
+          fi
+
+          CHANGED=$(git diff --name-only $BASE HEAD -- '*.js' '*.ts' '*.tsx' 'package.json' 'jest.config.*')
           echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
+
           if [ -z "$CHANGED" ]; then
             echo "No relevant code changes detected."
           else
