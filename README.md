@@ -119,3 +119,4 @@ npm test:snapshot
 ---
 
 For further support, please reach out via [HDR UK](https://healthdatagateway.org/en) or raise a [bug](https://hdruk.atlassian.net/servicedesk/customer/portal/7/group/14/create/34) or even better raise a PR!
+
