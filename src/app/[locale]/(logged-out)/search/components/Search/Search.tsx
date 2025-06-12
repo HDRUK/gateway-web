@@ -10,7 +10,15 @@ import {
 import { FieldValues } from "react-hook-form";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { Box, IconButton, Tooltip, Typography, useTheme } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    Menu,
+    MenuItem,
+    Tooltip,
+    Typography,
+    useTheme,
+} from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
@@ -102,7 +110,7 @@ import searchFormConfig, {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { DownloadIcon, TableIcon } from "@/consts/icons";
+import { ChevronThinIcon, DownloadIcon, TableIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
@@ -156,6 +164,12 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const isTabletOrLaptop = useMediaQuery(
         theme.breakpoints.between("tablet", "desktop")
     );
+    // This is a bit hacky because this is the exact width of the tabs with content,
+    // so it's susceptible to changes in font size or content.
+    // This is required because there's a documented feature (i.e. bug) in MUI Tabs
+    // that they can't simultaneously support centering AND scroll bars, so we have
+    // to do it ourselves.
+    const scrollableTabs = useMediaQuery("(max-width:1372px)");
 
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
@@ -494,6 +508,17 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         },
     ];
 
+    const categoryDropdowns = {
+        [SearchCategory.DATASETS]: t("datasets"),
+        [SearchCategory.DATA_USE]: t("dataUse"),
+        [SearchCategory.TOOLS]: t("tools"),
+        [SearchCategory.PUBLICATIONS]: t("publications"),
+        [SearchCategory.DATA_CUSTODIANS]: t("dataProviders"),
+        // This can be removed when search endpoint has been updated to use data_custodians
+        [SearchCategory.DATA_PROVIDERS_LEGACY]: t("dataProviders"),
+        [SearchCategory.COLLECTIONS]: t("collections"),
+    };
+
     const removeFilter = (
         filterType: keyof SearchQueryParams,
         removedFilter: string
@@ -798,6 +823,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const handleClick = e => {
+        setAnchorEl(e.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const getXofX = () => {
         // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
         // to make it seem more consistent
@@ -807,6 +840,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
         );
     };
+
     return (
         <Box
             display={{
@@ -857,37 +891,81 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     />
                 </Box>
             </Box>
-            <ActionBar>
-                <Box sx={{ flex: 1, p: 0 }}>
-                    <FilterChips
-                        label={t("filtersApplied")}
-                        selectedFilters={selectedFilters}
-                        handleDelete={removeFilter}
-                        filterCategory={FILTER_TYPE_MAPPING[queryParams.type]}
-                    />
-                </Box>
-            </ActionBar>
+
             <Box
                 sx={{
                     width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "white",
                 }}>
-                <Tabs
-                    centered
-                    tabs={categoryTabs}
-                    tabBoxSx={{
-                        paddingLeft: 4,
-                        paddingRight: 4,
-                        borderBottom: `1px solid ${colors.green400}`,
-                        marginBottom: 1,
-                    }}
-                    rootBoxSx={{ padding: 0 }}
-                    variant={TabVariant.LARGE}
-                    paramName={TYPE_FIELD}
-                    persistParams={false}
-                    handleChange={(_, value) =>
-                        resetQueryParamState(value as SearchCategory)
-                    }
-                />
+                {!isMobile && (
+                    <Tabs
+                        tabs={categoryTabs}
+                        tabBoxSx={{
+                            paddingLeft: !scrollableTabs ? "45px" : "5px",
+                            paddingRight: !scrollableTabs ? "45px" : "5px",
+                        }}
+                        rootBoxSx={{ padding: 0 }}
+                        variant={TabVariant.SEARCH}
+                        paramName={TYPE_FIELD}
+                        persistParams={false}
+                        tabVariant={scrollableTabs ? "scrollable" : "standard"}
+                        scrollButtons="on"
+                        centered={!scrollableTabs}
+                        handleChange={(_, value) => {
+                            resetQueryParamState(value as SearchCategory);
+                        }}
+                    />
+                )}
+                {isMobile && (
+                    <Box
+                        sx={{
+                            borderBottom: `3px solid ${colors.green400}`,
+                            width: "100%",
+                        }}>
+                        <Button
+                            aria-controls="tab-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                            aria-label="Open to show search type options"
+                            title="Open to show search type options"
+                            color="secondary"
+                            sx={{
+                                backgroundColor: "white",
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                "&:hover": { background: "white" },
+                            }}
+                            endIcon={<ChevronThinIcon color="primary" />}>
+                            {categoryDropdowns[queryParams.type]}
+                        </Button>
+                        <Menu
+                            id="tab-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}>
+                            {categoryTabs.map(item => {
+                                return (
+                                    <MenuItem
+                                        onClick={() => {
+                                            resetQueryParamState(
+                                                item.value as SearchCategory
+                                            );
+                                            updatePath("type", item.value);
+                                            handleClose();
+                                        }}
+                                        key={categoryDropdowns[item.value]}
+                                        value={item.value}
+                                        sx={{ fontSize: "15px" }}>
+                                        {categoryDropdowns[item.value]}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Menu>
+                    </Box>
+                )}
             </Box>
             <BoxContainer
                 sx={{
@@ -955,6 +1033,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             m: 2,
                         }}
                         aria-busy={isSearching}>
+                        <FilterChips
+                            label={t("filtersApplied")}
+                            selectedFilters={selectedFilters}
+                            handleDelete={removeFilter}
+                            filterCategory={
+                                FILTER_TYPE_MAPPING[queryParams.type]
+                            }
+                        />
                         {!isSearching && !isEuropePmcSearchNoQuery && (
                             <>
                                 <Box
@@ -969,18 +1055,16 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     )}
                                 </Box>
                                 <ActionBar>
-                                    <Box sx={{ flex: 1, p: 0 }}>
-                                        <Box
-                                            sx={{ display: "flex" }}
-                                            id="result-summary"
-                                            role="alert"
-                                            aria-live="polite">
-                                            {data &&
-                                                data.path?.includes(
-                                                    queryParams.type
-                                                ) &&
-                                                getXofX()}
-                                        </Box>
+                                    <Box
+                                        sx={{ display: "flex" }}
+                                        id="result-summary"
+                                        role="alert"
+                                        aria-live="polite">
+                                        {data &&
+                                            data.path?.includes(
+                                                queryParams.type
+                                            ) &&
+                                            getXofX()}
                                     </Box>
                                     {!isMobile && !isTabletOrLaptop && (
                                         <Box sx={{ display: "flex", gap: 2 }}>
