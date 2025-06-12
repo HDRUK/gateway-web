@@ -1,10 +1,10 @@
 import { act } from "react-dom/test-utils";
-import useModal, { ModalProps } from "@/hooks/useModal";
+import useModal from "@/hooks/useModal";
 import { fireEvent, renderHook, screen, waitFor } from "@/utils/testUtils";
 
 describe("useModal", () => {
     it("should render content and title", async () => {
-        const { result } = renderHook<ModalProps>(() => useModal());
+        const { result } = renderHook(() => useModal());
 
         const props = {
             title: "This is a modal",
@@ -20,8 +20,9 @@ describe("useModal", () => {
             expect(screen.getByText(props.content)).toBeInTheDocument();
         });
     });
+
     it("should render custom button labels", async () => {
-        const { result } = renderHook<ModalProps>(() => useModal());
+        const { result } = renderHook(() => useModal());
 
         const props = {
             cancelText: "Dismiss",
@@ -37,8 +38,9 @@ describe("useModal", () => {
             expect(screen.getByText(props.confirmText)).toBeInTheDocument();
         });
     });
+
     it("should call cancel if function is passed", async () => {
-        const { result } = renderHook<ModalProps>(() => useModal());
+        const { result } = renderHook(() => useModal());
 
         const props = {
             title: "This is a modal",
@@ -60,8 +62,9 @@ describe("useModal", () => {
             expect(props.onCancel).toHaveBeenCalled();
         });
     });
+
     it("should call confirm if function is passed", async () => {
-        const { result } = renderHook<ModalProps>(() => useModal());
+        const { result } = renderHook(() => useModal());
 
         const props = {
             title: "This is a modal",
@@ -83,8 +86,9 @@ describe("useModal", () => {
             expect(props.onSuccess).toHaveBeenCalled();
         });
     });
+
     it("should call onClose prop when selecting `Close` icon", async () => {
-        const { result } = renderHook<ModalProps>(() => useModal());
+        const { result } = renderHook(() => useModal());
 
         const props = {
             title: "This is a modal",
@@ -105,8 +109,9 @@ describe("useModal", () => {
             expect(props.onCancel).toHaveBeenCalled();
         });
     });
+
     it("should call onSuccess prop when selecting `Close` icon and 'invertCloseIconBehaviour' is passed", async () => {
-        const { result } = renderHook<ModalProps>(() => useModal());
+        const { result } = renderHook(() => useModal());
 
         const props = {
             invertCloseIconBehaviour: true,

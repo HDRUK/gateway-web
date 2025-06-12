@@ -6,10 +6,24 @@ on:
       - dev
       - staging
       - main
+    paths:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - 'package.json'
+      - 'jest.config.*'
+      - '.github/workflows/**'
   pull_request:
     branches:
       - main
       - dev
+    paths:
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - 'package.json'
+      - 'jest.config.*'
+      - '.github/workflows/**'
 
 env:
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
@@ -18,7 +32,7 @@ env:
 jobs:
   test:
     timeout-minutes: 10
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     environment: |-
       ${{
          github.ref_name == 'dev' && 'dev'
@@ -31,17 +45,57 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: NPM install
+      - name: Use Node.js and cache dependencies
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+
+      - name: Install dependencies
         id: npminstall
-        run: "npm install"
+        run: npm ci
+
+      - name: Check if code changed
+        id: codecheck
+        run: |
+          echo "Detecting code changes..."
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch origin ${{ github.base_ref }} --depth=1
+            BASE=origin/${{ github.base_ref }}
+          else
+            BASE=$(git rev-parse HEAD~1)
+          fi
+
+          CHANGED=$(git diff --name-only $BASE HEAD -- '*.js' '*.ts' '*.tsx' 'package.json' 'jest.config.*')
+          echo "$CHANGED"
+          
+          # Store as comma-separated list
+          CHANGED_CSV=$(echo "$CHANGED" | paste -sd "," -)
+
+          echo "changed_files=$CHANGED_CSV" >> $GITHUB_OUTPUT
+
+      - name: Restore Jest cache
+        if: steps.codecheck.outputs.changed_files != ''
+        uses: actions/cache@v4
+        with:
+            path: |
+              .jest-cache/
+              node_modules/.cache/jest
+            key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
+            restore-keys: |
+              ${{ runner.os }}-jest-
+
+      - name: List Jest cache contents
+        if: steps.codecheck.outputs.changed_files != ''
+        run: ls -la .jest-cache || echo "No Jest cache found"
 
       - name: Run lint
         id: runlint
-        run: "npm run lint"
+        if: steps.codecheck.outputs.changed_files != ''
+        run: npm run lint
 
       - name: Run unit tests
-        id: unittests
-        run: "npm run test"
+        if: steps.codecheck.outputs.changed_files != ''
+        run: npm run test:ci
 
       - name: Run Notification
         id: runnotificationsent

@@ -1,5 +1,5 @@
 import mockRouter from "next-router-mock";
-import { render, screen, waitFor, within } from "@/utils/testUtils";
+import { render, screen, waitFor } from "@/utils/testUtils";
 import { generateDatasetForTeamV1 } from "@/mocks/data/dataset";
 import { getTeamDatasetsV1 } from "@/mocks/handlers/teams";
 import { server } from "@/mocks/server";
@@ -30,50 +30,48 @@ describe("TeamDatasets", () => {
         server.use(getTeamDatasetsV1(mockDatasets));
         renderTeamDatasets();
 
-        await waitFor(() => {
-            const datasetCards = screen.getAllByTestId("dataset-card");
-            expect(datasetCards).toHaveLength(3);
+        await waitFor(
+            () => {
+                const cards = screen.getAllByTestId("dataset-card");
+                expect(cards).toHaveLength(3);
 
-            expect(
-                within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.summary.title}`
-                )
-            ).toBeInTheDocument();
-            expect(
-                within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.summary.publisher.publisherName}`
-                )
-            ).toBeInTheDocument();
-            expect(
-                within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.required.version}`
-                )
-            ).toBeInTheDocument();
+                const [card1, card2, card3] = cards;
 
-            expect(
-                within(datasetCards[0]).getByText(`Manually created dataset`)
-            ).toBeInTheDocument();
-            expect(
-                within(datasetCards[1]).getByText(`API created dataset`)
-            ).toBeInTheDocument();
-            expect(
-                within(datasetCards[2]).getByText(
-                    `Predefined Integration created dataset`
-                )
-            ).toBeInTheDocument();
-        });
+                expect(card1).toHaveTextContent(
+                    mockDatasets[0].latest_metadata.summary.title
+                );
+                expect(card1).toHaveTextContent(
+                    mockDatasets[0].latest_metadata.summary.publisher
+                        .publisherName
+                );
+                expect(card1).toHaveTextContent(
+                    mockDatasets[0].latest_metadata.required.version
+                );
+                expect(card1).toHaveTextContent("Manually created dataset");
+
+                expect(card2).toHaveTextContent("API created dataset");
+                expect(card3).toHaveTextContent(
+                    "Predefined Integration created dataset"
+                );
+            },
+            { timeout: 300 }
+        );
     });
+
     it("should render message if no active datasets", async () => {
         server.use(getTeamDatasetsV1([]));
         renderTeamDatasets();
 
-        await waitFor(() => {
-            expect(
-                screen.getByText(
-                    "No active datasets found on the Gateway for your team."
-                )
-            ).toBeInTheDocument();
-        });
+        await waitFor(
+            () => {
+                expect(
+                    screen.getByText(
+                        "No active datasets found on the Gateway for your team."
+                    )
+                ).toBeInTheDocument();
+            },
+            { timeout: 300 }
+        );
     });
 
     it("should render all datasets (with different GWDM versions)", async () => {
@@ -94,27 +92,26 @@ describe("TeamDatasets", () => {
         server.use(getTeamDatasetsV1(mockDatasets));
         renderTeamDatasets();
 
-        await waitFor(() => {
-            const datasetCards = screen.getAllByTestId("dataset-card");
-            expect(datasetCards).toHaveLength(3);
+        await waitFor(
+            () => {
+                const cards = screen.getAllByTestId("dataset-card");
+                expect(cards).toHaveLength(3);
 
-            expect(
-                within(datasetCards[0]).getByText(
-                    `${mockDatasets[0].latest_metadata.summary.publisher.publisherName}`
-                )
-            ).toBeInTheDocument();
+                const [card1, card2, card3] = cards;
 
-            expect(
-                within(datasetCards[1]).getByText(
-                    `${mockDatasets[1].latest_metadata.summary.publisher.publisherName}`
-                )
-            ).toBeInTheDocument();
-
-            expect(
-                within(datasetCards[2]).getByText(
-                    `${mockDatasets[2].latest_metadata.summary.publisher.name}`
-                )
-            ).toBeInTheDocument();
-        });
+                expect(card1).toHaveTextContent(
+                    mockDatasets[0].latest_metadata.summary.publisher
+                        .publisherName
+                );
+                expect(card2).toHaveTextContent(
+                    mockDatasets[1].latest_metadata.summary.publisher
+                        .publisherName
+                );
+                expect(card3).toHaveTextContent(
+                    mockDatasets[2].latest_metadata.summary.publisher.name
+                );
+            },
+            { timeout: 300 }
+        );
     });
 });

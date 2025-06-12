@@ -11,8 +11,8 @@ describe("useDialog", () => {
         const { store } = useDialog();
         const { dialogProps } = store as unknown as {
             dialogProps: {
-                onCancel: () => null;
-                onSuccess: (val: string) => null;
+                onCancel: () => void;
+                onSuccess: (val: string) => void;
                 foo: string;
             };
         };
@@ -58,16 +58,23 @@ describe("useDialog", () => {
             result.current.showDialog(SimpleDialog, props);
         });
 
-        await waitFor(() => {
-            expect(screen.getByText("Dialog title")).toBeInTheDocument();
-        });
+        await waitFor(
+            () => {
+                expect(screen.getByText("Dialog title")).toBeInTheDocument();
+            },
+            { timeout: 300 }
+        );
 
         fireEvent.click(screen.getByText("Confirm"));
 
-        await waitFor(() => {
-            expect(props.onSuccess).toHaveBeenCalledWith("successful");
-        });
+        await waitFor(
+            () => {
+                expect(props.onSuccess).toHaveBeenCalledWith("successful");
+            },
+            { timeout: 300 }
+        );
     });
+
     it("should render prop from where dialog was invoked", async () => {
         const { result } = renderHook(() => useDialog());
 
@@ -75,10 +82,14 @@ describe("useDialog", () => {
             result.current.showDialog(SimpleDialog, props);
         });
 
-        await waitFor(() => {
-            expect(screen.getByText("Bar")).toBeInTheDocument();
-        });
+        await waitFor(
+            () => {
+                expect(screen.getByText("Bar")).toBeInTheDocument();
+            },
+            { timeout: 300 }
+        );
     });
+
     it("should call onClose prop when selecting `Cancel`", async () => {
         const { result } = renderHook(() => useDialog());
 
@@ -86,16 +97,23 @@ describe("useDialog", () => {
             result.current.showDialog(SimpleDialog, props);
         });
 
-        await waitFor(() => {
-            expect(screen.getByText("Dialog title")).toBeInTheDocument();
-        });
+        await waitFor(
+            () => {
+                expect(screen.getByText("Dialog title")).toBeInTheDocument();
+            },
+            { timeout: 300 }
+        );
 
         fireEvent.click(screen.getByText("Cancel"));
 
-        await waitFor(() => {
-            expect(props.onCancel).toHaveBeenCalled();
-        });
+        await waitFor(
+            () => {
+                expect(props.onCancel).toHaveBeenCalled();
+            },
+            { timeout: 300 }
+        );
     });
+
     it("should call onClose prop when selecting `Close` icon", async () => {
         const { result } = renderHook(() => useDialog());
 
@@ -103,14 +121,20 @@ describe("useDialog", () => {
             result.current.showDialog(SimpleDialog, props);
         });
 
-        await waitFor(() => {
-            expect(screen.getByText("Dialog title")).toBeInTheDocument();
-        });
+        await waitFor(
+            () => {
+                expect(screen.getByText("Dialog title")).toBeInTheDocument();
+            },
+            { timeout: 300 }
+        );
 
         fireEvent.click(screen.getByTestId("dialog-close-icon"));
 
-        await waitFor(() => {
-            expect(props.onCancel).toHaveBeenCalled();
-        });
+        await waitFor(
+            () => {
+                expect(props.onCancel).toHaveBeenCalled();
+            },
+            { timeout: 300 }
+        );
     });
 });

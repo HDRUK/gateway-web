@@ -35,6 +35,13 @@ const customJestConfig = {
         "<rootDir>/mocks",
         "<rootDir>/src/config",
     ],
+   cacheDirectory: '<rootDir>/.jest-cache',
+   "reporters": [
+	"default",
+	["./node_modules/jest-html-reporter", {
+		"pageTitle": "Test Report"
+	}]
+]
 };
 
 module.exports = createJestConfig(customJestConfig);

@@ -54,31 +54,32 @@ const schemaFields = [
     },
 ];
 
+const getValuesMock = (values: unknown[]) => jest.fn(() => values);
+
 describe("formGetFieldsCompletedCount", () => {
     it("Should calculate required fields correctly when all empty", () => {
-        const getValues = jest.fn(() => [undefined, undefined]);
-
+        const getValues = getValuesMock([undefined, undefined]);
         expect(
             formGetFieldsCompletedCount(schemaFields, getValues, false)
         ).toBe(0);
     });
 
     it("Should calculate required fields correctly when all complete", () => {
-        const getValues = jest.fn(() => ["test", "test"]);
+        const getValues = getValuesMock(["test", "test"]);
         expect(
             formGetFieldsCompletedCount(schemaFields, getValues, false)
         ).toBe(100);
     });
 
     it("Should calculate optional fields correctly when all empty", () => {
-        const getValues = jest.fn(() => [undefined]);
+        const getValues = getValuesMock([undefined]);
         expect(formGetFieldsCompletedCount(schemaFields, getValues, true)).toBe(
             0
         );
     });
 
     it("Should calculate optional fields correctly when all complete", () => {
-        const getValues = jest.fn(() => ["test"]);
+        const getValues = getValuesMock(["test"]);
         expect(formGetFieldsCompletedCount(schemaFields, getValues, true)).toBe(
             100
         );
