@@ -47,7 +47,9 @@ jobs:
       - name: Restore Jest cache
         uses: actions/cache@v4
         with:
-          path: .jest-cache/
+          path: |
+            .jest-cache/
+            node_modules/.cache/jest
           key: ${{ runner.os }}-jest-${{ hashFiles('**/*.test.ts', '**/jest.config.js') }}
           restore-keys: |
             ${{ runner.os }}-jest-
