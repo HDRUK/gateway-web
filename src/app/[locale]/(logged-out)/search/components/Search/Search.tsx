@@ -109,6 +109,7 @@ import searchFormConfig, {
     sortByOptionsPublications,
     sortByOptionsTool,
 } from "@/config/forms/search";
+import { colors } from "@/config/theme";
 import { ChevronThinIcon, DownloadIcon, TableIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
@@ -911,7 +912,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     />
                 )}
                 {isMobile && (
-                    <>
+                    <Box
+                        sx={{
+                            borderBottom: `3px solid ${colors.green400}`,
+                            width: "100%",
+                        }}>
                         <Button
                             aria-controls="tab-menu"
                             aria-haspopup="true"
@@ -919,8 +924,13 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             aria-label="Open to show search type options"
                             title="Open to show search type options"
                             color="secondary"
-                            sx={{ backgroundColor: "white" }}
-                            endIcon={<ChevronThinIcon />}>
+                            sx={{
+                                backgroundColor: "white",
+                                fontSize: "15px",
+                                fontWeight: 600,
+                                "&:hover": { background: "white" },
+                            }}
+                            endIcon={<ChevronThinIcon color="primary" />}>
                             {categoryDropdowns[queryParams.type]}
                         </Button>
                         <Menu
@@ -939,14 +949,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             updatePath("type", item.value);
                                             handleClose();
                                         }}
-                                        key={item.label}
-                                        value={item.value}>
-                                        {item.label}
+                                        key={categoryDropdowns[item.value]}
+                                        value={item.value}
+                                        sx={{ fontSize: "15px" }}>
+                                        {categoryDropdowns[item.value]}
                                     </MenuItem>
                                 );
                             })}
                         </Menu>
-                    </>
+                    </Box>
                 )}
             </Box>
             <BoxContainer
