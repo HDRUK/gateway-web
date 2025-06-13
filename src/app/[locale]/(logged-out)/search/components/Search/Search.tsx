@@ -967,11 +967,14 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     </Box>
                 )}
             </Box>
-            <BoxContainer
+            <Box
                 sx={{
                     width: "100%",
+                    display: {
+                        mobile: "block",
+                        tablet: "grid",
+                    },
                     gridTemplateColumns: {
-                        mobile: "repeat(1, 1fr)",
                         tablet: "repeat(7, 1fr)",
                     },
                     gap: {
@@ -981,7 +984,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 }}>
                 <Box
                     sx={{
-                        gridColumn: { tablet: "span 2", laptop: "span 2" },
+                        gridColumn: {
+                            tablet: "span 2",
+                            laptop: "span 2",
+                        },
                     }}>
                     <FilterPanel
                         selectedFilters={selectedFilters}
@@ -1250,7 +1256,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         />
                     </Box>
                 </Box>
-            </BoxContainer>
+            </Box>
         </Box>
     );
 };
