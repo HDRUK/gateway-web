@@ -279,7 +279,11 @@ const ResultCard = ({
                                         aria-level={3}
                                         fontSize={16}
                                         fontWeight={600}
-                                        marginBottom={0.5}>
+                                        marginBottom={0.5}
+                                        marginRight={{
+                                            tablet: 0,
+                                            laptop: 1,
+                                        }}>
                                         {metadata.summary.shortTitle}
                                     </Link>
                                     {isNumber && (
@@ -295,6 +299,10 @@ const ResultCard = ({
                                                     fontSize: 14,
                                                     color: "secondary",
                                                     mb: 1.5,
+                                                    mr: {
+                                                        tablet: 0,
+                                                        laptop: 1,
+                                                    },
                                                 }}>
                                                 {metadata.summary.publisher
                                                     .name !== undefined
@@ -316,6 +324,10 @@ const ResultCard = ({
                                                 fontSize: 14,
                                                 color: "secondary",
                                                 mb: 1.5,
+                                                mr: {
+                                                    tablet: 0,
+                                                    laptop: 1,
+                                                },
                                             }}>
                                             {metadata.summary.publisher.name !==
                                             undefined
