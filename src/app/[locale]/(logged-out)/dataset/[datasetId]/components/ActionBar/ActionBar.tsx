@@ -17,7 +17,7 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import getRequest from "@/services/api/get";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import {
     ChevronThinIcon,
     DownloadIcon,

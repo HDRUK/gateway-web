@@ -9,7 +9,7 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { CheckCircleRoundedIcon, WarningRoundedIcon } from "@/consts/icons";
 import {
     ACCOUNT,

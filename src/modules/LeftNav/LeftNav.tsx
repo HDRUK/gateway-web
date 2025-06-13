@@ -12,7 +12,7 @@ import {
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";

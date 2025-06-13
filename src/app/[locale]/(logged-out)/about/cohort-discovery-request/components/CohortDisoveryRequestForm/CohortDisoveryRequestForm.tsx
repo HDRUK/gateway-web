@@ -13,7 +13,7 @@ import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { RouteName } from "@/consts/routeName";
 import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 

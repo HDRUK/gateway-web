@@ -3,6 +3,7 @@
 import { ReactElement } from "react";
 import { createTheme, styled } from "@mui/material/styles";
 import Image from "next/image";
+import { colors } from "./colors";
 import { sourceSans3 } from "./fonts";
 
 const buttonLinkStyle = {
@@ -106,43 +107,6 @@ declare module "@mui/material/styles" {
         desktop: true;
     }
 }
-
-export const colors = {
-    white: "#fff",
-    black: "#000",
-    orange: "#FE9A2D",
-    orange300: "#F9B475",
-    orange200: "#F0BB24",
-    green50: "#E2F3F0",
-    green100: "#B8E2D8",
-    green400: "#3DB28C",
-    green700: "#2c8267",
-    amber500: "#ffc107",
-    grey: "#F6F7F8",
-    grey100: "#F6F7F8",
-    grey200: "#EEE",
-    grey300: "#E2E2E2",
-    grey400: "#D0D3D4",
-    grey500: "#B3B8BD",
-    grey600: "#868E96",
-    grey700: "#53575A",
-    grey800: "#3C3C3B",
-    grey900: "#262626",
-    red50: "#FFECF1",
-    red600: "#EF3F4B",
-    red700: "#DC3645",
-    red900: "#C02531",
-    purple100: "#C6CEE5",
-    purple200: "#A2AED3",
-    purple400: "#6275B3",
-    purple500: "#475da7",
-    purple700: "#384B91",
-    purple900: "#29235C",
-    darkGreen50: "#DEF0F0",
-    darkGreen100: "#ADDAD9",
-    yellow400: "#F4E751",
-    yellow500: "#FFC40C",
-};
 
 const palette = {
     primary: {

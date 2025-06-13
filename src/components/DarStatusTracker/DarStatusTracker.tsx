@@ -2,7 +2,7 @@ import { ListItem, alpha, List } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,

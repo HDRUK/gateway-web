@@ -2,7 +2,7 @@ import { Control, FieldValues } from "react-hook-form";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
 import { InputWrapperCombinedProps } from "@/components/InputWrapper/InputWrapper";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 interface InputSectionWrapperProps<TFieldValues extends FieldValues> {
     sections: {

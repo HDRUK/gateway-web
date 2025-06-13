@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import { getChipLabel } from "@/components/Autocomplete/utils";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {

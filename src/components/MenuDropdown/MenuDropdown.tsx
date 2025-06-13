@@ -2,7 +2,8 @@ import { MouseEvent, MouseEventHandler } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import Link from "next/link";
 import useDialog from "@/hooks/useDialog";
-import theme, { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
+import theme from "@/config/theme";
 import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface MenuDropdownProps {

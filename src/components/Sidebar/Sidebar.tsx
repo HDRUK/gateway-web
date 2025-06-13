@@ -3,7 +3,7 @@ import { Box, Drawer, DrawerProps, IconButton } from "@mui/material";
 import { DialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { CloseIcon } from "@/consts/icons";
 import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 

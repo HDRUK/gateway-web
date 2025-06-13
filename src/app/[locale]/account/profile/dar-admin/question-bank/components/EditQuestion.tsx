@@ -21,13 +21,13 @@ import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import {
     questionDefaultValues,
     questionValidationSchema,
     sectionField,
     custodiansFields,
 } from "@/config/forms/questionBank";
-import { colors } from "@/config/theme";
 import FormQuestions from "./FormQuestions";
 import PreviewQuestion from "./PreviewQuestion";
 

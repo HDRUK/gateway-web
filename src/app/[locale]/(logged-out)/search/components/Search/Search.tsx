@@ -68,6 +68,7 @@ import usePostSwr from "@/hooks/usePostSwr";
 import useSearch from "@/hooks/useSearch";
 import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
@@ -109,7 +110,6 @@ import searchFormConfig, {
     sortByOptionsPublications,
     sortByOptionsTool,
 } from "@/config/forms/search";
-import { colors } from "@/config/theme";
 import { ChevronThinIcon, DownloadIcon, TableIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";

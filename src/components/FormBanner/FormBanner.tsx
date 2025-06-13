@@ -2,7 +2,7 @@
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import Button from "../Button";
 import DownloadExternalFile from "../DownloadExternalFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";

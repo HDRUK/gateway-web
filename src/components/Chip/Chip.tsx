@@ -1,7 +1,7 @@
 import { cloneElement } from "react";
 import MuiChip, { ChipProps as MuiChipProps } from "@mui/material/Chip";
 import { ResourceType } from "@/interfaces/AddResource";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import {
     DataUseIcon,
     DatabaseIcon,

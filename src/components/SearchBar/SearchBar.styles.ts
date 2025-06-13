@@ -3,7 +3,7 @@ import Box from "@/components/Box";
 import Form from "@/components/Form";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import TextFieldBase from "../TextFieldBase";
 
 export const FormWrapper = styled(Box)(() => ({

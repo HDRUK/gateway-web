@@ -5,7 +5,7 @@ import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { nonManualDatasetCardActions } from "@/consts/actions";
 import { getLatestVersion } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";

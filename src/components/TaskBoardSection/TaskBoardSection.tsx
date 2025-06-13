@@ -9,7 +9,7 @@ import { TaskBoardItem } from "@/interfaces/TaskBoard";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import SortableItem from "@/components/SortableItem";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 export type TaskBoardSectionProps = {
     id: string;

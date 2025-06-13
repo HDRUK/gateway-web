@@ -8,7 +8,7 @@ import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import ToolDetailsDialog from "@/modules/ToolDetailsDialog";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { RouteName } from "@/consts/routeName";
 import { ToolDescription } from "./ResultCardTool.styles";
 

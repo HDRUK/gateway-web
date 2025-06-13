@@ -9,7 +9,7 @@ import Box from "@/components/Box";
 import DarApplicationCard from "@/components/DarApplicationCard";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { ArrowDropDownIcon } from "@/consts/icons";
 
 const TRANSLATION_PATH =

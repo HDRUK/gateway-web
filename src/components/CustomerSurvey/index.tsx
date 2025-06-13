@@ -27,8 +27,8 @@ import * as yup from "yup";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import InputWrapper from "../InputWrapper";
 
 interface Ratings {

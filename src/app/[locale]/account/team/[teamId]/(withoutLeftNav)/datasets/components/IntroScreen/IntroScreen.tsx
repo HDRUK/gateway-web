@@ -11,8 +11,8 @@ import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import { colors } from "@/config/colors";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import {
     ACCOUNT,
     COMPONENTS,

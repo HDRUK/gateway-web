@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import { ListItemButton } from "@mui/material";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { CloseIcon, CheckIcon, PriorityHighIcon } from "@/consts/icons";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import Typography from "../Typography";

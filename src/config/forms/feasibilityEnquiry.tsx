@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { REGEX_PHONE } from "@/consts/regex";
 import { inputComponents } from ".";
 

@@ -26,8 +26,8 @@ import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import { getColumns } from "@/config/tables/addResources";
-import { colors } from "@/config/theme";
 import { capitalise } from "@/utils/general";
 import { resourceTypes, defaultValues, searchResource } from "./config";
 

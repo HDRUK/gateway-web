@@ -1,6 +1,6 @@
 import { Card, styled } from "@mui/material";
 import Image from "next/image";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 export const StatCard = styled(Card)(() => ({
     display: "flex",

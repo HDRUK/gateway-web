@@ -38,9 +38,10 @@ import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes"
 import { GetNewsQuery } from "@/config/queries/news";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
+import { CACHE_CMS } from "@/consts/cache";
 
 const DEFAULT_OPTIONS = {
-    next: { revalidate: 10 },
+    next: { tags: [CACHE_CMS, "all"], revalidate: 4 * 60 * 60 },
 };
 
 const substituteEnvLinks = async <T>(content: T) => {

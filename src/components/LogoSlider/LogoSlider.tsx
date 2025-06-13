@@ -1,3 +1,5 @@
+"use client";
+
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Button, GlobalStyles } from "@mui/material";
 import Image from "next/image";

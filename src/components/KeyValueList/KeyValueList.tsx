@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import Box from "../Box";
 import Typography from "../Typography";
 

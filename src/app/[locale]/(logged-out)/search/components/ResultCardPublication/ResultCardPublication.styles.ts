@@ -2,7 +2,7 @@ import { ListItemText, styled } from "@mui/material";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 export const PublicationTitleWrapper = styled("div")(({ theme }) => ({
     display: "flex",

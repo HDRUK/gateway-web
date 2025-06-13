@@ -6,7 +6,7 @@ import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 

@@ -12,7 +12,7 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { ContentCopyIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import TemplateList from "../TemplateList";

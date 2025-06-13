@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useMemo, useState } from "react";
 import { isMobile } from "react-device-detect";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Typography } from "@mui/material";
@@ -15,8 +12,8 @@ import GradientBoxes from "@/components/GradientBoxes";
 import HTMLContent from "@/components/HTMLContent";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
+import { colors } from "@/config/colors";
 import { StaticImages } from "@/config/images";
-import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import InfoHoverPanel from "@/app/[locale]/components/InfoHoverPanel";
@@ -105,14 +102,17 @@ const connectedResources = [
         externalUrl: true,
     },
 ];
-
+interface FormattedLogo {
+    alt: string;
+    imageSrc: string;
+    websiteUrl: string;
+}
 interface HomePageProps {
     cmsContent: PageTemplateHome;
 }
 
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
-    const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
 
     const {
         meetTheTeam,
@@ -126,28 +126,16 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             newsletterSignupDescription,
         },
     } = page.template;
-
-    const logosFormatted = useMemo(
-        () =>
-            logos.map(logo => ({
-                websiteUrl: logo.websiteAddress,
-                imageSrc: logo.imageLocation.node.mediaItemUrl,
-                alt: logo.organisationCharity,
-            })),
-        [logos]
-    );
-
-    useEffect(() => {
-        if (isMobile) {
-            setIsTouchDevice(true);
-        }
-    }, []);
-
-    const responsiveServices = isTouchDevice
+    const logosFormatted: FormattedLogo[] = logos.map(logo => ({
+        websiteUrl: logo.websiteAddress,
+        imageSrc: logo.imageLocation.node.mediaItemUrl,
+        alt: logo.organisationCharity,
+    }));
+    const responsiveServices = isMobile
         ? services.map(service => ({ ...service, text: t("touchDevice") }))
         : services;
 
-    const responsiveServicesConnected = isTouchDevice
+    const responsiveServicesConnected = isMobile
         ? connectedResources.map(service => ({
               ...service,
               text: t("touchDevice"),
@@ -228,10 +216,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                             maxWidth: 950,
                         }}>
                         <IFrameWrapper>
-                            <HTMLContent
-                                content={gatewayVideo}
-                                sanitize={false}
-                            />
+                            <HTMLContent content={gatewayVideo} />
                         </IFrameWrapper>
                     </Box>
                 </Container>
@@ -253,13 +238,15 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         />
                         <Box
                             sx={{
-                                position: "absolute",
                                 right: 0,
                                 top: "50%",
-                                transform: "translateY(-50%)",
-                                [theme.breakpoints.down("tablet")]: {
-                                    position: "static",
-                                    transform: "none",
+                                position: {
+                                    mobile: "static",
+                                    desktop: "absolute",
+                                },
+                                transform: {
+                                    mobile: "none",
+                                    desktop: "translateY(-50%)",
                                 },
                             }}>
                             <Button
@@ -333,8 +320,9 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     background: "white",
                     position: "relative",
                     zIndex: 1,
-                    [theme.breakpoints.up(810)]: {
-                        marginTop: "-70px",
+
+                    marginTop: {
+                        tablet: "-70px",
                     },
                 }}>
                 <Container
@@ -364,19 +352,18 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     <LogoSlider logos={logosFormatted} />
                 </Container>
             </Box>
-            <Box
-                sx={{
-                    display: "none",
-                    [theme.breakpoints.up(810)]: {
+            {!isMobile && (
+                <Box
+                    sx={{
                         position: "relative",
                         zIndex: 0,
                         height: "65px",
                         width: "100%",
                         backgroundColor: "#fff",
                         display: "block",
-                    },
-                }}
-            />
+                    }}
+                />
+            )}
         </>
     );
 };

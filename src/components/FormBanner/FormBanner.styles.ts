@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
-import theme, { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
+import theme from "@/config/theme";
 import Box from "../Box";
 
 export enum Justify {

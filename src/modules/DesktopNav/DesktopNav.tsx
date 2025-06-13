@@ -3,8 +3,8 @@ import { Box, Divider } from "@mui/material";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
+import { colors } from "@/config/colors";
 import navItems from "@/config/nav";
-import { colors } from "@/config/theme";
 import { ExpandMoreIcon } from "@/consts/icons";
 
 function DesktopNav() {
