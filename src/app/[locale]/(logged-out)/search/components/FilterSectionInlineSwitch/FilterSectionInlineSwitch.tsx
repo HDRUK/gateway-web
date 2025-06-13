@@ -36,6 +36,7 @@ const FilterSectionInlineSwitch = ({
             }}>
             <Tooltip
                 describeChild
+                placement="right"
                 tabIndex={0}
                 title={t(`${label}${TOOLTIP_SUFFIX}`)}>
                 <div>

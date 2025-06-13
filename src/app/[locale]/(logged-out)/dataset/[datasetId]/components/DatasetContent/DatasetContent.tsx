@@ -57,7 +57,11 @@ const getColumns = (notReportedText: string) =>
                     </p>
                 ),
             header: () => (
-                <TooltipText content={column.tooltip} label={column.header} />
+                <TooltipText
+                    content={column.tooltip}
+                    placement="bottom"
+                    label={column.header}
+                />
             ),
         })
     );
