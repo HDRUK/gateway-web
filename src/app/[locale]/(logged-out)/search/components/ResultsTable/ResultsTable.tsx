@@ -82,7 +82,6 @@ const getColumns = ({
             return (
                 <Link href={linkHref}>
                     <EllipsisLineLimit
-                        showToolTip
                         text={get(original, "metadata.summary.title")}
                     />
                 </Link>
@@ -106,14 +105,12 @@ const getColumns = ({
                     {isNumber && (
                         <Link href={linkHref}>
                             <EllipsisLineLimit
-                                showToolTip
                                 text={get(original, PUBLISHER_NAME_PATH)}
                             />
                         </Link>
                     )}
                     {!isNumber && (
                         <EllipsisLineLimit
-                            showToolTip
                             text={get(original, PUBLISHER_NAME_PATH)}
                         />
                     )}
