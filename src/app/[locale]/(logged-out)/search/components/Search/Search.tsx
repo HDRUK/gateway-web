@@ -41,7 +41,6 @@ import {
     SearchResultTool,
     ViewType,
 } from "@/interfaces/Search";
-import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
