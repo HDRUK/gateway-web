@@ -16,22 +16,26 @@ const TooltipText = ({
     ...restProps
 }: TooltipTextProps) => {
     return (
-        <Tooltip describeChild tabIndex={0} title={content}>
-            <Typography
-                data-testid="tooltipText"
-                sx={{
-                    fontSize: size,
-                    fontWeight: 600,
-                    textDecoration: "underline",
-                    textDecorationStyle: "dashed",
-                    textDecorationThickness: "1px",
-                    textUnderlineOffset: 5,
-                    ...sx,
-                }}
-                {...restProps}>
+        <Typography
+            data-testid="tooltipText"
+            sx={{
+                fontSize: size,
+                fontWeight: 600,
+                textDecoration: "underline",
+                textDecorationStyle: "dashed",
+                textDecorationThickness: "1px",
+                textUnderlineOffset: 5,
+                ...sx,
+            }}
+            {...restProps}>
+            <Tooltip
+                describeChild
+                placement="right"
+                tabIndex={0}
+                title={content}>
                 {label}
-            </Typography>
-        </Tooltip>
+            </Tooltip>
+        </Typography>
     );
 };
 
