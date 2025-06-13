@@ -44,6 +44,7 @@ const TooltipText = ({
             }}
             {...restProps}>
             <Tooltip
+                data-testid="tooltip"
                 describeChild
                 placement={placement}
                 tabIndex={0}
