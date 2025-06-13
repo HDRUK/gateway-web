@@ -9,7 +9,7 @@ import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { formatDate } from "@/utils/date";
 
 interface TemplateListProps {

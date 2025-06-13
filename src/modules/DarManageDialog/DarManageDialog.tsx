@@ -13,9 +13,9 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
+import { colors } from "@/config/colors";
 import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import { CACHE_DAR_REVIEWS } from "@/consts/cache";
 import {
     DarApplicationApprovalStatus,

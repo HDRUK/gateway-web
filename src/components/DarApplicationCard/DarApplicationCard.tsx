@@ -16,7 +16,7 @@ import Typography from "@/components/Typography";
 import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { DarEditIcon } from "@/consts/customIcons";
 import {
     DarApplicationApprovalStatus,

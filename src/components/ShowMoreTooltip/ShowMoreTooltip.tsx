@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Tooltip } from "@mui/material";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 interface ShowMoreTooltipProps {
     items: string[];

@@ -19,11 +19,11 @@ import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import {
     datasetSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/datasetAccountSearch";
-import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import {
     AddIcon,

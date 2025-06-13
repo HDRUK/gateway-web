@@ -17,11 +17,11 @@ import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import {
     dataUseSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/dataUseAccountSearch";
-import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";

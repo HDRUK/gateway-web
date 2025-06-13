@@ -5,7 +5,7 @@ import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { formatDate } from "@/utils/date";
 
 interface QuestionCardProps {

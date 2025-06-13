@@ -6,7 +6,7 @@ import CharacterLimit from "@/components/CharacterLimit";
 import FormError from "@/components/FormError";
 import FormInfoLabel from "@/components/FormInfoLabel";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 interface FormInputWrapperProps {
     horizontalForm?: boolean;

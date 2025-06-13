@@ -17,6 +17,7 @@ import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import {
     emailNotificationValidationSchema,
     emailNotificationDefaultValues,
@@ -25,7 +26,6 @@ import {
     TeamNotifications,
     TeamNotificationsForm,
 } from "@/config/forms/emailNotifications";
-import { colors } from "@/config/theme";
 import { getPreferredEmail } from "@/utils/user";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 

@@ -26,7 +26,7 @@ describe("CMS utils", () => {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ query: GetReleaseNotesQuery }),
-                next: { revalidate: 10 },
+                next: { revalidate: 14400, tags: ["cms", "all"] },
             });
         });
     });
@@ -38,7 +38,7 @@ describe("CMS utils", () => {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ query: GetMissionAndPurposesQuery }),
-                next: { revalidate: 10 },
+                next: { revalidate: 14400, tags: ["cms", "all"] },
             });
         });
     });
@@ -50,7 +50,7 @@ describe("CMS utils", () => {
                 headers: { "Content-Type": "application/json" },
                 method: "POST",
                 body: JSON.stringify({ query: GetTermsAndConditionsQuery }),
-                next: { revalidate: 10 },
+                next: { revalidate: 14400, tags: ["cms", "all"] },
             });
         });
     });

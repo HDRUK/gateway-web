@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { RouteName } from "@/consts/routeName";
 
 interface LinkItem {

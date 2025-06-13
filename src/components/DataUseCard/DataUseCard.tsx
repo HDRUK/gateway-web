@@ -7,7 +7,7 @@ import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";

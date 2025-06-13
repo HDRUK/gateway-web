@@ -9,7 +9,7 @@ import Typography from "@/components/Typography";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 type HoverPanelItem = {
     id: string;

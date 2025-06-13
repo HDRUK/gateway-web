@@ -32,6 +32,7 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import {
@@ -42,7 +43,7 @@ import {
     LAST_SAVED_DATE_FORMAT,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,

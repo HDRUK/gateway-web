@@ -10,7 +10,7 @@ import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 const AccountNav = () => {
     const { showDialog } = useDialog();

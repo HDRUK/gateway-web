@@ -21,13 +21,13 @@ import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
 import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import { inputComponents } from "@/config/forms";
 import {
     dataUseDefaultValues,
     dataUseFormFields,
     dataUseValidationSchema,
 } from "@/config/forms/dataUse";
-import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import {

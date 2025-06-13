@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 export const tabsStyle = {
     searchTabList: css({

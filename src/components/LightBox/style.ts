@@ -1,4 +1,4 @@
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 
 export const galleryStyle = {
     figure: {

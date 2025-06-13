@@ -19,13 +19,13 @@ import Tabs from "@/components/Tabs";
 import useDebounce from "@/hooks/useDebounce";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
+import { colors } from "@/config/colors";
 import config from "@/config/config";
 import {
     darDashboardDefaultValues,
     darDashboardSearchFilter,
     darDashboardSortField,
 } from "@/config/forms/dataAccessApplicationDashboard";
-import { colors } from "@/config/theme";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,

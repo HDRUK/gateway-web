@@ -22,12 +22,12 @@ import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { colors } from "@/config/colors";
 import {
     cohortAcceptTermsValidationSchema,
     cohortAcceptTermsDefaultValues,
     cohortAcceptTermsField,
 } from "@/config/forms/cohortTermsAccept";
-import { colors } from "@/config/theme";
 
 const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";

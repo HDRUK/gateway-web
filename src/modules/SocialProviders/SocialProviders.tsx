@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Box from "@/components/Box";
 import Label from "@/components/Label";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import * as styles from "./SocialProviders.styles";
 
 interface SocialProvidersProps {

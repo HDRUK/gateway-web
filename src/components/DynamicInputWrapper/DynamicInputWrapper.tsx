@@ -3,8 +3,8 @@ import { isPlainObject } from "lodash";
 import { Metadata } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
+import { colors } from "@/config/colors";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import Typography from "../Typography";
 

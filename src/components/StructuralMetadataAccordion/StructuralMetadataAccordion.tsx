@@ -18,7 +18,7 @@ import {
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import TooltipText from "@/components/TooltipText";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { formatTextWithLinks } from "@/utils/dataset";
 
 type GroupByResult<T> = {

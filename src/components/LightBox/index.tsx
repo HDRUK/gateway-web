@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { useGatewayStore } from "@/store/useGatewayStore";
 import { galleryStyle } from "./style";
 

@@ -1,8 +1,10 @@
 import { ReactNode, Suspense } from "react";
+import { RichBreadCrumbs } from "react-schema-markup";
 import visuallyHidden from "@mui/utils/visuallyHidden";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -55,6 +57,7 @@ export default async function RootLayout({
         <html lang={locale}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
             <Organization />
+            <RichBreadCrumbs ScriptWrap={Script} />
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     <SWRProvider>

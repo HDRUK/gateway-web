@@ -3,7 +3,7 @@ import Link from "next/link";
 import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
 import Chip, { ChipProps } from "@/components/Chip";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import HTMLContent from "../HTMLContent";
 
 export interface CardStackedProps {

@@ -19,7 +19,7 @@ import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";

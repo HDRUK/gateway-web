@@ -1,3 +1,5 @@
+"use client";
+
 import Box from "@/components/Box";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";

@@ -7,7 +7,7 @@ import {
     ColumnDef,
     Column,
 } from "@tanstack/react-table";
-import { colors } from "@/config/theme";
+import { colors } from "@/config/colors";
 import ActionDropdown from "@/app/[locale]/(logged-out)/search/components/ActionDropdown";
 import * as styles from "./Table.styles";
 

@@ -15,9 +15,9 @@ import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import { useIsHomePage } from "@/hooks/useIsHomePage";
+import { colors } from "@/config/colors";
 import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
-import { colors } from "@/config/theme";
 import { MenuIcon } from "@/consts/icons";
 
 function Header() {
