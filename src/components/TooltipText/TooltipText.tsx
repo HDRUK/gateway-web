@@ -5,6 +5,20 @@ interface TooltipTextProps {
     label?: ReactNode;
     content: ReactNode;
     size?: "medium" | "small" | "inherit" | "large";
+    placement?:
+        | "bottom"
+        | "left"
+        | "right"
+        | "top"
+        | "bottom-end"
+        | "bottom-start"
+        | "left-end"
+        | "left-start"
+        | "right-end"
+        | "right-start"
+        | "top-end"
+        | "top-start"
+        | undefined;
     sx?: SxProps;
 }
 
@@ -12,6 +26,7 @@ const TooltipText = ({
     label,
     content,
     size = "medium",
+    placement = "right",
     sx,
     ...restProps
 }: TooltipTextProps) => {
@@ -30,7 +45,7 @@ const TooltipText = ({
             {...restProps}>
             <Tooltip
                 describeChild
-                placement="right"
+                placement={placement}
                 tabIndex={0}
                 title={content}>
                 {label}
