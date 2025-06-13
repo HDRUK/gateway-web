@@ -433,7 +433,13 @@ const ResultCard = ({
                                     </Typography>
                                     <Typography
                                         color="secondary"
-                                        sx={{ fontSize: 16 }}>
+                                        sx={{
+                                            fontSize: 16,
+                                            mb: {
+                                                mobile: 1,
+                                                tablet: 0,
+                                            },
+                                        }}>
                                         {t("dateLabel")}:{" "}
                                         {getDateRange(metadata)}
                                     </Typography>
