@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { serialize } from "cookie";
+import { NextRequest, NextResponse } from "next/server";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
@@ -30,10 +30,12 @@ export async function POST(req: NextRequest) {
             }),
         });
 
-        const response = NextResponse.json({ message: "success" }, { status: 200 });
+        const response = NextResponse.json(
+            { message: "success" },
+            { status: 200 }
+        );
         response.headers.set("Set-Cookie", cookie);
         return response;
-
     } catch (error) {
         const err = error as {
             response?: {
