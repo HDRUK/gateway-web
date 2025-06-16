@@ -8,8 +8,6 @@ import { sessionCookie } from "./config/session";
 import { RouteName } from "./consts/routeName";
 import { logger } from "./utils/logger";
 
-
-
 export function middleware(request: NextRequest) {
     try {
         const token = request.cookies.get(conf.JWT_COOKIE)?.value;

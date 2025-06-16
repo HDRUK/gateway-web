@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import apis from "@/config/apis";
 import config from "@/config/config";
-import { sessionCookie } from "@/config/session";
+import { sessionCookie, sessionPrefix } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
 import { getSessionCookie } from "@/utils/getSessionCookie";
 import { logger } from "@/utils/logger";
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
-                "x-Request-Session-Id": session,
+                "x-Request-Session-Id": sessionPrefix + session,
             },
         });
 

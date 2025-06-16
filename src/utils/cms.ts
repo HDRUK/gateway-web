@@ -38,6 +38,7 @@ import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes"
 import { GetNewsQuery } from "@/config/queries/news";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
+import { sessionPrefix } from "@/config/session";
 import { getSessionCookie } from "./getSessionCookie";
 import { logger } from "./logger";
 
@@ -105,7 +106,7 @@ async function fetchCMS(
     const session = await getSessionCookie();
     const headers = {
         "Content-Type": "application/json",
-        "x-Request-Session-Id": session,
+        "x-Request-Session-Id": sessionPrefix + session,
     };
 
     const res = await fetch(apis.wordPressApiUrl, {
@@ -126,7 +127,7 @@ async function fetchCMS(
         } catch {
             errorMessage = await res.text();
         }
-        logger!.error(errorMessage, session, "fetchCMS");
+        logger.error(errorMessage, session, "fetchCMS");
     }
 
     if (acfClean) {

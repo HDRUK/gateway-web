@@ -33,6 +33,7 @@ import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
+import { sessionPrefix } from "@/config/session";
 import {
     CACHE_DAR,
     CACHE_DAR_SECTIONS,
@@ -41,9 +42,13 @@ import {
     CACHE_DAR_REVIEWS,
 } from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
+import { getSessionCookie } from "./getSessionCookie";
+import { logger } from "./logger";
 import { revalidateCache } from "./revalidateCache";
 
 type Payload<T> = T | (() => BodyInit & T);
+
+const { LOG_LEVEL } = process.env;
 
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
@@ -55,6 +60,7 @@ async function get<T>(
     }
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
+    const session = await getSessionCookie();
     const { cache, suppressError } = options;
     const nextConfig = cache
         ? {
@@ -66,12 +72,26 @@ async function get<T>(
         : undefined;
 
     const res = await fetch(`${url}`, {
-        headers: { Authorization: `Bearer ${jwt?.value}` },
+        headers: {
+            Authorization: `Bearer ${jwt?.value}`,
+            "x-Request-Session-Id": sessionPrefix + session,
+        },
         ...nextConfig,
     });
+    if (LOG_LEVEL === "debug") {
+        logger.info(url, session, "api.get");
+    }
 
     if (!res.ok && !suppressError) {
-        // This will activate the closest `error.js` Error Boundary
+        let errorMessage: string;
+
+        try {
+            const errorData = await res.json();
+            errorMessage = JSON.stringify(errorData, null, 2);
+        } catch {
+            errorMessage = await res.text();
+        }
+        logger.error(errorMessage, session, `api.get:${url}`);
         throw new Error("Failed to fetch data");
     }
 
@@ -95,18 +115,35 @@ async function patch<T>(
     tagsToRevalidate?: string[]
 ): Promise<T> {
     const jwt = cookies().get(config.JWT_COOKIE);
-
+    const session = await getSessionCookie();
+    if (LOG_LEVEL === "debug") {
+        const message = {
+            url,
+            payload: payload ?? "no payload in patch",
+        };
+        logger.info(message, session, "api.patch");
+    }
     const res = await fetch(url, {
         method: "PATCH",
+
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
+            "x-Request-Session-Id": sessionPrefix + session,
         },
         body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
+        let errorMessage: string;
+
+        try {
+            const errorData = await res.json();
+            errorMessage = JSON.stringify(errorData, null, 2);
+        } catch {
+            errorMessage = await res.text();
+        }
+        logger.error(errorMessage, session, `api.patch:${url}`);
         throw new Error("Failed to patch data");
     }
 
@@ -124,19 +161,35 @@ async function put<T>(
     tagsToRevalidate?: string[]
 ): Promise<T> {
     const jwt = cookies().get(config.JWT_COOKIE);
-
+    const session = await getSessionCookie();
+    if (LOG_LEVEL === "debug") {
+        const message = {
+            url,
+            payload: payload ?? "no payload in put",
+        };
+        logger.info(message, session, "api.put");
+    }
     const res = await fetch(url, {
         method: "PUT",
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
+            "x-Request-Session-Id": sessionPrefix + session,
         },
         body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error("Failed to patch data");
+        let errorMessage: string;
+
+        try {
+            const errorData = await res.json();
+            errorMessage = JSON.stringify(errorData, null, 2);
+        } catch {
+            errorMessage = await res.text();
+        }
+        logger.error(errorMessage, session, `api.put:${url}`);
+        throw new Error("Failed to put data");
     }
 
     if (tagsToRevalidate?.length) {
@@ -153,19 +206,35 @@ async function post<T>(
     tagsToRevalidate?: string[]
 ): Promise<T> {
     const jwt = cookies().get(config.JWT_COOKIE);
-
+    const session = await getSessionCookie();
+    if (LOG_LEVEL === "debug") {
+        const message = {
+            url,
+            payload: payload ?? "no payload in post",
+        };
+        logger.info(message, session, "api.post");
+    }
     const res = await fetch(url, {
         method: "POST",
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
+            "x-Request-Session-Id": sessionPrefix + session,
         },
         body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error("Failed to patch data");
+        let errorMessage: string;
+
+        try {
+            const errorData = await res.json();
+            errorMessage = JSON.stringify(errorData, null, 2);
+        } catch {
+            errorMessage = await res.text();
+        }
+        logger.error(errorMessage, session, `api.post:${url}`);
+        throw new Error("Failed to post data");
     }
 
     if (tagsToRevalidate?.length) {
