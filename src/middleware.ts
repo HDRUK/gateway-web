@@ -6,9 +6,9 @@ import conf from "@/config/config";
 import { getUserFromToken } from "@/utils/cookies";
 import { sessionCookie } from "./config/session";
 import { RouteName } from "./consts/routeName";
-import Log from "./utils/logger";
+import { logger } from "./utils/logger";
 
-const logger = new Log();
+
 
 export function middleware(request: NextRequest) {
     try {
@@ -49,7 +49,7 @@ export function middleware(request: NextRequest) {
                 sameSite: "strict",
             });
 
-            logger.info("new session set", id, "session");
+            logger.info("new session set", id, "middleware");
         }
         // Remove the JWT cookie if the token exists but the user is not authenticated
         if (!authUser && token) {
