@@ -1,18 +1,22 @@
 import { serialize } from "cookie";
+import Cookies from "js-cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import apis from "@/config/apis";
 import config from "@/config/config";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+    const session = Cookies.get(sessionCookie);
     try {
         await fetch(apis.logoutV1UrlIP, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${req.cookies[config.JWT_COOKIE]}`,
+                [sessionHeader]: sessionPrefix + session,
             },
         });
 

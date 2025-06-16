@@ -1,4 +1,5 @@
-import { RequestOptions } from "@/interfaces/Api";
+import Cookies from "js-cookie";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { errorNotification, successNotification } from "./utils";
 
 const postFetch = async <T>(
@@ -15,12 +16,17 @@ const postFetch = async <T>(
 
     try {
         const isFormData = data instanceof FormData;
-
+        const session = Cookies.get(sessionCookie);
         const response = await fetch(url, {
             method: "POST",
             body: !isFormData ? JSON.stringify(data) : data,
             credentials: "include",
-            headers: !isFormData ? { "Content-Type": "application/json" } : {},
+            headers: !isFormData
+                ? {
+                      "Content-Type": "application/json",
+                      [sessionHeader]: sessionPrefix + session,
+                  }
+                : {},
         });
 
         if (response.ok) {

@@ -33,7 +33,7 @@ import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
-import { sessionPrefix } from "@/config/session";
+import { sessionHeader, sessionPrefix } from "@/config/session";
 import {
     CACHE_DAR,
     CACHE_DAR_SECTIONS,
@@ -74,7 +74,7 @@ async function get<T>(
     const res = await fetch(`${url}`, {
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
-            "x-Request-Session-Id": sessionPrefix + session,
+            [sessionHeader]: sessionPrefix + session,
         },
         ...nextConfig,
     });
@@ -129,7 +129,7 @@ async function patch<T>(
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
-            "x-Request-Session-Id": sessionPrefix + session,
+            [sessionHeader]: sessionPrefix + session,
         },
         body: JSON.stringify(payload),
     });
@@ -174,7 +174,7 @@ async function put<T>(
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
-            "x-Request-Session-Id": sessionPrefix + session,
+            [sessionHeader]: sessionPrefix + session,
         },
         body: JSON.stringify(payload),
     });
@@ -219,7 +219,7 @@ async function post<T>(
         headers: {
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
-            "x-Request-Session-Id": sessionPrefix + session,
+            [sessionHeader]: sessionPrefix + session,
         },
         body: JSON.stringify(payload),
     });

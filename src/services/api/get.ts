@@ -1,4 +1,5 @@
-import { RequestOptions } from "@/interfaces/Api";
+import Cookies from "js-cookie";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { errorNotification } from "./utils";
 
 const CONTENT_TYPE_EXCEL =
@@ -11,9 +12,13 @@ const getRequest = async <T>(
 ): Promise<T | unknown> => {
     const { withPagination, notificationOptions } = options;
     const { errorNotificationsOn = true, ...props } = notificationOptions;
+    const session = Cookies.get(sessionCookie);
 
     try {
-        const response = await fetch(url, { credentials: "include" });
+        const response = await fetch(url, {
+            credentials: "include",
+            headers: { [sessionHeader]: sessionPrefix + session },
+        });
 
         if (response.ok) {
             const contentType = response.headers.get("Content-Type");

@@ -1,4 +1,6 @@
+import Cookies from "js-cookie";
 import notificationService from "@/services/notification";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { downloadExternalFile } from "@/utils/download";
 import DownloadButton from "../DownloadButton";
 import { DownloadFileProps } from "../DownloadFile";
@@ -17,8 +19,10 @@ const DownloadExternalFile = ({
         if (!fileName) {
             return;
         }
-
-        const response = await fetch(apiPath);
+        const session = Cookies.get(sessionCookie);
+        const response = await fetch(apiPath, {
+            headers: { [sessionHeader]: sessionPrefix + session },
+        });
 
         if (!response.ok) {
             notificationService.apiError("Failed to download file");

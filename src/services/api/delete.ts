@@ -1,4 +1,5 @@
-import { RequestOptions } from "@/interfaces/Api";
+import Cookies from "js-cookie";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { errorNotification, successNotification } from "./utils";
 
 const deleteRequest = async <T>(
@@ -11,11 +12,12 @@ const deleteRequest = async <T>(
         errorNotificationsOn = true,
         ...props
     } = notificationOptions;
-
+    const session = Cookies.get(sessionCookie);
     try {
         const response = await fetch(url, {
             method: "DELETE",
             credentials: "include",
+            headers: { [sessionHeader]: sessionPrefix + session },
         });
 
         if (response.ok) {

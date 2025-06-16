@@ -1,4 +1,5 @@
-import { RequestOptions } from "@/interfaces/Api";
+import Cookies from "js-cookie";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { errorNotification, successNotification } from "./utils";
 
 const putRequest = async <T>(
@@ -12,7 +13,7 @@ const putRequest = async <T>(
         errorNotificationsOn = true,
         ...props
     } = notificationOptions;
-
+    const session = Cookies.get(sessionCookie);
     try {
         const response = await fetch(url, {
             method: "PUT",
@@ -20,6 +21,7 @@ const putRequest = async <T>(
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                [sessionHeader]: sessionPrefix + session,
             },
         });
 

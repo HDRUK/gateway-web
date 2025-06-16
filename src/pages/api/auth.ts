@@ -1,6 +1,8 @@
+import Cookies from "js-cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import apis from "@/config/apis";
 import config from "@/config/config";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { getUserFromToken } from "@/utils/cookies";
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
@@ -11,7 +13,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
             res.status(200).json({ data: { isLoggedIn: false } });
             return;
         }
-
+        const session = Cookies.get(sessionCookie);
         try {
             const response = await fetch(
                 `${apis.usersV1UrlIP}/${authUser?.id}`,
@@ -20,6 +22,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
                         Authorization: `Bearer ${
                             req.cookies[config.JWT_COOKIE]
                         }`,
+                        [sessionHeader]: sessionPrefix + session,
                     },
                 }
             );
