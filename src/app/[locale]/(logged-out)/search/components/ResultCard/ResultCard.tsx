@@ -245,7 +245,7 @@ const ResultCard = ({
     const dataCustodianId = metadata.summary.publisher.gatewayId;
     // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
     const isNumber = !Number.isNaN(dataCustodianId);
-    const linkHref = `/${RouteName.DATA_PROVIDERS_ITEM}/${dataCustodianId}`;
+    const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
 
     return (
         <>
@@ -258,21 +258,92 @@ const ResultCard = ({
                         disableTypography
                         sx={{ padding: 2, paddingBottom: 1, m: 0 }}
                         primary={
-                            <ResultTitle>
-                                <Link
-                                    id={resultId}
-                                    href={`${RouteName.DATASET_ITEM}/${datasetId}`}
-                                    role="heading"
-                                    aria-level={3}
-                                    fontSize={16}
-                                    fontWeight={600}
-                                    marginBottom={2}>
-                                    {metadata.summary.shortTitle}
-                                </Link>
+                            <ResultTitle
+                                sx={{
+                                    flexDirection: {
+                                        mobile: "column",
+                                        tablet: "column",
+                                        laptop: "row",
+                                    },
+                                    mb: 1.5,
+                                }}>
                                 <div
                                     style={{
                                         display: "flex",
+                                        flexDirection: "column",
+                                    }}>
+                                    <Link
+                                        id={resultId}
+                                        href={`${RouteName.DATASET_ITEM}/${datasetId}`}
+                                        role="heading"
+                                        aria-level={3}
+                                        fontSize={16}
+                                        fontWeight={600}
+                                        marginBottom={0.5}
+                                        marginRight={{
+                                            tablet: 0,
+                                            laptop: 1,
+                                        }}>
+                                        {metadata.summary.shortTitle}
+                                    </Link>
+                                    {isNumber && (
+                                        <Link
+                                            href={linkHref}
+                                            sx={{ display: "inline-block" }}>
+                                            <Typography
+                                                // eslint-disable-next-line
+                                                aria-description="Data Custodian"
+                                                sx={{
+                                                    textDecoration: "uppercase",
+                                                    fontWeight: 400,
+                                                    fontSize: 14,
+                                                    color: "secondary",
+                                                    mb: 1.5,
+                                                    mr: {
+                                                        tablet: 0,
+                                                        laptop: 1,
+                                                    },
+                                                }}>
+                                                {metadata.summary.publisher
+                                                    .name !== undefined
+                                                    ? metadata.summary.publisher
+                                                          .name
+                                                    : metadata.summary.publisher
+                                                          .publisherName}
+                                            </Typography>
+                                        </Link>
+                                    )}
+
+                                    {!isNumber && (
+                                        <Typography
+                                            // eslint-disable-next-line
+                                            aria-description="Data Custodian"
+                                            sx={{
+                                                textDecoration: "uppercase",
+                                                fontWeight: 400,
+                                                fontSize: 14,
+                                                color: "secondary",
+                                                mb: 1.5,
+                                                mr: {
+                                                    tablet: 0,
+                                                    laptop: 1,
+                                                },
+                                            }}>
+                                            {metadata.summary.publisher.name !==
+                                            undefined
+                                                ? metadata.summary.publisher
+                                                      .name
+                                                : metadata.summary.publisher
+                                                      .publisherName}
+                                        </Typography>
+                                    )}
+                                </div>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "end",
                                         textAlign: "end",
+                                        marginBottom: 1.5,
                                     }}>
                                     <Button
                                         onClick={handleToggleLibraryItem}
@@ -285,6 +356,7 @@ const ResultCard = ({
                                                           .shortTitle
                                                   }`
                                         }
+                                        // color="secondary"
                                         startIcon={
                                             isLibraryToggled ? (
                                                 <Bookmark color="secondary" />
@@ -292,7 +364,9 @@ const ResultCard = ({
                                                 <BookmarkBorder color="secondary" />
                                             )
                                         }
-                                        sx={{ alignSelf: "flex-start" }}>
+                                        sx={{
+                                            alignSelf: "flex-start",
+                                        }}>
                                         {isLibraryToggled
                                             ? t("removeFromLibrary")
                                             : t("addToLibrary")}
@@ -341,48 +415,6 @@ const ResultCard = ({
                         }}
                         secondary={
                             <section aria-describedby={resultId}>
-                                {isNumber && (
-                                    <Link
-                                        href={linkHref}
-                                        sx={{ display: "inline-block" }}>
-                                        <Typography
-                                            // eslint-disable-next-line
-                                            aria-description="Data Custodian"
-                                            sx={{
-                                                textDecoration: "uppercase",
-                                                fontWeight: 400,
-                                                fontSize: 14,
-                                                color: "secondary",
-                                                mb: 1.5,
-                                            }}>
-                                            {metadata.summary.publisher.name !==
-                                            undefined
-                                                ? metadata.summary.publisher
-                                                      .name
-                                                : metadata.summary.publisher
-                                                      .publisherName}
-                                        </Typography>
-                                    </Link>
-                                )}
-
-                                {!isNumber && (
-                                    <Typography
-                                        // eslint-disable-next-line
-                                        aria-description="Data Custodian"
-                                        sx={{
-                                            textDecoration: "uppercase",
-                                            fontWeight: 400,
-                                            fontSize: 14,
-                                            color: "secondary",
-                                            mb: 1.5,
-                                        }}>
-                                        {metadata.summary.publisher.name !==
-                                        undefined
-                                            ? metadata.summary.publisher.name
-                                            : metadata.summary.publisher
-                                                  .publisherName}
-                                    </Typography>
-                                )}
                                 <Highlight
                                     sx={{ mb: 1.5 }}
                                     component="div"
@@ -396,6 +428,10 @@ const ResultCard = ({
                                     sx={{
                                         p: 0,
                                         display: "flex",
+                                        flexDirection: {
+                                            mobile: "column",
+                                            tablet: "row",
+                                        },
                                         justifyContent: "space-between",
                                     }}>
                                     <Typography
@@ -409,7 +445,13 @@ const ResultCard = ({
                                     </Typography>
                                     <Typography
                                         color="secondary"
-                                        sx={{ fontSize: 16 }}>
+                                        sx={{
+                                            fontSize: 16,
+                                            mb: {
+                                                mobile: 1,
+                                                tablet: 0,
+                                            },
+                                        }}>
                                         {t("dateLabel")}:{" "}
                                         {getDateRange(metadata)}
                                     </Typography>

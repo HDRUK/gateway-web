@@ -46,6 +46,7 @@ export type FilterKey =
     | "organisationName"
     | "organisationSector"
     | "fundersAndSponsors"
+    | "dataSubType"
     | "publisherName";
 
 export type DateRange = {

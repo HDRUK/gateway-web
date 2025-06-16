@@ -1,3 +1,4 @@
+import { Alias } from "@/interfaces/Alias";
 import { Collection } from "@/interfaces/Collection";
 import { DataUse } from "@/interfaces/DataUse";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
@@ -18,6 +19,7 @@ interface TeamSummary {
     collections: Collection[];
     url: string | null;
     service: string[] | null;
+    aliases?: Alias[];
 }
 
 export type { TeamSummary };

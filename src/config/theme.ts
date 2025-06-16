@@ -77,6 +77,7 @@ declare module "@mui/material/Switch" {
 declare module "@mui/material/Chip" {
     interface ChipPropsColorOverrides {
         warningCustom: true;
+        alias: true;
     }
 }
 
@@ -175,6 +176,10 @@ const palette = {
         dark: "#A29415",
         contrastText: colors.black,
     },
+    alias: {
+        backgroundColor: colors.grey700,
+        contrastText: colors.white,
+    },
 };
 
 const theme = createTheme({
@@ -218,6 +223,10 @@ const theme = createTheme({
                     margin: 0,
                     fontSize: theme.typography.body1.fontSize,
                 }),
+            },
+            defaultProps: {
+                enterDelay: 500,
+                enterNextDelay: 500,
             },
         },
         MuiSvgIcon: {
@@ -711,6 +720,9 @@ const theme = createTheme({
                         backgroundColor: palette.error.main,
                         opacity: 1,
                     },
+                    "& .Mui-focusVisible": {
+                        outline: `3px solid ${palette.primary.main}`,
+                    },
                 },
             },
         },
@@ -720,6 +732,13 @@ const theme = createTheme({
                     props: { color: "warningCustom" },
                     style: {
                         background: colors.orange300,
+                    },
+                },
+                {
+                    props: { color: "alias" },
+                    style: {
+                        backgroundColor: palette.alias.backgroundColor,
+                        color: palette.alias.contrastText,
                     },
                 },
             ],

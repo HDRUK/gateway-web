@@ -4,12 +4,14 @@ interface ShowingXofXProps {
     from?: number;
     to?: number;
     total?: number;
+    hideTotal?: boolean;
 }
 
-const ShowingXofX = ({ from, to, total }: ShowingXofXProps) => {
+const ShowingXofX = ({ from, to, total, hideTotal }: ShowingXofXProps) => {
     return (
         <Typography sx={{ p: 0, mb: 1 }}>
-            Showing {from || 0}-{to || 0} of {total || 0} results
+            Showing {from || 0}-{to || 0}
+            {!hideTotal && <> of {total || 0} results</>}.
         </Typography>
     );
 };

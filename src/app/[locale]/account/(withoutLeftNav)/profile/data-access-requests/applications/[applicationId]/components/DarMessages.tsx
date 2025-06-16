@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Divider, Typography } from "@mui/material";
+import DOMPurify from "isomorphic-dompurify";
 import { useTranslations } from "next-intl";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
@@ -168,18 +169,25 @@ const DarMessages = ({
                 {applicationInProgress &&
                     actionRequiredApplicant !== undefined &&
                     reviewComments && (
-                        <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                p: 0,
+                                gap: 2,
+                                mb: 3,
+                            }}>
                             <Typography
                                 variant="h2"
                                 component="p"
-                                color={colors.purple500}>
+                                color={colors.purple500}
+                                sx={{ m: 0 }}>
                                 {t("status")}
                             </Typography>
                             <Typography
                                 sx={{
                                     display: "flex",
                                     color: colors.grey700,
-                                    mb: 3,
                                 }}>
                                 {(actionRequiredApplicant && isResearcher) ||
                                 (!actionRequiredApplicant && !isResearcher) ? (
@@ -212,7 +220,7 @@ const DarMessages = ({
                                     ? "Applicant"
                                     : "Custodian"}
                             </Typography>
-                        </>
+                        </Box>
                     )}
 
                 <Typography variant="h2" component="p" color={colors.purple500}>
@@ -279,9 +287,14 @@ const DarMessages = ({
                                         )}
                                     </Typography>
                                 </Box>
-                                <Typography sx={{ pt: 1 }}>
-                                    {review.comment}
-                                </Typography>
+                                <Typography
+                                    sx={{ pt: 1 }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(
+                                            review.comment
+                                        ),
+                                    }}
+                                />
                             </Box>
                         ))
                     )}

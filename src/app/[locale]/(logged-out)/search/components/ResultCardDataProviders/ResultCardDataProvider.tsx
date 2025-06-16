@@ -12,7 +12,7 @@ const ResultCardDataProvider = ({ result }: ResultCardDataProviderProps) => {
 
     return (
         <CardStacked
-            href={`${RouteName.DATA_PROVIDERS_ITEM}/${id}`}
+            href={`${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}
             title={result.name}
             imgUrl={result?.team_logo || StaticImages.BASE.placeholder}
         />

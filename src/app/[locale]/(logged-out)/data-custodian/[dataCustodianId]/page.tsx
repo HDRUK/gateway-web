@@ -1,8 +1,10 @@
+import { Fragment } from "react";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
+import Chip from "@/components/Chip";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
@@ -13,7 +15,8 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
-import { getTeamSummary } from "@/utils/api";
+import { getDataset, getTeamSummary } from "@/utils/api";
+import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -40,6 +43,16 @@ export default async function DataCustodianItemPage({
     });
 
     if (!data) notFound();
+
+    const cohortDiscovery = await getCohortDiscovery();
+
+    const promises = data.datasets.map(x =>
+        getDataset(cookieStore, x.id.toString())
+    );
+
+    const datasets = await Promise.all(promises);
+
+    const enableCohortDiscovery = datasets.some(x => x.is_cohort_discovery);
 
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
@@ -75,6 +88,8 @@ export default async function DataCustodianItemPage({
                             name: data.name,
                             member_of: data.member_of,
                         }}
+                        cohortDiscovery={cohortDiscovery}
+                        cohortDiscoveryEnabled={enableCohortDiscovery}
                     />
                     <Box
                         sx={{
@@ -86,6 +101,18 @@ export default async function DataCustodianItemPage({
                             data={data}
                             populatedSections={populatedSections}
                         />
+                        <Fragment key="custodian_alias">
+                            <Typography variant="h3">{t("aliases")}</Typography>
+                            <Box sx={{ p: 0, pb: 1, display: "flex" }} gap={1}>
+                                {data.aliases?.map(alias => (
+                                    <Chip
+                                        label={alias.name}
+                                        key={alias.id}
+                                        color="alias"
+                                    />
+                                ))}
+                            </Box>
+                        </Fragment>
                         <DatasetsContent
                             datasets={data.datasets}
                             anchorIndex={populatedSections.length + 1}

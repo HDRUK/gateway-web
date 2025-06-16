@@ -253,7 +253,7 @@ async function getFilters(
     };
     return get<Filter[]>(
         cookieStore,
-        `${apis.filtersV1UrlIP}?perPage=${FILTERS_PER_PAGE}`,
+        `${apis.filtersV1UrlIP}?per_page=${FILTERS_PER_PAGE}`,
         { cache }
     );
 }
@@ -264,7 +264,7 @@ async function getKeywords(
     const cache: Cache = {
         tags: ["keywords"],
     };
-    return get<Keyword[]>(cookieStore, `${apis.keywordsV1IPUrl}?perPage=-1`, {
+    return get<Keyword[]>(cookieStore, `${apis.keywordsV1IPUrl}?per_page=-1`, {
         cache,
     });
 }
@@ -452,6 +452,21 @@ async function getDarSections(
         {
             cache: {
                 tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
+                revalidate: 4 * 60 * 60,
+            },
+        }
+    );
+}
+
+async function getAllDarSections(
+    cookieStore: ReadonlyRequestCookies
+): Promise<QuestionBankSection[]> {
+    return get<QuestionBankSection[]>(
+        cookieStore,
+        `${apis.dataAccessSectionV1UrlIP}?page=-1`,
+        {
+            cache: {
+                tags: [CACHE_DAR, CACHE_DAR_SECTIONS, CACHE_DAR_REVIEWS],
                 revalidate: 4 * 60 * 60,
             },
         }
@@ -692,6 +707,7 @@ export {
     getUser,
     getUserFromCookie,
     getDarSections,
+    getAllDarSections,
     getDarTeamApplication,
     getDarApplicationUser,
     getDarAnswersTeam,

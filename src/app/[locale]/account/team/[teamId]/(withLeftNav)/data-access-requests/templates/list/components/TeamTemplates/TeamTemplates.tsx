@@ -35,8 +35,15 @@ const TeamTemplates = ({
     teamId,
 }: TeamTemplatesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { push } = useRouter();
+    const { push, replace } = useRouter();
     const searchParams = useSearchParams();
+
+    // Set a default value for published if not specified
+    if (!searchParams?.get("published")) {
+        replace(
+            `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/list?published=1`
+        );
+    }
 
     const createTemplate = usePost(apis.dataAccessTemplateV1Url, {
         itemName: "DAR Template",
@@ -156,6 +163,7 @@ const TeamTemplates = ({
                 tabBoxSx={{ padding: 0, background: colors.white }}
                 rootBoxSx={{ padding: 0 }}
                 paramName="published"
+                defaultSelectedTab={t("active")}
             />
         </>
     );

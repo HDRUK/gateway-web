@@ -10,7 +10,7 @@ import apis from "@/config/apis";
 import { DarApplicationStatus } from "@/consts/dataAccess";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
-import { formatDate, getToday } from "@/utils/date";
+import { formatDate } from "@/utils/date";
 import useAuth from "../useAuth";
 import usePost from "../usePost";
 
@@ -65,7 +65,7 @@ const useDataAccessRequest = () => {
                 dataset_ids: datasetIds,
                 team_ids: teamIds,
                 project_title: `${DarApplicationStatus.DRAFT} ${formatDate(
-                    getToday(),
+                    new Date(),
                     DATE_FORMAT_TITLE
                 )}`,
             })

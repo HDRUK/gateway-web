@@ -71,7 +71,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.structuralMetadata.syntheticDataWebLink",
-                type: FieldType.TEXT,
+                type: FieldType.LINK_LIST,
                 label: "Synthetic data web link",
                 tooltip:
                     "Website with information on your synthetic dataset creation, or the location where a synthetic version of the dataset can be accessed.",
@@ -399,6 +399,25 @@ const datasetFields: DatasetSection[] = [
             {
                 path: "metadata.metadata.demographicFrequency",
                 type: FieldType.TAG,
+            },
+        ],
+    },
+    {
+        sectionName: "Enrichment and Linkage",
+        fields: [
+            {
+                label: "Investigations",
+                path: "metadata.metadata.enrichmentAndLinkage.investigations",
+                type: FieldType.LIST,
+                tooltip:
+                    "Website address(es) which document information related to active projects utilising the Dataset and or BioSample(s).",
+            },
+            {
+                label: "Tools",
+                path: "metadata.metadata.enrichmentAndLinkage.tools",
+                type: FieldType.LIST,
+                tooltip:
+                    "URL(s) of any analysis tool(s) or models that have been created for this Dataset & BioSample and are available for further use.",
             },
         ],
     },

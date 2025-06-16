@@ -5,16 +5,20 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+const USER_TIMEZONE = typeof window !== "undefined" ? dayjs.tz.guess() : "UTC";
+
 const getTZDate = (date: string | Date, timezone?: string) => {
-    if (!timezone) {
+    const resolvedTZ = timezone ?? USER_TIMEZONE;
+
+    if (resolvedTZ === "UTC") {
         return dayjs(date).utc();
     }
 
-    return dayjs(date).tz(timezone);
+    return dayjs(date).tz(resolvedTZ);
 };
 
 const getToday = (): string => {
-    return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ss[Z]");
+    return getTZDate(new Date()).format("YYYY-MM-DDTHH:mm:ssZ");
 };
 
 const getDayjs = (date: string | Date) => {
@@ -48,4 +52,5 @@ export {
     getDayjs,
     getToday,
     getTZDate,
+    USER_TIMEZONE,
 };

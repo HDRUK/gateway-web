@@ -106,11 +106,6 @@
             }
         }
     },
-    "error": {
-        "image": "An error occured when reading your file.",
-        "imageAspectRatio": "File needs to be of approximately of aspect ratio 2:1 (width:height).",
-        "imageDimensions": "File needs to be at least 600px wide, by 300px high."
-    },
     "common": {
         "companyNameShort": "HDR UK",
         "companyNameLong": "Health Data Research UK",
@@ -837,7 +832,7 @@
                 "title": "Cohort Discovery",
                 "text": "Query federated datasets to find out how many records match a specified criteria e.g. the number of females with asthma. This is useful for high level feasibility analysis or to find potential recruits for clinical trials. Queries run on both routinely collected electronic health records and research collected cohorts."
             },
-            "dataProviders": {
+            "dataCustodians": {
                 "label": "Data Custodians",
                 "title": "Data Custodians",
                 "text": "Search Data Custodians, discover their associated Gateway entities (e.g. Datasets, Publications, Analysis Scripts & Software), and find out how to contact them."
@@ -951,12 +946,13 @@
             "dataCustodianNetworks": "Data Custodian Networks",
             "dataCustodianNetworksTooltip": "Discover networks of Data Custodians to learn about the resources available across a network e.g. the NHS England SDE Network or the Research Data Scotland Network.",
             "collectionsHeader": "Collections",
+            "searchHeader": "Search the Gateway",
             "searchExplainerDatasets": "Search, for example, by Dataset, SNOMED code, LOINC term, Read code, ICD10 code, MESH term, keywords",
             "searchExplainerDataUse": "Search, for example, by project title, lay or technical summary, funders and sponsors, keywords",
             "searchExplainerPublications": "Search, for example, by Publication title, Publication DOI, journal name, authors, Dataset title, Dataset DOI, keywords",
             "searchExplainerCollections": "Search, for example, by Collection name, keywords",
             "searchExplainerTools": "Search, for example, by name, programming language, license type, keywords",
-            "searchExplainerDataProviders": "Search, for example, by Data Custodian, Datasets, Publication, Data Uses, Collection, or Analysis Scripts & Software",
+            "searchExplainerDataCustodians": "Search, for example, by Data Custodian, Datasets, Publication, Data Uses, Collection, or Analysis Scripts & Software",
             "howToSearch": "How to search the Gateway",
             "searchPlaceholder": "Enter your search term",
             "noResults": "No Results Found",
@@ -965,12 +961,13 @@
             "downloadStarted": "Your download has started",
             "filtersApplied": "Filter(s) applied",
             "dur": "Data Uses / Research Projects",
-            "data_providers": "Data Custodians",
+            "data_custodians": "Data Custodians",
             "loadingAriaLabel": "Loading search results",
+            "saveSearch": "Save search",
             "components": {
                 "Search": {
-                    "toggleLabelTable": "Table",
-                    "toggleLabelList": "List"
+                    "toggleLabelTable": "Switch to table view",
+                    "toggleLabelList": "Switch to list view"
                 },
                 "FilterPanel": {
                     "clearFilter": "Clear filter",
@@ -1079,7 +1076,7 @@
                     "populationSizeNotReported": "not reported",
                     "populationSize": "Dataset population size",
                     "dateLabel": "Date range",
-                    "leadOrganisation": "Lead applicant organisation",
+                    "leadOrganisation": "Lead Organisation",
                     "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
                     "datasets": "Datasets",
                     "datasetsTooltip": "The name of the dataset(s) being accessed",
@@ -1141,6 +1138,9 @@
                     "feasibilityEnquiries": {
                         "sidebarTitle": "Messages"
                     }
+                },
+                "Sort": {
+                    "sortOptions": "Sort options"
                 }
             },
             "hooks": {
@@ -1182,13 +1182,16 @@
             "publications": "Publications",
             "tools": "Tools",
             "serviceOfferings": "Service offerings",
+            "aliases": "Aliases",
             "components": {
                 "DataCustodianLinks": {
                     "usefulLinks": "Useful links:"
                 },
                 "ActionBar": {
                     "label": "Back",
-                    "enquire": "Make a general enquiry"
+                    "enquire": "Make a general enquiry",
+                    "cohortDiscoveryEnabled": "Start a Cohort Discovery query",
+                    "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
                 },
                 "CollectionsContent": {
                     "heading": "Collections ({ length })"
@@ -1440,7 +1443,10 @@
             "tooltip-1": "Dissatisfied",
             "tooltip-2": "Neutral",
             "tooltip-3": "Satisfied",
-            "tooltip-4": "Very Satisfied"
+            "tooltip-4": "Very Satisfied",
+            "label": "What is the reason for your rating?",
+            "submit": "Submit",
+            "success": "Thank you for your feedback"
         },
         "CohortDiscoveryButton": {
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
@@ -1508,7 +1514,11 @@
             "uploadHelper": "Must be a {fileType} file, cannot exceed 10 mb per file.",
             "uploadHelperFilesize": "Cannot exceed 10 mb per file.",
             "uploadImage": "Upload file",
-            "error": "An error has occured. Please check your file and try again"
+            "error": "An error has occured. Please check your file and try again",
+            "sanitisedFilename": "Note: all spaces and special characters will be removed from the file name.",
+            "imageError": "An error occured when reading your file.",
+            "imageAspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height).",
+            "imageDimensionsError": "File needs to be at least 600px wide, by 300px high."
         },
         "StructuralMetadataAccordion": {
             "columnName": "Column name",
@@ -1700,7 +1710,8 @@
                 "rejectedInfo": "Any comments or notes regarding the rejection.",
                 "rejectedButtonText": "Reject",
                 "changeStatus": "Change Application Status",
-                "intro": "Use the options below to log your decision about this application."
+                "intro": "Use the options below to log your decision about this application.",
+                "defaultDraftMessage": "This is an automated notification that the application has been changed from 'In review' to 'Draft' status. No comment has been added by the Data Custodian."
             },
             "DarActionDialog": {
                 "actionPermanent": "I understand this action is permanent",

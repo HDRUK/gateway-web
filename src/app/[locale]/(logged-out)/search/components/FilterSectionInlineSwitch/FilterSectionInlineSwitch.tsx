@@ -1,11 +1,11 @@
 "use client";
 
 import { useId } from "react";
+import { Tooltip } from "@mui/material";
 import MuiSwitch from "@mui/material/Switch";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import Box from "@/components/Box";
-import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
@@ -34,32 +34,27 @@ const FilterSectionInlineSwitch = ({
                 justifyContent: "space-between",
                 alignItems: "center",
             }}>
-            <Typography
-                fontWeight="400"
-                fontSize="20px"
-                component="label"
-                for={id}>
-                {t(label)}
-            </Typography>
-            <Box
-                sx={{
-                    display: "flex",
-                    gap: 1,
-                    p: 0,
-                }}>
-                <TooltipIcon
-                    buttonSx={{ p: 0 }}
-                    size="small"
-                    label=""
-                    content={t(`${label}${TOOLTIP_SUFFIX}`)}
-                />
-                <MuiSwitch
-                    id={id}
-                    disableRipple
-                    onChange={handleRadioChange}
-                    checked={!!selectedFilters[filterItem.label]?.length}
-                />
-            </Box>
+            <Tooltip
+                describeChild
+                placement="right"
+                tabIndex={0}
+                title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                <div>
+                    <Typography
+                        fontWeight="400"
+                        fontSize={20}
+                        component="label"
+                        for={id}>
+                        {t(label)}
+                    </Typography>
+                </div>
+            </Tooltip>
+            <MuiSwitch
+                id={id}
+                disableRipple
+                onChange={handleRadioChange}
+                checked={!!selectedFilters[filterItem.label]?.length}
+            />
         </Box>
     );
 };
