@@ -48,7 +48,7 @@ import { revalidateCache } from "./revalidateCache";
 
 type Payload<T> = T | (() => BodyInit & T);
 
-const { LOG_LEVEL } = process.env;
+const { NEXT_PUBLIC_LOG_LEVEL } = process.env;
 
 async function get<T>(
     cookieStore: ReadonlyRequestCookies,
@@ -78,7 +78,7 @@ async function get<T>(
         },
         ...nextConfig,
     });
-    if (LOG_LEVEL === "debug") {
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         logger.info(url, session, "api.get");
     }
 
@@ -116,7 +116,7 @@ async function patch<T>(
 ): Promise<T> {
     const jwt = cookies().get(config.JWT_COOKIE);
     const session = await getSessionCookie();
-    if (LOG_LEVEL === "debug") {
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         const message = {
             url,
             payload: payload ?? "no payload in patch",
@@ -162,7 +162,7 @@ async function put<T>(
 ): Promise<T> {
     const jwt = cookies().get(config.JWT_COOKIE);
     const session = await getSessionCookie();
-    if (LOG_LEVEL === "debug") {
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         const message = {
             url,
             payload: payload ?? "no payload in put",
@@ -207,7 +207,7 @@ async function post<T>(
 ): Promise<T> {
     const jwt = cookies().get(config.JWT_COOKIE);
     const session = await getSessionCookie();
-    if (LOG_LEVEL === "debug") {
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         const message = {
             url,
             payload: payload ?? "no payload in post",

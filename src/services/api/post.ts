@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
+import { logger } from "@/utils/logger";
 import { errorNotification, successNotification } from "./utils";
 
 const postFetch = async <T>(
@@ -16,7 +17,16 @@ const postFetch = async <T>(
 
     try {
         const isFormData = data instanceof FormData;
-        const session = Cookies.get(sessionCookie);
+        const session = Cookies.get(sessionCookie)!;
+
+        if (process.env.NEXT_PUBLIC_LOG_LEVEL === "debug") {
+            const message = {
+                url,
+                data,
+                options,
+            };
+            logger.info(message, session, "post");
+        }
         const response = await fetch(url, {
             method: "POST",
             body: !isFormData ? JSON.stringify(data) : data,
@@ -61,7 +71,16 @@ const postFetch = async <T>(
         }
 
         if (!response.ok) {
-            const error = await response.json();
+            let errorMessage: string;
+            let error;
+            try {
+                const errorData = await response.json();
+                error = errorData;
+                errorMessage = JSON.stringify(errorData, null, 2);
+            } catch {
+                errorMessage = await response.text();
+            }
+            logger.error(errorMessage, session, `post`);
             if (errorNotificationsOn) {
                 errorNotification({
                     status: response.status,

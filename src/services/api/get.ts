@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
+import { logger } from "@/utils/logger";
 import { errorNotification } from "./utils";
 
 const CONTENT_TYPE_EXCEL =
@@ -12,7 +13,15 @@ const getRequest = async <T>(
 ): Promise<T | unknown> => {
     const { withPagination, notificationOptions } = options;
     const { errorNotificationsOn = true, ...props } = notificationOptions;
-    const session = Cookies.get(sessionCookie);
+    const session = Cookies.get(sessionCookie)!;
+
+    if (process.env.NEXT_PUBLIC_LOG_LEVEL === "debug") {
+        const message = {
+            url,
+            options,
+        };
+        logger.info(message, session, "get");
+    }
 
     try {
         const response = await fetch(url, {
@@ -68,7 +77,16 @@ const getRequest = async <T>(
         }
 
         if (!response.ok) {
-            const error = await response.json();
+            let errorMessage: string;
+            let error;
+            try {
+                const errorData = await response.json();
+                error = errorData;
+                errorMessage = JSON.stringify(errorData, null, 2);
+            } catch {
+                errorMessage = await response.text();
+            }
+            logger.error(errorMessage, session, `get`);
             if (errorNotificationsOn) {
                 errorNotification({
                     status: response.status,
