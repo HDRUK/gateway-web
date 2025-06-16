@@ -5,20 +5,14 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import { sessionCookie } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
-import Log from "@/utils/logger";
-
-let logger: Log | undefined;
-
-if (!logger) {
-    logger = new Log();
-}
+import { getSessionCookie } from "@/utils/getSessionCookie";
+import { logger } from "@/utils/logger";
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
-    const cookieStore = await cookies();
-    const session = cookieStore.get(sessionCookie);
+    const session = await getSessionCookie();
 
-    if (!session?.value) {
+    if (!session) {
         return NextResponse.json({ error: "no session" }, { status: 401 });
     }
 
@@ -28,7 +22,7 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
-                "x-Request-Session-Id": session.value,
+                "x-Request-Session-Id": session,
             },
         });
 

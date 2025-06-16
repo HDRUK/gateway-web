@@ -1,4 +1,4 @@
-export default class Log {
+class Log {
     readonly logger: Console;
 
     readonly extend: string | undefined;
@@ -7,7 +7,7 @@ export default class Log {
         this.logger = console;
     }
 
-    private readonly format = (data: string | object) =>
+    private static format = (data: string | object) =>
         typeof data === "object" ? JSON.stringify(data, null, 2) : data;
 
     public info = (
@@ -17,7 +17,7 @@ export default class Log {
     ) => {
         this.logger.info(
             `session: ${session} - info - during  ${location}  -`,
-            this.format(message)
+            Log.format(message)
         );
     };
 
@@ -28,7 +28,7 @@ export default class Log {
     ) => {
         this.logger.warn(
             `session: ${session} - warn - during ${location}  - `,
-            this.format(message)
+            Log.format(message)
         );
     };
 
@@ -39,7 +39,9 @@ export default class Log {
     ) => {
         this.logger.error(
             `session: ${session} - error - during  ${location} - `,
-            this.format(message)
+            Log.format(message)
         );
     };
 }
+
+export const logger = new Log();
