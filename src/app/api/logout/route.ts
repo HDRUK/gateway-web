@@ -1,21 +1,23 @@
+import { NextRequest, NextResponse } from "next/server";
 import { serialize } from "cookie";
-import Cookies from "js-cookie";
-import { NextApiRequest, NextApiResponse } from "next";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
+import { getSessionCookie } from "@/utils/getSessionCookie";
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
-    const session = Cookies.get(sessionCookie);
+export async function POST(req: NextRequest) {
+    const session = await getSessionCookie();
+    if (!session) {
+        return NextResponse.json({ error: "no session" }, { status: 401 });
+    }
+    const jwtToken = req.cookies.get(config.JWT_COOKIE)?.value;
+
     try {
         await fetch(apis.logoutV1UrlIP, {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${req.cookies[config.JWT_COOKIE]}`,
+                Authorization: `Bearer ${jwtToken}`,
                 [sessionHeader]: sessionPrefix + session,
             },
         });
@@ -27,28 +29,31 @@ export default async function handler(
                 domain: extractSubdomain(apis.apiV1IPUrl as string) || "",
             }),
         });
-        res.setHeader("Set-Cookie", cookie);
-        res.status(200).json({ message: "success" });
+
+        const response = NextResponse.json({ message: "success" }, { status: 200 });
+        response.headers.set("Set-Cookie", cookie);
+        return response;
+
     } catch (error) {
         const err = error as {
-            response: {
+            response?: {
                 status: number;
                 data?: { message: string };
             };
-            stack: unknown;
+            stack?: unknown;
             message: string;
         };
-        if (err?.response) {
-            res.status(err.response.status).send({
+
+        const status = err?.response?.status ?? 500;
+        const message = err?.response?.data?.message ?? err.message;
+
+        return NextResponse.json(
+            {
                 title: "We have not been able to log you out",
-                message: err.response.data?.message,
-            });
-        } else {
-            res.status(500).send({
-                title: "We have not been able to log you out",
-                message: err.message,
+                message,
                 stack: err.stack,
-            });
-        }
+            },
+            { status }
+        );
     }
 }
