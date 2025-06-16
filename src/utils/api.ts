@@ -96,6 +96,9 @@ async function get<T>(
     }
 
     const json = await res.json();
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
+        logger.info(json, session, "api.get.response");
+    }
     if (!options.withPagination) return json.data;
 
     const { data, current_page, last_page, next_page_url, ...rest } = json;
@@ -152,6 +155,9 @@ async function patch<T>(
     }
 
     const { data } = await res.json();
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
+        logger.info(data, session, "api.patch.response");
+    }
     return data;
 }
 
@@ -197,6 +203,9 @@ async function put<T>(
     }
 
     const { data } = await res.json();
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
+        logger.info(data, session, "api.put.response");
+    }
     return data;
 }
 
@@ -242,6 +251,9 @@ async function post<T>(
     }
 
     const { data } = await res.json();
+    if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
+        logger.info(data, session, "api.post.response");
+    }
     return data;
 }
 
