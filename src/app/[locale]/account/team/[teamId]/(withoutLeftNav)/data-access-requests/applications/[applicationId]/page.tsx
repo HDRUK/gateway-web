@@ -9,9 +9,9 @@ import {
 import { DarApplicationApprovalStatus } from "@/consts/dataAccess";
 import { RouteName } from "@/consts/routeName";
 import {
+    getDarSections,
     getDarAnswersTeam,
     getDarReviewsTeam,
-    getDarSections,
     getDarTeamApplication,
     getUser,
     updateDarApplicationTeam,

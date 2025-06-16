@@ -224,6 +224,10 @@ const theme = createTheme({
                     fontSize: theme.typography.body1.fontSize,
                 }),
             },
+            defaultProps: {
+                enterDelay: 500,
+                enterNextDelay: 500,
+            },
         },
         MuiSvgIcon: {
             variants: [
@@ -715,6 +719,9 @@ const theme = createTheme({
                     "& .MuiSwitch-track": {
                         backgroundColor: palette.error.main,
                         opacity: 1,
+                    },
+                    "& .Mui-focusVisible": {
+                        outline: `3px solid ${palette.primary.main}`,
                     },
                 },
             },

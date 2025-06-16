@@ -402,6 +402,25 @@ const datasetFields: DatasetSection[] = [
             },
         ],
     },
+    {
+        sectionName: "Enrichment and Linkage",
+        fields: [
+            {
+                label: "Investigations",
+                path: "metadata.metadata.enrichmentAndLinkage.investigations",
+                type: FieldType.LIST,
+                tooltip:
+                    "Website address(es) which document information related to active projects utilising the Dataset and or BioSample(s).",
+            },
+            {
+                label: "Tools",
+                path: "metadata.metadata.enrichmentAndLinkage.tools",
+                type: FieldType.LIST,
+                tooltip:
+                    "URL(s) of any analysis tool(s) or models that have been created for this Dataset & BioSample and are available for further use.",
+            },
+        ],
+    },
 ];
 
 export interface Observation {

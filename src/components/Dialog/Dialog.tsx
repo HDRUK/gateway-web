@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { Breakpoint, IconButton, SxProps } from "@mui/material";
 import MuiDialog, {
     DialogClasses,
@@ -38,6 +38,7 @@ const Dialog = ({
     open = true,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
+    const closeButtonRef = useRef(null);
 
     const handleClose = (props: unknown) => {
         if (typeof onClose === "function") {
@@ -45,7 +46,11 @@ const Dialog = ({
         }
         hideDialog();
     };
-
+    useEffect(() => {
+        if (open && closeButtonRef.current) {
+            closeButtonRef.current.focus();
+        }
+    }, [open]);
     const props: MuiDialogProps = {
         maxWidth,
         fullWidth: true,
@@ -62,6 +67,7 @@ const Dialog = ({
                     data-testid="dialog-close-icon"
                     aria-label="close"
                     onClick={handleClose}
+                    ref={closeButtonRef}
                     sx={{
                         position: "absolute",
                         right: 8,

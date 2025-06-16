@@ -26,6 +26,7 @@ const ApiSuccess = React.forwardRef<HTMLDivElement, ApiSuccessProps>(
                         borderStyle: "solid",
                         color: "#2C8267",
                         fontSize: "14px",
+                        minWidth: "150px",
                     }}>
                     <CardHeader
                         title="Success"

@@ -44,6 +44,6 @@ export const Default: Story = {
 };
 
 export const Large: Story = {
-    args: { variant: TabVariant.LARGE, renderTabContent: false },
+    args: { variant: TabVariant.SEARCH, renderTabContent: false },
     render: args => <WrapperComponent {...args} />,
 };

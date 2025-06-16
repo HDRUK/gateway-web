@@ -8,11 +8,11 @@ exports[`CMSPromoTemplate should render content 1`] = `
     <div
       class="MuiBox-root mui-style-1u6a07a"
     >
-      <h2
+      <h1
         class="MuiTypography-root MuiTypography-h2 mui-style-verkaw-MuiTypography-root"
       >
         Cohort Discovery
-      </h2>
+      </h1>
     </div>
     <div
       class="MuiBox-root mui-style-twmf8g"
