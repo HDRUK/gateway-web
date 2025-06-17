@@ -1,5 +1,6 @@
 import { serialize } from "cookie";
-import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { sessionHeader, sessionPrefix } from "@/config/session";
@@ -7,13 +8,14 @@ import { extractSubdomain } from "@/utils/general";
 import { getSessionCookie } from "@/utils/getSessionCookie";
 import { logger } from "@/utils/logger";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     const session = await getSessionCookie();
 
     if (!session) {
         return NextResponse.json({ error: "no session" }, { status: 401 });
     }
-    const jwtToken = req.cookies.get(config.JWT_COOKIE)?.value;
+    const cookieStore = await cookies();
+    const jwtToken = cookieStore.get(config.JWT_COOKIE)?.value;
 
     try {
         await fetch(apis.logoutV1UrlIP, {
