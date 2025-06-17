@@ -84,23 +84,24 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
     const { data: tagData } = useGet<Tag[]>(`${apis.tagsV1Url}?per_page=-1`);
 
+    const baseToolsUrl = teamId
+        ? `${apis.teamsV2Url}/${teamId}/tools`
+        : `${apis.usersV2Url}/${userId}/tools`;
+
     const { data: existingToolData } = useGet<Tool>(
-        `${apis.toolsV1Url}/${toolId}`,
+        `${baseToolsUrl}/${toolId}`,
         {
             shouldFetch: !!toolId,
         }
     );
 
-    const createTool = usePost<ToolPayloadSubmission>(`${apis.toolsV1Url}`, {
+    const createTool = usePost<ToolPayloadSubmission>(baseToolsUrl, {
         itemName: "Tool",
     });
 
-    const editTool = usePatch<Partial<ToolPayloadSubmission>>(
-        `${apis.toolsV1Url}`,
-        {
-            itemName: "Tool",
-        }
-    );
+    const editTool = usePatch<Partial<ToolPayloadSubmission>>(baseToolsUrl, {
+        itemName: "Tool",
+    });
 
     const toolCategoryOptions = useMemo(() => {
         if (!toolCategoryData) return [];
