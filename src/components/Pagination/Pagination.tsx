@@ -21,9 +21,9 @@ const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
                             next: ArrowRightIcon,
                         }}
                         {...item}
-                        disabled={isLoading}
                     />
                 )}
+                disabled={isLoading}
                 {...rest}
             />
         </Box>

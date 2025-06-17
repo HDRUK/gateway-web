@@ -336,7 +336,7 @@ async function getTool(
 ): Promise<Tool> {
     const tool = await get<Tool>(
         cookieStore,
-        `${apis.toolsV1UrlIP}/${toolId}`,
+        `${apis.toolsV2UrlIP}/${toolId}`,
         options
     );
 
