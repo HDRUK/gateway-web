@@ -39,7 +39,7 @@ export default async function RootLayout({
     children: ReactNode;
 }) {
     let messages;
-    const homePageBanner: HomepageBannerNode[] = [];
+    let homePageBanner: HomepageBannerNode[] = [];
     try {
         messages = (await import(`@/config/messages/${locale}.json`))
             .default as AbstractIntlMessages;
@@ -55,9 +55,9 @@ export default async function RootLayout({
         isAliasesEnabled: (await isAliasesEnabled()) as boolean,
     };
 
-    // if (includeBanners) {
-    //     homePageBanner = (await getHomePageBanner()) as HomepageBannerNode[];
-    // }
+    if (includeBanners) {
+        homePageBanner = (await getHomePageBanner()) as HomepageBannerNode[];
+    }
 
     return (
         <html lang={locale}>
