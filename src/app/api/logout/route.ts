@@ -2,7 +2,7 @@ import { serialize } from "cookie";
 import { NextRequest, NextResponse } from "next/server";
 import apis from "@/config/apis";
 import config from "@/config/config";
-import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
+import { sessionHeader, sessionPrefix } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
 import { getSessionCookie } from "@/utils/getSessionCookie";
 
