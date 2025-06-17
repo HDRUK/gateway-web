@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Aggregations } from "@/interfaces/Search";
 import FilterPanel from "./FilterPanel";
 
@@ -23,13 +24,7 @@ const mockSourceData = [
         type: "collection",
         buckets: [],
     },
-    {
-        id: 4,
-        keys: "datasetTitles",
-        enabled: true,
-        type: "paper",
-        buckets: [],
-    },
+    { id: 4, keys: "datasetTitles", enabled: true, type: "paper", buckets: [] },
     {
         id: 5,
         keys: "accessType",
@@ -44,13 +39,7 @@ const mockSourceData = [
         type: "dataProvider",
         buckets: [],
     },
-    {
-        id: 6,
-        keys: "typeCategory",
-        enabled: true,
-        type: "tool",
-        buckets: [],
-    },
+    { id: 6, keys: "typeCategory", enabled: true, type: "tool", buckets: [] },
 ];
 
 const defaultProps = {
@@ -79,23 +68,24 @@ describe("FilterPanel", () => {
         jest.clearAllMocks();
     });
 
+    const renderWithCategory = (category: string) => {
+        const newProps = { ...defaultProps, filterCategory: category };
+        render(<FilterPanel {...newProps} />);
+    };
+
     it.each(testCases)(
         "should render different filters based on category",
         ({ category, filter }) => {
-            const newProps = {
-                ...defaultProps,
-                filterCategory: category,
-            };
-            render(<FilterPanel {...newProps} />);
+            renderWithCategory(category);
             expect(screen.getByText(filter)).toBeInTheDocument();
         }
     );
 
-    it("should call setFilterQueryParams when a filter is updated", () => {
+    it("should call setFilterQueryParams when a filter is updated", async () => {
         render(<FilterPanel {...defaultProps} />);
-
         const checkbox = screen.getByRole("checkbox");
-        fireEvent.click(checkbox);
+
+        await userEvent.click(checkbox);
 
         expect(defaultProps.setFilterQueryParams).toHaveBeenCalledWith(
             [],
@@ -103,7 +93,7 @@ describe("FilterPanel", () => {
         );
     });
 
-    it("should correctly remove dataset filter for publications that have Europe PMC selected as source", () => {
+    it("should correctly remove dataset filter for publications that have Europe PMC selected as source", async () => {
         const publicationProps = {
             ...defaultProps,
             filterCategory: "paper",
@@ -111,14 +101,14 @@ describe("FilterPanel", () => {
 
         render(<FilterPanel {...publicationProps} />);
 
-        expect(
-            screen.getByRole("button", {
-                name: "datasetTitles",
-            })
-        ).toBeInTheDocument();
+        const datasetButton = screen.getByRole("button", {
+            name: "datasetTitles",
+        });
+        expect(datasetButton).toBeInTheDocument();
 
         const radioButton = screen.getByText("Search Online Publications");
-        fireEvent.click(radioButton);
+
+        await userEvent.click(radioButton);
 
         expect(
             screen.queryByRole("button", { name: "datasetTitles" })
