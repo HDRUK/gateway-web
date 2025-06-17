@@ -4,8 +4,14 @@ import config from "@/config/config";
 import { sessionHeader, sessionPrefix } from "@/config/session";
 import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "@/utils/getSessionCookie";
+import { logger } from "@/utils/logger";
 
 export async function GET(req: NextRequest) {
+    const session = await getSessionCookie();
+    if (!session) {
+        return NextResponse.json({ error: "no session" }, { status: 401 });
+    }
+
     try {
         const jwtToken = req.cookies.get(config.JWT_COOKIE)?.value;
 
@@ -16,12 +22,6 @@ export async function GET(req: NextRequest) {
                 { data: { isLoggedIn: false } },
                 { status: 200 }
             );
-        }
-
-        const session = await getSessionCookie();
-
-        if (!session) {
-            return NextResponse.json({ error: "no session" }, { status: 401 });
         }
 
         try {
@@ -55,6 +55,8 @@ export async function GET(req: NextRequest) {
             stack?: unknown;
             message: string;
         };
+
+        logger.error(err, session, `api/auth`);
 
         if (err?.response) {
             return NextResponse.json(

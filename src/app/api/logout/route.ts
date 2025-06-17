@@ -5,6 +5,7 @@ import config from "@/config/config";
 import { sessionHeader, sessionPrefix } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
 import { getSessionCookie } from "@/utils/getSessionCookie";
+import { logger } from "@/utils/logger";
 
 export async function GET(req: NextRequest) {
     const session = await getSessionCookie();
@@ -47,6 +48,7 @@ export async function GET(req: NextRequest) {
             stack?: unknown;
             message: string;
         };
+        logger.error(err, session, `api/logout`);
 
         const status = err?.response?.status ?? 500;
         const message = err?.response?.data?.message ?? err.message;
