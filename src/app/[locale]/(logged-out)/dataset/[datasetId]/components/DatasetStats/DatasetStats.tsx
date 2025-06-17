@@ -11,6 +11,8 @@ import {
     parseLeadTime,
     splitStringList,
 } from "@/utils/dataset";
+import { isValidUrl } from "@/utils/isValidUrl";
+import { truncateUrl } from "@/utils/truncateUrl";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
@@ -29,9 +31,15 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
         get(data, "metadata.metadata.provenance.temporal.endDate")
     );
     const tissueStat = get(data, "metadata.metadata.coverage.materialType");
-    const coverageStat = spatialCoverage
+    let coverage = spatialCoverage
         ? Array.from(new Set(splitStringList(spatialCoverage)))
         : "";
+
+    if (Array.isArray(coverage) && isValidUrl(coverage[0])) {
+        coverage = truncateUrl(coverage[0], 15);
+    }
+
+    const coverageStat = coverage;
     const leadTimeStat = parseLeadTime(
         get(data, "metadata.metadata.accessibility.access.deliveryLeadTime") ||
             ""
