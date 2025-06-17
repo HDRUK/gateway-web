@@ -86,6 +86,10 @@ export default async function DatasetItemPage({
         section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
 
+    const spatialCoverage = data.spatialCoverage
+        ?.map(item => item.region)
+        .join(", ");
+
     const linkageCounts = {
         tools: data?.tools_count,
         publications: data?.publications_count,
@@ -131,7 +135,10 @@ export default async function DatasetItemPage({
                                     }
                                 </Typography>
                                 <div>
-                                    <DatasetStats data={datasetStats} />
+                                    <DatasetStats
+                                        data={datasetStats}
+                                        spatial={spatialCoverage}
+                                    />
                                 </div>
                             </Box>
                         )}

@@ -14,10 +14,17 @@ import {
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
-const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
+const DatasetStats = ({
+    data,
+    spatial,
+}: {
+    data: Partial<VersionItem>;
+    spatial: string;
+}) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
+    const spatialCoverage =
+        spatial ?? get(data, "metadata.metadata.coverage.spatial");
     const populationStat = formatTextDelimiter(
         get(
             data,

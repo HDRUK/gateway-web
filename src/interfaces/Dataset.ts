@@ -181,11 +181,24 @@ export interface ReducedDataset {
     datasetType: string;
     dataCustodian: string;
 }
+interface Pivot {
+    dataset_version_id: number;
+    spatial_coverage_id: number;
+}
 
+interface SpatialCoverage {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    region: string;
+    enabled: boolean;
+    pivot: Pivot;
+}
 interface Dataset {
     id: number;
     team_id: number;
     user_id: number;
+    spatialCoverage?: SpatialCoverage[];
     status: DatasetStatus;
     pid: string | null;
     versions: VersionItem[];
