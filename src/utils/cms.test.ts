@@ -9,6 +9,13 @@ import {
     substituteEnvLinks,
 } from "@/utils/cms";
 
+const sessionId = "123421";
+
+jest.mock("next/headers", () => ({
+    cookies: jest.fn(() => ({
+        get: jest.fn().mockReturnValue({ value: sessionId }),
+    })),
+}));
 describe("CMS utils", () => {
     beforeAll(() => {
         jest.spyOn(window, "fetch");
@@ -23,7 +30,10 @@ describe("CMS utils", () => {
             await getReleaseNotes();
 
             expect(window.fetch).toBeCalledWith(apis.wordPressApiUrl, {
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-Request-Session-Id": "web: 123421",
+                },
                 method: "POST",
                 body: JSON.stringify({ query: GetReleaseNotesQuery }),
                 next: { revalidate: 10 },
@@ -35,7 +45,10 @@ describe("CMS utils", () => {
             await getMissionAndPurposes();
 
             expect(window.fetch).toBeCalledWith(apis.wordPressApiUrl, {
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-Request-Session-Id": "web: 123421",
+                },
                 method: "POST",
                 body: JSON.stringify({ query: GetMissionAndPurposesQuery }),
                 next: { revalidate: 10 },
@@ -47,7 +60,10 @@ describe("CMS utils", () => {
             await getTermsAndConditions();
 
             expect(window.fetch).toBeCalledWith(apis.wordPressApiUrl, {
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-Request-Session-Id": "web: 123421",
+                },
                 method: "POST",
                 body: JSON.stringify({ query: GetTermsAndConditionsQuery }),
                 next: { revalidate: 10 },
