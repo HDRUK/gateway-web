@@ -72,9 +72,12 @@ export default async function RootLayout({
                                     <ActionBarProvider>
                                         <SupportPopOut />
                                         <LightBox />
-                                        {homePageBanner?.length && (
-                                            <CMSBanners data={homePageBanner} />
-                                        )}
+                                        {homePageBanner?.length > 0 &&
+                                            includeBanners && (
+                                                <CMSBanners
+                                                    data={homePageBanner}
+                                                />
+                                            )}
                                         <SnackbarProvider />
                                         <Header />
                                         {children}
