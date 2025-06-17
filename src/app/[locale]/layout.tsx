@@ -3,6 +3,7 @@ import visuallyHidden from "@mui/utils/visuallyHidden";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
+import { HomepageBannerNode } from "@/interfaces/Homepage";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -11,6 +12,7 @@ import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
+import { getHomePageBanner } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import { isAliasesEnabled, isSDEConciergeServiceEnquiryEnabled } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
@@ -37,6 +39,7 @@ export default async function RootLayout({
     children: ReactNode;
 }) {
     let messages;
+    let homePageBanner: HomepageBannerNode[] = [];
     try {
         messages = (await import(`@/config/messages/${locale}.json`))
             .default as AbstractIntlMessages;
@@ -44,12 +47,17 @@ export default async function RootLayout({
         notFound();
     }
     const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+    const includeBanners = process.env.NEXT_PUBLIC_INCLUDE_BANNERS === "true";
 
     const features = {
         isSDEConciergeServiceEnquiryEnabled:
             (await isSDEConciergeServiceEnquiryEnabled()) as boolean,
         isAliasesEnabled: (await isAliasesEnabled()) as boolean,
     };
+
+    if (includeBanners) {
+        homePageBanner = (await getHomePageBanner()) as HomepageBannerNode[];
+    }
 
     return (
         <html lang={locale}>
@@ -64,7 +72,9 @@ export default async function RootLayout({
                                     <ActionBarProvider>
                                         <SupportPopOut />
                                         <LightBox />
-                                        <CMSBanners />
+                                        {homePageBanner?.length && (
+                                            <CMSBanners data={homePageBanner} />
+                                        )}
                                         <SnackbarProvider />
                                         <Header />
                                         {children}
