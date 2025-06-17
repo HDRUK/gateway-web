@@ -6,8 +6,9 @@ import { sessionHeader, sessionPrefix } from "@/config/session";
 import { extractSubdomain } from "@/utils/general";
 import { getSessionCookie } from "@/utils/getSessionCookie";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     const session = await getSessionCookie();
+
     if (!session) {
         return NextResponse.json({ error: "no session" }, { status: 401 });
     }
@@ -34,6 +35,7 @@ export async function POST(req: NextRequest) {
             { message: "success" },
             { status: 200 }
         );
+
         response.headers.set("Set-Cookie", cookie);
         return response;
     } catch (error) {
