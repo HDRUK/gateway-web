@@ -26,9 +26,11 @@ describe("MapUK", () => {
         const wales = screen.getByTestId("Wales");
         fireEvent.mouseOver(wales);
 
-        await waitFor(() => {
-            const title = screen.getByText("Wales - 204 datasets");
-            expect(title).toBeInTheDocument();
-        });
+        const title = await screen.findByText(
+            "Wales - 204 datasets",
+            {},
+            { timeout: 2000 }
+        );
+        expect(title).toBeInTheDocument();
     });
 });
