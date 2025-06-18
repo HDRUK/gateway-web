@@ -4,7 +4,6 @@ import { colors } from "@/config/theme";
 export const tabsStyle = {
     searchTabList: css({
         boxShadow: "none",
-        paddingBottom: "1px",
     }),
 
     normal: () =>
