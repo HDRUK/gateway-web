@@ -75,7 +75,7 @@ const formArrayFields = [
 
 const formFields = [
     {
-        label: "Github Link (optional)",
+        label: "URL or Github link (optional)",
         name: "url",
         info: "Where can we find this analysis script, tool or software?",
         component: inputComponents.TextField,
