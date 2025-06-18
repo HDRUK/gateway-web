@@ -1,3 +1,9 @@
+## [2.13.0](https://github.com/HDRUK/gateway-web/compare/v2.12.0...v2.13.0) (2025-06-18)
+
+### ✨ Features
+
+* **GAT-7438:** Search styling tweaks (#1224) ([920b19a](https://github.com/HDRUK/gateway-web/commit/920b19a708e589b75c3045cad04ea033a5453df0)), closes [GAT-7438](GAT-7438)
+
 ## [2.12.0](https://github.com/HDRUK/gateway-web/compare/v2.11.0...v2.12.0) (2025-06-16)
 
 ### ✨ Features
