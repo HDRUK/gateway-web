@@ -852,7 +852,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     width: "100%",
                     display: "flex",
                     justifyContent: "center",
-                    background: `linear-gradient(97.46deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
                 }}>
                 <Box
                     sx={{
@@ -865,7 +864,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     }}>
                     <Typography
                         variant="h1"
-                        color="white"
                         sx={{
                             marginTop: 4,
                             marginBottom: 0.5,
