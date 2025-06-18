@@ -48,6 +48,7 @@ import DatasetRelationshipFields from "../DatasetRelationshipFields";
 
 interface CreatePublicationProps {
     teamId?: string;
+    userId?: string;
     publicationId?: string;
 }
 
@@ -55,6 +56,7 @@ const TRANSLATION_PATH = "pages.account.profile.publications.create";
 
 const CreatePublication = ({
     teamId,
+    userId,
     publicationId,
 }: CreatePublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -67,6 +69,10 @@ const CreatePublication = ({
         ? `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`
         : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`;
 
+    const basePublicationsUrl = teamId
+        ? `${apis.teamsV2Url}/${teamId}/publications`
+        : `${apis.usersV2Url}/${userId}/publications`;
+
     const { handleSubmit, control, setValue, getValues, watch, reset } =
         useForm<PublicationPayload>({
             mode: "onTouched",
@@ -77,21 +83,21 @@ const CreatePublication = ({
         });
 
     const { data: existingPublicationData } = useGet<PublicationPayload>(
-        `${apis.publicationsV1Url}/${publicationId}`,
+        `${basePublicationsUrl}/${publicationId}`,
         {
             shouldFetch: !!publicationId,
         }
     );
 
     const createPublication = usePost<PublicationPayloadSubmission>(
-        `${apis.publicationsV1Url}`,
+        `${basePublicationsUrl}`,
         {
             itemName: "Publication",
         }
     );
 
     const editPublication = usePut<Partial<PublicationPayloadSubmission>>(
-        `${apis.publicationsV1Url}`,
+        `${basePublicationsUrl}`,
         {
             itemName: "Publication",
         }
