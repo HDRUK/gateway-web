@@ -61,8 +61,6 @@ const apis = {
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,
-    collectionsV1Url: `${apiV1Url}/collections`,
-    collectionsV1UrlIP: `${apiV1IPUrl}/collections`,
     collectionsV2Url: `${apiV2Url}/collections`,
     collectionsV2UrlIP: `${apiV2IPUrl}/collections`,
     questionBankV1Url: `${apiV1Url}/questions`,

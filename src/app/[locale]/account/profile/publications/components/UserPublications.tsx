@@ -66,6 +66,8 @@ const UserPublications = ({
         paper_title: "",
     }));
 
+    const { status, ...filteredQueryParams } = queryParams;
+
     const { control, watch, setValue } = useForm({
         defaultValues: {
             ...publicationSearchDefaultValues,
@@ -121,9 +123,9 @@ const UserPublications = ({
         isLoading,
         mutate: mutatePublications,
     } = useGet<PaginationType<Publication>>(
-        `${basePublicationsUrl}/status/${
-            queryParams.status
-        }?${new URLSearchParams(queryParams)}`,
+        `${basePublicationsUrl}/status/${status}?${new URLSearchParams(
+            filteredQueryParams
+        )}`,
         {
             keepPreviousData: true,
             withPagination: true,
