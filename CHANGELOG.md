@@ -1,3 +1,37 @@
+## [2.12.0](https://github.com/HDRUK/gateway-web/compare/v2.11.0...v2.12.0) (2025-06-16)
+
+### ✨ Features
+
+* **GAT-5792:** Add cohort discovery button to data custodian page (#1184) ([ad01af8](https://github.com/HDRUK/gateway-web/commit/ad01af80003c087d4bfa7afd8155090d57c30777)), closes [GAT-5792](GAT-5792)
+* **GAT-5895:** Remove special characters from uploaded file name (#1180) ([8d282eb](https://github.com/HDRUK/gateway-web/commit/8d282eb4ad65cff4e2b3e6d3e6b09722f46e9bac)), closes [GAT-5895](GAT-5895)
+* **GAT-6328:** Customer survey reason (#1185) ([70e157e](https://github.com/HDRUK/gateway-web/commit/70e157e3b481beef5a6c3a2680cfba9cbee5e76b)), closes [GAT-6328](GAT-6328)
+* **GAT-6413:** Added tools and investigations to the dataset landing page (#1187) ([1a1de05](https://github.com/HDRUK/gateway-web/commit/1a1de05d035f1be386e973aeee8c06f94189eca6)), closes [GAT-6413](GAT-6413)
+* **GAT-6770:** Make Arrow White (#1191) ([8be8dec](https://github.com/HDRUK/gateway-web/commit/8be8decb739f1a7f6a4a3cf50269f6bb65e94b0f)), closes [GAT-6770](GAT-6770)
+* **GAT-6790:** Navbar causes survey and feedback to layoutshift (#1204) ([e837c10](https://github.com/HDRUK/gateway-web/commit/e837c1061bc963976f227a95cfe9115fed9aa153)), closes [GAT-6790](GAT-6790)
+* **GAT-6797:** Focus on modal close when open (#1205) ([162b7c2](https://github.com/HDRUK/gateway-web/commit/162b7c2df5974b25562b70f315cf01708e7e8aaa))
+* **GAT-6798:** remove heading from grid box (#1201) ([b756fe7](https://github.com/HDRUK/gateway-web/commit/b756fe7cafb03a9d15afc53bfd9e9fb36516c9ba)), closes [GAT-6798](GAT-6798)
+* **GAT-6802:** header order (#1192) ([f5984de](https://github.com/HDRUK/gateway-web/commit/f5984de00414f734e747df0a75fc4707574d03bf)), closes [GAT-6802](GAT-6802)
+* **GAT-6849:** Default comment when Data Custodian changes DAR application from 'in review' to 'draft' (#1179) ([ceb1c35](https://github.com/HDRUK/gateway-web/commit/ceb1c356b874b3413c278282075b890d0b25b8d1)), closes [GAT-6849](GAT-6849)
+* **GAT-7012:** remove NA from data sub type filter (#1199) ([d4e7342](https://github.com/HDRUK/gateway-web/commit/d4e7342a502d5ab83f106ffe09465eaaaa869c5a)), closes [GAT-7012](GAT-7012)
+* **GAT-7016:** Update to use data_custodian urls (#1186) ([c8d04cc](https://github.com/HDRUK/gateway-web/commit/c8d04ccbdcffe099e9b25722f4d12f75c248993c)), closes [GAT-7016](GAT-7016)
+* **GAT-7092:** Add synthetic web link to structural metadata (#1196) ([d5064d3](https://github.com/HDRUK/gateway-web/commit/d5064d3ba77a36fdbbdf2f3782874ca0875acca1)), closes [GAT-7092](GAT-7092)
+* **GAT-7092:** Synthetic data web link tweaks (#1202) ([87de430](https://github.com/HDRUK/gateway-web/commit/87de4301c35d35e79be793de9b69c94c4ecd686f)), closes [GAT-7092](GAT-7092)
+* **GAT-7128:** Responsive UI design for search bar (#1203) ([cb384fe](https://github.com/HDRUK/gateway-web/commit/cb384fed8c27a632f490673a6b3927c9641a8988)), closes [GAT-7128](GAT-7128)
+* **GAT-7130:** Update button components on search UI (#1208) ([4922172](https://github.com/HDRUK/gateway-web/commit/4922172e682718eb78a81ba7936ee3d19d679452)), closes [GAT-7130](GAT-7130)
+* **GAT-7133:** Fix spacing on result card (#1216) ([36c74ca](https://github.com/HDRUK/gateway-web/commit/36c74ca3c3e2e119915d748c73b82c2275773e10))
+* **GAT-7133:** Further fixes and tweaks to responsive search UI (#1214) ([7ea51f5](https://github.com/HDRUK/gateway-web/commit/7ea51f5fdff329cc9e7ef7931d2458fe5be28eb5))
+* **GAT-7133:** Responsive tabs on search UI (#1213) ([4b9ba45](https://github.com/HDRUK/gateway-web/commit/4b9ba456a330e988b09de339265197e4c062c5c5)), closes [GAT-7133](GAT-7133)
+* **GAT-7134:** convert helper text to hover-over (#1195) ([5cd2ba4](https://github.com/HDRUK/gateway-web/commit/5cd2ba48cb43f403f784ea11c49d9df8e59bbfd5)), closes [GAT-7134](GAT-7134)
+
+### 🐛 Bug Fixes
+
+* **GAT-4346:** tagList keywords are a comma delimited string (#1206) ([edfca48](https://github.com/HDRUK/gateway-web/commit/edfca489484d9d13ca3233f17fa1758059fdd739)), closes [GAT-4346](GAT-4346)
+* **GAT-6943:** Use correct timezone when creating dates (#1183) ([e6fdb19](https://github.com/HDRUK/gateway-web/commit/e6fdb19361a80079cae3f84a28834dc37f1b5554)), closes [GAT-6943](GAT-6943)
+* **GAT-7016:** Fix issues with data_custodian search (#1197) ([fe425df](https://github.com/HDRUK/gateway-web/commit/fe425df11bf12722a66c9d12d47f0a49c1647546))
+* **GAT-7267:** Don't make access call when redirecting to profile page. (#1194) ([8d402b2](https://github.com/HDRUK/gateway-web/commit/8d402b226fb4602b26b1ff21fe1debc3fdcdc618)), closes [GAT-7267](GAT-7267)
+* **GAT-7290:** set empty stirng ot undefined (#1198) ([80a3c8d](https://github.com/HDRUK/gateway-web/commit/80a3c8d7a6910984ae2163a1c332e6470fca467f)), closes [GAT-7290](GAT-7290)
+* **GAT-7325:** Missing Dar Sections (#1210) ([55ba6ac](https://github.com/HDRUK/gateway-web/commit/55ba6ac81f3874c37a06f6d9c12a573132b8547a)), closes [GAT-7325](GAT-7325)
+
 ## [2.11.0](https://github.com/HDRUK/gateway-web/compare/v2.10.0...v2.11.0) (2025-06-10)
 
 ### ✨ Features

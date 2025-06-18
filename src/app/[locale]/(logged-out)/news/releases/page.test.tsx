@@ -3,7 +3,11 @@ import { releaseV1 } from "@/mocks/data/cms";
 import ReleasePage from "./page";
 
 jest.useFakeTimers().setSystemTime(new Date("2024-01-01"));
-
+jest.mock("next/headers", () => ({
+    cookies: jest.fn(() => ({
+        get: jest.fn().mockReturnValue({ value: 123421 }),
+    })),
+}));
 describe("Releases", () => {
     it("should render contents", async () => {
         const Result = await ReleasePage();

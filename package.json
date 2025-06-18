@@ -1,6 +1,6 @@
 {
   "name": "gateway-web-2",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -100,6 +100,7 @@
     "swr": "^2.1.1",
     "tsx": "4.19.2",
     "typescript": "4.9.5",
+    "uuid": "^11.1.0",
     "yup": "^1.2.0",
     "zustand": "^5.0.4"
   },

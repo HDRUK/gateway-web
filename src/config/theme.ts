@@ -224,6 +224,10 @@ const theme = createTheme({
                     fontSize: theme.typography.body1.fontSize,
                 }),
             },
+            defaultProps: {
+                enterDelay: 500,
+                enterNextDelay: 500,
+            },
         },
         MuiSvgIcon: {
             variants: [

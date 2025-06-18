@@ -1,4 +1,6 @@
-import { RequestOptions } from "@/interfaces/Api";
+import Cookies from "js-cookie";
+import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
+import { logger } from "@/utils/logger";
 import { errorNotification, successNotification } from "./utils";
 
 const patchRequest = async <T>(
@@ -12,7 +14,16 @@ const patchRequest = async <T>(
         errorNotificationsOn = true,
         ...props
     } = notificationOptions || {};
+    const session = Cookies.get(sessionCookie)!;
 
+    if (process.env.NEXT_PUBLIC_LOG_LEVEL === "debug") {
+        const message = {
+            url,
+            data,
+            options,
+        };
+        logger.info(message, session, "patch");
+    }
     try {
         const response = await fetch(url, {
             method: "PATCH",
@@ -20,6 +31,7 @@ const patchRequest = async <T>(
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                [sessionHeader]: sessionPrefix + session,
             },
         });
 
@@ -37,7 +49,16 @@ const patchRequest = async <T>(
         }
 
         if (!response.ok) {
-            const error = await response.json();
+            let errorMessage: string;
+            let error;
+            try {
+                const errorData = await response.json();
+                error = errorData;
+                errorMessage = JSON.stringify(errorData, null, 2);
+            } catch {
+                errorMessage = await response.text();
+            }
+            logger.error(errorMessage, session, `patch`);
             if (errorNotificationsOn) {
                 errorNotification({
                     status: response.status,

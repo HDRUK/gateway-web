@@ -2,10 +2,6 @@ import { render, screen, waitFor } from "@/utils/testUtils";
 import { homepageBannerV1 } from "@/mocks/data/cms";
 import CMSBanners from "./CMSBanners";
 
-jest.mock("@/utils/cms", () => ({
-    getHomePageBanner: () => Promise.resolve(homepageBannerV1.posts.edges),
-}));
-
 const processEnv = { ...process.env };
 
 describe("CMSBanners", () => {
@@ -20,7 +16,7 @@ describe("CMSBanners", () => {
     it.each(homepageBannerV1.posts.edges)(
         "$node.homepageBanner.heading has the correct content",
         async item => {
-            render(<CMSBanners />);
+            render(<CMSBanners data={homepageBannerV1.posts.edges} />);
 
             await waitFor(() =>
                 expect(

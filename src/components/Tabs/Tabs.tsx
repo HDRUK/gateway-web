@@ -19,9 +19,8 @@ export interface Tab {
 }
 
 export enum TabVariant {
+    SEARCH = "search",
     STANDARD = "standard",
-    LARGE = "large",
-    SLIM = "slim",
 }
 
 export interface TabProps {
@@ -96,10 +95,13 @@ const Tabs = ({
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>
             <MuiTabContext value={selectedTab}>
                 <Paper
-                    css={variant === TabVariant.LARGE && tabsStyle.tabList}
+                    css={
+                        variant === TabVariant.SEARCH && tabsStyle.searchTabList
+                    }
                     sx={{
-                        paddingBottom: 0,
+                        padding: 0,
                         background: "none",
+
                         ...tabBoxSx,
                     }}>
                     <MuiTabList
@@ -128,8 +130,8 @@ const Tabs = ({
                                 value={tab.value}
                                 label={tab.label}
                                 css={
-                                    variant === TabVariant.LARGE
-                                        ? tabsStyle.tab
+                                    variant === TabVariant.SEARCH
+                                        ? tabsStyle.search
                                         : tabsStyle.normal
                                 }
                                 param={paramName}
