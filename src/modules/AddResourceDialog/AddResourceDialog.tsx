@@ -130,7 +130,7 @@ const AddDatasetDialog = ({
     );
 
     const { data: toolData, isLoading: isLoadingTools } = useGet<Tool[]>(
-        `${apis.toolsV1Url}?${new URLSearchParams({
+        `${apis.toolsV2Url}?${new URLSearchParams({
             title: queryParams.title,
             status: "ACTIVE",
         })}`,
