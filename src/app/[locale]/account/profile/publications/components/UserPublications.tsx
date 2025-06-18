@@ -13,7 +13,6 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import AddPublicationDialog from "@/modules/AddPublicationDialog";
 import useDebounce from "@/hooks/useDebounce";
-import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
@@ -61,12 +60,10 @@ const UserPublications = ({
     );
 
     const [queryParams, setQueryParams] = useState(() => ({
-        withTrashed: "true",
-        status: "ACTIVE",
+        status: DataStatus.ACTIVE.toLowerCase(),
         page: "1",
         sort: `${publicationSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         paper_title: "",
-        ...(teamId ? { team_id: teamId } : { owner_id: userId }),
     }));
 
     const { control, watch, setValue } = useForm({
@@ -97,6 +94,10 @@ const UserPublications = ({
 
     const filterTitleDebounced = useDebounce(watchAll.searchTitle, 500);
 
+    const basePublicationsUrl = teamId
+        ? `${apis.teamsV2Url}/${teamId}/publications`
+        : `${apis.usersV2Url}/${userId}/publications`;
+
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
@@ -108,7 +109,9 @@ const UserPublications = ({
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            status: searchParams?.get("tab") || "ACTIVE",
+            status: (
+                searchParams?.get("tab") || DataStatus.ACTIVE
+            ).toLowerCase(),
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams?.get("tab")]);
@@ -118,21 +121,16 @@ const UserPublications = ({
         isLoading,
         mutate: mutatePublications,
     } = useGet<PaginationType<Publication>>(
-        `${apis.publicationsV1Url}?${new URLSearchParams(queryParams)}`,
+        `${basePublicationsUrl}/status/${
+            queryParams.status
+        }?${new URLSearchParams(queryParams)}`,
         {
             keepPreviousData: true,
             withPagination: true,
         }
     );
 
-    const unArchivePublication = usePatch<Partial<Publication>>(
-        apis.publicationsV1Url,
-        {
-            itemName: "Publication",
-        }
-    );
-    const archivePublication = useDelete(apis.publicationsV1Url, {
-        localeKey: "archivePublication",
+    const patchPublication = usePatch(basePublicationsUrl, {
         itemName: "Publication",
     });
 
@@ -142,9 +140,7 @@ const UserPublications = ({
         tab === DataStatus.ARCHIVED && permissions["papers.update"];
 
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        `${apis.publicationsV1Url}/count/status?${
-            teamId ? `team_id=${teamId}` : `owner_id=${userId}`
-        }`
+        `${basePublicationsUrl}/count/status`
     );
 
     const {
@@ -172,7 +168,7 @@ const UserPublications = ({
                           showModal({
                               tertiaryButton: {
                                   onAction: async () => {
-                                      await unArchivePublication(id, {
+                                      await patchPublication(id, {
                                           status: DataStatus.ACTIVE,
                                       });
                                       mutatePublications();
@@ -181,7 +177,7 @@ const UserPublications = ({
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: async () => {
-                                  await unArchivePublication(id, {
+                                  await patchPublication(id, {
                                       status: DataStatus.DRAFT,
                                   });
                                   mutatePublications();
@@ -201,7 +197,9 @@ const UserPublications = ({
             ? [
                   {
                       action: async (id: number) => {
-                          await archivePublication(id);
+                          await patchPublication(id, {
+                              status: DataStatus.ARCHIVED,
+                          });
                           mutatePublications();
                           mutateCount();
                       },
