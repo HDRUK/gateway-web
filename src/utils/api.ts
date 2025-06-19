@@ -480,7 +480,7 @@ async function getReducedCollection(
 ): Promise<ReducedCollection> {
     const collection = await get<ReducedCollection>(
         cookieStore,
-        `${apis.collectionsV1UrlIP}/${collectionId}?view_type=mini`,
+        `${apis.collectionsV2UrlIP}/${collectionId}?view_type=mini`,
         options
     );
 
