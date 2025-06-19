@@ -101,22 +101,22 @@ const CollectionForm = ({
         }
     );
 
+    const baseCollectionsUrl = teamId
+        ? `${apis.teamsV2Url}/${teamId}/collections`
+        : `${apis.usersV2Url}/${userId}/collections`;
+
     const { data: existingCollectionData } = useGet<Collection>(
-        `${apis.collectionsV1Url}/${collectionId}?view_type=mini`,
+        `${baseCollectionsUrl}/${collectionId}`,
         { shouldFetch: !!collectionId }
     );
 
-    const createCollection = usePost<CollectionSubmission>(
-        teamId
-            ? `${apis.teamsV1Url}/${teamId}/collections`
-            : apis.collectionsV2Url,
-        { itemName: "Collection", successNotificationsOn: !file }
-    );
+    const createCollection = usePost<CollectionSubmission>(baseCollectionsUrl, {
+        itemName: "Collection",
+        successNotificationsOn: !file,
+    });
 
     const editCollection = usePatch<Partial<CollectionSubmission>>(
-        teamId
-            ? `${apis.teamsV1Url}/${teamId}/collections`
-            : apis.collectionsV2Url,
+        baseCollectionsUrl,
         { itemName: "Collection" }
     );
 

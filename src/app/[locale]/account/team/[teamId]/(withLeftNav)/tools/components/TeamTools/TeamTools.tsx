@@ -68,6 +68,8 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         title: "",
     });
 
+    const { status, ...filteredQueryParams } = queryParams;
+
     const { control, watch, setValue } = useForm({
         defaultValues: {
             ...searchDefaultValues,
@@ -133,8 +135,8 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         isLoading,
         mutate: mutateTools,
     } = useGet<PaginationType<Tool>>(
-        `${baseToolsUrl}/status/${queryParams.status}?${new URLSearchParams(
-            queryParams
+        `${baseToolsUrl}/status/${status}?${new URLSearchParams(
+            filteredQueryParams
         )}`,
         {
             keepPreviousData: true,
