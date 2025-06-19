@@ -225,8 +225,8 @@ const theme = createTheme({
                 }),
             },
             defaultProps: {
-                enterDelay: 500,
-                enterNextDelay: 500,
+                enterDelay: 1000,
+                enterNextDelay: 1000,
             },
         },
         MuiSvgIcon: {
