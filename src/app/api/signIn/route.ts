@@ -11,10 +11,6 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const session = await getSessionCookie();
 
-    if (!session) {
-        return NextResponse.json({ error: "no session" }, { status: 401 });
-    }
-
     try {
         const response = await fetch(apis.signInV1UrlIP, {
             method: "POST",
