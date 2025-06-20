@@ -13,7 +13,6 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import AddDatasetDialog from "@/modules/AddDatasetDialog";
 import useDebounce from "@/hooks/useDebounce";
-import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
@@ -71,12 +70,13 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     );
 
     const [queryParams, setQueryParams] = useState({
-        withTrashed: "true",
-        status: "ACTIVE",
+        status: DataStatus.ACTIVE.toLowerCase(),
         page: "1",
         sort: `${datasetSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         title: "",
     });
+
+    const { status, ...filteredQueryParams } = queryParams;
 
     const { control, watch, setValue } = useForm({
         defaultValues: {
@@ -117,14 +117,19 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            status: searchParams?.get("tab") || "ACTIVE",
+            status: (
+                searchParams?.get("tab") || DataStatus.ACTIVE
+            ).toLowerCase(),
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams?.get("tab")]);
 
+    const baseDatasetsUrl = `${apis.teamsV2Url}/${params?.teamId}/datasets`;
+
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        `${apis.datasetsV1Url}/count/status?team_id=${params?.teamId}`
+        `${baseDatasetsUrl}/count/status`
     );
+
     const {
         ACTIVE: countActive,
         DRAFT: countDraft,
@@ -136,8 +141,10 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         isLoading,
         mutate: mutateDatasets,
     } = useGet<PaginationType<Dataset>>(
-        `${apis.teamsV1Url}/${teamId}/datasets?${new URLSearchParams(
-            queryParams
+        `${
+            apis.teamsV2Url
+        }/${teamId}/datasets/status/${status}?${new URLSearchParams(
+            filteredQueryParams
         )}`,
         {
             keepPreviousData: true,
@@ -145,11 +152,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         }
     );
 
-    const unArchiveDataset = usePatch<Partial<Dataset>>(apis.datasetsV1Url, {
-        query: "unarchive",
-    });
-
-    const archiveDataset = useDelete(apis.datasetsV1Url, {
+    const patchDataset = usePatch(baseDatasetsUrl, {
         localeKey: "archiveDataset",
     });
 
@@ -193,7 +196,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                           showModal({
                               tertiaryButton: {
                                   onAction: async () => {
-                                      await unArchiveDataset(id, {
+                                      await patchDataset(id, {
                                           status: DataStatus.ACTIVE,
                                       });
                                       mutateDatasets();
@@ -202,7 +205,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: async () => {
-                                  await unArchiveDataset(id, {
+                                  await patchDataset(id, {
                                       status: DataStatus.DRAFT,
                                   });
                                   mutateDatasets();
@@ -222,7 +225,9 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
             ? [
                   {
                       action: async (id: number) => {
-                          await archiveDataset(id);
+                          await patchDataset(id, {
+                              status: DataStatus.ARCHIVED,
+                          });
                           mutateDatasets();
                           mutateCount();
                       },
