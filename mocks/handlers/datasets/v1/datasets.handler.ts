@@ -4,7 +4,7 @@ import { PaginationType } from "@/interfaces/Pagination";
 import apis from "@/config/apis";
 import { datasetsV1, datasetV1 } from "@/mocks/data/dataset";
 
-const getDatasetsV1 = (data: Dataset[] = datasetsV1, status = 200) => {
+const getDatasetsV2 = (data: Dataset[] = datasetsV1, status = 200) => {
     return rest.get(apis.datasetsV2Url, (req, res, ctx) => {
         const url = new URL(req.url);
         if (status !== 200) {
@@ -30,7 +30,7 @@ const getDatasetsV1 = (data: Dataset[] = datasetsV1, status = 200) => {
     });
 };
 
-const getDatasetV1 = (data: Dataset = datasetV1, status = 200) => {
+const getDatasetV2 = (data: Dataset = datasetV1, status = 200) => {
     return rest.get(`${apis.datasetsV2Url}/${data.id}`, (req, res, ctx) => {
         if (status !== 200) {
             return res(
@@ -42,4 +42,4 @@ const getDatasetV1 = (data: Dataset = datasetV1, status = 200) => {
     });
 };
 
-export { getDatasetsV1, getDatasetV1 };
+export { getDatasetsV2, getDatasetV2 };
