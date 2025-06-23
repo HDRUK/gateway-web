@@ -1,7 +1,7 @@
 import mockRouter from "next-router-mock";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { generateDatasetForTeamV1 } from "@/mocks/data/dataset";
-import { getTeamDatasetsV1 } from "@/mocks/handlers/teams";
+import { getTeamDatasetsV2 } from "@/mocks/handlers/teams";
 import { server } from "@/mocks/server";
 import TeamDatasets from "./TeamDatasets";
 
@@ -27,7 +27,7 @@ describe("TeamDatasets", () => {
                 status: "DRAFT",
             }),
         ];
-        server.use(getTeamDatasetsV1(mockDatasets));
+        server.use(getTeamDatasetsV2(mockDatasets));
         renderTeamDatasets();
 
         await waitFor(() => {
@@ -64,7 +64,7 @@ describe("TeamDatasets", () => {
         });
     });
     it("should render message if no active datasets", async () => {
-        server.use(getTeamDatasetsV1([]));
+        server.use(getTeamDatasetsV2([]));
         renderTeamDatasets();
 
         await waitFor(() => {
@@ -91,7 +91,7 @@ describe("TeamDatasets", () => {
                 status: "ACTIVE",
             }),
         ];
-        server.use(getTeamDatasetsV1(mockDatasets));
+        server.use(getTeamDatasetsV2(mockDatasets));
         renderTeamDatasets();
 
         await waitFor(() => {

@@ -181,10 +181,12 @@ const CreateDataset = ({
 
     const { push } = useRouter();
 
+    const baseDatasetsUrl = `${apis.teamsV2Url}/${params?.teamId}/datasets`;
+
     const { data: dataset, isLoading } = useGet<Dataset>(
         searchParams?.get("status") === DataStatus.DRAFT
-            ? `${apis.datasetsV1Url}/${datasetId}`
-            : `${apis.datasetsV1Url}/${datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
+            ? `${baseDatasetsUrl}/${datasetId}`
+            : `${baseDatasetsUrl}/${datasetId}?schema_model=${SCHEMA_NAME}&schema_version=${SCHEMA_VERSION}`,
         { shouldFetch: !!params?.teamId && !!datasetId }
     );
 
@@ -271,7 +273,7 @@ const CreateDataset = ({
     const [guidanceText, setGuidanceText] = useState<string>();
 
     const datasetVersionQuery = `input_schema=${SCHEMA_NAME}&input_version=${SCHEMA_VERSION}`;
-    const postDatasetUrl = `${apis.datasetsV1Url}?${datasetVersionQuery}`;
+    const postDatasetUrl = `${baseDatasetsUrl}?${datasetVersionQuery}`;
 
     const createDataset = usePost<NewDataset>(
         `${postDatasetUrl}?${datasetVersionQuery}`,
@@ -280,9 +282,8 @@ const CreateDataset = ({
         }
     );
 
-    const updateDataset = usePut<NewDataset>(apis.datasetsV1Url, {
+    const updateDataset = usePut<NewDataset>(baseDatasetsUrl, {
         itemName: "Dataset",
-        query: datasetVersionQuery,
     });
 
     const generatedYupValidation = useMemo(

@@ -4,9 +4,9 @@ import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { DataStatus } from "@/consts/application";
 import {
-    getDataset,
     getFormHydration,
     getTeam,
+    getTeamDataset,
     getTeamIdFromPid,
     getUser,
 } from "@/utils/api";
@@ -41,8 +41,9 @@ export default async function TeamDatasetPage({
 
     const isDraft = searchParams.status === DataStatus.DRAFT;
 
-    const dataset = await getDataset(
+    const dataset = await getTeamDataset(
         cookieStore,
+        params.teamId,
         params.datasetId,
         isDraft ? "" : SCHEMA_NAME,
         isDraft ? "" : SCHEMA_VERSION
