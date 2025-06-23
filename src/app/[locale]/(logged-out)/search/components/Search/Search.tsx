@@ -1183,10 +1183,9 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             </>
                         )}
 
-                        {isSearching ||
-                            (data === undefined && (
-                                <Loading ariaLabel={t("loadingAriaLabel")} />
-                            ))}
+                        {(isSearching || data === undefined) && (
+                            <Loading ariaLabel={t("loadingAriaLabel")} />
+                        )}
 
                         {!isSearching &&
                             data !== undefined &&
