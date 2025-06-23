@@ -20,7 +20,7 @@ import {
     postFederationsTestV1,
 } from "./integration/v1";
 import { getLogoutV1, getLogoutInternal } from "./logout";
-import { getTeamDatasetsV1, getTeamV1 } from "./teams";
+import { getTeamDatasetsV2, getTeamV1 } from "./teams";
 import { getUserV1 } from "./user";
 
 export const handlers = [
@@ -33,7 +33,7 @@ export const handlers = [
     getLogoutInternal(),
     getAuthInternal(),
     getTeamV1(),
-    getTeamDatasetsV1(),
+    getTeamDatasetsV2(),
     getApplicationV1(),
     getApplicationsV1({}),
     patchApplicationV1(),
