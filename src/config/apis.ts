@@ -37,8 +37,6 @@ const apis = {
     applicationsV1Url: `${apiV1Url}/applications`,
     applicationsV1UrlIP: `${apiV1IPUrl}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,
-    datasetsV1Url: `${apiV1Url}/datasets`,
-    datasetsV1UrlIP: `${apiV1IPUrl}/datasets`,
     datasetsV2Url: `${apiV2Url}/datasets`,
     datasetsV2UrlIP: `${apiV2IPUrl}/datasets`,
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
