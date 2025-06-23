@@ -284,7 +284,7 @@ const EditDataUse = () => {
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`, {
+    >(`${apis.datasetsV2Url}?${new URLSearchParams(queryParams)}`, {
         keepPreviousData: true,
     });
     const datasetOptions = useMemo(() => {

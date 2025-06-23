@@ -7,7 +7,7 @@ import { getAuthInternal } from "./auth";
 import { getCMSReleaseV1 } from "./cms";
 import { getCohortRequestsV1 } from "./cohortRequest";
 import { getDataUses } from "./dataUses";
-import { getDatasetV1, getDatasetsV1 } from "./datasets";
+import { getDatasetsV2, getDatasetV2 } from "./datasets";
 import {
     getFiltersV1,
     postFilterV1,
@@ -20,7 +20,7 @@ import {
     postFederationsTestV1,
 } from "./integration/v1";
 import { getLogoutV1, getLogoutInternal } from "./logout";
-import { getTeamDatasetsV1, getTeamV1 } from "./teams";
+import { getTeamDatasetsV2, getTeamV1 } from "./teams";
 import { getUserV1 } from "./user";
 
 export const handlers = [
@@ -33,7 +33,7 @@ export const handlers = [
     getLogoutInternal(),
     getAuthInternal(),
     getTeamV1(),
-    getTeamDatasetsV1(),
+    getTeamDatasetsV2(),
     getApplicationV1(),
     getApplicationsV1({}),
     patchApplicationV1(),
@@ -42,7 +42,7 @@ export const handlers = [
     postFederationsTestV1({}),
     getCohortRequestsV1(),
     getCMSReleaseV1(),
-    getDatasetV1(),
-    getDatasetsV1(),
+    getDatasetV2(),
+    getDatasetsV2(),
     getDataUses(),
 ];

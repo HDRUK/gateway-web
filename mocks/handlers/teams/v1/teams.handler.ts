@@ -22,22 +22,25 @@ const getTeamV1 = (data = teamV1, status = 200) => {
     });
 };
 
-const getTeamDatasetsV1 = (data = datasetsV1, status = 200) => {
-    return rest.get(`${apis.teamsV1Url}/1/datasets`, (req, res, ctx) => {
-        if (status !== 200) {
+const getTeamDatasetsV2 = (data = datasetsV1, status = 200) => {
+    return rest.get(
+        `${apis.teamsV2Url}/1/datasets/status/active`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+
             return res(
                 ctx.status(status),
-                ctx.json(`Request failed with status code ${status}`)
+                ctx.json<{
+                    data: Dataset[];
+                }>({ data })
             );
         }
-
-        return res(
-            ctx.status(status),
-            ctx.json<{
-                data: Dataset[];
-            }>({ data })
-        );
-    });
+    );
 };
 
-export { getTeamV1, getTeamDatasetsV1 };
+export { getTeamV1, getTeamDatasetsV2 };
