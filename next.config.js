@@ -5,6 +5,12 @@ const withNextIntl = require("next-intl/plugin")();
 const nextConfig = withNextIntl({
     reactStrictMode: true,
     swcMinify: true,
+    headers: [
+      {
+        key: 'Strict-Transport-Security',
+        value: 'max-age=63072000; includeSubDomains; preload',
+      },
+    ],
     env: {
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
