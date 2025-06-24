@@ -19,7 +19,7 @@ import InputWrapper from "@/components/InputWrapper";
 import useActionBar from "@/hooks/useActionBar";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
-import usePut from "@/hooks/usePut";
+import usePatch from "@/hooks/usePatch";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import {
@@ -54,15 +54,18 @@ const EditDataUse = () => {
     const { push } = useRouter();
     const { showBar } = useActionBar();
 
+    const baseDurUrl = `${apis.teamsV2Url}/${params.teamId}/dur`;
+
     const { data: keywords } = useGet<Keyword[]>(
         `${apis.keywordsV1Url}?per_page=-1`
     );
 
-    const { data } = useGet<DataUse[]>(
-        `${apis.dataUseV1Url}/${params?.dataUseId}`,
-        { shouldFetch: !!params?.dataUseId }
+    const { data: existingDataUse } = useGet<DataUse>(
+        `${baseDurUrl}/${params?.dataUseId}`,
+        {
+            shouldFetch: !!params?.dataUseId,
+        }
     );
-    const existingDataUse = useMemo(() => data?.[0], [data]);
 
     const mapKeywords = (keywords: Keyword[]) =>
         keywords.map(keyword => keyword.name);
@@ -112,7 +115,7 @@ const EditDataUse = () => {
         reset(formData);
     }, [reset, existingDataUse]);
 
-    const editDataUse = usePut<Partial<DataUse>>(`${apis.dataUseV1Url}`, {
+    const editDataUse = usePatch<Partial<DataUse>>(baseDurUrl, {
         itemName: "Data Use",
     });
 

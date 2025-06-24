@@ -427,7 +427,7 @@ async function getDataUse(
 ): Promise<DataUse> {
     const dataUse = await get<DataUse[]>(
         cookieStore,
-        `${apis.dataUseV1UrlIP}/${dataUseId}`,
+        `${apis.dataUseV2UrlIP}/${dataUseId}`,
         options
     );
 
