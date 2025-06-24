@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
     Table,
     TableBody,
@@ -74,42 +74,34 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
     const [createdDurId, setCreatedDurId] = useState<number>();
     const [isUploading, setIsUploading] = useState<boolean>(false);
 
-    const { data: durContent } = useGet<DataUse[]>(
-        `${apis.dataUseV1Url}/${createdDurId}`,
+    const { data: durContent } = useGet<DataUse>(
+        `${apis.teamsV2Url}/${teamId}/dur/${createdDurId}`,
         {
             shouldFetch: !!createdDurId,
         }
     );
 
-    const durValues = useMemo(() => {
-        if (!durContent?.length) {
-            return undefined;
-        }
-
-        return durContent[0];
-    }, [durContent]);
-
     const displayDataUseValue = (fieldName: string) => {
         if (DATE_FIELD_NAMES.includes(fieldName)) {
-            return get(durValues, fieldName)
-                ? dayjs(get(durValues, fieldName)).format(DATE_FORMAT)
+            return get(durContent, fieldName)
+                ? dayjs(get(durContent, fieldName)).format(DATE_FORMAT)
                 : EMPTY_VALUE;
         }
 
         if (fieldName === DATASETS_FIELD_NAME) {
-            const datasets = get(durValues, DATASETS_FIELD_NAME);
+            const datasets = get(durContent, DATASETS_FIELD_NAME);
             return datasets?.map(dataset => dataset.shortTitle).join(", ");
         }
 
         if (fieldName === NON_GATEWAY_DATASETS_FIELD_NAME) {
             const nonGatewayDatasets = get(
-                durValues,
+                durContent,
                 NON_GATEWAY_DATASETS_FIELD_NAME
             );
             return nonGatewayDatasets?.join(", ");
         }
 
-        return get(durValues, fieldName);
+        return get(durContent, fieldName);
     };
 
     return (
@@ -120,7 +112,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                     <Typography sx={{ mb: 2 }}>{t("downloadInfo")}</Typography>
 
                     <DownloadFile
-                        apiPath={`${apis.dataUseV1Url}/template`}
+                        apiPath={`${apis.dataUseV2Url}/template`}
                         buttonText={t("downloadButtonText")}
                         buttonSx={{ mb: 0 }}
                     />
@@ -145,7 +137,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                 </Paper>
             )}
 
-            {durValues && !isUploading && (
+            {durContent && !isUploading && (
                 <Paper>
                     <Box sx={{ gap: 2 }}>
                         <Typography variant="h2" sx={{ mb: 2 }}>
