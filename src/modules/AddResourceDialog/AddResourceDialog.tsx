@@ -108,7 +108,7 @@ const AddDatasetDialog = ({
     const { data: datauseData, isLoading: isLoadingDatauses } = useGet<
         DataUse[]
     >(
-        `${apis.dataUseV1Url}?${new URLSearchParams({
+        `${apis.dataUseV2Url}?${new URLSearchParams({
             project_title: queryParams.title,
             status: "ACTIVE",
         })}`,
