@@ -23,7 +23,7 @@ import ProvidersDialog from "../ProvidersDialog";
 interface LinkageDetails {
     linkage_type: string;
     id: number;
-    dataset_id: number
+    dataset_id: number;
     title: string;
     shortTitle: string;
 }
@@ -133,7 +133,7 @@ const DatasetRelationshipDialog = ({
                                 gap={2}>
                                 <div>
                                     <Link
-                                        href={`/${RouteName.DATASET_ITEM}/${linkage.dataset_id ?? id}`}>
+                                        href={`/${RouteName.DATASET_ITEM}/${linkage.dataset_id}`}>
                                         <Typography
                                             variant="h3"
                                             component="p"
