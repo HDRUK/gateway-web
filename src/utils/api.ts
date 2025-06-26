@@ -324,6 +324,7 @@ export async function getUserCohortRequest(
 ): Promise<CohortRequestUser> {
     const cache: Cache = {
         tags: ["cohort"],
+        revalidate: 15 * 60, // 15 minutes
     };
 
     return get<CohortRequestUser>(
@@ -338,6 +339,7 @@ export async function getCohortAccessRedirect(
 ): Promise<CohortRequestAccess> {
     const cache: Cache = {
         tags: ["cohort"],
+        revalidate: 15 * 60, // 15 minutes
     };
 
     return get<CohortRequestAccess>(
