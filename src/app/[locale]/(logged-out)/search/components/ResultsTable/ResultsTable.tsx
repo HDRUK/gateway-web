@@ -4,7 +4,6 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
 import { PageTemplatePromo } from "@/interfaces/Cms";
-import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -12,6 +11,7 @@ import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import useAuth from "@/hooks/useAuth";
+import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { CheckIcon } from "@/consts/icons";
@@ -276,23 +276,16 @@ const ResultTable = ({
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
     const { isLoggedIn, user } = useAuth();
 
+    const { requestStatus } = useCohortStatus(user?.id);
+
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
 
-    const { data: userData } = useGet<CohortRequest>(
-        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
-        {
-            shouldFetch: !!user?.id,
-        }
-    );
-
     const isCohortDiscoveryDisabled =
-        isLoggedIn && userData
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
-                  userData.request_status
-              )
+        isLoggedIn && requestStatus
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
             : false;
 
     const translations = {
