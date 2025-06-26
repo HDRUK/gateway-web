@@ -4,10 +4,7 @@ import { PaginationType } from "@/interfaces/Pagination";
 import apis from "@/config/apis";
 import { generateDataUse } from "@/mocks/data/dataUse";
 
-const getDataUses = (
-    data: DataUse[] = Array.from({ length: 3 }).map(() => generateDataUse()),
-    status = 200
-) => {
+const getDataUses = (data: DataUse[] = generateDataUse, status = 200) => {
     return rest.get(apis.dataUseV2Url, (req, res, ctx) => {
         const url = new URL(req.url);
         if (status !== 200) {
