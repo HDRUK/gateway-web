@@ -24,7 +24,6 @@ import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PageTemplatePromo } from "@/interfaces/Cms";
-import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
@@ -57,6 +56,7 @@ import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
+import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDialog from "@/hooks/useDialog";
 import useGTMEvent from "@/hooks/useGTMEvent";
@@ -545,18 +545,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         setIsDownloading(false);
     };
 
-    const { data: userData } = useGet<CohortRequest>(
-        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
-        {
-            shouldFetch: !!user?.id,
-        }
-    );
+    const { requestStatus } = useCohortStatus(user?.id);
 
     const isCohortDiscoveryDisabled =
-        isLoggedIn && userData
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
-                  userData.request_status
-              )
+        isLoggedIn && requestStatus
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
             : false;
 
     const renderResultCard = (result: SearchResult) => {
