@@ -411,7 +411,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             sort: searchFormConfig.defaultValues.sort,
             page: "1",
             per_page: "25",
-            type: getSearchType(selectedType),
+            type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
             [FILTER_COLLECTION_NAME]: undefined,
