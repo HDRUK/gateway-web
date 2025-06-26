@@ -4,7 +4,11 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { cookies } from "next/headers";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
-import { CohortRequest } from "@/interfaces/CohortRequest";
+import {
+    CohortRequest,
+    CohortRequestAccess,
+    CohortRequestUser,
+} from "@/interfaces/CohortRequest";
 import { ReducedCollection } from "@/interfaces/Collection";
 import {
     DarApplicationAnswer,
@@ -311,6 +315,37 @@ async function getCohort(
     return get<CohortRequest>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/${cohortId}`
+    );
+}
+
+export async function getUserCohortRequest(
+    cookieStore: ReadonlyRequestCookies,
+    userId: string
+): Promise<CohortRequestUser> {
+    const cache: Cache = {
+        tags: ["cohort"],
+        revalidate: 2 * 60 * 60,
+    };
+
+    return get<CohortRequestUser>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
+        { cache }
+    );
+}
+
+export async function getCohortAccessRedirect(
+    cookieStore: ReadonlyRequestCookies
+): Promise<CohortRequestAccess> {
+    const cache: Cache = {
+        tags: ["cohort"],
+        revalidate: 2 * 60 * 60,
+    };
+
+    return get<CohortRequestAccess>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/access`,
+        { cache }
     );
 }
 
