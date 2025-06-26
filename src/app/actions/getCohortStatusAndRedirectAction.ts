@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { CohortResponse } from "@/interfaces/CohortRequest";
 import { getCohortAccessRedirect, getUserCohortRequest } from "@/utils/api";
+import { getSessionCookie } from "@/utils/getSessionCookie";
+import { logger } from "@/utils/logger";
 
 export const getCohortStatusAndRedirect = async (
     userId: number
@@ -19,8 +21,18 @@ export const getCohortStatusAndRedirect = async (
             requestStatus: userRequest.request_status ?? null,
             redirectUrl: accessRedirect.redirect_url ?? null,
         };
-    } catch (err) {
-        console.error("Cohort server action error:", err);
+    } catch (error) {
+        const session = await getSessionCookie();
+        const err = error as {
+            response?: {
+                status: number;
+                data?: { message: string };
+            };
+            stack?: unknown;
+            message: string;
+        };
+        logger.error(err, session, `api/logout`);
+
         return null;
     }
 };
