@@ -101,18 +101,24 @@ export default async function DataCustodianItemPage({
                             data={data}
                             populatedSections={populatedSections}
                         />
-                        <Fragment key="custodian_alias">
-                            <Typography variant="h3">{t("aliases")}</Typography>
-                            <Box sx={{ p: 0, pb: 1, display: "flex" }} gap={1}>
-                                {data.aliases?.map(alias => (
-                                    <Chip
-                                        label={alias.name}
-                                        key={alias.id}
-                                        color="alias"
-                                    />
-                                ))}
-                            </Box>
-                        </Fragment>
+                        {!!data.aliases?.length && (
+                            <Fragment key="custodian_alias">
+                                <Typography variant="h3">
+                                    {t("aliases")}
+                                </Typography>
+                                <Box
+                                    sx={{ p: 0, pb: 1, display: "flex" }}
+                                    gap={1}>
+                                    {data.aliases?.map(alias => (
+                                        <Chip
+                                            label={alias.name}
+                                            key={alias.id}
+                                            color="alias"
+                                        />
+                                    ))}
+                                </Box>
+                            </Fragment>
+                        )}
                         <DatasetsContent
                             datasets={data.datasets}
                             anchorIndex={populatedSections.length + 1}
