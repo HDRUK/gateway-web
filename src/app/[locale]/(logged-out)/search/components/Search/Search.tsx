@@ -24,7 +24,6 @@ import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PageTemplatePromo } from "@/interfaces/Cms";
-import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
@@ -57,6 +56,7 @@ import SaveSearchDialog, {
     SaveSearchValues,
 } from "@/modules/SaveSearchDialog.tsx";
 import useAuth from "@/hooks/useAuth";
+import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDialog from "@/hooks/useDialog";
 import useGTMEvent from "@/hooks/useGTMEvent";
@@ -199,25 +199,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         [searchParams]
     );
 
-    // This can be removed when search endpoint has been updated to use data_custodians
-    const getSearchType = (searchCategory: SearchCategory) => {
-        if (searchCategory === SearchCategory.DATA_CUSTODIANS) {
-            return SearchCategory.DATA_PROVIDERS_LEGACY;
-        }
-
-        return searchCategory;
-    };
-
     const [queryParams, setQueryParams] = useState<SearchQueryParams>({
         query:
             getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
         sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
         page: getParamString(PAGE_FIELD) || "1",
         per_page: "25",
-        type: getSearchType(
+        type:
             (getParamString(TYPE_FIELD) as SearchCategory) ||
-                SearchCategory.DATASETS
-        ),
+            SearchCategory.DATASETS,
         [STATIC_FILTER_SOURCE]:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
@@ -421,7 +411,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             sort: searchFormConfig.defaultValues.sort,
             page: "1",
             per_page: "25",
-            type: getSearchType(selectedType),
+            type: selectedType,
             [FILTER_DATA_USE_TITLES]: undefined,
             [FILTER_PUBLISHER_NAME]: undefined,
             [FILTER_COLLECTION_NAME]: undefined,
@@ -513,8 +503,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         [SearchCategory.TOOLS]: t("tools"),
         [SearchCategory.PUBLICATIONS]: t("publications"),
         [SearchCategory.DATA_CUSTODIANS]: t("dataProviders"),
-        // This can be removed when search endpoint has been updated to use data_custodians
-        [SearchCategory.DATA_PROVIDERS_LEGACY]: t("dataProviders"),
         [SearchCategory.COLLECTIONS]: t("collections"),
     };
 
@@ -557,18 +545,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         setIsDownloading(false);
     };
 
-    const { data: userData } = useGet<CohortRequest>(
-        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
-        {
-            shouldFetch: !!user?.id,
-        }
-    );
+    const { requestStatus } = useCohortStatus(user?.id);
 
     const isCohortDiscoveryDisabled =
-        isLoggedIn && userData
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
-                  userData.request_status
-              )
+        isLoggedIn && requestStatus
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
             : false;
 
     const renderResultCard = (result: SearchResult) => {
@@ -600,7 +581,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                     />
                 );
             case SearchCategory.DATA_CUSTODIANS:
-            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return (
                     <ResultCardDataProvider
                         result={result as SearchResultDataProvider}
@@ -637,8 +617,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             <ResultsList
                 variant={
                     queryParams.type === SearchCategory.COLLECTIONS ||
-                    queryParams.type === SearchCategory.DATA_CUSTODIANS ||
-                    queryParams.type === SearchCategory.DATA_PROVIDERS_LEGACY
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS
                         ? "tiled"
                         : "list"
                 }>
@@ -657,7 +636,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
             case SearchCategory.DATA_CUSTODIANS:
-            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return sortByOptionsDataProviders;
             default:
                 return sortByOptionsDataset;
@@ -753,7 +731,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             case SearchCategory.COLLECTIONS:
                 return t("searchExplainerCollections");
             case SearchCategory.DATA_CUSTODIANS:
-            case SearchCategory.DATA_PROVIDERS_LEGACY:
                 return t("searchExplainerDataCustodians");
             case SearchCategory.TOOLS:
                 return t("searchExplainerTools");
@@ -765,7 +742,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const excludedDownloadSearchCategories = [
         SearchCategory.PUBLICATIONS,
         SearchCategory.DATA_CUSTODIANS,
-        SearchCategory.DATA_PROVIDERS_LEGACY,
         SearchCategory.COLLECTIONS,
     ];
 

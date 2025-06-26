@@ -185,7 +185,6 @@ export enum SearchCategory {
     DATA_USE = "dur",
     TOOLS = "tools",
     PUBLICATIONS = "publications",
-    DATA_PROVIDERS_LEGACY = "data_providers",
 }
 
 export interface SavedSearchPayload {
