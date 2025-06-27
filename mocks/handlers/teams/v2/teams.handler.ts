@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
+import { PaginationType } from "@/interfaces/Pagination";
 import { Team } from "@/interfaces/Team";
 import { Tool } from "@/interfaces/Tool";
 import apis from "@/config/apis";
@@ -68,22 +69,65 @@ const getTeamDataUseV2 = (
     });
 };
 
-const getTeamToolV2 = (id: number, data = generateTool(), status = 200) => {
-    return rest.get(`${apis.teamsV2Url}/1/tools/${id}`, (req, res, ctx) => {
+const getTeamToolsV2 = (
+    overrides: Partial<Tool>[] = [],
+    status = 200,
+    teamId = 1
+) => {
+    const data: Tool[] = overrides.length
+        ? overrides.map(override => ({ ...generateTool(), ...override }))
+        : Array.from({ length: 5 }, () => generateTool());
+
+    return rest.get(`${apis.teamsV2Url}/${teamId}/tools`, (req, res, ctx) => {
+        const url = new URL(req.url);
         if (status !== 200) {
             return res(
                 ctx.status(status),
                 ctx.json(`Request failed with status code ${status}`)
             );
         }
-
-        return res(
-            ctx.status(status),
-            ctx.json<{
-                data: Tool;
-            }>({ data })
-        );
+        if (url.searchParams.get("page")) {
+            return res(
+                ctx.status(status),
+                ctx.json<PaginationType<Tool>>({
+                    lastPage: 5,
+                    to: 5,
+                    from: 1,
+                    currentPage: 1,
+                    total: 25,
+                    list: data,
+                })
+            );
+        }
+        return res(ctx.status(status), ctx.json<{ data: Tool[] }>({ data }));
     });
 };
 
-export { getTeamV2, getTeamDatasetsV2, getTeamDataUseV2, getTeamToolV2 };
+const getTeamToolV2 = (
+    overrides: Partial<Tool> = {},
+    status = 200,
+    teamId = 1
+) => {
+    const data = { ...generateTool(), ...overrides };
+
+    return rest.get(
+        `${apis.teamsV2Url}/${teamId}/tools/${data.id}`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+            return res(ctx.status(status), ctx.json<{ data: Tool }>({ data }));
+        }
+    );
+};
+
+export {
+    getTeamV2,
+    getTeamDatasetsV2,
+    getTeamDataUseV2,
+    getTeamToolV2,
+    getTeamToolsV2,
+};

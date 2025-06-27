@@ -1,7 +1,5 @@
-import { rest } from "msw";
-import apis from "@/config/apis";
 import { render, screen, waitFor } from "@/utils/testUtils";
-import { generateTool } from "@/mocks/data/tool";
+import { getTeamToolV2 } from "@/mocks/handlers/teams/v2";
 import { server } from "@/mocks/server";
 import CreateTool from "./CreateTool";
 
@@ -17,16 +15,7 @@ jest.mock("@/hooks/useDialog", () => () => ({
 
 const TEAM_ID = 1;
 
-const mockTool = generateTool({
-    name: "Test Tool",
-    info: "TEST",
-    url: "www.google",
-});
-
-const mockToolHandler = (tool = mockTool) =>
-    rest.get(`${apis.teamsV2Url}/${TEAM_ID}/tools/${tool.id}`, (_, res, ctx) =>
-        res(ctx.status(200), ctx.json({ data: tool }))
-    );
+const mockTool = { id: 99, name: "Test Tool" };
 
 describe("CreateTool", () => {
     it("renders create tool form UI", async () => {
@@ -40,7 +29,7 @@ describe("CreateTool", () => {
     });
 
     it("loads and populates form with existing tool when editing", async () => {
-        server.use(mockToolHandler());
+        server.use(getTeamToolV2(mockTool));
 
         render(
             <CreateTool
@@ -59,7 +48,7 @@ describe("CreateTool", () => {
     });
 
     it("doesn't show data if team id doesn't match", async () => {
-        server.use(mockToolHandler());
+        server.use(getTeamToolV2(mockTool));
 
         render(
             <CreateTool userId={1} teamId="2" toolId={mockTool.id.toString()} />
@@ -72,12 +61,7 @@ describe("CreateTool", () => {
     });
 
     it("handles failed fetch without crashing", async () => {
-        server.use(
-            rest.get(
-                `${apis.teamsV2Url}/${TEAM_ID}/tools/${mockTool.id}`,
-                (req, res, ctx) => res(ctx.status(500))
-            )
-        );
+        server.use(getTeamToolV2(mockTool, 500));
 
         render(
             <CreateTool
