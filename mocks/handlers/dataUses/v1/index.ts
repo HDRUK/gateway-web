@@ -1,1 +1,0 @@
-export * from "./dataUses.handler";
