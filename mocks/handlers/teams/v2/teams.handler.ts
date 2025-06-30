@@ -69,24 +69,67 @@ const getTeamDataUseV2 = (
     });
 };
 
+const getTeamDataUsesV2 = (
+    overrides: Partial<DataUse>[] = [],
+    status = 200,
+    teamId = 1,
+    dataLength = 5
+) => {
+    const data: DataUse[] = overrides.length
+        ? overrides.map(override => ({ ...generateDataUse(), ...override }))
+        : Array.from({ length: dataLength }, () => generateDataUse());
+
+    return rest.get(
+        `${apis.teamsV2Url}/${teamId}/dur/status/active`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+
+            if (req.url.searchParams.get("page")) {
+                return res(
+                    ctx.status(status),
+                    ctx.json<PaginationType<DataUse>>({
+                        lastPage: 5,
+                        to: 5,
+                        from: 1,
+                        currentPage: 1,
+                        total: dataLength,
+                        list: data,
+                    })
+                );
+            }
+
+            return res(
+                ctx.status(status),
+                ctx.json<{ data: DataUse[] }>({ data })
+            );
+        }
+    );
+};
+
 const getTeamToolsV2 = (
     overrides: Partial<Tool>[] = [],
     status = 200,
-    teamId = 1
+    teamId = 1,
+    dataLength = 5
 ) => {
     const data: Tool[] = overrides.length
         ? overrides.map(override => ({ ...generateTool(), ...override }))
-        : Array.from({ length: 5 }, () => generateTool());
+        : Array.from({ length: dataLength }, () => generateTool());
 
     return rest.get(`${apis.teamsV2Url}/${teamId}/tools`, (req, res, ctx) => {
-        const url = new URL(req.url);
         if (status !== 200) {
             return res(
                 ctx.status(status),
                 ctx.json(`Request failed with status code ${status}`)
             );
         }
-        if (url.searchParams.get("page")) {
+
+        if (req.url.searchParams.get("page")) {
             return res(
                 ctx.status(status),
                 ctx.json<PaginationType<Tool>>({
@@ -94,7 +137,7 @@ const getTeamToolsV2 = (
                     to: 5,
                     from: 1,
                     currentPage: 1,
-                    total: 25,
+                    total: dataLength,
                     list: data,
                 })
             );
@@ -128,6 +171,7 @@ export {
     getTeamV2,
     getTeamDatasetsV2,
     getTeamDataUseV2,
+    getTeamDataUsesV2,
     getTeamToolV2,
     getTeamToolsV2,
 };
