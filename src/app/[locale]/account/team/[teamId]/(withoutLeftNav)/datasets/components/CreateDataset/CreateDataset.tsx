@@ -467,7 +467,7 @@ const CreateDataset = ({
             schemaFields
         );
 
-const formPayload =
+        const formPayload =
             isEditing && !isDuplicate
                 ? {
                       ...omit(dataset, ["versions"]),
