@@ -1,45 +1,39 @@
 import mockRouter from "next-router-mock";
 import { render, screen, waitFor, within } from "@/utils/testUtils";
 import { generateDataUse } from "@/mocks/data/dataUse";
-import { getDataUses } from "@/mocks/handlers/dataUses";
+import { getTeamDataUsesV2 } from "@/mocks/handlers/teams/v2";
 import { server } from "@/mocks/server";
 import TeamDataUses from "./TeamDataUses";
 
-mockRouter.query = { teamId: "1", tab: "ACTIVE" };
+mockRouter.query = { teamId: "5", tab: "ACTIVE" };
 window.scrollTo = jest.fn();
 
 describe("TeamDataUses", () => {
-    it("should render all data uses (filtered on BE)", async () => {
+    it("should render all data uses", async () => {
         const mockDataUses = [
             generateDataUse({
-                status: "ARCHIVED",
+                team: {
+                    name: "TEAM 1",
+                },
             }),
-            generateDataUse({
-                status: "ACTIVE",
-            }),
-            generateDataUse({ status: "DRAFT" }),
         ];
-        server.use(getDataUses(mockDataUses));
+
+        server.use(getTeamDataUsesV2(mockDataUses));
         render(<TeamDataUses permissions={{}} teamId="1" />);
 
         await waitFor(() => {
             const dataUseCards = screen.getAllByTestId("datause-card");
-            expect(dataUseCards).toHaveLength(3);
+            expect(dataUseCards).toHaveLength(1);
 
             expect(
-                within(dataUseCards[0]).getByText(
-                    `${mockDataUses[0].project_title}`
-                )
-            ).toBeInTheDocument();
-            expect(
-                within(dataUseCards[0]).getByText(
-                    `${mockDataUses[0].team.name}`
-                )
+                within(dataUseCards[0]).getByText("TEAM 1")
             ).toBeInTheDocument();
         });
     });
-    it("should render message if no active datasets", async () => {
-        server.use(getDataUses([]));
+
+    it("should render message if no active data uses", async () => {
+        server.use(getTeamDataUsesV2(undefined, undefined, 1, 0));
+
         render(<TeamDataUses permissions={{}} teamId="1" />);
 
         await waitFor(() => {

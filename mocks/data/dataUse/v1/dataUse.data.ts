@@ -1,12 +1,12 @@
 import { faker } from "@faker-js/faker";
-import {
-    DataUse
-} from "@/interfaces/DataUse";
-import { generateDatasetVersionV1 } from "@/mocks/data/dataset"
-import { DatasetWithTitle } from "@/interfaces/DataUse";
+import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
 import { Team } from "@/interfaces/Team";
+import { generateDatasetVersionV1 } from "@/mocks/data/dataset";
 
-const generateDatasetWithTitleV1 = (version = "1.0", data = {}): DatasetWithTitle => {
+const generateDatasetWithTitleV1 = (
+    version = "1.0",
+    data = {}
+): DatasetWithTitle => {
     return {
         id: faker.datatype.number(),
         team_id: faker.datatype.number(),
@@ -50,4 +50,7 @@ const generateDataUse = (data = {}): DataUse => {
     };
 };
 
-export { generateDataUse };
+const generateDataUses = () =>
+    Array.from({ length: 3 }).map(() => generateDataUse());
+
+export { generateDataUse, generateDataUses };
