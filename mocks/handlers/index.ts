@@ -20,7 +20,8 @@ import {
     postFederationsTestV1,
 } from "./integration/v1";
 import { getLogoutV1, getLogoutInternal } from "./logout";
-import { getTeamDatasetsV2, getTeamV1 } from "./teams";
+import { getTeamV1 } from "./teams";
+import { getTeamDatasetsV2 } from "./teams/v2";
 import { getUserV1 } from "./user";
 
 export const handlers = [
