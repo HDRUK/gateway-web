@@ -1,27 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
 import InfoBanner from "@/components/InfoBanner";
-import { getHomePageBanner } from "@/utils/cms";
 
 const TRANSLATION_PATH = "components.CMSBanner";
 
-const CMSBanners = () => {
+const CMSBanners = ({ data }: { data: HomepageBannerNode[] }) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const [data, setData] = useState<HomepageBannerNode[]>([]);
 
-    useEffect(() => {
-        if (process.env.NEXT_PUBLIC_INCLUDE_BANNERS === "true") {
-            getHomePageBanner().then(response => {
-                setData(response);
-            });
-        }
-    }, []);
-
-    return data?.length ? (
+    return (
         <div>
             {data.map(
                 ({
@@ -86,7 +75,7 @@ const CMSBanners = () => {
                 }
             )}
         </div>
-    ) : null;
+    );
 };
 
 export default CMSBanners;

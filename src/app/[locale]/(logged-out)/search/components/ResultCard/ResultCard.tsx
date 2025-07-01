@@ -169,6 +169,7 @@ const ResultCard = ({
                               }
                               showDatasetExplanatoryTooltip
                               variant="link"
+                              clickedAction={() => setAnchorElement(null)}
                           />
                       ),
                       icon: (
