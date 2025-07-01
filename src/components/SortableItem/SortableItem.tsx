@@ -5,7 +5,7 @@ import Box from "@/components/Box";
 
 type SortableItemProps = {
     children: React.ReactNode;
-    id: number | string;
+    itemId: number | string;
 };
 
 const SortableItem = React.memo(({ children, itemId }: SortableItemProps) => {
