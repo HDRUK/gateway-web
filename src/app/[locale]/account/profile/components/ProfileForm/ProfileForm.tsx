@@ -1,7 +1,10 @@
+"use client";
+
 import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Alert } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { Sector } from "@/interfaces/Sector";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
@@ -26,6 +29,7 @@ import {
 import KeepingUpdated from "../KeepingUpdated";
 
 const ProfileForm = () => {
+    const t = useTranslations("pages.profile");
     const { user } = useAuth();
     const [
         secondaryEmailVerificationRequested,
@@ -35,27 +39,26 @@ const ProfileForm = () => {
     const isOpenAthens = user?.provider === "open-athens";
     const secondaryEmailVerified = user?.secondary_email_verified_at !== null;
 
-    const requestSecondaryVerfication = usePost(
+    const requestSecondaryVerification = usePost(
         `${apis.usersV1Url}/${user?.id}/resend-secondary-verification`,
-        {
-            successNotificationsOn: false,
-        }
+        { successNotificationsOn: false }
     );
 
-    const hydratedDefaultValues = useMemo(() => {
-        return {
+    const hydratedDefaultValues = useMemo(
+        () => ({
             ...profileDefaultValues,
             ...user,
             ...(isOpenAthens && { preferred_email: "secondary" }),
-        };
-    }, [isOpenAthens, user]);
+        }),
+        [isOpenAthens, user]
+    );
 
     const updateProfile = usePut<User>(apis.usersV1Url, {
         itemName: "Account",
     });
 
     const triggerSecondaryVerification = () => {
-        requestSecondaryVerfication(null);
+        requestSecondaryVerification(null);
         setSecondaryEmailVerificationRequested(true);
     };
 
@@ -85,7 +88,7 @@ const ProfileForm = () => {
                 if (field.name === "sector_id") {
                     return {
                         ...field,
-                        options: sectors?.map(sector => ({
+                        options: sectors.map(sector => ({
                             value: sector.id,
                             label: sector.name,
                         })),
@@ -120,8 +123,7 @@ const ProfileForm = () => {
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
-            content:
-                "Changes to your profile account are not automatically saved.",
+            content: t("unsavedChangesWarning"),
         },
     });
 
@@ -153,7 +155,7 @@ const ProfileForm = () => {
                         {isSecondaryEmail &&
                             secondaryEmailVerificationRequested && (
                                 <Alert severity="success" sx={{ mb: 2 }}>
-                                    Email Verification Sent!
+                                    {t("verificationSent")}
                                 </Alert>
                             )}
 
@@ -161,20 +163,24 @@ const ProfileForm = () => {
                             !secondaryEmailVerified &&
                             !secondaryEmailVerificationRequested && (
                                 <Alert severity="warning" sx={{ mb: 2 }}>
-                                    Your secondary email is unverified. If you
-                                    have not already received a verification
-                                    email, please{" "}
-                                    <Button
-                                        variant="text"
-                                        onClick={triggerSecondaryVerification}
-                                        sx={{
-                                            textTransform: "none",
-                                            p: 0,
-                                            minWidth: "auto",
-                                        }}>
-                                        click here
-                                    </Button>{" "}
-                                    to trigger a new one.
+                                    {t.rich("unverified", {
+                                        verifyButton: (
+                                            chunks: React.ReactNode
+                                        ) => (
+                                            <Button
+                                                variant="text"
+                                                onClick={
+                                                    triggerSecondaryVerification
+                                                }
+                                                sx={{
+                                                    textTransform: "none",
+                                                    p: 0,
+                                                    minWidth: "auto",
+                                                }}>
+                                                {chunks}
+                                            </Button>
+                                        ),
+                                    })}
                                 </Alert>
                             )}
                     </React.Fragment>
@@ -187,7 +193,7 @@ const ProfileForm = () => {
             />
 
             <Box sx={{ p: 0, display: "flex", justifyContent: "end" }}>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit">{t("saveChanges")}</Button>
             </Box>
         </Form>
     );

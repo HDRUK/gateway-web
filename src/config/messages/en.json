@@ -139,6 +139,12 @@
         }
     },
     "pages": {
+       "profile": {
+            "verificationSent": "Email verification sent!",
+            "unverified": "Your secondary email is unverified. If you have not already received a verification email, please <verifyButton>click here</verifyButton> to trigger a new one.",
+            "saveChanges": "Save changes",
+            "unsavedChangesWarning": "Changes to your profile account are not automatically saved."
+        },
         "emailVerification": {
             "title":"Email verifcation",
             "fail": "Verification expired or invalid.",
