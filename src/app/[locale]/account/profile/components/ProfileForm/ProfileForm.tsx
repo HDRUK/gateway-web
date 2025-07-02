@@ -127,6 +127,9 @@ const ProfileForm = () => {
 
     const submitForm = (formData: User) => {
         if (!user) return;
+        if (user.secondary_email !== secondaryEmail) {
+            setSecondaryEmailVerificationRequested(true);
+        }
         const payload = { ...user, ...formData };
         updateProfile(payload.id, payload);
     };
@@ -140,35 +143,43 @@ const ProfileForm = () => {
 
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
-            {hydratedFormFields.map(field => (
-                <React.Fragment key={field.name}>
-                    <InputWrapper control={control} {...field} />
-                    {field.name === "secondary_email" &&
-                        !secondaryEmailVerified &&
-                        (!secondaryEmailVerificationRequested ? (
-                            <Alert severity="warning" sx={{ mb: 2 }}>
-                                Your secondary email is unverified. If you have
-                                not already received a verification email,
-                                please{" "}
-                                <Button
-                                    variant="text"
-                                    onClick={triggerSecondaryVerification}
-                                    sx={{
-                                        textTransform: "none",
-                                        p: 0,
-                                        minWidth: "auto",
-                                    }}>
-                                    click here
-                                </Button>{" "}
-                                to trigger a new one.
-                            </Alert>
-                        ) : (
-                            <Alert severity="success" sx={{ mb: 2 }}>
-                                Email Verification Sent!
-                            </Alert>
-                        ))}
-                </React.Fragment>
-            ))}
+            {hydratedFormFields.map(field => {
+                const isSecondaryEmail = field.name === "secondary_email";
+
+                return (
+                    <React.Fragment key={field.name}>
+                        <InputWrapper control={control} {...field} />
+
+                        {isSecondaryEmail &&
+                            secondaryEmailVerificationRequested && (
+                                <Alert severity="success" sx={{ mb: 2 }}>
+                                    Email Verification Sent!
+                                </Alert>
+                            )}
+
+                        {isSecondaryEmail &&
+                            !secondaryEmailVerified &&
+                            !secondaryEmailVerificationRequested && (
+                                <Alert severity="warning" sx={{ mb: 2 }}>
+                                    Your secondary email is unverified. If you
+                                    have not already received a verification
+                                    email, please{" "}
+                                    <Button
+                                        variant="text"
+                                        onClick={triggerSecondaryVerification}
+                                        sx={{
+                                            textTransform: "none",
+                                            p: 0,
+                                            minWidth: "auto",
+                                        }}>
+                                        click here
+                                    </Button>{" "}
+                                    to trigger a new one.
+                                </Alert>
+                            )}
+                    </React.Fragment>
+                );
+            })}
 
             <KeepingUpdated
                 fields={profileContactFormFields}
