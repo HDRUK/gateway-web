@@ -1,3 +1,27 @@
+## [2.14.0](https://github.com/HDRUK/gateway-web/compare/v2.13.0...v2.14.0) (2025-07-01)
+
+### ✨ Features
+
+* **GAT-6924:** Only show data custodian aliases if it has some (#1239) ([cd3bdf3](https://github.com/HDRUK/gateway-web/commit/cd3bdf3749c29994941d11775132168e7259f25b)), closes [GAT-6924](GAT-6924)
+* **GAT-7249:** Reduce cohort api calls (#1236) ([72c76be](https://github.com/HDRUK/gateway-web/commit/72c76be0fd6414f9bb1220b6945857564d6457b5)), closes [GAT-7249](GAT-7249)
+* **GAT-7263:** Changed tool URL message (#1225) ([3c0275e](https://github.com/HDRUK/gateway-web/commit/3c0275e94c64ded4576b386c78bedd8353fe85dc)), closes [GAT-7263](GAT-7263)
+* **GAT-7302:** Logging, Sessions And Bears Oh MY! (#1178) ([2c26c66](https://github.com/HDRUK/gateway-web/commit/2c26c66e6647b9c06e2ede006a82cf2f68c2c626)), closes [GAT-7302](GAT-7302)
+* **GAT-7438:** Search styling tweaks (#1224) ([71e424d](https://github.com/HDRUK/gateway-web/commit/71e424dd70cbe202700dcdb6243e5f15f35c5dd2)), closes [GAT-7438](GAT-7438)
+* **GAT-7450:** Updated search filter names (#1229) ([4d9bbab](https://github.com/HDRUK/gateway-web/commit/4d9bbab6cbf7a99a8d835514c94595a0e156c529)), closes [GAT-7450](GAT-7450)
+* **GAT-7527:** Fix filters for dataCustodian search (#1240) ([68fcc0e](https://github.com/HDRUK/gateway-web/commit/68fcc0e9962f0d6aaa23a4bd97564dbfaf1766a0))
+* **GAT-7527:** Remove DATA_PROVIDERS_LEGACY now BE is updated (#1237) ([de52005](https://github.com/HDRUK/gateway-web/commit/de520052f427e235be49c9aa62f9103327abca2b)), closes [GAT-7527](GAT-7527)
+
+### 🐛 Bug Fixes
+
+* **GAT-5938:** add in hsts header (#1235) ([3c75333](https://github.com/HDRUK/gateway-web/commit/3c7533399e808c9e37703bb2f7deeff0af8682e8)), closes [GAT-5938](GAT-5938)
+* **GAT-7288:** trim off coverage if its a url (#1221) ([6e28f56](https://github.com/HDRUK/gateway-web/commit/6e28f56ba4afc5b965b2956bf884d853884d4381)), closes [GAT-7288](GAT-7288)
+* **GAT-7302:** null session (#1227) ([b918760](https://github.com/HDRUK/gateway-web/commit/b91876098dafc05452c0a72c8f2e2977b84e3448)), closes [GAT-7302](GAT-7302)
+* **GAT-7302:** zero at top (#1219) ([fa70fdb](https://github.com/HDRUK/gateway-web/commit/fa70fdbe368e3f77f4540128a3b9489337d5d8ba)), closes [GAT-7302](GAT-7302)
+* **GAT-7311:** No search results on page first load (#1230) ([9f712f3](https://github.com/HDRUK/gateway-web/commit/9f712f3470978635ff9b6a760f1fa14ca6b4b9f4)), closes [GAT-7311](GAT-7311)
+* **GAT-7311:** search loading (brackets) (#1233) ([aabe39c](https://github.com/HDRUK/gateway-web/commit/aabe39c5a12edba42c4a7151094089a7f7605f3e)), closes [GAT-7311](GAT-7311)
+* **GAT-7412:** linkages wrong id - 2 (#1238) ([d0b6c9d](https://github.com/HDRUK/gateway-web/commit/d0b6c9d25bb13ed62f266644994e130c32ec0797)), closes [GAT-7412](GAT-7412)
+* **GAT-7412:** linkages wrong id (#1232) ([b5255da](https://github.com/HDRUK/gateway-web/commit/b5255da20716fec81928ed06067a10b21a65104f)), closes [GAT-7412](GAT-7412)
+
 ## [2.13.0](https://github.com/HDRUK/gateway-web/compare/v2.12.0...v2.13.0) (2025-06-18)
 
 ### ✨ Features
