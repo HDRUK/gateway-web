@@ -961,6 +961,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             tablet: "span 2",
                             laptop: "span 2",
                         },
+                        ml: 3,
+                        mb: 2,
                     }}>
                     <FilterPanel
                         selectedFilters={selectedFilters}
@@ -998,6 +1000,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         }}
                         getParamString={getParamString}
                         showEuropePmcModal={europePmcModalAction}
+                        resetQueryParamState={resetQueryParamState}
                     />
                 </Box>
                 <Box
@@ -1013,7 +1016,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         }}
                         aria-busy={isSearching}>
                         <FilterChips
-                            label={t("filtersApplied")}
                             selectedFilters={selectedFilters}
                             handleDelete={removeFilter}
                             filterCategory={

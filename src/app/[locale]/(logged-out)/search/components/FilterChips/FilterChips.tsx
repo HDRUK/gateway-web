@@ -4,12 +4,11 @@ import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
-import Typography from "@/components/Typography";
+import { CloseIcon } from "@/consts/icons";
 import { isQueryEmpty } from "@/utils/filters";
 
 interface FilterChipsProps extends ChipProps {
     selectedFilters: { [filter: string]: string[] | undefined };
-    label: string;
     handleDelete: (filterType: keyof SearchQueryParams, filter: string) => void;
     filterCategory: string;
 }
@@ -21,7 +20,6 @@ const FilterChips = ({
     handleDelete,
     color = "success",
     size = "small",
-    label,
     filterCategory,
 }: FilterChipsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -29,10 +27,7 @@ const FilterChips = ({
     if (isQueryEmpty(selectedFilters)) return null;
 
     return (
-        <Box sx={{ display: "flex" }}>
-            <Typography sx={{ fontWeight: 700, mr: 1, whiteSpace: "nowrap" }}>
-                {label}:
-            </Typography>
+        <Box sx={{ display: "flex", pl: 0, pr: 0 }}>
             <ShowMore maxHeight={28}>
                 <Box
                     sx={{
@@ -73,6 +68,7 @@ const FilterChips = ({
                                                         filter
                                                     )
                                                 }
+                                                deleteIcon={<CloseIcon />}
                                             />
                                         </Tooltip>
                                     );
