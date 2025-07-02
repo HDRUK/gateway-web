@@ -963,6 +963,7 @@
             "data_custodians": "Data Custodians",
             "loadingAriaLabel": "Loading search results",
             "saveSearch": "Save search",
+            "filtersApplied": "{count, plural, =0 {No filters applied} =1 {# filter applied} other {# filters applied}}",
             "components": {
                 "Search": {
                     "toggleLabelTable": "Switch to table view",
@@ -970,6 +971,7 @@
                 },
                 "FilterPanel": {
                     "clearFilter": "Clear filter",
+                    "filter": "Filter",
                     "filters": {
                         "clearAll": "Clear all",
                         "filterResults": "Filter results",
@@ -1472,8 +1474,8 @@
             "visitSupportCentre": "Visit Support Centre"
         },
         "ShowMore": {
-            "showLess": "...show less",
-            "showMore": "...show more"
+            "showLess": "Show less",
+            "showMore": "Show more"
         },
         "FilterSection": {
             "placeholder": "I'm looking for...",

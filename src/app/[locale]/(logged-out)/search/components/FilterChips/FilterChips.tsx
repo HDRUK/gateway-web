@@ -4,6 +4,7 @@ import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
+import { colors } from "@/config/theme";
 import { CloseIcon } from "@/consts/icons";
 import { isQueryEmpty } from "@/utils/filters";
 
@@ -28,7 +29,12 @@ const FilterChips = ({
 
     return (
         <Box sx={{ display: "flex", pl: 0, pr: 0 }}>
-            <ShowMore maxHeight={28}>
+            <ShowMore
+                maxHeight={68}
+                sxButton={{
+                    color: colors.green700,
+                    textDecoration: "underline",
+                }}>
                 <Box
                     sx={{
                         p: 0,

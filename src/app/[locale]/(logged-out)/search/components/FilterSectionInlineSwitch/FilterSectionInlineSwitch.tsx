@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { Tooltip } from "@mui/material";
+import { SxProps, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import Box from "@/components/Box";
@@ -15,12 +15,14 @@ interface FilterSectionInlineSwitchProps {
     filterCategory: string;
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     selectedFilters: { [filter: string]: string[] | undefined };
+    containerSx?: SxProps;
     handleRadioChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const FilterSectionInlineSwitch = ({
     filterCategory,
     filterItem,
     selectedFilters,
+    containerSx,
     handleRadioChange,
 }: FilterSectionInlineSwitchProps) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
@@ -36,6 +38,7 @@ const FilterSectionInlineSwitch = ({
                 background: colors.white,
                 p: 0,
                 pl: 3,
+                ...containerSx,
             }}>
             <Tooltip
                 describeChild

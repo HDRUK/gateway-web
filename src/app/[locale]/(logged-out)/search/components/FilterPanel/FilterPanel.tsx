@@ -526,7 +526,13 @@ const FilterPanel = ({
     return (
         <>
             <Box
-                sx={{ display: "flex", alignItems: "baseline", gap: 1, mt: 3 }}>
+                sx={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: 1,
+                    mt: 1,
+                    backgroundColor: colors.grey,
+                }}>
                 <Typography variant="h2">{tRoot("filterResults")}</Typography>
 
                 {!isQueryEmpty(selectedFilters) && (
@@ -563,6 +569,11 @@ const FilterPanel = ({
                                     label
                                 )
                             }
+                            containerSx={
+                                label === FILTER_CONTAINS_TISSUE
+                                    ? { pt: 1 }
+                                    : { pb: 1 }
+                            }
                         />
                     );
                 }
@@ -581,6 +592,14 @@ const FilterPanel = ({
                         sx={{
                             background: colors.white,
                             boxShadow: "none",
+                            mt: 0.5,
+                            mb: 0.5,
+                            border: 0,
+                            "&:before": { display: "none" },
+                            "&.MuiAccordion-root.Mui-expanded": {
+                                mt: 0.5,
+                                mb: 0.5,
+                            },
                             ...(isPublicationSource && {
                                 ".MuiAccordionSummary-expandIconWrapper": {
                                     opacity: 0,
