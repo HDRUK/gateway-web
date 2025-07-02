@@ -890,12 +890,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const filterCount = useMemo(
         () =>
-            Object.values(selectedFilters).filter(
-                p =>
-                    p !== undefined &&
-                    p.length > 0 &&
-                    p.some(value => value !== "")
-            ).length,
+            Object.values(selectedFilters).reduce(
+                (total, value) =>
+                    total + (Array.isArray(value) ? value.length : 0),
+                0
+            ),
         [selectedFilters]
     );
 
