@@ -46,6 +46,11 @@ const VerifyButton = ({
         {children}
     </Button>
 );
+const getRichTextComponents = (onClick: () => void) => ({
+    verifyButton: (chunks: React.ReactNode) => (
+        <VerifyButton onClick={onClick}>{chunks}</VerifyButton>
+    ),
+});
 
 const ProfileForm = () => {
     const t = useTranslations("pages.profile");
@@ -97,13 +102,10 @@ const ProfileForm = () => {
         });
 
     const secondaryEmail = watch("secondary_email");
-    const richTextComponents = {
-        verifyButton: (chunks: React.ReactNode) => (
-            <VerifyButton onClick={triggerSecondaryVerification}>
-                {chunks}
-            </VerifyButton>
-        ),
-    };
+    const richTextComponents = useMemo(
+        () => getRichTextComponents(triggerSecondaryVerification),
+        [triggerSecondaryVerification]
+    );
 
     const hydratedFormFields = useMemo(
         () =>
