@@ -144,33 +144,29 @@ const ProfileForm = () => {
                 <React.Fragment key={field.name}>
                     <InputWrapper control={control} {...field} />
                     {field.name === "secondary_email" &&
-                        !secondaryEmailVerified && (
-                            <>
-                                {!secondaryEmailVerificationRequested ? (
-                                    <Alert severity="warning" sx={{ mb: 2 }}>
-                                        Your secondary email is unverified. If
-                                        you have not already received a
-                                        verification email, please{" "}
-                                        <span
-                                            onClick={
-                                                triggerSecondaryVerification
-                                            }
-                                            style={{
-                                                textDecoration: "underline",
-                                                cursor: "pointer",
-                                                color: "blue",
-                                            }}>
-                                            click here
-                                        </span>{" "}
-                                        to trigger a new one.
-                                    </Alert>
-                                ) : (
-                                    <Alert severity="success" sx={{ mb: 2 }}>
-                                        Email Verification Sent!
-                                    </Alert>
-                                )}
-                            </>
-                        )}
+                        !secondaryEmailVerified &&
+                        (!secondaryEmailVerificationRequested ? (
+                            <Alert severity="warning" sx={{ mb: 2 }}>
+                                Your secondary email is unverified. If you have
+                                not already received a verification email,
+                                please{" "}
+                                <Button
+                                    variant="text"
+                                    onClick={triggerSecondaryVerification}
+                                    sx={{
+                                        textTransform: "none",
+                                        p: 0,
+                                        minWidth: "auto",
+                                    }}>
+                                    click here
+                                </Button>{" "}
+                                to trigger a new one.
+                            </Alert>
+                        ) : (
+                            <Alert severity="success" sx={{ mb: 2 }}>
+                                Email Verification Sent!
+                            </Alert>
+                        ))}
                 </React.Fragment>
             ))}
 
