@@ -1,6 +1,7 @@
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Alert } from "@mui/material";
 import { Sector } from "@/interfaces/Sector";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
@@ -10,6 +11,7 @@ import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
+import usePost from "@/hooks/usePost";
 import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
@@ -25,8 +27,20 @@ import KeepingUpdated from "../KeepingUpdated";
 
 const ProfileForm = () => {
     const { user } = useAuth();
+    const [
+        secondaryEmailVerificationRequested,
+        setSecondaryEmailVerificationRequested,
+    ] = useState(false);
 
     const isOpenAthens = user?.provider === "open-athens";
+    const secondaryEmailVerified = user?.secondary_email_verified_at !== null;
+
+    const requestSecondaryVerfication = usePost(
+        `${apis.usersV1Url}/${user?.id}/resend-secondary-verification`,
+        {
+            successNotificationsOn: false,
+        }
+    );
 
     const hydratedDefaultValues = useMemo(() => {
         return {
@@ -39,6 +53,12 @@ const ProfileForm = () => {
     const updateProfile = usePut<User>(apis.usersV1Url, {
         itemName: "Account",
     });
+
+    const triggerSecondaryVerification = () => {
+        requestSecondaryVerfication(null);
+        setSecondaryEmailVerificationRequested(true);
+    };
+
     const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
         apis.sectorsV1Url
     );
@@ -112,9 +132,7 @@ const ProfileForm = () => {
     };
 
     useEffect(() => {
-        if (!user) {
-            return;
-        }
+        if (!user) return;
         reset(hydratedDefaultValues);
     }, [isOpenAthens, hydratedDefaultValues, reset, user]);
 
@@ -123,19 +141,45 @@ const ProfileForm = () => {
     return (
         <Form sx={{ maxWidth: 1000 }} onSubmit={handleSubmit(submitForm)}>
             {hydratedFormFields.map(field => (
-                <InputWrapper key={field.name} control={control} {...field} />
+                <React.Fragment key={field.name}>
+                    <InputWrapper control={control} {...field} />
+                    {field.name === "secondary_email" &&
+                        !secondaryEmailVerified && (
+                            <>
+                                {!secondaryEmailVerificationRequested ? (
+                                    <Alert severity="warning" sx={{ mb: 2 }}>
+                                        Your secondary email is unverified. If
+                                        you have not already received a
+                                        verification email, please{" "}
+                                        <span
+                                            onClick={
+                                                triggerSecondaryVerification
+                                            }
+                                            style={{
+                                                textDecoration: "underline",
+                                                cursor: "pointer",
+                                                color: "blue",
+                                            }}>
+                                            click here
+                                        </span>{" "}
+                                        to trigger a new one.
+                                    </Alert>
+                                ) : (
+                                    <Alert severity="success" sx={{ mb: 2 }}>
+                                        Email Verification Sent!
+                                    </Alert>
+                                )}
+                            </>
+                        )}
+                </React.Fragment>
             ))}
 
             <KeepingUpdated
                 fields={profileContactFormFields}
                 control={control}
             />
-            <Box
-                sx={{
-                    p: 0,
-                    display: "flex",
-                    justifyContent: "end",
-                }}>
+
+            <Box sx={{ p: 0, display: "flex", justifyContent: "end" }}>
                 <Button type="submit">Save changes</Button>
             </Box>
         </Form>

@@ -139,6 +139,11 @@
         }
     },
     "pages": {
+        "emailVerification": {
+            "title":"Email verifcation",
+            "fail": "Verification expired or invalid.",
+            "pass" : "Email verified."
+        },
         "newsEvents": {
             "noResults": "There are no results for the selected year.",
             "readMore": "Read more"
