@@ -28,6 +28,25 @@ import {
 } from "@/config/forms/profile";
 import KeepingUpdated from "../KeepingUpdated";
 
+const VerifyButton = ({
+    onClick,
+    children,
+}: {
+    onClick: () => void;
+    children: React.ReactNode;
+}) => (
+    <Button
+        variant="text"
+        onClick={onClick}
+        sx={{
+            textTransform: "none",
+            p: 0,
+            minWidth: "auto",
+        }}>
+        {children}
+    </Button>
+);
+
 const ProfileForm = () => {
     const t = useTranslations("pages.profile");
     const { user } = useAuth();
@@ -78,6 +97,13 @@ const ProfileForm = () => {
         });
 
     const secondaryEmail = watch("secondary_email");
+    const richTextComponents = {
+        verifyButton: (chunks: React.ReactNode) => (
+            <VerifyButton onClick={triggerSecondaryVerification}>
+                {chunks}
+            </VerifyButton>
+        ),
+    };
 
     const hydratedFormFields = useMemo(
         () =>
@@ -163,24 +189,7 @@ const ProfileForm = () => {
                             !secondaryEmailVerified &&
                             !secondaryEmailVerificationRequested && (
                                 <Alert severity="warning" sx={{ mb: 2 }}>
-                                    {t.rich("unverified", {
-                                        verifyButton: (
-                                            chunks: React.ReactNode
-                                        ) => (
-                                            <Button
-                                                variant="text"
-                                                onClick={
-                                                    triggerSecondaryVerification
-                                                }
-                                                sx={{
-                                                    textTransform: "none",
-                                                    p: 0,
-                                                    minWidth: "auto",
-                                                }}>
-                                                {chunks}
-                                            </Button>
-                                        ),
-                                    })}
+                                    {t.rich("unverified", richTextComponents)}
                                 </Alert>
                             )}
                     </React.Fragment>

@@ -27,7 +27,7 @@ export default async function VerificationPage({
     let hasFailed = false;
 
     try {
-        const res = await fetch(`${apis.secondaryVerifcation1UrlIP}/${uuid}`);
+        const res = await fetch(`${apis.secondaryVerification1UrlIP}/${uuid}`);
         if (!res.ok) {
             hasFailed = true;
         }
