@@ -148,6 +148,17 @@ const EMPTY_FILTERS = {
     [FILTER_FORMAT_STANDARDS]: {},
 };
 
+const filterCountStyles = {
+    borderRadius: "50%",
+    backgroundColor: colors.green400,
+    width: "25px",
+    height: "25px",
+    color: colors.white,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+};
+
 const FilterPanel = ({
     filterCategory,
     filterSourceData,
@@ -649,19 +660,7 @@ const FilterPanel = ({
                                                     filterValues[label]
                                                 ).length && (
                                                     <Typography
-                                                        sx={{
-                                                            borderRadius: "50%",
-                                                            backgroundColor:
-                                                                colors.green400,
-                                                            width: "25px",
-                                                            height: "25px",
-                                                            color: colors.white,
-                                                            display: "flex",
-                                                            alignItems:
-                                                                "center",
-                                                            justifyContent:
-                                                                "center",
-                                                        }}>
+                                                        sx={filterCountStyles}>
                                                         {
                                                             Object.entries(
                                                                 filterValues[
