@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, Dispatch, SetStateAction } from "react";
+import { useState, useMemo, Dispatch, SetStateAction, useRef } from "react";
 import {
     useSensors,
     useSensor,
@@ -12,10 +12,10 @@ import {
     DragStartEvent,
     DragOverEvent,
     DragOverlay,
-    DropAnimation,
     defaultDropAnimation,
 } from "@dnd-kit/core";
-import { sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { debounce } from "lodash";
 import Container from "@/components/Container";
 import TaskBoardSection from "@/components/TaskBoardSection";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
@@ -32,10 +32,6 @@ const TaskBoard = ({
     anchoredErrorCallback,
 }: TaskBoardProps) => {
     const [activeTaskId, setActiveTaskId] = useState<null | string>(null);
-
-    const dropAnimation: DropAnimation = {
-        ...defaultDropAnimation,
-    };
 
     const activeTask = useMemo(
         () =>
@@ -74,6 +70,62 @@ const TaskBoard = ({
         return boardSections.find(s => s.tasks.some(task => task.id === id));
     };
 
+    const debouncedUpdate = useRef(
+        debounce(
+            (
+                activeSection: TaskBoardSectionProps,
+                overSection: TaskBoardSectionProps,
+                activeId: string,
+                overId: string | null
+            ) => {
+                setBoardSections(prevBoardSections => {
+                    // Copy the previous board sections to avoid direct mutations
+                    const activeSectionIndex = prevBoardSections.findIndex(
+                        section => section.id === activeSection.id
+                    );
+                    const overSectionIndex = prevBoardSections.findIndex(
+                        section => section.id === overSection.id
+                    );
+
+                    // Copy the sections to avoid direct mutations
+                    const newActiveSection = {
+                        ...prevBoardSections[activeSectionIndex],
+                        tasks: [...prevBoardSections[activeSectionIndex].tasks],
+                    };
+                    const newOverSection = {
+                        ...prevBoardSections[overSectionIndex],
+                        tasks: [...prevBoardSections[overSectionIndex].tasks],
+                    };
+
+                    // Find the indexes for the tasks
+                    const activeIndex = newActiveSection.tasks.findIndex(
+                        task => task.id === activeId
+                    );
+                    const overIndex = newOverSection.tasks.findIndex(
+                        task => task.id !== overId
+                    );
+
+                    // Remove the active task from its original location
+                    const [activeTask] = newActiveSection.tasks.splice(
+                        activeIndex,
+                        1
+                    );
+
+                    // Insert the active task into the new location
+                    newOverSection.tasks.splice(overIndex, 0, activeTask);
+
+                    // Create a new array of sections with the updated sections
+                    const updatedBoardSections = [...prevBoardSections];
+                    updatedBoardSections[activeSectionIndex] = newActiveSection;
+                    updatedBoardSections[overSectionIndex] = newOverSection;
+
+                    return updatedBoardSections;
+                });
+            },
+            50
+        )
+    ).current;
+
     const handleDragOver = ({ active, over }: DragOverEvent) => {
         // Find the containers
         const activeSection = findBoardSectionContainer(
@@ -99,48 +151,12 @@ const TaskBoard = ({
             return;
         }
 
-        setBoardSections(prevBoardSections => {
-            // Copy the previous board sections to avoid direct mutations
-            const activeSectionIndex = prevBoardSections.findIndex(
-                section => section.id === activeSection.id
-            );
-            const overSectionIndex = prevBoardSections.findIndex(
-                section => section.id === overSection.id
-            );
-
-            // Copy the sections to avoid direct mutations
-            const newActiveSection = {
-                ...prevBoardSections[activeSectionIndex],
-            };
-            const newOverSection = {
-                ...prevBoardSections[overSectionIndex],
-            };
-
-            // Copy the tasks arrays to avoid direct mutations
-            newActiveSection.tasks = [...newActiveSection.tasks];
-            newOverSection.tasks = [...newOverSection.tasks];
-
-            // Find the indexes for the tasks
-            const activeIndex = newActiveSection.tasks.findIndex(
-                task => task.id === active.id
-            );
-            const overIndex = newOverSection.tasks.findIndex(
-                task => task.id !== over?.id
-            );
-
-            // Remove the active task from its original location
-            const [activeTask] = newActiveSection.tasks.splice(activeIndex, 1);
-
-            // Insert the active task into the new location
-            newOverSection.tasks.splice(overIndex, 0, activeTask);
-
-            // Create a new array of sections with the updated sections
-            const updatedBoardSections = [...prevBoardSections];
-            updatedBoardSections[activeSectionIndex] = newActiveSection;
-            updatedBoardSections[overSectionIndex] = newOverSection;
-
-            return updatedBoardSections;
-        });
+        debouncedUpdate(
+            activeSection,
+            overSection,
+            active.id as string,
+            (over?.id as string) ?? null
+        );
     };
 
     const handleDragEnd = ({ active, over }: DragEndEvent) => {
@@ -223,7 +239,7 @@ const TaskBoard = ({
                     <TaskBoardSection key={section.id} {...section} />
                 ))}
 
-                <DragOverlay dropAnimation={dropAnimation}>
+                <DragOverlay dropAnimation={defaultDropAnimation}>
                     {activeTask ? activeTask.content : null}
                 </DragOverlay>
             </Container>
