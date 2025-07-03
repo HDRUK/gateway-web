@@ -40,6 +40,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
@@ -85,6 +86,7 @@ export {
     AppsIcon,
     FilterAltOffIcon,
     FilterAltIcon,
+    FilterAltOutlinedIcon,
     InfoIcon,
     ArrowDropUpIcon,
     SortByAlphaIcon,
