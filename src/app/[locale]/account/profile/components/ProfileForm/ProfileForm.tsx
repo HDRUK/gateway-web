@@ -62,6 +62,7 @@ const ProfileForm = () => {
 
     const isOpenAthens = user?.provider === "open-athens";
     const secondaryEmailVerified = user?.secondary_email_verified_at !== null;
+    const hasSecondaryEmail = !!user?.secondary_email;
 
     const requestSecondaryVerification = usePost(
         `${apis.usersV1Url}/${user?.id}/resend-secondary-verification`,
@@ -188,6 +189,7 @@ const ProfileForm = () => {
                             )}
 
                         {isSecondaryEmail &&
+                            hasSecondaryEmail &&
                             !secondaryEmailVerified &&
                             !secondaryEmailVerificationRequested && (
                                 <Alert severity="warning" sx={{ mb: 2 }}>
