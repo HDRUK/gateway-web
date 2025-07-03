@@ -50,7 +50,9 @@ export default function TeamManagement({
         <BoxContainer sx={{ gap: 0 }}>
             <Paper>
                 <Box sx={{ bgcolor: "white", mb: 0 }}>
-                    <Typography variant="h2">Team management</Typography>
+                    <Typography variant="h2" component="h1">
+                        Team management
+                    </Typography>
                     <Typography>
                         Organise and manage team members and email
                         notifications. If you need assistance, please{" "}
