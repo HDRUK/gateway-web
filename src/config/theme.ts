@@ -727,7 +727,20 @@ const theme = createTheme({
             },
         },
         MuiChip: {
+            styleOverrides: {
+                root: {
+                    "& .MuiChip-deleteIcon": {
+                        color: colors.black,
+                    },
+                },
+            },
             variants: [
+                {
+                    props: { color: "success" },
+                    style: {
+                        background: colors.green400,
+                    },
+                },
                 {
                     props: { color: "warningCustom" },
                     style: {

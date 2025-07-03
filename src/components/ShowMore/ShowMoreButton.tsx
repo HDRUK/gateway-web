@@ -1,13 +1,18 @@
-import { Button, ButtonProps } from "@mui/material";
+import { Button, ButtonProps, SxProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ArrowDropDownIcon } from "@/consts/icons";
 
 export interface ShowMoreButtonProps extends Omit<ButtonProps, "onClick"> {
     open?: boolean;
+    sxButton?: SxProps;
     onClick: (open: boolean) => void;
 }
 
-export default function ShowMoreButton({ onClick, open }: ShowMoreButtonProps) {
+export default function ShowMoreButton({
+    open,
+    sxButton,
+    onClick,
+}: ShowMoreButtonProps) {
     const t = useTranslations("components.ShowMore");
 
     return (
@@ -24,7 +29,8 @@ export default function ShowMoreButton({ onClick, open }: ShowMoreButtonProps) {
                     color="primary"
                 />
             }
-            variant="link">
+            variant="link"
+            sx={sxButton}>
             {open ? t("showLess") : t("showMore")}
         </Button>
     );
