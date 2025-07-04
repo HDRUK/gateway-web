@@ -10,7 +10,7 @@ import PublicationsContent from "@/components/PublicationsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
-import { getTool } from "@/utils/api";
+import { getReducedTool } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
@@ -31,7 +31,7 @@ export default async function ToolPage({
 
     const { toolId } = params;
     const cookieStore = cookies();
-    const data = await getTool(cookieStore, toolId, {
+    const data = await getReducedTool(cookieStore, toolId, {
         suppressError: true,
     });
 
