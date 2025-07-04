@@ -8,7 +8,7 @@ interface FormErrorProps {
 const ErrorMessage = ({ message }: { message?: string }) => {
     if (!message) return null;
     return (
-        <FormHelperText sx={{ fontSize: 14 }} error>
+        <FormHelperText sx={{ fontSize: 14 }} error role="alert">
             {message}
         </FormHelperText>
     );
