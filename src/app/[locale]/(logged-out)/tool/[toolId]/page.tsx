@@ -64,7 +64,7 @@ export default async function ToolPage({
                             populatedSections={populatedSections}
                         />
                         <DatasetsContent
-                            dataset_versions={data.dataset_versions}
+                            dataset_versions={data.versions}
                             anchorIndex={populatedSections.length + 1}
                         />
                         <DataUsesContent
