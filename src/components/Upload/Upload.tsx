@@ -61,6 +61,7 @@ const Upload = (props: UploadProps) => {
                 control={
                     <Input
                         aria-label={label}
+                        aria-invalid={error ? "true" : "false"}
                         inputProps={{
                             accept: acceptFileTypes,
                         }}

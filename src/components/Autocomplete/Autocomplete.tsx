@@ -129,6 +129,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 {...restProps}
                 freeSolo={freeSolo}
                 multiple={multiple}
+                aria-invalid={error ? "true" : "false"}
                 getOptionLabel={(option: string) => {
                     if (typeof option === "object") return option?.label;
                     return (
