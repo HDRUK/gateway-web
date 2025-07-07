@@ -1,3 +1,9 @@
+## [2.14.1](https://github.com/HDRUK/gateway-web/compare/v2.14.0...v2.14.1) (2025-07-07)
+
+### 🐛 Bug Fixes
+
+* **GAT-7442:** structural dataset not uploading (#1242) ([5840df5](https://github.com/HDRUK/gateway-web/commit/5840df5a2468844ae89f89930acba1a4e86d93d6)), closes [GAT-7442](GAT-7442)
+
 ## [2.14.0](https://github.com/HDRUK/gateway-web/compare/v2.13.0...v2.14.0) (2025-07-01)
 
 ### ✨ Features
