@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useId } from "react";
 import { Box, IconButton, SxProps, Tooltip } from "@mui/material";
 import { InfoIcon } from "@/consts/icons";
 
@@ -21,15 +21,20 @@ const TooltipIcon = ({
     buttonSx,
     invertColor,
 }: TooltipIconProps) => {
+    const id = useId();
+
     return (
         <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
             sx={boxSx}>
-            {label}
+            <span id={id}>{label}</span>
             <Tooltip title={content}>
-                <IconButton sx={{ ...buttonSx }} disableRipple>
+                <IconButton
+                    sx={{ ...buttonSx }}
+                    disableRipple
+                    aria-labelledby={id}>
                     {icon || (
                         <InfoIcon
                             color={!invertColor ? "primary" : "inherit"}

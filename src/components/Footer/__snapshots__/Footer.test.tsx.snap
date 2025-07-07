@@ -148,6 +148,13 @@ exports[`Footer should render component 1`] = `
         </li>
       </ul>
     </div>
+    <div
+      role="note"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;"
+      tabindex="0"
+    >
+      end of page
+    </div>
   </footer>
 </div>
 `;
