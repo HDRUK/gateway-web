@@ -79,7 +79,6 @@ const DatePicker = <
                                     onFocus: () => onFocus && onFocus(),
                                 },
                             }}
-                            aria-invalid={error ? "true" : "false"}
                             {...rest}
                         />
                     </LocalizationProvider>

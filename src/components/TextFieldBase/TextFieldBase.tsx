@@ -143,7 +143,6 @@ const TextFieldBase = <
                 error={!!error}
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
-                aria-invalid={error ? "true" : "false"}
                 {...inputProps}
             />
         </FormInputWrapper>

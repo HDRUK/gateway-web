@@ -125,7 +125,6 @@ const Select = <
                 }
                 {...fieldProps}
                 value={fieldProps.value ?? ""}
-                aria-invalid={error ? "true" : "false"}
                 {...rest}>
                 {options?.map(option =>
                     option.isHeader ? (

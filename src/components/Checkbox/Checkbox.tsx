@@ -60,7 +60,6 @@ const Checkbox = <
                         inputRef={ref}
                         sx={{ ...checkboxSx }}
                         id={id || name}
-                        aria-invalid={error ? "true" : "false"}
                         {...rest}
                         {...fieldProps}
                     />

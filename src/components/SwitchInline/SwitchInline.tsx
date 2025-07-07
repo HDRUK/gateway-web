@@ -80,7 +80,6 @@ const SwitchInline = <
                                         ? `${name}-description`
                                         : undefined,
                                 }}
-                                aria-invalid={error ? "true" : "false"}
                             />
                         </span>
                     </Tooltip>
