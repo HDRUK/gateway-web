@@ -535,7 +535,7 @@ const FilterPanel = ({
     };
 
     return (
-        <>
+        <aside aria-label="filters">
             <Box
                 sx={{
                     display: "flex",
@@ -686,7 +686,7 @@ const FilterPanel = ({
                     />
                 );
             })}
-        </>
+        </aside>
     );
 };
 
