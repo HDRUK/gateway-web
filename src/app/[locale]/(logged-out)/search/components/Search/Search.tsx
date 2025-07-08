@@ -1096,7 +1096,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     alignItems: "flex-start",
                                     pt: 0,
                                     gap: 2,
-                                }}>
+                                }}
+                                {...(!!filterCount && {
+                                    "aria-label": "filter controls",
+                                    role: "region",
+                                })}>
                                 <FilterChips
                                     selectedFilters={selectedFilters}
                                     handleDelete={removeFilter}
@@ -1158,6 +1162,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         </Box>
                                         {!isMobile && !isTabletOrLaptop && (
                                             <Box
+                                                aria-label="results controls"
+                                                role="region"
                                                 sx={{
                                                     display: "flex",
                                                     gap: 2,
@@ -1338,9 +1344,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             </>
                                         )}
 
-                                        <div aria-describedby="result-summary">
+                                        <section
+                                            aria-describedby="result-summary"
+                                            aria-label="results list">
                                             {renderResults()}
-                                        </div>
+                                        </section>
                                     </>
                                 )}
                             <Pagination
