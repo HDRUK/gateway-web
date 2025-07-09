@@ -18,7 +18,7 @@ import {
     FILTER_POPULATION_SIZE,
     FILTER_PROGRAMMING_LANGUAGE,
     FILTER_TYPE_CATEGORY,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_MATERIAL_TYPE,
     FILTER_FORMAT_STANDARDS,
     FILTER_COHORT_DISCOVERY,
@@ -249,7 +249,7 @@ export interface SearchQueryParams {
     [FILTER_POPULATION_SIZE]: string[] | undefined;
     [FILTER_PROGRAMMING_LANGUAGE]: string[] | undefined;
     [FILTER_TYPE_CATEGORY]: string[] | undefined;
-    [FILTER_CONTAINS_TISSUE]: string[] | undefined;
+    [FILTER_CONTAINS_BIOSAMPLES]: string[] | undefined;
     [FILTER_MATERIAL_TYPE]: string[] | undefined;
     [PMC_TYPE_FIELD]: string | undefined;
     [FILTER_FORMAT_STANDARDS]: string[] | undefined;

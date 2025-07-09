@@ -3,7 +3,7 @@ import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import {
     FILTER_COHORT_DISCOVERY,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_MATERIAL_TYPE,
     filtersList,
 } from "@/config/forms/filters";
@@ -83,10 +83,10 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                               INCLUDE_UNREPORTED
                           ),
                   },
-                  ...(filterQueries?.[FILTER_CONTAINS_TISSUE]?.includes(
-                      FILTER_CONTAINS_TISSUE
+                  ...(filterQueries?.[FILTER_CONTAINS_BIOSAMPLES]?.includes(
+                      FILTER_CONTAINS_BIOSAMPLES
                   )
-                      ? { [FILTER_CONTAINS_TISSUE]: [true] }
+                      ? { [FILTER_CONTAINS_BIOSAMPLES]: [true] }
                       : {}),
                   ...(filterQueries?.[FILTER_COHORT_DISCOVERY]?.includes(
                       FILTER_COHORT_DISCOVERY
@@ -94,8 +94,8 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                       ? { [FILTER_COHORT_DISCOVERY]: [true] }
                       : {}),
                   [FILTER_MATERIAL_TYPE]: !filterQueries?.[
-                      FILTER_CONTAINS_TISSUE
-                  ]?.includes(FILTER_CONTAINS_TISSUE)
+                      FILTER_CONTAINS_BIOSAMPLES
+                  ]?.includes(FILTER_CONTAINS_BIOSAMPLES)
                       ? []
                       : filterQueries[FILTER_MATERIAL_TYPE],
               }

@@ -139,16 +139,16 @@
         }
     },
     "pages": {
-       "profile": {
+        "profile": {
             "verificationSent": "Email verification sent!",
             "unverified": "Your secondary email is unverified. If you have not already received a verification email, please <verifyButton>click here</verifyButton> to trigger a new one.",
             "saveChanges": "Save changes",
             "unsavedChangesWarning": "Changes to your profile account are not automatically saved."
         },
         "emailVerification": {
-            "title":"Email verifcation",
+            "title": "Email verifcation",
             "fail": "Verification expired or invalid.",
-            "pass" : "Email verified."
+            "pass": "Email verified."
         },
         "newsEvents": {
             "noResults": "There are no results for the selected year.",
@@ -1008,8 +1008,8 @@
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
-                            "containsTissue": "Datasets with BioSamples",
-                            "containsTissueTooltip": "Restrict your search result to datasets with BioSamples",
+                            "containsBioSamples": "Datasets with BioSamples",
+                            "containsBioSamplesTooltip": "Restrict your search result to datasets with BioSamples",
                             "isCohortDiscovery": "Datasets in Cohort Discovery",
                             "isCohortDiscoveryTooltip": "Restrict your search result to datasets in Cohort Discovery",
                             "sampleAvailability": "Material type",
@@ -1140,7 +1140,7 @@
                         "label": "Cohort Discovery",
                         "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
-                    "containsTissue": {
+                    "containsBioSamples": {
                         "label": "BioSample availability",
                         "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },
