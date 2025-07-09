@@ -18,8 +18,12 @@ exports[`DatasetStatCard should match snapshot 1`] = `
       <div
         class="MuiBox-root mui-style-1lekzkb"
       >
+        <span
+          id=":r0:"
+        />
         <button
           aria-label="helper"
+          aria-labelledby=":r0:"
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-nz5anb-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
