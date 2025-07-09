@@ -6,7 +6,7 @@ exports[`Pagination renders without crashing 1`] = `
     class="MuiBox-root mui-style-1r2sw3a"
   >
     <nav
-      aria-label="pagination navigation"
+      aria-label="pagination"
       class="MuiPagination-root MuiPagination-outlined mui-style-1oj2twp-MuiPagination-root"
     >
       <ul
@@ -140,7 +140,7 @@ exports[`Pagination should return empty div if still loading 1`] = `
     class="MuiBox-root mui-style-1r2sw3a"
   >
     <nav
-      aria-label="pagination navigation"
+      aria-label="pagination"
       class="MuiPagination-root MuiPagination-outlined mui-style-1oj2twp-MuiPagination-root"
     >
       <ul
