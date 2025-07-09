@@ -56,7 +56,7 @@ const mockSourceData = [
 const defaultProps = {
     filterCategory: "dataset",
     selectedFilters: {
-        containsTissue: ["containsBioSample"],
+        containsTissue: ["containsBioSamples"],
     },
     filterSourceData: mockSourceData,
     setFilterQueryParams: jest.fn(),
@@ -67,7 +67,7 @@ const defaultProps = {
 };
 
 const testCases = [
-    { category: "dataset", filter: "containsBioSample" },
+    { category: "dataset", filter: "containsBioSamples" },
     { category: "collection", filter: "publisherName" },
     { category: "paper", filter: "source" },
     { category: "tool", filter: "typeCategory" },
