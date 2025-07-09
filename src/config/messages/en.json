@@ -1140,7 +1140,7 @@
                         "label": "Cohort Discovery",
                         "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
-                    "containsTissue": {
+                    "containsBioSamples": {
                         "label": "BioSample availability",
                         "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },

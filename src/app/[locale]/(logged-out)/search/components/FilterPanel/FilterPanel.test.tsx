@@ -11,7 +11,7 @@ jest.mock("next-intl", () => ({
 const mockSourceData = [
     {
         id: 2,
-        keys: "containsBioSample",
+        keys: "containsBioSamples",
         enabled: true,
         type: "dataset",
         buckets: [],
@@ -56,7 +56,7 @@ const mockSourceData = [
 const defaultProps = {
     filterCategory: "dataset",
     selectedFilters: {
-        containsTissue: ["containsBioSamples"],
+        containsBioSamples: ["containsBioSamples"],
     },
     filterSourceData: mockSourceData,
     setFilterQueryParams: jest.fn(),
@@ -99,7 +99,7 @@ describe("FilterPanel", () => {
 
         expect(defaultProps.setFilterQueryParams).toHaveBeenCalledWith(
             [],
-            "containsBioSample"
+            "containsBioSamples"
         );
     });
 
