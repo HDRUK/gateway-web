@@ -11,7 +11,7 @@ jest.mock("next-intl", () => ({
 const mockSourceData = [
     {
         id: 2,
-        keys: "containsTissue",
+        keys: "containsBioSample",
         enabled: true,
         type: "dataset",
         buckets: [],
@@ -56,7 +56,7 @@ const mockSourceData = [
 const defaultProps = {
     filterCategory: "dataset",
     selectedFilters: {
-        containsTissue: ["containsTissue"],
+        containsTissue: ["containsBioSample"],
     },
     filterSourceData: mockSourceData,
     setFilterQueryParams: jest.fn(),
@@ -67,7 +67,7 @@ const defaultProps = {
 };
 
 const testCases = [
-    { category: "dataset", filter: "containsTissue" },
+    { category: "dataset", filter: "containsBioSample" },
     { category: "collection", filter: "publisherName" },
     { category: "paper", filter: "source" },
     { category: "tool", filter: "typeCategory" },
@@ -99,7 +99,7 @@ describe("FilterPanel", () => {
 
         expect(defaultProps.setFilterQueryParams).toHaveBeenCalledWith(
             [],
-            "containsTissue"
+            "containsBioSample"
         );
     });
 
