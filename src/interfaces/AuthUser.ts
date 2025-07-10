@@ -8,6 +8,7 @@ interface AuthUser {
     name: string;
     email: string;
     secondary_email?: string;
+    secondary_email_verified_at: string | null;
     preferred_email: "secondary" | "primary";
     sector_id: string;
     organisation: string;

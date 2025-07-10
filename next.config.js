@@ -39,6 +39,17 @@ const nextConfig = withNextIntl({
             },
         ],
     },
+    async headers() {
+        return [
+        { 
+            source: '/(.*)',
+            headers: [{ 
+                    key: 'Strict-Transport-Security',
+                    value: 'max-age=63072000; includeSubDomains; preload', 
+                }],
+            },
+        ];
+    },
     async rewrites() {
         return [
         {

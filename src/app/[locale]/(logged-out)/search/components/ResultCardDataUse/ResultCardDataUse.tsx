@@ -1,4 +1,4 @@
-import { Divider, ListItem, ListItemText } from "@mui/material";
+import { ListItem, ListItemText } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SearchResultDataUse } from "@/interfaces/Search";
@@ -10,6 +10,7 @@ import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import DataUseDetailsDialog from "@/modules/DataUseDetailsDialog";
 import useDialog from "@/hooks/useDialog";
+import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import {
     ResultButtonWrap,
@@ -59,155 +60,146 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
     const hasNonGatewayDatasets = !!result.non_gateway_datasets?.length;
 
     return (
-        <>
-            <ListItem sx={{ p: 0 }} alignItems="flex-start">
-                <ListItemText
-                    disableTypography
-                    sx={{ padding: 2, paddingBottom: 1, m: 0 }}
-                    primary={
-                        <ResultTitle>
-                            <Link
-                                href={`${RouteName.DATA_USE_ITEM}/${resultId}`}
-                                fontSize={16}
-                                fontWeight={600}
-                                marginBottom={2}>
-                                <EllipsisLineLimit
-                                    text={result.projectTitle || ""}
-                                    showToolTip
+        <ListItem
+            sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+            alignItems="flex-start">
+            <ListItemText
+                disableTypography
+                sx={{ padding: 2, paddingBottom: 1, m: 0 }}
+                primary={
+                    <ResultTitle>
+                        <Link
+                            href={`${RouteName.DATA_USE_ITEM}/${resultId}`}
+                            fontSize={16}
+                            fontWeight={600}
+                            marginBottom={2}>
+                            <EllipsisLineLimit
+                                text={result.projectTitle || ""}
+                                showToolTip
+                            />
+                        </Link>
+                        {(totalDatasets > 1 || hasMultipleLeadOrgs) && (
+                            <Button
+                                onClick={handleShowAll}
+                                size="small"
+                                variant="outlined"
+                                color="secondary"
+                                sx={{
+                                    ml: 1,
+                                    flexShrink: 0,
+                                    alignSelf: "flex-start",
+                                }}>
+                                {t("showAll")}
+                            </Button>
+                        )}
+                    </ResultTitle>
+                }
+                primaryTypographyProps={{
+                    color: "primary",
+                    fontWeight: 600,
+                    fontSize: 16,
+                    mb: 1.5,
+                }}
+                secondary={
+                    <>
+                        <ResultRow>
+                            <ResultRowCategory>
+                                <TooltipText
+                                    content={t(
+                                        `leadOrganisation${TOOLTIP_SUFFIX}`
+                                    )}
+                                    label={t("leadOrganisation")}
                                 />
-                            </Link>
-                            {(totalDatasets > 1 || hasMultipleLeadOrgs) && (
-                                <Button
-                                    onClick={handleShowAll}
-                                    size="small"
-                                    variant="outlined"
-                                    color="secondary"
+                            </ResultRowCategory>
+
+                            {(!!leadOrgNames && (
+                                <Typography
                                     sx={{
-                                        ml: 1,
-                                        flexShrink: 0,
-                                        alignSelf: "flex-start",
+                                        fontWeight: 500,
                                     }}>
-                                    {t("showAll")}
-                                </Button>
-                            )}
-                        </ResultTitle>
-                    }
-                    primaryTypographyProps={{
-                        color: "primary",
-                        fontWeight: 600,
-                        fontSize: 16,
-                        mb: 1.5,
-                    }}
-                    secondary={
-                        <>
-                            <ResultRow>
-                                <ResultRowCategory>
-                                    <TooltipText
-                                        content={t(
-                                            `leadOrganisation${TOOLTIP_SUFFIX}`
-                                        )}
-                                        label={t("leadOrganisation")}
-                                    />
-                                </ResultRowCategory>
+                                    {leadOrgNames[0]}
+                                    {leadOrgNames.length > 1 &&
+                                        `,... (${leadOrgNames.length})`}
+                                </Typography>
+                            )) ||
+                                missingDataComponent}
+                        </ResultRow>
 
-                                {(!!leadOrgNames && (
-                                    <Typography
-                                        sx={{
-                                            fontWeight: 500,
-                                        }}>
-                                        {leadOrgNames[0]}
-                                        {leadOrgNames.length > 1 &&
-                                            `,... (${leadOrgNames.length})`}
-                                    </Typography>
-                                )) ||
-                                    missingDataComponent}
-                            </ResultRow>
+                        <ResultRow>
+                            <ResultRowCategory>
+                                <TooltipText
+                                    content={t(`datasets${TOOLTIP_SUFFIX}`)}
+                                    label={t("datasets")}
+                                />
+                            </ResultRowCategory>
 
-                            <ResultRow>
-                                <ResultRowCategory>
-                                    <TooltipText
-                                        content={t(`datasets${TOOLTIP_SUFFIX}`)}
-                                        label={t("datasets")}
-                                    />
-                                </ResultRowCategory>
-
-                                {hasGatewayDatasets ? (
-                                    <>
-                                        <ResultButtonWrap>
-                                            <EllipsisCharacterLimit
-                                                text={
-                                                    result.datasetTitles[0] ||
-                                                    ""
-                                                }
-                                                isButton
-                                                characterLimit={CHARACTER_LIMIT}
-                                                onClick={() =>
-                                                    push(
-                                                        `/${RouteName.DATASET_ITEM}/${result.datasetIds[0]}`
-                                                    )
-                                                }
-                                            />
-                                        </ResultButtonWrap>
-                                        {totalDatasets > 1 && (
-                                            <Typography
-                                                sx={{ fontWeight: 500, ml: 1 }}>
-                                                ({totalDatasets})
-                                            </Typography>
-                                        )}
-                                    </>
-                                ) : hasNonGatewayDatasets ? (
-                                    <>
+                            {hasGatewayDatasets ? (
+                                <>
+                                    <ResultButtonWrap>
                                         <EllipsisCharacterLimit
-                                            text={
-                                                result.non_gateway_datasets[0]
-                                            }
+                                            text={result.datasetTitles[0] || ""}
+                                            isButton
                                             characterLimit={CHARACTER_LIMIT}
-                                            isChip
-                                        />
-                                        {totalDatasets > 1 && (
-                                            <Typography
-                                                sx={{ fontWeight: 500, ml: 1 }}>
-                                                (
-                                                {
-                                                    result.non_gateway_datasets
-                                                        .length
-                                                }
+                                            onClick={() =>
+                                                push(
+                                                    `/${RouteName.DATASET_ITEM}/${result.datasetIds[0]}`
                                                 )
-                                            </Typography>
-                                        )}
-                                    </>
-                                ) : (
-                                    missingDataComponent
-                                )}
-                            </ResultRow>
-
-                            <ResultRow>
-                                <ResultRowCategory>
-                                    <TooltipText
-                                        content={t(
-                                            `dataCustodian${TOOLTIP_SUFFIX}`
-                                        )}
-                                        label={t("dataCustodian")}
-                                    />
-                                </ResultRowCategory>
-                                {(!!result?.team?.name && (
-                                    <Link
-                                        href={`${RouteName.DATA_CUSTODIANS_ITEM}/${result.team.id}`}>
-                                        {`${result.team?.member_of} > `}
-                                        <EllipsisCharacterLimit
-                                            text={result.team.name}
-                                            characterLimit={CHARACTER_LIMIT}
+                                            }
                                         />
-                                    </Link>
-                                )) ||
-                                    missingDataComponent}
-                            </ResultRow>
-                        </>
-                    }
-                />
-            </ListItem>
-            <Divider component="li" />
-        </>
+                                    </ResultButtonWrap>
+                                    {totalDatasets > 1 && (
+                                        <Typography
+                                            sx={{ fontWeight: 500, ml: 1 }}>
+                                            ({totalDatasets})
+                                        </Typography>
+                                    )}
+                                </>
+                            ) : hasNonGatewayDatasets ? (
+                                <>
+                                    <EllipsisCharacterLimit
+                                        text={result.non_gateway_datasets[0]}
+                                        characterLimit={CHARACTER_LIMIT}
+                                        isChip
+                                    />
+                                    {totalDatasets > 1 && (
+                                        <Typography
+                                            sx={{ fontWeight: 500, ml: 1 }}>
+                                            (
+                                            {result.non_gateway_datasets.length}
+                                            )
+                                        </Typography>
+                                    )}
+                                </>
+                            ) : (
+                                missingDataComponent
+                            )}
+                        </ResultRow>
+
+                        <ResultRow>
+                            <ResultRowCategory>
+                                <TooltipText
+                                    content={t(
+                                        `dataCustodian${TOOLTIP_SUFFIX}`
+                                    )}
+                                    label={t("dataCustodian")}
+                                />
+                            </ResultRowCategory>
+                            {(!!result?.team?.name && (
+                                <Link
+                                    href={`${RouteName.DATA_CUSTODIANS_ITEM}/${result.team.id}`}>
+                                    {`${result.team?.member_of} > `}
+                                    <EllipsisCharacterLimit
+                                        text={result.team.name}
+                                        characterLimit={CHARACTER_LIMIT}
+                                    />
+                                </Link>
+                            )) ||
+                                missingDataComponent}
+                        </ResultRow>
+                    </>
+                }
+            />
+        </ListItem>
     );
 };
 

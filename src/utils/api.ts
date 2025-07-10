@@ -4,7 +4,11 @@ import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adap
 import { cookies } from "next/headers";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
-import { CohortRequest } from "@/interfaces/CohortRequest";
+import {
+    CohortRequest,
+    CohortRequestAccess,
+    CohortRequestUser,
+} from "@/interfaces/CohortRequest";
 import { ReducedCollection } from "@/interfaces/Collection";
 import {
     DarApplicationAnswer,
@@ -314,6 +318,37 @@ async function getCohort(
     );
 }
 
+export async function getUserCohortRequest(
+    cookieStore: ReadonlyRequestCookies,
+    userId: string
+): Promise<CohortRequestUser> {
+    const cache: Cache = {
+        tags: ["cohort"],
+        revalidate: 15 * 60, // 15 minutes
+    };
+
+    return get<CohortRequestUser>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
+        { cache }
+    );
+}
+
+export async function getCohortAccessRedirect(
+    cookieStore: ReadonlyRequestCookies
+): Promise<CohortRequestAccess> {
+    const cache: Cache = {
+        tags: ["cohort"],
+        revalidate: 15 * 60, // 15 minutes
+    };
+
+    return get<CohortRequestAccess>(
+        cookieStore,
+        `${apis.cohortRequestsV1UrlIP}/access`,
+        { cache }
+    );
+}
+
 async function getTeam(
     cookieStore: ReadonlyRequestCookies,
     teamId: string
@@ -446,6 +481,20 @@ async function getTool(
     );
 
     return tool;
+}
+
+async function getReducedTool(
+    cookieStore: ReadonlyRequestCookies,
+    toolId: string,
+    options?: GetOptions
+): Promise<Tool> {
+    const collection = await get<Tool>(
+        cookieStore,
+        `${apis.toolsV1UrlIP}/${toolId}?view_type=mini`,
+        options
+    );
+
+    return collection;
 }
 
 async function getReducedCollection(
@@ -728,6 +777,7 @@ async function getDarTemplatesCount(
 export {
     getApplication,
     getCohort,
+    getReducedTool,
     getReducedCollection,
     getDataCustodianNetworks,
     getDataset,

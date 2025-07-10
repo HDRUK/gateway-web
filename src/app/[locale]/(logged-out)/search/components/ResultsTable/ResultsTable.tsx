@@ -1,10 +1,9 @@
-import { Tooltip } from "@mui/material";
+import { TableContainer, Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
 import { PageTemplatePromo } from "@/interfaces/Cms";
-import { CohortRequest } from "@/interfaces/CohortRequest";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -12,6 +11,7 @@ import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import useAuth from "@/hooks/useAuth";
+import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { CheckIcon } from "@/consts/icons";
@@ -103,7 +103,15 @@ const getColumns = ({
             return (
                 <div style={{ textAlign: "center" }}>
                     {isNumber && (
-                        <Link href={linkHref}>
+                        <Link
+                            href={linkHref}
+                            onFocus={e => {
+                                e.currentTarget.scrollIntoView({
+                                    behavior: "smooth",
+                                    inline: "center",
+                                    block: "nearest",
+                                });
+                            }}>
                             <EllipsisLineLimit
                                 text={get(original, PUBLISHER_NAME_PATH)}
                             />
@@ -276,23 +284,16 @@ const ResultTable = ({
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
     const { isLoggedIn, user } = useAuth();
 
+    const { requestStatus } = useCohortStatus(user?.id);
+
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
 
-    const { data: userData } = useGet<CohortRequest>(
-        `${apis.cohortRequestsV1Url}/user/${user?.id}`,
-        {
-            shouldFetch: !!user?.id,
-        }
-    );
-
     const isCohortDiscoveryDisabled =
-        isLoggedIn && userData
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(
-                  userData.request_status
-              )
+        isLoggedIn && requestStatus
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
             : false;
 
     const translations = {
@@ -322,22 +323,21 @@ const ResultTable = ({
             sx={{
                 p: 0,
                 border: "1px solid lightgray",
-                overflowX: "scroll",
-                width: "100%",
-                position: "relative",
                 mb: 4,
             }}>
-            <Table<SearchResultDataset>
-                columns={getColumns({
-                    translations,
-                    libraryData,
-                    showLibraryModal,
-                    mutateLibraries,
-                    isCohortDiscoveryDisabled,
-                    cohortDiscovery,
-                })}
-                rows={results}
-            />
+            <TableContainer>
+                <Table<SearchResultDataset>
+                    columns={getColumns({
+                        translations,
+                        libraryData,
+                        showLibraryModal,
+                        mutateLibraries,
+                        isCohortDiscoveryDisabled,
+                        cohortDiscovery,
+                    })}
+                    rows={results}
+                />
+            </TableContainer>
         </Paper>
     );
 };

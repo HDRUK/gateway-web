@@ -485,10 +485,11 @@ const CreateDataset = ({
                           metadata: {
                               observations: [],
                               coverage: null,
+                              ...mappedFormData,
                               structuralMetadata: {
+                                  ...mappedFormData.structuralMetadata,
                                   tables: structuralMetadata,
                               },
-                              ...mappedFormData,
                           },
                       },
                   }
@@ -505,10 +506,11 @@ const CreateDataset = ({
                           metadata: {
                               observations: [],
                               coverage: null,
+                              ...mappedFormData,
                               structuralMetadata: {
+                                  ...mappedFormData.structuralMetadata,
                                   tables: structuralMetadata,
                               },
-                              ...mappedFormData,
                           },
                       },
                   }
@@ -525,12 +527,13 @@ const CreateDataset = ({
                           metadata: {
                               observations: [],
                               coverage: null,
-                              structuralMetadata: {
-                                  tables: structuralMetadata,
-                              },
                               ...mappedFormData,
                               issued: today,
                               modified: today,
+                              structuralMetadata: {
+                                  ...mappedFormData.structuralMetadata,
+                                  tables: structuralMetadata,
+                              },
                           },
                       },
                   };

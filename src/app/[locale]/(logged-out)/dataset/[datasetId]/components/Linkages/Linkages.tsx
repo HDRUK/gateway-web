@@ -35,7 +35,7 @@ const Linkages = ({ data }: LinkagesProps) => {
 
     const linkageDetails = reduced_linked_dataset_versions.map(item => ({
         linkage_type: item.pivot.linkage_type,
-        id: item.id,
+        dataset_id: item.dataset_id,
         title: item.title,
         shortTitle: item.shortTitle,
     }));

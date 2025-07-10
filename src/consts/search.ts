@@ -4,6 +4,7 @@ const FILTER_TYPE_MAPPING: { [key: string]: string } = {
     publications: "paper",
     collections: "collection",
     data_providers: "dataProvider",
+    data_custodians: "dataProvider",
     tools: "tool",
 };
 

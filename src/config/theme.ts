@@ -225,8 +225,8 @@ const theme = createTheme({
                 }),
             },
             defaultProps: {
-                enterDelay: 500,
-                enterNextDelay: 500,
+                enterDelay: 1000,
+                enterNextDelay: 1000,
             },
         },
         MuiSvgIcon: {
@@ -727,7 +727,20 @@ const theme = createTheme({
             },
         },
         MuiChip: {
+            styleOverrides: {
+                root: {
+                    "& .MuiChip-deleteIcon": {
+                        color: colors.black,
+                    },
+                },
+            },
             variants: [
+                {
+                    props: { color: "success" },
+                    style: {
+                        background: colors.green400,
+                    },
+                },
                 {
                     props: { color: "warningCustom" },
                     style: {

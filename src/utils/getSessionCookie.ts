@@ -5,7 +5,7 @@ import { sessionCookie } from "@/config/session";
 
 export const getSessionCookie = async () => {
     const cookieStore = await cookies();
-    const { value } = cookieStore.get(sessionCookie)!;
-
-    return value;
+    const session = cookieStore.get(sessionCookie);
+    const token = session?.value ?? "N/A";
+    return token;
 };

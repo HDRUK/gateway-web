@@ -191,7 +191,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                     content: <QuestionItem task={t} setTasks={setTasks} />,
                 })),
         }),
-        [tasks, isLoading]
+        [t, tasks]
     );
 
     const initalQuestionBankBoard = useMemo(
@@ -217,7 +217,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                     };
                 }),
         }),
-        [tasks, isLoading]
+        [t, tasks]
     );
 
     useEffect(() => {
@@ -285,33 +285,39 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [boardSections]);
 
-    const tabsList = tasks.length > 0 && [
-        {
-            label: "Select Questions",
-            value: "select",
-            content: tasks.length > 0 && (
-                <TaskBoard
-                    boardSections={boardSections}
-                    setBoardSections={setBoardSections}
-                    anchoredErrorCallback={anchoredErrorCallback}
-                />
-            ),
-        },
-        {
-            label: "Preview",
-            value: "preview",
-            content:
-                tasks.length > 0 ? (
-                    <PreviewTemplate
-                        questions={tasks
-                            .filter(t => t.boardId === SELECTED_BOARD_ID)
-                            .sort((a, b) => a.order - b.order)}
-                    />
-                ) : (
-                    <Loading />
-                ),
-        },
-    ];
+    const tabsList = useMemo(
+        () =>
+            tasks.length > 0 && [
+                {
+                    label: "Select Questions",
+                    value: "select",
+                    content: tasks.length > 0 && (
+                        <TaskBoard
+                            boardSections={boardSections}
+                            setBoardSections={setBoardSections}
+                            anchoredErrorCallback={anchoredErrorCallback}
+                        />
+                    ),
+                },
+                {
+                    label: "Preview",
+                    value: "preview",
+                    content:
+                        tasks.length > 0 ? (
+                            <PreviewTemplate
+                                questions={tasks
+                                    .filter(
+                                        t => t.boardId === SELECTED_BOARD_ID
+                                    )
+                                    .sort((a, b) => a.order - b.order)}
+                            />
+                        ) : (
+                            <Loading />
+                        ),
+                },
+            ],
+        [boardSections, tasks]
+    );
 
     if (isLoading) {
         return <Loading />;

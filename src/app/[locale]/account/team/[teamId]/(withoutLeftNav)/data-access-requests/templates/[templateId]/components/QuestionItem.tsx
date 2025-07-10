@@ -1,4 +1,10 @@
-import { useEffect, useState, useMemo, Dispatch, SetStateAction } from "react";
+import React, {
+    useMemo,
+    Dispatch,
+    SetStateAction,
+    useState,
+    useEffect,
+} from "react";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -44,11 +50,12 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
 
     const allowEditRequired = useMemo(
         () => !currentTask.force_required,
-        [currentTask]
+        [currentTask.force_required]
     );
+
     const allowEditGuidance = useMemo(
         () => currentTask.allow_guidance_override,
-        [currentTask]
+        [currentTask.allow_guidance_override]
     );
     const allowEdit = useMemo(
         () => allowEditRequired || allowEditGuidance,
@@ -134,7 +141,57 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         });
     };
 
-    const showLock = useMemo(() => !!currentTask.required, [currentTask]);
+    const showLock = useMemo(
+        () => !!currentTask.required,
+        [currentTask.required]
+    );
+
+    const parentLabel = useMemo(() => t("parentQuestionOption"), [t]);
+    const lockTooltip = useMemo(() => t("forcedRequired"), [t]);
+
+    const nestedOptions = useMemo(() => {
+        return currentTask?.options?.map(option => (
+            <Accordion
+                key={option.label}
+                heading={
+                    <Typography>
+                        {parentLabel}: ({option.label})
+                    </Typography>
+                }
+                contents={
+                    option?.children.length ? (
+                        option?.children?.map(child => (
+                            <Box key={child.id}>
+                                <Typography
+                                    gutterBottom
+                                    variant="h4"
+                                    component="p"
+                                    sx={{ mb: 1 }}>
+                                    <b>{child.title}</b>
+                                </Typography>
+                                <Typography
+                                    sx={{ p: 1, pl: 0 }}
+                                    gutterBottom
+                                    variant="h5"
+                                    component="p">
+                                    {child.guidance}
+                                </Typography>
+                                <Typography>
+                                    <Chip
+                                        variant="outlined"
+                                        label={child.component}
+                                        color="primary"
+                                    />
+                                </Typography>
+                            </Box>
+                        ))
+                    ) : (
+                        <Typography>{t("noNestedQuestions")}</Typography>
+                    )
+                }
+            />
+        ));
+    }, [currentTask, parentLabel, t]);
 
     return (
         <Card
@@ -207,58 +264,12 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                         />
                     </Typography>
 
-                    <Box sx={{ mt: 2, p: 0 }}>
-                        {currentTask?.options?.map(option => (
-                            <Accordion
-                                key={option.label}
-                                heading={
-                                    <Typography>
-                                        {t("parentQuestionOption")}: (
-                                        {option.label})
-                                    </Typography>
-                                }
-                                contents={
-                                    option?.children.length ? (
-                                        option?.children?.map(child => (
-                                            <Box>
-                                                <Typography
-                                                    gutterBottom
-                                                    variant="h4"
-                                                    component="p"
-                                                    sx={{ mb: 1 }}>
-                                                    <b>{child.title}</b>
-                                                </Typography>
-                                                <Typography
-                                                    sx={{ p: 1, pl: 0 }}
-                                                    gutterBottom
-                                                    variant="h5"
-                                                    component="p">
-                                                    {child.guidance}
-                                                </Typography>
-
-                                                <Typography>
-                                                    <Chip
-                                                        variant="outlined"
-                                                        label={child.component}
-                                                        color="primary"
-                                                    />
-                                                </Typography>
-                                            </Box>
-                                        ))
-                                    ) : (
-                                        <Typography>
-                                            {t("noNestedQuestions")}
-                                        </Typography>
-                                    )
-                                }
-                            />
-                        ))}
-                    </Box>
+                    <Box sx={{ mt: 2, p: 0 }}>{nestedOptions}</Box>
                 </Box>
             </CardContent>
             {showLock && (
                 <TooltipIcon
-                    content={<div>{t("forcedRequired")}</div>}
+                    content={<div>{lockTooltip}</div>}
                     icon={<LockIcon sx={{ color: "grey" }} />}
                     label=""
                 />
@@ -267,4 +278,11 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     );
 };
 
-export default QuestionItem;
+export default React.memo(QuestionItem, (prev, next) => {
+    return (
+        prev.task.id === next.task.id &&
+        prev.task.required === next.task.required &&
+        prev.task.guidance === next.task.guidance &&
+        prev.task.hasChanged === next.task.hasChanged
+    );
+});

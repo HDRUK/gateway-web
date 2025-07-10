@@ -30,7 +30,9 @@ function DesktopNav() {
                 alignItems: "center",
                 textAlign: "center",
                 ml: 4,
-            }}>
+            }}
+            component="nav"
+            aria-label="HDR UK Gateway">
             {navItems.map(item => {
                 if (item.divider) {
                     return (

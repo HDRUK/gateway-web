@@ -44,8 +44,6 @@ function Header() {
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>
             <Container maxWidth="desktop">
                 <Toolbar
-                    component="nav"
-                    aria-label="HDR UK Gateway"
                     disableGutters
                     sx={{
                         pt: 1,

@@ -61,7 +61,7 @@ const DataCustodianNetwork = ({
     const { data, mutate, isLoading } = usePostSwr<
         SearchResultDataCustodianCol[]
     >(
-        `${apis.searchV1Url}/data_provider_colls?view_type=mini&per_page=${SEARCH_PER_PAGE}`,
+        `${apis.searchV1Url}/data_custodian_networks?view_type=mini&per_page=${SEARCH_PER_PAGE}`,
         {
             query: searchParams.query,
             filters: dataCustodianFilters,

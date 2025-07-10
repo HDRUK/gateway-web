@@ -22,6 +22,7 @@ const apis = {
     usersV1Url: `${apiV1Url}/users`,
     usersV2UrlIP: `${apiV2IPUrl}/users`,
     usersV2Url: `${apiV2Url}/users`,
+    secondaryVerification1UrlIP: `${apiV1IPUrl}/users/verify-secondary-email`,
     authGoogleV1Url: `${apiV1Url}/auth/google`,
     authLinkedinV1Url: `${apiV1Url}/auth/linkedin`,
     authAzureV1Url: `${apiV1Url}/auth/azure`,

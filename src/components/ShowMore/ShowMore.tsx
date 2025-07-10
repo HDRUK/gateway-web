@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
+import { SxProps } from "@mui/material";
 import getNodeDimensions from "get-node-dimensions";
 import { useTranslations } from "next-intl";
 import ShowMoreButton from "./ShowMoreButton";
@@ -6,9 +7,10 @@ import ShowMoreButton from "./ShowMoreButton";
 interface ShowMoreProps {
     children: ReactNode;
     maxHeight: number;
+    sxButton?: SxProps;
 }
 
-const ShowMore = ({ children, maxHeight }: ShowMoreProps) => {
+const ShowMore = ({ children, maxHeight, sxButton }: ShowMoreProps) => {
     const t = useTranslations("components.ShowMore");
     const [needsMoreButton, setNeedsMoreButton] = useState(false);
     const [showAll, setShowAll] = useState(false);
@@ -32,7 +34,8 @@ const ShowMore = ({ children, maxHeight }: ShowMoreProps) => {
             {needsMoreButton && (
                 <ShowMoreButton
                     onClick={() => setShowAll(showAll => !showAll)}
-                    open={showAll}>
+                    open={showAll}
+                    sxButton={sxButton}>
                     {showAll ? t("showLess") : t("showMore")}
                 </ShowMoreButton>
             )}

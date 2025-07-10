@@ -137,6 +137,7 @@ interface Metadata {
 
 export interface ReducedLinkedDatasetVersions {
     id: number;
+    dataset_id: number;
     title: string;
     shortTitle: string;
     pivot: {

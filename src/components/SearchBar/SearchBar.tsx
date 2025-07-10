@@ -61,7 +61,7 @@ const SearchBar = ({
                 </>
             )}
 
-            <SearchForm onSubmit={handleSubmit(submitAction)}>
+            <SearchForm onSubmit={handleSubmit(submitAction)} role="search">
                 <InputWrapper
                     onClick={() =>
                         inputOverrideAction && inputOverrideAction()

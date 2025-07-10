@@ -30,20 +30,7 @@ export default function DatasetContent({
                 length: datasetsLatestVersions.length,
             })}
             contents={datasetsLatestVersions.map(
-                (
-                    {
-                        metadata: {
-                            metadata: {
-                                summary: {
-                                    shortTitle,
-                                    datasetType,
-                                    populationSize,
-                                },
-                            },
-                        },
-                    },
-                    dataset_id: number
-                ) => (
+                ({ shortTitle, datasetType, populationSize, dataset_id }) => (
                     <>
                         <Link href={`/${RouteName.DATASET_ITEM}/${dataset_id}`}>
                             {shortTitle}

@@ -11,9 +11,6 @@ import { logger } from "@/utils/logger";
 export async function GET() {
     const session = await getSessionCookie();
 
-    if (!session) {
-        return NextResponse.json({ error: "no session" }, { status: 401 });
-    }
     const cookieStore = await cookies();
     const jwtToken = cookieStore.get(config.JWT_COOKIE)?.value;
 
