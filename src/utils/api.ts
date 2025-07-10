@@ -460,13 +460,13 @@ async function getDataUse(
     dataUseId: string,
     options?: GetOptions
 ): Promise<DataUse> {
-    const dataUse = await get<DataUse[]>(
+    const dataUse = await get<DataUse>(
         cookieStore,
         `${apis.dataUseV2UrlIP}/${dataUseId}`,
         options
     );
 
-    return dataUse?.[0];
+    return dataUse;
 }
 
 async function getTool(
