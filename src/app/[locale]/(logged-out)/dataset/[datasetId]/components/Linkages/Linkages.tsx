@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Dataset } from "@/interfaces/Dataset";
+import { Linkage } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Paper from "@/components/Paper";
@@ -12,37 +12,24 @@ import useDialog from "@/hooks/useDialog";
 const TRANSLATION_PATH = "pages.dataset.components.Linkages";
 
 interface LinkagesProps {
-    data: Dataset;
+    linkages: Linkage[];
 }
 
-const Linkages = ({ data }: LinkagesProps) => {
+const Linkages = ({ linkages }: LinkagesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
 
-    const { reduced_linked_dataset_versions } = data.versions[0];
-
-    const linkageCounts = Object.entries(
-        reduced_linked_dataset_versions.reduce<Record<string, number>>(
-            (counts, { pivot: { linkage_type } }) => {
-                return {
-                    ...counts,
-                    [linkage_type]: (counts[linkage_type] || 0) + 1,
-                };
-            },
-            {} as Record<string, number>
-        )
-    );
-
-    const linkageDetails = reduced_linked_dataset_versions.map(item => ({
-        linkage_type: item.pivot.linkage_type,
-        dataset_id: item.dataset_id,
-        title: item.title,
-        shortTitle: item.shortTitle,
-    }));
-
-    if (!linkageCounts.length) {
+    if (!linkages) {
         return null;
     }
+
+    const linkageCounts = Object.entries(
+        linkages.reduce<Record<string, number>>((counts, linkage) => {
+            const { linkage_type } = linkage;
+            counts[linkage_type] = (counts[linkage_type] || 0) + 1;
+            return counts;
+        }, {})
+    );
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
@@ -54,8 +41,7 @@ const Linkages = ({ data }: LinkagesProps) => {
                         text={t(type, { count })}
                         onClick={() =>
                             showDialog(DatasetRelationshipDialog, {
-                                datasetId: data.id,
-                                linkageDetails: linkageDetails.filter(
+                                linkageDetails: linkages.filter(
                                     linkage => linkage.linkage_type === type
                                 ),
                             })
