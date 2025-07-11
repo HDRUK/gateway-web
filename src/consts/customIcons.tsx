@@ -702,6 +702,21 @@ const SortDateDescIcon = createSvgIcon(
     "SortDateDescIcon"
 );
 
+const PanelExpandIcon = createSvgIcon(
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none">
+        <path
+            d="M16.8333 16V8L12.8333 12L16.8333 16ZM5.33325 21C4.78325 21 4.31242 20.8042 3.92075 20.4125C3.52909 20.0208 3.33325 19.55 3.33325 19V5C3.33325 4.45 3.52909 3.97917 3.92075 3.5875C4.31242 3.19583 4.78325 3 5.33325 3H19.3333C19.8833 3 20.3541 3.19583 20.7458 3.5875C21.1374 3.97917 21.3333 4.45 21.3333 5V19C21.3333 19.55 21.1374 20.0208 20.7458 20.4125C20.3541 20.8042 19.8833 21 19.3333 21H5.33325ZM8.33325 19V5H5.33325V19H8.33325ZM10.3333 19H19.3333V5H10.3333V19Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "PanelExpandIcon"
+);
+
 export {
     BookmarksOutlinedIcon,
     BookmarkBorderIcon,
@@ -737,4 +752,5 @@ export {
     SortAlphabeticalDescIcon,
     SortDateAscIcon,
     SortDateDescIcon,
+    PanelExpandIcon,
 };
