@@ -183,6 +183,13 @@ export interface ReducedDataset {
     dataCustodian: string;
 }
 
+interface Linkage {
+    title: string;
+    url?: string;
+    dataset_id?: number;
+    linkage_type: string;
+}
+
 interface Dataset {
     id: number;
     team_id: number;
@@ -202,6 +209,7 @@ interface Dataset {
     team: Team;
     name?: string;
     is_cohort_discovery: boolean;
+    linkages?: Linkage[];
 }
 
 interface DataCustodianDataset {
@@ -231,4 +239,5 @@ export type {
     Demographics,
     DemographicDisease,
     DemographicGeneric,
+    Linkage,
 };

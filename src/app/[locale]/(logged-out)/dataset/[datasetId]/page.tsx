@@ -193,8 +193,8 @@ export default async function DatasetItemPage({
                                 <Sources
                                     data={datasetVersion.metadata.metadata}
                                 />
-                                {datasetVersion?.reduced_linked_dataset_versions && (
-                                    <Linkages data={data} />
+                                {data?.linkages && (
+                                    <Linkages linkages={data.linkages} />
                                 )}
 
                                 <Publications data={data} />
