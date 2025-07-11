@@ -1,4 +1,4 @@
-import type { Publication } from "./Publication";
+import type { Publication, PublicationHasDatasetVersion } from "./Publication";
 import type { Team } from "./Team";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
@@ -198,7 +198,7 @@ interface Dataset {
     publications_count: number;
     tools_count: number;
     collections_count: number;
-    publications: Publication[];
+    publications: PublicationHasDatasetVersion[];
     team: Team;
     name?: string;
     is_cohort_discovery: boolean;

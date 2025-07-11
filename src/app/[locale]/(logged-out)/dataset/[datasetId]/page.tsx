@@ -90,10 +90,10 @@ export default async function DatasetItemPage({
         tools: data?.tools_count,
         publications: data?.publications_count,
         publications_about: data?.publications.filter(
-            pub => pub.dataset_versions?.[0].link_type === "ABOUT"
+            pub => pub.link_type === "ABOUT"
         ).length,
         publications_using: data?.publications.filter(
-            pub => pub.dataset_versions?.[0].link_type === "USING"
+            pub => pub.link_type === "USING"
         ).length,
         durs: data?.durs_count,
         collections: data?.collections_count,
