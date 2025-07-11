@@ -19,16 +19,16 @@ const Linkages = ({ linkages }: LinkagesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
 
-    if (!linkages) {
-        return null;
-    }
-
     const linkageCounts = Object.entries(
         linkages.reduce<Record<string, number>>((acc, { linkage_type }) => {
             acc[linkage_type] = (acc[linkage_type] ?? 0) + 1;
             return acc;
         }, {})
     );
+
+    if (!linkageCounts.length) {
+        return null;
+    }
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
