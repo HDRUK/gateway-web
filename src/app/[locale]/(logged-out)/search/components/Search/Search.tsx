@@ -5,6 +5,7 @@ import {
     useCallback,
     useEffect,
     useMemo,
+    useRef,
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
@@ -21,6 +22,7 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
+import zIndex from "@mui/material/styles/zIndex";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -115,6 +117,7 @@ import {
     CloseIcon,
     DownloadIcon,
     FilterAltOutlinedIcon,
+    PanelExpandIcon,
     TableIcon,
 } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
@@ -152,6 +155,20 @@ interface SearchProps {
     cohortDiscovery: PageTemplatePromo;
 }
 
+const filterSidebarWidth = 350;
+
+const filterSidebarStyles = {
+    width: filterSidebarWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    "& .MuiDrawer-paper": {
+        width: filterSidebarWidth,
+        position: "relative",
+        boxSizing: "border-box",
+        background: "none",
+    },
+};
+
 const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
@@ -167,6 +184,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showSidebar } = useSidebar();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+
     const isTabletOrLaptop = useMediaQuery(
         theme.breakpoints.between("tablet", "desktop")
     );
@@ -898,29 +916,70 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         [selectedFilters]
     );
 
+    const [filterSidebarOpen, setFilterSidebarOpen] = useState(true);
+
+    const iconRef = useRef<HTMLButtonElement>(null);
+
+    const easing =
+        theme.transitions.easing[filterSidebarOpen ? "easeOut" : "easeIn"];
+    const duration =
+        theme.transitions.duration[
+            filterSidebarOpen ? "enteringScreen" : "leavingScreen"
+        ];
+
+    const filterSidebarButtonStyles = {
+        position: "absolute",
+        zIndex: zIndex.modal,
+        borderRadius: "50%",
+        backgroundColor: colors.white,
+        width: "48px",
+        height: "48px",
+        top: 20,
+        m: 0,
+        left: filterSidebarOpen ? 290 : 20,
+        "&:hover": {
+            backgroundColor: colors.grey300,
+        },
+        transition: theme.transitions.create("left", {
+            easing,
+            duration,
+        }),
+    };
+
+    const mainContentStyles = {
+        flexGrow: 1,
+        transition: theme.transitions.create("margin", {
+            easing,
+            duration,
+        }),
+        marginLeft: filterSidebarOpen || isMobile ? 0 : `-280px`,
+    };
+
     return (
         <>
             {/* Filter Drawer */}
-            <Drawer
-                anchor="top"
-                open={filterDrawerOpen}
-                onClose={toggleFilterDrawer(false)}>
-                <Box sx={{ mt: 0, pt: 2, backgroundColor: colors.grey }}>
-                    <IconButton
-                        data-testid="dialog-close-icon"
-                        aria-label="close"
-                        onClick={toggleFilterDrawer(false)}
-                        sx={{
-                            position: "absolute",
-                            right: 8,
-                            top: 30,
-                            color: colors.purple500,
-                        }}>
-                        <CloseIcon />
-                    </IconButton>
-                    {filterPanel}
-                </Box>
-            </Drawer>
+            {isMobile && (
+                <Drawer
+                    anchor="top"
+                    open={filterDrawerOpen}
+                    onClose={toggleFilterDrawer(false)}>
+                    <Box sx={{ mt: 0, pt: 2, backgroundColor: colors.grey }}>
+                        <IconButton
+                            data-testid="dialog-close-icon"
+                            aria-label="close"
+                            onClick={toggleFilterDrawer(false)}
+                            sx={{
+                                position: "absolute",
+                                right: 8,
+                                top: 30,
+                                color: colors.purple500,
+                            }}>
+                            <CloseIcon />
+                        </IconButton>
+                        {filterPanel}
+                    </Box>
+                </Drawer>
+            )}
 
             <Box
                 display={{
@@ -1051,36 +1110,55 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 </Box>
                 <Box
                     sx={{
+                        display: "flex",
                         width: "100%",
-                        display: {
-                            mobile: "block",
-                            tablet: "grid",
-                        },
-                        gridTemplateColumns: {
-                            tablet: "repeat(7, 1fr)",
-                        },
-                        gap: {
-                            mobile: 0,
-                            tablet: 1,
-                        },
+                        position: "relative",
                     }}>
-                    <Box
-                        sx={{
-                            gridColumn: {
-                                tablet: "span 2",
-                                laptop: "span 2",
-                            },
-                            ml: 3,
-                            mb: 2,
-                            mt: 1,
-                        }}>
-                        {!isMobile && filterPanel}
-                    </Box>
-                    <Box
-                        sx={{
-                            gridColumn: { tablet: "span 5", laptop: "span 5" },
-                        }}
-                        component="section">
+                    {!isMobile && (
+                        <>
+                            <IconButton
+                                ref={iconRef}
+                                size="large"
+                                edge="start"
+                                onClick={() =>
+                                    setFilterSidebarOpen(!filterSidebarOpen)
+                                }
+                                sx={filterSidebarButtonStyles}
+                                color="secondary">
+                                <PanelExpandIcon
+                                    sx={{
+                                        transform: `scaleX(${
+                                            filterSidebarOpen ? 1 : -1
+                                        })`,
+                                    }}
+                                />
+                            </IconButton>
+
+                            {/* Filter Sidebar */}
+                            <Drawer
+                                sx={filterSidebarStyles}
+                                variant="persistent"
+                                anchor="left"
+                                PaperProps={{
+                                    sx: {
+                                        boxShadow: "none",
+                                        border: 0,
+                                    },
+                                }}
+                                open={filterSidebarOpen}>
+                                <Box
+                                    sx={{
+                                        ml: 3,
+                                        mb: 2,
+                                        mt: 1,
+                                    }}>
+                                    {filterPanel}
+                                </Box>
+                            </Drawer>
+                        </>
+                    )}
+
+                    <Box component="section" sx={mainContentStyles}>
                         <Box
                             sx={{
                                 display: "flex",

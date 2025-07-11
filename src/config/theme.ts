@@ -197,6 +197,9 @@ const theme = createTheme({
             desktop: 1280,
         },
     },
+    transitions: {
+        duration: { enteringScreen: 400, leavingScreen: 400 },
+    },
     palette,
     components: {
         MuiIconButton: {
