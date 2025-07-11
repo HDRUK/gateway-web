@@ -24,10 +24,9 @@ const Linkages = ({ linkages }: LinkagesProps) => {
     }
 
     const linkageCounts = Object.entries(
-        linkages.reduce<Record<string, number>>((counts, linkage) => {
-            const { linkage_type } = linkage;
-            counts[linkage_type] = (counts[linkage_type] || 0) + 1;
-            return counts;
+        linkages.reduce<Record<string, number>>((acc, { linkage_type }) => {
+            acc[linkage_type] = (acc[linkage_type] ?? 0) + 1;
+            return acc;
         }, {})
     );
 
