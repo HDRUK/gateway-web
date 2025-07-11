@@ -2,7 +2,7 @@ import { DatasetRelationship } from "@/config/forms/tool";
 import type { DataUse } from "./DataUse";
 import type { Tool } from "./Tool";
 
-interface PublicationHasDatasetVersion {
+export interface PublicationHasDatasetVersion {
     link_type: string;
     id: number;
     publication_id: number;
