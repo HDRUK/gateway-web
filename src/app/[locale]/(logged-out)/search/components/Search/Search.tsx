@@ -1165,9 +1165,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                m: 2,
-                                ml: 0,
-                                mr: 0,
+                                my: 2,
+                                mx: 0,
                             }}
                             aria-busy={isSearching}>
                             <Box
