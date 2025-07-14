@@ -953,6 +953,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             duration,
         }),
         marginLeft: filterSidebarOpen || isMobile ? 0 : `-280px`,
+        padding: `0 ${theme.spacing(2)}`,
+        width: `calc(100% - ${filterSidebarWidth}px)`,
     };
 
     return (
@@ -1164,6 +1166,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                 display: "flex",
                                 flexDirection: "column",
                                 m: 2,
+                                ml: 0,
+                                mr: 0,
                             }}
                             aria-busy={isSearching}>
                             <Box
@@ -1422,11 +1426,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             </>
                                         )}
 
-                                        <section
+                                        <Box
+                                            component="section"
                                             aria-describedby="result-summary"
-                                            aria-label="results list">
+                                            aria-label="results list"
+                                            sx={{
+                                                p: `0 ${theme.spacing(2)}`,
+                                            }}>
                                             {renderResults()}
-                                        </section>
+                                        </Box>
                                     </>
                                 )}
                             <Pagination
