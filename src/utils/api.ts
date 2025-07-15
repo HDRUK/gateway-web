@@ -459,6 +459,20 @@ async function getTool(
     return tool;
 }
 
+async function getReducedTool(
+    cookieStore: ReadonlyRequestCookies,
+    toolId: string,
+    options?: GetOptions
+): Promise<Tool> {
+    const collection = await get<Tool>(
+        cookieStore,
+        `${apis.toolsV1UrlIP}/${toolId}?view_type=mini`,
+        options
+    );
+
+    return collection;
+}
+
 async function getReducedCollection(
     cookieStore: ReadonlyRequestCookies,
     collectionId: string,
@@ -739,6 +753,7 @@ async function getDarTemplatesCount(
 export {
     getApplication,
     getCohort,
+    getReducedTool,
     getReducedCollection,
     getDataCustodianNetworks,
     getDataset,

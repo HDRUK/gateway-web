@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { TableContainer, Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -103,7 +103,15 @@ const getColumns = ({
             return (
                 <div style={{ textAlign: "center" }}>
                     {isNumber && (
-                        <Link href={linkHref}>
+                        <Link
+                            href={linkHref}
+                            onFocus={e => {
+                                e.currentTarget.scrollIntoView({
+                                    behavior: "smooth",
+                                    inline: "center",
+                                    block: "nearest",
+                                });
+                            }}>
                             <EllipsisLineLimit
                                 text={get(original, PUBLISHER_NAME_PATH)}
                             />
@@ -315,22 +323,21 @@ const ResultTable = ({
             sx={{
                 p: 0,
                 border: "1px solid lightgray",
-                overflowX: "scroll",
-                width: "100%",
-                position: "relative",
                 mb: 4,
             }}>
-            <Table<SearchResultDataset>
-                columns={getColumns({
-                    translations,
-                    libraryData,
-                    showLibraryModal,
-                    mutateLibraries,
-                    isCohortDiscoveryDisabled,
-                    cohortDiscovery,
-                })}
-                rows={results}
-            />
+            <TableContainer>
+                <Table<SearchResultDataset>
+                    columns={getColumns({
+                        translations,
+                        libraryData,
+                        showLibraryModal,
+                        mutateLibraries,
+                        isCohortDiscoveryDisabled,
+                        cohortDiscovery,
+                    })}
+                    rows={results}
+                />
+            </TableContainer>
         </Paper>
     );
 };

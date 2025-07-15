@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { Tooltip } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
-import { Aggregations } from "@/interfaces/Search";
+import { Aggregations, SearchCategory } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
@@ -43,12 +43,15 @@ import {
     FILTER_DATA_PROVIDER,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
+import { colors } from "@/config/theme";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
 import {
     formatBucketCounts,
     groupByType,
+    isQueryEmpty,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
+import { ClearButton } from "../ClearFilterButton/ClearFilterButton.styles";
 import DateRangeFilter from "../DateRangeFilter";
 import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
 import PopulationFilter from "../PopulationFilter";
@@ -125,6 +128,37 @@ type DefaultValues = {
     [key: string]: { [key: string]: boolean };
 };
 
+const EMPTY_FILTERS = {
+    [FILTER_PUBLISHER_NAME]: {},
+    [FILTER_DATA_CUSTODIAN_NETWORK]: {},
+    [FILTER_COLLECTION_NAME]: {},
+    [FILTER_COLLECTION_NAMES]: {},
+    [FILTER_DATA_USE_TITLES]: {},
+    [FILTER_GEOGRAPHIC_LOCATION]: {},
+    [FILTER_DATE_RANGE]: {},
+    [FILTER_PUBLICATION_DATE]: {},
+    [FILTER_PUBLICATION_TYPE]: {},
+    [FILTER_ACCESS_SERVICE]: {},
+    [FILTER_PROGRAMMING_LANGUAGE]: {},
+    [FILTER_TYPE_CATEGORY]: {},
+    [FILTER_SECTOR]: {},
+    [FILTER_MATERIAL_TYPE]: {},
+    [FILTER_DATA_TYPE]: {},
+    [FILTER_DATA_SUBTYPE]: {},
+    [FILTER_FORMAT_STANDARDS]: {},
+};
+
+const filterCountStyles = {
+    borderRadius: "50%",
+    backgroundColor: colors.green400,
+    width: "25px",
+    height: "25px",
+    color: colors.white,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+};
+
 const FilterPanel = ({
     filterCategory,
     filterSourceData,
@@ -134,6 +168,7 @@ const FilterPanel = ({
     updateStaticFilter,
     getParamString,
     showEuropePmcModal,
+    resetQueryParamState,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
@@ -146,31 +181,19 @@ const FilterPanel = ({
     updateStaticFilter: (filterSection: string, value: string) => void;
     getParamString: (paramName: string) => string | null;
     showEuropePmcModal: () => void;
+    resetQueryParamState: (selectedType: SearchCategory) => void;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
+    const tRoot = useTranslations(TRANSLATION_PATH);
+
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const router = useRouter();
     const fireGTMEvent = useGTMEvent();
 
     // filterValues controls the selected values of each filter
-    const [filterValues, setFilterValues] = useState<DefaultValues>({
-        [FILTER_PUBLISHER_NAME]: {},
-        [FILTER_DATA_CUSTODIAN_NETWORK]: {},
-        [FILTER_COLLECTION_NAME]: {},
-        [FILTER_COLLECTION_NAMES]: {},
-        [FILTER_DATA_USE_TITLES]: {},
-        [FILTER_GEOGRAPHIC_LOCATION]: {},
-        [FILTER_DATE_RANGE]: {},
-        [FILTER_PUBLICATION_DATE]: {},
-        [FILTER_PUBLICATION_TYPE]: {},
-        [FILTER_ACCESS_SERVICE]: {},
-        [FILTER_PROGRAMMING_LANGUAGE]: {},
-        [FILTER_TYPE_CATEGORY]: {},
-        [FILTER_SECTOR]: {},
-        [FILTER_MATERIAL_TYPE]: {},
-        [FILTER_DATA_TYPE]: {},
-        [FILTER_DATA_SUBTYPE]: {},
-        [FILTER_FORMAT_STANDARDS]: {},
-    });
+    const [filterValues, setFilterValues] =
+        useState<DefaultValues>(EMPTY_FILTERS);
 
     const [staticFilterValues, setStaticFilterValues] = useState<DefaultValues>(
         {
@@ -334,6 +357,27 @@ const FilterPanel = ({
         setFilterQueryParams([], filterSection);
     };
 
+    const resetAllFilters = () => {
+        setFilterValues(EMPTY_FILTERS);
+
+        const type = searchParams.get("type");
+        const sort = searchParams.get("sort");
+        const newParams = new URLSearchParams();
+        if (type) {
+            newParams.set("type", type);
+        }
+        if (sort) {
+            newParams.set("sort", sort);
+        }
+
+        const newPath = `${pathname}?${newParams.toString()}`;
+        router.push(newPath, { scroll: false });
+
+        resetQueryParamState(
+            type ? (type as SearchCategory) : SearchCategory.DATASETS
+        );
+    };
+
     const updateCheckboxes = (
         updatedCheckbox: { [key: string]: boolean },
         filterSection: string
@@ -491,7 +535,27 @@ const FilterPanel = ({
     };
 
     return (
-        <>
+        <aside aria-label="filters">
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: 1,
+                    mt: 1,
+                    backgroundColor: colors.grey,
+                }}>
+                <Typography variant="h2">{tRoot("filterResults")}</Typography>
+
+                {!isQueryEmpty(selectedFilters) && (
+                    <ClearButton
+                        variant="link"
+                        onClick={resetAllFilters}
+                        sx={{ m: 0 }}>
+                        {tRoot("clearAll")}
+                    </ClearButton>
+                )}
+            </Box>
+
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
 
@@ -516,6 +580,11 @@ const FilterPanel = ({
                                     label
                                 )
                             }
+                            containerSx={
+                                label === FILTER_CONTAINS_TISSUE
+                                    ? { pt: 1 }
+                                    : { pb: 1 }
+                            }
                         />
                     );
                 }
@@ -532,8 +601,16 @@ const FilterPanel = ({
                     <Accordion
                         key={label}
                         sx={{
-                            background: "transparent",
+                            background: colors.white,
                             boxShadow: "none",
+                            mt: 0.5,
+                            mb: 0.5,
+                            border: 0,
+                            "&:before": { display: "none" },
+                            "&.MuiAccordion-root.Mui-expanded": {
+                                mt: 0.5,
+                                mb: 0.5,
+                            },
                             ...(isPublicationSource && {
                                 ".MuiAccordionSummary-expandIconWrapper": {
                                     opacity: 0,
@@ -562,13 +639,38 @@ const FilterPanel = ({
                                 <Tooltip
                                     describeChild
                                     placement="right"
-                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}>
+                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}
+                                    style={{ width: "100%" }}>
                                     <div>
-                                        <Typography
-                                            fontWeight="400"
-                                            fontSize={20}>
-                                            {t(label)}
-                                        </Typography>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                p: 0,
+                                                justifyContent: "space-between",
+                                                width: "100%",
+                                            }}>
+                                            <Typography
+                                                fontWeight="400"
+                                                fontSize={20}>
+                                                {t(label)}
+                                            </Typography>
+                                            {filterValues[label] &&
+                                                !!Object.entries(
+                                                    filterValues[label]
+                                                ).length && (
+                                                    <Typography
+                                                        sx={filterCountStyles}>
+                                                        {
+                                                            Object.entries(
+                                                                filterValues[
+                                                                    label
+                                                                ]
+                                                            ).length
+                                                        }
+                                                    </Typography>
+                                                )}
+                                        </Box>
                                     </div>
                                 </Tooltip>
                             </Box>
@@ -584,7 +686,7 @@ const FilterPanel = ({
                     />
                 );
             })}
-        </>
+        </aside>
     );
 };
 

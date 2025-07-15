@@ -197,6 +197,9 @@ const theme = createTheme({
             desktop: 1280,
         },
     },
+    transitions: {
+        duration: { enteringScreen: 400, leavingScreen: 400 },
+    },
     palette,
     components: {
         MuiIconButton: {
@@ -727,7 +730,20 @@ const theme = createTheme({
             },
         },
         MuiChip: {
+            styleOverrides: {
+                root: {
+                    "& .MuiChip-deleteIcon": {
+                        color: colors.black,
+                    },
+                },
+            },
             variants: [
+                {
+                    props: { color: "success" },
+                    style: {
+                        background: colors.green400,
+                    },
+                },
                 {
                     props: { color: "warningCustom" },
                     style: {

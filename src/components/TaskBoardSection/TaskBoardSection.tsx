@@ -43,17 +43,9 @@ const TaskBoardSection = ({
                     strategy={verticalListSortingStrategy}>
                     <div ref={setNodeRef}>
                         {tasks?.map(task => (
-                            <Box
-                                key={task.id}
-                                sx={{
-                                    p: 0,
-                                    m: 0,
-                                    mb: 2,
-                                }}>
-                                <SortableItem id={task.id}>
-                                    {task.content}
-                                </SortableItem>
-                            </Box>
+                            <SortableItem key={task.id} itemId={task.id}>
+                                {task.content}
+                            </SortableItem>
                         ))}
                     </div>
                 </SortableContext>

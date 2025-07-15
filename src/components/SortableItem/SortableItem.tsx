@@ -1,13 +1,14 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import Box from "@/components/Box";
 
 type SortableItemProps = {
     children: React.ReactNode;
-    id: number | string;
+    itemId: number | string;
 };
 
-const SortableItem = ({ children, id }: SortableItemProps) => {
+const SortableItem = React.memo(({ children, itemId }: SortableItemProps) => {
     const {
         attributes,
         listeners,
@@ -15,7 +16,7 @@ const SortableItem = ({ children, id }: SortableItemProps) => {
         transform,
         transition,
         isDragging,
-    } = useSortable({ id });
+    } = useSortable({ id: itemId });
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -25,9 +26,17 @@ const SortableItem = ({ children, id }: SortableItemProps) => {
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-            {children}
+            <Box
+                sx={{
+                    p: 0,
+                    m: 0,
+                    mb: 2,
+                }}
+                key={itemId}>
+                {children}
+            </Box>
         </div>
     );
-};
+});
 
 export default SortableItem;

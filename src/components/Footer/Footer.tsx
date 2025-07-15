@@ -1,6 +1,7 @@
 "use client";
 
 import { Box } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { RouteName } from "@/consts/routeName";
@@ -116,6 +117,14 @@ const Footer = () => {
                     </li>
                 </FooterLinksContainer>
             </FooterContainer>
+
+            <div
+                role="note"
+                // eslint-disable-next-line
+                tabIndex={0}
+                style={visuallyHidden}>
+                end of page
+            </div>
         </FooterWrapper>
     );
 };
