@@ -18,6 +18,7 @@ const apis = {
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",
     signInV1UrlIP: `${apiV1IPUrl}/auth`,
+    usersV1Url: `${apiV1Url}/users`,
     usersV1UrlIP: `${apiV1IPUrl}/users`,
     secondaryVerification1UrlIP: `${apiV1IPUrl}/users/verify-secondary-email`,
     authGoogleV1Url: `${apiV1Url}/auth/google`,

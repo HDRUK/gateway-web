@@ -15,10 +15,9 @@ exports[`Pagination renders without crashing 1`] = `
         <li>
           <button
             aria-label="Go to previous page"
-            class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded Mui-disabled MuiPaginationItem-previousNext mui-style-18irgz1-MuiButtonBase-root-MuiPaginationItem-root"
+            class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-previousNext mui-style-18irgz1-MuiButtonBase-root-MuiPaginationItem-root"
             data-testid="pagination-item"
-            disabled=""
-            tabindex="-1"
+            tabindex="0"
             type="button"
           >
             <svg
