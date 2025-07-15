@@ -1,3 +1,10 @@
+## [2.14.2](https://github.com/HDRUK/gateway-web/compare/v2.14.1...v2.14.2) (2025-07-11)
+
+### 🐛 Bug Fixes
+
+* **GAT-7600:** Fix the path to publication data in dataset payload  (#1258) ([866aec6](https://github.com/HDRUK/gateway-web/commit/866aec6338a8e9ba4a3be002af3a994f70c7188f))
+* **GAT-7600:** Use dataset linkages correctly (#1257) ([a8da0bf](https://github.com/HDRUK/gateway-web/commit/a8da0bf93b7952efbac602279e37200388672324)), closes [GAT-7600](GAT-7600)
+
 ## [2.14.1](https://github.com/HDRUK/gateway-web/compare/v2.14.0...v2.14.1) (2025-07-07)
 
 ### 🐛 Bug Fixes

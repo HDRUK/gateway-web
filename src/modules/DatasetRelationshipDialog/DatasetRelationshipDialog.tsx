@@ -132,41 +132,49 @@ const DatasetRelationshipDialog = ({
                                 }}
                                 gap={2}>
                                 <div>
-                                    <Link
-                                        href={`/${RouteName.DATASET_ITEM}/${linkage.dataset_id}`}>
-                                        <Typography
-                                            variant="h3"
-                                            component="p"
-                                            onClick={() => hideDialog()}>
+                                    {linkage?.dataset_id ? (
+                                        <Link
+                                            href={`/${RouteName.DATASET_ITEM}/${linkage.dataset_id}`}>
+                                            <Typography
+                                                variant="h3"
+                                                component="p"
+                                                onClick={() => hideDialog()}>
+                                                {linkage.title}
+                                            </Typography>
+                                        </Link>
+                                    ) : (
+                                        <Typography variant="h3" component="p">
                                             {linkage.title}
                                         </Typography>
-                                    </Link>
+                                    )}
                                 </div>
-                                <Button
-                                    onClick={() =>
-                                        handleToggleLibraryItem(
-                                            linkage.id.toString(),
+                                {linkage?.dataset_id && (
+                                    <Button
+                                        onClick={() =>
+                                            handleToggleLibraryItem(
+                                                linkage.id.toString(),
+                                                isAddedToLibrary
+                                            )
+                                        }
+                                        variant="outlined"
+                                        aria-label={
                                             isAddedToLibrary
-                                        )
-                                    }
-                                    variant="outlined"
-                                    aria-label={
-                                        isAddedToLibrary
-                                            ? t("removeFromLibrary")
-                                            : `${t("addToLibrary")} for
+                                                ? t("removeFromLibrary")
+                                                : `${t("addToLibrary")} for
                                      ${linkage.shortTitle}`
-                                    }
-                                    startIcon={
-                                        isAddedToLibrary ? (
-                                            <Bookmark color="secondary" />
-                                        ) : (
-                                            <BookmarkBorder color="secondary" />
-                                        )
-                                    }>
-                                    {isAddedToLibrary
-                                        ? t("removeFromLibrary")
-                                        : t("addToLibrary")}
-                                </Button>
+                                        }
+                                        startIcon={
+                                            isAddedToLibrary ? (
+                                                <Bookmark color="secondary" />
+                                            ) : (
+                                                <BookmarkBorder color="secondary" />
+                                            )
+                                        }>
+                                        {isAddedToLibrary
+                                            ? t("removeFromLibrary")
+                                            : t("addToLibrary")}
+                                    </Button>
+                                )}
                             </Box>
                         );
                     })}
