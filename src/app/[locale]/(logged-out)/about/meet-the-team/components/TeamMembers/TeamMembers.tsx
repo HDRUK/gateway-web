@@ -4,9 +4,7 @@ import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { TeamMember } from "@/interfaces/MeetTheTeam";
-import BackButton from "@/components/BackButton";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -25,7 +23,6 @@ const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS = "pages.about";
 export default function TeamMembers({ title, data }: TeamMembersProps) {
     const [activeTeamMember, setActiveTeamMember] = useState<TeamMember>();
     const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MEMBERS);
-    const router = useRouter();
 
     const handleTeamMemberClick = (teamMember: TeamMember) => {
         setActiveTeamMember(teamMember);
@@ -33,10 +30,6 @@ export default function TeamMembers({ title, data }: TeamMembersProps) {
 
     const handleTeamModalCancel = () => {
         setActiveTeamMember(undefined);
-    };
-
-    const handleBackClick = () => {
-        router.push("/");
     };
 
     const content = data.teamList?.map(teamMember => {
@@ -99,10 +92,6 @@ export default function TeamMembers({ title, data }: TeamMembersProps) {
         <>
             <Banner title={title} />
             <Container sx={{ background: "white", px: 10, py: 3 }}>
-                <BackButton
-                    label={t("backToHomepage")}
-                    onClick={handleBackClick}
-                />
                 <Typography sx={{ mb: 4 }}>{data.summaryText}</Typography>
                 <Box
                     component="ul"
