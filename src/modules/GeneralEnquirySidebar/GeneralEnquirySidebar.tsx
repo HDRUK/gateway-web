@@ -23,6 +23,21 @@ import {
 } from "@/config/forms/generalEnquiry";
 import { getPreferredEmail } from "@/utils/user";
 
+import { Role } from "@/interfaces/Role";
+
+interface FormUser {
+    id: number;
+    firstname: string;
+    lastname: string;
+    preferred_email: string;
+    name: string;
+    emailValues: string[];
+    provider: string;
+    providerId: number;
+    roles: Role[];
+    organisation: string;
+}
+
 const TRANSLATION_PATH = "pages.search.components.GeneralEnquiryForm";
 
 const GeneralEnquirySidebar = ({
@@ -39,8 +54,8 @@ const GeneralEnquirySidebar = ({
     const sendEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
         itemName: "Enquiry item",
     });
-
-    const { control, handleSubmit, reset } = useForm<User>({
+    console.log([user?.email, user?.secondary_email])
+    const { control, handleSubmit, reset } = useForm<FormUser>({
         mode: "onTouched",
         resolver: yupResolver(generalEnquiryValidationSchema),
         defaultValues: {
@@ -48,14 +63,31 @@ const GeneralEnquirySidebar = ({
             ...user,
         },
     });
+    
+    const emailValues = user?.preferred_email == "secondary" ? [user?.secondary_email, user?.email] : [user?.email, user?.secondary_email]
 
-    const hydratedFormFields = generalEnquiryFormFields;
+    const hydratedFormFields = generalEnquiryFormFields.map(field =>
+    {
+        if (field.name=="emailValues") {
+            return { ... field,
+                options: emailValues.map(email => ({
+                    value: email, label: email
+                }))
+            }
+        }
+
+        return field
+    });
 
     const organisationField = hydratedFormFields.find(
         item => item.name === "organisation"
     );
     if (organisationField) {
         organisationField.readOnly = !!user?.organisation;
+
+        if (!!!organisationField.readOnly) {
+            organisationField.info = "";
+        }
     }
 
     const submitForm = async (formData: Enquiry) => {
@@ -72,7 +104,7 @@ const GeneralEnquirySidebar = ({
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
-            from: getPreferredEmail(user),
+            from: formData.from,
             is_dar_dialogue: false,
             is_dar_status: false,
             is_feasibility_enquiry: false,
