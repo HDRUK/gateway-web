@@ -74,7 +74,7 @@ import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
     FILTER_COLLECTION_NAME,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_DATA_SET_TITLES,
@@ -260,7 +260,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             FILTER_PROGRAMMING_LANGUAGE
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
-        [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
+        [FILTER_CONTAINS_BIOSAMPLES]: getParamArray(FILTER_CONTAINS_BIOSAMPLES),
         [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
         [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
         [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
@@ -458,7 +458,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             [FILTER_POPULATION_SIZE]: undefined,
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
-            [FILTER_CONTAINS_TISSUE]: undefined,
+            [FILTER_CONTAINS_BIOSAMPLES]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
             [PMC_TYPE_FIELD]: undefined,
