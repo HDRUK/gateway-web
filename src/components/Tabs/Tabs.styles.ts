@@ -9,6 +9,8 @@ export const tabsStyle = {
     normal: () =>
         css({
             "&.MuiTab-root": {
+                borderBottom: "3px solid transparent",
+
                 "&.Mui-selected": {
                     borderBottom: `3px solid ${colors.green400}`,
                     boxShadow: "inherit",

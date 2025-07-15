@@ -142,7 +142,6 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
-import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
@@ -469,58 +468,34 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const categoryTabs = [
         {
-            label: (
-                <TabTooltip content={t("datasetsTooltip")}>
-                    {t("datasets")}
-                </TabTooltip>
-            ),
+            label: t("datasets"),
             value: SearchCategory.DATASETS,
-            content: "",
+            tooltip: t("datasetsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("dataUseTooltip")}>
-                    {t("dataUse")}
-                </TabTooltip>
-            ),
+            label: t("dataUse"),
             value: SearchCategory.DATA_USE,
-            content: "",
+            tooltip: t("dataUseTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("toolsTooltip")}>
-                    {t("tools")}
-                </TabTooltip>
-            ),
+            label: t("tools"),
             value: SearchCategory.TOOLS,
-            content: "",
+            tooltip: t("toolsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("publicationsTooltip")}>
-                    {t("publications")}
-                </TabTooltip>
-            ),
+            label: t("publications"),
             value: SearchCategory.PUBLICATIONS,
-            content: "",
+            tooltip: t("publicationsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("dataProvidersTooltip")}>
-                    {t("dataProviders")}
-                </TabTooltip>
-            ),
+            label: t("dataProviders"),
             value: SearchCategory.DATA_CUSTODIANS,
-            content: "",
+            tooltip: t("dataProvidersTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("collectionsTooltip")}>
-                    {t("collections")}
-                </TabTooltip>
-            ),
+            label: t("collections"),
             value: SearchCategory.COLLECTIONS,
-            content: "",
+            tooltip: t("collectionsTooltip"),
         },
     ];
 
