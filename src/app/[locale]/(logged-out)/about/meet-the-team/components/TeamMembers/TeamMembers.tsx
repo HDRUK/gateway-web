@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { useTranslations } from "next-intl";
 import { TeamMember } from "@/interfaces/MeetTheTeam";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
@@ -18,11 +17,8 @@ interface TeamMembersProps {
     };
 }
 
-const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS = "pages.about";
-
 export default function TeamMembers({ title, data }: TeamMembersProps) {
     const [activeTeamMember, setActiveTeamMember] = useState<TeamMember>();
-    const t = useTranslations(TRANSLATIONS_NAMESPACE_TEAM_MEMBERS);
 
     const handleTeamMemberClick = (teamMember: TeamMember) => {
         setActiveTeamMember(teamMember);
