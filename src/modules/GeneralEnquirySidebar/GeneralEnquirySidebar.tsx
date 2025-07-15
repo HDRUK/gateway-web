@@ -68,7 +68,7 @@ const GeneralEnquirySidebar = ({
 
     const hydratedFormFields = generalEnquiryFormFields.map(field =>
     {
-        if (field.name=="emailValues") {
+        if (field.name=="from") {
             return { ... field,
                 options: emailValues.map(email => ({
                     value: email, label: email
@@ -104,7 +104,6 @@ const GeneralEnquirySidebar = ({
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
-            from: formData.from,
             is_dar_dialogue: false,
             is_dar_status: false,
             is_feasibility_enquiry: false,

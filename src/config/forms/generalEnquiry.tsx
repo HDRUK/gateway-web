@@ -40,7 +40,7 @@ const formFields = [
     },
     {
         label: "Email",
-        name: "emailValues",
+        name: "from",
         component: inputComponents.Select,
         required: true,
         readOnly: false,
