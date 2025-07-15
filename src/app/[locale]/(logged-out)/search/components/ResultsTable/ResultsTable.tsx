@@ -245,9 +245,9 @@ const getColumns = ({
         header: () => (
             <Tooltip
                 describeChild
-                title={translations.containsTissueTooltip}
+                title={translations.containsBioSamplesTooltip}
                 tabIndex={0}>
-                {translations.containsTissueLabel}
+                {translations.containsBioSamplesLabel}
             </Tooltip>
         ),
         size: 120,
@@ -312,8 +312,8 @@ const ResultTable = ({
         accessServiceTooltip: t("accessService.tooltip"),
         cohortDiscoveryLabel: t("cohortDiscovery.label"),
         cohortDiscoveryTooltip: t("cohortDiscovery.tooltip"),
-        containsTissueLabel: t("containsTissue.label"),
-        containsTissueTooltip: t("containsTissue.tooltip"),
+        containsBioSamplesLabel: t("containsBioSamples.label"),
+        containsBioSamplesTooltip: t("containsBioSamples.tooltip"),
         hasTechnicalMetadataLabel: t("hasTechnicalMetadata.label"),
         hasTechnicalMetadataTooltip: t("hasTechnicalMetadata.tooltip"),
     };
