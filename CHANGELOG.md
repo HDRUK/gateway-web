@@ -1,3 +1,24 @@
+## [2.15.0](https://github.com/HDRUK/gateway-web/compare/v2.14.2...v2.15.0) (2025-07-15)
+
+### ✨ Features
+
+* **GAT-6782:** Scroll data custodian link into view (#1249) ([403d1ef](https://github.com/HDRUK/gateway-web/commit/403d1ef80b8bd0a284b0f6bbd01210bbab8b4ae2)), closes [GAT-6782](GAT-6782)
+* **GAT-6796:** Add search landmarks (#1253) ([04c0b8d](https://github.com/HDRUK/gateway-web/commit/04c0b8df69238128f503ed74e56825b376c7e680)), closes [GAT-6796](GAT-6796)
+* **GAT-6826:** Accessibility fixes (#1248) ([2bd385a](https://github.com/HDRUK/gateway-web/commit/2bd385a2de8f5122b0462e3be5b77eb9b985016a))
+* **GAT-7129:** Update filter components on search UI (#1246) ([88df52e](https://github.com/HDRUK/gateway-web/commit/88df52e1e32986dcdd38d77aaa74f0b4e1e405f1)), closes [GAT-7129](GAT-7129)
+* **GAT-7194:** Secondary Email Verifcation (#1245) ([f5a7742](https://github.com/HDRUK/gateway-web/commit/f5a7742d24e30d77873b937cc3d87ee883d9f2cb)), closes [GAT-7194](GAT-7194)
+* **GAT-7194:** Secondary Email Verifcation (#1247) ([2b6b434](https://github.com/HDRUK/gateway-web/commit/2b6b43447be0043ee2e221627a40350453c75232)), closes [GAT-7194](GAT-7194)
+* **GAT-7566:** Add filter sidebar (#1256) ([e9b78ad](https://github.com/HDRUK/gateway-web/commit/e9b78adf3a31083ccbf8af98776e1b03026b1540)), closes [GAT-7566](GAT-7566)
+
+### 🐛 Bug Fixes
+
+* **GAT-7264:** Dataset relationship not showing on Analysis Script & Software on the landing page (#1250) ([f7d59dd](https://github.com/HDRUK/gateway-web/commit/f7d59ddf3a1db6ce9ba85b281c4bf7a9c2651a00)), closes [GAT-7264](GAT-7264)
+* **GAT-7292:** Improvements to dar template creation components (#1244) ([e5e6de2](https://github.com/HDRUK/gateway-web/commit/e5e6de2c87d59b6a63e922c0782af9e9c615795d)), closes [GAT-7292](GAT-7292)
+* **GAT-7442:** structural dataset not uploading (#1242) ([f792edf](https://github.com/HDRUK/gateway-web/commit/f792edfea2ea6c842e3acbbfa2fc8b01e917f709)), closes [GAT-7442](GAT-7442)
+* **GAT-7566:** Fix responsive view on search table (#1260) ([feafb18](https://github.com/HDRUK/gateway-web/commit/feafb18bf6fb2f1d698b925594ed29aecd2185a0))
+* **GAT-7600:** Fix the path to publication data in dataset payload  (#1258) ([c0af872](https://github.com/HDRUK/gateway-web/commit/c0af872c2e6aa222adbb50421f93dd35f2e1d813))
+* **GAT-7600:** Use dataset linkages correctly (#1257) ([f63f4eb](https://github.com/HDRUK/gateway-web/commit/f63f4ebd1286d60a74d4a7cee53298d1d8e2ccf9)), closes [GAT-7600](GAT-7600)
+
 ## [2.14.2](https://github.com/HDRUK/gateway-web/compare/v2.14.1...v2.14.2) (2025-07-11)
 
 ### 🐛 Bug Fixes
