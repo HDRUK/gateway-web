@@ -30,7 +30,7 @@ import {
     FILTER_TYPE_CATEGORY,
     filtersList,
     FILTER_POPULATION_SIZE,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_LICENSE,
     FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
@@ -79,7 +79,7 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 };
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
-        FILTER_CONTAINS_TISSUE,
+        FILTER_CONTAINS_BIOSAMPLES,
         FILTER_COHORT_DISCOVERY,
         FILTER_DATA_TYPE,
         FILTER_DATA_SUBTYPE,
@@ -558,9 +558,8 @@ const FilterPanel = ({
 
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
-
                 if (
-                    filterItem.label === FILTER_CONTAINS_TISSUE ||
+                    filterItem.label === FILTER_CONTAINS_BIOSAMPLES ||
                     filterItem.label === FILTER_COHORT_DISCOVERY
                 ) {
                     return (
@@ -581,7 +580,7 @@ const FilterPanel = ({
                                 )
                             }
                             containerSx={
-                                label === FILTER_CONTAINS_TISSUE
+                                label === FILTER_CONTAINS_BIOSAMPLES
                                     ? { pt: 1 }
                                     : { pb: 1 }
                             }
@@ -591,7 +590,7 @@ const FilterPanel = ({
 
                 if (
                     filterItem.label === FILTER_MATERIAL_TYPE &&
-                    !get(selectedFilters, FILTER_CONTAINS_TISSUE)?.length
+                    !get(selectedFilters, FILTER_CONTAINS_BIOSAMPLES)?.length
                 ) {
                     return null;
                 }
