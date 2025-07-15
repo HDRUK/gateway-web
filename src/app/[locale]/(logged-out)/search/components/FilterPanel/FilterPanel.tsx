@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Tooltip } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -624,6 +623,7 @@ const FilterPanel = ({
                         expanded={
                             maximised.includes(label) || isPublicationSource
                         }
+                        tooltip={t(`${label}${TOOLTIP_SUFFIX}`)}
                         heading={
                             <Box
                                 sx={{
@@ -636,43 +636,20 @@ const FilterPanel = ({
                                     width: "100%",
                                     pr: 3.25,
                                 }}>
-                                <Tooltip
-                                    describeChild
-                                    placement="right"
-                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}
-                                    style={{ width: "100%" }}>
-                                    <div>
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                p: 0,
-                                                justifyContent: "space-between",
-                                                width: "100%",
-                                            }}>
-                                            <Typography
-                                                fontWeight="400"
-                                                fontSize={20}>
-                                                {t(label)}
-                                            </Typography>
-                                            {filterValues[label] &&
-                                                !!Object.entries(
+                                <Typography fontWeight="400" fontSize={20}>
+                                    {t(label)}
+                                </Typography>
+                                {filterValues[label] &&
+                                    !!Object.entries(filterValues[label])
+                                        .length && (
+                                        <Typography sx={filterCountStyles}>
+                                            {
+                                                Object.entries(
                                                     filterValues[label]
-                                                ).length && (
-                                                    <Typography
-                                                        sx={filterCountStyles}>
-                                                        {
-                                                            Object.entries(
-                                                                filterValues[
-                                                                    label
-                                                                ]
-                                                            ).length
-                                                        }
-                                                    </Typography>
-                                                )}
-                                        </Box>
-                                    </div>
-                                </Tooltip>
+                                                ).length
+                                            }
+                                        </Typography>
+                                    )}
                             </Box>
                         }
                         onChange={() =>

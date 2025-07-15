@@ -1,7 +1,13 @@
 "use client";
 
 /** @jsxImportSource @emotion/react */
-import { ElementType, ReactNode, SyntheticEvent, forwardRef } from "react";
+import {
+    ElementType,
+    ReactElement,
+    ReactNode,
+    SyntheticEvent,
+    forwardRef,
+} from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
@@ -41,7 +47,7 @@ export interface TabProps {
     handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
-const linkWrapper = (title: string) => (children: ReactNode) => {
+const tooltipWrapper = (title: string) => (children: ReactElement) => {
     return (
         <Tooltip title={title} describeChild>
             {children}
@@ -72,7 +78,7 @@ const CustomLink = forwardRef<
     return (
         <ConditionalWrapper
             requiresWrapper={!!tooltip}
-            wrapper={linkWrapper(tooltip || "")}>
+            wrapper={tooltipWrapper(tooltip || "")}>
             <Link
                 ref={ref}
                 passHref
