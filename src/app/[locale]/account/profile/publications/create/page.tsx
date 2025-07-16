@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+import { getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import CreatePublication from "../components/CreatePublication";
 
@@ -9,5 +11,8 @@ export const metadata = metaData(
     noFollowRobots
 );
 export default async function PublicationCreatePage() {
-    return <CreatePublication />;
+    const cookieStore = cookies();
+    const user = await getUser(cookieStore);
+
+    return <CreatePublication userId={user.id.toString()} />;
 }

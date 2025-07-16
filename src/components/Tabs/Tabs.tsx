@@ -1,21 +1,29 @@
 "use client";
 
 /** @jsxImportSource @emotion/react */
-import { ElementType, ReactNode, SyntheticEvent, forwardRef } from "react";
+import {
+    ElementType,
+    ReactElement,
+    ReactNode,
+    SyntheticEvent,
+    forwardRef,
+} from "react";
 import MuiTabContext from "@mui/lab/TabContext";
 import MuiTabList from "@mui/lab/TabList";
 import MuiTabPanel from "@mui/lab/TabPanel";
-import { Tab as MuiTab, SxProps } from "@mui/material";
-import Link from "next/link";
+import { Tab as MuiTab, SxProps, Tooltip } from "@mui/material";
 import { usePathname, useSearchParams } from "next/navigation";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import ConditionalWrapper from "../ConditionalWrapper";
+import Link from "../Link";
 import { tabsStyle } from "./Tabs.styles";
 
 export interface Tab {
     label: string;
     value: string;
-    content: ReactNode;
+    tooltip?: string;
+    content?: ReactNode;
 }
 
 export enum TabVariant {
@@ -39,36 +47,50 @@ export interface TabProps {
     handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
+const tooltipWrapper = (title: string) => (children: ReactElement) => {
+    return (
+        <Tooltip title={title} describeChild>
+            {children}
+        </Tooltip>
+    );
+};
+
 const CustomLink = forwardRef<
     HTMLAnchorElement & { param: string; persist: boolean },
-    { href: string; children: ReactNode; param: string; persist: boolean }
->((props, ref) => {
+    {
+        href: string;
+        children: ReactNode;
+        param: string;
+        persist: boolean;
+        tooltip?: string;
+    }
+>(({ href, children, param, persist, tooltip, ...rest }, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
-    const { persist, ...rest } = props;
 
-    const currentQuery = searchParams?.entries()
-        ? Object.fromEntries(searchParams.entries())
-        : {};
-
-    currentQuery[props.param] = props.href;
+    const currentQuery = Object.fromEntries(searchParams?.entries() ?? []);
+    currentQuery[param] = href;
 
     if ("page" in currentQuery) {
         currentQuery.page = "1";
     }
 
     return (
-        <Link
-            ref={ref}
-            passHref
-            {...rest}
-            scroll={false}
-            href={{
-                pathname,
-                query: persist ? currentQuery : { [props.param]: props.href },
-            }}>
-            {props.children}
-        </Link>
+        <ConditionalWrapper
+            requiresWrapper={!!tooltip}
+            wrapper={tooltipWrapper(tooltip || "")}>
+            <Link
+                ref={ref}
+                passHref
+                {...rest}
+                scroll={false}
+                href={{
+                    pathname,
+                    query: persist ? currentQuery : { [param]: href },
+                }}>
+                {children}
+            </Link>
+        </ConditionalWrapper>
     );
 });
 
@@ -101,7 +123,6 @@ const Tabs = ({
                     sx={{
                         padding: 0,
                         background: "none",
-
                         ...tabBoxSx,
                     }}>
                     <MuiTabList
@@ -119,16 +140,16 @@ const Tabs = ({
                         }}
                         centered={centered}
                         onChange={handleChange}>
-                        {tabs.map(tab => (
+                        {tabs.map(({ label, value, tooltip }) => (
                             <MuiTab<ElementType>
-                                id={`tab-${tab.value}`}
+                                id={`tab-${value}`}
                                 component={CustomLink}
                                 disableRipple
                                 color="secondary"
-                                key={tab.value}
-                                href={tab.value}
-                                value={tab.value}
-                                label={tab.label}
+                                key={value}
+                                href={value}
+                                value={value}
+                                label={label}
                                 css={
                                     variant === TabVariant.SEARCH
                                         ? tabsStyle.search
@@ -136,19 +157,22 @@ const Tabs = ({
                                 }
                                 param={paramName}
                                 persist={persistParams}
+                                tooltip={tooltip}
                             />
                         ))}
                     </MuiTabList>
                 </Paper>
+
                 {introContent}
+
                 {renderTabContent &&
-                    tabs.map(tab => (
+                    tabs.map(({ value, content }) => (
                         <MuiTabPanel
-                            aria-labelledby={`tab-${tab.value}`}
+                            aria-labelledby={`tab-${value}`}
                             sx={{ padding: 0 }}
-                            key={tab.value}
-                            value={tab.value}>
-                            {tab.content}
+                            key={value}
+                            value={value}>
+                            {content && content}
                         </MuiTabPanel>
                     ))}
             </MuiTabContext>

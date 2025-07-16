@@ -89,15 +89,6 @@ const getProfileNav = (permissions: {
             label: "Collections",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
         },
-        ...(permissions["dur.update"]
-            ? [
-                  {
-                      icon: <DataUseIcon />,
-                      label: "Data Uses",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_USES}`,
-                  },
-              ]
-            : []),
     ];
 };
 
