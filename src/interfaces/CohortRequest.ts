@@ -8,6 +8,15 @@ type CohortRequestStatus =
     | "SUSPENDED"
     | "EXPIRED";
 
+type NHSSDERequestStatus =
+    | "IN_PROCESS"
+    | "APPROVAL_REQUESTED"
+    | "APPROVED"
+    | "REJECTED"
+    | "BANNED"
+    | "SUSPENDED"
+    | "EXPIRED";
+
 interface Log {
     id: number;
     user_id: number;
@@ -26,6 +35,11 @@ interface CohortRequest {
     request_status: CohortRequestStatus;
     user: User;
     logs: Log[];
+    nhse_sde_request_status: NHSSDERequestStatus;
+    nhse_sde_requested_at: string;
+    nhse_sde_self_declared_approved_at: string;
+    nhse_sde_request_expire_at: string;
+    nhse_sde_updated_at: string;
 }
 
 interface CohortRequestForm {
@@ -59,6 +73,7 @@ export type {
     CohortRequest,
     Log,
     CohortRequestStatus,
+    NHSSDERequestStatus,
     CohortRequestForm,
     CohortRequestUser,
     CohortRequestAccess,
