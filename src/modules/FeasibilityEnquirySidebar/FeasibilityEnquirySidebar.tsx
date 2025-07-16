@@ -47,8 +47,10 @@ const FeasibilityEnquirySidebar = ({
         },
     });
 
-    const emailValues = user?.preferred_email == "secondary" ? [user?.secondary_email, user?.email] : [user?.email, user?.secondary_email]
-
+    const emailValues =
+        user?.preferred_email == "secondary"
+            ? [user?.secondary_email, user?.email]
+            : [user?.email, user?.secondary_email];
 
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
@@ -71,8 +73,9 @@ const FeasibilityEnquirySidebar = ({
                 return {
                     ...field,
                     options: emailValues.map(email => ({
-                    value: email, label: email
-                }))
+                        value: email,
+                        label: email,
+                    })),
                 };
             }
             return field;

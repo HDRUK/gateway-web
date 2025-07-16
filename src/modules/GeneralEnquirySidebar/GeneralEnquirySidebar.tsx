@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
+import { Role } from "@/interfaces/Role";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -20,8 +21,6 @@ import {
     generalEnquiryValidationSchema,
     generalEnquiryDefaultValues,
 } from "@/config/forms/generalEnquiry";
-
-import { Role } from "@/interfaces/Role";
 
 interface FormUser {
     id: number;
@@ -61,20 +60,24 @@ const GeneralEnquirySidebar = ({
             ...user,
         },
     });
-    
-    const emailValues = user?.preferred_email == "secondary" ? [user?.secondary_email, user?.email] : [user?.email, user?.secondary_email]
 
-    const hydratedFormFields = generalEnquiryFormFields.map(field =>
-    {
-        if (field.name=="from") {
-            return { ... field,
+    const emailValues =
+        user?.preferred_email == "secondary"
+            ? [user?.secondary_email, user?.email]
+            : [user?.email, user?.secondary_email];
+
+    const hydratedFormFields = generalEnquiryFormFields.map(field => {
+        if (field.name == "from") {
+            return {
+                ...field,
                 options: emailValues.map(email => ({
-                    value: email, label: email
-                }))
-            }
+                    value: email,
+                    label: email,
+                })),
+            };
         }
 
-        return field
+        return field;
     });
 
     const organisationField = hydratedFormFields.find(
