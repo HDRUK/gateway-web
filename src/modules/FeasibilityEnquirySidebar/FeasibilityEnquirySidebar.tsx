@@ -21,7 +21,6 @@ import {
     feasibilityEnquiryValidationSchema,
     feasibilityEnquiryDefaultValues,
 } from "@/config/forms/feasibilityEnquiry";
-import { getPreferredEmail } from "@/utils/user";
 
 const TRANSLATION_PATH = "pages.search.components.FeasibilityEnquiryForm";
 
