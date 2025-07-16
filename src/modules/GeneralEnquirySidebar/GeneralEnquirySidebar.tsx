@@ -62,12 +62,12 @@ const GeneralEnquirySidebar = ({
     });
 
     const emailValues =
-        user?.preferred_email == "secondary"
+        user?.preferred_email === "secondary"
             ? [user?.secondary_email, user?.email]
             : [user?.email, user?.secondary_email];
 
     const hydratedFormFields = generalEnquiryFormFields.map(field => {
-        if (field.name == "from") {
+        if (field.name === "from") {
             return {
                 ...field,
                 options: emailValues.map(email => ({

@@ -48,7 +48,7 @@ const FeasibilityEnquirySidebar = ({
     });
 
     const emailValues =
-        user?.preferred_email == "secondary"
+        user?.preferred_email === "secondary"
             ? [user?.secondary_email, user?.email]
             : [user?.email, user?.secondary_email];
 
