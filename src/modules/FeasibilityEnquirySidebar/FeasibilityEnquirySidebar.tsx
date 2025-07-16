@@ -48,6 +48,9 @@ const FeasibilityEnquirySidebar = ({
         },
     });
 
+    const emailValues = user?.preferred_email == "secondary" ? [user?.secondary_email, user?.email] : [user?.email, user?.secondary_email]
+
+
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
             if (field.name === "organisation") {
@@ -63,6 +66,14 @@ const FeasibilityEnquirySidebar = ({
                         value: v.datasetId,
                         label: v.name,
                     })),
+                };
+            }
+            if (field.name === "from") {
+                return {
+                    ...field,
+                    options: emailValues.map(email => ({
+                    value: email, label: email
+                }))
                 };
             }
             return field;
@@ -83,7 +94,7 @@ const FeasibilityEnquirySidebar = ({
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
-            from: getPreferredEmail(user),
+            from: formData.from,
             is_dar_dialogue: false,
             is_dar_status: false,
             is_feasibility_enquiry: true,

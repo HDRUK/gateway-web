@@ -6,7 +6,6 @@ import { inputComponents } from ".";
 const defaultValues = {
     name: "",
     organisation: "",
-    email: "",
     number: "",
     query: "",
 };
@@ -55,11 +54,10 @@ const formFields = [
     },
     {
         label: "Email",
-        name: "email",
-        component: inputComponents.TextField,
+        name: "from",
+        component: inputComponents.Select,
         required: true,
-        info: "This is automatically filled from your profile and cannot be changed in this form.",
-        readOnly: true,
+        readOnly: false,
     },
     {
         label: "Contact number (optional)",
