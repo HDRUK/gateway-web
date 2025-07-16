@@ -86,7 +86,7 @@ const GeneralEnquirySidebar = ({
     if (organisationField) {
         organisationField.readOnly = !!user?.organisation;
 
-        if (!!!organisationField.readOnly) {
+        if (!organisationField.readOnly) {
             organisationField.info = "";
         }
     }
