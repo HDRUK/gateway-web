@@ -101,14 +101,14 @@ const AddDatasetDialog = ({
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`, {
+    >(`${apis.datasetsV2Url}?${new URLSearchParams(queryParams)}`, {
         shouldFetch: resourceType === ResourceType.DATASET,
     });
 
     const { data: datauseData, isLoading: isLoadingDatauses } = useGet<
         DataUse[]
     >(
-        `${apis.dataUseV1Url}?${new URLSearchParams({
+        `${apis.dataUseV2Url}?${new URLSearchParams({
             project_title: queryParams.title,
             status: "ACTIVE",
         })}`,
@@ -130,7 +130,7 @@ const AddDatasetDialog = ({
     );
 
     const { data: toolData, isLoading: isLoadingTools } = useGet<Tool[]>(
-        `${apis.toolsV1Url}?${new URLSearchParams({
+        `${apis.toolsV2Url}?${new URLSearchParams({
             title: queryParams.title,
             status: "ACTIVE",
         })}`,
