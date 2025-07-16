@@ -58,14 +58,13 @@ const TeamCollections = ({
     );
 
     const [queryParams, setQueryParams] = useState({
-        team_id: teamId ? `${teamId}` : "",
-        user_id: !teamId ? `${userId}` : "",
-        withTrashed: "true",
-        status: "ACTIVE",
+        status: DataStatus.ACTIVE.toLowerCase(),
         page: "1",
         sort: `${searchDefaultValues.sortField}:${initialSort.initialDirection}`,
         title: "",
     });
+
+    const { status, ...filteredQueryParams } = queryParams;
 
     const { control, watch, setValue } = useForm({
         defaultValues: {
@@ -106,15 +105,19 @@ const TeamCollections = ({
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            status: searchParams?.get("tab") || "ACTIVE",
+            status: (
+                searchParams?.get("tab") || DataStatus.ACTIVE
+            ).toLowerCase(),
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams?.get("tab")]);
 
+    const baseCollectionsUrl = teamId
+        ? `${apis.teamsV2Url}/${teamId}/collections`
+        : `${apis.usersV2Url}/${userId}/collections`;
+
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        teamId
-            ? `${apis.collectionsV1Url}/count/status?team_id=${teamId}`
-            : `${apis.collectionsV1Url}/count/status?user_id=${userId}`
+        `${baseCollectionsUrl}/count/status`
     );
 
     const {
@@ -128,32 +131,18 @@ const TeamCollections = ({
         isLoading,
         mutate: mutateCollections,
     } = useGet<PaginationType<Collection>>(
-        `${apis.collectionsV1Url}?${new URLSearchParams(queryParams)}`,
+        `${baseCollectionsUrl}/status/${status}?${new URLSearchParams(
+            filteredQueryParams
+        )}`,
         {
             keepPreviousData: true,
             withPagination: true,
         }
     );
 
-    const unArchiveCollection = usePatch<Partial<Collection>>(
-        teamId
-            ? `${apis.teamsV1Url}/${teamId}/collections`
-            : apis.collectionsV2Url,
-        {
-            query: "unarchive",
-            localeKey: "archiveCollection",
-        }
-    );
-
-    const archiveCollection = usePatch<Partial<Collection>>(
-        teamId
-            ? `${apis.teamsV1Url}/${teamId}/collections`
-            : apis.collectionsV2Url,
-        {
-            query: "archive",
-            localeKey: "archiveCollection",
-        }
-    );
+    const patchCollection = usePatch<Partial<Collection>>(baseCollectionsUrl, {
+        localeKey: "archiveCollection",
+    });
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
@@ -191,7 +180,7 @@ const TeamCollections = ({
                           showModal({
                               tertiaryButton: {
                                   onAction: async () => {
-                                      await unArchiveCollection(id, {
+                                      await patchCollection(id, {
                                           status: DataStatus.ACTIVE,
                                       });
                                       mutateCollections();
@@ -200,7 +189,7 @@ const TeamCollections = ({
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: async () => {
-                                  await unArchiveCollection(id, {
+                                  await patchCollection(id, {
                                       status: DataStatus.DRAFT,
                                   });
                                   mutateCollections();
@@ -220,7 +209,7 @@ const TeamCollections = ({
             ? [
                   {
                       action: async (id: number) => {
-                          await archiveCollection(id, {
+                          await patchCollection(id, {
                               status: DataStatus.ARCHIVED,
                           });
                           mutateCollections();
