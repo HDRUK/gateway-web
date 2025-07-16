@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
 import { Role } from "@/interfaces/Role";
+import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
@@ -21,19 +22,6 @@ import {
     generalEnquiryValidationSchema,
     generalEnquiryDefaultValues,
 } from "@/config/forms/generalEnquiry";
-
-interface FormUser {
-    id: number;
-    firstname: string;
-    lastname: string;
-    preferred_email: string;
-    name: string;
-    emailValues: string[];
-    provider: string;
-    providerId: number;
-    roles: Role[];
-    organisation: string;
-}
 
 const TRANSLATION_PATH = "pages.search.components.GeneralEnquiryForm";
 
@@ -52,7 +40,7 @@ const GeneralEnquirySidebar = ({
         itemName: "Enquiry item",
     });
 
-    const { control, handleSubmit, reset } = useForm<FormUser>({
+    const { control, handleSubmit, reset } = useForm<User>({
         mode: "onTouched",
         resolver: yupResolver(generalEnquiryValidationSchema),
         defaultValues: {
