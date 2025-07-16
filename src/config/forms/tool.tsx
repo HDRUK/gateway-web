@@ -14,6 +14,7 @@ const defaultValues = {
     name: "",
     type_category: [],
     description: "",
+    results_insights: "",
     associated_authors: "",
     programming_language: [],
     keywords: [],
