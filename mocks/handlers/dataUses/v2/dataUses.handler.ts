@@ -1,11 +1,11 @@
 import { rest } from "msw";
-import apis from "@/config/apis";
 import { DataUse } from "@/interfaces/DataUse";
-import { generateDataUse } from "@/mocks/data/dataUse";
 import { PaginationType } from "@/interfaces/Pagination";
+import apis from "@/config/apis";
+import { generateDataUse, generateDataUses } from "@/mocks/data/dataUse";
 
-const getDataUses = (data: DataUse[] = generateDataUse, status = 200) => {
-    return rest.get(apis.dataUseV1Url, (req, res, ctx) => {
+const getDataUses = (data: DataUse[] = generateDataUses(), status = 200) => {
+    return rest.get(apis.dataUseV2Url, (req, res, ctx) => {
         const url = new URL(req.url);
         if (status !== 200) {
             return res(
@@ -30,8 +30,8 @@ const getDataUses = (data: DataUse[] = generateDataUse, status = 200) => {
     });
 };
 
-const getDataUse = (data: DataUse = generateDataUse, status = 200) => {
-    return rest.get(`${apis.dataUseV1Url}/${data.id}`, (req, res, ctx) => {
+const getDataUse = (data: DataUse = generateDataUse(), status = 200) => {
+    return rest.get(`${apis.dataUseV2Url}/${data.id}`, (req, res, ctx) => {
         if (status !== 200) {
             return res(
                 ctx.status(status),

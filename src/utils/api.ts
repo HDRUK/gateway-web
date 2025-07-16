@@ -415,7 +415,31 @@ async function getDataset(
     schemaVersion?: string,
     options?: GetOptions
 ): Promise<Dataset> {
-    const baseUrl = `${apis.datasetsV1UrlIP}/${datasetId}`;
+    const baseUrl = `${apis.datasetsV2UrlIP}/${datasetId}`;
+    const params = new URLSearchParams();
+
+    if (schemaModel && schemaVersion) {
+        params.append("schema_model", schemaModel);
+        params.append("schema_version", schemaVersion);
+    }
+    const queryString = params.toString();
+
+    return await get<Dataset>(
+        cookieStore,
+        queryString ? `${baseUrl}?${queryString}` : baseUrl,
+        options
+    );
+}
+
+async function getTeamDataset(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    datasetId: string,
+    schemaModel?: string,
+    schemaVersion?: string,
+    options?: GetOptions
+): Promise<Dataset> {
+    const baseUrl = `${apis.teamsV2UrlIP}/${teamId}/datasets/${datasetId}`;
     const params = new URLSearchParams();
 
     if (schemaModel && schemaVersion) {
@@ -436,13 +460,13 @@ async function getDataUse(
     dataUseId: string,
     options?: GetOptions
 ): Promise<DataUse> {
-    const dataUse = await get<DataUse[]>(
+    const dataUse = await get<DataUse>(
         cookieStore,
-        `${apis.dataUseV1UrlIP}/${dataUseId}`,
+        `${apis.dataUseV2UrlIP}/${dataUseId}`,
         options
     );
 
-    return dataUse?.[0];
+    return dataUse;
 }
 
 async function getTool(
@@ -452,7 +476,7 @@ async function getTool(
 ): Promise<Tool> {
     const tool = await get<Tool>(
         cookieStore,
-        `${apis.toolsV1UrlIP}/${toolId}`,
+        `${apis.toolsV2UrlIP}/${toolId}`,
         options
     );
 
@@ -480,7 +504,7 @@ async function getReducedCollection(
 ): Promise<ReducedCollection> {
     const collection = await get<ReducedCollection>(
         cookieStore,
-        `${apis.collectionsV1UrlIP}/${collectionId}?view_type=mini`,
+        `${apis.collectionsV2UrlIP}/${collectionId}?view_type=mini`,
         options
     );
 
@@ -757,6 +781,7 @@ export {
     getReducedCollection,
     getDataCustodianNetworks,
     getDataset,
+    getTeamDataset,
     getDataUse,
     getFilters,
     getKeywords,

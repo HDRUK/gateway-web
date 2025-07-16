@@ -59,7 +59,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV1Url}?${new URLSearchParams(queryParams)}`, {
+    >(`${apis.datasetsV2Url}?${new URLSearchParams(queryParams)}`, {
         keepPreviousData: true,
     });
 
