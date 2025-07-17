@@ -24,6 +24,7 @@ const Pagination = ({ isLoading = false, ...rest }: PaginationProps) => {
                         disabled={isLoading}
                     />
                 )}
+                aria-label="pagination"
                 {...rest}
             />
         </Box>

@@ -12,7 +12,6 @@ import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
-import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -63,13 +62,13 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     );
 
     const [queryParams, setQueryParams] = useState({
-        team_id: `${params?.teamId}`,
-        withTrashed: "true",
-        status: "ACTIVE",
+        status: DataStatus.ACTIVE.toLowerCase(),
         page: "1",
         sort: `${dataUseSearchDefaultValues.sortField}:${initialSort.initialDirection}`,
         project_title: "",
     });
+
+    const { status, ...filteredQueryParams } = queryParams;
 
     const { control, watch, setValue } = useForm({
         defaultValues: {
@@ -110,14 +109,19 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            status: searchParams?.get("tab") || "ACTIVE",
+            status: (
+                searchParams?.get("tab") || DataStatus.ACTIVE
+            ).toLowerCase(),
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams?.get("tab")]);
 
+    const baseDurUrl = `${apis.teamsV2Url}/${teamId}/dur`;
+
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        `${apis.dataUseV1Url}/count/status?team_id=${params?.teamId}`
+        `${baseDurUrl}/count/status`
     );
+
     const {
         ACTIVE: countActive,
         DRAFT: countDraft,
@@ -129,19 +133,17 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
         isLoading,
         mutate: mutateDataUses,
     } = useGet<PaginationType<DataUse>>(
-        `${apis.dataUseV1Url}?${new URLSearchParams(queryParams)}`,
+        `${baseDurUrl}/status/${status}/?${new URLSearchParams(
+            filteredQueryParams
+        )}`,
         {
             keepPreviousData: true,
             withPagination: true,
         }
     );
 
-    const unArchiveDataUse = usePatch<Partial<DataUse>>(apis.dataUseV1Url, {
-        query: "unarchive",
-    });
-
-    const archiveDataUse = useDelete(apis.dataUseV1Url, {
-        localeKey: "archiveDataUse",
+    const patchDataUse = usePatch<Partial<DataUse>>(baseDurUrl, {
+        itemName: "Data Use",
     });
 
     useEffect(() => {
@@ -175,7 +177,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                           showModal({
                               tertiaryButton: {
                                   onAction: async () => {
-                                      await unArchiveDataUse(id, {
+                                      await patchDataUse(id, {
                                           status: DataStatus.ACTIVE,
                                       });
                                       mutateDataUses();
@@ -184,7 +186,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: async () => {
-                                  await unArchiveDataUse(id, {
+                                  await patchDataUse(id, {
                                       status: DataStatus.DRAFT,
                                   });
                                   mutateDataUses();
@@ -204,7 +206,9 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
             ? [
                   {
                       action: async (id: number) => {
-                          await archiveDataUse(id);
+                          await patchDataUse(id, {
+                              status: DataStatus.ARCHIVED,
+                          });
                           mutateDataUses();
                           mutateCount();
                       },

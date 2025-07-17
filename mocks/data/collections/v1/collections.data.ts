@@ -3,7 +3,7 @@ import { Collection, ReducedCollection } from "@/interfaces/Collection";
 
 const generateCollectionV1 = (data = {}): Collection | ReducedCollection => {
     return {
-        name: faker.datatype.string(),
+        name: faker.lorem.words(2),
         _id: faker.datatype.uuid(),
         ...data,
     };
@@ -17,7 +17,6 @@ const generateLargeCollectionV1 = (data = {}): ReducedCollection => {
             "This tool provides insights into the neonatal health data contained within the National Neonatal Research Database (NNRD). The tools are aimed at parents, clinical teams, researchers and health service managers.  To access our NNRD Interrogation tools, please click here: https://www.imperial.ac.uk/neonatal-data-analysis-unit/neonatal-data-analysis-unit/neonatal-data-visualisations/",
         image_link: null,
         enabled: true,
-    
         created_at: "2024-10-04T12:23:54.000000Z",
         updated_at: "2024-10-04T12:34:14.000000Z",
         deleted_at: null,
@@ -64,7 +63,7 @@ const generateLargeCollectionV1 = (data = {}): ReducedCollection => {
                     id: 3242,
                     firstname: "Ricardo",
                     lastname: "Ribas",
-                    requestroles: []
+                    requestroles: [],
                 },
             },
         ],
@@ -121,9 +120,9 @@ const generateLargeCollectionV1 = (data = {}): ReducedCollection => {
             },
         ],
         team: null,
-        ...data
-    }
-}
+        ...data,
+    };
+};
 
 const generateBadCollectionV1 = (data = {}): ReducedCollection => {
     return {
@@ -161,8 +160,12 @@ const generateBadCollectionV1 = (data = {}): ReducedCollection => {
             },
         ],
         team: null,
-        ...data
-    }
-}
+        ...data,
+    };
+};
 
-export { generateCollectionV1, generateLargeCollectionV1, generateBadCollectionV1 };
+export {
+    generateCollectionV1,
+    generateLargeCollectionV1,
+    generateBadCollectionV1,
+};

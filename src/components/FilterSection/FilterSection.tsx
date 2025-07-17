@@ -134,6 +134,7 @@ const FilterSection = <
                     {() => {
                         return (
                             <List
+                                tabIndex={-1}
                                 rowRenderer={renderRow}
                                 rowCount={checkboxes.length}
                                 rowHeight={42}
@@ -144,6 +145,8 @@ const FilterSection = <
                                     maxWidth: "100%",
                                 }}
                                 style={{ width: "100%" }}
+                                // eslint-disable-next-line jsx-a11y/aria-role
+                                role=""
                             />
                         );
                     }}

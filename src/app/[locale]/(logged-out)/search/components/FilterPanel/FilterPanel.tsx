@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Tooltip } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -30,7 +29,7 @@ import {
     FILTER_TYPE_CATEGORY,
     filtersList,
     FILTER_POPULATION_SIZE,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_LICENSE,
     FILTER_MATERIAL_TYPE,
     FILTER_ORGANISATION_NAME,
@@ -79,7 +78,7 @@ const STATIC_FILTER_SOURCE_OBJECT = {
 };
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
-        FILTER_CONTAINS_TISSUE,
+        FILTER_CONTAINS_BIOSAMPLES,
         FILTER_COHORT_DISCOVERY,
         FILTER_DATA_TYPE,
         FILTER_DATA_SUBTYPE,
@@ -535,7 +534,7 @@ const FilterPanel = ({
     };
 
     return (
-        <>
+        <aside aria-label="filters">
             <Box
                 sx={{
                     display: "flex",
@@ -558,9 +557,8 @@ const FilterPanel = ({
 
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
                 const { label } = filterItem;
-
                 if (
-                    filterItem.label === FILTER_CONTAINS_TISSUE ||
+                    filterItem.label === FILTER_CONTAINS_BIOSAMPLES ||
                     filterItem.label === FILTER_COHORT_DISCOVERY
                 ) {
                     return (
@@ -581,7 +579,7 @@ const FilterPanel = ({
                                 )
                             }
                             containerSx={
-                                label === FILTER_CONTAINS_TISSUE
+                                label === FILTER_CONTAINS_BIOSAMPLES
                                     ? { pt: 1 }
                                     : { pb: 1 }
                             }
@@ -591,7 +589,7 @@ const FilterPanel = ({
 
                 if (
                     filterItem.label === FILTER_MATERIAL_TYPE &&
-                    !get(selectedFilters, FILTER_CONTAINS_TISSUE)?.length
+                    !get(selectedFilters, FILTER_CONTAINS_BIOSAMPLES)?.length
                 ) {
                     return null;
                 }
@@ -624,6 +622,7 @@ const FilterPanel = ({
                         expanded={
                             maximised.includes(label) || isPublicationSource
                         }
+                        tooltip={t(`${label}${TOOLTIP_SUFFIX}`)}
                         heading={
                             <Box
                                 sx={{
@@ -636,43 +635,20 @@ const FilterPanel = ({
                                     width: "100%",
                                     pr: 3.25,
                                 }}>
-                                <Tooltip
-                                    describeChild
-                                    placement="right"
-                                    title={t(`${label}${TOOLTIP_SUFFIX}`)}
-                                    style={{ width: "100%" }}>
-                                    <div>
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                p: 0,
-                                                justifyContent: "space-between",
-                                                width: "100%",
-                                            }}>
-                                            <Typography
-                                                fontWeight="400"
-                                                fontSize={20}>
-                                                {t(label)}
-                                            </Typography>
-                                            {filterValues[label] &&
-                                                !!Object.entries(
+                                <Typography fontWeight="400" fontSize={20}>
+                                    {t(label)}
+                                </Typography>
+                                {filterValues[label] &&
+                                    !!Object.entries(filterValues[label])
+                                        .length && (
+                                        <Typography sx={filterCountStyles}>
+                                            {
+                                                Object.entries(
                                                     filterValues[label]
-                                                ).length && (
-                                                    <Typography
-                                                        sx={filterCountStyles}>
-                                                        {
-                                                            Object.entries(
-                                                                filterValues[
-                                                                    label
-                                                                ]
-                                                            ).length
-                                                        }
-                                                    </Typography>
-                                                )}
-                                        </Box>
-                                    </div>
-                                </Tooltip>
+                                                ).length
+                                            }
+                                        </Typography>
+                                    )}
                             </Box>
                         }
                         onChange={() =>
@@ -686,7 +662,7 @@ const FilterPanel = ({
                     />
                 );
             })}
-        </>
+        </aside>
     );
 };
 

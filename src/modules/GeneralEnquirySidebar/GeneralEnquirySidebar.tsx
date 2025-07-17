@@ -21,7 +21,7 @@ import {
     generalEnquiryValidationSchema,
     generalEnquiryDefaultValues,
 } from "@/config/forms/generalEnquiry";
-import { getPreferredEmail } from "@/utils/user";
+import { getEmails } from "@/utils/user";
 
 const TRANSLATION_PATH = "pages.search.components.GeneralEnquiryForm";
 
@@ -49,13 +49,31 @@ const GeneralEnquirySidebar = ({
         },
     });
 
-    const hydratedFormFields = generalEnquiryFormFields;
+    const emailValues = user ? getEmails(user) : [];
+
+    const hydratedFormFields = generalEnquiryFormFields.map(field => {
+        if (field.name === "from") {
+            return {
+                ...field,
+                options: emailValues.map(email => ({
+                    value: email,
+                    label: email,
+                })),
+            };
+        }
+
+        return field;
+    });
 
     const organisationField = hydratedFormFields.find(
         item => item.name === "organisation"
     );
     if (organisationField) {
         organisationField.readOnly = !!user?.organisation;
+
+        if (!organisationField.readOnly) {
+            organisationField.info = "";
+        }
     }
 
     const submitForm = async (formData: Enquiry) => {
@@ -72,7 +90,6 @@ const GeneralEnquirySidebar = ({
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
-            from: getPreferredEmail(user),
             is_dar_dialogue: false,
             is_dar_status: false,
             is_feasibility_enquiry: false,

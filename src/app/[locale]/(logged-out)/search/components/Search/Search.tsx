@@ -5,6 +5,7 @@ import {
     useCallback,
     useEffect,
     useMemo,
+    useRef,
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
@@ -21,6 +22,7 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
+import zIndex from "@mui/material/styles/zIndex";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -72,7 +74,7 @@ import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
     FILTER_COLLECTION_NAME,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_DATA_SET_TITLES,
@@ -115,6 +117,7 @@ import {
     CloseIcon,
     DownloadIcon,
     FilterAltOutlinedIcon,
+    PanelExpandIcon,
     TableIcon,
 } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
@@ -139,7 +142,6 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
-import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
@@ -151,6 +153,20 @@ interface SearchProps {
     filters: Filter[];
     cohortDiscovery: PageTemplatePromo;
 }
+
+const filterSidebarWidth = 350;
+
+const filterSidebarStyles = {
+    width: filterSidebarWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    "& .MuiDrawer-paper": {
+        width: filterSidebarWidth,
+        position: "relative",
+        boxSizing: "border-box",
+        background: "none",
+    },
+};
 
 const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
@@ -167,6 +183,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     const { showSidebar } = useSidebar();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+
     const isTabletOrLaptop = useMediaQuery(
         theme.breakpoints.between("tablet", "desktop")
     );
@@ -242,7 +259,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             FILTER_PROGRAMMING_LANGUAGE
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
-        [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
+        [FILTER_CONTAINS_BIOSAMPLES]: getParamArray(FILTER_CONTAINS_BIOSAMPLES),
         [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
         [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
         [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
@@ -440,7 +457,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             [FILTER_POPULATION_SIZE]: undefined,
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
-            [FILTER_CONTAINS_TISSUE]: undefined,
+            [FILTER_CONTAINS_BIOSAMPLES]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
             [PMC_TYPE_FIELD]: undefined,
@@ -451,58 +468,34 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const categoryTabs = [
         {
-            label: (
-                <TabTooltip content={t("datasetsTooltip")}>
-                    {t("datasets")}
-                </TabTooltip>
-            ),
+            label: t("datasets"),
             value: SearchCategory.DATASETS,
-            content: "",
+            tooltip: t("datasetsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("dataUseTooltip")}>
-                    {t("dataUse")}
-                </TabTooltip>
-            ),
+            label: t("dataUse"),
             value: SearchCategory.DATA_USE,
-            content: "",
+            tooltip: t("dataUseTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("toolsTooltip")}>
-                    {t("tools")}
-                </TabTooltip>
-            ),
+            label: t("tools"),
             value: SearchCategory.TOOLS,
-            content: "",
+            tooltip: t("toolsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("publicationsTooltip")}>
-                    {t("publications")}
-                </TabTooltip>
-            ),
+            label: t("publications"),
             value: SearchCategory.PUBLICATIONS,
-            content: "",
+            tooltip: t("publicationsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("dataProvidersTooltip")}>
-                    {t("dataProviders")}
-                </TabTooltip>
-            ),
+            label: t("dataProviders"),
             value: SearchCategory.DATA_CUSTODIANS,
-            content: "",
+            tooltip: t("dataProvidersTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("collectionsTooltip")}>
-                    {t("collections")}
-                </TabTooltip>
-            ),
+            label: t("collections"),
             value: SearchCategory.COLLECTIONS,
-            content: "",
+            tooltip: t("collectionsTooltip"),
         },
     ];
 
@@ -898,29 +891,72 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         [selectedFilters]
     );
 
+    const [filterSidebarOpen, setFilterSidebarOpen] = useState(true);
+
+    const iconRef = useRef<HTMLButtonElement>(null);
+
+    const easing =
+        theme.transitions.easing[filterSidebarOpen ? "easeOut" : "easeIn"];
+    const duration =
+        theme.transitions.duration[
+            filterSidebarOpen ? "enteringScreen" : "leavingScreen"
+        ];
+
+    const filterSidebarButtonStyles = {
+        position: "absolute",
+        zIndex: zIndex.modal,
+        borderRadius: "50%",
+        backgroundColor: colors.white,
+        width: "48px",
+        height: "48px",
+        top: 20,
+        m: 0,
+        left: filterSidebarOpen ? 290 : 20,
+        "&:hover": {
+            backgroundColor: colors.grey300,
+        },
+        transition: theme.transitions.create("left", {
+            easing,
+            duration,
+        }),
+    };
+
+    const mainContentStyles = {
+        flexGrow: 1,
+        transition: theme.transitions.create("margin", {
+            easing,
+            duration,
+        }),
+        marginLeft: filterSidebarOpen || isMobile ? 0 : `-280px`,
+        padding: `0 ${theme.spacing(2)}`,
+        width: `calc(100% - ${filterSidebarWidth}px)`,
+    };
+
     return (
         <>
             {/* Filter Drawer */}
-            <Drawer
-                anchor="top"
-                open={filterDrawerOpen}
-                onClose={toggleFilterDrawer(false)}>
-                <Box sx={{ mt: 0, pt: 2, backgroundColor: colors.grey }}>
-                    <IconButton
-                        data-testid="dialog-close-icon"
-                        aria-label="close"
-                        onClick={toggleFilterDrawer(false)}
-                        sx={{
-                            position: "absolute",
-                            right: 8,
-                            top: 30,
-                            color: colors.purple500,
-                        }}>
-                        <CloseIcon />
-                    </IconButton>
-                    {filterPanel}
-                </Box>
-            </Drawer>
+            {isMobile && (
+                <Drawer
+                    anchor="top"
+                    open={filterDrawerOpen}
+                    onClose={toggleFilterDrawer(false)}>
+                    <Box sx={{ mt: 0, pt: 2, backgroundColor: colors.grey }}>
+                        <IconButton
+                            data-testid="dialog-close-icon"
+                            aria-label="close"
+                            onClick={toggleFilterDrawer(false)}
+                            sx={{
+                                position: "absolute",
+                                right: 8,
+                                top: 30,
+                                color: colors.purple500,
+                            }}>
+                            <CloseIcon />
+                        </IconButton>
+                        {filterPanel}
+                    </Box>
+                </Drawer>
+            )}
 
             <Box
                 display={{
@@ -1051,41 +1087,61 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 </Box>
                 <Box
                     sx={{
+                        display: "flex",
                         width: "100%",
-                        display: {
-                            mobile: "block",
-                            tablet: "grid",
-                        },
-                        gridTemplateColumns: {
-                            tablet: "repeat(7, 1fr)",
-                        },
-                        gap: {
-                            mobile: 0,
-                            tablet: 1,
-                        },
+                        position: "relative",
                     }}>
-                    <Box
-                        sx={{
-                            gridColumn: {
-                                tablet: "span 2",
-                                laptop: "span 2",
-                            },
-                            ml: 3,
-                            mb: 2,
-                            mt: 1,
-                        }}>
-                        {!isMobile && filterPanel}
-                    </Box>
-                    <Box
-                        sx={{
-                            gridColumn: { tablet: "span 5", laptop: "span 5" },
-                        }}
-                        component="section">
+                    {!isMobile && (
+                        <>
+                            <IconButton
+                                ref={iconRef}
+                                size="large"
+                                edge="start"
+                                onClick={() =>
+                                    setFilterSidebarOpen(!filterSidebarOpen)
+                                }
+                                sx={filterSidebarButtonStyles}
+                                color="secondary">
+                                <PanelExpandIcon
+                                    sx={{
+                                        transform: `scaleX(${
+                                            filterSidebarOpen ? 1 : -1
+                                        })`,
+                                    }}
+                                />
+                            </IconButton>
+
+                            {/* Filter Sidebar */}
+                            <Drawer
+                                sx={filterSidebarStyles}
+                                variant="persistent"
+                                anchor="left"
+                                PaperProps={{
+                                    sx: {
+                                        boxShadow: "none",
+                                        border: 0,
+                                    },
+                                }}
+                                open={filterSidebarOpen}>
+                                <Box
+                                    sx={{
+                                        ml: 3,
+                                        mb: 2,
+                                        mt: 1,
+                                    }}>
+                                    {filterPanel}
+                                </Box>
+                            </Drawer>
+                        </>
+                    )}
+
+                    <Box component="section" sx={mainContentStyles}>
                         <Box
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                m: 2,
+                                my: 2,
+                                mx: 0,
                             }}
                             aria-busy={isSearching}>
                             <Box
@@ -1096,7 +1152,11 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     alignItems: "flex-start",
                                     pt: 0,
                                     gap: 2,
-                                }}>
+                                }}
+                                {...(!!filterCount && {
+                                    "aria-label": "filter controls",
+                                    role: "region",
+                                })}>
                                 <FilterChips
                                     selectedFilters={selectedFilters}
                                     handleDelete={removeFilter}
@@ -1158,6 +1218,8 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                         </Box>
                                         {!isMobile && !isTabletOrLaptop && (
                                             <Box
+                                                aria-label="results controls"
+                                                role="region"
                                                 sx={{
                                                     display: "flex",
                                                     gap: 2,
@@ -1338,9 +1400,15 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             </>
                                         )}
 
-                                        <div aria-describedby="result-summary">
+                                        <Box
+                                            component="section"
+                                            aria-describedby="result-summary"
+                                            aria-label="results list"
+                                            sx={{
+                                                p: `0 ${theme.spacing(2)}`,
+                                            }}>
                                             {renderResults()}
-                                        </div>
+                                        </Box>
                                     </>
                                 )}
                             <Pagination

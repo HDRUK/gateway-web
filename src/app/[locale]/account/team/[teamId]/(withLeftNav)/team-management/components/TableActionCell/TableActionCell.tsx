@@ -16,7 +16,7 @@ interface TableActionCellProps {
 
 const linkWrapper = (title: string) => (children: ReactNode) => {
     return (
-        <Tooltip title={title}>
+        <Tooltip tabIndex={0} title={title}>
             <span>{children}</span>
         </Tooltip>
     );
@@ -39,6 +39,7 @@ const TableActionCell = ({ actions, user }: TableActionCellProps) => {
                         color="primary"
                         onClick={() => onClick(user)}
                         disabled={disabled}
+                        aria-label={title}
                         {...rest}>
                         <Icon />
                     </IconButton>

@@ -1,4 +1,4 @@
-import type { Publication } from "./Publication";
+import type { Publication, PublicationHasDatasetVersion } from "./Publication";
 import type { Team } from "./Team";
 
 type DatasetStatus = "ARCHIVED" | "ACTIVE" | "DRAFT";
@@ -183,6 +183,13 @@ export interface ReducedDataset {
     dataCustodian: string;
 }
 
+interface Linkage {
+    title: string;
+    url?: string;
+    dataset_id?: number;
+    linkage_type: string;
+}
+
 interface Dataset {
     id: number;
     team_id: number;
@@ -198,10 +205,11 @@ interface Dataset {
     publications_count: number;
     tools_count: number;
     collections_count: number;
-    publications: Publication[];
+    publications: PublicationHasDatasetVersion[];
     team: Team;
     name?: string;
     is_cohort_discovery: boolean;
+    linkages?: Linkage[];
 }
 
 interface DataCustodianDataset {
@@ -231,4 +239,5 @@ export type {
     Demographics,
     DemographicDisease,
     DemographicGeneric,
+    Linkage,
 };

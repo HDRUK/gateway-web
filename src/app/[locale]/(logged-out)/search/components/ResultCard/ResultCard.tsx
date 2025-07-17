@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
-import { Divider, ListItem, ListItemText } from "@mui/material";
+import { ListItem, ListItemText } from "@mui/material";
 import { get } from "lodash";
 import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
@@ -25,6 +25,7 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
 import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
+import { colors } from "@/config/theme";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
@@ -249,35 +250,35 @@ const ResultCard = ({
     const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
 
     return (
-        <>
-            <ListItem sx={{ p: 0 }} alignItems="flex-start">
-                <section
-                    style={{ width: "100%" }}
-                    // eslint-disable-next-line
-                    aria-description={`Result for ${metadata.summary.shortTitle}`}>
-                    <ListItemText
-                        disableTypography
-                        sx={{ padding: 2, paddingBottom: 1, m: 0 }}
-                        primary={
-                            <ResultTitle
-                                sx={{
-                                    flexDirection: {
-                                        mobile: "column",
-                                        tablet: "column",
-                                        laptop: "row",
-                                    },
-                                    mb: 1.5,
+        <ListItem
+            sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+            alignItems="flex-start">
+            <section
+                style={{ width: "100%" }}
+                // eslint-disable-next-line
+                aria-description={`Result for ${metadata.summary.shortTitle}`}>
+                <ListItemText
+                    disableTypography
+                    sx={{ padding: 2, paddingBottom: 1, m: 0 }}
+                    primary={
+                        <ResultTitle
+                            sx={{
+                                flexDirection: {
+                                    mobile: "column",
+                                    tablet: "column",
+                                    laptop: "row",
+                                },
+                                mb: 1.5,
+                            }}>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "column",
                                 }}>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                    }}>
+                                <h3 style={{ margin: 0 }}>
                                     <Link
                                         id={resultId}
                                         href={`${RouteName.DATASET_ITEM}/${datasetId}`}
-                                        role="heading"
-                                        aria-level={3}
                                         fontSize={16}
                                         fontWeight={600}
                                         marginBottom={0.5}
@@ -287,35 +288,11 @@ const ResultCard = ({
                                         }}>
                                         {metadata.summary.shortTitle}
                                     </Link>
-                                    {isNumber && (
-                                        <Link
-                                            href={linkHref}
-                                            sx={{ display: "inline-block" }}>
-                                            <Typography
-                                                // eslint-disable-next-line
-                                                aria-description="Data Custodian"
-                                                sx={{
-                                                    textDecoration: "uppercase",
-                                                    fontWeight: 400,
-                                                    fontSize: 14,
-                                                    color: "secondary",
-                                                    mb: 1.5,
-                                                    mr: {
-                                                        tablet: 0,
-                                                        laptop: 1,
-                                                    },
-                                                }}>
-                                                {metadata.summary.publisher
-                                                    .name !== undefined
-                                                    ? metadata.summary.publisher
-                                                          .name
-                                                    : metadata.summary.publisher
-                                                          .publisherName}
-                                            </Typography>
-                                        </Link>
-                                    )}
-
-                                    {!isNumber && (
+                                </h3>
+                                {isNumber && (
+                                    <Link
+                                        href={linkHref}
+                                        sx={{ display: "inline-block" }}>
                                         <Typography
                                             // eslint-disable-next-line
                                             aria-description="Data Custodian"
@@ -337,142 +314,159 @@ const ResultCard = ({
                                                 : metadata.summary.publisher
                                                       .publisherName}
                                         </Typography>
-                                    )}
-                                </div>
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "end",
-                                        textAlign: "end",
-                                        marginBottom: 1.5,
-                                    }}>
-                                    <Button
-                                        onClick={handleToggleLibraryItem}
-                                        variant="outlined"
-                                        aria-label={
-                                            isLibraryToggled
-                                                ? t("removeFromLibrary")
-                                                : `${t("addToLibrary")} for ${
-                                                      metadata.summary
-                                                          .shortTitle
-                                                  }`
-                                        }
-                                        // color="secondary"
-                                        startIcon={
-                                            isLibraryToggled ? (
-                                                <Bookmark color="secondary" />
-                                            ) : (
-                                                <BookmarkBorder color="secondary" />
-                                            )
-                                        }
-                                        sx={{
-                                            alignSelf: "flex-start",
-                                        }}>
-                                        {isLibraryToggled
-                                            ? t("removeFromLibrary")
-                                            : t("addToLibrary")}
-                                    </Button>
-                                    <Button
-                                        aria-label={`${t("actions")} for ${
-                                            metadata.summary.shortTitle
-                                        }`}
-                                        variant="contained"
-                                        startIcon={
-                                            <SpeechBubbleIcon
-                                                sx={{ fill: "white" }}
-                                            />
-                                        }
-                                        endIcon={
-                                            <ChevronThinIcon
-                                                fontSize="medium"
-                                                style={{ color: "white" }}
-                                            />
-                                        }
-                                        sx={{
-                                            ml: 2,
-                                            px: 3,
-                                            alignSelf: "flex-start",
-                                        }}
-                                        onClick={handleOpenDropdownMenu}>
-                                        {t("actions")}
-                                    </Button>
-                                    <MenuDropdown
-                                        handleClose={() =>
-                                            setAnchorElement(null)
-                                        }
-                                        menuItems={menuItems}
-                                        anchorElement={anchorElement}
-                                        title={metadata.summary.shortTitle}
-                                        stopPropagation
-                                    />
-                                </div>
-                            </ResultTitle>
-                        }
-                        primaryTypographyProps={{
-                            color: "primary",
-                            fontWeight: 600,
-                            fontSize: 16,
-                            mb: 1.5,
-                        }}
-                        secondary={
-                            <section aria-describedby={resultId}>
-                                <Highlight
-                                    sx={{ mb: 1.5 }}
-                                    component="div"
-                                    variant="body2"
-                                    color="text.gray"
-                                    dangerouslySetInnerHTML={{
-                                        __html: formattedText,
-                                    }}
-                                />
-                                <Box
-                                    sx={{
-                                        p: 0,
-                                        display: "flex",
-                                        flexDirection: {
-                                            mobile: "column",
-                                            tablet: "row",
-                                        },
-                                        justifyContent: "space-between",
-                                    }}>
+                                    </Link>
+                                )}
+
+                                {!isNumber && (
                                     <Typography
-                                        color="secondary"
-                                        sx={{ fontSize: 16 }}>
-                                        {t("populationSize")}:{" "}
-                                        {getPopulationSize(
-                                            metadata,
-                                            t("populationSizeNotReported")
-                                        )}
-                                    </Typography>
-                                    <Typography
-                                        color="secondary"
+                                        // eslint-disable-next-line
+                                        aria-description="Data Custodian"
                                         sx={{
-                                            fontSize: 16,
-                                            mb: {
-                                                mobile: 1,
+                                            textDecoration: "uppercase",
+                                            fontWeight: 400,
+                                            fontSize: 14,
+                                            color: "secondary",
+                                            mb: 1.5,
+                                            mr: {
                                                 tablet: 0,
+                                                laptop: 1,
                                             },
                                         }}>
-                                        {t("dateLabel")}:{" "}
-                                        {getDateRange(metadata)}
+                                        {metadata.summary.publisher.name !==
+                                        undefined
+                                            ? metadata.summary.publisher.name
+                                            : metadata.summary.publisher
+                                                  .publisherName}
                                     </Typography>
-                                    <Typography>
-                                        <Button
-                                            onClick={handleClickQuickView}
-                                            color="secondary"
-                                            variant="outlined">
-                                            {t("showAll")}
-                                        </Button>
-                                    </Typography>
-                                </Box>
-                            </section>
-                        }
-                    />
-                </section>
-            </ListItem>
-
-            <Divider component="li" />
-        </>
+                                )}
+                            </div>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "end",
+                                    textAlign: "end",
+                                    marginBottom: 1.5,
+                                }}>
+                                <Button
+                                    onClick={handleToggleLibraryItem}
+                                    variant="outlined"
+                                    aria-label={
+                                        isLibraryToggled
+                                            ? t("removeFromLibrary")
+                                            : `${t("addToLibrary")} for ${
+                                                  metadata.summary.shortTitle
+                                              }`
+                                    }
+                                    // color="secondary"
+                                    startIcon={
+                                        isLibraryToggled ? (
+                                            <Bookmark color="secondary" />
+                                        ) : (
+                                            <BookmarkBorder color="secondary" />
+                                        )
+                                    }
+                                    sx={{
+                                        alignSelf: "flex-start",
+                                    }}>
+                                    {isLibraryToggled
+                                        ? t("removeFromLibrary")
+                                        : t("addToLibrary")}
+                                </Button>
+                                <Button
+                                    aria-label={`${t("actions")} for ${
+                                        metadata.summary.shortTitle
+                                    }`}
+                                    variant="contained"
+                                    startIcon={
+                                        <SpeechBubbleIcon
+                                            sx={{ fill: "white" }}
+                                        />
+                                    }
+                                    endIcon={
+                                        <ChevronThinIcon
+                                            fontSize="medium"
+                                            style={{ color: "white" }}
+                                        />
+                                    }
+                                    sx={{
+                                        ml: 2,
+                                        px: 3,
+                                        alignSelf: "flex-start",
+                                    }}
+                                    onClick={handleOpenDropdownMenu}>
+                                    {t("actions")}
+                                </Button>
+                                <MenuDropdown
+                                    handleClose={() => setAnchorElement(null)}
+                                    menuItems={menuItems}
+                                    anchorElement={anchorElement}
+                                    title={metadata.summary.shortTitle}
+                                    stopPropagation
+                                />
+                            </div>
+                        </ResultTitle>
+                    }
+                    primaryTypographyProps={{
+                        color: "primary",
+                        fontWeight: 600,
+                        fontSize: 16,
+                        mb: 1.5,
+                    }}
+                    secondary={
+                        <section aria-describedby={resultId}>
+                            <Highlight
+                                sx={{ mb: 1.5 }}
+                                component="div"
+                                variant="body2"
+                                color="text.gray"
+                                dangerouslySetInnerHTML={{
+                                    __html: formattedText,
+                                }}
+                            />
+                            <Box
+                                sx={{
+                                    p: 0,
+                                    display: "flex",
+                                    flexDirection: {
+                                        mobile: "column",
+                                        tablet: "row",
+                                    },
+                                    justifyContent: "space-between",
+                                }}>
+                                <Typography
+                                    color={colors.green700}
+                                    sx={{ fontSize: 16 }}>
+                                    {t("populationSize")}:{" "}
+                                    {getPopulationSize(
+                                        metadata,
+                                        t("populationSizeNotReported")
+                                    )}
+                                </Typography>
+                                <Typography
+                                    color={colors.green700}
+                                    sx={{
+                                        fontSize: 16,
+                                        mb: {
+                                            mobile: 1,
+                                            tablet: 0,
+                                        },
+                                    }}>
+                                    {t("dateLabel")}: {getDateRange(metadata)}
+                                </Typography>
+                                <Typography>
+                                    <Button
+                                        onClick={handleClickQuickView}
+                                        color="secondary"
+                                        variant="outlined">
+                                        {t("showAll")}
+                                    </Button>
+                                </Typography>
+                            </Box>
+                        </section>
+                    }
+                />
+            </section>
+        </ListItem>
     );
 };
 
