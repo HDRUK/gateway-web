@@ -21,6 +21,7 @@ import {
     generalEnquiryValidationSchema,
     generalEnquiryDefaultValues,
 } from "@/config/forms/generalEnquiry";
+import { getEmails } from "@/utils/user";
 
 const TRANSLATION_PATH = "pages.search.components.GeneralEnquiryForm";
 
@@ -48,10 +49,7 @@ const GeneralEnquirySidebar = ({
         },
     });
 
-    const emailValues =
-        user?.preferred_email === "secondary"
-            ? [user?.secondary_email, user?.email]
-            : [user?.email, user?.secondary_email];
+    const emailValues = user ? getEmails(user) : [];
 
     const hydratedFormFields = generalEnquiryFormFields.map(field => {
         if (field.name === "from") {

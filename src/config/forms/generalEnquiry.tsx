@@ -7,6 +7,7 @@ const defaultValues = {
     organisation: "",
     number: "",
     query: "",
+    from: [],
 };
 
 const validationSchema = yup

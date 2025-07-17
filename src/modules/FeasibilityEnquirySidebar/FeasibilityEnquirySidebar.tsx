@@ -21,6 +21,7 @@ import {
     feasibilityEnquiryValidationSchema,
     feasibilityEnquiryDefaultValues,
 } from "@/config/forms/feasibilityEnquiry";
+import { getEmails } from "@/utils/user";
 
 const TRANSLATION_PATH = "pages.search.components.FeasibilityEnquiryForm";
 
@@ -47,10 +48,7 @@ const FeasibilityEnquirySidebar = ({
         },
     });
 
-    const emailValues =
-        user?.preferred_email === "secondary"
-            ? [user?.secondary_email, user?.email]
-            : [user?.email, user?.secondary_email];
+    const emailValues = user ? getEmails(user) : [];
 
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {

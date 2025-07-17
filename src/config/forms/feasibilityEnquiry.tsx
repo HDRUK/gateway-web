@@ -8,6 +8,7 @@ const defaultValues = {
     organisation: "",
     number: "",
     query: "",
+    from: [],
 };
 
 const validationSchema = yup
@@ -49,7 +50,6 @@ const formFields = [
         name: "organisation",
         component: inputComponents.TextField,
         required: true,
-        info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
     },
     {
