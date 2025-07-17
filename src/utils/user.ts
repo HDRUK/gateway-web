@@ -26,6 +26,18 @@ const getPreferredEmail = (user: AuthUser) => {
     return preferred_email === "secondary" ? secondary_email : email;
 };
 
+const getEmails = (user: AuthUser) => {
+    const { preferred_email, secondary_email, email } = user;
+
+    if (secondary_email) {
+        return preferred_email === "secondary"
+            ? [secondary_email, email]
+            : [email, secondary_email];
+    }
+
+    return [email];
+};
+
 const getTeamAdmins = (users: User[]) => {
     const usersWithAdmins = users
         .filter(
@@ -44,4 +56,5 @@ export {
     getRoleNamesByTeam,
     getPreferredEmail,
     getTeamAdmins,
+    getEmails,
 };
