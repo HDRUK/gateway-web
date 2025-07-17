@@ -816,6 +816,16 @@
                             },
                             "draft": "Draft",
                             "active": "Active"
+                        },
+                        "createModal": {
+                            "web": {
+                                "heading": "Create Web-based Template",
+                                "description": "Build an online Data Access Request form using the Five Safes Framework questions and/or your own"
+                            },
+                            "file": {
+                                "heading": "Create File-based Template",
+                                "description": "Upload an existing Data Access Request form for users to complete and upload to the Gateway"
+                            }
                         }
                     }
                 }

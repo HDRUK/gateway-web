@@ -5,9 +5,9 @@ import { useRouter, useParams } from "next/navigation";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Typography from "@/components/Typography";
+import DarTemplateCreationDialog from "@/modules/DarTemplateCreationDialog";
 import useAuth from "@/hooks/useAuth";
-import usePost from "@/hooks/usePost";
-import apis from "@/config/apis";
+import useDialog from "@/hooks/useDialog";
 import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH = `pages.account.team.dar.template`;
@@ -20,20 +20,15 @@ const DarTemplatePage = () => {
     }>();
     const t = useTranslations(TRANSLATION_PATH);
 
-    const createNewTemplate = usePost(apis.dataAccessTemplateV1Url, {
-        itemName: "DAR Template",
-    });
+    const { showDialog } = useDialog();
+
+    const payload = {
+        team_id: params?.teamId,
+        user_id: user?.id,
+    };
 
     const handleCreateTemplate = () => {
-        const payload = {
-            team_id: params?.teamId,
-            user_id: user?.id,
-        };
-        createNewTemplate(payload).then(res => {
-            const templateId = res;
-            const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}`;
-            router.push(redirectUrl);
-        });
+        showDialog(DarTemplateCreationDialog, { payload });
     };
 
     return (
