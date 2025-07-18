@@ -24,7 +24,7 @@ const getColumns = (): ColumnDef<Log>[] => {
                     </Typography>
                 );
             },
-            header: () => <div>{"Cohort Request Status"}</div>,
+            header: () => <div>"Cohort Request Status"</div>,
             size: 60,
         },
         {
@@ -36,7 +36,7 @@ const getColumns = (): ColumnDef<Log>[] => {
                     </Typography>
                 );
             },
-            header: () => <div>{"NHSE SDE Request Status"}</div>,
+            header: () => <div>"NHSE SDE Request Status"</div>,
             size: 80,
         },
         {
@@ -48,7 +48,7 @@ const getColumns = (): ColumnDef<Log>[] => {
                     </Typography>
                 );
             },
-            header: () => <div>{"Updated at"}</div>,
+            header: () => <div>"Updated at"</div>,
             size: 60,
         },
         {
@@ -58,7 +58,7 @@ const getColumns = (): ColumnDef<Log>[] => {
                     <Typography color="GrayText">{original.details}</Typography>
                 );
             },
-            header: () => <span>{"Details"}</span>,
+            header: () => <span>"Details"</span>,
         },
     ];
 };
@@ -73,8 +73,9 @@ const DecisionHistory = ({ cohortRequest }: DecisionHistoryProps) => {
                         <Table<Log>
                             columns={getColumns()}
                             rows={cohortRequest.logs.map(log => {
-                                log.id = -log.id;
-                                return log;
+                                const reversedLog = log;
+                                reversedLog.id = -reversedLog.id;
+                                return reversedLog;
                             })}
                         />
                     </TableContainer>

@@ -7,7 +7,6 @@ import FilterPopover from "@/components/FilterPopover";
 import Link from "@/components/Link";
 import SortIcon from "@/components/SortIcon";
 import TooltipIcon from "@/components/TooltipIcon";
-import { warning } from "@/services/notification/notification";
 import {
     statusMapping,
     NHSSDEStatusMapping,
@@ -450,7 +449,7 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            //TODO: it's a bit wonky that we don't actually use the expiry date in
+            // TODO: it's a bit wonky that we don't actually use the expiry date in
             // calculating the alert.
             cell: ({ row }) => {
                 const { showToolTip, toolTipMessage, hasExpired } = showAlert(
