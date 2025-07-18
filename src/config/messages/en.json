@@ -135,6 +135,10 @@
                 "approved_comments": "Approved",
                 "withdrawn": "Withdrawn",
                 "draft": "Draft"
+            },
+            "template": {
+                "FORM": "Web form Application",
+                "DOCUMENT": "File-based Application"
             }
         }
     },
