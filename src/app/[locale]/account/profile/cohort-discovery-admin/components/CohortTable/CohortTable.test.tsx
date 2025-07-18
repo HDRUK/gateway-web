@@ -6,12 +6,30 @@ import { server } from "@/mocks/server";
 import CohortTable from "./CohortTable";
 
 const requests = [
-    generateCohortRequestV1({ request_status: "APPROVED" }),
-    generateCohortRequestV1({ request_status: "REJECTED" }),
-    generateCohortRequestV1({ request_status: "PENDING" }),
-    generateCohortRequestV1({ request_status: "BANNED" }),
-    generateCohortRequestV1({ request_status: "SUSPENDED" }),
-    generateCohortRequestV1({ request_status: "EXPIRED" }),
+    generateCohortRequestV1({
+        request_status: "APPROVED",
+        nhse_sde_request_status: "IN_PROCESS",
+    }),
+    generateCohortRequestV1({
+        request_status: "REJECTED",
+        nhse_sde_request_status: "APPROVAL_REQUESTED",
+    }),
+    generateCohortRequestV1({
+        request_status: "PENDING",
+        nhse_sde_request_status: "APPROVED",
+    }),
+    generateCohortRequestV1({
+        request_status: "BANNED",
+        nhse_sde_request_status: "REJECTED",
+    }),
+    generateCohortRequestV1({
+        request_status: "SUSPENDED",
+        nhse_sde_request_status: "BANNED",
+    }),
+    generateCohortRequestV1({
+        request_status: "EXPIRED",
+        nhse_sde_request_status: "SUSPENDED",
+    }),
 ];
 
 describe("Cohort Table", () => {
@@ -74,6 +92,24 @@ describe("Cohort Table", () => {
             ).toBeInTheDocument();
             expect(
                 within(tableRows[6]).getByText("Expired")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[1]).getByText("In process")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[2]).getByText("Approval requested")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[3]).getByText("Approved")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[4]).getByText("Rejected")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[5]).getByText("Banned")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[6]).getByText("Suspended")
             ).toBeInTheDocument();
         });
     });
