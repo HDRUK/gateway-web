@@ -799,7 +799,11 @@
                             },
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
-                            "parentQuestionOption": "Parent question option"
+                            "parentQuestionOption": "Parent question option",
+                            "unsavedConfirm": "Stay on page",
+                            "unsavedCancel": "Continue without saving",
+                            "unsavedTitle": "Are you sure you want to exit?",
+                            "unsavedInfo": "You have changes to your template that will not be saved automatically"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",

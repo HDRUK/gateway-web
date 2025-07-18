@@ -42,11 +42,10 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         } else {
             showModal({
                 invertCloseIconBehaviour: true,
-                confirmText: "Stay on page",
-                cancelText: "Continue without saving",
-                title: "Are you sure you want to exit?",
-                content:
-                    "You have changes to your template that will not be saved automatically",
+                confirmText: t("unsavedConfirm"),
+                cancelText: t("unsavedCancel"),
+                title: t("unsavedTitle"),
+                content: t("unsavedInfo"),
                 onCancel: () => setSectionId(sectionId),
             });
         }
