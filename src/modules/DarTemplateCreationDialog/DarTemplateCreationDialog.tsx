@@ -46,7 +46,6 @@ const BUTTON_SX = {
 const DarTemplateCreationDialog = ({
     payload,
 }: DarTemplateCreationDialogProps) => {
-    console.log(payload);
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
 
