@@ -15,7 +15,6 @@ const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
 
 interface EditTemplateProps {
     teamId: string;
-    templateId: string;
 }
 const sections = [
     {
@@ -26,29 +25,30 @@ const sections = [
     },
 ];
 
-const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
+const EditTemplate = ({ teamId }: EditTemplateProps) => {
+    console.log(teamId);
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
 
     const [sectionId, setSectionId] = useState(1);
 
-    const [hasChanges, setHasChanges] = useState(false);
+    // const [hasChanges, setHasChanges] = useState(false);
 
     const { showModal } = useModal();
     const { showBar } = useActionBar();
 
     const handleChangeSection = (sectionId: number) => {
-        if (!hasChanges) {
-            setSectionId(sectionId);
-        } else {
-            showModal({
-                invertCloseIconBehaviour: true,
-                confirmText: t("unsavedConfirm"),
-                cancelText: t("unsavedCancel"),
-                title: t("unsavedTitle"),
-                content: t("unsavedInfo"),
-                onCancel: () => setSectionId(sectionId),
-            });
-        }
+        // if (!hasChanges) {
+        //     setSectionId(sectionId);
+        // } else {
+        showModal({
+            invertCloseIconBehaviour: true,
+            confirmText: t("unsavedConfirm"),
+            cancelText: t("unsavedCancel"),
+            title: t("unsavedTitle"),
+            content: t("unsavedInfo"),
+            onCancel: () => setSectionId(sectionId),
+        });
+        // }
     };
 
     const [currentSection, setCurrentSection] = useState<QuestionBankSection>();
@@ -61,11 +61,12 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
     }, [sections, sectionId]);
 
     const handleSaveChanges = (isPublished: boolean) => {
-        // const payload = {
-        //     team_id: teamId,
-        //     user_id: user?.id.toString(),
-        //     published: isPublished ? 1 : 0,
-        // };
+        console.log(isPublished);
+        //      const payload = {
+        //          team_id: teamId,
+        //          user_id: user?.id.toString(),
+        //          published: isPublished ? 1 : 0,
+        //      };
     };
 
     useEffect(() => {
@@ -80,7 +81,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 },
             },
             onSuccess: () => {
-                handleSaveChanges(true);
+                // handleSaveChanges(true);
             },
             showCancel: false,
         });
