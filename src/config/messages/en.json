@@ -135,6 +135,10 @@
                 "approved_comments": "Approved",
                 "withdrawn": "Withdrawn",
                 "draft": "Draft"
+            },
+            "template": {
+                "FORM": "Web form Application",
+                "DOCUMENT": "File-based Application"
             }
         }
     },
@@ -795,7 +799,11 @@
                             },
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
-                            "parentQuestionOption": "Parent question option"
+                            "parentQuestionOption": "Parent question option",
+                            "unsavedConfirm": "Stay on page",
+                            "unsavedCancel": "Continue without saving",
+                            "unsavedTitle": "Are you sure you want to exit?",
+                            "unsavedInfo": "You have changes to your template that will not be saved automatically"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -816,6 +824,16 @@
                             },
                             "draft": "Draft",
                             "active": "Active"
+                        },
+                        "createModal": {
+                            "web": {
+                                "heading": "Create Web-based Template",
+                                "description": "Build an online Data Access Request form using the Five Safes Framework questions and/or your own"
+                            },
+                            "file": {
+                                "heading": "Create File-based Template",
+                                "description": "Upload an existing Data Access Request form for users to complete and upload to the Gateway"
+                            }
                         }
                     }
                 }

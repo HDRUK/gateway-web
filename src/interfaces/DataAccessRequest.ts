@@ -42,6 +42,7 @@ interface DarTemplate {
     published: number;
     locked: number;
     questions: DarHasQuestion[];
+    template_type: "FORM" | "DOCUMENT";
 }
 
 type Validations = {
