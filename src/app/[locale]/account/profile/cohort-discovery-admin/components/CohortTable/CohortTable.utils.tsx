@@ -13,6 +13,7 @@ import {
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
     COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS,
 } from "@/consts/cohortDiscovery";
+import { SHORT_DATE_FORMAT } from "@/consts/date";
 import { SortByAlphaIcon, WarningIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate, differenceInDays } from "@/utils/date";
@@ -372,7 +373,6 @@ const getColumns = ({
                         />
                     </div>
                 ),
-            // <Typography>{original.nhse_sde_request_status}</Typography>
         },
         {
             id: "nhse_sde_requested_at",
@@ -396,7 +396,10 @@ const getColumns = ({
             ),
             cell: ({ row: { original } }) => (
                 <Typography>
-                    {formatDate(original.nhse_sde_requested_at, "DD/MM/YYYY")}
+                    {formatDate(
+                        original.nhse_sde_requested_at,
+                        SHORT_DATE_FORMAT
+                    )}
                 </Typography>
             ),
         },
