@@ -34,7 +34,7 @@ describe("useFeasibilityEnquiry", () => {
             const {
                 _id,
                 metadata,
-                team: { name, member_of, id },
+                team: { name, id },
             } = datasetSearchResultV1;
 
             expect(mockShowDialog).toHaveBeenCalledWith(expect.any(Function), {
