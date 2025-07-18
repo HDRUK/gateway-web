@@ -7,7 +7,6 @@ interface DatasetEnquiry {
     datasetId: number | null;
     teamId: number;
     teamName: string;
-    teamMemberOf: string;
     name?: string;
 }
 interface Enquiry {

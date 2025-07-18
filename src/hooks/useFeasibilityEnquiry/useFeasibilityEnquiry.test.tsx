@@ -43,7 +43,6 @@ describe("useFeasibilityEnquiry", () => {
                     name: metadata.summary.title,
                     teamId: id,
                     teamName: name,
-                    teamMemberOf: member_of,
                 },
                 mutateLibraries: expect.any(Function),
             });
@@ -81,7 +80,6 @@ describe("useFeasibilityEnquiry", () => {
                         name: metadata.summary.title,
                         teamId: team.id,
                         teamName: team.name,
-                        teamMemberOf: team.member_of,
                     },
                 }),
                 {

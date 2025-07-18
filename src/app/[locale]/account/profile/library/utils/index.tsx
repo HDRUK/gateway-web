@@ -46,7 +46,6 @@ const getColumns = ({
                                     name,
                                     teamId: dataCustodianId,
                                     teamName: dataCustodian,
-                                    teamMemberOf: dataCustodianMemberOf,
                                     darEnabled,
                                     cohortEnabled,
                                 },

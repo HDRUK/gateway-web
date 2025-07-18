@@ -19,7 +19,6 @@ interface SelectedLibrary {
         name: string;
         teamId: number;
         teamName: string;
-        teamMemberOf: string;
         darEnabled: boolean;
         cohortEnabled: boolean;
     };
