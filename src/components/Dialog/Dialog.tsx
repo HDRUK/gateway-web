@@ -22,6 +22,7 @@ export interface DialogProps {
     classes?: Partial<DialogClasses>;
     keepMounted?: boolean;
     open?: boolean;
+    fullWidth?: boolean;
 }
 
 const Dialog = ({
@@ -36,6 +37,7 @@ const Dialog = ({
     classes,
     keepMounted,
     open = true,
+    fullWidth = true,
 }: DialogProps) => {
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
     const closeButtonRef = useRef(null);
@@ -53,7 +55,7 @@ const Dialog = ({
     }, [open]);
     const props: MuiDialogProps = {
         maxWidth,
-        fullWidth: true,
+        fullWidth,
         classes,
         keepMounted,
         open,
