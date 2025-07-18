@@ -30,7 +30,6 @@ const getColumns = ({
                 name,
                 dataCustodianId,
                 dataCustodian,
-                dataCustodianMemberOf,
                 darEnabled,
                 cohortEnabled,
             } = row.original;

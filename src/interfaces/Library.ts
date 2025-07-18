@@ -33,7 +33,6 @@ interface LibraryListItem {
     dataCustodian: string;
     entityType: string;
     dataCustodianId: number;
-    dataCustodianMemberOf: string;
 }
 
 interface NewLibrary {
