@@ -47,7 +47,6 @@ const RightPanel = ({
                     name: item.name,
                     teamId: Number(item.teamId),
                     teamName: item.teamName,
-                    teamMemberOf: item.teamMemberOf,
                     darEnabled: item.darEnabled,
                     cohortEnabled: item.cohortEnabled,
                 };

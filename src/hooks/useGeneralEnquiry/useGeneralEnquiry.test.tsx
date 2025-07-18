@@ -73,7 +73,6 @@ describe("useGeneralEnquiry", () => {
                         datasetId: Number(_id) || null,
                         teamId: team.id,
                         teamName: team.name,
-                        teamMemberOf: team.member_of,
                     },
                 }),
                 {

@@ -38,7 +38,6 @@ const useFeasibilityEnquiry = () => {
                             name: metadata.summary.title,
                             teamId: team.id,
                             teamName: team.name,
-                            teamMemberOf: team.member_of,
                         },
                     }
                 );
@@ -53,7 +52,6 @@ const useFeasibilityEnquiry = () => {
                     name: metadata.summary.title,
                     teamId: team.id,
                     teamName: team.name,
-                    teamMemberOf: team.member_of,
                 };
 
                 showDialog(FeasibilityEnquiryDialog, {
