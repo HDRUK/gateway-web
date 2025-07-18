@@ -18,6 +18,7 @@ import {
     requestStatusField,
     detailsField,
     validationSchema,
+    nhseSdeRequestStatusField,
 } from "./config";
 
 interface EditCohortRequestProps {
@@ -33,6 +34,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             defaultValues: {
                 ...defaultValues,
                 request_status: cohortRequest.request_status,
+                nhse_sde_request_status: cohortRequest.nhse_sde_request_status,
             },
         });
 
@@ -59,10 +61,27 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                     ],
                 }),
             },
-            /* only display "details" field if "request_status" has changed */
-            ...(formState.dirtyFields.request_status ? [detailsField] : []),
+            {
+                ...nhseSdeRequestStatusField,
+                /* only add "EXPIRED" to dropdown if that is the current status */
+                ...(cohortRequest.request_status === "EXPIRED" && {
+                    options: [
+                        { label: "Expired", value: "EXPIRED" },
+                        ...nhseSdeRequestStatusField.options,
+                    ],
+                }),
+            },
+            /* only display "details" field if "request_status" or "nhs_sde_request_status" has changed */
+            ...(formState.dirtyFields.request_status ||
+            formState.dirtyFields.nhse_sde_request_status
+                ? [detailsField]
+                : []),
         ],
-        [formState.dirtyFields.request_status, cohortRequest]
+        [
+            formState.dirtyFields.request_status,
+            formState.dirtyFields.nhse_sde_request_status,
+            cohortRequest,
+        ]
     );
 
     const updateCohort = usePut<CohortRequestForm>(
@@ -85,6 +104,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
         updateCohort(cohortRequest.id, {
             details: formData.details,
             request_status: formData.request_status,
+            nhse_sde_request_status: formData.nhse_sde_request_status,
         });
         push(
             `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`

@@ -22,6 +22,7 @@ interface Log {
     user_id: number;
     details: string;
     request_status: CohortRequestStatus;
+    nhse_sde_request_status: CohortRequestStatus;
     created_at: string;
     updated_at: string;
     user: User;
@@ -45,6 +46,7 @@ interface CohortRequest {
 interface CohortRequestForm {
     details: string;
     request_status: CohortRequestStatus;
+    nhse_sde_request_status: NHSSDERequestStatus;
 }
 
 interface CohortRequestUser {
