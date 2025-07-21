@@ -1,61 +1,74 @@
-enum LogLevel {
-    Info = "info",
-    Warn = "warn",
-    Error = "error",
-}
-
 class Log {
     readonly logger: Console;
+
+    readonly extend: string | undefined;
 
     constructor() {
         this.logger = console;
     }
 
-    private static formatMessage = (data: string | object) =>
-        typeof data === "object" ? JSON.stringify(data, null, 2) : data;
+   private static formatError = (data: string | object): string => {
+        if (data instanceof Error) {
+            return JSON.stringify(
+                {
+                    name: data.name,
+                    message: data.message,
+                    stack: data.stack,
+                },
+                null,
+                2
+            );
+        }
 
-    private static log = (
-        level: LogLevel,
-        message: string | object,
+        return typeof data === "object"
+            ? JSON.stringify(data, null, 2)
+            : data.toString();
+    };
+
+    private static logFormat = (
         session: string,
-        location: string
+        level: "INFO" | "WARN" | "ERROR",
+        location: string,
+        message: string | object
     ) => {
-        const logObject = {
+        return {
             timestamp: new Date().toISOString(),
             level,
             "x-request-session-id": session,
             location,
-            message: Log.formatMessage(message),
+            message: Log.formatError(message),
         };
-
-        const logLine = JSON.stringify(logObject);
-
-        const consoleMethod = {
-            [LogLevel.Info]: console.log,
-            [LogLevel.Warn]: console.warn,
-            [LogLevel.Error]: console.error,
-        }[level];
-
-        consoleMethod(logLine);
     };
 
     public info = (
         message: string | object,
         session: string,
         location: string
-    ) => this.logger.log(LogLevel.Info, message, session, location);
+    ) => {
+        this.logger.info(
+            JSON.stringify(Log.logFormat(session, "INFO", location, message))
+        );
+    };
 
     public warn = (
         message: string | object,
         session: string,
         location: string
-    ) => this.logger.log(LogLevel.Warn, message, session, location);
+    ) => {
+        this.logger.warn(
+            JSON.stringify(Log.logFormat(session, "WARN", location, message))
+        );
+    };
 
     public error = (
         message: string | object,
         session: string,
         location: string
-    ) => this.logger.log(LogLevel.Error, message, session, location);
+    ) => {
+        this.logger.error(
+            JSON.stringify(Log.logFormat(session, "ERROR", location, message))
+        );
+    };
 }
 
 export const logger = new Log();
