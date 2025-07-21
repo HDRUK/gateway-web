@@ -1,3 +1,13 @@
+## [2.16.0](https://github.com/HDRUK/gateway-web/compare/v2.15.0...v2.16.0) (2025-07-21)
+
+### ✨ Features
+
+* **GAT-5954:** v2 endpoints (#1263) ([c358f83](https://github.com/HDRUK/gateway-web/commit/c358f83ca1aafe88cae1fe2dcfdbe44e8dd783f1)), closes [GAT-5954](GAT-5954)
+
+### 🐛 Bug Fixes
+
+* **GAT-5951:** Add missing v2 users config. (#1267) ([a93bd1d](https://github.com/HDRUK/gateway-web/commit/a93bd1d3a4ebbe5345172b90b34ee9d3d1094513)), closes [GAT-5951](GAT-5951)
+
 ## [2.15.0](https://github.com/HDRUK/gateway-web/compare/v2.14.2...v2.15.0) (2025-07-15)
 
 ### ✨ Features
