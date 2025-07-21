@@ -1,47 +1,52 @@
+enum LogLevel {
+  Info = "info",
+  Warn = "warn",
+  Error = "error",
+}
+
 class Log {
-    readonly logger: Console;
+  readonly logger: Console;
 
-    readonly extend: string | undefined;
+  constructor() {
+    this.logger = console;
+  }
 
-    constructor() {
-        this.logger = console;
-    }
+  private static formatMessage = (data: string | object) =>
+    typeof data === "object" ? JSON.stringify(data, null, 2) : data;
 
-    private static format = (data: string | object) =>
-        typeof data === "object" ? JSON.stringify(data, null, 2) : data;
-
-    public info = (
-        message: string | object,
-        session: string,
-        location: string
-    ) => {
-        this.logger.info(
-            `session: ${session} - info - during  ${location}  -`,
-            Log.format(message)
-        );
+  private static log = (
+    level: LogLevel,
+    message: string | object,
+    session: string,
+    location: string
+  ) => {
+    const logObject = {
+      timestamp: new Date().toISOString(),
+      level,
+      "x-request-session-id": session,
+      location,
+      message: Log.formatMessage(message),
     };
 
-    public warn = (
-        message: string | object,
-        session: string,
-        location: string
-    ) => {
-        this.logger.warn(
-            `session: ${session} - warn - during ${location}  - `,
-            Log.format(message)
-        );
-    };
+    const logLine = JSON.stringify(logObject);
 
-    public error = (
-        message: string | object,
-        session: string,
-        location: string
-    ) => {
-        this.logger.error(
-            `session: ${session} - error - during  ${location} - `,
-            Log.format(message)
-        );
-    };
+    const consoleMethod = {
+      [LogLevel.Info]: console.log,
+      [LogLevel.Warn]: console.warn,
+      [LogLevel.Error]: console.error,
+    }[level];
+
+    consoleMethod(logLine);
+  };
+
+  public info = (message: string | object, session: string, location: string) =>
+    Log.log(LogLevel.Info, message, session, location);
+
+  public warn = (message: string | object, session: string, location: string) =>
+    Log.log(LogLevel.Warn, message, session, location);
+
+  public error = (message: string | object, session: string, location: string) =>
+    Log.log(LogLevel.Error, message, session, location);
 }
 
 export const logger = new Log();
