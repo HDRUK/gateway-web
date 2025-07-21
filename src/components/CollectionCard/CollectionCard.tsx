@@ -72,15 +72,25 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
+                            maxWidth: "20vw",
                         }}>
                         {!hasImage && (
-                            <Typography variant="h3" sx={{ fontSize: 20 }}>
+                            <Typography
+                                variant="h3"
+                                sx={{ fontSize: 20 }}
+                                noWrap>
                                 {name}
                             </Typography>
                         )}
                     </Box>
-                    <Box sx={{ p: 0, fontSize: 13 }}>
-                        <Typography variant="h3" sx={{ mb: 2, fontSize: 16 }}>
+                    <Box sx={{ p: 0, fontSize: 13, maxWidth: "20vw" }}>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                mb: 2,
+                                fontSize: 16,
+                                wordBreak: "break-word",
+                            }}>
                             {name}
                         </Typography>
                         <KeyValueList
