@@ -13,6 +13,7 @@ import {
     PageTemplateHome,
     PageTemplatePromo,
     PageTemplateRepeat,
+    CohortDiscoveryTemplate,
 } from "@/interfaces/Cms";
 import { ContributorsAndCollaboratorsNode } from "@/interfaces/ContributorsAndCollaborators";
 import { EventNode } from "@/interfaces/Events";
@@ -24,6 +25,7 @@ import { ReleaseNode } from "@/interfaces/Releases";
 import { SupportCohortDiscoveryPage } from "@/interfaces/Support";
 import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
+import { GetCohortDiscoveryQuery1 } from "@/config/queries/cohortDiscovery1";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import {
@@ -293,6 +295,15 @@ const getCohortDiscovery = async () => {
     return substituteEnvLinks(data?.page);
 };
 
+const getCohortDiscovery1 = async () => {
+    const data: CMSPageResponse<CohortDiscoveryTemplate> = await fetchCMS(
+        GetCohortDiscoveryQuery1,
+        DEFAULT_OPTIONS
+    );
+
+    return substituteEnvLinks(data?.page);
+};
+
 const getHomePage = async () => {
     const data: PageTemplateHome = await fetchCMS(
         GetHomePageQuery,
@@ -479,6 +490,7 @@ const getCookieNotice = async () => {
 
 export {
     getCohortDiscovery,
+    getCohortDiscovery1,
     getCohortDiscoverySupportPageQuery,
     getCohortTermsAndConditions,
     getContentPageByParentQuery,
