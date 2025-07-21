@@ -4,7 +4,7 @@ import { logger } from "@/utils/logger";
 export async function GET() {
     const sessionId = "test-session-123";
     const location = "GET /api/kaboom";
-    console.log('hello')
+    console.log("hello");
     logger.info("Everything is working fine", sessionId, location);
     logger.warn("This might be a potential issue", sessionId, location);
     logger.error(new Error("Kaboom! Something exploded"), sessionId, location);
