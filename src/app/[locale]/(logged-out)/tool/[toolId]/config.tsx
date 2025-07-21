@@ -55,7 +55,7 @@ const toolFields: ToolSection[] = [
             },
             {
                 path: "updated_at",
-                type: FieldType.TEXT,
+                type: FieldType.DATE,
                 hideTooltip: false,
                 label: "lastUpdated",
             },

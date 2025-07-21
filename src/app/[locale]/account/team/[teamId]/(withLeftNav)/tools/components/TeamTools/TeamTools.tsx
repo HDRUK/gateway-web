@@ -12,7 +12,6 @@ import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";
-import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
@@ -63,14 +62,13 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     );
 
     const [queryParams, setQueryParams] = useState({
-        team_id: teamId ? `${teamId}` : "",
-        user_id: !teamId ? `${userId}` : "",
-        withTrashed: "true",
-        status: "ACTIVE",
+        status: DataStatus.ACTIVE.toLowerCase(),
         page: "1",
         sort: `${searchDefaultValues.sortField}:${initialSort.initialDirection}`,
         title: "",
     });
+
+    const { status, ...filteredQueryParams } = queryParams;
 
     const { control, watch, setValue } = useForm({
         defaultValues: {
@@ -111,15 +109,19 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     useEffect(() => {
         setQueryParams(previous => ({
             ...previous,
-            status: searchParams?.get("tab") || "ACTIVE",
+            status: (
+                searchParams?.get("tab") || DataStatus.ACTIVE
+            ).toLowerCase(),
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams?.get("tab")]);
 
+    const baseToolsUrl = teamId
+        ? `${apis.teamsV2Url}/${teamId}/tools`
+        : `${apis.usersV2Url}/${userId}/tools`;
+
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
-        teamId
-            ? `${apis.toolsV1Url}/count/status?team_id=${teamId}`
-            : `${apis.toolsV1Url}/count/status?user_id=${userId}`
+        `${baseToolsUrl}/count/status`
     );
 
     const {
@@ -133,19 +135,17 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         isLoading,
         mutate: mutateTools,
     } = useGet<PaginationType<Tool>>(
-        `${apis.toolsV1Url}?${new URLSearchParams(queryParams)}`,
+        `${baseToolsUrl}/status/${status}?${new URLSearchParams(
+            filteredQueryParams
+        )}`,
         {
             keepPreviousData: true,
             withPagination: true,
         }
     );
 
-    const unArchiveTool = usePatch<Partial<Tool>>(apis.toolsV1Url, {
-        query: "unarchive",
-    });
-
-    const archiveTool = useDelete(apis.toolsV1Url, {
-        localeKey: "archiveTool",
+    const patchTool = usePatch<Partial<Tool>>(baseToolsUrl, {
+        itemName: "Tool",
     });
 
     useEffect(() => {
@@ -180,7 +180,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                           showModal({
                               tertiaryButton: {
                                   onAction: async () => {
-                                      await unArchiveTool(id, {
+                                      await patchTool(id, {
                                           status: DataStatus.ACTIVE,
                                       });
                                       mutateTools();
@@ -189,7 +189,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                                   buttonText: t("actions.unarchive.buttonText"),
                               },
                               onSuccess: async () => {
-                                  await unArchiveTool(id, {
+                                  await patchTool(id, {
                                       status: DataStatus.DRAFT,
                                   });
                                   mutateTools();
@@ -209,7 +209,9 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
             ? [
                   {
                       action: async (id: number) => {
-                          await archiveTool(id);
+                          await patchTool(id, {
+                              status: DataStatus.ARCHIVED,
+                          });
                           mutateTools();
                           mutateCount();
                       },
@@ -246,7 +248,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                 setValue={setValue}
                 key={tabItem.value}
                 label={tabItem.label}
-                list={data?.list}
+                list={data?.list || []}
                 currentPage={parseInt(queryParams.page, 10)}
                 setCurrentPage={page =>
                     setQueryParams({
