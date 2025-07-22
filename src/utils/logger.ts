@@ -46,7 +46,9 @@ class Log {
         location: string
     ) => {
         this.logger.info(
-            Log.logFormat(session, "INFO", location, message)
+            JSON.stringify(
+                Log.logFormat(session, "INFO", location, message)
+            )
         );
     };
 
