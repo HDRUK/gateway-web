@@ -14,7 +14,9 @@ class Log {
                     name: data.name,
                     message: data.message,
                     stack: data.stack,
-                }
+                },
+                null,
+                2
             );
         }
 
