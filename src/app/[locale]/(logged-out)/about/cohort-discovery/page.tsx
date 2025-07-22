@@ -222,13 +222,14 @@ export default async function CohortDiscoveryPage() {
                                         display: "flex",
                                         alignItems: "stretch",
                                         flexDirection: "column",
+                                        p: 0,
                                     }}>
                                     <Box
                                         sx={{
                                             bgcolor: "white",
                                             display: "flex",
                                             justifyContent: "center",
-                                            mb: 3,
+                                            mb: 2,
                                             gap: 2,
                                             py: 2,
                                         }}>
