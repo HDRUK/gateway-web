@@ -14,9 +14,7 @@ class Log {
                     name: data.name,
                     message: data.message,
                     stack: data.stack,
-                },
-                null,
-                2
+                }
             );
         }
 
@@ -46,9 +44,7 @@ class Log {
         location: string
     ) => {
         this.logger.info(
-            JSON.stringify(
-                Log.logFormat(session, "INFO", location, message)
-            )
+            JSON.stringify(Log.logFormat(session, "INFO", location, message))
         );
     };
 
