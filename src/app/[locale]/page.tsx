@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { getHomePage, getSortedNewsEventsByDate } from "@/utils/cms";
-import { logger } from "@/utils/logger";
 import Homepage from "./components/Homepage";
 
 export default async function HomePage() {
