@@ -6,6 +6,7 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import { getCohortDiscovery1 } from "@/utils/cms";
 import metaData from "@/utils/metadata";
+import { CohortDiscoveryTabContent } from "./CohortDiscoveryPage.styles";
 import CtaOverride from "./components/CtaOverride";
 
 export const metadata = metaData({
@@ -65,14 +66,8 @@ export default async function CohortDiscoveryPage() {
                             value: "about-cohort-discovery",
                             label: "About Cohort Discovery",
                             content: (
-                                <Box
-                                    sx={{
-                                        bgcolor: "white",
-                                        p: 3,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        flexDirection: "column",
-                                    }}>
+                                <CohortDiscoveryTabContent
+                                    sx={{ bgcolor: "white" }}>
                                     <Box
                                         sx={{
                                             p: 0,
@@ -104,21 +99,15 @@ export default async function CohortDiscoveryPage() {
                                             )}
                                         </Box>
                                     </Box>
-                                </Box>
+                                </CohortDiscoveryTabContent>
                             ),
                         },
                         {
                             value: "how-to-request-access",
                             label: "How to request access",
                             content: (
-                                <Box
-                                    sx={{
-                                        bgcolor: "white",
-                                        p: 3,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        flexDirection: "column",
-                                    }}>
+                                <CohortDiscoveryTabContent
+                                    sx={{ bgcolor: "white" }}>
                                     <Box
                                         sx={{
                                             p: 0,
@@ -154,14 +143,22 @@ export default async function CohortDiscoveryPage() {
                                             )}
                                         </Box>
                                     </Box>
-                                </Box>
+                                </CohortDiscoveryTabContent>
                             ),
                         },
                         {
                             value: "security-and-confidentiality",
                             label: "Security and confidentiality",
                             content: (
-                                <Box>
+                                <Box
+                                    sx={{
+                                        overflowY: "auto",
+                                        height: "520px",
+                                        justifySelf: "center",
+                                        "&::-webkit-scrollbar": {
+                                            display: "none",
+                                        },
+                                    }}>
                                     <Box
                                         sx={{
                                             bgcolor: "white",
@@ -220,7 +217,7 @@ export default async function CohortDiscoveryPage() {
                             value: "nhs-sde-network",
                             label: "NHS SDE Network",
                             content: (
-                                <Box
+                                <CohortDiscoveryTabContent
                                     sx={{
                                         display: "flex",
                                         alignItems: "stretch",
@@ -276,7 +273,7 @@ export default async function CohortDiscoveryPage() {
                                             )}
                                         </Box>
                                     </Box>
-                                </Box>
+                                </CohortDiscoveryTabContent>
                             ),
                         },
                     ]}
