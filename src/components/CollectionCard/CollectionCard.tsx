@@ -42,7 +42,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 50px",
+                    gridTemplateColumns: "repeat(1, 1fr 50px)",
                     p: 0,
                 }}>
                 <Box
