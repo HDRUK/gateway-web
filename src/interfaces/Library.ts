@@ -19,7 +19,6 @@ interface SelectedLibrary {
         name: string;
         teamId: number;
         teamName: string;
-        teamMemberOf: string;
         darEnabled: boolean;
         cohortEnabled: boolean;
     };
@@ -34,7 +33,6 @@ interface LibraryListItem {
     dataCustodian: string;
     entityType: string;
     dataCustodianId: number;
-    dataCustodianMemberOf: string;
 }
 
 interface NewLibrary {
