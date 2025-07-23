@@ -77,7 +77,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                                 desktop: "40vw",
                                 laptop: "30vw",
                                 tablet: "15vw",
-                                mobile: "15vw",
+                                mobile: "70vw",
                             },
                         }}>
                         {!hasImage && (
@@ -89,7 +89,17 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             </Typography>
                         )}
                     </Box>
-                    <Box sx={{ p: 0, fontSize: 13 }}>
+                    <Box
+                        sx={{
+                            p: 0,
+                            fontSize: 13,
+                            maxWidth: {
+                                desktop: "40vw",
+                                laptop: "30vw",
+                                tablet: "15vw",
+                                mobile: "70vw",
+                            },
+                        }}>
                         <Typography
                             variant="h3"
                             sx={{
