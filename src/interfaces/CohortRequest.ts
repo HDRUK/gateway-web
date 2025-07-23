@@ -68,6 +68,7 @@ interface CohortRequestAccess {
 
 interface CohortResponse {
     requestStatus: string;
+    requestExpiry: string;
     redirectUrl: string;
 }
 

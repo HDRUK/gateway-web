@@ -30,6 +30,7 @@ export const useCohortStatus = (userId?: number) => {
 
     return {
         requestStatus: data?.requestStatus ?? null,
+        requestExpiry: data?.requestExpiry ?? null,
         redirectUrl: data?.redirectUrl ?? null,
         isLoading,
     };

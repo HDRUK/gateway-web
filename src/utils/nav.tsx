@@ -54,7 +54,20 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-
+        {
+            icon: <CohortIcon />,
+            label: "Cohort Discovery",
+            subItems: [
+                {
+                    label: "My access request",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
+                },
+                {
+                    label: "About this service",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY}`,
+                },
+            ],
+        },
         {
             icon: <DescriptionIcon />,
             label: "Data Access Requests",
