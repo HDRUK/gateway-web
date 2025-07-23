@@ -42,7 +42,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    gridTemplateColumns: "1fr 50px",
                     p: 0,
                 }}>
                 <Box
@@ -51,6 +51,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                         gridTemplateColumns: {
                             mobile: "repeat(1, 1fr)",
                             tablet: "repeat(1, 1fr 4fr)",
+                            laptop: "repeat(1, 1fr 4fr)",
                         },
                         gap: 2,
                         p: 2,
@@ -72,7 +73,12 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
-                            maxWidth: "15vw",
+                            maxWidth: {
+                                desktop: "40vw",
+                                laptop: "30vw",
+                                tablet: "15vw",
+                                mobile: "15vw",
+                            },
                         }}>
                         {!hasImage && (
                             <Typography
@@ -83,7 +89,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             </Typography>
                         )}
                     </Box>
-                    <Box sx={{ p: 0, fontSize: 13, maxWidth: "30vw" }}>
+                    <Box sx={{ p: 0, fontSize: 13 }}>
                         <Typography
                             variant="h3"
                             sx={{
