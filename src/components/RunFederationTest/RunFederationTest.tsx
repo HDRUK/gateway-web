@@ -5,7 +5,9 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import Typography from "@/components/Typography";
+import { INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
 import { colors } from "@/config/theme";
+import Link from "../Link";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
@@ -96,6 +98,11 @@ const RunFederationTest = ({
                                 </Typography>
                                 <Typography>
                                     Change the form inputs to reset the test
+                                </Typography>
+                                <Typography>
+                                    <Link href={INTEGRATION_OVERVIEW_URL}>
+                                        How to setup and manage integrations
+                                    </Link>
                                 </Typography>
                             </>
                         )}

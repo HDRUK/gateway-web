@@ -4,6 +4,7 @@ const CUSTOMER_PORTAL_RAISE_SUPPORT_URL = `${process.env.NEXT_PUBLIC_SERVICE_DES
 const GATEWAY_TERMS_URL = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/about/terms-and-conditions`;
 const INTEGRATION_TESTING_URL =
     "https://hdruk.github.io/gateway-2-integrations-testing/";
+const INTEGRATION_OVERVIEW_URL = `${process.env.NEXT_PUBLIC_INTEGRATION_OVERVIEW_URL}`;
 
 export {
     INTEGRATION_TESTING_URL,
@@ -11,4 +12,5 @@ export {
     CUSTOMER_PORTAL_SUPPORT_URL,
     GATEWAY_TERMS_URL,
     CUSTOMER_PORTAL_RAISE_SUPPORT_URL,
+    INTEGRATION_OVERVIEW_URL,
 };
