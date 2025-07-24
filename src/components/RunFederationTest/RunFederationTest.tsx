@@ -5,10 +5,10 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import Typography from "@/components/Typography";
+import { INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
 import { colors } from "@/config/theme";
 import Link from "../Link";
 import * as styles from "./RunFederationTest.styles";
-import { INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
 
 interface RunFederationTestProps {
     onRun: () => void;
