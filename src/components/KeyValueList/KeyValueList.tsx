@@ -15,7 +15,12 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
                     key={row.key}
                     sx={{
                         display: "grid",
-                        gridTemplateColumns: "130px 1fr",
+                        gridTemplateColumns: {
+                            desktop: "130px 1fr",
+                            laptop: "130px 1fr",
+                            tablet: "100px 1fr",
+                            mobile: "130px 1fr",
+                        },
                         p: 0,
                     }}>
                     <Typography
