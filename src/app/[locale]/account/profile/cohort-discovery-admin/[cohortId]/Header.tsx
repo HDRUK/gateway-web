@@ -2,7 +2,7 @@ import { CohortRequest } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
-import { statusMapping } from "@/consts/cohortDiscovery";
+import { NHSSDEStatusMapping, statusMapping } from "@/consts/cohortDiscovery";
 import { capitalise } from "@/utils/general";
 
 export default function Header({
@@ -27,11 +27,55 @@ export default function Header({
                     {cohortRequest.user.email}
                 </Typography>
             </Typography>
-            <Chip
-                size="small"
-                label={capitalise(cohortRequest.request_status)}
-                color={statusMapping[cohortRequest.request_status]}
-            />
+            <Box
+                sx={{
+                    p: 0,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                    gap: 4,
+                }}>
+                {cohortRequest?.request_status && (
+                    <Box
+                        sx={{
+                            p: 0,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: 2,
+                        }}>
+                        <Typography>General: </Typography>
+                        <Chip
+                            size="small"
+                            label={capitalise(cohortRequest?.request_status)}
+                            color={statusMapping[cohortRequest?.request_status]}
+                        />
+                    </Box>
+                )}
+                {cohortRequest?.nhse_sde_request_status && (
+                    <Box
+                        sx={{
+                            p: 0,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: 2,
+                        }}>
+                        <Typography>NHS: </Typography>
+                        <Chip
+                            size="small"
+                            label={capitalise(
+                                cohortRequest?.nhse_sde_request_status
+                            )}
+                            color={
+                                NHSSDEStatusMapping[
+                                    cohortRequest?.nhse_sde_request_status
+                                ]
+                            }
+                        />
+                    </Box>
+                )}
+            </Box>
         </Box>
     );
 }
