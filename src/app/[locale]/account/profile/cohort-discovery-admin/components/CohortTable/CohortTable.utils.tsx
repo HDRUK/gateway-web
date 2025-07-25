@@ -222,15 +222,16 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            cell: ({ row: { original } }) => (
-                <div style={{ textAlign: "center" }}>
-                    <Chip
-                        size="small"
-                        label={capitalise(original.request_status)}
-                        color={statusMapping[original.request_status]}
-                    />
-                </div>
-            ),
+            cell: ({ row: { original } }) =>
+                original.request_status && (
+                    <div style={{ textAlign: "center" }}>
+                        <Chip
+                            size="small"
+                            label={capitalise(original.request_status || "")}
+                            color={statusMapping[original.request_status]}
+                        />
+                    </div>
+                ),
         },
         {
             id: "dateRequested",

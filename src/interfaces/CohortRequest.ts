@@ -9,8 +9,8 @@ type CohortRequestStatus =
     | "EXPIRED";
 
 type NHSSDERequestStatus =
-    | "IN_PROCESS"
-    | "APPROVAL_REQUESTED"
+    | "IN PROCESS"
+    | "APPROVAL REQUESTED"
     | "APPROVED"
     | "REJECTED"
     | "BANNED"

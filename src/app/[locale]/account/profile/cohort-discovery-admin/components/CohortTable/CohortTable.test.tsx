@@ -8,11 +8,11 @@ import CohortTable from "./CohortTable";
 const requests = [
     generateCohortRequestV1({
         request_status: "APPROVED",
-        nhse_sde_request_status: "IN_PROCESS",
+        nhse_sde_request_status: "IN PROCESS",
     }),
     generateCohortRequestV1({
         request_status: "REJECTED",
-        nhse_sde_request_status: "APPROVAL_REQUESTED",
+        nhse_sde_request_status: "APPROVAL REQUESTED",
     }),
     generateCohortRequestV1({
         request_status: "PENDING",
