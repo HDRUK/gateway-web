@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import apis from "@/config/apis";
@@ -22,7 +22,6 @@ const ProviderLinks = ({
     redirectPath,
 }: ProviderLinksProps) => {
     const t = useTranslations("modules");
-    const pathname = usePathname();
     const { push } = useRouter();
 
     let effectiveRedirectPath = "";

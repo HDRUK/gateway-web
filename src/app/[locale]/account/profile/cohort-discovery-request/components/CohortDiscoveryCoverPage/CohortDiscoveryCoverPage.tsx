@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import { Grid, Typography, useTheme } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -25,7 +25,7 @@ export default function CohortDiscoveryCoverPage({
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { user } = useAuth();
     const { requestExpiry, requestStatus } = useCohortStatus(user?.id);
-    console.log(requestStatus);
+
     return (
         <Container sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ bgcolor: "white", mb: 3, px: 4, pb: 1, pt: 3 }}>

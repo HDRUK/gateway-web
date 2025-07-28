@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { CohortDiscoveryTemplate } from "@/interfaces/Cms";
 import Container from "@/components/Container";
 import CtaOverride from "@/components/CtaOverride";
 import HTMLContent from "@/components/HTMLContent";
@@ -12,7 +13,7 @@ const CohortDiscoveryInfo = ({
     cohortDiscovery,
     showAccessButton = false,
 }: {
-    cohortDiscovery: any;
+    cohortDiscovery?: CohortDiscoveryTemplate;
     showAccessButton?: boolean;
 }) => {
     return (

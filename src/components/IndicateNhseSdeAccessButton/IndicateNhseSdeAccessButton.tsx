@@ -48,7 +48,6 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
                     color="secondary"
                     disabled={isDisabled}
                     onClick={() => {
-                        console.log(user);
                         user?.id && onClick();
                     }}>
                     {t("label")}

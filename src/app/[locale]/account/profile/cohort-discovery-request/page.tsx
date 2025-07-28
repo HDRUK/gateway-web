@@ -27,7 +27,8 @@ const CohortDiscoveryPage = async () => {
                         }
                     />
                 )
-            }></CohortDiscoveryCoverPage>
+            }
+        />
     );
 };
 
