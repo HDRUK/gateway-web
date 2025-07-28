@@ -1,8 +1,8 @@
 import { Handle, Position, NodeProps } from "@xyflow/react";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { LaunchIcon } from "@/consts/icons";
-import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 import Button from "../Button";
 
 export interface RectangleNodeData {
