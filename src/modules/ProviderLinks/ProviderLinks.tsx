@@ -5,7 +5,6 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { RouteName } from "@/consts/routeName";
 
 interface LinkItem {
     label: string;
@@ -28,11 +27,7 @@ const ProviderLinks = ({
 
     let effectiveRedirectPath = "";
 
-    if (
-        pathname?.includes(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`)
-    ) {
-        effectiveRedirectPath = `?redirect=/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`;
-    } else if (redirectPath) {
+    if (redirectPath) {
         effectiveRedirectPath = `?redirect=${encodeURIComponent(redirectPath)}`;
     }
 

@@ -10,6 +10,7 @@ import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
@@ -18,7 +19,6 @@ import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useSidebar from "@/hooks/useSidebar";
 import theme from "@/config/theme";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
-import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
 
