@@ -5,14 +5,13 @@ import { CohortResponse } from "@/interfaces/CohortRequest";
 import { getCohortAccessRedirect, getUserCohortRequest } from "@/utils/api";
 import { getSessionCookie } from "@/utils/getSessionCookie";
 import { logger } from "@/utils/logger";
-import { revalidateCacheAction } from "./revalidateCacheAction";
 
 export const getCohortStatusAndRedirect = async (
     userId: number
 ): Promise<CohortResponse | null> => {
     try {
         const cookieStore = cookies();
-        revalidateCacheAction("cohort");
+
         const [userRequest, accessRedirect] = await Promise.all([
             getUserCohortRequest(cookieStore, userId.toString()),
             getCohortAccessRedirect(cookieStore),
