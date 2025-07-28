@@ -1,5 +1,5 @@
 import CtaOverride from "@/components/CtaOverride";
-import { getCohortDiscovery1 } from "@/utils/cms";
+import { getNewCohortDiscovery } from "@/utils/cms";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import CohortDiscoveryCoverPage from "./components/CohortDiscoveryCoverPage/CohortDiscoveryCoverPage";
 
@@ -12,7 +12,7 @@ export const metadata = metaData(
 );
 
 const CohortDiscoveryPage = async () => {
-    const cohortDiscovery = await getCohortDiscovery1();
+    const cohortDiscovery = await getNewCohortDiscovery();
 
     return (
         <CohortDiscoveryCoverPage

@@ -1,5 +1,5 @@
-const GetCohortDiscoveryQuery1 = `
-query GetCohortDiscoveryQuery1 {
+const GetNewCohortDiscoveryQuery = `
+query GetNewCohortDiscoveryQuery {
   page(id: "new-cohort-discovery-landing", idType: URI) {
       id
       title
@@ -28,4 +28,4 @@ query GetCohortDiscoveryQuery1 {
 }
 `;
 
-export { GetCohortDiscoveryQuery1 };
+export { GetNewCohortDiscoveryQuery };

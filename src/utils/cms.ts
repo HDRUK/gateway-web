@@ -25,7 +25,6 @@ import { ReleaseNode } from "@/interfaces/Releases";
 import { SupportCohortDiscoveryPage } from "@/interfaces/Support";
 import apis from "@/config/apis";
 import { GetCohortDiscoveryQuery } from "@/config/queries/cohortDiscovery";
-import { GetCohortDiscoveryQuery1 } from "@/config/queries/cohortDiscovery1";
 import { GetCohortDiscoverySupportPageQuery } from "@/config/queries/cohortDiscoverySupport";
 import { GetCohortTermsAndConditionsQuery } from "@/config/queries/cohortTermsAndConditions";
 import {
@@ -39,6 +38,7 @@ import { GetHomePageBanner, GetHomePageQuery } from "@/config/queries/homePage";
 import { GetHowToSearchQuery } from "@/config/queries/howToSearch";
 import { GetMeetTheTeamQuery } from "@/config/queries/meetTheTeam";
 import { GetMissionAndPurposesQuery } from "@/config/queries/missionAndPurposes";
+import { GetNewCohortDiscoveryQuery } from "@/config/queries/newCohortDiscovery";
 import { GetNewsQuery } from "@/config/queries/news";
 import { GetReleaseNotesQuery } from "@/config/queries/releaseNotes";
 import { GetTermsAndConditionsQuery } from "@/config/queries/termsAndConditions";
@@ -295,9 +295,9 @@ const getCohortDiscovery = async () => {
     return substituteEnvLinks(data?.page);
 };
 
-const getCohortDiscovery1 = async () => {
+const getNewCohortDiscovery = async () => {
     const data: CMSPageResponse<CohortDiscoveryTemplate> = await fetchCMS(
-        GetCohortDiscoveryQuery1,
+        GetNewCohortDiscoveryQuery,
         DEFAULT_OPTIONS
     );
 
@@ -490,7 +490,7 @@ const getCookieNotice = async () => {
 
 export {
     getCohortDiscovery,
-    getCohortDiscovery1,
+    getNewCohortDiscovery,
     getCohortDiscoverySupportPageQuery,
     getCohortTermsAndConditions,
     getContentPageByParentQuery,
