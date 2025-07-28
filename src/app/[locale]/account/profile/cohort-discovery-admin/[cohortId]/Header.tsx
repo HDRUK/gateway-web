@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -10,6 +11,7 @@ export default function Header({
 }: {
     cohortRequest: CohortRequest;
 }) {
+    const t = useTranslations("pages.account.profile.cohortDiscoveryAdmin");
     return (
         <Box
             sx={{
@@ -44,7 +46,7 @@ export default function Header({
                             alignItems: "center",
                             gap: 2,
                         }}>
-                        <Typography>General: </Typography>
+                        <Typography>{t("generalHeader")}</Typography>
                         <Chip
                             size="small"
                             label={capitalise(cohortRequest?.request_status)}
@@ -61,7 +63,7 @@ export default function Header({
                             alignItems: "center",
                             gap: 2,
                         }}>
-                        <Typography>NHS: </Typography>
+                        <Typography>{t("nhseHeader")}</Typography>
                         <Chip
                             size="small"
                             label={capitalise(
