@@ -28,7 +28,9 @@ const RequestNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
         <Button
             sx={{ ...sx }}
             onClick={() => {
-                user?.id && onClick();
+                if (user?.id) {
+                    onClick();
+                }
                 push(
                     "https://digital.nhs.uk/services/secure-data-environment-service/expression-of-interest"
                 );

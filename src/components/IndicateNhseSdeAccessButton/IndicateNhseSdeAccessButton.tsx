@@ -47,9 +47,7 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
                     variant="outlined"
                     color="secondary"
                     disabled={isDisabled}
-                    onClick={() => {
-                        user?.id && onClick();
-                    }}>
+                    onClick={() => user?.id && onClick()}>
                     {t("label")}
                 </Button>
             </div>
