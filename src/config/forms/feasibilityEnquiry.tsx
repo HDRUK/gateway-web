@@ -6,9 +6,9 @@ import { inputComponents } from ".";
 const defaultValues = {
     name: "",
     organisation: "",
-    email: "",
     number: "",
     query: "",
+    from: [],
 };
 
 const validationSchema = yup
@@ -50,16 +50,14 @@ const formFields = [
         name: "organisation",
         component: inputComponents.TextField,
         required: true,
-        info: "This is automatically filled from your profile and cannot be changed in this form.",
         readOnly: true,
     },
     {
         label: "Email",
-        name: "email",
-        component: inputComponents.TextField,
+        name: "from",
+        component: inputComponents.Select,
         required: true,
-        info: "This is automatically filled from your profile and cannot be changed in this form.",
-        readOnly: true,
+        readOnly: false,
     },
     {
         label: "Contact number (optional)",

@@ -16,6 +16,15 @@ const generateCohortRequestV1 = (data = {}): CohortRequest => {
         updated_at: faker.date.past().toString(),
         created_at: faker.date.past().toString(),
         user: generateUserV1(),
+        nhse_sde_request_status: faker.helpers.arrayElement([
+            "IN PROCESS",
+            "APPROVAL REQUESTED",
+            "APPROVED",
+            "REJECTED",
+            "BANNED",
+            "SUSPENDED",
+            "EXPIRED",
+        ]),
         ...data,
     };
 };

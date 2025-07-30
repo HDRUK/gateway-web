@@ -1,11 +1,10 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { RouteName } from "@/consts/routeName";
 
 interface LinkItem {
     label: string;
@@ -23,16 +22,11 @@ const ProviderLinks = ({
     redirectPath,
 }: ProviderLinksProps) => {
     const t = useTranslations("modules");
-    const pathname = usePathname();
     const { push } = useRouter();
 
     let effectiveRedirectPath = "";
 
-    if (
-        pathname?.includes(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`)
-    ) {
-        effectiveRedirectPath = `?redirect=/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`;
-    } else if (redirectPath) {
+    if (redirectPath) {
         effectiveRedirectPath = `?redirect=${encodeURIComponent(redirectPath)}`;
     }
 

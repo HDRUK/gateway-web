@@ -21,7 +21,7 @@ import {
     feasibilityEnquiryValidationSchema,
     feasibilityEnquiryDefaultValues,
 } from "@/config/forms/feasibilityEnquiry";
-import { getPreferredEmail } from "@/utils/user";
+import { getEmails } from "@/utils/user";
 
 const TRANSLATION_PATH = "pages.search.components.FeasibilityEnquiryForm";
 
@@ -48,6 +48,8 @@ const FeasibilityEnquirySidebar = ({
         },
     });
 
+    const emailValues = user ? getEmails(user) : [];
+
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
             if (field.name === "organisation") {
@@ -62,6 +64,15 @@ const FeasibilityEnquirySidebar = ({
                     defaultValue: datasets.map(v => ({
                         value: v.datasetId,
                         label: v.name,
+                    })),
+                };
+            }
+            if (field.name === "from") {
+                return {
+                    ...field,
+                    options: emailValues.map(email => ({
+                        value: email,
+                        label: email,
                     })),
                 };
             }
@@ -83,7 +94,7 @@ const FeasibilityEnquirySidebar = ({
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
-            from: getPreferredEmail(user),
+            from: formData.from,
             is_dar_dialogue: false,
             is_dar_status: false,
             is_feasibility_enquiry: true,
@@ -124,9 +135,7 @@ const FeasibilityEnquirySidebar = ({
                     },
                 }}>
                 {datasets.map(item => (
-                    <Typography variant="h1">
-                        {item.teamMemberOf} {">"} {item.teamName}
-                    </Typography>
+                    <Typography variant="h1">{item.teamName}</Typography>
                 ))}
                 <Typography>{t("helperText")}</Typography>
 

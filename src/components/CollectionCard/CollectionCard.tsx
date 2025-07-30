@@ -51,6 +51,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                         gridTemplateColumns: {
                             mobile: "repeat(1, 1fr)",
                             tablet: "repeat(1, 1fr 4fr)",
+                            laptop: "repeat(1, 1fr 4fr)",
                         },
                         gap: 2,
                         p: 2,
@@ -72,15 +73,40 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
+                            maxWidth: {
+                                desktop: "40vw",
+                                laptop: "30vw",
+                                tablet: "15vw",
+                                mobile: "70vw",
+                            },
                         }}>
                         {!hasImage && (
-                            <Typography variant="h3" sx={{ fontSize: 20 }}>
+                            <Typography
+                                variant="h3"
+                                sx={{ fontSize: 20 }}
+                                noWrap>
                                 {name}
                             </Typography>
                         )}
                     </Box>
-                    <Box sx={{ p: 0, fontSize: 13 }}>
-                        <Typography variant="h3" sx={{ mb: 2, fontSize: 16 }}>
+                    <Box
+                        sx={{
+                            p: 0,
+                            fontSize: 13,
+                            maxWidth: {
+                                desktop: "40vw",
+                                laptop: "30vw",
+                                tablet: "15vw",
+                                mobile: "70vw",
+                            },
+                        }}>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                mb: 2,
+                                fontSize: 16,
+                                wordBreak: "break-word",
+                            }}>
                             {name}
                         </Typography>
                         <KeyValueList

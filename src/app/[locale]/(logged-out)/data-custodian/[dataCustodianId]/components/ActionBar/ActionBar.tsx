@@ -7,11 +7,11 @@ import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import { Team } from "@/interfaces/Team";
 import BackButton from "@/components/BackButton";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import useAuth from "@/hooks/useAuth";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
-import CohortDiscoveryButton from "@/app/[locale]/(logged-out)/about/cohort-discovery/components/CohortDiscoveryButton";
 import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";

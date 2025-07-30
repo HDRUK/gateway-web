@@ -16,7 +16,7 @@ export const FILTER_LICENSE = "license";
 export const FILTER_ACCESS_SERVICE = "accessService";
 export const FILTER_POPULATION_SIZE = "populationSize";
 export const FILTER_TYPE_CATEGORY = "typeCategory";
-export const FILTER_CONTAINS_TISSUE = "containsTissue";
+export const FILTER_CONTAINS_BIOSAMPLES = "containsBioSamples";
 export const FILTER_COHORT_DISCOVERY = "isCohortDiscovery";
 export const FILTER_MATERIAL_TYPE = "sampleAvailability";
 export const FILTER_DATA_TYPE = "dataType";
@@ -44,7 +44,7 @@ export const filtersList = [
     FILTER_ACCESS_SERVICE,
     FILTER_POPULATION_SIZE,
     FILTER_TYPE_CATEGORY,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_COHORT_DISCOVERY,
     FILTER_MATERIAL_TYPE,
     FILTER_DATA_TYPE,

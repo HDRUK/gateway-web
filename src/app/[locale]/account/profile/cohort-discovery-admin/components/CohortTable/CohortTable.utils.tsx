@@ -9,8 +9,11 @@ import SortIcon from "@/components/SortIcon";
 import TooltipIcon from "@/components/TooltipIcon";
 import {
     statusMapping,
+    NHSSDEStatusMapping,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
+    COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS,
 } from "@/consts/cohortDiscovery";
+import { SHORT_DATE_FORMAT } from "@/consts/date";
 import { SortByAlphaIcon, WarningIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate, differenceInDays } from "@/utils/date";
@@ -49,15 +52,15 @@ const statusRadios = [
 const showAlert = (
     date: string,
     status: string,
-    translations: { [id: string]: string }
+    translations: { [id: string]: string },
+    warning_days: number
 ) => {
     const actionedDate = new Date(date);
     const currentDate = new Date();
 
     const showWarning =
         status === "APPROVED" &&
-        differenceInDays(currentDate, actionedDate) >
-            COHORT_DISCOVERY_EXPIRY_WARNING_DAYS;
+        differenceInDays(currentDate, actionedDate) > warning_days;
 
     const hasExpired = status === "EXPIRED";
 
@@ -219,15 +222,16 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            cell: ({ row: { original } }) => (
-                <div style={{ textAlign: "center" }}>
-                    <Chip
-                        size="small"
-                        label={capitalise(original.request_status)}
-                        color={statusMapping[original.request_status]}
-                    />
-                </div>
-            ),
+            cell: ({ row: { original } }) =>
+                original.request_status && (
+                    <div style={{ textAlign: "center" }}>
+                        <Chip
+                            size="small"
+                            label={capitalise(original.request_status || "")}
+                            color={statusMapping[original.request_status]}
+                        />
+                    </div>
+                ),
         },
         {
             id: "dateRequested",
@@ -279,7 +283,8 @@ const getColumns = ({
                 const { showToolTip, toolTipMessage, hasExpired } = showAlert(
                     row.original.updated_at,
                     row.original.request_status,
-                    translations
+                    translations,
+                    COHORT_DISCOVERY_EXPIRY_WARNING_DAYS
                 );
 
                 return (
@@ -330,7 +335,185 @@ const getColumns = ({
                 </Typography>
             ),
         },
+        {
+            id: "nhse_sde_request_status",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    NHSE SDE Status
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="nhse_sde_request_status"
+                        ariaLabel="NHSE SDE Status"
+                    />
+                </Box>
+            ),
+            cell: ({ row: { original } }) =>
+                original.nhse_sde_request_status && (
+                    <div style={{ textAlign: "center" }}>
+                        <Chip
+                            size="small"
+                            label={capitalise(
+                                original.nhse_sde_request_status.replace(
+                                    "_",
+                                    " "
+                                )
+                            )}
+                            color={
+                                NHSSDEStatusMapping[
+                                    original.nhse_sde_request_status
+                                ]
+                            }
+                        />
+                    </div>
+                ),
+        },
+        {
+            id: "nhse_sde_requested_at",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    First Applied to NHSE SDE
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="nhse_sde_requested_at"
+                        ariaLabel="Date First Applied to NHSE SDE"
+                    />
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography>
+                    {formatDate(
+                        original.nhse_sde_requested_at,
+                        SHORT_DATE_FORMAT
+                    )}
+                </Typography>
+            ),
+        },
+        {
+            id: "nhse_sde_self_declared_approved_at",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    NHSE SDE Self-Declared Approval
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="nhse_sde_self_declared_approved_at"
+                        ariaLabel="Date Self-Declared Approval By NHSE SDE"
+                    />
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography>
+                    {formatDate(
+                        original.nhse_sde_self_declared_approved_at,
+                        "DD/MM/YYYY"
+                    )}
+                </Typography>
+            ),
+        },
+        {
+            id: "nhse_sde_request_expire_at",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    NHSE SDE Expires At
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="nhse_sde_request_expire_at"
+                        ariaLabel="Date NHSE SDE Expiry"
+                    />
+                </Box>
+            ),
+            // TODO: it's a bit wonky that we don't actually use the expiry date in
+            // calculating the alert.
+            cell: ({ row }) => {
+                const { showToolTip, toolTipMessage, hasExpired } = showAlert(
+                    row.original.nhse_sde_updated_at,
+                    row.original.nhse_sde_request_status,
+                    translations,
+                    COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS
+                );
 
+                return (
+                    <Box display="flex" alignItems="center" sx={{ p: 0 }}>
+                        {formatDate(
+                            row.original.nhse_sde_request_expire_at,
+                            "DD/MM/YYYY"
+                        )}
+                        {showToolTip && (
+                            <TooltipIcon
+                                label=""
+                                boxSx={{
+                                    justifyContent: "start",
+                                    p: 0,
+                                }}
+                                content={<div>{toolTipMessage}</div>}
+                                icon={
+                                    <WarningIcon
+                                        color={hasExpired ? "error" : "warning"}
+                                    />
+                                }
+                            />
+                        )}
+                    </Box>
+                );
+            },
+        },
+        {
+            id: "nhse_sde_updated_at",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    NHSE SDE Updated At
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="nhse_sde_updated_at"
+                        ariaLabel="Date NHSE SDE Updated"
+                    />
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography>
+                    {formatDate(original.nhse_sde_updated_at, "DD/MM/YYYY")}
+                </Typography>
+            ),
+        },
         {
             id: "domain",
             header: () => (

@@ -8,6 +8,8 @@ import { sessionCookie } from "./config/session";
 import { RouteName } from "./consts/routeName";
 import { logger } from "./utils/logger";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export function middleware(request: NextRequest) {
     try {
         const token = request.cookies.get(conf.JWT_COOKIE)?.value;
@@ -43,7 +45,7 @@ export function middleware(request: NextRequest) {
         if (!session) {
             const id = v4();
             response.cookies.set(sessionCookie, id, {
-                secure: true,
+                secure: isProd,
                 sameSite: "strict",
             });
 

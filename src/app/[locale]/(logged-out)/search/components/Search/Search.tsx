@@ -74,7 +74,7 @@ import config from "@/config/config";
 import {
     FILTER_ACCESS_SERVICE,
     FILTER_COLLECTION_NAME,
-    FILTER_CONTAINS_TISSUE,
+    FILTER_CONTAINS_BIOSAMPLES,
     FILTER_DATA_PROVIDER,
     FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_DATA_SET_TITLES,
@@ -142,7 +142,6 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
-import TabTooltip from "../TabTooltip";
 import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
@@ -260,7 +259,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             FILTER_PROGRAMMING_LANGUAGE
         ),
         [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
-        [FILTER_CONTAINS_TISSUE]: getParamArray(FILTER_CONTAINS_TISSUE),
+        [FILTER_CONTAINS_BIOSAMPLES]: getParamArray(FILTER_CONTAINS_BIOSAMPLES),
         [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
         [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
         [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
@@ -458,7 +457,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             [FILTER_POPULATION_SIZE]: undefined,
             [FILTER_PROGRAMMING_LANGUAGE]: undefined,
             [FILTER_TYPE_CATEGORY]: undefined,
-            [FILTER_CONTAINS_TISSUE]: undefined,
+            [FILTER_CONTAINS_BIOSAMPLES]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
             [PMC_TYPE_FIELD]: undefined,
@@ -469,58 +468,34 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
 
     const categoryTabs = [
         {
-            label: (
-                <TabTooltip content={t("datasetsTooltip")}>
-                    {t("datasets")}
-                </TabTooltip>
-            ),
+            label: t("datasets"),
             value: SearchCategory.DATASETS,
-            content: "",
+            tooltip: t("datasetsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("dataUseTooltip")}>
-                    {t("dataUse")}
-                </TabTooltip>
-            ),
+            label: t("dataUse"),
             value: SearchCategory.DATA_USE,
-            content: "",
+            tooltip: t("dataUseTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("toolsTooltip")}>
-                    {t("tools")}
-                </TabTooltip>
-            ),
+            label: t("tools"),
             value: SearchCategory.TOOLS,
-            content: "",
+            tooltip: t("toolsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("publicationsTooltip")}>
-                    {t("publications")}
-                </TabTooltip>
-            ),
+            label: t("publications"),
             value: SearchCategory.PUBLICATIONS,
-            content: "",
+            tooltip: t("publicationsTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("dataProvidersTooltip")}>
-                    {t("dataProviders")}
-                </TabTooltip>
-            ),
+            label: t("dataProviders"),
             value: SearchCategory.DATA_CUSTODIANS,
-            content: "",
+            tooltip: t("dataProvidersTooltip"),
         },
         {
-            label: (
-                <TabTooltip content={t("collectionsTooltip")}>
-                    {t("collections")}
-                </TabTooltip>
-            ),
+            label: t("collections"),
             value: SearchCategory.COLLECTIONS,
-            content: "",
+            tooltip: t("collectionsTooltip"),
         },
     ];
 

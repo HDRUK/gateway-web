@@ -135,20 +135,24 @@
                 "approved_comments": "Approved",
                 "withdrawn": "Withdrawn",
                 "draft": "Draft"
+            },
+            "template": {
+                "FORM": "Web form Application",
+                "DOCUMENT": "File-based Application"
             }
         }
     },
     "pages": {
-       "profile": {
+        "profile": {
             "verificationSent": "Email verification sent!",
             "unverified": "Your secondary email is unverified. If you have not already received a verification email, please <verifyButton>click here</verifyButton> to trigger a new one.",
             "saveChanges": "Save changes",
             "unsavedChangesWarning": "Changes to your profile account are not automatically saved."
         },
         "emailVerification": {
-            "title":"Email verifcation",
+            "title": "Email verifcation",
             "fail": "Verification expired or invalid.",
-            "pass" : "Email verified."
+            "pass": "Email verified."
         },
         "newsEvents": {
             "noResults": "There are no results for the selected year.",
@@ -232,9 +236,22 @@
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
+                    "generalHeader": "General: ",
+                    "nhseHeader": "NHS: ",
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",
                     "expiryWarning": "This user access is close to expiration date"
+                },
+                "cohortDiscovery": {
+                    "title": "Cohort Discovery",
+                    "headerText": "Learn about Cohort Discovery and gain access to the service",
+                    "accessTitle": "Cohort Data Access",
+                    "daysRemaining": "days remaining in current access period",
+                    "accessText1": "Cohort Discovery allows researchers to explore and identify patient cohorts across multiple, federated health data sources without accessing identifiable patient-level data. It streamlines study feasibility assessments by providing rapid, aggregated cohort counts and characteristics across diverse datasets. To request access or log in, please click the 'Access Cohort Discovery' button.",
+                    "nhseSdeTitle": "NHS SDE Cohort Data Access",
+                    "nhseSdeText1": "SDE access is limited by access to Gateway Cohort Discovery",
+                    "nhseSdeText2": "By selecting 'I have been approved by the NHS SDE', you are confirming that you have completed NHS SDE validation and are requesting access to SDE Network datasets through Cohort Discovery. You consent to HDR UK sharing your email address with the NHS SDE team solely for the purpose of verifying your approval status.",
+                    "nhseSdeText3": "Please note: this step involves manual validation by NHS SDE and HDR UK and may take up to 10 working days. You will receive an email notification once your access has been granted."
                 },
                 "dataAccessRequests": {
                     "applications": {
@@ -795,7 +812,11 @@
                             },
                             "noNestedQuestions": "No nested questions",
                             "forcedRequired": "Forced required question",
-                            "parentQuestionOption": "Parent question option"
+                            "parentQuestionOption": "Parent question option",
+                            "unsavedConfirm": "Stay on page",
+                            "unsavedCancel": "Continue without saving",
+                            "unsavedTitle": "Are you sure you want to exit?",
+                            "unsavedInfo": "You have changes to your template that will not be saved automatically"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -816,6 +837,16 @@
                             },
                             "draft": "Draft",
                             "active": "Active"
+                        },
+                        "createModal": {
+                            "web": {
+                                "heading": "Create Web-based Template",
+                                "description": "Build an online Data Access Request form using the Five Safes Framework questions and/or your own"
+                            },
+                            "file": {
+                                "heading": "Create File-based Template",
+                                "description": "Upload an existing Data Access Request form for users to complete and upload to the Gateway"
+                            }
                         }
                     }
                 }
@@ -1008,8 +1039,8 @@
                             "dateRangeTooltip": "The time period the dataset covers. The end date may be empty depending on publishing frequency and data collection plan",
                             "accessService": "Access service",
                             "accessServiceTooltip": "Method for accessing the dataset, if access request is approved",
-                            "containsTissue": "Datasets with BioSamples",
-                            "containsTissueTooltip": "Restrict your search result to datasets with BioSamples",
+                            "containsBioSamples": "Datasets with BioSamples",
+                            "containsBioSamplesTooltip": "Restrict your search result to datasets with BioSamples",
                             "isCohortDiscovery": "Datasets in Cohort Discovery",
                             "isCohortDiscoveryTooltip": "Restrict your search result to datasets in Cohort Discovery",
                             "sampleAvailability": "Material type",
@@ -1140,7 +1171,7 @@
                         "label": "Cohort Discovery",
                         "tooltip": "Indicates if frequency count accessible in HDR UK cohort discovery tool"
                     },
-                    "containsTissue": {
+                    "containsBioSamples": {
                         "label": "BioSample availability",
                         "tooltip": "Availability of associated physical samples. Note: This information may not be provided by the Data custodian"
                     },
@@ -1465,6 +1496,14 @@
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
             "setSecondaryEmail": "You are logged in via OpenAthens, which generates a primary email address in your profile that cannot be used for Cohort Discovery. This button will now send you to your profile page to please set your secondary email address. This must be an institutional email address. Please return here after setting and saving a secondary email address.",
             "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries."
+        },
+        "RequestNhseSdeAccessButton": {
+            "label": "Request access to NHS SDE Network datasets"
+        },
+        "IndicateNhseSdeAccessButton": {
+            "disabledTooltip": "Please sign in to activate this button",
+            "label": "I have been approved by the NHS SDE",
+            "success": "Successfully notified HDR UK"
         },
         "CMSBanner": {
             "ariaCloseButtonLabel": "Close banner"

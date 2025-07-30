@@ -56,7 +56,6 @@ const CohortDiscoveryButton = ({
             if (clickedAction) {
                 clickedAction();
             }
-
             if (redirectUrl) {
                 push(redirectUrl);
             } else if (isLoggedIn) {
@@ -68,7 +67,10 @@ const CohortDiscoveryButton = ({
                     push(ctaLink.url);
                 }
             } else {
-                showDialog(ProvidersDialog, { isProvidersDialog: true });
+                showDialog(ProvidersDialog, {
+                    isProvidersDialog: true,
+                    redirectPath: `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
+                });
             }
         }
     }, [redirectUrl, isClicked, isLoggedIn, clickedAction]);

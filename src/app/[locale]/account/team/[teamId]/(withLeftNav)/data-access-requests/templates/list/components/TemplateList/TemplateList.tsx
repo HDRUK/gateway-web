@@ -3,6 +3,7 @@ import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
+import Chip from "@/components/Chip";
 import KeyValueList from "@/components/KeyValueList";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
@@ -41,6 +42,7 @@ const TemplateList = ({
     isLoading,
 }: TemplateListProps) => {
     const t = useTranslations(`pages.account.team.dar.template.list`);
+    const tCommon = useTranslations(`common`);
 
     return (
         <Box sx={{ p: 0 }}>
@@ -77,16 +79,31 @@ const TemplateList = ({
                                     pb: 1,
                                 }}>
                                 <Box sx={{ p: 0, fontSize: 13 }}>
-                                    <Typography
-                                        variant="h3"
-                                        sx={{ mb: 2, fontSize: 16 }}>
-                                        {t("cardTitle", {
-                                            createdAt: formatDate(
-                                                template.created_at,
-                                                "DD MMMM YYYY"
-                                            ),
-                                        })}
-                                    </Typography>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            width: "100%",
+                                            p: 0,
+                                            mb: 2,
+                                        }}>
+                                        <Typography
+                                            variant="h3"
+                                            sx={{ fontSize: 16 }}>
+                                            {t("cardTitle", {
+                                                createdAt: formatDate(
+                                                    template.created_at,
+                                                    "DD MMMM YYYY"
+                                                ),
+                                            })}
+                                        </Typography>
+                                        <Chip
+                                            label={tCommon(
+                                                `dar.template.${template.template_type}`
+                                            )}
+                                            sx={{ ml: 2 }}
+                                        />
+                                    </Box>
                                     <KeyValueList
                                         rows={[
                                             {
