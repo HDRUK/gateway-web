@@ -52,9 +52,7 @@ describe("DownloadExternalFile", () => {
         fireEvent.click(screen.getByRole("button"));
 
         await waitFor(() => {
-            expect(fetchMock).toHaveBeenCalledWith(apiPath, {
-                headers: { "x-Request-Session-Id": "web: undefined" },
-            });
+            expect(fetchMock).toHaveBeenCalledWith(apiPath);
 
             expect(mockDownloadExternalFile).toHaveBeenCalledWith(
                 expect.objectContaining({
