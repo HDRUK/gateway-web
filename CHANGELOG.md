@@ -1,3 +1,29 @@
+## [2.17.0](https://github.com/HDRUK/gateway-web/compare/v2.16.0...v2.17.0) (2025-07-30)
+
+### ✨ Features
+
+* **GAT-3068:** Added link to help on test error (#1276) ([e6c5eaf](https://github.com/HDRUK/gateway-web/commit/e6c5eaf95ed56e540bc7aea9ac28434767cf42da)), closes [GAT-3068](GAT-3068)
+* **GAT-3068:** Added NEXT_PUBLIC_INTEGRATION_OVERVIEW_URL to pipeline (#1277) ([bdd552f](https://github.com/HDRUK/gateway-web/commit/bdd552f27df8d5bc8eafdb30607422aa6a2dba9c)), closes [GAT-3068](GAT-3068)
+* **GAT-3068:** Fixed deployment issue in a dockerfile (#1281) ([50618a8](https://github.com/HDRUK/gateway-web/commit/50618a8266fd7db857309f7b0f8e250e21aebee6))
+* **GAT-5632:** Rename containsTissue filter chip to containsBioSample (#1255) ([1c7b73c](https://github.com/HDRUK/gateway-web/commit/1c7b73c216bff6081db5af8f9617f536b5de0afa)), closes [GAT-5632](GAT-5632)
+* **GAT-5954:** v2 endpoints (#1263) ([c5823c2](https://github.com/HDRUK/gateway-web/commit/c5823c2b4ab72dd35be31f66e3adb93916354a78)), closes [GAT-5954](GAT-5954)
+* **GAT-7135:** Add file based dar template creation modal (#1269) ([ac5079b](https://github.com/HDRUK/gateway-web/commit/ac5079befaf580f81d98ce15b27ceeb4576db6f8)), closes [GAT-7135](GAT-7135)
+* **GAT-7203:** Allow email selection in email forms  (#1266) ([1cf281e](https://github.com/HDRUK/gateway-web/commit/1cf281e100ce103369a44e7afb4b3372dc6f0ff3)), closes [GAT-7203](GAT-7203)
+* **GAT-7459:** Removed back button from team members page (#1265) ([4e411c4](https://github.com/HDRUK/gateway-web/commit/4e411c468b093c723f5f1b75512960ebca4d7a89)), closes [GAT-7459](GAT-7459)
+* **GAT-7532:** added in script to check dataset schemas (#1268) ([95c6af0](https://github.com/HDRUK/gateway-web/commit/95c6af0ed4bfc262fe783cb2cd2cb186da4d211a)), closes [GAT-7532](GAT-7532)
+* **GAT-7546:** Correct tooltips for keyboard users (#1264) ([725affe](https://github.com/HDRUK/gateway-web/commit/725affeb07a8891b57c96eec0413397331f3f800)), closes [GAT-7546](GAT-7546)
+* **GAT-7603:** Removed team prefix from enquiry forms (#1270) ([b748651](https://github.com/HDRUK/gateway-web/commit/b748651149df9dc90179ea81bbbc1e32dee9cd7a))
+* **GAT-7609:** Cohort Discovery user flow redesign (#1279) ([e85d424](https://github.com/HDRUK/gateway-web/commit/e85d424d257297ec4fd22655a85abdd850054b87)), closes [GAT-7609](GAT-7609)
+* **GAT-7613:** [FE] Update Cohort Discovery Admin Panel (#1271) ([dde7372](https://github.com/HDRUK/gateway-web/commit/dde7372b4967df9f7d024df9fc5403160e08e70c)), closes [GAT-7613](GAT-7613)
+
+### 🐛 Bug Fixes
+
+* **GAT-1234:** Session Cookie always secure (#1275) ([92a4634](https://github.com/HDRUK/gateway-web/commit/92a46343297c293bf6f6c760660575c904433068)), closes [GAT-1234](GAT-1234)
+* **GAT-1234:** Web Logging GCP across multiple lines (#1274) ([17ff4dc](https://github.com/HDRUK/gateway-web/commit/17ff4dcd97cd1f0ede2c96146d5f58d929e0083e)), closes [GAT-1234](GAT-1234)
+* **GAT-5632:** Fixed title error in search results (#1261) ([3f7fed3](https://github.com/HDRUK/gateway-web/commit/3f7fed3449cce1715a1a5f840d40e89a479b54e4))
+* **GAT-5951:** Add missing v2 users config. (#1267) ([94a29d7](https://github.com/HDRUK/gateway-web/commit/94a29d72855e822141ea46c15e5ee41a25748286)), closes [GAT-5951](GAT-5951)
+* **GAT-7135:** Show file or document based type (#1280) ([26dde57](https://github.com/HDRUK/gateway-web/commit/26dde57ee2e3790a15986a9c18d3f2fd91b74b96)), closes [GAT-7135](GAT-7135)
+
 ## [2.16.0](https://github.com/HDRUK/gateway-web/compare/v2.15.0...v2.16.0) (2025-07-21)
 
 ### ✨ Features
