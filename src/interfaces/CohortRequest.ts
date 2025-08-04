@@ -41,6 +41,7 @@ interface CohortRequest {
     nhse_sde_self_declared_approved_at: string;
     nhse_sde_request_expire_at: string;
     nhse_sde_updated_at: string;
+    access_to_env: string;
 }
 
 interface CohortRequestForm {
