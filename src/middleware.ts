@@ -42,16 +42,15 @@ export function middleware(request: NextRequest) {
         });
 
         const response = handleI18nRouting(request);
-        if (!session) {
-            const id = v4();
-            response.cookies.set(sessionCookie, id, {
-                secure: isProd,
-                // sameSite: "strict",
-                sameSite: "lax", // Changed to lax for compatibility with cross-site requests
-            });
+        // if (!session) {
+        //     const id = v4();
+        //     response.cookies.set(sessionCookie, id, {
+        //         secure: isProd,
+        //         sameSite: "strict",
+        //     });
 
-            logger.info("new session set", id, "middleware");
-        }
+        //     logger.info("new session set", id, "middleware");
+        // }
         // Remove the JWT cookie if the token exists but the user is not authenticated
         if (!authUser && token) {
             response.cookies.set(conf.JWT_COOKIE, "", { maxAge: 0 });
