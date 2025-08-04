@@ -234,6 +234,32 @@ const getColumns = ({
                 ),
         },
         {
+            id: "accessToEnv",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Access to Environment
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="access_to_env"
+                        ariaLabel="Access to environment"
+                    />
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.access_to_env}
+                </Typography>
+            ),
+        },
+        {
             id: "dateRequested",
             header: () => (
                 <Box
