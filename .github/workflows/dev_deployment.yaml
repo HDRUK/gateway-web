@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "dev"
+      - "fix/test-samesite-to-lax"
 
 env:
   PROJECT_ID: "${{ secrets.PROJECT_ID }}"
@@ -24,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "fix/test-samesite-to-lax"
 
       - name: Read VERSION file
         id: getversion
@@ -73,7 +74,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "fix/test-samesite-to-lax"
 
       - name: Google Auth
         id: auth

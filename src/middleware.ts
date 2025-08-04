@@ -46,7 +46,8 @@ export function middleware(request: NextRequest) {
             const id = v4();
             response.cookies.set(sessionCookie, id, {
                 secure: isProd,
-                sameSite: "strict",
+                // sameSite: "strict",
+                sameSite: "lax", // Changed to lax for compatibility with cross-site requests
             });
 
             logger.info("new session set", id, "middleware");
