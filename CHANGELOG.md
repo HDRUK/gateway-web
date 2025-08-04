@@ -1,3 +1,9 @@
+## [2.17.1](https://github.com/HDRUK/gateway-web/compare/v2.17.0...v2.17.1) (2025-08-04)
+
+### 🐛 Bug Fixes
+
+* **GAT-7689:** Add environment column to cohort admin panel. (#1284) ([4d0c0b7](https://github.com/HDRUK/gateway-web/commit/4d0c0b712e25b21589563387c33729369b6fb6fb)), closes [GAT-7689](GAT-7689)
+
 ## [2.17.0](https://github.com/HDRUK/gateway-web/compare/v2.16.0...v2.17.0) (2025-07-30)
 
 ### ✨ Features
