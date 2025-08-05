@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
@@ -300,6 +300,14 @@ const CreateDataset = ({
 
     const yupSchema = buildYup(generatedYupValidation);
 
+
+
+    const methods = useForm<FormValues>({
+        mode: "onTouched",
+        resolver: yupResolver(yupSchema),
+        defaultValues: defaultFormValues,
+    });
+
     const {
         control,
         handleSubmit,
@@ -310,11 +318,7 @@ const CreateDataset = ({
         setValue,
         reset,
         formState,
-    } = useForm({
-        mode: "onTouched",
-        resolver: yupResolver(yupSchema),
-        defaultValues: defaultFormValues,
-    });
+    } = methods;
 
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
@@ -333,7 +337,7 @@ const CreateDataset = ({
     const watchIdIsNumber = !Number.isNaN(Number(watchId));
 
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
-        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
+        `http://localhost:3000/api/tester?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
         {
             shouldFetch: watchIdIsNumber,
         }
@@ -775,87 +779,89 @@ const CreateDataset = ({
                 currentSectionIndex > 0 ? (
                     <>
                         <Box sx={{ flex: 2, p: 0 }}>
-                            <Form>
-                                <Paper
-                                    sx={{
-                                        marginTop: "10px",
-                                        marginBottom: "10px",
-                                        padding: 2,
-                                    }}>
-                                    <Typography variant="h2">
-                                        {capitalise(
-                                            splitCamelcase(selectedFormSection)
+                            <FormProvider {...methods}>
+                                <Form>
+                                    <Paper
+                                        sx={{
+                                            marginTop: "10px",
+                                            marginBottom: "10px",
+                                            padding: 2,
+                                        }}>
+                                        <Typography variant="h2">
+                                            {capitalise(
+                                                splitCamelcase(selectedFormSection)
+                                            )}
+                                        </Typography>
+
+                                        {isStructuralMetadataSection && (
+                                            <StructuralMetadataSection
+                                                structuralMetadata={
+                                                    structuralMetadata
+                                                }
+                                                fileProcessedAction={(
+                                                    metadata: StructuralMetadata[]
+                                                ) => {
+                                                    notificationService.apiSuccess(
+                                                        t("uploadSuccess")
+                                                    );
+                                                    setStructuralMetadata(metadata);
+                                                }}
+                                                handleToggleUploading={setIsSaving}
+                                            />
                                         )}
-                                    </Typography>
 
-                                    {isStructuralMetadataSection && (
-                                        <StructuralMetadataSection
-                                            structuralMetadata={
-                                                structuralMetadata
-                                            }
-                                            fileProcessedAction={(
-                                                metadata: StructuralMetadata[]
-                                            ) => {
-                                                notificationService.apiSuccess(
-                                                    t("uploadSuccess")
-                                                );
-                                                setStructuralMetadata(metadata);
-                                            }}
-                                            handleToggleUploading={setIsSaving}
-                                        />
-                                    )}
-
-                                    {currentSectionIndex > 0 && (
-                                        <Box sx={{ p: 0 }}>
-                                            {selectedFormSection &&
-                                                schemaFields
-                                                    .filter(
-                                                        schemaField =>
-                                                            !schemaField.field
-                                                                ?.hidden
-                                                    )
-                                                    .filter(({ location }) =>
-                                                        location?.startsWith(
-                                                            selectedFormSection
+                                        {currentSectionIndex > 0 && (
+                                            <Box sx={{ p: 0 }}>
+                                                {selectedFormSection &&
+                                                    schemaFields
+                                                        .filter(
+                                                            schemaField =>
+                                                                !schemaField.field
+                                                                    ?.hidden
                                                         )
-                                                    )
-                                                    .map(fieldParent => {
-                                                        const {
-                                                            field,
-                                                            fields,
-                                                        } = fieldParent;
+                                                        .filter(({ location }) =>
+                                                            location?.startsWith(
+                                                                selectedFormSection
+                                                            )
+                                                        )
+                                                        .map(fieldParent => {
+                                                            const {
+                                                                field,
+                                                                fields,
+                                                            } = fieldParent;
 
-                                                        return fields?.length ? (
-                                                            <FormFieldArray
-                                                                control={
-                                                                    control
-                                                                }
-                                                                formArrayValues={
-                                                                    getValues(
-                                                                        fieldParent.title
-                                                                    ) as unknown as FormValues[]
-                                                                }
-                                                                fieldParent={
-                                                                    fieldParent
-                                                                }
-                                                                setSelectedField={
-                                                                    updateGuidanceText
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            field &&
-                                                                renderFormHydrationField(
-                                                                    field,
-                                                                    control,
-                                                                    undefined,
-                                                                    updateGuidanceText
-                                                                )
-                                                        );
-                                                    })}
-                                        </Box>
-                                    )}
-                                </Paper>
-                            </Form>
+                                                            return fields?.length ? (
+                                                                <FormFieldArray
+                                                                    control={
+                                                                        control
+                                                                    }
+                                                                    formArrayValues={
+                                                                        getValues(
+                                                                            fieldParent.title
+                                                                        ) as unknown as FormValues[]
+                                                                    }
+                                                                    fieldParent={
+                                                                        fieldParent
+                                                                    }
+                                                                    setSelectedField={
+                                                                        updateGuidanceText
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                field &&
+                                                                    renderFormHydrationField(
+                                                                        field,
+                                                                        control,
+                                                                        undefined,
+                                                                        updateGuidanceText
+                                                                    )
+                                                            );
+                                                        })}
+                                            </Box>
+                                        )}
+                                    </Paper>
+                                </Form>
+                            </FormProvider>
                         </Box>
                         {currentSectionIndex > 0 && (
                             <Paper

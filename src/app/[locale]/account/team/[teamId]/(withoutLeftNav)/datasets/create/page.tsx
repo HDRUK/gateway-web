@@ -6,6 +6,7 @@ import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import CreateDataset from "../components/CreateDataset";
+import { tester } from "@/app/api/tester/route";
 
 export const metadata = metaData(
     {
@@ -37,6 +38,9 @@ export default async function CreateDatasetPage({
         [],
         teamId
     );
+
+    formJSON.schema_fields = tester.schema_fields
+    console.log(formJSON)
 
     if (formJSON) {
         // here be dragons
