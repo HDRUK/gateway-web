@@ -57,6 +57,7 @@ const CohortDiscoveryButton = ({
                 clickedAction();
             }
             if (redirectUrl) {
+                 console.log('redirectUrl', redirectUrl)
                 push(redirectUrl);
             } else if (isLoggedIn) {
                 // check that if the user is using OpenAthens, that they have provided a secondary email,
@@ -64,7 +65,9 @@ const CohortDiscoveryButton = ({
                 if (openAthensInvalid) {
                     push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
                 } else {
+                    console.log('ctaLink.url', ctaLink.url)
                     push(ctaLink.url);
+                    
                 }
             } else {
                 showDialog(ProvidersDialog, {
