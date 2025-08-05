@@ -1593,6 +1593,10 @@
             "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
         },
+        "NestedFilterSection": {
+            "placeholder": "I'm looking for...",
+            "noFilters": "No filters available"
+        },
         "DataAccessMessages": {
             "modalTitle": "Success!",
             "modalContent": "Your message has been successfully submitted. Please allow some time for a response. Thank you for your patience!",

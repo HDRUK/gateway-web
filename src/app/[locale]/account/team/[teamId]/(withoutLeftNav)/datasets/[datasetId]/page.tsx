@@ -65,7 +65,6 @@ export default async function TeamDatasetPage({
     }
     const dataSetTypes: DataSetTypeArrayType[] =
         get(latestMetadata, "provenance.origin.datasetType") ?? [];
-
     const datasetTypesForForm = dataSetTypes.map(item => {
         return {
             "Dataset type": item.name,

@@ -152,6 +152,7 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 interface SearchProps {
     filters: Filter[];
     cohortDiscovery: PageTemplatePromo;
+    schema: any;
 }
 
 const filterSidebarWidth = 350;
@@ -168,7 +169,7 @@ const filterSidebarStyles = {
     },
 };
 
-const Search = ({ filters, cohortDiscovery }: SearchProps) => {
+const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
@@ -466,6 +467,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         });
     };
 
+    // foreach(data?.aggregations.dataType);
     const categoryTabs = [
         {
             label: t("datasets"),
@@ -854,6 +856,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 getParamString={getParamString}
                 showEuropePmcModal={europePmcModalAction}
                 resetQueryParamState={resetQueryParamState}
+                schemadefs={schema.$defs}
             />
         );
     }, [
@@ -932,6 +935,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         width: `calc(100% - ${filterSidebarWidth}px)`,
     };
 
+    // console.log(schema);
+    // console.log(
+    //     getSubtypeOptionsFromSchema(schema.$defs, "Health and disease")
+    // );
     return (
         <>
             {/* Filter Drawer */}

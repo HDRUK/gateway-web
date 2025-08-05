@@ -12,6 +12,7 @@ import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
 import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
+import NestedFilterSection from "@/components/NestedFilterSection";
 import Typography from "@/components/Typography";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import {
@@ -44,12 +45,14 @@ import {
 import { SOURCE_GAT } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
+import { getSchemaFromTraser } from "@/utils/api";
 import {
     formatBucketCounts,
     groupByType,
     isQueryEmpty,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
+import { getSubtypeOptionsFromSchema } from "@/utils/getSubtypeOptionsFromSchema";
 import { ClearButton } from "../ClearFilterButton/ClearFilterButton.styles";
 import DateRangeFilter from "../DateRangeFilter";
 import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
@@ -61,6 +64,7 @@ const FILTER_CATEGORY_PUBLICATIONS = "paper";
 const FILTER_CATEGORY_DURS = "dataUseRegister";
 const FILTER_CATEGORY_TOOLS = "tool";
 const FILTER_CATEGORY_COLLECTIONS = "collection";
+const FILTER_CATEGORY_DATASETS = "dataset";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
     buckets: [
@@ -168,6 +172,7 @@ const FilterPanel = ({
     getParamString,
     showEuropePmcModal,
     resetQueryParamState,
+    schemadefs,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
@@ -181,6 +186,7 @@ const FilterPanel = ({
     getParamString: (paramName: string) => string | null;
     showEuropePmcModal: () => void;
     resetQueryParamState: (selectedType: SearchCategory) => void;
+    schemadefs;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     const tRoot = useTranslations(TRANSLATION_PATH);
@@ -285,8 +291,58 @@ const FilterPanel = ({
             );
         }
 
+        if (filterCategory === FILTER_CATEGORY_DATASETS) {
+            // Add in sub-buckets to filterItem.buckets
+
+            console.log("filterItems.formattedFilters", formattedFilters);
+
+            if (aggregations !== undefined) {
+                console.log("aggregations", aggregations);
+                // const subtypes = aggregations["dataType"]["buckets"].map(
+                //     dataType => {
+                //         console.log("dataType", dataType.key);
+                //         const subtype = getSubtypeOptionsFromSchema(
+                //             schemadefs,
+                //             dataType.key
+                //         );
+                //         console.log("subtype", subtype);
+                //         return subtype;
+                //     }
+                // );
+                const ffIndex = formattedFilters.findIndex(
+                    bucket => bucket.label === "dataType"
+                );
+                console.log("ffIndex", ffIndex);
+                // console.log("subtypes", subtypes);
+                const dataTypeFilters = formattedFilters[ffIndex][
+                    "buckets"
+                ].map(filterItem => {
+                    console.log("filterItem", filterItem);
+                    const subtypeOptions = getSubtypeOptionsFromSchema(
+                        schemadefs,
+                        filterItem.label
+                    );
+                    console.log("subtypeOptions", subtypeOptions);
+                    filterItem["subBuckets"] = subtypeOptions.map(item => ({
+                        label: item,
+                        value: item,
+                    }));
+                    console.log("filterItem after", filterItem);
+
+                    return filterItem;
+                });
+
+                formattedFilters[ffIndex]["buckets"] = dataTypeFilters;
+
+                console.log(
+                    "filterItems.formattedFilters after",
+                    formattedFilters[ffIndex]
+                );
+            }
+        }
+
         return formattedFilters;
-    }, [filterCategory, filterSourceData, staticFilterValues]);
+    }, [filterCategory, filterSourceData, staticFilterValues, aggregations]);
     const [maximised, setMaximised] = useState<string[]>([]);
 
     const handleUpdateMap = (mapValue: SelectedType) => {
@@ -509,6 +565,29 @@ const FilterPanel = ({
                         handleUpdate={handleUpdatePopulationSize}
                     />
                 );
+            case FILTER_DATA_TYPE:
+                console.log("renderFilterContent filterItem", filterItem);
+
+                return (
+                    <NestedFilterSection
+                        handleCheckboxChange={updatedCheckbox =>
+                            updateCheckboxes(updatedCheckbox, label)
+                        }
+                        checkboxValues={filterValues[label]}
+                        filterSection={label}
+                        setValue={setValue}
+                        control={control}
+                        filterItem={filterItem}
+                        resetFilterSection={() => resetFilterSection(label)}
+                        counts={formatBucketCounts(
+                            get(aggregations, label)?.buckets
+                        )}
+                        countsDisabled={
+                            filterCategory === FILTER_CATEGORY_PUBLICATIONS &&
+                            (staticFilterValues.source?.FED || false)
+                        }
+                    />
+                );
             default:
                 return (
                     <FilterSection
@@ -592,6 +671,14 @@ const FilterPanel = ({
                     !get(selectedFilters, FILTER_CONTAINS_BIOSAMPLES)?.length
                 ) {
                     return null;
+                }
+
+                if (filterItem.label === FILTER_DATA_SUBTYPE) {
+                    return null;
+                }
+
+                if (filterItem.label === FILTER_DATA_TYPE) {
+                    // console.log("filterItem", filterItem);
                 }
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
 
