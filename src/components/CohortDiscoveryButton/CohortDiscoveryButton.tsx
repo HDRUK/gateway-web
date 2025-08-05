@@ -66,7 +66,8 @@ const CohortDiscoveryButton = ({
                     push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
                 } else {
                     console.log('ctaLink.url', ctaLink.url)
-                    push(ctaLink.url);
+                    push('/about/cohort-discovery-request')
+                    //push(ctaLink.url);
                     
                 }
             } else {
