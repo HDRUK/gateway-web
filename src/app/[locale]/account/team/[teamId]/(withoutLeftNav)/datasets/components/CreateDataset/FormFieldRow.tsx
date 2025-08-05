@@ -548,16 +548,13 @@ const watchedType = watch(dataTypeField);
             return Array.isArray(enumOptions) ? enumOptions : [];
         }
 
-    useEffect(() => {
-        if (!watchedType) return;
+        useEffect(() => {
+            if (!watchedType) return;
 
-        const enumValues = getSubtypeOptionsFromSchema(schemaJson, watchedType);
-        const options = enumValues.map((v) => ({ label: v, value: v }));
-        setNewSubtypeOptions(options)
-        setValue(dataSubTypeField, undefined); 
- resetField(dataSubTypeField, { defaultValue: undefined });
-
-
+            const enumValues = getSubtypeOptionsFromSchema(schemaJson, watchedType);
+            const options = enumValues.map((v) => ({ label: v, value: v }));
+            setNewSubtypeOptions(options)
+            setValue(dataSubTypeField, undefined); 
     }, [watchedType]);
 
     return (
@@ -569,28 +566,28 @@ const watchedType = watch(dataTypeField);
                         field => field.title === key
                     );
                     const field = arrayField?.field;
-
                     const isSubtype = field?.name?.includes("subtype");
+
+                      const uniqueFieldKey = isSubtype
+  ? `${watchedType}-${index}-${field?.name}`  // ensure uniqueness
+  : `${index}-${field?.name}`;
                     const fieldWithOptions = isSubtype
-                        ? { ...field, options: newSubtypeOptions, key: watchedType  }
+                        ? { ...field, options: newSubtypeOptions, key: uniqueFieldKey  }
                         : field;
+                  
 
                     return (
-                        <React.Fragment key={(isSubtype) ? watchedType : key}>
-                            {fieldWithOptions &&
-                                renderFormHydrationField(
-                                    fieldWithOptions,
-                                    control,
-                                    `${fieldParent.title}.${index}.${fieldWithOptions.name}`,
-                                    (fieldTest: string) =>
-                                        setSelectedField &&
-                                        setSelectedField(
-                                            fieldTest,
-                                            fieldParent.title
-                                        ),
-                                        
-                                )}
-                        </React.Fragment>
+                        <React.Fragment key={key}>
+                        {fieldWithOptions &&
+                            renderFormHydrationField(
+                            fieldWithOptions,
+                            control,
+                            `${fieldParent.title}.${index}.${fieldWithOptions.name}`,
+                            (fieldTest: string) =>
+                                setSelectedField &&
+                                setSelectedField(fieldTest, fieldParent.title),
+                            )}
+</React.Fragment>
                     );
                 })}
             <Button onClick={() => remove(index)} variant="outlined">

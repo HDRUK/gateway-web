@@ -63,6 +63,7 @@ async function get<T>(
         withPagination: false,
     }
 ): Promise<T> {
+    console.log(url);
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
     const { cache, suppressError } = options;
