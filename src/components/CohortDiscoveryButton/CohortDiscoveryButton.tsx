@@ -58,8 +58,8 @@ const CohortDiscoveryButton = ({
             }
             if (redirectUrl) {
                  console.log('redirectUrl', redirectUrl)
-                 push('/about/cohort-discovery-request')
-                //push(redirectUrl);
+                 //push('/about/cohort-discovery-request')
+                push(redirectUrl);
             } else if (isLoggedIn) {
                 // check that if the user is using OpenAthens, that they have provided a secondary email,
                 // and send them to set it if not
@@ -67,8 +67,8 @@ const CohortDiscoveryButton = ({
                     push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
                 } else {
                     console.log('ctaLink.url', ctaLink.url)
-                    push('/about/cohort-discovery-request')
-                    //push(ctaLink.url);
+                    //push('/about/cohort-discovery-request')
+                    push(ctaLink.url);
                     
                 }
             } else {
