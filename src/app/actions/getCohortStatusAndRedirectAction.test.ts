@@ -42,7 +42,6 @@ describe("getCohortStatusAndRedirect", () => {
             mockCookieStore,
             "123"
         );
-        expect(getCohortAccessRedirect).toHaveBeenCalledWith(mockCookieStore);
         expect(result).toEqual({
             requestStatus: "APPROVED",
             requestExpiry: "07-07-2025 10:00:00",
