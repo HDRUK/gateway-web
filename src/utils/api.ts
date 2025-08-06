@@ -63,7 +63,6 @@ async function get<T>(
         withPagination: false,
     },
     headers: object = {}
-    
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
@@ -327,10 +326,10 @@ export async function getUserCohortRequest(
 ): Promise<CohortRequestUser> {
     const cookieHeader = cookieStore
         .getAll()
-        .map((cookie) => `${cookie.name}=${cookie.value}`)
+        .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
     const cache: Cache = {
-        tags: ["cohort", "cohort-user", "cohort-user-"+userId],
+        tags: ["cohort", "cohort-user", `cohort-user-${userId}`],
         revalidate: 15 * 60, // 15 minutes
     };
 
@@ -339,7 +338,7 @@ export async function getUserCohortRequest(
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
         { cache },
         {
-           Cookie: cookieHeader
+            Cookie: cookieHeader,
         }
     );
 }
@@ -350,10 +349,10 @@ export async function getCohortAccessRedirect(
 ): Promise<CohortRequestAccess> {
     const cookieHeader = cookieStore
         .getAll()
-        .map((cookie) => `${cookie.name}=${cookie.value}`)
+        .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
     const cache: Cache = {
-        tags: ["cohort", "cohort-redirect", "cohort-redirect-"+userId],
+        tags: ["cohort", "cohort-redirect", `cohort-redirect-${userId}`],
         revalidate: 15 * 60, // 15 minutes
     };
 
@@ -362,7 +361,7 @@ export async function getCohortAccessRedirect(
         `${apis.cohortRequestsV1UrlIP}/access`,
         { cache },
         {
-           Cookie: cookieHeader
+            Cookie: cookieHeader,
         }
     );
 }
