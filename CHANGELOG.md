@@ -1,3 +1,9 @@
+## [2.17.2](https://github.com/HDRUK/gateway-web/compare/v2.17.1...v2.17.2) (2025-08-06)
+
+### 🐛 Bug Fixes
+
+* **GAT-1234:** Rquest - retain users session when making server to server call (#1286) ([cff2cb1](https://github.com/HDRUK/gateway-web/commit/cff2cb14e76e323129406b7df5953de42f109522)), closes [GAT-1234](GAT-1234)
+
 ## [2.17.1](https://github.com/HDRUK/gateway-web/compare/v2.17.0...v2.17.1) (2025-08-04)
 
 ### 🐛 Bug Fixes
