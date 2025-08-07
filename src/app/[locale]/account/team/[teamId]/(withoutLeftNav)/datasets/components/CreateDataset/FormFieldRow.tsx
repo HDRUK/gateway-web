@@ -77,7 +77,7 @@ const watchedType = watch(dataTypeField);
                     const field = arrayField?.field;
                     const isSubtype = field?.name?.includes("subtype");
 
-  const options = getSubtypeOptionsFromSchema(schemaJson, fieldData["Dataset type"]).map((v) => ({ label: v, value: v }))
+            const options = getSubtypeOptionsFromSchema(schemadefs, fieldData["Dataset type"]).map((v) => ({ label: v, value: v }))
 
                     const fieldWithOptions = isSubtype
                         ? { ...field, options,   }
