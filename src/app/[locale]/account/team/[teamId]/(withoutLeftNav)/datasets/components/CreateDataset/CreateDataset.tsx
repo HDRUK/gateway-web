@@ -338,8 +338,11 @@ const CreateDataset = ({
 
 
             watchType.forEach((type) => {
+
                 if (!existingTypes.includes(type)) {
-                const defaultValues = parentField?.fields?.reduce((acc, field) => {
+                const defaultValues = parentField?.fields?.reduce((acc, _field) => {
+                  
+
                     acc["Dataset type"] = type;
                     acc["Dataset subtypes"] = undefined;
                     return acc;
@@ -352,8 +355,7 @@ const CreateDataset = ({
 
             watchDataTypeArray.forEach((item, index) => {
                 if (!watchType.includes(item["Dataset type"])) {
-                datasetRemove(index);
-  
+                    datasetRemove(index);
                 }
             });
 
