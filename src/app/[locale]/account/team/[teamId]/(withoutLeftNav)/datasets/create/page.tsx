@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { getFormHydration, getTeam, getUser } from "@/utils/api";
+import { getFormHydration, getSchemaFromTraser, getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -30,6 +30,12 @@ export default async function CreateDatasetPage({
     const team = await getTeam(cookieStore, teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
+
+    const cake = await getSchemaFromTraser(cookieStore, SCHEMA_NAME, SCHEMA_VERSION)
+
+    console.log(cake)
+
+    const { schema } = cake
 
     const formJSON = await getFormHydration(
         cookieStore,
@@ -61,8 +67,11 @@ export default async function CreateDatasetPage({
                     teamId={Number(teamId)}
                     user={user}
                     defaultTeamId={teamId}
+                    schemadefs={schema['$defs']}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>
     );
 }
+
+

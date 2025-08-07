@@ -49,6 +49,7 @@ import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
 import { logger } from "./logger";
 import { revalidateCache } from "./revalidateCache";
+import { TraserSchema } from "@/interfaces/TraserSchema";
 
 type Payload<T> = T | (() => BodyInit & T);
 
@@ -424,6 +425,7 @@ async function getDataset(
         params.append("schema_version", schemaVersion);
     }
     const queryString = params.toString();
+    console.log('<<<<', queryString ? `${baseUrl}?${queryString}` : baseUrl,)
 
     return await get<Dataset>(
         cookieStore,
@@ -510,6 +512,17 @@ async function getReducedCollection(
     );
 
     return collection;
+}
+
+async function getSchemaFromTraser( cookieStore: ReadonlyRequestCookies, schemaName: string,
+    schemaVersion: string,): Promise<TraserSchema>{
+
+    return get<TraserSchema>(cookieStore, process.env.TRASER_SERVICE_URL+ '/get/schema?name='+schemaName+'&version='+schemaVersion,{
+        cache: {
+            tags: ['traser-schema-'+schemaName+'-'+schemaVersion]
+        }
+    })
+    
 }
 
 async function getFormHydration(
@@ -802,6 +815,7 @@ export {
     getDarAnswersUser,
     getDarReviewsTeam,
     getDarReviewsUser,
+    getSchemaFromTraser,
     updateDarApplicationTeam,
     updateDarAnswers,
     updateDarApplicationUser,

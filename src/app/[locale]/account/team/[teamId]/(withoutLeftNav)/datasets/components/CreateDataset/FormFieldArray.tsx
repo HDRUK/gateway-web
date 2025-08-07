@@ -19,6 +19,7 @@ import {
     TEAM,
 } from "@/consts/translation";
 import FormFieldRow from "./FormFieldRow";
+import { Defs } from "@/interfaces/TraserSchema";
 
 type FieldValues = {
     [key: string]: string | number | Option[] | boolean | null | undefined;
@@ -31,6 +32,7 @@ interface CreateDatasetProps {
     fieldParent: FormHydration;
     setSelectedField?: (fieldName: string, fieldArrayName: string) => void;
     formArrayValues: FormValues[] | null;
+    schemadefs: Defs;
 }
 
 const FormFieldArray = ({
@@ -38,6 +40,7 @@ const FormFieldArray = ({
     fieldParent,
     setSelectedField,
     formArrayValues,
+    schemadefs
 }: CreateDatasetProps) => {
     const isDatasetType = fieldParent.title.toLowerCase().includes('dataset')
     const t = useTranslations(
@@ -72,6 +75,7 @@ const FormFieldArray = ({
 
             {formArrayValues?.map((_, index) => (
                 <FormFieldRow
+                    schemadefs={schemadefs}
                     key={`${fieldParent.title}-${index}`}
                     index={index}
                     control={control}

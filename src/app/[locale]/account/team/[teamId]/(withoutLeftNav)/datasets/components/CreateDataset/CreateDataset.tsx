@@ -80,12 +80,14 @@ import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
+import { Defs } from "@/interfaces/TraserSchema";
 
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
     teamId: number;
     user: AuthUser;
     defaultTeamId: number;
+    schemadefs: Defs;
 }
 
 type FormValues = Record<string, unknown>;
@@ -105,6 +107,7 @@ const CreateDataset = ({
     teamId,
     user,
     defaultTeamId,
+    schemadefs
 }: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
@@ -875,6 +878,7 @@ const CreateDataset = ({
 
                                                             return fields?.length ? (
                                                                 <FormFieldArray
+                                                                    schemadefs={schemadefs}
                                                                     control={
                                                                         control
                                                                     }
