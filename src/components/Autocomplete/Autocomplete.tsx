@@ -83,8 +83,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         ...restProps
     } = props;
 
-    console.log('iamrendewred')
-
     const {
         field,
         fieldState: { error },

@@ -39,6 +39,7 @@ const FormFieldArray = ({
     setSelectedField,
     formArrayValues,
 }: CreateDatasetProps) => {
+    const isDatasetType = fieldParent.title.toLowerCase().includes('dataset')
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -48,14 +49,14 @@ const FormFieldArray = ({
         name: fieldParent.title,
     });
 
-    const [subtypeOptions, setSubtypeOptions] = useState<Record<number, Option[]>>({});
+   // const [subtypeOptions, setSubtypeOptions] = useState<Record<number, Option[]>>({});
 
     const generateEmptyArrayFields = useMemo(
-        () =>
-            fieldParent?.fields?.reduce<FieldValues>((acc, field) => {
+        () =>{
+            return fieldParent?.fields?.reduce<FieldValues>((acc, field) => {
                 acc[field.title] = undefined;
                 return acc;
-            }, {}),
+            }, {})},
         [fieldParent]
     );
 
@@ -64,6 +65,10 @@ const FormFieldArray = ({
             <Typography sx={{ mb: 1 }}>
                 {fieldParent.title.replace(" Array", "")}
             </Typography>
+
+           {isDatasetType && <Typography sx={{ mb: 1 }}>
+               Please select dataset types on "Welcome and form builder"
+            </Typography>}
 
             {formArrayValues?.map((_, index) => (
                 <FormFieldRow
@@ -74,16 +79,17 @@ const FormFieldArray = ({
                     fieldData={formArrayValues[index]}
                     setSelectedField={setSelectedField}
                     remove={remove}
-                    subtypeOptions={subtypeOptions[index] || []}
+                    // subtypeOptions={subtypeOptions[index] || []}
+                    subtypeOptions={[]}
                 />
             ))}
 
-            <Button
+            {!isDatasetType && <Button
                 onClick={() => append(generateEmptyArrayFields)}
                 startIcon={<AddIcon sx={{ height: 14, width: 14 }} />}
                 sx={{ mb: theme.spacing(3) }}>
                 {t("add")}
-            </Button>
+            </Button>}
         </div>
     );
 };

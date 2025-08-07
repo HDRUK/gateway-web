@@ -20,32 +20,7 @@ interface FormFieldRowProps {
 }
 
 const ID = "id";
-
-const FormFieldRow = ({
-    index,
-    control,
-    fieldParent,
-    fieldData,
-    setSelectedField,
-    remove,
-    subtypeOptions,
-}: FormFieldRowProps) => {
-const dataTypeField = `${fieldParent.title}.${index}.Dataset type`
-const dataSubTypeField = `${fieldParent.title}.${index}.Dataset subtypes`
-console.log(dataSubTypeField)
-console.log('Dataset Type Array.0.Dataset subtypes')
-
-
-    // const watchedType = useWatch({
-    //     control,
-    //     name: dataTypeField,
-    // });
-
-    const [newSubtypeOptions, setNewSubtypeOptions] = useState(subtypeOptions);
-    const { setValue, watch, resetField } = useFormContext<FormValues>();
-const watchedType = watch(dataTypeField);
-
-    const schemaJson = {
+ const schemaJson = {
         "HealthAndDisease": {
                 "properties": {
                     "name": {
@@ -529,8 +504,7 @@ const watchedType = watch(dataTypeField);
                 "type": "string"
             }
     }
-
-         function getSubtypeOptionsFromSchema(
+function getSubtypeOptionsFromSchema(
             schema: Record<string, any>,
             selectedLabel: string
             ): string[] {
@@ -548,14 +522,31 @@ const watchedType = watch(dataTypeField);
             return Array.isArray(enumOptions) ? enumOptions : [];
         }
 
-        useEffect(() => {
-            if (!watchedType) return;
+const FormFieldRow = ({
+    index,
+    control,
+    fieldParent,
+    fieldData,
+    setSelectedField,
+    remove,
+    subtypeOptions,
+}: FormFieldRowProps) => {
+const dataTypeField = `${fieldParent.title}.${index}.Dataset type`
+const dataSubTypeField = `${fieldParent.title}.${index}.Dataset subtypes`
+console.log(dataSubTypeField)
+console.log('Dataset Type Array.0.Dataset subtypes')
 
-            const enumValues = getSubtypeOptionsFromSchema(schemaJson, watchedType);
-            const options = enumValues.map((v) => ({ label: v, value: v }));
-            setNewSubtypeOptions(options)
-            setValue(dataSubTypeField, undefined); 
-    }, [watchedType]);
+
+    // const watchedType = useWatch({
+    //     control,
+    //     name: dataTypeField,
+    // });
+
+    const [newSubtypeOptions, setNewSubtypeOptions] = useState(subtypeOptions);
+    const { setValue, watch, resetField } = useFormContext<FormValues>();
+const watchedType = watch(dataTypeField);
+
+
 
     return (
         <Box sx={{ mb: theme.spacing(3) }}>
@@ -568,12 +559,11 @@ const watchedType = watch(dataTypeField);
                     const field = arrayField?.field;
                     const isSubtype = field?.name?.includes("subtype");
 
-                      const uniqueFieldKey = isSubtype
-  ? `${watchedType}-${index}-${field?.name}`  // ensure uniqueness
-  : `${index}-${field?.name}`;
+  const options = getSubtypeOptionsFromSchema(schemaJson, fieldData["Dataset type"]).map((v) => ({ label: v, value: v }))
+
                     const fieldWithOptions = isSubtype
-                        ? { ...field, options: newSubtypeOptions, key: uniqueFieldKey  }
-                        : field;
+                        ? { ...field, options,   }
+                        : {...field, disabled: true};
                   
 
                     return (
@@ -590,9 +580,6 @@ const watchedType = watch(dataTypeField);
 </React.Fragment>
                     );
                 })}
-            <Button onClick={() => remove(index)} variant="outlined">
-                Remove
-            </Button>
         </Box>
     );
 };

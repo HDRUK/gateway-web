@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, useFieldArray, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
@@ -323,6 +323,44 @@ const CreateDataset = ({
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
+    const { fields: watchDataTypeArray, append: datasetAppend, remove: datasetRemove } = useFieldArray({
+    control,
+    name: "Dataset Type Array",
+    });
+   useEffect(() => {
+            if (!watchType || !Array.isArray(watchType) || watchType?.length <=0) return;
+
+            const parentField = schemaFields.find(
+                (field) => field.title === "Dataset Type Array"
+            );
+
+            const existingTypes = watchDataTypeArray.map((item) => item["Dataset type"]);
+
+
+            watchType.forEach((type) => {
+                if (!existingTypes.includes(type)) {
+                const defaultValues = parentField?.fields?.reduce((acc, field) => {
+                    acc["Dataset type"] = type;
+                    acc["Dataset subtypes"] = undefined;
+                    return acc;
+                }, {} as FieldValues);
+
+                datasetAppend(defaultValues);
+                }
+            });
+
+
+            watchDataTypeArray.forEach((item, index) => {
+                if (!watchType.includes(item["Dataset type"])) {
+                datasetRemove(index);
+  
+                }
+            });
+
+            console.log("watchType", watchType);
+            }, [watchType, watchDataTypeArray]);
+
+
     const patientPathway = watch(PATIENT_PATHWAY_DESCRIPTION);
     useEffect(() => {
         if (patientPathway === "") {
@@ -446,6 +484,7 @@ const CreateDataset = ({
 
     const [navbarHeight, setNavbarHeight] = useState<string>("0");
 
+    
     // Handle form legend top offset
     useEffect(() => {
         const handleResize = () => {
@@ -608,6 +647,7 @@ const CreateDataset = ({
     const handleFormSubmission = async (saveAsDraft: boolean) => {
         if (!saveAsDraft) {
             const formIsValid = await trigger();
+            console.log(formState.errors)
             if (formIsValid) {
                 handleSubmit(data => formSubmit(data, saveAsDraft))();
             } else {
