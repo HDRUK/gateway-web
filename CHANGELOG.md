@@ -1,3 +1,9 @@
+## [2.17.3](https://github.com/HDRUK/gateway-web/compare/v2.17.2...v2.17.3) (2025-08-11)
+
+### 🐛 Bug Fixes
+
+* **GAT-7698:** missing publcations on dataset mindmap page ([aa57502](https://github.com/HDRUK/gateway-web/commit/aa575029c008db1877d445aae1accd640b79250d)), closes [GAT-7698](GAT-7698)
+
 ## [2.17.2](https://github.com/HDRUK/gateway-web/compare/v2.17.1...v2.17.2) (2025-08-06)
 
 ### 🐛 Bug Fixes
