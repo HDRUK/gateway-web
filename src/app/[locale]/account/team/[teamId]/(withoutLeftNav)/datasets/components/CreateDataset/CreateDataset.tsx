@@ -432,7 +432,11 @@ const CreateDataset = ({
         }
 
         if (existingFormData) {
-            reset({ ...defaultFormValues, ...existingFormData });
+            const dataSetTypes = defaultFormValues["Dataset type"] ?? []
+            const dataSetTypeArray = defaultFormValues["Dataset Type Array"] ?? []
+            // if you ask me about this i will run away from you.
+            const tester = {...defaultFormValues, ...existingFormData, 'Dataset type': dataSetTypes, "Dataset Type Array": dataSetTypeArray }
+            reset(tester);
             setFinishedLoadingExisting(true);
         }
     }, [existingFormData, isEditing]);

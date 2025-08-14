@@ -51,7 +51,8 @@ interface FormHydrationSchema {
     schema_fields: FormHydration[];
     validation: FormHydrationValidation[];
     defaultValues: {
-        [key: string]: string | string[];
+        [key: string]: string | string[] | { [key]: string
+        [key]: string[]}[];
     };
 }
 
