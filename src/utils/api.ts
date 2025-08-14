@@ -62,7 +62,8 @@ async function get<T>(
         suppressError: false,
         cache: undefined,
         withPagination: false,
-    }
+    },
+    serveRaw?: boolean
 ): Promise<T> {
     console.log(url);
     const jwt = cookieStore.get(config.JWT_COOKIE);
@@ -90,6 +91,7 @@ async function get<T>(
 
     if (!res.ok && !suppressError) {
         let errorMessage: string;
+        console.log('res error', res)
 
         try {
             const errorData = await res.json();
@@ -102,6 +104,11 @@ async function get<T>(
     }
 
     const json = await res.json();
+
+    if(serveRaw) {
+        return json
+    }
+  
     if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         logger.info(json, session, "api.get.response");
     }
@@ -521,7 +528,7 @@ async function getSchemaFromTraser( cookieStore: ReadonlyRequestCookies, schemaN
         cache: {
             tags: ['traser-schema-'+schemaName+'-'+schemaVersion]
         }
-    })
+    }, true)
     
 }
 
