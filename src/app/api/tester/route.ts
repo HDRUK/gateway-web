@@ -1,11 +1,4 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import apis from "@/config/apis";
-import config from "@/config/config";
-import { sessionHeader, sessionPrefix } from "@/config/session";
-import { getUserFromToken } from "@/utils/cookies";
-import { getSessionCookie } from "@/utils/getSessionCookie";
-import { logger } from "@/utils/logger";
 
 export const tester = {
     schema_fields: [
