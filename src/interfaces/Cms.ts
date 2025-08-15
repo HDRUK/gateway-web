@@ -55,6 +55,25 @@ interface PageTemplatePromo {
     ctaOverrideComponent?: React.ReactElement;
 }
 
+interface CohortDiscoveryTemplate {
+    id: string;
+    title: string;
+    template: {
+        newCohortDiscoveryFieldGroup: {
+            ctaLink?: CtaLink;
+            firstPageText: string;
+            firstPageMedia: string;
+            secondPageText: string;
+            secondPageMedia: string;
+            thirdPageText: string;
+            thirdPageMedia: string;
+            thirdPageTextPartTwo: string;
+            fourthPageText: string;
+            fourthPageMedia: string;
+        };
+    };
+}
+
 interface NewsPost {
     node: {
         id: string;
@@ -153,6 +172,7 @@ export type {
     PageTemplateDefault,
     PageTemplateHome,
     PageTemplatePromo,
+    CohortDiscoveryTemplate,
     templateRepeatFields,
     CMSPostResponse,
     CMSPageResponse,

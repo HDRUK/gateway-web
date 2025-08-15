@@ -10,10 +10,5 @@ export const metadata = metaData({
 export default async function CohortDiscoveryPage() {
     const cohortDiscovery = await getNewCohortDiscovery();
 
-    return (
-        <CohortDiscoveryInfo
-            cohortDiscovery={cohortDiscovery}
-            showAccessButton
-        />
-    );
+    return <CohortDiscoveryInfo cohortDiscovery={cohortDiscovery} />;
 }

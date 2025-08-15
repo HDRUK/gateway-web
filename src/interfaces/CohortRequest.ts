@@ -9,8 +9,8 @@ type CohortRequestStatus =
     | "EXPIRED";
 
 type NHSSDERequestStatus =
-    | "IN_PROCESS"
-    | "APPROVAL_REQUESTED"
+    | "IN PROCESS"
+    | "APPROVAL REQUESTED"
     | "APPROVED"
     | "REJECTED"
     | "BANNED"
@@ -41,6 +41,7 @@ interface CohortRequest {
     nhse_sde_self_declared_approved_at: string;
     nhse_sde_request_expire_at: string;
     nhse_sde_updated_at: string;
+    access_to_env: string;
 }
 
 interface CohortRequestForm {
@@ -68,6 +69,7 @@ interface CohortRequestAccess {
 
 interface CohortResponse {
     requestStatus: string;
+    requestExpiry: string;
     redirectUrl: string;
 }
 

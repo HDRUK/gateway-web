@@ -22,7 +22,10 @@ describe("getCohortStatusAndRedirect", () => {
     });
 
     it("should return correct cohort response when both API calls succeed", async () => {
-        const mockUserRequest = { request_status: "APPROVED" };
+        const mockUserRequest = {
+            request_status: "APPROVED",
+            request_expire_at: "07-07-2025 10:00:00",
+        };
         const mockAccessRedirect = {
             redirect_url: "https://example.com/redirect",
         };
@@ -39,9 +42,9 @@ describe("getCohortStatusAndRedirect", () => {
             mockCookieStore,
             "123"
         );
-        expect(getCohortAccessRedirect).toHaveBeenCalledWith(mockCookieStore);
         expect(result).toEqual({
             requestStatus: "APPROVED",
+            requestExpiry: "07-07-2025 10:00:00",
             redirectUrl: "https://example.com/redirect",
         });
     });
@@ -67,6 +70,7 @@ describe("getCohortStatusAndRedirect", () => {
 
         expect(result).toEqual({
             requestStatus: null,
+            requestExpiry: null,
             redirectUrl: null,
         });
     });
