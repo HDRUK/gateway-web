@@ -19,7 +19,9 @@ const validationSchema = yup
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
         query: yup.string().required().max(1500).label("Your enquiry"),
-        organisation: yup.string().required("Applicant organisation is a required field"),
+        organisation: yup
+            .string()
+            .required("Applicant organisation is a required field"),
         from: yup.string().required("Please select an option"),
     })
     .required();

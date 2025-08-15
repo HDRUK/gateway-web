@@ -20,7 +20,9 @@ const validationSchema = yup
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
         project_title: yup.string().required().min(2).label("Project title"),
-        organisation: yup.string().required("Applicant organisation is a required field"),
+        organisation: yup
+            .string()
+            .required("Applicant organisation is a required field"),
         research_aim: yup
             .string()
             .required()
