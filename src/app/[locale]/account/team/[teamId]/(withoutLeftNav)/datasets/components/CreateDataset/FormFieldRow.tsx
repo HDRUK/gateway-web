@@ -1,7 +1,6 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import { FormHydration } from "@/interfaces/FormHydration";
-import { Option } from "@/interfaces/Option";
 import { Defs } from "@/interfaces/TraserSchema";
 import Box from "@/components/Box";
 import theme from "@/config/theme";
@@ -21,9 +20,10 @@ interface FormFieldRowProps {
 const ID = "id";
 
 function getSubtypeOptionsFromSchema(
-    schema: Record<string, any>,
+    schema: Record<string, unknown>,
     selectedLabel: string
 ): string[] {
+    // eslint-disable-next-line
     const matchedEntry = Object.entries(schema).find(([_, value]) => {
         return value?.properties?.name?.default === selectedLabel;
     });
@@ -45,11 +45,6 @@ const FormFieldRow = ({
     setSelectedField,
     schemadefs,
 }: FormFieldRowProps) => {
-    const dataTypeField = `${fieldParent.title}.${index}.Dataset type`;
-    const dataSubTypeField = `${fieldParent.title}.${index}.Dataset subtypes`;
-    console.log(dataSubTypeField);
-    console.log("Dataset Type Array.0.Dataset subtypes");
-
     return (
         <Box sx={{ mb: theme.spacing(3) }}>
             {Object.entries(fieldData)
