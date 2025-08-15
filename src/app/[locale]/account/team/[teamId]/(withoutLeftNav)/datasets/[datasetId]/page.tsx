@@ -11,13 +11,12 @@ import {
     getTeamIdFromPid,
     getUser,
 } from "@/utils/api";
+import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import EditDataset from "../components/CreateDataset";
-import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 import { tester } from "@/app/api/tester/route";
-import { string } from "yup";
+import EditDataset from "../components/CreateDataset";
 
 export const metadata = metaData(
     {
@@ -28,7 +27,7 @@ export const metadata = metaData(
 );
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME;
 // const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
-const SCHEMA_VERSION = '4.0.0'
+const SCHEMA_VERSION = "4.0.0";
 export default async function TeamDatasetPage({
     params,
     searchParams,
@@ -847,7 +846,7 @@ export default async function TeamDatasetPage({
     //                                 }
     //                              ],
     //                             "imageContrast": "Not stated",
-                               
+
     //                             "collectionSource": [
     //                                 "Clinic"
     //                             ]
@@ -981,8 +980,6 @@ export default async function TeamDatasetPage({
     //     }
     // }
 
-
-
     const getMetadata = (isDraft: boolean) =>
         isDraft
             ? "versions[0].metadata.original_metadata"
@@ -991,18 +988,21 @@ export default async function TeamDatasetPage({
     const metadataLocation = getMetadata(isDraft);
 
     const latestMetadata = get(dataset, metadataLocation);
-
-
-    const dataSetTypes:DataSetTypeArrayType[] = isDraft ? get(latestMetadata, "provenance.origin.datasetType") || [] : []
+    interface DataSetTypeArrayType {
+        name: string;
+        subTypes: string[];
+    }
+    const dataSetTypes: DataSetTypeArrayType[] = isDraft
+        ? get(latestMetadata, "provenance.origin.datasetType") || []
+        : [];
     const datasetTypesForForm = dataSetTypes.map(item => {
-                return {
-                    'Dataset type': item.name,
-                    'Dataset subtypes': item.subTypes
-                };
-                })
-   const dataTypes =
-        extractNamesFromDataType(dataSetTypes)
-        
+        return {
+            "Dataset type": item.name,
+            "Dataset subtypes": item.subTypes,
+        };
+    });
+    const dataTypes = extractNamesFromDataType(dataSetTypes);
+
     const dataCustodianIdentifier = get(
         latestMetadata,
         "summary.dataCustodian.identifier"
@@ -1012,7 +1012,11 @@ export default async function TeamDatasetPage({
     const dataCustodianId = isNotTeamId
         ? await getTeamIdFromPid(cookieStore, dataCustodianIdentifier || "")
         : dataCustodianIdentifier;
-    const { schema } = await getSchemaFromTraser(cookieStore, SCHEMA_NAME, SCHEMA_VERSION)
+    const { schema } = await getSchemaFromTraser(
+        cookieStore,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
+    );
 
     const formJSON = await getFormHydration(
         cookieStore,
@@ -1021,23 +1025,14 @@ export default async function TeamDatasetPage({
         dataTypes,
         dataCustodianId
     );
- formJSON.schema_fields = tester.schema_fields
-    console.log('here<<<', formJSON)
+    formJSON.schema_fields = tester.schema_fields;
+    console.log("here<<<", formJSON);
 
-    interface DataSetTypeArrayType {
-        name: string
-        subTypes: string[]
-    }
-
-
-  
-
-
-    formJSON.defaultValues={
-        'Dataset type': dataTypes,
-        'Dataset Type Array':datasetTypesForForm,
-        ...formJSON.defaultValues
-    }
+    formJSON.defaultValues = {
+        "Dataset type": dataTypes,
+        "Dataset Type Array": datasetTypesForForm,
+        ...formJSON.defaultValues,
+    };
 
     return (
         <ProtectedAccountRoute
@@ -1049,7 +1044,7 @@ export default async function TeamDatasetPage({
                     teamId={Number(teamId)}
                     user={user}
                     defaultTeamId={Number(dataCustodianId)}
-                     schemadefs={schema['$defs']}
+                    schemadefs={schema.$defs}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>

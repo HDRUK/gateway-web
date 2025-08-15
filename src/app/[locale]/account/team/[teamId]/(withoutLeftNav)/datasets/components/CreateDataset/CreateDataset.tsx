@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useForm, FormProvider, useFieldArray, FieldValues } from "react-hook-form";
+import {
+    useForm,
+    FormProvider,
+    useFieldArray,
+    FieldValues,
+} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
@@ -22,6 +27,7 @@ import {
 } from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
 import { Team } from "@/interfaces/Team";
+import { Defs } from "@/interfaces/TraserSchema";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -80,7 +86,6 @@ import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
-import { Defs } from "@/interfaces/TraserSchema";
 
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
@@ -107,7 +112,7 @@ const CreateDataset = ({
     teamId,
     user,
     defaultTeamId,
-    schemadefs
+    schemadefs,
 }: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
@@ -303,8 +308,6 @@ const CreateDataset = ({
 
     const yupSchema = buildYup(generatedYupValidation);
 
-
-
     const methods = useForm<FormValues>({
         mode: "onTouched",
         resolver: yupResolver(yupSchema),
@@ -326,45 +329,46 @@ const CreateDataset = ({
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
 
-    const { fields: watchDataTypeArray, append: datasetAppend, remove: datasetRemove } = useFieldArray({
-    control,
-    name: "Dataset Type Array",
+    const {
+        fields: watchDataTypeArray,
+        append: datasetAppend,
+        remove: datasetRemove,
+    } = useFieldArray({
+        control,
+        name: "Dataset Type Array",
     });
-   useEffect(() => {
-            if (!watchType || !Array.isArray(watchType) || watchType?.length <=0) return;
+    useEffect(() => {
+        if (!watchType || !Array.isArray(watchType) || watchType?.length <= 0)
+            return;
 
-            const parentField = schemaFields.find(
-                (field) => field.title === "Dataset Type Array"
-            );
+        const parentField = schemaFields.find(
+            field => field.title === "Dataset Type Array"
+        );
 
-            const existingTypes = watchDataTypeArray.map((item) => item["Dataset type"]);
+        const existingTypes = watchDataTypeArray.map(
+            item => item["Dataset type"]
+        );
 
-
-            watchType.forEach((type) => {
-
-                if (!existingTypes.includes(type)) {
-                const defaultValues = parentField?.fields?.reduce((acc, _field) => {
-                  
-
+        watchType.forEach(type => {
+            if (!existingTypes.includes(type)) {
+                const defaultValues = parentField?.fields?.reduce(acc => {
                     acc["Dataset type"] = type;
                     acc["Dataset subtypes"] = undefined;
                     return acc;
                 }, {} as FieldValues);
 
                 datasetAppend(defaultValues);
-                }
-            });
+            }
+        });
 
+        watchDataTypeArray.forEach((item, index) => {
+            if (!watchType.includes(item["Dataset type"])) {
+                datasetRemove(index);
+            }
+        });
 
-            watchDataTypeArray.forEach((item, index) => {
-                if (!watchType.includes(item["Dataset type"])) {
-                    datasetRemove(index);
-                }
-            });
-
-            console.log("watchType", watchType);
-            }, [watchType, watchDataTypeArray]);
-
+        console.log("watchType", watchType);
+    }, [watchType, watchDataTypeArray]);
 
     const patientPathway = watch(PATIENT_PATHWAY_DESCRIPTION);
     useEffect(() => {
@@ -432,10 +436,16 @@ const CreateDataset = ({
         }
 
         if (existingFormData) {
-            const dataSetTypes = defaultFormValues["Dataset type"] ?? []
-            const dataSetTypeArray = defaultFormValues["Dataset Type Array"] ?? []
+            const dataSetTypes = defaultFormValues["Dataset type"] ?? [];
+            const dataSetTypeArray =
+                defaultFormValues["Dataset Type Array"] ?? [];
             // if you ask me about this i will run away from you.
-            const tester = {...defaultFormValues, ...existingFormData, 'Dataset type': dataSetTypes, "Dataset Type Array": dataSetTypeArray }
+            const tester = {
+                ...defaultFormValues,
+                ...existingFormData,
+                "Dataset type": dataSetTypes,
+                "Dataset Type Array": dataSetTypeArray,
+            };
             reset(tester);
             setFinishedLoadingExisting(true);
         }
@@ -493,7 +503,6 @@ const CreateDataset = ({
 
     const [navbarHeight, setNavbarHeight] = useState<string>("0");
 
-    
     // Handle form legend top offset
     useEffect(() => {
         const handleResize = () => {
@@ -519,7 +528,6 @@ const CreateDataset = ({
             formData,
             schemaFields
         );
-
 
         const formPayload =
             isEditing && !isDuplicate
@@ -657,7 +665,7 @@ const CreateDataset = ({
     const handleFormSubmission = async (saveAsDraft: boolean) => {
         if (!saveAsDraft) {
             const formIsValid = await trigger();
-            console.log(formState.errors)
+            console.log(formState.errors);
             if (formIsValid) {
                 handleSubmit(data => formSubmit(data, saveAsDraft))();
             } else {
@@ -839,7 +847,9 @@ const CreateDataset = ({
                                         }}>
                                         <Typography variant="h2">
                                             {capitalise(
-                                                splitCamelcase(selectedFormSection)
+                                                splitCamelcase(
+                                                    selectedFormSection
+                                                )
                                             )}
                                         </Typography>
 
@@ -854,9 +864,13 @@ const CreateDataset = ({
                                                     notificationService.apiSuccess(
                                                         t("uploadSuccess")
                                                     );
-                                                    setStructuralMetadata(metadata);
+                                                    setStructuralMetadata(
+                                                        metadata
+                                                    );
                                                 }}
-                                                handleToggleUploading={setIsSaving}
+                                                handleToggleUploading={
+                                                    setIsSaving
+                                                }
                                             />
                                         )}
 
@@ -866,13 +880,15 @@ const CreateDataset = ({
                                                     schemaFields
                                                         .filter(
                                                             schemaField =>
-                                                                !schemaField.field
+                                                                !schemaField
+                                                                    .field
                                                                     ?.hidden
                                                         )
-                                                        .filter(({ location }) =>
-                                                            location?.startsWith(
-                                                                selectedFormSection
-                                                            )
+                                                        .filter(
+                                                            ({ location }) =>
+                                                                location?.startsWith(
+                                                                    selectedFormSection
+                                                                )
                                                         )
                                                         .map(fieldParent => {
                                                             const {
@@ -882,7 +898,9 @@ const CreateDataset = ({
 
                                                             return fields?.length ? (
                                                                 <FormFieldArray
-                                                                    schemadefs={schemadefs}
+                                                                    schemadefs={
+                                                                        schemadefs
+                                                                    }
                                                                     control={
                                                                         control
                                                                     }

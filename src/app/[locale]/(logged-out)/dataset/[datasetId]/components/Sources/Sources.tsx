@@ -7,6 +7,7 @@ import { Metadata } from "@/interfaces/Dataset";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { formatTextDelimiter } from "@/utils/dataset";
+import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 
 const TRANSLATION_PATH = "pages.dataset.components.Sources";
 
@@ -16,7 +17,11 @@ interface SourcesProps {
 
 const Sources = ({ data }: SourcesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { datasetType, datasetSubType } = data.provenance.origin;
+    const { datasetType } = data.provenance.origin;
+
+    const datasetSubTypeArray = datasetType.map(item =>
+        item.subTypes && item.subTypes.length > 0 ? item.subTypes : null
+    );
     // This is using HDRUK schema so it's not collectionSituation as in the GWDM case
     const { collectionSource } = data.provenance.origin;
 
@@ -24,15 +29,16 @@ const Sources = ({ data }: SourcesProps) => {
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             <Typography variant="h4">
                 <b>{`${t("datasetTypes")}: `}</b>
-                {formatTextDelimiter(datasetType)}
+                {formatTextDelimiter(extractNamesFromDataType(datasetType))}
             </Typography>
 
-            {datasetSubType && !isEqual(datasetSubType, ["Not applicable"]) && (
-                <Typography variant="h4">
-                    <b>{`${t("datasetSubtypes")}: `}</b>
-                    {formatTextDelimiter(datasetSubType)}
-                </Typography>
-            )}
+            {datasetSubTypeArray &&
+                !isEqual(datasetSubTypeArray, ["Not applicable"]) && (
+                    <Typography variant="h4">
+                        <b>{`${t("datasetSubtypes")}: `}</b>
+                        {formatTextDelimiter(datasetSubTypeArray)}
+                    </Typography>
+                )}
 
             <Divider sx={{ my: 1 }} />
             <Typography variant="h4">

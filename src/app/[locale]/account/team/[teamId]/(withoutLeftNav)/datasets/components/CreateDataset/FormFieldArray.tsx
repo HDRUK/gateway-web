@@ -1,14 +1,11 @@
-import React, { useMemo, useState } from "react";
-import {
-    Control,
-    useFieldArray,
-    UseFormSetValue,
-} from "react-hook-form";
+import React, { useMemo } from "react";
+import { Control, useFieldArray } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
-import Typography from "@/components/Typography";
+import { Defs } from "@/interfaces/TraserSchema";
 import Button from "@/components/Button";
+import Typography from "@/components/Typography";
 import theme from "@/config/theme";
 import { AddIcon } from "@/consts/icons";
 import {
@@ -19,7 +16,6 @@ import {
     TEAM,
 } from "@/consts/translation";
 import FormFieldRow from "./FormFieldRow";
-import { Defs } from "@/interfaces/TraserSchema";
 
 type FieldValues = {
     [key: string]: string | number | Option[] | boolean | null | undefined;
@@ -40,9 +36,9 @@ const FormFieldArray = ({
     fieldParent,
     setSelectedField,
     formArrayValues,
-    schemadefs
+    schemadefs,
 }: CreateDatasetProps) => {
-    const isDatasetType = fieldParent.title.toLowerCase().includes('dataset')
+    const isDatasetType = fieldParent.title.toLowerCase().includes("dataset");
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
     );
@@ -52,16 +48,14 @@ const FormFieldArray = ({
         name: fieldParent.title,
     });
 
-   // const [subtypeOptions, setSubtypeOptions] = useState<Record<number, Option[]>>({});
+    // const [subtypeOptions, setSubtypeOptions] = useState<Record<number, Option[]>>({});
 
-    const generateEmptyArrayFields = useMemo(
-        () =>{
-            return fieldParent?.fields?.reduce<FieldValues>((acc, field) => {
-                acc[field.title] = undefined;
-                return acc;
-            }, {})},
-        [fieldParent]
-    );
+    const generateEmptyArrayFields = useMemo(() => {
+        return fieldParent?.fields?.reduce<FieldValues>((acc, field) => {
+            acc[field.title] = undefined;
+            return acc;
+        }, {});
+    }, [fieldParent]);
 
     return (
         <div key={`${fieldParent.title}_fieldarray`}>
@@ -69,31 +63,34 @@ const FormFieldArray = ({
                 {fieldParent.title.replace(" Array", "")}
             </Typography>
 
-           {isDatasetType && <Typography sx={{ mb: 1 }}>
-               Please select dataset types on "Welcome and form builder"
-            </Typography>}
+            {isDatasetType && (
+                <Typography sx={{ mb: 1 }}>
+                    Please select dataset types on Welcome and form builder
+                </Typography>
+            )}
 
             {formArrayValues?.map((_, index) => (
                 <FormFieldRow
                     schemadefs={schemadefs}
-                    key={`${fieldParent.title}-${index}`}
+                    key={fieldParent.title}
                     index={index}
                     control={control}
                     fieldParent={fieldParent}
                     fieldData={formArrayValues[index]}
                     setSelectedField={setSelectedField}
                     remove={remove}
-                    // subtypeOptions={subtypeOptions[index] || []}
                     subtypeOptions={[]}
                 />
             ))}
 
-            {!isDatasetType && <Button
-                onClick={() => append(generateEmptyArrayFields)}
-                startIcon={<AddIcon sx={{ height: 14, width: 14 }} />}
-                sx={{ mb: theme.spacing(3) }}>
-                {t("add")}
-            </Button>}
+            {!isDatasetType && (
+                <Button
+                    onClick={() => append(generateEmptyArrayFields)}
+                    startIcon={<AddIcon sx={{ height: 14, width: 14 }} />}
+                    sx={{ mb: theme.spacing(3) }}>
+                    {t("add")}
+                </Button>
+            )}
         </div>
     );
 };

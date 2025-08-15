@@ -33,6 +33,7 @@ import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
+import { TraserSchema } from "@/interfaces/TraserSchema";
 import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import config from "@/config/config";
@@ -49,7 +50,6 @@ import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
 import { logger } from "./logger";
 import { revalidateCache } from "./revalidateCache";
-import { TraserSchema } from "@/interfaces/TraserSchema";
 
 type Payload<T> = T | (() => BodyInit & T);
 
@@ -62,13 +62,13 @@ async function get<T>(
         suppressError: false,
         cache: undefined,
         withPagination: false,
-    },
-    serveRaw?: boolean
+        serveRaw: false,
+    }
 ): Promise<T> {
     console.log(url);
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
-    const { cache, suppressError } = options;
+    const { cache, suppressError, serveRaw } = options;
     const nextConfig = cache
         ? {
               next: {
@@ -91,7 +91,7 @@ async function get<T>(
 
     if (!res.ok && !suppressError) {
         let errorMessage: string;
-        console.log('res error', res)
+        console.log("res error", res);
 
         try {
             const errorData = await res.json();
@@ -105,10 +105,10 @@ async function get<T>(
 
     const json = await res.json();
 
-    if(serveRaw) {
-        return json
+    if (serveRaw) {
+        return json;
     }
-  
+
     if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         logger.info(json, session, "api.get.response");
     }
@@ -432,7 +432,7 @@ async function getDataset(
         params.append("schema_version", schemaVersion);
     }
     const queryString = params.toString();
-    console.log('<<<<', queryString ? `${baseUrl}?${queryString}` : baseUrl,)
+    console.log("<<<<", queryString ? `${baseUrl}?${queryString}` : baseUrl);
 
     return await get<Dataset>(
         cookieStore,
@@ -521,15 +521,25 @@ async function getReducedCollection(
     return collection;
 }
 
-async function getSchemaFromTraser( cookieStore: ReadonlyRequestCookies, schemaName: string,
-    schemaVersion: string,): Promise<TraserSchema>{
-
-    return get<TraserSchema>(cookieStore, process.env.TRASER_SERVICE_URL+ '/get/schema?name='+schemaName+'&version='+schemaVersion,{
-        cache: {
-            tags: ['traser-schema-'+schemaName+'-'+schemaVersion]
+async function getSchemaFromTraser(
+    cookieStore: ReadonlyRequestCookies,
+    schemaName: string,
+    schemaVersion: string
+): Promise<TraserSchema> {
+    console.log(
+        `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
+        "<<<<<"
+    );
+    return get<TraserSchema>(
+        cookieStore,
+        `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
+        {
+            cache: {
+                tags: [`traser-schema-${schemaName}-${schemaVersion}`],
+            },
+            serveRaw: true,
         }
-    }, true)
-    
+    );
 }
 
 async function getFormHydration(
