@@ -76,6 +76,7 @@ const DatasetMindMap = ({
                 let hidden = false;
                 let cohort = false;
                 const { title } = data.metadata.metadata.summary;
+                const safeTitle = encodeURIComponent(title);
 
                 if (node.id === "node-synthetic") {
                     href =
@@ -97,9 +98,7 @@ const DatasetMindMap = ({
                         hidden = true;
                         emptyNodes.push(node.id);
                     }
-                    href = `${
-                        node.data.href
-                    }&datasetTitles=${encodeURIComponent(title)}`;
+                    href = `${node.data.href}&datasetTitles=${safeTitle}`;
                 } else if (node.id === "node-dataCustodian") {
                     href = `/data-custodian/${teamId}`;
                 } else if (node.id === "node-curatedPublications") {
@@ -108,11 +107,9 @@ const DatasetMindMap = ({
                         hidden = true;
                         emptyNodes.push(node.id);
                     }
-                    href = `${node.data.href}&query=&datasetTitles=${title}&source=${node.data.source}&force`;
+                    href = `${node.data.href}&query=&datasetTitles=${safeTitle}&source=${node.data.source}&force`;
                 } else if (node.id === "node-externalPublications") {
-                    href = `${node.data.href}&query=${encodeURIComponent(
-                        title
-                    )}&source=${node.data.source}&pmc=dataset`;
+                    href = `${node.data.href}&query=${safeTitle}&source=${node.data.source}&pmc=dataset`;
                 } else if (node.id === "node-coverageCompleteness") {
                     href =
                         data.metadata.metadata?.coverage?.datasetCompleteness;
