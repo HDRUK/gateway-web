@@ -1,10 +1,16 @@
 import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { getFormHydration, getTeam, getUser } from "@/utils/api";
+import {
+    getFormHydration,
+    getSchemaFromTraser,
+    getTeam,
+    getUser,
+} from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import { tester } from "@/app/api/tester/route";
 import CreateDataset from "../components/CreateDataset";
 
 export const metadata = metaData(
@@ -30,6 +36,12 @@ export default async function CreateDatasetPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
+    const { schema } = await getSchemaFromTraser(
+        cookieStore,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
+    );
+
     const formJSON = await getFormHydration(
         cookieStore,
         SCHEMA_NAME,
@@ -37,6 +49,9 @@ export default async function CreateDatasetPage({
         [],
         teamId
     );
+
+    formJSON.schema_fields = tester.schema_fields;
+    console.log(formJSON);
 
     if (formJSON) {
         // here be dragons
@@ -57,6 +72,7 @@ export default async function CreateDatasetPage({
                     teamId={Number(teamId)}
                     user={user}
                     defaultTeamId={teamId}
+                    schemadefs={schema.$defs}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>

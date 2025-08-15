@@ -15,6 +15,7 @@ export interface FormHydrationField {
     showClearButton?: boolean;
     info?: string | null;
     disabled?: boolean;
+    key?: string;
 }
 
 export interface FormHydrationItems {
@@ -50,7 +51,7 @@ interface FormHydrationSchema {
     schema_fields: FormHydration[];
     validation: FormHydrationValidation[];
     defaultValues: {
-        [key: string]: string | string[];
+        [key: string]: string | string[] | { [key]: string; [key]: string[] }[];
     };
 }
 
