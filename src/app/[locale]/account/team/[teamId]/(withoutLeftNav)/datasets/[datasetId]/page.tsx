@@ -15,7 +15,7 @@ import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import { tester } from "@/app/api/tester/route";
+// import { tester } from "@/app/api/tester/route";
 import EditDataset from "../components/CreateDataset";
 
 export const metadata = metaData(
@@ -26,8 +26,8 @@ export const metadata = metaData(
     noFollowRobots
 );
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME;
-// const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
-const SCHEMA_VERSION = "4.0.0";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
+
 export default async function TeamDatasetPage({
     params,
     searchParams,
@@ -97,8 +97,8 @@ export default async function TeamDatasetPage({
         dataTypes,
         dataCustodianId
     );
-    formJSON.schema_fields = tester.schema_fields;
-    console.log("here<<<", formJSON);
+    // formJSON.schema_fields = tester.schema_fields;
+    // console.log("here<<<", formJSON);
 
     formJSON.defaultValues = {
         "Dataset type": dataTypes,

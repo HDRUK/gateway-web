@@ -66,7 +66,6 @@ async function get<T>(
     },
     headers: object = {}
 ): Promise<T> {
-    console.log(url);
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
     const { cache, suppressError, serveRaw } = options;
@@ -447,7 +446,6 @@ async function getDataset(
         params.append("schema_version", schemaVersion);
     }
     const queryString = params.toString();
-    console.log("<<<<", queryString ? `${baseUrl}?${queryString}` : baseUrl);
 
     return await get<Dataset>(
         cookieStore,
@@ -541,10 +539,7 @@ async function getSchemaFromTraser(
     schemaName: string,
     schemaVersion: string
 ): Promise<TraserSchema> {
-    console.log(
-        `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
-        "<<<<<"
-    );
+
     return get<TraserSchema>(
         cookieStore,
         `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
