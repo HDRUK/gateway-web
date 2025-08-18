@@ -384,7 +384,7 @@ const CreateDataset = ({
     const watchIdIsNumber = !Number.isNaN(Number(watchId));
 
     const { data: formJSONUpdated } = useGet<FormHydrationSchema>(
-        `http://localhost:3000/api/tester?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
+        `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${watchType}&team_id=${watchId}`,
         {
             shouldFetch: watchIdIsNumber,
         }
@@ -440,13 +440,12 @@ const CreateDataset = ({
             const dataSetTypeArray =
                 defaultFormValues["Dataset Type Array"] ?? [];
             // if you ask me about this i will run away from you.
-            const tester = {
+            reset({
                 ...defaultFormValues,
                 ...existingFormData,
                 "Dataset type": dataSetTypes,
                 "Dataset Type Array": dataSetTypeArray,
-            };
-            reset(tester);
+            });
             setFinishedLoadingExisting(true);
         }
     }, [existingFormData, isEditing]);
@@ -665,7 +664,7 @@ const CreateDataset = ({
     const handleFormSubmission = async (saveAsDraft: boolean) => {
         if (!saveAsDraft) {
             const formIsValid = await trigger();
-            console.log(formState.errors);
+            // console.log(formState.errors);
             if (formIsValid) {
                 handleSubmit(data => formSubmit(data, saveAsDraft))();
             } else {
