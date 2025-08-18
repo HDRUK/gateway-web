@@ -366,8 +366,6 @@ const CreateDataset = ({
                 datasetRemove(index);
             }
         });
-
-        console.log("watchType", watchType);
     }, [watchType, watchDataTypeArray]);
 
     const patientPathway = watch(PATIENT_PATHWAY_DESCRIPTION);

@@ -93,8 +93,6 @@ async function get<T>(
 
     if (!res.ok && !suppressError) {
         let errorMessage: string;
-        console.log("res error", res);
-
         try {
             const errorData = await res.json();
             errorMessage = JSON.stringify(errorData, null, 2);
