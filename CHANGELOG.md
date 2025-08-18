@@ -1,3 +1,13 @@
+## [2.17.4](https://github.com/HDRUK/gateway-web/compare/v2.17.3...v2.17.4) (2025-08-18)
+
+### 🐛 Bug Fixes
+
+* **GAT-1234:** Rquest - retain users session when making server to server call (#1286) ([74e57c8](https://github.com/HDRUK/gateway-web/commit/74e57c88319f97bd0438f383fe52470c04d80df3)), closes [GAT-1234](GAT-1234)
+* **GAT-7643:** Can't download a metadata template file (#1283) ([57397ab](https://github.com/HDRUK/gateway-web/commit/57397ab6abd68a7bdeb39e6d34569aa9750db0da)), closes [GAT-7643](GAT-7643)
+* **GAT-7689:** Add environment column to cohort admin panel. (#1284) ([65cdc69](https://github.com/HDRUK/gateway-web/commit/65cdc6946a9e3a1845c9a54afd00cf1c94f999e6)), closes [GAT-7689](GAT-7689)
+* **GAT-7698:** missing publcations on dataset mindmap page (#1288) ([302c49a](https://github.com/HDRUK/gateway-web/commit/302c49a0347cf135501471df94bfdee64ec3ca9e)), closes [GAT-7698](GAT-7698)
+* **GAT-7708:** Missing encoding of one URL (#1291) ([c316dc3](https://github.com/HDRUK/gateway-web/commit/c316dc3a8ff60eb80840d5bfd762c812ec003ebe)), closes [GAT-7708](GAT-7708)
+
 ## [2.17.3](https://github.com/HDRUK/gateway-web/compare/v2.17.2...v2.17.3) (2025-08-11)
 
 ### 🐛 Bug Fixes
