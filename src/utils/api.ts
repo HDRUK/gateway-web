@@ -539,7 +539,6 @@ async function getSchemaFromTraser(
     schemaName: string,
     schemaVersion: string
 ): Promise<TraserSchema> {
-
     return get<TraserSchema>(
         cookieStore,
         `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,

@@ -15,7 +15,8 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
-import FormFieldRow from "./FormFieldRow";
+import { renderFormHydrationField } from "@/utils/formHydration";
+import DatasetTypeFormFieldRow from "./DatasetTypeFormFieldRow";
 
 type FieldValues = {
     [key: string]: string | number | Option[] | boolean | null | undefined;
@@ -48,8 +49,6 @@ const FormFieldArray = ({
         name: fieldParent.title,
     });
 
-    // const [subtypeOptions, setSubtypeOptions] = useState<Record<number, Option[]>>({});
-
     const generateEmptyArrayFields = useMemo(() => {
         return fieldParent?.fields?.reduce<FieldValues>((acc, field) => {
             acc[field.title] = undefined;
@@ -69,19 +68,48 @@ const FormFieldArray = ({
                 </Typography>
             )}
 
-            {formArrayValues?.map((_, index) => (
-                <FormFieldRow
-                    schemadefs={schemadefs}
-                    key={fieldParent.title}
-                    index={index}
-                    control={control}
-                    fieldParent={fieldParent}
-                    fieldData={formArrayValues[index]}
-                    setSelectedField={setSelectedField}
-                    remove={remove}
-                    subtypeOptions={[]}
-                />
-            ))}
+            {isDatasetType &&
+                formArrayValues?.map((_, index) => (
+                    <DatasetTypeFormFieldRow
+                        schemadefs={schemadefs}
+                        key={fieldParent.title}
+                        index={index}
+                        control={control}
+                        fieldParent={fieldParent}
+                        fieldData={formArrayValues[index]}
+                        setSelectedField={setSelectedField}
+                        remove={remove}
+                        subtypeOptions={[]}
+                    />
+                ))}
+
+            {!isDatasetType &&
+                Object.entries(field)
+                    .filter(([key]) => key !== ID)
+                    .map(([key]) => {
+                        const arrayField = fieldParent?.fields?.find(
+                            field => field.title === key
+                        );
+
+                        const field = arrayField?.field;
+
+                        return (
+                            <React.Fragment key={key}>
+                                {field &&
+                                    renderFormHydrationField(
+                                        field,
+                                        control,
+                                        `${fieldParent.title}.${index}.${field.name}`,
+                                        (fieldTest: string) =>
+                                            setSelectedField &&
+                                            setSelectedField(
+                                                fieldTest,
+                                                fieldParent.title
+                                            )
+                                    )}
+                            </React.Fragment>
+                        );
+                    })}
 
             {!isDatasetType && (
                 <Button

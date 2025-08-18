@@ -8,7 +8,7 @@ import { renderFormHydrationField } from "@/utils/formHydration";
 
 type FormValues = Record<string, unknown>;
 
-interface FormFieldRowProps {
+interface DatasetTypeFormFieldRowProps {
     index: number;
     control: Control<FormValues>;
     fieldParent: FormHydration;
@@ -37,14 +37,14 @@ function getSubtypeOptionsFromSchema(
     return Array.isArray(enumOptions) ? enumOptions : ["Not applicable"];
 }
 
-const FormFieldRow = ({
+const DatasetTypeFormFieldRow = ({
     index,
     control,
     fieldParent,
     fieldData,
     setSelectedField,
     schemadefs,
-}: FormFieldRowProps) => {
+}: DatasetTypeFormFieldRowProps) => {
     return (
         <Box sx={{ mb: theme.spacing(3) }}>
             {Object.entries(fieldData)
@@ -86,4 +86,4 @@ const FormFieldRow = ({
     );
 };
 
-export default FormFieldRow;
+export default DatasetTypeFormFieldRow;
