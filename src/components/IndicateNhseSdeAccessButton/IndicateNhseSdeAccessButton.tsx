@@ -58,7 +58,7 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
         );
     }
 
-    return <></>;
+    return null;
 };
 
 export default IndicateNhseSdeAccessButton;
