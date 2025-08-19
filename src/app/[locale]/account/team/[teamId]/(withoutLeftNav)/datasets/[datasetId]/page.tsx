@@ -25,8 +25,8 @@ export const metadata = metaData(
     },
     noFollowRobots
 );
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME;
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION;
+const SCHEMA_NAME = "HDRUK";
+const SCHEMA_VERSION = "4.0.0";
 
 export default async function TeamDatasetPage({
     params,

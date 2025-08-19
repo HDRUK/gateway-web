@@ -16,7 +16,7 @@ interface FormBannerProps {
 }
 
 const TRANSLATION_PATH = "components.FormBanner";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
+const SCHEMA_VERSION = "4.0.0";
 const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
 const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
 export const NAVBAR_ID = "form-navbar";
