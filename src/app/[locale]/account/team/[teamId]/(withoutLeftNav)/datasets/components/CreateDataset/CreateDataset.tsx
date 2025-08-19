@@ -422,6 +422,10 @@ const CreateDataset = ({
             }
             formJSONUpdated.defaultValues = {
                 ...formJSONUpdated.defaultValues,
+                // the formhydration default values come from a gwd 2.0 dm
+                // The subtypes are more than likely not correct, but we know there
+                // correct from the original call as its gone through traser
+                // so do the old switcharoo
                 "Dataset type": formJSON.defaultValues["Dataset type"],
                 "Dataset Type Array":
                     formJSON.defaultValues["Dataset Type Array"],
