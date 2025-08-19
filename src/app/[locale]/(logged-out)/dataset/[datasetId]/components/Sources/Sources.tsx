@@ -19,9 +19,12 @@ const Sources = ({ data }: SourcesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { datasetType } = data.provenance.origin;
 
-    const datasetSubTypeArray = datasetType.map(item =>
-        item.subTypes && item.subTypes.length > 0 ? item.subTypes : null
-    );
+    const datasetSubTypeArray = [];
+    datasetType.forEach(item => {
+        if (item.subTypes.length > 0) {
+            datasetSubTypeArray.push(item.subTypes);
+        }
+    });
     // This is using HDRUK schema so it's not collectionSituation as in the GWDM case
     const { collectionSource } = data.provenance.origin;
 
@@ -32,7 +35,7 @@ const Sources = ({ data }: SourcesProps) => {
                 {formatTextDelimiter(extractNamesFromDataType(datasetType))}
             </Typography>
 
-            {datasetSubTypeArray &&
+            {datasetSubTypeArray.length > 0 &&
                 !isEqual(datasetSubTypeArray, ["Not applicable"]) && (
                     <Typography variant="h4">
                         <b>{`${t("datasetSubtypes")}: `}</b>

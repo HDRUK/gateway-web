@@ -64,7 +64,8 @@ export default async function TeamDatasetPage({
         name: string;
         subTypes: string[];
     }
-    const dataSetTypes: DataSetTypeArrayType[] = get(latestMetadata, "provenance.origin.datasetType") ?? [];
+    const dataSetTypes: DataSetTypeArrayType[] =
+        get(latestMetadata, "provenance.origin.datasetType") ?? [];
     const datasetTypesForForm = dataSetTypes.map(item => {
         return {
             "Dataset type": item.name,
@@ -101,7 +102,7 @@ export default async function TeamDatasetPage({
     formJSON.defaultValues = {
         ...formJSON.defaultValues,
         "Dataset type": dataTypes,
-        "Dataset Type Array": datasetTypesForForm
+        "Dataset Type Array": datasetTypesForForm,
     };
 
     return (
