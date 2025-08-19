@@ -236,7 +236,7 @@
                 "cohortDiscoveryAdmin": {
                     "title": "Cohort Discovery Admin",
                     "text": "Find and manage status of all Cohort Discovery users, Click individual account users name to access decision page to review and edit status",
-                    "generalHeader": "General: ",
+                    "generalHeader": "Cohort: ",
                     "nhseHeader": "NHS: ",
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",

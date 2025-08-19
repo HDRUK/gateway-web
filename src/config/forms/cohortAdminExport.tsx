@@ -46,7 +46,7 @@ const formFields = [
         ],
     },
     {
-        label: "Status",
+        label: "Cohort Status",
         name: "status",
         nColumns: 3,
         formControlSx: { m: 0, p: 0, mb: 0 },
