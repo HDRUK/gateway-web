@@ -420,6 +420,12 @@ const CreateDataset = ({
                 formJSONUpdated.defaultValues["Organisation Logo"] =
                     encodeURI(orgImage);
             }
+            formJSONUpdated.defaultValues = {
+                ...formJSONUpdated.defaultValues,
+                "Dataset type": formJSON.defaultValues["Dataset type"],
+                "Dataset Type Array":
+                    formJSON.defaultValues["Dataset Type Array"],
+            };
             setFormJSONDynamic(formJSONUpdated);
             updateDataCustodian(formJSONUpdated);
         } else {
