@@ -12,3 +12,8 @@ export const isAliasesEnabled = flag({
     key: "Aliases",
     adapter: await gatewayAdapter(),
 });
+
+export const isNhsSdeApplicationsEnabled = flag({
+    key: "NhsSdeApplicationsEnabled",
+    adapter: await gatewayAdapter(),
+});
