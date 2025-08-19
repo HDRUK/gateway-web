@@ -21,7 +21,7 @@ const Sources = ({ data }: SourcesProps) => {
 
     const datasetSubTypeArray = [];
     datasetType.forEach(item => {
-        if (item.subTypes.length > 0) {
+        if (item.subTypes?.length > 0) {
             datasetSubTypeArray.push(item.subTypes);
         }
     });
