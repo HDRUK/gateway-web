@@ -28,7 +28,7 @@ export const defaultValues = {
 };
 
 export const requestStatusField = {
-    label: "Cohort Discovery Status",
+    label: "Cohort Status",
     name: "request_status",
     component: inputComponents.Select,
     options: cohortStatusOptions,
