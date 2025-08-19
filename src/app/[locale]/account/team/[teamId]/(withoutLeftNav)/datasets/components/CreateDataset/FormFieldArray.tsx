@@ -3,7 +3,7 @@ import { Control, useFieldArray } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
-import { Defs } from "@/interfaces/TraserSchema";
+import { Defs } from "@/interfaces/V4Schema";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
 import theme from "@/config/theme";

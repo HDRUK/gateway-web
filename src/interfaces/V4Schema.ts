@@ -141,7 +141,7 @@ export interface Schema {
     title: string;
     type: string;
 }
-export interface TraserSchema {
+export interface V4Schema {
     name: string;
     version: string;
     schema: Schema;

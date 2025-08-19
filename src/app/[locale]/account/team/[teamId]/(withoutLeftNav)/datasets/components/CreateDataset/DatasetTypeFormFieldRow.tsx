@@ -1,7 +1,7 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import { FormHydration } from "@/interfaces/FormHydration";
-import { Defs } from "@/interfaces/TraserSchema";
+import { Defs } from "@/interfaces/V4Schema";
 import Box from "@/components/Box";
 import theme from "@/config/theme";
 import { renderFormHydrationField } from "@/utils/formHydration";

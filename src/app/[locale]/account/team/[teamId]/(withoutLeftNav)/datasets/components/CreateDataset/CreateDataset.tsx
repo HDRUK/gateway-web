@@ -27,7 +27,7 @@ import {
 } from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
 import { Team } from "@/interfaces/Team";
-import { Defs } from "@/interfaces/TraserSchema";
+import { Defs } from "@/interfaces/V4Schema";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Button from "@/components/Button";

@@ -33,7 +33,7 @@ import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
-import { TraserSchema } from "@/interfaces/TraserSchema";
+import { V4Schema } from "@/interfaces/V4Schema";
 import { User } from "@/interfaces/User";
 import apis from "@/config/apis";
 import config from "@/config/config";
@@ -538,8 +538,8 @@ async function getSchemaFromTraser(
     cookieStore: ReadonlyRequestCookies,
     schemaName: string,
     schemaVersion: string
-): Promise<TraserSchema> {
-    return get<TraserSchema>(
+): Promise<V4Schema> {
+    return get<V4Schema>(
         cookieStore,
         `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
         {
