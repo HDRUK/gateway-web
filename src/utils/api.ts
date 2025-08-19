@@ -410,7 +410,7 @@ async function getNetworkSummary(
 ): Promise<NetworkSummary> {
     return await get<NetworkSummary>(
         cookieStore,
-        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}/summary`,
+        `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/summary`,
         options
     );
 }
