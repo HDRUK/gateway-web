@@ -48,6 +48,8 @@ const apis = {
     dataUseExportV1Url: `${apiV1Url}/dur/export`,
     dataCustodianNetworkV1Url: `${apiV1Url}/data_provider_colls`,
     dataCustodianNetworkV1UrlIP: `${apiV1IPUrl}/data_provider_colls`,
+    dataCustodianNetworkV2Url: `${apiV2IPUrl}/data_custodian_networks`,
+    dataCustodianNetworkV2UrlIP: `${apiV2IPUrl}/data_custodian_networks`,
     publicationsV1Url: `${apiV1Url}/publications`,
     publicationsV1UrlIP: `${apiV1IPUrl}/publications`,
     toolsV1Url: `${apiV1Url}/tools`,
