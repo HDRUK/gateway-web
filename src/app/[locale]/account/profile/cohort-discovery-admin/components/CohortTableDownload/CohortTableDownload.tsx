@@ -85,10 +85,16 @@ const CohortTableDownload = () => {
             if (field.name === "organisations") {
                 return {
                     ...field,
-                    options: uniqueOrganisations?.map(org => ({
-                        value: org,
-                        label: org,
-                    })),
+                    options: uniqueOrganisations
+                        ?.sort(function (a, b) {
+                            return a
+                                ?.toLowerCase()
+                                .localeCompare(b?.toLowerCase());
+                        })
+                        .map(org => ({
+                            value: org,
+                            label: org,
+                        })),
                 };
             }
             return field;
