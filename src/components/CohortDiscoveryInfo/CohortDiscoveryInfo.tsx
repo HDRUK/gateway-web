@@ -226,7 +226,7 @@ const CohortDiscoveryInfo = ({
                     },
                     {
                         value: "nhs-sde-network",
-                        label: "NHS SDE Network",
+                        label: "NHS Research SDE Network",
                         content: (
                             <CohortDiscoveryTabContent
                                 sx={{

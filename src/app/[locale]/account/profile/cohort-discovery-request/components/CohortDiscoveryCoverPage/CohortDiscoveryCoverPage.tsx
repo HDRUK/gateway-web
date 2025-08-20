@@ -2,7 +2,7 @@
 
 import { ReactElement } from "react";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -16,6 +16,7 @@ import { colors } from "@/config/theme";
 import { statusMapping } from "@/consts/cohortDiscovery";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 export default function CohortDiscoveryCoverPage({
     ctaOverrideComponent,
@@ -23,6 +24,7 @@ export default function CohortDiscoveryCoverPage({
     ctaOverrideComponent?: ReactElement;
 }) {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
+    const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user } = useAuth();
     const { requestExpiry, requestStatus } = useCohortStatus(user?.id);
 
@@ -104,15 +106,35 @@ export default function CohortDiscoveryCoverPage({
                         <Typography variant="h1">
                             {t("nhseSdeTitle")}
                         </Typography>
-                        <Typography color={colors.red700} sx={{ pb: 2 }}>
-                            {t("nhseSdeText1")}
-                        </Typography>
-                        <Typography color={colors.grey600} sx={{ pb: 2 }}>
-                            {t("nhseSdeText2")}
-                        </Typography>
-                        <Typography color={colors.red700}>
-                            {t("nhseSdeText3")}
-                        </Typography>
+                        {isNhsSdeApplicationsEnabled && (
+                            <>
+                                <Typography
+                                    color={colors.red700}
+                                    sx={{ pb: 2 }}>
+                                    {t("nhseSdeText1")}
+                                </Typography>
+                                <Typography
+                                    color={colors.grey600}
+                                    sx={{ pb: 2 }}>
+                                    {t("nhseSdeText2")}
+                                </Typography>
+                                <Typography color={colors.red700}>
+                                    {t("nhseSdeText3")}
+                                </Typography>
+                            </>
+                        )}
+                        {!isNhsSdeApplicationsEnabled && (
+                            <Typography color={colors.grey600}>
+                                {t.rich("nhseSdeTemporaryText", {
+                                    // eslint-disable-next-line react/no-unstable-nested-components
+                                    mailto: chunks => (
+                                        <Link href={`mailto:${chunks}`}>
+                                            {chunks}
+                                        </Link>
+                                    ),
+                                })}
+                            </Typography>
+                        )}
                     </Paper>
                 </Grid>
                 <Grid item mobile={12} laptop={4}>
