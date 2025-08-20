@@ -66,7 +66,7 @@ export default async function TeamDatasetPage({
     }
     const dataSetTypes: DataSetTypeArrayType[] =
         get(latestMetadata, "provenance.origin.datasetType") ?? [];
-    console.log("dataSetTypes", dataSetTypes);
+
     const datasetTypesForForm = dataSetTypes.map(item => {
         return {
             "Dataset type": item.name,
@@ -76,7 +76,6 @@ export default async function TeamDatasetPage({
     const dataTypes = isDraft
         ? dataSetTypes
         : extractNamesFromDataType(dataSetTypes);
-    console.log("dataTypes", dataTypes);
 
     const dataCustodianIdentifier = get(
         latestMetadata,
@@ -100,8 +99,6 @@ export default async function TeamDatasetPage({
         dataTypes,
         dataCustodianId
     );
-    // formJSON.schema_fields = tester.schema_fields;
-    // console.log("here<<<", formJSON);
 
     formJSON.defaultValues = {
         ...formJSON.defaultValues,
