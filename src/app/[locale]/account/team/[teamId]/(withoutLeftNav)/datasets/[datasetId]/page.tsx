@@ -43,7 +43,6 @@ export default async function TeamDatasetPage({
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
     const isDraft = searchParams.status === DataStatus.DRAFT;
-
     const dataset = await getTeamDataset(
         cookieStore,
         params.teamId,
@@ -60,19 +59,24 @@ export default async function TeamDatasetPage({
     const metadataLocation = getMetadata(isDraft);
 
     const latestMetadata = get(dataset, metadataLocation);
+
     interface DataSetTypeArrayType {
         name: string;
         subTypes: string[];
     }
     const dataSetTypes: DataSetTypeArrayType[] =
         get(latestMetadata, "provenance.origin.datasetType") ?? [];
+    console.log("dataSetTypes", dataSetTypes);
     const datasetTypesForForm = dataSetTypes.map(item => {
         return {
             "Dataset type": item.name,
             "Dataset subtypes": item.subTypes,
         };
     });
-    const dataTypes = extractNamesFromDataType(dataSetTypes);
+    const dataTypes = isDraft
+        ? dataSetTypes
+        : extractNamesFromDataType(dataSetTypes);
+    console.log("dataTypes", dataTypes);
 
     const dataCustodianIdentifier = get(
         latestMetadata,
