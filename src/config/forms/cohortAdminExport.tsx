@@ -3,7 +3,8 @@ import { CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { capitalise } from "@/utils/general";
 import { inputComponents } from ".";
 
-const cohortRequestStatusValues: CohortRequestStatus[] = [
+const cohortRequestStatusValues: (CohortRequestStatus | "NULL")[] = [
+    "NULL",
     "APPROVED",
     "REJECTED",
     "PENDING",
@@ -17,6 +18,7 @@ const defaultValues = {
     dateRangeTo: dayjs(new Date()),
     organisations: [],
     status: {
+        NULL: false,
         APPROVED: false,
         REJECTED: false,
         PENDING: false,
