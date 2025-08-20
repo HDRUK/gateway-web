@@ -54,7 +54,9 @@ const defaultValues = {
 
 const formFields = [
     {
-        label: "Date range",
+        label: "Date range of initial Cohort Discovery access request",
+        guidance:
+            "NOTE: this is the date of the first request submitted, which might be an SDE Network access request OR a general Cohort Discovery access request.",
         name: "dateRange",
         fields: [
             {
