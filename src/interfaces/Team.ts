@@ -13,6 +13,7 @@ interface Team {
     uses_5_safes: boolean;
     is_admin: boolean;
     is_question_bank: boolean;
+    has_published_dar_template: boolean;
     member_of: string;
     is_dar: boolean;
     dar_modal_header: string | null;

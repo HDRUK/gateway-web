@@ -23,6 +23,7 @@ export interface DarEnquiryDialogProps {
         redirectPath?: string;
     }): void;
     isDarEnabled: boolean;
+    hasPublishedDarTemplate: boolean;
     url: string;
     modalHeader?: string;
     modalContent?: string;
@@ -38,6 +39,7 @@ const DarEnquiryDialog = ({
     onFeasibilityEnquiryClick,
     createDARApplication,
     isDarEnabled,
+    hasPublishedDarTemplate,
     modalHeader,
     modalContent,
     url,
@@ -99,7 +101,7 @@ const DarEnquiryDialog = ({
                 )}
             </MuiDialogContent>
             <MuiDialogActions>
-                {isDarEnabled ? (
+                {isDarEnabled && hasPublishedDarTemplate ? (
                     <Button
                         variant="contained"
                         onClick={() => {
