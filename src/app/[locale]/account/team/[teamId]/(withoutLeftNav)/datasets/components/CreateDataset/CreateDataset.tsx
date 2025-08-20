@@ -672,7 +672,7 @@ const CreateDataset = ({
     const handleFormSubmission = async (saveAsDraft: boolean) => {
         if (!saveAsDraft) {
             const formIsValid = await trigger();
-            // console.log(formState.errors);
+            console.log(formState.errors);
             if (formIsValid) {
                 handleSubmit(data => formSubmit(data, saveAsDraft))();
             } else {
