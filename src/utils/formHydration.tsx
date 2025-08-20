@@ -409,7 +409,7 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    formattedFormData.datasetType = formData["Dataset Type Array"].map(
+    formattedFormData.provenance.origin.datasetType = formData["Dataset Type Array"].map(
         item => ({
             name: item["Dataset type"],
             subTypes: item["Dataset subtypes"],
