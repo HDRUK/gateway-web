@@ -3,10 +3,10 @@ const SUBMISSON_FORM_SECTION = "Make active";
 const STRUCTURAL_METADATA_FORM_SECTION = "structuralMetadata";
 const DATASET_TYPE = "Dataset type";
 const DATA_CUSTODIAN_ID = "identifier";
-const DATA_CUSTODIAN_NAME = "Name of data provider";
+const DATA_CUSTODIAN_NAME = "Name of Data Custodian";
 const PATIENT_PATHWAY_DESCRIPTION = "Patient pathway description";
 const DATA_CUSTODIAN_FIELDS = [
-    "Name of data provider",
+    "Name of Data Custodian",
     "Organisation Description",
     "Organisation Logo",
     "Organisation Membership",
