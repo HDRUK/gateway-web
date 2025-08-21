@@ -1,3 +1,9 @@
+## [2.17.5](https://github.com/HDRUK/gateway-web/compare/v2.17.4...v2.17.5) (2025-08-21)
+
+### 🐛 Bug Fixes
+
+* **GAT-7351:** none breaking V3 changes which actually are... (#1300) ([243bc3f](https://github.com/HDRUK/gateway-web/commit/243bc3f24422a8460005d8af0e327c606e8e6ba5)), closes [GAT-7351](GAT-7351)
+
 ## [2.17.4](https://github.com/HDRUK/gateway-web/compare/v2.17.3...v2.17.4) (2025-08-18)
 
 ### 🐛 Bug Fixes
