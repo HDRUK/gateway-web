@@ -31,6 +31,7 @@ const getColumns = ({
                 dataCustodianId,
                 dataCustodian,
                 darEnabled,
+                darTemplatePublished,
                 cohortEnabled,
             } = row.original;
             return (
@@ -46,6 +47,7 @@ const getColumns = ({
                                     teamId: dataCustodianId,
                                     teamName: dataCustodian,
                                     darEnabled,
+                                    darTemplatePublished,
                                     cohortEnabled,
                                 },
                             })
