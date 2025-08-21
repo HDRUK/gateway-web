@@ -131,7 +131,20 @@ const CreateDataset = ({
     );
 
     const currentFormJSON = useMemo(() => {
-        return formJSONDynamic || formJSON;
+        const base = formJSONDynamic || formJSON;
+        // here be dragons
+        // the validation rule around urls is strict.
+        // as it should be, the below question is not a user visible question, one the api populates behind the scenes..
+        // localhost:3000 is not a valid url so we fail validation silently locally so we can't create datasets..
+        // also if some past data contains a // like produrl//datasets/ it fails validation and the user can do nothing..
+        // as this value is defaulted behind the scenes and the user has no control over it, remove the validation from the frontend.
+
+        return {
+            ...base,
+            validation:
+                base.validation?.filter(obj => obj.title !== "revision url") ||
+                [],
+        };
     }, [formJSON, formJSONDynamic]);
 
     const teamOptions = useMemo(() => {
@@ -639,6 +652,8 @@ const CreateDataset = ({
                         "0"
                     );
             }
+            delete formPayload.metadata.metadata.datasetType;
+            delete formPayload.metadata.metadata.datasetSubType;
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
