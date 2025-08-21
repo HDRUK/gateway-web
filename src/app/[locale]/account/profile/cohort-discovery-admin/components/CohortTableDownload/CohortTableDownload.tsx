@@ -47,14 +47,24 @@ const CohortTableDownload = () => {
         filters.append("from", dateRangeFrom);
 
         const watchedStatusValues = formData.status;
+        const watchedSdeStatusValues = formData.sdeStatus;
 
         const request_status = Object.entries(watchedStatusValues)
             .filter(([, value]) => value === true)
             .map(([key]) => key)
             .join(",");
 
+        const nhse_sde_request_status = Object.entries(watchedSdeStatusValues)
+            .filter(([, value]) => value === true)
+            .map(([key]) => key)
+            .join(",");
+
         if (request_status) {
             filters.append("request_status", request_status);
+        }
+
+        if (nhse_sde_request_status) {
+            filters.append("nhse_sde_request_status", nhse_sde_request_status);
         }
 
         if (organisations.length > 0) {
@@ -75,10 +85,16 @@ const CohortTableDownload = () => {
             if (field.name === "organisations") {
                 return {
                     ...field,
-                    options: uniqueOrganisations?.map(org => ({
-                        value: org,
-                        label: org,
-                    })),
+                    options: uniqueOrganisations
+                        ?.sort(function (a, b) {
+                            return a
+                                ?.toLowerCase()
+                                .localeCompare(b?.toLowerCase());
+                        })
+                        .map(org => ({
+                            value: org,
+                            label: org,
+                        })),
                 };
             }
             return field;

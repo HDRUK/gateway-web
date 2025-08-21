@@ -11,13 +11,21 @@ describe("Cohort Table Download", () => {
             screen.getByText("Download dashboard report")
         ).toBeInTheDocument();
 
-        expect(screen.queryByText("Date range")).not.toBeInTheDocument();
+        expect(
+            screen.queryByText(
+                "Date range of initial Cohort Discovery access request"
+            )
+        ).not.toBeInTheDocument();
 
         const button = screen.getByLabelText("download-cohort-table");
         fireEvent.click(button);
 
         expect(screen.getByText("Export Filters")).toBeInTheDocument();
-        expect(screen.getByText("Date range")).toBeInTheDocument();
+        expect(
+            screen.getByText(
+                "Date range of initial Cohort Discovery access request"
+            )
+        ).toBeInTheDocument();
 
         await waitFor(() => {
             const exportButton = screen.getByText("Export xs file");
