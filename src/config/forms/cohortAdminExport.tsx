@@ -1,12 +1,27 @@
 import dayjs from "dayjs";
-import { CohortRequestStatus } from "@/interfaces/CohortRequest";
+import {
+    CohortRequestStatus,
+    NHSSDERequestStatus,
+} from "@/interfaces/CohortRequest";
 import { capitalise } from "@/utils/general";
 import { inputComponents } from ".";
 
-const cohortRequestStatusValues: CohortRequestStatus[] = [
+const cohortRequestStatusValues: (CohortRequestStatus | "NULL")[] = [
+    "NULL",
     "APPROVED",
     "REJECTED",
     "PENDING",
+    "BANNED",
+    "SUSPENDED",
+    "EXPIRED",
+];
+
+const nhseSdeCohortRequestStatusValues: (NHSSDERequestStatus | "NULL")[] = [
+    "NULL",
+    "IN PROCESS",
+    "APPROVAL REQUESTED",
+    "APPROVED",
+    "REJECTED",
     "BANNED",
     "SUSPENDED",
     "EXPIRED",
@@ -17,9 +32,20 @@ const defaultValues = {
     dateRangeTo: dayjs(new Date()),
     organisations: [],
     status: {
+        NULL: false,
         APPROVED: false,
         REJECTED: false,
         PENDING: false,
+        BANNED: false,
+        SUSPENDED: false,
+        EXPIRED: false,
+    },
+    sdeStatus: {
+        NULL: false,
+        "IN PROCESS": false,
+        "APPROVAL REQUESTED": false,
+        APPROVED: false,
+        REJECTED: false,
         BANNED: false,
         SUSPENDED: false,
         EXPIRED: false,
@@ -28,7 +54,9 @@ const defaultValues = {
 
 const formFields = [
     {
-        label: "Date range",
+        label: "Date range of initial Cohort Discovery access request",
+        guidance:
+            "NOTE: this is the date of the first request submitted, which might be an SDE Network access request OR a general Cohort Discovery access request.",
         name: "dateRange",
         fields: [
             {
@@ -53,6 +81,17 @@ const formFields = [
         component: inputComponents.CheckboxGroup,
         checkboxes: cohortRequestStatusValues.map(status => ({
             name: `status.${status}`,
+            label: capitalise(status),
+        })),
+    },
+    {
+        label: "SDE Network Status",
+        name: "sdeStatus",
+        nColumns: 3,
+        formControlSx: { m: 0, p: 0, mb: 0 },
+        component: inputComponents.CheckboxGroup,
+        checkboxes: nhseSdeCohortRequestStatusValues.map(status => ({
+            name: `sdeStatus.${status}`,
             label: capitalise(status),
         })),
     },

@@ -48,6 +48,7 @@ const RightPanel = ({
                     teamId: Number(item.teamId),
                     teamName: item.teamName,
                     darEnabled: item.darEnabled,
+                    darTemplatePublished: item.darTemplatePublished,
                     cohortEnabled: item.cohortEnabled,
                 };
             });
@@ -152,7 +153,9 @@ const RightPanel = ({
                     <Tooltip
                         title={
                             !selectedDatasets.every(
-                                dataset => dataset.darEnabled
+                                dataset =>
+                                    dataset.darEnabled &&
+                                    dataset.darTemplatePublished
                             )
                                 ? t("dataAccessRequest.buttonTooltipDar")
                                 : selectedDatasets.length > 0
@@ -166,7 +169,9 @@ const RightPanel = ({
                                 disabled={
                                     !(selectedDatasets.length > 0) ||
                                     !selectedDatasets.every(
-                                        dataset => dataset.darEnabled
+                                        dataset =>
+                                            dataset.darEnabled &&
+                                            dataset.darTemplatePublished
                                     )
                                 }>
                                 <FileUploadOutlined sx={{ pr: 1 }} />

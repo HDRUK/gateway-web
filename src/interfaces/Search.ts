@@ -97,6 +97,7 @@ export interface SearchResultDataset extends SearchResultBase {
         member_of: string;
         name: string;
         is_question_bank: boolean;
+        has_published_dar_template: boolean;
         is_dar: boolean;
         dar_modal_header: string | null;
         dar_modal_content: string | null;

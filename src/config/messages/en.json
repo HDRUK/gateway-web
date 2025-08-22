@@ -251,7 +251,8 @@
                     "nhseSdeTitle": "NHS SDE Cohort Data Access",
                     "nhseSdeText1": "SDE access is limited by access to Gateway Cohort Discovery",
                     "nhseSdeText2": "By selecting 'I have been approved by the NHS SDE', you are confirming that you have completed NHS SDE validation and are requesting access to SDE Network datasets through Cohort Discovery. You consent to HDR UK sharing your email address with the NHS SDE team solely for the purpose of verifying your approval status.",
-                    "nhseSdeText3": "Please note: this step involves manual validation by NHS SDE and HDR UK and may take up to 10 working days. You will receive an email notification once your access has been granted."
+                    "nhseSdeText3": "Please note: this step involves manual validation by NHS SDE and HDR UK and may take up to 10 working days. You will receive an email notification once your access has been granted.",
+                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>"
                 },
                 "dataAccessRequests": {
                     "applications": {
@@ -1498,7 +1499,8 @@
             "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries."
         },
         "RequestNhseSdeAccessButton": {
-            "label": "Request access to NHS SDE Network datasets"
+            "label": "Request access to NHS SDE Network datasets",
+            "temporaryLabel": "Learn more about the SDE Network"
         },
         "IndicateNhseSdeAccessButton": {
             "disabledTooltip": "Please sign in to activate this button",

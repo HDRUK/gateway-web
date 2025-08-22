@@ -6,10 +6,16 @@ import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { useFeatures } from "@/providers/FeatureProvider";
 import Button from "../Button";
 
+// SC: NHSE SDEs have requested we disable this functionality until they are ready.
+// Given this may need swift re-enabling/disabling in future outside of our
+// standard release cycle, I've controlled this with feature flags.
 const RequestNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
     const t = useTranslations("components.RequestNhseSdeAccessButton");
+
+    const { isNhsSdeApplicationsEnabled } = useFeatures();
 
     const { push } = useRouter();
     const { user } = useAuth();
@@ -21,7 +27,9 @@ const RequestNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
     );
 
     const onClick = async () => {
-        await submitRequest({ details: "required" });
+        if (isNhsSdeApplicationsEnabled) {
+            await submitRequest({ details: "required" });
+        }
     };
 
     return (
@@ -32,10 +40,12 @@ const RequestNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
                     onClick();
                 }
                 push(
-                    "https://digital.nhs.uk/services/secure-data-environment-service/expression-of-interest"
+                    isNhsSdeApplicationsEnabled
+                        ? "https://digital.nhs.uk/services/secure-data-environment-service/expression-of-interest"
+                        : "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network"
                 );
             }}>
-            {t("label")}
+            {isNhsSdeApplicationsEnabled ? t("label") : t("temporaryLabel")}
         </Button>
     );
 };

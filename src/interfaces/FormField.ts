@@ -5,6 +5,7 @@ interface FormField<TName> {
     name: TName;
     component: ComponentTypes;
     fields?: FormField<TName>[];
+    guidance?: string;
 }
 
 export type { FormField };
