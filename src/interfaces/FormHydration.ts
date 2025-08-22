@@ -45,6 +45,7 @@ interface FormHydration {
     location?: string;
     field?: FormHydrationField;
     fields?: FormHydration[];
+    required?: boolean;
 }
 
 interface FormHydrationSchema {

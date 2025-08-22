@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Control, useFieldArray } from "react-hook-form";
+import { Control, useFieldArray, useFormState } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
@@ -40,6 +40,8 @@ const FormFieldArray = ({
     formArrayValues,
     schemadefs,
 }: CreateDatasetProps) => {
+    const { errors } = useFormState({ control, name: fieldParent.title });
+
     const isDatasetType = fieldParent.title
         .toLowerCase()
         .includes("dataset type array");
@@ -63,6 +65,11 @@ const FormFieldArray = ({
         <div key={`${fieldParent.title}_fieldarray`}>
             <Typography sx={{ mb: 1 }}>
                 {fieldParent.title.replace(" Array", "")}
+                {fieldParent.required && (
+                    <Typography component="span" sx={{ color: "#DC3645" }}>
+                        *
+                    </Typography>
+                )}
             </Typography>
 
             {isDatasetType && (
@@ -70,7 +77,11 @@ const FormFieldArray = ({
                     Please select dataset types on Welcome and form builder
                 </Typography>
             )}
-
+            {errors?.[fieldParent.title]?.message && (
+                <Typography sx={{ color: "#DC3645" }}>
+                    {errors[fieldParent.title].message as string}
+                </Typography>
+            )}
             {isDatasetType &&
                 formArrayValues?.map((_, index) => (
                     <DatasetTypeFormFieldRow
