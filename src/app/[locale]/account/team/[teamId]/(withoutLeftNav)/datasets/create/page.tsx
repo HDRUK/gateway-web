@@ -10,7 +10,6 @@ import {
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-// import { tester } from "@/app/api/tester/route";
 import CreateDataset from "../components/CreateDataset";
 
 export const metadata = metaData(
@@ -21,8 +20,8 @@ export const metadata = metaData(
     noFollowRobots
 );
 
-const SCHEMA_NAME = "HDRUK";
-const SCHEMA_VERSION = "4.0.0";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 
 export default async function CreateDatasetPage({
     params,

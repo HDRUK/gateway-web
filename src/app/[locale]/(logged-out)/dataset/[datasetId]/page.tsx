@@ -36,8 +36,8 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
 
-const SCHEMA_NAME = "HDRUK";
-const SCHEMA_VERSION = "4.0.0";
+const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
+const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 
 export default async function DatasetItemPage({
     params,

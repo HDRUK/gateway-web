@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Metadata } from "@/interfaces/Dataset";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import { N_A } from "@/consts/dataset";
 import { formatTextDelimiter } from "@/utils/dataset";
 import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 
@@ -36,7 +37,7 @@ const Sources = ({ data }: SourcesProps) => {
             </Typography>
 
             {datasetSubTypeArray.length > 0 &&
-                !isEqual(datasetSubTypeArray, ["Not applicable"]) && (
+                !isEqual(datasetSubTypeArray, [N_A]) && (
                     <Typography variant="h4">
                         <b>{`${t("datasetSubtypes")}: `}</b>
                         {formatTextDelimiter(datasetSubTypeArray)}

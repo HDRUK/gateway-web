@@ -4,6 +4,7 @@ import { FormHydration } from "@/interfaces/FormHydration";
 import { Defs } from "@/interfaces/V4Schema";
 import Box from "@/components/Box";
 import theme from "@/config/theme";
+import { N_A } from "@/consts/dataset";
 import { renderFormHydrationField } from "@/utils/formHydration";
 
 type FormValues = Record<string, unknown>;
@@ -28,13 +29,13 @@ function getSubtypeOptionsFromSchema(
         return value?.properties?.name?.default === selectedLabel;
     });
 
-    if (!matchedEntry) return ["Not applicable"];
+    if (!matchedEntry) return [N_A];
 
     const [baseKey] = matchedEntry;
     const subTypeKey = `${baseKey}SubTypes`;
     const enumOptions = schema[subTypeKey]?.enum;
 
-    return Array.isArray(enumOptions) ? enumOptions : ["Not applicable"];
+    return Array.isArray(enumOptions) ? enumOptions : [N_A];
 }
 
 const DatasetTypeFormFieldRow = ({
