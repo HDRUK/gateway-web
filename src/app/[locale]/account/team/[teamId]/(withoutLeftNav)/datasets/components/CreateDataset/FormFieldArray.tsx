@@ -7,7 +7,8 @@ import { Defs } from "@/interfaces/V4Schema";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Typography from "@/components/Typography";
-import theme from "@/config/theme";
+import theme, { colors } from "@/config/theme";
+import { INITIAL_FORM_SECTION } from "@/consts/createDataset";
 import { AddIcon } from "@/consts/icons";
 import {
     ACCOUNT,
@@ -66,7 +67,7 @@ const FormFieldArray = ({
             <Typography sx={{ mb: 1 }}>
                 {fieldParent.title.replace(" Array", "")}
                 {fieldParent.required && (
-                    <Typography component="span" sx={{ color: "#DC3645" }}>
+                    <Typography component="span" sx={{ color: colors.red700 }}>
                         *
                     </Typography>
                 )}
@@ -74,11 +75,11 @@ const FormFieldArray = ({
 
             {isDatasetType && (
                 <Typography sx={{ mb: 1 }}>
-                    Please select dataset types on Welcome and form builder
+                    Please select dataset types on {INITIAL_FORM_SECTION}
                 </Typography>
             )}
             {errors?.[fieldParent.title]?.message && (
-                <Typography sx={{ color: "#DC3645" }}>
+                <Typography sx={{ color: colors.red700 }}>
                     {errors[fieldParent.title].message as string}
                 </Typography>
             )}
