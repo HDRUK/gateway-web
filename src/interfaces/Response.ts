@@ -7,6 +7,7 @@ interface GetOptions {
     suppressError?: boolean;
     cache?: Cache;
     withPagination?: boolean;
+    serveRaw?: boolean;
 }
 
 export type { GetOptions, Cache };
