@@ -72,9 +72,7 @@ export default async function TeamDatasetPage({
             "Dataset subtypes": item.subTypes,
         };
     });
-    const dataTypes = isDraft
-        ? dataSetTypes
-        : extractNamesFromDataType(dataSetTypes);
+    const dataTypes = extractNamesFromDataType(dataSetTypes);
 
     const dataCustodianIdentifier = get(
         latestMetadata,
