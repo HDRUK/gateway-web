@@ -42,7 +42,6 @@ const FormFieldArray = ({
     schemadefs,
 }: CreateDatasetProps) => {
 
-    console.log('schemadefs formField', schemadefs)
     const { errors } = useFormState({ control, name: fieldParent.title });
 
     const isDatasetType = fieldParent.title
