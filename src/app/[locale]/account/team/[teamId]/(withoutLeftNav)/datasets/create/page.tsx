@@ -40,9 +40,7 @@ export default async function CreateDatasetPage({
         SCHEMA_NAME,
         SCHEMA_VERSION
     );
-    
-    console.log('schema', schema)
-
+  
     const formJSON = await getFormHydration(
         cookieStore,
         SCHEMA_NAME,
