@@ -118,6 +118,8 @@ const CreateDataset = ({
         FormHydrationSchema | undefined
     >();
 
+    console.log('schemadefs', schemadefs);
+
     const [currentTeamId, setCurrentTeamId] = useState<number>(defaultTeamId);
 
     const [searchName, setSearchName] = useState("");

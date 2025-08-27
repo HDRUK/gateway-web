@@ -25,6 +25,9 @@ function getSubtypeOptionsFromSchema(
     selectedLabel: string
 ): string[] {
     // eslint-disable-next-line
+    console.log('getSubtypeOptionsFromSchema', schema)
+
+    console.log('selectedLabel', selectedLabel)
     const matchedEntry = Object.entries(schema).find(([_, value]) => {
         return value?.properties?.name?.default === selectedLabel;
     });
@@ -46,6 +49,7 @@ const DatasetTypeFormFieldRow = ({
     setSelectedField,
     schemadefs,
 }: DatasetTypeFormFieldRowProps) => {
+    console.log('schemadefs datasetFieldRow', schemadefs)
     return (
         <Box sx={{ mb: theme.spacing(3) }}>
             {Object.entries(fieldData)
