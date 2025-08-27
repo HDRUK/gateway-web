@@ -25,7 +25,7 @@ type FieldValues = {
 };
 
 type FormValues = Record<string, unknown>;
-const ID = "id";
+
 interface CreateDatasetProps {
     control: Control<FormValues>;
     fieldParent: FormHydration;
@@ -104,7 +104,7 @@ const FormFieldArray = ({
                         key={`${fieldParent.title}${field.id}`}
                         sx={{ mb: theme.spacing(3) }}>
                         {Object.entries(field)
-                            .filter(([key]) => key !== ID)
+                            .filter(([key]) => key !== "id")
                             .map(([key]) => {
                                 const arrayField = fieldParent?.fields?.find(
                                     field => field.title === key

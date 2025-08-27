@@ -15,7 +15,6 @@ import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-// import { tester } from "@/app/api/tester/route";
 import EditDataset from "../components/CreateDataset";
 
 export const metadata = metaData(

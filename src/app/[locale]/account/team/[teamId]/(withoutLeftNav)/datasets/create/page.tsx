@@ -49,9 +49,6 @@ export default async function CreateDatasetPage({
         teamId
     );
 
-    // formJSON.schema_fields = tester.schema_fields;
-    // console.log(formJSON);
-
     if (formJSON) {
         // here be dragons
         // for some reason reeact-form-hook does not like Organisation Logo containing a space...

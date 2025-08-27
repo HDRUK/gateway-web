@@ -21,7 +21,7 @@ interface DatasetTypeFormFieldRowProps {
 const ID = "id";
 
 function getSubtypeOptionsFromSchema(
-    schema: Record<string, unknown>,
+    schema: Defs,
     selectedLabel: string
 ): string[] {
     // eslint-disable-next-line

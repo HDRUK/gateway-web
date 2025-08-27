@@ -1,7 +1,4 @@
-// type Ref = { $ref: string };
 type AnyOf<T = unknown> = { anyOf: T[] };
-// type AllOf<T = unknown> = { allOf: T[] };
-// type Items<T = unknown> = { items: T; type?: string };
 export interface Defs {
     AbstractText: AnyOf<{
         maxLength?: number;
