@@ -539,6 +539,7 @@ async function getSchemaFromTraser(
     schemaName: string,
     schemaVersion: string
 ): Promise<V4Schema> {
+    console.log('so where making a call for...',   `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`)
     return get<V4Schema>(
         cookieStore,
         `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
