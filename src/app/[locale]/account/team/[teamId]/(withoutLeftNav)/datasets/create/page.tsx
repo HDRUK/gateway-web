@@ -23,6 +23,8 @@ export const metadata = metaData(
 const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
 const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 
+console.log('process.env.NEXT_PUBLIC_SCHEMA_VERSION', process.env.NEXT_PUBLIC_SCHEMA_VERSION)
+console.log('SCHEMA_VERSION', SCHEMA_VERSION)
 export default async function CreateDatasetPage({
     params,
 }: {
