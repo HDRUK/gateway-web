@@ -1,3 +1,19 @@
+## [2.18.0](https://github.com/HDRUK/gateway-web/compare/v2.17.5...v2.18.0) (2025-08-29)
+
+### ✨ Features
+
+* **GAT-7613:** Update naming of a few fields on Cohort admin as required (#1294) ([617a2b1](https://github.com/HDRUK/gateway-web/commit/617a2b1a5de475f3c52bc28fdfbce5d48831887b)), closes [GAT-7613](GAT-7613)
+* **GAT-7614:** Update overlay for Cohort Discovery admin panel content download (#1299) ([5792744](https://github.com/HDRUK/gateway-web/commit/57927444d8bd70b65f3cc2ce664584f4060c63fc)), closes [GAT-7614](GAT-7614)
+* **GAT-7683:** V4 schema dataset creation, editing for draft & active and viewing (#1287) ([aa8eb90](https://github.com/HDRUK/gateway-web/commit/aa8eb90654cb529fbec382c92f7be8bcdc39a3bc)), closes [GAT-7683](GAT-7683)
+* **GAT-7731:** Hyperlink + Text edits to Cohort Discovery UI (#1295) ([3e32ef7](https://github.com/HDRUK/gateway-web/commit/3e32ef7cbeca8eb0dbb2eae51ae4e9c2e4be9641)), closes [GAT-7731](GAT-7731)
+
+### 🐛 Bug Fixes
+
+* **GAT-7351:** none breaking V3 changes which actually are... (#1300) ([f4322d1](https://github.com/HDRUK/gateway-web/commit/f4322d19899f41aa3632395c4f85e6a6f348836d)), closes [GAT-7351](GAT-7351)
+* **GAT-7550:** Data Access Request application loading even though team doesn't have an active template (#1298) ([b4a1931](https://github.com/HDRUK/gateway-web/commit/b4a19310c7065c7805fe5e834216c4b7be19cfa6)), closes [GAT-7550](GAT-7550)
+* **GAT-7665:** Fix Network counts reporting (#1296) ([f00db9c](https://github.com/HDRUK/gateway-web/commit/f00db9c00b424051028ef8b1c559bec169e7d115))
+* **GAT-7683:** fix for when active to draft (#1302) ([decf311](https://github.com/HDRUK/gateway-web/commit/decf3119839dc084041af0b498ca3ac92c21f233))
+
 ## [2.17.5](https://github.com/HDRUK/gateway-web/compare/v2.17.4...v2.17.5) (2025-08-21)
 
 ### 🐛 Bug Fixes
