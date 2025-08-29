@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, useMemo } from "react";
+import { useMemo } from "react";
 import {
     Control,
     FieldValues,
@@ -8,7 +8,6 @@ import {
     UseFormSetValue,
     useController,
 } from "react-hook-form";
-import { List, AutoSizer } from "react-virtualized";
 import { cloneDeep, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
@@ -20,6 +19,7 @@ import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 import HTMLContent from "../HTMLContent";
+import Box from "@/components/Box";
 
 interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
@@ -60,6 +60,7 @@ const NestedFilterSection = <
     });
 
     console.log("NestedFilterSection filterItem", filterItem);
+
     const checkboxes = useMemo(() => {
         return filterItem.buckets
             .filter(bucket =>
@@ -86,71 +87,6 @@ const NestedFilterSection = <
     if (!filterItem.buckets.length)
         return <Typography>{noFilterLabel || t("noFilters")}</Typography>;
 
-    const renderRow = ({
-        index,
-        key,
-        style,
-    }: {
-        index: number;
-        key: string;
-        style: CSSProperties;
-    }) => {
-        const { label, ...formattedRow } = cloneDeep(checkboxes[index]);
-        console.log("checkboxes", checkboxes);
-        if (checkboxes[index]["subBuckets"]?.length > 1) {
-            return (
-                <div key={key} style={style}>
-                    <Accordion
-                        heading={
-                            <CheckboxControlled
-                                label={<HTMLContent content={label} />}
-                                {...formattedRow}
-                                formControlSx={{ pl: 1, pr: 1 }}
-                                checked={
-                                    (checkboxValues &&
-                                        checkboxValues[
-                                            checkboxes[index].label
-                                        ]) ||
-                                    false
-                                }
-                                name={checkboxes[index].label}
-                                onChange={(event, value) =>
-                                    handleCheckboxChange({
-                                        [event.target.name]: value,
-                                    })
-                                }
-                            />
-                        }
-                        contents={checkboxes[index]["subBuckets"].map(
-                            subBucket => (
-                                <CheckboxControlled label={subBucket.label} />
-                            )
-                        )}></Accordion>
-                </div>
-            );
-        }
-
-        return (
-            <div key={key} style={style}>
-                <CheckboxControlled
-                    label={<HTMLContent content={label} />}
-                    {...formattedRow}
-                    formControlSx={{ pl: 1, pr: 1 }}
-                    checked={
-                        (checkboxValues &&
-                            checkboxValues[checkboxes[index].label]) ||
-                        false
-                    }
-                    name={checkboxes[index].label}
-                    onChange={(event, value) =>
-                        handleCheckboxChange({
-                            [event.target.name]: value,
-                        })
-                    }
-                />
-            </div>
-        );
-    };
 
     return (
         <>
@@ -164,29 +100,82 @@ const NestedFilterSection = <
                 setValue={setValue}
             />
 
-            <div style={{ height: 126 }}>
-                <AutoSizer disableWidth>
-                    {() => {
+            <Box display="flex" flexDirection="column" alignItems="flex-start">
+                {checkboxes.map(checkbox => {
+                    const { label, ...formattedRow } = cloneDeep(checkbox);
+                    if (checkbox["subBuckets"]?.length > 1) {
+                        console.log("nested - render subfilter for ", label);
                         return (
-                            <List
-                                tabIndex={-1}
-                                rowRenderer={renderRow}
-                                rowCount={checkboxes.length}
-                                rowHeight={42}
-                                width={1}
-                                height={126}
-                                containerStyle={{
-                                    width: "100%",
-                                    maxWidth: "100%",
-                                }}
-                                style={{ width: "100%" }}
-                                // eslint-disable-next-line jsx-a11y/aria-role
-                                role=""
-                            />
+                            <div> {/* key={key} style={style}> */}
+                                <Accordion
+                                    heading={
+                                        <CheckboxControlled
+                                            label={<HTMLContent content={label} />}
+                                            {...formattedRow}
+                                            formControlSx={{ pl: 1, pr: 1, m: 0 }}
+                                            checked={
+                                                (checkboxValues &&
+                                                    checkboxValues[
+                                                        checkbox.label
+                                                    ]) ||
+                                                false
+                                            }
+                                            name={checkbox.label}
+                                            onChange={(event, value) =>
+                                                handleCheckboxChange({
+                                                    [event.target.name]: value,
+                                                })
+                                            }
+                                            checkboxSx={{ p: 0.5 }}
+                                        />
+                                    }
+                                    contents={
+                                        <Box display="flex" flexDirection={"column"} sx={{ py: 0}}>
+                                            {(checkbox && checkbox["subBuckets"] ?? null) 
+                                                ? checkbox["subBuckets"].map((item) => { console.log('item', item); return <CheckboxControlled formControlSx={{ pl: 5, pr: 0 }} label={item.label} />}) : null}
+
+                                        </Box>
+                                        
+                                    } 
+                                    variant="plain"
+                                    iconLeft
+                                    noIndent
+                                    sx={{
+                                        pl: 0.7,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        // justifyItems: "stretch"
+                                        ".MuiAccordionSummary-content": {
+                        margin: 0,
+                    },
+                                    }}
+                                    />
+                            </div>
                         );
-                    }}
-                </AutoSizer>
-            </div>
+                    }
+                    return (
+                        <div> {/*key={key} style={style}> */}
+                            <CheckboxControlled
+                                label={<HTMLContent content={label} />}
+                                {...formattedRow}
+                                formControlSx={{ pl: 1, pr: 1 }}
+                                checked={
+                                    (checkboxValues &&
+                                        checkboxValues[checkbox.label]) ||
+                                    false
+                                }
+                                name={checkbox.label}
+                                onChange={(event, value) =>
+                                    handleCheckboxChange({
+                                        [event.target.name]: value,
+                                    })
+                                }
+                            />
+                        </div>
+                    );
+                })}
+            </Box>
+                        
             <ClearFilterButton
                 checkboxValues={checkboxValues}
                 resetFilterSection={resetFilterSection}

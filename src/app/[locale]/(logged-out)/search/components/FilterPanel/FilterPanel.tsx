@@ -294,7 +294,7 @@ const FilterPanel = ({
         if (filterCategory === FILTER_CATEGORY_DATASETS) {
             // Add in sub-buckets to filterItem.buckets
 
-            console.log("filterItems.formattedFilters", formattedFilters);
+            // console.log("filterItems.formattedFilters", formattedFilters);
 
             if (aggregations !== undefined) {
                 console.log("aggregations", aggregations);
