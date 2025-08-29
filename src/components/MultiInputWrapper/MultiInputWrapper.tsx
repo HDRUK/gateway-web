@@ -2,7 +2,7 @@
 
 import { Fragment } from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { FormField } from "@/interfaces/FormField";
 import InputWrapper from "@/components/InputWrapper";
 
@@ -30,7 +30,12 @@ const MultiInputWrapper = <
         if (field.fields) {
             return (
                 <>
-                    {field.label}
+                    <Typography>{field.label}</Typography>
+                    {field?.guidance ? (
+                        <Typography sx={{ color: "grey", fontSize: 12, ml: 1 }}>
+                            {field.guidance}
+                        </Typography>
+                    ) : null}
                     <Box
                         key={field.name as string}
                         sx={{

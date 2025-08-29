@@ -213,7 +213,7 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    Status
+                    Cohort Status
                     <FilterPopover
                         name="request_status"
                         radios={statusRadios}
@@ -270,7 +270,7 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    Date requested
+                    Cohort Date Requested
                     <SortIcon
                         setSort={setSort}
                         sort={sort}
@@ -294,7 +294,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     <TooltipIcon
-                        label="Date Actioned"
+                        label="Cohort Date Actioned"
                         content={translations.dateActionedTooltip}
                     />{" "}
                     <SortIcon

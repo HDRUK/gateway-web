@@ -5,11 +5,13 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { DataStatus } from "@/consts/application";
 import {
     getFormHydration,
+    getSchemaFromTraser,
     getTeam,
     getTeamDataset,
     getTeamIdFromPid,
     getUser,
 } from "@/utils/api";
+import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -23,7 +25,7 @@ export const metadata = metaData(
     noFollowRobots
 );
 const SCHEMA_NAME = "HDRUK";
-const SCHEMA_VERSION = "3.0.0";
+const SCHEMA_VERSION = "4.0.0";
 
 export default async function TeamDatasetPage({
     params,
@@ -40,7 +42,6 @@ export default async function TeamDatasetPage({
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
     const isDraft = searchParams.status === DataStatus.DRAFT;
-
     const dataset = await getTeamDataset(
         cookieStore,
         params.teamId,
@@ -58,8 +59,20 @@ export default async function TeamDatasetPage({
 
     const latestMetadata = get(dataset, metadataLocation);
 
-    const dataTypes =
-        get(latestMetadata, "provenance.origin.datasetType") || [];
+    interface DataSetTypeArrayType {
+        name: string;
+        subTypes: string[];
+    }
+    const dataSetTypes: DataSetTypeArrayType[] =
+        get(latestMetadata, "provenance.origin.datasetType") ?? [];
+
+    const datasetTypesForForm = dataSetTypes.map(item => {
+        return {
+            "Dataset type": item.name,
+            "Dataset subtypes": item.subTypes,
+        };
+    });
+    const dataTypes = extractNamesFromDataType(dataSetTypes);
 
     const dataCustodianIdentifier = get(
         latestMetadata,
@@ -70,6 +83,11 @@ export default async function TeamDatasetPage({
     const dataCustodianId = isNotTeamId
         ? await getTeamIdFromPid(cookieStore, dataCustodianIdentifier || "")
         : dataCustodianIdentifier;
+    const { schema } = await getSchemaFromTraser(
+        cookieStore,
+        SCHEMA_NAME,
+        SCHEMA_VERSION
+    );
 
     const formJSON = await getFormHydration(
         cookieStore,
@@ -78,6 +96,12 @@ export default async function TeamDatasetPage({
         dataTypes,
         dataCustodianId
     );
+
+    formJSON.defaultValues = {
+        ...formJSON.defaultValues,
+        "Dataset type": dataTypes,
+        "Dataset Type Array": datasetTypesForForm,
+    };
 
     return (
         <ProtectedAccountRoute
@@ -89,6 +113,7 @@ export default async function TeamDatasetPage({
                     teamId={Number(teamId)}
                     user={user}
                     defaultTeamId={Number(dataCustodianId)}
+                    schemadefs={schema.$defs}
                 />
             </BoxContainer>
         </ProtectedAccountRoute>

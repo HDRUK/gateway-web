@@ -7,6 +7,7 @@ import useAuth from "@/hooks/useAuth";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { useFeatures } from "@/providers/FeatureProvider";
 import Button from "../Button";
 import ConditionalWrapper from "../ConditionalWrapper";
 
@@ -19,6 +20,7 @@ const tooltipWrapper = (tooltip: string) => (children: ReactElement) =>
 
 const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
     const t = useTranslations("components.IndicateNhseSdeAccessButton");
+    const { isNhsSdeApplicationsEnabled } = useFeatures();
 
     const { isLoggedIn, user } = useAuth();
     const submitRequest = usePost(
@@ -37,22 +39,26 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
 
     const isDisabled = !isLoggedIn;
 
-    return (
-        <ConditionalWrapper
-            requiresWrapper={isDisabled}
-            wrapper={tooltipWrapper(t("disabledTooltip") || "")}>
-            <div>
-                <Button
-                    sx={{ ...sx }}
-                    variant="outlined"
-                    color="secondary"
-                    disabled={isDisabled}
-                    onClick={() => user?.id && onClick()}>
-                    {t("label")}
-                </Button>
-            </div>
-        </ConditionalWrapper>
-    );
+    if (isNhsSdeApplicationsEnabled) {
+        return (
+            <ConditionalWrapper
+                requiresWrapper={isDisabled}
+                wrapper={tooltipWrapper(t("disabledTooltip") || "")}>
+                <div>
+                    <Button
+                        sx={{ ...sx }}
+                        variant="outlined"
+                        color="secondary"
+                        disabled={isDisabled}
+                        onClick={() => user?.id && onClick()}>
+                        {t("label")}
+                    </Button>
+                </div>
+            </ConditionalWrapper>
+        );
+    }
+
+    return null;
 };
 
 export default IndicateNhseSdeAccessButton;

@@ -42,9 +42,9 @@ describe("Cohort Table", () => {
         });
         expect(screen.getByText("Name")).toBeInTheDocument();
         expect(screen.getByText("Organisation")).toBeInTheDocument();
-        expect(screen.getByText("Status")).toBeInTheDocument();
-        expect(screen.getByText("Date requested")).toBeInTheDocument();
-        expect(screen.getByText("Date Actioned")).toBeInTheDocument();
+        expect(screen.getByText("Cohort Status")).toBeInTheDocument();
+        expect(screen.getByText("Cohort Date Requested")).toBeInTheDocument();
+        expect(screen.getByText("Cohort Date Actioned")).toBeInTheDocument();
     });
     it("should render row content", async () => {
         server.use(getCohortRequestsV1(requests));
