@@ -1,3 +1,9 @@
+## [2.19.0](https://github.com/HDRUK/gateway-web/compare/v2.18.0...v2.19.0) (2025-08-29)
+
+### ✨ Features
+
+* **GAT-1234:** fixing the pipeline environment by adding the traser environment  (#1306) ([4b5570d](https://github.com/HDRUK/gateway-web/commit/4b5570dca10058f2bc979810e2f787ee3d4f36b0)), closes [GAT-1234](GAT-1234)
+
 ## [2.18.0](https://github.com/HDRUK/gateway-web/compare/v2.17.5...v2.18.0) (2025-08-29)
 
 ### ✨ Features
