@@ -49,7 +49,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
                             }}>
                             <EllipsisLineLimit
                                 text={rawLabel}
-                                showToolTip={rawLabel.length > 70}
+                                showToolTip={rawLabel?.length > 70}
                             />
                             <Typography sx={{ ml: 1 }} fontWeight={400}>
                                 {count}
