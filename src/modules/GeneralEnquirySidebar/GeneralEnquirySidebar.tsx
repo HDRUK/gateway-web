@@ -40,24 +40,25 @@ const GeneralEnquirySidebar = ({
         itemName: "Enquiry item",
     });
 
-    const emailValues = user ? getEmails(user) : [];
+    const emailValues = user ? getEmails(user) : [""];
 
-    const { control, handleSubmit, reset } = useForm<User>({
+    const defaultEmailValue = emailValues[0];
+
+    const { control, handleSubmit, reset } = useForm<Enquiry>({
         mode: "onTouched",
         resolver: yupResolver(generalEnquiryValidationSchema),
         defaultValues: {
             ...generalEnquiryDefaultValues,
             ...user,
+            from: defaultEmailValue,
         },
     });
 
-    const defaultEmailValue = emailValues[0] ?? [""];
 
     const hydratedFormFields = generalEnquiryFormFields.map(field => {
         if (field.name === "from") {
             return {
                 ...field,
-                value: defaultEmailValue,
                 options: emailValues.map(email => ({
                     value: email,
                     label: email,

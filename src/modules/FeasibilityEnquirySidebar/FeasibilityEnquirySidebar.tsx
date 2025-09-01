@@ -39,18 +39,19 @@ const FeasibilityEnquirySidebar = ({
         itemName: t("itemName"),
     });
 
-    const { control, handleSubmit, reset } = useForm<User>({
+    const emailValues = user ? getEmails(user) : [""];
+
+    const defaultEmailValue = emailValues[0];
+
+    const { control, handleSubmit, reset } = useForm<Enquiry>({
         mode: "onTouched",
         resolver: yupResolver(feasibilityEnquiryValidationSchema),
         defaultValues: {
             ...feasibilityEnquiryDefaultValues,
             ...user,
+            from: defaultEmailValue,
         },
     });
-
-    const emailValues = user ? getEmails(user) : [""];
-
-    const defaultEmailValue = emailValues[0] ?? "";
 
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
@@ -72,7 +73,6 @@ const FeasibilityEnquirySidebar = ({
             if (field.name === "from") {
                 return {
                     ...field,
-                    value: defaultEmailValue,
                     options: emailValues.map(email => ({
                         value: email,
                         label: email,
