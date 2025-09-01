@@ -98,6 +98,7 @@ const FilterSection = <
         return (
             <div key={key} style={style}>
                 <CheckboxControlled
+                    rawLalbel={label}
                     label={<HTMLContent content={label} />}
                     {...formattedRow}
                     formControlSx={{ pl: 1, pr: 1 }}
