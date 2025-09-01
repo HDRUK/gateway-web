@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
-import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
