@@ -158,6 +158,7 @@ const Tabs = ({
                                 param={paramName}
                                 persist={persistParams}
                                 tooltip={tooltip}
+                                aria-description={tooltip}
                             />
                         ))}
                     </MuiTabList>
