@@ -1,12 +1,12 @@
-const apiUrl = 'https://api.dev.hdruk.cloud';
-const webUrlBase = 'https://web.dev.hdruk.cloud/en/dataset';
+const apiUrl = 'https://api.healthdatagateway.org';
+const webUrlBase = 'https://healthdatagateway.org/en/dataset';
 const ALargeNumber = 10000;
 
 const successfulIds: number[] = [];
 const failedIds: number[] = [];
 
 async function getDatasetIds(): Promise<number[]> {
-  const url = `${apiUrl}/api/v2/datasets?with_metadata=false&per_page=${ALargeNumber}`;
+  const url = `${apiUrl}/api/v2/datasets?with_metadata=false&per_page=${ALargeNumber}&status=ACTIVE`;
 
   try {
     const response = await fetch(url);
@@ -72,8 +72,9 @@ async function main() {
     processedCount++;
   };
 
-  await Promise.all(ids.map(wrappedCheckWebPage));
-
+  for (const id of ids) {
+    await wrappedCheckWebPage(id);
+  }
   clearInterval(progressInterval);
 
   console.log('\n=== Summary ===');
