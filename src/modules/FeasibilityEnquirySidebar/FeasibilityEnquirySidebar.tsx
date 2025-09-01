@@ -48,7 +48,7 @@ const FeasibilityEnquirySidebar = ({
         },
     });
 
-    const emailValues = user ? getEmails(user) : [];
+    const emailValues = user ? getEmails(user) : [""];
 
     const defaultEmailValue = emailValues[0] ?? "";
 

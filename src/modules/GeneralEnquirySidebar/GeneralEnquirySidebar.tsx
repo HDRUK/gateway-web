@@ -51,7 +51,7 @@ const GeneralEnquirySidebar = ({
         },
     });
 
-    const defaultEmailValue = emailValues[0] ?? "";
+    const defaultEmailValue = emailValues[0] ?? [""];
 
     const hydratedFormFields = generalEnquiryFormFields.map(field => {
         if (field.name === "from") {
