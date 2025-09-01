@@ -54,7 +54,6 @@ const GeneralEnquirySidebar = ({
         },
     });
 
-
     const hydratedFormFields = generalEnquiryFormFields.map(field => {
         if (field.name === "from") {
             return {
