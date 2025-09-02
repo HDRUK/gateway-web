@@ -13,6 +13,7 @@ export interface CheckboxProps extends MuiCheckboxProps {
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
     count?: number;
+    rawLabel?: string;
 }
 
 const CheckboxControlled = (props: CheckboxProps) => {
@@ -23,6 +24,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
         checkboxSx,
         formControlSx,
         count,
+        rawLabel,
         ...rest
     } = props;
 
@@ -37,7 +39,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
                     />
                 }
                 label={
-                    count !== undefined ? (
+                    count !== undefined && rawLabel ? (
                         <Box
                             sx={{
                                 p: 0,
@@ -46,8 +48,8 @@ const CheckboxControlled = (props: CheckboxProps) => {
                                 justifyContent: "space-between",
                             }}>
                             <EllipsisLineLimit
-                                text={label}
-                                showToolTip={label.length > 70}
+                                text={rawLabel}
+                                showToolTip={rawLabel?.length > 70}
                             />
                             <Typography sx={{ ml: 1 }} fontWeight={400}>
                                 {count}
