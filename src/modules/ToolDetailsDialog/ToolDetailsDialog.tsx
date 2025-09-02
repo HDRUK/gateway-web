@@ -4,6 +4,7 @@ import { SearchResultTool } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import Typography from "@/components/Typography";
 import { CategoryHeader } from "./ToolDetailsDialog.styles";
 
 interface ToolDetailsDialogProps {
@@ -15,7 +16,7 @@ const TRANSLATION_PATH = "modules.dialogs.ToolDetailsDialog";
 const ToolDetailsDialog = ({ result }: ToolDetailsDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const { name: title, description } = result;
+    const { name: title, description, associatedAuthors } = result;
 
     return (
         <Dialog title={title}>
@@ -30,6 +31,7 @@ const ToolDetailsDialog = ({ result }: ToolDetailsDialogProps) => {
                 <CategoryHeader variant="h3">{t("keywords")}</CategoryHeader>
 
                 <CategoryHeader variant="h3">{t("team")}</CategoryHeader>
+                <Typography>{associatedAuthors}</Typography>
             </MuiDialogContent>
         </Dialog>
     );

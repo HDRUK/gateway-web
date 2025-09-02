@@ -146,6 +146,7 @@ export interface SearchResultTool extends SearchResultBase {
     programming_package?: string[];
     datasets?: string[];
     category?: string;
+    associatedAuthors?: string;
 }
 
 export interface SearchResultCollection extends SearchResultBase {
