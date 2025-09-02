@@ -13,7 +13,7 @@ export interface CheckboxProps extends MuiCheckboxProps {
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
     count?: number;
-    rawLabel: string;
+    rawLabel?: string;
 }
 
 const CheckboxControlled = (props: CheckboxProps) => {
@@ -39,7 +39,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
                     />
                 }
                 label={
-                    count !== undefined ? (
+                    count !== undefined && rawLabel ? (
                         <Box
                             sx={{
                                 p: 0,
