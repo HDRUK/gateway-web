@@ -59,6 +59,12 @@ const toolFields: ToolSection[] = [
                 hideTooltip: false,
                 label: "lastUpdated",
             },
+            {
+                path: "associated_authors",
+                type: FieldType.TEXT,
+                hideTooltip: false,
+                label: "authors",
+            },
             // missing - uploaders or use associated authors?
             // missing - tool category, what is that suppose to be? I see category_id returned
             // missing - domain, what is this suppose to be?
