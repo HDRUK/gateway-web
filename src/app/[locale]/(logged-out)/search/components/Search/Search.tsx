@@ -203,7 +203,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
     };
 
     const getParamArray = (paramName: string, allowEmptyStrings?: boolean) => {
-        const param = searchParams?.get(paramName)?.split(",");
+        const param = searchParams?.get(paramName)?.split("|");
         return allowEmptyStrings ? param : param?.filter(filter => !!filter);
     };
 
@@ -830,7 +830,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 ) => {
                     // url requires string format, ie "one, two, three"
                     updatePathMultiple({
-                        [filterName]: filterValues.join(","),
+                        [filterName]: filterValues.join("|"),
                         [PAGE_FIELD]: "1",
                     });
 
