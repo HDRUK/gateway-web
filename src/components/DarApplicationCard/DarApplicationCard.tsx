@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useMemo } from "react";
+import DownloadIcon from "@mui/icons-material/Download";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
@@ -16,9 +17,9 @@ import Typography from "@/components/Typography";
 import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { DarEditIcon } from "@/consts/customIcons";
-import DownloadIcon from '@mui/icons-material/Download';
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
@@ -31,7 +32,6 @@ import {
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
-import apis from "@/config/apis";
 
 const TRANSLATION_PATH = "pages.account.team.dataAccessRequests.applications";
 const CHARACTER_LIMIT = 50;
@@ -182,7 +182,8 @@ export default function DarApplicationCard({
                   teamId || application.teams[teamIndex || 0].team_id
               }`;
 
-    const downloadHref = (id: number) => `${apis.teamsV1Url}/${teamId}/dar/applications/${id}/download`
+    const downloadHref = (id: number) =>
+        `${apis.teamsV1Url}/${teamId}/dar/applications/${id}/download`;
 
     const canEdit = isResearcher
         ? submissionStatus === DarApplicationStatus.DRAFT ||
@@ -241,7 +242,8 @@ export default function DarApplicationCard({
                   },
               ]
             : []),
-        ...(!isResearcher && canEdit ? [
+        ...(!isResearcher && canEdit
+            ? [
                   {
                       action: (id: number) => {
                           push(downloadHref(id));
@@ -249,7 +251,8 @@ export default function DarApplicationCard({
                       icon: DownloadIcon,
                       label: t("downloadApplication"),
                   },
-        ] : [])
+              ]
+            : []),
     ];
 
     return (
