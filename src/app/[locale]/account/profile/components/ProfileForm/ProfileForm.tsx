@@ -127,7 +127,7 @@ const ProfileForm = () => {
                     return {
                         ...field,
                         disabled:
-                            (!isOpenAthens && !secondaryEmail) || isOpenAthens,
+                            (!isOpenAthens && !secondaryEmail) || isOpenAthens || !secondaryEmailVerified,
                     };
                 }
                 if (field.name === "secondary_email") {
