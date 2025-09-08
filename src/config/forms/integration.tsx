@@ -22,7 +22,7 @@ const defaultValues: Partial<IntegrationForm> = {
 const validationSchema = yup.object({
     federation_type: yup.string().required().label("Integration type"),
     auth_type: yup.string().required().label("Authentication type"),
-    endpoint_baseurl: yup.string().url().required().label("Base URL"),
+    // endpoint_baseurl: yup.string().url().required().label("Base URL"),
     endpoint_dataset: yup
         .string()
         .required()

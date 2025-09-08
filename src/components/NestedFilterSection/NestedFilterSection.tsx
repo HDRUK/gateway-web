@@ -31,6 +31,7 @@ interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     counts?: CountType;
     countsDisabled: boolean;
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
+    handleNestedCheckboxChange;
     setValue: (
         name: keyof TFieldValues,
         value: UseFormSetValue<TFieldValues>
@@ -50,6 +51,7 @@ const NestedFilterSection = <
     counts = {},
     countsDisabled,
     handleCheckboxChange,
+    handleNestedCheckboxChange,
     setValue,
     resetFilterSection,
 }: NestedFilterSectionProps<TFieldValues, TName>) => {
@@ -60,6 +62,7 @@ const NestedFilterSection = <
     });
 
     console.log("NestedFilterSection filterItem", filterItem);
+    console.log('checkboxValues',checkboxValues);
 
     const checkboxes = useMemo(() => {
         return filterItem.buckets
@@ -104,7 +107,11 @@ const NestedFilterSection = <
                 {checkboxes.map(checkbox => {
                     const { label, ...formattedRow } = cloneDeep(checkbox);
                     if (checkbox["subBuckets"]?.length > 1) {
-                        console.log("nested - render subfilter for ", label);
+                        if (label === 'Health and disease') {
+                            console.log("nested - render subfilter for ", label);
+                            console.log('checkboxValues',checkboxValues);
+                            console.log('checkbox', checkbox);
+                        }
                         return (
                             <div> {/* key={key} style={style}> */}
                                 <Accordion
@@ -121,19 +128,37 @@ const NestedFilterSection = <
                                                 false
                                             }
                                             name={checkbox.label}
-                                            onChange={(event, value) =>
-                                                handleCheckboxChange({
+                                            onChange={(event, value) => {
+                                                console.log('update', value, event);
+                                                return handleCheckboxChange({
                                                     [event.target.name]: value,
                                                 })
+                                                }
                                             }
                                             checkboxSx={{ p: 0.5 }}
+                                            stopPropagation
                                         />
                                     }
                                     contents={
                                         <Box display="flex" flexDirection={"column"} sx={{ py: 0}}>
                                             {(checkbox && checkbox["subBuckets"] ?? null) 
-                                                ? checkbox["subBuckets"].map((item) => { console.log('item', item); return <CheckboxControlled formControlSx={{ pl: 5, pr: 0 }} label={item.label} />}) : null}
-
+                                                ? checkbox["subBuckets"].map((item) => { 
+                                                    // console.log('item', item);
+                                                    return (
+                                                        <CheckboxControlled 
+                                                            formControlSx={{ pl: 5, pr: 0 }} 
+                                                            label={item.label} 
+                                                            name={item.label}
+                                                            onChange={(event, value) =>
+                                                            {
+                                                                console.log('nested update', event, value, label, item.label, item.value);
+                                                            
+                                                                return handleNestedCheckboxChange({
+                                                                    [label]: {[event.target.name]: value},
+                                                                });
+                                                            }}
+                                                        />)
+                                                    }) : null}
                                         </Box>
                                         
                                     } 

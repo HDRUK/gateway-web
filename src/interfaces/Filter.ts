@@ -54,6 +54,10 @@ export type DateRange = {
     maxYear: string;
 };
 
+interface subBucket {
+    value: string;
+    label: string;
+}
 export interface Bucket {
     doc_count: number;
     key: string;
@@ -65,6 +69,7 @@ export interface BucketCheckbox {
     value: string;
     label: string;
     count?: number;
+    subBuckets?: subBucket[];
 }
 
 interface Filter {

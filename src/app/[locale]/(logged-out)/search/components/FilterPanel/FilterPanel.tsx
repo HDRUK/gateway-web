@@ -297,7 +297,7 @@ const FilterPanel = ({
             // console.log("filterItems.formattedFilters", formattedFilters);
 
             if (aggregations !== undefined) {
-                console.log("aggregations", aggregations);
+                // console.log("aggregations", aggregations);
                 // const subtypes = aggregations["dataType"]["buckets"].map(
                 //     dataType => {
                 //         console.log("dataType", dataType.key);
@@ -312,32 +312,34 @@ const FilterPanel = ({
                 const ffIndex = formattedFilters.findIndex(
                     bucket => bucket.label === "dataType"
                 );
-                console.log("ffIndex", ffIndex);
+                // console.log("ffIndex", ffIndex);
                 // console.log("subtypes", subtypes);
                 const dataTypeFilters = formattedFilters[ffIndex][
                     "buckets"
                 ].map(filterItem => {
-                    console.log("filterItem", filterItem);
+                    // console.log("filterItem", filterItem);
                     const subtypeOptions = getSubtypeOptionsFromSchema(
                         schemadefs,
                         filterItem.label
                     );
-                    console.log("subtypeOptions", subtypeOptions);
+                    // if (filterItem.label === "Health and disease") {
+                    //     console.log("subtypeOptions", subtypeOptions);
+                    // }
                     filterItem["subBuckets"] = subtypeOptions.map(item => ({
                         label: item,
                         value: item,
                     }));
-                    console.log("filterItem after", filterItem);
+                    // console.log("filterItem after", filterItem);
 
                     return filterItem;
                 });
 
                 formattedFilters[ffIndex]["buckets"] = dataTypeFilters;
 
-                console.log(
-                    "filterItems.formattedFilters after",
-                    formattedFilters[ffIndex]
-                );
+                // console.log(
+                //     "filterItems.formattedFilters after",
+                //     formattedFilters[ffIndex]
+                // );
             }
         }
 
@@ -437,14 +439,18 @@ const FilterPanel = ({
         updatedCheckbox: { [key: string]: boolean },
         filterSection: string
     ) => {
+        // Complete set of all filter values (those that have ever been touched)
         const updates = {
             ...(filterValues[filterSection] || {}),
             ...updatedCheckbox,
         };
-
+        console.log("updates", updates);
+        // Keys of all 'true' values
         const selectedKeys = Object.keys(updates).filter(key => updates[key]);
-
+        console.log("selectedKeys", selectedKeys);
+        // key and value of updated entry
         const [key, value] = Object.entries(updatedCheckbox)[0];
+        console.log("key value", key, value);
         if (key) {
             const status = value ? "filter_applied" : "filter_removed";
             const searchTerm = searchParams?.get("query") || "";
@@ -462,10 +468,74 @@ const FilterPanel = ({
                 ...prevValues,
                 [filterSection]: updates,
             }));
+            console.log("filterValues after update", filterValues);
             setFilterQueryParams(selectedKeys, filterSection);
         } else {
             resetFilterSection(filterSection);
         }
+    };
+
+    const updateNestedCheckboxes = (
+        updatedCheckbox: {
+            [key: string]: { [key: string]: boolean };
+        },
+        filterSection: string
+    ) => {
+        console.log(
+            "updateNestedCheckboxChange updatedCheckbox",
+            updatedCheckbox
+        );
+        console.log("updateNestedCheckboxChange filterSection", filterSection);
+        // console.log("updateNestedCheckbox updatedCheckbox", updatedCheckbox);
+        // const updates = {
+        //     ...(filterValues[filterSection] || {}),
+        //     ...updatedCheckbox,
+        // };
+        // console.log("updates", updates);
+        // const selectedKeys = Object.keys(updates).filter(key => updates[key]);
+        // console.log("selectedKeys", selectedKeys);
+        // const [key, value] = Object.entries(updatedCheckbox)[0];
+        // console.log("key", key, "value", value);
+        // if (key) {
+        //     const status = value ? "filter_applied" : "filter_removed";
+        //     const searchTerm = searchParams?.get("query") || "";
+
+        //     fireGTMEvent({
+        //         event: status,
+        //         filter_name: filterSection,
+        //         filter_value: key,
+        //         search_term: searchTerm,
+        //     });
+        // }
+
+        // if (selectedKeys.length) {
+        //     setFilterValues(prevValues => {
+        //         console.log(
+        //             "setFilterValues prevValues",
+        //             prevValues[filterSection],
+        //             prevValues,
+        //             {
+        //                 ...prevValues,
+        //                 [filterSection]: {
+        //                     ...prevValues[filterSection],
+        //                     ...updates,
+        //                 },
+        //             }
+        //         );
+
+        //         return {
+        //             ...prevValues,
+        //             [filterSection]: {
+        //                 ...prevValues[filterSection],
+        //                 ...updates,
+        //             },
+        //         };
+        //     });
+        //     console.log("filterValues", filterValues);
+        //     setFilterQueryParams(selectedKeys, filterSection);
+        // } else {
+        //     resetFilterSection(filterSection);
+        // }
     };
 
     const getFilterSortOrder = (
@@ -567,11 +637,14 @@ const FilterPanel = ({
                 );
             case FILTER_DATA_TYPE:
                 console.log("renderFilterContent filterItem", filterItem);
-
+                // console.log("filterValues[label]", filterValues[label]);
                 return (
                     <NestedFilterSection
                         handleCheckboxChange={updatedCheckbox =>
                             updateCheckboxes(updatedCheckbox, label)
+                        }
+                        handleNestedCheckboxChange={updatedCheckbox =>
+                            updateNestedCheckboxes(updatedCheckbox, label)
                         }
                         checkboxValues={filterValues[label]}
                         filterSection={label}
