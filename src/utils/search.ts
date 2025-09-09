@@ -90,7 +90,7 @@ const getUrlFromSearchParams = (
     }
 
     Object.keys(filters).forEach((key: string) => {
-        params.set(key, filters[key].join(","));
+        params.set(key, filters[key].join("|"));
     });
 
     params.set("sort", sort);
