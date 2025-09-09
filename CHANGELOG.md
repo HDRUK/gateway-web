@@ -1,3 +1,16 @@
+## [2.20.0](https://github.com/HDRUK/gateway-web/compare/v2.19.0...v2.20.0) (2025-09-09)
+
+### ✨ Features
+
+* **1234:** added traser environment in pipeline (#1305) ([5ceac83](https://github.com/HDRUK/gateway-web/commit/5ceac83a6953857b29051590ca264512e9590e52))
+* **GAT-7262:** Display associated authors on tool search results and landing page (#1312) ([754471d](https://github.com/HDRUK/gateway-web/commit/754471d3d5a32aadb9a1dbf1c42133d8ea9832f0)), closes [GAT-7262](GAT-7262)
+
+### 🐛 Bug Fixes
+
+* **GAT-1234:** Hydration error (#1311) ([92d0585](https://github.com/HDRUK/gateway-web/commit/92d0585dbfdf58813a4173babdb309a2bb8a5697)), closes [GAT-1234](GAT-1234)
+* **GAT-7546:** Tool tip announcement on tabs (#1309) ([b0f34c3](https://github.com/HDRUK/gateway-web/commit/b0f34c3e6ee163d15dcbfdfa5848798fcdc25e60)), closes [GAT-7546](GAT-7546)
+* **GAT-7770:** Change filter split character to | (#1314) ([71b0248](https://github.com/HDRUK/gateway-web/commit/71b0248d56d1514c3524de215e335f06078a7f58)), closes [GAT-7770](GAT-7770)
+
 ## [2.19.0](https://github.com/HDRUK/gateway-web/compare/v2.18.0...v2.19.0) (2025-08-29)
 
 ### ✨ Features
