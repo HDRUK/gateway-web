@@ -55,10 +55,7 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                 </Box>
 
                 <CategoryHeader variant="h3">{t("dataType")}</CategoryHeader>
-                <Typography>
-                    {formatTextDelimiter(datasetType)}{" "}
-                    {datasetSubType && `, ${datasetSubType}`}
-                </Typography>
+                <Typography>{formatTextDelimiter(datasetType)}</Typography>
 
                 <CategoryHeader variant="h3">
                     {t("collectionSource")}
