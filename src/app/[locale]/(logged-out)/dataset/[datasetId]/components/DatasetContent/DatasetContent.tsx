@@ -23,6 +23,7 @@ import { formatTextWithLinks, splitStringList } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import {
     DatasetSection,
+    DatasetType,
     FieldType,
     Observation,
     observationTableColumns,
@@ -89,7 +90,10 @@ const DatasetContent = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
-    const renderDatasetField = (type: FieldType, value: string) => {
+    const renderDatasetField = (
+        type: FieldType,
+        value: string | DatasetType[]
+    ) => {
         switch (type) {
             case FieldType.DATE: {
                 return (
@@ -145,6 +149,10 @@ const DatasetContent = ({
                         ))}
                     </ListContainer>
                 );
+            }
+
+            case FieldType.DATASETTYPE_LIST: {
+                return value.map((item, i) => [i > 0 && ", ", item.name]);
             }
 
             default: {
