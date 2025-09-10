@@ -358,8 +358,9 @@ export async function getCohortAccessRedirect(
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
     const cache: Cache = {
+        // cache: "no-store",
         tags: ["cohort", "cohort-redirect", `cohort-redirect-${userId}`],
-        revalidate: 15 * 60, // 15 minutes
+        revalidate: 1, // 15 * 60, // 15 minutes
     };
 
     return get<CohortRequestAccess>(

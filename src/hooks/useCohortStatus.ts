@@ -16,6 +16,7 @@ export const useCohortStatus = (userId?: number) => {
 
             try {
                 const result = await getCohortStatusAndRedirect(userId);
+                console.log("res", result);
                 setData(result);
             } catch (err) {
                 console.error("Error fetching cohort status:", err);
