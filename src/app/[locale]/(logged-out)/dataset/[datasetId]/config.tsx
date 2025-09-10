@@ -4,7 +4,7 @@ export enum FieldType {
     DATE = "date",
     TAG_LIST = "tag-list",
     LINK_LIST = "link-list",
-    DATASETTYPE_LIST = "datasetype-list",
+    DATASETTYPE_LIST = "dataset-type-list",
 }
 
 export interface DatasetType {
