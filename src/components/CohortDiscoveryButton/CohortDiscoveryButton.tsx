@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Tooltip } from "@mui/material";
+import { CircularProgress, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
@@ -38,6 +38,7 @@ const CohortDiscoveryButton = ({
     const { requestStatus, redirectUrl } = useCohortStatus(user?.id);
 
     const [isClicked, setIsClicked] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const t = useTranslations(TRANSLATION_PATH_CTAOVERRIDE);
 
@@ -52,7 +53,7 @@ const CohortDiscoveryButton = ({
     useEffect(() => {
         if (isClicked) {
             setIsClicked(false);
-
+            setIsLoading(true);
             if (clickedAction) {
                 clickedAction();
             }
@@ -102,7 +103,11 @@ const CohortDiscoveryButton = ({
                     color={color}
                     disabled={disabledOuter || isDisabled}
                     {...restProps}>
-                    {ctaLink?.title}
+                    {isLoading ? (
+                        <CircularProgress size={20} color="inherit" />
+                    ) : (
+                        ctaLink?.title
+                    )}
                 </Button>
             </span>
         </Tooltip>
