@@ -75,9 +75,7 @@ const AccountNav = () => {
                 color: "white",
             }}
             onClick={() =>
-                showDialog(ProvidersDialog, {
-                    isProvidersDialog: true,
-                })
+                showDialog(ProvidersDialog, { isProvidersDialog: true })
             }>
             {t("DesktopNav.labels.signIn")}
         </Button>
