@@ -13,6 +13,7 @@ import {
 } from "@/interfaces/AddResource";
 import { Category } from "@/interfaces/Category";
 import { DataUse } from "@/interfaces/DataUse";
+import { License } from "@/interfaces/License";
 import { ProgrammingLanguage } from "@/interfaces/ProgrammingLanguage";
 import { Publication } from "@/interfaces/Publication";
 import { Tag } from "@/interfaces/Tag";
@@ -84,6 +85,10 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
 
     const { data: tagData } = useGet<Tag[]>(`${apis.tagsV1Url}?per_page=-1`);
 
+    const { data: licenseData } = useGet<License[]>(
+        `${apis.licensesV1URL}?per_page=-1`
+    );
+
     const baseToolsUrl = teamId
         ? `${apis.teamsV2Url}/${teamId}/tools`
         : `${apis.usersV2Url}/${userId}/tools`;
@@ -135,6 +140,16 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         }) as OptionsType[];
     }, [tagData]);
 
+    const licenseOptions = useMemo(() => {
+        if (!licenseData) return [];
+        return licenseData.map(data => {
+            return {
+                value: data.id as ValueType,
+                label: data.label,
+            };
+        }) as OptionsType[];
+    }, [licenseData]);
+
     useEffect(() => {
         if (!existingToolData) {
             return;
@@ -158,13 +173,13 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             type_category:
                 existingToolData?.type_category?.map(item => item.id) || [],
             keywords: existingToolData?.tag?.map(item => item.id) || [],
+            license: existingToolData?.license || "",
         };
         const propertiesToDelete = [
             "programming_languages",
             "mongo_object_id",
             "team_id",
             "collections",
-            "license",
             "status",
             "datasets",
             "user",
@@ -340,6 +355,8 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                             return programmingLanguageOptions;
                         case "keywords":
                             return tagOptions;
+                        case "license":
+                            return licenseOptions;
                         default:
                             return field.options || [];
                     }
@@ -370,6 +387,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             append,
             remove,
             watchAnyDataset,
+            licenseOptions,
             toolCategoryOptions,
             programmingLanguageOptions,
             tagOptions,
