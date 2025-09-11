@@ -10,7 +10,7 @@ const CohortRedirectProvider = () => {
     const { requestStatus } = useCohortStatus(user?.id);
     const router = useRouter();
     const params = useSearchParams();
-    const redirectUrl = params?.get("cohort_redirect_upon_signin");
+    const redirectUrl = params?.get("redirect_cohort_discovery_upon_signin");
 
     useEffect(() => {
         if (user && requestStatus === "APPROVED" && redirectUrl) {
