@@ -109,7 +109,7 @@ const ProfileForm = () => {
     );
 
     const [preferredEmailDisabled, setPreferredEmailDisabled] = useState(false);
-    
+
     const hydratedFormFields = useMemo(
         () =>
             (!isOpenAthens
@@ -129,7 +129,10 @@ const ProfileForm = () => {
                     return {
                         ...field,
                         disabled:
-                            (!isOpenAthens && !secondaryEmail) || isOpenAthens || !secondaryEmailVerified || preferredEmailDisabled,
+                            (!isOpenAthens && !secondaryEmail) ||
+                            isOpenAthens ||
+                            !secondaryEmailVerified ||
+                            preferredEmailDisabled,
                     };
                 }
                 if (field.name === "secondary_email") {
@@ -140,10 +143,16 @@ const ProfileForm = () => {
                 }
                 return field;
             }),
-        [isOpenAthens, sectors, secondaryEmail, user?.secondary_email, preferredEmailDisabled]
+        [
+            isOpenAthens,
+            sectors,
+            secondaryEmail,
+            user?.secondary_email,
+            preferredEmailDisabled,
+        ]
     );
 
-    // Disable 
+    // Disable
     useEffect(() => {
         if (isOpenAthens) {
             setValue("preferred_email", "secondary");
@@ -172,13 +181,15 @@ const ProfileForm = () => {
         reset(hydratedDefaultValues);
     }, [isOpenAthens, hydratedDefaultValues, reset, user]);
 
+    // If the user changes their secondary email it becomes unverified
+    // We don't want them top be able to select it as their preferred notification
     useEffect(() => {
         if (secondaryEmail != user?.secondary_email) {
             setPreferredEmailDisabled(true);
         } else {
             setPreferredEmailDisabled(false);
         }
-    }, [secondaryEmail])
+    }, [secondaryEmail]);
 
     if (isSectorLoading) return <Loading />;
 
