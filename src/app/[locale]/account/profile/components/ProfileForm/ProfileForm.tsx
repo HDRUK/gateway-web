@@ -186,6 +186,7 @@ const ProfileForm = () => {
     useEffect(() => {
         if (secondaryEmail !== user?.secondary_email) {
             setPreferredEmailDisabled(true);
+            setValue("preferred_email", "primary");
         } else {
             setPreferredEmailDisabled(false);
         }
