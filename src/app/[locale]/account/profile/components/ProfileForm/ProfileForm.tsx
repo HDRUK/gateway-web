@@ -184,7 +184,7 @@ const ProfileForm = () => {
     // If the user changes their secondary email it becomes unverified
     // We don't want them top be able to select it as their preferred notification
     useEffect(() => {
-        if (secondaryEmail != user?.secondary_email) {
+        if (secondaryEmail !== user?.secondary_email) {
             setPreferredEmailDisabled(true);
         } else {
             setPreferredEmailDisabled(false);
