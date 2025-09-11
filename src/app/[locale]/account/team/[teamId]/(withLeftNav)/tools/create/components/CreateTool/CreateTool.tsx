@@ -237,6 +237,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             )
                 ? []
                 : formData.dataset,
+            license: formData?.license || null,
         };
 
         if (!toolId) {
