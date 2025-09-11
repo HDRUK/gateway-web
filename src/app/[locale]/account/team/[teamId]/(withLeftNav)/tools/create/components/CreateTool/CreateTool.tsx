@@ -381,8 +381,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
             <BoxContainer
                 sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Box>
-                    <Typography variant="h2">{t("title")}</Typography>
-                    <Typography>{t("intro")}</Typography>
+                    <Typography variant="h2" sx={{ mb: 0 }}>
+                        {t("title")}
+                    </Typography>
                 </Box>
                 <Box>
                     <Chip
@@ -391,6 +392,9 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                     />
                 </Box>
             </BoxContainer>
+            <Box>
+                <Typography>{t("intro")}</Typography>
+            </Box>
             <BoxContainer>
                 <Form>
                     <Paper>
