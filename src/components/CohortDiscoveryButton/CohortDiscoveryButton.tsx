@@ -72,6 +72,7 @@ const CohortDiscoveryButton = ({
                     isProvidersDialog: true,
                     redirectPath: `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
                 });
+                setIsLoading(false);
             }
         }
     }, [redirectUrl, isClicked, isLoggedIn, clickedAction]);
