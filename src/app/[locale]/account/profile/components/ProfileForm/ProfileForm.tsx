@@ -108,6 +108,8 @@ const ProfileForm = () => {
         [triggerSecondaryVerification]
     );
 
+    const [preferredEmailDisabled, setPreferredEmailDisabled] = useState(false);
+    
     const hydratedFormFields = useMemo(
         () =>
             (!isOpenAthens
@@ -127,7 +129,7 @@ const ProfileForm = () => {
                     return {
                         ...field,
                         disabled:
-                            (!isOpenAthens && !secondaryEmail) || isOpenAthens || !secondaryEmailVerified,
+                            (!isOpenAthens && !secondaryEmail) || isOpenAthens || !secondaryEmailVerified || preferredEmailDisabled,
                     };
                 }
                 if (field.name === "secondary_email") {
@@ -138,9 +140,10 @@ const ProfileForm = () => {
                 }
                 return field;
             }),
-        [isOpenAthens, sectors, secondaryEmail, user?.secondary_email]
+        [isOpenAthens, sectors, secondaryEmail, user?.secondary_email, preferredEmailDisabled]
     );
 
+    // Disable 
     useEffect(() => {
         if (isOpenAthens) {
             setValue("preferred_email", "secondary");
@@ -148,7 +151,6 @@ const ProfileForm = () => {
             setValue("preferred_email", "primary");
         }
     }, [isOpenAthens, secondaryEmail, setValue]);
-
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
@@ -169,6 +171,14 @@ const ProfileForm = () => {
         if (!user) return;
         reset(hydratedDefaultValues);
     }, [isOpenAthens, hydratedDefaultValues, reset, user]);
+
+    useEffect(() => {
+        if (secondaryEmail != user?.secondary_email) {
+            setPreferredEmailDisabled(true);
+        } else {
+            setPreferredEmailDisabled(false);
+        }
+    }, [secondaryEmail])
 
     if (isSectorLoading) return <Loading />;
 
