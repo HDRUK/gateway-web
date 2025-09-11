@@ -23,11 +23,17 @@ interface ToolFieldProps {
 }
 
 const ToolField = ({ type, value }: ToolFieldProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
     switch (type) {
         case FieldType.DATE:
             return <Typography>{formatDate(value, DATE_FORMAT)}</Typography>;
         case FieldType.LINK:
-            return <Link href={value}>{value}</Link>;
+            if (value !== t("notAvailable")) {
+                return <Link href={value}>{value}</Link>;
+            } else {
+                return <MarkDownSanitizedWithHtml content={value} />;
+            }
         default:
             return <MarkDownSanitizedWithHtml content={value} />;
     }
