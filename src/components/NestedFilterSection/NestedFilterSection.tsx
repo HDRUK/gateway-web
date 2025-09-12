@@ -91,6 +91,7 @@ const NestedFilterSection = <
         return <Typography>{noFilterLabel || t("noFilters")}</Typography>;
 
 
+    console.log('checkboxes', checkboxes);
     return (
         <>
             <TextField
@@ -157,6 +158,11 @@ const NestedFilterSection = <
                                                                     [label]: {[event.target.name]: value},
                                                                 });
                                                             }}
+                                                            disabled={checkboxValues
+                                                                && ((Object.keys(checkboxValues).length > 1)
+                                                                    || ((Object.keys(checkboxValues).length === 1) && Object.keys(checkboxValues)[0] !== checkbox.label)
+                                                                   )
+                                                                }
                                                         />)
                                                     }) : null}
                                         </Box>
