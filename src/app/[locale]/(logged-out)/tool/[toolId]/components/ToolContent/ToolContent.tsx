@@ -31,9 +31,8 @@ const ToolField = ({ type, value }: ToolFieldProps) => {
         case FieldType.LINK:
             if (value !== t("notAvailable")) {
                 return <Link href={value}>{value}</Link>;
-            } else {
-                return <MarkDownSanitizedWithHtml content={value} />;
             }
+            return <MarkDownSanitizedWithHtml content={value} />;
         default:
             return <MarkDownSanitizedWithHtml content={value} />;
     }
