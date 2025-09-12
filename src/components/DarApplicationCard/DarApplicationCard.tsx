@@ -193,6 +193,13 @@ export default function DarApplicationCard({
           (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
               !approvalStatus);
 
+    const donwloadEnabled =
+        (submissionStatus === DarApplicationStatus.SUBMITTED &&
+            approvalStatus === DarApplicationApprovalStatus.APPROVED) ||
+        approvalStatus === DarApplicationApprovalStatus.REJECTED ||
+        approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
+        approvalStatus === DarApplicationApprovalStatus.WITHDRAWN;
+
     const actions = [
         ...(canEdit
             ? [
@@ -242,7 +249,7 @@ export default function DarApplicationCard({
                   },
               ]
             : []),
-        ...(!isResearcher && canEdit
+        ...(!isResearcher && donwloadEnabled
             ? [
                   {
                       action: (id: number) => {

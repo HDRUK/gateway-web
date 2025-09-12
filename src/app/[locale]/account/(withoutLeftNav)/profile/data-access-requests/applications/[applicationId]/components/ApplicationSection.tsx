@@ -450,6 +450,8 @@ const ApplicationSection = ({
         notFound();
     }
 
+    const downloadHref = `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/download`;
+
     return (
         <BoxContainer
             sx={{
@@ -490,6 +492,8 @@ const ApplicationSection = ({
                         ? handleManageApplication
                         : undefined
                 }
+                downloadButtonEnabled={!isResearcher}
+                downloadButtonUrl={downloadHref}
             />
 
             <Box
