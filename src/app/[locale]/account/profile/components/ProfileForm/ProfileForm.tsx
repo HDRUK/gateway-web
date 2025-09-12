@@ -190,7 +190,7 @@ const ProfileForm = () => {
         } else {
             setPreferredEmailDisabled(false);
         }
-    }, [secondaryEmail]);
+    }, [secondaryEmail, user]);
 
     if (isSectorLoading) return <Loading />;
 
