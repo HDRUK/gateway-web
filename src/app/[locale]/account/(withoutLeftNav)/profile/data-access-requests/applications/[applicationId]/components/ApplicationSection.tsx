@@ -452,6 +452,18 @@ const ApplicationSection = ({
 
     const downloadHref = `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/download`;
 
+    const donwloadEnabled =
+        !isResearcher &&
+        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED &&
+        (teamApplication?.approval_status ===
+            DarApplicationApprovalStatus.APPROVED ||
+            teamApplication?.approval_status ===
+                DarApplicationApprovalStatus.REJECTED ||
+            teamApplication?.approval_status ===
+                DarApplicationApprovalStatus.FEEDBACK ||
+            teamApplication?.approval_status ===
+                DarApplicationApprovalStatus.WITHDRAWN);
+
     return (
         <BoxContainer
             sx={{
@@ -492,7 +504,7 @@ const ApplicationSection = ({
                         ? handleManageApplication
                         : undefined
                 }
-                downloadButtonEnabled={!isResearcher}
+                downloadButtonEnabled={donwloadEnabled}
                 downloadButtonUrl={downloadHref}
             />
 
