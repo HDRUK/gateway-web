@@ -31,7 +31,6 @@ import {
     EyeIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { updateDarApplicationTeam } from "@/utils/api";
 import { formatDate } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.account.team.dataAccessRequests.applications";
