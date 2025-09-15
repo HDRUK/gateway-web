@@ -195,8 +195,7 @@ export default function DarApplicationCard({
               !approvalStatus);
 
     const donwloadEnabled =
-        !isResearcher &&
-        submissionStatus === DarApplicationStatus.SUBMITTED;
+        !isResearcher && submissionStatus === DarApplicationStatus.SUBMITTED;
 
     const actions = [
         ...(canEdit
