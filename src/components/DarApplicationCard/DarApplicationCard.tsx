@@ -31,6 +31,7 @@ import {
     EyeIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { updateDarApplicationTeam } from "@/utils/api";
 import { formatDate } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.account.team.dataAccessRequests.applications";
@@ -195,11 +196,7 @@ export default function DarApplicationCard({
 
     const donwloadEnabled =
         !isResearcher &&
-        submissionStatus === DarApplicationStatus.SUBMITTED &&
-        (approvalStatus === DarApplicationApprovalStatus.APPROVED ||
-            approvalStatus === DarApplicationApprovalStatus.REJECTED ||
-            approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
-            approvalStatus === DarApplicationApprovalStatus.WITHDRAWN);
+        submissionStatus === DarApplicationStatus.SUBMITTED;
 
     const actions = [
         ...(canEdit
