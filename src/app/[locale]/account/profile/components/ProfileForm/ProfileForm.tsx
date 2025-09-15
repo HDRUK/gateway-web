@@ -108,6 +108,8 @@ const ProfileForm = () => {
         [triggerSecondaryVerification]
     );
 
+    const [preferredEmailDisabled, setPreferredEmailDisabled] = useState(false);
+
     const hydratedFormFields = useMemo(
         () =>
             (!isOpenAthens
@@ -127,7 +129,10 @@ const ProfileForm = () => {
                     return {
                         ...field,
                         disabled:
-                            (!isOpenAthens && !secondaryEmail) || isOpenAthens,
+                            (!isOpenAthens && !secondaryEmail) ||
+                            isOpenAthens ||
+                            !secondaryEmailVerified ||
+                            preferredEmailDisabled,
                     };
                 }
                 if (field.name === "secondary_email") {
@@ -138,9 +143,16 @@ const ProfileForm = () => {
                 }
                 return field;
             }),
-        [isOpenAthens, sectors, secondaryEmail, user?.secondary_email]
+        [
+            isOpenAthens,
+            sectors,
+            secondaryEmail,
+            user?.secondary_email,
+            preferredEmailDisabled,
+        ]
     );
 
+    // Disable
     useEffect(() => {
         if (isOpenAthens) {
             setValue("preferred_email", "secondary");
@@ -148,7 +160,6 @@ const ProfileForm = () => {
             setValue("preferred_email", "primary");
         }
     }, [isOpenAthens, secondaryEmail, setValue]);
-
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
@@ -169,6 +180,17 @@ const ProfileForm = () => {
         if (!user) return;
         reset(hydratedDefaultValues);
     }, [isOpenAthens, hydratedDefaultValues, reset, user]);
+
+    // If the user changes their secondary email it becomes unverified
+    // We don't want them top be able to select it as their preferred notification
+    useEffect(() => {
+        if (secondaryEmail !== user?.secondary_email) {
+            setPreferredEmailDisabled(true);
+            setValue("preferred_email", "primary");
+        } else {
+            setPreferredEmailDisabled(false);
+        }
+    }, [secondaryEmail, user]);
 
     if (isSectorLoading) return <Loading />;
 

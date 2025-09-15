@@ -157,7 +157,7 @@ const formFields = [
     },
     {
         label: "License",
-        info: "License info",
+        info: "Select a license from the existing list",
         name: "license",
         component: inputComponents.Autocomplete,
         canCreate: false,
