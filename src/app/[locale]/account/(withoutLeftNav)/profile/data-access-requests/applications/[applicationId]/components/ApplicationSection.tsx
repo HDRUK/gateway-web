@@ -452,7 +452,7 @@ const ApplicationSection = ({
 
     const downloadHref = `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/download`;
 
-    const donwloadEnabled =
+    const downloadEnabled =
         !isResearcher &&
         teamApplication?.submission_status === DarApplicationStatus.SUBMITTED;
 
@@ -496,7 +496,7 @@ const ApplicationSection = ({
                         ? handleManageApplication
                         : undefined
                 }
-                downloadButtonEnabled={donwloadEnabled}
+                downloadButtonEnabled={downloadEnabled}
                 downloadButtonUrl={downloadHref}
             />
 
