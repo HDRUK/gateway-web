@@ -193,6 +193,9 @@ export default function DarApplicationCard({
           (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
               !approvalStatus);
 
+    const downloadEnabled =
+        !isResearcher && submissionStatus === DarApplicationStatus.SUBMITTED;
+
     const actions = [
         ...(canEdit
             ? [
@@ -242,7 +245,7 @@ export default function DarApplicationCard({
                   },
               ]
             : []),
-        ...(!isResearcher && canEdit
+        ...(downloadEnabled
             ? [
                   {
                       action: (id: number) => {

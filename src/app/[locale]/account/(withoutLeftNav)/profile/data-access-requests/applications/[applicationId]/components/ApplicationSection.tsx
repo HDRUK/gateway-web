@@ -450,6 +450,12 @@ const ApplicationSection = ({
         notFound();
     }
 
+    const downloadHref = `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/download`;
+
+    const downloadEnabled =
+        !isResearcher &&
+        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED;
+
     return (
         <BoxContainer
             sx={{
@@ -490,6 +496,8 @@ const ApplicationSection = ({
                         ? handleManageApplication
                         : undefined
                 }
+                downloadButtonEnabled={downloadEnabled}
+                downloadButtonUrl={downloadHref}
             />
 
             <Box
