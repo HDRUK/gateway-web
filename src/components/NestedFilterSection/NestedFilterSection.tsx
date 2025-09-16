@@ -21,6 +21,21 @@ import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/Cle
 import HTMLContent from "../HTMLContent";
 import Box from "@/components/Box";
 
+function anotherParentHasSelectedChildren(checkboxValues: {[key: string]: boolean }, thisParent: string) {
+    if (!checkboxValues) {
+        return false;
+    }
+
+    if (Object.keys(checkboxValues).length === 0) {
+        return false;
+    }
+    // console.log('##here', Object.entries(checkboxValues));
+    // success = Object.entries(checkboxValues).some((item) => {
+    //     return (typeof item === "object" && key !== thisParent);
+    // }).any
+    return false;
+};
+
 interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     control: Control<TFieldValues>;
@@ -31,7 +46,7 @@ interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     counts?: CountType;
     countsDisabled: boolean;
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
-    handleNestedCheckboxChange;
+    // handleNestedCheckboxChange;
     setValue: (
         name: keyof TFieldValues,
         value: UseFormSetValue<TFieldValues>
@@ -51,7 +66,7 @@ const NestedFilterSection = <
     counts = {},
     countsDisabled,
     handleCheckboxChange,
-    handleNestedCheckboxChange,
+    // handleNestedCheckboxChange,
     setValue,
     resetFilterSection,
 }: NestedFilterSectionProps<TFieldValues, TName>) => {
@@ -61,8 +76,8 @@ const NestedFilterSection = <
         name: filterSection,
     });
 
-    console.log("NestedFilterSection filterItem", filterItem);
-    console.log('checkboxValues',checkboxValues);
+    // console.log("NestedFilterSection filterItem", filterItem);
+    // console.log('checkboxValues',checkboxValues);
 
     const checkboxes = useMemo(() => {
         return filterItem.buckets
@@ -91,7 +106,7 @@ const NestedFilterSection = <
         return <Typography>{noFilterLabel || t("noFilters")}</Typography>;
 
 
-    console.log('checkboxes', checkboxes);
+    // console.log('checkboxes', checkboxes);
     return (
         <>
             <TextField
@@ -108,11 +123,11 @@ const NestedFilterSection = <
                 {checkboxes.map(checkbox => {
                     const { label, ...formattedRow } = cloneDeep(checkbox);
                     if (checkbox["subBuckets"]?.length > 1) {
-                        if (label === 'Health and disease') {
-                            console.log("nested - render subfilter for ", label);
-                            console.log('checkboxValues',checkboxValues);
-                            console.log('checkbox', checkbox);
-                        }
+                        // if (label === 'Health and disease') {
+                        //     console.log("nested - render subfilter for ", label);
+                        //     console.log('checkboxValues',checkboxValues);
+                        //     console.log('checkbox', checkbox);
+                        // }
                         return (
                             <div> {/* key={key} style={style}> */}
                                 <Accordion
@@ -130,7 +145,7 @@ const NestedFilterSection = <
                                             }
                                             name={checkbox.label}
                                             onChange={(event, value) => {
-                                                console.log('update', value, event);
+                                                // console.log('update', event.target.name, value);
                                                 return handleCheckboxChange({
                                                     [event.target.name]: value,
                                                 })
@@ -138,6 +153,9 @@ const NestedFilterSection = <
                                             }
                                             checkboxSx={{ p: 0.5 }}
                                             stopPropagation
+                                            disabled={checkboxValues &&
+                                                ((Object.keys(checkboxValues).length > 0) && anotherParentHasSelectedChildren(checkboxValues, checkbox.label))
+                                            }
                                         />
                                     }
                                     contents={
@@ -152,9 +170,9 @@ const NestedFilterSection = <
                                                             name={item.label}
                                                             onChange={(event, value) =>
                                                             {
-                                                                console.log('nested update', event, value, label, item.label, item.value);
+                                                                // console.log('nested update', event, value, label, item.label, item.value);
                                                             
-                                                                return handleNestedCheckboxChange({
+                                                                return handleCheckboxChange({
                                                                     [label]: {[event.target.name]: value},
                                                                 });
                                                             }}

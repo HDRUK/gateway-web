@@ -828,20 +828,43 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                 filterSourceData={filters}
                 setFilterQueryParams={(
                     filterValues: string[],
-                    filterName: string
+                    filterName: string,
+                    secondFilterValues?: string[],
+                    secondFilterName?: string
                 ) => {
                     // url requires string format, ie "one, two, three"
                     updatePathMultiple({
                         [filterName]: filterValues.join("|"),
                         [PAGE_FIELD]: "1",
+                        [secondFilterName]: secondFilterValues.join("|"),
                     });
 
                     // api requires string[] format, ie ["one", "two", "three"]
+                    // console.log("filterPanel", {
+                    //     ...queryParams,
+                    //     [PAGE_FIELD]: "1",
+                    //     [filterName]: filterValues,
+                    //     [secondFilterName]: secondFilterValues,
+                    // });
                     setQueryParams({
                         ...queryParams,
                         [PAGE_FIELD]: "1",
                         [filterName]: filterValues,
+                        [secondFilterName]: secondFilterValues,
                     });
+
+                    // secondFilterName &&
+                    //     setQueryParams({
+                    //         ...queryParams,
+                    //         [PAGE_FIELD]: "1",
+                    //     });
+
+                    // console.log(
+                    //     "queryParams",
+                    //     queryParams,
+                    //     filterName,
+                    //     filterValues
+                    // );
                 }}
                 aggregations={data?.aggregations}
                 updateStaticFilter={(filterName: string, value: string) => {

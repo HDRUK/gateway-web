@@ -179,7 +179,9 @@ const FilterPanel = ({
     filterSourceData: Filter[];
     setFilterQueryParams: (
         filterValues: string[],
-        filterSection: string
+        filterSection: string,
+        secondFilterValues?: string[],
+        secondFilterSections?: string
     ) => void;
     aggregations?: Aggregations;
     updateStaticFilter: (filterSection: string, value: string) => void;
@@ -444,13 +446,13 @@ const FilterPanel = ({
             ...(filterValues[filterSection] || {}),
             ...updatedCheckbox,
         };
-        console.log("updates", updates);
+        // console.log("updates", updates);
         // Keys of all 'true' values
         const selectedKeys = Object.keys(updates).filter(key => updates[key]);
-        console.log("selectedKeys", selectedKeys);
+        // console.log("selectedKeys", selectedKeys);
         // key and value of updated entry
         const [key, value] = Object.entries(updatedCheckbox)[0];
-        console.log("key value", key, value);
+        // console.log("key value", key, value);
         if (key) {
             const status = value ? "filter_applied" : "filter_removed";
             const searchTerm = searchParams?.get("query") || "";
@@ -468,7 +470,7 @@ const FilterPanel = ({
                 ...prevValues,
                 [filterSection]: updates,
             }));
-            console.log("filterValues after update", filterValues);
+            // console.log("filterValues after update", filterValues);
             setFilterQueryParams(selectedKeys, filterSection);
         } else {
             resetFilterSection(filterSection);
@@ -477,65 +479,133 @@ const FilterPanel = ({
 
     const updateNestedCheckboxes = (
         updatedCheckbox: {
-            [key: string]: { [key: string]: boolean };
+            [key: string]: { [key: string]: boolean } | boolean;
         },
-        filterSection: string
+        filterSection: string,
+        subfilterSection: string
     ) => {
         console.log(
-            "updateNestedCheckboxChange updatedCheckbox",
-            updatedCheckbox
+            "updateNestedCheckbox filterValues[filterSection]",
+            filterValues[filterSection]
         );
-        console.log("updateNestedCheckboxChange filterSection", filterSection);
+        console.log(
+            "updateNestedCheckbox filterValues[subfilterSection]",
+            filterValues[subfilterSection]
+        );
+        // console.log("updateNestedCheckbox filterSection", filterSection);
+        // console.log("updateNestedCheckbox subfilterSection", subfilterSection);
+
+        console.log("updateNestedCheckbox updatedCheckbox", updatedCheckbox);
+
+        // 1. split into parent and child lists to hand to the query builder and filterValues
+        // 2. also
+
         // console.log("updateNestedCheckbox updatedCheckbox", updatedCheckbox);
-        // const updates = {
-        //     ...(filterValues[filterSection] || {}),
-        //     ...updatedCheckbox,
-        // };
-        // console.log("updates", updates);
-        // const selectedKeys = Object.keys(updates).filter(key => updates[key]);
-        // console.log("selectedKeys", selectedKeys);
-        // const [key, value] = Object.entries(updatedCheckbox)[0];
-        // console.log("key", key, "value", value);
-        // if (key) {
-        //     const status = value ? "filter_applied" : "filter_removed";
-        //     const searchTerm = searchParams?.get("query") || "";
+        const updates = {
+            ...(filterValues[filterSection] || {}),
+            ...updatedCheckbox,
+        };
+        console.log("updateNestedCheckbox updates", updates);
 
-        //     fireGTMEvent({
-        //         event: status,
-        //         filter_name: filterSection,
-        //         filter_value: key,
-        //         search_term: searchTerm,
-        //     });
-        // }
+        const subContent = updatedCheckbox[Object.keys(updatedCheckbox)[0]];
+        // console.log(filterValues[subfilterSection] || {});
+        console.log(
+            "updateNestedCheckbox updatedCheckbox subContent",
+            subContent
+        );
+        const subUpdates = {
+            // "Cognitive function": true };
+            ...(filterValues[subfilterSection] || {}),
+            // (typeof updatedCheckbox[Object.keys(updatedCheckbox)[0]]) === "boolean" ? {} : ...updatedCheckbox[Object.keys(updatedCheckbox)[0]],
+            ...(typeof subContent === "object" ? subContent : {}),
+        };
+        console.log("updateNestedCheckbox subUpdates", subUpdates);
 
-        // if (selectedKeys.length) {
-        //     setFilterValues(prevValues => {
-        //         console.log(
-        //             "setFilterValues prevValues",
-        //             prevValues[filterSection],
-        //             prevValues,
-        //             {
-        //                 ...prevValues,
-        //                 [filterSection]: {
-        //                     ...prevValues[filterSection],
-        //                     ...updates,
-        //                 },
-        //             }
-        //         );
+        const selectedKeys = Object.keys(updates).filter(key => updates[key]);
 
-        //         return {
-        //             ...prevValues,
-        //             [filterSection]: {
-        //                 ...prevValues[filterSection],
-        //                 ...updates,
-        //             },
-        //         };
-        //     });
-        //     console.log("filterValues", filterValues);
-        //     setFilterQueryParams(selectedKeys, filterSection);
-        // } else {
-        //     resetFilterSection(filterSection);
-        // }
+        console.log("updateNestedCheckbox selectedKeys", selectedKeys);
+        const selectedSubKeys = Object.keys(subUpdates).filter(
+            key => subUpdates[key]
+        );
+
+        console.log("updateNestedCheckbox selectedSubKeys", selectedSubKeys);
+        const [key, value] = Object.entries(updatedCheckbox)[0];
+        console.log("updateNestedCheckbox key", key, "value", value);
+        if (key) {
+            console.log(typeof value);
+            if (typeof value === "boolean") {
+                const status = value ? "filter_applied" : "filter_removed";
+                const searchTerm = searchParams?.get("query") || "";
+
+                fireGTMEvent({
+                    event: status,
+                    filter_name: filterSection,
+                    filter_value: key,
+                    search_term: searchTerm,
+                });
+            } else {
+                // console.log("updateNestedCheckbox value", value);
+                const [subKey, subValue] = Object.entries(value)[0];
+                const status = subValue ? "filter_applied" : "filter_removed";
+                const searchTerm = searchParams?.get("query") || "";
+
+                fireGTMEvent({
+                    event: status,
+                    filter_name: subfilterSection,
+                    filter_value: subKey,
+                    search_term: searchTerm,
+                });
+
+                // console.log("updateNestedCheckbox dict", {
+                //     event: status,
+                //     filter_name: subfilterSection,
+                //     filter_value: subKey,
+                //     search_term: searchTerm,
+                // });
+            }
+        }
+
+        if (selectedKeys.length) {
+            setFilterValues(prevValues => {
+                // console.log(
+                //     "setFilterValues prevValues",
+                //     prevValues[filterSection],
+                //     prevValues,
+                //     {
+                //         ...prevValues,
+                //         [filterSection]: {
+                //             ...prevValues[filterSection],
+                //             ...updates,
+                //         },
+                //     }
+                // );
+                console.log(
+                    "updateNestedCheckbox prevValues[subfilterSection]",
+                    prevValues[subfilterSection]
+                );
+                return {
+                    ...prevValues,
+                    [filterSection]: {
+                        ...prevValues[filterSection],
+                        ...updates,
+                    },
+                    [subfilterSection]: {
+                        ...prevValues[subfilterSection],
+                        ...subUpdates,
+                    },
+                };
+            });
+            // console.log("filterValues", filterValues);
+            setFilterQueryParams(
+                selectedKeys,
+                filterSection,
+                selectedSubKeys,
+                subfilterSection
+            );
+            // setFilterQueryParams(selectedSubKeys, subfilterSection);
+        } else {
+            resetFilterSection(filterSection);
+        }
     };
 
     const getFilterSortOrder = (
@@ -636,16 +706,24 @@ const FilterPanel = ({
                     />
                 );
             case FILTER_DATA_TYPE:
-                console.log("renderFilterContent filterItem", filterItem);
+                // console.log("renderFilterContent filterItem", filterItem);
                 // console.log("filterValues[label]", filterValues[label]);
                 return (
                     <NestedFilterSection
                         handleCheckboxChange={updatedCheckbox =>
-                            updateCheckboxes(updatedCheckbox, label)
+                            updateNestedCheckboxes(
+                                updatedCheckbox,
+                                FILTER_DATA_TYPE,
+                                FILTER_DATA_SUBTYPE
+                            )
                         }
-                        handleNestedCheckboxChange={updatedCheckbox =>
-                            updateNestedCheckboxes(updatedCheckbox, label)
-                        }
+                        // handleNestedCheckboxChange={updatedCheckbox =>
+                        //     updateNestedCheckboxes(
+                        //         updatedCheckbox,
+                        //         label,
+                        //         "subdataType"
+                        //     )
+                        // }
                         checkboxValues={filterValues[label]}
                         filterSection={label}
                         setValue={setValue}
