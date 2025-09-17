@@ -1,8 +1,6 @@
-import CMSPromoTemplate from "@/components/CMSPromoTemplate";
-import Container from "@/components/Container";
-import { getCohortDiscovery } from "@/utils/cms";
+import CohortDiscoveryInfo from "@/components/CohortDiscoveryInfo";
+import { getNewCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
-import CtaOverride from "./components/CtaOverride";
 
 export const metadata = metaData({
     title: "Cohort Discovery - About",
@@ -10,22 +8,12 @@ export const metadata = metaData({
 });
 
 export default async function CohortDiscoveryPage() {
-    const cohortDiscovery = await getCohortDiscovery();
+    const cohortDiscovery = await getNewCohortDiscovery();
 
     return (
-        <Container>
-            <CMSPromoTemplate
-                content={cohortDiscovery}
-                ctaOverrideComponent={
-                    cohortDiscovery.template.promofields?.ctaLink && (
-                        <CtaOverride
-                            ctaLink={
-                                cohortDiscovery.template.promofields.ctaLink
-                            }
-                        />
-                    )
-                }
-            />
-        </Container>
+        <CohortDiscoveryInfo
+            cohortDiscovery={cohortDiscovery}
+            showAccessButton
+        />
     );
 }

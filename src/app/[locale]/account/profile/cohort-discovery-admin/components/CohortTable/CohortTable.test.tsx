@@ -8,11 +8,11 @@ import CohortTable from "./CohortTable";
 const requests = [
     generateCohortRequestV1({
         request_status: "APPROVED",
-        nhse_sde_request_status: "IN_PROCESS",
+        nhse_sde_request_status: "IN PROCESS",
     }),
     generateCohortRequestV1({
         request_status: "REJECTED",
-        nhse_sde_request_status: "APPROVAL_REQUESTED",
+        nhse_sde_request_status: "APPROVAL REQUESTED",
     }),
     generateCohortRequestV1({
         request_status: "PENDING",
@@ -42,9 +42,9 @@ describe("Cohort Table", () => {
         });
         expect(screen.getByText("Name")).toBeInTheDocument();
         expect(screen.getByText("Organisation")).toBeInTheDocument();
-        expect(screen.getByText("Status")).toBeInTheDocument();
-        expect(screen.getByText("Date requested")).toBeInTheDocument();
-        expect(screen.getByText("Date Actioned")).toBeInTheDocument();
+        expect(screen.getByText("Cohort Status")).toBeInTheDocument();
+        expect(screen.getByText("Cohort Date Requested")).toBeInTheDocument();
+        expect(screen.getByText("Cohort Date Actioned")).toBeInTheDocument();
     });
     it("should render row content", async () => {
         server.use(getCohortRequestsV1(requests));

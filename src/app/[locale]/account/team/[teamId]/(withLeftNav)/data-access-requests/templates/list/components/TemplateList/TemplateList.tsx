@@ -97,15 +97,12 @@ const TemplateList = ({
                                                 ),
                                             })}
                                         </Typography>
-                                        {template.template_type ===
-                                            "DOCUMENT" && (
-                                            <Chip
-                                                label={tCommon(
-                                                    `dar.template.${template.template_type}`
-                                                )}
-                                                sx={{ ml: 2 }}
-                                            />
-                                        )}
+                                        <Chip
+                                            label={tCommon(
+                                                `dar.template.${template.template_type}`
+                                            )}
+                                            sx={{ ml: 2 }}
+                                        />
                                     </Box>
                                     <KeyValueList
                                         rows={[

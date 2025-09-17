@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useMemo } from "react";
+import DownloadIcon from "@mui/icons-material/Download";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
@@ -16,6 +17,7 @@ import Typography from "@/components/Typography";
 import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { DarEditIcon } from "@/consts/customIcons";
 import {
@@ -180,6 +182,9 @@ export default function DarApplicationCard({
                   teamId || application.teams[teamIndex || 0].team_id
               }`;
 
+    const downloadHref = (id: number) =>
+        `${apis.teamsV1Url}/${teamId}/dar/applications/${id}/download`;
+
     const canEdit = isResearcher
         ? submissionStatus === DarApplicationStatus.DRAFT ||
           (submissionStatus === DarApplicationStatus.SUBMITTED &&
@@ -187,6 +192,9 @@ export default function DarApplicationCard({
         : submissionStatus === DarApplicationStatus.SUBMITTED &&
           (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
               !approvalStatus);
+
+    const downloadEnabled =
+        !isResearcher && submissionStatus === DarApplicationStatus.SUBMITTED;
 
     const actions = [
         ...(canEdit
@@ -234,6 +242,17 @@ export default function DarApplicationCard({
                           }),
                       icon: WithdrawIcon,
                       label: t("withdrawApplication"),
+                  },
+              ]
+            : []),
+        ...(downloadEnabled
+            ? [
+                  {
+                      action: (id: number) => {
+                          push(downloadHref(id));
+                      },
+                      icon: DownloadIcon,
+                      label: t("downloadApplication"),
                   },
               ]
             : []),

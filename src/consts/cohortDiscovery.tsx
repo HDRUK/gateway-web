@@ -8,8 +8,8 @@ const statusMapping = {
 };
 
 const NHSSDEStatusMapping = {
-    IN_PROCESS: "yellowCustom",
-    APPROVAL_REQUESTED: "primary",
+    "IN PROCESS": "yellowCustom",
+    "APPROVAL REQUESTED": "primary",
     APPROVED: "secondary",
     REJECTED: "warning",
     BANNED: "error",

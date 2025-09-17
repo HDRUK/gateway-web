@@ -8,7 +8,6 @@ const defaultValues = {
     organisation: "",
     number: "",
     query: "",
-    from: [],
 };
 
 const validationSchema = yup
@@ -20,6 +19,9 @@ const validationSchema = yup
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
         project_title: yup.string().required().min(2).label("Project title"),
+        organisation: yup
+            .string()
+            .required("Applicant organisation is a required field"),
         research_aim: yup
             .string()
             .required()
@@ -28,6 +30,7 @@ const validationSchema = yup
         other_datasets: yup.string().required("Please select an option"),
         dataset_parts_known: yup.string().required("Please select an option"),
         funding: yup.string().required().max(1500).label("Funding"),
+        from: yup.string().required("Please select an option"),
         potential_research_benefit: yup
             .string()
             .required()

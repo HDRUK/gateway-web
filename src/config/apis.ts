@@ -48,6 +48,8 @@ const apis = {
     dataUseExportV1Url: `${apiV1Url}/dur/export`,
     dataCustodianNetworkV1Url: `${apiV1Url}/data_provider_colls`,
     dataCustodianNetworkV1UrlIP: `${apiV1IPUrl}/data_provider_colls`,
+    dataCustodianNetworkV2Url: `${apiV2IPUrl}/data_custodian_networks`,
+    dataCustodianNetworkV2UrlIP: `${apiV2IPUrl}/data_custodian_networks`,
     publicationsV1Url: `${apiV1Url}/publications`,
     publicationsV1UrlIP: `${apiV1IPUrl}/publications`,
     toolsV1Url: `${apiV1Url}/tools`,
@@ -85,6 +87,7 @@ const apis = {
     enquiryThreadsV1Url: `${apiV1Url}/enquiry_threads`,
     doiSearchV1Url: `${apiV1Url}/search/doi`,
     aliasesV1Url: `${apiV1Url}/aliases`,
+    licensesV1URL: `${apiV1Url}/licenses`,
 };
 
 export default apis;

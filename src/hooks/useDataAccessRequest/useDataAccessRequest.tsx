@@ -24,6 +24,7 @@ interface ShowDARApplicationModalProps {
     onGeneralEnquiryClick(event: React.MouseEvent<HTMLButtonElement>): void;
     onFeasibilityEnquiryClick(event: React.MouseEvent<HTMLButtonElement>): void;
     isDarEnabled: boolean;
+    hasPublishedDarTemplate: boolean;
     url: string;
     modalHeader: string | null;
     modalContent: string | null;
@@ -90,6 +91,7 @@ const useDataAccessRequest = () => {
             onGeneralEnquiryClick,
             onFeasibilityEnquiryClick,
             isDarEnabled,
+            hasPublishedDarTemplate,
             modalHeader,
             modalContent,
             url,
@@ -102,6 +104,7 @@ const useDataAccessRequest = () => {
                     onGeneralEnquiryClick,
                     onFeasibilityEnquiryClick,
                     isDarEnabled,
+                    hasPublishedDarTemplate,
                     modalHeader,
                     modalContent,
                     url,
@@ -115,7 +118,7 @@ const useDataAccessRequest = () => {
                 });
             }
 
-            if (isDarEnabled && !modalContent) {
+            if (isDarEnabled && !modalContent && hasPublishedDarTemplate) {
                 return createDARApplication({
                     datasetIds,
                     teamIds,
@@ -127,6 +130,7 @@ const useDataAccessRequest = () => {
                 onGeneralEnquiryClick,
                 onFeasibilityEnquiryClick,
                 isDarEnabled,
+                hasPublishedDarTemplate,
                 modalHeader,
                 modalContent,
                 url,

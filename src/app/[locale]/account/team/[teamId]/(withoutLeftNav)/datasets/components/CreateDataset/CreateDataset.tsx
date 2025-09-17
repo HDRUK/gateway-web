@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import {
+    useForm,
+    FormProvider,
+    useFieldArray,
+    FieldValues,
+} from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
@@ -22,6 +27,7 @@ import {
 } from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
 import { Team } from "@/interfaces/Team";
+import { Defs } from "@/interfaces/V4Schema";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -86,12 +92,13 @@ interface CreateDatasetProps {
     teamId: number;
     user: AuthUser;
     defaultTeamId: number;
+    schemadefs: Defs;
 }
 
 type FormValues = Record<string, unknown>;
 
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "3.0.0";
+const SCHEMA_NAME = "HDRUK";
+const SCHEMA_VERSION = "4.0.0";
 
 const getMetadata = (isDraft: boolean) =>
     isDraft
@@ -105,6 +112,7 @@ const CreateDataset = ({
     teamId,
     user,
     defaultTeamId,
+    schemadefs,
 }: CreateDatasetProps) => {
     const [formJSONDynamic, setFormJSONDynamic] = useState<
         FormHydrationSchema | undefined
@@ -123,7 +131,20 @@ const CreateDataset = ({
     );
 
     const currentFormJSON = useMemo(() => {
-        return formJSONDynamic || formJSON;
+        const base = formJSONDynamic || formJSON;
+        // here be dragons
+        // the validation rule around urls is strict.
+        // as it should be, the below question is not a user visible question, one the api populates behind the scenes..
+        // localhost:3000 is not a valid url so we fail validation silently locally so we can't create datasets..
+        // also if some past data contains a // like produrl//datasets/ it fails validation and the user can do nothing..
+        // as this value is defaulted behind the scenes and the user has no control over it, remove the validation from the frontend.
+
+        return {
+            ...base,
+            validation:
+                base.validation?.filter(obj => obj.title !== "revision url") ||
+                [],
+        };
     }, [formJSON, formJSONDynamic]);
 
     const teamOptions = useMemo(() => {
@@ -207,7 +228,7 @@ const CreateDataset = ({
         identifier: defaultTeamId,
         "Metadata Issued Datetime": today,
         "Last Modified Datetime": today,
-        "Name of data provider": "--",
+        "Name of Data Custodian": "--",
         "Dataset population size": -1,
         "Follow-up": null,
         "contact point":
@@ -300,6 +321,12 @@ const CreateDataset = ({
 
     const yupSchema = buildYup(generatedYupValidation);
 
+    const methods = useForm<FormValues>({
+        mode: "onTouched",
+        resolver: yupResolver(yupSchema),
+        defaultValues: defaultFormValues,
+    });
+
     const {
         control,
         handleSubmit,
@@ -310,14 +337,49 @@ const CreateDataset = ({
         setValue,
         reset,
         formState,
-    } = useForm({
-        mode: "onTouched",
-        resolver: yupResolver(yupSchema),
-        defaultValues: defaultFormValues,
-    });
+    } = methods;
 
     const watchId = watch(DATA_CUSTODIAN_ID);
     const watchType = watch(DATASET_TYPE);
+
+    const {
+        fields: watchDataTypeArray,
+        append: datasetAppend,
+        remove: datasetRemove,
+    } = useFieldArray({
+        control,
+        name: "Dataset Type Array",
+    });
+    useEffect(() => {
+        if (!watchType || !Array.isArray(watchType) || watchType?.length <= 0)
+            return;
+
+        const parentField = schemaFields.find(
+            field => field.title === "Dataset Type Array"
+        );
+
+        const existingTypes = watchDataTypeArray.map(
+            item => item["Dataset type"]
+        );
+
+        watchType.forEach(type => {
+            if (!existingTypes.includes(type)) {
+                const defaultValues = parentField?.fields?.reduce(acc => {
+                    acc["Dataset type"] = type;
+                    acc["Dataset subtypes"] = undefined;
+                    return acc;
+                }, {} as FieldValues);
+
+                datasetAppend(defaultValues);
+            }
+        });
+
+        watchDataTypeArray.forEach((item, index) => {
+            if (!watchType.includes(item["Dataset type"])) {
+                datasetRemove(index);
+            }
+        });
+    }, [watchType, watchDataTypeArray]);
 
     const patientPathway = watch(PATIENT_PATHWAY_DESCRIPTION);
     useEffect(() => {
@@ -371,6 +433,16 @@ const CreateDataset = ({
                 formJSONUpdated.defaultValues["Organisation Logo"] =
                     encodeURI(orgImage);
             }
+            formJSONUpdated.defaultValues = {
+                ...formJSONUpdated.defaultValues,
+                // the formhydration default values come from a gwd 2.0 dm
+                // The subtypes are more than likely not correct, but we know there
+                // correct from the original call as its gone through traser
+                // so do the old switcharoo
+                "Dataset type": formJSON.defaultValues["Dataset type"],
+                "Dataset Type Array":
+                    formJSON.defaultValues["Dataset Type Array"],
+            };
             setFormJSONDynamic(formJSONUpdated);
             updateDataCustodian(formJSONUpdated);
         } else {
@@ -385,7 +457,16 @@ const CreateDataset = ({
         }
 
         if (existingFormData) {
-            reset({ ...defaultFormValues, ...existingFormData });
+            const dataSetTypes = defaultFormValues["Dataset type"] ?? [];
+            const dataSetTypeArray =
+                defaultFormValues["Dataset Type Array"] ?? [];
+            // if you ask me about this i will run away from you.
+            reset({
+                ...defaultFormValues,
+                ...existingFormData,
+                "Dataset type": dataSetTypes,
+                "Dataset Type Array": dataSetTypeArray,
+            });
             setFinishedLoadingExisting(true);
         }
     }, [existingFormData, isEditing]);
@@ -571,6 +652,8 @@ const CreateDataset = ({
                         "0"
                     );
             }
+            delete formPayload.metadata.metadata.datasetType;
+            delete formPayload.metadata.metadata.datasetSubType;
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
@@ -775,87 +858,100 @@ const CreateDataset = ({
                 currentSectionIndex > 0 ? (
                     <>
                         <Box sx={{ flex: 2, p: 0 }}>
-                            <Form>
-                                <Paper
-                                    sx={{
-                                        marginTop: "10px",
-                                        marginBottom: "10px",
-                                        padding: 2,
-                                    }}>
-                                    <Typography variant="h2">
-                                        {capitalise(
-                                            splitCamelcase(selectedFormSection)
+                            <FormProvider {...methods}>
+                                <Form>
+                                    <Paper
+                                        sx={{
+                                            marginTop: "10px",
+                                            marginBottom: "10px",
+                                            padding: 2,
+                                        }}>
+                                        <Typography variant="h2">
+                                            {capitalise(
+                                                splitCamelcase(
+                                                    selectedFormSection
+                                                )
+                                            )}
+                                        </Typography>
+
+                                        {isStructuralMetadataSection && (
+                                            <StructuralMetadataSection
+                                                structuralMetadata={
+                                                    structuralMetadata
+                                                }
+                                                fileProcessedAction={(
+                                                    metadata: StructuralMetadata[]
+                                                ) => {
+                                                    notificationService.apiSuccess(
+                                                        t("uploadSuccess")
+                                                    );
+                                                    setStructuralMetadata(
+                                                        metadata
+                                                    );
+                                                }}
+                                                handleToggleUploading={
+                                                    setIsSaving
+                                                }
+                                            />
                                         )}
-                                    </Typography>
 
-                                    {isStructuralMetadataSection && (
-                                        <StructuralMetadataSection
-                                            structuralMetadata={
-                                                structuralMetadata
-                                            }
-                                            fileProcessedAction={(
-                                                metadata: StructuralMetadata[]
-                                            ) => {
-                                                notificationService.apiSuccess(
-                                                    t("uploadSuccess")
-                                                );
-                                                setStructuralMetadata(metadata);
-                                            }}
-                                            handleToggleUploading={setIsSaving}
-                                        />
-                                    )}
-
-                                    {currentSectionIndex > 0 && (
-                                        <Box sx={{ p: 0 }}>
-                                            {selectedFormSection &&
-                                                schemaFields
-                                                    .filter(
-                                                        schemaField =>
-                                                            !schemaField.field
-                                                                ?.hidden
-                                                    )
-                                                    .filter(({ location }) =>
-                                                        location?.startsWith(
-                                                            selectedFormSection
+                                        {currentSectionIndex > 0 && (
+                                            <Box sx={{ p: 0 }}>
+                                                {selectedFormSection &&
+                                                    schemaFields
+                                                        .filter(
+                                                            schemaField =>
+                                                                !schemaField
+                                                                    .field
+                                                                    ?.hidden
                                                         )
-                                                    )
-                                                    .map(fieldParent => {
-                                                        const {
-                                                            field,
-                                                            fields,
-                                                        } = fieldParent;
-
-                                                        return fields?.length ? (
-                                                            <FormFieldArray
-                                                                control={
-                                                                    control
-                                                                }
-                                                                formArrayValues={
-                                                                    getValues(
-                                                                        fieldParent.title
-                                                                    ) as unknown as FormValues[]
-                                                                }
-                                                                fieldParent={
-                                                                    fieldParent
-                                                                }
-                                                                setSelectedField={
-                                                                    updateGuidanceText
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            field &&
-                                                                renderFormHydrationField(
-                                                                    field,
-                                                                    control,
-                                                                    undefined,
-                                                                    updateGuidanceText
+                                                        .filter(
+                                                            ({ location }) =>
+                                                                location?.startsWith(
+                                                                    selectedFormSection
                                                                 )
-                                                        );
-                                                    })}
-                                        </Box>
-                                    )}
-                                </Paper>
-                            </Form>
+                                                        )
+                                                        .map(fieldParent => {
+                                                            const {
+                                                                field,
+                                                                fields,
+                                                            } = fieldParent;
+
+                                                            return fields?.length ? (
+                                                                <FormFieldArray
+                                                                    schemadefs={
+                                                                        schemadefs
+                                                                    }
+                                                                    control={
+                                                                        control
+                                                                    }
+                                                                    formArrayValues={
+                                                                        getValues(
+                                                                            fieldParent.title
+                                                                        ) as unknown as FormValues[]
+                                                                    }
+                                                                    fieldParent={
+                                                                        fieldParent
+                                                                    }
+                                                                    setSelectedField={
+                                                                        updateGuidanceText
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                field &&
+                                                                    renderFormHydrationField(
+                                                                        field,
+                                                                        control,
+                                                                        undefined,
+                                                                        updateGuidanceText
+                                                                    )
+                                                            );
+                                                        })}
+                                            </Box>
+                                        )}
+                                    </Paper>
+                                </Form>
+                            </FormProvider>
                         </Box>
                         {currentSectionIndex > 0 && (
                             <Paper

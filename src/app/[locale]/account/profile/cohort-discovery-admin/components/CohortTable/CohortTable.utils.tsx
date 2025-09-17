@@ -213,7 +213,7 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    Status
+                    Cohort Status
                     <FilterPopover
                         name="request_status"
                         radios={statusRadios}
@@ -222,14 +222,41 @@ const getColumns = ({
                     />
                 </Box>
             ),
-            cell: ({ row: { original } }) => (
-                <div style={{ textAlign: "center" }}>
-                    <Chip
-                        size="small"
-                        label={capitalise(original.request_status)}
-                        color={statusMapping[original.request_status]}
+            cell: ({ row: { original } }) =>
+                original.request_status && (
+                    <div style={{ textAlign: "center" }}>
+                        <Chip
+                            size="small"
+                            label={capitalise(original.request_status || "")}
+                            color={statusMapping[original.request_status]}
+                        />
+                    </div>
+                ),
+        },
+        {
+            id: "accessToEnv",
+            header: () => (
+                <Box
+                    sx={{
+                        p: 0,
+                        justifyContent: "space-between",
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                    textAlign="left">
+                    Access to Environment
+                    <SortIcon
+                        setSort={setSort}
+                        sort={sort}
+                        sortKey="access_to_env"
+                        ariaLabel="Access to environment"
                     />
-                </div>
+                </Box>
+            ),
+            cell: ({ row: { original } }) => (
+                <Typography color="GrayText">
+                    {original.access_to_env}
+                </Typography>
             ),
         },
         {
@@ -243,7 +270,7 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    Date requested
+                    Cohort Date Requested
                     <SortIcon
                         setSort={setSort}
                         sort={sort}
@@ -267,7 +294,7 @@ const getColumns = ({
                     }}
                     textAlign="left">
                     <TooltipIcon
-                        label="Date Actioned"
+                        label="Cohort Date Actioned"
                         content={translations.dateActionedTooltip}
                     />{" "}
                     <SortIcon

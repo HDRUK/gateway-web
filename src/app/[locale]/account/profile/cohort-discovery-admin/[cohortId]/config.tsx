@@ -9,8 +9,8 @@ const cohortStatusOptions = [
 ];
 
 const nhseSdeCohortStatusOptions = [
-    { label: "In Process", value: "IN_PROCESS" }, // This means that the user has clicked on the SDE link
-    { label: "Approval Requested", value: "APPROVAL_REQUESTED" },
+    { label: "In Process", value: "IN PROCESS" }, // This means that the user has clicked on the SDE link
+    { label: "Approval Requested", value: "APPROVAL REQUESTED" },
     { label: "Approved", value: "APPROVED" },
     { label: "Rejected", value: "REJECTED" },
     { label: "Banned", value: "BANNED" },
@@ -28,7 +28,7 @@ export const defaultValues = {
 };
 
 export const requestStatusField = {
-    label: "Cohort Discovery Status",
+    label: "Cohort Status",
     name: "request_status",
     component: inputComponents.Select,
     options: cohortStatusOptions,

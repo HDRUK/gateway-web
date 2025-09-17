@@ -34,6 +34,7 @@ import { Team } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
 import { User } from "@/interfaces/User";
+import { V4Schema } from "@/interfaces/V4Schema";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
@@ -61,11 +62,13 @@ async function get<T>(
         suppressError: false,
         cache: undefined,
         withPagination: false,
-    }
+        serveRaw: false,
+    },
+    headers: object = {}
 ): Promise<T> {
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
-    const { cache, suppressError } = options;
+    const { cache, suppressError, serveRaw } = options;
     const nextConfig = cache
         ? {
               next: {
@@ -77,6 +80,7 @@ async function get<T>(
 
     const res = await fetch(`${url}`, {
         headers: {
+            ...headers,
             Authorization: `Bearer ${jwt?.value}`,
             [sessionHeader]: sessionPrefix + session,
         },
@@ -88,7 +92,6 @@ async function get<T>(
 
     if (!res.ok && !suppressError) {
         let errorMessage: string;
-
         try {
             const errorData = await res.json();
             errorMessage = JSON.stringify(errorData, null, 2);
@@ -100,6 +103,11 @@ async function get<T>(
     }
 
     const json = await res.json();
+
+    if (serveRaw) {
+        return json;
+    }
+
     if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         logger.info(json, session, "api.get.response");
     }
@@ -322,30 +330,45 @@ export async function getUserCohortRequest(
     cookieStore: ReadonlyRequestCookies,
     userId: string
 ): Promise<CohortRequestUser> {
+    const cookieHeader = cookieStore
+        .getAll()
+        .map(cookie => `${cookie.name}=${cookie.value}`)
+        .join("; ");
     const cache: Cache = {
-        tags: ["cohort"],
+        tags: ["cohort", "cohort-user", `cohort-user-${userId}`],
         revalidate: 15 * 60, // 15 minutes
     };
 
     return get<CohortRequestUser>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
-        { cache }
+        { cache },
+        {
+            Cookie: cookieHeader,
+        }
     );
 }
 
 export async function getCohortAccessRedirect(
-    cookieStore: ReadonlyRequestCookies
+    cookieStore: ReadonlyRequestCookies,
+    userId: string
 ): Promise<CohortRequestAccess> {
+    const cookieHeader = cookieStore
+        .getAll()
+        .map(cookie => `${cookie.name}=${cookie.value}`)
+        .join("; ");
     const cache: Cache = {
-        tags: ["cohort"],
+        tags: ["cohort", "cohort-redirect", `cohort-redirect-${userId}`],
         revalidate: 15 * 60, // 15 minutes
     };
 
     return get<CohortRequestAccess>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/access`,
-        { cache }
+        { cache },
+        {
+            Cookie: cookieHeader,
+        }
     );
 }
 
@@ -393,7 +416,7 @@ async function getNetworkSummary(
 ): Promise<NetworkSummary> {
     return await get<NetworkSummary>(
         cookieStore,
-        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}/summary`,
+        `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/summary`,
         options
     );
 }
@@ -509,6 +532,23 @@ async function getReducedCollection(
     );
 
     return collection;
+}
+
+async function getSchemaFromTraser(
+    cookieStore: ReadonlyRequestCookies,
+    schemaName: string,
+    schemaVersion: string
+): Promise<V4Schema> {
+    return get<V4Schema>(
+        cookieStore,
+        `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
+        {
+            cache: {
+                tags: [`traser-schema-${schemaName}-${schemaVersion}`],
+            },
+            serveRaw: true,
+        }
+    );
 }
 
 async function getFormHydration(
@@ -801,6 +841,7 @@ export {
     getDarAnswersUser,
     getDarReviewsTeam,
     getDarReviewsUser,
+    getSchemaFromTraser,
     updateDarApplicationTeam,
     updateDarAnswers,
     updateDarApplicationUser,

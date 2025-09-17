@@ -9,6 +9,7 @@ import { KeyedMutator } from "swr";
 import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import MenuDropdown from "@/components/MenuDropdown";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
@@ -24,7 +25,6 @@ import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { COMPONENTS, PAGES, SEARCH } from "@/consts/translation";
-import CohortDiscoveryButton from "../../../about/cohort-discovery/components/CohortDiscoveryButton";
 
 interface ResultRowProps {
     result: SearchResultDataset;
@@ -102,6 +102,7 @@ const ActionDropdown = ({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDarEnabled: team.is_question_bank,
+            hasPublishedDarTemplate: team.has_published_dar_template,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,

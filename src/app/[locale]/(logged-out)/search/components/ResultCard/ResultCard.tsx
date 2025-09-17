@@ -11,6 +11,7 @@ import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
@@ -31,7 +32,6 @@ import { ChevronThinIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import CohortDiscoveryButton from "../../../about/cohort-discovery/components/CohortDiscoveryButton";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 
 interface ResultCardProps {
@@ -135,6 +135,7 @@ const ResultCard = ({
             onGeneralEnquiryClick: handleGeneralEnquiryClick,
             onFeasibilityEnquiryClick: handleFeasibilityEnquiryClick,
             isDarEnabled: team.is_question_bank,
+            hasPublishedDarTemplate: team.has_published_dar_template,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,

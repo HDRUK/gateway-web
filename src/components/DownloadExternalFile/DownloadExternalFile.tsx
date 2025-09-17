@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import notificationService from "@/services/notification";
-import { sessionCookie, sessionHeader, sessionPrefix } from "@/config/session";
+import { sessionCookie } from "@/config/session";
 import { downloadExternalFile } from "@/utils/download";
 import { logger } from "@/utils/logger";
 import DownloadButton from "../DownloadButton";
@@ -29,9 +29,7 @@ const DownloadExternalFile = ({
             return;
         }
 
-        const response = await fetch(apiPath, {
-            headers: { [sessionHeader]: sessionPrefix + session },
-        });
+        const response = await fetch(apiPath);
 
         if (!response.ok) {
             let errorMessage: string;

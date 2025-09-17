@@ -13,8 +13,13 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { getHomePageBanner } from "@/utils/cms";
 import metaData from "@/utils/metadata";
-import { isAliasesEnabled, isSDEConciergeServiceEnquiryEnabled } from "@/flags";
+import {
+    isAliasesEnabled,
+    isSDEConciergeServiceEnquiryEnabled,
+    isNhsSdeApplicationsEnabled,
+} from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
+import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import { FeatureProvider } from "@/providers/FeatureProvider";
 import SWRProvider from "@/providers/SWRProvider";
@@ -52,6 +57,8 @@ export default async function RootLayout({
         isSDEConciergeServiceEnquiryEnabled:
             (await isSDEConciergeServiceEnquiryEnabled()) as boolean,
         isAliasesEnabled: (await isAliasesEnabled()) as boolean,
+        isNhsSdeApplicationsEnabled:
+            (await isNhsSdeApplicationsEnabled()) as boolean,
     };
 
     if (includeBanners) {
@@ -78,6 +85,7 @@ export default async function RootLayout({
                                                 />
                                             )}
                                         <SnackbarProvider />
+                                        <CohortRedirectProvider />
                                         <Header />
                                         {children}
                                         <Footer />

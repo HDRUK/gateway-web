@@ -14,12 +14,12 @@ export const getCohortStatusAndRedirect = async (
 
         const [userRequest, accessRedirect] = await Promise.all([
             getUserCohortRequest(cookieStore, userId.toString()),
-            getCohortAccessRedirect(cookieStore),
+            getCohortAccessRedirect(cookieStore, userId.toString()),
         ]);
-
         return {
-            requestStatus: userRequest.request_status ?? null,
-            redirectUrl: accessRedirect.redirect_url ?? null,
+            requestStatus: userRequest?.request_status ?? null,
+            requestExpiry: userRequest?.request_expire_at ?? null,
+            redirectUrl: accessRedirect?.redirect_url ?? null,
         };
     } catch (error) {
         const session = await getSessionCookie();
@@ -31,7 +31,7 @@ export const getCohortStatusAndRedirect = async (
             stack?: unknown;
             message: string;
         };
-        logger.error(err, session, `api/logout`);
+        logger.error(err, session, `cohort_request`);
 
         return null;
     }
