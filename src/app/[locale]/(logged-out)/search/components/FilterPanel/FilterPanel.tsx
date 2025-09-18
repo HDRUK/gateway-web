@@ -262,6 +262,7 @@ const FilterPanel = ({
         },
     });
     const filterItems = useMemo(() => {
+        console.log("filterSourceData", filterSourceData);
         let formattedFilters = groupByType(
             filterSourceData,
             filterCategory
@@ -304,6 +305,7 @@ const FilterPanel = ({
                             schemadefs,
                             filterItem.label
                         );
+                        console.log(filterItem);
                         return {
                             ...filterItem,
                             subBuckets: subtypeOptions.map(item => ({
@@ -526,21 +528,21 @@ const FilterPanel = ({
             }
         }
 
-        if (selectedKeys.length) {
-            setFilterValues(prevValues => {
-                return {
-                    ...prevValues,
-                    [filterSection]: {
-                        ...prevValues[filterSection],
-                        ...updates,
-                    },
-                    [subfilterSection]: {
-                        ...prevValues[subfilterSection],
-                        ...subUpdates,
-                    },
-                };
-            });
+        setFilterValues(prevValues => {
+            return {
+                ...prevValues,
+                [filterSection]: {
+                    ...prevValues[filterSection],
+                    ...updates,
+                },
+                [subfilterSection]: {
+                    ...prevValues[subfilterSection],
+                    ...subUpdates,
+                },
+            };
+        });
 
+        if (selectedKeys.length) {
             setFilterQueryParams(
                 selectedKeys,
                 filterSection,
@@ -548,19 +550,6 @@ const FilterPanel = ({
                 subfilterSection
             );
         } else {
-            setFilterValues(prevValues => {
-                return {
-                    ...prevValues,
-                    [filterSection]: {
-                        ...prevValues[filterSection],
-                        ...updates,
-                    },
-                    [subfilterSection]: {
-                        ...prevValues[subfilterSection],
-                        ...subUpdates,
-                    },
-                };
-            });
             resetFilterSection(filterSection);
 
             if (!selectedSubKeys.length) {
