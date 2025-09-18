@@ -43,6 +43,7 @@ import {
     SearchResultTool,
     ViewType,
 } from "@/interfaces/Search";
+import { V4Schema } from "@/interfaces/V4Schema";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
@@ -152,7 +153,7 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 interface SearchProps {
     filters: Filter[];
     cohortDiscovery: PageTemplatePromo;
-    schema: any;
+    schema: V4Schema;
 }
 
 const filterSidebarWidth = 350;

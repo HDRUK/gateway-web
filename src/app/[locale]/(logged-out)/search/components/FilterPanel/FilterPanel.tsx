@@ -304,13 +304,13 @@ const FilterPanel = ({
                             schemadefs,
                             filterItem.label
                         );
-
-                        filterItem.subBuckets = subtypeOptions.map(item => ({
-                            label: item,
-                            value: item,
-                        }));
-
-                        return filterItem;
+                        return {
+                            ...filterItem,
+                            subBuckets: subtypeOptions.map(item => ({
+                                label: item,
+                                value: item,
+                            })),
+                        };
                     }
                 );
 
