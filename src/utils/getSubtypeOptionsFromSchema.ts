@@ -3,8 +3,6 @@ export function getSubtypeOptionsFromSchema(
     selectedLabel: string
 ): string[] {
     // eslint-disable-next-line
-    // console.log(schema);
-    // console.log(schema["HealthAndDisease"]);
     const matchedEntry = Object.entries(schema).find(([_, value]) => {
         return value?.properties?.name?.default === selectedLabel;
     });
@@ -14,6 +12,6 @@ export function getSubtypeOptionsFromSchema(
     const [baseKey] = matchedEntry;
     const subTypeKey = `${baseKey}SubTypes`;
     const enumOptions = schema[subTypeKey]?.enum;
-    // console.log("enumOptions", enumOptions);
+
     return Array.isArray(enumOptions) ? enumOptions : ["Not applicable"];
 }

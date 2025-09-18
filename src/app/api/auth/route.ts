@@ -14,7 +14,6 @@ export async function GET() {
     }
 
     try {
-        const start = Date.now();
         const cookieStore = await cookies();
         const jwtToken = cookieStore.get(config.JWT_COOKIE)?.value;
 
@@ -27,7 +26,6 @@ export async function GET() {
             );
         }
 
-        console.log(`1. ms elapsed = ${Date.now() - start}`);
         try {
             const response = await fetch(
                 `${apis.usersV1UrlIP}/${authUser?.id}`,
@@ -40,7 +38,6 @@ export async function GET() {
             );
 
             const json = await response.json();
-            console.log(`2. ms elapsed = ${Date.now() - start}`);
 
             return NextResponse.json(
                 {
