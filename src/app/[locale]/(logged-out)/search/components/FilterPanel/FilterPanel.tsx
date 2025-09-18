@@ -298,23 +298,23 @@ const FilterPanel = ({
                 const ffIndex = formattedFilters.findIndex(
                     bucket => bucket.label === "dataType"
                 );
-                const dataTypeFilters = formattedFilters[ffIndex][
-                    "buckets"
-                ].map(filterItem => {
-                    const subtypeOptions = getSubtypeOptionsFromSchema(
-                        schemadefs,
-                        filterItem.label
-                    );
+                const dataTypeFilters = formattedFilters[ffIndex].buckets.map(
+                    filterItem => {
+                        const subtypeOptions = getSubtypeOptionsFromSchema(
+                            schemadefs,
+                            filterItem.label
+                        );
 
-                    filterItem["subBuckets"] = subtypeOptions.map(item => ({
-                        label: item,
-                        value: item,
-                    }));
+                        filterItem.subBuckets = subtypeOptions.map(item => ({
+                            label: item,
+                            value: item,
+                        }));
 
-                    return filterItem;
-                });
+                        return filterItem;
+                    }
+                );
 
-                formattedFilters[ffIndex]["buckets"] = dataTypeFilters;
+                formattedFilters[ffIndex].buckets = dataTypeFilters;
             }
         }
 
@@ -512,7 +512,7 @@ const FilterPanel = ({
                     search_term: searchTerm,
                 });
             } else {
-                //TODO: not firing correctly ewhen removing a parent with children
+                // TODO: not firing correctly ewhen removing a parent with children
                 const [subKey, subValue] = Object.entries(value)[0];
                 const status = subValue ? "filter_applied" : "filter_removed";
                 const searchTerm = searchParams?.get("query") || "";
