@@ -89,8 +89,6 @@ const NestedFilterSection = <
         name: filterSection,
     });
 
-    // bucket.count comes from the payload with the previous query terms
-    // counts come from aggregations (from payload)
     const checkboxes = useMemo(() => {
         return filterItem.buckets
             .filter(bucket =>
@@ -137,8 +135,6 @@ const NestedFilterSection = <
                         // Handle this better so it shows a skeleton or loading component on initial render
                         return (
                             <div>
-                                {" "}
-                                {/* key={key} style={style}> */}
                                 <Accordion
                                     heading={
                                         <CheckboxControlled
@@ -264,7 +260,7 @@ const NestedFilterSection = <
                         );
                     }
                     return (
-                        <div key={key} style={style}>
+                        <div>
                             <CheckboxControlled
                                 label={<HTMLContent content={label} />}
                                 {...formattedRow}
