@@ -836,35 +836,23 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                     updatePathMultiple({
                         [filterName]: filterValues.join("|"),
                         [PAGE_FIELD]: "1",
-                        [secondFilterName]: secondFilterValues.join("|"),
+                        ...(secondFilterName !== undefined &&
+                            secondFilterValues !== undefined && {
+                                [secondFilterName]:
+                                    secondFilterValues.join("|"),
+                            }),
                     });
 
                     // api requires string[] format, ie ["one", "two", "three"]
-                    // console.log("filterPanel", {
-                    //     ...queryParams,
-                    //     [PAGE_FIELD]: "1",
-                    //     [filterName]: filterValues,
-                    //     [secondFilterName]: secondFilterValues,
-                    // });
                     setQueryParams({
                         ...queryParams,
                         [PAGE_FIELD]: "1",
                         [filterName]: filterValues,
-                        [secondFilterName]: secondFilterValues,
+                        ...(secondFilterName !== undefined &&
+                            secondFilterValues !== undefined && {
+                                [secondFilterName]: secondFilterValues,
+                            }),
                     });
-
-                    // secondFilterName &&
-                    //     setQueryParams({
-                    //         ...queryParams,
-                    //         [PAGE_FIELD]: "1",
-                    //     });
-
-                    // console.log(
-                    //     "queryParams",
-                    //     queryParams,
-                    //     filterName,
-                    //     filterValues
-                    // );
                 }}
                 aggregations={data?.aggregations}
                 updateStaticFilter={(filterName: string, value: string) => {
@@ -958,10 +946,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         width: `calc(100% - ${filterSidebarWidth}px)`,
     };
 
-    // console.log(schema);
-    // console.log(
-    //     getSubtypeOptionsFromSchema(schema.$defs, "Health and disease")
-    // );
     return (
         <>
             {/* Filter Drawer */}
