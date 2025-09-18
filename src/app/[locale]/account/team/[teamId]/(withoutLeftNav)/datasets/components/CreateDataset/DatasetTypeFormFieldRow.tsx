@@ -4,7 +4,6 @@ import { FormHydration } from "@/interfaces/FormHydration";
 import { Defs } from "@/interfaces/V4Schema";
 import Box from "@/components/Box";
 import theme from "@/config/theme";
-import { N_A } from "@/consts/dataset";
 import { renderFormHydrationField } from "@/utils/formHydration";
 import { getSubtypeOptionsFromSchema } from "@/utils/getSubtypeOptionsFromSchema";
 

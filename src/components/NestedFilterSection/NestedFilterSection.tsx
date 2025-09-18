@@ -13,32 +13,39 @@ import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import { CountType } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
+import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
+import HTMLContent from "@/components/HTMLContent";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
-import HTMLContent from "../HTMLContent";
-import Box from "@/components/Box";
 
-function anotherParentHasSelectedChildren(checkboxValues: {[key: string]: boolean }, nestedCheckboxValues: {[key: string]: boolean }, thisParent: string) {
-    // We can check whether there is another parent selected and a nested value selected - if so, it must be the other parent's because it can't be ours, 
+function anotherParentHasSelectedChildren(
+    checkboxValues: { [key: string]: boolean },
+    nestedCheckboxValues: { [key: string]: boolean },
+    thisParent: string
+) {
+    // We can check whether there is another parent selected and a nested value selected - if so, it must be the other parent's because it can't be ours,
     // otherwise we'd have already broken the logic that we can't have 2 parents with one having a child.
-    
+
     if (!checkboxValues || !nestedCheckboxValues) {
         return false;
     }
 
-    if (Object.keys(checkboxValues).length === 0 || Object.keys(nestedCheckboxValues).length === 0) {
+    if (
+        Object.keys(checkboxValues).length === 0 ||
+        Object.keys(nestedCheckboxValues).length === 0
+    ) {
         return false;
     }
-    
+
     // We must have at least one child. Check that there are no parents that are not this value. If they exist, then the child must be the other's.
-    const success = Object.entries(checkboxValues).some((item) => {
-        return (typeof item === "object" && item[0] !== thisParent);
+    const success = Object.entries(checkboxValues).some(item => {
+        return typeof item === "object" && item[0] !== thisParent;
     });
     return success;
-};
+}
 
 interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
@@ -50,7 +57,9 @@ interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     nestedCheckboxValues: { [key: string]: boolean };
     counts?: CountType;
     countsDisabled: boolean;
-    handleCheckboxChange: (updates: { [key: string]: boolean | {[key: string] : boolean}}) => void;
+    handleCheckboxChange: (updates: {
+        [key: string]: boolean | { [key: string]: boolean };
+    }) => void;
     setValue: (
         name: keyof TFieldValues,
         value: UseFormSetValue<TFieldValues>
@@ -102,12 +111,11 @@ const NestedFilterSection = <
                     count: updatedCount,
                 };
             });
-            // .filter(bucket => bucket.count !== 0);
+        // .filter(bucket => bucket.count !== 0);
     }, [filterItem.buckets, field.value, countsDisabled, counts]);
 
     if (!filterItem.buckets.length)
         return <Typography>{noFilterLabel || t("noFilters")}</Typography>;
-
 
     return (
         <>
@@ -124,16 +132,25 @@ const NestedFilterSection = <
             <Box display="flex" flexDirection="column" alignItems="flex-start">
                 {checkboxes.map(checkbox => {
                     const { label, ...formattedRow } = cloneDeep(checkbox);
-                    if (checkbox["subBuckets"]?.length > 1) { // TODO: this condition means we show non-accordians initially. 
-                    // Handle this better so it shows a skeleton or loading component on initial render
+                    if (checkbox.subBuckets?.length > 1) {
+                        // TODO: this condition means we show non-accordians initially.
+                        // Handle this better so it shows a skeleton or loading component on initial render
                         return (
-                            <div> {/* key={key} style={style}> */}
+                            <div>
+                                {" "}
+                                {/* key={key} style={style}> */}
                                 <Accordion
                                     heading={
                                         <CheckboxControlled
-                                            label={<HTMLContent content={label} />}
+                                            label={
+                                                <HTMLContent content={label} />
+                                            }
                                             {...formattedRow}
-                                            formControlSx={{ pl: 1, pr: 1, m: 0 }}
+                                            formControlSx={{
+                                                pl: 1,
+                                                pr: 1,
+                                                m: 0,
+                                            }}
                                             checked={
                                                 (checkboxValues &&
                                                     checkboxValues[
@@ -145,43 +162,91 @@ const NestedFilterSection = <
                                             onChange={(event, value) => {
                                                 return handleCheckboxChange({
                                                     [event.target.name]: value,
-                                                })
-                                                }
-                                            }
+                                                });
+                                            }}
                                             checkboxSx={{ p: 0.5 }}
                                             stopPropagation
-                                            disabled={checkboxValues &&
-                                                ((Object.keys(checkboxValues).length > 0) && anotherParentHasSelectedChildren(checkboxValues, nestedCheckboxValues, checkbox.label))
+                                            disabled={
+                                                checkboxValues &&
+                                                Object.keys(checkboxValues)
+                                                    .length > 0 &&
+                                                anotherParentHasSelectedChildren(
+                                                    checkboxValues,
+                                                    nestedCheckboxValues,
+                                                    checkbox.label
+                                                )
                                             }
                                         />
                                     }
                                     contents={
-                                        <Box display="flex" flexDirection={"column"} sx={{ py: 0}}>
-                                            {(checkbox && checkbox["subBuckets"] ?? null) 
-                                                ? checkbox["subBuckets"].map((item) => { 
-                                                    const isDisabled = checkboxValues
-                                                                && ((Object.keys(checkboxValues).length > 1)
-                                                                    || ((Object.keys(checkboxValues).length === 1) && Object.keys(checkboxValues)[0] !== checkbox.label)
-                                                                   );
-                                                    return (
-                                                        <CheckboxControlled 
-                                                            formControlSx={{ pl: 5, pr: 0 }} 
-                                                            label={item.label} 
-                                                            name={item.label}
-                                                            checked={
-                                                                (nestedCheckboxValues && 
-                                                                nestedCheckboxValues[item.label] && !isDisabled) || false
-                                                            }
-                                                            onChange={(event, value) => {                                                            
-                                                                return handleCheckboxChange({
-                                                                    [label]: {[event.target.name]: value},
-                                                                });
-                                                            }}
-                                                            disabled={isDisabled}
-                                                        />)
-                                                    }) : null}
+                                        <Box
+                                            display="flex"
+                                            flexDirection="column"
+                                            sx={{ py: 0 }}>
+                                            {checkbox &&
+                                            (checkbox.subBuckets ?? null)
+                                                ? checkbox.subBuckets.map(
+                                                      item => {
+                                                          const isDisabled =
+                                                              checkboxValues &&
+                                                              (Object.keys(
+                                                                  checkboxValues
+                                                              ).length > 1 ||
+                                                                  (Object.keys(
+                                                                      checkboxValues
+                                                                  ).length ===
+                                                                      1 &&
+                                                                      Object.keys(
+                                                                          checkboxValues
+                                                                      )[0] !==
+                                                                          checkbox.label));
+                                                          return (
+                                                              <CheckboxControlled
+                                                                  formControlSx={{
+                                                                      pl: 5,
+                                                                      pr: 0,
+                                                                  }}
+                                                                  label={
+                                                                      item.label
+                                                                  }
+                                                                  name={
+                                                                      item.label
+                                                                  }
+                                                                  checked={
+                                                                      (nestedCheckboxValues &&
+                                                                          nestedCheckboxValues[
+                                                                              item
+                                                                                  .label
+                                                                          ] &&
+                                                                          !isDisabled) ||
+                                                                      false
+                                                                  }
+                                                                  onChange={(
+                                                                      event,
+                                                                      value
+                                                                  ) => {
+                                                                      return handleCheckboxChange(
+                                                                          {
+                                                                              [label]:
+                                                                                  {
+                                                                                      [event
+                                                                                          .target
+                                                                                          .name]:
+                                                                                          value,
+                                                                                  },
+                                                                          }
+                                                                      );
+                                                                  }}
+                                                                  disabled={
+                                                                      isDisabled
+                                                                  }
+                                                              />
+                                                          );
+                                                      }
+                                                  )
+                                                : null}
                                         </Box>
-                                    } 
+                                    }
                                     variant="plain"
                                     iconLeft
                                     noIndent
@@ -194,12 +259,14 @@ const NestedFilterSection = <
                                             margin: 0,
                                         },
                                     }}
-                                    />
+                                />
                             </div>
                         );
                     }
                     return (
-                        <div> {/*key={key} style={style}> */}
+                        <div>
+                            {" "}
+                            {/*key={key} style={style}> */}
                             <CheckboxControlled
                                 label={<HTMLContent content={label} />}
                                 {...formattedRow}
@@ -220,7 +287,7 @@ const NestedFilterSection = <
                     );
                 })}
             </Box>
-                        
+
             <ClearFilterButton
                 checkboxValues={checkboxValues}
                 resetFilterSection={resetFilterSection}
