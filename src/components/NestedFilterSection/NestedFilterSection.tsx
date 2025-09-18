@@ -264,9 +264,7 @@ const NestedFilterSection = <
                         );
                     }
                     return (
-                        <div>
-                            {" "}
-                            {/*key={key} style={style}> */}
+                        <div key={key} style={style}>
                             <CheckboxControlled
                                 label={<HTMLContent content={label} />}
                                 {...formattedRow}
