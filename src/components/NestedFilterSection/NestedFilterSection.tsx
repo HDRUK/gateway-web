@@ -8,6 +8,7 @@ import {
     UseFormSetValue,
     useController,
 } from "react-hook-form";
+import { Tooltip } from "@mui/material";
 import { cloneDeep, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
@@ -86,29 +87,40 @@ const NestedCheckboxes = ({
                                   Object.keys(checkboxValues)[0] !==
                                       checkbox.label));
                       return (
-                          <CheckboxControlled
-                              formControlSx={{
-                                  pl: 5,
-                                  pr: 0,
-                              }}
-                              rawLabel={item.label}
-                              name={item.label}
-                              checked={
-                                  (nestedCheckboxValues &&
-                                      nestedCheckboxValues[item.label] &&
-                                      !isDisabled) ||
-                                  false
-                              }
-                              onChange={(event, value) => {
-                                  return handleCheckboxChange({
-                                      [label]: {
-                                          [event.target.name]: value,
-                                      },
-                                  });
-                              }}
-                              count={nestedCounts[item.label]}
-                              disabled={isDisabled}
-                          />
+                          <Tooltip
+                              title={
+                                  isDisabled
+                                      ? "Filter option unavailable due to the options selected. To select this filter option, remove currently selected filter options."
+                                      : ""
+                              }>
+                              <div>
+                                  <CheckboxControlled
+                                      formControlSx={{
+                                          pl: 5,
+                                          pr: 0,
+                                      }}
+                                      rawLabel={item.label}
+                                      name={item.label}
+                                      checked={
+                                          (nestedCheckboxValues &&
+                                              nestedCheckboxValues[
+                                                  item.label
+                                              ] &&
+                                              !isDisabled) ||
+                                          false
+                                      }
+                                      onChange={(event, value) => {
+                                          return handleCheckboxChange({
+                                              [label]: {
+                                                  [event.target.name]: value,
+                                              },
+                                          });
+                                      }}
+                                      count={nestedCounts[item.label]}
+                                      disabled={isDisabled}
+                                  />
+                              </div>
+                          </Tooltip>
                       );
                   })
                 : null}
@@ -230,95 +242,116 @@ const NestedFilterSection = <
                             // Handle this better so it shows a skeleton or loading component on initial render
                             return (
                                 <div style={{ width: "100%" }}>
-                                    <Accordion
-                                        key={checkbox.label}
-                                        heading={
-                                            <CheckboxControlled
-                                                rawLabel={label}
-                                                {...formattedRow}
-                                                formControlSx={{
-                                                    pl: 1,
-                                                    pr: 1,
-                                                    py: 1,
-                                                }}
-                                                checked={
-                                                    (checkboxValues &&
-                                                        checkboxValues[
-                                                            checkbox.label
-                                                        ]) ||
-                                                    false
-                                                }
-                                                name={checkbox.label}
-                                                onChange={(event, value) => {
-                                                    return handleCheckboxChange(
-                                                        {
-                                                            [event.target.name]:
-                                                                value,
-                                                        }
-                                                    );
-                                                }}
-                                                count={checkbox.count}
-                                                checkboxSx={{ p: 0.5 }}
-                                                stopPropagation
-                                                disabled={outerDisabled}
-                                            />
-                                        }
-                                        contents={
-                                            <NestedCheckboxes
-                                                label={label}
-                                                checkbox={checkbox}
-                                                nestedCounts={nestedCounts}
-                                                checkboxValues={checkboxValues}
-                                                nestedCheckboxValues={
-                                                    nestedCheckboxValues
-                                                }
-                                                handleCheckboxChange={
-                                                    handleCheckboxChange
-                                                }
-                                            />
-                                        }
-                                        variant="plain"
-                                        iconLeft
-                                        noIndent
-                                        sx={{
-                                            pl: 0.7,
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            maxWidth: "100%",
-                                            ".MuiAccordionSummary-content": {
-                                                margin: 0,
-                                            },
-                                            "&:before": { display: "none" },
-                                            "&.MuiAccordion-root.Mui-expanded":
-                                                {
-                                                    mt: 0,
-                                                    mb: 0,
-                                                },
-                                        }}
-                                    />
+                                    <Tooltip
+                                        title={
+                                            outerDisabled
+                                                ? t("filterDisabled")
+                                                : ""
+                                        }>
+                                        <Accordion
+                                            key={checkbox.label}
+                                            heading={
+                                                <CheckboxControlled
+                                                    rawLabel={label}
+                                                    {...formattedRow}
+                                                    formControlSx={{
+                                                        pl: 1,
+                                                        pr: 1,
+                                                        py: 1,
+                                                    }}
+                                                    checked={
+                                                        (checkboxValues &&
+                                                            checkboxValues[
+                                                                checkbox.label
+                                                            ]) ||
+                                                        false
+                                                    }
+                                                    name={checkbox.label}
+                                                    onChange={(
+                                                        event,
+                                                        value
+                                                    ) => {
+                                                        return handleCheckboxChange(
+                                                            {
+                                                                [event.target
+                                                                    .name]:
+                                                                    value,
+                                                            }
+                                                        );
+                                                    }}
+                                                    count={checkbox.count}
+                                                    checkboxSx={{ p: 0.5 }}
+                                                    stopPropagation
+                                                    disabled={outerDisabled}
+                                                />
+                                            }
+                                            contents={
+                                                <NestedCheckboxes
+                                                    label={label}
+                                                    checkbox={checkbox}
+                                                    nestedCounts={nestedCounts}
+                                                    checkboxValues={
+                                                        checkboxValues
+                                                    }
+                                                    nestedCheckboxValues={
+                                                        nestedCheckboxValues
+                                                    }
+                                                    handleCheckboxChange={
+                                                        handleCheckboxChange
+                                                    }
+                                                />
+                                            }
+                                            variant="plain"
+                                            iconLeft
+                                            noIndent
+                                            sx={{
+                                                pl: 0.7,
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                maxWidth: "100%",
+                                                ".MuiAccordionSummary-content":
+                                                    {
+                                                        margin: 0,
+                                                    },
+                                                "&:before": { display: "none" },
+                                                "&.MuiAccordion-root.Mui-expanded":
+                                                    {
+                                                        mt: 0,
+                                                        mb: 0,
+                                                    },
+                                            }}
+                                        />
+                                    </Tooltip>
                                 </div>
                             );
                         }
                         return (
-                            <div>
-                                <CheckboxControlled
-                                    label={<HTMLContent content={label} />}
-                                    {...formattedRow}
-                                    formControlSx={{ pl: 1, pr: 1 }}
-                                    checked={
-                                        (checkboxValues &&
-                                            checkboxValues[checkbox.label]) ||
-                                        false
-                                    }
-                                    name={checkbox.label}
-                                    onChange={(event, value) =>
-                                        handleCheckboxChange({
-                                            [event.target.name]: value,
-                                        })
-                                    }
-                                    disabled={outerDisabled}
-                                />
-                            </div>
+                            <Tooltip
+                                title={
+                                    outerDisabled ? t("filterDisabled") : ""
+                                }>
+                                <div>
+                                    <CheckboxControlled
+                                        label={<HTMLContent content={label} />}
+                                        {...formattedRow}
+                                        formControlSx={{ pl: 1, pr: 1 }}
+                                        checked={
+                                            (checkboxValues &&
+                                                checkboxValues[
+                                                    checkbox.label
+                                                ]) ||
+                                            false
+                                        }
+                                        name={checkbox.label}
+                                        onChange={(event, value) =>
+                                            handleCheckboxChange({
+                                                [event.target.name]: value,
+                                            })
+                                        }
+                                        disabled={outerDisabled}
+                                    />
+                                </div>
+                            </Tooltip>
                         );
                     })}
             </Box>

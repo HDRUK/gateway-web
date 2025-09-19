@@ -1593,6 +1593,7 @@
         },
         "NestedFilterSection": {
             "placeholder": "I'm looking for...",
+            "filterDisabled": "Filter option unavailable due to the options selected. To select this filter option, remove currently selected filter options.",
             "noFilters": "No filters available"
         },
         "DataAccessMessages": {
