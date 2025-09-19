@@ -74,7 +74,6 @@ const NestedCheckboxes = <
     field,
     disabledText,
 }: NestedCheckboxesProps<TFieldValues, TName>) => {
-    console.log("checkbox.subBuckets", checkbox.subBuckets);
     return (
         <Box display="flex" flexDirection="column" sx={{ py: 0 }}>
             {(
@@ -266,7 +265,7 @@ const NestedFilterSection = <
                                 <Skeleton
                                     variant="text"
                                     sx={{ fontSize: "2rem" }}
-                                    width={"100%"}
+                                    width="100%"
                                 />
                             );
                         }

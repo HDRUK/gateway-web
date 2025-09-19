@@ -32,6 +32,7 @@ describe("NestedFilterSection", () => {
                             value: "filter 2",
                             label: "filter 2",
                             count: 10,
+                            subBuckets: [],
                         },
                     ],
                     value: "1",
