@@ -162,11 +162,19 @@ const NestedFilterSection = <
 
     const checkboxes = useMemo(() => {
         return filterItem.buckets
-            .filter(bucket =>
-                bucket?.label
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(field.value?.toLowerCase() || "")
+            .filter(
+                bucket =>
+                    bucket?.label
+                        ?.toString()
+                        ?.toLowerCase()
+                        ?.includes(field.value?.toLowerCase() || "") ||
+                    (bucket.subBuckets ?? null)?.some(
+                        subBucket =>
+                            nestedCounts[subBucket.label] !== undefined &&
+                            subBucket.value
+                                .toLowerCase()
+                                ?.includes(field.value?.toLowerCase() || "")
+                    )
             )
             .map(bucket => {
                 const updatedCount = countsDisabled
