@@ -262,7 +262,6 @@ const FilterPanel = ({
         },
     });
     const filterItems = useMemo(() => {
-        console.log("filterSourceData", filterSourceData);
         let formattedFilters = groupByType(
             filterSourceData,
             filterCategory
@@ -293,12 +292,9 @@ const FilterPanel = ({
             );
         }
 
-        console.log("formattedFilters", formattedFilters);
         if (filterCategory === FILTER_CATEGORY_DATASETS) {
             // Add in sub-buckets to filterItem.buckets
             if (aggregations !== undefined) {
-                console.log("formattedFilters", formattedFilters);
-                console.log("aggregations", aggregations);
                 const ffIndex = formattedFilters.findIndex(
                     bucket => bucket.label === "dataType"
                 );
@@ -308,7 +304,7 @@ const FilterPanel = ({
                             schemadefs,
                             filterItem.label
                         );
-                        console.log(filterItem);
+
                         return {
                             ...filterItem,
                             subBuckets: subtypeOptions.map(item => ({
@@ -322,7 +318,6 @@ const FilterPanel = ({
                 formattedFilters[ffIndex].buckets = dataTypeFilters;
             }
         }
-        console.log("formattedFilters after", formattedFilters);
 
         return formattedFilters;
     }, [filterCategory, filterSourceData, staticFilterValues, aggregations]);
@@ -506,7 +501,6 @@ const FilterPanel = ({
         const [key, value] = Object.entries(updatedCheckbox)[0];
 
         if (key) {
-            console.log("updateNestedCheckbox typeof value", typeof value);
             if (typeof value === "boolean") {
                 const status = value ? "filter_applied" : "filter_removed";
                 const searchTerm = searchParams?.get("query") || "";
@@ -777,6 +771,24 @@ const FilterPanel = ({
 
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
 
+                const filterCount = (
+                    <>
+                        {filterValues[label] &&
+                            !!Object.entries(filterValues[label]).length && (
+                                <Typography sx={filterCountStyles}>
+                                    {label === FILTER_DATA_TYPE
+                                        ? Object.entries(filterValues[label])
+                                              .length +
+                                          Object.entries(
+                                              filterValues[FILTER_DATA_SUBTYPE]
+                                          ).length
+                                        : Object.entries(filterValues[label])
+                                              .length}
+                                </Typography>
+                            )}
+                    </>
+                );
+
                 return (
                     <Accordion
                         key={label}
@@ -820,17 +832,7 @@ const FilterPanel = ({
                                 <Typography fontWeight="400" fontSize={20}>
                                     {t(label)}
                                 </Typography>
-                                {filterValues[label] &&
-                                    !!Object.entries(filterValues[label])
-                                        .length && (
-                                        <Typography sx={filterCountStyles}>
-                                            {
-                                                Object.entries(
-                                                    filterValues[label]
-                                                ).length
-                                            }
-                                        </Typography>
-                                    )}
+                                {filterCount}
                             </Box>
                         }
                         onChange={() =>

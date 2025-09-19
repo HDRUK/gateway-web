@@ -91,9 +91,7 @@ const NestedCheckboxes = ({
                                   pl: 5,
                                   pr: 0,
                               }}
-                              label={`${item.label} ${
-                                  nestedCounts[item.label]
-                              }`}
+                              rawLabel={item.label}
                               name={item.label}
                               checked={
                                   (nestedCheckboxValues &&
@@ -108,6 +106,7 @@ const NestedCheckboxes = ({
                                       },
                                   });
                               }}
+                              count={nestedCounts[item.label]}
                               disabled={isDisabled}
                           />
                       );
@@ -170,7 +169,6 @@ const NestedFilterSection = <
                     ?.includes(field.value?.toLowerCase() || "")
             )
             .map(bucket => {
-                console.log(bucket.label, counts[bucket.label], bucket.count);
                 const updatedCount = countsDisabled
                     ? undefined
                     : !isEmpty(counts)
@@ -200,7 +198,11 @@ const NestedFilterSection = <
                 setValue={setValue}
             />
 
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
+            <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="flex-start"
+                sx={{ p: 0 }}>
                 {checkboxes
                     .filter(checkbox => checkbox.count > 0)
                     .map(checkbox => {
@@ -216,28 +218,20 @@ const NestedFilterSection = <
                             );
 
                         if (checkbox.subBuckets?.length > 1) {
-                            console.log(
-                                "checkbox.subBuckets",
-                                checkbox.subBuckets
-                            );
                             // TODO: this condition means we show non-accordians initially.
                             // Handle this better so it shows a skeleton or loading component on initial render
                             return (
-                                <div>
+                                <div style={{ width: "100%" }}>
                                     <Accordion
                                         key={checkbox.label}
                                         heading={
                                             <CheckboxControlled
-                                                label={
-                                                    <HTMLContent
-                                                        content={`${label}  ${checkbox.count}`}
-                                                    />
-                                                }
+                                                rawLabel={label}
                                                 {...formattedRow}
                                                 formControlSx={{
                                                     pl: 1,
                                                     pr: 1,
-                                                    m: 0,
+                                                    py: 1,
                                                 }}
                                                 checked={
                                                     (checkboxValues &&
@@ -255,6 +249,7 @@ const NestedFilterSection = <
                                                         }
                                                     );
                                                 }}
+                                                count={checkbox.count}
                                                 checkboxSx={{ p: 0.5 }}
                                                 stopPropagation
                                                 disabled={outerDisabled}
@@ -281,10 +276,16 @@ const NestedFilterSection = <
                                             pl: 0.7,
                                             display: "flex",
                                             flexDirection: "column",
-                                            // justifyItems: "stretch"
+                                            maxWidth: "100%",
                                             ".MuiAccordionSummary-content": {
                                                 margin: 0,
                                             },
+                                            "&:before": { display: "none" },
+                                            "&.MuiAccordion-root.Mui-expanded":
+                                                {
+                                                    mt: 0,
+                                                    mb: 0,
+                                                },
                                         }}
                                     />
                                 </div>
