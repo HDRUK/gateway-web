@@ -388,6 +388,7 @@ const NestedFilterSection = <
 
             <ClearFilterButton
                 checkboxValues={checkboxValues}
+                nestedCheckboxValues={nestedCheckboxValues}
                 resetFilterSection={resetFilterSection}
             />
         </>
