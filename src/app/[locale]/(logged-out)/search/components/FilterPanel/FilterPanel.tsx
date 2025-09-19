@@ -515,7 +515,6 @@ const FilterPanel = ({
                     search_term: searchTerm,
                 });
             } else {
-                // TODO: not firing correctly ewhen removing a parent with children
                 const [subKey, subValue] = Object.entries(value)[0];
                 const status = subValue ? "filter_applied" : "filter_removed";
                 const searchTerm = searchParams?.get("query") || "";
