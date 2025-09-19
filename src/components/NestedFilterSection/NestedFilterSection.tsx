@@ -9,7 +9,7 @@ import {
     UseFormSetValue,
     useController,
 } from "react-hook-form";
-import { Tooltip } from "@mui/material";
+import { Skeleton, Tooltip } from "@mui/material";
 import { cloneDeep, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
@@ -261,9 +261,17 @@ const NestedFilterSection = <
                                 checkbox.label
                             );
 
+                        if (checkbox.subBuckets === undefined) {
+                            return (
+                                <Skeleton
+                                    variant="text"
+                                    sx={{ fontSize: "2rem" }}
+                                    width={"100%"}
+                                />
+                            );
+                        }
+
                         if (checkbox.subBuckets?.length > 1) {
-                            // TODO: this condition means we show non-accordians initially.
-                            // Handle this better so it shows a skeleton or loading component on initial render
                             return (
                                 <div style={{ width: "100%" }}>
                                     <Tooltip
