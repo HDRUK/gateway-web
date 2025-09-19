@@ -43,6 +43,80 @@ function anotherParentHasSelectedChildren(
     });
 }
 
+interface NestedCheckboxesProps {
+    label: string;
+    checkbox: BucketCheckbox;
+    nestedCounts: CountType;
+    checkboxValues: { [key: string]: boolean };
+    nestedCheckboxValues: { [key: string]: boolean };
+    handleCheckboxChange: (updates: {
+        [key: string]: boolean | { [key: string]: boolean };
+    }) => void;
+}
+
+const NestedCheckboxes = ({
+    label,
+    checkbox,
+    nestedCounts,
+    checkboxValues,
+    nestedCheckboxValues,
+    handleCheckboxChange,
+}: NestedCheckboxesProps) => {
+    return (
+        <Box display="flex" flexDirection="column" sx={{ py: 0 }}>
+            {(
+                checkbox && (checkbox.subBuckets ?? null)
+                    ? checkbox.subBuckets.reduce((acc, item) => {
+                          return acc + (nestedCounts[item.label] ?? 0);
+                      }, 0)
+                    : 0
+            )
+                ? null
+                : "No subtypes match the current query"}
+
+            {checkbox && (checkbox.subBuckets ?? null)
+                ? checkbox.subBuckets.map(item => {
+                      if (nestedCounts[item.label] === undefined) {
+                          return null;
+                      }
+                      const isDisabled =
+                          checkboxValues &&
+                          (Object.keys(checkboxValues).length > 1 ||
+                              (Object.keys(checkboxValues).length === 1 &&
+                                  Object.keys(checkboxValues)[0] !==
+                                      checkbox.label));
+                      return (
+                          <CheckboxControlled
+                              formControlSx={{
+                                  pl: 5,
+                                  pr: 0,
+                              }}
+                              label={`${item.label} ${
+                                  nestedCounts[item.label]
+                              }`}
+                              name={item.label}
+                              checked={
+                                  (nestedCheckboxValues &&
+                                      nestedCheckboxValues[item.label] &&
+                                      !isDisabled) ||
+                                  false
+                              }
+                              onChange={(event, value) => {
+                                  return handleCheckboxChange({
+                                      [label]: {
+                                          [event.target.name]: value,
+                                      },
+                                  });
+                              }}
+                              disabled={isDisabled}
+                          />
+                      );
+                  })
+                : null}
+        </Box>
+    );
+};
+
 interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     control: Control<TFieldValues>;
@@ -52,6 +126,7 @@ interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     checkboxValues: { [key: string]: boolean };
     nestedCheckboxValues: { [key: string]: boolean };
     counts?: CountType;
+    nestedCounts?: CountType;
     countsDisabled: boolean;
     handleCheckboxChange: (updates: {
         [key: string]: boolean | { [key: string]: boolean };
@@ -74,6 +149,7 @@ const NestedFilterSection = <
     noFilterLabel,
     placeholder,
     counts = {},
+    nestedCounts = {},
     countsDisabled,
     handleCheckboxChange,
     setValue,
@@ -105,8 +181,8 @@ const NestedFilterSection = <
                     ...bucket,
                     count: updatedCount,
                 };
-            });
-        // .filter(bucket => bucket.count !== 0);
+            })
+            .filter(bucket => bucket.count !== 0);
     }, [filterItem.buckets, field.value, countsDisabled, counts]);
 
     if (!filterItem.buckets.length)
@@ -140,16 +216,21 @@ const NestedFilterSection = <
                             );
 
                         if (checkbox.subBuckets?.length > 1) {
+                            console.log(
+                                "checkbox.subBuckets",
+                                checkbox.subBuckets
+                            );
                             // TODO: this condition means we show non-accordians initially.
                             // Handle this better so it shows a skeleton or loading component on initial render
                             return (
                                 <div>
                                     <Accordion
+                                        key={checkbox.label}
                                         heading={
                                             <CheckboxControlled
                                                 label={
                                                     <HTMLContent
-                                                        content={label}
+                                                        content={`${label}  ${checkbox.count}`}
                                                     />
                                                 }
                                                 {...formattedRow}
@@ -180,75 +261,18 @@ const NestedFilterSection = <
                                             />
                                         }
                                         contents={
-                                            <Box
-                                                display="flex"
-                                                flexDirection="column"
-                                                sx={{ py: 0 }}>
-                                                {checkbox &&
-                                                (checkbox.subBuckets ?? null)
-                                                    ? checkbox.subBuckets.map(
-                                                          item => {
-                                                              const isDisabled =
-                                                                  checkboxValues &&
-                                                                  (Object.keys(
-                                                                      checkboxValues
-                                                                  ).length >
-                                                                      1 ||
-                                                                      (Object.keys(
-                                                                          checkboxValues
-                                                                      )
-                                                                          .length ===
-                                                                          1 &&
-                                                                          Object.keys(
-                                                                              checkboxValues
-                                                                          )[0] !==
-                                                                              checkbox.label));
-                                                              return (
-                                                                  <CheckboxControlled
-                                                                      formControlSx={{
-                                                                          pl: 5,
-                                                                          pr: 0,
-                                                                      }}
-                                                                      label={
-                                                                          item.label
-                                                                      }
-                                                                      name={
-                                                                          item.label
-                                                                      }
-                                                                      checked={
-                                                                          (nestedCheckboxValues &&
-                                                                              nestedCheckboxValues[
-                                                                                  item
-                                                                                      .label
-                                                                              ] &&
-                                                                              !isDisabled) ||
-                                                                          false
-                                                                      }
-                                                                      onChange={(
-                                                                          event,
-                                                                          value
-                                                                      ) => {
-                                                                          return handleCheckboxChange(
-                                                                              {
-                                                                                  [label]:
-                                                                                      {
-                                                                                          [event
-                                                                                              .target
-                                                                                              .name]:
-                                                                                              value,
-                                                                                      },
-                                                                              }
-                                                                          );
-                                                                      }}
-                                                                      disabled={
-                                                                          isDisabled
-                                                                      }
-                                                                  />
-                                                              );
-                                                          }
-                                                      )
-                                                    : null}
-                                            </Box>
+                                            <NestedCheckboxes
+                                                label={label}
+                                                checkbox={checkbox}
+                                                nestedCounts={nestedCounts}
+                                                checkboxValues={checkboxValues}
+                                                nestedCheckboxValues={
+                                                    nestedCheckboxValues
+                                                }
+                                                handleCheckboxChange={
+                                                    handleCheckboxChange
+                                                }
+                                            />
                                         }
                                         variant="plain"
                                         iconLeft

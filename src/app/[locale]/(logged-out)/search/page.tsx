@@ -31,6 +31,8 @@ const SearchPage = async () => {
         return filter;
     });
 
+    console.log("filters", filters);
+    console.log("adjustedFilters", adjustedFilters);
     const SCHEMA_NAME = "HDRUK";
     const SCHEMA_VERSION = "4.0.0";
 

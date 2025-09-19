@@ -293,9 +293,12 @@ const FilterPanel = ({
             );
         }
 
+        console.log("formattedFilters", formattedFilters);
         if (filterCategory === FILTER_CATEGORY_DATASETS) {
             // Add in sub-buckets to filterItem.buckets
             if (aggregations !== undefined) {
+                console.log("formattedFilters", formattedFilters);
+                console.log("aggregations", aggregations);
                 const ffIndex = formattedFilters.findIndex(
                     bucket => bucket.label === "dataType"
                 );
@@ -319,6 +322,7 @@ const FilterPanel = ({
                 formattedFilters[ffIndex].buckets = dataTypeFilters;
             }
         }
+        console.log("formattedFilters after", formattedFilters);
 
         return formattedFilters;
     }, [filterCategory, filterSourceData, staticFilterValues, aggregations]);
@@ -661,7 +665,7 @@ const FilterPanel = ({
                         handleCheckboxChange={updatedCheckbox =>
                             updateNestedCheckboxes(
                                 updatedCheckbox,
-                                FILTER_DATA_TYPE,
+                                label,
                                 FILTER_DATA_SUBTYPE
                             )
                         }
@@ -671,9 +675,14 @@ const FilterPanel = ({
                         setValue={setValue}
                         control={control}
                         filterItem={filterItem}
-                        resetFilterSection={() => resetFilterSection(label)}
+                        resetFilterSection={() =>
+                            resetNestedFilterSection(label, FILTER_DATA_SUBTYPE)
+                        }
                         counts={formatBucketCounts(
                             get(aggregations, label)?.buckets
+                        )}
+                        nestedCounts={formatBucketCounts(
+                            get(aggregations, FILTER_DATA_SUBTYPE)?.buckets
                         )}
                     />
                 );
