@@ -246,7 +246,7 @@ const NestedFilterSection = <
                 display="flex"
                 flexDirection="column"
                 alignItems="flex-start"
-                sx={{ p: 0 }}>
+                sx={{ p: 0, maxHeight: 226, overflow: "auto" }}>
                 {checkboxes
                     .filter(checkbox => checkbox.count > 0)
                     .map(checkbox => {
