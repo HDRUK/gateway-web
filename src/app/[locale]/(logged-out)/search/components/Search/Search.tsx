@@ -468,7 +468,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         });
     };
 
-    // foreach(data?.aggregations.dataType);
     const categoryTabs = [
         {
             label: t("datasets"),
