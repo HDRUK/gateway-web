@@ -771,23 +771,17 @@ const FilterPanel = ({
 
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
 
-                const filterCount = (
-                    <>
-                        {filterValues[label] &&
-                            !!Object.entries(filterValues[label]).length && (
-                                <Typography sx={filterCountStyles}>
-                                    {label === FILTER_DATA_TYPE
-                                        ? Object.entries(filterValues[label])
-                                              .length +
-                                          Object.entries(
-                                              filterValues[FILTER_DATA_SUBTYPE]
-                                          ).length
-                                        : Object.entries(filterValues[label])
-                                              .length}
-                                </Typography>
-                            )}
-                    </>
-                );
+                const filterCount = filterValues[label] &&
+                    !!Object.entries(filterValues[label]).length && (
+                        <Typography sx={filterCountStyles}>
+                            {label === FILTER_DATA_TYPE
+                                ? Object.entries(filterValues[label]).length +
+                                  Object.entries(
+                                      filterValues[FILTER_DATA_SUBTYPE]
+                                  ).length
+                                : Object.entries(filterValues[label]).length}
+                        </Typography>
+                    );
 
                 return (
                     <Accordion
