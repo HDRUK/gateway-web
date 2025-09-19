@@ -296,10 +296,13 @@ const FilterPanel = ({
             // Add in sub-buckets to filterItem.buckets
             if (aggregations !== undefined) {
                 const ffIndex = formattedFilters.findIndex(
-                    bucket => bucket.label === "dataType"
+                    bucket => bucket.label === FILTER_DATA_TYPE
                 );
-                const dataTypeFilters = formattedFilters[ffIndex].buckets.map(
-                    filterItem => {
+
+                if (ffIndex !== -1) {
+                    const dataTypeFilters = formattedFilters[
+                        ffIndex
+                    ].buckets?.map(filterItem => {
                         const subtypeOptions = getSubtypeOptionsFromSchema(
                             schemadefs,
                             filterItem.label
@@ -312,10 +315,10 @@ const FilterPanel = ({
                                 value: item,
                             })),
                         };
-                    }
-                );
+                    });
 
-                formattedFilters[ffIndex].buckets = dataTypeFilters;
+                    formattedFilters[ffIndex].buckets = dataTypeFilters;
+                }
             }
         }
 

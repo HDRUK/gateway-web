@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import {
     Control,
+    ControllerRenderProps,
     FieldValues,
     Path,
     UseFormSetValue,
@@ -44,7 +45,10 @@ function anotherParentHasSelectedChildren(
     });
 }
 
-interface NestedCheckboxesProps {
+interface NestedCheckboxesProps<
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+> {
     label: string;
     checkbox: BucketCheckbox;
     nestedCounts: CountType;
@@ -53,16 +57,24 @@ interface NestedCheckboxesProps {
     handleCheckboxChange: (updates: {
         [key: string]: boolean | { [key: string]: boolean };
     }) => void;
+    field: ControllerRenderProps<TFieldValues, TName>;
+    disabledText: string;
 }
 
-const NestedCheckboxes = ({
+const NestedCheckboxes = <
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>
+>({
     label,
     checkbox,
     nestedCounts,
     checkboxValues,
     nestedCheckboxValues,
     handleCheckboxChange,
-}: NestedCheckboxesProps) => {
+    field,
+    disabledText,
+}: NestedCheckboxesProps<TFieldValues, TName>) => {
+    console.log("checkbox.subBuckets", checkbox.subBuckets);
     return (
         <Box display="flex" flexDirection="column" sx={{ py: 0 }}>
             {(
@@ -76,53 +88,65 @@ const NestedCheckboxes = ({
                 : "No subtypes match the current query"}
 
             {checkbox && (checkbox.subBuckets ?? null)
-                ? checkbox.subBuckets.map(item => {
-                      if (nestedCounts[item.label] === undefined) {
-                          return null;
-                      }
-                      const isDisabled =
-                          checkboxValues &&
-                          (Object.keys(checkboxValues).length > 1 ||
-                              (Object.keys(checkboxValues).length === 1 &&
-                                  Object.keys(checkboxValues)[0] !==
-                                      checkbox.label));
-                      return (
-                          <Tooltip
-                              title={
-                                  isDisabled
-                                      ? "Filter option unavailable due to the options selected. To select this filter option, remove currently selected filter options."
-                                      : ""
-                              }>
-                              <div>
-                                  <CheckboxControlled
-                                      formControlSx={{
-                                          pl: 5,
-                                          pr: 0,
-                                      }}
-                                      rawLabel={item.label}
-                                      name={item.label}
-                                      checked={
-                                          (nestedCheckboxValues &&
-                                              nestedCheckboxValues[
-                                                  item.label
-                                              ] &&
-                                              !isDisabled) ||
-                                          false
-                                      }
-                                      onChange={(event, value) => {
-                                          return handleCheckboxChange({
-                                              [label]: {
-                                                  [event.target.name]: value,
-                                              },
-                                          });
-                                      }}
-                                      count={nestedCounts[item.label]}
-                                      disabled={isDisabled}
-                                  />
-                              </div>
-                          </Tooltip>
-                      );
-                  })
+                ? checkbox.subBuckets
+                      .filter(
+                          bucket =>
+                              label
+                                  .toString()
+                                  ?.toLowerCase()
+                                  ?.includes(
+                                      field.value?.toLowerCase() || ""
+                                  ) ||
+                              bucket?.label
+                                  ?.toString()
+                                  ?.toLowerCase()
+                                  ?.includes(field.value?.toLowerCase() || "")
+                      )
+                      .map(item => {
+                          if (nestedCounts[item.label] === undefined) {
+                              return null;
+                          }
+                          const isDisabled =
+                              checkboxValues &&
+                              (Object.keys(checkboxValues).length > 1 ||
+                                  (Object.keys(checkboxValues).length === 1 &&
+                                      Object.keys(checkboxValues)[0] !==
+                                          checkbox.label));
+                          return (
+                              <Tooltip
+                                  key={item.label}
+                                  title={isDisabled ? disabledText : ""}>
+                                  <div>
+                                      <CheckboxControlled
+                                          formControlSx={{
+                                              pl: 5,
+                                              pr: 0,
+                                          }}
+                                          rawLabel={item.label}
+                                          name={item.label}
+                                          checked={
+                                              (nestedCheckboxValues &&
+                                                  nestedCheckboxValues[
+                                                      item.label
+                                                  ] &&
+                                                  !isDisabled) ||
+                                              false
+                                          }
+                                          onChange={(event, value) => {
+                                              return handleCheckboxChange({
+                                                  [label]: {
+                                                      [event.target.name]:
+                                                          value,
+                                                  },
+                                              });
+                                          }}
+                                          count={nestedCounts[item.label]}
+                                          disabled={isDisabled}
+                                      />
+                                  </div>
+                              </Tooltip>
+                          );
+                      })
                 : null}
         </Box>
     );
@@ -243,6 +267,7 @@ const NestedFilterSection = <
                             return (
                                 <div style={{ width: "100%" }}>
                                     <Tooltip
+                                        key={checkbox.label}
                                         title={
                                             outerDisabled
                                                 ? t("filterDisabled")
@@ -299,6 +324,10 @@ const NestedFilterSection = <
                                                     handleCheckboxChange={
                                                         handleCheckboxChange
                                                     }
+                                                    field={field}
+                                                    disabledText={t(
+                                                        "filterDisabled"
+                                                    )}
                                                 />
                                             }
                                             variant="plain"
@@ -327,6 +356,7 @@ const NestedFilterSection = <
                         }
                         return (
                             <Tooltip
+                                key={label}
                                 title={
                                     outerDisabled ? t("filterDisabled") : ""
                                 }>
