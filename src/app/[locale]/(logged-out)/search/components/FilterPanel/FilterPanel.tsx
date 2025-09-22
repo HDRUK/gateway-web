@@ -12,6 +12,7 @@ import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
 import FilterSectionRadio from "@/components/FilterSectionRadio";
 import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
+import NestedFilterSection from "@/components/NestedFilterSection";
 import Typography from "@/components/Typography";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import {
@@ -50,6 +51,7 @@ import {
     isQueryEmpty,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
+import { getSubtypeOptionsFromSchema } from "@/utils/getSubtypeOptionsFromSchema";
 import { ClearButton } from "../ClearFilterButton/ClearFilterButton.styles";
 import DateRangeFilter from "../DateRangeFilter";
 import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
@@ -61,6 +63,7 @@ const FILTER_CATEGORY_PUBLICATIONS = "paper";
 const FILTER_CATEGORY_DURS = "dataUseRegister";
 const FILTER_CATEGORY_TOOLS = "tool";
 const FILTER_CATEGORY_COLLECTIONS = "collection";
+const FILTER_CATEGORY_DATASETS = "dataset";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
     buckets: [
@@ -168,19 +171,23 @@ const FilterPanel = ({
     getParamString,
     showEuropePmcModal,
     resetQueryParamState,
+    schemadefs,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
     filterSourceData: Filter[];
     setFilterQueryParams: (
         filterValues: string[],
-        filterSection: string
+        filterSection: string,
+        secondFilterValues?: string[],
+        secondFilterSections?: string
     ) => void;
     aggregations?: Aggregations;
     updateStaticFilter: (filterSection: string, value: string) => void;
     getParamString: (paramName: string) => string | null;
     showEuropePmcModal: () => void;
     resetQueryParamState: (selectedType: SearchCategory) => void;
+    schemadefs;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     const tRoot = useTranslations(TRANSLATION_PATH);
@@ -285,8 +292,38 @@ const FilterPanel = ({
             );
         }
 
+        if (filterCategory === FILTER_CATEGORY_DATASETS) {
+            // Add in sub-buckets to filterItem.buckets
+            if (aggregations !== undefined) {
+                const ffIndex = formattedFilters.findIndex(
+                    bucket => bucket.label === FILTER_DATA_TYPE
+                );
+
+                if (ffIndex !== -1) {
+                    const dataTypeFilters = formattedFilters[
+                        ffIndex
+                    ].buckets?.map(filterItem => {
+                        const subtypeOptions = getSubtypeOptionsFromSchema(
+                            schemadefs,
+                            filterItem.label
+                        );
+
+                        return {
+                            ...filterItem,
+                            subBuckets: subtypeOptions.map(item => ({
+                                label: item,
+                                value: item,
+                            })),
+                        };
+                    });
+
+                    formattedFilters[ffIndex].buckets = dataTypeFilters;
+                }
+            }
+        }
+
         return formattedFilters;
-    }, [filterCategory, filterSourceData, staticFilterValues]);
+    }, [filterCategory, filterSourceData, staticFilterValues, aggregations]);
     const [maximised, setMaximised] = useState<string[]>([]);
 
     const handleUpdateMap = (mapValue: SelectedType) => {
@@ -356,6 +393,19 @@ const FilterPanel = ({
         setFilterQueryParams([], filterSection);
     };
 
+    const resetNestedFilterSection = (
+        filterSection: string,
+        subfilterSection: string
+    ) => {
+        setFilterValues({
+            ...filterValues,
+            [filterSection]: {},
+            [subfilterSection]: {},
+        });
+
+        setFilterQueryParams([], filterSection, [], subfilterSection);
+    };
+
     const resetAllFilters = () => {
         setFilterValues(EMPTY_FILTERS);
 
@@ -381,14 +431,18 @@ const FilterPanel = ({
         updatedCheckbox: { [key: string]: boolean },
         filterSection: string
     ) => {
+        // Complete set of all filter values (those that have ever been touched)
         const updates = {
             ...(filterValues[filterSection] || {}),
             ...updatedCheckbox,
         };
 
+        // Keys of all 'true' values
         const selectedKeys = Object.keys(updates).filter(key => updates[key]);
 
+        // key and value of updated entry
         const [key, value] = Object.entries(updatedCheckbox)[0];
+
         if (key) {
             const status = value ? "filter_applied" : "filter_removed";
             const searchTerm = searchParams?.get("query") || "";
@@ -406,9 +460,101 @@ const FilterPanel = ({
                 ...prevValues,
                 [filterSection]: updates,
             }));
+
             setFilterQueryParams(selectedKeys, filterSection);
         } else {
             resetFilterSection(filterSection);
+        }
+    };
+
+    const updateNestedCheckboxes = (
+        updatedCheckbox: {
+            [key: string]: { [key: string]: boolean } | boolean;
+        },
+        filterSection: string,
+        subfilterSection: string
+    ) => {
+        const updates = {
+            ...(filterValues[filterSection] || {}),
+            ...updatedCheckbox,
+        };
+
+        const subContent = updatedCheckbox[Object.keys(updatedCheckbox)[0]];
+
+        const subUpdates = {
+            ...(filterValues[subfilterSection] || {}),
+            ...(typeof subContent === "object"
+                ? subContent
+                : subContent === false
+                ? Object.fromEntries(
+                      Object.keys(filterValues[subfilterSection]).map(item => [
+                          item,
+                          false,
+                      ])
+                  )
+                : {}),
+        };
+
+        const selectedKeys = Object.keys(updates).filter(key => updates[key]);
+
+        const selectedSubKeys = Object.keys(subUpdates).filter(
+            key => subUpdates[key]
+        );
+
+        const [key, value] = Object.entries(updatedCheckbox)[0];
+
+        if (key) {
+            if (typeof value === "boolean") {
+                const status = value ? "filter_applied" : "filter_removed";
+                const searchTerm = searchParams?.get("query") || "";
+
+                fireGTMEvent({
+                    event: status,
+                    filter_name: filterSection,
+                    filter_value: key,
+                    search_term: searchTerm,
+                });
+            } else {
+                const [subKey, subValue] = Object.entries(value)[0];
+                const status = subValue ? "filter_applied" : "filter_removed";
+                const searchTerm = searchParams?.get("query") || "";
+
+                fireGTMEvent({
+                    event: status,
+                    filter_name: subfilterSection,
+                    filter_value: subKey,
+                    search_term: searchTerm,
+                });
+            }
+        }
+
+        setFilterValues(prevValues => {
+            return {
+                ...prevValues,
+                [filterSection]: {
+                    ...prevValues[filterSection],
+                    ...updates,
+                },
+                [subfilterSection]: {
+                    ...prevValues[subfilterSection],
+                    ...subUpdates,
+                },
+            };
+        });
+
+        if (selectedKeys.length) {
+            setFilterQueryParams(
+                selectedKeys,
+                filterSection,
+                selectedSubKeys,
+                subfilterSection
+            );
+        } else {
+            resetFilterSection(filterSection);
+
+            if (!selectedSubKeys.length) {
+                resetNestedFilterSection(filterSection, subfilterSection);
+            }
         }
     };
 
@@ -509,6 +655,33 @@ const FilterPanel = ({
                         handleUpdate={handleUpdatePopulationSize}
                     />
                 );
+            case FILTER_DATA_TYPE:
+                return (
+                    <NestedFilterSection
+                        handleCheckboxChange={updatedCheckbox =>
+                            updateNestedCheckboxes(
+                                updatedCheckbox,
+                                label,
+                                FILTER_DATA_SUBTYPE
+                            )
+                        }
+                        checkboxValues={filterValues[label]}
+                        nestedCheckboxValues={filterValues[FILTER_DATA_SUBTYPE]}
+                        filterSection={label}
+                        setValue={setValue}
+                        control={control}
+                        filterItem={filterItem}
+                        resetFilterSection={() =>
+                            resetNestedFilterSection(label, FILTER_DATA_SUBTYPE)
+                        }
+                        counts={formatBucketCounts(
+                            get(aggregations, label)?.buckets
+                        )}
+                        nestedCounts={formatBucketCounts(
+                            get(aggregations, FILTER_DATA_SUBTYPE)?.buckets
+                        )}
+                    />
+                );
             default:
                 return (
                     <FilterSection
@@ -593,7 +766,24 @@ const FilterPanel = ({
                 ) {
                     return null;
                 }
+
+                if (filterItem.label === FILTER_DATA_SUBTYPE) {
+                    return null;
+                }
+
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
+
+                const filterCount = filterValues[label] &&
+                    !!Object.entries(filterValues[label]).length && (
+                        <Typography sx={filterCountStyles}>
+                            {label === FILTER_DATA_TYPE
+                                ? Object.entries(filterValues[label]).length +
+                                  Object.entries(
+                                      filterValues[FILTER_DATA_SUBTYPE]
+                                  ).length
+                                : Object.entries(filterValues[label]).length}
+                        </Typography>
+                    );
 
                 return (
                     <Accordion
@@ -638,17 +828,7 @@ const FilterPanel = ({
                                 <Typography fontWeight="400" fontSize={20}>
                                     {t(label)}
                                 </Typography>
-                                {filterValues[label] &&
-                                    !!Object.entries(filterValues[label])
-                                        .length && (
-                                        <Typography sx={filterCountStyles}>
-                                            {
-                                                Object.entries(
-                                                    filterValues[label]
-                                                ).length
-                                            }
-                                        </Typography>
-                                    )}
+                                {filterCount}
                             </Box>
                         }
                         onChange={() =>

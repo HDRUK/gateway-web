@@ -14,6 +14,7 @@ export interface CheckboxProps extends MuiCheckboxProps {
     formControlSx?: SxProps;
     count?: number;
     rawLabel?: string;
+    stopPropagation?: boolean;
 }
 
 const CheckboxControlled = (props: CheckboxProps) => {
@@ -25,6 +26,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
         formControlSx,
         count,
         rawLabel,
+        stopPropagation,
         ...rest
     } = props;
 
@@ -35,6 +37,7 @@ const CheckboxControlled = (props: CheckboxProps) => {
                     <StyledCheckbox
                         size={size}
                         sx={{ ...checkboxSx }}
+                        stopPropagation={stopPropagation}
                         {...rest}
                     />
                 }

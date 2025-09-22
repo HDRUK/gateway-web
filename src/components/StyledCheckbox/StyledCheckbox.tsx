@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { SxProps } from "@mui/material";
 import MuiCheckbox, {
     CheckboxProps as MuiCheckboxProps,
@@ -11,11 +12,13 @@ import {
 export interface StyledCheckboxProps extends MuiCheckboxProps {
     size?: "small" | "medium" | "large";
     iconSx?: SxProps;
+    stopPropagation?: boolean;
 }
 
 const StyledCheckbox = ({
     size = "small",
     iconSx,
+    stopPropagation,
     ...rest
 }: StyledCheckboxProps) => {
     return (
@@ -25,6 +28,11 @@ const StyledCheckbox = ({
             indeterminateIcon={
                 <CheckboxIndeterminateIcon sx={{ ...iconSx }} size={size} />
             }
+            onClick={(event: MouseEvent<HTMLElement>) => {
+                if (stopPropagation) {
+                    event.stopPropagation();
+                }
+            }}
             {...rest}
         />
     );
