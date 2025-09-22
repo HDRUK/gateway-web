@@ -656,32 +656,61 @@ const FilterPanel = ({
                     />
                 );
             case FILTER_DATA_TYPE:
-                return (
-                    <NestedFilterSection
-                        handleCheckboxChange={updatedCheckbox =>
-                            updateNestedCheckboxes(
-                                updatedCheckbox,
-                                label,
-                                FILTER_DATA_SUBTYPE
-                            )
-                        }
-                        checkboxValues={filterValues[label]}
-                        nestedCheckboxValues={filterValues[FILTER_DATA_SUBTYPE]}
-                        filterSection={label}
-                        setValue={setValue}
-                        control={control}
-                        filterItem={filterItem}
-                        resetFilterSection={() =>
-                            resetNestedFilterSection(label, FILTER_DATA_SUBTYPE)
-                        }
-                        counts={formatBucketCounts(
-                            get(aggregations, label)?.buckets
-                        )}
-                        nestedCounts={formatBucketCounts(
-                            get(aggregations, FILTER_DATA_SUBTYPE)?.buckets
-                        )}
-                    />
-                );
+                if (filterCategory === FILTER_CATEGORY_DATASETS) {
+                    return (
+                        <NestedFilterSection
+                            handleCheckboxChange={updatedCheckbox =>
+                                updateNestedCheckboxes(
+                                    updatedCheckbox,
+                                    label,
+                                    FILTER_DATA_SUBTYPE
+                                )
+                            }
+                            checkboxValues={filterValues[label]}
+                            nestedCheckboxValues={
+                                filterValues[FILTER_DATA_SUBTYPE]
+                            }
+                            filterSection={label}
+                            setValue={setValue}
+                            control={control}
+                            filterItem={filterItem}
+                            resetFilterSection={() =>
+                                resetNestedFilterSection(
+                                    label,
+                                    FILTER_DATA_SUBTYPE
+                                )
+                            }
+                            counts={formatBucketCounts(
+                                get(aggregations, label)?.buckets
+                            )}
+                            nestedCounts={formatBucketCounts(
+                                get(aggregations, FILTER_DATA_SUBTYPE)?.buckets
+                            )}
+                        />
+                    );
+                } else {
+                    return (
+                        <FilterSection
+                            handleCheckboxChange={updatedCheckbox =>
+                                updateCheckboxes(updatedCheckbox, label)
+                            }
+                            checkboxValues={filterValues[label]}
+                            filterSection={label}
+                            setValue={setValue}
+                            control={control}
+                            filterItem={filterItem}
+                            resetFilterSection={() => resetFilterSection(label)}
+                            counts={formatBucketCounts(
+                                get(aggregations, label)?.buckets
+                            )}
+                            countsDisabled={
+                                filterCategory ===
+                                    FILTER_CATEGORY_PUBLICATIONS &&
+                                (staticFilterValues.source?.FED || false)
+                            }
+                        />
+                    );
+                }
             default:
                 return (
                     <FilterSection

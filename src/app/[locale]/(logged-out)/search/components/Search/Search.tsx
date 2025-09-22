@@ -529,9 +529,20 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
             filtered = filterToUpdate.filter(f => f !== removedFilter);
         }
 
-        setQueryParams({ ...queryParams, [filterType]: filtered });
+        setQueryParams({
+            ...queryParams,
+            [filterType]: filtered,
+            ...(filterType === FILTER_DATA_TYPE && {
+                [FILTER_DATA_SUBTYPE]: [],
+            }),
+        });
         if (filterType === FILTER_DATA_SET_TITLES) {
             removeArrayQueryAndPush(filterType, removedFilter);
+        } else if (filterType === FILTER_DATA_TYPE) {
+            updatePathMultiple({
+                [FILTER_DATA_TYPE]: filtered,
+                [FILTER_DATA_SUBTYPE]: [],
+            });
         } else {
             updatePath(filterType, filtered.join(","));
         }
