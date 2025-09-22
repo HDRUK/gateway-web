@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import Dashboard from "@/components/DarDashboard";
+import DarDashboard from "@/components/DarDashboard";
 import apis from "@/config/apis";
 import { getUser } from "@/utils/api";
 import metaData from "@/utils/metadata";
@@ -15,7 +15,7 @@ const DARApplicationsPage = async () => {
     const userId = user?.id?.toString();
 
     return (
-        <Dashboard
+        <DarDashboard
             translationPath="pages.account.profile.dataAccessRequests.applications"
             darApiPath={`${apis.usersV1Url}/${userId}/dar/applications`}
             isResearcher
