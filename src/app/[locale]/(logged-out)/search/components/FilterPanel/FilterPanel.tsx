@@ -688,29 +688,28 @@ const FilterPanel = ({
                             )}
                         />
                     );
-                } else {
-                    return (
-                        <FilterSection
-                            handleCheckboxChange={updatedCheckbox =>
-                                updateCheckboxes(updatedCheckbox, label)
-                            }
-                            checkboxValues={filterValues[label]}
-                            filterSection={label}
-                            setValue={setValue}
-                            control={control}
-                            filterItem={filterItem}
-                            resetFilterSection={() => resetFilterSection(label)}
-                            counts={formatBucketCounts(
-                                get(aggregations, label)?.buckets
-                            )}
-                            countsDisabled={
-                                filterCategory ===
-                                    FILTER_CATEGORY_PUBLICATIONS &&
-                                (staticFilterValues.source?.FED || false)
-                            }
-                        />
-                    );
                 }
+                return (
+                    <FilterSection
+                        handleCheckboxChange={updatedCheckbox =>
+                            updateCheckboxes(updatedCheckbox, label)
+                        }
+                        checkboxValues={filterValues[label]}
+                        filterSection={label}
+                        setValue={setValue}
+                        control={control}
+                        filterItem={filterItem}
+                        resetFilterSection={() => resetFilterSection(label)}
+                        counts={formatBucketCounts(
+                            get(aggregations, label)?.buckets
+                        )}
+                        countsDisabled={
+                            filterCategory === FILTER_CATEGORY_PUBLICATIONS &&
+                            (staticFilterValues.source?.FED || false)
+                        }
+                    />
+                );
+
             default:
                 return (
                     <FilterSection
