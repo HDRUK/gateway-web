@@ -1,3 +1,4 @@
+import IconButton from "@mui/material/IconButton";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
@@ -8,7 +9,7 @@ import {
 } from "@/components/FormBanner/FormBanner.styles";
 import Typography from "@/components/Typography";
 import { LAST_SAVED_DATE_FORMAT } from "@/config/forms/dataAccessApplication";
-import { AccessTimeIcon } from "@/consts/icons";
+import { AccessTimeIcon, DownloadIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
@@ -69,12 +70,9 @@ const DarFormBanner = ({
                 )}
 
                 {downloadButtonEnabled && (
-                    <Button
-                        onClick={downloadButtonAction}
-                        size="small"
-                        color="greyCustom">
-                        {t("downloadApplication")}
-                    </Button>
+                    <IconButton onClick={downloadButtonAction} size="small">
+                        <DownloadIcon sx={{ color: "white" }} />
+                    </IconButton>
                 )}
             </Column>
         </DetailBanner>
