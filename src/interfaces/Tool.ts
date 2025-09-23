@@ -70,6 +70,7 @@ export interface ToolPayload {
     any_dataset?: boolean;
     tag: Tag[];
     dataset_versions: VersionItem[];
+    license: number;
 }
 
 export interface ToolPayloadSubmission

@@ -449,6 +449,7 @@
                         "viewApplication": "View application form and any comments",
                         "deleteApplication": "Delete application",
                         "withdrawApplication": "Withdraw application",
+                        "downloadApplication": "Download the application and all attached files as a zip",
                         "daysSinceStart": " days since start",
                         "deleteTitle": "Are you sure you want to delete this application?",
                         "deleteIntro": "This action is permanent, and the information cannot be recovered.",
@@ -1023,9 +1024,7 @@
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
                             "dataType": "Dataset type",
-                            "dataTypeTooltip": "The focus areas to which the dataset content relates",
-                            "dataSubType": "Dataset subtype",
-                            "dataSubTypeTooltip": "The sub-types of topic areas to which the dataset content relates",
+                            "dataTypeTooltip": "Select from the primary dataset types (e.g. Health and disease, Treatments/Interventions) or specific subtypes (e.g. Cancer, Mental health).",
                             "publisherName": "Data Custodian",
                             "publisherNameTooltip": "Individual or organisation providing metadata on the Gateway",
                             "dataProviderColl": "Data Custodian Network",
@@ -1590,6 +1589,11 @@
             "entities": "Entities",
             "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
             "lastActivity": "Last activity"
+        },
+        "NestedFilterSection": {
+            "placeholder": "I'm looking for...",
+            "filterDisabled": "Filter option unavailable due to the options selected. To select this filter option, remove currently selected filter options.",
+            "noFilters": "No filters available"
         },
         "DataAccessMessages": {
             "modalTitle": "Success!",

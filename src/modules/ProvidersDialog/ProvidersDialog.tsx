@@ -10,6 +10,7 @@ import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import useDialog from "@/hooks/useDialog";
+import useFullPathname from "@/hooks/useFullPathname";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
 
@@ -22,12 +23,13 @@ const ProvidersDialog = () => {
         useState<boolean>();
 
     const { hideDialog, store } = useDialog();
+    const pathname = useFullPathname();
 
     useEffect(() => {
         setInstitutionSelectVisible(false);
     }, [store?.dialogComponent]);
 
-    const redirectPath = store.dialogProps?.redirectPath || "";
+    const redirectPath = store.dialogProps?.redirectPath || pathname || "";
 
     return (
         <Dialog

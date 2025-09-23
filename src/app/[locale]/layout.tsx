@@ -19,6 +19,7 @@ import {
     isNhsSdeApplicationsEnabled,
 } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
+import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
 import DialogProvider from "@/providers/DialogProvider";
 import { FeatureProvider } from "@/providers/FeatureProvider";
 import SWRProvider from "@/providers/SWRProvider";
@@ -84,6 +85,7 @@ export default async function RootLayout({
                                                 />
                                             )}
                                         <SnackbarProvider />
+                                        <CohortRedirectProvider />
                                         <Header />
                                         {children}
                                         <Footer />

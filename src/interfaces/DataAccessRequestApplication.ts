@@ -49,6 +49,7 @@ interface DataAccessRequestApplication {
         question_id: string;
         answer: unknown;
     }[];
+    application_type: "FORM" | "DOCUMENT";
 }
 
 export type { DataAccessRequestApplication, DarTeamApplication };

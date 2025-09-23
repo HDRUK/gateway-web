@@ -43,6 +43,7 @@ import {
     SearchResultTool,
     ViewType,
 } from "@/interfaces/Search";
+import { V4Schema } from "@/interfaces/V4Schema";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
@@ -152,6 +153,7 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 interface SearchProps {
     filters: Filter[];
     cohortDiscovery: PageTemplatePromo;
+    schema: V4Schema;
 }
 
 const filterSidebarWidth = 350;
@@ -168,7 +170,7 @@ const filterSidebarStyles = {
     },
 };
 
-const Search = ({ filters, cohortDiscovery }: SearchProps) => {
+const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
@@ -527,9 +529,20 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             filtered = filterToUpdate.filter(f => f !== removedFilter);
         }
 
-        setQueryParams({ ...queryParams, [filterType]: filtered });
+        setQueryParams({
+            ...queryParams,
+            [filterType]: filtered,
+            ...(filterType === FILTER_DATA_TYPE && {
+                [FILTER_DATA_SUBTYPE]: [],
+            }),
+        });
         if (filterType === FILTER_DATA_SET_TITLES) {
             removeArrayQueryAndPush(filterType, removedFilter);
+        } else if (filterType === FILTER_DATA_TYPE) {
+            updatePathMultiple({
+                [FILTER_DATA_TYPE]: filtered,
+                [FILTER_DATA_SUBTYPE]: [],
+            });
         } else {
             updatePath(filterType, filtered.join(","));
         }
@@ -826,12 +839,19 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 filterSourceData={filters}
                 setFilterQueryParams={(
                     filterValues: string[],
-                    filterName: string
+                    filterName: string,
+                    secondFilterValues?: string[],
+                    secondFilterName?: string
                 ) => {
                     // url requires string format, ie "one, two, three"
                     updatePathMultiple({
                         [filterName]: filterValues.join("|"),
                         [PAGE_FIELD]: "1",
+                        ...(secondFilterName !== undefined &&
+                            secondFilterValues !== undefined && {
+                                [secondFilterName]:
+                                    secondFilterValues.join("|"),
+                            }),
                     });
 
                     // api requires string[] format, ie ["one", "two", "three"]
@@ -839,6 +859,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                         ...queryParams,
                         [PAGE_FIELD]: "1",
                         [filterName]: filterValues,
+                        ...(secondFilterName !== undefined &&
+                            secondFilterValues !== undefined && {
+                                [secondFilterName]: secondFilterValues,
+                            }),
                     });
                 }}
                 aggregations={data?.aggregations}
@@ -854,6 +878,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                 getParamString={getParamString}
                 showEuropePmcModal={europePmcModalAction}
                 resetQueryParamState={resetQueryParamState}
+                schemadefs={schema.$defs}
             />
         );
     }, [

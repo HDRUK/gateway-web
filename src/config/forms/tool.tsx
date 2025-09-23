@@ -25,6 +25,7 @@ const defaultValues = {
     publications: [],
     tools: [],
     results: "",
+    license: "",
 };
 
 const validationSchema = yup.object().shape({
@@ -153,6 +154,17 @@ const formFields = [
             value: string | number
         ) => option.value === value,
         getChipLabel,
+    },
+    {
+        label: "License",
+        info: "Select a license from the existing list",
+        name: "license",
+        component: inputComponents.Autocomplete,
+        canCreate: false,
+        isOptionEqualToValue: (
+            option: { id: number; label: string },
+            value: number
+        ) => option.id === value,
     },
     {
         label: "DATASET_RELATIONSHIP_COMPONENT",

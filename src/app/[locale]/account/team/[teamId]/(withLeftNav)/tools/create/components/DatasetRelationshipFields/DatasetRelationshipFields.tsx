@@ -48,7 +48,7 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
 
     const [queryParams, setQueryParams] = useState({
         status: "ACTIVE",
-        searchTitle: "",
+        title: "",
     });
 
     const filterTitleDebounced = useDebounce(query, 500);
