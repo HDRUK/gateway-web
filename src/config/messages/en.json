@@ -170,6 +170,7 @@
             "managingEnquiryDarTitle": "Using the Gateway Enquiry & Data Access Request Module",
             "gettingStartedTitle": "Getting started on the Gateway and managing your Team",
             "theAllianceTitle": "The Alliance",
+            "faqsTitle": "FAQs",
             "onboardingCohortDiscoveryTitle": "Onboarding to Cohort Discovery",
             "documentation": {
                 "title": "Documentation"
@@ -192,6 +193,7 @@
             "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
             "durTitle": "Exploring Data Uses / Research Projects",
             "darTitle": "Submitting Enquiries and Data Access Requests",
+            "researcherTitle": "Researcher FAQs",
             "uploadingPublicationsTitle": "Uploading Publications ",
             "cohortDiscoveryTitle": "Using Cohort Discovery",
             "exploringCollectionsTitle": "Exploring Collections, Data Custodians and Data Custodian Networks",
