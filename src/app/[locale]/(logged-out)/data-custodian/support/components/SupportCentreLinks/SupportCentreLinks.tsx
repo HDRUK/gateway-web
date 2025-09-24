@@ -1,5 +1,6 @@
 "use client";
 
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Banner from "@/components/Banner";
@@ -73,6 +74,11 @@ export default function MeetTheTeam() {
             heading: t("theAllianceTitle"),
             link: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
             icon: <TheAllianceIcon aria-hidden="true" focusable="false" />,
+        },
+        {
+            heading: t("faqsTitle"),
+            link: RouteName.DATA_CUSTODIAN_FAQS,
+            icon: <QuizOutlinedIcon aria-hidden="true" focusable="false" />,
         },
     ];
 
