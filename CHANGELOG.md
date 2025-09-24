@@ -1,3 +1,23 @@
+## [2.21.0](https://github.com/HDRUK/gateway-web/compare/v2.20.0...v2.21.0) (2025-09-23)
+
+### ✨ Features
+
+* **GAT-6152:** Fixed filter chip issue for nested subtypes (#1325) ([27c0a11](https://github.com/HDRUK/gateway-web/commit/27c0a11225283ed4c5ee8be85ae87b770730e5eb))
+* **GAT-6152:** Nested filter for data types (#1323) ([a9d1e33](https://github.com/HDRUK/gateway-web/commit/a9d1e333a97adbe4392e0cdb994b89e5972be431)), closes [GAT-6152](GAT-6152)
+* **GAT-7135:** Add dar application type display (#1324) ([132ea5a](https://github.com/HDRUK/gateway-web/commit/132ea5ac996d3afe2b1492cb70ca645bbeafb46b)), closes [GAT-7135](GAT-7135)
+* **GAT-7335:** Added integrations table component (#1278) ([c925ec5](https://github.com/HDRUK/gateway-web/commit/c925ec50a50bef4c080ece9e30ecaed704e7aeda)), closes [GAT-7335](GAT-7335)
+* **GAT-7353:** Added download button to DAR application form (#1322) ([1fcc512](https://github.com/HDRUK/gateway-web/commit/1fcc51243fd5b625712ded714d176bacdc75388d)), closes [GAT-7353](GAT-7353)
+* **GAT-7354:** Added option to download DAR forms (#1313) ([d7de072](https://github.com/HDRUK/gateway-web/commit/d7de07265d064aa6bc61c68b90f893ccc0ddd9cf)), closes [GAT-7354](GAT-7354)
+* **GAT-7408:** Remove datasetSubType from quick view dialog (#1318) ([80a190b](https://github.com/HDRUK/gateway-web/commit/80a190ba1a025b6a86461d3818bc6621074c8b31)), closes [GAT-7408](GAT-7408)
+* **GAT-7845:** Cohort Redirect upon sign-in provider (#1319) ([2218bde](https://github.com/HDRUK/gateway-web/commit/2218bde70b6adc13b98d881b6769283b496e63a4)), closes [GAT-7845](GAT-7845)
+
+### 🐛 Bug Fixes
+
+* **GAT-7694:** Add license field to tool creation/edit page (#1320) ([7723cc5](https://github.com/HDRUK/gateway-web/commit/7723cc5879bd948017ed2050d8e3fc2c0b26e039)), closes [GAT-7694](GAT-7694)
+* **GAT-7694:** Improve license input box description (#1321) ([c6dc81e](https://github.com/HDRUK/gateway-web/commit/c6dc81e3d7a333a2ffba8bf3cfce28dce1ed0bc7)), closes [GAT-7694](GAT-7694)
+* **GAT-7797:** Fix dataset array validation (#1328) ([4bca870](https://github.com/HDRUK/gateway-web/commit/4bca8709ca5b3ee9be0cf41bd5a71d3f4670dd93))
+* **GAT-7817:** Handle new nested datasetType and datasetSubtype on Dataset content page (#1317) ([5b9c8ed](https://github.com/HDRUK/gateway-web/commit/5b9c8ed3dabff23c1b3b33de657eaa820b3df942)), closes [GAT-7817](GAT-7817)
+
 ## [2.20.0](https://github.com/HDRUK/gateway-web/compare/v2.19.0...v2.20.0) (2025-09-09)
 
 ### ✨ Features
