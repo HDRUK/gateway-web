@@ -134,7 +134,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         return {
             ...q,
             id: q.question_id,
-            boardId,
+            boardId: q.force_required ? SELECTED_BOARD_ID : boardId,
             order: extended ? q.order : index,
             guidance:
                 extended && q.allow_guidance_override && q.guidance
@@ -186,7 +186,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 .sort((a, b) => a.order - b.order)
                 .map(t => ({
                     id: t.id,
-                    anchored: t.force_required === 1,
+                    anchored: t.force_required,
                     task: t,
                     content: <QuestionItem task={t} setTasks={setTasks} />,
                 })),
@@ -202,20 +202,14 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
             tasks: tasks
                 .filter(t => t.boardId === QB_BOARD_ID)
                 .sort((a, b) => a.order - b.order)
-                .map(t => {
-                    return {
-                        id: t.id,
-                        anchored: false,
-                        task: t,
-                        content: (
-                            <QuestionItem
-                                key={t.id}
-                                task={t}
-                                setTasks={setTasks}
-                            />
-                        ),
-                    };
-                }),
+                .map(t => ({
+                    id: t.id,
+                    anchored: false,
+                    task: t,
+                    content: (
+                        <QuestionItem key={t.id} task={t} setTasks={setTasks} />
+                    ),
+                })),
         }),
         [t, tasks]
     );
@@ -347,7 +341,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
 
                         <Typography>{currentSection?.description}</Typography>
                     </Paper>
-                    {tabsList && (
+                    {tabsList && currentSection?.parent_section && (
                         <Tabs
                             centered
                             tabs={tabsList}

@@ -48,18 +48,19 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         },
     });
 
-    const allowEditRequired = useMemo(
+    const isForceRequired = useMemo(
         () => !currentTask.force_required,
         [currentTask.force_required]
+    );
+
+    const isRequired = useMemo(
+        () => currentTask.required,
+        [currentTask.required]
     );
 
     const allowEditGuidance = useMemo(
         () => currentTask.allow_guidance_override,
         [currentTask.allow_guidance_override]
-    );
-    const allowEdit = useMemo(
-        () => allowEditRequired || allowEditGuidance,
-        [allowEditRequired, allowEditGuidance]
     );
 
     const onSuccess = async () => {
@@ -126,7 +127,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
 
                     <RadioGroup
                         isRow
-                        disabled={!allowEditRequired}
+                        disabled={!isForceRequired}
                         name="required"
                         label="Required"
                         control={control}
@@ -142,8 +143,8 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     };
 
     const showLock = useMemo(
-        () => !!currentTask.required,
-        [currentTask.required]
+        () => !!currentTask.force_required,
+        [currentTask.force_required]
     );
 
     const parentLabel = useMemo(() => t("parentQuestionOption"), [t]);
@@ -197,7 +198,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         <Card
             sx={{
                 border: 1,
-                borderColor: !allowEditRequired ? "red" : "lightgrey",
+                borderColor: isRequired ? "red" : "lightgrey",
                 borderRadius: 2,
             }}>
             <CardContent
@@ -235,10 +236,10 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             }}>
                             <IconButton
                                 sx={{ p: 0, m: 0, alignSelf: "flex-start" }}
-                                disabled={!allowEdit}
+                                disabled={!isForceRequired}
                                 onClick={() => handleEdit()}>
                                 <EditIcon
-                                    color={allowEdit ? "primary" : "grey"}
+                                    color={isForceRequired ? "primary" : "grey"}
                                 />
                             </IconButton>
 
