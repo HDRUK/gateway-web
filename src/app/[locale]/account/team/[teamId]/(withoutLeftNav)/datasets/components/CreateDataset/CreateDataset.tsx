@@ -72,13 +72,13 @@ import {
     mapExistingDatasetToFormFields,
     formGenerateLegendItems,
     formGetFieldsCompletedCount,
-    formatValidationItems,
     getFirstLocationValues,
     hasVisibleFieldsForLocation,
     isFirstSection,
     isLastSection,
     mapFormFieldsForSubmission,
     renderFormHydrationField,
+    formatValidationItems,
 } from "@/utils/formHydration";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
@@ -272,15 +272,24 @@ const CreateDataset = ({
             > = {};
 
             validationFields.forEach(field => {
-                const { title, items, ...rest } = field;
+                const { title, items, required, of, ...rest } = field;
 
                 if (items && Array.isArray(items)) {
+                    // When field has an items array, convert to formatted object (used for field arrays)
                     transformedObject[title] = {
                         ...rest,
+                        required,
                         items: formatValidationItems(items),
                     };
+                } else if (of && required) {
+                    // Ensure required array of enums requires at least 1 value
+                    transformedObject[title] = {
+                        ...rest,
+                        required,
+                        min: 1,
+                    };
                 } else {
-                    transformedObject[title] = rest;
+                    transformedObject[title] = { ...rest, required };
                 }
             });
 
