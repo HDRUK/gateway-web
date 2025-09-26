@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { AllowedErrors, errors } from "@/config/errors";
 import { RemoveCircleIcon } from "@/consts/icons";
 
