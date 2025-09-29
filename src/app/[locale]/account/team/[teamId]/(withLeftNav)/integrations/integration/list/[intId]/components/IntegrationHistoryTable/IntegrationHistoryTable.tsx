@@ -44,7 +44,7 @@ const IntegrationHistoryTable = ({}: {}) => {
         ],
     };
 
-    const { lastPage, list } = data || {};
+    const { lastPage, list } = data;
 
     const rows = list.map(x => (
         <TableRow>
