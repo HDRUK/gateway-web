@@ -51,6 +51,7 @@ export enum RouteName {
     SUPPORT_COLLECTIONS = "/support/collections",
     SUPPORT_DUR = "/support/data-use-register",
     SUPPORT_DAR = "/support/data-access-request",
+    SUPPORT_RESEARCHER_FAQS = "/support/researcher-faqs",
     SUPPORT_TOOLS = "/support/tools",
     NEWS_EVENTS = "news/events",
     UPLOAD = "upload",
@@ -74,6 +75,7 @@ export enum RouteName {
     DATA_CUSTODIAN_THE_ALLIANCE = "/data-custodian/support/the-alliance",
     DATA_CUSTODIAN_TOOLS = "/data-custodian/support/tools",
     DATA_CUSTODIAN_PUBLICATIONS = "/data-custodian/support/publications",
+    DATA_CUSTODIAN_FAQS = "/data-custodian/support/faqs",
     MISSION_AND_PURPOSE = "/about/our-mission-and-purpose",
     RESEARCHERS = "/about/researchers-innovators",
 }

@@ -385,6 +385,7 @@ const NestedFilterSection = <
                                                 [event.target.name]: value,
                                             })
                                         }
+                                        count={checkbox.count}
                                         disabled={outerDisabled}
                                     />
                                 </div>
