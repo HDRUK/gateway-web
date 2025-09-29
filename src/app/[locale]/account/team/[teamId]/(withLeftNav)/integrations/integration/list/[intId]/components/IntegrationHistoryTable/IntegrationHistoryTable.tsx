@@ -16,7 +16,7 @@ import Pagination from "@/components/Pagination";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import { colors } from "@/config/theme";
 
-const IntegrationHistoryTable = ({}: {}) => {
+const IntegrationHistoryTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     // Example, put data fetching in here
