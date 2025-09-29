@@ -19,14 +19,29 @@ import { colors } from "@/config/theme";
 const IntegrationHistoryTable = ({}: {}) => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Example, put data fetch here
+    // Example, put data fetching in here
     const data: PaginationType<IntegrationHistory> = {
         lastPage: 1,
         to: 1,
         from: 1,
         currentPage: 1,
         total: 1,
-        list: [],
+        list: [
+            {
+                run_time: "21 September 2025 12:00",
+                success: false,
+                message: "Resource not found",
+            },
+            {
+                run_time: "20 September 2025 17:00",
+                success: true,
+            },
+            {
+                run_time: "19 September 2025 08:15",
+                success: false,
+                message: "Internal server error",
+            },
+        ],
     };
 
     const { lastPage, list } = data || {};
