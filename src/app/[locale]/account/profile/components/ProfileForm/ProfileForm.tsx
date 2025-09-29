@@ -119,7 +119,7 @@ const ProfileForm = () => {
                 if (field.name === "sector_id") {
                     return {
                         ...field,
-                        options: sectors?.map(sector => ({
+                        options: sectors.map(sector => ({
                             value: sector.id,
                             label: sector.name,
                         })),
