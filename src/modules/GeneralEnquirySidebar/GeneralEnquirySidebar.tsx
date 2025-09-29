@@ -132,7 +132,9 @@ const GeneralEnquirySidebar = ({
                     },
                 }}>
                 {datasets.map(item => (
-                    <Typography variant="h1">{item.teamName}</Typography>
+                    <Typography variant="h1" key={item.teamName}>
+                        {item.teamName}
+                    </Typography>
                 ))}
                 <Typography>{t("helperText")}</Typography>
 
