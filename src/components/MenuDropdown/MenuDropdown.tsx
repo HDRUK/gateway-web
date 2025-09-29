@@ -10,6 +10,7 @@ interface MenuDropdownProps {
     anchorElement: null | HTMLElement;
     menuItems: {
         label: string;
+        key?: string;
         href?: string;
         action?: MouseEventHandler<HTMLElement>;
         subItems?: { label: string; href: string }[];
