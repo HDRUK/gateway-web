@@ -49,7 +49,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     });
 
     const isForceRequired = useMemo(
-        () => !currentTask.force_required,
+        () => currentTask.force_required,
         [currentTask.force_required]
     );
 
@@ -61,6 +61,12 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     const allowEditGuidance = useMemo(
         () => currentTask.allow_guidance_override,
         [currentTask.allow_guidance_override]
+    );
+
+    const allowEdit = useMemo(
+        () =>
+            currentTask.allow_guidance_override || !currentTask.force_required,
+        [currentTask.allow_guidance_override, currentTask.force_required]
     );
 
     const onSuccess = async () => {
@@ -127,7 +133,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
 
                     <RadioGroup
                         isRow
-                        disabled={!isForceRequired}
+                        disabled={isForceRequired}
                         name="required"
                         label="Required"
                         control={control}
@@ -236,10 +242,10 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             }}>
                             <IconButton
                                 sx={{ p: 0, m: 0, alignSelf: "flex-start" }}
-                                disabled={!isForceRequired}
+                                disabled={!allowEdit}
                                 onClick={() => handleEdit()}>
                                 <EditIcon
-                                    color={isForceRequired ? "primary" : "grey"}
+                                    color={allowEdit ? "primary" : "grey"}
                                 />
                             </IconButton>
 

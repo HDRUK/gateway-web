@@ -39,7 +39,7 @@ interface DarTemplate {
     deleted_at: string | null;
     team_id: number;
     user_id: number;
-    published: number;
+    published: boolean;
     locked: number;
     questions: DarHasQuestion[];
     template_type: "FORM" | "DOCUMENT";
