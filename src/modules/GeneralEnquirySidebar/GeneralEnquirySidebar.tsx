@@ -109,7 +109,11 @@ const GeneralEnquirySidebar = ({
         if (!user) {
             return;
         }
-        reset({ ...generalEnquiryDefaultValues, ...user });
+        reset({
+            ...generalEnquiryDefaultValues,
+            ...user,
+            from: defaultEmailValue,
+        });
     }, [reset, user]);
 
     return (

@@ -118,7 +118,15 @@ const FeasibilityEnquirySidebar = ({
         if (!user) {
             return;
         }
-        reset({ ...feasibilityEnquiryDefaultValues, ...user });
+        reset({
+            ...feasibilityEnquiryDefaultValues,
+            ...user,
+            from: defaultEmailValue,
+            datasets: datasets.map(v => ({
+                value: v.datasetId,
+                label: v.name,
+            })),
+        });
     }, [reset, user]);
 
     return (
