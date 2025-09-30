@@ -95,11 +95,10 @@ const TeamTemplates = ({
         );
     };
 
-    const handleDeleteTemplate = async (selectedId: number) => {
+    const handleDeleteTemplate = (selectedId: number) => {
         showDialog(DarApplicationActionDialog, {
-            action: async () => {
-                await deleteTemplate(selectedId);
-                refresh();
+            action: () => {
+                deleteTemplate(selectedId).then(() => refresh());
             },
             title: tModal("title"),
         });

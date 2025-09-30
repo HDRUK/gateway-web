@@ -253,7 +253,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
             questions: tasksInSection,
         };
 
-        await updateTemplateQuestions(templateId, payload).then(() =>
+        updateTemplateQuestions(templateId, payload).then(() =>
             mutateQuestions().then(() =>
                 mutateTemplate().then(() => setHasChanges(false))
             )
@@ -272,8 +272,8 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 content:
                     "You have changes to your template that will not be saved automatically",
                 onCancel: () => setSectionId(sectionId),
-                onSuccess: async () => {
-                    await handleSaveChanges(template?.published ?? false);
+                onSuccess: () => {
+                    handleSaveChanges(template?.published ?? false);
                     setSectionId(sectionId);
                 },
             });
