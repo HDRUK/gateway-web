@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { Box } from "@mui/material";
+import zIndex from "@mui/material/styles/zIndex";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import {
     DarQuestion,
     DarHasQuestion,
@@ -10,6 +13,8 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
+import BackButton from "@/components/BackButton";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
@@ -18,20 +23,28 @@ import Tabs from "@/components/Tabs";
 import TaskBoard from "@/components/TaskBoard";
 import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSection";
 import Typography from "@/components/Typography";
-import useActionBar from "@/hooks/useActionBar";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 import PreviewTemplate from "./PreviewTemplate";
 import QuestionItem from "./QuestionItem";
 
 const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
-
 const SELECTED_BOARD_ID = "selectedQuestions";
 const QB_BOARD_ID = "questionBank";
+
+function countBySectionId(templateQuestions: DarHasQuestion[]) {
+    return templateQuestions?.reduce<Record<number, number>>((acc, q) => {
+        const id = q.section_id;
+        acc[id] = (acc[id] ?? 0) + 1;
+        return acc;
+    }, {});
+}
 
 interface EditTemplateProps {
     teamId: string;
@@ -41,6 +54,9 @@ interface EditTemplateProps {
 const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
     const { user } = useAuth();
+    const router = useRouter();
+
+    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`;
 
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
@@ -80,7 +96,6 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
     const [hasChanges, setHasChanges] = useState(false);
 
     const { showModal } = useModal();
-    const { showBar } = useActionBar();
 
     const anchoredErrorCallback = () => {
         notificationService.error(
@@ -89,22 +104,6 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 persist: false,
             }
         );
-    };
-
-    const handleChangeSection = (sectionId: number) => {
-        if (!hasChanges) {
-            setSectionId(sectionId);
-        } else {
-            showModal({
-                invertCloseIconBehaviour: true,
-                confirmText: "Stay on page",
-                cancelText: "Continue without saving",
-                title: "Are you sure you want to exit?",
-                content:
-                    "You have changes to your template that will not be saved automatically",
-                onCancel: () => setSectionId(sectionId),
-            });
-        }
     };
 
     const [currentSection, setCurrentSection] = useState<QuestionBankSection>();
@@ -235,7 +234,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         setHasChanges(!tasksAreUnchanged || anyTaskChanged);
     }, [boardSections, isLoading]);
 
-    const handleSaveChanges = (isPublished: boolean) => {
+    const handleSaveChanges = async (isPublished: boolean) => {
         // first board is the select board
         const tasksInSection = boardSections[0]?.tasks.map(t => {
             return {
@@ -253,31 +252,33 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
             locked: false,
             questions: tasksInSection,
         };
-        updateTemplateQuestions(templateId, payload).then(() =>
+
+        await updateTemplateQuestions(templateId, payload).then(() =>
             mutateQuestions().then(() =>
                 mutateTemplate().then(() => setHasChanges(false))
             )
         );
     };
 
-    useEffect(() => {
-        showBar("CreateTool", {
-            confirmText: t("save"),
-            tertiaryButton: {
-                onAction: () => handleSaveChanges(false),
-                buttonText: t("saveDraft"),
-                buttonProps: {
-                    color: "secondary",
-                    variant: "outlined",
+    const handleChangeSection = (sectionId: number) => {
+        if (!hasChanges) {
+            setSectionId(sectionId);
+        } else {
+            showModal({
+                invertCloseIconBehaviour: true,
+                confirmText: "Save section changes",
+                cancelText: "Discard section changes",
+                title: "Are you sure you want to exit?",
+                content:
+                    "You have changes to your template that will not be saved automatically",
+                onCancel: () => setSectionId(sectionId),
+                onSuccess: async () => {
+                    await handleSaveChanges(template?.published ?? false);
+                    setSectionId(sectionId);
                 },
-            },
-            onSuccess: () => {
-                handleSaveChanges(true);
-            },
-            showCancel: false,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [boardSections]);
+            });
+        }
+    };
 
     const tabsList = useMemo(
         () =>
@@ -313,13 +314,51 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         [boardSections, tasks]
     );
 
+    const countsBySectionId = useMemo(
+        () => template?.questions && countBySectionId(template.questions),
+        [template?.questions]
+    );
+
     if (isLoading) {
         return <Loading />;
     }
 
     return (
-        <Container maxWidth={false} sx={{ minHeight: "1000px", p: 1, m: 1 }}>
-            <Typography variant="h2"> {t("title")} </Typography>
+        <Container
+            maxWidth={false}
+            sx={{ minHeight: "1000px", p: 1, m: 1, mx: 0, pt: 0, mt: 0 }}>
+            <Box
+                sx={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: zIndex.appBar,
+                    bgcolor: colors.grey,
+                    borderBottom: 1,
+                    borderColor: "divider",
+                    py: 4,
+                }}>
+                <Container
+                    maxWidth={false}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}>
+                    <Typography variant="h2" sx={{ m: 0 }}>
+                        {t("title")}
+                    </Typography>
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                        <Button
+                            onClick={() => handleSaveChanges(false)}
+                            color="secondary"
+                            variant="outlined">
+                            {t("saveDraft")}
+                        </Button>
+                        <Button onClick={() => handleSaveChanges(true)}>
+                            {t("save")}
+                        </Button>
+                    </Box>
+                </Container>
+            </Box>
             <Container
                 maxWidth={false}
                 sx={{
@@ -332,10 +371,15 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                     handleLegendClick={handleChangeSection}
                     sectionId={sectionId}
                     sections={sections || []}
+                    sectionCounts={countsBySectionId}
                 />
                 <Container maxWidth={false}>
                     <Paper sx={{ p: 2 }}>
-                        <Typography variant="h2">
+                        <BackButton
+                            onClick={() => router.push(backHref)}
+                            label="Back to DAR Template Management"
+                        />
+                        <Typography variant="h2" sx={{ mt: 2 }}>
                             {currentSection?.name}
                         </Typography>
 
