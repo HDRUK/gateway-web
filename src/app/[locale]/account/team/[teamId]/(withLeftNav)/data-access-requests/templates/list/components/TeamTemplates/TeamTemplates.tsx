@@ -10,10 +10,13 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
+import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
+import useDelete from "@/hooks/useDelete";
+import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { ContentCopyIcon, EditIcon } from "@/consts/icons";
+import { ContentCopyIcon, EditIcon, DeleteIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import TemplateList from "../TemplateList";
 
@@ -26,6 +29,7 @@ interface TeamTemplatesProps {
 }
 
 const TRANSLATION_PATH = `pages.account.team.dar.template.list`;
+const TRANSLATION_PATH_MODAL = "modules.modals.DarTemplateDelete";
 
 const TeamTemplates = ({
     permissions,
@@ -35,7 +39,10 @@ const TeamTemplates = ({
     teamId,
 }: TeamTemplatesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { push, replace } = useRouter();
+    const tModal = useTranslations(TRANSLATION_PATH_MODAL);
+
+    const { push, replace, refresh } = useRouter();
+    const { showDialog } = useDialog();
     const searchParams = useSearchParams();
 
     // Set a default value for published if not specified
@@ -46,6 +53,11 @@ const TeamTemplates = ({
     }
 
     const createTemplate = usePost(apis.dataAccessTemplateV1Url, {
+        itemName: "DAR Template",
+        successNotificationsOn: false,
+    });
+
+    const deleteTemplate = useDelete(apis.dataAccessTemplateV1Url, {
         itemName: "DAR Template",
         successNotificationsOn: false,
     });
@@ -83,6 +95,16 @@ const TeamTemplates = ({
         );
     };
 
+    const handleDeleteTemplate = async (selectedId: number) => {
+        showDialog(DarApplicationActionDialog, {
+            action: async () => {
+                await deleteTemplate(selectedId);
+                refresh();
+            },
+            title: tModal("title"),
+        });
+    };
+
     const actions = [
         ...(permissions?.["data-access-template.update"]
             ? [
@@ -99,6 +121,15 @@ const TeamTemplates = ({
                       icon: ContentCopyIcon,
                       label: t("actions.duplicate.label"),
                       action: handleDuplicateTemplate,
+                  },
+              ]
+            : []),
+        ...(permissions?.["data-access-template.delete"]
+            ? [
+                  {
+                      icon: DeleteIcon,
+                      label: t("actions.delete.label"),
+                      action: handleDeleteTemplate,
                   },
               ]
             : []),
