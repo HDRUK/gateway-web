@@ -820,7 +820,8 @@
                             "unsavedConfirm": "Stay on page",
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
-                            "unsavedInfo": "You have changes to your template that will not be saved automatically"
+                            "unsavedInfo": "You have changes to your template that will not be saved automatically",
+                            "backLinkText": "Back to DAR Template Management"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",

@@ -13,7 +13,6 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
-import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
@@ -30,6 +29,7 @@ import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
+import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import PreviewTemplate from "./PreviewTemplate";
 import QuestionItem from "./QuestionItem";
@@ -375,10 +375,13 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 />
                 <Container maxWidth={false}>
                     <Paper sx={{ p: 2 }}>
-                        <BackButton
+                        <Button
                             onClick={() => router.push(backHref)}
-                            label="Back to DAR Template Management"
-                        />
+                            variant="text"
+                            startIcon={<ArrowBackIosNewIcon />}>
+                            {t("backLinkText")}
+                        </Button>
+
                         <Typography variant="h2" sx={{ mt: 2 }}>
                             {currentSection?.name}
                         </Typography>
