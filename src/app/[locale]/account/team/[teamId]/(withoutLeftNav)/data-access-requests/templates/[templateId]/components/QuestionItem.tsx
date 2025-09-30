@@ -48,18 +48,25 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         },
     });
 
-    const allowEditRequired = useMemo(
-        () => !currentTask.force_required,
+    const isForceRequired = useMemo(
+        () => currentTask.force_required,
         [currentTask.force_required]
+    );
+
+    const isRequired = useMemo(
+        () => currentTask.required,
+        [currentTask.required]
     );
 
     const allowEditGuidance = useMemo(
         () => currentTask.allow_guidance_override,
         [currentTask.allow_guidance_override]
     );
+
     const allowEdit = useMemo(
-        () => allowEditRequired || allowEditGuidance,
-        [allowEditRequired, allowEditGuidance]
+        () =>
+            currentTask.allow_guidance_override || !currentTask.force_required,
+        [currentTask.allow_guidance_override, currentTask.force_required]
     );
 
     const onSuccess = async () => {
@@ -126,7 +133,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
 
                     <RadioGroup
                         isRow
-                        disabled={!allowEditRequired}
+                        disabled={isForceRequired}
                         name="required"
                         label="Required"
                         control={control}
@@ -142,8 +149,8 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
     };
 
     const showLock = useMemo(
-        () => !!currentTask.required,
-        [currentTask.required]
+        () => !!currentTask.force_required,
+        [currentTask.force_required]
     );
 
     const parentLabel = useMemo(() => t("parentQuestionOption"), [t]);
@@ -197,7 +204,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
         <Card
             sx={{
                 border: 1,
-                borderColor: !allowEditRequired ? "red" : "lightgrey",
+                borderColor: isRequired ? "red" : "lightgrey",
                 borderRadius: 2,
             }}>
             <CardContent

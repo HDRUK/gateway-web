@@ -820,7 +820,8 @@
                             "unsavedConfirm": "Stay on page",
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
-                            "unsavedInfo": "You have changes to your template that will not be saved automatically"
+                            "unsavedInfo": "You have changes to your template that will not be saved automatically",
+                            "backLinkText": "Back to DAR Template Management"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -837,6 +838,9 @@
                                 },
                                 "duplicate": {
                                     "label": "Duplicate template"
+                                },
+                                "delete": {
+                                    "label": "Delete template"
                                 }
                             },
                             "draft": "Draft",
@@ -1615,6 +1619,11 @@
                 "title": "Request Sent!",
                 "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
                 "confirmButton": "Back to homepage"
+            },
+            "DarTemplateDelete": {
+                "title": "Are you sure you want to delete this template?",
+                "confirmButton": "Yes",
+                "cancelButton": "No"
             }
         },
         "ActiveListSidebar": {
