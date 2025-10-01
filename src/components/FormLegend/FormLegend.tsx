@@ -6,6 +6,7 @@ import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { colors } from "@/config/theme";
 import { CloseIcon, CheckIcon, PriorityHighIcon } from "@/consts/icons";
 import { capitalise, splitCamelcase } from "@/utils/general";
+import Box from "../Box";
 import Typography from "../Typography";
 import { Wrapper, LegendIcon } from "./FormLegend.styles";
 
@@ -95,15 +96,37 @@ const FormLegend = ({
                                 </LegendIcon>
                             )}
 
-                            <Typography
+                            <Box
                                 sx={{
-                                    fontWeight:
-                                        item.status === LegendStatus.ACTIVE
-                                            ? 600
-                                            : "normal",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    p: 0,
+                                    width: "100%",
+                                    gap: 3,
                                 }}>
-                                {capitalise(splitCamelcase(item.name))}
-                            </Typography>
+                                <Typography
+                                    sx={{
+                                        fontWeight:
+                                            item.status === LegendStatus.ACTIVE
+                                                ? 600
+                                                : "normal",
+                                    }}>
+                                    {capitalise(splitCamelcase(item.name))}
+                                </Typography>
+
+                                {item.count !== undefined && (
+                                    <Typography
+                                        sx={{
+                                            fontWeight:
+                                                item.status ===
+                                                LegendStatus.ACTIVE
+                                                    ? 600
+                                                    : "normal",
+                                        }}>
+                                        ({item.count})
+                                    </Typography>
+                                )}
+                            </Box>
                         </ListItemButton>
                         {item.subItems && (
                             <FormLegend

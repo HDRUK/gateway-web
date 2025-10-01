@@ -10,6 +10,7 @@ interface MenuDropdownProps {
     anchorElement: null | HTMLElement;
     menuItems: {
         label: string;
+        key?: string;
         href?: string;
         action?: MouseEventHandler<HTMLElement>;
         subItems?: { label: string; href: string }[];
@@ -118,7 +119,7 @@ function MenuDropdown({
 
                 return (
                     <MenuItem
-                        key={menuItem.label}
+                        key={menuItem.key ?? menuItem.label}
                         sx={{
                             maxWidth: 250,
                             color: theme.palette.primary.main,
