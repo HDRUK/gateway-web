@@ -117,7 +117,11 @@ const getColumns = ({
     columnHelper.display({
         id: "name",
         header: () => <Box textAlign="left">{translations.nameHeader}</Box>,
-        cell: ({ row }) => `${row.original.firstname} ${row.original.lastname}`,
+        cell: ({ row }) => {
+            return row.original.firstname
+                ? `${row.original.firstname} ${row.original.lastname}`
+                : row.original.name;
+        },
     }),
     columnHelper.display({
         id: "team",
