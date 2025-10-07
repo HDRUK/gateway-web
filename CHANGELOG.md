@@ -1,3 +1,17 @@
+## [2.22.0](https://github.com/HDRUK/gateway-web/compare/v2.21.0...v2.22.0) (2025-10-07)
+
+### ✨ Features
+
+* **GAT-6152:** Show count on un-nested parents (#1333) ([9af0272](https://github.com/HDRUK/gateway-web/commit/9af027274a6040397dc627f0ae9afd7293169747)), closes [GAT-6152](GAT-6152)
+* **GAT-6568:** DAR template builder UX improvements (#1335) ([737fd77](https://github.com/HDRUK/gateway-web/commit/737fd770cd1ce74512f59205869c32ff7544e31e)), closes [GAT-6568](GAT-6568)
+* **GAT-7335:** Add pagination to integration history table (#1334) ([d5b557e](https://github.com/HDRUK/gateway-web/commit/d5b557ef51f403e3c5e34c53a949915c2ce4a138)), closes [GAT-7335](GAT-7335)
+* **GAT-7879:** Add additional wordpress support pages (#1331) ([bc7c608](https://github.com/HDRUK/gateway-web/commit/bc7c6086b87e524999c5dc23bab299567211648b)), closes [GAT-7879](GAT-7879)
+
+### 🐛 Bug Fixes
+
+* **GAT-1234:** Show user.name if user.firstname is null, to avoid showing 'null null' (#1338) ([18559f9](https://github.com/HDRUK/gateway-web/commit/18559f986f0f18af9eefe84132f9fa9a4571c2b3)), closes [GAT-1234](GAT-1234)
+* **GAT-7861:** Enquiry forms email selection and dataset name fix (#1336) ([0615254](https://github.com/HDRUK/gateway-web/commit/06152542470a0378f8de70f0bb4e21223e323ee1))
+
 ## [2.21.0](https://github.com/HDRUK/gateway-web/compare/v2.20.0...v2.21.0) (2025-09-23)
 
 ### ✨ Features
