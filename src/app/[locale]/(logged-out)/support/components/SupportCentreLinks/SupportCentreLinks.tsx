@@ -1,5 +1,6 @@
 "use client";
 
+import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -59,6 +60,11 @@ export default function MeetTheTeam() {
             icon: (
                 <DataAccessRequestIcon aria-hidden="true" focusable="false" />
             ),
+        },
+        {
+            heading: t("researcherTitle"),
+            link: RouteName.SUPPORT_RESEARCHER_FAQS,
+            icon: <QuizOutlinedIcon aria-hidden="true" focusable="false" />,
         },
     ];
 

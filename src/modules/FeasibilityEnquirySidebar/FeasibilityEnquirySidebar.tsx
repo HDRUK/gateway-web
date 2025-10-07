@@ -49,6 +49,10 @@ const FeasibilityEnquirySidebar = ({
             ...feasibilityEnquiryDefaultValues,
             ...user,
             from: defaultEmailValue,
+            datasets: datasets.map(v => ({
+                value: v.datasetId,
+                label: v.name,
+            })),
         },
     });
 
@@ -114,7 +118,15 @@ const FeasibilityEnquirySidebar = ({
         if (!user) {
             return;
         }
-        reset({ ...feasibilityEnquiryDefaultValues, ...user });
+        reset({
+            ...feasibilityEnquiryDefaultValues,
+            ...user,
+            from: defaultEmailValue,
+            datasets: datasets.map(v => ({
+                value: v.datasetId,
+                label: v.name,
+            })),
+        });
     }, [reset, user]);
 
     return (
@@ -137,7 +149,9 @@ const FeasibilityEnquirySidebar = ({
                     },
                 }}>
                 {datasets.map(item => (
-                    <Typography variant="h1">{item.teamName}</Typography>
+                    <Typography variant="h1" key={item.teamName}>
+                        {item.teamName}
+                    </Typography>
                 ))}
                 <Typography>{t("helperText")}</Typography>
 

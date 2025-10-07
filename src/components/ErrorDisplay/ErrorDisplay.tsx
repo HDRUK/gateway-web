@@ -1,6 +1,4 @@
-"use client";
-
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { AllowedErrors, errors } from "@/config/errors";
 import { RemoveCircleIcon } from "@/consts/icons";
 
@@ -9,7 +7,6 @@ interface ErrorDisplayProps {
 }
 
 const ErrorDisplay = ({ variant }: ErrorDisplayProps) => {
-    const theme = useTheme();
     const errorStatusCode = variant;
 
     const { message, imageSrc, imageAlt, icon } = errors[errorStatusCode];
@@ -26,9 +23,6 @@ const ErrorDisplay = ({ variant }: ErrorDisplayProps) => {
                 alignItems: "center",
                 justifyContent: "center",
                 width: "100%",
-                [theme.breakpoints.down("laptop")]: {
-                    my: "auto",
-                },
             }}>
             <Box sx={{ maxWidth: "550px" }}>
                 {imageSrc ? (

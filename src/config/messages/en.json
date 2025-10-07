@@ -170,6 +170,7 @@
             "managingEnquiryDarTitle": "Using the Gateway Enquiry & Data Access Request Module",
             "gettingStartedTitle": "Getting started on the Gateway and managing your Team",
             "theAllianceTitle": "The Alliance",
+            "faqsTitle": "FAQs",
             "onboardingCohortDiscoveryTitle": "Onboarding to Cohort Discovery",
             "documentation": {
                 "title": "Documentation"
@@ -192,6 +193,7 @@
             "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
             "durTitle": "Exploring Data Uses / Research Projects",
             "darTitle": "Submitting Enquiries and Data Access Requests",
+            "researcherTitle": "Researcher FAQs",
             "uploadingPublicationsTitle": "Uploading Publications ",
             "cohortDiscoveryTitle": "Using Cohort Discovery",
             "exploringCollectionsTitle": "Exploring Collections, Data Custodians and Data Custodian Networks",
@@ -624,8 +626,8 @@
                             "successMessage": "Dataset successfully created",
                             "upload": "Upload",
                             "returnButtonText": "View dataset in 'Drafts' tab",
-                            "errorNoMatchingPid": "The summary.dataCustodian.identifier is: {dataCustodianId} which does not match your teams identifier: {teamPid}.",
-                            "errorNoPid": "Missing summary.dataCustodian.identifier your teams identifier is: {teamPid} please add in, this identifier before uploading."
+                            "errorNoMatchingPid": "The summary.dataCustodian.identifier is: {dataCustodianId} which does not match your team's identifier: {teamPid}.",
+                            "errorNoPid": "Missing summary.dataCustodian.identifier. Your team's identifier is: {teamPid}. Please add in this identifier before uploading."
                         }
                     }
                 },
@@ -818,7 +820,8 @@
                             "unsavedConfirm": "Stay on page",
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
-                            "unsavedInfo": "You have changes to your template that will not be saved automatically"
+                            "unsavedInfo": "You have changes to your template that will not be saved automatically",
+                            "backLinkText": "Back to DAR Template Management"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -835,6 +838,9 @@
                                 },
                                 "duplicate": {
                                     "label": "Duplicate template"
+                                },
+                                "delete": {
+                                    "label": "Delete template"
                                 }
                             },
                             "draft": "Draft",
@@ -1613,6 +1619,11 @@
                 "title": "Request Sent!",
                 "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
                 "confirmButton": "Back to homepage"
+            },
+            "DarTemplateDelete": {
+                "title": "Are you sure you want to delete this template?",
+                "confirmButton": "Yes",
+                "cancelButton": "No"
             }
         },
         "ActiveListSidebar": {
