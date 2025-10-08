@@ -51,6 +51,11 @@ function parseStaticImagePaths<T>(values: T, prefix?: string) {
     ) as T;
 }
 
+function decodeHtmlEntity(input: string): string {
+    const doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent || "";
+}
+
 export {
     capitalise,
     convertToCamelCase,
@@ -59,4 +64,5 @@ export {
     getTrimmedpathname,
     parseStaticImagePaths,
     getTeamAssetPath,
+    decodeHtmlEntity,
 };

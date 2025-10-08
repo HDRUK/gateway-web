@@ -80,7 +80,7 @@ import {
     renderFormHydrationField,
     formatValidationItems,
 } from "@/utils/formHydration";
-import { capitalise, splitCamelcase } from "@/utils/general";
+import { capitalise, decodeHtmlEntity, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
 import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
@@ -252,6 +252,14 @@ const CreateDataset = ({
 
         if (isDuplicate) {
             latestMetadata = omit(latestMetadata, "summary.title");
+        }
+
+        const keywords = latestMetadata?.summary?.keywords;
+
+        if (keywords && latestMetadata) {
+            latestMetadata.summary.keywords = keywords.map(keyword =>
+                decodeHtmlEntity(keyword)
+            );
         }
 
         setStructuralMetadata(latestMetadata?.structuralMetadata?.tables || []);
@@ -663,6 +671,7 @@ const CreateDataset = ({
             }
             delete formPayload.metadata.metadata.datasetType;
             delete formPayload.metadata.metadata.datasetSubType;
+
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(
