@@ -605,7 +605,7 @@ async function getDarTeamApplication(
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
         cookieStore,
-        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}`,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}?group_arrays=true`,
         {
             cache: {
                 tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],
@@ -621,7 +621,7 @@ async function getDarApplicationUser(
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
         cookieStore,
-        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}?group_arrays=true`,
         {
             cache: {
                 tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],

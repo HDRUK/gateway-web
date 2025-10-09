@@ -61,6 +61,9 @@ const formatDarQuestion = (
             value: option.label,
         })),
     }),
+    ...(field?.fields && {
+        fields: field?.fields,
+    }),
 });
 
 const createFileUploadConfig = (

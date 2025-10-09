@@ -68,13 +68,14 @@ interface DarApplicationQuestion {
         label: string;
         children: DarApplicationQuestion[];
     }[];
+    fields?: DarApplicationQuestion[];
 }
 
 interface DarApplicationAnswer {
     application_id: number;
     question_id: number;
     contributor_id: number;
-    answer: string;
+    answer: string | string[];
 }
 
 interface DarTemplateCountResponse {
