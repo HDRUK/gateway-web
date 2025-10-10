@@ -160,6 +160,7 @@ export default async function DatasetItemPage({
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,
+                                    overflow: "hidden",
                                 }}>
                                 <DatasetMindMap
                                     data={datasetVersion}
