@@ -22,7 +22,6 @@ import {
     useTheme,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import zIndex from "@mui/material/styles/zIndex";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -201,7 +200,7 @@ export default function CustomerSurvey({
                 bottom: isMobile ? 30 : 0,
                 left: `calc(50% - ${boxSize / 2}px)`,
                 width: boxSize,
-                zIndex: zIndex.snackbar,
+                zIndex: 1400,
                 animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
             }}>
             <IconButton
