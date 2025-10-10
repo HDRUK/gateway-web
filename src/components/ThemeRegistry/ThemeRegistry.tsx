@@ -27,7 +27,6 @@ export default function ThemeRegistry({
                             display: "flex",
                             flexDirection: "column",
                             minHeight: "100vh",
-                            overflowX: "clip",
                             ...(isHome
                                 ? {
                                       background:
