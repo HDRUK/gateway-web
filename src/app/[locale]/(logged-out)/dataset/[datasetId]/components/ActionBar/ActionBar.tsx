@@ -208,10 +208,14 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     };
 
     return (
-        <ActionBarWrapper>
+        <ActionBarWrapper
+            sx={{
+                display: { mobile: "grid", tablet: "flex" },
+                gap: { mobile: 1, tablet: 0 },
+            }}>
             <BackButton
                 label={t("label")}
-                style={{ margin: 0 }}
+                style={{ margin: 0, justifySelf: "flex-start" }}
                 onClick={() =>
                     router.push(
                         `/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`
@@ -219,13 +223,32 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                 }
             />
 
-            <Box sx={{ display: "flex", gap: 1, p: 0 }}>
+            <Box
+                sx={{
+                    display: { mobile: "grid", tablet: "flex" },
+                    gap: 1,
+                    p: 0,
+                    gridTemplateColumns: {
+                        mobile: "repeat(2, minmax(0, 1fr))",
+                        tablet: "none",
+                    },
+                }}>
                 <Button onClick={handleGeneralEnquiryClick}>
-                    <QuestionAnswerIcon sx={{ pr: 1 }} />
+                    <QuestionAnswerIcon
+                        sx={{
+                            pr: 1,
+                            display: { mobile: "none", tablet: "inline-block" },
+                        }}
+                    />
                     {t("generalEnquiryButtonText")}
                 </Button>
                 <Button onClick={handleFeasibilityEnquiryClick}>
-                    <QuestionAnswerIcon sx={{ pr: 1 }} />
+                    <QuestionAnswerIcon
+                        sx={{
+                            pr: 1,
+                            display: { mobile: "none", tablet: "inline-block" },
+                        }}
+                    />
                     {t("feasibilityEnquiryButtonText")}
                 </Button>
                 <Button
@@ -238,14 +261,29 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                 <Button
                     aria-label={t("downloadMetadata")}
                     variant="text"
-                    startIcon={<DownloadIcon sx={{ fill: "primary" }} />}
+                    startIcon={
+                        <DownloadIcon
+                            sx={{
+                                fill: "primary",
+                            }}
+                        />
+                    }
                     endIcon={
                         <ChevronThinIcon
                             fontSize="medium"
                             style={{ color: "primary" }}
+                            sx={{
+                                display: {
+                                    mobile: "none",
+                                    tablet: "inline-block",
+                                },
+                            }}
                         />
                     }
-                    sx={{ ml: 2, bgcolor: colors.grey200 }}
+                    sx={{
+                        bgcolor: colors.grey200,
+                        ml: { mobile: 0, tablet: 2 },
+                    }}
                     onClick={handleOpenDropdownMenu}>
                     {t("downloadMetadata")}
                 </Button>

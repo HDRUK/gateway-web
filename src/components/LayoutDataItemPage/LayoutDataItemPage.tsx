@@ -40,6 +40,7 @@ export default function LayoutDataItemPage({
                 sx={{
                     gridColumn: { tablet: "span 3", laptop: "span 4" },
                     p: 0,
+                    overflow: "hidden",
                 }}>
                 {body}
             </Box>
