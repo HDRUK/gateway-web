@@ -60,6 +60,9 @@ const DatasetStatCard = ({
             aria-describedby={descriptionId}
             sx={{
                 ...(enableScroll ? { cursor: "pointer" } : {}),
+                width: { mobile: "40%", desktop: "100%" },
+                flexShrink: 0,
+                scrollSnapAlign: "start",
             }}>
             <Title>
                 <Typography fontSize={16} sx={{ mb: 0, pt: 1, pb: 1 }}>
