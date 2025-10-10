@@ -25,12 +25,13 @@ export default function LayoutDataItemPage({
             sx={{
                 gridTemplateColumns: {
                     mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
+                    tablet: "repeat(3, 1fr)",
+                    laptop: "repeat(5, 1fr)",
                 },
             }}>
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
+                    gridColumn: { tablet: "span 1", laptop: "span 1" },
                     bgcolor: "white",
                     p: 0,
                 }}>
@@ -38,7 +39,7 @@ export default function LayoutDataItemPage({
             </Box>
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 3", laptop: "span 4" },
+                    gridColumn: { tablet: "span 2", laptop: "span 4" },
                     p: 0,
                 }}>
                 {body}
