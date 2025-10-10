@@ -18,8 +18,11 @@ import {
     keyframes,
     Box,
     Button,
+    useMediaQuery,
+    useTheme,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
+import zIndex from "@mui/material/styles/zIndex";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -49,7 +52,6 @@ const ratings: Ratings[] = [
 ];
 
 const displayIn = 150000;
-const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
@@ -73,6 +75,9 @@ export default function CustomerSurvey({
 }: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
     const [animateOut, setAnimateOut] = useState(false);
@@ -80,6 +85,9 @@ export default function CustomerSurvey({
         "rating"
     );
     const [sessionId, setSessionId] = useState<string | null>(null);
+
+    const boxSize = isMobile ? 375 : 600;
+
     const id = useId();
     const reason = {
         label: t("label"),
@@ -190,10 +198,10 @@ export default function CustomerSurvey({
                 padding: 2,
                 background: "white",
                 position: "fixed",
-                bottom: 0,
+                bottom: isMobile ? 30 : 0,
                 left: `calc(50% - ${boxSize / 2}px)`,
                 width: boxSize,
-                zIndex: 999,
+                zIndex: zIndex.snackbar,
                 animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
             }}>
             <IconButton
@@ -202,7 +210,11 @@ export default function CustomerSurvey({
                 <CloseIcon />
             </IconButton>
 
-            <Typography variant="h6" gutterBottom id={id}>
+            <Typography
+                variant="h6"
+                gutterBottom
+                id={id}
+                width={isMobile ? "90%" : "100%"}>
                 {t("title")}
             </Typography>
 
@@ -226,8 +238,14 @@ export default function CustomerSurvey({
                                             sx={{
                                                 cursor: "pointer",
                                                 color: colour,
-                                                minWidth: "75px",
-                                                minHeight: "75px",
+                                                minWidth: {
+                                                    mobile: "30px",
+                                                    tablet: "75px",
+                                                },
+                                                minHeight: {
+                                                    mobile: "30px",
+                                                    tablet: "75px",
+                                                },
                                                 margin: 1,
                                                 fontSize: 1,
                                                 fontWeight: "bold",
