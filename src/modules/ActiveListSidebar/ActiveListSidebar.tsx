@@ -105,7 +105,6 @@ const ActiveListSidebar = ({
                             backgroundColor: "white",
                             fontSize: "15px",
                             fontWeight: 600,
-                            "&:hover": { background: "white" },
                         }}
                         endIcon={<ChevronThinIcon color="primary" />}>
                         {t("bookmarks")}
