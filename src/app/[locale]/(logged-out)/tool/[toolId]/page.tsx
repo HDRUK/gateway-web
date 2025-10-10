@@ -55,7 +55,7 @@ export default async function ToolPage({
             body={
                 <>
                     <ActionBar />
-                    <Box sx={{ px: 6, py: 3 }}>
+                    <Box sx={{ px: 3, py: 3 }}>
                         <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
                             {data.name}
                         </Typography>
