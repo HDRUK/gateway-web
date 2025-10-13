@@ -29,7 +29,6 @@ describe("getCohortStatusAndRedirect", () => {
 
         (getUserCohortRequest as jest.Mock).mockResolvedValue(mockUserRequest);
 
-
         const result = await getCohortStatusAndRedirect(123);
 
         expect(cookies).toHaveBeenCalled();
