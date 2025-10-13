@@ -7,14 +7,17 @@ import { getSessionCookie } from "@/utils/getSessionCookie";
 import { logger } from "@/utils/logger";
 
 export const getCohortStatusAndRedirect = async (
-    userId: number
+    userId: number,
+    redirect: boolean
 ): Promise<CohortResponse | null> => {
     try {
         const cookieStore = cookies();
 
         const [userRequest, accessRedirect] = await Promise.all([
             getUserCohortRequest(cookieStore, userId.toString()),
-            getCohortAccessRedirect(cookieStore),
+            redirect
+                ? getCohortAccessRedirect(cookieStore)
+                : { redirect_url: "" },
         ]);
         return {
             requestStatus: userRequest?.request_status ?? null,
