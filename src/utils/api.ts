@@ -334,15 +334,11 @@ export async function getUserCohortRequest(
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
-    const cache: Cache = {
-        tags: ["cohort", "cohort-user", `cohort-user-${userId}`],
-        revalidate: 15 * 60, // 15 minutes
-    };
 
     return get<CohortRequestUser>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
-        { cache },
+        undefined,
         {
             Cookie: cookieHeader,
         }
