@@ -34,7 +34,7 @@ const CohortDiscoveryButton = ({
 }: CohortDiscoveryButtonProps) => {
     const { showDialog } = useDialog();
     const { push } = useRouter();
-    const { isLoggedIn, user } = useAuth();
+    const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
     const { requestStatus, redirectUrl } = useCohortStatus(user?.id);
 
     const [isClicked, setIsClicked] = useState(false);
@@ -104,7 +104,7 @@ const CohortDiscoveryButton = ({
                     color={color}
                     disabled={disabledOuter || isDisabled}
                     {...restProps}>
-                    {isLoading ? (
+                    {isLoading || isLoadingAuth ? (
                         <CircularProgress size={20} color="inherit" />
                     ) : (
                         ctaLink?.title
