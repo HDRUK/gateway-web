@@ -119,6 +119,7 @@ interface DarFormattedField extends FormHydrationField {
         value: string;
         children: DarFormattedField[];
     }[];
+    fields?: DarApplicationQuestion[];
 }
 
 export type {
