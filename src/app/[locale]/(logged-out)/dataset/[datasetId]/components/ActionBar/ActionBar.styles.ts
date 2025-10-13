@@ -7,7 +7,7 @@ export const ActionBarWrapper = styled(Box)(() => ({
     width: "100%",
     boxShadow: "1px 1px 3px 0px #00000017",
 
-    [theme.breakpoints.up("tablet")]: {
+    [theme.breakpoints.up("desktop")]: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
