@@ -51,9 +51,11 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                                 <EllipsisLineLimit
                                     text={paper_title || ""}
                                     showToolTip
-                                    maxLine={1}
+                                    maxLine={isMobileOrTablet ? 2 : 1}
                                 />
-                                <OpenInNewIcon sx={{ ml: 2 }} />
+                                <OpenInNewIcon
+                                    sx={{ ml: isMobileOrTablet ? 1 : 2 }}
+                                />
                             </PublicationTitle>
                             {!isMobileOrTablet && (
                                 <PublicationYear>
