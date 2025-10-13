@@ -1,3 +1,9 @@
+## [2.22.2](https://github.com/HDRUK/gateway-web/compare/v2.22.1...v2.22.2) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8070:** Break action bar to grid earlier (#1350) ([bf0b6e9](https://github.com/HDRUK/gateway-web/commit/bf0b6e913c425466a680df08bb6c4270e74088b3)), closes [GAT-8070](GAT-8070)
+
 ## [2.22.1](https://github.com/HDRUK/gateway-web/compare/v2.22.0...v2.22.1) (2025-10-13)
 
 ### 🐛 Bug Fixes
