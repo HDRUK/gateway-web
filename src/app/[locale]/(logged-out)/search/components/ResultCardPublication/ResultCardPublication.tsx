@@ -1,4 +1,4 @@
-import { ListItem } from "@mui/material";
+import { ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultPublication } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -22,6 +22,9 @@ const TRANSLATION_PATH = "pages.search.components.ResultCardPublication";
 
 const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    const theme = useTheme();
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("laptop"));
 
     const {
         abstract,
@@ -52,14 +55,22 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                                 />
                                 <OpenInNewIcon sx={{ ml: 2 }} />
                             </PublicationTitle>
-                            <PublicationYear>
-                                {t("published")}:{" "}
-                                {year_of_publication || t("notAvailable")}
-                            </PublicationYear>
+                            {!isMobileOrTablet && (
+                                <PublicationYear>
+                                    {t("published")}:{" "}
+                                    {year_of_publication || t("notAvailable")}
+                                </PublicationYear>
+                            )}
                         </PublicationTitleWrapper>
                     }
                     secondary={
                         <>
+                            {isMobileOrTablet && (
+                                <PublicationYear alignSelf="end">
+                                    {t("published")}:{" "}
+                                    {year_of_publication || t("notAvailable")}
+                                </PublicationYear>
+                            )}
                             <div>
                                 <ShowMore maxHeight={21}>
                                     <PublicationText sx={{ m: 0 }}>
