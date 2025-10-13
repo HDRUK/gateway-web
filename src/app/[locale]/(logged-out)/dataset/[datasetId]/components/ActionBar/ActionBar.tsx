@@ -210,8 +210,8 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     return (
         <ActionBarWrapper
             sx={{
-                display: { mobile: "grid", tablet: "flex" },
-                gap: { mobile: 1, tablet: 0 },
+                display: { mobile: "grid", desktop: "flex" },
+                gap: { mobile: 1, desktop: 0 },
             }}>
             <BackButton
                 label={t("label")}
@@ -225,12 +225,12 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
 
             <Box
                 sx={{
-                    display: { mobile: "grid", tablet: "flex" },
+                    display: { mobile: "grid", desktop: "flex" },
                     gap: 1,
                     p: 0,
                     gridTemplateColumns: {
                         mobile: "repeat(2, minmax(0, 1fr))",
-                        tablet: "none",
+                        desktop: "none",
                     },
                 }}>
                 <Button onClick={handleGeneralEnquiryClick}>
@@ -282,7 +282,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     }
                     sx={{
                         bgcolor: colors.grey200,
-                        ml: { mobile: 0, tablet: 2 },
+                        ml: { mobile: 0, desktop: 2 },
                     }}
                     onClick={handleOpenDropdownMenu}>
                     {t("downloadMetadata")}
