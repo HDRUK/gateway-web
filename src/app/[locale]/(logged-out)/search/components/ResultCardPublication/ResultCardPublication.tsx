@@ -10,7 +10,6 @@ import {
     PublicationAbstract,
     PublicationText,
     PublicationTitle,
-    PublicationTitleWrapper,
     PublicationWrapper,
     PublicationYear,
 } from "./ResultCardPublication.styles";
