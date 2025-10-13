@@ -8,7 +8,7 @@ import { logger } from "@/utils/logger";
 
 export const getCohortStatusAndRedirect = async (
     userId: number,
-    redirect: boolean
+    redirect = false
 ): Promise<CohortResponse | null> => {
     try {
         const cookieStore = cookies();
