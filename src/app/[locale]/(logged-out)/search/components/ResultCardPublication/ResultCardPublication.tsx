@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { SearchResultPublication } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import ShowMore from "@/components/ShowMore";
+import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { OpenInNewIcon } from "@/consts/icons";
 import {
@@ -44,7 +45,18 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                 <PublicationWrapper
                     disableTypography
                     primary={
-                        <PublicationTitleWrapper>
+                        <Typography
+                            sx={{
+                                display: "flex",
+                                flexDirection: {
+                                    laptop: "row",
+                                    tablet: "column",
+                                    mobile: "column",
+                                },
+                                justifyContent: "space-between",
+                                alignItems: "flex-end",
+                                marginBottom: theme.spacing(1),
+                            }}>
                             <PublicationTitle
                                 href={full_text_url || url || ""}
                                 target="_blank">
@@ -57,22 +69,14 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                                     sx={{ ml: isMobileOrTablet ? 1 : 2 }}
                                 />
                             </PublicationTitle>
-                            {!isMobileOrTablet && (
-                                <PublicationYear>
-                                    {t("published")}:{" "}
-                                    {year_of_publication || t("notAvailable")}
-                                </PublicationYear>
-                            )}
-                        </PublicationTitleWrapper>
+                            <PublicationYear>
+                                {t("published")}:{" "}
+                                {year_of_publication || t("notAvailable")}
+                            </PublicationYear>
+                        </Typography>
                     }
                     secondary={
                         <>
-                            {isMobileOrTablet && (
-                                <PublicationYear alignSelf="end">
-                                    {t("published")}:{" "}
-                                    {year_of_publication || t("notAvailable")}
-                                </PublicationYear>
-                            )}
                             <div>
                                 <ShowMore maxHeight={21}>
                                     <PublicationText sx={{ m: 0 }}>
