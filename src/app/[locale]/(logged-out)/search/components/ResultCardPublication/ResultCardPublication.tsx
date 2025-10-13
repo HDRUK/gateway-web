@@ -1,15 +1,15 @@
-import { ListItem } from "@mui/material";
+import { ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultPublication } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import ShowMore from "@/components/ShowMore";
+import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { OpenInNewIcon } from "@/consts/icons";
 import {
     PublicationAbstract,
     PublicationText,
     PublicationTitle,
-    PublicationTitleWrapper,
     PublicationWrapper,
     PublicationYear,
 } from "./ResultCardPublication.styles";
@@ -22,6 +22,9 @@ const TRANSLATION_PATH = "pages.search.components.ResultCardPublication";
 
 const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    const theme = useTheme();
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("laptop"));
 
     const {
         abstract,
@@ -41,22 +44,35 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                 <PublicationWrapper
                     disableTypography
                     primary={
-                        <PublicationTitleWrapper>
+                        <Typography
+                            sx={{
+                                display: "flex",
+                                flexDirection: {
+                                    laptop: "row",
+                                    tablet: "column",
+                                    mobile: "column",
+                                },
+                                justifyContent: "space-between",
+                                alignItems: "flex-end",
+                                marginBottom: theme.spacing(1),
+                            }}>
                             <PublicationTitle
                                 href={full_text_url || url || ""}
                                 target="_blank">
                                 <EllipsisLineLimit
                                     text={paper_title || ""}
                                     showToolTip
-                                    maxLine={1}
+                                    maxLine={isMobileOrTablet ? 2 : 1}
                                 />
-                                <OpenInNewIcon sx={{ ml: 2 }} />
+                                <OpenInNewIcon
+                                    sx={{ ml: isMobileOrTablet ? 1 : 2 }}
+                                />
                             </PublicationTitle>
                             <PublicationYear>
                                 {t("published")}:{" "}
                                 {year_of_publication || t("notAvailable")}
                             </PublicationYear>
-                        </PublicationTitleWrapper>
+                        </Typography>
                     }
                     secondary={
                         <>

@@ -62,52 +62,50 @@ export default async function CollectionItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                        <HTMLContent content={name} />
+                    </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
                         <AspectRatioImage
                             width={554}
                             height={250}
                             alt={toTitleCase(name)}
                             src={image_link || StaticImages.BASE.placeholder}
                         />
-                        <Typography variant="h1" sx={{ ml: 2 }}>
-                            <HTMLContent content={name} />
-                        </Typography>
                     </Box>
 
-                    <Box sx={{ px: 6, py: 3 }}>
-                        <Box sx={{ mb: 3 }}>
-                            <ActionBar />
-                        </Box>
-                        <Box sx={{ mb: 3 }}>
-                            <Typography variant="h3" sx={{ mb: 1 }}>
-                                {t("introTitle")}
-                            </Typography>
-                            <MarkDownSanitizedWithHtml content={description} />
-                        </Box>
-                        <Box>
-                            <DatasetsContent
-                                datasets={dataset_versions}
-                                anchorIndex={1}
-                            />
+                    <Box>
+                        <ActionBar />
+                    </Box>
+                    <Box sx={{ mb: 3 }}>
+                        <Typography variant="h3" sx={{ mb: 1 }}>
+                            {t("introTitle")}
+                        </Typography>
+                        <MarkDownSanitizedWithHtml content={description} />
+                    </Box>
+                    <Box>
+                        <DatasetsContent
+                            datasets={dataset_versions}
+                            anchorIndex={1}
+                        />
 
-                            <ToolsContent
-                                tools={tools}
-                                anchorIndex={2}
-                                translationPath={TRANSLATION_PATH}
-                            />
+                        <ToolsContent
+                            tools={tools}
+                            anchorIndex={2}
+                            translationPath={TRANSLATION_PATH}
+                        />
 
-                            <DataUsesContent
-                                datauses={dur}
-                                anchorIndex={3}
-                                translationPath={TRANSLATION_PATH}
-                            />
+                        <DataUsesContent
+                            datauses={dur}
+                            anchorIndex={3}
+                            translationPath={TRANSLATION_PATH}
+                        />
 
-                            <PublicationsContent
-                                publications={publications}
-                                anchorIndex={4}
-                                translationPath={TRANSLATION_PATH}
-                            />
-                        </Box>
+                        <PublicationsContent
+                            publications={publications}
+                            anchorIndex={4}
+                            translationPath={TRANSLATION_PATH}
+                        />
                     </Box>
                 </>
             }

@@ -21,6 +21,7 @@ import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
 import { formatTextWithLinks, splitStringList } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
+import { decodeHtmlEntity } from "@/utils/general";
 import {
     DatasetSection,
     DatasetType,
@@ -106,6 +107,8 @@ const DatasetContent = ({
                 if (typeof tagList === "string") {
                     tagList = tagList.split(",");
                 }
+                tagList = tagList.map(tag => decodeHtmlEntity(tag));
+
                 return (
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
