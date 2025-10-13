@@ -14,7 +14,7 @@ export const getCohortStatusAndRedirect = async (
 
         const [userRequest, accessRedirect] = await Promise.all([
             getUserCohortRequest(cookieStore, userId.toString()),
-            getCohortAccessRedirect(cookieStore, userId.toString()),
+            getCohortAccessRedirect(cookieStore),
         ]);
         return {
             requestStatus: userRequest?.request_status ?? null,
