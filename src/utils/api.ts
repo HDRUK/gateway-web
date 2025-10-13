@@ -334,11 +334,14 @@ export async function getUserCohortRequest(
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
-
+    const cache: Cache = {
+        tags: ["cohort", "cohort-user", `cohort-user-${userId}`],
+        revalidate: 15 * 60, // 15 minutes
+    };
     return get<CohortRequestUser>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
-        undefined,
+        { cache },
         {
             Cookie: cookieHeader,
         }
@@ -352,7 +355,6 @@ export async function getCohortAccessRedirect(
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
-
     return get<CohortRequestAccess>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/access`,
