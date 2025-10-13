@@ -1,3 +1,14 @@
+## [2.22.1](https://github.com/HDRUK/gateway-web/compare/v2.22.0...v2.22.1) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8016:** Place name of Custodian / Network above logo on Custodian / Network pages (#1341) ([6e21996](https://github.com/HDRUK/gateway-web/commit/6e2199677beeaf74ead2054bf752d8f8a5fc87df)), closes [GAT-8016](GAT-8016)
+* **GAT-8070:** Collapse bookmark bar on mobile to a dropdown, and tweak the grid template behaviour (#1344) ([427249a](https://github.com/HDRUK/gateway-web/commit/427249af2050450d60162d058bfeb160ba3bd8d6)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Fix display of mind map on mobile  (#1346) ([bf50372](https://github.com/HDRUK/gateway-web/commit/bf503722ae850fe674bc773ece3a5297247a258b))
+* **GAT-8070:** Make publication search card title more readable on mobile and tablet (#1348) ([16acfb4](https://github.com/HDRUK/gateway-web/commit/16acfb43fb6e3b0968a37e07a84764fef6f461a7)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Make survey smaller on mobile (#1347) ([7924b86](https://github.com/HDRUK/gateway-web/commit/7924b866830d87adffe48956d61123df0a744358)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Responsive styling fixes (#1345) ([fdef034](https://github.com/HDRUK/gateway-web/commit/fdef03480bd648a5df7570d4f1d2ca793b26977e))
+
 ## [2.22.0](https://github.com/HDRUK/gateway-web/compare/v2.21.0...v2.22.0) (2025-10-07)
 
 ### ✨ Features
