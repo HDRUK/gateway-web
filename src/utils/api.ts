@@ -346,14 +346,12 @@ export async function getUserCohortRequest(
 }
 
 export async function getCohortAccessRedirect(
-    cookieStore: ReadonlyRequestCookies,
-    userId: string
+    cookieStore: ReadonlyRequestCookies
 ): Promise<CohortRequestAccess> {
     const cookieHeader = cookieStore
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
-
 
     return get<CohortRequestAccess>(
         cookieStore,
