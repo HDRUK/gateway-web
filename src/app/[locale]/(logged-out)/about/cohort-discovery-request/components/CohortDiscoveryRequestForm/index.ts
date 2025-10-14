@@ -1,3 +1,3 @@
-import CohortDisoveryRequestForm from "./CohortDiscoveryRequestForm";
+import CohortDiscoveryRequestForm from "./CohortDiscoveryRequestForm";
 
-export default CohortDisoveryRequestForm;
+export default CohortDiscoveryRequestForm;

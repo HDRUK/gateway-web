@@ -19,7 +19,7 @@ import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 
 const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
 
-interface CohortDisoveryRequestFormProps {
+interface CohortDiscoveryRequestFormProps {
     cmsContent: templateRepeatFields;
     userId: number;
 }
@@ -31,7 +31,7 @@ interface accessRequestType {
 const CohortDiscoveryRequestForm = ({
     cmsContent,
     userId,
-}: CohortDisoveryRequestFormProps) => {
+}: CohortDiscoveryRequestFormProps) => {
     const { push } = useRouter();
     const { showDialog } = useDialog();
     const t = useTranslations();
@@ -152,4 +152,4 @@ const CohortDiscoveryRequestForm = ({
     ) : null;
 };
 
-export default CohortDisoveryRequestForm;
+export default CohortDiscoveryRequestForm;
