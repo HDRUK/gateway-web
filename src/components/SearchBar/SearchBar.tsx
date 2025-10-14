@@ -52,15 +52,6 @@ const SearchBar = ({
 
     return (
         <FormWrapper data-testid={TEST_ID_WRAPPER}>
-            {explainerText && (
-                <>
-                    <ExplainerText>{explainerText}</ExplainerText>
-                    <ExplainerLink href={`/${RouteName.HOW_TO_SEARCH}`}>
-                        {t("howToSearch")}
-                    </ExplainerLink>
-                </>
-            )}
-
             <SearchForm onSubmit={handleSubmit(submitAction)} role="search">
                 <InputWrapper
                     onClick={() =>

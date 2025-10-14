@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 export const appbar = css({
     flexDirection: "row",
     padding: "12px 16px",
-    background: "white",
+    background: "red",
     marginBottom: "5px",
     boxShadow: "1px 1px 3px 0 rgba(0,0,0,.09)",
 });
@@ -12,7 +12,7 @@ export const toolbar = css({
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
-    height: "70px",
+    height: "100px",
     padding: "0",
 });
 

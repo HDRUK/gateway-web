@@ -30,7 +30,7 @@ export const StaticImages = {
         "team_integrations"
     ),
     BASE: parseStaticImagePaths({
-        logo: "heath_data_research_gateway_logo_white.svg",
+        logo: "logo.svg",
         placeholder: "default_placeholder.png",
     }),
 };

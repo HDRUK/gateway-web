@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { hotjar } from "react-hotjar";
+import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -15,7 +16,6 @@ import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import { useIsHomePage } from "@/hooks/useIsHomePage";
-import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
 import { colors } from "@/config/theme";
 import { MenuIcon } from "@/consts/icons";
@@ -41,110 +41,136 @@ function Header() {
     const accountLinks = useAccountMenu();
 
     return (
-        <AppBar position="static" color={isHome ? "transparent" : "primary"}>
-            <Container maxWidth="desktop">
-                <Toolbar
-                    disableGutters
+        <>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                }}>
+                <Box
                     sx={{
-                        pt: 1,
-                        pb: 1,
-                        justifyContent: {
-                            tablet: "initial",
-                        },
+                        flex: 1,
+                        textAlign: "left",
+                        paddingTop: "15px",
+                    }}
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "40px",
                     }}>
-                    <Link
-                        href="/"
+                    <Image
+                        src="/images/logos/logo.svg"
+                        priority
+                        width={110}
+                        height={50}
+                        alt="HDR UK Gateway"
+                    />
+                    <Typography variant="h1" gutterBottom>
+                        CRUK Data Hub
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        flex: 1,
+                        textAlign: "right",
+                        paddingRight: "50px",
+                        paddingTop: "20px",
+                    }}>
+                    <AccountNav />
+                </Box>
+            </Box>
+            <AppBar
+                position="static"
+                color={isHome ? "transparent" : "primary"}>
+                <Container maxWidth="desktop">
+                    <Toolbar
+                        disableGutters
                         sx={{
-                            display: { mobile: "none", desktop: "flex" },
-                            mr: 1,
-                            "&:focus&.Mui-focusVisible": {
-                                borderRadius: 0,
-                                outline: `2px solid ${colors.white}`,
-                                outlineOffset: "3px",
+                            pt: 1,
+                            pb: 1,
+                            justifyContent: {
+                                tablet: "initial",
                             },
                         }}>
-                        <Image
-                            src={StaticImages.BASE.logo}
-                            priority
-                            width={110}
-                            height={50}
-                            alt="HDR UK Gateway"
-                        />
-                    </Link>
-                    <Box
-                        sx={{
-                            display: { mobile: "flex", desktop: "none" },
-                        }}>
-                        <IconButton
-                            size="large"
-                            aria-label="navigation menu"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
+                        <Link
+                            href="/"
                             sx={{
+                                display: { mobile: "none", desktop: "flex" },
+                                mr: 1,
                                 "&:focus&.Mui-focusVisible": {
                                     borderRadius: 0,
                                     outline: `2px solid ${colors.white}`,
                                     outlineOffset: "3px",
                                 },
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                display: { mobile: "flex", desktop: "none" },
                             }}>
-                            <MenuIcon htmlColor="white" />
-                        </IconButton>
+                            <IconButton
+                                size="large"
+                                aria-label="navigation menu"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
+                                sx={{
+                                    "&:focus&.Mui-focusVisible": {
+                                        borderRadius: 0,
+                                        outline: `2px solid ${colors.white}`,
+                                        outlineOffset: "3px",
+                                    },
+                                }}>
+                                <MenuIcon htmlColor="white" />
+                            </IconButton>
 
-                        <MenuDropdown
-                            handleClose={() => setAnchorElement(null)}
-                            menuItems={
-                                isTablet
-                                    ? navItems
-                                    : [...navItems, ...accountLinks]
-                            }
-                            anchorElement={anchorElement}
+                            <MenuDropdown
+                                handleClose={() => setAnchorElement(null)}
+                                menuItems={
+                                    isTablet
+                                        ? navItems
+                                        : [...navItems, ...accountLinks]
+                                }
+                                anchorElement={anchorElement}
+                            />
+                        </Box>
+                        <Link
+                            href="/"
+                            sx={{
+                                margin: { mobile: "auto" },
+                                ml: { tablet: 2 },
+                                flex: { tablet: 1 },
+                                mr: { tablet: 1 },
+                                position: { mobile: "relative" },
+                                left: { mobile: "-24px", tablet: 0 },
+                                display: { tablet: "flex", desktop: "none" },
+                                "&:focus&.Mui-focusVisible": {
+                                    borderRadius: 0,
+                                    outline: `2px solid ${colors.white}`,
+                                    outlineOffset: "3px",
+                                },
+                            }}
                         />
-                    </Box>
-                    <Link
-                        href="/"
-                        sx={{
-                            margin: { mobile: "auto" },
-                            ml: { tablet: 2 },
-                            flex: { tablet: 1 },
-                            mr: { tablet: 1 },
-                            position: { mobile: "relative" },
-                            left: { mobile: "-24px", tablet: 0 },
-                            display: { tablet: "flex", desktop: "none" },
-                            "&:focus&.Mui-focusVisible": {
-                                borderRadius: 0,
-                                outline: `2px solid ${colors.white}`,
-                                outlineOffset: "3px",
-                            },
-                        }}>
-                        <Image
-                            src={StaticImages.BASE.logo}
-                            priority
-                            width={110}
-                            height={50}
-                            alt="HDR Gateway logo"
-                        />
-                    </Link>
-                    <Box
-                        sx={{
-                            flexGrow: 1,
-                            display: { mobile: "none", desktop: "flex" },
-                        }}>
-                        <DesktopNav />
-                    </Box>
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                display: { mobile: "none", desktop: "flex" },
+                            }}>
+                            <DesktopNav />
+                        </Box>
 
-                    <Box
-                        sx={{
-                            justifySelf: "end",
-                            flexGrow: 0,
-                            display: { mobile: "none", tablet: "flex" },
-                        }}>
-                        <AccountNav />
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                        <Box
+                            sx={{
+                                justifySelf: "end",
+                                flexGrow: 0,
+                                display: { mobile: "none", tablet: "flex" },
+                            }}
+                        />
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </>
     );
 }
 export default Header;

@@ -65,7 +65,7 @@ const getCommonCellStyles = <T,>(
 
     const shouldPin = isPinned || isHeaderPinned;
     return {
-        backgroundColor: shouldPin ? colors.grey100 : "white",
+        backgroundColor: "white",
         boxShadow: hasPinnedBorder ? `1px 0 ${colors.grey300}` : undefined,
         left: shouldPin ? `${column.getStart()}px` : undefined,
         top: shouldPin ? 0 : undefined,

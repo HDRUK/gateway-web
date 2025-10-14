@@ -25,6 +25,15 @@ export interface DatasetSection {
 
 const datasetFields: DatasetSection[] = [
     {
+        sectionName: "Keywords",
+        fields: [
+            {
+                path: "metadata.metadata.summary.keywords",
+                type: FieldType.TAG_LIST,
+            },
+        ],
+    },
+    {
         sectionName: "Summary",
         fields: [
             {
@@ -85,221 +94,11 @@ const datasetFields: DatasetSection[] = [
         ],
     },
     {
-        sectionName: "Keywords",
-        fields: [
-            {
-                path: "metadata.metadata.summary.keywords",
-                type: FieldType.TAG_LIST,
-            },
-        ],
-    },
-    {
-        sectionName: "Observations",
-        fields: [
-            {
-                path: "metadata.metadata.observations",
-                type: FieldType.TEXT,
-            },
-        ],
-    },
-    {
-        sectionName: "Provenance",
-        fields: [
-            {
-                path: "metadata.metadata.provenance.origin.purpose",
-                type: FieldType.LIST,
-                label: "Purpose of dataset collection",
-                tooltip: "The purpose for which the dataset was collected.",
-            },
-            {
-                path: "metadata.metadata.provenance.origin.source",
-                type: FieldType.LIST,
-                label: "Source of data extraction",
-                tooltip: "The source from which the data was extracted.",
-            },
-            {
-                path: "metadata.metadata.provenance.origin.collectionSource",
-                type: FieldType.LIST,
-                label: "Collection source setting",
-                tooltip:
-                    "The setting(s) where data was collected. Multiple settings may be provided.",
-            },
-            {
-                path: "metadata.metadata.coverage.pathway",
-                type: FieldType.LIST,
-                label: "Patient pathway description",
-                tooltip:
-                    "Description of the patient pathway and any limitations the dataset may have with respect to pathway coverage. This could include if the dataset is from a single speciality or area, a single tier of care, linked across two tiers (e.g. primary and secondary care), or an integrated care record covering the whole patient pathway.",
-            },
-            {
-                path: "metadata.metadata.provenance.origin.imageContrast",
-                type: FieldType.TEXT,
-                label: "Image contrast",
-                tooltip:
-                    "Indication of whether usage of imaging contrast is captured within the dataset.",
-            },
-            {
-                path: "metadata.metadata.coverage.materialType",
-                type: FieldType.TEXT,
-                label: "Biological sample availability",
-                tooltip:
-                    "Type of specimen saved from a biological entity, and indication of the specimen availability.",
-            },
-        ],
-    },
-    {
         sectionName: "Structural Metadata",
         fields: [
             {
                 path: "metadata.metadata.structuralMetadata.tables",
                 type: FieldType.TAG_LIST,
-            },
-        ],
-    },
-    {
-        sectionName: "Details",
-        fields: [
-            {
-                path: "metadata.metadata.provenance.temporal.publishingFrequency",
-                type: FieldType.TEXT,
-                label: "Publishing frequency",
-                tooltip:
-                    "The frequency of publishing new data for this dataset.",
-            },
-            {
-                path: "metadata.metadata.version",
-                type: FieldType.TEXT,
-                label: "Version",
-                tooltip: "Dataset metadata version",
-            },
-            {
-                path: "metadata.metadata.modified",
-                type: FieldType.DATE,
-                label: "Modified",
-                tooltip:
-                    "The most recent date when the information about this dataset was updated.",
-            },
-            {
-                path: "metadata.metadata.provenance.temporal.distributionReleaseDate",
-                type: FieldType.DATE,
-                label: "Distribution release date",
-                tooltip:
-                    "Date this version of the dataset was released for research purposes.",
-            },
-            {
-                path: "metadata.metadata.accessibility.usage.resourceCreator",
-                type: FieldType.TEXT,
-                label: "Citation Requirements",
-                tooltip:
-                    "The text which needs to be included as part of any citation that credits this dataset.",
-            },
-        ],
-    },
-    {
-        sectionName: "Coverage",
-        fields: [
-            {
-                path: "metadata.metadata.provenance.temporal.startDate",
-                type: FieldType.DATE,
-                label: "Start date",
-                tooltip:
-                    "The start of the time period for which the dataset provides coverage.",
-            },
-            {
-                path: "metadata.metadata.provenance.temporal.endDate",
-                type: FieldType.DATE,
-                label: "End date",
-                tooltip:
-                    "The last date of the time period for which the dataset provides coverage.",
-            },
-            {
-                path: "metadata.metadata.provenance.temporal.timeLag",
-                type: FieldType.TEXT,
-                label: "Time lag",
-                tooltip:
-                    "The typical time-lag between an event and the data for that event appearing in the dataset.",
-            },
-            {
-                path: "metadata.metadata.coverage.spatial",
-                type: FieldType.LIST,
-                label: "Geographic coverage",
-                tooltip:
-                    "The geographical area covered by the dataset population or data.",
-            },
-            {
-                path: "metadata.metadata.coverage.typicalAgeRangeMin",
-                type: FieldType.TEXT,
-                label: "Minimum age range",
-                tooltip: "The minimum age of dataset participants.",
-            },
-            {
-                path: "metadata.metadata.coverage.typicalAgeRangeMax",
-                type: FieldType.TEXT,
-                label: "Maximum age range",
-                tooltip:
-                    "The maximum age of dataset participants. NOTE: a value of 150 indicates the dataset contains all ages",
-            },
-            {
-                path: "metadata.metadata.coverage.followUp",
-                type: FieldType.TEXT,
-                label: "Follow-up",
-                tooltip:
-                    "The typical time span that a patient appears in the dataset (follow up period).",
-            },
-            {
-                path: "metadata.metadata.coverage.datasetCompleteness",
-                type: FieldType.TEXT,
-                label: "Dataset completeness",
-                tooltip:
-                    "The URL where a Researcher can learn more about the completeness of the dataset.",
-            },
-        ],
-    },
-    {
-        sectionName: "Omics",
-        fields: [
-            {
-                path: "metadata.metadata.omics.assay",
-                type: FieldType.TEXT,
-                label: "Assay",
-            },
-            {
-                path: "metadata.metadata.omics.platform",
-                type: FieldType.TEXT,
-                label: "Platform",
-            },
-        ],
-    },
-    {
-        sectionName: "Accessibility",
-        fields: [
-            {
-                path: "metadata.metadata.accessibility.formatAndStandards.language",
-                type: FieldType.LIST,
-                label: "Language",
-                tooltip:
-                    "All the languages in which the dataset metadata and underlying data are made available.",
-            },
-            {
-                path: "metadata.metadata.accessibility.formatAndStandards.conformsTo",
-                type: FieldType.LIST,
-                label: "Alignment with standardised data models",
-                tooltip:
-                    "Standardised data models that the dataset has been stored in or transformed to (e.g. OMOP, FHIR), or if the data is only available in a local format.",
-            },
-            {
-                path: "metadata.metadata.accessibility.formatAndStandards.vocabularyEncodingScheme",
-                type: FieldType.LIST,
-                label: "Controlled vocabulary",
-                tooltip:
-                    "Relevant terminologies/ontologies/controlled vocabularies that are being used in the dataset. (e.g. ICD-10 codes, NHS Data Dictionary national codes, SNOMED CT International)",
-            },
-            {
-                path: "metadata.metadata.accessibility.formatAndStandards.format",
-                type: FieldType.LIST,
-                label: "Format",
-                tooltip:
-                    "Format(s) in which the dataset is available. (e.g. application, audio, image, message, model, multipart, text, video)",
             },
         ],
     },
@@ -396,6 +195,60 @@ const datasetFields: DatasetSection[] = [
                 type: FieldType.LIST,
                 label: "Investigations",
                 tooltip: "Weblink to any active projects using the dataset.",
+            },
+        ],
+    },
+    {
+        sectionName: "Provenance",
+        fields: [
+            {
+                path: "metadata.metadata.provenance.origin.purpose",
+                type: FieldType.LIST,
+                label: "Purpose of dataset collection",
+                tooltip: "The purpose for which the dataset was collected.",
+            },
+            {
+                path: "metadata.metadata.provenance.origin.source",
+                type: FieldType.LIST,
+                label: "Source of data extraction",
+                tooltip: "The source from which the data was extracted.",
+            },
+            {
+                path: "metadata.metadata.provenance.origin.collectionSource",
+                type: FieldType.LIST,
+                label: "Collection source setting",
+                tooltip:
+                    "The setting(s) where data was collected. Multiple settings may be provided.",
+            },
+            {
+                path: "metadata.metadata.coverage.pathway",
+                type: FieldType.LIST,
+                label: "Patient pathway description",
+                tooltip:
+                    "Description of the patient pathway and any limitations the dataset may have with respect to pathway coverage. This could include if the dataset is from a single speciality or area, a single tier of care, linked across two tiers (e.g. primary and secondary care), or an integrated care record covering the whole patient pathway.",
+            },
+            {
+                path: "metadata.metadata.provenance.origin.imageContrast",
+                type: FieldType.TEXT,
+                label: "Image contrast",
+                tooltip:
+                    "Indication of whether usage of imaging contrast is captured within the dataset.",
+            },
+            {
+                path: "metadata.metadata.coverage.materialType",
+                type: FieldType.TEXT,
+                label: "Biological sample availability",
+                tooltip:
+                    "Type of specimen saved from a biological entity, and indication of the specimen availability.",
+            },
+        ],
+    },
+    {
+        sectionName: "Observations",
+        fields: [
+            {
+                path: "metadata.metadata.observations",
+                type: FieldType.TEXT,
             },
         ],
     },

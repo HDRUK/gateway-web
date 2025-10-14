@@ -67,18 +67,33 @@ const AccountNav = () => {
     }
 
     return (
-        <Button
-            size="small"
-            variant="outlined"
-            color="secondary"
-            sx={{
-                color: "white",
-            }}
-            onClick={() =>
-                showDialog(ProvidersDialog, { isProvidersDialog: true })
-            }>
-            {t("DesktopNav.labels.signIn")}
-        </Button>
+        <Box sx={{ flexDirection: "horizontal" }}>
+            <Button
+                size="medium"
+                variant="contained"
+                color="secondary"
+                sx={{
+                    color: "white",
+                    marginRight: 2,
+                }}
+                onClick={() =>
+                    showDialog(ProvidersDialog, { isProvidersDialog: true })
+                }>
+                {t("DesktopNav.labels.signIn")}
+            </Button>
+            <Button
+                size="medium"
+                variant="contained"
+                color="secondary"
+                sx={{
+                    color: "white",
+                }}
+                onClick={() =>
+                    showDialog(ProvidersDialog, { isProvidersDialog: true })
+                }>
+                {t("DesktopNav.labels.help")}
+            </Button>
+        </Box>
     );
 };
 

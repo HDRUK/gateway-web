@@ -26,14 +26,8 @@ interface ResultTableProps {
     cohortDiscovery: PageTemplatePromo;
 }
 
-const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
 const PUBLISHERS_ID = "metadata.summary.publisher.gatewayId";
-const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
-const ACCESS_SERVICE_PATH =
-    "metadata.accessibility.access.accessServiceCategory";
-const CONTAINS_TISSUE_PATH = "metadata.additional.containsTissue";
-const STRUCTURAL_METADATA_PATH = "metadata.additional.hasTechnicalMetadata";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
 
@@ -53,27 +47,6 @@ const getColumns = ({
     cohortDiscovery: PageTemplatePromo;
 }) => [
     columnHelper.display({
-        id: "actions",
-        meta: { isPinned: true },
-        cell: ({ row: { original } }) => {
-            return (
-                <div style={{ textAlign: "center" }}>
-                    <ActionDropdown
-                        result={original}
-                        libraryData={libraryData}
-                        showLibraryModal={showLibraryModal}
-                        mutateLibraries={mutateLibraries}
-                        isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
-                        cohortDiscovery={cohortDiscovery}
-                    />
-                </div>
-            );
-        },
-        header: () => <span>{translations.actionLabel}</span>,
-        size: 120,
-    }),
-
-    columnHelper.display({
         id: "title",
         cell: ({ row: { original } }) => {
             const { _id: datasetId } = original;
@@ -89,7 +62,8 @@ const getColumns = ({
         },
         meta: { isPinned: true, hasPinnedBorder: true },
         header: () => <span>{translations.metaDataLabel}</span>,
-        size: 240,
+        minSize: 300,
+        size: 300,
     }),
 
     columnHelper.display({
@@ -133,30 +107,8 @@ const getColumns = ({
                 {translations.dataProviderLabel}
             </Tooltip>
         ),
-        size: 120,
+        size: 240,
     }),
-
-    columnHelper.display({
-        id: "populationSize",
-        cell: ({ row: { original } }) => (
-            <div style={{ textAlign: "center" }}>
-                {getPopulationSize(
-                    original?.metadata,
-                    translations.populationSizeNotReported
-                )}
-            </div>
-        ),
-        header: () => (
-            <Tooltip
-                describeChild
-                title={translations.populationSizeTooltip}
-                tabIndex={0}>
-                {translations.populationSizeLabel}
-            </Tooltip>
-        ),
-        size: 120,
-    }),
-
     columnHelper.display({
         id: "dateRange",
         cell: info => (
@@ -174,103 +126,23 @@ const getColumns = ({
         ),
         size: 120,
     }),
-
     columnHelper.display({
-        id: "accessService",
-        cell: ({ row: { original } }) => (
-            <div style={{ textAlign: "center" }}>
-                {get(original, ACCESS_SERVICE_PATH)}
-            </div>
-        ),
-        header: () => (
-            <Tooltip
-                describeChild
-                title={translations.accessServiceTooltip}
-                tabIndex={0}>
-                {translations.accessServiceLabel}
-            </Tooltip>
-        ),
-        size: 120,
-    }),
-
-    columnHelper.display({
-        id: "conformsTo",
-        cell: ({ row: { original } }) => (
-            <div style={{ textAlign: "center" }}>
-                {formatTextDelimiter(get(original, CONFORMS_TO_PATH))}
-            </div>
-        ),
-        header: () => (
-            <Tooltip
-                describeChild
-                title={translations.dataStandardTooltip}
-                tabIndex={0}>
-                {translations.dataStandardLabel}
-            </Tooltip>
-        ),
-        size: 120,
-    }),
-
-    columnHelper.display({
-        id: "cohortDiscovery",
+        id: "actions",
+        meta: { isPinned: true },
         cell: ({ row: { original } }) => {
-            const isCohortDiscovery = get(original, COHORT_DISCOVERY_PATH);
             return (
                 <div style={{ textAlign: "center" }}>
-                    {isCohortDiscovery ? <CheckIcon color="primary" /> : "-"}
+                    <ActionDropdown
+                        result={original}
+                        showLibraryModal={showLibraryModal}
+                        mutateLibraries={mutateLibraries}
+                        isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
+                        cohortDiscovery={cohortDiscovery}
+                    />
                 </div>
             );
         },
-        header: () => (
-            <Tooltip
-                describeChild
-                title={translations.cohortDiscoveryTooltip}
-                tabIndex={0}>
-                {translations.cohortDiscoveryLabel}
-            </Tooltip>
-        ),
-        size: 120,
-    }),
-
-    columnHelper.display({
-        id: "containsTissue",
-        cell: ({ row: { original } }) => {
-            const containsTissue = get(original, CONTAINS_TISSUE_PATH);
-            return (
-                <div style={{ textAlign: "center" }}>
-                    {containsTissue ? <CheckIcon color="primary" /> : "-"}
-                </div>
-            );
-        },
-        header: () => (
-            <Tooltip
-                describeChild
-                title={translations.containsBioSamplesTooltip}
-                tabIndex={0}>
-                {translations.containsBioSamplesLabel}
-            </Tooltip>
-        ),
-        size: 120,
-    }),
-
-    columnHelper.display({
-        id: "hasTechnicalMetadata",
-        cell: ({ row: { original } }) => {
-            const containsTissue = get(original, STRUCTURAL_METADATA_PATH);
-            return (
-                <div style={{ textAlign: "center" }}>
-                    {containsTissue ? <CheckIcon color="primary" /> : "-"}
-                </div>
-            );
-        },
-        header: () => (
-            <Tooltip
-                describeChild
-                title={translations.hasTechnicalMetadataTooltip}
-                tabIndex={0}>
-                {translations.hasTechnicalMetadataLabel}
-            </Tooltip>
-        ),
+        header: () => <span>{translations.actionLabel}</span>,
         size: 120,
     }),
 ];
@@ -297,7 +169,6 @@ const ResultTable = ({
             : false;
 
     const translations = {
-        actionLabel: t("action.label"),
         metaDataLabel: t("title.label"),
         populationSizeLabel: t("populationSize.label"),
         populationSizeTooltip: t("populationSize.tooltip"),
@@ -309,24 +180,23 @@ const ResultTable = ({
         dataProviderLabel: t("dataProvider.label"),
         dataProviderTooltip: t("dataProvider.tooltip"),
         accessServiceLabel: t("accessService.label"),
-        accessServiceTooltip: t("accessService.tooltip"),
-        cohortDiscoveryLabel: t("cohortDiscovery.label"),
-        cohortDiscoveryTooltip: t("cohortDiscovery.tooltip"),
-        containsBioSamplesLabel: t("containsBioSamples.label"),
-        containsBioSamplesTooltip: t("containsBioSamples.tooltip"),
-        hasTechnicalMetadataLabel: t("hasTechnicalMetadata.label"),
-        hasTechnicalMetadataTooltip: t("hasTechnicalMetadata.tooltip"),
+
+        actionLabel: t("action.label"),
     };
 
     return (
         <Paper
             sx={{
                 p: 0,
-                border: "1px solid lightgray",
+                width: "100%",
+                bgcolor: "background.paper",
+                border: "1px solid #AAB7C4",
+                borderRadius: 2,
                 mb: 4,
             }}>
             <TableContainer>
                 <Table<SearchResultDataset>
+                    style={{ background: "background.paper", borderRadius: 2 }}
                     columns={getColumns({
                         translations,
                         libraryData,

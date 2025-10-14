@@ -8,7 +8,7 @@ export const FooterWrapper = styled("footer")(({ theme }) => ({
         listStyleType: "none",
         paddingLeft: 0,
     },
-    background: `linear-gradient(97deg, #46AF93 4.05%, ${theme.palette.primary.main} 100%)`,
+    background: "#fff",
 }));
 
 export const FooterContainer = styled(Container)(({ theme }) => ({
@@ -52,16 +52,17 @@ export const FooterSocial = styled("span")({
     display: "flex",
     alignItems: "center",
     gap: "6px",
+    color: "black",
 });
 
 export const FooterLink = styled(Link)({
     textDecoration: "none",
-    color: "white",
+    color: "black",
     "&:hover": {
         textDecoration: "underline",
     },
 });
 
 export const FooterCopyright = styled("div")({
-    color: "#bdbada",
+    color: "#000",
 });
