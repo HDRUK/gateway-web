@@ -62,9 +62,10 @@ const CohortDiscoveryRequestForm = ({
         if (!isUserLoading && !isAccessLoading) {
             if (accessData?.redirect_url) {
                 push(accessData.redirect_url);
-            } else if (userData?.request_status === "APPROVED") {
-                push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
-            }
+           } else if (
+            userData?.request_status &&
+            userData.request_status === "APPROVED"
+        ) {
         }
     }, [isUserLoading, isAccessLoading, accessData, userData, push]);
 
