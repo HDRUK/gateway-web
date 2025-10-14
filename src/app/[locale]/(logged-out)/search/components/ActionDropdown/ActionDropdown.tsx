@@ -118,17 +118,17 @@ const ActionDropdown = ({
         {
             label: "General enquiry",
             action: handleGeneralEnquiryClick,
-            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+            icon: <SpeechBubbleIcon color="secondary" sx={{ mr: 1 }} />,
         },
         {
             label: "Feasibility enquiry",
             action: handleFeasibilityEnquiryClick,
-            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+            icon: <SpeechBubbleIcon color="secondary" sx={{ mr: 1 }} />,
         },
         {
             label: "Start a Data Access Request",
             action: handleStartDarRequest,
-            icon: <SpeechBubbleIcon color="primary" sx={{ mr: 1 }} />,
+            icon: <SpeechBubbleIcon color="secondary" sx={{ mr: 1 }} />,
         },
         ...(isCohortDiscovery
             ? [
@@ -232,7 +232,7 @@ const ActionDropdown = ({
             <Button
                 variant="contained"
                 endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
-                sx={{ py: 0.5 }}
+                sx={{ py: 0.5, backgroundColor: colors.red600 }}
                 onClick={handleOpenDropdownMenu}
                 aria-label={title ? `${t("actions")} for ${title}` : undefined}>
                 {t("actions")}

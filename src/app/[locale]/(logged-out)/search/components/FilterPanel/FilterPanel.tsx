@@ -224,30 +224,12 @@ const FilterPanel = ({
 
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm<{
-        [FILTER_PUBLISHER_NAME]: string;
-        [FILTER_COLLECTION_NAME]: string;
-        [FILTER_COLLECTION_NAMES]: string;
-        [FILTER_DATA_USE_TITLES]: string;
-        [FILTER_SECTOR]: string;
-        [FILTER_ACCESS_SERVICE]: string;
-        [FILTER_PROGRAMMING_LANGUAGE]: string;
-        [FILTER_TYPE_CATEGORY]: string;
-        [FILTER_MATERIAL_TYPE]: string;
         [FILTER_DATA_TYPE]: string;
         [FILTER_DATA_SUBTYPE]: string;
         [FILTER_DATA_CUSTODIAN_NETWORK]: string;
         [FILTER_FORMAT_STANDARDS]: string;
     }>({
         defaultValues: {
-            [FILTER_PUBLISHER_NAME]: "",
-            [FILTER_COLLECTION_NAME]: "",
-            [FILTER_COLLECTION_NAMES]: "",
-            [FILTER_DATA_USE_TITLES]: "",
-            [FILTER_SECTOR]: "",
-            [FILTER_ACCESS_SERVICE]: "",
-            [FILTER_PROGRAMMING_LANGUAGE]: "",
-            [FILTER_TYPE_CATEGORY]: "",
-            [FILTER_MATERIAL_TYPE]: "",
             [FILTER_DATA_TYPE]: "",
             [FILTER_DATA_SUBTYPE]: "",
             [FILTER_DATA_CUSTODIAN_NETWORK]: "",
@@ -259,12 +241,11 @@ const FilterPanel = ({
             filterSourceData,
             filterCategory
         ).filter(filterItem => filtersList.includes(filterItem.label));
-
         // Manually add any static filters not returned from the filters api
         if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
-
+        
         // If the selected source is 'Search Online Publications' then remove the 'Dataset' filter
         if (staticFilterValues.source.FED) {
             formattedFilters = formattedFilters.filter(
@@ -284,7 +265,7 @@ const FilterPanel = ({
                 filterItem => filterItem.label !== FILTER_DATA_CUSTODIAN_NETWORK
             );
         }
-
+        console.log(formattedFilters);
         return formattedFilters;
     }, [filterCategory, filterSourceData, staticFilterValues]);
     const [maximised, setMaximised] = useState<string[]>([]);
@@ -538,10 +519,14 @@ const FilterPanel = ({
             <Box
                 sx={{
                     display: "flex",
-                    alignItems: "baseline",
+                    flexDirection: "column",
                     gap: 1,
                     mt: 1,
-                    backgroundColor: colors.grey,
+                    backgroundColor: colors.white,
+                    border: `1px solid ${colors.grey300}`,
+                    borderRadius: 2,
+                    p: 3,
+                    pb: 10,
                 }}>
                 <Typography variant="h2">{tRoot("filterResults")}</Typography>
 
@@ -553,115 +538,59 @@ const FilterPanel = ({
                         {tRoot("clearAll")}
                     </ClearButton>
                 )}
-            </Box>
 
-            {filterItems.sort(getFilterSortOrder).map(filterItem => {
-                const { label } = filterItem;
-                if (
-                    filterItem.label === FILTER_CONTAINS_BIOSAMPLES ||
-                    filterItem.label === FILTER_COHORT_DISCOVERY
-                ) {
-                    return (
-                        <FilterSectionInlineSwitch
-                            key={filterItem.label}
-                            filterCategory={filterCategory}
-                            filterItem={filterItem}
-                            selectedFilters={selectedFilters}
-                            handleRadioChange={(
-                                event: React.ChangeEvent<HTMLInputElement>
-                            ) =>
-                                updateCheckboxes(
-                                    {
-                                        [filterItem.label]:
-                                            event.target.checked,
-                                    },
-                                    label
-                                )
-                            }
-                            containerSx={
-                                label === FILTER_CONTAINS_BIOSAMPLES
-                                    ? { pt: 1 }
-                                    : { pb: 1 }
-                            }
-                        />
-                    );
-                }
-
-                if (
-                    filterItem.label === FILTER_MATERIAL_TYPE &&
-                    !get(selectedFilters, FILTER_CONTAINS_BIOSAMPLES)?.length
-                ) {
-                    return null;
-                }
-                const isPublicationSource = label === STATIC_FILTER_SOURCE;
-
-                return (
-                    <Accordion
-                        key={label}
-                        sx={{
-                            background: colors.white,
-                            boxShadow: "none",
-                            mt: 0.5,
-                            mb: 0.5,
-                            border: 0,
-                            "&:before": { display: "none" },
-                            "&.MuiAccordion-root.Mui-expanded": {
-                                mt: 0.5,
-                                mb: 0.5,
-                            },
-                            ...(isPublicationSource && {
-                                ".MuiAccordionSummary-expandIconWrapper": {
-                                    opacity: 0,
-                                },
-                                ".MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded":
-                                    {
-                                        cursor: "default",
-                                    },
-                            }),
-                        }}
-                        expanded={
-                            maximised.includes(label) || isPublicationSource
-                        }
-                        tooltip={t(`${label}${TOOLTIP_SUFFIX}`)}
-                        heading={
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    p: 0,
-                                    m: 0,
-                                    flexDirection: "row",
-                                    alignContent: "center",
-                                    justifyContent: "space-between",
-                                    width: "100%",
-                                    pr: 3.25,
-                                }}>
-                                <Typography fontWeight="400" fontSize={20}>
-                                    {t(label)}
-                                </Typography>
-                                {filterValues[label] &&
-                                    !!Object.entries(filterValues[label])
-                                        .length && (
-                                        <Typography sx={filterCountStyles}>
+                <h3>Home</h3>
+                <Box
+                    sx={{
+                        borderRadius: 3,
+                        border: `1px solid ${colors.grey300}`,
+                        backgroundColor: colors.white,
+                    }}>
+                    {filterItems.sort(getFilterSortOrder).map(filterItem => {
+                        const { label } = filterItem;
+                        if (
+                            filterItem.label === FILTER_CONTAINS_BIOSAMPLES ||
+                            filterItem.label === FILTER_COHORT_DISCOVERY
+                        ) {
+                            return (
+                                <FilterSectionInlineSwitch
+                                    key={filterItem.label}
+                                    filterCategory={filterCategory}
+                                    filterItem={filterItem}
+                                    selectedFilters={selectedFilters}
+                                    handleRadioChange={(
+                                        event: React.ChangeEvent<HTMLInputElement>
+                                    ) =>
+                                        updateCheckboxes(
                                             {
-                                                Object.entries(
-                                                    filterValues[label]
-                                                ).length
-                                            }
-                                        </Typography>
-                                    )}
-                            </Box>
+                                                [filterItem.label]:
+                                                    event.target.checked,
+                                            },
+                                            label
+                                        )
+                                    }
+                                    containerSx={
+                                        label === FILTER_CONTAINS_BIOSAMPLES
+                                            ? { pt: 1 }
+                                            : { pb: 1 }
+                                    }
+                                />
+                            );
                         }
-                        onChange={() =>
-                            setMaximised(
-                                maximised.includes(label)
-                                    ? maximised.filter(e => e !== label)
-                                    : [...maximised, label]
-                            )
+
+                        if (
+                            filterItem.label === FILTER_MATERIAL_TYPE &&
+                            !get(selectedFilters, FILTER_CONTAINS_BIOSAMPLES)
+                                ?.length
+                        ) {
+                            return null;
                         }
-                        contents={renderFilterContent(filterItem)}
-                    />
-                );
-            })}
+                        // const isPublicationSource = label === STATIC_FILTER_SOURCE;
+
+                        return null;
+                    })}
+                </Box>
+            </Box>
         </aside>
     );
 };

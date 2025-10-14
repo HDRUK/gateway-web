@@ -9,15 +9,10 @@ import {
     useState,
 } from "react";
 import { FieldValues } from "react-hook-form";
-import { BookmarkBorder } from "@mui/icons-material";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
     Box,
     Drawer,
     IconButton,
-    Menu,
-    MenuItem,
-    Tooltip,
     Typography,
     useMediaQuery,
     useTheme,
@@ -46,14 +41,10 @@ import {
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
-import Paper from "@/components/Paper";
 import SearchBar from "@/components/SearchBar";
 import ShowingXofX from "@/components/ShowingXofX";
-import Tabs from "@/components/Tabs";
-import { TabVariant } from "@/components/Tabs/Tabs";
 import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
-import ProvidersDialog from "@/modules/ProvidersDialog";
 import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
 import SaveSearchDialog, {
     SaveSearchValues,
@@ -104,21 +95,12 @@ import searchFormConfig, {
     SORT_FIELD,
     TYPE_FIELD,
     VIEW_FIELD,
-    sortByOptionsCollections,
-    sortByOptionsDataProviders,
-    sortByOptionsDataUse,
-    sortByOptionsDataset,
-    sortByOptionsPublications,
-    sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import {
-    ChevronThinIcon,
     CloseIcon,
-    DownloadIcon,
     FilterAltOutlinedIcon,
     PanelExpandIcon,
-    TableIcon,
 } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
@@ -141,8 +123,6 @@ import ResultCardPublication from "../ResultCardPublication/ResultCardPublicatio
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
-import Sort from "../Sort";
-import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
@@ -352,17 +332,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         });
     };
 
-    const onSortChange = async (selectedValue: string) => {
-        if (selectedValue === queryParams.sort) return;
-
-        setQueryParams({
-            ...queryParams,
-            sort: selectedValue,
-        });
-
-        updatePath(SORT_FIELD, selectedValue);
-    };
-
     const selectedFilters = useMemo(
         () => getAllSelectedFilters(queryParams),
         [queryParams]
@@ -535,18 +504,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         }
     };
 
-    const handleChangeView = (viewType: ViewType) => {
-        setResultsView(viewType);
-        updatePath(VIEW_FIELD, viewType);
-        Cookies.set(config.VIEW_TYPE, viewType);
-    };
-
-    const downloadSearchResults = async () => {
-        setIsDownloading(true);
-        await handleDownload();
-        setIsDownloading(false);
-    };
-
     const { requestStatus } = useCohortStatus(user?.id);
 
     const isCohortDiscoveryDisabled =
@@ -627,23 +584,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
             </ResultsList>
         );
 
-    const getSortOptions = () => {
-        switch (queryParams.type) {
-            case SearchCategory.DATA_USE:
-                return sortByOptionsDataUse;
-            case SearchCategory.TOOLS:
-                return sortByOptionsTool;
-            case SearchCategory.PUBLICATIONS:
-                return sortByOptionsPublications;
-            case SearchCategory.COLLECTIONS:
-                return sortByOptionsCollections;
-            case SearchCategory.DATA_CUSTODIANS:
-                return sortByOptionsDataProviders;
-            default:
-                return sortByOptionsDataset;
-        }
-    };
-
     const handleSaveSubmit = ({ name }: SaveSearchValues) => {
         saveSearchQuery({
             search_term: queryParams.query || "",
@@ -700,29 +640,6 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
         },
     });
 
-    const handleSaveClick = () => {
-        if (isLoggedIn) {
-            showDialog(() => (
-                <SaveSearchDialog
-                    onSubmit={handleSaveSubmit}
-                    onCancel={() => hideDialog()}
-                />
-            ));
-        } else {
-            setPostLoginActionCookie(PostLoginActions.SAVE_SEARCH);
-
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-                redirectPath,
-            });
-        }
-    };
-
-    const handleToggleView = () => {
-        return resultsView === ViewType.LIST
-            ? handleChangeView(ViewType.TABLE)
-            : handleChangeView(ViewType.LIST);
-    };
 
     const getExplainerText = () => {
         switch (queryParams.type) {
@@ -978,113 +895,10 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                             maxWidth: "768px",
                             marginX: 1,
                             flexGrow: 1,
-                        }}>
-                        <Typography
-                            variant="h1"
-                            sx={{
-                                marginTop: 4,
-                                marginBottom: 0.5,
-                                fontSize: "40px",
-                            }}>
-                            {t("searchHeader")}
-                        </Typography>
-                        <SearchBar
-                            defaultValue={queryParams.query}
-                            explainerText={getExplainerText()}
-                            resetAction={() => resetQueryInput()}
-                            isDisabled={!queryParams.query}
-                            submitAction={onQuerySubmit}
-                            queryPlaceholder={t("searchPlaceholder")}
-                            queryName={QUERY_FIELD}
-                            inputOverrideAction={
-                                isEuropePmcSearch
-                                    ? europePmcModalAction
-                                    : undefined
-                            }
-                            valueOverride={
-                                isPublications ? queryParams.query : undefined
-                            }
-                        />
-                    </Box>
+                        }}
+                    />
                 </Box>
 
-                <Box
-                    sx={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        backgroundColor: "white",
-                    }}>
-                    {!isMobile && (
-                        <Tabs
-                            tabs={categoryTabs}
-                            tabBoxSx={{
-                                paddingLeft: !scrollableTabs ? "45px" : "5px",
-                                paddingRight: !scrollableTabs ? "45px" : "5px",
-                            }}
-                            rootBoxSx={{ padding: 0 }}
-                            variant={TabVariant.SEARCH}
-                            paramName={TYPE_FIELD}
-                            persistParams={false}
-                            tabVariant={
-                                scrollableTabs ? "scrollable" : "standard"
-                            }
-                            scrollButtons="on"
-                            centered={!scrollableTabs}
-                            handleChange={(_, value) => {
-                                resetQueryParamState(value as SearchCategory);
-                            }}
-                        />
-                    )}
-                    {isMobile && (
-                        <Box
-                            sx={{
-                                borderBottom: `3px solid ${colors.green400}`,
-                                width: "100%",
-                            }}>
-                            <Button
-                                aria-controls="tab-menu"
-                                aria-haspopup="true"
-                                onClick={handleClick}
-                                aria-label="Open to show search type options"
-                                title="Open to show search type options"
-                                color="secondary"
-                                sx={{
-                                    backgroundColor: "white",
-                                    fontSize: "15px",
-                                    fontWeight: 600,
-                                    "&:hover": { background: "white" },
-                                }}
-                                endIcon={<ChevronThinIcon color="primary" />}>
-                                {categoryDropdowns[queryParams.type]}
-                            </Button>
-                            <Menu
-                                id="tab-menu"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}>
-                                {categoryTabs.map(item => {
-                                    return (
-                                        <MenuItem
-                                            onClick={() => {
-                                                resetQueryParamState(
-                                                    item.value as SearchCategory
-                                                );
-                                                updatePath("type", item.value);
-                                                handleClose();
-                                            }}
-                                            key={categoryDropdowns[item.value]}
-                                            value={item.value}
-                                            sx={{ fontSize: "15px" }}>
-                                            {categoryDropdowns[item.value]}
-                                        </MenuItem>
-                                    );
-                                })}
-                            </Menu>
-                        </Box>
-                    )}
-                </Box>
                 <Box
                     sx={{
                         display: "flex",
@@ -1186,220 +1000,82 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                     </Button>
                                 )}
                             </Box>
-
-                            {!isSearching && !isEuropePmcSearchNoQuery && (
-                                <>
-                                    {data && data.elastic_total > 100 && (
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                paddingX: "1em",
-                                                pt: 1,
-                                            }}
-                                            id="result-summary2"
-                                            role="alert"
-                                            aria-live="polite">
-                                            <ResultLimitText>
-                                                {t("resultLimit")}
-                                            </ResultLimitText>
-                                        </Box>
-                                    )}
-                                    <ActionBar>
-                                        <Box
-                                            sx={{ display: "flex" }}
-                                            id="result-summary"
-                                            role="alert"
-                                            aria-live="polite">
-                                            {data &&
-                                                data.path?.includes(
-                                                    queryParams.type
-                                                ) &&
-                                                getXofX()}
-                                        </Box>
-                                        {!isMobile && !isTabletOrLaptop && (
-                                            <Box
-                                                aria-label="results controls"
-                                                role="region"
-                                                sx={{
-                                                    display: "flex",
-                                                    gap: 2,
-                                                }}>
-                                                <Box sx={{ p: 0 }}>
-                                                    <Sort
-                                                        sortName={SORT_FIELD}
-                                                        defaultValue={
-                                                            queryParams.sort
-                                                        }
-                                                        submitAction={
-                                                            onSortChange
-                                                        }
-                                                        sortOptions={getSortOptions()}
-                                                        iconised={false}
-                                                    />
-                                                </Box>
-                                                {!excludedDownloadSearchCategories.includes(
-                                                    queryParams.type
-                                                ) && (
-                                                    <Button
-                                                        onClick={() =>
-                                                            !isDownloading &&
-                                                            downloadSearchResults()
-                                                        }
-                                                        variant="contained"
-                                                        color="greyCustom"
-                                                        startIcon={
-                                                            <DownloadIcon color="primary" />
-                                                        }
-                                                        disabled={
-                                                            isDownloading ||
-                                                            !data?.list?.length
-                                                        }>
-                                                        {t("downloadResults")}
-                                                    </Button>
-                                                )}
-                                                <Button
-                                                    variant="contained"
-                                                    color="greyCustom"
-                                                    disabled={!hasSearched}
-                                                    onClick={handleSaveClick}
-                                                    startIcon={
-                                                        <BookmarkBorder color="primary" />
-                                                    }>
-                                                    {t("saveSearch")}
-                                                </Button>
-                                                {queryParams.type ===
-                                                    SearchCategory.DATASETS && (
-                                                    <Button
-                                                        variant="outlined"
-                                                        color="secondary"
-                                                        onClick={
-                                                            handleToggleView
-                                                        }
-                                                        startIcon={
-                                                            resultsView ===
-                                                            ViewType.LIST ? (
-                                                                <FormatListBulletedIcon color="success" />
-                                                            ) : (
-                                                                <TableIcon color="success" />
-                                                            )
-                                                        }>
-                                                        {resultsView ===
-                                                        ViewType.LIST
-                                                            ? t(
-                                                                  "components.Search.toggleLabelTable"
-                                                              )
-                                                            : t(
-                                                                  "components.Search.toggleLabelList"
-                                                              )}
-                                                    </Button>
-                                                )}
-                                            </Box>
-                                        )}
-                                        {(isMobile || isTabletOrLaptop) && (
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    gap: 2,
-                                                }}>
-                                                <Sort
-                                                    sortName={SORT_FIELD}
-                                                    defaultValue={
-                                                        queryParams.sort
-                                                    }
-                                                    submitAction={onSortChange}
-                                                    sortOptions={getSortOptions()}
-                                                    iconised
-                                                />
-
-                                                {!excludedDownloadSearchCategories.includes(
-                                                    queryParams.type
-                                                ) && (
-                                                    <Tooltip
-                                                        title={t(
-                                                            "downloadResults"
-                                                        )}>
-                                                        <IconButton
-                                                            color="primary"
-                                                            onClick={() =>
-                                                                !isDownloading &&
-                                                                downloadSearchResults()
-                                                            }
-                                                            disabled={
-                                                                isDownloading ||
-                                                                !data?.list
-                                                                    ?.length
-                                                            }>
-                                                            <DownloadIcon />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
-                                                <Tooltip
-                                                    title={t("saveSearch")}>
-                                                    <IconButton
-                                                        color="primary"
-                                                        disabled={!hasSearched}
-                                                        onClick={
-                                                            handleSaveClick
-                                                        }>
-                                                        <BookmarkBorder />
-                                                    </IconButton>
-                                                </Tooltip>
-                                            </Box>
-                                        )}
-                                    </ActionBar>
-                                </>
-                            )}
-
                             {(isSearching || data === undefined) && (
                                 <Loading ariaLabel={t("loadingAriaLabel")} />
                             )}
-
-                            {!isSearching &&
-                                data !== undefined &&
-                                !data?.list?.length &&
-                                (queryParams.query ||
-                                    !(
-                                        queryParams.type ===
-                                        SearchCategory.PUBLICATIONS
-                                    )) &&
-                                !isEuropePmcSearchNoQuery && (
-                                    <Paper
-                                        sx={{ textAlign: "center", p: 5 }}
-                                        role="status"
-                                        aria-live="polite"
-                                        id="result-summary">
-                                        <Typography variant="h3" role="alert">
-                                            {t("noResults")}
-                                        </Typography>
-                                    </Paper>
-                                )}
                             {!isSearching &&
                                 !isEuropePmcSearchNoQuery &&
                                 !!data?.list?.length &&
                                 data?.path?.includes(queryParams.type) && (
-                                    <>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: 2,
+                                            backgroundColor: colors.white,
+                                            border: `1px solid ${colors.grey300}`,
+                                            borderRadius: 2,
+                                            boxShadow: `0px 1px 3px ${colors.grey300}`,
+                                            p: 2,
+                                            mb: 2,
+                                        }}>
                                         {queryParams.type ===
                                             SearchCategory.COLLECTIONS && (
-                                            <>
-                                                <DataCustodianNetwork
-                                                    searchParams={{
-                                                        query: queryParams.query,
-                                                        ...pickedFilters,
-                                                    }}
-                                                />
-                                                <Typography
-                                                    fontWeight={600}
-                                                    sx={{
-                                                        mt: 1,
-                                                        mb: 1,
-                                                        textDecoration:
-                                                            "underline",
-                                                    }}>
-                                                    {t("collectionsHeader")}
-                                                </Typography>
-                                            </>
+                                            <DataCustodianNetwork
+                                                searchParams={{
+                                                    query: queryParams.query,
+                                                    ...pickedFilters,
+                                                }}
+                                            />
                                         )}
-
+                                        <Box
+                                            sx={{
+                                                flexGrow: 1,
+                                                paddingLeft: 2,
+                                            }}>
+                                            <SearchBar
+                                                defaultValue={queryParams.query}
+                                                explainerText={getExplainerText()}
+                                                resetAction={() =>
+                                                    resetQueryInput()
+                                                }
+                                                isDisabled={!queryParams.query}
+                                                submitAction={onQuerySubmit}
+                                                queryPlaceholder={t(
+                                                    "searchPlaceholder"
+                                                )}
+                                                queryName={QUERY_FIELD}
+                                                inputOverrideAction={
+                                                    isEuropePmcSearch
+                                                        ? europePmcModalAction
+                                                        : undefined
+                                                }
+                                                valueOverride={
+                                                    isPublications
+                                                        ? queryParams.query
+                                                        : undefined
+                                                }
+                                            />
+                                        </Box>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                paddingLeft: 10,
+                                                textAlign: "center",
+                                            }}
+                                        />
+                                        <Typography variant="h2" align="center">
+                                            Unleashing the power of big data
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            paragraph
+                                            align="center"
+                                            sx={{ mb: 3 }}>
+                                            Explore a vast array of datasets,
+                                            tools, and publications to fuel your
+                                            research and innovation.
+                                        </Typography>
                                         <Box
                                             component="section"
                                             aria-describedby="result-summary"
@@ -1409,7 +1085,7 @@ const Search = ({ filters, cohortDiscovery }: SearchProps) => {
                                             }}>
                                             {renderResults()}
                                         </Box>
-                                    </>
+                                    </Box>
                                 )}
                             <Pagination
                                 isLoading={isSearching}

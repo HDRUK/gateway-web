@@ -1017,7 +1017,7 @@
                     "filter": "Filter",
                     "filters": {
                         "clearAll": "Clear all",
-                        "filterResults": "Filter results",
+                        "filterResults": "Study Filters",
                         "dataset": {
                             "populationSize": "Population size",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
@@ -1142,10 +1142,10 @@
                 },
                 "ResultsTable": {
                     "action": {
-                        "label": "Action search result"
+                        "label": "Explore"
                     },
                     "title": {
-                        "label": "Metadata title"
+                        "label": "Study Title"
                     },
                     "populationSize": {
                         "notReported": "Not reported",
@@ -1153,7 +1153,7 @@
                         "tooltip": "Population size associated with the population type in the dataset"
                     },
                     "dateRangePublisher": {
-                        "label": "Date Range",
+                        "label": "Date added",
                         "tooltip": "Start and end of the time period that the dataset provides coverage for"
                     },
                     "dataStandard": {
@@ -1161,7 +1161,7 @@
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
                     "dataProvider": {
-                        "label": "Data Custodian",
+                        "label": "Lead Researcher/Institute ",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
                     "accessService": {
@@ -1546,7 +1546,8 @@
         "DesktopNav": {
             "labels": {
                 "myAccount": "My Account",
-                "signIn": "Sign in"
+                "signIn": "Sign in",
+                "help": "Help"
             }
         },
         "Loading": {

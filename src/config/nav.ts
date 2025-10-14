@@ -1,136 +1,19 @@
-import { SearchCategory } from "@/interfaces/Search";
-import { RouteName } from "@/consts/routeName";
-
 const navItems = [
     {
-        label: "Search",
-        subItems: [
-            {
-                label: "Cohort Discovery",
-                href: "/about/cohort-discovery",
-            },
-            {
-                label: "Phenotypes",
-                href: "https://phenotypes.healthdatagateway.org/",
-            },
-            {
-                label: "Courses",
-                href: "https://hdruklearn.org/",
-            },
-            {
-                label: "Datasets & BioSamples",
-                href: `/search?type=${SearchCategory.DATASETS}`,
-            },
-            {
-                label: "Data Uses / Research Projects",
-                href: `/search?type=${SearchCategory.DATA_USE}`,
-            },
-            {
-                label: "Analysis Scripts & Software",
-                href: `/search?type=${SearchCategory.TOOLS}`,
-            },
-            {
-                label: "Publications",
-                href: `/search?type=${SearchCategory.PUBLICATIONS}`,
-            },
-            {
-                label: "Data Custodians",
-                href: `/search?type=${SearchCategory.DATA_CUSTODIANS}`,
-            },
-            {
-                label: "Collections / Networks",
-                href: `/search?type=${SearchCategory.COLLECTIONS}`,
-            },
-        ],
-    },
-    {
-        label: "Community",
-        subItems: [
-            {
-                label: "The Technology Ecosystem",
-                href: "/community/technology-ecosystem",
-            },
-            {
-                label: "Open-Source Development",
-                href: "/community/open-source-development",
-            },
-        ],
-    },
-    {
-        label: "News",
-        subItems: [
-            {
-                label: "News",
-                href: "/news/events?tab=news",
-            },
-            {
-                label: "Events",
-                href: "/news/events?tab=events",
-            },
-            {
-                label: "Release Note Summaries",
-                href: "/news/releases",
-            },
-            {
-                label: "Detailed Release Notes",
-                href: "https://github.com/HDRUK/gateway-api/blob/dev/change-log-locations.md",
-            },
-            {
-                label: "Newsletter",
-                href: "/newsletter-signup",
-            },
-        ],
-    },
-    {
         label: "About",
-        subItems: [
-            {
-                label: "Our Mission and Purpose",
-                href: RouteName.MISSION_AND_PURPOSE,
-            },
-            {
-                label: "For Researchers and Innovators",
-                href: "/about/researchers-innovators",
-            },
-            {
-                label: "For Custodians",
-                href: "/about/data-custodians",
-            },
-            {
-                label: "For the Public",
-                href: "/about/patients-and-public",
-            },
-            {
-                label: "The Technology Team",
-                href: RouteName.MEET_THE_TEAM,
-            },
-        ],
+        href: "/community/technology-ecosystem",
     },
     {
-        label: "Help",
-        subItems: [
-            {
-                label: "Support Centre",
-                href: "/support",
-            },
-            {
-                label: "Contact Us",
-                href: "https://hdruk.atlassian.net/servicedesk/customer/portal/7",
-            },
-            {
-                label: "Glossary",
-                href: "/help/glossary",
-            },
-        ],
+        label: "Study Discovery",
+        href: "/community/technology-ecosystem",
     },
     {
-        label: "",
-        divider: true,
-        href: "",
+        label: "CRUK Data Strategy",
+        href: "https://www.cancerresearchuk.org/for-researchers/our-research-strategy/research-data?_gl=1*j2h94s*_gcl_aw*R0NMLjE3NTIwNjY3ODcuQ2p3S0NBandwcmpEQmhCVEVpd0ExbTFkMG9kQ3M5bktReW14VlplOW5FUWJ4R0l2X0E4ekdieVpTaVZaWUNBUm1hZ09BN2t1anhNbTlCb0NNSm9RQXZEX0J3RQ..*_gcl_dc*R0NMLjE3NTIwNjY3ODcuQ2p3S0NBandwcmpEQmhCVEVpd0ExbTFkMG9kQ3M5bktReW14VlplOW5FUWJ4R0l2X0E4ekdieVpTaVZaWUNBUm1hZ09BN2t1anhNbTlCb0NNSm9RQXZEX0J3RQ..*_gcl_au*NTU0Mjk1Mzc0LjE3NDg4NjEwMTc.*_ga*MTg1NjY3MDg4OC4xNzQxMDA5MjYx*_ga_58736Z2GNN*czE3NTUyNTE1NTAkbzY0JGcxJHQxNzU1MjUxNjQ4JGo1MCRsMCRoMA..",
     },
     {
         label: "Data Custodian Area",
-        href: RouteName.DATA_CUSTODIAN_SUPPORT,
+        href: "/community/technology-ecosystem",
     },
 ];
 

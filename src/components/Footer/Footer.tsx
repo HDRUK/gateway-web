@@ -5,8 +5,8 @@ import { visuallyHidden } from "@mui/utils";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { RouteName } from "@/consts/routeName";
-import hdrukLogo from "../../../public/images/logos/hdruk-white.png";
 import linkedInLogo from "../../../public/images/logos/linkedIn-white.png";
+import hdrukLogo from "../../../public/images/logos/logo.svg";
 import twitterInLogo from "../../../public/images/logos/twitter-white.png";
 import {
     FooterContainer,
@@ -49,7 +49,7 @@ const Footer = () => {
 
     const links1 = [
         {
-            href: "https://www.hdruk.ac.uk/",
+            href: "https://www.cancerresearchuk.org/",
             label: t("visitHDRUKSite"),
         },
         {
@@ -77,7 +77,7 @@ const Footer = () => {
         <FooterWrapper>
             <FooterContainer>
                 <Box>
-                    <Image src={hdrukLogo} alt="HDRUK logo" width="130" />
+                    <Image src={hdrukLogo} alt="CRUK logo" width="130" />
                     <FooterSocialLinks>
                         {linksSocial.map(link => (
                             <li key={`${link.label}-${link.href}`}>

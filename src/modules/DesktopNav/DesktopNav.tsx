@@ -11,6 +11,13 @@ function DesktopNav() {
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
+    type NavItem = {
+        label: string;
+        href?: string;
+        divider?: boolean;
+        subItems?: { label: string; href: string }[];
+    };
+
     const [menuItems, setMenuItems] = useState<
         { label: string; href: string }[]
     >([]);
@@ -26,14 +33,14 @@ function DesktopNav() {
     return (
         <Box
             sx={{
-                display: "flex",
-                alignItems: "center",
                 textAlign: "center",
                 ml: 4,
+                textDecoration: "none",
+                gap: 40,
             }}
             component="nav"
             aria-label="HDR UK Gateway">
-            {navItems.map(item => {
+            {(navItems as NavItem[]).map(item => {
                 if (item.divider) {
                     return (
                         <Fragment key={item.label}>
@@ -47,15 +54,14 @@ function DesktopNav() {
                 return item.subItems ? (
                     <Fragment key={item.label}>
                         <Button
-                            variant="text"
+                            variant="contained"
                             disableRipple
-                            key={item.label}
                             sx={{
                                 color: colors.white,
                                 "&:focus&.Mui-focusVisible": {
                                     outlineColor: `${colors.white} !important`,
                                     borderRadius: 0,
-                                    textDecoration: "underline",
+                                    textDecoration: "none",
                                     svg: {
                                         color: colors.white,
                                     },
@@ -67,7 +73,7 @@ function DesktopNav() {
                             onClick={(event: React.MouseEvent<HTMLElement>) =>
                                 handleOpenNav(
                                     event.currentTarget,
-                                    item.subItems
+                                    item.subItems!
                                 )
                             }>
                             {item.label}
@@ -81,10 +87,10 @@ function DesktopNav() {
                                 outlineColor: colors.white,
                                 outlineOffset: "3px",
                                 borderRadius: 0,
-                                textDecoration: "underline",
+                                textDecoration: "none",
                             },
                         }}
-                        variant="link"
+                        variant="contained"
                         component={Link}
                         key={item.label}
                         href={item.href}>
