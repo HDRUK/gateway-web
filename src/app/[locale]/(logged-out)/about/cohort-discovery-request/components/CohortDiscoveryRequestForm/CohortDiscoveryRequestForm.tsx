@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import BoxContainer from "@/components/BoxContainer";
@@ -28,7 +28,7 @@ interface accessRequestType {
     redirect_url: string;
 }
 
-const CohortDisoveryRequestForm = ({
+const CohortDiscoveryRequestForm = ({
     cmsContent,
     userId,
 }: CohortDisoveryRequestFormProps) => {
@@ -58,16 +58,15 @@ const CohortDisoveryRequestForm = ({
 
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
+   useEffect(() => {
     if (!isUserLoading && !isAccessLoading) {
         if (accessData?.redirect_url) {
-            redirect(accessData?.redirect_url);
-        } else if (
-            userData?.request_status &&
-            userData.request_status === "APPROVED"
-        ) {
-            redirect(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+            push(accessData.redirect_url);
+        } else if (userData?.request_status === "APPROVED") {
+            push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
         }
     }
+}, [isUserLoading, isAccessLoading, accessData, userData, push]);
 
     return !isUserLoading && !isAccessLoading ? (
         <BoxContainer
