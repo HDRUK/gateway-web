@@ -58,15 +58,15 @@ const CohortDiscoveryRequestForm = ({
 
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
-   useEffect(() => {
-    if (!isUserLoading && !isAccessLoading) {
-        if (accessData?.redirect_url) {
-            push(accessData.redirect_url);
-        } else if (userData?.request_status === "APPROVED") {
-            push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+    useEffect(() => {
+        if (!isUserLoading && !isAccessLoading) {
+            if (accessData?.redirect_url) {
+                push(accessData.redirect_url);
+            } else if (userData?.request_status === "APPROVED") {
+                push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+            }
         }
-    }
-}, [isUserLoading, isAccessLoading, accessData, userData, push]);
+    }, [isUserLoading, isAccessLoading, accessData, userData, push]);
 
     return !isUserLoading && !isAccessLoading ? (
         <BoxContainer
