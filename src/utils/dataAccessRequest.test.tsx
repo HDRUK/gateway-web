@@ -9,6 +9,8 @@ import {
     mapKeysToValues,
 } from "./dataAccessRequest";
 
+const ARRAY_NAME = "Other individuals - array";
+
 describe("Data Access Request utils", () => {
     describe("mapKeysToValues", () => {
         it("creates an object from two arrays correctly", () => {
@@ -111,6 +113,165 @@ describe("Data Access Request utils", () => {
                     staticFieldsNames
                 )
             ).toEqual(["1", "2"]);
+        });
+
+        it("includes inner fields of an ArrayField and any children selected in any row", () => {
+            const filteredData: DarFormattedField[] = [
+                {
+                    component: "ArrayField",
+                    name: ARRAY_NAME,
+                    fields: [
+                        {
+                            question_id: 1752,
+                            options: [
+                                { label: "No", value: "No", children: [] },
+                            ],
+                        } as Partial<DarFormattedField>,
+                        {
+                            question_id: 1762,
+                            options: [
+                                {
+                                    label: "Yes",
+                                    children: [
+                                        {
+                                            question_id: 1763,
+                                        } as DarFormattedField,
+                                    ],
+                                },
+                                { label: "No", children: [] },
+                            ],
+                        } as Partial<DarFormattedField>,
+                    ],
+                } as unknown as DarFormattedField,
+            ];
+
+            const parentValues = {
+                [ARRAY_NAME]: [
+                    { "1752": "Alice", "1762": "Yes" },
+                    { "1752": "Bob", "1762": "No" },
+                ],
+            };
+            const staticFieldsNames: string[] = [];
+
+            const rows = parentValues[ARRAY_NAME] as Array<
+                Record<string, string>
+            >;
+
+            const expected = rows.flatMap((row, i) => [
+                `${ARRAY_NAME}.${i}.1752`,
+                `${ARRAY_NAME}.${i}.1762`,
+                ...(row["1762"] === "Yes" ? [`${ARRAY_NAME}.${i}.1763`] : []),
+            ]);
+
+            const actual = getVisibleQuestionIds(
+                filteredData,
+                parentValues,
+                staticFieldsNames
+            );
+
+            expect(actual.sort()).toEqual(expected.sort());
+        });
+
+        it("includes inner fields of an ArrayField even if rows have undefined values, but does not include children when not selected", () => {
+            const filteredData: DarFormattedField[] = [
+                {
+                    component: "ArrayField",
+                    name: ARRAY_NAME,
+                    fields: [
+                        {
+                            question_id: 1752,
+                            options: [],
+                        } as Partial<DarFormattedField>,
+                        {
+                            question_id: 1762,
+                            options: [
+                                {
+                                    label: "Yes",
+                                    children: [
+                                        {
+                                            question_id: 1763,
+                                        } as DarFormattedField,
+                                    ],
+                                },
+                                { label: "No", children: [] },
+                            ],
+                        } as DarFormattedField,
+                    ],
+                } as unknown as DarFormattedField,
+            ];
+
+            const parentValues = {
+                [ARRAY_NAME]: [
+                    { "1752": "Alice" },
+                    { "1752": "Bob", "1762": "No" },
+                ],
+            };
+            const staticFieldsNames: string[] = [];
+
+            const rows = parentValues[ARRAY_NAME] as Array<
+                Record<string, string>
+            >;
+
+            // Expect inner fields per row; no children since "Yes" wasn't selected
+            const expected = rows.flatMap((_, i) => [
+                `${ARRAY_NAME}.${i}.1752`,
+                `${ARRAY_NAME}.${i}.1762`,
+            ]);
+
+            expect(
+                getVisibleQuestionIds(
+                    filteredData,
+                    parentValues,
+                    staticFieldsNames
+                ).sort()
+            ).toEqual(expected.sort());
+        });
+
+        it("handles empty ArrayField rows - includes inner fields but no children", () => {
+            const filteredData: DarFormattedField[] = [
+                {
+                    component: "ArrayField",
+                    name: ARRAY_NAME,
+                    fields: [
+                        {
+                            question_id: 1752,
+                            options: [],
+                        } as Partial<DarFormattedField>,
+                        {
+                            question_id: 1762,
+                            options: [
+                                {
+                                    label: "Yes",
+                                    children: [
+                                        {
+                                            question_id: 1763,
+                                        } as DarFormattedField,
+                                    ],
+                                },
+                                { label: "No", children: [] },
+                            ],
+                        } as DarFormattedField,
+                    ],
+                } as unknown as DarFormattedField,
+            ];
+
+            const parentValues = { [ARRAY_NAME]: [] };
+            const staticFieldsNames: string[] = [];
+
+            const rows = parentValues[ARRAY_NAME];
+
+            const expected: string[] = rows.flatMap((_, i) => [
+                `${ARRAY_NAME}.${i}.1752`,
+                `${ARRAY_NAME}.${i}.1762`,
+            ]);
+
+            expect(
+                getVisibleQuestionIds(
+                    filteredData,
+                    parentValues,
+                    staticFieldsNames
+                ).sort()
+            ).toEqual(expected.sort());
         });
     });
 

@@ -18,17 +18,62 @@ const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
 
 const getVisibleQuestionIds = (
     filteredData: DarFormattedField[],
-    parentValues: { [k: string]: string | undefined },
+    parentValues: DarApplicationResponses,
     staticFieldsNames: string[]
-): string[] => [
-    ...filteredData.flatMap(field => [
-        field.question_id.toString(),
-        ...(field.options
-            ?.find(opt => opt.label === parentValues[field.question_id])
-            ?.children.map(child => child.question_id.toString()) || []),
-    ]),
-    ...staticFieldsNames,
-];
+): string[] => {
+    const isSelected = (sel: string, label: string) =>
+        Array.isArray(sel) ? sel.includes(label) : sel === label;
+
+    const out = [
+        ...filteredData.flatMap(field => {
+            // Array field
+            if (
+                field.component === "ArrayField" &&
+                Array.isArray(parentValues[field.name])
+            ) {
+                const rows: DarApplicationResponses[] =
+                    parentValues[field.name];
+                const inner = field.fields ?? [];
+                return inner.flatMap(innerField => {
+                    // base IDs per row (count rows even if values are undefined)
+                    const base = rows.map(
+                        (_, i) => `${field.name}.${i}.${innerField.question_id}`
+                    );
+
+                    // Children per row (only when selected)
+                    const child = rows.flatMap((row, i) => {
+                        const sel = row?.[innerField.question_id];
+                        const children =
+                            innerField.options
+                                ?.filter(opt => isSelected(sel, opt.label))
+                                .flatMap(opt => opt.children ?? []) ?? [];
+
+                        return children.map(
+                            childField =>
+                                `${field.name}.${i}.${childField.question_id}`
+                        );
+                    });
+
+                    return [...base, ...child];
+                });
+            }
+
+            // Non array field
+            const children =
+                field.options?.find(
+                    opt => opt.label === parentValues[field.question_id]
+                )?.children ?? [];
+
+            return [
+                String(field.question_id),
+                ...children.map(c => String(c.question_id)),
+            ];
+        }),
+        ...staticFieldsNames,
+    ];
+
+    return Array.from(new Set(out));
+};
 
 const formatDarQuestion = (
     field: DarApplicationQuestion

@@ -33,6 +33,7 @@ interface DarFieldArrayProps {
     fieldParent: DarFormattedField;
     setSelectedField?: (fieldName: string) => void;
     selectedField?: string;
+    isViewOnly?: boolean;
 }
 
 const DarFieldArray = ({
@@ -40,6 +41,7 @@ const DarFieldArray = ({
     fieldParent,
     setSelectedField,
     selectedField,
+    isViewOnly,
 }: DarFieldArrayProps) => {
     const arrayName = fieldParent.name;
 
@@ -100,37 +102,42 @@ const DarFieldArray = ({
                                         : "inherit",
                             }}>
                             {renderFormHydrationField(
-                                arrayField,
+                                { ...arrayField, disabled: isViewOnly },
                                 control,
                                 `${arrayName}.${index}.${arrayField.question_id}`,
                                 () => setSelectedField?.(arrayField.name)
                             )}
                         </Box>
                     ))}
-                    <Button
-                        onClick={() => remove(index)}
-                        variant="outlined"
-                        sx={{ ml: 2, mb: 1 }}>
-                        {t("remove")}
-                    </Button>
+
+                    {!isViewOnly && (
+                        <Button
+                            onClick={() => remove(index)}
+                            variant="outlined"
+                            sx={{ ml: 2, mb: 1 }}>
+                            {t("remove")}
+                        </Button>
+                    )}
                 </Box>
             ))}
 
-            <Box
-                sx={{
-                    mb: 1,
-                    pt: 1,
-                    pb: 0,
-                    pl: 3,
-                    pr: 3,
-                }}>
-                <Button
-                    onClick={() => append(generateEmptyArrayFields)}
-                    startIcon={<AddIcon sx={{ height: 14, width: 14 }} />}
-                    sx={{ mb: 3 }}>
-                    {t("add")}
-                </Button>
-            </Box>
+            {!isViewOnly && (
+                <Box
+                    sx={{
+                        mb: 1,
+                        pt: 1,
+                        pb: 0,
+                        pl: 3,
+                        pr: 3,
+                    }}>
+                    <Button
+                        onClick={() => append(generateEmptyArrayFields)}
+                        startIcon={<AddIcon sx={{ height: 14, width: 14 }} />}
+                        sx={{ mb: 3 }}>
+                        {t("add")}
+                    </Button>
+                </Box>
+            )}
         </div>
     );
 };
