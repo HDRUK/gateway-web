@@ -21,8 +21,10 @@ import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
 import { formatTextWithLinks, splitStringList } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
+import { decodeHtmlEntity } from "@/utils/general";
 import {
     DatasetSection,
+    DatasetType,
     FieldType,
     Observation,
     observationTableColumns,
@@ -89,7 +91,10 @@ const DatasetContent = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
 
-    const renderDatasetField = (type: FieldType, value: string) => {
+    const renderDatasetField = (
+        type: FieldType,
+        value: string | DatasetType[]
+    ) => {
         switch (type) {
             case FieldType.DATE: {
                 return (
@@ -102,6 +107,8 @@ const DatasetContent = ({
                 if (typeof tagList === "string") {
                     tagList = tagList.split(",");
                 }
+                tagList = tagList.map(tag => decodeHtmlEntity(tag));
+
                 return (
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
@@ -145,6 +152,10 @@ const DatasetContent = ({
                         ))}
                     </ListContainer>
                 );
+            }
+
+            case FieldType.DATASETTYPE_LIST: {
+                return value.map((item, i) => [i > 0 && ", ", item.name]);
             }
 
             default: {

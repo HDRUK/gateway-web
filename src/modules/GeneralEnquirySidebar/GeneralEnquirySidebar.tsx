@@ -109,7 +109,11 @@ const GeneralEnquirySidebar = ({
         if (!user) {
             return;
         }
-        reset({ ...generalEnquiryDefaultValues, ...user });
+        reset({
+            ...generalEnquiryDefaultValues,
+            ...user,
+            from: defaultEmailValue,
+        });
     }, [reset, user]);
 
     return (
@@ -132,7 +136,9 @@ const GeneralEnquirySidebar = ({
                     },
                 }}>
                 {datasets.map(item => (
-                    <Typography variant="h1">{item.teamName}</Typography>
+                    <Typography variant="h1" key={item.teamName}>
+                        {item.teamName}
+                    </Typography>
                 ))}
                 <Typography>{t("helperText")}</Typography>
 

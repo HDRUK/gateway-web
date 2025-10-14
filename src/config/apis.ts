@@ -87,6 +87,7 @@ const apis = {
     enquiryThreadsV1Url: `${apiV1Url}/enquiry_threads`,
     doiSearchV1Url: `${apiV1Url}/search/doi`,
     aliasesV1Url: `${apiV1Url}/aliases`,
+    licensesV1URL: `${apiV1Url}/licenses`,
 };
 
 export default apis;

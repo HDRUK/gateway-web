@@ -1,6 +1,8 @@
 "use client";
 
 import { Fragment, useMemo } from "react";
+import DownloadIcon from "@mui/icons-material/Download";
+import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
@@ -8,6 +10,7 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import CardActions from "@/components/CardActions";
+import Chip from "@/components/Chip";
 import DarStatusTracker from "@/components/DarStatusTracker";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Paper from "@/components/Paper";
@@ -16,6 +19,7 @@ import Typography from "@/components/Typography";
 import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useDialog from "@/hooks/useDialog";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { DarEditIcon } from "@/consts/customIcons";
 import {
@@ -51,6 +55,7 @@ export default function DarApplicationCard({
     withdrawApplication,
 }: DarApplicationCardProps) {
     const t = useTranslations(TRANSLATION_PATH);
+    const tCommon = useTranslations(`common`);
     const params = useParams<{ teamId: string }>();
     const { push } = useRouter();
     const { showDialog } = useDialog();
@@ -180,6 +185,9 @@ export default function DarApplicationCard({
                   teamId || application.teams[teamIndex || 0].team_id
               }`;
 
+    const downloadHref = (id: number) =>
+        `${apis.teamsV1Url}/${teamId}/dar/applications/${id}/download`;
+
     const canEdit = isResearcher
         ? submissionStatus === DarApplicationStatus.DRAFT ||
           (submissionStatus === DarApplicationStatus.SUBMITTED &&
@@ -187,6 +195,9 @@ export default function DarApplicationCard({
         : submissionStatus === DarApplicationStatus.SUBMITTED &&
           (approvalStatus === DarApplicationApprovalStatus.FEEDBACK ||
               !approvalStatus);
+
+    const downloadEnabled =
+        !isResearcher && submissionStatus === DarApplicationStatus.SUBMITTED;
 
     const actions = [
         ...(canEdit
@@ -237,6 +248,17 @@ export default function DarApplicationCard({
                   },
               ]
             : []),
+        ...(downloadEnabled
+            ? [
+                  {
+                      action: (id: number) => {
+                          push(downloadHref(id));
+                      },
+                      icon: DownloadIcon,
+                      label: t("downloadApplication"),
+                  },
+              ]
+            : []),
     ];
 
     return (
@@ -249,11 +271,23 @@ export default function DarApplicationCard({
                     sx={{
                         flexGrow: 1,
                     }}>
-                    <ShowMore maxHeight={24}>
-                        <Typography fontSize={16}>
-                            {application.project_title}
-                        </Typography>
-                    </ShowMore>
+                    <Grid container sx={{ flexWrap: "nowrap" }}>
+                        <Grid item sx={{ alignSelf: "center" }}>
+                            <ShowMore maxHeight={24}>
+                                <Typography fontSize={16}>
+                                    {application.project_title}
+                                </Typography>
+                            </ShowMore>
+                        </Grid>
+                        <Grid item sx={{ flexShrink: 0, ml: 2 }}>
+                            <Chip
+                                label={tCommon(
+                                    `dar.template.${application.application_type}`
+                                )}
+                                sx={{ ml: 2 }}
+                            />
+                        </Grid>
+                    </Grid>
 
                     <DarStatusTracker
                         submissionStatus={submissionStatus}

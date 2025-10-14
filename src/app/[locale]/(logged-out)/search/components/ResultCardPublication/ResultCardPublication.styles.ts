@@ -4,14 +4,6 @@ import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 
-export const PublicationTitleWrapper = styled("div")(({ theme }) => ({
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: theme.spacing(1),
-}));
-
 export const PublicationTitle = styled(Link)(() => ({
     width: "100%",
     fontWeight: 600,

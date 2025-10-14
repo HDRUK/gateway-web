@@ -21,8 +21,7 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog();
 
-    const { keywords, datasetType, datasetSubType } =
-        result?.metadata?.summary || {};
+    const { keywords, datasetType } = result?.metadata?.summary || {};
 
     /* note: sort this out as this is returning the GWDM, rather than the schema */
     const { collectionSituation } = result?.metadata?.provenance.origin || {};
@@ -55,10 +54,7 @@ const DatasetQuickViewDialog = ({ result }: DatasetQuickViewDialogProps) => {
                 </Box>
 
                 <CategoryHeader variant="h3">{t("dataType")}</CategoryHeader>
-                <Typography>
-                    {formatTextDelimiter(datasetType)}{" "}
-                    {datasetSubType && `, ${datasetSubType}`}
-                </Typography>
+                <Typography>{formatTextDelimiter(datasetType)}</Typography>
 
                 <CategoryHeader variant="h3">
                     {t("collectionSource")}

@@ -17,6 +17,7 @@ const useAccountMenu = () => {
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(team => ({
                 label: team.name,
+                key: team.name.toString().concat("-", team.id.toString()),
                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
             }));
 

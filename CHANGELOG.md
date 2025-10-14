@@ -1,3 +1,54 @@
+## [2.22.2](https://github.com/HDRUK/gateway-web/compare/v2.22.1...v2.22.2) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8070:** Break action bar to grid earlier (#1350) ([bf0b6e9](https://github.com/HDRUK/gateway-web/commit/bf0b6e913c425466a680df08bb6c4270e74088b3)), closes [GAT-8070](GAT-8070)
+
+## [2.22.1](https://github.com/HDRUK/gateway-web/compare/v2.22.0...v2.22.1) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8016:** Place name of Custodian / Network above logo on Custodian / Network pages (#1341) ([6e21996](https://github.com/HDRUK/gateway-web/commit/6e2199677beeaf74ead2054bf752d8f8a5fc87df)), closes [GAT-8016](GAT-8016)
+* **GAT-8070:** Collapse bookmark bar on mobile to a dropdown, and tweak the grid template behaviour (#1344) ([427249a](https://github.com/HDRUK/gateway-web/commit/427249af2050450d60162d058bfeb160ba3bd8d6)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Fix display of mind map on mobile  (#1346) ([bf50372](https://github.com/HDRUK/gateway-web/commit/bf503722ae850fe674bc773ece3a5297247a258b))
+* **GAT-8070:** Make publication search card title more readable on mobile and tablet (#1348) ([16acfb4](https://github.com/HDRUK/gateway-web/commit/16acfb43fb6e3b0968a37e07a84764fef6f461a7)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Make survey smaller on mobile (#1347) ([7924b86](https://github.com/HDRUK/gateway-web/commit/7924b866830d87adffe48956d61123df0a744358)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Responsive styling fixes (#1345) ([fdef034](https://github.com/HDRUK/gateway-web/commit/fdef03480bd648a5df7570d4f1d2ca793b26977e))
+
+## [2.22.0](https://github.com/HDRUK/gateway-web/compare/v2.21.0...v2.22.0) (2025-10-07)
+
+### ✨ Features
+
+* **GAT-6152:** Show count on un-nested parents (#1333) ([9af0272](https://github.com/HDRUK/gateway-web/commit/9af027274a6040397dc627f0ae9afd7293169747)), closes [GAT-6152](GAT-6152)
+* **GAT-6568:** DAR template builder UX improvements (#1335) ([737fd77](https://github.com/HDRUK/gateway-web/commit/737fd770cd1ce74512f59205869c32ff7544e31e)), closes [GAT-6568](GAT-6568)
+* **GAT-7335:** Add pagination to integration history table (#1334) ([d5b557e](https://github.com/HDRUK/gateway-web/commit/d5b557ef51f403e3c5e34c53a949915c2ce4a138)), closes [GAT-7335](GAT-7335)
+* **GAT-7879:** Add additional wordpress support pages (#1331) ([bc7c608](https://github.com/HDRUK/gateway-web/commit/bc7c6086b87e524999c5dc23bab299567211648b)), closes [GAT-7879](GAT-7879)
+
+### 🐛 Bug Fixes
+
+* **GAT-1234:** Show user.name if user.firstname is null, to avoid showing 'null null' (#1338) ([18559f9](https://github.com/HDRUK/gateway-web/commit/18559f986f0f18af9eefe84132f9fa9a4571c2b3)), closes [GAT-1234](GAT-1234)
+* **GAT-7861:** Enquiry forms email selection and dataset name fix (#1336) ([0615254](https://github.com/HDRUK/gateway-web/commit/06152542470a0378f8de70f0bb4e21223e323ee1))
+
+## [2.21.0](https://github.com/HDRUK/gateway-web/compare/v2.20.0...v2.21.0) (2025-09-23)
+
+### ✨ Features
+
+* **GAT-6152:** Fixed filter chip issue for nested subtypes (#1325) ([27c0a11](https://github.com/HDRUK/gateway-web/commit/27c0a11225283ed4c5ee8be85ae87b770730e5eb))
+* **GAT-6152:** Nested filter for data types (#1323) ([a9d1e33](https://github.com/HDRUK/gateway-web/commit/a9d1e333a97adbe4392e0cdb994b89e5972be431)), closes [GAT-6152](GAT-6152)
+* **GAT-7135:** Add dar application type display (#1324) ([132ea5a](https://github.com/HDRUK/gateway-web/commit/132ea5ac996d3afe2b1492cb70ca645bbeafb46b)), closes [GAT-7135](GAT-7135)
+* **GAT-7335:** Added integrations table component (#1278) ([c925ec5](https://github.com/HDRUK/gateway-web/commit/c925ec50a50bef4c080ece9e30ecaed704e7aeda)), closes [GAT-7335](GAT-7335)
+* **GAT-7353:** Added download button to DAR application form (#1322) ([1fcc512](https://github.com/HDRUK/gateway-web/commit/1fcc51243fd5b625712ded714d176bacdc75388d)), closes [GAT-7353](GAT-7353)
+* **GAT-7354:** Added option to download DAR forms (#1313) ([d7de072](https://github.com/HDRUK/gateway-web/commit/d7de07265d064aa6bc61c68b90f893ccc0ddd9cf)), closes [GAT-7354](GAT-7354)
+* **GAT-7408:** Remove datasetSubType from quick view dialog (#1318) ([80a190b](https://github.com/HDRUK/gateway-web/commit/80a190ba1a025b6a86461d3818bc6621074c8b31)), closes [GAT-7408](GAT-7408)
+* **GAT-7845:** Cohort Redirect upon sign-in provider (#1319) ([2218bde](https://github.com/HDRUK/gateway-web/commit/2218bde70b6adc13b98d881b6769283b496e63a4)), closes [GAT-7845](GAT-7845)
+
+### 🐛 Bug Fixes
+
+* **GAT-7694:** Add license field to tool creation/edit page (#1320) ([7723cc5](https://github.com/HDRUK/gateway-web/commit/7723cc5879bd948017ed2050d8e3fc2c0b26e039)), closes [GAT-7694](GAT-7694)
+* **GAT-7694:** Improve license input box description (#1321) ([c6dc81e](https://github.com/HDRUK/gateway-web/commit/c6dc81e3d7a333a2ffba8bf3cfce28dce1ed0bc7)), closes [GAT-7694](GAT-7694)
+* **GAT-7797:** Fix dataset array validation (#1328) ([4bca870](https://github.com/HDRUK/gateway-web/commit/4bca8709ca5b3ee9be0cf41bd5a71d3f4670dd93))
+* **GAT-7817:** Handle new nested datasetType and datasetSubtype on Dataset content page (#1317) ([5b9c8ed](https://github.com/HDRUK/gateway-web/commit/5b9c8ed3dabff23c1b3b33de657eaa820b3df942)), closes [GAT-7817](GAT-7817)
+
 ## [2.20.0](https://github.com/HDRUK/gateway-web/compare/v2.19.0...v2.20.0) (2025-09-09)
 
 ### ✨ Features

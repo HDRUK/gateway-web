@@ -132,6 +132,11 @@ const TemplateList = ({
                                 sx={{
                                     p: 0,
                                     borderLeft: `solid 1px ${colors.grey600}`,
+                                    justifyContent: "center",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    mt: 3,
+                                    mb: 3,
                                 }}>
                                 <CardActions
                                     actions={actions}

@@ -1,7 +1,6 @@
 "use client";
 
 import Typography from "@mui/material/Typography";
-import { visuallyHidden } from "@mui/utils";
 import { hasValidValue } from "@/utils/dataset";
 import TooltipIcon from "../TooltipIcon";
 import {
@@ -60,6 +59,9 @@ const DatasetStatCard = ({
             aria-describedby={descriptionId}
             sx={{
                 ...(enableScroll ? { cursor: "pointer" } : {}),
+                width: { mobile: "60%", tablet: "40%", desktop: "100%" },
+                flexShrink: 0,
+                scrollSnapAlign: "start",
             }}>
             <Title>
                 <Typography fontSize={16} sx={{ mb: 0, pt: 1, pb: 1 }}>
@@ -107,7 +109,7 @@ const DatasetStatCard = ({
             </InfoWrapper>
 
             {/* this be a description for screen readers */}
-            <span id={descriptionId} style={visuallyHidden}>
+            <span id={descriptionId} style={{ zIndex: -1 }}>
                 {helperText || `${title} statistic card`}
             </span>
         </StatCard>

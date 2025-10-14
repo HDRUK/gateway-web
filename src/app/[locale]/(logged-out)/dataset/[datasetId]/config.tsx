@@ -4,6 +4,12 @@ export enum FieldType {
     DATE = "date",
     TAG_LIST = "tag-list",
     LINK_LIST = "link-list",
+    DATASETTYPE_LIST = "dataset-type-list",
+}
+
+export interface DatasetType {
+    name: string;
+    subTypes: string[];
 }
 interface DatasetField {
     path: string;
@@ -52,7 +58,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.provenance.origin.datasetType",
-                type: FieldType.LIST,
+                type: FieldType.DATASETTYPE_LIST,
                 label: "Dataset type",
                 tooltip:
                     "The topic areas to which the dataset content relates.",

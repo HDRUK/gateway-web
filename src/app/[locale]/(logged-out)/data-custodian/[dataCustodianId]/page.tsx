@@ -69,7 +69,10 @@ export default async function DataCustodianItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                        {data.name}
+                    </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
                         <AspectRatioImage
                             width={554}
                             height={250}
@@ -78,9 +81,6 @@ export default async function DataCustodianItemPage({
                                 data?.team_logo || StaticImages.BASE.placeholder
                             }
                         />
-                        <Typography variant="h1" sx={{ ml: 2 }}>
-                            {data.name}
-                        </Typography>
                     </Box>
                     <ActionBar
                         team={{

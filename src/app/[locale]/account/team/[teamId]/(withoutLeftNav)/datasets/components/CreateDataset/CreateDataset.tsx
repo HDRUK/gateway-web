@@ -72,15 +72,15 @@ import {
     mapExistingDatasetToFormFields,
     formGenerateLegendItems,
     formGetFieldsCompletedCount,
-    formatValidationItems,
     getFirstLocationValues,
     hasVisibleFieldsForLocation,
     isFirstSection,
     isLastSection,
     mapFormFieldsForSubmission,
     renderFormHydrationField,
+    formatValidationItems,
 } from "@/utils/formHydration";
-import { capitalise, splitCamelcase } from "@/utils/general";
+import { capitalise, decodeHtmlEntity, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
 import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
@@ -254,6 +254,14 @@ const CreateDataset = ({
             latestMetadata = omit(latestMetadata, "summary.title");
         }
 
+        const keywords = latestMetadata?.summary?.keywords;
+
+        if (keywords && latestMetadata) {
+            latestMetadata.summary.keywords = keywords.map(keyword =>
+                decodeHtmlEntity(keyword)
+            );
+        }
+
         setStructuralMetadata(latestMetadata?.structuralMetadata?.tables || []);
 
         const mappedFormData = mapExistingDatasetToFormFields(
@@ -272,15 +280,24 @@ const CreateDataset = ({
             > = {};
 
             validationFields.forEach(field => {
-                const { title, items, ...rest } = field;
+                const { title, items, required, of, ...rest } = field;
 
                 if (items && Array.isArray(items)) {
+                    // When field has an items array, convert to formatted object (used for field arrays)
                     transformedObject[title] = {
                         ...rest,
+                        required,
                         items: formatValidationItems(items),
                     };
+                } else if (of && required) {
+                    // Ensure required array of enums requires at least 1 value
+                    transformedObject[title] = {
+                        ...rest,
+                        required,
+                        min: 1,
+                    };
                 } else {
-                    transformedObject[title] = rest;
+                    transformedObject[title] = { ...rest, required };
                 }
             });
 
@@ -654,6 +671,7 @@ const CreateDataset = ({
             }
             delete formPayload.metadata.metadata.datasetType;
             delete formPayload.metadata.metadata.datasetSubType;
+
             const formPostRequest =
                 isEditing && !isDuplicate
                     ? await updateDataset(

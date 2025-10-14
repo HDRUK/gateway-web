@@ -62,7 +62,10 @@ export default async function DataCustodianNetworkPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                        {summaryData.name}
+                    </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
                         <AspectRatioImage
                             width={554}
                             height={250}
@@ -72,9 +75,6 @@ export default async function DataCustodianNetworkPage({
                                 StaticImages.BASE.placeholder
                             }
                         />
-                        <Typography variant="h1" sx={{ ml: 2 }}>
-                            {summaryData.name}
-                        </Typography>
                     </Box>
                     <ActionBar />
                     <Box
