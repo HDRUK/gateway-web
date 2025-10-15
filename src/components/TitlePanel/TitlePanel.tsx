@@ -16,11 +16,11 @@ const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
             <Box
                 sx={{
                     p: 0,
-                    mr: 2,
+                    mr: { tablet: 2 },
                     mt: { tablet: 6 },
                     flex: 1,
-                    textAlign: { mobile: "center", tablet: "left" },
                     flexDirection: { mobile: "row", tablet: "column" },
+                    width: "100%",
                 }}>
                 <TitleWithBg mb={2} title={title} />
                 <Typography

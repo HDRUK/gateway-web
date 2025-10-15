@@ -6,5 +6,7 @@ export const ActionBarWrapper = styled(Box)(() => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    boxShadow: "1px 1px 3px 0px #00000017",
+    gap: 8,
+    p: 24,
+    boxShadow: "3px 3px 6px 3px rgba(91, 47, 47, 0.09)",
 }));

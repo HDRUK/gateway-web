@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import BoxContainer from "@/components/BoxContainer";
@@ -19,7 +19,7 @@ import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 
 const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
 
-interface CohortDisoveryRequestFormProps {
+interface CohortDiscoveryRequestFormProps {
     cmsContent: templateRepeatFields;
     userId: number;
 }
@@ -28,10 +28,10 @@ interface accessRequestType {
     redirect_url: string;
 }
 
-const CohortDisoveryRequestForm = ({
+const CohortDiscoveryRequestForm = ({
     cmsContent,
     userId,
-}: CohortDisoveryRequestFormProps) => {
+}: CohortDiscoveryRequestFormProps) => {
     const { push } = useRouter();
     const { showDialog } = useDialog();
     const t = useTranslations();
@@ -58,16 +58,18 @@ const CohortDisoveryRequestForm = ({
 
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
-    if (!isUserLoading && !isAccessLoading) {
-        if (accessData?.redirect_url) {
-            redirect(accessData?.redirect_url);
-        } else if (
-            userData?.request_status &&
-            userData.request_status === "APPROVED"
-        ) {
-            redirect(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+    useEffect(() => {
+        if (!isUserLoading && !isAccessLoading) {
+            if (accessData?.redirect_url) {
+                push(accessData.redirect_url);
+            } else if (
+                userData?.request_status &&
+                userData.request_status === "APPROVED"
+            ) {
+                push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
+            }
         }
-    }
+    }, [isUserLoading, isAccessLoading, accessData, userData, push]);
 
     return !isUserLoading && !isAccessLoading ? (
         <BoxContainer
@@ -153,4 +155,4 @@ const CohortDisoveryRequestForm = ({
     ) : null;
 };
 
-export default CohortDisoveryRequestForm;
+export default CohortDiscoveryRequestForm;
