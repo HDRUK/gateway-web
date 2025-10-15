@@ -150,6 +150,14 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
+                          ...(permissions["widgets.read"]
+                              ? [
+                                    {
+                                        label: "Widgets",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`,
+                                    },
+                                ]
+                              : []),
                       ],
                   },
               ]
