@@ -217,22 +217,22 @@ const ApplicationSection = ({
             submission_status: DarApplicationStatus.DRAFT,
         };
 
-        console.log(visibleQuestionIds);
+        const questionIsVisible = (qid: string, ids: string[]) =>
+            ids.includes(qid) || ids.some(id => id.split(".").pop() === qid);
 
         const answers = Object.entries(formData ?? getValues())
             .flatMap(([key, val]) => {
-                if (key.includes(ARRAY_PREFIX)) {
-                    const cols = val.reduce<Record<string, string[]>>(
-                        (acc, row) => {
-                            for (const [qid, v] of Object.entries(row)) {
-                                const s = String(v ?? "").trim();
-                                if (!s) continue;
-                                (acc[qid] ??= []).push(s);
-                            }
-                            return acc;
-                        },
-                        {}
-                    );
+                if (key.includes(ARRAY_PREFIX) && Array.isArray(val)) {
+                    const cols = (val as Array<Record<string, string>>).reduce<
+                        Record<string, string[]>
+                    >((acc, row) => {
+                        Object.entries(row || {}).forEach(([qid, v]) => {
+                            const s = String(v ?? "").trim();
+                            if (!s) return;
+                            (acc[qid] ||= []).push(s);
+                        });
+                        return acc;
+                    }, {});
 
                     // emit one entry per question_id with JSON array as the answer
                     return Object.entries(cols).map(([qid, arr]) => [qid, arr]);
@@ -245,8 +245,11 @@ const ApplicationSection = ({
             .filter(
                 a =>
                     !isEmpty(a.answer) &&
-                    !excludedQuestionFields.includes(a.question_id) // &&
-                // visibleQuestionIds?.includes(a.question_id) // keeps only real question_ids like "1752"
+                    !excludedQuestionFields.includes(a.question_id) &&
+                    questionIsVisible(
+                        a.question_id.toString(),
+                        visibleQuestionIds
+                    )
             );
 
         if (formData) {

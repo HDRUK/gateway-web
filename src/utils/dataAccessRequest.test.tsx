@@ -13,7 +13,7 @@ import {
 
 const ARRAY_NAME = "Other individuals - array";
 
-type QA = { question_id: string; answer: any };
+type QA = { question_id: string; answer: string };
 type Q = {
     component?: string;
     title?: string;

@@ -153,20 +153,21 @@ const formatDarAnswers = (
     // Group array answers by array name: name -> { qid: string[] }
     const arrayColumnsByName = new Map<string, Map<string, string[]>>();
 
-    for (const a of userAnswers) {
+    userAnswers.forEach(a => {
         const arrayName = childQuestionToArrayName.get(a.question_id);
-        if (!arrayName) continue;
+        if (!arrayName) return;
 
         const values = Array.isArray(a.answer)
-            ? a.answer.map(String)
+            ? a.answer.map(v => String(v ?? ""))
             : [String(a.answer ?? "")];
 
         const cols =
             arrayColumnsByName.get(arrayName) ?? new Map<string, string[]>();
+
         const col = cols.get(a.question_id) ?? [];
         cols.set(a.question_id, col.concat(values));
         arrayColumnsByName.set(arrayName, cols);
-    }
+    });
 
     // Format columns -> rows per array name
     const arrayRowsByName = Object.fromEntries(
