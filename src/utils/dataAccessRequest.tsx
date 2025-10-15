@@ -1,6 +1,7 @@
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import {
+    DarApplicationAnswer,
     DarApplicationQuestion,
     DarApplicationResponses,
     DarFormattedField,
@@ -9,6 +10,7 @@ import { FileUploadFields } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { CACHE_DAR_ANSWERS } from "@/consts/cache";
+import { ARRAY_FIELD } from "@/consts/dataAccess";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
@@ -111,6 +113,80 @@ const formatDarQuestion = (
     }),
 });
 
+const formatDarAnswers = (
+    userAnswers: DarApplicationAnswer[] = [],
+    questions: DarApplicationQuestion[] = []
+) => {
+    // map child question_id to its ArrayField name
+    const childQuestionToArrayName = new Map(
+        (questions || [])
+            .filter(
+                question =>
+                    question.component === ARRAY_FIELD &&
+                    Array.isArray(question.fields)
+            )
+            .flatMap(question =>
+                question.fields!.flatMap(field => {
+                    return [
+                        [String(field.question_id), question.title],
+                        ...(field.options ?? []).flatMap(option =>
+                            (option.children ?? []).map(
+                                option =>
+                                    [
+                                        String(option.question_id),
+                                        question.title,
+                                    ] as [string, string]
+                            )
+                        ),
+                    ];
+                })
+            )
+    );
+
+    // Non-array answers
+    const nonArrayValues = Object.fromEntries(
+        userAnswers
+            .filter(a => !childQuestionToArrayName.has(a.question_id))
+            .map(a => [a.question_id, a.answer])
+    );
+
+    // Group array answers by array name: name -> { qid: string[] }
+    const arrayColumnsByName = new Map<string, Map<string, string[]>>();
+
+    for (const a of userAnswers) {
+        const arrayName = childQuestionToArrayName.get(a.question_id);
+        if (!arrayName) continue;
+
+        const values = Array.isArray(a.answer)
+            ? a.answer.map(String)
+            : [String(a.answer ?? "")];
+
+        const cols =
+            arrayColumnsByName.get(arrayName) ?? new Map<string, string[]>();
+        const col = cols.get(a.question_id) ?? [];
+        cols.set(a.question_id, col.concat(values));
+        arrayColumnsByName.set(arrayName, cols);
+    }
+
+    // Format columns -> rows per array name
+    const arrayRowsByName = Object.fromEntries(
+        [...arrayColumnsByName].map(([arrayName, cols]) => {
+            const childIds = [...cols.keys()];
+            const len = Math.max(0, ...[...cols.values()].map(a => a.length));
+
+            const rows = Array.from({ length: len }, (_, i) =>
+                Object.fromEntries(
+                    childIds.map(qid => [qid, (cols.get(qid) ?? [])[i] ?? ""])
+                )
+            ).filter(r => Object.values(r).some(v => String(v).trim()));
+
+            return [arrayName, rows];
+        })
+    );
+
+    return { ...nonArrayValues, ...arrayRowsByName };
+};
+
 const createFileUploadConfig = (
     questionId: string,
     component: ComponentTypes,
@@ -183,5 +259,6 @@ export {
     getVisibleQuestionIds,
     mapKeysToValues,
     formatDarQuestion,
+    formatDarAnswers,
     createFileUploadConfig,
 };

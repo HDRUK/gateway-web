@@ -3,13 +3,23 @@ import {
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
 import { inputComponents } from "@/config/forms";
+import { ARRAY_FIELD } from "@/consts/dataAccess";
 import {
+    formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
     mapKeysToValues,
 } from "./dataAccessRequest";
 
 const ARRAY_NAME = "Other individuals - array";
+
+type QA = { question_id: string; answer: any };
+type Q = {
+    component?: string;
+    title?: string;
+    name?: string;
+    fields?: { question_id: number; is_child?: number }[];
+};
 
 describe("Data Access Request utils", () => {
     describe("mapKeysToValues", () => {
@@ -118,7 +128,7 @@ describe("Data Access Request utils", () => {
         it("includes inner fields of an ArrayField and any children selected in any row", () => {
             const filteredData: DarFormattedField[] = [
                 {
-                    component: "ArrayField",
+                    component: ARRAY_FIELD,
                     name: ARRAY_NAME,
                     fields: [
                         {
@@ -175,7 +185,7 @@ describe("Data Access Request utils", () => {
         it("includes inner fields of an ArrayField even if rows have undefined values, but does not include children when not selected", () => {
             const filteredData: DarFormattedField[] = [
                 {
-                    component: "ArrayField",
+                    component: ARRAY_FIELD,
                     name: ARRAY_NAME,
                     fields: [
                         {
@@ -230,7 +240,7 @@ describe("Data Access Request utils", () => {
         it("handles empty ArrayField rows - includes inner fields but no children", () => {
             const filteredData: DarFormattedField[] = [
                 {
-                    component: "ArrayField",
+                    component: ARRAY_FIELD,
                     name: ARRAY_NAME,
                     fields: [
                         {
@@ -272,6 +282,148 @@ describe("Data Access Request utils", () => {
                     staticFieldsNames
                 ).sort()
             ).toEqual(expected.sort());
+        });
+    });
+
+    describe("formatDarAnswers", () => {
+        it("passes through non-array answers", () => {
+            const questions: Q[] = [];
+            const userAnswers: QA[] = [
+                { question_id: "1722", answer: "Title" },
+                { question_id: "1729", answer: "Yes" },
+            ];
+
+            expect(formatDarAnswers(userAnswers, questions)).toEqual({
+                "1722": "Title",
+                "1729": "Yes",
+            });
+        });
+
+        it("formats columns into rows for a single ArrayField", () => {
+            const questions: Q[] = [
+                {
+                    component: ARRAY_FIELD,
+                    title: ARRAY_NAME,
+                    fields: [{ question_id: 1752 }, { question_id: 1753 }],
+                },
+            ];
+
+            // Backend provided “columns”: each child qid can have multiple values
+            const userAnswers: QA[] = [
+                { question_id: "1752", answer: ["Alice", "Bob"] },
+                { question_id: "1753", answer: ["Dev", "PM"] },
+            ];
+
+            expect(formatDarAnswers(userAnswers, questions)).toEqual({
+                [ARRAY_NAME]: [
+                    { "1752": "Alice", "1753": "Dev" },
+                    { "1752": "Bob", "1753": "PM" },
+                ],
+            });
+        });
+
+        it("handles uneven column lengths and drops fully empty rows", () => {
+            const questions: Q[] = [
+                {
+                    component: ARRAY_FIELD,
+                    title: ARRAY_NAME,
+                    fields: [
+                        { question_id: 1752 },
+                        { question_id: 1753 },
+                        { question_id: 1762 },
+                    ],
+                },
+            ];
+
+            const userAnswers: QA[] = [
+                { question_id: "1752", answer: ["Alice", "Bob"] },
+                { question_id: "1753", answer: ["Dev"] },
+                { question_id: "1762", answer: [] },
+            ];
+
+            expect(formatDarAnswers(userAnswers, questions)).toEqual({
+                [ARRAY_NAME]: [
+                    { "1752": "Alice", "1753": "Dev", "1762": "" },
+                    { "1752": "Bob", "1753": "", "1762": "" },
+                ],
+            });
+        });
+
+        it("drops rows that are fully empty", () => {
+            const questions: Q[] = [
+                {
+                    component: ARRAY_FIELD,
+                    title: ARRAY_NAME,
+                    fields: [{ question_id: 1752 }, { question_id: 1753 }],
+                },
+            ];
+
+            const userAnswers: QA[] = [
+                { question_id: "1752", answer: ["Alice", ""] },
+                { question_id: "1753", answer: ["Dev", ""] },
+            ];
+
+            expect(formatDarAnswers(userAnswers, questions)).toEqual({
+                [ARRAY_NAME]: [{ "1752": "Alice", "1753": "Dev" }],
+            });
+        });
+
+        it("supports multiple ArrayFields at once and keeps non-array answers", () => {
+            const ARRAY_NAME_2 = "Declaration of interest - array";
+
+            const questions: Q[] = [
+                {
+                    component: ARRAY_FIELD,
+                    title: ARRAY_NAME,
+                    fields: [{ question_id: 1752 }, { question_id: 1753 }],
+                },
+                {
+                    component: ARRAY_FIELD,
+                    title: ARRAY_NAME_2,
+                    fields: [{ question_id: 1832 }, { question_id: 1839 }],
+                },
+            ];
+
+            const userAnswers: QA[] = [
+                // non array
+                { question_id: "1722", answer: "Project X" },
+
+                // first array
+                { question_id: "1752", answer: ["Alice", "Bob"] },
+                { question_id: "1753", answer: ["Dev", "PM"] },
+
+                // second array
+                { question_id: "1832", answer: ["Yes"] },
+                { question_id: "1839", answer: ["Describe"] },
+            ];
+
+            expect(formatDarAnswers(userAnswers, questions)).toEqual({
+                "1722": "Project X",
+                [ARRAY_NAME]: [
+                    { "1752": "Alice", "1753": "Dev" },
+                    { "1752": "Bob", "1753": "PM" },
+                ],
+                [ARRAY_NAME_2]: [{ "1832": "Yes", "1839": "Describe" }],
+            });
+        });
+
+        it("wraps single value answers into array", () => {
+            const questions: Q[] = [
+                {
+                    component: ARRAY_FIELD,
+                    title: ARRAY_NAME,
+                    fields: [{ question_id: 1752 }, { question_id: 1753 }],
+                },
+            ];
+
+            const userAnswers: QA[] = [
+                { question_id: "1752", answer: "Alice" },
+                { question_id: "1753", answer: "Dev" },
+            ];
+
+            expect(formatDarAnswers(userAnswers, questions)).toEqual({
+                [ARRAY_NAME]: [{ "1752": "Alice", "1753": "Dev" }],
+            });
         });
     });
 

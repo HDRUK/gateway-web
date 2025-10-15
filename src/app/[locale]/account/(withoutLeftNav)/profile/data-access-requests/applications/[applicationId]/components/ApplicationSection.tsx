@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
@@ -44,6 +44,8 @@ import {
 } from "@/config/forms/dataAccessApplication";
 import theme, { colors } from "@/config/theme";
 import {
+    ARRAY_FIELD,
+    ARRAY_PREFIX,
     DarApplicationApprovalStatus,
     DarApplicationStatus,
 } from "@/consts/dataAccess";
@@ -52,6 +54,7 @@ import { RouteName } from "@/consts/routeName";
 import { setTemporaryCookie } from "@/utils/cookies";
 import {
     createFileUploadConfig,
+    formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
     mapKeysToValues,
@@ -65,6 +68,7 @@ import { updateDarApplicationAnswersAction } from "@/app/actions/updateDarApplic
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
+import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
 import DarMessages from "./DarMessages";
 
@@ -137,14 +141,10 @@ const ApplicationSection = ({
     const formatGuidance = (guidance: string) =>
         guidance.replace(/\\n\\n/g, "\n\n");
 
-    const defaultValues = Object.fromEntries(
-        userAnswers?.map(a => [a.question_id, a.answer])
-    );
-
     const { control, handleSubmit, getValues, watch, formState, setValue } =
         useForm<DarApplicationResponses>({
             defaultValues: {
-                ...defaultValues,
+                ...formatDarAnswers(userAnswers, questions),
                 project_title: data.project_title,
             },
             resolver: yupResolver(
@@ -164,6 +164,7 @@ const ApplicationSection = ({
         )?.guidance;
 
         if (!guidance) {
+            setGuidanceText(undefined);
             return;
         }
 
@@ -182,7 +183,7 @@ const ApplicationSection = ({
                 ?.filter(field => !field.is_child)
                 .map(field => formatDarQuestion(field)) || []
         );
-    }, [questions, sectionId]);
+    }, [questions]);
 
     const parentFieldNames = useMemo(
         () =>
@@ -199,14 +200,12 @@ const ApplicationSection = ({
         [parentFieldNames, parentValuesArray]
     );
 
-    const visibleQuestionIds = useMemo(
-        () =>
-            getVisibleQuestionIds(
-                filteredData,
-                parentValues,
-                excludedQuestionFields
-            ),
-        [filteredData, parentValues]
+    const watchAll = watch();
+
+    const visibleQuestionIds = getVisibleQuestionIds(
+        filteredData,
+        watchAll,
+        excludedQuestionFields
     );
 
     const saveApplication = async (formData?: DarApplicationResponses) => {
@@ -218,16 +217,36 @@ const ApplicationSection = ({
             submission_status: DarApplicationStatus.DRAFT,
         };
 
+        console.log(visibleQuestionIds);
+
         const answers = Object.entries(formData ?? getValues())
-            .map(([key, val]) => ({
-                question_id: key,
-                answer: val,
-            }))
+            .flatMap(([key, val]) => {
+                if (key.includes(ARRAY_PREFIX)) {
+                    const cols = val.reduce<Record<string, string[]>>(
+                        (acc, row) => {
+                            for (const [qid, v] of Object.entries(row)) {
+                                const s = String(v ?? "").trim();
+                                if (!s) continue;
+                                (acc[qid] ??= []).push(s);
+                            }
+                            return acc;
+                        },
+                        {}
+                    );
+
+                    // emit one entry per question_id with JSON array as the answer
+                    return Object.entries(cols).map(([qid, arr]) => [qid, arr]);
+                }
+
+                // pass normal fields
+                return [[key, val]];
+            })
+            .map(([question_id, answer]) => ({ question_id, answer }))
             .filter(
                 a =>
                     !isEmpty(a.answer) &&
-                    !excludedQuestionFields.includes(a.question_id) &&
-                    visibleQuestionIds?.includes(a.question_id)
+                    !excludedQuestionFields.includes(a.question_id) // &&
+                // visibleQuestionIds?.includes(a.question_id) // keeps only real question_ids like "1752"
             );
 
         if (formData) {
@@ -312,7 +331,12 @@ const ApplicationSection = ({
 
     const renderFormFields = () =>
         filteredData
-            ?.filter(field => getParentSection(field.section_id) === sectionId)
+            ?.filter(
+                field =>
+                    getParentSection(field.section_id) === sectionId ||
+                    getParentSection(field?.fields?.[0]?.section_id) ===
+                        sectionId
+            )
             .map(field => {
                 if (field.is_child) return null;
 
@@ -349,35 +373,54 @@ const ApplicationSection = ({
 
                 return (
                     <Fragment key={field.question_id}>
-                        {sectionHeader}
-                        <Box
-                            sx={{
-                                pt: 1,
-                                pb: 0,
-                                pl: 3,
-                                pr: 3,
-                                backgroundColor:
-                                    field.name === selectedField
-                                        ? theme.palette.grey[100]
-                                        : "inherit",
-                            }}>
-                            {renderFormHydrationField(
-                                {
-                                    ...field,
-                                    disabled:
-                                        !isResearcher ||
-                                        (isResearcher &&
-                                            teamApplication &&
-                                            teamApplication?.approval_status !==
-                                                null),
-                                },
-                                control,
-                                field.question_id.toString(),
-                                updateGuidanceText,
-                                fileUploadFields
-                            )}
-                        </Box>
-
+                        {field.component === ARRAY_FIELD ? (
+                            <DarFieldArray
+                                key={`${field.name}-${sectionId}`}
+                                control={control}
+                                fieldParent={field}
+                                formArrayValues={watch(field.name)}
+                                selectedField={selectedField}
+                                setSelectedField={updateGuidanceText}
+                                isViewOnly={
+                                    !isResearcher ||
+                                    (isResearcher &&
+                                        teamApplication &&
+                                        teamApplication?.approval_status !==
+                                            null)
+                                }
+                            />
+                        ) : (
+                            <>
+                                {sectionHeader}
+                                <Box
+                                    sx={{
+                                        pt: 1,
+                                        pb: 0,
+                                        pl: 3,
+                                        pr: 3,
+                                        backgroundColor:
+                                            field.name === selectedField
+                                                ? theme.palette.grey[100]
+                                                : "inherit",
+                                    }}>
+                                    {renderFormHydrationField(
+                                        {
+                                            ...field,
+                                            disabled:
+                                                !isResearcher ||
+                                                (isResearcher &&
+                                                    teamApplication &&
+                                                    teamApplication?.approval_status !==
+                                                        null),
+                                        },
+                                        control,
+                                        field.question_id.toString(),
+                                        updateGuidanceText,
+                                        fileUploadFields
+                                    )}
+                                </Box>
+                            </>
+                        )}
                         {/* Process child fields when necessary */}
                         {field.options.flatMap(
                             option =>
@@ -421,14 +464,11 @@ const ApplicationSection = ({
                 );
             });
 
-    const getCompletedVisibleQuestionCount = (
-        visibleQuestionIds: string[]
-    ): number =>
-        visibleQuestionIds.filter(id => !isEmpty(getValues()[id])).length;
-
     const completedVisibleQuestions = useMemo(
-        () => getCompletedVisibleQuestionCount(visibleQuestionIds),
-        [visibleQuestionIds, getValues]
+        () =>
+            visibleQuestionIds.filter(id => get(watchAll, id.split(".")))
+                .length,
+        [watchAll, visibleQuestionIds]
     );
 
     const completedQsCount = `${completedVisibleQuestions}/${visibleQuestionIds.length}`;
