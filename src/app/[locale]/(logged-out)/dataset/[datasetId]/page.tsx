@@ -134,9 +134,13 @@ export default async function DatasetItemPage({
                                             ?.summary?.title
                                     }
                                 </Typography>
-                                <div>
+                                <Box
+                                    sx={{
+                                        overflow: "hidden",
+                                        p: 0,
+                                    }}>
                                     <DatasetStats data={datasetStats} />
-                                </div>
+                                </Box>
                             </Box>
                         )}
                         <BoxContainer
@@ -156,6 +160,7 @@ export default async function DatasetItemPage({
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 2,
+                                    overflow: "hidden",
                                 }}>
                                 <DatasetMindMap
                                     data={datasetVersion}

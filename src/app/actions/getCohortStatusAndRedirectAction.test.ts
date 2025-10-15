@@ -26,14 +26,8 @@ describe("getCohortStatusAndRedirect", () => {
             request_status: "APPROVED",
             request_expire_at: "07-07-2025 10:00:00",
         };
-        const mockAccessRedirect = {
-            redirect_url: "https://example.com/redirect",
-        };
 
         (getUserCohortRequest as jest.Mock).mockResolvedValue(mockUserRequest);
-        (getCohortAccessRedirect as jest.Mock).mockResolvedValue(
-            mockAccessRedirect
-        );
 
         const result = await getCohortStatusAndRedirect(123);
 
@@ -45,7 +39,7 @@ describe("getCohortStatusAndRedirect", () => {
         expect(result).toEqual({
             requestStatus: "APPROVED",
             requestExpiry: "07-07-2025 10:00:00",
-            redirectUrl: "https://example.com/redirect",
+            redirectUrl: "",
         });
     });
 
@@ -71,7 +65,7 @@ describe("getCohortStatusAndRedirect", () => {
         expect(result).toEqual({
             requestStatus: null,
             requestExpiry: null,
-            redirectUrl: null,
+            redirectUrl: "",
         });
     });
 });

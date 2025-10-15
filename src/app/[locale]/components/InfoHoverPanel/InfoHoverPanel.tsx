@@ -32,6 +32,7 @@ const BUTTON_STYLES = {
     borderRadius: { mobile: 2, tablet: 3 },
     p: { mobile: 1, tablet: "24px 15px" },
     fontSize: { mobile: 14, tablet: 19 },
+    textAlign: "center",
 };
 
 const InfoHoverPanel = ({

@@ -57,6 +57,8 @@ export default async function DataUseItemPage({
                             display: "flex",
                             flexDirection: "column",
                             gap: 2,
+                            px: 3,
+                            py: 3,
                         }}>
                         <Typography
                             variant="h2"

@@ -49,18 +49,27 @@ const ActionBar = () => {
     };
 
     return (
-        <ActionBarWrapper>
-            <BackButton
-                label={t("label")}
-                style={{ margin: 0 }}
-                onClick={() =>
-                    router.push(
-                        `/${RouteName.SEARCH}?type=${SearchCategory.DATA_USE}`
-                    )
-                }
-            />
+        <Box sx={{ px: 3 }}>
+            <ActionBarWrapper
+                sx={{
+                    flexDirection: { mobile: "column", tablet: "row" },
+                    justifyContent: "space-between",
+                    alignItems: { mobile: "flex-start", tablet: "stretch" },
+                }}>
+                <BackButton
+                    label={t("label")}
+                    style={{ margin: 0 }}
+                    sx={{
+                        paddingTop: { mobile: 1, tablet: 0 },
+                        paddingLeft: { mobile: 1, tablet: 0 },
+                    }}
+                    onClick={() =>
+                        router.push(
+                            `/${RouteName.SEARCH}?type=${SearchCategory.DATA_USE}`
+                        )
+                    }
+                />
 
-            <Box sx={{ display: "flex", gap: 1, p: 0 }}>
                 <Button
                     onClick={() => !isDownloading && downloadDataUse()}
                     variant="text"
@@ -68,8 +77,8 @@ const ActionBar = () => {
                     disabled={isDownloading}>
                     {t("downloadDataUse")}
                 </Button>
-            </Box>
-        </ActionBarWrapper>
+            </ActionBarWrapper>
+        </Box>
     );
 };
 

@@ -105,15 +105,16 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
     return (
         <BoxContainer
             sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(2, 1fr)",
-                    desktop: "repeat(5, 1fr)",
-                },
+                gridTemplateColumns: "repeat(5, 1fr)",
                 gap: {
                     mobile: 1,
                     tablet: 2,
                 },
+                display: { mobile: "flex", desktop: "grid" },
+                overflowX: { mobile: "scroll", desktop: "inherit" },
+                p: { mobile: 1, desktop: 0 },
+                scrollSnapType: "x mandatory",
+                "&::-webkit-scrollbar": { display: "none" },
             }}>
             {formattedStats.map(datasetStat => (
                 <DatasetStatCard

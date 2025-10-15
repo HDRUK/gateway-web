@@ -20,6 +20,7 @@ import Box from "@/components/Box";
 import TooltipText from "@/components/TooltipText";
 import { colors } from "@/config/theme";
 import { formatTextWithLinks } from "@/utils/dataset";
+import { decodeHtmlEntity } from "@/utils/general";
 
 type GroupByResult<T> = {
     [key: string]: T[];
@@ -129,7 +130,9 @@ const StructuralMetadataAccordion = ({
                                     }}>
                                     {item?.rows.map(row => (
                                         <TableRow key={row.name}>
-                                            <TableCell>{row.name}</TableCell>
+                                            <TableCell>
+                                                {decodeHtmlEntity(row.name)}
+                                            </TableCell>
                                             <TableCell>
                                                 {formatTextWithLinks(
                                                     row.dataType
