@@ -39,7 +39,7 @@ export default async function WidgetsPage({
             permissions={permissions}
             pagePermissions={["widgets.read"]}>
             <Box>
-                <Typography variant="h2">{t("title")}</Typography>
+                <Typography variant="h1">{t("title")}</Typography>
                 <Typography>{t("intro")}</Typography>
                 {permissions["widgets.create"] && (
                     <Button
