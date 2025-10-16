@@ -857,6 +857,15 @@
                             }
                         }
                     }
+                },
+                "widgets": {
+                    "title": "Widgets",
+                    "intro": "Widgets are a way of embedding functionality from the Gateway into your own site. We have a range of different types of widgets from search functionality, to widgets that highlight your own Datasets and Data Uses to your researchers",
+                    "create": "Create new widget",
+                    "search": "Search",
+                    "dimensions": "Dimensions",
+                    "dateUpdated": "Date updated",
+                    "widget": "Widget"
                 }
             }
         },
