@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import Container from "@/components/Container";
 import Link from "@/components/Link";
 
-export const FooterWrapper = styled("footer")(({ theme }) => ({
+export const FooterWrapper = styled("footer")(() => ({
     fontSize: "14px",
     ul: {
         listStyleType: "none",

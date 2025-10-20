@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
-import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { getHomePageBanner } from "@/utils/cms";

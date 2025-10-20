@@ -13,7 +13,7 @@ const navItems = [
     },
     {
         label: "Data Custodian Area",
-        href: "/community/technology-ecosystem",
+        href: "/data-custodian/support",
     },
 ];
 

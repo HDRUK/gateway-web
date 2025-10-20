@@ -1,12 +1,8 @@
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
 import theme from "@/config/theme";
 import { SearchIcon } from "@/consts/icons";
-import { RouteName } from "@/consts/routeName";
 import {
-    ExplainerLink,
-    ExplainerText,
     FormWrapper,
     InputWrapper,
     SearchForm,
@@ -14,7 +10,6 @@ import {
 } from "./SearchBar.styles";
 
 interface SearchBarProps {
-    explainerText?: string;
     resetAction: () => void;
     submitAction: (fieldValues: FieldValues) => void;
     inputOverrideAction?: () => void;
@@ -28,10 +23,7 @@ export const TEST_ID_RESET_BUTTON = "reset-btn";
 
 const SEARCH_ICON_SIZE = "32px";
 const CROSS_ICON_SIZE = "32px";
-const TRANSLATION_PATH = "pages.search";
-
 const SearchBar = ({
-    explainerText,
     resetAction,
     submitAction,
     inputOverrideAction,
@@ -40,8 +32,6 @@ const SearchBar = ({
     queryName,
     queryPlaceholder,
 }: SearchBarProps) => {
-    const t = useTranslations(TRANSLATION_PATH);
-
     const { control, handleSubmit, setValue } = useForm({
         defaultValues: { [queryName]: defaultValue },
     });

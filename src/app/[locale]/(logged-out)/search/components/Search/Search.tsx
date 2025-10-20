@@ -43,7 +43,6 @@ import Button from "@/components/Button";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import SearchBar from "@/components/SearchBar";
-import ShowingXofX from "@/components/ShowingXofX";
 import FeasibilityEnquiryDialog from "@/modules/FeasibilityEnquiryDialog";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import PublicationSearchDialog from "@/modules/PublicationSearchDialog";
@@ -59,7 +58,6 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
-import useSearch from "@/hooks/useSearch";
 import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
@@ -116,7 +114,6 @@ import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
-import ResultCard from "../ResultCard";
 import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
@@ -152,7 +149,6 @@ const filterSidebarStyles = {
 
 const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
-    const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -174,12 +170,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
     // This is required because there's a documented feature (i.e. bug) in MUI Tabs
     // that they can't simultaneously support centering AND scroll bars, so we have
     // to do it ourselves.
-    const scrollableTabs = useMediaQuery("(max-width:1372px)");
-
-    const redirectPath = searchParams
-        ? `${pathname}?${searchParams.toString()}`
-        : pathname;
-
     const getParamString = (paramName: string) => {
         return searchParams?.get(paramName)?.toString();
     };
@@ -251,12 +241,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
 
     const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
 
-    const { handleDownload } = useSearch(
-        queryParams.type,
-        resultsView,
-        queryParams
-    );
-
     const allSearchParams = getAllParams(searchParams);
     const forceSearch = searchParams?.get("force") !== null;
 
@@ -264,7 +248,7 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         const keys = Object.keys(allSearchParams).filter(
             (key: string) => allSearchParams[key] !== ""
         );
-
+        console.log(hasSearched);
         // In the Datasets view, "view" parameter is used to switch between
         // list and table view but is not a search parameter
         setHasSearched(
@@ -396,7 +380,7 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
     }, []);
 
     // Update the list of libraries
-    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
+    const { mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
@@ -437,48 +421,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         });
     };
 
-    const categoryTabs = [
-        {
-            label: t("datasets"),
-            value: SearchCategory.DATASETS,
-            tooltip: t("datasetsTooltip"),
-        },
-        {
-            label: t("dataUse"),
-            value: SearchCategory.DATA_USE,
-            tooltip: t("dataUseTooltip"),
-        },
-        {
-            label: t("tools"),
-            value: SearchCategory.TOOLS,
-            tooltip: t("toolsTooltip"),
-        },
-        {
-            label: t("publications"),
-            value: SearchCategory.PUBLICATIONS,
-            tooltip: t("publicationsTooltip"),
-        },
-        {
-            label: t("dataProviders"),
-            value: SearchCategory.DATA_CUSTODIANS,
-            tooltip: t("dataProvidersTooltip"),
-        },
-        {
-            label: t("collections"),
-            value: SearchCategory.COLLECTIONS,
-            tooltip: t("collectionsTooltip"),
-        },
-    ];
-
-    const categoryDropdowns = {
-        [SearchCategory.DATASETS]: t("datasets"),
-        [SearchCategory.DATA_USE]: t("dataUse"),
-        [SearchCategory.TOOLS]: t("tools"),
-        [SearchCategory.PUBLICATIONS]: t("publications"),
-        [SearchCategory.DATA_CUSTODIANS]: t("dataProviders"),
-        [SearchCategory.COLLECTIONS]: t("collections"),
-    };
-
     const removeFilter = (
         filterType: keyof SearchQueryParams,
         removedFilter: string
@@ -508,37 +450,33 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         if (filterType === FILTER_DATA_SET_TITLES) {
             removeArrayQueryAndPush(filterType, removedFilter);
         } else if (filterType === FILTER_DATA_TYPE) {
-            updatePathMultiple({
+            /* updatePathMultiple({
                 [FILTER_DATA_TYPE]: filtered,
                 [FILTER_DATA_SUBTYPE]: [],
-            });
+            }); */
         } else {
             updatePath(filterType, filtered.join(","));
         }
     };
 
-    const { requestStatus } = useCohortStatus(user?.id);
-
-    const isCohortDiscoveryDisabled =
-        isLoggedIn && requestStatus
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
-            : false;
+    useCohortStatus(user?.id);
 
     const renderResultCard = (result: SearchResult) => {
         const { _id: resultId } = result;
 
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
-                return (
-                    <ResultCard
+                /* return (
+                     <ResultCard
                         result={result as SearchResultDataset}
                         key={resultId}
                         mutateLibraries={mutateLibraries}
                         libraryData={libraryData}
                         isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
                         cohortDiscovery={cohortDiscovery}
-                    />
-                );
+                    /> 
+                ); */
+                return null;
             case SearchCategory.PUBLICATIONS:
                 return (
                     <ResultCardPublication
@@ -653,7 +591,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         },
     });
 
-
     const getExplainerText = () => {
         switch (queryParams.type) {
             case SearchCategory.PUBLICATIONS:
@@ -670,12 +607,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                 return t("searchExplainerDatasets");
         }
     };
-
-    const excludedDownloadSearchCategories = [
-        SearchCategory.PUBLICATIONS,
-        SearchCategory.DATA_CUSTODIANS,
-        SearchCategory.COLLECTIONS,
-    ];
 
     const isPublications = useMemo(
         () => queryParams.type === SearchCategory.PUBLICATIONS,
@@ -729,25 +660,7 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
 
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);
-
-    const [anchorEl, setAnchorEl] = useState(null);
-    const handleClick = e => {
-        setAnchorEl(e.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const getXofX = () => {
-        // Sometimes elastic_total > 100 while total < 100, so we avoid showing the total number
-        // to make it seem more consistent
-        return data && data.elastic_total > 100 && data.total <= 100 ? (
-            <ShowingXofX to={data?.to} from={data?.from} hideTotal />
-        ) : (
-            <ShowingXofX to={data?.to} from={data?.from} total={data?.total} />
-        );
-    };
-
+    console.log(setPostLoginActionCookie);
     const filterPanel = useMemo(() => {
         return (
             <FilterPanel
@@ -805,6 +718,7 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         getParamString,
         queryParams,
         resetQueryParamState,
+        schema.$defs,
         selectedFilters,
         updatePath,
         updatePathMultiple,

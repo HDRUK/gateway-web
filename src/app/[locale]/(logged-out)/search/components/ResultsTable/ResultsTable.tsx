@@ -14,10 +14,8 @@ import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { formatTextDelimiter } from "@/utils/dataset";
-import { getDateRange, getPopulationSize } from "@/utils/search";
+import { getDateRange } from "@/utils/search";
 import ActionDropdown from "../ActionDropdown";
 
 interface ResultTableProps {
@@ -33,7 +31,6 @@ const columnHelper = createColumnHelper<SearchResultDataset>();
 
 const getColumns = ({
     translations,
-    libraryData,
     showLibraryModal,
     mutateLibraries,
     isCohortDiscoveryDisabled,
@@ -63,7 +60,7 @@ const getColumns = ({
         meta: { isPinned: true, hasPinnedBorder: true },
         header: () => <span>{translations.metaDataLabel}</span>,
         minSize: 300,
-        size: 300,
+        size: 700,
     }),
 
     columnHelper.display({
@@ -107,7 +104,7 @@ const getColumns = ({
                 {translations.dataProviderLabel}
             </Tooltip>
         ),
-        size: 240,
+        size: 400,
     }),
     columnHelper.display({
         id: "dateRange",

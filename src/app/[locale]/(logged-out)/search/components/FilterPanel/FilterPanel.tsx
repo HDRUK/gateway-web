@@ -5,14 +5,9 @@ import { useForm } from "react-hook-form";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
+import { BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { Aggregations, SearchCategory } from "@/interfaces/Search";
-import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
-import FilterSection from "@/components/FilterSection";
-import FilterSectionRadio from "@/components/FilterSectionRadio";
-import MapUK, { SelectedType } from "@/components/MapUK/MapUK";
-import NestedFilterSection from "@/components/NestedFilterSection";
 import Typography from "@/components/Typography";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import {
@@ -44,26 +39,19 @@ import {
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { INCLUDE_UNREPORTED } from "@/consts/filters";
 import {
-    formatBucketCounts,
     groupByType,
     isQueryEmpty,
     transformQueryFiltersToForm,
 } from "@/utils/filters";
-import { getSubtypeOptionsFromSchema } from "@/utils/getSubtypeOptionsFromSchema";
 import { ClearButton } from "../ClearFilterButton/ClearFilterButton.styles";
-import DateRangeFilter from "../DateRangeFilter";
 import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
-import PopulationFilter from "../PopulationFilter";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
-const TOOLTIP_SUFFIX = "Tooltip";
 const FILTER_CATEGORY_PUBLICATIONS = "paper";
 const FILTER_CATEGORY_DURS = "dataUseRegister";
 const FILTER_CATEGORY_TOOLS = "tool";
 const FILTER_CATEGORY_COLLECTIONS = "collection";
-const FILTER_CATEGORY_DATASETS = "dataset";
 const STATIC_FILTER_SOURCE = "source";
 const STATIC_FILTER_SOURCE_OBJECT = {
     buckets: [
@@ -124,7 +112,6 @@ const FILTER_ORDERING: { [key: string]: Array<string> } = {
         FILTER_GEOGRAPHIC_LOCATION,
     ],
 };
-const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 type DefaultValues = {
     [key: string]: { [key: string]: boolean };
@@ -150,28 +137,14 @@ const EMPTY_FILTERS = {
     [FILTER_FORMAT_STANDARDS]: {},
 };
 
-const filterCountStyles = {
-    borderRadius: "50%",
-    backgroundColor: colors.green400,
-    width: "25px",
-    height: "25px",
-    color: colors.white,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-};
-
 const FilterPanel = ({
     filterCategory,
     filterSourceData,
     selectedFilters,
     setFilterQueryParams,
     aggregations,
-    updateStaticFilter,
     getParamString,
-    showEuropePmcModal,
     resetQueryParamState,
-    schemadefs,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
@@ -183,13 +156,13 @@ const FilterPanel = ({
         secondFilterSections?: string
     ) => void;
     aggregations?: Aggregations;
+    // eslint-disable-next-line react/no-unused-prop-types
     updateStaticFilter: (filterSection: string, value: string) => void;
     getParamString: (paramName: string) => string | null;
+    // eslint-disable-next-line react/no-unused-prop-types
     showEuropePmcModal: () => void;
     resetQueryParamState: (selectedType: SearchCategory) => void;
-    schemadefs;
 }) => {
-    const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     const tRoot = useTranslations(TRANSLATION_PATH);
 
     const searchParams = useSearchParams();
@@ -230,7 +203,7 @@ const FilterPanel = ({
     }, [filterCategory]);
 
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
-    const { control, setValue } = useForm<{
+    useForm<{
         [FILTER_DATA_TYPE]: string;
         [FILTER_DATA_SUBTYPE]: string;
         [FILTER_DATA_CUSTODIAN_NETWORK]: string;
@@ -252,7 +225,7 @@ const FilterPanel = ({
         if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
-        
+
         // If the selected source is 'Search Online Publications' then remove the 'Dataset' filter
         if (staticFilterValues.source.FED) {
             formattedFilters = formattedFilters.filter(
@@ -272,68 +245,8 @@ const FilterPanel = ({
                 filterItem => filterItem.label !== FILTER_DATA_CUSTODIAN_NETWORK
             );
         }
-        console.log(formattedFilters);
         return formattedFilters;
     }, [filterCategory, filterSourceData, staticFilterValues, aggregations]);
-    const [maximised, setMaximised] = useState<string[]>([]);
-
-    const handleUpdateMap = (mapValue: SelectedType) => {
-        const selectedCountries = Object.keys(mapValue).filter(
-            key => mapValue[key]
-        );
-
-        setFilterValues({
-            ...filterValues,
-            [FILTER_GEOGRAPHIC_LOCATION]: mapValue,
-        });
-
-        setFilterQueryParams(selectedCountries, FILTER_GEOGRAPHIC_LOCATION);
-    };
-
-    const handleUpdateDateRange = (dateRange: DateRange) => {
-        const dateFilterName =
-            filterCategory === FILTER_CATEGORY_PUBLICATIONS
-                ? FILTER_PUBLICATION_DATE
-                : FILTER_DATE_RANGE;
-
-        setFilterValues({
-            ...filterValues,
-            dateFilterName: transformQueryFiltersToForm(
-                Object.values(dateRange)
-            ),
-        });
-
-        setFilterQueryParams(Object.values(dateRange), dateFilterName);
-    };
-
-    const handleUpdatePopulationSize = (
-        populationSize?: number[],
-        includeUnreported?: boolean
-    ) => {
-        const formattedPopulationSize =
-            (populationSize &&
-                populationSize.map(number => number.toString())) ||
-            Object.keys(filterValues.populationSize);
-
-        const completePopulationFilter =
-            includeUnreported &&
-            !Object.keys(filterValues.populationSize).includes(
-                INCLUDE_UNREPORTED
-            )
-                ? formattedPopulationSize.concat(INCLUDE_UNREPORTED)
-                : formattedPopulationSize.filter(
-                      item => item !== INCLUDE_UNREPORTED
-                  );
-
-        setFilterValues({
-            ...filterValues,
-            [FILTER_POPULATION_SIZE]: transformQueryFiltersToForm(
-                completePopulationFilter
-            ),
-        });
-
-        setFilterQueryParams(completePopulationFilter, FILTER_POPULATION_SIZE);
-    };
 
     const resetFilterSection = (filterSection: string) => {
         setFilterValues({
@@ -342,19 +255,6 @@ const FilterPanel = ({
         });
 
         setFilterQueryParams([], filterSection);
-    };
-
-    const resetNestedFilterSection = (
-        filterSection: string,
-        subfilterSection: string
-    ) => {
-        setFilterValues({
-            ...filterValues,
-            [filterSection]: {},
-            [subfilterSection]: {},
-        });
-
-        setFilterQueryParams([], filterSection, [], subfilterSection);
     };
 
     const resetAllFilters = () => {
@@ -418,97 +318,6 @@ const FilterPanel = ({
         }
     };
 
-    const updateNestedCheckboxes = (
-        updatedCheckbox: {
-            [key: string]: { [key: string]: boolean } | boolean;
-        },
-        filterSection: string,
-        subfilterSection: string
-    ) => {
-        const updates = {
-            ...(filterValues[filterSection] || {}),
-            ...updatedCheckbox,
-        };
-
-        const subContent = updatedCheckbox[Object.keys(updatedCheckbox)[0]];
-
-        const subUpdates = {
-            ...(filterValues[subfilterSection] || {}),
-            ...(typeof subContent === "object"
-                ? subContent
-                : subContent === false
-                ? Object.fromEntries(
-                      Object.keys(filterValues[subfilterSection]).map(item => [
-                          item,
-                          false,
-                      ])
-                  )
-                : {}),
-        };
-
-        const selectedKeys = Object.keys(updates).filter(key => updates[key]);
-
-        const selectedSubKeys = Object.keys(subUpdates).filter(
-            key => subUpdates[key]
-        );
-
-        const [key, value] = Object.entries(updatedCheckbox)[0];
-
-        if (key) {
-            if (typeof value === "boolean") {
-                const status = value ? "filter_applied" : "filter_removed";
-                const searchTerm = searchParams?.get("query") || "";
-
-                fireGTMEvent({
-                    event: status,
-                    filter_name: filterSection,
-                    filter_value: key,
-                    search_term: searchTerm,
-                });
-            } else {
-                const [subKey, subValue] = Object.entries(value)[0];
-                const status = subValue ? "filter_applied" : "filter_removed";
-                const searchTerm = searchParams?.get("query") || "";
-
-                fireGTMEvent({
-                    event: status,
-                    filter_name: subfilterSection,
-                    filter_value: subKey,
-                    search_term: searchTerm,
-                });
-            }
-        }
-
-        setFilterValues(prevValues => {
-            return {
-                ...prevValues,
-                [filterSection]: {
-                    ...prevValues[filterSection],
-                    ...updates,
-                },
-                [subfilterSection]: {
-                    ...prevValues[subfilterSection],
-                    ...subUpdates,
-                },
-            };
-        });
-
-        if (selectedKeys.length) {
-            setFilterQueryParams(
-                selectedKeys,
-                filterSection,
-                selectedSubKeys,
-                subfilterSection
-            );
-        } else {
-            resetFilterSection(filterSection);
-
-            if (!selectedSubKeys.length) {
-                resetNestedFilterSection(filterSection, subfilterSection);
-            }
-        }
-    };
-
     const getFilterSortOrder = (
         itemA: {
             label: string;
@@ -537,152 +346,6 @@ const FilterPanel = ({
         }
 
         return -1;
-    };
-
-    const renderFilterContent = (filterItem: {
-        label: string;
-        value: string;
-        buckets: BucketCheckbox[];
-    }) => {
-        const { label } = filterItem;
-        switch (label) {
-            case STATIC_FILTER_SOURCE:
-                return (
-                    <FilterSectionRadio
-                        filterItem={filterItem}
-                        handleRadioChange={value => {
-                            setStaticFilterValues(prev => ({
-                                ...prev,
-                                [label]: { [value]: true },
-                            }));
-                            updateStaticFilter(label, value);
-
-                            if (value === EUROPE_PMC_SOURCE_FIELD) {
-                                showEuropePmcModal();
-                            }
-                        }}
-                        value={
-                            Object.keys(
-                                staticFilterValues[STATIC_FILTER_SOURCE]
-                            )[0]
-                        }
-                    />
-                );
-            case FILTER_GEOGRAPHIC_LOCATION:
-                return (
-                    <Box style={{ display: "flex", justifyContent: "center" }}>
-                        <MapUK
-                            handleUpdate={handleUpdateMap}
-                            counts={formatBucketCounts(
-                                aggregations?.geographicLocation?.buckets
-                            )}
-                            overrides={filterValues[FILTER_GEOGRAPHIC_LOCATION]}
-                        />
-                    </Box>
-                );
-            case FILTER_DATE_RANGE:
-                return (
-                    <DateRangeFilter
-                        aggregations={aggregations}
-                        selectedFilters={selectedFilters}
-                        handleUpdate={handleUpdateDateRange}
-                        filterName={FILTER_DATE_RANGE}
-                    />
-                );
-            case FILTER_PUBLICATION_DATE:
-                return (
-                    <DateRangeFilter
-                        aggregations={aggregations}
-                        selectedFilters={selectedFilters}
-                        handleUpdate={handleUpdateDateRange}
-                        filterName={FILTER_PUBLICATION_DATE}
-                    />
-                );
-            case FILTER_POPULATION_SIZE:
-                return (
-                    <PopulationFilter
-                        aggregations={aggregations}
-                        selectedFilters={selectedFilters}
-                        handleUpdate={handleUpdatePopulationSize}
-                    />
-                );
-            case FILTER_DATA_TYPE:
-                if (filterCategory === FILTER_CATEGORY_DATASETS) {
-                    return (
-                        <NestedFilterSection
-                            handleCheckboxChange={updatedCheckbox =>
-                                updateNestedCheckboxes(
-                                    updatedCheckbox,
-                                    label,
-                                    FILTER_DATA_SUBTYPE
-                                )
-                            }
-                            checkboxValues={filterValues[label]}
-                            nestedCheckboxValues={
-                                filterValues[FILTER_DATA_SUBTYPE]
-                            }
-                            filterSection={label}
-                            setValue={setValue}
-                            control={control}
-                            filterItem={filterItem}
-                            resetFilterSection={() =>
-                                resetNestedFilterSection(
-                                    label,
-                                    FILTER_DATA_SUBTYPE
-                                )
-                            }
-                            counts={formatBucketCounts(
-                                get(aggregations, label)?.buckets
-                            )}
-                            nestedCounts={formatBucketCounts(
-                                get(aggregations, FILTER_DATA_SUBTYPE)?.buckets
-                            )}
-                        />
-                    );
-                }
-                return (
-                    <FilterSection
-                        handleCheckboxChange={updatedCheckbox =>
-                            updateCheckboxes(updatedCheckbox, label)
-                        }
-                        checkboxValues={filterValues[label]}
-                        filterSection={label}
-                        setValue={setValue}
-                        control={control}
-                        filterItem={filterItem}
-                        resetFilterSection={() => resetFilterSection(label)}
-                        counts={formatBucketCounts(
-                            get(aggregations, label)?.buckets
-                        )}
-                        countsDisabled={
-                            filterCategory === FILTER_CATEGORY_PUBLICATIONS &&
-                            (staticFilterValues.source?.FED || false)
-                        }
-                    />
-                );
-
-            default:
-                return (
-                    <FilterSection
-                        handleCheckboxChange={updatedCheckbox =>
-                            updateCheckboxes(updatedCheckbox, label)
-                        }
-                        checkboxValues={filterValues[label]}
-                        filterSection={label}
-                        setValue={setValue}
-                        control={control}
-                        filterItem={filterItem}
-                        resetFilterSection={() => resetFilterSection(label)}
-                        counts={formatBucketCounts(
-                            get(aggregations, label)?.buckets
-                        )}
-                        countsDisabled={
-                            filterCategory === FILTER_CATEGORY_PUBLICATIONS &&
-                            (staticFilterValues.source?.FED || false)
-                        }
-                    />
-                );
-        }
     };
 
     return (
