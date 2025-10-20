@@ -3,12 +3,10 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
-import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
-import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { getHomePageBanner } from "@/utils/cms";
@@ -76,7 +74,7 @@ export default async function RootLayout({
                             <FeatureProvider feature={features}>
                                 <DialogProvider>
                                     <ActionBarProvider>
-                                        <SupportPopOut />
+                                        {/* <SupportPopOut /> */}
                                         <LightBox />
                                         {homePageBanner?.length > 0 &&
                                             includeBanners && (
@@ -89,7 +87,6 @@ export default async function RootLayout({
                                         <Header />
                                         {children}
                                         <Footer />
-                                        <CustomerSurvey />
                                         <Suspense fallback={null}>
                                             <NavigationEvents />
                                             <PageTracker />

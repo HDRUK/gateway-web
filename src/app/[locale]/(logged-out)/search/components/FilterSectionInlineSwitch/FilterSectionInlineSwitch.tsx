@@ -28,7 +28,6 @@ const FilterSectionInlineSwitch = ({
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     const id = useId();
     const { label } = filterItem;
-
     return (
         <Box
             sx={{
@@ -37,7 +36,7 @@ const FilterSectionInlineSwitch = ({
                 alignItems: "center",
                 background: colors.white,
                 p: 0,
-                pl: 3,
+                pl: 0,
                 ...containerSx,
             }}>
             <Tooltip
