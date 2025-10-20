@@ -81,7 +81,9 @@ const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
             sx={{
                 display: "flex",
                 alignItems: "center",
+                flexDirection: "column",
                 flexGrow: 1,
+                gap: 2,
                 p: 0,
                 mb: 2,
             }}>
@@ -97,7 +99,9 @@ const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
                 </Box>
             )}
             {widgetList?.map(widget => (
-                <Paper sx={{ m: 0, flexGrow: 1 }}>
+                <Paper
+                    sx={{ m: 0, flexGrow: 1, width: "100%" }}
+                    key={widget.id}>
                     <Box
                         sx={{
                             display: "grid",

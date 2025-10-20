@@ -865,7 +865,34 @@
                     "search": "Search",
                     "dimensions": "Dimensions",
                     "dateUpdated": "Date updated",
-                    "widget": "Widget"
+                    "widget": "Widget",
+                    "edit": {
+                        "configuration": "Configuration",
+                        "preview": "Preview and copy code",
+                        "content": "Content",
+                        "contentLabel": "Show entries from specific Data Custodians",
+                        "contentInfo": "You might just want to show entities from yourselves for example",
+                        "dataCustodians": "Data custodians",
+                        "permittedDomains": "Permitted domains",
+                        "validUrl": "Each item must be a valid URL",
+                        "widget": "Widget",
+                        "widgetName": "Widget name",
+                        "size": "What size do you want your widget?",
+                        "sizeInfo": "We've suggested some sizes below but feel free to try your own. You can also switch to percentage values if you want it to be more fluid and fit within a responsive layout.",
+                        "sizeLarge": "Large (600 x 740px)",
+                        "sizeMedium": "Medium (400 x 592px)",
+                        "sizeSmall": "Small (300 x 444px)",
+                        "name": "Give your widget a name",
+                        "nameInfo": "This is so you’ll be able to identify it later",
+                        "searchBar": "Include search bar and filters",
+                        "searchBarInfo": "Search and filter within the widget like you can on the Gateway",
+                        "cohortLink": "Include Cohort Discovery link",
+                        "scripts": "Analysis Scripts & Software",
+                        "collections": "Collections / Networks",
+                        "selectCollections": "Select Collections / Networks",
+                        "cohortLinkInfo": "Add a button for the user to go to Cohort Discovery search within the Gateway",
+                        "save": "Save"
+                    }
                 }
             }
         },
