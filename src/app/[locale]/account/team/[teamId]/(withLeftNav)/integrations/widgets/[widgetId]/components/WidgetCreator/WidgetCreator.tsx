@@ -76,11 +76,6 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
             included_collections: [],
             permitted_domains: [],
             keep_proportions: false,
-            has_datasets: false,
-            has_data_custodians: false,
-            has_datause: false,
-            has_scripts: false,
-            has_collections: false,
             include_search_bar: false,
             include_cohort_link: false,
             size_width: 0,
@@ -88,6 +83,11 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
             unit: Unit.PX,
             widget_name: "",
             ...widget,
+            has_datasets: !!widget?.included_datasets.length,
+            has_data_custodians: !!widget?.data_custodian_entities_ids.length,
+            has_datause: !!widget?.included_data_uses.length,
+            has_scripts: !!widget?.included_scripts.length,
+            has_collections: !!widget?.included_collections.length,
         },
         resolver: yupResolver(
             yup
