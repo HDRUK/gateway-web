@@ -9,7 +9,6 @@ import { useTranslations } from "next-intl";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
 import { Unit, Widget } from "@/interfaces/Widget";
-import { getChipLabel } from "@/components/Autocomplete/utils";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -17,8 +16,8 @@ import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import useGet from "@/hooks/useGet";
+import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
-import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
@@ -36,9 +35,17 @@ enum TabValues {
     PREVIEW = "preview",
 }
 
-const UNIT_OPTIONS: { value: Unit; label: string }[] = Object.values(Unit).map(
+const unitOptions: { value: Unit; label: string }[] = Object.values(Unit).map(
     u => ({ value: u, label: u })
 );
+
+const getChipLabel = (options, value) =>
+    options.find(option => option.value.toString() === value)?.label;
+
+const isOptionEqualToValue = (
+    option: { value: string | number; label: string },
+    value: string | number
+) => option.value === value;
 
 const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -46,7 +53,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
     const teamNameOptions = useMemo(
         () =>
             teamNames.map(team => ({
-                value: team.id,
+                value: team.id.toString(),
                 label: team.name,
             })),
         [teamNames]
@@ -66,6 +73,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
         handleSubmit,
         watch,
         setValue,
+        getValues,
         formState: { dirtyFields },
     } = useForm({
         defaultValues: {
@@ -131,7 +139,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
         }
     );
 
-    const updateWidget = usePut<Partial<Widget>>(
+    const updateWidget = usePatch<Partial<Widget>>(
         `${apis.teamsV1Url}/${teamId}/widgets`,
         {
             itemName: t("widget"),
@@ -141,7 +149,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
     const formatEntityOptions = useCallback(
         (entityType: string, valueKey: string, labelKey: string) =>
             entityData?.[entityType]?.map(entity => ({
-                value: entity?.[valueKey],
+                value: entity?.[valueKey].toString(),
                 label: entity?.[labelKey],
                 team: entity?.team_name,
             })),
@@ -170,10 +178,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         multiple: true,
                         options: teamNameOptions,
                         getChipLabel,
-                        isOptionEqualToValue: (
-                            option: { value: string | number; label: string },
-                            value: string | number
-                        ) => option.value === value,
+                        isOptionEqualToValue,
                         marginLeft: true,
                     },
 
@@ -189,13 +194,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         multiple: true,
                         groupBy: option => option.team,
                         options: formatEntityOptions("datasets", "id", "title"),
-                        getChipLabel: (options, value) =>
-                            options.find(option => option.value === value)
-                                ?.label,
-                        isOptionEqualToValue: (
-                            option: { value: string | number; label: string },
-                            value: string | number
-                        ) => option.value === value,
+                        getChipLabel,
+                        isOptionEqualToValue,
                         marginLeft: true,
                         showWhen: "has_datasets",
                     },
@@ -211,13 +211,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         component: inputComponents.Autocomplete,
                         multiple: true,
                         options: formatEntityOptions("durs", "id", "name"),
-                        getChipLabel: (options, value) =>
-                            options.find(option => option.value === value)
-                                ?.label,
-                        isOptionEqualToValue: (
-                            option: { value: string | number; label: string },
-                            value: string | number
-                        ) => option.value === value,
+                        getChipLabel,
+                        isOptionEqualToValue,
                         marginLeft: true,
                         showWhen: "has_datause",
                         groupBy: option => option.team,
@@ -234,13 +229,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         component: inputComponents.Autocomplete,
                         multiple: true,
                         options: formatEntityOptions("tools", "id", "name"),
-                        getChipLabel: (options, value) =>
-                            options.find(option => option.value === value)
-                                ?.label,
-                        isOptionEqualToValue: (
-                            option: { value: string | number; label: string },
-                            value: string | number
-                        ) => option.value === value,
+                        getChipLabel,
+                        isOptionEqualToValue,
                         marginLeft: true,
                         showWhen: "has_scripts",
                         groupBy: option => option.team,
@@ -261,13 +251,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                             "id",
                             "name"
                         ),
-                        getChipLabel: (options, value) =>
-                            options.find(option => option.value === value)
-                                ?.label,
-                        isOptionEqualToValue: (
-                            option: { value: string | number; label: string },
-                            value: string | number
-                        ) => option.value === value,
+                        getChipLabel,
+                        isOptionEqualToValue,
                         marginLeft: true,
                         showWhen: "has_collections",
                         groupBy: option => option.team,
@@ -361,7 +346,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         name: "unit",
                         label: "Unit",
                         component: inputComponents.Select,
-                        options: UNIT_OPTIONS,
+                        options: unitOptions,
                     },
                     {
                         name: "keep_proportions",
@@ -382,14 +367,20 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                 ],
             },
         ],
-        [formatEntityOptions, setValue, t, teamNameOptions]
+        [formatEntityOptions, setValue, t, teamNameOptions, entityData]
     );
 
     const onSubmit = async (values: Widget) => {
         if (!widget) {
             createWidget(values);
         } else {
-            updateWidget(widget.id, dirtyFields as Partial<Widget>);
+            const payload = Object.fromEntries(
+                (Object.entries(dirtyFields) as [keyof Widget, boolean][]).map(
+                    ([k]) => [k, values[k] as Widget[typeof k]]
+                )
+            ) as Partial<Widget>;
+
+            updateWidget(widget.id, payload);
         }
     };
 
