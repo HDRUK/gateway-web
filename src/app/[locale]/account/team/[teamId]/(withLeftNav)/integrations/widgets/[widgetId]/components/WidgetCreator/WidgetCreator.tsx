@@ -335,18 +335,21 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         label: "Width",
                         component: inputComponents.TextField,
                         type: "number",
+                        inline: true,
                     },
                     {
                         name: "size_height",
                         label: "Height",
                         component: inputComponents.TextField,
                         type: "number",
+                        inline: true,
                     },
                     {
                         name: "unit",
                         label: "Unit",
                         component: inputComponents.Select,
                         options: unitOptions,
+                        inline: true,
                     },
                     {
                         name: "keep_proportions",
@@ -367,7 +370,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                 ],
             },
         ],
-        [formatEntityOptions, setValue, t, teamNameOptions, entityData]
+        [formatEntityOptions, setValue, t, teamNameOptions]
     );
 
     const onSubmit = async (values: Widget) => {
@@ -402,45 +405,49 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                             <Form
                                 sx={{ mt: 3 }}
                                 onSubmit={handleSubmit(onSubmit)}>
-                                {configSections.map(section => {
-                                    return (
-                                        <>
-                                            <Typography
-                                                fontSize={16}
-                                                fontWeight={600}
-                                                sx={{ mt: 6, mb: 2 }}>
-                                                {section.name}
-                                            </Typography>
+                                {configSections.map(section => (
+                                    <>
+                                        <Typography
+                                            fontSize={16}
+                                            fontWeight={600}
+                                            sx={{ mt: 6, mb: 2 }}>
+                                            {section.name}
+                                        </Typography>
 
-                                            {section?.intro && section.intro}
+                                        {section?.intro && section.intro}
 
-                                            {section.fields.map(field =>
-                                                !field.showWhen ||
-                                                watch(field.showWhen) ? (
-                                                    <Box
-                                                        sx={{
-                                                            ml: field.marginLeft
-                                                                ? 5
-                                                                : 0,
-                                                            mb: field.marginLeft
-                                                                ? 4
-                                                                : 0,
-                                                            p: 0,
-                                                        }}>
-                                                        <InputWrapper
-                                                            key={field.name}
-                                                            control={control}
-                                                            filterOptions={(
-                                                                x: OptionType
-                                                            ) => x}
-                                                            {...field}
-                                                        />
-                                                    </Box>
-                                                ) : null
-                                            )}
-                                        </>
-                                    );
-                                })}
+                                        {section.fields.map(field =>
+                                            !field.showWhen ||
+                                            watch(field.showWhen) ? (
+                                                <Box
+                                                    sx={{
+                                                        ml: field.marginLeft
+                                                            ? 5
+                                                            : 0,
+                                                        mb: field.marginLeft
+                                                            ? 4
+                                                            : 0,
+                                                        p: 0,
+                                                        ...(field.inline && {
+                                                            display:
+                                                                "inline-block",
+                                                            mr: 2,
+                                                            maxWidth: 100,
+                                                        }),
+                                                    }}>
+                                                    <InputWrapper
+                                                        key={field.name}
+                                                        control={control}
+                                                        filterOptions={(
+                                                            x: OptionType
+                                                        ) => x}
+                                                        {...field}
+                                                    />
+                                                </Box>
+                                            ) : null
+                                        )}
+                                    </>
+                                ))}
 
                                 <Button type="submit">{t("save")}</Button>
                             </Form>
