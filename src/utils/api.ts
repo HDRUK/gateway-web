@@ -817,7 +817,7 @@ async function getWidget(
 ): Promise<Widget> {
     const widget = await get<Widget>(
         cookieStore,
-        `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}`,
+        `${apis.teamsV1UrlIP}/${teamId}/widgets/${widgetId}`,
         options
     );
 
@@ -830,7 +830,7 @@ async function getTeamNames(
 ): Promise<TeamNames[]> {
     const names = await get<TeamNames[]>(
         cookieStore,
-        `${apis.teamsV1Url}/names`,
+        `${apis.teamsV1UrlIP}/names`,
         options
     );
 
