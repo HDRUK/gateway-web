@@ -149,7 +149,7 @@ const formatDarAnswers = (
         .filter(q => q.component === ARRAY_FIELD && Array.isArray(q.fields))
         .forEach(q => {
             const set = childIdsByArrayName.get(q.title) ?? new Set<string>();
-            q.fields!.forEach(f => {
+            q.fields?.forEach(f => {
                 set.add(String(f.question_id));
                 (f.options ?? []).forEach(opt =>
                     (opt.children ?? []).forEach(ch =>
