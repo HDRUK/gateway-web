@@ -18,6 +18,9 @@ const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
 
+type Row = Record<string, string | undefined>;
+type RowsByArrayName = Record<string, Row[]>;
+
 const getVisibleQuestionIds = (
     filteredData: DarFormattedField[],
     parentValues: DarApplicationResponses,
@@ -187,7 +190,7 @@ const formatDarAnswers = (
     });
 
     // Format columns -> rows per array name
-    const arrayRowsByName = Object.fromEntries(
+    const arrayRowsByName: RowsByArrayName = Object.fromEntries(
         [...arrayColumnsByName].map(([arrayName, cols]) => {
             const childIds = [...cols.keys()];
             const len = Math.max(0, ...[...cols.values()].map(a => a.length));
@@ -206,7 +209,7 @@ const formatDarAnswers = (
     childIdsByArrayName.forEach((idSet, arrayName) => {
         if (!(arrayName in arrayRowsByName)) {
             const ids = [...idSet];
-            (arrayRowsByName as any)[arrayName] = [
+            arrayRowsByName[arrayName] = [
                 Object.fromEntries(ids.map(id => [id, undefined])),
             ];
         }
