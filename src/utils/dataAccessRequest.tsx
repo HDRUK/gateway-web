@@ -143,6 +143,23 @@ const formatDarAnswers = (
             )
     );
 
+    //  Set of childIds to create blank row
+    const childIdsByArrayName = new Map<string, Set<string>>();
+    (questions || [])
+        .filter(q => q.component === ARRAY_FIELD && Array.isArray(q.fields))
+        .forEach(q => {
+            const set = childIdsByArrayName.get(q.title) ?? new Set<string>();
+            q.fields!.forEach(f => {
+                set.add(String(f.question_id));
+                (f.options ?? []).forEach(opt =>
+                    (opt.children ?? []).forEach(ch =>
+                        set.add(String(ch.question_id))
+                    )
+                );
+            });
+            childIdsByArrayName.set(q.title, set);
+        });
+
     // Non-array answers
     const nonArrayValues = Object.fromEntries(
         userAnswers
@@ -184,6 +201,16 @@ const formatDarAnswers = (
             return [arrayName, rows];
         })
     );
+
+    // Add a single blank row to arrays with no answers
+    childIdsByArrayName.forEach((idSet, arrayName) => {
+        if (!(arrayName in arrayRowsByName)) {
+            const ids = [...idSet];
+            (arrayRowsByName as any)[arrayName] = [
+                Object.fromEntries(ids.map(id => [id, undefined])),
+            ];
+        }
+    });
 
     return { ...nonArrayValues, ...arrayRowsByName };
 };

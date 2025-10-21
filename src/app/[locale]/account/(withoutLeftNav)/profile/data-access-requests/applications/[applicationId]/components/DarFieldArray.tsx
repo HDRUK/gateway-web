@@ -174,7 +174,8 @@ const DarFieldArray = ({
                         <Button
                             onClick={() => remove(fieldIndex)}
                             variant="outlined"
-                            sx={{ ml: 2, mb: 1 }}>
+                            sx={{ ml: 2, mb: 1 }}
+                            disabled={fields.length === 1}>
                             {t("remove")}
                         </Button>
                     )}
