@@ -24,3 +24,22 @@ export interface Widget {
     updated_at: string;
     deleted_at: string;
 }
+
+type EntityData = {
+    id: number;
+    name: string;
+    team_id: number;
+    team_name: string;
+};
+
+export interface WidgetEntityData {
+    collections: EntityData[];
+    datasets: {
+        id: number;
+        title: string;
+        team_id: number;
+        team_name: string;
+    };
+    durs: EntityData[];
+    tools: EntityData[];
+}

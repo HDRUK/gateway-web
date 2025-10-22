@@ -8,7 +8,7 @@ import { OptionType } from "dayjs";
 import { useTranslations } from "next-intl";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
-import { Unit, Widget } from "@/interfaces/Widget";
+import { Unit, Widget, WidgetEntityData } from "@/interfaces/Widget";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -22,7 +22,7 @@ import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 
-interface WidgetListProps {
+interface WidgetCreatorProps {
     widget?: Widget;
     teamId: string;
     teamNames: TeamNames[];
@@ -47,7 +47,7 @@ const isOptionEqualToValue = (
     value: string | number
 ) => option.value === value;
 
-const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
+const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const teamNameOptions = useMemo(
@@ -73,7 +73,6 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
         handleSubmit,
         watch,
         setValue,
-        getValues,
         formState: { dirtyFields },
     } = useForm({
         defaultValues: {
@@ -93,7 +92,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
             ...widget,
             has_datasets: !!widget?.included_datasets.length,
             has_data_custodians: !!widget?.data_custodian_entities_ids.length,
-            has_datause: !!widget?.included_data_uses.length,
+            has_datauses: !!widget?.included_data_uses.length,
             has_scripts: !!widget?.included_scripts.length,
             has_collections: !!widget?.included_collections.length,
         },
@@ -120,12 +119,11 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         ),
                     widget_name: yup.string().required().label(t("widgetName")),
                 })
-
                 .required()
         ),
     });
 
-    const { data: entityData } = useGet(
+    const { data: entityData } = useGet<WidgetEntityData>(
         `${apis.teamsV1Url}/${teamId}/widgets/data?team_ids=${watch(
             "data_custodian_entities_ids"
         )}`,
@@ -156,6 +154,12 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
         [entityData]
     );
 
+    const selectAllOptions = (formValue: string, entityType: string) =>
+        setValue(
+            formValue,
+            entityData?.[entityType]?.map(d => d.id.toString())
+        );
+
     const configSections = useMemo(
         () => [
             {
@@ -180,6 +184,19 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         getChipLabel,
                         isOptionEqualToValue,
                         marginLeft: true,
+                        height: 250,
+                        selectAllButton: (
+                            <Button
+                                onClick={() =>
+                                    setValue(
+                                        "data_custodian_entities_ids",
+                                        teamNameOptions.map(team => team.value)
+                                    )
+                                }
+                                variant="link">
+                                Select all
+                            </Button>
+                        ),
                     },
 
                     {
@@ -198,10 +215,22 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         isOptionEqualToValue,
                         marginLeft: true,
                         showWhen: "has_datasets",
+                        selectAllButton: (
+                            <Button
+                                onClick={() =>
+                                    selectAllOptions(
+                                        "included_datasets",
+                                        "datasets"
+                                    )
+                                }
+                                variant="link">
+                                Select all
+                            </Button>
+                        ),
                     },
 
                     {
-                        name: "has_datause",
+                        name: "has_datauses",
                         label: "Data Uses / Research Projects",
                         component: inputComponents.Checkbox,
                     },
@@ -214,10 +243,21 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         getChipLabel,
                         isOptionEqualToValue,
                         marginLeft: true,
-                        showWhen: "has_datause",
+                        showWhen: "has_datauses",
                         groupBy: option => option.team,
+                        selectAllButton: (
+                            <Button
+                                onClick={() =>
+                                    selectAllOptions(
+                                        "included_data_uses",
+                                        "durs"
+                                    )
+                                }
+                                variant="link">
+                                Select all
+                            </Button>
+                        ),
                     },
-
                     {
                         name: "has_scripts",
                         label: t("scripts"),
@@ -234,6 +274,18 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         marginLeft: true,
                         showWhen: "has_scripts",
                         groupBy: option => option.team,
+                        selectAllButton: (
+                            <Button
+                                onClick={() =>
+                                    selectAllOptions(
+                                        "included_scripts",
+                                        "tools"
+                                    )
+                                }
+                                variant="link">
+                                Select all
+                            </Button>
+                        ),
                     },
 
                     {
@@ -256,6 +308,18 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                         marginLeft: true,
                         showWhen: "has_collections",
                         groupBy: option => option.team,
+                        selectAllButton: (
+                            <Button
+                                onClick={() =>
+                                    selectAllOptions(
+                                        "included_collections",
+                                        "collections"
+                                    )
+                                }
+                                variant="link">
+                                Select all
+                            </Button>
+                        ),
                     },
                 ],
             },
@@ -370,7 +434,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                 ],
             },
         ],
-        [formatEntityOptions, setValue, t, teamNameOptions]
+        [formatEntityOptions, selectAllOptions, setValue, t, teamNameOptions]
     );
 
     const onSubmit = async (values: Widget) => {
@@ -443,6 +507,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetListProps) => {
                                                         ) => x}
                                                         {...field}
                                                     />
+                                                    {field.selectAllButton &&
+                                                        field.selectAllButton}
                                                 </Box>
                                             ) : null
                                         )}

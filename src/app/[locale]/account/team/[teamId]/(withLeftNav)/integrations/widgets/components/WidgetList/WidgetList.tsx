@@ -132,7 +132,7 @@ const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
                                         },
                                         {
                                             key: t("dimensions"),
-                                            value: `${widget.size_width} x ${widget.size_height}`,
+                                            value: `${widget.size_width} x ${widget.size_height} ${widget.unit}`,
                                         },
                                         {
                                             key: t("dateUpdated"),
