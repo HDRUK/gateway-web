@@ -57,6 +57,8 @@ interface SearchOptions {
     label: string;
 }
 
+const MAX_DISPLAYED_TAGS = 20;
+
 const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
         label,
@@ -144,22 +146,36 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 })}
                 options={options}
                 disabled={disabled}
-                renderTags={(tagValue, getTagProps) =>
-                    tagValue?.map((option, index) => {
-                        const chipLabel =
-                            typeof getChipLabel === "function"
-                                ? getChipLabel(options, option)
-                                : option?.label || `${option}`;
-                        return (
-                            <Chip
-                                label={chipLabel || ""}
-                                size="small"
-                                {...(chipColor ? { color: chipColor } : {})}
-                                {...getTagProps({ index })}
-                            />
-                        );
-                    })
-                }
+                renderTags={(tagValue, getTagProps) => {
+                    const visibleOptions = tagValue.slice(
+                        0,
+                        MAX_DISPLAYED_TAGS
+                    );
+                    const additionalOptions =
+                        tagValue.length - visibleOptions.length;
+
+                    return [
+                        ...visibleOptions.map((option, index) => {
+                            const chipLabel =
+                                typeof getChipLabel === "function"
+                                    ? getChipLabel(options, option)
+                                    : option?.label || `${option}`;
+                            return (
+                                <Chip
+                                    label={chipLabel || ""}
+                                    size="small"
+                                    {...(chipColor ? { color: chipColor } : {})}
+                                    {...getTagProps({ index })}
+                                />
+                            );
+                        }),
+                        additionalOptions > 0 ? (
+                            <span key="more" style={{ marginLeft: 4 }}>
+                                +{additionalOptions}
+                            </span>
+                        ) : null,
+                    ];
+                }}
                 onChange={(e, v) => {
                     if (Array.isArray(v)) {
                         const values = v.map(value => {
