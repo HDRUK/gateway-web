@@ -96,7 +96,7 @@ const getColumns = ({
         id: "dataProvider",
         cell: ({ row: { original } }) => {
             const dataCustodianId = get(original, PUBLISHERS_ID);
-                       // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
+            // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
             const isNumber = !isNaN(dataCustodianId as number);
             const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
 
