@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { CohortResponse } from "@/interfaces/CohortRequest";
 import { getCohortStatusAndRedirect } from "@/app/actions/getCohortStatusAndRedirectAction";
 
-export const useCohortStatus = (userId?: number) => {
+export const useCohortStatus = (userId?: number, redirect = false) => {
     const [data, setData] = useState<CohortResponse | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -15,7 +15,10 @@ export const useCohortStatus = (userId?: number) => {
             setIsLoading(true);
 
             try {
-                const result = await getCohortStatusAndRedirect(userId);
+                const result = await getCohortStatusAndRedirect(
+                    userId,
+                    redirect
+                );
                 setData(result);
             } catch (err) {
                 console.error("Error fetching cohort status:", err);

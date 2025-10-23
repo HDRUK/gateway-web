@@ -338,7 +338,6 @@ export async function getUserCohortRequest(
         tags: ["cohort", "cohort-user", `cohort-user-${userId}`],
         revalidate: 15 * 60, // 15 minutes
     };
-
     return get<CohortRequestUser>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
@@ -350,22 +349,16 @@ export async function getUserCohortRequest(
 }
 
 export async function getCohortAccessRedirect(
-    cookieStore: ReadonlyRequestCookies,
-    userId: string
+    cookieStore: ReadonlyRequestCookies
 ): Promise<CohortRequestAccess> {
     const cookieHeader = cookieStore
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
-    const cache: Cache = {
-        tags: ["cohort", "cohort-redirect", `cohort-redirect-${userId}`],
-        revalidate: 15 * 60, // 15 minutes
-    };
-
     return get<CohortRequestAccess>(
         cookieStore,
         `${apis.cohortRequestsV1UrlIP}/access`,
-        { cache },
+        undefined,
         {
             Cookie: cookieHeader,
         }
@@ -605,7 +598,7 @@ async function getDarTeamApplication(
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
         cookieStore,
-        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}`,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}?group_arrays=true`,
         {
             cache: {
                 tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],
@@ -621,7 +614,7 @@ async function getDarApplicationUser(
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
         cookieStore,
-        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}?group_arrays=true`,
         {
             cache: {
                 tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],

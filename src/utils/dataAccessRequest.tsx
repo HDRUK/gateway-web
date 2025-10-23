@@ -1,6 +1,7 @@
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import {
+    DarApplicationAnswer,
     DarApplicationQuestion,
     DarApplicationResponses,
     DarFormattedField,
@@ -9,6 +10,7 @@ import { FileUploadFields } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { CACHE_DAR_ANSWERS } from "@/consts/cache";
+import { ARRAY_FIELD } from "@/consts/dataAccess";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
@@ -16,19 +18,67 @@ const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
 
+type Row = Record<string, string | undefined>;
+type RowsByArrayName = Record<string, Row[]>;
+
 const getVisibleQuestionIds = (
     filteredData: DarFormattedField[],
-    parentValues: { [k: string]: string | undefined },
+    parentValues: DarApplicationResponses,
     staticFieldsNames: string[]
-): string[] => [
-    ...filteredData.flatMap(field => [
-        field.question_id.toString(),
-        ...(field.options
-            ?.find(opt => opt.label === parentValues[field.question_id])
-            ?.children.map(child => child.question_id.toString()) || []),
-    ]),
-    ...staticFieldsNames,
-];
+): string[] => {
+    const isSelected = (sel: string, label: string) =>
+        Array.isArray(sel) ? sel.includes(label) : sel === label;
+
+    const out = [
+        ...filteredData.flatMap(field => {
+            // Array field
+            if (
+                field.component === "ArrayField" &&
+                Array.isArray(parentValues[field.name])
+            ) {
+                const rows: DarApplicationResponses[] =
+                    parentValues[field.name];
+                const inner = field.fields ?? [];
+                return inner.flatMap(innerField => {
+                    // base IDs per row (count rows even if values are undefined)
+                    const base = rows.map(
+                        (_, i) => `${field.name}.${i}.${innerField.question_id}`
+                    );
+
+                    // Children per row (only when selected)
+                    const child = rows.flatMap((row, i) => {
+                        const sel = row?.[innerField.question_id];
+                        const children =
+                            innerField.options
+                                ?.filter(opt => isSelected(sel, opt.label))
+                                .flatMap(opt => opt.children ?? []) ?? [];
+
+                        return children.map(
+                            childField =>
+                                `${field.name}.${i}.${childField.question_id}`
+                        );
+                    });
+
+                    return [...base, ...child];
+                });
+            }
+
+            // Non array field
+            const children =
+                field.options?.find(
+                    opt => opt.label === parentValues[field.question_id]
+                )?.children ?? [];
+
+            return [
+                String(field.question_id),
+                ...children.map(c => String(c.question_id)),
+            ];
+        }),
+        ...staticFieldsNames,
+    ];
+
+    return Array.from(new Set(out));
+};
 
 const formatDarQuestion = (
     field: DarApplicationQuestion
@@ -61,7 +111,112 @@ const formatDarQuestion = (
             value: option.label,
         })),
     }),
+    ...(field?.fields && {
+        fields: field?.fields,
+    }),
 });
+
+const formatDarAnswers = (
+    userAnswers: DarApplicationAnswer[] = [],
+    questions: DarApplicationQuestion[] = []
+) => {
+    // map child question_id to its ArrayField name
+    const childQuestionToArrayName = new Map(
+        (questions || [])
+            .filter(
+                question =>
+                    question.component === ARRAY_FIELD &&
+                    Array.isArray(question.fields)
+            )
+            .flatMap(question =>
+                question.fields!.flatMap(field => {
+                    return [
+                        [String(field.question_id), question.title],
+                        ...(field.options ?? []).flatMap(option =>
+                            (option.children ?? []).map(
+                                option =>
+                                    [
+                                        String(option.question_id),
+                                        question.title,
+                                    ] as [string, string]
+                            )
+                        ),
+                    ];
+                })
+            )
+    );
+
+    //  Set of childIds to create blank row
+    const childIdsByArrayName = new Map<string, Set<string>>();
+    (questions || [])
+        .filter(q => q.component === ARRAY_FIELD && Array.isArray(q.fields))
+        .forEach(q => {
+            const set = childIdsByArrayName.get(q.title) ?? new Set<string>();
+            q.fields?.forEach(f => {
+                set.add(String(f.question_id));
+                (f.options ?? []).forEach(opt =>
+                    (opt.children ?? []).forEach(ch =>
+                        set.add(String(ch.question_id))
+                    )
+                );
+            });
+            childIdsByArrayName.set(q.title, set);
+        });
+
+    // Non-array answers
+    const nonArrayValues = Object.fromEntries(
+        userAnswers
+            .filter(a => !childQuestionToArrayName.has(a.question_id))
+            .map(a => [a.question_id, a.answer])
+    );
+
+    // Group array answers by array name: name -> { qid: string[] }
+    const arrayColumnsByName = new Map<string, Map<string, string[]>>();
+
+    userAnswers.forEach(a => {
+        const arrayName = childQuestionToArrayName.get(a.question_id);
+        if (!arrayName) return;
+
+        const values = Array.isArray(a.answer)
+            ? a.answer.map(v => String(v ?? ""))
+            : [String(a.answer ?? "")];
+
+        const cols =
+            arrayColumnsByName.get(arrayName) ?? new Map<string, string[]>();
+
+        const col = cols.get(a.question_id) ?? [];
+        cols.set(a.question_id, col.concat(values));
+        arrayColumnsByName.set(arrayName, cols);
+    });
+
+    // Format columns -> rows per array name
+    const arrayRowsByName: RowsByArrayName = Object.fromEntries(
+        [...arrayColumnsByName].map(([arrayName, cols]) => {
+            const childIds = [...cols.keys()];
+            const len = Math.max(0, ...[...cols.values()].map(a => a.length));
+
+            const rows = Array.from({ length: len }, (_, i) =>
+                Object.fromEntries(
+                    childIds.map(qid => [qid, (cols.get(qid) ?? [])[i] ?? ""])
+                )
+            ).filter(r => Object.values(r).some(v => String(v).trim()));
+
+            return [arrayName, rows];
+        })
+    );
+
+    // Add a single blank row to arrays with no answers
+    childIdsByArrayName.forEach((idSet, arrayName) => {
+        if (!(arrayName in arrayRowsByName)) {
+            const ids = [...idSet];
+            arrayRowsByName[arrayName] = [
+                Object.fromEntries(ids.map(id => [id, undefined])),
+            ];
+        }
+    });
+
+    return { ...nonArrayValues, ...arrayRowsByName };
+};
 
 const createFileUploadConfig = (
     questionId: string,
@@ -135,5 +290,6 @@ export {
     getVisibleQuestionIds,
     mapKeysToValues,
     formatDarQuestion,
+    formatDarAnswers,
     createFileUploadConfig,
 };
