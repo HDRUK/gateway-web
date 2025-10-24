@@ -83,12 +83,14 @@ const WidgetDisplay = ({ data }: { data: WidgetEntityData }) => {
         defaultValues: { [queryName]: "" },
     });
 
-    const handleSearch = (searchValue: FieldValues) => {
-        console.log(searchValue);
-    };
-
     const [entityType, setEntityType] = useState(SearchCategory.DATASETS);
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const [searchValue, setSearchValue] = useState("");
+
+    const handleSearch = (searchValue: FieldValues) => {
+        setSearchValue(searchValue.search);
+    };
 
     const handleClick = e => {
         setAnchorEl(e.currentTarget);
@@ -97,6 +99,31 @@ const WidgetDisplay = ({ data }: { data: WidgetEntityData }) => {
         setAnchorEl(null);
     };
 
+    const filterResults = <T extends Record<string, any>>(
+        filterProperties: string[],
+        searchValue: string
+    ) => {
+        const terms = (searchValue ?? "")
+            .trim()
+            .toLowerCase()
+            .split(/\s+/)
+            .filter(Boolean); // remove empty strings
+
+        if (!terms.length) return () => true; // no query → include all
+
+        return (item: T): boolean =>
+            // every search term must match at least one property
+            terms.every(term =>
+                filterProperties.some(key => {
+                    const val = item?.[key];
+                    if (val == null) return false;
+                    const txt = Array.isArray(val)
+                        ? val.join(" ")
+                        : String(val);
+                    return txt.toLowerCase().includes(term);
+                })
+            );
+    };
     const renderResult = (results: SearchResult) => {
         const { _id: resultId } = results;
 
@@ -113,98 +140,113 @@ const WidgetDisplay = ({ data }: { data: WidgetEntityData }) => {
                             flexWrap: "wrap",
                             justifyContent: "center",
                         }}>
-                        {results.map(result => (
-                            <ListItem
-                                key={`listitem-${result.id}`}
-                                sx={{
-                                    p: 0,
-                                    mb: 1,
-                                    borderBottom: `1px solid ${colors.grey300}`,
-                                    background: colors.white,
-                                }}>
-                                <ListItemText
-                                    disableTypography
-                                    sx={{ padding: 2, paddingBottom: 1, m: 0 }}
-                                    primary={
-                                        <Box
-                                            sx={{
-                                                flexDirection: {
-                                                    mobile: "column",
-                                                    tablet: "column",
-                                                    laptop: "row",
-                                                },
-                                                mb: 1.5,
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                                p: 0,
-                                            }}>
+                        {results
+                            .filter(
+                                filterResults(
+                                    ["name", "description"],
+                                    searchValue
+                                )
+                            )
+                            .map(result => (
+                                <ListItem
+                                    key={`listitem-${result.id}`}
+                                    sx={{
+                                        p: 0,
+                                        mb: 1,
+                                        borderBottom: `1px solid ${colors.grey300}`,
+                                        background: colors.white,
+                                    }}>
+                                    <ListItemText
+                                        disableTypography
+                                        sx={{
+                                            padding: 2,
+                                            paddingBottom: 1,
+                                            m: 0,
+                                        }}
+                                        primary={
                                             <Box
                                                 sx={{
-                                                    display: "flex",
-                                                    flexDirection: "column",
-                                                    p: 0,
-                                                }}>
-                                                <Link
-                                                    href={`https://healthdatagateway.org/en/dataset/${result.id}`}
-                                                    fontSize={16}
-                                                    fontWeight={600}
-                                                    marginBottom={0.5}>
-                                                    {result.name}
-                                                </Link>
-
-                                                <Link
-                                                    id={resultId}
-                                                    href="/"
-                                                    sx={{
-                                                        display: "inline-block",
-                                                    }}>
-                                                    <Typography
-                                                        // eslint-disable-next-line
-                                                        aria-description="Data Custodian"
-                                                        sx={{
-                                                            mb: 1.5,
-                                                        }}>
-                                                        MISSING CUSTODIAN TEXT
-                                                    </Typography>
-                                                </Link>
-                                            </Box>
-                                        </Box>
-                                    }
-                                    secondary={
-                                        <section aria-describedby={resultId}>
-                                            <Typography>
-                                                MISSING INTRO
-                                            </Typography>
-                                            <Box
-                                                sx={{
-                                                    p: 0,
-                                                    display: "flex",
                                                     flexDirection: {
                                                         mobile: "column",
-                                                        tablet: "row",
+                                                        tablet: "column",
+                                                        laptop: "row",
                                                     },
+                                                    mb: 1.5,
+                                                    display: "flex",
                                                     justifyContent:
                                                         "space-between",
+                                                    p: 0,
                                                 }}>
-                                                <Typography
-                                                    color={colors.green700}
-                                                    sx={{ fontSize: 16 }}>
-                                                    Dataset Population size:
-                                                    MISSING
-                                                </Typography>
-                                                <Typography
-                                                    color={colors.green700}
+                                                <Box
                                                     sx={{
-                                                        fontSize: 16,
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        p: 0,
                                                     }}>
-                                                    Date range: MISSING
-                                                </Typography>
+                                                    <Link
+                                                        href={`https://healthdatagateway.org/en/dataset/${result.id}`}
+                                                        fontSize={16}
+                                                        fontWeight={600}
+                                                        marginBottom={0.5}>
+                                                        {result.name}
+                                                    </Link>
+
+                                                    <Link
+                                                        id={resultId}
+                                                        href="/"
+                                                        sx={{
+                                                            display:
+                                                                "inline-block",
+                                                        }}>
+                                                        <Typography
+                                                            // eslint-disable-next-line
+                                                            aria-description="Data Custodian"
+                                                            sx={{
+                                                                mb: 1.5,
+                                                            }}>
+                                                            MISSING CUSTODIAN
+                                                            TEXT
+                                                        </Typography>
+                                                    </Link>
+                                                </Box>
                                             </Box>
-                                        </section>
-                                    }
-                                />
-                            </ListItem>
-                        ))}
+                                        }
+                                        secondary={
+                                            <section
+                                                aria-describedby={resultId}>
+                                                <Typography>
+                                                    MISSING INTRO
+                                                </Typography>
+                                                <Box
+                                                    sx={{
+                                                        p: 0,
+                                                        display: "flex",
+                                                        flexDirection: {
+                                                            mobile: "column",
+                                                            tablet: "row",
+                                                        },
+                                                        justifyContent:
+                                                            "space-between",
+                                                    }}>
+                                                    <Typography
+                                                        color={colors.green700}
+                                                        sx={{ fontSize: 16 }}>
+                                                        Dataset Population size:
+                                                        MISSING
+                                                    </Typography>
+                                                    <Typography
+                                                        color={colors.green700}
+                                                        sx={{
+                                                            fontSize: 16,
+                                                        }}>
+                                                        Date range: MISSING
+                                                    </Typography>
+                                                </Box>
+                                            </section>
+                                        }
+                                    />
+                                </ListItem>
+                            ))}
                     </List>
                 );
             case SearchCategory.COLLECTIONS:
