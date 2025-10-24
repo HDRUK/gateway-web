@@ -3,7 +3,8 @@
 import { ReactElement } from "react";
 import { createTheme, styled } from "@mui/material/styles";
 import Image from "next/image";
-import { sourceSans3 } from "./fonts";
+
+// import { sourceSans3 } from "./fonts";
 
 const buttonLinkStyle = {
     padding: 0,
@@ -184,7 +185,7 @@ const palette = {
 
 const theme = createTheme({
     typography: {
-        fontFamily: sourceSans3.style.fontFamily,
+        // fontFamily: sourceSans3.style.fontFamily,
         body1: {
             fontSize: 14,
         },

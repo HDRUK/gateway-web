@@ -1,3 +1,3 @@
-import WidgetDisplay from "./WidgetDisplay";
+import WidgetDisplay from "../../../../../widgets/WidgetDisplay";
 
 export default WidgetDisplay;
