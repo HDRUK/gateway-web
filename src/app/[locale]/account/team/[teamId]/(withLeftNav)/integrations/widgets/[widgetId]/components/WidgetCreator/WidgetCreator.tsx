@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { OptionType } from "dayjs";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
 import { Unit, Widget, WidgetEntityData } from "@/interfaces/Widget";
@@ -28,6 +29,13 @@ interface WidgetCreatorProps {
     teamNames: TeamNames[];
 }
 
+interface HasFields {
+    has_datasets?: boolean;
+    has_datauses?: boolean;
+    has_scripts?: boolean;
+    has_collections?: boolean;
+}
+
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
 enum TabValues {
@@ -48,6 +56,7 @@ const isOptionEqualToValue = (
 ) => option.value === value;
 
 const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
+    const router = useRouter();
     const t = useTranslations(TRANSLATION_PATH);
 
     const teamNameOptions = useMemo(
@@ -74,6 +83,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         watch,
         setValue,
         formState: { dirtyFields },
+        getValues,
     } = useForm({
         defaultValues: {
             ...defaultValues,
@@ -90,11 +100,12 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             unit: Unit.PX,
             widget_name: "",
             ...widget,
-            has_datasets: !!widget?.included_datasets.length,
-            has_data_custodians: !!widget?.data_custodian_entities_ids.length,
-            has_datauses: !!widget?.included_data_uses.length,
-            has_scripts: !!widget?.included_scripts.length,
-            has_collections: !!widget?.included_collections.length,
+
+            has_datasets: widget?.included_datasets.length > 0,
+            has_data_custodians: widget?.data_custodian_entities_ids.length > 0,
+            has_datauses: widget?.included_data_uses.length > 0,
+            has_scripts: widget?.included_scripts.length > 0,
+            has_collections: widget?.included_collections.length > 0,
         },
         resolver: yupResolver(
             yup
@@ -157,7 +168,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
     const selectAllOptions = (formValue: string, entityType: string) =>
         setValue(
             formValue,
-            entityData?.[entityType]?.map(d => d.id.toString())
+            entityData?.[entityType]?.map(d => d.id.toString()),
+            { shouldDirty: true }
         );
 
     const configSections = useMemo(
@@ -190,7 +202,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                 onClick={() =>
                                     setValue(
                                         "data_custodian_entities_ids",
-                                        teamNameOptions.map(team => team.value)
+                                        teamNameOptions.map(team => team.value),
+                                        { shouldDirty: true }
                                     )
                                 }
                                 variant="link">
@@ -362,9 +375,15 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                         <Box sx={{ display: "flex", p: 0, gap: 3, mb: 2 }}>
                             <Button
                                 onClick={() => {
-                                    setValue("size_width", 600);
-                                    setValue("size_height", 740);
-                                    setValue("unit", Unit.PX);
+                                    setValue("size_width", 600, {
+                                        shouldDirty: true,
+                                    });
+                                    setValue("size_height", 740, {
+                                        shouldDirty: true,
+                                    });
+                                    setValue("unit", Unit.PX, {
+                                        shouldDirty: true,
+                                    });
                                 }}
                                 variant="link"
                                 sx={{ color: colors.green700 }}>
@@ -372,9 +391,15 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                             </Button>
                             <Button
                                 onClick={() => {
-                                    setValue("size_width", 400);
-                                    setValue("size_height", 592);
-                                    setValue("unit", Unit.PX);
+                                    setValue("size_width", 400, {
+                                        shouldDirty: true,
+                                    });
+                                    setValue("size_height", 592, {
+                                        shouldDirty: true,
+                                    });
+                                    setValue("unit", Unit.PX, {
+                                        shouldDirty: true,
+                                    });
                                 }}
                                 variant="link"
                                 sx={{ color: colors.green700 }}>
@@ -382,9 +407,15 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                             </Button>
                             <Button
                                 onClick={() => {
-                                    setValue("size_width", 300);
-                                    setValue("size_height", 444);
-                                    setValue("unit", Unit.PX);
+                                    setValue("size_width", 300, {
+                                        shouldDirty: true,
+                                    });
+                                    setValue("size_height", 444, {
+                                        shouldDirty: true,
+                                    });
+                                    setValue("unit", Unit.PX, {
+                                        shouldDirty: true,
+                                    });
                                 }}
                                 variant="link"
                                 sx={{ color: colors.green700 }}>
@@ -437,9 +468,38 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         [formatEntityOptions, selectAllOptions, setValue, t, teamNameOptions]
     );
 
-    const onSubmit = async (values: Widget) => {
+    const onSubmit = async (values: Widget & HasFields) => {
+        // Remove any entities if unchecked
+        const cleanPayload = (payload: Partial<Widget> & HasFields) => {
+            const updatedPayload = payload;
+
+            if (updatedPayload.has_datasets === false) {
+                updatedPayload.included_datasets = [];
+            }
+
+            if (updatedPayload.has_datauses === false) {
+                updatedPayload.included_data_uses = [];
+            }
+
+            if (updatedPayload.has_scripts === false) {
+                updatedPayload.included_scripts = [];
+            }
+
+            if (updatedPayload.has_collections === false) {
+                updatedPayload.included_collections = [];
+            }
+
+            // Remove has_* fields after processing
+            delete updatedPayload.has_datasets;
+            delete updatedPayload.has_datauses;
+            delete updatedPayload.has_scripts;
+            delete updatedPayload.has_collections;
+
+            return updatedPayload as Widget;
+        };
+
         if (!widget) {
-            createWidget(values);
+            createWidget(cleanPayload(values));
         } else {
             const payload = Object.fromEntries(
                 (Object.entries(dirtyFields) as [keyof Widget, boolean][]).map(
@@ -447,8 +507,21 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                 )
             ) as Partial<Widget>;
 
-            updateWidget(widget.id, payload);
+            updateWidget(
+                widget.id,
+                cleanPayload({
+                    ...payload,
+                    has_datasets: watch("has_datasets"),
+                    has_datauses: watch("has_datauses"),
+                    has_scripts: watch("has_scripts"),
+                    has_collections: watch("has_collections"),
+                })
+            );
         }
+
+        // router.push(
+        //     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`
+        // );
     };
 
     return (

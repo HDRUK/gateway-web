@@ -32,6 +32,16 @@ type EntityData = {
     team_name: string;
 };
 
+interface WidgetDetails {
+    widget_name: string;
+    size_width: number;
+    size_height: number;
+    unit: Unit;
+    include_search_bar: number;
+    include_cohort_link: number;
+    keep_proportions: number;
+}
+
 export interface WidgetEntityData {
     collections: EntityData[];
     datasets: {
@@ -42,4 +52,5 @@ export interface WidgetEntityData {
     };
     durs: EntityData[];
     tools: EntityData[];
+    widget: WidgetDetails;
 }

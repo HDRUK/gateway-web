@@ -11,7 +11,6 @@ import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import WidgetList from "./components/WidgetList";
-import { SimpleComponent } from "@/components/SimpleComponent";
 
 const TRANSLATION_PATH = "pages.account.team.widgets";
 
@@ -41,7 +40,6 @@ export default async function WidgetsPage({
             pagePermissions={["widgets.read"]}>
             <Box>
                 <Typography variant="h1">{t("title")}</Typography>
-                <SimpleComponent/>
                 <Typography>{t("intro")}</Typography>
                 {permissions["widgets.create"] && (
                     <Button
