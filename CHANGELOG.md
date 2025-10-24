@@ -1,3 +1,9 @@
+## [2.24.0](https://github.com/HDRUK/gateway-web/compare/v2.23.0...v2.24.0) (2025-10-24)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([4b4055e](https://github.com/HDRUK/gateway-web/commit/4b4055e4398e5c8584ccff72d1ffe738eef85c7d)), closes [GAT-7284](GAT-7284)
+
 ## [2.23.0](https://github.com/HDRUK/gateway-web/compare/v2.22.2...v2.23.0) (2025-10-23)
 
 ### ✨ Features
