@@ -54,9 +54,12 @@ code = code
     .replace(
         /from\s*["']@emotion\/styled["']/g,
         'from "https://esm.sh/@emotion/styled@11?deps=react@18"'
-    );
+    )
+    .replace(
+  /from\s*["']@mui\/material\/([A-Za-z0-9_-]+)["']/g,
+  'from "https://esm.sh/@mui/material/$1?deps=react@18"');
 
-code = "const React = o;\n" + code;
+// code = "const React = o;\n" + code;
 
 fs.writeFileSync("public/embed/widget.js", code);
 
