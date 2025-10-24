@@ -13,7 +13,7 @@ export default function HomePage() {
             <Script
                 crossOrigin="anonymous"
                 type="module"
-                src="http://localhost:3000/api/widgets/58-2"
+                src="http://localhost:3000/api/widget/58-2"
                 // http://localhost:8000/api/v1/teams/58/widgets/2/data?domain_origin=http://www.google.com
             />
         </>

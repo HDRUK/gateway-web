@@ -31,7 +31,7 @@ export async function GET(req: NextRequest, { params }) {
     const el = document.getElementById("replaceMe");
 
     const root = ReactDOM.createRoot(el);
-    root.render(React.createElement(Widget, { data:${data} }));
+    root.render(React.createElement(Widget, { data:${JSON.stringify(data)} }));
   `;
 
     return new NextResponse(script, {

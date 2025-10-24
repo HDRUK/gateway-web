@@ -3,8 +3,7 @@
 // import { useState } from "react";
 // import { FieldValues, useForm } from "react-hook-form";
 // import Box from "@/components/Box";
-import Box from "@mui/material/Box";
-import { WidgetEntityData } from "@/interfaces/Widget";
+import { Box } from "@mui/material";
 
 // import { SearchCategory } from "@/interfaces/Search";
 // import { WidgetEntityData } from "@/interfaces/Widget";
@@ -51,8 +50,9 @@ import { WidgetEntityData } from "@/interfaces/Widget";
 //     },
 // ];
 
-export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
-    console.log(data);
+export default function WidgetDisplay({ data }: { data: string }) {
+    console.log(data, JSON.parse(data));
+
     console.log("TEST");
 
     // const {
