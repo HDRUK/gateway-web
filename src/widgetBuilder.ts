@@ -14,7 +14,18 @@ await build({
         "@mui/material",
         "@emotion/react",
         "@emotion/styled",
+
+        "react-hook-form",
     ],
+
+    mainFields: ["module", "browser", "main"], // pick ESM
+    conditions: ["browser", "import", "default"],
+
+    jsx: "automatic",
+    // loader: {
+    //     ".svg": "file", // or "dataurl" to inline
+    // },
+    jsxImportSource: "react",
     minify: true,
 });
 
@@ -56,8 +67,18 @@ code = code
         'from "https://esm.sh/@emotion/styled@11?deps=react@18"'
     )
     .replace(
-  /from\s*["']@mui\/material\/([A-Za-z0-9_-]+)["']/g,
-  'from "https://esm.sh/@mui/material/$1?deps=react@18"');
+        /from\s*["']@mui\/material\/([A-Za-z0-9_-]+)["']/g,
+        'from "https://esm.sh/@mui/material/$1?deps=react@18"'
+    )
+    .replace(
+        /from\s*["']react\/jsx-runtime["']/g,
+        'from "https://esm.sh/react@18/jsx-runtime"'
+    )
+
+    .replace(
+        /from\s*["']react-hook-form["']/g,
+        'from "https://esm.sh/react-hook-form@7?deps=react@18"'
+    );
 
 // code = "const React = o;\n" + code;
 
