@@ -1,10 +1,8 @@
 "use client";
 
 import { ReactElement } from "react";
-import { createTheme, styled } from "@mui/material/styles";
-import Image from "next/image";
-
-// import { sourceSans3 } from "./fonts";
+import { createTheme } from "@mui/material/styles";
+import { sourceSans3 } from "./fonts";
 
 const buttonLinkStyle = {
     padding: 0,
@@ -13,13 +11,6 @@ const buttonLinkStyle = {
         backgroundColor: "transparent",
     },
 };
-
-export const AspectRatioImage = styled(Image)(() => ({
-    width: "auto",
-    maxHeight: "20vw",
-    maxWidth: "30vw",
-    height: "100%",
-}));
 
 export const DISABLED_OPACITY = 0.4;
 
@@ -185,7 +176,7 @@ const palette = {
 
 const theme = createTheme({
     typography: {
-        // fontFamily: sourceSans3.style.fontFamily,
+        fontFamily: sourceSans3.style.fontFamily,
         body1: {
             fontSize: 14,
         },
