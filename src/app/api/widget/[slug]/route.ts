@@ -11,7 +11,7 @@ const widget = "embed/widget.js";
 
 export async function GET(req: NextRequest, { params }) {
     try {
-        const widgetUrl = `${new URL(req.url).origin}/en/${widget}`;
+        const widgetUrl = `${new URL(req.url).origin}/${widget}`;
         const { slug } = params;
 
         if (!slug || !slug.includes("-")) {
@@ -68,9 +68,12 @@ export async function GET(req: NextRequest, { params }) {
           data
       )} }));
     `;
-
         return new NextResponse(script, {
-            headers: { "Content-Type": "application/javascript" },
+            headers: {
+                "Content-Type": "application/javascript",
+                "Cache-Control":
+                    "public, max-age=180, s-maxage=180, stale-while-revalidate=300",
+            },
             status: 200,
         });
     } catch (error) {
