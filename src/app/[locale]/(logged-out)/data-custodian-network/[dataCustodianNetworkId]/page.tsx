@@ -11,7 +11,7 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
+import { AspectRatioImage } from "@/consts/image";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";

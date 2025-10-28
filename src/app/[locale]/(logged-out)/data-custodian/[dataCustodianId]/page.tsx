@@ -14,7 +14,7 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
+import { AspectRatioImage } from "@/consts/image";
 import { getDataset, getTeamSummary } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
