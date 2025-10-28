@@ -17,7 +17,6 @@ await build({
         "@mui/icons-material",
         "@emotion/react",
         "@emotion/styled",
-        "react-hook-form",
     ],
 
     mainFields: ["module", "browser", "main"], // pick ESM
@@ -86,11 +85,6 @@ code = code
         /from\s*["']react\/jsx-runtime["']/g,
         'from "https://esm.sh/react@18/jsx-runtime"'
     );
-
-// .replace(
-//     /from\s*["']react-hook-form["']/g,
-//     'from "https://esm.sh/react-hook-form@7?deps=react@18"'
-// );
 
 // Icons — strip optional ".js", bundle, and include MUI as a dep
 code = code.replace(
