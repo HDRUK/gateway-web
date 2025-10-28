@@ -17,9 +17,9 @@ export async function GET(req: NextRequest, { params }) {
     const response = await fetch(
         `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${origin}`
     );
-    const json = JSON.stringify(await response.json())
+    const data = await response.json();
 
-    console.log("WIGGY DATA", json);
+    console.log("WIGGY DATA", data);
 
     const { searchParams } = new URL(req.url);
 
@@ -31,8 +31,7 @@ export async function GET(req: NextRequest, { params }) {
     const el = document.getElementById("replaceMe");
 
     const root = ReactDOM.createRoot(el);
-    const data = JSON.parse(${JSON.stringify(json)});
-    root.render(React.createElement(Widget, { data }));
+    root.render(React.createElement(Widget, { data:${JSON.stringify(data)} }));
   `;
 
     return new NextResponse(script, {

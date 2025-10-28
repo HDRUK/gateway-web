@@ -5,7 +5,6 @@ import Script from "next/script";
 export default function TestPage() {
     return (
         <>
-            here
             <div id="replaceMe" />
             <Script
                 type="module"

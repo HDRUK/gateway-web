@@ -12,9 +12,11 @@ await build({
         "react",
         "react-dom",
         "@mui/material",
+        "@mui/material/utils",
+        "@mui/material/SvgIcon",
+        "@mui/icons-material",
         "@emotion/react",
         "@emotion/styled",
-
         "react-hook-form",
     ],
 
@@ -22,16 +24,20 @@ await build({
     conditions: ["browser", "import", "default"],
 
     jsx: "automatic",
-    // loader: {
-    //     ".svg": "file", // or "dataurl" to inline
-    // },
+    loader: {
+        ".svg": "dataurl", // or "dataurl" to inline
+    },
     jsxImportSource: "react",
     minify: true,
+    alias: {
+        "next/font/google": "./src/widgets/shims/next-font-google.js",
+    },
 });
 
 let code = fs.readFileSync("public/embed/widget.js", "utf8");
 
 code = code
+
     // React
     .replace(/from\s*["']react["']/g, 'from "https://esm.sh/react@18"')
     .replace(
@@ -46,16 +52,22 @@ code = code
     // material UI (only supported entry points)
     .replace(
         /from\s*["']@mui\/material["']/g,
-        'from "https://esm.sh/@mui/material@5?deps=react@18"'
+        'from "https://esm.sh/@mui/material?deps=react@18"'
     )
     .replace(
         /from\s*["']@mui\/material\/styles["']/g,
         'from "https://esm.sh/@mui/material/styles?deps=react@18"'
     )
+
     .replace(
         /from\s*["']@mui\/icons-material["']/g,
-        'from "https://esm.sh/@mui/icons-material@5?deps=react@18"'
+        'from "https://esm.sh/@mui/icons-material?deps=react@18"'
     )
+
+    // .replace(
+    //     /from\s*["']@mui\/material\/utils["']/g,
+    //     'from "https://esm.sh/@mui/material/utils?deps=react@18"'
+    // )
 
     // emotion
     .replace(
@@ -64,7 +76,7 @@ code = code
     )
     .replace(
         /from\s*["']@emotion\/styled["']/g,
-        'from "https://esm.sh/@emotion/styled@11?deps=react@18"'
+        'from "https://esm.sh/@emotion/styled?deps=react@18"'
     )
     .replace(
         /from\s*["']@mui\/material\/([A-Za-z0-9_-]+)["']/g,
@@ -73,12 +85,37 @@ code = code
     .replace(
         /from\s*["']react\/jsx-runtime["']/g,
         'from "https://esm.sh/react@18/jsx-runtime"'
-    )
-
-    .replace(
-        /from\s*["']react-hook-form["']/g,
-        'from "https://esm.sh/react-hook-form@7?deps=react@18"'
     );
+
+// .replace(
+//     /from\s*["']react-hook-form["']/g,
+//     'from "https://esm.sh/react-hook-form@7?deps=react@18"'
+// );
+
+// Icons — strip optional ".js", bundle, and include MUI as a dep
+code = code.replace(
+    /from\s*["']@mui\/icons-material\/([^"']+)["']/g,
+    (_m, sub) =>
+        `from "https://esm.sh/@mui/icons-material@5.14.19/${sub.replace(
+            /\.js$/,
+            ""
+        )}?bundle&deps=react@18,@mui/material@5.14.19"`
+);
+
+// MUI utils (folder or subpath) — bundle to avoid dynamic require
+code = code.replace(
+    /from\s*["']@mui\/material\/utils(?:\/([^"']+))?["']/g,
+    (_m, sub = "") =>
+        `from "https://esm.sh/@mui/material@5.14.19/utils${
+            sub ? `/${sub}` : ""
+        }?bundle&deps=react@18"`
+);
+
+// (Optional) react/jsx-runtime to ESM URL
+code = code.replace(
+    /from\s*["']react\/jsx-runtime["']/g,
+    'from "https://esm.sh/react@18/jsx-runtime"'
+);
 
 // code = "const React = o;\n" + code;
 
