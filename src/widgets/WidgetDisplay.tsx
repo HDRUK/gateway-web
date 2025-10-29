@@ -847,7 +847,11 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                     p: 1,
                                 }}>
                                 <Typography>
-                                    <strong>{TRANSLATIONS.footerTtle}</strong>
+                                    <Typography
+                                        component="span"
+                                        sx={{ fontWeight: 600, mr: 1 }}>
+                                        {TRANSLATIONS.footerTtle}
+                                    </Typography>
                                     {TRANSLATIONS.footerDesc}
                                 </Typography>
                                 <Button
