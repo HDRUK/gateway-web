@@ -22,7 +22,7 @@
         "semi": "npx semantic-release",
         "schemaTester": "tsx ./datasetsSchemaTester.ts",
         "pageTester": "tsx ./datasetsPageTester.ts",
-        "widget": "node src/widgetBuilder.ts"
+        "build:widget": "node src/widgetBuilder.ts"
     },
     "dependencies": {
         "@dnd-kit/core": "^6.1.0",
