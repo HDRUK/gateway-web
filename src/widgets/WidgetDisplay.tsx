@@ -8,6 +8,7 @@ import { FieldValues } from "react-hook-form";
 import {
     Box,
     Button,
+    Chip,
     CssBaseline,
     GlobalStyles,
     IconButton,
@@ -23,19 +24,16 @@ import {
 } from "@mui/material";
 import { SearchCategory } from "@/interfaces/Search";
 import { WidgetEntityData } from "@/interfaces/Widget";
+import BoxStacked from "@/components/BoxStacked";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Form from "@/components/Form";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
 import { CancelIcon, ChevronThinIcon, SearchIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import {
-    ResultButtonWrap,
-    ResultRow,
-    ResultRowCategory,
-} from "@/app/[locale]/(logged-out)/search/components/ResultCardDataUse/ResultCardDataUse.styles";
 import { formatPopulationSize } from "./utils/formatPopulationSize";
 import { formatYearRange } from "./utils/formatYearRange";
 
@@ -47,8 +45,6 @@ const TRANSLATIONS = {
     footerDesc:
         "Cohort Discovery indentifies relevant populations across datasets",
     cohortButton: "Open Cohort Discovery",
-
-    populationSizeNotReported: "not reported",
     populationSize: "Dataset population size",
     dateRange: "Date range",
     leadOrganisation: "Lead Organisation",
@@ -59,11 +55,6 @@ const TRANSLATIONS = {
     dataCustodian: "Data Custodian",
     dataCustodianTooltip:
         "The individual or organisation responsible for the safe custody, transport, storage of, and access to data",
-    showAll: "Quick view",
-    actions: "Actions",
-    addToLibrary: "Add to library",
-    removeFromLibrary: "Remove from library",
-
     noData: "not reported",
     notAvailable: "n/a",
 };
@@ -85,19 +76,21 @@ const ResultRowSx = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 1,
+    p: 0,
 
     "&:first-of-type": {
         marginTop: theme.spacing(2),
     },
 };
 
-// styled(Typography)
 const ResultRowCategorySx = {
     flexBasis: "20%",
     fontWeight: 500,
     marginRight: theme.spacing(2),
 };
+
+const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 };
 
 const categoryDropdowns = {
     [SearchCategory.DATASETS]: "Datasets & Biosamples",
@@ -105,6 +98,7 @@ const categoryDropdowns = {
     scripts: "Analysis Scripts & Software",
     [SearchCategory.COLLECTIONS]: "Collections",
 };
+
 const categoryTabs = [
     {
         label: SearchCategory.DATASETS,
@@ -128,24 +122,11 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
     const {
         include_cohort_link,
         include_search_bar,
-        keep_proportions,
+        // keep_proportions,
         size_height,
         size_width,
         unit,
     } = data.widget;
-
-    console.log(
-        include_cohort_link,
-        include_search_bar,
-        keep_proportions,
-        size_height,
-        size_width,
-        unit,
-        data,
-        data.widget
-    );
-
-    const queryName = "search";
 
     const [entityType, setEntityType] = useState(SearchCategory.DATASETS);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -199,12 +180,9 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
         };
     }, [data, createSearchFilter, searchValue]);
 
-    console.log("resultsByType", resultsByType);
-
     const widgetContainer = useRef<HTMLDivElement | null>(null);
 
     const handleSearch = (event, searchValue: FieldValues) => {
-        console.log(searchValue);
         event.preventDefault();
         setSearchValue(searchValue);
     };
@@ -212,6 +190,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
     const handleClick = e => {
         setAnchorEl(e.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -219,7 +198,6 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
     const CHARACTER_LIMIT = 35;
 
     const renderResult = (entityType: string, results: any[]) => {
-        console.log(entityType);
         switch (entityType) {
             case SearchCategory.DATASETS:
                 return (
@@ -286,7 +264,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                         sx={{
                                                             mb: 1.5,
                                                         }}>
-                                                        {result.publisher.name}
+                                                        {result.publisher?.name}
                                                     </Typography>
                                                 </Link>
                                             </Box>
@@ -351,56 +329,136 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                 );
             case SearchCategory.COLLECTIONS:
                 return (
-                    <List
+                    <Box
                         sx={{
                             display: "grid",
                             gap: 2,
                             gridTemplateColumns: {
                                 mobile: "1fr",
                                 tablet: "repeat(2, 1fr)",
-                                desktop: "repeat(3, 1fr)",
                             },
                             p: 1,
                         }}>
                         {results.map(result => (
-                            // <CardStacked
-                            //     href={`/https://healthdatagateway.org/en/collection/${result.id}`}
-                            //     title={result.name}
-                            //     imgUrl={
-                            //         result?.image_link ||
-                            //         StaticImages.BASE.placeholder
-                            //     }
-                            // />
-                            <p>COLLECTION</p>
+                            <BoxStacked sx={boxStackedSX}>
+                                <Box
+                                    component={Link}
+                                    href={`${GATEWAY_URL}/collection/${result.id}`}
+                                    sx={{
+                                        color: colors.white,
+                                        px: 3,
+                                        py: 2,
+                                        display: "flex",
+                                        alignItems: "flex-end",
+                                        backgroundImage: `url(${
+                                            result?.image_link ||
+                                            "https://media.prod.hdruk.cloud/static/default_placeholder.png"
+                                        })`,
+                                        backgroundColor: colors.white,
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "contain",
+                                        backgroundPosition: "center",
+                                        textDecoration: "none",
+                                    }}>
+                                    <Chip
+                                        size="small"
+                                        label={result.name}
+                                        sx={{
+                                            backgroundColor: colors.grey600,
+                                            color: colors.white,
+                                            maxWidth: "220px",
+                                        }}
+                                    />
+                                </Box>
+                            </BoxStacked>
+                        ))}
+                    </Box>
+                );
+            case "scripts":
+                return (
+                    <List
+                        key={`list-${entityType}`}
+                        sx={{
+                            background: colors.white,
+                            p: 0,
+                            m: 0,
+                        }}>
+                        {results.map(result => (
+                            <ListItem
+                                alignItems="flex-start"
+                                sx={{
+                                    borderBottom: `1px solid ${colors.grey300}`,
+                                    "&:last-of-type": {
+                                        borderBottom: "none",
+                                        pb: 0,
+                                    },
+                                }}>
+                                <ListItemText
+                                    disableTypography
+                                    primary={
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                width: "100%",
+                                                p: 0,
+                                                mb: 1.5,
+                                            }}>
+                                            <Link
+                                                href={`${GATEWAY_URL}/${RouteName.TOOL_ITEM}/${result.id}`}
+                                                target="_blank"
+                                                fontSize={16}
+                                                fontWeight={600}>
+                                                <EllipsisLineLimit
+                                                    text={result.name}
+                                                    component="span"
+                                                />
+                                            </Link>
+                                        </Box>
+                                    }
+                                    secondary={
+                                        <EllipsisLineLimit
+                                            component="div"
+                                            maxLine={2}
+                                            sx={{
+                                                margin: `${theme.spacing(
+                                                    2
+                                                )} 0 ${theme.spacing(1.5)}`,
+                                                color: colors.grey800,
+                                            }}
+                                            text={
+                                                result?.description ? (
+                                                    <MarkDownSanitizedWithHtml
+                                                        content={
+                                                            result?.description
+                                                        }
+                                                    />
+                                                ) : (
+                                                    TRANSLATIONS.notAvailable
+                                                )
+                                            }
+                                        />
+                                    }
+                                />
+                            </ListItem>
                         ))}
                     </List>
                 );
-            case SearchCategory.DATA_CUSTODIANS:
-                return (
-                    // <ResultCardDataProvider
-                    //     result={result as SearchResultDataProvider}
-                    // />
-                    null
-                );
-            case SearchCategory.TOOLS:
-                // return <ResultCardTool result={result as SearchResultTool} />;
-                return null;
             default:
-                // console.log(results);
-                const leadOrgNames = null;
-                const hasGatewayDatasets = false;
-                const hasNonGatewayDatasets = false;
-
-                console.log("HERE");
-
                 return (
-                    <>
+                    <List
+                        key={`list-${entityType}`}
+                        sx={{
+                            background: colors.white,
+                            p: 0,
+                            m: 0,
+                        }}>
                         {results.map(result => (
                             <ListItem
                                 sx={{
                                     p: 0,
                                     borderBottom: `1px solid ${colors.grey300}`,
-                                    backgroundColor: colors.white,
                                 }}
                                 alignItems="flex-start">
                                 <ListItemText
@@ -422,32 +480,11 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                     showToolTip
                                                 />
                                             </Link>
-                                            {/* {(totalDatasets > 1 ||
-                                                hasMultipleLeadOrgs) && (
-                                                <Button
-                                                    // onClick={handleShowAll}
-                                                    size="small"
-                                                    variant="outlined"
-                                                    color="secondary"
-                                                    sx={{
-                                                        ml: 1,
-                                                        flexShrink: 0,
-                                                        alignSelf: "flex-start",
-                                                    }}>
-                                                    {t("showAll")}
-                                                </Button>
-                                            )} */}
                                         </Box>
                                     }
-                                    primaryTypographyProps={{
-                                        color: "primary",
-                                        fontWeight: 600,
-                                        fontSize: 16,
-                                        mb: 1.5,
-                                    }}
                                     secondary={
                                         <>
-                                            <ResultRow>
+                                            <Box sx={ResultRowSx}>
                                                 <Typography
                                                     sx={ResultRowCategorySx}>
                                                     <TooltipText
@@ -460,22 +497,22 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                     />
                                                 </Typography>
 
-                                                {(!!leadOrgNames && (
+                                                {(!!result.organisation_name && (
                                                     <Typography
                                                         sx={{
                                                             fontWeight: 500,
                                                         }}>
-                                                        {leadOrgNames[0]}
-                                                        {leadOrgNames.length >
-                                                            1 &&
-                                                            `,... (${leadOrgNames.length})`}
+                                                        {
+                                                            result.organisation_name
+                                                        }
                                                     </Typography>
                                                 )) ||
-                                                    "NO DATA"}
-                                            </ResultRow>
+                                                    TRANSLATIONS.notAvailable}
+                                            </Box>
 
-                                            <ResultRow>
-                                                <ResultRowCategory>
+                                            <Box sx={ResultRowSx}>
+                                                <Typography
+                                                    sx={ResultRowCategorySx}>
                                                     <TooltipText
                                                         content={
                                                             TRANSLATIONS.datasetsTooltip
@@ -484,55 +521,39 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                             TRANSLATIONS.datasets
                                                         }
                                                     />
-                                                </ResultRowCategory>
+                                                </Typography>
 
-                                                {hasGatewayDatasets ? (
+                                                {result.dataset
+                                                    ?.dataset_title ? (
                                                     <>
-                                                        <ResultButtonWrap>
+                                                        <Box
+                                                            sx={{
+                                                                display: "flex",
+                                                                flexWrap:
+                                                                    "wrap",
+                                                                gap: theme.spacing(
+                                                                    1
+                                                                ),
+                                                            }}>
                                                             <EllipsisCharacterLimit
                                                                 text={
                                                                     result
-                                                                        .datasetTitles[0] ||
+                                                                        .dataset
+                                                                        ?.dataset_title ||
+                                                                    "TEST" ||
                                                                     ""
                                                                 }
                                                                 isButton
                                                                 characterLimit={
                                                                     CHARACTER_LIMIT
                                                                 }
-                                                                onClick={() =>
-                                                                    // push(
-                                                                    //     `/${RouteName.DATASET_ITEM}/${result.datasetIds[0]}`
-                                                                    // )
-                                                                    console.log(
-                                                                        "GO TO LINK"
-                                                                    )
-                                                                }
+                                                                href={`${GATEWAY_URL}/dataset/${result.dataset?.dataset_id}`}
+                                                                target="_blank"
                                                             />
-                                                        </ResultButtonWrap>
-                                                        {totalDatasets > 1 && (
-                                                            <Typography
-                                                                sx={{
-                                                                    fontWeight: 500,
-                                                                    ml: 1,
-                                                                }}>
-                                                                ({totalDatasets}
-                                                                )
-                                                            </Typography>
-                                                        )}
-                                                    </>
-                                                ) : hasNonGatewayDatasets ? (
-                                                    <>
-                                                        <EllipsisCharacterLimit
-                                                            text={
-                                                                result
-                                                                    .non_gateway_datasets[0]
-                                                            }
-                                                            characterLimit={
-                                                                CHARACTER_LIMIT
-                                                            }
-                                                            isChip
-                                                        />
-                                                        {totalDatasets > 1 && (
+                                                        </Box>
+                                                        {result.dataset
+                                                            ?.dataset_count >
+                                                            1 && (
                                                             <Typography
                                                                 sx={{
                                                                     fontWeight: 500,
@@ -541,20 +562,21 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                                 (
                                                                 {
                                                                     result
-                                                                        .non_gateway_datasets
-                                                                        .length
+                                                                        .dataset
+                                                                        .dataset_count
                                                                 }
                                                                 )
                                                             </Typography>
                                                         )}
                                                     </>
                                                 ) : (
-                                                    "NO DATA"
+                                                    "-"
                                                 )}
-                                            </ResultRow>
+                                            </Box>
 
-                                            <ResultRow>
-                                                <ResultRowCategory>
+                                            <Box sx={ResultRowSx}>
+                                                <Typography
+                                                    sx={ResultRowCategorySx}>
                                                     <TooltipText
                                                         content={
                                                             TRANSLATIONS.dataCustodianTooltip
@@ -563,14 +585,16 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                             TRANSLATIONS.dataCustodian
                                                         }
                                                     />
-                                                </ResultRowCategory>
-                                                {(!!result?.team?.name && (
+                                                </Typography>
+                                                {(result?.team_name && (
                                                     <Link
-                                                        href={`${RouteName.DATA_CUSTODIANS_ITEM}/${result.team.id}`}>
-                                                        {`${result.team?.member_of} > `}
+                                                        href={`${GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
+                                                        target="_blank">
+                                                        {result?.member_of &&
+                                                            `${result?.member_of} > `}
                                                         <EllipsisCharacterLimit
                                                             text={
-                                                                result.team.name
+                                                                result.team_name
                                                             }
                                                             characterLimit={
                                                                 CHARACTER_LIMIT
@@ -578,14 +602,14 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                         />
                                                     </Link>
                                                 )) ||
-                                                    "N DATA"}
-                                            </ResultRow>
+                                                    TRANSLATIONS.noData}
+                                            </Box>
                                         </>
                                     }
                                 />
                             </ListItem>
                         ))}
-                    </>
+                    </List>
                 );
         }
     };
@@ -610,11 +634,9 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                 <CssBaseline />
                 <Box
                     sx={{
-                        width: size_width,
-                        height: size_height,
+                        width: `${size_width}${unit}`,
+                        height: `${size_height}${unit}`,
                         overflow: "hidden",
-                        // boxShadow: 2,
-                        // borderRadius: 3,
                         backgroundColor: theme.palette.grey[100],
                     }}
                     ref={widgetContainer}>
@@ -625,7 +647,6 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                             height: "100%",
                             p: 0,
                         }}>
-                        {/* HEADER */}
                         <Box
                             component="header"
                             sx={{
@@ -660,7 +681,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                         size="small"
                                         fullWidth
                                         placeholder="Start searching"
-                                        id={queryName}
+                                        id="search"
                                         startAdornment={
                                             <InputAdornment position="start">
                                                 <SearchIcon

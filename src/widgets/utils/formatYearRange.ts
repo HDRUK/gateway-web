@@ -1,21 +1,21 @@
-import { formatDate } from "@/utils/date";
+import { getYear } from "@/utils/date";
 
 export function formatYearRange(
     start: string | null | undefined,
     end: string | null | undefined,
     fallback: string
 ): string {
-    const startFormatted = start ? formatDate(start, "YYYY") : "";
-    const endFormatted = end ? formatDate(end, "YYYY") : "";
+    const startFormatted = start ? getYear(start) : "";
+    const endFormatted = end ? getYear(end) : "";
 
     if (startFormatted && endFormatted) {
         return startFormatted === endFormatted
-            ? startFormatted
+            ? startFormatted.toString()
             : `${startFormatted}–${endFormatted}`;
     }
 
-    if (startFormatted) return startFormatted;
-    if (endFormatted) return endFormatted;
+    if (startFormatted) return startFormatted.toString();
+    if (endFormatted) return endFormatted.toString();
 
     return fallback;
 }
