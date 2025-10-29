@@ -27,6 +27,7 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                     <Box
                         component={Link}
                         href={`${GATEWAY_URL}/collection/${result.id}`}
+                        target="_blank"
                         sx={{
                             color: colors.white,
                             px: 3,
