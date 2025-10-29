@@ -25,14 +25,7 @@ export interface Widget {
     deleted_at: string;
 }
 
-type EntityData = {
-    id: number;
-    name: string;
-    team_id: number;
-    team_name: string;
-};
-
-interface WidgetDetails {
+export interface WidgetDetails {
     widget_name: string;
     size_width: number;
     size_height: number;
@@ -42,15 +35,58 @@ interface WidgetDetails {
     keep_proportions: number;
 }
 
+export type WidgetCategory =
+    | "datasets"
+    | "data_uses"
+    | "scripts"
+    | "collections";
+
+export interface DatasetItem {
+    id: number;
+    team_id: number;
+    dataset_version_id: number;
+    title: string;
+    short_title?: string;
+    description?: string;
+    raw_keywords?: string;
+    population_size?: string | number | null;
+    start_date?: string | null;
+    end_date?: string | null;
+    publisher?: string | null;
+}
+
+export interface DataUseDatasetRef {
+    dataset_id: number;
+    dataset_title: string;
+    dataset_count: number;
+}
+
+export interface DataUseItem {
+    id: number;
+    name: string;
+    team_name?: string;
+    team_id?: number;
+    organisation_name?: string;
+    dataset?: DataUseDatasetRef;
+    member_of?: string;
+}
+
+export interface ScriptItem {
+    id: number;
+    name: string;
+    description?: string;
+}
+
+export interface CollectionItem {
+    id: number;
+    name: string;
+    image_link?: string;
+}
+
 export interface WidgetEntityData {
-    collections: EntityData[];
-    datasets: {
-        id: number;
-        title: string;
-        team_id: number;
-        team_name: string;
-    };
-    durs: EntityData[];
-    tools: EntityData[];
+    datasets: DatasetItem[];
+    data_uses: DataUseItem[];
+    scripts: ScriptItem[];
+    collections: CollectionItem[];
     widget: WidgetDetails;
 }

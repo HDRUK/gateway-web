@@ -4,7 +4,6 @@
 
 /* eslint-disable @next/next/no-page-custom-font */
 import { useCallback, useMemo, useRef, useState } from "react";
-import { FieldValues } from "react-hook-form";
 import {
     Box,
     Button,
@@ -22,8 +21,14 @@ import {
     OutlinedInput,
     ThemeProvider,
 } from "@mui/material";
-import { SearchCategory } from "@/interfaces/Search";
-import { WidgetEntityData } from "@/interfaces/Widget";
+import {
+    WidgetEntityData,
+    WidgetCategory,
+    DatasetItem,
+    CollectionItem,
+    ScriptItem,
+    DataUseItem,
+} from "@/interfaces/Widget";
 import BoxStacked from "@/components/BoxStacked";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -34,6 +39,7 @@ import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
 import { CancelIcon, ChevronThinIcon, SearchIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { CATEGORY_LABEL, CATEGORIES } from "./consts";
 import { formatPopulationSize } from "./utils/formatPopulationSize";
 import { formatYearRange } from "./utils/formatYearRange";
 
@@ -70,7 +76,7 @@ const btnFullWidthSx = {
     boxShadow: "none",
     textTransform: "none",
     width: "100%",
-};
+} as const;
 
 const ResultRowSx = {
     display: "flex",
@@ -78,62 +84,31 @@ const ResultRowSx = {
     alignItems: "center",
     marginBottom: 1,
     p: 0,
-
-    "&:first-of-type": {
-        marginTop: theme.spacing(2),
-    },
-};
+    "&:first-of-type": { marginTop: theme.spacing(2) },
+} as const;
 
 const ResultRowCategorySx = {
     flexBasis: "20%",
     fontWeight: 500,
     marginRight: theme.spacing(2),
-};
+} as const;
 
-const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 };
-
-const categoryDropdowns = {
-    [SearchCategory.DATASETS]: "Datasets & Biosamples",
-    data_uses: "Data Uses / Research Projects",
-    scripts: "Analysis Scripts & Software",
-    [SearchCategory.COLLECTIONS]: "Collections",
-};
-
-const categoryTabs = [
-    {
-        label: SearchCategory.DATASETS,
-        value: SearchCategory.DATASETS,
-    },
-    {
-        label: SearchCategory.DATA_USE,
-        value: "data_uses",
-    },
-    {
-        label: SearchCategory.TOOLS,
-        value: "scripts",
-    },
-    {
-        label: SearchCategory.COLLECTIONS,
-        value: SearchCategory.COLLECTIONS,
-    },
-];
+const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 } as const;
 
 export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
     const {
         include_cohort_link,
         include_search_bar,
-        // keep_proportions,
         size_height,
         size_width,
         unit,
     } = data.widget;
 
-    const [entityType, setEntityType] = useState(SearchCategory.DATASETS);
-    const [anchorEl, setAnchorEl] = useState(null);
-
+    const [entityType, setEntityType] = useState<WidgetCategory>("datasets");
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [searchValue, setSearchValue] = useState("");
 
-    const createSearchFilter = useCallback((keys: string[], query: string) => {
+    const makeTextFilter = useCallback((keys: string[], query: string) => {
         const terms = (query ?? "")
             .trim()
             .toLowerCase()
@@ -143,8 +118,8 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
 
         return (item: Record<string, unknown>) =>
             terms.every(term =>
-                keys.some(key => {
-                    const value = (item as any)?.[key];
+                keys.some(k => {
+                    const value = (item as any)[k];
                     const text = Array.isArray(value)
                         ? value.join(" ")
                         : String(value ?? "");
@@ -153,56 +128,41 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
             );
     }, []);
 
-    const resultsByType = useMemo(() => {
-        const filterDatasets = createSearchFilter(
-            ["title", "short_title", "description", "publisher.name"],
+    const resultsByType = useMemo<Record<WidgetCategory, unknown[]>>(() => {
+        const datasetsFilter = makeTextFilter(
+            ["title", "short_title", "description", "publisher"], // publisher is a string in the sample
             searchValue
         );
-        const filterCollections = createSearchFilter(["name"], searchValue);
-        const filterDataUses = createSearchFilter(
+        const collectionsFilter = makeTextFilter(["name"], searchValue);
+        const dataUsesFilter = makeTextFilter(
             ["name", "organisation_name", "team_name"],
             searchValue
         );
-        const filterTools = createSearchFilter(
+        const scriptsFilter = makeTextFilter(
             ["name", "description"],
             searchValue
         );
 
         return {
-            [SearchCategory.DATASETS]: (
-                data[SearchCategory.DATASETS] ?? []
-            ).filter(filterDatasets),
-            [SearchCategory.COLLECTIONS]: (
-                data[SearchCategory.COLLECTIONS] ?? []
-            ).filter(filterCollections),
-            data_uses: (data?.data_uses ?? []).filter(filterDataUses),
-            scripts: (data.scripts ?? []).filter(filterTools),
+            datasets: (data.datasets ?? []).filter(datasetsFilter),
+            collections: (data.collections ?? []).filter(collectionsFilter),
+            data_uses: (data.data_uses ?? []).filter(dataUsesFilter),
+            scripts: (data.scripts ?? []).filter(scriptsFilter),
         };
-    }, [data, createSearchFilter, searchValue]);
+    }, [data, makeTextFilter, searchValue]);
 
     const widgetContainer = useRef<HTMLDivElement | null>(null);
 
-    const handleSearch = (event, searchValue: FieldValues) => {
-        event.preventDefault();
-        setSearchValue(searchValue);
-    };
-
-    const handleClick = e => {
-        setAnchorEl(e.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const handleClose = () => setAnchorEl(null);
 
     const CHARACTER_LIMIT = 35;
 
-    const renderResult = (entityType: string, results: any[]) => {
-        switch (entityType) {
-            case SearchCategory.DATASETS:
+    const renderResult = (cat: WidgetCategory, results: unknown[]) => {
+        switch (cat) {
+            case "datasets": {
+                const items = results as DatasetItem[];
                 return (
                     <List
-                        key={`list-${entityType}`}
                         sx={{
                             background: colors.grey100,
                             px: 1,
@@ -211,9 +171,9 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                             flexWrap: "wrap",
                             justifyContent: "center",
                         }}>
-                        {results.map(result => (
+                        {items.map(result => (
                             <ListItem
-                                key={`listitem-${result.id}`}
+                                key={result.id}
                                 sx={{
                                     p: 0,
                                     mb: 1,
@@ -222,11 +182,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                 }}>
                                 <ListItemText
                                     disableTypography
-                                    sx={{
-                                        padding: 2,
-                                        paddingBottom: 1,
-                                        m: 0,
-                                    }}
+                                    sx={{ p: 2, pb: 1, m: 0 }}
                                     primary={
                                         <Box
                                             sx={{
@@ -250,34 +206,28 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                     href={`${GATEWAY_URL}/dataset/${result.id}`}
                                                     fontSize={16}
                                                     fontWeight={600}
-                                                    marginBottom={0.5}
+                                                    mb={0.5}
                                                     target="_blank">
                                                     {result.title}
                                                 </Link>
-
-                                                <Link
-                                                    href={`${GATEWAY_URL}/data-custodian/${result.team_id}`}
-                                                    target="_blank">
-                                                    <Typography
-                                                        // eslint-disable-next-line
-                                                        aria-description="Data Custodian"
-                                                        sx={{
-                                                            mb: 1.5,
-                                                        }}>
-                                                        {result.publisher?.name}
-                                                    </Typography>
-                                                </Link>
+                                                {result.publisher && (
+                                                    <Link
+                                                        href={`${GATEWAY_URL}/data-custodian/${result.team_id}`}
+                                                        target="_blank">
+                                                        <Typography
+                                                            sx={{ mb: 1.5 }}>
+                                                            {result.publisher}
+                                                        </Typography>
+                                                    </Link>
+                                                )}
                                             </Box>
                                         </Box>
                                     }
                                     secondary={
-                                        <section aria-describedby={result.id}>
+                                        <section
+                                            aria-describedby={`${result.id}`}>
                                             {result.description && (
-                                                <Box
-                                                    sx={{
-                                                        p: 0,
-                                                        mb: 2,
-                                                    }}>
+                                                <Box sx={{ p: 0, mb: 2 }}>
                                                     <EllipsisLineLimit
                                                         text={
                                                             result.description
@@ -286,7 +236,6 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                     />
                                                 </Box>
                                             )}
-
                                             <Box
                                                 sx={{
                                                     p: 0,
@@ -309,13 +258,12 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                 </Typography>
                                                 <Typography
                                                     color={colors.green700}
-                                                    sx={{
-                                                        fontSize: 16,
-                                                    }}>
+                                                    sx={{ fontSize: 16 }}>
                                                     {`${TRANSLATIONS.dateRange}: `}
                                                     {formatYearRange(
-                                                        result.start_date,
-                                                        result.end_date,
+                                                        result.start_date ??
+                                                            null,
+                                                        result.end_date ?? null,
                                                         TRANSLATIONS.notAvailable
                                                     )}
                                                 </Typography>
@@ -327,7 +275,9 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                         ))}
                     </List>
                 );
-            case SearchCategory.COLLECTIONS:
+            }
+            case "collections": {
+                const items = results as CollectionItem[];
                 return (
                     <Box
                         sx={{
@@ -339,8 +289,8 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                             },
                             p: 1,
                         }}>
-                        {results.map(result => (
-                            <BoxStacked sx={boxStackedSX}>
+                        {items.map(result => (
+                            <BoxStacked key={result.id} sx={boxStackedSX}>
                                 <Box
                                     component={Link}
                                     href={`${GATEWAY_URL}/collection/${result.id}`}
@@ -374,17 +324,14 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                         ))}
                     </Box>
                 );
-            case "scripts":
+            }
+            case "scripts": {
+                const items = results as ScriptItem[];
                 return (
-                    <List
-                        key={`list-${entityType}`}
-                        sx={{
-                            background: colors.white,
-                            p: 0,
-                            m: 0,
-                        }}>
-                        {results.map(result => (
+                    <List sx={{ background: colors.white, p: 0, m: 0 }}>
+                        {items.map(result => (
                             <ListItem
+                                key={result.id}
                                 alignItems="flex-start"
                                 sx={{
                                     borderBottom: `1px solid ${colors.grey300}`,
@@ -431,7 +378,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                 result?.description ? (
                                                     <MarkDownSanitizedWithHtml
                                                         content={
-                                                            result?.description
+                                                            result.description
                                                         }
                                                     />
                                                 ) : (
@@ -445,17 +392,14 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                         ))}
                     </List>
                 );
-            default:
+            }
+            default: {
+                const items = results as DataUseItem[];
                 return (
-                    <List
-                        key={`list-${entityType}`}
-                        sx={{
-                            background: colors.white,
-                            p: 0,
-                            m: 0,
-                        }}>
-                        {results.map(result => (
+                    <List sx={{ background: colors.white, p: 0, m: 0 }}>
+                        {items.map(result => (
                             <ListItem
+                                key={result.id}
                                 sx={{
                                     p: 0,
                                     borderBottom: `1px solid ${colors.grey300}`,
@@ -463,7 +407,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                 alignItems="flex-start">
                                 <ListItemText
                                     disableTypography
-                                    sx={{ padding: 2, paddingBottom: 1, m: 0 }}
+                                    sx={{ p: 2, pb: 1, m: 0 }}
                                     primary={
                                         <Box
                                             sx={{
@@ -474,7 +418,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                 href={`${RouteName.DATA_USE_ITEM}/${result.id}`}
                                                 fontSize={16}
                                                 fontWeight={600}
-                                                marginBottom={2}>
+                                                mb={2}>
                                                 <EllipsisLineLimit
                                                     text={result.name || ""}
                                                     showToolTip
@@ -496,8 +440,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                         }
                                                     />
                                                 </Typography>
-
-                                                {(!!result.organisation_name && (
+                                                {result.organisation_name ? (
                                                     <Typography
                                                         sx={{
                                                             fontWeight: 500,
@@ -506,8 +449,9 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                             result.organisation_name
                                                         }
                                                     </Typography>
-                                                )) ||
-                                                    TRANSLATIONS.notAvailable}
+                                                ) : (
+                                                    TRANSLATIONS.notAvailable
+                                                )}
                                             </Box>
 
                                             <Box sx={ResultRowSx}>
@@ -522,7 +466,6 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                         }
                                                     />
                                                 </Typography>
-
                                                 {result.dataset
                                                     ?.dataset_title ? (
                                                     <>
@@ -539,15 +482,13 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                                 text={
                                                                     result
                                                                         .dataset
-                                                                        ?.dataset_title ||
-                                                                    "TEST" ||
-                                                                    ""
+                                                                        .dataset_title
                                                                 }
                                                                 isButton
                                                                 characterLimit={
                                                                     CHARACTER_LIMIT
                                                                 }
-                                                                href={`${GATEWAY_URL}/dataset/${result.dataset?.dataset_id}`}
+                                                                href={`${GATEWAY_URL}/dataset/${result.dataset.dataset_id}`}
                                                                 target="_blank"
                                                             />
                                                         </Box>
@@ -586,12 +527,12 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                         }
                                                     />
                                                 </Typography>
-                                                {(result?.team_name && (
+                                                {result.team_name ? (
                                                     <Link
                                                         href={`${GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
                                                         target="_blank">
-                                                        {result?.member_of &&
-                                                            `${result?.member_of} > `}
+                                                        {result.member_of &&
+                                                            `${result.member_of} > `}
                                                         <EllipsisCharacterLimit
                                                             text={
                                                                 result.team_name
@@ -601,8 +542,9 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                             }
                                                         />
                                                     </Link>
-                                                )) ||
-                                                    TRANSLATIONS.noData}
+                                                ) : (
+                                                    TRANSLATIONS.noData
+                                                )}
                                             </Box>
                                         </>
                                     }
@@ -611,6 +553,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                         ))}
                     </List>
                 );
+            }
         }
     };
 
@@ -665,7 +608,10 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                             }}>
                             {!!include_search_bar && (
                                 <Form
-                                    onSubmit={handleSearch}
+                                    onSubmit={(e, v) => {
+                                        e.preventDefault();
+                                        setSearchValue(String(v));
+                                    }}
                                     role="search"
                                     sx={{ flexGrow: 1 }}>
                                     <OutlinedInput
@@ -698,7 +644,6 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                                 <IconButton
                                                     disableRipple
                                                     aria-label="clear text"
-                                                    data-testid="reset-btn"
                                                     onClick={() =>
                                                         setSearchValue("")
                                                     }
@@ -729,9 +674,8 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                 <Typography fontSize={15}>
                                     {TRANSLATIONS.poweredBy}
                                 </Typography>
-
                                 <a
-                                    href="https://healthdatagateway.org/en"
+                                    href={GATEWAY_URL}
                                     target="_blank"
                                     rel="noreferrer">
                                     <img
@@ -743,11 +687,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                             </Box>
                         </Box>
 
-                        <Box
-                            component="nav"
-                            sx={{
-                                p: 0,
-                            }}>
+                        <Box component="nav" sx={{ p: 0 }}>
                             <Box
                                 sx={{
                                     borderBottom: `3px solid ${colors.green400}`,
@@ -758,7 +698,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                     id="basic-button"
                                     aria-controls="tab-menu"
                                     aria-haspopup="true"
-                                    onClick={handleClick}
+                                    onClick={e => setAnchorEl(e.currentTarget)}
                                     aria-label="Open to show search type options"
                                     title="Open to show search type options"
                                     color="secondary"
@@ -766,7 +706,7 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                     endIcon={
                                         <ChevronThinIcon color="primary" />
                                     }>
-                                    {categoryDropdowns[entityType]}
+                                    {CATEGORY_LABEL[entityType]}
                                 </Button>
                                 <Menu
                                     container={() =>
@@ -804,23 +744,23 @@ export default function WidgetDisplay({ data }: { data: WidgetEntityData }) {
                                             },
                                         },
                                     }}>
-                                    {categoryTabs.map(item => (
+                                    {CATEGORIES.map(cat => (
                                         <MenuItem
                                             onClick={() => {
-                                                setEntityType(item.value);
+                                                setEntityType(cat);
                                                 handleClose();
                                             }}
-                                            key={categoryDropdowns[item.value]}
-                                            value={item.value}
+                                            key={cat}
+                                            value={cat}
                                             sx={{
                                                 fontSize: "15px",
                                                 py: 1.5,
                                                 fontWeight:
-                                                    item.value === entityType
+                                                    cat === entityType
                                                         ? 600
                                                         : 400,
                                             }}>
-                                            {categoryDropdowns[item.value]}
+                                            {CATEGORY_LABEL[cat]}
                                         </MenuItem>
                                     ))}
                                 </Menu>
