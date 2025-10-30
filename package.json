@@ -21,7 +21,8 @@
     "seeder": "tsx ./sitemap-seeder.ts",
     "semi": "npx semantic-release",
     "schemaTester": "tsx ./datasetsSchemaTester.ts",
-    "pageTester": "tsx ./datasetsPageTester.ts"
+    "pageTester": "tsx ./datasetsPageTester.ts",
+    "build:widget": "tsx ./widgetBuilder.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
@@ -105,7 +106,8 @@
     "typescript": "4.9.5",
     "uuid": "^11.1.0",
     "yup": "^1.2.0",
-    "zustand": "^5.0.4"
+    "zustand": "^5.0.4",
+    "esbuild": "^0.25.11"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",

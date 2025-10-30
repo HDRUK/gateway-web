@@ -3,6 +3,7 @@ import { FormControl, FormControlLabel, SxProps } from "@mui/material";
 import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
 import FormError from "@/components/FormError";
 import Box from "../Box";
+import FormInfoLabel from "../FormInfoLabel";
 import StyledCheckbox from "../StyledCheckbox";
 import Typography from "../Typography";
 
@@ -17,6 +18,9 @@ export interface CheckboxProps<TFieldValues extends FieldValues, TName>
     formControlSx?: SxProps;
     count?: number;
     id?: string;
+    info?: string;
+    required?: boolean;
+    disabled?: boolean;
 }
 
 const Checkbox = <
@@ -35,6 +39,9 @@ const Checkbox = <
         formControlSx,
         count,
         id,
+        info,
+        required,
+        disabled,
         ...rest
     } = props;
 
@@ -50,7 +57,8 @@ const Checkbox = <
         <FormControl
             fullWidth={fullWidth}
             sx={{ m: 0, mb: 2, ...formControlSx }}
-            error={!!error}>
+            error={!!error}
+            disabled={disabled}>
             <FormControlLabel
                 control={
                     <StyledCheckbox
@@ -64,6 +72,7 @@ const Checkbox = <
                         {...fieldProps}
                     />
                 }
+                disabled={disabled}
                 label={
                     count !== undefined ? (
                         <Box
@@ -77,7 +86,12 @@ const Checkbox = <
                             <Typography fontWeight={400}>{count}</Typography>
                         </Box>
                     ) : (
-                        label
+                        <FormInfoLabel
+                            name={name}
+                            label={label}
+                            info={info}
+                            required={required}
+                        />
                     )
                 }
             />
