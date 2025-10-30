@@ -32,13 +32,14 @@ function isScrambled(email: string) {
     const indicatorsOfScrambled = [
         "member@",
         "staff@",
-        "Staff@",
         "student@",
         "employee@",
         "postgraduatetaught@",
     ];
 
-    return indicatorsOfScrambled.some(item => email.includes(item));
+    return indicatorsOfScrambled.some(item =>
+        email.toLowerCase().includes(item)
+    );
 }
 
 const VerifyButton = ({
