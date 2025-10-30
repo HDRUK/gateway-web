@@ -12,6 +12,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
+import Image from "next/image";
 import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -66,7 +67,7 @@ export default async function DataCustodianNetworkPage({
                         {summaryData.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                        <Image
                             width={554}
                             height={250}
                             alt={summaryData.name}
@@ -74,6 +75,7 @@ export default async function DataCustodianNetworkPage({
                                 summaryData?.img_url ||
                                 StaticImages.BASE.placeholder
                             }
+                            style={AspectRatioImage}
                         />
                     </Box>
                     <ActionBar />
