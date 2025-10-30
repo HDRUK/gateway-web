@@ -28,6 +28,19 @@ import {
 } from "@/config/forms/profile";
 import KeepingUpdated from "../KeepingUpdated";
 
+function isScrambled(email: string) {
+    const indicatorsOfScrambled = [
+        "member@",
+        "staff@",
+        "Staff@",
+        "student@",
+        "employee@",
+        "postgraduatetaught@",
+    ];
+
+    return indicatorsOfScrambled.some(item => email.includes(item));
+}
+
 const VerifyButton = ({
     onClick,
     children,
@@ -63,6 +76,8 @@ const ProfileForm = () => {
     const isOpenAthens = user?.provider === "open-athens";
     const secondaryEmailVerified = user?.secondary_email_verified_at !== null;
     const hasSecondaryEmail = !!user?.secondary_email;
+    const emailIsScrambled =
+        user?.provider === "open-athens" && isScrambled(user.email);
 
     const requestSecondaryVerification = usePost(
         `${apis.usersV1Url}/${user?.id}/resend-secondary-verification`,
@@ -130,7 +145,7 @@ const ProfileForm = () => {
                         ...field,
                         disabled:
                             (!isOpenAthens && !secondaryEmail) ||
-                            isOpenAthens ||
+                            (isOpenAthens && emailIsScrambled) ||
                             !secondaryEmailVerified ||
                             preferredEmailDisabled,
                     };
@@ -145,6 +160,7 @@ const ProfileForm = () => {
             }),
         [
             isOpenAthens,
+            emailIsScrambled,
             sectors,
             secondaryEmail,
             user?.secondary_email,
