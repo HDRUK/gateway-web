@@ -28,7 +28,7 @@ export default async function WidgetCreationPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    let widgetData = undefined;
+    let widgetData;
 
     // Get widget data
     if (widgetId !== "create") {
