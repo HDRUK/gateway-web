@@ -39,13 +39,13 @@ const nextConfig = withNextIntl({
             },
         ],
     },
-    webpack: (config, {isServer})=> {
+    // webpack: (config, {isServer})=> {
 
-        if(isServer){
-            config.externals.push('esbuild')
-        }
-        return config;
-    },
+    //     if(isServer){
+    //         config.externals.push('esbuild')
+    //     }
+    //     return config;
+    // },
     async headers() {
         return [
         { 
