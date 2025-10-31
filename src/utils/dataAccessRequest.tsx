@@ -10,8 +10,7 @@ import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { CACHE_DAR_ANSWERS } from "@/consts/cache";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
-
-const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
+import { EntityType } from "@/consts/entityTypes";
 
 const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
@@ -75,7 +74,7 @@ const createFileUploadConfig = (
 ): FileUploadFields => {
     return {
         fileDownloadApiPath: fileDownloadApiPath || undefined,
-        apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
+        apiPath: `${apis.fileUploadV1Url}?entity_flag=${EntityType.DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
             const newFile = { filename: response.filename, id: response.id };
 

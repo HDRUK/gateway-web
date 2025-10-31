@@ -119,14 +119,13 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
         setSearchName(value);
     };
 
-    const { control, handleSubmit, reset, resetField, watch, formState } =
+    const { control, handleSubmit, reset, resetField, watch, formState, setValue } =
         useForm<QuestionBankQuestionForm>({
             defaultValues,
             resolver: yupResolver(questionValidationSchema),
         });
 
     const allFields = watch();
-
     const checkboxValue = watch("all_custodians");
     const componentTypeValue = watch("component");
     const validationFormatValue = watch("validations.format");
@@ -212,6 +211,8 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
                             control={control}
                             componentType={allFields.component}
                             validationFormat={allFields.validations?.format}
+                            questionId={question?.question_id}
+                            setValue={setValue}
                             watch={watch}
                         />
 
