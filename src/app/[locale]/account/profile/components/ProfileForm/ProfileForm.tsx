@@ -171,7 +171,7 @@ const ProfileForm = () => {
 
     // Disable
     useEffect(() => {
-        if (isOpenAthens) {
+        if (isOpenAthens && user?.preferred_email !=='primary') {
             setValue("preferred_email", "secondary");
         } else if (!secondaryEmail) {
             setValue("preferred_email", "primary");
