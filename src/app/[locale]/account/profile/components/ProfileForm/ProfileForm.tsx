@@ -182,7 +182,7 @@ const ProfileForm = () => {
         } else if (!secondaryEmail) {
             setValue("preferred_email", "primary");
         }
-    }, [isOpenAthens, secondaryEmail, setValue, user]);
+    }, [isOpenAthens, secondaryEmail, setValue, user, emailIsScrambled]);
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
