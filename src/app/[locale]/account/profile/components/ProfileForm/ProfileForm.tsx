@@ -89,7 +89,10 @@ const ProfileForm = () => {
         () => ({
             ...profileDefaultValues,
             ...user,
-            ...(isOpenAthens && { preferred_email: "secondary" }),
+            ...(isOpenAthens &&
+                (emailIsScrambled || user?.preferred_email !== "primary") && {
+                    preferred_email: "secondary",
+                }),
         }),
         [isOpenAthens, user]
     );
@@ -171,7 +174,10 @@ const ProfileForm = () => {
 
     // Disable
     useEffect(() => {
-        if (isOpenAthens && user?.preferred_email !== "primary") {
+        if (
+            isOpenAthens &&
+            (emailIsScrambled || user?.preferred_email !== "primary")
+        ) {
             setValue("preferred_email", "secondary");
         } else if (!secondaryEmail) {
             setValue("preferred_email", "primary");
