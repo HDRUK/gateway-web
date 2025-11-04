@@ -1,3 +1,16 @@
+## [2.25.0](https://github.com/HDRUK/gateway-web/compare/v2.24.0...v2.25.0) (2025-11-04)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([ff7754f](https://github.com/HDRUK/gateway-web/commit/ff7754fbbe7073259382194b8ca70c48dc5e6141)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-7911:** Dom parser error (#1363) ([59ca04b](https://github.com/HDRUK/gateway-web/commit/59ca04bee0d41c634eee026f7bd64198ec7bec53)), closes [GAT-7911](GAT-7911)
+* **GAT-8113:** Number.isNaN is strict, isNaN is less strict (#1360) ([825ac61](https://github.com/HDRUK/gateway-web/commit/825ac61f0661152d87e1206e2123e4758cc2cca0)), closes [GAT-8113](GAT-8113)
+* **GAT-8127:** Add check for scrambled email addresses.  (#1365) ([030167f](https://github.com/HDRUK/gateway-web/commit/030167f2e4e42731f37dec7bed9350c769ee499c)), closes [GAT-8127](GAT-8127)
+* **GAT-8127:** open-athens provider don't default (#1366) ([b4a42fc](https://github.com/HDRUK/gateway-web/commit/b4a42fc8946416c039ebfc64463e27d2430cd00d)), closes [GAT-8127](GAT-8127)
+
 ## [2.24.0](https://github.com/HDRUK/gateway-web/compare/v2.23.0...v2.24.0) (2025-10-24)
 
 ### ✨ Features
