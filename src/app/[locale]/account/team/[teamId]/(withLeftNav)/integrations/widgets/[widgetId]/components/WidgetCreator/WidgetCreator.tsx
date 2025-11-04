@@ -103,7 +103,6 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         handleSubmit,
         watch,
         setValue,
-        getValues,
         formState: { dirtyFields },
     } = useForm({
         defaultValues: {
@@ -172,12 +171,6 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             setEntityDataCache(entityData);
         }
     }, [entityData, loadingEntityData]);
-
-    const selectedCustodianIds = watch("data_custodian_entities_ids") ?? [];
-    const allowedTeamIdSet = useMemo(
-        () => new Set(selectedCustodianIds.map(String)), // everything as string for comparisons
-        [selectedCustodianIds]
-    );
 
     const createWidget = usePost<Widget>(
         `${apis.teamsV1Url}/${teamId}/widgets`,
