@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { OptionType } from "dayjs";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
 import { Unit, Widget, WidgetEntityData } from "@/interfaces/Widget";
@@ -56,7 +56,7 @@ const isOptionEqualToValue = (
 ) => option.value === value;
 
 const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
-    const router = useRouter();
+    // const router = useRouter();
     const t = useTranslations(TRANSLATION_PATH);
 
     const teamNameOptions = useMemo(
@@ -83,7 +83,6 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         watch,
         setValue,
         formState: { dirtyFields },
-        getValues,
     } = useForm({
         defaultValues: {
             ...defaultValues,

@@ -47,8 +47,8 @@ describe("formatPopulationSize", () => {
     });
 
     it("returns fallback for undefined, null, or NaN", () => {
-        expect(formatPopulationSize(undefined as any, FALLBACK)).toBe(FALLBACK);
-        expect(formatPopulationSize(null as any, FALLBACK)).toBe(FALLBACK);
+        expect(formatPopulationSize(undefined, FALLBACK)).toBe(FALLBACK);
+        expect(formatPopulationSize(null, FALLBACK)).toBe(FALLBACK);
         expect(formatPopulationSize(NaN, FALLBACK)).toBe(FALLBACK);
     });
 });

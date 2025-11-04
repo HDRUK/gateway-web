@@ -1,16 +1,22 @@
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import apis from "@/config/apis";
 import WidgetDisplay from "./components/WidgetDisplay";
 
-export default async function Widget({ params }) {
+interface WidgetProps {
+    params: {
+        slug: string;
+    };
+}
+
+export default async function Widget({ params }: WidgetProps) {
     const { slug } = params;
 
     const popped = slug.split("-");
     const teamId = popped[0];
     const widgetId = popped[1];
 
-    const headersList = headers();
-    const referer = headersList.get("referer");
+    // const headersList = headers();
+    // const referer = headersList.get("referer");
 
     const { origin } = new URL("http://www.google.com/test"); // referer);
 

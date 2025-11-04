@@ -12,13 +12,15 @@ export default function useTextFilter() {
                 .filter(Boolean);
 
             if (!terms.length) {
-                return (_item: T) => true;
+                return true;
             }
 
             return (item: T) =>
                 terms.every(term =>
                     keys.some(k => {
-                        const value = (item as any)[String(k)];
+                        const value = (item as Record<string, unknown>)[
+                            String(k)
+                        ];
                         const text = Array.isArray(value)
                             ? value.join(" ")
                             : String(value ?? "");
