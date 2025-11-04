@@ -8,4 +8,4 @@ export const AspectRatioImage = {
     maxHeight: "20vw",
     maxWidth: "30vw",
     height: "100%",
-}
+};

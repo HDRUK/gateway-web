@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
@@ -13,7 +14,6 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { DataStatus } from "@/consts/application";
 import { AspectRatioImage } from "@/consts/image";
-import Image from "next/image";
 import { getReducedCollection } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { toTitleCase } from "@/utils/string";
