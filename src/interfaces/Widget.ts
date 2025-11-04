@@ -87,7 +87,7 @@ export interface CollectionItem {
 
 export interface WidgetEntityData {
     datasets: DatasetItem[];
-    durs: DataUseItem[];
+    data_uses: DataUseItem[];
     scripts: ScriptItem[];
     collections: CollectionItem[];
     widget: WidgetDetails;

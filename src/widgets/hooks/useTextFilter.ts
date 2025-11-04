@@ -11,8 +11,8 @@ export default function useTextFilter() {
                 .split(/\s+/)
                 .filter(Boolean);
 
-            if (!terms.length) {
-                return true;
+            if (terms.length === 0) {
+                return (_item: T) => true;
             }
 
             return (item: T) =>
