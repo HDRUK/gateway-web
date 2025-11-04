@@ -1,15 +1,15 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { OptionType } from "dayjs";
 import { useTranslations } from "next-intl";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
-import { Unit, Widget, WidgetEntityData } from "@/interfaces/Widget";
+import { Unit, Widget, WidgetResponse } from "@/interfaces/Widget";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
@@ -22,6 +22,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 
 interface WidgetCreatorProps {
     widget?: Widget;
@@ -36,7 +37,27 @@ interface HasFields {
     has_collections?: boolean;
 }
 
+function filterSelectedByTeam<T>(
+    selectedIds: number[] | undefined,
+    items: T[] | undefined,
+    getId: (item: T) => number,
+    getTeamId: (item: T) => number | undefined,
+    allowedTeams: Set<string>
+): number[] {
+    if (!Array.isArray(selectedIds) || !selectedIds.length || !items?.length) {
+        return selectedIds ?? [];
+    }
+
+    return selectedIds.filter(selId => {
+        const match = items.find(it => String(getId(it)) === String(selId));
+        if (!match) return false;
+        const team = getTeamId(match);
+        return team != null && allowedTeams.has(String(team));
+    });
+}
+
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
+const DATA_CUSTODIAN_LIMIT = 25;
 
 enum TabValues {
     CONFIGURATION = "configuration",
@@ -56,7 +77,7 @@ const isOptionEqualToValue = (
 ) => option.value === value;
 
 const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
-    // const router = useRouter();
+    const router = useRouter();
     const t = useTranslations(TRANSLATION_PATH);
 
     const teamNameOptions = useMemo(
@@ -82,6 +103,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         handleSubmit,
         watch,
         setValue,
+        getValues,
         formState: { dirtyFields },
     } = useForm({
         defaultValues: {
@@ -99,9 +121,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             unit: Unit.PX,
             widget_name: "",
             ...widget,
-
             has_datasets: widget?.included_datasets.length > 0,
-            has_data_custodians: widget?.data_custodian_entities_ids.length > 0,
+            has_data_custodians: true,
             has_datauses: widget?.included_data_uses.length > 0,
             has_scripts: widget?.included_scripts.length > 0,
             has_collections: widget?.included_collections.length > 0,
@@ -117,7 +138,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                             1,
                             ({ label, path }) =>
                                 `${label || path} must have at least 1 item`
-                        ),
+                        )
+                        .max(DATA_CUSTODIAN_LIMIT),
                     permitted_domains: yup
                         .array()
                         .of(yup.string().url(t("validUrl")))
@@ -133,11 +155,28 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         ),
     });
 
-    const { data: entityData } = useGet<WidgetEntityData>(
-        `${apis.teamsV1Url}/${teamId}/widgets/data?team_ids=${watch(
-            "data_custodian_entities_ids"
-        )}`,
-        { shouldFetch: !!watch("data_custodian_entities_ids")?.length }
+    const { data: entityData, isLoading: loadingEntityData } =
+        useGet<WidgetResponse>(
+            `${apis.teamsV1Url}/${teamId}/widgets/data?team_ids=${watch(
+                "data_custodian_entities_ids"
+            )}`,
+            { shouldFetch: !!watch("data_custodian_entities_ids")?.length }
+        );
+
+    const [entityDataCache, setEntityDataCache] = useState<
+        WidgetResponse | undefined
+    >();
+
+    useEffect(() => {
+        if (!loadingEntityData) {
+            setEntityDataCache(entityData);
+        }
+    }, [entityData, loadingEntityData]);
+
+    const selectedCustodianIds = watch("data_custodian_entities_ids") ?? [];
+    const allowedTeamIdSet = useMemo(
+        () => new Set(selectedCustodianIds.map(String)), // everything as string for comparisons
+        [selectedCustodianIds]
     );
 
     const createWidget = usePost<Widget>(
@@ -156,18 +195,19 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
 
     const formatEntityOptions = useCallback(
         (entityType: string, valueKey: string, labelKey: string) =>
-            entityData?.[entityType]?.map(entity => ({
+            entityDataCache?.[entityType]?.map(entity => ({
                 value: entity?.[valueKey].toString(),
                 label: entity?.[labelKey],
                 team: entity?.team_name,
+                teamId: entity?.team_id,
             })),
-        [entityData]
+        [entityDataCache]
     );
 
     const selectAllOptions = (formValue: string, entityType: string) =>
         setValue(
             formValue,
-            entityData?.[entityType]?.map(d => d.id.toString()),
+            entityDataCache?.[entityType]?.map(d => d.id.toString()),
             { shouldDirty: true }
         );
 
@@ -183,11 +223,17 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                         info: t("contentInfo"),
                         component: inputComponents.Checkbox,
                         required: true,
+                        inputProps: { readOnly: true },
+                        onChange: () =>
+                            setValue("has_data_custodians", true, {
+                                shouldDirty: false,
+                            }),
+                        value: true,
                     },
                     {
                         name: "data_custodian_entities_ids",
                         label: "Select Custodians",
-                        info: "You might just want to show entities from yourselves for example",
+                        info: `You might just want to show entities from yourselves for example. A maximum of ${DATA_CUSTODIAN_LIMIT} can be selected.`,
                         component: inputComponents.Autocomplete,
                         required: true,
                         multiple: true,
@@ -196,19 +242,10 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                         isOptionEqualToValue,
                         marginLeft: true,
                         height: 250,
-                        selectAllButton: (
-                            <Button
-                                onClick={() =>
-                                    setValue(
-                                        "data_custodian_entities_ids",
-                                        teamNameOptions.map(team => team.value),
-                                        { shouldDirty: true }
-                                    )
-                                }
-                                variant="link">
-                                Select all
-                            </Button>
-                        ),
+                        chipColor: "success",
+                        getOptionDisabled: () =>
+                            watch("data_custodian_entities_ids").length >=
+                            DATA_CUSTODIAN_LIMIT,
                     },
 
                     {
@@ -239,6 +276,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                 Select all
                             </Button>
                         ),
+                        chipColor: "success",
                     },
 
                     {
@@ -269,6 +307,19 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                 Select all
                             </Button>
                         ),
+                        chipColor: "success", // 🔽 only show options whose teamId is in the selected custodians (or all if none selected)
+                        // filterOptions: (
+                        //     options: Array<{
+                        //         value: string;
+                        //         label: string;
+                        //         teamId?: number;
+                        //     }>
+                        // ) =>
+                        //     options.filter(
+                        //         o =>
+                        //             o.teamId != null &&
+                        //             allowedTeamIdSet.has(String(o.teamId))
+                        //     ),
                     },
                     {
                         name: "has_scripts",
@@ -298,6 +349,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                 Select all
                             </Button>
                         ),
+                        chipColor: "success",
                     },
 
                     {
@@ -332,6 +384,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                 Select all
                             </Button>
                         ),
+                        chipColor: "success",
                     },
                 ],
             },
@@ -445,11 +498,11 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                         options: unitOptions,
                         inline: true,
                     },
-                    {
-                        name: "keep_proportions",
-                        label: "Keep proportions",
-                        component: inputComponents.Checkbox,
-                    },
+                    // {
+                    //     name: "keep_proportions",
+                    //     label: "Keep proportions",
+                    //     component: inputComponents.Checkbox,
+                    // },
                 ],
             },
             {
@@ -464,7 +517,14 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                 ],
             },
         ],
-        [formatEntityOptions, selectAllOptions, setValue, t, teamNameOptions]
+        [
+            formatEntityOptions,
+            selectAllOptions,
+            setValue,
+            t,
+            teamNameOptions,
+            watch,
+        ]
     );
 
     const onSubmit = async (values: Widget & HasFields) => {
@@ -518,10 +578,93 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             );
         }
 
-        // router.push(
-        //     `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`
-        // );
+        router.push(
+            `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`
+        );
     };
+
+    const custodians = watch("data_custodian_entities_ids");
+    const includedDatasets = watch("included_datasets");
+    const includedDatause = watch("included_data_uses");
+    const includedScripts = watch("included_scripts");
+    const includedCollections = watch("included_collections");
+
+    const allowedTeams = useMemo(
+        () => new Set((custodians ?? []).map(String)),
+        [custodians]
+    );
+
+    // Remove any entities belonging to teams that have been removed
+    useEffect(() => {
+        if (!entityDataCache) return;
+
+        const filteredDatasets = filterSelectedByTeam(
+            includedDatasets,
+            entityDataCache.datasets,
+            d => d.id,
+            d => d.team_id,
+            allowedTeams
+        );
+        if (
+            (filteredDatasets?.length ?? 0) !== (includedDatasets?.length ?? 0)
+        ) {
+            setValue("included_datasets", filteredDatasets, {
+                shouldDirty: true,
+            });
+        }
+
+        const filteredDatauses = filterSelectedByTeam(
+            includedDatause,
+            entityDataCache.durs,
+            d => d.id,
+            d => d.team_id,
+            allowedTeams
+        );
+        if (
+            (filteredDatauses?.length ?? 0) !== (includedDatause?.length ?? 0)
+        ) {
+            setValue("included_data_uses", filteredDatauses, {
+                shouldDirty: true,
+            });
+        }
+
+        const filteredScripts = filterSelectedByTeam(
+            includedScripts,
+            entityDataCache.tools,
+            t => t.id,
+            t => t.team_id,
+            allowedTeams
+        );
+        if ((filteredScripts?.length ?? 0) !== (includedScripts?.length ?? 0)) {
+            setValue("included_scripts", filteredScripts, {
+                shouldDirty: true,
+            });
+        }
+
+        const filteredCollections = filterSelectedByTeam(
+            includedCollections,
+            entityDataCache.collections,
+            c => c.id,
+            c => c.team_id,
+            allowedTeams
+        );
+        if (
+            (filteredCollections?.length ?? 0) !==
+            (includedCollections?.length ?? 0)
+        ) {
+            setValue("included_collections", filteredCollections, {
+                shouldDirty: true,
+            });
+        }
+    }, [
+        entityDataCache,
+        allowedTeams,
+        includedDatasets,
+        includedDatause,
+        includedScripts,
+        includedCollections,
+        setValue,
+    ]);
 
     return (
         <Tabs

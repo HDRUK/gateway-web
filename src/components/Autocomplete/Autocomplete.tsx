@@ -5,8 +5,9 @@ import {
     FilterOptionsState,
     InputAdornment,
     ListItemText,
-    Chip,
     ChipPropsColorOverrides,
+    Chip,
+    Tooltip,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -15,6 +16,7 @@ import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import Loading from "../Loading";
+import Typography from "../Typography";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -50,6 +52,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     noOptionsText?: string;
     clearIcon?: boolean;
     chipColor?: keyof ChipPropsColorOverrides;
+    maxLabelLength?: number;
 }
 
 interface SearchOptions {
@@ -82,6 +85,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         id,
         clearIcon = false,
         chipColor,
+        maxLabelLength = 40,
         ...restProps
     } = props;
 
@@ -156,23 +160,54 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
 
                     return [
                         ...visibleOptions.map((option, index) => {
-                            const chipLabel =
+                            const tagProps = getTagProps({ index });
+                            const { key, ...restTagProps } = tagProps;
+
+                            const rawLabel =
                                 typeof getChipLabel === "function"
                                     ? getChipLabel(options, option)
-                                    : option?.label || `${option}`;
-                            return (
+                                    : option?.label ?? String(option);
+
+                            const truncated =
+                                rawLabel && rawLabel.length > maxLabelLength
+                                    ? `${rawLabel.slice(0, maxLabelLength)}...`
+                                    : null;
+
+                            const label = truncated ?? rawLabel;
+                            const isTruncated = truncated !== null;
+
+                            const chip = (
                                 <Chip
-                                    label={chipLabel || ""}
+                                    label={label ?? ""}
                                     size="small"
-                                    {...(chipColor ? { color: chipColor } : {})}
-                                    {...getTagProps({ index })}
+                                    color={chipColor ?? undefined}
+                                    {...restTagProps}
                                 />
+                            );
+
+                            return isTruncated ? (
+                                <Tooltip
+                                    key={key}
+                                    title={rawLabel}
+                                    enterDelay={400}
+                                    arrow>
+                                    {/* Tooltip needs a single child */}
+                                    <span style={{ display: "inline-flex" }}>
+                                        {chip}
+                                    </span>
+                                </Tooltip>
+                            ) : (
+                                <span
+                                    key={key}
+                                    style={{ display: "inline-flex" }}>
+                                    {chip}
+                                </span>
                             );
                         }),
                         additionalOptions > 0 ? (
-                            <span key="more" style={{ marginLeft: 4 }}>
-                                +{additionalOptions}
-                            </span>
+                            <Typography key="more" style={{ marginLeft: 4 }}>
+                                + {additionalOptions} more
+                            </Typography>
                         ) : null,
                     ];
                 }}
@@ -235,6 +270,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 noOptionsText={
                     isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }
+                ListboxProps={{ style: { maxHeight: "35vh" } }}
             />
         </FormInputWrapper>
     );

@@ -72,12 +72,14 @@ export interface DataUseItem {
 }
 
 export interface ScriptItem {
+    team_id: number;
     id: number;
     name: string;
     description?: string;
 }
 
 export interface CollectionItem {
+    team_id: number;
     id: number;
     name: string;
     image_link?: string;
@@ -85,8 +87,16 @@ export interface CollectionItem {
 
 export interface WidgetEntityData {
     datasets: DatasetItem[];
-    data_uses: DataUseItem[];
+    durs: DataUseItem[];
     scripts: ScriptItem[];
+    collections: CollectionItem[];
+    widget: WidgetDetails;
+}
+
+export interface WidgetResponse {
+    datasets: DatasetItem[];
+    durs: DataUseItem[];
+    tools: ScriptItem[];
     collections: CollectionItem[];
     widget: WidgetDetails;
 }
