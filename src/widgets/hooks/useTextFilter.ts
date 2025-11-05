@@ -12,7 +12,7 @@ export default function useTextFilter() {
                 .filter(Boolean);
 
             if (terms.length === 0) {
-                return (_item: T) => true;
+                return () => true;
             }
 
             return (item: T) =>

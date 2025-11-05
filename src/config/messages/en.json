@@ -861,11 +861,16 @@
                 "widgets": {
                     "title": "Widgets",
                     "intro": "Widgets are a way of embedding functionality from the Gateway into your own site. We have a range of different types of widgets from search functionality, to widgets that highlight your own Datasets and Data Uses to your researchers",
-                    "create": "Create new widget",
                     "search": "Search",
                     "dimensions": "Dimensions",
                     "dateUpdated": "Date updated",
                     "widget": "Widget",
+                    "createmodal": {
+                        "create": "Create new widget",
+                        "title": "Start using an existing template",
+                        "cancel": "Cancel",
+                        "confirm": "Confirm"
+                    },
                     "edit": {
                         "configuration": "Configuration",
                         "preview": "Preview and copy code",
@@ -891,7 +896,16 @@
                         "collections": "Collections / Networks",
                         "selectCollections": "Select Collections / Networks",
                         "cohortLinkInfo": "Add a button for the user to go to Cohort Discovery search within the Gateway",
-                        "save": "Save"
+                        "save": "Save and preview",
+                        "cancel": "Cancel"
+                    },
+                    "preview": {
+                        "codeCopied": "Code copied to clipboard",
+                        "codeTitle": "Here's the code you need",
+                        "codeIntro": "You'll just need to copy and paste the code below into the HTML on your site. Come back here if you need to make any changes.",
+                        "copyCode": "Copy code",
+                        "back": "Back to configuration",
+                        "viewAll": "View all my widgets"
                     }
                 }
             }

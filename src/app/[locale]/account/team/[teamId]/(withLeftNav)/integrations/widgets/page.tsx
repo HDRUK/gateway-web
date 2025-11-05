@@ -2,14 +2,12 @@ import { Typography } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { AddIcon } from "@/consts/icons";
-import { RouteName } from "@/consts/routeName";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import CreateNewWidget from "./components/CreateNewWidget";
 import WidgetList from "./components/WidgetList";
 
 const TRANSLATION_PATH = "pages.account.team.widgets";
@@ -41,14 +39,7 @@ export default async function WidgetsPage({
             <Box>
                 <Typography variant="h1">{t("title")}</Typography>
                 <Typography>{t("intro")}</Typography>
-                {permissions["widgets.create"] && (
-                    <Button
-                        startIcon={<AddIcon />}
-                        href={`${RouteName.WIDGETS}/create`}
-                        sx={{ mt: 5, mb: 3 }}>
-                        {t("create")}
-                    </Button>
-                )}
+                {permissions["widgets.create"] && <CreateNewWidget />}
                 <WidgetList permissions={permissions} teamId={teamId} />
             </Box>
         </ProtectedAccountRoute>

@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { OptionType } from "dayjs";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
 import { Unit, Widget, WidgetResponse } from "@/interfaces/Widget";
@@ -23,6 +23,7 @@ import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+import WidgetPreview from "../WidgetPreview";
 
 interface WidgetCreatorProps {
     widget?: Widget;
@@ -78,7 +79,15 @@ const isOptionEqualToValue = (
 
 const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
     const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
+
+    const changeTab = (targetTab: TabValues) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("tab", targetTab);
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     const teamNameOptions = useMemo(
         () =>
@@ -103,6 +112,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         handleSubmit,
         watch,
         setValue,
+        getValues,
         formState: { dirtyFields },
     } = useForm({
         defaultValues: {
@@ -161,6 +171,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             )}`,
             { shouldFetch: !!watch("data_custodian_entities_ids")?.length }
         );
+
+    const [widgetId, setWidgetId] = useState<number | undefined>(widget?.id);
 
     const [entityDataCache, setEntityDataCache] = useState<
         WidgetResponse | undefined
@@ -300,19 +312,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                 Select all
                             </Button>
                         ),
-                        chipColor: "success", // 🔽 only show options whose teamId is in the selected custodians (or all if none selected)
-                        // filterOptions: (
-                        //     options: Array<{
-                        //         value: string;
-                        //         label: string;
-                        //         teamId?: number;
-                        //     }>
-                        // ) =>
-                        //     options.filter(
-                        //         o =>
-                        //             o.teamId != null &&
-                        //             allowedTeamIdSet.has(String(o.teamId))
-                        //     ),
+                        chipColor: "success",
                     },
                     {
                         name: "has_scripts",
@@ -550,8 +550,9 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             return updatedPayload as Widget;
         };
 
-        if (!widget) {
-            createWidget(cleanPayload(values));
+        if (!widget && !widgetId) {
+            const res = await createWidget(cleanPayload(values));
+            setWidgetId(res);
         } else {
             const payload = Object.fromEntries(
                 (Object.entries(dirtyFields) as [keyof Widget, boolean][]).map(
@@ -560,7 +561,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             ) as Partial<Widget>;
 
             updateWidget(
-                widget.id,
+                widgetId as number,
                 cleanPayload({
                     ...payload,
                     has_datasets: watch("has_datasets"),
@@ -571,9 +572,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             );
         }
 
-        router.push(
-            `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`
-        );
+        changeTab(TabValues.PREVIEW);
     };
 
     const custodians = watch("data_custodian_entities_ids");
@@ -723,7 +722,22 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                                     </>
                                 ))}
 
-                                <Button type="submit">{t("save")}</Button>
+                                <Box
+                                    sx={{
+                                        p: 0,
+                                        display: "flex",
+                                        gap: 2,
+                                        mt: 5,
+                                    }}>
+                                    <Button type="submit">{t("save")}</Button>
+                                    <Button
+                                        type="submit"
+                                        variant="outlined"
+                                        color="secondary"
+                                        href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`}>
+                                        {t("cancel")}
+                                    </Button>
+                                </Box>
                             </Form>
                         </Paper>
                     ),
@@ -731,7 +745,14 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                 {
                     value: TabValues.PREVIEW,
                     label: t("preview"),
-                    content: <p>PREVIEW</p>,
+                    disabled: !widgetId,
+                    content: (
+                        <WidgetPreview
+                            widgetId={widgetId}
+                            teamId={teamId}
+                            widgetDomains={getValues("permitted_domains")}
+                        />
+                    ),
                 },
             ]}
         />
