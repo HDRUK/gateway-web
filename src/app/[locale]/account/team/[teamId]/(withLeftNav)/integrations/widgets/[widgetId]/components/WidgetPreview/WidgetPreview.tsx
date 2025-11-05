@@ -44,7 +44,7 @@ const WidgetPreview = ({
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
-    const { data: entityDatawidg } = useGet<WidgetResponse>(
+    const { data } = useGet<WidgetResponse>(
         `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${widgetDomains?.[0]}`
     );
 
@@ -66,11 +66,7 @@ const WidgetPreview = ({
                 direction="row"
                 alignItems="stretch">
                 <Grid item mobile={12} laptop={9} sx={{ overflow: "hidden" }}>
-                    {entityDatawidg ? (
-                        <WidgetDisplay data={entityDatawidg} />
-                    ) : (
-                        <Loading />
-                    )}
+                    {data ? <WidgetDisplay data={data} /> : <Loading />}
                 </Grid>
                 <Grid item mobile={12} laptop={3}>
                     <Typography sx={{ fontWeight: 600, mb: 1 }} fontSize={16}>
