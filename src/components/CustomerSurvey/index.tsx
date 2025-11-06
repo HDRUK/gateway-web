@@ -31,6 +31,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import { formatDate, getToday } from "@/utils/date";
 import InputWrapper from "../InputWrapper";
 
 interface Ratings {
@@ -59,6 +60,8 @@ const slideOut = keyframes`
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(100%); opacity: 0; }
 `;
+
+const validMonths = ["01", "04", "08", "10"];
 
 interface CustomerSurveyProps {
     hideOnLoad?: boolean;
@@ -187,7 +190,19 @@ export default function CustomerSurvey({
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
 
+    const isValidMonth = () => {
+        const currentMonth = formatDate(getToday(), "MM");
+
+        if (!currentMonth) {
+            return false;
+        }
+
+        return validMonths.includes(currentMonth);
+    };
+
     if (hideComponent || submitted) return null;
+
+    if (!isValidMonth()) return null;
 
     return (
         <Box
