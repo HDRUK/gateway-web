@@ -71,6 +71,10 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
         }
     };
 
+    const filteredMenuCategories = CATEGORIES.filter(
+        category => data?.[category].length > 0
+    );
+
     return (
         <>
             <link
@@ -113,7 +117,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
 
                         <CategoryMenu
                             value={entityType}
-                            options={CATEGORIES}
+                            options={filteredMenuCategories}
                             onChange={setEntityType}
                             menuAnchor={menuAnchor}
                             setMenuAnchor={setMenuAnchor}
