@@ -14,15 +14,12 @@ import apis from "@/config/apis";
 import theme, { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
+import { TabValues } from "../../const";
 
 interface WidgetPreviewProps {
     teamId?: string;
     widgetId?: number;
     widgetDomains?: string[];
-}
-enum TabValues {
-    CONFIGURATION = "configuration",
-    PREVIEW = "preview",
 }
 
 const TRANSLATION_PATH = `pages.account.team.widgets.preview`;

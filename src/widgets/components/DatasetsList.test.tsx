@@ -67,7 +67,7 @@ describe("DatasetsList", () => {
         ).toHaveAttribute("href", `${GATEWAY_URL}/dataset/992`);
 
         expect(
-            screen.getByRole("link", { name: "Some Historical Register" })
+            screen.getByRole("link", { name: "Historical Register" })
         ).toHaveAttribute("href", `${GATEWAY_URL}/dataset/1001`);
 
         // opens in new tab
@@ -118,7 +118,7 @@ describe("DatasetsList", () => {
         const dateEl2 = within(row2).getByText(/^Date range:/i);
         expect(dateEl2).toHaveTextContent(/^Date range:\s*n\/a\s*$/i);
 
-        const row3 = getRowByTitle("Some Historical Register");
+        const row3 = getRowByTitle("Historical Register");
         expect(row3).toHaveTextContent(/Dataset population size:\s*12,500/i);
         const dateEl3 = within(row3).getByText(/^Date range:/i);
         expect(dateEl3).toHaveTextContent(/^Date range:\s*2001\s*$/);
