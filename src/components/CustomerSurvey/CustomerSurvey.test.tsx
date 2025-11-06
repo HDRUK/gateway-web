@@ -16,8 +16,8 @@ jest.mock("js-cookie", () => ({
 
 jest.mock("@/utils/date", () => ({
     ...jest.requireActual("@/utils/date"),
-    formatDate: jest.fn(() => "02"),
-    getToday: jest.fn(() => "2025-02-10T00:00:00Z"),
+    formatDate: jest.fn(() => "01"),
+    getToday: jest.fn(() => "2025-01-10T00:00:00Z"),
 }));
 
 describe("CustomerSurvey", () => {
