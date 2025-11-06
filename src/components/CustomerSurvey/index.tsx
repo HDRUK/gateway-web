@@ -61,7 +61,7 @@ const slideOut = keyframes`
   to { transform: translateY(100%); opacity: 0; }
 `;
 
-const validMonths = ["01", "04", "08", "10"];
+const validMonths = ["01", "04", "07", "10"];
 
 interface CustomerSurveyProps {
     hideOnLoad?: boolean;
