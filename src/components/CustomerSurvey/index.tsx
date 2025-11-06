@@ -42,6 +42,7 @@ interface Ratings {
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
+const cookieLifeShort = 1; // days
 
 const ratings: Ratings[] = [
     { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
@@ -163,6 +164,11 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
+        // Create a short lifetime cookie to avoid survey reappearing
+        Cookies.set(cookieName, JSON.stringify({ id }), {
+            expires: cookieLifeShort,
+        });
+
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
