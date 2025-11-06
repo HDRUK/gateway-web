@@ -18,7 +18,7 @@ export default function useWidgetForm(
     teamId: string,
     teamNames: TeamNames[],
     widget?: Widget,
-    templateType?: string
+    templateType?: string | null
 ): {
     form: UseFormReturn<Widget>;
     widgetId?: number;

@@ -8,8 +8,7 @@ type Entity = {
     id: number | string;
     team_id?: number | string;
     team_name?: string;
-    [key: string]: any;
-};
+} & Record<string, unknown>;
 
 export function useEntityOptions(
     entityData: WidgetResponse | undefined,
@@ -20,13 +19,17 @@ export function useEntityOptions(
             entityType: keyof WidgetResponse,
             valueKey: string,
             labelKey: string
-        ) =>
-            (entityData?.[entityType] as Entity[])?.map(entity => ({
+        ) => {
+            const list = entityData?.[entityType] as unknown as Entity[];
+            if (!Array.isArray(list)) return [];
+
+            return list.map(entity => ({
                 value: entity?.[valueKey]?.toString(),
                 label: entity?.[labelKey],
                 team: entity?.team_name,
                 teamId: entity?.team_id,
-            })) ?? [],
+            }));
+        },
         [entityData]
     );
 
