@@ -241,19 +241,6 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                 name: t("content"),
                 fields: [
                     {
-                        name: "has_data_custodians",
-                        label: t("contentLabel"),
-                        info: t("contentInfo"),
-                        component: inputComponents.Checkbox,
-                        required: true,
-                        inputProps: { readOnly: true },
-                        onChange: () =>
-                            setValue("has_data_custodians", true, {
-                                shouldDirty: false,
-                            }),
-                        value: true,
-                    },
-                    {
                         name: "data_custodian_entities_ids",
                         label: "Select Custodians",
                         info: `You might just want to show entities from yourselves for example. A maximum of ${DATA_CUSTODIAN_LIMIT} can be selected.`,
