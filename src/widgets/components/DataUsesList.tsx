@@ -71,6 +71,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                 <Box sx={rowSx}>
                                     <Typography sx={categorySx}>
                                         <TooltipText
+                                            size="inherit"
                                             label={
                                                 TRANSLATIONS.leadOrganisation
                                             }
@@ -89,6 +90,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                 <Box sx={rowSx}>
                                     <Typography sx={categorySx}>
                                         <TooltipText
+                                            size="inherit"
                                             label={TRANSLATIONS.datasets}
                                             content="The name of the dataset(s) being accessed"
                                         />
@@ -138,6 +140,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                 <Box sx={rowSx}>
                                     <Typography sx={categorySx}>
                                         <TooltipText
+                                            size="inherit"
                                             label={TRANSLATIONS.dataCustodian}
                                             content="The individual or organisation responsible for the safe custody, transport, storage of, and access to data"
                                         />

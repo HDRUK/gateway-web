@@ -74,7 +74,6 @@ export default function CategoryMenu({
                                 maxWidth: "100%",
                                 borderRadius: 0,
                                 boxShadow: "none",
-                                left: "0 !important",
                                 pt: 0,
                             },
                         },

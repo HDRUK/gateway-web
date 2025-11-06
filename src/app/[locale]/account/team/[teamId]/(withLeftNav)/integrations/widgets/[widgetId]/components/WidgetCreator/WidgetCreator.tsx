@@ -83,6 +83,8 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
 
+    const templateType = searchParams.get("template");
+
     const changeTab = (targetTab: TabValues) => {
         const params = new URLSearchParams(searchParams);
         params.set("tab", targetTab);
@@ -123,18 +125,31 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
             included_collections: [],
             permitted_domains: [],
             keep_proportions: false,
-            include_search_bar: false,
+            include_search_bar:
+                templateType === "datasets" || templateType === "datauses",
             include_cohort_link: false,
-            size_width: 0,
-            size_height: 0,
+            size_width: 600,
+            size_height: 740,
             unit: Unit.PX,
             widget_name: "",
             ...widget,
-            has_datasets: widget?.included_datasets.length > 0,
+            has_datasets:
+                templateType === "custodian" || templateType === "datasets"
+                    ? true
+                    : widget?.included_datasets.length > 0,
             has_data_custodians: true,
-            has_datauses: widget?.included_data_uses.length > 0,
-            has_scripts: widget?.included_scripts.length > 0,
-            has_collections: widget?.included_collections.length > 0,
+            has_datauses:
+                templateType === "custodian" || templateType === "datauses"
+                    ? true
+                    : widget?.included_data_uses.length > 0,
+            has_scripts:
+                templateType === "custodian"
+                    ? true
+                    : widget?.included_scripts.length > 0,
+            has_collections:
+                templateType === "custodian"
+                    ? true
+                    : widget?.included_collections.length > 0,
         },
         resolver: yupResolver(
             yup
@@ -209,12 +224,15 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         [entityDataCache]
     );
 
-    const selectAllOptions = (formValue: string, entityType: string) =>
-        setValue(
-            formValue,
-            entityDataCache?.[entityType]?.map(d => d.id.toString()),
-            { shouldDirty: true }
-        );
+    const selectAllOptions = useMemo(
+        () => (formValue: string, entityType: string) =>
+            setValue(
+                formValue,
+                entityDataCache?.[entityType]?.map(d => d.id.toString()),
+                { shouldDirty: true }
+            ),
+        [entityDataCache, setValue]
+    );
 
     const configSections = useMemo(
         () => [

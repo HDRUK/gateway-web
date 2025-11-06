@@ -60,7 +60,7 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                         fontWeight={600}
                                         mb={0.5}
                                         target="_blank">
-                                        {result.title}
+                                        {result.short_title}
                                     </Link>
                                     {result.publisher && (
                                         <Link
@@ -94,18 +94,14 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                         },
                                         justifyContent: "space-between",
                                     }}>
-                                    <Typography
-                                        color={colors.green700}
-                                        sx={{ fontSize: 16 }}>
+                                    <Typography color={colors.green700}>
                                         {`${TRANSLATIONS.populationSize}: `}
                                         {formatPopulationSize(
                                             result.population_size,
                                             TRANSLATIONS.noData
                                         )}
                                     </Typography>
-                                    <Typography
-                                        color={colors.green700}
-                                        sx={{ fontSize: 16 }}>
+                                    <Typography color={colors.green700}>
                                         {`${TRANSLATIONS.dateRange}: `}
                                         {formatYearRange(
                                             result.start_date ?? null,
