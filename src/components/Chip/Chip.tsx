@@ -1,6 +1,7 @@
 import { cloneElement } from "react";
 import MuiChip, { ChipProps as MuiChipProps } from "@mui/material/Chip";
 import { ResourceType } from "@/interfaces/AddResource";
+import { colors } from "@/config/theme";
 import {
     DataUseIcon,
     DatabaseIcon,
@@ -16,19 +17,19 @@ export interface ChipProps extends MuiChipProps {
 const resourceChipConfig = {
     [ResourceType.DATASET]: {
         icon: <DatabaseIcon sx={{ "*": { fill: "white" } }} />,
-        // sx: { color: "white", backgroundColor: "secondary.main" },
+        sx: { color: "white", backgroundColor: "secondary.main" },
     },
     [ResourceType.PUBLICATION]: {
         icon: <PublicationIcon />,
-        // sx: { backgroundColor: colors.darkGreen100 },
+        sx: { backgroundColor: colors.darkGreen100 },
     },
     [ResourceType.DATA_USE]: {
         icon: <DataUseIcon />,
-        // sx: { backgroundColor: colors.orange300 },
+        sx: { backgroundColor: colors.orange300 },
     },
     [ResourceType.TOOL]: {
         icon: <ToolIcon sx={{ "*": { fill: "white" } }} />,
-        // sx: { color: "white", backgroundColor: colors.purple900 },
+        sx: { color: "white", backgroundColor: colors.purple900 },
     },
 };
 
@@ -54,7 +55,7 @@ const Chip = ({ label, resourceType, ...rest }: ChipProps) => {
                     "& .MuiChip-label": {
                         overflow: "visible",
                     },
-                    // ...config.sx,
+                    ...config.sx,
                 }}
             />
         );

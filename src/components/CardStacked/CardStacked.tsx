@@ -3,6 +3,7 @@ import Link from "next/link";
 import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
 import Chip, { ChipProps } from "@/components/Chip";
+import { colors } from "@/config/theme";
 import HTMLContent from "../HTMLContent";
 
 export interface CardStackedProps {
@@ -28,13 +29,13 @@ export default function CardStacked({
                 component={Link}
                 href={href}
                 sx={{
-                    // color: colors.white,
+                    color: colors.white,
                     px: 3,
                     py: 2,
                     display: "flex",
                     alignItems: "flex-end",
                     backgroundImage: `url(${imgUrl})`,
-                    // backgroundColor: colors.white,
+                    backgroundColor: colors.white,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "contain",
                     backgroundPosition: "center",
@@ -43,8 +44,8 @@ export default function CardStacked({
                     size="small"
                     label={<HTMLContent content={title} />}
                     sx={{
-                        // backgroundColor: colors.grey600,
-                        // color: colors.white,
+                        backgroundColor: colors.grey600,
+                        color: colors.white,
                         maxWidth: "220px",
                     }}
                     data-testid="grid-chip"
