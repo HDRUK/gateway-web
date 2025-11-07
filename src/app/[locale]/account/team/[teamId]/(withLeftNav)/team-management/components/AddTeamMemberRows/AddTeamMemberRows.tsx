@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { Control, FieldArrayWithId, FieldValues } from "react-hook-form";
 import { IconButton } from "@mui/material";
-import { Role } from "schema-dts";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { User } from "@/interfaces/User";
