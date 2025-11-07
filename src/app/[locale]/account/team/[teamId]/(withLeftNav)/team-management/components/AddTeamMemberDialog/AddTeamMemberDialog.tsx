@@ -25,6 +25,7 @@ import {
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import AddTeamMemberRows from "../AddTeamMemberRows";
+import Loading from "@/components/Loading";
 
 const limit = pLimit(1);
 
@@ -96,7 +97,7 @@ const AddTeamMemberDialog = () => {
                         Users that you want to add to your team must already
                         have an account on the Gateway
                     </Typography>
-                    {isTeamLoading && <Typography>Loading...</Typography>}
+                    {isTeamLoading && <Loading/>}
                     {team && !isTeamLoading && (
                         <AddTeamMemberRows
                             team={team}
