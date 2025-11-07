@@ -232,9 +232,10 @@ const createFileUploadConfig = (
         fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
-            const newFile = { filename: response.filename, id: response.id };
+            const newFile = { filename: response.filename, uuid: response.uuid };
 
             if (component === inputComponents.FileUpload) {
+                console.log("Single upload?");
                 setValue(
                     questionId,
                     { value: newFile },
@@ -255,7 +256,7 @@ const createFileUploadConfig = (
                     { shouldValidate: true }
                 );
             }
-
+            console.log(getValues(questionId));
             revalidateCacheAction(`${CACHE_DAR_ANSWERS}${applicationId}`);
         },
         ...(isResearcher &&
@@ -266,13 +267,17 @@ const createFileUploadConfig = (
 
                     if (response && prev && typeof prev === "object") {
                         const prevValue = prev.value;
+
+                        console.log(prevValue);
+                        console.log(fileId);
                         if (Array.isArray(prevValue)) {
                             setValue(questionId, {
-                                value: prevValue.filter(v => v.id !== fileId),
+                                value: prevValue.filter(v => v.uuid !== fileId),
                             });
                         } else {
                             setValue(questionId, undefined);
                         }
+                        console.log(getValues(questionId));
                     }
 
                     revalidateCacheAction(
