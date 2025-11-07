@@ -232,7 +232,10 @@ const createFileUploadConfig = (
         fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
-            const newFile = { filename: response.filename, uuid: response.uuid };
+            const newFile = {
+                filename: response.filename,
+                uuid: response.uuid,
+            };
 
             if (component === inputComponents.FileUpload) {
                 setValue(
