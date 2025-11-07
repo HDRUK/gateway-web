@@ -89,7 +89,10 @@ const ProfileForm = () => {
         () => ({
             ...profileDefaultValues,
             ...user,
-            ...(isOpenAthens && { preferred_email: "secondary" }),
+            ...(isOpenAthens &&
+                (emailIsScrambled || user?.preferred_email !== "primary") && {
+                    preferred_email: "secondary",
+                }),
         }),
         [isOpenAthens, user]
     );
@@ -171,12 +174,15 @@ const ProfileForm = () => {
 
     // Disable
     useEffect(() => {
-        if (isOpenAthens) {
+        if (
+            isOpenAthens &&
+            (emailIsScrambled || user?.preferred_email !== "primary")
+        ) {
             setValue("preferred_email", "secondary");
         } else if (!secondaryEmail) {
             setValue("preferred_email", "primary");
         }
-    }, [isOpenAthens, secondaryEmail, setValue]);
+    }, [isOpenAthens, secondaryEmail, setValue, user, emailIsScrambled]);
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
