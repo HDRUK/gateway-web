@@ -254,7 +254,10 @@ const ResultCard = ({
         <ListItem
             sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
             alignItems="flex-start">
-            <section style={{ width: "100%" }}>
+            <section
+                style={{ width: "100%" }}
+                // eslint-disable-next-line
+                aria-description={`Result for ${metadata.summary.shortTitle}`}>
                 <ListItemText
                     disableTypography
                     sx={{ padding: 2, paddingBottom: 1, m: 0 }}
