@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
@@ -9,14 +8,12 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import pLimit from "p-limit";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
-import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
 import ModalButtons from "@/components/ModalButtons";
 import useAuth from "@/hooks/useAuth";
 // import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
-import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
@@ -28,7 +25,6 @@ import {
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import AddTeamMemberRows from "../AddTeamMemberRows";
-import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 
 const limit = pLimit(1);
 
