@@ -10,6 +10,7 @@ import pLimit from "p-limit";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
+import Loading from "@/components/Loading";
 import ModalButtons from "@/components/ModalButtons";
 import useAuth from "@/hooks/useAuth";
 // import useDebounce from "@/hooks/useDebounce";
@@ -25,7 +26,6 @@ import {
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import AddTeamMemberRows from "../AddTeamMemberRows";
-import Loading from "@/components/Loading";
 
 const limit = pLimit(1);
 
@@ -97,7 +97,7 @@ const AddTeamMemberDialog = () => {
                         Users that you want to add to your team must already
                         have an account on the Gateway
                     </Typography>
-                    {isTeamLoading && <Loading/>}
+                    {isTeamLoading && <Loading />}
                     {team && !isTeamLoading && (
                         <AddTeamMemberRows
                             team={team}
