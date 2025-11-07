@@ -53,28 +53,10 @@ const AddTeamMemberDialog = () => {
         name: "userAndRoles",
     });
 
-    // TODO: switch to typeahead propery
-    // - difficult due to use of useFieldArray and shared options
-    // - defaulting to full list of all users as a temporary measure..
-    // const [searchName, setSearchName] = useState("");
-    // const searchNameDebounced = useDebounce(searchName, 500);
-
-    const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
-        `${apis.usersV1Url}?mini`, // filterNames=${searchNameDebounced}`,
-        {
-            shouldFetch: true, // !!searchNameDebounced
-        }
-    );
-
-    const { team } = useGetTeam(dialogProps.teamId);
+    const { team, isTeamLoading } = useGetTeam(dialogProps.teamId);
 
     const teamUser = team && user && getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user?.roles, teamUser?.roles);
-
-    const userOptions = useMemo(() => {
-        if (!team) return [];
-        return getAvailableUsers(team.users, users);
-    }, [team, users]);
 
     const addTeamMember = usePost<UserAndRoles>(
         `${apis.teamsV1Url}/${dialogProps.teamId}/users`,
@@ -118,16 +100,17 @@ const AddTeamMemberDialog = () => {
                         Users that you want to add to your team must already
                         have an account on the Gateway
                     </Typography>
-                    <AddTeamMemberRows
-                        fields={fields}
-                        append={append}
-                        remove={remove}
-                        control={control}
-                        userOptions={userOptions}
-                        // onInputChangeUser={setSearchName}
-                        isLoadingUsers={isLoadingUsers}
-                        userPermissions={permissions}
-                    />
+                    {isTeamLoading && <Typography>Loading...</Typography>}
+                    {team && !isTeamLoading && (
+                        <AddTeamMemberRows
+                            team={team}
+                            fields={fields}
+                            append={append}
+                            remove={remove}
+                            control={control}
+                            userPermissions={permissions}
+                        />
+                    )}
                 </MuiDialogContent>
                 <MuiDialogActions>
                     <ModalButtons
