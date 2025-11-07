@@ -5,7 +5,6 @@ import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
-import { SelectOptionsType } from "@/components/Select/Select";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import {
