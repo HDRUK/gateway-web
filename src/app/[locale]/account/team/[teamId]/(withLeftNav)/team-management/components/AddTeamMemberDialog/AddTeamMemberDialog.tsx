@@ -23,8 +23,6 @@ import {
     addTeamMemberDefaultValues,
     addTeamMemberValidationSchema,
 } from "@/config/forms/addTeamMember";
-import { getPermissions } from "@/utils/permissions";
-import { getTeamUser } from "@/utils/user";
 import AddTeamMemberRows from "../AddTeamMemberRows";
 
 const limit = pLimit(1);
@@ -51,9 +49,6 @@ const AddTeamMemberDialog = () => {
     });
 
     const { team, isTeamLoading } = useGetTeam(dialogProps.teamId);
-
-    const teamUser = team && user && getTeamUser(team?.users, user?.id);
-    const permissions = getPermissions(user?.roles, teamUser?.roles);
 
     const addTeamMember = usePost<UserAndRoles>(
         `${apis.teamsV1Url}/${dialogProps.teamId}/users`,
@@ -98,14 +93,14 @@ const AddTeamMemberDialog = () => {
                         have an account on the Gateway
                     </Typography>
                     {isTeamLoading && <Loading />}
-                    {team && !isTeamLoading && (
+                    {team && user && !isTeamLoading && (
                         <AddTeamMemberRows
+                            user={user}
                             team={team}
                             fields={fields}
                             append={append}
                             remove={remove}
                             control={control}
-                            userPermissions={permissions}
                         />
                     )}
                 </MuiDialogContent>
