@@ -2,7 +2,6 @@
 
 import { UseFormReturn } from "react-hook-form";
 import { Typography } from "@mui/material";
-import { OptionType } from "dayjs";
 import { useTranslations } from "next-intl";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
@@ -350,7 +349,6 @@ const WidgetConfigForm = ({
                                     }}>
                                     <InputWrapper
                                         control={control}
-                                        filterOptions={(x: OptionType) => x}
                                         {...field}
                                     />
                                     {field.selectAllButton &&
