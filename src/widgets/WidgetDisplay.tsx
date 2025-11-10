@@ -8,7 +8,7 @@ import {
     Box,
     Button,
     GlobalStyles,
-    // CssBaseline,
+    CssBaseline,
     ThemeProvider,
     Typography,
 } from "@mui/material";
@@ -92,7 +92,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                         },
                     }}
                 />
-                {/* <CssBaseline /> */}
+                <CssBaseline />
                 <Box
                     sx={{
                         width: `${size_width}${unit}`,
