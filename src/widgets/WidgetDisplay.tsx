@@ -8,7 +8,6 @@ import {
     Box,
     Button,
     GlobalStyles,
-    CssBaseline,
     ThemeProvider,
     Typography,
 } from "@mui/material";
@@ -48,7 +47,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
         size_height,
         size_width,
         unit,
-    } = data;
+    } = data.widget;
 
     const [entityType, setEntityType] = useState<WidgetCategory>("datasets");
     const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
@@ -92,7 +91,6 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                         },
                     }}
                 />
-                <CssBaseline />
                 <Box
                     sx={{
                         width: `${size_width}${unit}`,
