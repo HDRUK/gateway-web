@@ -23,7 +23,7 @@ export default async function Widget({ params }: WidgetProps) {
     const response = await fetch(
         `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${origin}`
     );
-    const data = await response.json();
+    const {data} = await response.json();
 
     return (
         <html lang="en">
