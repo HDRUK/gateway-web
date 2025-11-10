@@ -1,6 +1,7 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
+import { CSSProperties } from "react";
 import { Box, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
@@ -17,6 +18,7 @@ type HeaderProps = {
     includeSearch: boolean;
     gatewayUrl: string;
     searchValue: string;
+    headerSx?: CSSProperties;
     setSearchValue: (v: string) => void;
 };
 
@@ -24,6 +26,7 @@ export default function Header({
     includeSearch,
     gatewayUrl,
     searchValue,
+    headerSx,
     setSearchValue,
 }: HeaderProps) {
     return (
@@ -40,6 +43,7 @@ export default function Header({
                 px: 1,
                 backgroundColor: colors.white,
                 borderBottom: `1px solid ${theme.palette.grey[300]}`,
+                ...headerSx,
             }}>
             {!!includeSearch && (
                 <Box sx={{ flexGrow: 1, p: 0 }}>

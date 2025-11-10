@@ -97,6 +97,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                         height: `${size_height}${unit}`,
                         overflow: "hidden",
                         backgroundColor: theme.palette.grey[100],
+                        color: colors.grey900,
                     }}
                     ref={widgetContainer}>
                     <Box
@@ -111,6 +112,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                             gatewayUrl={GATEWAY_URL}
                             searchValue={searchValue}
                             setSearchValue={setSearchValue}
+                            headerSx={{ width: "auto" }}
                         />
 
                         <CategoryMenu
