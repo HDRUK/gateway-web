@@ -97,6 +97,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                     sx={{
                         width: `${size_width}${unit}`,
                         height: `${size_height}${unit}`,
+                        maxWidth: "100%",
                         overflow: "hidden",
                         backgroundColor: theme.palette.grey[100],
                     }}
