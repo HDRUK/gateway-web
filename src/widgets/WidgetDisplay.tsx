@@ -7,8 +7,8 @@ import { useRef, useState } from "react";
 import {
     Box,
     Button,
-    CssBaseline,
-    ThemeProvider,
+    // CssBaseline,
+    // ThemeProvider,
     Typography,
 } from "@mui/material";
 import {
@@ -80,7 +80,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                 href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&display=swap&subset=latin"
                 rel="stylesheet"
             />
-            <ThemeProvider theme={theme}>
+            {/* <ThemeProvider theme={theme}>
                 {/* <GlobalStyles
                     styles={{
                         body: {
@@ -90,8 +90,8 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                             minHeight: "100vh",
                         },
                     }}
-                /> */}
-                <CssBaseline />
+                /> 
+                <CssBaseline /> */}
                 <Box
                     component='section'
                     sx={{
@@ -164,7 +164,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                         )}
                     </Box>
                 </Box>
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
         </>
     );
 }
