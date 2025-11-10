@@ -83,7 +83,11 @@ describe("UploadFile Component", () => {
         );
         fireEvent.click(removeButton);
 
-        await waitFor(() => expect(onFileRemove).toHaveBeenCalledWith(2));
+        await waitFor(() =>
+            expect(onFileRemove).toHaveBeenCalledWith(
+                "95290b80-0292-4cab-ac78-d5e20bb9b914"
+            )
+        );
     });
 
     it("does not allow file upload if no file is selected", async () => {
