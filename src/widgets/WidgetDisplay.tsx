@@ -7,8 +7,9 @@ import { useRef, useState } from "react";
 import {
     Box,
     Button,
+    GlobalStyles,
     // CssBaseline,
-    // ThemeProvider,
+    ThemeProvider,
     Typography,
 } from "@mui/material";
 import {
@@ -47,7 +48,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
         size_height,
         size_width,
         unit,
-    } = data.widget;
+    } = data;
 
     const [entityType, setEntityType] = useState<WidgetCategory>("datasets");
     const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
@@ -80,8 +81,8 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                 href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&display=swap&subset=latin"
                 rel="stylesheet"
             />
-            {/* <ThemeProvider theme={theme}>
-                {/* <GlobalStyles
+            <ThemeProvider theme={theme}>
+                <GlobalStyles
                     styles={{
                         body: {
                             width: "100%",
@@ -90,14 +91,12 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                             minHeight: "100vh",
                         },
                     }}
-                /> 
-                <CssBaseline /> */}
+                />
+                {/* <CssBaseline /> */}
                 <Box
-                    component='section'
                     sx={{
                         width: `${size_width}${unit}`,
                         height: `${size_height}${unit}`,
-                        maxWidth: "100%",
                         overflow: "hidden",
                         backgroundColor: theme.palette.grey[100],
                     }}
@@ -164,7 +163,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                         )}
                     </Box>
                 </Box>
-            {/* </ThemeProvider> */}
+            </ThemeProvider>
         </>
     );
 }
