@@ -215,22 +215,18 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         ) : null,
                     ];
                 }}
-                onChange={(e, v) => {
-                    if (Array.isArray(v)) {
-                        const values = v.map(value => {
-                            if (typeof value === "object") return value?.value;
-                            return value;
-                        });
-                        field.onChange(values);
+                onChange={(_, value) => {
+                    let newValue: ValueType | ValueType[] | null = null;
+
+                    if (Array.isArray(value)) {
+                    newValue = value.map(v => (typeof v === "object" ? v.value : v));
+                    } else if (typeof value === "object" && value !== null) {
+                    newValue = value.value;
+                    } else {
+                    newValue = value;
                     }
 
-                    if ((v as OptionsType)?.value) {
-                        field.onChange((v as OptionsType).value);
-                    }
-
-                    if (!v) {
-                        field.onChange(v);
-                    }
+                    field.onChange(newValue);
                 }}
                 {...(canCreate && {
                     filterOptions,
