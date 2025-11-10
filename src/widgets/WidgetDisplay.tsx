@@ -93,6 +93,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                 /> */}
                 <CssBaseline />
                 <Box
+                    component='section'
                     sx={{
                         width: `${size_width}${unit}`,
                         height: `${size_height}${unit}`,
