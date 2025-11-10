@@ -7,7 +7,6 @@ import { useRef, useState } from "react";
 import {
     Box,
     Button,
-    GlobalStyles,
     CssBaseline,
     ThemeProvider,
     Typography,
@@ -82,7 +81,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                 rel="stylesheet"
             />
             <ThemeProvider theme={theme}>
-                <GlobalStyles
+                {/* <GlobalStyles
                     styles={{
                         body: {
                             width: "100%",
@@ -91,7 +90,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
                             minHeight: "100vh",
                         },
                     }}
-                />
+                /> */}
                 <CssBaseline />
                 <Box
                     sx={{
