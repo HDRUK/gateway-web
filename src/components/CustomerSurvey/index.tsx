@@ -31,6 +31,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import { formatDate, getToday } from "@/utils/date";
 import InputWrapper from "../InputWrapper";
 
 interface Ratings {
@@ -41,6 +42,7 @@ interface Ratings {
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
+const cookieLifeShort = 1; // days
 
 const ratings: Ratings[] = [
     { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
@@ -59,6 +61,8 @@ const slideOut = keyframes`
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(100%); opacity: 0; }
 `;
+
+const validMonths = ["01", "04", "07", "10"];
 
 interface CustomerSurveyProps {
     hideOnLoad?: boolean;
@@ -160,6 +164,11 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
+        // Create a short lifetime cookie to avoid survey reappearing
+        Cookies.set(cookieName, JSON.stringify({ id }), {
+            expires: cookieLifeShort,
+        });
+
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
@@ -187,7 +196,19 @@ export default function CustomerSurvey({
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
 
+    const isValidMonth = () => {
+        const currentMonth = formatDate(getToday(), "MM");
+
+        if (!currentMonth) {
+            return false;
+        }
+
+        return validMonths.includes(currentMonth);
+    };
+
     if (hideComponent || submitted) return null;
+
+    if (!isValidMonth()) return null;
 
     return (
         <Box
