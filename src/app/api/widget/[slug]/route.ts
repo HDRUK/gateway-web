@@ -8,10 +8,13 @@ export const dynamic = "force-cache";
 const reactUrl = "https://esm.sh/react@18";
 const reactDomUrl = "https://esm.sh/react-dom@18/client";
 const widget = "embed/widget.js";
+const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
 
 export async function GET(req: NextRequest, { params }) {
     try {
-        const widgetUrl = `${new URL(req.url).origin}/${widget}`;
+        const widgetUrl = `${
+            new URL(NEXT_PUBLIC_GATEWAY_URL!).origin
+        }/${widget}`;
         const { slug } = params;
 
         if (!slug || !slug.includes("-")) {
