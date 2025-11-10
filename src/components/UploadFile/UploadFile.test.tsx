@@ -57,7 +57,7 @@ describe("UploadFile Component", () => {
         );
         fireEvent.click(removeButton);
 
-        await waitFor(() => expect(onFileRemove).toHaveBeenCalledWith(1));
+        await waitFor(() => expect(onFileRemove).toHaveBeenCalledWith("977badec-cd56-438e-b468-196bf066fdb2"));
     });
 
     it("handles multiple file uploads", async () => {
