@@ -33,7 +33,11 @@ export async function GET(req: NextRequest, { params }) {
         const headersList = headers();
         const referer = headersList.get("referer");
 
+        console.log(referer, "<<<");
         const { origin } = new URL(referer!);
+
+        console.log("origin <<", origin);
+        console.log("referer <<", referer);
 
         const response = await fetch(
             `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${origin}`,
@@ -42,6 +46,8 @@ export async function GET(req: NextRequest, { params }) {
                 cache: "force-cache",
             }
         );
+
+        console.log("response <<", response);
 
         if (!response.ok) {
             const text = await response.text();
