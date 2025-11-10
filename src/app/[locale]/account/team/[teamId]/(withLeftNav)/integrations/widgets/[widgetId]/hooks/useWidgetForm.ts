@@ -144,8 +144,7 @@ export default function useWidgetForm(
         dirtyFields: Partial<Record<keyof Widget, boolean>>
     ) => {
         if (!widget && !widgetId) {
-            console.log(dirtyFields);
-            // const res = await createWidget(cleanPayload(values) as Widget);
+            const res = await createWidget(cleanPayload(values) as Widget);
             setWidgetId(res);
         } else if (widgetId) {
             console.log(dirtyFields);
@@ -155,7 +154,7 @@ export default function useWidgetForm(
                     values[k as keyof Widget],
                 ])
             );
-            // await updateWidget(widgetId, cleanPayload(payload));
+            await updateWidget(widgetId, cleanPayload(payload));
         }
     };
 

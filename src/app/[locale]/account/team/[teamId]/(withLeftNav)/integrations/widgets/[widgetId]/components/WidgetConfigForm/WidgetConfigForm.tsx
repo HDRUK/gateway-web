@@ -1,7 +1,6 @@
 "use client";
 
-import { UseFormReturn } from "react-hook-form";
-import { Autocomplete, TextField, Typography } from "@mui/material";
+import { FormProvider, UseFormReturn } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
@@ -201,16 +200,16 @@ const WidgetConfigForm = ({
                     info: t("cohortLinkInfo"),
                     component: inputComponents.Checkbox,
                 },
-                // {
-                //     name: "permitted_domains",
-                //     label: t("permittedDomains"),
-                //     component: inputComponents.Autocomplete,
-                //     multiple: true,
-                //     handleHomeEndKeys: true,
-                //     selectOnFocus: true,
-                //     clearOnBlur: true,
-                //     canCreate: true,
-                // },
+                {
+                    name: "permitted_domains",
+                    label: t("permittedDomains"),
+                    component: inputComponents.Autocomplete,
+                    multiple: true,
+                    handleHomeEndKeys: true,
+                    selectOnFocus: true,
+                    clearOnBlur: true,
+                    canCreate: true,
+                },
             ],
         },
         {
@@ -311,6 +310,7 @@ const WidgetConfigForm = ({
 
     return (
         <Paper sx={{ marginBottom: "10px", padding: 2 }}>
+              <FormProvider {...form}>
             <Form
                 sx={{ mt: 3 }}
                 onSubmit={handleSubmit(values =>
@@ -358,17 +358,6 @@ const WidgetConfigForm = ({
                         )}
                     </>
                 ))}
-
-                <Autocomplete
-                    options={[{ label: "TEST", id: 1 }]}
-                    renderInput={params => (
-                        <TextField {...params} label="Movie" />
-                    )}
-                    id="permitted_domains"
-                    name="permitted_domains"
-                    multiple
-                />
-
                 <Box
                     sx={{
                         p: 0,
@@ -386,7 +375,9 @@ const WidgetConfigForm = ({
                     </Button>
                 </Box>
             </Form>
+             </FormProvider>
         </Paper>
+       
     );
 };
 
