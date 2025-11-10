@@ -65,7 +65,7 @@ const nextConfig = withNextIntl({
                 ]
             },
             {
-                source: "/embded/widget.js",
+                source: "/embed/widget.js",
                 headers: [
                     { key: "Access-Control-Allow-Credentials", value: "true" },
                     { key: "Access-Control-Allow-Origin", value: "*" },
