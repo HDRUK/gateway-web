@@ -12,9 +12,11 @@ const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
 
 export async function GET(req: NextRequest, { params }) {
     try {
-        const widgetUrl = `${
-            new URL(NEXT_PUBLIC_GATEWAY_URL!).origin
-        }/${widget}`;
+        // const widgetUrl = `${
+        //     new URL(NEXT_PUBLIC_GATEWAY_URL!).origin
+        // }/${widget}`;
+        const widgetUrl = "https://web.dev.hdruk.cloud/embed/widget.js";
+
         const { slug } = params;
 
         if (!slug || !slug.includes("-")) {
