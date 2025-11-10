@@ -66,7 +66,7 @@ export async function GET(req: NextRequest, { params }) {
             );
         }
 
-        const data = await response.json();
+        const {data} = await response.json();
 
         const script = `
       import React from "${reactUrl}";
