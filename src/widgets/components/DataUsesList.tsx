@@ -55,7 +55,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                     justifyContent: "space-between",
                                 }}>
                                 <Link
-                                    href={`${RouteName.DATA_USE_ITEM}/${result.id}`}
+                                    href={`${GATEWAY_URL}${RouteName.DATA_USE_ITEM}/${result.id}`}
                                     fontSize={16}
                                     fontWeight={600}
                                     mb={2}>

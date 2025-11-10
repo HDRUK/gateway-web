@@ -5,6 +5,7 @@ import { DatasetItem } from "@/interfaces/Widget";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 import { formatPopulationSize } from "../utils/formatPopulationSize";
 import { formatYearRange } from "../utils/formatYearRange";
 
@@ -55,7 +56,7 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                         flexDirection: "column",
                                     }}>
                                     <Link
-                                        href={`${GATEWAY_URL}/dataset/${result.id}`}
+                                        href={`${GATEWAY_URL}/${RouteName.DATASET_ITEM}/${result.id}`}
                                         fontSize={16}
                                         fontWeight={600}
                                         mb={0.5}
@@ -64,7 +65,7 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                     </Link>
                                     {result.publisher && (
                                         <Link
-                                            href={`${GATEWAY_URL}/data-custodian/${result.team_id}`}
+                                            href={`${GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
                                             target="_blank">
                                             <Typography sx={{ mb: 1.5 }}>
                                                 {result.publisher}
