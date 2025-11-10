@@ -126,11 +126,15 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
             <MuiAutocomplete
                 id={id || name}
                 {...field}
+                value={field.value ?? []}
                 {...restProps}
                 freeSolo={freeSolo}
                 multiple={multiple}
                 defaultValue={[]}
                 getOptionLabel={(option: string) => {
+                    if (isLoadingOptions) return "Loading...";
+                    if (!option) return "";
+                    if (Array.isArray(option) && option.length === 0) return "";
                     if (typeof option === "object") return option?.label;
                     return (
                         options.find(

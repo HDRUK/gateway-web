@@ -11,3 +11,6 @@ export enum DarApplicationApprovalStatus {
     APPROVED_COMMENTS = "APPROVED_COMMENTS",
     REJECTED = "REJECTED",
 }
+
+export const ARRAY_FIELD = "ArrayField";
+export const ARRAY_PREFIX = " - array";

@@ -1,3 +1,42 @@
+## [2.25.0](https://github.com/HDRUK/gateway-web/compare/v2.24.0...v2.25.0) (2025-11-04)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([ff7754f](https://github.com/HDRUK/gateway-web/commit/ff7754fbbe7073259382194b8ca70c48dc5e6141)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-7911:** Dom parser error (#1363) ([59ca04b](https://github.com/HDRUK/gateway-web/commit/59ca04bee0d41c634eee026f7bd64198ec7bec53)), closes [GAT-7911](GAT-7911)
+* **GAT-8113:** Number.isNaN is strict, isNaN is less strict (#1360) ([825ac61](https://github.com/HDRUK/gateway-web/commit/825ac61f0661152d87e1206e2123e4758cc2cca0)), closes [GAT-8113](GAT-8113)
+* **GAT-8127:** Add check for scrambled email addresses.  (#1365) ([030167f](https://github.com/HDRUK/gateway-web/commit/030167f2e4e42731f37dec7bed9350c769ee499c)), closes [GAT-8127](GAT-8127)
+* **GAT-8127:** open-athens provider don't default (#1366) ([b4a42fc](https://github.com/HDRUK/gateway-web/commit/b4a42fc8946416c039ebfc64463e27d2430cd00d)), closes [GAT-8127](GAT-8127)
+
+## [2.24.0](https://github.com/HDRUK/gateway-web/compare/v2.23.0...v2.24.0) (2025-10-24)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([4b4055e](https://github.com/HDRUK/gateway-web/commit/4b4055e4398e5c8584ccff72d1ffe738eef85c7d)), closes [GAT-7284](GAT-7284)
+
+## [2.23.0](https://github.com/HDRUK/gateway-web/compare/v2.22.2...v2.23.0) (2025-10-23)
+
+### ✨ Features
+
+* **GAT-7284:** DAR field arrays (#1356) ([0188ce7](https://github.com/HDRUK/gateway-web/commit/0188ce725b2fc3132f7b96731bcd5859821ef39b)), closes [GAT-7284](GAT-7284)
+* **GAT-7284:** Ensure at least one row of array fields are displayed (#1358) ([60cc91f](https://github.com/HDRUK/gateway-web/commit/60cc91f47ccf5ce61d20cdd221378e467ad0379f)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-8073:** Cohort hand over (#1354) ([537a263](https://github.com/HDRUK/gateway-web/commit/537a263cf914533fa964d95846f4fee65baf1994)), closes [GAT-8073](GAT-8073)
+* **GAT-8073:** cohort handover (#1352) ([410e8ec](https://github.com/HDRUK/gateway-web/commit/410e8eccb86e0ddb78c4a44e55f378cdd9210aff)), closes [GAT-8073](GAT-8073)
+* **GAT-8073:** cohort handover (#1353) ([ace0983](https://github.com/HDRUK/gateway-web/commit/ace09834a911acb4412c01e67bd07f2fa2bcacf8)), closes [GAT-8073](GAT-8073)
+* **GAT-8082:** Don't call export on load (#1357) ([ae18965](https://github.com/HDRUK/gateway-web/commit/ae18965cc72b2350f066ff743cc0713cb8d99508)), closes [GAT-8082](GAT-8082)
+
+## [2.22.2](https://github.com/HDRUK/gateway-web/compare/v2.22.1...v2.22.2) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8070:** Break action bar to grid earlier (#1350) ([bf0b6e9](https://github.com/HDRUK/gateway-web/commit/bf0b6e913c425466a680df08bb6c4270e74088b3)), closes [GAT-8070](GAT-8070)
+
 ## [2.22.1](https://github.com/HDRUK/gateway-web/compare/v2.22.0...v2.22.1) (2025-10-13)
 
 ### 🐛 Bug Fixes

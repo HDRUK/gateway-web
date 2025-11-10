@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
@@ -9,14 +8,13 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import pLimit from "p-limit";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
-import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
+import Loading from "@/components/Loading";
 import ModalButtons from "@/components/ModalButtons";
 import useAuth from "@/hooks/useAuth";
 // import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
-import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
@@ -25,10 +23,7 @@ import {
     addTeamMemberDefaultValues,
     addTeamMemberValidationSchema,
 } from "@/config/forms/addTeamMember";
-import { getPermissions } from "@/utils/permissions";
-import { getTeamUser } from "@/utils/user";
 import AddTeamMemberRows from "../AddTeamMemberRows";
-import { getAvailableUsers } from "./AddTeamMemberDialog.utils";
 
 const limit = pLimit(1);
 
@@ -53,28 +48,7 @@ const AddTeamMemberDialog = () => {
         name: "userAndRoles",
     });
 
-    // TODO: switch to typeahead propery
-    // - difficult due to use of useFieldArray and shared options
-    // - defaulting to full list of all users as a temporary measure..
-    // const [searchName, setSearchName] = useState("");
-    // const searchNameDebounced = useDebounce(searchName, 500);
-
-    const { data: users = [], isLoading: isLoadingUsers } = useGet<User[]>(
-        `${apis.usersV1Url}?mini`, // filterNames=${searchNameDebounced}`,
-        {
-            shouldFetch: true, // !!searchNameDebounced
-        }
-    );
-
-    const { team } = useGetTeam(dialogProps.teamId);
-
-    const teamUser = team && user && getTeamUser(team?.users, user?.id);
-    const permissions = getPermissions(user?.roles, teamUser?.roles);
-
-    const userOptions = useMemo(() => {
-        if (!team) return [];
-        return getAvailableUsers(team.users, users);
-    }, [team, users]);
+    const { team, isTeamLoading } = useGetTeam(dialogProps.teamId);
 
     const addTeamMember = usePost<UserAndRoles>(
         `${apis.teamsV1Url}/${dialogProps.teamId}/users`,
@@ -118,16 +92,17 @@ const AddTeamMemberDialog = () => {
                         Users that you want to add to your team must already
                         have an account on the Gateway
                     </Typography>
-                    <AddTeamMemberRows
-                        fields={fields}
-                        append={append}
-                        remove={remove}
-                        control={control}
-                        userOptions={userOptions}
-                        // onInputChangeUser={setSearchName}
-                        isLoadingUsers={isLoadingUsers}
-                        userPermissions={permissions}
-                    />
+                    {isTeamLoading && <Loading />}
+                    {team && user && !isTeamLoading && (
+                        <AddTeamMemberRows
+                            user={user}
+                            team={team}
+                            fields={fields}
+                            append={append}
+                            remove={remove}
+                            control={control}
+                        />
+                    )}
                 </MuiDialogContent>
                 <MuiDialogActions>
                     <ModalButtons

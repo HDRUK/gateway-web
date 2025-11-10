@@ -55,60 +55,68 @@ const getFieldType = (componentType: ComponentTypes): string => {
     }
 };
 
-const generateYupSchema = (fields: DarApplicationQuestion[]) => {
-    const schemaConfig: Record<number | string, unknown> = {};
+const buildFieldType = (field: DarApplicationQuestion) => ({
+    type: getFieldType(field.component),
+    label: field.title,
+    required: !!field.required,
+    errors: {},
+    ...field.validations,
+    properties:
+        field.component === inputComponents.FileUpload
+            ? {
+                  value: {
+                      type: "object",
+                      properties: {
+                          filename: {
+                              type: "string",
+                              required: !!field.required,
+                          },
+                      },
+                      required: !!field.required,
+                  },
+              }
+            : field.component === inputComponents.FileUploadMultiple
+            ? {
+                  value: {
+                      type: "array",
+                      required: !!field.required,
+                  },
+              }
+            : undefined,
+});
+
+const buildProperties = (fields: DarApplicationQuestion[]) => {
+    const props: Record<number | string, unknown> = {};
 
     const processField = (field: DarApplicationQuestion) => {
-        const fieldSchema: {
-            type: string;
-            label: string;
-            required: boolean;
-            errors: Record<string, string>;
-            properties?: Record<string, unknown>;
-        } = {
-            type: getFieldType(field.component),
-            label: field.title,
-            required: !!field.required,
-            errors: {},
-            ...field.validations,
-            properties:
-                field.component === inputComponents.FileUpload
-                    ? {
-                          value: {
-                              type: "object",
-                              properties: {
-                                  filename: {
-                                      type: "string",
-                                      required: !!field.required,
-                                  },
-                              },
-                              required: !!field.required,
-                          },
-                      }
-                    : field.component === inputComponents.FileUploadMultiple
-                    ? {
-                          value: {
-                              type: "array",
-                              required: !!field.required,
-                          },
-                      }
-                    : undefined,
-        };
+        if (field.component === "ArrayField" && field.fields?.length) {
+            const arrayKey = field.title;
 
-        schemaConfig[field.question_id] = fieldSchema;
+            props[arrayKey] = {
+                type: "array",
+                label: field.title ?? arrayKey,
+                required: !!field.required,
+                items: {
+                    type: "object",
+                    properties: buildProperties(field.fields),
+                },
+            };
+            return;
+        }
+
+        // normal field
+        props[field.question_id] = buildFieldType(field);
 
         // Process children recursively
-        if (field.options?.length) {
-            field.options.forEach(option => {
-                if (option.children) {
-                    Object.values(option.children).flat().forEach(processField);
-                }
-            });
-        }
+        field.options?.forEach(o => o.children?.forEach(c => processField(c)));
     };
+
     fields.forEach(processField);
-    return buildYup({ type: "object", properties: schemaConfig });
+    return props;
 };
+
+const generateYupSchema = (fields: DarApplicationQuestion[]) =>
+    buildYup({ type: "object", properties: buildProperties(fields) });
 
 const messageSection: QuestionBankSection = {
     id: 99,

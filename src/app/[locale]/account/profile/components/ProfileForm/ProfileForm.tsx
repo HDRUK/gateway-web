@@ -28,6 +28,20 @@ import {
 } from "@/config/forms/profile";
 import KeepingUpdated from "../KeepingUpdated";
 
+function isScrambled(email: string) {
+    const indicatorsOfScrambled = [
+        "member@",
+        "staff@",
+        "student@",
+        "employee@",
+        "postgraduatetaught@",
+    ];
+
+    return indicatorsOfScrambled.some(item =>
+        email.toLowerCase().includes(item)
+    );
+}
+
 const VerifyButton = ({
     onClick,
     children,
@@ -63,6 +77,8 @@ const ProfileForm = () => {
     const isOpenAthens = user?.provider === "open-athens";
     const secondaryEmailVerified = user?.secondary_email_verified_at !== null;
     const hasSecondaryEmail = !!user?.secondary_email;
+    const emailIsScrambled =
+        user?.provider === "open-athens" && isScrambled(user.email);
 
     const requestSecondaryVerification = usePost(
         `${apis.usersV1Url}/${user?.id}/resend-secondary-verification`,
@@ -73,7 +89,10 @@ const ProfileForm = () => {
         () => ({
             ...profileDefaultValues,
             ...user,
-            ...(isOpenAthens && { preferred_email: "secondary" }),
+            ...(isOpenAthens &&
+                (emailIsScrambled || user?.preferred_email !== "primary") && {
+                    preferred_email: "secondary",
+                }),
         }),
         [isOpenAthens, user]
     );
@@ -130,7 +149,7 @@ const ProfileForm = () => {
                         ...field,
                         disabled:
                             (!isOpenAthens && !secondaryEmail) ||
-                            isOpenAthens ||
+                            (isOpenAthens && emailIsScrambled) ||
                             !secondaryEmailVerified ||
                             preferredEmailDisabled,
                     };
@@ -145,6 +164,7 @@ const ProfileForm = () => {
             }),
         [
             isOpenAthens,
+            emailIsScrambled,
             sectors,
             secondaryEmail,
             user?.secondary_email,
@@ -154,12 +174,15 @@ const ProfileForm = () => {
 
     // Disable
     useEffect(() => {
-        if (isOpenAthens) {
+        if (
+            isOpenAthens &&
+            (emailIsScrambled || user?.preferred_email !== "primary")
+        ) {
             setValue("preferred_email", "secondary");
         } else if (!secondaryEmail) {
             setValue("preferred_email", "primary");
         }
-    }, [isOpenAthens, secondaryEmail, setValue]);
+    }, [isOpenAthens, secondaryEmail, setValue, user, emailIsScrambled]);
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty,
         modalProps: {
