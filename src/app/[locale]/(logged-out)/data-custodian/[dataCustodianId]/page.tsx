@@ -15,7 +15,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
-import { getDataset, getTeamSummary } from "@/utils/api";
+import { getTeamSummary } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
