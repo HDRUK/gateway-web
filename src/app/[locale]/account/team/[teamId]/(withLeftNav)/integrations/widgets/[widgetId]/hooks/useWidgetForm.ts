@@ -111,7 +111,7 @@ export default function useWidgetForm(
     });
 
     useEffect(() => {
-        form.reset({ ...initialDefaults, ...form.getValues() });
+        form.reset(initialDefaults, { keepValues: true });
     }, [initialDefaults]);
 
     const createWidget = usePost<Widget>(
