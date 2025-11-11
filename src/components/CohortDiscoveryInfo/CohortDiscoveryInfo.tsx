@@ -162,11 +162,8 @@ const CohortDiscoveryInfo = ({
                             <Box
                                 sx={{
                                     overflowY: "auto",
-                                    height: "520px",
+                                    height: "620px",
                                     justifySelf: "center",
-                                    "&::-webkit-scrollbar": {
-                                        display: "none",
-                                    },
                                 }}>
                                 <Box
                                     sx={{
@@ -257,6 +254,7 @@ const CohortDiscoveryInfo = ({
                                             mobile: "column",
                                             laptop: "row",
                                         },
+                                        flexGrow: 1,
                                     }}>
                                     <Box
                                         sx={{
@@ -279,11 +277,7 @@ const CohortDiscoveryInfo = ({
                                                 laptop: "auto",
                                                 mobile: "visible",
                                             },
-                                            height: { laptop: "1000px" },
                                             justifySelf: "center",
-                                            "&::-webkit-scrollbar": {
-                                                display: "none",
-                                            },
                                             display: "flex",
                                             justifyContent: "center",
                                         }}>
