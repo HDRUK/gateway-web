@@ -58,6 +58,7 @@ const AddDatasetDialog = ({
     const [queryParams, setQueryParams] = useState({
         status: "ACTIVE",
         title: "",
+        per_page: 15,
     });
 
     const [resourceType, setResourceType] = useState<ResourceType>(
