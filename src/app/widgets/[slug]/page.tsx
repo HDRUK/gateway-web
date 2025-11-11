@@ -17,22 +17,23 @@ export default async function Widget({ params }: WidgetProps) {
     const teamId = popped[0];
     const widgetId = popped[1];
     const headersList = headers();
-    const referer = headersList.get("referer");
-    const origins = headersList.get("origin");
-    console.log('<<<<', referer)
-    console.log('<<<<', origins)
+    const referer = headersList.get("referer"); 
+    // above is correct for iframe
+    // const origins = headersList.get("origin");
+    // console.log('<<<<', referer)
+    // console.log('<<<<', origins)
     // const { origin } = new URL(referer!);
-    const origin = "https://www.google.com";
+    // const origin = "https://www.google.com";
     const response = await fetch(
-        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${origin}`,
+        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`,
         {
             next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
             cache: "force-cache",
         }
     );
-    console.log(
-        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${origin}`
-    );
+    // console.log(
+    //     `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`
+    // );
     if (!response.ok) {
         notFound();
     }
