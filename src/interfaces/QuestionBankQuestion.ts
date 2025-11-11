@@ -1,5 +1,6 @@
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Team } from "./Team";
+import { UploadedFileMetadata } from "./FileUpload";
 
 interface QBFields {
     title: string;
@@ -12,6 +13,7 @@ interface QBFields {
     options: [];
     all_custodians: boolean;
     team_ids: number[];
+    document?: { value: UploadedFileMetadata }
 }
 
 type Nested = {

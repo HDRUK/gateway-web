@@ -127,7 +127,7 @@ const ApplicationSection = ({
     };
 
     const removeUploadedFile = useDelete(
-        `${darApplicationEndpoint}/${applicationId}/files`,
+        `${fileProcessedV1Url}/`,
         {
             itemName: "File",
         }

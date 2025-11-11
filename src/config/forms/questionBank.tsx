@@ -28,6 +28,7 @@ const supportedComponents = [
     inputComponents.DatePicker,
     inputComponents.FileUpload,
     inputComponents.FileUploadMultiple,
+    inputComponents.DocumentExchange,
 ];
 
 const componentsWithOptions = [
@@ -101,6 +102,13 @@ const formFields = [
             my: 2,
             backgroundColor: colors.purple100,
         },
+    },
+    {
+        label: "Document Exchange Document",
+        name: "document",
+        component: "FileUpload",
+        showClearButton: true,
+        variant: "outlined",
     },
     {
         component: inputComponents.TextArea,
