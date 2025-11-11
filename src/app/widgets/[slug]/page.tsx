@@ -2,7 +2,7 @@
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import apis from "@/config/apis";
-import WidgetDisplay from "./components/WidgetDisplay";
+import WidgetDisplay from "@/widgets/WidgetDisplay";
 
 interface WidgetProps {
     params: {
@@ -18,7 +18,9 @@ export default async function Widget({ params }: WidgetProps) {
     const widgetId = popped[1];
     const headersList = headers();
     const referer = headersList.get("referer");
-
+    const origins = headersList.get("origin");
+    console.log('<<<<', referer)
+    console.log('<<<<', origins)
     // const { origin } = new URL(referer!);
     const origin = "https://www.google.com";
     const response = await fetch(
