@@ -23,7 +23,7 @@ interface WidgetPreviewProps {
 }
 
 const TRANSLATION_PATH = `pages.account.team.widgets.preview`;
-const WIDGET_CODE_PATH = "https://api.healthdatagateway.org/api/v1/widget/";
+const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/api/widget/`;
 
 const WidgetPreview = ({
     teamId,
@@ -51,7 +51,7 @@ const WidgetPreview = ({
     };
 
     const generateWidgetCode = () => {
-        return `<div id="replaceMe"/><script type="module" crossOrigin="anonymous" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" />`;
+        return `<div id="HDRGatewayWidget"/><script type="module" crossOrigin="anonymous" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" />`;
     };
 
     return (

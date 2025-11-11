@@ -69,7 +69,7 @@ export async function GET(req: NextRequest, { params }) {
       import ReactDOM from "${reactDomUrl}";
       import Widget from "${widgetUrl}";
 
-      const el = document.getElementById("replaceMe");
+      const el = document.getElementById("HDRGatewayWidget");
       const root = ReactDOM.createRoot(el);
       root.render(React.createElement(Widget, { data: ${JSON.stringify(
           data

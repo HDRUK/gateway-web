@@ -5,7 +5,7 @@ import Script from "next/script";
 export default function TestPage() {
     return (
         <>
-            <div id="replaceMe" />
+            <div id="HDRGatewayWidget" />
             <Script
                 type="module"
                 crossOrigin="anonymous"
