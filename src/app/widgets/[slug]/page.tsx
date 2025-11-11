@@ -1,6 +1,6 @@
-// import { headers } from "next/headers";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
+import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import apis from "@/config/apis";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 
@@ -17,13 +17,8 @@ export default async function Widget({ params }: WidgetProps) {
     const teamId = popped[0];
     const widgetId = popped[1];
     const headersList = headers();
-    const referer = headersList.get("referer"); 
-    // above is correct for iframe
-    // const origins = headersList.get("origin");
-    // console.log('<<<<', referer)
-    // console.log('<<<<', origins)
-    // const { origin } = new URL(referer!);
-    // const origin = "https://www.google.com";
+    const referer = headersList.get("referer");
+
     const response = await fetch(
         `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`,
         {
@@ -31,25 +26,18 @@ export default async function Widget({ params }: WidgetProps) {
             cache: "force-cache",
         }
     );
-    // console.log(
-    //     `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`
-    // );
+
     if (!response.ok) {
         notFound();
     }
     const { data } = await response.json();
 
     return (
-        <html lang="en">
-            <head>
-                <meta charSet="utf-8" />
-                <meta
-                    name="viewport"
-                    content="width=device-width,initial-scale=1"
-                />
-            </head>
-            <body style={{ margin: 0 }}>
-                <WidgetDisplay data={data} />
+        <html>
+            <body>
+                <ThemeRegistry isIframe>
+                    <WidgetDisplay data={data} />
+                </ThemeRegistry>
             </body>
         </html>
     );

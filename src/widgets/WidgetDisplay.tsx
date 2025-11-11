@@ -1,16 +1,7 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-
-/* eslint-disable @next/next/no-page-custom-font */
 import { useRef, useState } from "react";
-import {
-    Box,
-    Button,
-    GlobalStyles,
-    ThemeProvider,
-    Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import {
     WidgetEntityData,
     WidgetCategory,
@@ -75,95 +66,77 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
     );
 
     return (
-        <>
-            <link
-                href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&display=swap&subset=latin"
-                rel="stylesheet"
-            />
-            <ThemeProvider theme={theme}>
-                <GlobalStyles
-                    styles={{
-                        body: {
-                            width: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            minHeight: "100vh",
-                        },
-                    }}
+        <Box
+            sx={{
+                width: `${size_width}${unit}`,
+                height: `${size_height}${unit}`,
+                overflow: "hidden",
+                backgroundColor: theme.palette.grey[100],
+                color: colors.grey900,
+            }}
+            ref={widgetContainer}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                    p: 0,
+                }}>
+                <Header
+                    includeSearch={!!include_search_bar}
+                    gatewayUrl={GATEWAY_URL}
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    headerSx={{ width: "auto" }}
                 />
-                <Box
-                    sx={{
-                        width: `${size_width}${unit}`,
-                        height: `${size_height}${unit}`,
-                        overflow: "hidden",
-                        backgroundColor: theme.palette.grey[100],
-                        color: colors.grey900,
-                    }}
-                    ref={widgetContainer}>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            height: "100%",
-                            p: 0,
-                        }}>
-                        <Header
-                            includeSearch={!!include_search_bar}
-                            gatewayUrl={GATEWAY_URL}
-                            searchValue={searchValue}
-                            setSearchValue={setSearchValue}
-                            headerSx={{ width: "auto" }}
-                        />
 
-                        <CategoryMenu
-                            value={entityType}
-                            options={filteredMenuCategories}
-                            onChange={setEntityType}
-                            menuAnchor={menuAnchor}
-                            setMenuAnchor={setMenuAnchor}
-                            containerRef={widgetContainer}
-                        />
+                <CategoryMenu
+                    value={entityType}
+                    options={filteredMenuCategories}
+                    onChange={setEntityType}
+                    menuAnchor={menuAnchor}
+                    setMenuAnchor={setMenuAnchor}
+                    containerRef={widgetContainer}
+                />
 
-                        <Box sx={{ flex: 1, overflow: "auto", mb: 1, p: 0 }}>
-                            {renderByType()}
-                        </Box>
-
-                        {!!include_cohort_link && (
-                            <Box
-                                component="footer"
-                                sx={{
-                                    backgroundColor: colors.grey200,
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    gap: 2,
-                                    p: 1,
-                                }}>
-                                <Typography>
-                                    <Typography
-                                        component="span"
-                                        sx={{ fontWeight: 600, mr: 1 }}>
-                                        {TRANSLATIONS.footerTtle}
-                                    </Typography>
-                                    {TRANSLATIONS.footerDesc}
-                                </Typography>
-                                <Button
-                                    href={`${GATEWAY_URL}/about/cohort-discovery`}
-                                    target="_blank"
-                                    sx={{
-                                        backgroundColor: colors.white,
-                                        flexShrink: 0,
-                                    }}
-                                    color="greyCustom"
-                                    disableElevation>
-                                    {TRANSLATIONS.cohortButton}
-                                </Button>
-                            </Box>
-                        )}
-                    </Box>
+                <Box sx={{ flex: 1, overflow: "auto", mb: 1, p: 0 }}>
+                    {renderByType()}
                 </Box>
-            </ThemeProvider>
-        </>
+
+                {!!include_cohort_link && (
+                    <Box
+                        component="footer"
+                        sx={{
+                            backgroundColor: colors.grey200,
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            gap: 2,
+                            p: 1,
+                        }}>
+                        <Typography>
+                            <Typography
+                                component="span"
+                                sx={{ fontWeight: 600, mr: 1 }}>
+                                {TRANSLATIONS.footerTtle}
+                            </Typography>
+                            {TRANSLATIONS.footerDesc}
+                        </Typography>
+                        <Button
+                            href={`${GATEWAY_URL}/about/cohort-discovery`}
+                            target="_blank"
+                            sx={{
+                                backgroundColor: colors.white,
+                                flexShrink: 0,
+                            }}
+                            color="greyCustom"
+                            disableElevation>
+                            {TRANSLATIONS.cohortButton}
+                        </Button>
+                    </Box>
+                )}
+            </Box>
+        </Box>
     );
 }

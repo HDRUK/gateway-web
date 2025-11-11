@@ -3,7 +3,7 @@ import fs from "fs";
 
 (async () => {
   await build({
-    entryPoints: ["src/widgets/WidgetDisplay.tsx"],
+    entryPoints: ["src/widgets/WidgetInterface.tsx"],
     bundle: true,
     platform: "browser",
     format: "esm",
