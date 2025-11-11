@@ -4,13 +4,16 @@ import { useMemo, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { TeamNames } from "@/interfaces/Team";
 import { Unit, Widget } from "@/interfaces/Widget";
 import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { RouteName } from "@/consts/routeName";
 import { DATA_CUSTODIAN_LIMIT } from "../const";
+import { TabValues } from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
@@ -29,6 +32,7 @@ export default function useWidgetForm(
     setWidgetId: React.Dispatch<React.SetStateAction<number | undefined>>;
 } {
     const t = useTranslations(TRANSLATION_PATH);
+    const { push } = useRouter();
 
     const teamNameOptions = useMemo(
         () => teamNames.map(t => ({ value: t.id.toString(), label: t.name })),
@@ -145,9 +149,10 @@ export default function useWidgetForm(
     ) => {
         if (!widget && !widgetId) {
             const res = await createWidget(cleanPayload(values) as Widget);
-            setWidgetId(res);
+            push(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}/${res}?tab=${TabValues.PREVIEW}`
+            );
         } else if (widgetId) {
-            console.log(dirtyFields);
             const payload = Object.fromEntries(
                 Object.entries(dirtyFields).map(([k]) => [
                     k,

@@ -75,7 +75,9 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
         dirtyFields: Partial<Record<keyof Widget, boolean>>
     ) => {
         await onSubmit(values, dirtyFields);
-        changeTab(TabValues.PREVIEW);
+        if (widgetId) {
+            changeTab(TabValues.PREVIEW);
+        }
     };
 
     return (
