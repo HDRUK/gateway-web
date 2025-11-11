@@ -1,3 +1,53 @@
+## [2.25.0](https://github.com/HDRUK/gateway-web/compare/v2.24.0...v2.25.0) (2025-11-04)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([ff7754f](https://github.com/HDRUK/gateway-web/commit/ff7754fbbe7073259382194b8ca70c48dc5e6141)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-7911:** Dom parser error (#1363) ([59ca04b](https://github.com/HDRUK/gateway-web/commit/59ca04bee0d41c634eee026f7bd64198ec7bec53)), closes [GAT-7911](GAT-7911)
+* **GAT-8113:** Number.isNaN is strict, isNaN is less strict (#1360) ([825ac61](https://github.com/HDRUK/gateway-web/commit/825ac61f0661152d87e1206e2123e4758cc2cca0)), closes [GAT-8113](GAT-8113)
+* **GAT-8127:** Add check for scrambled email addresses.  (#1365) ([030167f](https://github.com/HDRUK/gateway-web/commit/030167f2e4e42731f37dec7bed9350c769ee499c)), closes [GAT-8127](GAT-8127)
+* **GAT-8127:** open-athens provider don't default (#1366) ([b4a42fc](https://github.com/HDRUK/gateway-web/commit/b4a42fc8946416c039ebfc64463e27d2430cd00d)), closes [GAT-8127](GAT-8127)
+
+## [2.24.0](https://github.com/HDRUK/gateway-web/compare/v2.23.0...v2.24.0) (2025-10-24)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([4b4055e](https://github.com/HDRUK/gateway-web/commit/4b4055e4398e5c8584ccff72d1ffe738eef85c7d)), closes [GAT-7284](GAT-7284)
+
+## [2.23.0](https://github.com/HDRUK/gateway-web/compare/v2.22.2...v2.23.0) (2025-10-23)
+
+### ✨ Features
+
+* **GAT-7284:** DAR field arrays (#1356) ([0188ce7](https://github.com/HDRUK/gateway-web/commit/0188ce725b2fc3132f7b96731bcd5859821ef39b)), closes [GAT-7284](GAT-7284)
+* **GAT-7284:** Ensure at least one row of array fields are displayed (#1358) ([60cc91f](https://github.com/HDRUK/gateway-web/commit/60cc91f47ccf5ce61d20cdd221378e467ad0379f)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-8073:** Cohort hand over (#1354) ([537a263](https://github.com/HDRUK/gateway-web/commit/537a263cf914533fa964d95846f4fee65baf1994)), closes [GAT-8073](GAT-8073)
+* **GAT-8073:** cohort handover (#1352) ([410e8ec](https://github.com/HDRUK/gateway-web/commit/410e8eccb86e0ddb78c4a44e55f378cdd9210aff)), closes [GAT-8073](GAT-8073)
+* **GAT-8073:** cohort handover (#1353) ([ace0983](https://github.com/HDRUK/gateway-web/commit/ace09834a911acb4412c01e67bd07f2fa2bcacf8)), closes [GAT-8073](GAT-8073)
+* **GAT-8082:** Don't call export on load (#1357) ([ae18965](https://github.com/HDRUK/gateway-web/commit/ae18965cc72b2350f066ff743cc0713cb8d99508)), closes [GAT-8082](GAT-8082)
+
+## [2.22.2](https://github.com/HDRUK/gateway-web/compare/v2.22.1...v2.22.2) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8070:** Break action bar to grid earlier (#1350) ([bf0b6e9](https://github.com/HDRUK/gateway-web/commit/bf0b6e913c425466a680df08bb6c4270e74088b3)), closes [GAT-8070](GAT-8070)
+
+## [2.22.1](https://github.com/HDRUK/gateway-web/compare/v2.22.0...v2.22.1) (2025-10-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-8016:** Place name of Custodian / Network above logo on Custodian / Network pages (#1341) ([6e21996](https://github.com/HDRUK/gateway-web/commit/6e2199677beeaf74ead2054bf752d8f8a5fc87df)), closes [GAT-8016](GAT-8016)
+* **GAT-8070:** Collapse bookmark bar on mobile to a dropdown, and tweak the grid template behaviour (#1344) ([427249a](https://github.com/HDRUK/gateway-web/commit/427249af2050450d60162d058bfeb160ba3bd8d6)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Fix display of mind map on mobile  (#1346) ([bf50372](https://github.com/HDRUK/gateway-web/commit/bf503722ae850fe674bc773ece3a5297247a258b))
+* **GAT-8070:** Make publication search card title more readable on mobile and tablet (#1348) ([16acfb4](https://github.com/HDRUK/gateway-web/commit/16acfb43fb6e3b0968a37e07a84764fef6f461a7)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Make survey smaller on mobile (#1347) ([7924b86](https://github.com/HDRUK/gateway-web/commit/7924b866830d87adffe48956d61123df0a744358)), closes [GAT-8070](GAT-8070)
+* **GAT-8070:** Responsive styling fixes (#1345) ([fdef034](https://github.com/HDRUK/gateway-web/commit/fdef03480bd648a5df7570d4f1d2ca793b26977e))
+
 ## [2.22.0](https://github.com/HDRUK/gateway-web/compare/v2.21.0...v2.22.0) (2025-10-07)
 
 ### ✨ Features

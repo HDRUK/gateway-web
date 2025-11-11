@@ -24,7 +24,14 @@ const TitleWithBg = ({
     };
 
     return (
-        <Box sx={{ bgcolor, display: "inline-block" }} {...rest}>
+        <Box
+            sx={{
+                bgcolor,
+                display: "inline-block",
+                width: "100%",
+                textAlign: "center",
+            }}
+            {...rest}>
             <Typography
                 sx={{ fontSize: fontSizes[size], mb: 0 }}
                 color={color}

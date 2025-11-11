@@ -18,6 +18,8 @@ import {
     keyframes,
     Box,
     Button,
+    useMediaQuery,
+    useTheme,
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Cookies from "js-cookie";
@@ -29,6 +31,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import { formatDate, getToday } from "@/utils/date";
 import InputWrapper from "../InputWrapper";
 
 interface Ratings {
@@ -39,6 +42,7 @@ interface Ratings {
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
+const cookieLifeShort = 1; // days
 
 const ratings: Ratings[] = [
     { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
@@ -49,7 +53,6 @@ const ratings: Ratings[] = [
 ];
 
 const displayIn = 150000;
-const boxSize = 600;
 const slideIn = keyframes`
   from { transform: translateY(100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
@@ -58,6 +61,8 @@ const slideOut = keyframes`
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(100%); opacity: 0; }
 `;
+
+const validMonths = ["01", "04", "07", "10"];
 
 interface CustomerSurveyProps {
     hideOnLoad?: boolean;
@@ -73,6 +78,9 @@ export default function CustomerSurvey({
 }: CustomerSurveyProps) {
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
     const [animateOut, setAnimateOut] = useState(false);
@@ -80,6 +88,9 @@ export default function CustomerSurvey({
         "rating"
     );
     const [sessionId, setSessionId] = useState<string | null>(null);
+
+    const boxSize = isMobile ? 375 : 600;
+
     const id = useId();
     const reason = {
         label: t("label"),
@@ -153,6 +164,11 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
+        // Create a short lifetime cookie to avoid survey reappearing
+        Cookies.set(cookieName, JSON.stringify({ id }), {
+            expires: cookieLifeShort,
+        });
+
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
@@ -180,7 +196,19 @@ export default function CustomerSurvey({
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
 
+    const isValidMonth = () => {
+        const currentMonth = formatDate(getToday(), "MM");
+
+        if (!currentMonth) {
+            return false;
+        }
+
+        return validMonths.includes(currentMonth);
+    };
+
     if (hideComponent || submitted) return null;
+
+    if (!isValidMonth()) return null;
 
     return (
         <Box
@@ -190,10 +218,10 @@ export default function CustomerSurvey({
                 padding: 2,
                 background: "white",
                 position: "fixed",
-                bottom: 0,
+                bottom: isMobile ? 30 : 0,
                 left: `calc(50% - ${boxSize / 2}px)`,
                 width: boxSize,
-                zIndex: 999,
+                zIndex: 1400,
                 animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
             }}>
             <IconButton
@@ -202,7 +230,11 @@ export default function CustomerSurvey({
                 <CloseIcon />
             </IconButton>
 
-            <Typography variant="h6" gutterBottom id={id}>
+            <Typography
+                variant="h6"
+                gutterBottom
+                id={id}
+                width={isMobile ? "90%" : "100%"}>
                 {t("title")}
             </Typography>
 
@@ -226,8 +258,14 @@ export default function CustomerSurvey({
                                             sx={{
                                                 cursor: "pointer",
                                                 color: colour,
-                                                minWidth: "75px",
-                                                minHeight: "75px",
+                                                minWidth: {
+                                                    mobile: "30px",
+                                                    tablet: "75px",
+                                                },
+                                                minHeight: {
+                                                    mobile: "30px",
+                                                    tablet: "75px",
+                                                },
                                                 margin: 1,
                                                 fontSize: 1,
                                                 fontWeight: "bold",
