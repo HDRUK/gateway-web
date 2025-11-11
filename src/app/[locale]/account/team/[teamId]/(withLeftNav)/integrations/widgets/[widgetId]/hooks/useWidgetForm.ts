@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
@@ -39,14 +39,14 @@ export default function useWidgetForm(
         [teamNames]
     );
 
-    const match = teamNameOptions.find(t => t.value.toString() === teamId);
-    const defaultValues = {
-        data_custodian_entities_ids: match ? [match.value] : [],
-    };
+    const defaultCustodians = useMemo(() => {
+        const match = teamNameOptions.find(t => t.value === teamId);
+        return match ? [match.value] : [];
+    }, [teamNameOptions, teamId]);
 
-    const form = useForm({
-        defaultValues: {
-            ...defaultValues,
+    const initialDefaults = useMemo<Partial<Widget>>(
+        () => ({
+            data_custodian_entities_ids: defaultCustodians,
             included_datasets: [],
             included_data_uses: [],
             included_scripts: [],
@@ -78,7 +78,12 @@ export default function useWidgetForm(
                 templateType === "custodian"
                     ? true
                     : widget?.included_collections?.length,
-        },
+        }),
+        [defaultCustodians, templateType, widget]
+    );
+
+    const form = useForm({
+        defaultValues: initialDefaults,
         resolver: yupResolver(
             yup.object({
                 data_custodian_entities_ids: yup
@@ -104,6 +109,10 @@ export default function useWidgetForm(
             })
         ),
     });
+
+    useEffect(() => {
+        form.reset({ ...initialDefaults, ...form.getValues() });
+    }, [initialDefaults]);
 
     const createWidget = usePost<Widget>(
         `${apis.teamsV1Url}/${teamId}/widgets`,

@@ -7,7 +7,7 @@ export enum Unit {
 export interface Widget {
     id: number;
     team_id: number;
-    data_custodian_entities_ids: number[];
+    data_custodian_entities_ids: string[];
     included_datasets: number[];
     included_data_uses: number[];
     included_scripts: number[];
