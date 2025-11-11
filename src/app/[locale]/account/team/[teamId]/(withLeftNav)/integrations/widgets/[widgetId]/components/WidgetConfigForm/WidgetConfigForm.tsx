@@ -12,6 +12,7 @@ import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import { DATA_CUSTODIAN_LIMIT } from "../../const";
 import { getChipLabel, isOptionEqualToValue } from "../../utils";
+import { Typography } from "@mui/material";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
