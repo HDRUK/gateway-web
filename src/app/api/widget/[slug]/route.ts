@@ -38,16 +38,12 @@ export async function GET(req: NextRequest, { params }) {
         const headersList = headers();
         const referer = headersList.get("referer");
 
-        console.log(referer, "<<<");
         const { origin } = new URL(referer!);
-
-        console.log("origin <<", origin);
-        console.log("referer <<", referer);
 
         const response = await fetch(
             `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${origin}`,
             {
-                next: { revalidate: 180 },
+                next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
                 cache: "force-cache",
             }
         );
@@ -66,7 +62,7 @@ export async function GET(req: NextRequest, { params }) {
             );
         }
 
-        const {data} = await response.json();
+        const { data } = await response.json();
 
         const script = `
       import React from "${reactUrl}";

@@ -219,11 +219,13 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                     let newValue: ValueType | ValueType[] | null = null;
 
                     if (Array.isArray(value)) {
-                    newValue = value.map(v => (typeof v === "object" ? v.value : v));
+                        newValue = value.map(v =>
+                            typeof v === "object" ? v.value : v
+                        );
                     } else if (typeof value === "object" && value !== null) {
-                    newValue = value.value;
+                        newValue = value.value;
                     } else {
-                    newValue = value;
+                        newValue = value;
                     }
 
                     field.onChange(newValue);

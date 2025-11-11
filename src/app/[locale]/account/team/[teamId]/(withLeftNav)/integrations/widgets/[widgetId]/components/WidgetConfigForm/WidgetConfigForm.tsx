@@ -1,6 +1,7 @@
 "use client";
 
 import { FormProvider, UseFormReturn } from "react-hook-form";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
@@ -12,7 +13,6 @@ import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import { DATA_CUSTODIAN_LIMIT } from "../../const";
 import { getChipLabel, isOptionEqualToValue } from "../../utils";
-import { Typography } from "@mui/material";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
@@ -311,74 +311,73 @@ const WidgetConfigForm = ({
 
     return (
         <Paper sx={{ marginBottom: "10px", padding: 2 }}>
-              <FormProvider {...form}>
-            <Form
-                sx={{ mt: 3 }}
-                onSubmit={handleSubmit(values =>
-                    onSubmit(
-                        values,
-                        form.formState.dirtyFields as Partial<
-                            Record<keyof Widget, boolean>
-                        >
-                    )
-                )}>
-                {configSections.map(section => (
-                    <>
-                        <Typography
-                            key={section.section}
-                            fontSize={16}
-                            fontWeight={600}
-                            sx={{ mt: 6, mb: 2 }}>
-                            {section.name}
-                        </Typography>
+            <FormProvider {...form}>
+                <Form
+                    sx={{ mt: 3 }}
+                    onSubmit={handleSubmit(values =>
+                        onSubmit(
+                            values,
+                            form.formState.dirtyFields as Partial<
+                                Record<keyof Widget, boolean>
+                            >
+                        )
+                    )}>
+                    {configSections.map(section => (
+                        <>
+                            <Typography
+                                key={section.section}
+                                fontSize={16}
+                                fontWeight={600}
+                                sx={{ mt: 6, mb: 2 }}>
+                                {section.name}
+                            </Typography>
 
-                        {section?.intro && section.intro}
+                            {section?.intro && section.intro}
 
-                        {section.fields.map(field =>
-                            !field.showWhen || watch(field.showWhen) ? (
-                                <Box
-                                    key={field.name}
-                                    sx={{
-                                        ml: field.marginLeft ? 5 : 0,
-                                        mb: field.marginLeft ? 4 : 0,
-                                        p: 0,
-                                        ...(field.inline && {
-                                            display: "inline-block",
-                                            mr: 2,
-                                            maxWidth: 100,
-                                        }),
-                                    }}>
-                                    <InputWrapper
-                                        control={control}
-                                        {...field}
-                                    />
-                                    {field.selectAllButton &&
-                                        field.selectAllButton}
-                                </Box>
-                            ) : null
-                        )}
-                    </>
-                ))}
-                <Box
-                    sx={{
-                        p: 0,
-                        display: "flex",
-                        gap: 2,
-                        mt: 5,
-                    }}>
-                    <Button type="submit">{t("save")}</Button>
-                    <Button
-                        type="button"
-                        variant="outlined"
-                        color="secondary"
-                        href={`/en/account/team/${teamId}/integrations/widgets`}>
-                        {t("cancel")}
-                    </Button>
-                </Box>
-            </Form>
-             </FormProvider>
+                            {section.fields.map(field =>
+                                !field.showWhen || watch(field.showWhen) ? (
+                                    <Box
+                                        key={field.name}
+                                        sx={{
+                                            ml: field.marginLeft ? 5 : 0,
+                                            mb: field.marginLeft ? 4 : 0,
+                                            p: 0,
+                                            ...(field.inline && {
+                                                display: "inline-block",
+                                                mr: 2,
+                                                maxWidth: 100,
+                                            }),
+                                        }}>
+                                        <InputWrapper
+                                            control={control}
+                                            {...field}
+                                        />
+                                        {field.selectAllButton &&
+                                            field.selectAllButton}
+                                    </Box>
+                                ) : null
+                            )}
+                        </>
+                    ))}
+                    <Box
+                        sx={{
+                            p: 0,
+                            display: "flex",
+                            gap: 2,
+                            mt: 5,
+                        }}>
+                        <Button type="submit">{t("save")}</Button>
+                        <Button
+                            type="button"
+                            variant="outlined"
+                            color="secondary"
+                            href={`/en/account/team/${teamId}/integrations/widgets`}>
+                            {t("cancel")}
+                        </Button>
+                    </Box>
+                </Form>
+            </FormProvider>
         </Paper>
-       
     );
 };
 
