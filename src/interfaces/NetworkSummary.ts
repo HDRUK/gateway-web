@@ -16,6 +16,9 @@ interface NetworkSummary {
     collections: Collection[];
     teams_counts: DataCustodian[];
     img_url?: string;
+    summary: string | null;
+    url: string | null;
+    service: string[] | null;
 }
 
 export type { NetworkSummary };

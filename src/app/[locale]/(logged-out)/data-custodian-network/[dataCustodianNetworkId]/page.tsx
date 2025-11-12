@@ -12,7 +12,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
-import { getDataCustodianNetworks, getNetworkSummary } from "@/utils/api";
+import { getNetworkSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -45,11 +45,6 @@ export default async function DataCustodianNetworkPage({
     );
 
     if (!summaryData) notFound();
-
-    const networkData = await getDataCustodianNetworks(
-        cookieStore,
-        dataCustodianNetworkId
-    );
 
     const activeLinkList = accordions.map(section => {
         return {
@@ -84,7 +79,7 @@ export default async function DataCustodianNetworkPage({
                             gap: 2,
                         }}>
                         <IntroductionContent
-                            networkData={networkData}
+                            networkData={summaryData}
                             anchorIndex={0}
                         />
                         <DataCustodianContent
