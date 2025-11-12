@@ -6,10 +6,13 @@ import { getCohortStatusAndRedirect } from "@/app/actions/getCohortStatusAndRedi
 
 export const useCohortStatus = (userId?: number, redirect = false) => {
     const [data, setData] = useState<CohortResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (!userId || data) return;
+        if (!userId || data) {
+            setIsLoading(false);
+            return;
+        }
 
         const fetchData = async () => {
             setIsLoading(true);
@@ -33,6 +36,7 @@ export const useCohortStatus = (userId?: number, redirect = false) => {
 
     return {
         requestStatus: data?.requestStatus ?? null,
+        nhseSdeRequestStatus: data?.nhseSdeRequestStatus ?? null,
         requestExpiry: data?.requestExpiry ?? null,
         redirectUrl: data?.redirectUrl ?? null,
         isLoading,
