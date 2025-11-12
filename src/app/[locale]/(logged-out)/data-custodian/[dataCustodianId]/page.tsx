@@ -16,7 +16,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
-import { getDataset, getTeamSummary } from "@/utils/api";
+import { getTeamSummary } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -47,13 +47,9 @@ export default async function DataCustodianItemPage({
 
     const cohortDiscovery = await getCohortDiscovery();
 
-    const promises = data.datasets.map(x =>
-        getDataset(cookieStore, x.id.toString())
+    const enableCohortDiscovery = data.datasets.some(
+        x => x.is_cohort_discovery
     );
-
-    const datasets = await Promise.all(promises);
-
-    const enableCohortDiscovery = datasets.some(x => x.is_cohort_discovery);
 
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
