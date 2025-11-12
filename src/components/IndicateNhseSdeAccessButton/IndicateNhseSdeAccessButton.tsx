@@ -46,7 +46,8 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
         }
     };
 
-    const approvalPending = nhseSdeRequestStatus === "APPROVAL REQUESTED";
+    const approvalPending =
+        hasClickedButton || nhseSdeRequestStatus === "APPROVAL REQUESTED";
     const isDisabled =
         !isLoggedIn ||
         approvalPending ||
