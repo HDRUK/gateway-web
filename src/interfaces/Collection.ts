@@ -44,11 +44,20 @@ interface Collection {
     team_id?: number;
     user_id?: string;
     image_link: string;
-    user_id?: number;
 }
 
 export interface CollectionSubmission
-    extends Omit<Collection, "publications" | "dur" | "tools" | "datasets"> {
+    extends Omit<
+        Collection,
+        | "publications"
+        | "dur"
+        | "tools"
+        | "datasets"
+        | "created_at"
+        | "updated_at"
+        | "updated_on"
+        | "deleted_at"
+    > {
     publications: { id: number }[];
     dur: { id: number }[];
     tools: { id: number }[];

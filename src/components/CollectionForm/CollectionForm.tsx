@@ -364,9 +364,10 @@ const CollectionForm = ({
             }
             return keywordArray;
         };
-
-        const payload: CollectionSubmission = {
-            ...formData,
+        const payload: Partial<CollectionSubmission> = {
+            id: formData.id,
+            name: formData.name,
+            description: formData.description,
             status,
             enabled: true,
             public: 1,
@@ -379,9 +380,6 @@ const CollectionForm = ({
             tools: formatEntityToIdArray(formData.tools),
             datasets: formatEntityToIdArray(formData.datasets),
             collaborators: formData.collaborators,
-            created_at: formData.created_at?.split(".")[0],
-            updated_at: formData.updated_at?.split(".")[0],
-            updated_on: formData.updated_on?.split(".")[0],
         };
 
         if (!collectionId) {
