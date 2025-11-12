@@ -21,6 +21,7 @@ export const getCohortStatusAndRedirect = async (
         ]);
         return {
             requestStatus: userRequest?.request_status ?? null,
+            nhseSdeRequestStatus: userRequest?.nhse_sde_request_status ?? null,
             requestExpiry: userRequest?.request_expire_at ?? null,
             redirectUrl: accessRedirect?.redirect_url ?? null,
         };
