@@ -865,13 +865,22 @@
                     "dimensions": "Dimensions",
                     "dateUpdated": "Date updated",
                     "widget": "Widget",
+                    "actions": {
+                        "edit": { "label": "Edit widget" },
+                        "preview": { "label": "Preview widget" },
+                        "delete": { "label": "Delete widget" }
+                    },
                     "createmodal": {
                         "create": "Create new widget",
+                        "edit": "Edit widget",
                         "title": "Start using an existing template",
                         "cancel": "Cancel",
                         "confirm": "Confirm"
                     },
                     "edit": {
+                        "titleCreate": "Create new widget",
+                        "titleEdit": "Edit Widget",
+                        "intro": "Create a widget by selecting from the options below. You can preview what your widget will look like in the preview tab.",
                         "configuration": "Configuration",
                         "preview": "Preview and copy code",
                         "content": "Content",

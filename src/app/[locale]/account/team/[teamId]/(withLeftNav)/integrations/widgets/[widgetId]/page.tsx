@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
@@ -16,6 +17,9 @@ export const metadata = metaData(
     },
     noFollowRobots
 );
+
+const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
+
 export default async function WidgetCreationPage({
     params,
 }: {
@@ -27,6 +31,7 @@ export default async function WidgetCreationPage({
     const team = await getTeam(cookieStore, teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
+    const t = await getTranslations(TRANSLATION_PATH);
 
     let widgetData;
 
@@ -49,12 +54,10 @@ export default async function WidgetCreationPage({
             permissions={permissions}
             pagePermissions={["widgets.create"]}>
             <Box sx={{}}>
-                <Typography variant="h1">Create new widget</Typography>
-                <Typography>
-                    Create a new widget by selecting from the options below. You
-                    can preview what your widget will look like in the preview
-                    tab.
+                <Typography variant="h1">
+                    {widgetId === "create" ? t("titleCreate") : t("titleEdit")}
                 </Typography>
+                <Typography>{t("intro")}</Typography>
                 <WidgetCreator
                     widget={widgetData}
                     teamNames={teamNames}
