@@ -26,7 +26,7 @@ export const metadata = metaData({
 const MySkeletonComponent = () => {
     return (
         <div>
-            <Loading></Loading>
+            <Loading />
         </div>
     );
 };
