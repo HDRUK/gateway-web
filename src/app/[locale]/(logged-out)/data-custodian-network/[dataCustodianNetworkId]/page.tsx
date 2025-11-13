@@ -1,8 +1,11 @@
-import { Suspense } from "react";
+import { ReactElement, Suspense } from "react";
+import { Skeleton } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Loading from "@/components/Loading";
 import Typography from "@/components/Typography";
@@ -23,11 +26,52 @@ export const metadata = metaData({
     description: "",
 });
 
-const MySkeletonComponent = () => {
+const SkeletonAccordian = ({ title }: { title: string }) => {
     return (
-        <div>
-            <Loading />
-        </div>
+        <Accordion
+            variant="plain"
+            noIndent
+            elevation={0}
+            heading={<Typography variant="h3">{title}</Typography>}
+            defaultExpanded
+            contents={
+                <BoxContainer
+                    sx={{
+                        gridTemplateColumns: {
+                            mobile: "repeat(1, 1fr)",
+                            desktop: "repeat(3, 1fr)",
+                        },
+                        gap: 2,
+                    }}>
+                    {[...Array(6).keys()].map(() => (
+                        <Skeleton
+                            key="data-custodian"
+                            variant="rectangular"
+                            height={154}
+                            sx={{ bgcolor: "white" }}
+                        />
+                    ))}
+                </BoxContainer>
+            }
+        />
+    );
+};
+
+const NetworkSkeleton = async (): Promise<ReactElement> => {
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+            }}>
+            <SkeletonAccordian title={"Data Custodians"} />
+            <SkeletonAccordian title={"Datasets"} />
+            <SkeletonAccordian title={"Data Uses"} />
+            <SkeletonAccordian title={"Analysis Scripts & Software"} />
+            <SkeletonAccordian title={"Publications"} />
+            <SkeletonAccordian title={"Collections"} />
+        </Box>
     );
 };
 
@@ -84,7 +128,7 @@ export default async function DataCustodianNetworkPage({
                             anchorIndex={0}
                         />
                     </Box>
-                    <Suspense fallback={<MySkeletonComponent />}>
+                    <Suspense fallback={<NetworkSkeleton />}>
                         <NetworkContent
                             dataCustodianNetworkId={+dataCustodianNetworkId}
                         />

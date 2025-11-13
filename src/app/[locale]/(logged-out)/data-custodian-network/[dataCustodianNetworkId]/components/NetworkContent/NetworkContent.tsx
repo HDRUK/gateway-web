@@ -1,5 +1,3 @@
-"use client";
-
 import { ReactElement } from "react";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
@@ -19,23 +17,18 @@ interface NetworkContentProps {
 const NetworkContent = async ({
     dataCustodianNetworkId,
 }: NetworkContentProps): Promise<ReactElement> => {
-    const response = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`
+    const [{ data: summaryData }, { data: oldsummaryData }] = await Promise.all(
+        [
+            `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`,
+            `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`,
+        ].map(async url => {
+            const resp = await fetch(url);
+            if (!resp.ok) {
+                throw new Error("Failed to fetch network data");
+            }
+            return await resp.json();
+        })
     );
-
-    if (!response.ok) {
-        throw new Error("Failed to fetch network summary data");
-    }
-    const { data: summaryData } = await response.json();
-
-    const oldresponse = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`
-    );
-
-    if (!oldresponse.ok) {
-        throw new Error("Failed to fetch old network summary data");
-    }
-    const { data: oldsummaryData } = await oldresponse.json();
 
     return (
         <Box
