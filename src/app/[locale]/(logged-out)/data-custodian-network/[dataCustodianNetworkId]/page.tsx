@@ -7,7 +7,6 @@ import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
-import Loading from "@/components/Loading";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
@@ -65,12 +64,12 @@ const NetworkSkeleton = async (): Promise<ReactElement> => {
                 flexDirection: "column",
                 gap: 2,
             }}>
-            <SkeletonAccordian title={"Data Custodians"} />
-            <SkeletonAccordian title={"Datasets"} />
-            <SkeletonAccordian title={"Data Uses"} />
-            <SkeletonAccordian title={"Analysis Scripts & Software"} />
-            <SkeletonAccordian title={"Publications"} />
-            <SkeletonAccordian title={"Collections"} />
+            <SkeletonAccordian title="Data Custodians" />
+            <SkeletonAccordian title="Datasets" />
+            <SkeletonAccordian title="Data Uses" />
+            <SkeletonAccordian title="Analysis Scripts & Software" />
+            <SkeletonAccordian title="Publications" />
+            <SkeletonAccordian title="Collections" />
         </Box>
     );
 };
