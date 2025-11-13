@@ -1561,6 +1561,7 @@
         },
         "IndicateNhseSdeAccessButton": {
             "disabledTooltip": "Please sign in to activate this button",
+            "pendingTooltip": "Access request pending",
             "label": "I have been approved by the NHS SDE",
             "success": "Successfully notified HDR UK"
         },
