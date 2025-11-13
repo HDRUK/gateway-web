@@ -903,6 +903,8 @@
                         "codeCopied": "Code copied to clipboard",
                         "codeTitle": "Here's the code you need",
                         "codeIntro": "You'll just need to copy and paste the code below into the HTML on your site. Come back here if you need to make any changes.",
+                        "cspTitle": "Note",
+                        "cspIntro": "If your site uses a Content Security Policy (CSP), make sure to include the following directive in your header:",
                         "copyCode": "Copy code",
                         "back": "Back to configuration",
                         "viewAll": "View all my widgets"

@@ -42,6 +42,8 @@ const WidgetPreview = ({
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
+    const cspHost = new URL(WIDGET_CODE_PATH).host;
+
     const { data } = useGet<WidgetResponse>(
         `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${widgetDomains?.[0]}`
     );
@@ -93,6 +95,25 @@ const WidgetPreview = ({
                         sx={{ mt: 1 }}>
                         {t("copyCode")}
                     </Button>
+
+                    <Typography
+                        sx={{ fontWeight: 600, mt: 5, mb: 1 }}
+                        fontSize={16}>
+                        {t("cspTitle")}
+                    </Typography>
+                    <Typography sx={{ mb: 2 }}>{t("cspIntro")}</Typography>
+                    <TextareaAutosize
+                        maxRows={3}
+                        style={{
+                            backgroundColor: colors.grey100,
+                            border: 0,
+                            width: "100%",
+                            padding: theme.spacing(2),
+                        }}
+                        aria-label="Widget code"
+                        defaultValue={`frame-src 'self' ${cspHost};`}
+                        readOnly
+                    />
                 </Grid>
             </Grid>
 

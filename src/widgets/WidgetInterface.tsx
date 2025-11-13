@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @next/next/no-page-custom-font */
 import { GlobalStyles, ThemeProvider } from "@mui/material";
 import { WidgetEntityData } from "@/interfaces/Widget";
 import theme from "@/config/theme";

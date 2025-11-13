@@ -29,7 +29,7 @@ const TRANSLATIONS = {
     cohortButton: "Open Cohort Discovery",
 };
 
-type WidgetDisplayProps = { data: WidgetEntityData; isIframe: boolean };
+type WidgetDisplayProps = { data: WidgetEntityData; isIframe?: boolean };
 
 export default function WidgetDisplay({
     data,
@@ -72,7 +72,7 @@ export default function WidgetDisplay({
         <Box
             sx={{
                 width: isIframe ? "100%" : `${size_width}${unit}`,
-                height: `${size_height}${unit}`,
+                height: isIframe ? "100%" : `${size_height}${unit}`,
                 overflow: "hidden",
                 backgroundColor: theme.palette.grey[100],
                 color: colors.grey900,
