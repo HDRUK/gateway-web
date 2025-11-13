@@ -29,9 +29,12 @@ const TRANSLATIONS = {
     cohortButton: "Open Cohort Discovery",
 };
 
-type WidgetDisplayProps = { data: WidgetEntityData };
+type WidgetDisplayProps = { data: WidgetEntityData; isIframe: boolean };
 
-export default function WidgetDisplay({ data }: WidgetDisplayProps) {
+export default function WidgetDisplay({
+    data,
+    isIframe = false,
+}: WidgetDisplayProps) {
     const {
         include_cohort_link,
         include_search_bar,
@@ -68,7 +71,7 @@ export default function WidgetDisplay({ data }: WidgetDisplayProps) {
     return (
         <Box
             sx={{
-                width: `${size_width}${unit}`,
+                width: isIframe ? "100%" : `${size_width}${unit}`,
                 height: `${size_height}${unit}`,
                 overflow: "hidden",
                 backgroundColor: theme.palette.grey[100],

@@ -36,7 +36,7 @@ export default async function Widget({ params }: WidgetProps) {
         <html>
             <body>
                 <ThemeRegistry isIframe>
-                    <WidgetDisplay data={data} />
+                    <WidgetDisplay data={data} isIframe />
                 </ThemeRegistry>
             </body>
         </html>
