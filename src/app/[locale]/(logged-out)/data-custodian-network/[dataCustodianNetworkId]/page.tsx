@@ -1,22 +1,19 @@
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
-import CollectionsContent from "@/components/CollectionsContent";
-import DataUsesContent from "@/components/DataUsesContent";
-import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
-import PublicationsContent from "@/components/PublicationsContent";
-import ToolsContent from "@/components/ToolsContent";
+import Loading from "@/components/Loading";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
-import { getNetworkSummary } from "@/utils/api";
+import { getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
-import DataCustodianContent from "./components/DataCustodianContent";
 import IntroductionContent from "./components/IntroductionContent";
+import NetworkContent from "./components/NetworkContent";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
@@ -25,6 +22,14 @@ export const metadata = metaData({
     title: "Data Custodian Network",
     description: "",
 });
+
+const MySkeletonComponent = () => {
+    return (
+        <div>
+            <Loading></Loading>
+        </div>
+    );
+};
 
 export default async function DataCustodianNetworkPage({
     params,
@@ -36,15 +41,11 @@ export default async function DataCustodianNetworkPage({
     const { dataCustodianNetworkId } = params;
     const cookieStore = cookies();
 
-    const summaryData = await getNetworkSummary(
-        cookieStore,
-        dataCustodianNetworkId,
-        {
-            suppressError: true,
-        }
-    );
+    const infoData = await getNetworkInfo(cookieStore, dataCustodianNetworkId, {
+        suppressError: true,
+    });
 
-    if (!summaryData) notFound();
+    if (!infoData) notFound();
 
     const activeLinkList = accordions.map(section => {
         return {
@@ -58,15 +59,15 @@ export default async function DataCustodianNetworkPage({
             body={
                 <>
                     <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
-                        {summaryData.name}
+                        {infoData.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
                         <AspectRatioImage
                             width={554}
                             height={250}
-                            alt={summaryData.name}
+                            alt={infoData.name}
                             src={
-                                summaryData?.img_url ||
+                                infoData?.img_url ||
                                 StaticImages.BASE.placeholder
                             }
                         />
@@ -79,40 +80,15 @@ export default async function DataCustodianNetworkPage({
                             gap: 2,
                         }}>
                         <IntroductionContent
-                            networkData={summaryData}
+                            networkData={infoData}
                             anchorIndex={0}
                         />
-                        <DataCustodianContent
-                            dataCustodians={summaryData.teams_counts}
-                            anchorIndex={1}
-                        />
-                        <DatasetsContent
-                            datasets={summaryData.datasets}
-                            anchorIndex={2}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <DataUsesContent
-                            datauses={summaryData.durs}
-                            anchorIndex={3}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <ToolsContent
-                            tools={summaryData.tools}
-                            anchorIndex={4}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <PublicationsContent
-                            publications={summaryData.publications}
-                            anchorIndex={5}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <CollectionsContent
-                            collections={summaryData.collections}
-                            anchorIndex={6}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        {/* Post-MVP: Service Offerings */}
                     </Box>
+                    <Suspense fallback={<MySkeletonComponent />}>
+                        <NetworkContent
+                            dataCustodianNetworkId={+dataCustodianNetworkId}
+                        />
+                    </Suspense>
                 </>
             }
         />
