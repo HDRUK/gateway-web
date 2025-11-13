@@ -16,7 +16,8 @@ export default function ThemeRegistry({
     children: React.ReactNode;
     isIframe?: boolean;
 }) {
-    const isHome = !isIframe && useIsHomePage();
+    const homeRoute = useIsHomePage();
+    const isHome = !isIframe && homeRoute;
 
     return (
         <NextAppDirEmotionCacheProvider options={{ key: "mui" }}>

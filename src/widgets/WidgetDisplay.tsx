@@ -121,8 +121,8 @@ export default function WidgetDisplay({
                         <Typography>
                             <Typography
                                 component="span"
-                                sx={{ fontWeight: 600, mr: 1 }}>
-                                {TRANSLATIONS.footerTtle}
+                                sx={{ fontWeight: 600 }}>
+                                {TRANSLATIONS.footerTtle}{" "}
                             </Typography>
                             {TRANSLATIONS.footerDesc}
                         </Typography>
