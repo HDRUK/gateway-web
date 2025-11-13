@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Grid, TextareaAutosize, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -50,9 +51,13 @@ const WidgetPreview = ({
         notificationService.apiSuccess(t("codeCopied"));
     };
 
-    const generateWidgetCode = () => {
-        return `<div id="HDRGatewayWidget"/><script type="module" crossOrigin="anonymous" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" />`;
-    };
+    const generateWidgetCode = useMemo(() => {
+        if (data) {
+            return `<div style="position:relative;width:${data?.widget.size_width}${data?.widget.unit};height:${data?.widget.size_height}${data?.widget.unit};max-width:'100%'"><iframe id="HDRGatewayWidget" title="Data Sets" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" allowfullscreen=""></iframe></div>
+        `;
+        }
+        return "";
+    }, [data, teamId, widgetId]);
 
     return (
         <Paper sx={{ p: 3 }}>
@@ -80,10 +85,10 @@ const WidgetPreview = ({
                             padding: theme.spacing(2),
                         }}
                         aria-label="Widget code"
-                        defaultValue={generateWidgetCode()}
+                        defaultValue={generateWidgetCode}
                     />
                     <Button
-                        onClick={() => copyToClipboard(generateWidgetCode())}
+                        onClick={() => copyToClipboard(generateWidgetCode)}
                         sx={{ mt: 1 }}>
                         {t("copyCode")}
                     </Button>
