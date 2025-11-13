@@ -33,7 +33,7 @@ export default async function Widget({ params }: WidgetProps) {
     const { data } = await response.json();
 
     return (
-        <html lang="en">
+        <html>
             <body>
                 <ThemeRegistry isIframe>
                     <WidgetDisplay data={data} isIframe />
