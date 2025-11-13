@@ -17,10 +17,15 @@ interface NetworkContentProps {
 const NetworkContent = async ({
     dataCustodianNetworkId,
 }: NetworkContentProps): Promise<ReactElement> => {
-    const [{ data: summaryData }, { data: oldsummaryData }] = await Promise.all(
+    const [
+        { data: custodiansSummaryData },
+        { data: datasetsSummaryData },
+        { data: entitiesSummaryData },
+    ] = await Promise.all(
         [
-            `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`,
             `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`,
+            `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/datasets_summary`,
+            `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`,
         ].map(async url => {
             const resp = await fetch(url);
             if (!resp.ok) {
@@ -38,31 +43,31 @@ const NetworkContent = async ({
                 gap: 2,
             }}>
             <DataCustodianContent
-                dataCustodians={oldsummaryData.teams_counts}
+                dataCustodians={custodiansSummaryData.teams_counts}
                 anchorIndex={1}
             />
             <DatasetsContent
-                datasets={summaryData.datasets}
+                datasets={datasetsSummaryData.datasets}
                 anchorIndex={2}
                 translationPath={TRANSLATION_PATH}
             />
             <DataUsesContent
-                datauses={summaryData.durs}
+                datauses={entitiesSummaryData.durs}
                 anchorIndex={3}
                 translationPath={TRANSLATION_PATH}
             />
             <ToolsContent
-                tools={summaryData.tools}
+                tools={entitiesSummaryData.tools}
                 anchorIndex={4}
                 translationPath={TRANSLATION_PATH}
             />
             <PublicationsContent
-                publications={summaryData.publications}
+                publications={entitiesSummaryData.publications}
                 anchorIndex={5}
                 translationPath={TRANSLATION_PATH}
             />
             <CollectionsContent
-                collections={summaryData.collections}
+                collections={entitiesSummaryData.collections}
                 anchorIndex={6}
                 translationPath={TRANSLATION_PATH}
             />
