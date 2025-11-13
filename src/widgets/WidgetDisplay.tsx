@@ -72,7 +72,7 @@ export default function WidgetDisplay({
         <Box
             sx={{
                 width: isIframe ? "100%" : `${size_width}${unit}`,
-                height: isIframe ? "100%" : `${size_height}${unit}`,
+                height: `${size_width}${unit}`,
                 overflow: "hidden",
                 backgroundColor: theme.palette.grey[100],
                 color: colors.grey900,
