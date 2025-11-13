@@ -1528,9 +1528,8 @@
         },
         "SupportPopOut": {
             "buttonText": "Need support?",
-            "giveFeedback": "Give feedback",
-            "reportBug": "Report bug",
-            "requestSupport": "Request support",
+            "giveFeedback": "Share feedback",
+            "reportBug": "Get Help / Report an Issue",
             "visitSupportCentre": "Visit Support Centre"
         },
         "ShowMore": {
