@@ -39,7 +39,7 @@ export default function DataCustodianContent({
                     collections_count,
                     durs_count,
                 }) => (
-                    <Fragment key="data-custodian">
+                    <Fragment key={`data-custodian-${id}`}>
                         <Link
                             href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}
                             style={{ textDecoration: "none" }}>
