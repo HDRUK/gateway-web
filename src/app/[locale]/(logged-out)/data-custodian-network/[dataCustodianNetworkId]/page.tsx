@@ -1,11 +1,8 @@
-import { ReactElement, Suspense } from "react";
-import { Skeleton } from "@mui/material";
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
@@ -18,6 +15,7 @@ import DataCustodianOuter from "./components/DataCustodianOuter";
 import DatasetsOuter from "./components/DatasetsOuter";
 import IntroductionContent from "./components/IntroductionContent";
 import NetworkContent from "./components/NetworkContent";
+import { NetworkSkeleton, SectionSkeleton } from "./components/Skeletons";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
@@ -26,67 +24,6 @@ export const metadata = metaData({
     title: "Data Custodian Network",
     description: "",
 });
-
-const SkeletonAccordian = ({ title }: { title: string }) => {
-    return (
-        <Accordion
-            variant="plain"
-            noIndent
-            elevation={0}
-            heading={<Typography variant="h3">{title}</Typography>}
-            defaultExpanded
-            contents={
-                <BoxContainer
-                    sx={{
-                        gridTemplateColumns: {
-                            mobile: "repeat(1, 1fr)",
-                            desktop: "repeat(3, 1fr)",
-                        },
-                        gap: 2,
-                    }}>
-                    {[...Array(6).keys()].map(() => (
-                        <Skeleton
-                            key={`${title}-skeleton`}
-                            variant="rectangular"
-                            height={154}
-                            sx={{ bgcolor: "white" }}
-                        />
-                    ))}
-                </BoxContainer>
-            }
-        />
-    );
-};
-
-const NetworkSkeleton = (): ReactElement => {
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-            }}>
-            <SkeletonAccordian title="Data Uses" />
-            <SkeletonAccordian title="Analysis Scripts & Software" />
-            <SkeletonAccordian title="Publications" />
-            <SkeletonAccordian title="Collections" />
-        </Box>
-    );
-};
-
-const SectionSkeleton = ({ title }: { title: string }): ReactElement => {
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                pb: 0,
-            }}>
-            <SkeletonAccordian title={title} />
-        </Box>
-    );
-};
 
 export default async function DataCustodianNetworkPage({
     params,
