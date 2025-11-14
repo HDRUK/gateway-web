@@ -16,7 +16,14 @@ const NetworkContent = async ({
     dataCustodianNetworkId,
 }: NetworkContentProps): Promise<ReactElement> => {
     const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`
+        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`,
+        {
+            next: {
+                revalidate: 180,
+                tags: ["all", `entities_summary-${dataCustodianNetworkId}`],
+            },
+            cache: "force-cache",
+        }
     );
     if (!resp.ok) {
         throw new Error("Failed to fetch network data");

@@ -94,7 +94,14 @@ const DataCustodianOuterContent = async ({
     dataCustodianNetworkId: number;
 }): Promise<ReactElement> => {
     const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`
+        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`,
+        {
+            next: {
+                revalidate: 180,
+                tags: ["all", `custodians_summary-${dataCustodianNetworkId}`],
+            },
+            cache: "force-cache",
+        }
     );
     if (!resp.ok) {
         throw new Error("Failed to fetch network data");
@@ -122,7 +129,14 @@ const DatasetsOuterContent = async ({
     dataCustodianNetworkId: number;
 }): Promise<ReactElement> => {
     const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/datasets_summary`
+        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/datasets_summary`,
+        {
+            next: {
+                revalidate: 180,
+                tags: ["all", `datasets_summary-${dataCustodianNetworkId}`],
+            },
+            cache: "force-cache",
+        }
     );
     if (!resp.ok) {
         throw new Error("Failed to fetch network data");
