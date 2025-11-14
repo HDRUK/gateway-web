@@ -2,7 +2,7 @@
 
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
+import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 
@@ -10,7 +10,7 @@ const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.IntroductionContent";
 
 export interface IntroductionContentProps {
-    networkData: DataCustodianNetwork;
+    networkData: NetworkSummary;
     anchorIndex: number;
 }
 
