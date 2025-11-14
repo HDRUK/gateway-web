@@ -59,7 +59,7 @@ const SkeletonAccordian = ({ title }: { title: string }) => {
     );
 };
 
-const NetworkSkeleton = async (): Promise<ReactElement> => {
+const NetworkSkeleton = (): ReactElement => {
     return (
         <Box
             sx={{
@@ -75,11 +75,7 @@ const NetworkSkeleton = async (): Promise<ReactElement> => {
     );
 };
 
-const SectionSkeleton = async ({
-    title,
-}: {
-    title: string;
-}): Promise<ReactElement> => {
+const SectionSkeleton = ({ title }: { title: string }): ReactElement => {
     return (
         <Box
             sx={{
