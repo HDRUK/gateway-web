@@ -402,6 +402,18 @@ async function getTeamSummary(
     );
 }
 
+async function getNetworkInfo(
+    cookieStore: ReadonlyRequestCookies,
+    networkId: string,
+    options?: GetOptions
+): Promise<NetworkSummary> {
+    return await get<NetworkSummary>(
+        cookieStore,
+        `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/info`,
+        options
+    );
+}
+
 async function getNetworkSummary(
     cookieStore: ReadonlyRequestCookies,
     networkId: string,
@@ -819,6 +831,7 @@ export {
     getFilters,
     getKeywords,
     getFormHydration,
+    getNetworkInfo,
     getNetworkSummary,
     getTeam,
     getTeamIdFromPid,
