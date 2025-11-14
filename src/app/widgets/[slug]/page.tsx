@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import apis from "@/config/apis";
+import { useFeatures } from "@/providers/FeatureProvider";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 
 interface WidgetProps {
@@ -11,6 +12,12 @@ interface WidgetProps {
 }
 
 export default async function Widget({ params }: WidgetProps) {
+    const { isWidgetsEnabled } = useFeatures();
+
+    if (!isWidgetsEnabled) {
+        return notFound();
+    }
+
     const { slug } = params;
 
     const popped = slug.split("-");
