@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import KeyValueList from "./KeyValueList";
 
 const meta: Meta<typeof KeyValueList> = {

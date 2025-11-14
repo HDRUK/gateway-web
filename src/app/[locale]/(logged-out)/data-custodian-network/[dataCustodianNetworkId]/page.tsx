@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
@@ -34,22 +33,14 @@ export default async function DataCustodianNetworkPage({
     const t = await getTranslations(TRANSLATION_PATH);
 
     const { dataCustodianNetworkId } = params;
-    const cookieStore = cookies();
 
-    const summaryData = await getNetworkSummary(
-        cookieStore,
-        dataCustodianNetworkId,
-        {
-            suppressError: true,
-        }
-    );
+    const summaryData = await getNetworkSummary(dataCustodianNetworkId, {
+        suppressError: true,
+    });
 
     if (!summaryData) notFound();
 
-    const networkData = await getDataCustodianNetworks(
-        cookieStore,
-        dataCustodianNetworkId
-    );
+    const networkData = await getDataCustodianNetworks(dataCustodianNetworkId);
 
     const activeLinkList = accordions.map(section => {
         return {

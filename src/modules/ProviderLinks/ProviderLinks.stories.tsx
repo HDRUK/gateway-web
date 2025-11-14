@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import ProviderLinks from "./ProviderLinks";
 
 const meta: Meta<typeof ProviderLinks> = {

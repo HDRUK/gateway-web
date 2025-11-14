@@ -35,13 +35,13 @@ export const metadata = metaData({
         "The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
 });
 
-export default async function RootLayout({
-    children,
-    params: { locale },
-}: {
-    params: { locale: string };
+export default async function RootLayout(props: {
+    params: Promise<{ locale: string }>;
     children: ReactNode;
 }) {
+    const { children, params } = props;
+    const { locale } = await params;
+
     let messages;
     let homePageBanner: HomepageBannerNode[] = [];
     try {

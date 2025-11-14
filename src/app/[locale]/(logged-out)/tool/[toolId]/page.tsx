@@ -1,6 +1,5 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
@@ -30,8 +29,7 @@ export default async function ToolPage({
     const t = await getTranslations(TRANSLATION_PATH);
 
     const { toolId } = params;
-    const cookieStore = cookies();
-    const data = await getReducedTool(cookieStore, toolId, {
+    const data = await getReducedTool(toolId, {
         suppressError: true,
     });
 

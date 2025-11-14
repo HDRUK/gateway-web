@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -22,9 +21,8 @@ export default async function TeamIntegrationsPage({
     params: { teamId: string };
 }) {
     const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 

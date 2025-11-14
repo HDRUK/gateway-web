@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
@@ -33,9 +32,8 @@ export default async function CollectionItemPage({
     params: { collectionId: string };
 }) {
     const { collectionId } = params;
-    const cookieStore = cookies();
     const t = await getTranslations(TRANSLATION_PATH);
-    const collection = await getReducedCollection(cookieStore, collectionId, {
+    const collection = await getReducedCollection(collectionId, {
         suppressError: true,
     });
 

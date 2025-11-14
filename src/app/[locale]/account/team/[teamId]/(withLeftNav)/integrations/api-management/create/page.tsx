@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
@@ -35,9 +34,8 @@ export default async function TeamCreatePage({
     params: { teamId: string };
 }) {
     const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 

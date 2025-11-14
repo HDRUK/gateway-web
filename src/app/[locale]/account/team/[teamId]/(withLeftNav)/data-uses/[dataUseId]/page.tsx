@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -21,9 +20,8 @@ export default async function DataUseEditPage({
     params: { teamId: string };
 }) {
     const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 

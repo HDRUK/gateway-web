@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -36,9 +35,8 @@ export default async function DataCustodianItemPage({
     const t = await getTranslations(TRANSLATION_PATH);
 
     const { dataCustodianId } = params;
-    const cookieStore = cookies();
 
-    const data = await getTeamSummary(cookieStore, dataCustodianId, {
+    const data = await getTeamSummary(dataCustodianId, {
         suppressError: true,
     });
 

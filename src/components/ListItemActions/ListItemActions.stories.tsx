@@ -5,7 +5,7 @@ import {
     ListItemText,
     Paper,
 } from "@mui/material";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { EditIcon } from "@/consts/icons";
 import ListItemActions from "./ListItemActions";
 

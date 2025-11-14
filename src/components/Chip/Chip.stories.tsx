@@ -1,5 +1,5 @@
 import Stack from "@mui/material/Stack";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import ChipComponent from "@/components/Chip";
 
 /** Mui documentation: https://mui.com/material-ui/react-chip/ */

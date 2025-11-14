@@ -1,6 +1,5 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
@@ -27,8 +26,7 @@ export default async function DataUseItemPage({
     const t = await getTranslations(TRANSLATION_PATH);
 
     const { dataUseId } = params;
-    const cookieStore = cookies();
-    const data = await getDataUse(cookieStore, dataUseId, {
+    const data = await getDataUse(dataUseId, {
         suppressError: true,
     });
 

@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
@@ -28,9 +27,8 @@ export default async function DARTemplateListPage({
     searchParams: { page?: string; published?: boolean };
 }) {
     const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
@@ -45,12 +43,11 @@ export default async function DARTemplateListPage({
     }
 
     const darTemplateData = await getDarTemplates(
-        cookieStore,
         teamId,
         queryPublished.toString()
     );
 
-    const darTemplatesCount = await getDarTemplatesCount(cookieStore, teamId);
+    const darTemplatesCount = await getDarTemplatesCount(teamId);
 
     if (!darTemplateData) {
         notFound();
