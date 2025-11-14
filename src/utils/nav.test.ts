@@ -6,7 +6,7 @@ describe("Nav utils", () => {
         const teamId = "123";
 
         it("should include Team Management item with href", () => {
-            const navItems = getTeamNav({ "roles.read": true }, teamId);
+            const navItems = getTeamNav({ "roles.read": true }, teamId, {});
             const teamManagementItem = navItems.find(
                 item => item.label === "Team Management"
             );
@@ -18,7 +18,7 @@ describe("Nav utils", () => {
         });
 
         it("should include Datasets item", () => {
-            const navItems = getTeamNav({ "datasets.read": true }, teamId);
+            const navItems = getTeamNav({ "datasets.read": true }, teamId, {});
             const datasetsItem = navItems.find(
                 item => item.label === "Datasets"
             );
@@ -72,7 +72,7 @@ describe("Nav utils", () => {
         // });
 
         it("should include Data Uses item", () => {
-            const navItems = getTeamNav({ "dur.update": true }, teamId);
+            const navItems = getTeamNav({ "dur.update": true }, teamId, {});
             const dataUsesItem = navItems.find(
                 item => item.label === "Data Uses"
             );
@@ -84,7 +84,11 @@ describe("Nav utils", () => {
         });
 
         it("should include API management", () => {
-            const navItems = getTeamNav({ "applications.read": true }, teamId);
+            const navItems = getTeamNav(
+                { "applications.read": true },
+                teamId,
+                {}
+            );
             const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
             );
@@ -105,7 +109,8 @@ describe("Nav utils", () => {
         it("should include Integrations", () => {
             const navItems = getTeamNav(
                 { "integrations.metadata": true, "integrations.dar": true },
-                teamId
+                teamId,
+                {}
             );
             const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
@@ -125,7 +130,7 @@ describe("Nav utils", () => {
         });
 
         it("should include Help item", () => {
-            const navItems = getTeamNav({}, teamId);
+            const navItems = getTeamNav({}, teamId, {});
             const helpItem = navItems.find(item => item.label === "Help");
 
             expect(helpItem).toBeDefined();

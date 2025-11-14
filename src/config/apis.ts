@@ -88,6 +88,8 @@ const apis = {
     doiSearchV1Url: `${apiV1Url}/search/doi`,
     aliasesV1Url: `${apiV1Url}/aliases`,
     licensesV1URL: `${apiV1Url}/licenses`,
+    widgetsV1Url: `${apiV1Url}/widgets`,
+    widgetsV1UrlIP: `${apiV1IPUrl}/widgets`,
 };
 
 export default apis;

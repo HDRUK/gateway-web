@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -14,7 +15,7 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
+import { AspectRatioImage } from "@/consts/image";
 import { getTeamSummary } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
@@ -69,13 +70,14 @@ export default async function DataCustodianItemPage({
                         {data.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                        <Image
                             width={554}
                             height={250}
                             alt={data.name}
                             src={
                                 data?.team_logo || StaticImages.BASE.placeholder
                             }
+                            style={AspectRatioImage}
                         />
                     </Box>
                     <ActionBar

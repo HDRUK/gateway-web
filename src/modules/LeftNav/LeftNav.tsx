@@ -16,6 +16,7 @@ import { colors } from "@/config/theme";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -33,8 +34,10 @@ interface LeftNavProps {
 }
 
 const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
+    const features = useFeatures();
+
     const navItems = teamId
-        ? getTeamNav(permissions, teamId)
+        ? getTeamNav(permissions, teamId, features)
         : getProfileNav(permissions);
 
     const params = useParams<{ locale: string }>();
