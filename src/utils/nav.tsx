@@ -109,8 +109,11 @@ const getTeamNav = (
     permissions: {
         [key: string]: boolean;
     },
-    teamId: string | undefined
+    teamId: string | undefined,
+    features: { [key: string]: boolean }
 ): LeftNavItem[] => {
+    const { isWidgetsEnabled } = features;
+
     return [
         ...(permissions["roles.read"]
             ? [
@@ -150,7 +153,7 @@ const getTeamNav = (
                                     },
                                 ]
                               : []),
-                          ...(permissions["widgets.read"]
+                          ...(permissions["widgets.read"] && isWidgetsEnabled
                               ? [
                                     {
                                         label: "Widgets",

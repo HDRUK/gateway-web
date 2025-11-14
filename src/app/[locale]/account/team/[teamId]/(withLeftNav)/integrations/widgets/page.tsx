@@ -1,12 +1,14 @@
 import { Typography } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import { useFeatures } from "@/providers/FeatureProvider";
 import CreateNewWidget from "./components/CreateNewWidget";
 import WidgetList from "./components/WidgetList";
 
@@ -31,6 +33,11 @@ export default async function WidgetsPage({
     const team = await getTeam(cookieStore, teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
+    const { isWidgetsEnabled } = useFeatures();
+
+    if (!isWidgetsEnabled) {
+        return notFound();
+    }
 
     return (
         <ProtectedAccountRoute

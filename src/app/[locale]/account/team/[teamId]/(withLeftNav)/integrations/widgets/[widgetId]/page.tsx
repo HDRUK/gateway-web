@@ -8,6 +8,7 @@ import { getTeam, getTeamNames, getUser, getWidget } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import { useFeatures } from "@/providers/FeatureProvider";
 import WidgetCreator from "./components/WidgetCreator";
 
 export const metadata = metaData(
@@ -32,6 +33,11 @@ export default async function WidgetCreationPage({
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
     const t = await getTranslations(TRANSLATION_PATH);
+    const { isWidgetsEnabled } = useFeatures();
+
+    if (!isWidgetsEnabled) {
+        return notFound();
+    }
 
     let widgetData;
 
