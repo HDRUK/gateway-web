@@ -6,17 +6,16 @@ import { notFound } from "next/navigation";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
 import { getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
-import DataCustodianContent from "./components/DataCustodianContent";
+import DataCustodianOuter from "./components/DataCustodianOuter";
+import DatasetsOuter from "./components/DatasetsOuter";
 import IntroductionContent from "./components/IntroductionContent";
 import NetworkContent from "./components/NetworkContent";
 import { accordions } from "./config";
@@ -47,7 +46,7 @@ const SkeletonAccordian = ({ title }: { title: string }) => {
                     }}>
                     {[...Array(6).keys()].map(() => (
                         <Skeleton
-                            key="data-custodian"
+                            key={`${title}-skeleton`}
                             variant="rectangular"
                             height={154}
                             sx={{ bgcolor: "white" }}
@@ -84,77 +83,6 @@ const SectionSkeleton = ({ title }: { title: string }): ReactElement => {
                 gap: 2,
             }}>
             <SkeletonAccordian title={title} />
-        </Box>
-    );
-};
-
-const DataCustodianOuterContent = async ({
-    dataCustodianNetworkId,
-}: {
-    dataCustodianNetworkId: number;
-}): Promise<ReactElement> => {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `custodians_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: custodiansSummaryData } = await resp.json();
-
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-            }}>
-            <DataCustodianContent
-                dataCustodians={custodiansSummaryData.teams_counts}
-                anchorIndex={1}
-            />
-        </Box>
-    );
-};
-
-const DatasetsOuterContent = async ({
-    dataCustodianNetworkId,
-}: {
-    dataCustodianNetworkId: number;
-}): Promise<ReactElement> => {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/datasets_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `datasets_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: datasetsSummaryData } = await resp.json();
-
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-            }}>
-            <DatasetsContent
-                datasets={datasetsSummaryData.datasets}
-                anchorIndex={2}
-                translationPath={TRANSLATION_PATH}
-            />
         </Box>
     );
 };
@@ -214,12 +142,12 @@ export default async function DataCustodianNetworkPage({
                     </Box>
                     <Suspense
                         fallback={<SectionSkeleton title="Data Custodians" />}>
-                        <DataCustodianOuterContent
+                        <DataCustodianOuter
                             dataCustodianNetworkId={+dataCustodianNetworkId}
                         />
                     </Suspense>
                     <Suspense fallback={<SectionSkeleton title="Datasets" />}>
-                        <DatasetsOuterContent
+                        <DatasetsOuter
                             dataCustodianNetworkId={+dataCustodianNetworkId}
                         />
                     </Suspense>
