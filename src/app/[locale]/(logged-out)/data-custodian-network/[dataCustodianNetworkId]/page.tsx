@@ -81,6 +81,7 @@ const SectionSkeleton = ({ title }: { title: string }): ReactElement => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
+                pb: 0,
             }}>
             <SkeletonAccordian title={title} />
         </Box>

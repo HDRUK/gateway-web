@@ -31,6 +31,7 @@ export default async function DatasetsOuter({
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
+                pb: 0,
             }}>
             <DatasetsContent
                 datasets={datasetsSummaryData.datasets}

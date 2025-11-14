@@ -29,6 +29,7 @@ export default async function DataCustodianOuter({
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
+                pb: 0,
             }}>
             <DataCustodianContent
                 dataCustodians={custodiansSummaryData.teams_counts}
