@@ -390,6 +390,18 @@ async function getTeamIdFromPid(
     return await get<string>(cookieStore, `${apis.teamsV1UrlIP}/${teamPid}/id`);
 }
 
+async function getTeamInfo(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    options?: GetOptions
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/info`,
+        options
+    );
+}
+
 async function getTeamSummary(
     cookieStore: ReadonlyRequestCookies,
     teamId: string,
@@ -398,6 +410,18 @@ async function getTeamSummary(
     return await get<TeamSummary>(
         cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/summary`,
+        options
+    );
+}
+
+async function getTeamDatasetsSummary(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    options?: GetOptions
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/datasets_summary`,
         options
     );
 }
@@ -835,7 +859,9 @@ export {
     getNetworkSummary,
     getTeam,
     getTeamIdFromPid,
+    getTeamInfo,
     getTeamSummary,
+    getTeamDatasetsSummary,
     getTool,
     getUser,
     getUserFromCookie,
