@@ -27,7 +27,9 @@ import dataCustodianPreview from "@/public/images/widgets/data_custodian.png";
 import dataUsePreview from "@/public/images/widgets/data_use.png";
 import datasetsPreview from "@/public/images/widgets/datasets.png";
 
-type TemplateValue = "custodian" | "datasets" | "datauses" | "blank";
+import { DATASETS, DATA_USES, CUSTODIAN} from "@/consts/translation"
+
+type TemplateValue = typeof CUSTODIAN | typeof DATASETS | typeof DATA_USES | "blank";
 
 type TemplateOption = {
     value: TemplateValue;
@@ -38,21 +40,21 @@ type TemplateOption = {
 
 const OPTIONS: TemplateOption[] = [
     {
-        value: "custodian",
+        value: CUSTODIAN,
         title: "Data Custodian widget",
         description:
             "This widget allows users to show users your catalogue of datasets, data uses , publications etc from the Gateway.",
         thumbnail: dataCustodianPreview.src,
     },
     {
-        value: "datasets",
+        value: DATASETS,
         title: "Datasets search widget",
         description:
             "This widget allows users to search Datasets across the Gateway.",
         thumbnail: datasetsPreview.src,
     },
     {
-        value: "datauses",
+        value: DATA_USES,
         title: "Data Uses search widget",
         description:
             "This widget allows users to search Data Uses across the Gateway.",

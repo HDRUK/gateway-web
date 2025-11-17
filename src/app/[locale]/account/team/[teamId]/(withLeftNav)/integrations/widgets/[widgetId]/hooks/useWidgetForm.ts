@@ -13,6 +13,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
 import { DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
+import { CUSTODIAN, DATA_USES, DATASETS } from "@/consts/translation";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
@@ -53,7 +54,7 @@ export default function useWidgetForm(
             permitted_domains: [],
             keep_proportions: false,
             include_search_bar:
-                templateType === "datasets" || templateType === "datauses",
+                templateType === DATASETS || templateType === DATA_USES,
             include_cohort_link: false,
             size_width: 600,
             size_height: 740,
@@ -61,20 +62,20 @@ export default function useWidgetForm(
             widget_name: "",
             ...widget,
             has_datasets:
-                templateType === "custodian" || templateType === "datasets"
+                templateType === CUSTODIAN || templateType === DATASETS
                     ? true
                     : widget?.included_datasets?.length,
             has_data_custodians: true,
             has_datauses:
-                templateType === "custodian" || templateType === "datauses"
+                templateType === CUSTODIAN || templateType === DATA_USES
                     ? true
                     : widget?.included_data_uses?.length,
             has_scripts:
-                templateType === "custodian"
+                templateType === CUSTODIAN
                     ? true
                     : widget?.included_scripts?.length,
             has_collections:
-                templateType === "custodian"
+                templateType === CUSTODIAN
                     ? true
                     : widget?.included_collections?.length,
         }),
