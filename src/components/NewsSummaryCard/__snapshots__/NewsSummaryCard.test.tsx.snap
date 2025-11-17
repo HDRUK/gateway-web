@@ -4,17 +4,18 @@ exports[`NewsSummaryCard should render component 1`] = `
 <div>
   <article
     aria-describedby=":r0:"
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-120eg3o-MuiPaper-root-MuiCard-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-hep7cc-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <img
       alt="Image alt text"
-      class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img mui-style-o69gx8-MuiCardMedia-root"
+      class="MuiCardMedia-root MuiCardMedia-media MuiCardMedia-img mui-style-1kuwa16-MuiCardMedia-root"
       height="225px"
       src="/images/account/teams/integrations/create.jpg"
     />
     <div
       aria-label="01 January 2023"
-      class="mui-style-1sn3vv7"
+      class="mui-style-1gqr2ff"
     >
       <div>
         Jan
@@ -24,23 +25,23 @@ exports[`NewsSummaryCard should render component 1`] = `
       </div>
     </div>
     <div
-      class="MuiCardContent-root mui-style-46bh2p-MuiCardContent-root"
+      class="MuiCardContent-root mui-style-1lt5qva-MuiCardContent-root"
     >
       <div
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-1n7om1r-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-1y0isbd-MuiTypography-root"
         id=":r0:"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-yyl2fl-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-17im13r-MuiTypography-root"
         >
           This is a headline
         </p>
       </div>
       <div
-        class="MuiTypography-root MuiTypography-body2 mui-style-1qlfv52-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-n936ne-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-o2cank-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-jz7w5o-MuiTypography-root"
         >
           Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
         </p>
@@ -49,7 +50,7 @@ exports[`NewsSummaryCard should render component 1`] = `
         class="MuiBox-root mui-style-164r41r"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover mui-style-zky3v8-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover mui-style-1h9evuv-MuiTypography-root-MuiLink-root"
           href="https://www.healthdatagateway.org/"
           rel="noopener"
           target="_blank"
