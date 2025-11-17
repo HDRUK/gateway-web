@@ -52,6 +52,22 @@ const NetworkSkeleton = (): ReactElement => {
     );
 };
 
+const DataCustodianEntitiesSkeleton = (): ReactElement => {
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+            }}>
+            <SkeletonAccordian title="Collections" />
+            <SkeletonAccordian title="Analysis Scripts & Software" />
+            <SkeletonAccordian title="Data Uses" />
+            <SkeletonAccordian title="Publications" />
+        </Box>
+    );
+};
+
 const SectionSkeleton = ({ title }: { title: string }): ReactElement => {
     return (
         <Box
@@ -66,4 +82,4 @@ const SectionSkeleton = ({ title }: { title: string }): ReactElement => {
     );
 };
 
-export { NetworkSkeleton, SectionSkeleton };
+export { NetworkSkeleton, DataCustodianEntitiesSkeleton, SectionSkeleton };
