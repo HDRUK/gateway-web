@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
@@ -15,7 +16,6 @@ import DataCustodianOuter from "./components/DataCustodianOuter";
 import DatasetsOuter from "./components/DatasetsOuter";
 import IntroductionContent from "./components/IntroductionContent";
 import NetworkContent from "./components/NetworkContent";
-import { NetworkSkeleton, SectionSkeleton } from "./components/Skeletons";
 import { accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
