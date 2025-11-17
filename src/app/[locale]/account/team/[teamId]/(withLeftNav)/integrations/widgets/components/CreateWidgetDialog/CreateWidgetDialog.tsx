@@ -23,9 +23,9 @@ import ModalButtons from "@/components/ModalButtons";
 import StyledRadio from "@/components/StyledRadio";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
-import dataCustodianPreview from "../../../../../../../../../../../public/images/widgets/data_custodian.png";
-import dataUsePreview from "../../../../../../../../../../../public/images/widgets/data_use.png";
-import datasetsPreview from "../../../../../../../../../../../public/images/widgets/datasets.png";
+import dataCustodianPreview from "@/public/images/widgets/data_custodian.png";
+import dataUsePreview from "@/public/images/widgets/data_use.png";
+import datasetsPreview from "@/public/images/widgets/datasets.png";
 
 type TemplateValue = "custodian" | "datasets" | "datauses" | "blank";
 
