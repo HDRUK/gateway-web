@@ -31,11 +31,11 @@ export const metadata = metaData(
 export default async function DarApplicationPage({
     params,
 }: {
-    params: { applicationId: string; teamId: string };
+    params: Promise<{ applicationId: string; teamId: string }>;
 }) {
     const isResearcher = false;
 
-    const { applicationId, teamId } = params;
+    const { applicationId, teamId } = await params;
 
     const user = await getUser();
 

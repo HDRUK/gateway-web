@@ -41,9 +41,9 @@ const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 export default async function DatasetItemPage({
     params,
 }: {
-    params: { datasetId: string };
+    params: Promise<{ datasetId: string }>;
 }) {
-    const { datasetId } = params;
+    const { datasetId } = await params;
 
     const data = await getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
         suppressError: true,

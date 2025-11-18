@@ -12,9 +12,9 @@ export const metadata = metaData(
 export default async function ToolCreatePage({
     params,
 }: {
-    params: { toolId: string };
+    params: Promise<{ toolId: string }>;
 }) {
-    const { toolId } = params;
+    const { toolId } = await params;
     const user = await getUser();
 
     return <CreateTool userId={user.id} toolId={toolId} />;

@@ -6,14 +6,15 @@ import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { RouteName } from "@/consts/routeName";
 import EditTemplate from "./components/EditTemplate";
 
-const CreateFileTemplatePage = ({
+const CreateFileTemplatePage = async ({
     params,
 }: {
-    params: { teamId: string; templateId: string };
+    params: Promise<{ teamId: string; templateId: string }>;
 }) => {
     const router = useRouter();
+    const { teamId, templateId } = await params;
 
-    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params.teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`;
+    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`;
 
     const onClick = () => {
         router.push(backHref);
@@ -22,10 +23,7 @@ const CreateFileTemplatePage = ({
     return (
         <ProtectedAccountRoute loggedInOnly>
             <BackButton onClick={onClick} label="Back to DAR admin" />
-            <EditTemplate
-                templateId={params.templateId}
-                teamId={params.teamId}
-            />
+            <EditTemplate templateId={templateId} teamId={teamId} />
         </ProtectedAccountRoute>
     );
 };

@@ -30,10 +30,10 @@ export default async function TeamDatasetPage({
     params,
     searchParams,
 }: {
-    params: { teamId: string; status: string; datasetId: string };
+    params: Promise<{ teamId: string; status: string; datasetId: string }>;
     searchParams: { [key: string]: string | undefined };
 }) {
-    const { teamId } = params;
+    const { teamId, datasetId } = await params;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
@@ -41,8 +41,8 @@ export default async function TeamDatasetPage({
 
     const isDraft = searchParams.status === DataStatus.DRAFT;
     const dataset = await getTeamDataset(
-        params.teamId,
-        params.datasetId,
+        teamId,
+        datasetId,
         isDraft ? "" : SCHEMA_NAME,
         isDraft ? "" : SCHEMA_VERSION
     );

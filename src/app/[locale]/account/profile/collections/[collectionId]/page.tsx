@@ -13,9 +13,9 @@ export const metadata = metaData(
 export default async function CollectionEditPage({
     params,
 }: {
-    params: { collectionId: string };
+    params: Promise<{ collectionId: string }>;
 }) {
-    const { collectionId } = params;
+    const { collectionId } = await params;
     const user = await getUser();
     const userId = user?.id?.toString();
     const keywords = await getKeywords();

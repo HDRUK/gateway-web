@@ -28,11 +28,11 @@ export const metadata = metaData({
 export default async function DataCustodianNetworkPage({
     params,
 }: {
-    params: { dataCustodianNetworkId: string };
+    params: Promise<{ dataCustodianNetworkId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataCustodianNetworkId } = params;
+    const { dataCustodianNetworkId } = await params;
 
     const summaryData = await getNetworkSummary(dataCustodianNetworkId, {
         suppressError: true,

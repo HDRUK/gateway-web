@@ -15,9 +15,9 @@ export const metadata = metaData(
 export default async function PublicationTeamsEditPage({
     params,
 }: {
-    params: { publicationId: string; teamId: string };
+    params: Promise<{ publicationId: string; teamId: string }>;
 }) {
-    const { publicationId, teamId } = params;
+    const { publicationId, teamId } = await params;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);

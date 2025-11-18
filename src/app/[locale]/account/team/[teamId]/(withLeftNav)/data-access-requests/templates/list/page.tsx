@@ -23,10 +23,10 @@ export default async function DARTemplateListPage({
     params,
     searchParams,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
     searchParams: { page?: string; published?: boolean };
 }) {
-    const { teamId } = params;
+    const { teamId } = await params;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);

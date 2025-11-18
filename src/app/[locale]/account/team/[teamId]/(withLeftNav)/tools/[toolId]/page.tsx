@@ -15,9 +15,9 @@ export const metadata = metaData(
 export default async function ToolCreatePage({
     params,
 }: {
-    params: { teamId: string; toolId: string };
+    params: Promise<{ teamId: string; toolId: string }>;
 }) {
-    const { teamId, toolId } = params;
+    const { teamId, toolId } = await params;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);

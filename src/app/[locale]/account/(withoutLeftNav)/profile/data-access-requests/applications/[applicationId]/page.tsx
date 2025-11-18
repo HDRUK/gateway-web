@@ -32,10 +32,10 @@ export default async function DarApplicationPage({
     params,
     searchParams,
 }: {
-    params: { applicationId: string };
+    params: Promise<{ applicationId: string }>;
     searchParams: { teamId: string };
 }) {
-    const { applicationId } = params;
+    const { applicationId } = await params;
     const { teamId } = searchParams;
 
     const user = await getUserFromCookie();

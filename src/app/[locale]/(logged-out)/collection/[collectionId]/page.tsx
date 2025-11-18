@@ -29,9 +29,9 @@ const TRANSLATION_PATH = "pages.collection";
 export default async function CollectionItemPage({
     params,
 }: {
-    params: { collectionId: string };
+    params: Promise<{ collectionId: string }>;
 }) {
-    const { collectionId } = params;
+    const { collectionId } = await params;
     const t = await getTranslations(TRANSLATION_PATH);
     const collection = await getReducedCollection(collectionId, {
         suppressError: true,

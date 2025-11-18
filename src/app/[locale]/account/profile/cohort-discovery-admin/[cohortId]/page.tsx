@@ -19,9 +19,9 @@ export const metadata = metaData(
 export default async function CohortDiscoveryManage({
     params,
 }: {
-    params: { cohortId: string };
+    params: Promise<{ cohortId: string }>;
 }) {
-    const { cohortId } = params;
+    const { cohortId } = await params;
     const user = await getUser();
     const permissions = await getPermissions(user.roles);
     const cohortRequest = await getCohort(cohortId);

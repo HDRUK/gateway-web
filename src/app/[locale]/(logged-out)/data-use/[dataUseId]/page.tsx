@@ -21,11 +21,11 @@ export const metadata = metaData({
 export default async function DataUseItemPage({
     params,
 }: {
-    params: { dataUseId: string };
+    params: Promise<{ dataUseId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataUseId } = params;
+    const { dataUseId } = await params;
     const data = await getDataUse(dataUseId, {
         suppressError: true,
     });

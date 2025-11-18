@@ -17,9 +17,9 @@ export const metadata = metaData(
 export default async function TeamApiEditCreatePage({
     params,
 }: {
-    params: { teamId: string; apiId: string };
+    params: Promise<{ teamId: string; apiId: string }>;
 }) {
-    const { teamId, apiId } = params;
+    const { teamId, apiId } = await params;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);

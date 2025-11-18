@@ -24,11 +24,11 @@ export const metadata = metaData({
 export default async function ToolPage({
     params,
 }: {
-    params: { toolId: string };
+    params: Promise<{ toolId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { toolId } = params;
+    const { toolId } = await params;
     const data = await getReducedTool(toolId, {
         suppressError: true,
     });

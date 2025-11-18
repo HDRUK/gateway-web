@@ -30,11 +30,11 @@ export const metadata = metaData({
 export default async function DataCustodianItemPage({
     params,
 }: {
-    params: { dataCustodianId: string };
+    params: Promise<{ dataCustodianId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataCustodianId } = params;
+    const { dataCustodianId } = await params;
 
     const data = await getTeamSummary(dataCustodianId, {
         suppressError: true,

@@ -12,10 +12,10 @@ export default async function AccountTeamLayout({
     children,
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
     children: React.ReactNode;
 }) {
-    const { teamId } = params;
+    const { teamId } = await params;
     const user = await getUser();
     const team = await getTeam(teamId);
     const foundUser = getTeamUser(team?.users, user?.id);
