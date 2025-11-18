@@ -30,8 +30,8 @@ export default function PublicationContent({
             })}
             defaultExpanded={publications.length > 0}
             contents={publications.map(
-                ({ paper_title, authors, url, year_of_publication }) => (
-                    <Fragment key={`publication_${paper_title}`}>
+                ({ id, paper_title, authors, url, year_of_publication }) => (
+                    <Fragment key={`publication_${id}`}>
                         <Link component="a" href={url} target="_blank">
                             {paper_title}
                         </Link>

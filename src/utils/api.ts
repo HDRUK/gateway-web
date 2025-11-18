@@ -366,12 +366,48 @@ async function getTeamIdFromPid(teamPid: string): Promise<string> {
     return await get<string>(`${apis.teamsV1UrlIP}/${teamPid}/id`);
 }
 
+async function getTeamInfo(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    options?: GetOptions
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/info`,
+        options
+    );
+}
+
 async function getTeamSummary(
     teamId: string,
     options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
         `${apis.teamsV1UrlIP}/${teamId}/summary`,
+        options
+    );
+}
+
+async function getTeamDatasetsSummary(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    options?: GetOptions
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/datasets_summary`,
+        options
+    );
+}
+
+async function getNetworkInfo(
+    cookieStore: ReadonlyRequestCookies,
+    networkId: string,
+    options?: GetOptions
+): Promise<NetworkSummary> {
+    return await get<NetworkSummary>(
+        cookieStore,
+        `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/info`,
         options
     );
 }
@@ -742,10 +778,13 @@ export {
     getFilters,
     getKeywords,
     getFormHydration,
+    getNetworkInfo,
     getNetworkSummary,
     getTeam,
     getTeamIdFromPid,
+    getTeamInfo,
     getTeamSummary,
+    getTeamDatasetsSummary,
     getTool,
     getUser,
     getUserFromCookie,
