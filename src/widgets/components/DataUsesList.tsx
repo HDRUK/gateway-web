@@ -8,8 +8,8 @@ import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 
-const GATEWAY_URL = "https://healthdatagateway.org/en";
 const CHARACTER_LIMIT = 35;
 
 const TRANSLATIONS = {
@@ -55,7 +55,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                     justifyContent: "space-between",
                                 }}>
                                 <Link
-                                    href={`${GATEWAY_URL}${RouteName.DATA_USE_ITEM}/${result.id}`}
+                                    href={`${FULL_GATEWAY_URL}${RouteName.DATA_USE_ITEM}/${result.id}`}
                                     fontSize={16}
                                     fontWeight={600}
                                     mb={2}>
@@ -112,7 +112,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                                     characterLimit={
                                                         CHARACTER_LIMIT
                                                     }
-                                                    href={`${GATEWAY_URL}/dataset/${result.dataset.dataset_id}`}
+                                                    href={`${FULL_GATEWAY_URL}/dataset/${result.dataset.dataset_id}`}
                                                     target="_blank"
                                                 />
                                             </Box>
@@ -147,7 +147,7 @@ export default function DataUsesList({ items }: DataUsesListProps) {
                                     </Typography>
                                     {result.team_name ? (
                                         <Link
-                                            href={`${GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
+                                            href={`${FULL_GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
                                             target="_blank">
                                             {result.member_of &&
                                                 `${result.member_of} > `}

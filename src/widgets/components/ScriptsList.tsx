@@ -6,8 +6,7 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import theme, { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
-
-const GATEWAY_URL = "https://healthdatagateway.org/en";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 
 type ScriptsListProps = { items: ScriptItem[] };
 
@@ -35,7 +34,7 @@ export default function ScriptsList({ items }: ScriptsListProps) {
                                     mb: 1.5,
                                 }}>
                                 <Link
-                                    href={`${GATEWAY_URL}/${RouteName.TOOL_ITEM}/${result.id}`}
+                                    href={`${FULL_GATEWAY_URL}/${RouteName.TOOL_ITEM}/${result.id}`}
                                     target="_blank"
                                     fontSize={16}
                                     fontWeight={600}>

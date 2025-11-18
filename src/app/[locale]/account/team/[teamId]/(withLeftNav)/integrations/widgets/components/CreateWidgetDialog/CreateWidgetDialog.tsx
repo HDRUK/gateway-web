@@ -23,13 +23,16 @@ import ModalButtons from "@/components/ModalButtons";
 import StyledRadio from "@/components/StyledRadio";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+import { DATASETS, DATA_USES, CUSTODIAN } from "@/consts/translation";
 import dataCustodianPreview from "@/public/images/widgets/data_custodian.png";
 import dataUsePreview from "@/public/images/widgets/data_use.png";
 import datasetsPreview from "@/public/images/widgets/datasets.png";
 
-import { DATASETS, DATA_USES, CUSTODIAN} from "@/consts/translation"
-
-type TemplateValue = typeof CUSTODIAN | typeof DATASETS | typeof DATA_USES | "blank";
+type TemplateValue =
+    | typeof CUSTODIAN
+    | typeof DATASETS
+    | typeof DATA_USES
+    | "blank";
 
 type TemplateOption = {
     value: TemplateValue;

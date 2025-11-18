@@ -6,10 +6,9 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 import { formatPopulationSize } from "../utils/formatPopulationSize";
 import { formatYearRange } from "../utils/formatYearRange";
-
-const GATEWAY_URL = "https://healthdatagateway.org/en";
 
 const TRANSLATIONS = {
     populationSize: "Dataset population size",
@@ -56,7 +55,7 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                         flexDirection: "column",
                                     }}>
                                     <Link
-                                        href={`${GATEWAY_URL}/${RouteName.DATASET_ITEM}/${result.id}`}
+                                        href={`${FULL_GATEWAY_URL}/${RouteName.DATASET_ITEM}/${result.id}`}
                                         fontSize={16}
                                         fontWeight={600}
                                         mb={0.5}
@@ -65,7 +64,7 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                     </Link>
                                     {result.publisher && (
                                         <Link
-                                            href={`${GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
+                                            href={`${FULL_GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
                                             target="_blank">
                                             <Typography sx={{ mb: 1.5 }}>
                                                 {result.publisher}

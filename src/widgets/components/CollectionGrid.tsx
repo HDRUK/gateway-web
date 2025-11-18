@@ -4,8 +4,8 @@ import { Box, Chip, Link } from "@mui/material";
 import { CollectionItem } from "@/interfaces/Widget";
 import BoxStacked from "@/components/BoxStacked";
 import { colors } from "@/config/theme";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 
-const GATEWAY_URL = "https://healthdatagateway.org/en";
 const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 } as const;
 
 type CollectionsGridProps = { items: CollectionItem[] };
@@ -26,7 +26,7 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                 <BoxStacked key={result.id} sx={boxStackedSX}>
                     <Box
                         component={Link}
-                        href={`${GATEWAY_URL}/collection/${result.id}`}
+                        href={`${FULL_GATEWAY_URL}/collection/${result.id}`}
                         target="_blank"
                         sx={{
                             color: colors.white,

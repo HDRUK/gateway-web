@@ -11,6 +11,7 @@ import {
     DataUseItem,
 } from "@/interfaces/Widget";
 import theme, { colors } from "@/config/theme";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 import CategoryMenu from "./components/CategoryMenu";
 import CollectionsGrid from "./components/CollectionGrid";
 import DataUsesList from "./components/DataUsesList";
@@ -19,8 +20,6 @@ import Header from "./components/Header";
 import ScriptsList from "./components/ScriptsList";
 import { CATEGORIES } from "./consts";
 import useResultsByType from "./hooks/useResultsByType";
-
-const GATEWAY_URL = "https://healthdatagateway.org/en";
 
 const TRANSLATIONS = {
     footerTtle: "Want to dig deeper?",
@@ -87,7 +86,7 @@ export default function WidgetDisplay({
                 }}>
                 <Header
                     includeSearch={!!include_search_bar}
-                    gatewayUrl={GATEWAY_URL}
+                    gatewayUrl={FULL_GATEWAY_URL}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
                     headerSx={{ width: "auto" }}
@@ -127,7 +126,7 @@ export default function WidgetDisplay({
                             {TRANSLATIONS.footerDesc}
                         </Typography>
                         <Button
-                            href={`${GATEWAY_URL}/about/cohort-discovery`}
+                            href={`${FULL_GATEWAY_URL}/about/cohort-discovery`}
                             target="_blank"
                             sx={{
                                 backgroundColor: colors.white,

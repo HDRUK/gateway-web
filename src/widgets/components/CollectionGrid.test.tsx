@@ -1,8 +1,8 @@
 import { CollectionItem } from "@/interfaces/Widget";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 import { render, screen } from "@/utils/testUtils";
 import CollectionsGrid from "./CollectionGrid";
 
-const GATEWAY_URL = "https://healthdatagateway.org/en";
 const FALLBACK_IMG =
     "https://media.prod.hdruk.cloud/static/default_placeholder.png";
 
@@ -35,11 +35,11 @@ describe("CollectionsGrid", () => {
         // Ensure correct hrefs
         expect(screen.getByRole("link", { name: "Alleviate" })).toHaveAttribute(
             "href",
-            `${GATEWAY_URL}/collection/75`
+            `${FULL_GATEWAY_URL}/collection/75`
         );
         expect(
             screen.getByRole("link", { name: "Testing Long Collection Name" })
-        ).toHaveAttribute("href", `${GATEWAY_URL}/collection/159`);
+        ).toHaveAttribute("href", `${FULL_GATEWAY_URL}/collection/159`);
 
         // Opens in new tab
         expect(screen.getByRole("link", { name: "Alleviate" })).toHaveAttribute(

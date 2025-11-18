@@ -12,8 +12,8 @@ import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
-import { DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
 import { CUSTODIAN, DATA_USES, DATASETS } from "@/consts/translation";
+import { DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 

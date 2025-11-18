@@ -1,8 +1,7 @@
 import { DatasetItem } from "@/interfaces/Widget";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
 import { render, screen, within } from "@/utils/testUtils";
 import DatasetsList from "./DatasetsList";
-
-const GATEWAY_URL = "https://healthdatagateway.org/en";
 
 const items: DatasetItem[] = [
     {
@@ -60,15 +59,15 @@ describe("DatasetsList", () => {
 
         expect(
             screen.getByRole("link", { name: "Barts Research Data Extract" })
-        ).toHaveAttribute("href", `${GATEWAY_URL}/dataset/648`);
+        ).toHaveAttribute("href", `${FULL_GATEWAY_URL}/dataset/648`);
 
         expect(
             screen.getByRole("link", { name: "Cerner Millenium EPR" })
-        ).toHaveAttribute("href", `${GATEWAY_URL}/dataset/992`);
+        ).toHaveAttribute("href", `${FULL_GATEWAY_URL}/dataset/992`);
 
         expect(
             screen.getByRole("link", { name: "Historical Register" })
-        ).toHaveAttribute("href", `${GATEWAY_URL}/dataset/1001`);
+        ).toHaveAttribute("href", `${FULL_GATEWAY_URL}/dataset/1001`);
 
         // opens in new tab
         expect(
@@ -84,7 +83,7 @@ describe("DatasetsList", () => {
         });
         expect(publisher1).toHaveAttribute(
             "href",
-            `${GATEWAY_URL}/data-custodian/33`
+            `${FULL_GATEWAY_URL}/data-custodian/33`
         );
         expect(publisher1).toHaveAttribute("target", "_blank");
 
