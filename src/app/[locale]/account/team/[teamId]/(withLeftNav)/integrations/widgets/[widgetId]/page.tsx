@@ -10,6 +10,7 @@ import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import { useFeatures } from "@/providers/FeatureProvider";
 import WidgetCreator from "./components/WidgetCreator";
+import { WIDGET_ID_CREATE } from "./const";
 
 export const metadata = metaData(
     {
@@ -42,7 +43,7 @@ export default async function WidgetCreationPage({
     let widgetData;
 
     // Get widget data
-    if (widgetId !== "create") {
+    if (widgetId !== WIDGET_ID_CREATE) {
         widgetData = await getWidget(cookieStore, teamId, widgetId, {
             suppressError: true,
         });
@@ -61,7 +62,9 @@ export default async function WidgetCreationPage({
             pagePermissions={["widgets.create"]}>
             <Box sx={{}}>
                 <Typography variant="h1">
-                    {widgetId === "create" ? t("titleCreate") : t("titleEdit")}
+                    {widgetId === WIDGET_ID_CREATE
+                        ? t("titleCreate")
+                        : t("titleEdit")}
                 </Typography>
                 <Typography>{t("intro")}</Typography>
                 <WidgetCreator
