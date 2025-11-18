@@ -23,9 +23,11 @@ import {
     useTheme,
 } from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
+import { request } from "graphql-request";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import useSWR from "swr";
 import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
@@ -124,6 +126,7 @@ import {
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING } from "@/consts/search";
+import { substituteEnvLinks } from "@/utils/cms";
 import {
     cleanSearchFilters,
     getAllSelectedFilters,
@@ -152,7 +155,6 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
-    cohortDiscovery: PageTemplatePromo;
     schema: V4Schema;
 }
 
@@ -170,7 +172,81 @@ const filterSidebarStyles = {
     },
 };
 
-const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
+const Search = ({ filters, schema }: SearchProps) => {
+    const fetcher = query => request(apis.wordPressApiUrl, query);
+
+    const { cohoData, error } = useSWR(
+        `query GetCohortDiscoveryQuery {
+  page(id: "cohort-discovery-landing", idType: URI) {
+      id
+      title
+      template {
+        __typename
+        ... on PromoTemplate {
+          promofields {
+            bannerTitle
+            ctaLink {
+              target
+              url
+              title
+            }
+            topRightPanel
+            topLeftPanel
+            middlePanel
+            bottomPanel
+          }
+        }
+    }
+  }
+}`,
+        fetcher
+    );
+    console.log("cohoData", cohoData);
+    console.log("error", error);
+    const cohortDiscovery = cohoData?.page;
+    // const cohortDiscovery = substituteEnvLinks(cohoData?.page);
+    //     const testing = usePostSwr<PageTemplatePromo>(apis.wordPressApiUrl, {
+    //         // query: searchParams.query,
+    //         // filters: dataCustodianFilters,
+
+    //         //JSON.stringify(
+    //         query: `query GetCohortDiscoveryQuery {
+    //   page(id: "cohort-discovery-landing", idType: URI) {
+    //       id
+    //       title
+    //       template {
+    //         __typename
+    //         ... on PromoTemplate {
+    //           promofields {
+    //             bannerTitle
+    //             ctaLink {
+    //               target
+    //               url
+    //               title
+    //             }
+    //             topRightPanel
+    //             topLeftPanel
+    //             middlePanel
+    //             bottomPanel
+    //           }
+    //         }
+    //     }
+    //   }
+    // }`,
+    //         //)
+    //         errorNotificationsOn: true,
+    //     });
+    //     console.log("testing", testing);
+    // console.log("cohortDiscovery", cohortDiscovery);
+    // console.log("isCohortLoading", isCohortLoading);
+    // CMSPageResponse<PageTemplatePromo> = await fetchCMS(
+    //     GetCohortDiscoveryQuery,
+    //     DEFAULT_OPTIONS
+    // );
+
+    // return substituteEnvLinks(data?.page);
+    const startTime = Date.now();
+    console.log("Date.now() at start of Search component:", startTime);
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
@@ -956,7 +1032,9 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
         padding: `0 ${theme.spacing(2)}`,
         width: `calc(100% - ${filterSidebarWidth}px)`,
     };
-
+    const endTime = Date.now();
+    console.log("Date.now() before return of Search component:", endTime);
+    console.log("Search component render time (ms):", endTime - startTime);
     return (
         <>
             {/* Filter Drawer */}
