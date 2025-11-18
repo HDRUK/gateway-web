@@ -24,9 +24,11 @@ import StyledRadio from "@/components/StyledRadio";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { DATASETS, DATA_USES, CUSTODIAN } from "@/consts/translation";
-import dataCustodianPreview from "@/public/images/widgets/data_custodian.png";
-import dataUsePreview from "@/public/images/widgets/data_use.png";
-import datasetsPreview from "@/public/images/widgets/datasets.png";
+import { FULL_GATEWAY_URL } from "@/consts/urls";
+
+const dataCustodianPreview = `${FULL_GATEWAY_URL}images/widgets/data_custodian.png`;
+const dataUsePreview = `${FULL_GATEWAY_URL}images/widgets/data_use.png`;
+const datasetsPreview = `${FULL_GATEWAY_URL}images/widgets/datasets.png`;
 
 type TemplateValue =
     | typeof CUSTODIAN
@@ -47,21 +49,21 @@ const OPTIONS: TemplateOption[] = [
         title: "Data Custodian widget",
         description:
             "This widget allows users to show users your catalogue of datasets, data uses , publications etc from the Gateway.",
-        thumbnail: dataCustodianPreview.src,
+        thumbnail: dataCustodianPreview,
     },
     {
         value: DATASETS,
         title: "Datasets search widget",
         description:
             "This widget allows users to search Datasets across the Gateway.",
-        thumbnail: datasetsPreview.src,
+        thumbnail: datasetsPreview,
     },
     {
         value: DATA_USES,
         title: "Data Uses search widget",
         description:
             "This widget allows users to search Data Uses across the Gateway.",
-        thumbnail: dataUsePreview.src,
+        thumbnail: dataUsePreview,
     },
     {
         value: "blank",
