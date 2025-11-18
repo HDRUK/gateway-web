@@ -89,7 +89,6 @@ export default function WidgetDisplay({
                     gatewayUrl={FULL_GATEWAY_URL}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
-                    headerSx={{ width: "auto" }}
                 />
 
                 <CategoryMenu

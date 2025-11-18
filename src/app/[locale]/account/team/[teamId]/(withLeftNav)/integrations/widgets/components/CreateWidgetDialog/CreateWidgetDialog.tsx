@@ -76,6 +76,21 @@ const OPTIONS: TemplateOption[] = [
 const TRANSLATION_PATH = "pages.account.team.widgets.createmodal";
 const IMAGE_HEIGHT = "30vh";
 
+const cardActionAreaSx = {
+    height: "100%",
+    alignItems: "stretch",
+    display: "flex",
+    flexDirection: "column",
+};
+
+const cardMediaSx = {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+};
+
 type RouteParams = {
     teamId: string;
 };
@@ -117,12 +132,7 @@ const CreateWidgetDialog = () => {
                                                             opt.value
                                                         )
                                                     }
-                                                    sx={{
-                                                        height: "100%",
-                                                        alignItems: "stretch",
-                                                        display: "flex",
-                                                        flexDirection: "column",
-                                                    }}>
+                                                    sx={cardActionAreaSx}>
                                                     {opt.thumbnail ? (
                                                         <Box
                                                             sx={{
@@ -137,15 +147,7 @@ const CreateWidgetDialog = () => {
                                                                     opt.thumbnail
                                                                 }
                                                                 alt={`${opt.description} image`}
-                                                                sx={{
-                                                                    position:
-                                                                        "absolute",
-                                                                    inset: 0,
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                    objectFit:
-                                                                        "cover",
-                                                                }}
+                                                                sx={cardMediaSx}
                                                             />
                                                         </Box>
                                                     ) : (

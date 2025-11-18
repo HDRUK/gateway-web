@@ -1,7 +1,6 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { CSSProperties } from "react";
 import { Box, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
@@ -14,11 +13,22 @@ const TRANSLATIONS = {
     poweredBy: "Powered by",
 };
 
+const headerSx = {
+    display: "flex",
+    flexDirection: "row",
+    maxHeight: "80px",
+    gap: 4,
+    width: "auto%",
+    py: 2,
+    px: 1,
+    backgroundColor: colors.white,
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
+};
+
 type HeaderProps = {
     includeSearch: boolean;
     gatewayUrl: string;
     searchValue: string;
-    headerSx?: CSSProperties;
     setSearchValue: (v: string) => void;
 };
 
@@ -26,24 +36,14 @@ export default function Header({
     includeSearch,
     gatewayUrl,
     searchValue,
-    headerSx,
     setSearchValue,
 }: HeaderProps) {
     return (
         <Box
             component="header"
             sx={{
-                display: "flex",
-                flexDirection: "row",
-                maxHeight: "80px",
-                gap: 4,
-                width: "100%",
-                justifyContent: includeSearch ? "space-between" : "flex-end",
-                py: 2,
-                px: 1,
-                backgroundColor: colors.white,
-                borderBottom: `1px solid ${theme.palette.grey[300]}`,
                 ...headerSx,
+                justifyContent: includeSearch ? "space-between" : "flex-end",
             }}>
             {!!includeSearch && (
                 <Box sx={{ flexGrow: 1, p: 0 }}>
