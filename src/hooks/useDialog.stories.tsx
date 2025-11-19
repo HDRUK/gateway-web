@@ -63,7 +63,6 @@ const CustomExample = () => {
     const { showDialog } = useDialog();
 
     const onSuccess = (data: unknown) => {
-        // eslint-disable-next-line no-alert
         alert(data);
     };
 

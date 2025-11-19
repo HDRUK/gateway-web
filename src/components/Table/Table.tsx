@@ -123,7 +123,6 @@ const Table = <T,>({
                 {
                     id: "checkinout",
                     Header: "CheckIn/Out",
-                    // eslint-disable-next-line react/no-unstable-nested-components, react/prop-types
                     Cell: ({ row }) => <ActionDropdown {...row} />,
                 },
                 ...columns,
@@ -172,9 +171,7 @@ const Table = <T,>({
             )}
             <tbody>
                 {table.getRowModel().rows.map(row => (
-                    // eslint-disable-next-line react/prop-types
                     <tr key={row.id}>
-                        {/* eslint-disable-next-line react/prop-types */}
                         {row.getVisibleCells().map(cell => (
                             <td
                                 css={styles.td}

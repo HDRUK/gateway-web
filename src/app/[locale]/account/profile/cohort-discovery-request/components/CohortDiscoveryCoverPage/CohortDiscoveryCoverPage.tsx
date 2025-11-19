@@ -126,7 +126,6 @@ export default function CohortDiscoveryCoverPage({
                         {!isNhsSdeApplicationsEnabled && (
                             <Typography color={colors.grey600}>
                                 {t.rich("nhseSdeTemporaryText", {
-                                    // eslint-disable-next-line react/no-unstable-nested-components
                                     mailto: chunks => (
                                         <Link href={`mailto:${chunks}`}>
                                             {chunks}

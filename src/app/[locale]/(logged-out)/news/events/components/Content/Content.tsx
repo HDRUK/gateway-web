@@ -56,9 +56,10 @@ const Content = ({ data }: ContentProps) => {
                                     container
                                     rowSpacing={4}
                                     columnSpacing={4}>
-                                    {dataByYear.map(item => {
+                                    {dataByYear.map((item, index) => {
                                         return (
                                             <Grid
+                                                key={index}
                                                 item
                                                 desktop={3}
                                                 tablet={4}

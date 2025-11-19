@@ -31,15 +31,16 @@ export default async function TeamDatasetPage({
     searchParams,
 }: {
     params: Promise<{ teamId: string; status: string; datasetId: string }>;
-    searchParams: { [key: string]: string | undefined };
+    searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
     const { teamId, datasetId } = await params;
+    const { status } = await searchParams;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    const isDraft = searchParams.status === DataStatus.DRAFT;
+    const isDraft = status === DataStatus.DRAFT;
     const dataset = await getTeamDataset(
         teamId,
         datasetId,

@@ -21,7 +21,7 @@ const PreviewTemplate = ({ questions }: PreviewTemplateProps) => {
                 padding: 2,
             }}>
             {questions.map(question => {
-                if (!question) return <Loading />;
+                if (!question) return <Loading key={question} />;
 
                 const { title, component, guidance, options, required } =
                     question;

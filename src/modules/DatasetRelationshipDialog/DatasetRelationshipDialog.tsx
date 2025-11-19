@@ -122,6 +122,7 @@ const DatasetRelationshipDialog = ({
 
                         return (
                             <Box
+                                key={linkage.id}
                                 sx={{
                                     display: "flex",
                                     flexWrap: "wrap",

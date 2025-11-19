@@ -22,7 +22,6 @@ const WrapperComponent = () => {
         <div>
             {Array.from({ length: 3 }).map((e, index: number) => (
                 <Accordion
-                    // eslint-disable-next-line react/no-array-index-key
                     key={index}
                     expanded={expanded === index}
                     heading={`Heading ${index}`}

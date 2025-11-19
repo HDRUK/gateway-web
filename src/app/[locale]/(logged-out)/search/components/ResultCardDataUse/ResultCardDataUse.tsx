@@ -47,7 +47,6 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
         showDialog(DataUseDetailsDialog, { result });
     };
 
-    // eslint-disable-next-line no-underscore-dangle
     const resultId = result._id;
 
     const hasMultipleLeadOrgs = leadOrgNames?.length > 1;

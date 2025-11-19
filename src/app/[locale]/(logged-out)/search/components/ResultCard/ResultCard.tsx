@@ -256,7 +256,6 @@ const ResultCard = ({
             alignItems="flex-start">
             <section
                 style={{ width: "100%" }}
-                // eslint-disable-next-line
                 aria-description={`Result for ${metadata.summary.shortTitle}`}>
                 <ListItemText
                     disableTypography
@@ -295,7 +294,6 @@ const ResultCard = ({
                                         href={linkHref}
                                         sx={{ display: "inline-block" }}>
                                         <Typography
-                                            // eslint-disable-next-line
                                             aria-description="Data Custodian"
                                             sx={{
                                                 textDecoration: "uppercase",
@@ -320,7 +318,6 @@ const ResultCard = ({
 
                                 {!isNumber && (
                                     <Typography
-                                        // eslint-disable-next-line
                                         aria-description="Data Custodian"
                                         sx={{
                                             textDecoration: "uppercase",

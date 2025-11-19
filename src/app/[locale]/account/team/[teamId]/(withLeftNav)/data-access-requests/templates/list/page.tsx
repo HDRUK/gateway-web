@@ -24,9 +24,10 @@ export default async function DARTemplateListPage({
     searchParams,
 }: {
     params: Promise<{ teamId: string }>;
-    searchParams: { page?: string; published?: boolean };
+    searchParams: Promise<{ page?: string; published?: boolean }>;
 }) {
     const { teamId } = await params;
+    const { page, published } = await searchParams;
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
@@ -34,12 +35,12 @@ export default async function DARTemplateListPage({
 
     const queryPublished = new URLSearchParams();
 
-    if (searchParams.page) {
-        queryPublished.set("page", searchParams.page.toString());
+    if (page) {
+        queryPublished.set("page", page.toString());
     }
 
-    if (searchParams.published) {
-        queryPublished.set("published", searchParams.published.toString());
+    if (published) {
+        queryPublished.set("published", published.toString());
     }
 
     const darTemplateData = await getDarTemplates(

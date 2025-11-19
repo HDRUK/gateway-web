@@ -158,8 +158,6 @@ const Tabs = ({
                                 param={paramName}
                                 persist={persistParams}
                                 tooltip={tooltip}
-                                // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description
-                                // eslint-disable-next-line
                                 aria-description={tooltip}
                             />
                         ))}

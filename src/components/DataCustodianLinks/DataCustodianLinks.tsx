@@ -54,10 +54,9 @@ const DataCustodianLinks = ({
                         }}>
                         {data.service?.map(href => {
                             return (
-                                <ListItem sx={{ p: 0 }}>
+                                <ListItem sx={{ p: 0 }} key={href}>
                                     <Link
                                         href={href}
-                                        key={href}
                                         underline="none"
                                         variant="caption">
                                         {href}

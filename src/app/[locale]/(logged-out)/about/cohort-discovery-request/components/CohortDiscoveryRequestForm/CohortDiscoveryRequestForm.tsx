@@ -83,7 +83,6 @@ const CohortDiscoveryRequestForm = ({
                     </Typography>
                     <Typography sx={{ marginBottom: 2 }}>
                         {t.rich(`${COHORT_TRANSLATION_PATH}.text`, {
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             userprofile: chunks => (
                                 <Link
                                     href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`}>
@@ -113,17 +112,13 @@ const CohortDiscoveryRequestForm = ({
                     </Typography>
                     <Typography component="div">
                         {t.rich(`${COHORT_TRANSLATION_PATH}.statement1`, {
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             list: chunks => <ol>{chunks}</ol>,
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             item: chunks => <li>{chunks}</li>,
                         })}
                     </Typography>
                     <Typography component="div">
                         {t.rich(`${COHORT_TRANSLATION_PATH}.statement2`, {
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             list: chunks => <ol>{chunks}</ol>,
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             item: chunks => <li>{chunks}</li>,
                         })}
                     </Typography>

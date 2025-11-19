@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
 import {
@@ -33,10 +34,10 @@ export default async function DarApplicationPage({
     searchParams,
 }: {
     params: Promise<{ applicationId: string }>;
-    searchParams: { teamId: string };
+    searchParams: Promise<{ teamId: string }>;
 }) {
     const { applicationId } = await params;
-    const { teamId } = searchParams;
+    const { teamId } = await searchParams;
 
     const user = await getUserFromCookie();
 
@@ -86,7 +87,8 @@ export default async function DarApplicationPage({
         team => team.team_id === +teamId
     );
 
-    const suppress = await cookieStore.get("dar-update-suppress");
+    const cookieStore = await cookies();
+    const suppress = cookieStore.get("dar-update-suppress");
 
     // If no approval status and submitted, set to draft
     if (
