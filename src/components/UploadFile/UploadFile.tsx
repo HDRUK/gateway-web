@@ -19,6 +19,7 @@ import Link from "../Link";
 import Loading from "../Loading";
 import Typography from "../Typography";
 import Upload from "../Upload";
+import { EntityType } from "@/consts/entityTypes";
 
 export type EventUploadedImage = {
     width: number;
@@ -153,6 +154,7 @@ const UploadFile = ({
 
                 if (
                     apiPath?.includes("media") ||
+                    apiPath?.includes(EntityType.DOCUMENT_EXCHANGE) ||
                     (fileScanStatus?.entity_id &&
                         fileScanStatus?.entity_id > 0) ||
                     fileScanStatus?.structural_metadata
