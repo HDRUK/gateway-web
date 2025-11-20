@@ -1511,6 +1511,7 @@
         },
         "IndicateNhseSdeAccessButton": {
             "disabledTooltip": "Please sign in to activate this button",
+            "pendingTooltip": "Access request pending",
             "label": "I have been approved by the NHS SDE",
             "success": "Successfully notified HDR UK"
         },
@@ -1527,9 +1528,8 @@
         },
         "SupportPopOut": {
             "buttonText": "Need support?",
-            "giveFeedback": "Give feedback",
-            "reportBug": "Report bug",
-            "requestSupport": "Request support",
+            "giveFeedback": "Share feedback",
+            "reportBug": "Get Help / Report an Issue",
             "visitSupportCentre": "Visit Support Centre"
         },
         "ShowMore": {

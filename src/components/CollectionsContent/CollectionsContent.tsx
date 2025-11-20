@@ -34,6 +34,7 @@ export default function CollectionsContent({
                     href={`/${RouteName.COLLECTION_ITEM}/${id}`}
                     title={name}
                     imgUrl={image_link}
+                    key={`collection_${id}`}
                 />
             ))}
         />

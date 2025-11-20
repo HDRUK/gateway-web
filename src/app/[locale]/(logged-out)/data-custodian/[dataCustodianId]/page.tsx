@@ -1,25 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
+import { Skeleton } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
-import CollectionsContent from "@/components/CollectionsContent";
-import DataUsesContent from "@/components/DataUsesContent";
-import DatasetsContent from "@/components/DatasetsContent";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
-import PublicationsContent from "@/components/PublicationsContent";
-import ToolsContent from "@/components/ToolsContent";
+import { SectionSkeleton } from "@/components/Skeletons";
+import { DataCustodianEntitiesSkeleton } from "@/components/Skeletons/Skeletons";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
+import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/config/theme";
-import { getDataset, getTeamSummary } from "@/utils/api";
+import { getTeamInfo } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
+import { DatasetsOuter } from "./components/DatasetsOuter";
+import EntitiesOuter from "./components/EntitiesOuter";
 import { accordions, dataCustodianFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
@@ -38,24 +39,30 @@ export default async function DataCustodianItemPage({
     const { dataCustodianId } = params;
     const cookieStore = cookies();
 
-    const data = await getTeamSummary(cookieStore, dataCustodianId, {
+    const infoData = await getTeamInfo(cookieStore, dataCustodianId, {
         suppressError: true,
     });
+    if (!infoData) notFound();
 
-    if (!data) notFound();
+    const resp = await fetch(
+        `${apis.teamsV1UrlIP}/${dataCustodianId}/datasets_cohort_discovery`,
+        {
+            next: {
+                revalidate: 180,
+                tags: ["all", `custodian_datasets-${dataCustodianId}`],
+            },
+            cache: "force-cache",
+        }
+    );
+    if (!resp.ok) {
+        throw new Error("Failed to fetch custodian data");
+    }
+    const { data: cohortDiscoverySupport } = await resp.json();
 
     const cohortDiscovery = await getCohortDiscovery();
 
-    const promises = data.datasets.map(x =>
-        getDataset(cookieStore, x.id.toString())
-    );
-
-    const datasets = await Promise.all(promises);
-
-    const enableCohortDiscovery = datasets.some(x => x.is_cohort_discovery);
-
     const populatedSections = dataCustodianFields.filter(section =>
-        section.fields.some(field => !isEmpty(get(data, field.path)))
+        section.fields.some(field => !isEmpty(get(infoData, field.path)))
     );
 
     const activeLinkList = populatedSections.concat(accordions).map(section => {
@@ -70,26 +77,29 @@ export default async function DataCustodianItemPage({
             body={
                 <>
                     <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
-                        {data.name}
+                        {infoData.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
                         <AspectRatioImage
                             width={554}
                             height={250}
-                            alt={data.name}
+                            alt={infoData.name}
                             src={
-                                data?.team_logo || StaticImages.BASE.placeholder
+                                infoData?.team_logo ||
+                                StaticImages.BASE.placeholder
                             }
                         />
                     </Box>
                     <ActionBar
                         team={{
-                            id: data.id,
-                            name: data.name,
-                            member_of: data.member_of,
+                            id: infoData.id,
+                            name: infoData.name,
+                            member_of: infoData.member_of,
                         }}
                         cohortDiscovery={cohortDiscovery}
-                        cohortDiscoveryEnabled={enableCohortDiscovery}
+                        cohortDiscoveryEnabled={
+                            cohortDiscoverySupport.supportsCohortDiscovery
+                        }
                     />
                     <Box
                         sx={{
@@ -97,53 +107,46 @@ export default async function DataCustodianItemPage({
                             flexDirection: "column",
                             gap: 2,
                         }}>
-                        <DataCustodianContent
-                            data={data}
-                            populatedSections={populatedSections}
-                        />
-                        {!!data.aliases?.length && (
-                            <Fragment key="custodian_alias">
-                                <Typography variant="h3">
-                                    {t("aliases")}
-                                </Typography>
-                                <Box
-                                    sx={{ p: 0, pb: 1, display: "flex" }}
-                                    gap={1}>
-                                    {data.aliases?.map(alias => (
-                                        <Chip
-                                            label={alias.name}
-                                            key={alias.id}
-                                            color="alias"
-                                        />
-                                    ))}
-                                </Box>
-                            </Fragment>
-                        )}
-                        <DatasetsContent
-                            datasets={data.datasets}
-                            anchorIndex={populatedSections.length + 1}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <CollectionsContent
-                            collections={data.collections}
-                            anchorIndex={populatedSections.length + 2}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <ToolsContent
-                            tools={data.tools}
-                            anchorIndex={populatedSections.length + 3}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <DataUsesContent
-                            datauses={data.durs}
-                            anchorIndex={populatedSections.length + 4}
-                            translationPath={TRANSLATION_PATH}
-                        />
-                        <PublicationsContent
-                            publications={data.publications}
-                            anchorIndex={populatedSections.length + 5}
-                            translationPath={TRANSLATION_PATH}
-                        />
+                        <Suspense
+                            fallback={
+                                <Skeleton variant="rectangular" height={200} />
+                            }>
+                            <DataCustodianContent
+                                dataCustodianId={dataCustodianId}
+                                populatedSections={populatedSections}
+                            />
+                            {!!infoData.aliases?.length && (
+                                <Fragment key="custodian_alias">
+                                    <Typography variant="h3">
+                                        {t("aliases")}
+                                    </Typography>
+                                    <Box
+                                        sx={{ p: 0, pb: 1, display: "flex" }}
+                                        gap={1}>
+                                        {infoData.aliases?.map(alias => (
+                                            <Chip
+                                                label={alias.name}
+                                                key={alias.id}
+                                                color="alias"
+                                            />
+                                        ))}
+                                    </Box>
+                                </Fragment>
+                            )}
+                        </Suspense>
+                        <Suspense
+                            fallback={<SectionSkeleton title="Datasets" />}>
+                            <DatasetsOuter
+                                dataCustodianId={+dataCustodianId}
+                                startIndex={populatedSections.length}
+                            />
+                        </Suspense>
+                        <Suspense fallback={<DataCustodianEntitiesSkeleton />}>
+                            <EntitiesOuter
+                                dataCustodianId={+dataCustodianId}
+                                startIndex={populatedSections.length}
+                            />
+                        </Suspense>
                         {/* Post-MVP: Service Offerings */}
                     </Box>
                 </>
