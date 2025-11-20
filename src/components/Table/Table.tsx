@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { CSSProperties, useCallback, useEffect, useRef } from "react";
+import { CSSProperties, useCallback, useEffect, useState } from "react";
 import {
     flexRender,
     getCoreRowModel,
@@ -35,17 +35,18 @@ interface TableProps<T> {
 }
 
 function useSkipper() {
-    const shouldSkipRef = useRef(true);
-    const shouldSkip = shouldSkipRef.current;
+    const [shouldSkip, setShouldSkip] = useState(true);
 
     // Wrap a function with this to skip a pagination reset temporarily
     const skip = useCallback(() => {
-        shouldSkipRef.current = false;
+        setShouldSkip(false);
     }, []);
 
     useEffect(() => {
-        shouldSkipRef.current = true;
-    });
+        if (!shouldSkip) {
+            setShouldSkip(true);
+        }
+    }, [shouldSkip]);
 
     return [shouldSkip, skip] as const;
 }
