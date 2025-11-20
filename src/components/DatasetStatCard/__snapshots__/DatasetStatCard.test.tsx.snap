@@ -4,14 +4,15 @@ exports[`DatasetStatCard should match snapshot 1`] = `
 <div>
   <div
     aria-describedby="desc-undefined"
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-d067dj-MuiPaper-root-MuiCard-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-14cx0w4-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
     tabindex="0"
   >
     <div
       class="mui-style-1hyoz7m"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-1bwtdq5-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1kaugz1-MuiTypography-root"
       >
         A description
       </p>
@@ -24,20 +25,20 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         <button
           aria-label="helper"
           aria-labelledby=":r0:"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-nz5anb-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-1lsi98i-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-slk7cj-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-19wjvpl-MuiSvgIcon-root"
             data-testid="InfoIcon"
             focusable="false"
             viewBox="0 0 24 24"
           >
             <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-6h2zm0-8h-2V7h2z"
             />
           </svg>
         </button>
@@ -50,12 +51,12 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         class="mui-style-1cfaonj"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-qhyxbx-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-ad8qyp-MuiTypography-root"
         >
           10
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-qri3ce-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-zi8i3t-MuiTypography-root"
         >
           days
         </p>

@@ -33,13 +33,15 @@ const ActionBar = () => {
     );
 
     const handleDownload = async () => {
-        const csvData = dur_content;
+        if (!dur_content) return;
 
-        if (csvData) {
-            csvData.filename = `dur_${params.dataUseId}.csv`;
-            notificationService.apiSuccess(t("downloadStarted"));
-            downloadFile(csvData as FileExport);
-        }
+        const csvData: FileExport = {
+            ...dur_content,
+            filename: `dur_${params.dataUseId}.csv`,
+        };
+
+        notificationService.apiSuccess(t("downloadStarted"));
+        downloadFile(csvData);
     };
 
     const downloadDataUse = async () => {

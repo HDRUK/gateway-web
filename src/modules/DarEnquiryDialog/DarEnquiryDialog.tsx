@@ -78,7 +78,6 @@ const DarEnquiryDialog = ({
                 {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             generalEnquiryLink: () => (
                                 <Button
                                     aria-label="general"
@@ -87,7 +86,6 @@ const DarEnquiryDialog = ({
                                     {t("generalEnquiryLink")}
                                 </Button>
                             ),
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             feasabilityEnquiryLink: () => (
                                 <Button
                                     aria-label="feasibility"

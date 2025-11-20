@@ -27,7 +27,13 @@ export default function IntroductionContent({
                 "heading"
             )}`}</Typography>
             {summary && (
-                <MarkDownSanitizedWithHtml sx={{ pb: 1 }} content={summary} />
+                <MarkDownSanitizedWithHtml
+                    sx={{ pb: 1 }}
+                    content={summary
+                        .split("\n")
+                        .map(line => line.trimStart())
+                        .join("\n")}
+                />
             )}
             <DataCustodianLinks
                 data={{

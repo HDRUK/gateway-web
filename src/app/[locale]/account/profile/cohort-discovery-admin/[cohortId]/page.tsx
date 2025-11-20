@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -20,13 +19,12 @@ export const metadata = metaData(
 export default async function CohortDiscoveryManage({
     params,
 }: {
-    params: { cohortId: string };
+    params: Promise<{ cohortId: string }>;
 }) {
-    const { cohortId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const { cohortId } = await params;
+    const user = await getUser();
     const permissions = await getPermissions(user.roles);
-    const cohortRequest = await getCohort(cookieStore, cohortId);
+    const cohortRequest = await getCohort(cohortId);
 
     return (
         <ProtectedAccountRoute

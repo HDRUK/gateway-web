@@ -53,7 +53,7 @@ const TableActionCell = ({ actions, user }: TableActionCellProps) => {
     return (
         <Box>
             {actions.map(action => (
-                <div>{action.label}</div>
+                <div key={action.label}>{action.label}</div>
             ))}
         </Box>
     );

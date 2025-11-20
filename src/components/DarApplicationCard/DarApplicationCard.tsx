@@ -272,14 +272,14 @@ export default function DarApplicationCard({
                         flexGrow: 1,
                     }}>
                     <Grid container sx={{ flexWrap: "nowrap" }}>
-                        <Grid item sx={{ alignSelf: "center" }}>
+                        <Grid sx={{ alignSelf: "center" }}>
                             <ShowMore maxHeight={24}>
                                 <Typography fontSize={16}>
                                     {application.project_title}
                                 </Typography>
                             </ShowMore>
                         </Grid>
-                        <Grid item sx={{ flexShrink: 0, ml: 2 }}>
+                        <Grid sx={{ flexShrink: 0, ml: 2 }}>
                             <Chip
                                 label={tCommon(
                                     `dar.template.${application.application_type}`

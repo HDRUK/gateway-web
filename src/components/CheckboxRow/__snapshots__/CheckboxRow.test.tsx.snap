@@ -6,18 +6,18 @@ exports[`CheckboxRow should render component 1`] = `
     class="MuiBox-root mui-style-106jpu6"
   >
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-a793d6-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-1i11g3-MuiTypography-root"
     >
       Name
     </p>
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-k4ahjr-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-13gtttw-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
       control="[object Object]"
       formcontrolsx="[object Object]"
       label="checkbox label"
     >
       <input
-        class="PrivateSwitchBase-input mui-style-1m9pwf3"
+        class="PrivateSwitchBase-input mui-style-12xagqm-MuiSwitchBase-root"
         data-indeterminate="false"
         name="fieldName"
         type="checkbox"

@@ -31,14 +31,13 @@ export const metadata = metaData(
 export default async function DarApplicationPage({
     params,
 }: {
-    params: { applicationId: string; teamId: string };
+    params: Promise<{ applicationId: string; teamId: string }>;
 }) {
     const isResearcher = false;
 
-    const { applicationId, teamId } = params;
+    const { applicationId, teamId } = await params;
 
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
 
     if (!user) {
         redirect(RouteName.ERROR_403);
@@ -46,11 +45,7 @@ export default async function DarApplicationPage({
 
     let darApplication;
     try {
-        darApplication = await getDarTeamApplication(
-            cookieStore,
-            applicationId,
-            teamId
-        );
+        darApplication = await getDarTeamApplication(applicationId, teamId);
     } catch {
         redirect("/error/401");
     }
@@ -60,9 +55,9 @@ export default async function DarApplicationPage({
     let reviews;
     try {
         [sections, userAnswers, reviews] = await Promise.all([
-            getDarSections(cookieStore),
-            getDarAnswersTeam(cookieStore, applicationId, teamId),
-            getDarReviewsTeam(cookieStore, applicationId, teamId),
+            getDarSections(),
+            getDarAnswersTeam(applicationId, teamId),
+            getDarReviewsTeam(applicationId, teamId),
         ]);
     } catch {
         redirect("/error/401");
@@ -105,6 +100,7 @@ export default async function DarApplicationPage({
         sectionId = messageSection.id;
     }
 
+    const cookieStore = await cookies();
     const suppress = cookieStore.get("dar-update-suppress");
 
     // If no approval status, set to feedback

@@ -22,7 +22,6 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -929,7 +928,7 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
 
     const filterSidebarButtonStyles = {
         position: "absolute",
-        zIndex: zIndex.modal,
+        zIndex: theme.zIndex.modal,
         borderRadius: "50%",
         backgroundColor: colors.white,
         width: "48px",

@@ -1,5 +1,4 @@
-import React from "react";
-import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
 import { render, fireEvent } from "@testing-library/react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

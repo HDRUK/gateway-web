@@ -162,7 +162,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                     <TableBody>
                                         <TableRow>
                                             {DUR_TABLE_ROWS.map(row => (
-                                                <TableCell>
+                                                <TableCell key={row}>
                                                     {displayDataUseValue(row)}
                                                 </TableCell>
                                             ))}
@@ -177,7 +177,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                         f.sectionName !== "Keywords"
                                 )
                                 .map(section => (
-                                    <BoxContainer>
+                                    <BoxContainer key={section.sectionName}>
                                         <Typography
                                             sx={{ fontWeight: "bold", p: 2 }}>
                                             {section.sectionName}
@@ -185,6 +185,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
 
                                         {section.fields.map(field => (
                                             <BoxContainer
+                                                key={field.name}
                                                 sx={{
                                                     gridTemplateColumns: {
                                                         desktop:

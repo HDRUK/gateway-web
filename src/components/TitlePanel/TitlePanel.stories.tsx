@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import TitlePanel from "./TitlePanel";
 
 const meta: Meta<typeof TitlePanel> = {

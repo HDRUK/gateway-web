@@ -6,21 +6,25 @@ import { getContentPostQuery, hasCategoryName } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 
 interface ArticlePageProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
+    const { slug } = await params;
+
     return metaData({
-        title: `${params.slug.replaceAll("-", " ")} - News`,
+        title: `${slug.replaceAll("-", " ")} - News`,
         description: "",
     });
 }
 
 const ArticlePage = async ({ params }: ArticlePageProps) => {
+    const { slug } = await params;
+
     const cmsPost = await getContentPostQuery("getNewsArticle", {
-        id: params.slug,
+        id: slug,
         idType: "SLUG",
     });
 

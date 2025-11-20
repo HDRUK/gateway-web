@@ -241,7 +241,7 @@ export default function CustomerSurvey({
             {step === "rating" && (
                 <Grid container spacing={1} justifyContent="center">
                     {ratings.map(({ icon: Icon, rating, colour }, index) => (
-                        <Grid item key={rating}>
+                        <Grid key={rating}>
                             <Tooltip title={t(`tooltip-${index}`)}>
                                 <div>
                                     <IconButton

@@ -52,12 +52,12 @@ const FilterChips = ({
 
                                     return (
                                         <Tooltip
+                                            key={`${filterType}-${filter}`}
                                             title={`${t("filter")}: ${t(
                                                 filterTranslationPath
                                             )}`}
                                             placement="top">
                                             <Chip
-                                                key={`${filterType}-${filter}`}
                                                 sx={{
                                                     textOverflow: "ellipsis",
                                                     maxWidth: 200,

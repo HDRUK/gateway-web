@@ -146,7 +146,6 @@ const TeamCollections = ({
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryParams.page]);
 
     const showArchiveButton =

@@ -92,7 +92,6 @@ const formatTextWithLinks = (text: string | string[] | number) => {
         URL_REGEX.test(segment) ? (
             <Link
                 href={segment}
-                // eslint-disable-next-line react/no-array-index-key
                 key={`segment_${index}`}
                 target="_blank"
                 rel="noopener">
@@ -102,7 +101,6 @@ const formatTextWithLinks = (text: string | string[] | number) => {
             <MarkDownSanitizedWithHtml
                 content={segment}
                 wrapper="span"
-                // eslint-disable-next-line react/no-array-index-key
                 key={`markdown_${index}`}
             />
         )

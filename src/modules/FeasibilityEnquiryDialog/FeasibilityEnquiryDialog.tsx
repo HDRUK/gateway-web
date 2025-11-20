@@ -64,7 +64,13 @@ const FeasibilityEnquiryDialog = ({
                     rowSpacing={4}
                     columnSpacing={1}
                     alignItems="center">
-                    <Grid item tablet={5} mobile={5} desktop={5} sx={{ p: 0 }}>
+                    <Grid
+                        size={{
+                            mobile: 5,
+                            tablet: 5,
+                            desktop: 5,
+                        }}
+                        sx={{ p: 0 }}>
                         <Box
                             display="flex"
                             alignItems="center"
@@ -76,14 +82,20 @@ const FeasibilityEnquiryDialog = ({
                             </Button>
                         </Box>
                     </Grid>
-                    <Grid item>
+                    <Grid>
                         <Divider
                             sx={{ mr: 2, height: 200 }}
                             orientation="vertical"
                             color="black"
                         />
                     </Grid>
-                    <Grid item tablet={6} mobile={6} desktop={6} sx={{ p: 0 }}>
+                    <Grid
+                        size={{
+                            mobile: 6,
+                            tablet: 6,
+                            desktop: 6,
+                        }}
+                        sx={{ p: 0 }}>
                         <MarkDownSanitizedWithHtml
                             content={t("helpText")}
                             WrapperComponent={<Typography mb={2} />}

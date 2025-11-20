@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import SupportPopOut from "./SupportPopOut";
 
 const meta: Meta<typeof SupportPopOut> = {

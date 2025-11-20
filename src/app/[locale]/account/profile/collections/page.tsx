@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import { getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -14,8 +13,7 @@ export const metadata = metaData(
 );
 
 export default async function CollectionsPage() {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 

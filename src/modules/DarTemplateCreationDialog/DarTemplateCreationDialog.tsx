@@ -71,7 +71,11 @@ const DarTemplateCreationDialog = ({
                     }}
                     spacing={2}
                     columnSpacing={4}>
-                    <Grid item mobile={12} desktop={6}>
+                    <Grid
+                        size={{
+                            mobile: 12,
+                            desktop: 6,
+                        }}>
                         <Button
                             onClick={() => {
                                 createNewTemplate(payload).then(res => {
@@ -92,7 +96,11 @@ const DarTemplateCreationDialog = ({
                             </>
                         </Button>
                     </Grid>
-                    <Grid item mobile={12} desktop={6}>
+                    <Grid
+                        size={{
+                            mobile: 12,
+                            desktop: 6,
+                        }}>
                         <Button
                             onClick={() => {
                                 const redirectUrl = `${RouteName.DAR_TEMPLATES}/file`;

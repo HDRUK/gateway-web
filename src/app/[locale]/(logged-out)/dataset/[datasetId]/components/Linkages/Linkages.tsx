@@ -36,6 +36,7 @@ const Linkages = ({ linkages }: LinkagesProps) => {
             <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
                 {linkageCounts.map(([type, count]) => (
                     <EllipsisCharacterLimit
+                        key={type}
                         isButton
                         text={t(type, { count })}
                         onClick={() =>

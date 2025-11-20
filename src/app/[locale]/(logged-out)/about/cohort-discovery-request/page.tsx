@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import Container from "@/components/Container";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUserFromCookie } from "@/utils/api";
@@ -11,8 +10,7 @@ export const metadata = metaData({
     description: "",
 });
 export default async function CohortDiscoryRequestPage() {
-    const cookieStore = cookies();
-    const user = getUserFromCookie(cookieStore);
+    const user = await getUserFromCookie();
 
     const content = await getCohortTermsAndConditions();
 

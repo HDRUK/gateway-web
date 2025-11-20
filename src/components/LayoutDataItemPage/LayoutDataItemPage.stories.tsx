@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import LayoutDataItemPage from "./LayoutDataItemPage";
 
 const meta: Meta<typeof LayoutDataItemPage> = {

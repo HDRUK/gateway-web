@@ -263,6 +263,7 @@ const NestedFilterSection = <
                         if (checkbox.subBuckets === undefined) {
                             return (
                                 <Skeleton
+                                    key={checkbox.label}
                                     variant="text"
                                     sx={{ fontSize: "2rem" }}
                                     width="100%"
@@ -272,16 +273,16 @@ const NestedFilterSection = <
 
                         if (checkbox.subBuckets?.length > 1) {
                             return (
-                                <div style={{ width: "100%" }}>
+                                <div
+                                    style={{ width: "100%" }}
+                                    key={checkbox.label}>
                                     <Tooltip
-                                        key={checkbox.label}
                                         title={
                                             outerDisabled
                                                 ? t("filterDisabled")
                                                 : ""
                                         }>
                                         <Accordion
-                                            key={checkbox.label}
                                             heading={
                                                 <CheckboxControlled
                                                     rawLabel={label}

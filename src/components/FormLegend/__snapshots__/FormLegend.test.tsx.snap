@@ -6,7 +6,7 @@ exports[`FormLegend should render legend 1`] = `
     class="MuiBox-root mui-style-129n30d"
   >
     <div
-      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-1hhp30x-MuiButtonBase-root-MuiListItemButton-root"
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-5gylba-MuiButtonBase-root-MuiListItemButton-root"
       role="button"
       tabindex="0"
     >
@@ -15,7 +15,7 @@ exports[`FormLegend should render legend 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-i4bv87-MuiSvgIcon-root"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mui-style-1umw9bq-MuiSvgIcon-root"
           data-testid="CheckIcon"
           focusable="false"
           viewBox="0 0 24 24"
@@ -29,12 +29,12 @@ exports[`FormLegend should render legend 1`] = `
         class="MuiBox-root mui-style-19bls30"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-18b1v8w-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1aa6n12-MuiTypography-root"
         >
           Item1
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-18b1v8w-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-1aa6n12-MuiTypography-root"
         >
           (
           2

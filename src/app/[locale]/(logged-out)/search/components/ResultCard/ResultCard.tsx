@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { ListItem, ListItemText } from "@mui/material";
 import { get } from "lodash";
-import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
@@ -53,7 +52,6 @@ const ResultCard = ({
     cohortDiscovery,
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { current: resultId } = useRef(uniqueId("result-title-"));
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { showDialog } = useDialog();
@@ -64,6 +62,8 @@ const ResultCard = ({
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
     const { showDARApplicationModal } = useDataAccessRequest();
+
+    const resultId = `result-title-${datasetId}`;
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -257,7 +257,6 @@ const ResultCard = ({
             alignItems="flex-start">
             <section
                 style={{ width: "100%" }}
-                // eslint-disable-next-line
                 aria-description={`Result for ${metadata.summary.shortTitle}`}>
                 <ListItemText
                     disableTypography
@@ -296,7 +295,6 @@ const ResultCard = ({
                                         href={linkHref}
                                         sx={{ display: "inline-block" }}>
                                         <Typography
-                                            // eslint-disable-next-line
                                             aria-description="Data Custodian"
                                             sx={{
                                                 textDecoration: "uppercase",
@@ -321,7 +319,6 @@ const ResultCard = ({
 
                                 {!isNumber && (
                                     <Typography
-                                        // eslint-disable-next-line
                                         aria-description="Data Custodian"
                                         sx={{
                                             textDecoration: "uppercase",

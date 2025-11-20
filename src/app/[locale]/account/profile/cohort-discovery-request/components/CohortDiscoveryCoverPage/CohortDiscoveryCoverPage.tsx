@@ -28,6 +28,12 @@ export default function CohortDiscoveryCoverPage({
     const { user } = useAuth();
     const { requestExpiry, requestStatus } = useCohortStatus(user?.id);
 
+    const daysRemaining =
+        requestStatus === "APPROVED" && requestExpiry
+            ? // eslint-disable-next-line react-hooks/purity
+              differenceInDays(requestExpiry, Date.now())
+            : null;
+
     return (
         <Container sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ bgcolor: "white", mb: 3, px: 4, pb: 1, pt: 3 }}>
@@ -40,7 +46,7 @@ export default function CohortDiscoveryCoverPage({
                 columnSpacing={2}
                 direction="row"
                 alignItems="stretch">
-                <Grid item mobile={12} laptop={8}>
+                <Grid size={{ mobile: 12, laptop: 8 }}>
                     <Paper
                         sx={{
                             bgcolor: "white",
@@ -68,10 +74,7 @@ export default function CohortDiscoveryCoverPage({
                                                     color: colors.grey600,
                                                     alignContent: "center",
                                                 }}>
-                                                {differenceInDays(
-                                                    requestExpiry,
-                                                    Date.now()
-                                                )}{" "}
+                                                {daysRemaining}{" "}
                                                 {t("daysRemaining")}
                                             </Typography>
                                         </>
@@ -84,7 +87,7 @@ export default function CohortDiscoveryCoverPage({
                         </Typography>
                     </Paper>
                 </Grid>
-                <Grid item mobile={12} laptop={4}>
+                <Grid size={{ mobile: 12, laptop: 4 }}>
                     <Paper
                         sx={{
                             bgcolor: "white",
@@ -96,7 +99,7 @@ export default function CohortDiscoveryCoverPage({
                         {ctaOverrideComponent}
                     </Paper>
                 </Grid>
-                <Grid item mobile={12} laptop={8}>
+                <Grid size={{ mobile: 12, laptop: 8 }}>
                     <Paper
                         sx={{
                             bgcolor: "white",
@@ -126,7 +129,6 @@ export default function CohortDiscoveryCoverPage({
                         {!isNhsSdeApplicationsEnabled && (
                             <Typography color={colors.grey600}>
                                 {t.rich("nhseSdeTemporaryText", {
-                                    // eslint-disable-next-line react/no-unstable-nested-components
                                     mailto: chunks => (
                                         <Link href={`mailto:${chunks}`}>
                                             {chunks}
@@ -137,7 +139,7 @@ export default function CohortDiscoveryCoverPage({
                         )}
                     </Paper>
                 </Grid>
-                <Grid item mobile={12} laptop={4}>
+                <Grid size={{ mobile: 12, laptop: 4 }}>
                     <Paper
                         sx={{
                             bgcolor: "white",

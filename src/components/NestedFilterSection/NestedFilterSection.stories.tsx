@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import NestedFilterSection from "./NestedFilterSection";
 
 const meta: Meta<typeof NestedFilterSection> = {

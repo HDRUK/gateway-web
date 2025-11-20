@@ -1,6 +1,5 @@
 "use client";
 
-/* eslint-disable react/prop-types */
 import ModalButtons from "@/components/ModalButtons";
 import useActionBar from "@/hooks/useActionBar";
 import { ModalButtonProps } from "../ModalButtons/ModalButtons";

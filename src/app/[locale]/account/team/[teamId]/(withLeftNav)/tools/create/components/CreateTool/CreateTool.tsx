@@ -219,7 +219,6 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
         };
 
         const publications = formData.publications.map(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ updated_at, created_at, ...item }) => item
         );
         const payload: ToolPayloadSubmission = {

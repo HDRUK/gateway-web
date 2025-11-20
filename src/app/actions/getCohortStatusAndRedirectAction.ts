@@ -1,6 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { CohortResponse } from "@/interfaces/CohortRequest";
 import { getCohortAccessRedirect, getUserCohortRequest } from "@/utils/api";
 import { getSessionCookie } from "@/utils/getSessionCookie";
@@ -11,13 +10,9 @@ export const getCohortStatusAndRedirect = async (
     redirect = false
 ): Promise<CohortResponse | null> => {
     try {
-        const cookieStore = cookies();
-
         const [userRequest, accessRedirect] = await Promise.all([
-            getUserCohortRequest(cookieStore, userId.toString()),
-            redirect
-                ? getCohortAccessRedirect(cookieStore)
-                : { redirect_url: "" },
+            getUserCohortRequest(userId.toString()),
+            redirect ? getCohortAccessRedirect() : { redirect_url: "" },
         ]);
         return {
             requestStatus: userRequest?.request_status ?? null,

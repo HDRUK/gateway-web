@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -20,8 +19,7 @@ export const metadata = metaData(
 );
 
 export default async function CohortDiscoveryAdmin() {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const permissions = await getPermissions(user.roles);
     const t = await getTranslations(
         `pages.account.profile.${COHORT_DISCOVERY_ADMIN}`

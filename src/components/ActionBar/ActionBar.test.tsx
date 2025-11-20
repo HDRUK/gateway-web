@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import ActionBar from "@/components/ActionBar";
 import Button from "@/components/Button";
 import useActionBar from "@/hooks/useActionBar";

@@ -27,7 +27,6 @@ function Header() {
     const isTablet = useMediaQuery("(min-width:640px)");
 
     if (HOTJAR_ID && typeof window !== "undefined" && !hotjar.initialized()) {
-        // eslint-disable-next-line radix
         hotjar.initialize(parseInt(HOTJAR_ID), HOTJAR_VERSION);
     }
 

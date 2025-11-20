@@ -1,5 +1,4 @@
 import { get, isEmpty, pick, some } from "lodash";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
@@ -42,20 +41,13 @@ const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 export default async function DatasetItemPage({
     params,
 }: {
-    params: { datasetId: string };
+    params: Promise<{ datasetId: string }>;
 }) {
-    const { datasetId } = params;
+    const { datasetId } = await params;
 
-    const cookieStore = cookies();
-    const data = await getDataset(
-        cookieStore,
-        datasetId,
-        SCHEMA_NAME,
-        SCHEMA_VERSION,
-        {
-            suppressError: true,
-        }
-    );
+    const data = await getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
+        suppressError: true,
+    });
 
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
@@ -65,7 +57,6 @@ export default async function DatasetItemPage({
 
     try {
         googleRecommendedDataset = await getDataset(
-            cookieStore,
             datasetId,
             "SchemaOrg",
             "GoogleRecommended"

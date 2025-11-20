@@ -118,6 +118,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             }}>
             {formattedStats.map(datasetStat => (
                 <DatasetStatCard
+                    key={datasetStat.title}
                     title={datasetStat.title}
                     stat={datasetStat.stat}
                     noStatText={datasetStat.noStatText}

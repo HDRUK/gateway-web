@@ -1,17 +1,15 @@
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import EditTemplate from "./components/EditTemplate";
 
-const EditTemplatePage = ({
+const EditTemplatePage = async ({
     params,
 }: {
-    params: { teamId: string; templateId: string };
+    params: Promise<{ teamId: string; templateId: string }>;
 }) => {
+    const { teamId, templateId } = await params;
     return (
         <ProtectedAccountRoute loggedInOnly>
-            <EditTemplate
-                templateId={params.templateId}
-                teamId={params.teamId}
-            />
+            <EditTemplate templateId={templateId} teamId={teamId} />
         </ProtectedAccountRoute>
     );
 };

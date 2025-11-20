@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 import { generateHTML, JSONContent } from "@tiptap/react";
@@ -49,10 +49,12 @@ export const MarkDownSanitizedWithHtml = ({
             DOMPurify.sanitize(value)
         );
 
-        setIsLoaded(true);
-
         return sanitized;
     }, [content]);
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, [parsedContent]);
 
     const overrides = {
         ...(overrideLinks && {

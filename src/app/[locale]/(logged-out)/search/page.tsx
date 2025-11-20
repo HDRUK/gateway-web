@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { Filter } from "@/interfaces/Filter";
 import { FILTER_DATA_SUBTYPE } from "@/config/forms/filters";
 import { getFilters, getSchemaFromTraser } from "@/utils/api";
@@ -15,8 +14,7 @@ export const metadata = metaData(
 );
 
 const SearchPage = async () => {
-    const cookieStore = cookies();
-    const filters: Filter[] = await getFilters(cookieStore);
+    const filters: Filter[] = await getFilters();
     const cohortDiscovery = await getCohortDiscovery();
 
     const adjustedFilters = filters.map(filter => {
@@ -34,11 +32,7 @@ const SearchPage = async () => {
     const SCHEMA_NAME = "HDRUK";
     const SCHEMA_VERSION = "4.0.0";
 
-    const { schema } = await getSchemaFromTraser(
-        cookieStore,
-        SCHEMA_NAME,
-        SCHEMA_VERSION
-    );
+    const { schema } = await getSchemaFromTraser(SCHEMA_NAME, SCHEMA_VERSION);
     return (
         <Search
             filters={adjustedFilters}

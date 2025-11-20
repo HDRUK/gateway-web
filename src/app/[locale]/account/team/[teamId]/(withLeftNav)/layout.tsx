@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import ActionBar from "@/components/ActionBar";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -13,13 +12,12 @@ export default async function AccountTeamLayout({
     children,
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
     children: React.ReactNode;
 }) {
-    const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const foundUser = getTeamUser(team?.users, user?.id);
     const permissions = await getPermissions(user.roles, foundUser?.roles);
 

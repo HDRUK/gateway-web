@@ -97,10 +97,7 @@ export default function MeetTheTeam() {
                     }}>
                     {data.map(({ heading, icon, link }) => (
                         <Grid
-                            item
-                            tablet={4}
-                            mobile={6}
-                            desktop={3}
+                            size={{ mobile: 6, tablet: 4, desktop: 3 }}
                             sx={{ p: 0 }}
                             key={link}>
                             <FeatureCard icon={icon} href={link}>

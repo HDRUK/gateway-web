@@ -56,13 +56,15 @@ const Content = ({ data }: ContentProps) => {
                                     container
                                     rowSpacing={4}
                                     columnSpacing={4}>
-                                    {dataByYear.map(item => {
+                                    {dataByYear.map((item, index) => {
                                         return (
                                             <Grid
-                                                item
-                                                desktop={3}
-                                                tablet={4}
-                                                mobile={12}>
+                                                key={index}
+                                                size={{
+                                                    mobile: 12,
+                                                    tablet: 4,
+                                                    desktop: 3,
+                                                }}>
                                                 <NewsSummaryCard
                                                     summary={
                                                         item.newsFields.text

@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import BackButton from "@/components/BackButton";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
@@ -16,8 +15,7 @@ export const metadata = metaData(
 );
 
 export default async function CreateTeamPage() {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const permissions = getPermissions(user.roles);
 
     const t = await getTranslations("pages.account.profile.teams.create");

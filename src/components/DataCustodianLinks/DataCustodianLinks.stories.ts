@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import DataCustodianLinks from "./DataCustodianLinks";
 
 const meta: Meta<typeof DataCustodianLinks> = {

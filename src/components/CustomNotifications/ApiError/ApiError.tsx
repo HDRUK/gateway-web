@@ -42,7 +42,7 @@ const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
                         <CardContent>
                             <ul style={{ padding: "0 15px", marginTop: 0 }}>
                                 {errors.map(err => (
-                                    <li>{err.message}</li>
+                                    <li key={err.message}>{err.message}</li>
                                 ))}
                             </ul>
                         </CardContent>

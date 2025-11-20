@@ -1,10 +1,8 @@
-const withNextIntl = require("next-intl/plugin")();
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 
-/** @type {import('next').NextConfig} */
-
-const nextConfig = withNextIntl({
+const nextConfig = {
     reactStrictMode: true,
-    swcMinify: true,
     env: {
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
@@ -41,21 +39,23 @@ const nextConfig = withNextIntl({
     },
     async headers() {
         return [
-        { 
-            source: '/(.*)',
-            headers: [{ 
-                    key: 'Strict-Transport-Security',
-                    value: 'max-age=63072000; includeSubDomains; preload', 
-                }],
+            {
+                source: "/(.*)",
+                headers: [
+                    {
+                        key: "Strict-Transport-Security",
+                        value: "max-age=63072000; includeSubDomains; preload",
+                    },
+                ],
             },
         ];
     },
     async rewrites() {
         return [
-        {
-            source: '/robots.txt',
-            destination: '/api/robots',
-        },
+            {
+                source: "/robots.txt",
+                destination: "/api/robots",
+            },
         ];
     },
     async redirects() {
@@ -84,6 +84,6 @@ const nextConfig = withNextIntl({
         // !! WARN !!
         ignoreBuildErrors: true,
     },
-});
+};
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);
