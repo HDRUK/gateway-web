@@ -33,7 +33,7 @@ export default async function DataCustodianNetworkPage({
 
     const { dataCustodianNetworkId } = await params;
 
-    const infoData = await getNetworkInfo(cookieStore, dataCustodianNetworkId, {
+    const infoData = await getNetworkInfo(dataCustodianNetworkId, {
         suppressError: true,
     });
 

@@ -367,12 +367,10 @@ async function getTeamIdFromPid(teamPid: string): Promise<string> {
 }
 
 async function getTeamInfo(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/info`,
         options
     );
@@ -389,24 +387,20 @@ async function getTeamSummary(
 }
 
 async function getTeamDatasetsSummary(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/datasets_summary`,
         options
     );
 }
 
 async function getNetworkInfo(
-    cookieStore: ReadonlyRequestCookies,
     networkId: string,
     options?: GetOptions
 ): Promise<NetworkSummary> {
     return await get<NetworkSummary>(
-        cookieStore,
         `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/info`,
         options
     );

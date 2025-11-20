@@ -37,7 +37,7 @@ export default async function DataCustodianItemPage({
 
     const { dataCustodianId } = await params;
 
-    const infoData = await getTeamInfo(cookieStore, dataCustodianId, {
+    const infoData = await getTeamInfo(dataCustodianId, {
         suppressError: true,
     });
     if (!infoData) notFound();
