@@ -8,7 +8,7 @@ import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import { useFeatures } from "@/providers/FeatureProvider";
+import { isWidgetsEnabled } from "@/flags";
 import CreateNewWidget from "./components/CreateNewWidget";
 import WidgetList from "./components/WidgetList";
 
@@ -33,9 +33,9 @@ export default async function WidgetsPage({
     const team = await getTeam(cookieStore, teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
-    const { isWidgetsEnabled } = useFeatures();
+    const widgetsEnabled = await isWidgetsEnabled();
 
-    if (!isWidgetsEnabled) {
+    if (!widgetsEnabled) {
         return notFound();
     }
 
