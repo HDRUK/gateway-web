@@ -7,7 +7,7 @@ export const HDRGlobals = ({
     features,
 }: {
     version: string;
-    features: objects;
+    features: object;
 }) => {
     return (
         <Script id="hdr-globals" strategy="afterInteractive">
