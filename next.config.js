@@ -1,5 +1,5 @@
 const withNextIntl = require("next-intl/plugin")();
-
+const { version } = require('./package.json')
 /** @type {import('next').NextConfig} */
 
 const allowAllHeader = [
@@ -10,6 +10,9 @@ const allowAllHeader = [
                 ]
 
 const nextConfig = withNextIntl({
+    publicRuntimeConfig: {
+        version
+    },
     reactStrictMode: true,
     swcMinify: true,
     env: {
