@@ -69,4 +69,9 @@ interface TeamCreateForm
     aliases: number[];
 }
 
-export type { Team, TeamEditForm, TeamCreateForm };
+interface TeamNames {
+    id: number;
+    name: string;
+}
+
+export type { Team, TeamEditForm, TeamCreateForm, TeamNames };

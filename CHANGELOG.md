@@ -1,3 +1,21 @@
+## [2.26.0](https://github.com/HDRUK/gateway-web/compare/v2.25.0...v2.26.0) (2025-11-20)
+
+### ✨ Features
+
+* **GAT-7721:** Revised Cohort Discovery user experience enhancements (#1375) ([3466dff](https://github.com/HDRUK/gateway-web/commit/3466dff3fb76c0883681124e38d343501f4a1110)), closes [GAT-7721](GAT-7721)
+* **GAT-7826:** Update support centre links (#1376) ([ef4eb40](https://github.com/HDRUK/gateway-web/commit/ef4eb406d9f59ea6730b0baa79d4c547d137c50c)), closes [GAT-7826](GAT-7826)
+* **GAT-8079:** Only show CSAT survey on certain months (#1368) ([7baf4fb](https://github.com/HDRUK/gateway-web/commit/7baf4fb06d815306f9a825b5d93577977a104459)), closes [GAT-8079](GAT-8079)
+* **GAT-8105:** Use team payload to determine cohort support on Custodian landing pages (#1374) ([2f508fd](https://github.com/HDRUK/gateway-web/commit/2f508fdc28d7462ccf26a0f38e9dd00d1c281cc9)), closes [GAT-8105](GAT-8105)
+* **GAT-8198:** Data custodian networks speed (#1377) ([bce56a6](https://github.com/HDRUK/gateway-web/commit/bce56a629ccbb11a8ebf925ce19edeeca23cb3b3)), closes [GAT-8198](GAT-8198)
+* **GAT-8200:** Data custodian landing page load times (#1378) ([79ef5ee](https://github.com/HDRUK/gateway-web/commit/79ef5ee5cbae934af9a11657e89a3c36656f6341)), closes [GAT-8200](GAT-8200)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** fixed users load (#1369) ([e25313b](https://github.com/HDRUK/gateway-web/commit/e25313b7121b8c67cd6d7daa3408a3b3b02a3eb5))
+* **GAT-0000:** User Roles Loading conflict (#1370) ([3f4876f](https://github.com/HDRUK/gateway-web/commit/3f4876faa6659e65ea2fb6eef585dcb3aab2e545)), closes [GAT-0000](GAT-0000)
+* **GAT-1234:** Defensive checks for cohort response on dataset search page (#1380) ([8292642](https://github.com/HDRUK/gateway-web/commit/82926425e5d10904884876b30268d93e3110c079)), closes [GAT-1234](GAT-1234)
+* **GAT-8025:** Limit resources in modal, fix collection POST (#1372) ([2f6fb0b](https://github.com/HDRUK/gateway-web/commit/2f6fb0bc6425c1cb5d2d0b9ab5c38831b3012d5c))
+
 ## [2.25.0](https://github.com/HDRUK/gateway-web/compare/v2.24.0...v2.25.0) (2025-11-04)
 
 ### ✨ Features

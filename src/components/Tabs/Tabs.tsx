@@ -24,6 +24,7 @@ export interface Tab {
     value: string;
     tooltip?: string;
     content?: ReactNode;
+    disabled?: boolean;
 }
 
 export enum TabVariant {
@@ -140,7 +141,7 @@ const Tabs = ({
                         }}
                         centered={centered}
                         onChange={handleChange}>
-                        {tabs.map(({ label, value, tooltip }) => (
+                        {tabs.map(({ label, value, tooltip, disabled }) => (
                             <MuiTab<ElementType>
                                 id={`tab-${value}`}
                                 component={CustomLink}
@@ -148,6 +149,7 @@ const Tabs = ({
                                 color="secondary"
                                 key={value}
                                 href={value}
+                                disabled={disabled}
                                 value={value}
                                 label={label}
                                 css={

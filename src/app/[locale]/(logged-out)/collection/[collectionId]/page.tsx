@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
@@ -10,8 +11,8 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
+import { AspectRatioImage } from "@/consts/image";
 import { getReducedCollection } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { toTitleCase } from "@/utils/string";
@@ -64,10 +65,11 @@ export default async function CollectionItemPage({
                         <HTMLContent content={name} />
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                        <Image
                             width={554}
                             height={250}
                             alt={toTitleCase(name)}
+                            style={AspectRatioImage}
                             src={image_link || StaticImages.BASE.placeholder}
                         />
                     </Box>

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import apis from "@/config/apis";
 
 export const revalidate = 180;
+export const dynamic = "force-cache";
 
 const reactUrl = "https://esm.sh/react@18";
 const reactDomUrl = "https://esm.sh/react-dom@18/client";

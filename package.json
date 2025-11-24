@@ -1,6 +1,6 @@
 {
     "name": "gateway-web-2",
-    "version": "2.25.0",
+    "version": "2.26.0",
     "private": true,
     "scripts": {
         "dev": "next dev",
@@ -21,7 +21,8 @@
         "seeder": "tsx ./sitemap-seeder.ts",
         "semi": "npx semantic-release",
         "schemaTester": "tsx ./datasetsSchemaTester.ts",
-        "pageTester": "tsx ./datasetsPageTester.ts"
+        "pageTester": "tsx ./datasetsPageTester.ts",
+        "build:widget": "tsx ./widgetBuilder.ts"
     },
     "dependencies": {
         "@dnd-kit/core": "^6.1.0",
@@ -57,6 +58,7 @@
         "@tiptap/pm": "^2.6.6",
         "@tiptap/react": "^2.6.6",
         "@tiptap/starter-kit": "^2.6.6",
+        "@types/node": "18.14.4",
         "@types/react": "^18.3.12",
         "@types/react-dom": "^18.3.1",
         "@vercel/flags": "3.1.1",
@@ -68,6 +70,8 @@
         "cookie": "^0.5.0",
         "dayjs": "^1.11.10",
         "escape-html": "^1.0.3",
+        "eslint": "^8.37.0",
+        "eslint-config-next": "^14.1.0",
         "get-node-dimensions": "^1.2.1",
         "he": "^1.2.0",
         "html-react-parser": "^5.1.16",

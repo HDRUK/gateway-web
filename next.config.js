@@ -1,7 +1,17 @@
 const createNextIntlPlugin = require("next-intl/plugin");
 const withNextIntl = createNextIntlPlugin();
 
+const allowAllHeader = [
+                    { key: "Access-Control-Allow-Credentials", value: "true" },
+                    { key: "Access-Control-Allow-Origin", value: "*" },
+                    { key: "Access-Control-Allow-Methods", value: "GET" },
+                    { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
+                ]
+
 const nextConfig = {
+    publicRuntimeConfig: {
+        version
+    },
     reactStrictMode: true,
     env: {
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
@@ -48,6 +58,14 @@ const nextConfig = {
                     },
                 ],
             },
+            {
+                source: "/api/widget/:path*",
+                headers: allowAllHeader
+            },
+            {
+                source: "/embed/widget.js",
+                headers: allowAllHeader
+            }
         ];
     },
     async rewrites() {
