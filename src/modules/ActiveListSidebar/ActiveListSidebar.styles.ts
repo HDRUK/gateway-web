@@ -1,11 +1,14 @@
 import { styled } from "@mui/material";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
+import theme from "@/config/theme";
 
 export const Wrapper = styled(Box)(() => ({
     position: "sticky",
     top: 0,
     padding: 0,
+    zIndex: theme.zIndex.appBar,
+    backgroundColor: theme.palette.common.white,
 }));
 
 export const BookmarkText = styled(Typography)(({ theme }) => ({
