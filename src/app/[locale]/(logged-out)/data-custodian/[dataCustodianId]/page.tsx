@@ -84,9 +84,10 @@ export default async function DataCustodianItemPage({
                         <Image
                             width={554}
                             height={250}
-                            alt={data.name}
+                            alt={infoData.name}
                             src={
-                                data?.team_logo || StaticImages.BASE.placeholder
+                                infoData?.team_logo ||
+                                StaticImages.BASE.placeholder
                             }
                             style={AspectRatioImage}
                         />
