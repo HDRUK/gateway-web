@@ -6,9 +6,9 @@ import { isWidgetsEnabled } from "@/flags";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 
 interface WidgetProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 export default async function Widget({ params }: WidgetProps) {
@@ -18,12 +18,12 @@ export default async function Widget({ params }: WidgetProps) {
         return notFound();
     }
 
-    const { slug } = params;
+    const { slug } = await params;
 
     const popped = slug.split("-");
     const teamId = popped[0];
     const widgetId = popped[1];
-    const headersList = headers();
+    const headersList = await headers();
     const referer = headersList.get("referer");
 
     const response = await fetch(

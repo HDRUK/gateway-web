@@ -763,13 +763,11 @@ async function getDarTemplatesCount(
 }
 
 async function getWidget(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     widgetId: string,
     options?: GetOptions
 ): Promise<Widget> {
     const widget = await get<Widget>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/widgets/${widgetId}`,
         options
     );
@@ -777,15 +775,8 @@ async function getWidget(
     return widget;
 }
 
-async function getTeamNames(
-    cookieStore: ReadonlyRequestCookies,
-    options?: GetOptions
-): Promise<TeamNames[]> {
-    const names = await get<TeamNames[]>(
-        cookieStore,
-        `${apis.teamsV1UrlIP}/names`,
-        options
-    );
+async function getTeamNames(options?: GetOptions): Promise<TeamNames[]> {
+    const names = await get<TeamNames[]>(`${apis.teamsV1UrlIP}/names`, options);
 
     return names;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import { WidgetCategory } from "@/interfaces/Widget";
 import { colors } from "@/config/theme";
@@ -33,6 +34,16 @@ export default function CategoryMenu({
     setMenuAnchor,
     containerRef,
 }: CategoryMenuProps) {
+    const [menuContainer, setMenuContainer] = useState<Element | null>(null);
+    const [menuWidth, setMenuWidth] = useState<number | string>("100%");
+
+    useEffect(() => {
+        if (containerRef.current) {
+            setMenuContainer(containerRef.current);
+            setMenuWidth(containerRef.current.clientWidth);
+        }
+    }, [containerRef]);
+
     return (
         <Box component="nav" sx={{ p: 0 }}>
             <Box
@@ -54,28 +65,27 @@ export default function CategoryMenu({
                 </Button>
 
                 <Menu
-                    container={() => containerRef.current as Element}
+                    container={menuContainer ?? undefined}
                     keepMounted
                     anchorEl={menuAnchor}
                     open={!!menuAnchor}
                     onClose={() => setMenuAnchor(null)}
                     anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
                     transformOrigin={{ vertical: "top", horizontal: "left" }}
-                    MenuListProps={{
-                        "aria-labelledby": "basic-button",
-                        sx: { p: 0 },
-                    }}
                     slotProps={{
                         paper: {
                             sx: {
                                 mt: "3px",
-                                width:
-                                    containerRef.current?.clientWidth ?? "100%",
+                                width: menuWidth,
                                 maxWidth: "100%",
                                 borderRadius: 0,
                                 boxShadow: "none",
                                 pt: 0,
                             },
+                        },
+                        list: {
+                            "aria-labelledby": "basic-button",
+                            sx: { p: 0 },
                         },
                     }}>
                     {options.map(cat => (
