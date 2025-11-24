@@ -17,3 +17,8 @@ export const isNhsSdeApplicationsEnabled = flag({
     key: "NhsSdeApplicationsEnabled",
     adapter: await gatewayAdapter(),
 });
+
+export const isWidgetsEnabled = flag({
+    key: "Widgets",
+    adapter: await gatewayAdapter(),
+});

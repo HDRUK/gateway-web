@@ -167,7 +167,8 @@ const ResultCard = ({
                       button: (
                           <CohortDiscoveryButton
                               ctaLink={
-                                  cohortDiscovery.template.promofields.ctaLink
+                                  cohortDiscovery?.template?.promofields
+                                      ?.ctaLink
                               }
                               showDatasetExplanatoryTooltip
                               variant="link"

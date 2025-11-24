@@ -56,6 +56,7 @@ interface CohortRequestUser {
     request_status: CohortRequestStatus;
     cohort_status: boolean;
     is_nhse_sde_approval: boolean;
+    nhse_sde_request_status: NHSSDERequestStatus;
     request_expire_at: string;
     created_at: string;
     updated_at: string;
@@ -69,6 +70,7 @@ interface CohortRequestAccess {
 
 interface CohortResponse {
     requestStatus: string;
+    nhseSdeRequestStatus: NHSSDERequestStatus;
     requestExpiry: string;
     redirectUrl: string;
 }

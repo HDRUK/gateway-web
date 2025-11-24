@@ -1,4 +1,3 @@
-import React from "react";
 import SupportPopOut from "@/components/SupportPopOut";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
@@ -13,9 +12,10 @@ describe("SupportPopOut", () => {
             expect(
                 screen.getByText("Visit Support Centre")
             ).toBeInTheDocument();
-            expect(screen.getByText("Give feedback")).toBeInTheDocument();
-            expect(screen.getByText("Report bug")).toBeInTheDocument();
-            expect(screen.getByText("Request support")).toBeInTheDocument();
+            expect(screen.getByText("Share feedback")).toBeInTheDocument();
+            expect(
+                screen.getByText("Get Help / Report an Issue")
+            ).toBeInTheDocument();
         });
     });
 });

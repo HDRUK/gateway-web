@@ -2,6 +2,7 @@ import { StructuralMetadata } from "./Dataset";
 
 interface FileUpload {
     id: number;
+    uuid: string;
     created_at: string;
     updated_at: string;
     filename: string;
@@ -15,7 +16,7 @@ interface FileUpload {
 }
 
 type UploadedFileMetadata = {
-    id: number;
+    uuid: string;
     filename: string;
 };
 
@@ -25,7 +26,7 @@ interface FileUploadFields {
     allowReuploading: boolean;
     hideUpload: boolean;
     onFileUploaded: (file: FileUpload) => Promise<void>;
-    onFileRemove?: (fileId: number) => Promise<void>;
+    onFileRemove?: (fileId: string) => Promise<void>;
     skipImageValidation: boolean;
 }
 

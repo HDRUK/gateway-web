@@ -9,5 +9,6 @@ ENV NODE_ENV=development
 
 RUN npm install
 RUN npm run seeder
+# RUN npm run build:widget
 EXPOSE 3000
 CMD npm run dev

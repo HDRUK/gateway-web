@@ -30,11 +30,12 @@ import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
-import { Team } from "@/interfaces/Team";
+import { Team, TeamNames } from "@/interfaces/Team";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import { Tool } from "@/interfaces/Tool";
 import { User } from "@/interfaces/User";
 import { V4Schema } from "@/interfaces/V4Schema";
+import { Widget } from "@/interfaces/Widget";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import { FILTERS_PER_PAGE } from "@/config/request";
@@ -390,6 +391,18 @@ async function getTeamIdFromPid(
     return await get<string>(cookieStore, `${apis.teamsV1UrlIP}/${teamPid}/id`);
 }
 
+async function getTeamInfo(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    options?: GetOptions
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/info`,
+        options
+    );
+}
+
 async function getTeamSummary(
     cookieStore: ReadonlyRequestCookies,
     teamId: string,
@@ -398,6 +411,30 @@ async function getTeamSummary(
     return await get<TeamSummary>(
         cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/summary`,
+        options
+    );
+}
+
+async function getTeamDatasetsSummary(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    options?: GetOptions
+): Promise<TeamSummary> {
+    return await get<TeamSummary>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/datasets_summary`,
+        options
+    );
+}
+
+async function getNetworkInfo(
+    cookieStore: ReadonlyRequestCookies,
+    networkId: string,
+    options?: GetOptions
+): Promise<NetworkSummary> {
+    return await get<NetworkSummary>(
+        cookieStore,
+        `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/info`,
         options
     );
 }
@@ -807,6 +844,35 @@ async function getDarTemplatesCount(
         `${apis.teamsV1UrlIP}/${teamId}/dar/templates/count/published`
     );
 }
+
+async function getWidget(
+    cookieStore: ReadonlyRequestCookies,
+    teamId: string,
+    widgetId: string,
+    options?: GetOptions
+): Promise<Widget> {
+    const widget = await get<Widget>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/${teamId}/widgets/${widgetId}`,
+        options
+    );
+
+    return widget;
+}
+
+async function getTeamNames(
+    cookieStore: ReadonlyRequestCookies,
+    options?: GetOptions
+): Promise<TeamNames[]> {
+    const names = await get<TeamNames[]>(
+        cookieStore,
+        `${apis.teamsV1UrlIP}/names`,
+        options
+    );
+
+    return names;
+}
+
 export {
     getApplication,
     getCohort,
@@ -819,10 +885,13 @@ export {
     getFilters,
     getKeywords,
     getFormHydration,
+    getNetworkInfo,
     getNetworkSummary,
     getTeam,
     getTeamIdFromPid,
+    getTeamInfo,
     getTeamSummary,
+    getTeamDatasetsSummary,
     getTool,
     getUser,
     getUserFromCookie,
@@ -843,4 +912,6 @@ export {
     updateDarApplicationCommentUser,
     getDarTemplates,
     getDarTemplatesCount,
+    getWidget,
+    getTeamNames,
 };
