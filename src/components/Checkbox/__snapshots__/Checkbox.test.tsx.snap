@@ -27,7 +27,7 @@ exports[`Checkbox checkbox snapshot 1`] = `
         class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-199nn88-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body2 mui-style-hzxl14-MuiTypography-root-Label"
+          class="MuiTypography-root MuiTypography-body2 mui-style-lf0vwj-MuiTypography-root"
         >
           <label
             for="fieldName"
