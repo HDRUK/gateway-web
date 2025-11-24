@@ -24,11 +24,10 @@ import StyledRadio from "@/components/StyledRadio";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { DATASETS, DATA_USES, CUSTODIAN } from "@/consts/translation";
-import { FULL_GATEWAY_URL } from "@/consts/urls";
 
-const dataCustodianPreview = `${FULL_GATEWAY_URL}images/widgets/data_custodian.png`;
-const dataUsePreview = `${FULL_GATEWAY_URL}images/widgets/data_use.png`;
-const datasetsPreview = `${FULL_GATEWAY_URL}images/widgets/datasets.png`;
+const dataCustodianPreview = "/images/widgets/data_custodian.png";
+const dataUsePreview = "/images/widgets/data_use.png";
+const datasetsPreview = "/images/widgets/datasets.png";
 
 type TemplateValue =
     | typeof CUSTODIAN
