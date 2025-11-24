@@ -19,9 +19,6 @@ export const getCohortStatusAndRedirect = async (
                 ? getCohortAccessRedirect(cookieStore)
                 : { redirect_url: "" },
         ]);
-
-        console.log(accessRedirect);
-
         return {
             requestStatus: userRequest?.request_status ?? null,
             requestExpiry: userRequest?.request_expire_at ?? null,

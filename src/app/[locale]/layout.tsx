@@ -85,9 +85,7 @@ export default async function RootLayout({
                                                 />
                                             )}
                                         <SnackbarProvider />
-
                                         <CohortRedirectProvider />
-
                                         <Header />
                                         {children}
                                         <Footer />
