@@ -1,8 +1,18 @@
 const withNextIntl = require("next-intl/plugin")();
-
+const { version } = require('./package.json')
 /** @type {import('next').NextConfig} */
 
+const allowAllHeader = [
+                    { key: "Access-Control-Allow-Credentials", value: "true" },
+                    { key: "Access-Control-Allow-Origin", value: "*" },
+                    { key: "Access-Control-Allow-Methods", value: "GET" },
+                    { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
+                ]
+
 const nextConfig = withNextIntl({
+    publicRuntimeConfig: {
+        version
+    },
     reactStrictMode: true,
     swcMinify: true,
     env: {
@@ -48,6 +58,14 @@ const nextConfig = withNextIntl({
                     value: 'max-age=63072000; includeSubDomains; preload', 
                 }],
             },
+            {
+                source: "/api/widget/:path*",
+                headers: allowAllHeader
+            },
+            {
+                source: "/embed/widget.js",
+                headers: allowAllHeader
+            }
         ];
     },
     async rewrites() {

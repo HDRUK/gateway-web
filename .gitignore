@@ -43,3 +43,5 @@ tiltconf.json
 
 # logs
 build-storybook.log
+
+/public/embed/widget.js

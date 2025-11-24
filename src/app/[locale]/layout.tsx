@@ -1,10 +1,12 @@
 import { ReactNode, Suspense } from "react";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
+import getConfig from "next/config";
 import { notFound } from "next/navigation";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
 import CustomerSurvey from "@/components/CustomerSurvey";
 import Footer from "@/components/Footer";
+import { HDRGlobals } from "@/components/HDRGlobals";
 import Header from "@/components/Header";
 import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
@@ -17,6 +19,7 @@ import {
     isAliasesEnabled,
     isSDEConciergeServiceEnquiryEnabled,
     isNhsSdeApplicationsEnabled,
+    isWidgetsEnabled,
 } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
@@ -53,12 +56,17 @@ export default async function RootLayout({
     const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
     const includeBanners = process.env.NEXT_PUBLIC_INCLUDE_BANNERS === "true";
 
+    const { publicRuntimeConfig } = getConfig();
+
+    const { version } = publicRuntimeConfig;
+
     const features = {
         isSDEConciergeServiceEnquiryEnabled:
             (await isSDEConciergeServiceEnquiryEnabled()) as boolean,
         isAliasesEnabled: (await isAliasesEnabled()) as boolean,
         isNhsSdeApplicationsEnabled:
             (await isNhsSdeApplicationsEnabled()) as boolean,
+        isWidgetsEnabled: (await isWidgetsEnabled()) as boolean,
     };
 
     if (includeBanners) {
@@ -102,6 +110,7 @@ export default async function RootLayout({
                         </ThemeRegistry>
                     </SWRProvider>
                 </NextIntlClientProvider>
+                <HDRGlobals version={version} features={features} />
             </body>
         </html>
     );

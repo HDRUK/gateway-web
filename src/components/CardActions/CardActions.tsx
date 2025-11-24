@@ -26,7 +26,13 @@ const CardActions = ({ actions, id, status }: CardActionsProps) => {
             if (label.toLowerCase().includes("duplicate")) {
                 searchParams.set("duplicate", "true");
             }
+
+            if (label.toLowerCase().includes("preview")) {
+                searchParams.set("tab", "preview");
+            }
         }
+
+        const params = searchParams.toString();
 
         return (
             <Tooltip key={label} placement="left" title={label}>
@@ -43,9 +49,7 @@ const CardActions = ({ actions, id, status }: CardActionsProps) => {
                     aria-label={label}
                     {...(href &&
                         !disabled && {
-                            href: `${href}/${id}${
-                                searchParams.size ? `?${searchParams}` : ""
-                            }`,
+                            href: `${href}/${id}${params ? `?${params}` : ""}`,
                         })}>
                     <Icon color={disabled ? "disabled" : "primary"} />
                 </IconButton>

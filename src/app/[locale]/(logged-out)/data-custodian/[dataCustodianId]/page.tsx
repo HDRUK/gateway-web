@@ -3,6 +3,7 @@ import { Skeleton } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -13,7 +14,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
+import { AspectRatioImage } from "@/consts/image";
 import { getTeamInfo } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
@@ -80,7 +81,7 @@ export default async function DataCustodianItemPage({
                         {infoData.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                        <Image
                             width={554}
                             height={250}
                             alt={infoData.name}
@@ -88,6 +89,7 @@ export default async function DataCustodianItemPage({
                                 infoData?.team_logo ||
                                 StaticImages.BASE.placeholder
                             }
+                            style={AspectRatioImage}
                         />
                     </Box>
                     <ActionBar
