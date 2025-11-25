@@ -109,8 +109,11 @@ const getTeamNav = (
     permissions: {
         [key: string]: boolean;
     },
-    teamId: string | undefined
+    teamId: string | undefined,
+    features: { [key: string]: boolean }
 ): LeftNavItem[] => {
+    const { isWidgetsEnabled } = features;
+
     return [
         ...(permissions["roles.read"]
             ? [
@@ -147,6 +150,14 @@ const getTeamNav = (
                                     {
                                         label: "Predefined Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
+                                    },
+                                ]
+                              : []),
+                          ...(permissions["widgets.read"] && isWidgetsEnabled
+                              ? [
+                                    {
+                                        label: "Widgets",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`,
                                     },
                                 ]
                               : []),

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { cookies } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
@@ -8,7 +9,7 @@ import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
+import { AspectRatioImage } from "@/consts/image";
 import { getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -56,7 +57,7 @@ export default async function DataCustodianNetworkPage({
                         {infoData.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                        <Image
                             width={554}
                             height={250}
                             alt={infoData.name}
@@ -64,6 +65,7 @@ export default async function DataCustodianNetworkPage({
                                 infoData?.img_url ||
                                 StaticImages.BASE.placeholder
                             }
+                            style={AspectRatioImage}
                         />
                     </Box>
                     <ActionBar />
