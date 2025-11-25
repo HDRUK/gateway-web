@@ -16,6 +16,7 @@ import {
 } from "./ActiveListSidebar.styles";
 
 const TRANSLATION_PATH = "modules.ActiveListSidebar";
+const MOBILE_SCROLL_OFFSET = 60;
 
 const ActiveListSidebar = ({
     items,
@@ -55,20 +56,30 @@ const ActiveListSidebar = ({
         }
     }, [searchParams]);
 
-    const handleScroll = useCallback((id: number) => {
-        const section = document.querySelector<HTMLElement>(`#anchor${id}`);
-        const heading = section?.querySelector<HTMLElement>("h2");
-        if (section) {
-            section.scrollIntoView({ behavior: "smooth", block: "start" });
-            heading?.focus({ preventScroll: true });
-            setActiveItem(id);
-            if (!isDatasetPage) {
-                setTimeout(() => {
-                    setActiveItem(0);
-                }, 200);
+    const handleScroll = useCallback(
+        (id: number) => {
+            const section = document.querySelector<HTMLElement>(`#anchor${id}`);
+            const heading = section?.querySelector<HTMLElement>("h2");
+
+            if (section) {
+                const rect = section.getBoundingClientRect();
+                const desiredScroll =
+                    window.pageYOffset +
+                    rect.top -
+                    (isMobile ? MOBILE_SCROLL_OFFSET : 0);
+
+                window.scrollTo({ top: desiredScroll, behavior: "smooth" });
+
+                heading?.focus({ preventScroll: true });
+                setActiveItem(id);
+
+                if (!isDatasetPage) {
+                    setTimeout(() => setActiveItem(0), 200);
+                }
             }
-        }
-    }, []);
+        },
+        [isDatasetPage, isMobile]
+    );
 
     return (
         <>

@@ -62,7 +62,8 @@ export default async function DataUseItemPage({
                         }}>
                         <Typography
                             variant="h2"
-                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}>
+                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}
+                            id="anchor1">
                             {data.project_title}
                         </Typography>
                         <DataUseContent
