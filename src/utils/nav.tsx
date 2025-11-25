@@ -1,3 +1,4 @@
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
@@ -65,6 +66,10 @@ const getProfileNav = (permissions: {
                 {
                     label: "About this service",
                     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY}`,
+                },
+                {
+                    label: "Cohort Builder",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/daphne`,
                 },
             ],
         },
