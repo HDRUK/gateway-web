@@ -13,7 +13,12 @@ const path = require("path");
 const config: StorybookConfig = {
     staticDirs: ["../public"],
     stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-    addons: ["@storybook/addon-links", "@storybook/addon-docs"],
+    addons: [
+        "@storybook/addon-links",
+        "@storybook/addon-docs",
+        "@storybook/addon-themes",
+        "@storybook/nextjs",
+    ],
 
     babel: async () => {
         return {
@@ -69,6 +74,7 @@ const config: StorybookConfig = {
                 "@/consts": path.resolve(__dirname, "../src/consts"),
                 fs: path.resolve(__dirname, "fsMock.js"),
                 "next/font/google": path.resolve(__dirname, "nextFontMock.ts"),
+                "next/navigation": "next-router-mock",
             };
         }
         return config;

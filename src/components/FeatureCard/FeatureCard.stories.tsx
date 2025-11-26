@@ -16,7 +16,7 @@ type Story = StoryObj<typeof FeatureCard>;
 
 const WrapperComponent = props => {
     return (
-        <FeatureCard {...props}>
+        <FeatureCard {...props} href="/">
             <FeatureCardHeading>Cohort Discovery</FeatureCardHeading>
             <FeatureCardBody>Cohort Discovery</FeatureCardBody>
         </FeatureCard>
