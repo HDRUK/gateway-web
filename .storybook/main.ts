@@ -44,6 +44,10 @@ const config: StorybookConfig = {
         },
     },
 
+    core: {
+        disableTelemetry: true,
+    },
+
     webpackFinal: async config => {
         if (config.resolve) {
             config.resolve.modules = [
