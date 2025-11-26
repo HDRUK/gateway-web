@@ -37,7 +37,6 @@ const ApplicationList = () => {
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [queryParams.page]);
 
     const { lastPage, list, total } = data || {};

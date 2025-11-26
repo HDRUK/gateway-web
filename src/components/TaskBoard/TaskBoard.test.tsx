@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import TaskBoard from "@/components/TaskBoard";
@@ -6,7 +6,6 @@ import { TaskBoardSectionProps } from "@/components/TaskBoardSection/TaskBoardSe
 import { render, screen } from "@/utils/testUtils";
 
 describe("TaskBoardSection", () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Component = () => {
         const [boardSections, setBoardSections] = useState<
             TaskBoardSectionProps[]

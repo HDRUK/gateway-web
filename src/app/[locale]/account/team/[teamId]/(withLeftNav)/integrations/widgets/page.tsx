@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -24,13 +23,12 @@ export const metadata = metaData(
 export default async function WidgetsPage({
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
 }) {
-    const { teamId } = params;
-    const cookieStore = cookies();
+    const { teamId } = await params;
     const t = await getTranslations(TRANSLATION_PATH);
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
     const widgetsEnabled = await isWidgetsEnabled();

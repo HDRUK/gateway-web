@@ -68,6 +68,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                                                 {dataUse.datasets.map(
                                                     (dataset, index) => (
                                                         <Link
+                                                            key={dataset}
                                                             href={`/${params?.locale}/${RouteName.DATASET_ITEM}/${dataset.id}`}>
                                                             {dataset.name}
                                                             {index <
@@ -79,7 +80,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                                                 )}
                                                 {dataUse.non_gateway_datasets.map(
                                                     (dataset, index) => (
-                                                        <span>
+                                                        <span key={dataset}>
                                                             {!!dataUse.datasets
                                                                 ?.length &&
                                                                 index === 0 &&

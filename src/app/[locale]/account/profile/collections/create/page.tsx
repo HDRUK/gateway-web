@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import CollectionForm from "@/components/CollectionForm";
 import { getKeywords, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -12,10 +11,9 @@ export const metadata = metaData(
 );
 
 export default async function CollectionCreatePage() {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const userId = user?.id?.toString();
-    const keywords = await getKeywords(cookieStore);
+    const keywords = await getKeywords();
     const keywordOptions = keywords.map(data => {
         return {
             value: data.id as ValueType,

@@ -2,7 +2,6 @@ import { Fragment, Suspense } from "react";
 import { Skeleton } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
@@ -33,14 +32,13 @@ export const metadata = metaData({
 export default async function DataCustodianItemPage({
     params,
 }: {
-    params: { dataCustodianId: string };
+    params: Promise<{ dataCustodianId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataCustodianId } = params;
-    const cookieStore = cookies();
+    const { dataCustodianId } = await params;
 
-    const infoData = await getTeamInfo(cookieStore, dataCustodianId, {
+    const infoData = await getTeamInfo(dataCustodianId, {
         suppressError: true,
     });
     if (!infoData) notFound();

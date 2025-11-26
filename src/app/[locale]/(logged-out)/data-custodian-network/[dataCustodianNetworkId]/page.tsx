@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
@@ -29,14 +28,13 @@ export const metadata = metaData({
 export default async function DataCustodianNetworkPage({
     params,
 }: {
-    params: { dataCustodianNetworkId: string };
+    params: Promise<{ dataCustodianNetworkId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataCustodianNetworkId } = params;
-    const cookieStore = cookies();
+    const { dataCustodianNetworkId } = await params;
 
-    const infoData = await getNetworkInfo(cookieStore, dataCustodianNetworkId, {
+    const infoData = await getNetworkInfo(dataCustodianNetworkId, {
         suppressError: true,
     });
 

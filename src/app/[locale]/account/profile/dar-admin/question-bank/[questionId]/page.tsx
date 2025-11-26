@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getUser } from "@/utils/api";
 import { getPermissions } from "@/utils/permissions";
@@ -9,11 +8,10 @@ import UpdateQuestion from "./components/UpdateQuestion";
 const QuestionBankEditPage = async ({
     params,
 }: {
-    params: { questionId: string };
+    params: Promise<{ questionId: string }>;
 }) => {
-    const { questionId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const { questionId } = await params;
+    const user = await getUser();
     const permissions = await getPermissions(user.roles);
 
     return (

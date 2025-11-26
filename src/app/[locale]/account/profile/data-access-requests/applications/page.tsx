@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import DarDashboard from "@/components/DarDashboard";
 import apis from "@/config/apis";
 import { getUser } from "@/utils/api";
@@ -10,8 +9,7 @@ export const metadata = metaData({
 });
 
 const DARApplicationsPage = async () => {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const userId = user?.id?.toString();
 
     return (

@@ -33,14 +33,13 @@ export default async function DarApplicationPage({
     params,
     searchParams,
 }: {
-    params: { applicationId: string };
-    searchParams: { teamId: string };
+    params: Promise<{ applicationId: string }>;
+    searchParams: Promise<{ teamId: string }>;
 }) {
-    const { applicationId } = params;
-    const { teamId } = searchParams;
+    const { applicationId } = await params;
+    const { teamId } = await searchParams;
 
-    const cookieStore = cookies();
-    const user = getUserFromCookie(cookieStore);
+    const user = await getUserFromCookie();
 
     if (!user) {
         redirect("/error/401");
@@ -50,11 +49,7 @@ export default async function DarApplicationPage({
 
     let darApplication;
     try {
-        darApplication = await getDarApplicationUser(
-            cookieStore,
-            applicationId,
-            userId
-        );
+        darApplication = await getDarApplicationUser(applicationId, userId);
     } catch {
         redirect("/error/401");
     }
@@ -64,9 +59,9 @@ export default async function DarApplicationPage({
     let reviews;
     try {
         [sections, userAnswers, reviews] = await Promise.all([
-            getAllDarSections(cookieStore),
-            getDarAnswersUser(cookieStore, applicationId, userId),
-            getDarReviewsUser(cookieStore, applicationId, userId),
+            getAllDarSections(),
+            getDarAnswersUser(applicationId, userId),
+            getDarReviewsUser(applicationId, userId),
         ]);
     } catch {
         redirect("/error/401");
@@ -92,6 +87,7 @@ export default async function DarApplicationPage({
         team => team.team_id === +teamId
     );
 
+    const cookieStore = await cookies();
     const suppress = cookieStore.get("dar-update-suppress");
 
     // If no approval status and submitted, set to draft

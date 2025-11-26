@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import Dashboard from "@/components/DarDashboard";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import apis from "@/config/apis";
@@ -15,12 +14,11 @@ export const metadata = metaData({
 const DARApplicationsPage = async ({
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
 }) => {
-    const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 

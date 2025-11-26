@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import PageBanner from "./PageBanner";
 
 const meta: Meta<typeof PageBanner> = {

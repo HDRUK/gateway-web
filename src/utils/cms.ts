@@ -1,6 +1,5 @@
 "use server";
 
-/* eslint-disable default-param-last */
 import dayjs from "dayjs";
 import {
     CMSPageResponse,

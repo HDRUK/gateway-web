@@ -186,6 +186,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                                     size="small"
                                     color={chipColor ?? undefined}
                                     {...restTagProps}
+                                    key={option?.label}
                                 />
                             );
 

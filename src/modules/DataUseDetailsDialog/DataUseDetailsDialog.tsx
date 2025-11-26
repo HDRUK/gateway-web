@@ -39,6 +39,7 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
                 <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
                     {result.datasetTitles.map((dataset, index) => (
                         <EllipsisCharacterLimit
+                            key={`${dataset}-${index}`}
                             text={dataset}
                             isButton
                             characterLimit={CHARACTER_LIMIT}
@@ -52,6 +53,7 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
                     ))}
                     {result.non_gateway_datasets.map(dataset => (
                         <EllipsisCharacterLimit
+                            key={dataset}
                             text={dataset}
                             characterLimit={CHARACTER_LIMIT}
                             isChip
@@ -63,7 +65,7 @@ const DataUseDetailsDialog = ({ result }: DataUseDetailsDialogProps) => {
                     {t("leadApplicantOrganisation")}
                 </CategoryHeader>
                 {leadOrgNames.map(name => (
-                    <Typography>{name}</Typography>
+                    <Typography key={name}>{name}</Typography>
                 ))}
 
                 <CategoryHeader variant="h3">

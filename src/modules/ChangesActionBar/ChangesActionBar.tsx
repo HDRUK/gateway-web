@@ -5,7 +5,6 @@ import useActionBar from "@/hooks/useActionBar";
 const ChangesActionBar = () => {
     const { store } = useActionBar();
     const { props } = store;
-    // eslint-disable-next-line react/prop-types
     const { changeCount } = props as { changeCount: ReactNode };
 
     return (

@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import ActionBar from "@/components/ActionBar";
 import TwoColumn from "@/components/TwoColumn";
 import LeftNav from "@/modules/LeftNav";
@@ -10,8 +9,7 @@ export default async function AccountProfileLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const permissions = await getPermissions(user.roles);
 
     return (

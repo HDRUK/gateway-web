@@ -6,32 +6,32 @@ exports[`KeepingUpdated should render content 1`] = `
     class="MuiBox-root mui-style-old1by"
   >
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth mui-style-1jpc804-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-13roe7n-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-dtz8rd-MuiTypography-root"
     >
       Keeping you updated
     </p>
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth mui-style-1jpc804-MuiDivider-root"
     />
     <div
       class="MuiBox-root mui-style-106jpu6"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-a793d6-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1i11g3-MuiTypography-root"
       >
         Feedback
       </p>
       <span
-        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-k4ahjr-MuiButtonBase-root-MuiCheckbox-root"
+        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-13gtttw-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
         control="[object Object]"
         formcontrolsx="[object Object]"
         label="I am happy to be contacted to share and give feedback on my experience with the Gateway"
       >
         <input
-          class="PrivateSwitchBase-input mui-style-1m9pwf3"
+          class="PrivateSwitchBase-input mui-style-12xagqm-MuiSwitchBase-root"
           data-indeterminate="false"
           name="contact_feedback"
           type="checkbox"
@@ -43,10 +43,10 @@ exports[`KeepingUpdated should render content 1`] = `
       </span>
     </div>
     <hr
-      class="MuiDivider-root MuiDivider-fullWidth mui-style-9mgopn-MuiDivider-root"
+      class="MuiDivider-root MuiDivider-fullWidth mui-style-1jpc804-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-2i2h27-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 mui-style-2sqve9-MuiTypography-root"
     >
       As a user of the Gateway we take the privacy and security of your personal data seriously. Our privacy policy aims to give you information on how Health Data Research UK collects and processes your personal data through your use of this Gateway, including any data you may provide by emailing us.
     </p>

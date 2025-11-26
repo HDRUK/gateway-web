@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, { params }) {
             );
         }
 
-        const headersList = headers();
+        const headersList = await headers();
         const referer = headersList.get("referer");
 
         const { origin } = new URL(referer!);

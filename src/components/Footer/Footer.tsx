@@ -118,11 +118,7 @@ const Footer = () => {
                 </FooterLinksContainer>
             </FooterContainer>
 
-            <div
-                role="note"
-                // eslint-disable-next-line
-                tabIndex={0}
-                style={visuallyHidden}>
+            <div role="note" tabIndex={0} style={visuallyHidden}>
                 end of page
             </div>
         </FooterWrapper>

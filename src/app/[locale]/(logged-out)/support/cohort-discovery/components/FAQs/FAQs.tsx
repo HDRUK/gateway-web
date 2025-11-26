@@ -17,7 +17,7 @@ export default function FAQs({ data }: FAQsProps) {
                 {t("faqs.title")}
             </Typography>
             {data.map(({ question, answer }) => (
-                <Box sx={{ mb: 3 }}>
+                <Box sx={{ mb: 3 }} key={`${question}.${answer}`}>
                     <Typography variant="h3" sx={{ mb: 3 }}>
                         {question}
                     </Typography>

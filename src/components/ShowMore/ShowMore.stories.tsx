@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Chip from "../Chip";
 import ShowMore from "./ShowMore";
 
@@ -15,7 +15,7 @@ export const Default: Story = {
     args: {
         maxHeight: 24,
         children: Array.from({ length: 20 }).map((_, i) => (
-            <Chip label={`chip: ${i}`} />
+            <Chip key={i} label={`chip: ${i}`} />
         )),
     },
 };

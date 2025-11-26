@@ -10,7 +10,6 @@ export interface HTMLContentProps {
 const HTMLContent = ({ content }: HTMLContentProps) => {
     return (
         <Content
-            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(content, {
                     ADD_TAGS: ["iframe"],
