@@ -9,7 +9,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
       class="MuiBox-root mui-style-1u6a07a"
     >
       <h1
-        class="MuiTypography-root MuiTypography-h2 mui-style-verkaw-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 mui-style-ssccsx-MuiTypography-root"
       >
         Cohort Discovery
       </h1>
@@ -74,11 +74,11 @@ exports[`CMSPromoTemplate should render content 1`] = `
         </div>
       </div>
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1lcka2s-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-aevukc-MuiTypography-root-MuiLink-root"
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation mui-style-648l9b-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary mui-style-1yfghat-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
@@ -118,11 +118,11 @@ exports[`CMSPromoTemplate should render content 1`] = `
         </div>
       </div>
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1lcka2s-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-aevukc-MuiTypography-root-MuiLink-root"
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation mui-style-648l9b-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary mui-style-1yfghat-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
@@ -155,11 +155,11 @@ exports[`CMSPromoTemplate should render content 1`] = `
         </div>
       </div>
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1lcka2s-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-aevukc-MuiTypography-root-MuiLink-root"
         href="button/url"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation mui-style-648l9b-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary mui-style-1yfghat-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >

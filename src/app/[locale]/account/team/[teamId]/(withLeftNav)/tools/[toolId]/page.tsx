@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -16,12 +15,11 @@ export const metadata = metaData(
 export default async function ToolCreatePage({
     params,
 }: {
-    params: { teamId: string; toolId: string };
+    params: Promise<{ teamId: string; toolId: string }>;
 }) {
-    const { teamId, toolId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId, toolId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 

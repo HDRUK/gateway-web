@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { Box } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
@@ -28,7 +27,7 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import PreviewTemplate from "./PreviewTemplate";
@@ -331,7 +330,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 sx={{
                     position: "sticky",
                     top: 0,
-                    zIndex: zIndex.appBar,
+                    zIndex: theme.zIndex.appBar,
                     bgcolor: colors.grey,
                     borderBottom: 1,
                     borderColor: "divider",

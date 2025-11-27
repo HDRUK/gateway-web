@@ -13,15 +13,15 @@ export const metadata = metaData(
 );
 
 interface VerificationPageProps {
-    params: {
+    params: Promise<{
         uuid: string;
-    };
+    }>;
 }
 
 export default async function VerificationPage({
     params,
 }: VerificationPageProps) {
-    const { uuid } = params;
+    const { uuid } = await params;
     const session = await getSessionCookie();
 
     let hasFailed = false;

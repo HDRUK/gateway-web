@@ -1,20 +1,18 @@
-const withNextIntl = require("next-intl/plugin")();
-const { version } = require('./package.json')
-/** @type {import('next').NextConfig} */
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 
 const allowAllHeader = [
-                    { key: "Access-Control-Allow-Credentials", value: "true" },
-                    { key: "Access-Control-Allow-Origin", value: "*" },
-                    { key: "Access-Control-Allow-Methods", value: "GET" },
-                    { key: "Access-Control-Allow-Headers", value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" },
-                ]
-
-const nextConfig = withNextIntl({
-    publicRuntimeConfig: {
-        version
+    { key: "Access-Control-Allow-Credentials", value: "true" },
+    { key: "Access-Control-Allow-Origin", value: "*" },
+    { key: "Access-Control-Allow-Methods", value: "GET" },
+    {
+        key: "Access-Control-Allow-Headers",
+        value: "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
     },
+];
+
+const nextConfig = {
     reactStrictMode: true,
-    swcMinify: true,
     env: {
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
@@ -51,29 +49,31 @@ const nextConfig = withNextIntl({
     },
     async headers() {
         return [
-        { 
-            source: '/(.*)',
-            headers: [{ 
-                    key: 'Strict-Transport-Security',
-                    value: 'max-age=63072000; includeSubDomains; preload', 
-                }],
+            {
+                source: "/(.*)",
+                headers: [
+                    {
+                        key: "Strict-Transport-Security",
+                        value: "max-age=63072000; includeSubDomains; preload",
+                    },
+                ],
             },
             {
                 source: "/api/widget/:path*",
-                headers: allowAllHeader
+                headers: allowAllHeader,
             },
             {
                 source: "/embed/widget.js",
-                headers: allowAllHeader
-            }
+                headers: allowAllHeader,
+            },
         ];
     },
     async rewrites() {
         return [
-        {
-            source: '/robots.txt',
-            destination: '/api/robots',
-        },
+            {
+                source: "/robots.txt",
+                destination: "/api/robots",
+            },
         ];
     },
     async redirects() {
@@ -102,6 +102,6 @@ const nextConfig = withNextIntl({
         // !! WARN !!
         ignoreBuildErrors: true,
     },
-});
+};
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -8,7 +7,7 @@ import { getTeam, getTeamNames, getUser, getWidget } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import { useFeatures } from "@/providers/FeatureProvider";
+import { isWidgetsEnabled } from "@/flags";
 import WidgetCreator from "./components/WidgetCreator";
 import { WIDGET_ID_CREATE } from "./const";
 
@@ -25,18 +24,17 @@ const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 export default async function WidgetCreationPage({
     params,
 }: {
-    params: { teamId: string; widgetId: string };
+    params: Promise<{ teamId: string; widgetId: string }>;
 }) {
-    const { teamId, widgetId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId, widgetId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
     const t = await getTranslations(TRANSLATION_PATH);
-    const { isWidgetsEnabled } = useFeatures();
+    const widgetsEnabled = await isWidgetsEnabled();
 
-    if (!isWidgetsEnabled) {
+    if (!widgetsEnabled) {
         return notFound();
     }
 
@@ -44,7 +42,7 @@ export default async function WidgetCreationPage({
 
     // Get widget data
     if (widgetId !== WIDGET_ID_CREATE) {
-        widgetData = await getWidget(cookieStore, teamId, widgetId, {
+        widgetData = await getWidget(teamId, widgetId, {
             suppressError: true,
         });
 
@@ -54,7 +52,7 @@ export default async function WidgetCreationPage({
     }
 
     // Get all teams
-    const teamNames = await getTeamNames(cookieStore);
+    const teamNames = await getTeamNames();
 
     return (
         <ProtectedAccountRoute

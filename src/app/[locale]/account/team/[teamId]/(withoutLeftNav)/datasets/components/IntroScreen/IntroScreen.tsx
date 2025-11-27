@@ -175,6 +175,7 @@ const IntroScreen = ({
 
                 {METADATA_CHECKBOXES.map(checkbox => (
                     <Box
+                        key={checkbox}
                         sx={{
                             display: "flex",
                             justifyContent: "space-between",

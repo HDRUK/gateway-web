@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Box from "@/components/Box";
 import Tabs from "@/components/Tabs";
 import { TabProps, TabVariant } from "./Tabs";

@@ -113,6 +113,7 @@ const DatasetContent = ({
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
                             <DatasetButtonItem
+                                key={tag}
                                 color="success"
                                 size="small"
                                 onClick={() =>
@@ -146,7 +147,10 @@ const DatasetContent = ({
                 return (
                     <ListContainer>
                         {list.map(item => (
-                            <Link href={item} target="_blank">
+                            <Link
+                                key={item.toString()}
+                                href={item}
+                                target="_blank">
                                 {item}
                             </Link>
                         ))}

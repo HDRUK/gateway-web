@@ -1,6 +1,5 @@
 "use server";
 
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 import { Application } from "@/interfaces/Application";
 import { AuthUser } from "@/interfaces/AuthUser";
@@ -57,7 +56,6 @@ type Payload<T> = T | (() => BodyInit & T);
 const { NEXT_PUBLIC_LOG_LEVEL } = process.env;
 
 async function get<T>(
-    cookieStore: ReadonlyRequestCookies,
     url: string,
     options: GetOptions = {
         suppressError: false,
@@ -67,6 +65,7 @@ async function get<T>(
     },
     headers: object = {}
 ): Promise<T> {
+    const cookieStore = await cookies();
     const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
     const { cache, suppressError, serveRaw } = options;
@@ -79,7 +78,7 @@ async function get<T>(
           }
         : undefined;
 
-    const res = await fetch(`${url}`, {
+    const res = await fetch(url, {
         headers: {
             ...headers,
             Authorization: `Bearer ${jwt?.value}`,
@@ -130,7 +129,8 @@ async function patch<T>(
     payload?: Payload<T>,
     tagsToRevalidate?: string[]
 ): Promise<T> {
-    const jwt = cookies().get(config.JWT_COOKIE);
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
     if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         const message = {
@@ -179,7 +179,8 @@ async function put<T>(
     payload: unknown,
     tagsToRevalidate?: string[]
 ): Promise<T> {
-    const jwt = cookies().get(config.JWT_COOKIE);
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
     if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         const message = {
@@ -227,7 +228,8 @@ async function post<T>(
     payload: unknown,
     tagsToRevalidate?: string[]
 ): Promise<T> {
-    const jwt = cookies().get(config.JWT_COOKIE);
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get(config.JWT_COOKIE);
     const session = await getSessionCookie();
     if (NEXT_PUBLIC_LOG_LEVEL === "debug") {
         const message = {
@@ -270,67 +272,50 @@ async function post<T>(
     return data;
 }
 
-async function getFilters(
-    cookieStore: ReadonlyRequestCookies
-): Promise<Filter[]> {
+async function getFilters(): Promise<Filter[]> {
     const cache: Cache = {
         tags: ["filters"],
     };
     return get<Filter[]>(
-        cookieStore,
         `${apis.filtersV1UrlIP}?per_page=${FILTERS_PER_PAGE}`,
         { cache }
     );
 }
 
-async function getKeywords(
-    cookieStore: ReadonlyRequestCookies
-): Promise<Keyword[]> {
+async function getKeywords(): Promise<Keyword[]> {
     const cache: Cache = {
         tags: ["keywords"],
     };
-    return get<Keyword[]>(cookieStore, `${apis.keywordsV1IPUrl}?per_page=-1`, {
+    return get<Keyword[]>(`${apis.keywordsV1IPUrl}?per_page=-1`, {
         cache,
     });
 }
 
-function getUserFromCookie(cookieStore: ReadonlyRequestCookies): User | null {
+async function getUserFromCookie(): Promise<User | null> {
+    const cookieStore = await cookies();
     const jwt = cookieStore.get(config.JWT_COOKIE);
 
     return getUserFromToken(jwt?.value);
 }
 
-async function getUser(cookieStore: ReadonlyRequestCookies): Promise<AuthUser> {
-    return get<AuthUser>(
-        cookieStore,
-        `${apis.usersV1UrlIP}/${getUserFromCookie(cookieStore)?.id}`
-    );
+async function getUser(): Promise<AuthUser> {
+    const user = await getUserFromCookie();
+
+    return get<AuthUser>(`${apis.usersV1UrlIP}/${user?.id}`);
 }
 
-async function getApplication(
-    cookieStore: ReadonlyRequestCookies,
-    applicationId: string
-): Promise<Application> {
-    return get<Application>(
-        cookieStore,
-        `${apis.applicationsV1UrlIP}/${applicationId}`
-    );
+async function getApplication(applicationId: string): Promise<Application> {
+    return get<Application>(`${apis.applicationsV1UrlIP}/${applicationId}`);
 }
 
-async function getCohort(
-    cookieStore: ReadonlyRequestCookies,
-    cohortId: string
-): Promise<CohortRequest> {
-    return get<CohortRequest>(
-        cookieStore,
-        `${apis.cohortRequestsV1UrlIP}/${cohortId}`
-    );
+async function getCohort(cohortId: string): Promise<CohortRequest> {
+    return get<CohortRequest>(`${apis.cohortRequestsV1UrlIP}/${cohortId}`);
 }
 
 export async function getUserCohortRequest(
-    cookieStore: ReadonlyRequestCookies,
     userId: string
 ): Promise<CohortRequestUser> {
+    const cookieStore = await cookies();
     const cookieHeader = cookieStore
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
@@ -340,7 +325,6 @@ export async function getUserCohortRequest(
         revalidate: 15 * 60, // 15 minutes
     };
     return get<CohortRequestUser>(
-        cookieStore,
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
         { cache },
         {
@@ -349,15 +333,13 @@ export async function getUserCohortRequest(
     );
 }
 
-export async function getCohortAccessRedirect(
-    cookieStore: ReadonlyRequestCookies
-): Promise<CohortRequestAccess> {
+export async function getCohortAccessRedirect(): Promise<CohortRequestAccess> {
+    const cookieStore = await cookies();
     const cookieHeader = cookieStore
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
     return get<CohortRequestAccess>(
-        cookieStore,
         `${apis.cohortRequestsV1UrlIP}/access`,
         undefined,
         {
@@ -366,11 +348,8 @@ export async function getCohortAccessRedirect(
     );
 }
 
-async function getTeam(
-    cookieStore: ReadonlyRequestCookies,
-    teamId: string
-): Promise<Team> {
-    const team = await get<Team>(cookieStore, `${apis.teamsV1UrlIP}/${teamId}`);
+async function getTeam(teamId: string): Promise<Team> {
+    const team = await get<Team>(`${apis.teamsV1UrlIP}/${teamId}`);
 
     return {
         ...team,
@@ -384,85 +363,69 @@ async function getTeam(
     };
 }
 
-async function getTeamIdFromPid(
-    cookieStore: ReadonlyRequestCookies,
-    teamPid: string
-): Promise<string> {
-    return await get<string>(cookieStore, `${apis.teamsV1UrlIP}/${teamPid}/id`);
+async function getTeamIdFromPid(teamPid: string): Promise<string> {
+    return await get<string>(`${apis.teamsV1UrlIP}/${teamPid}/id`);
 }
 
 async function getTeamInfo(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/info`,
         options
     );
 }
 
 async function getTeamSummary(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/summary`,
         options
     );
 }
 
 async function getTeamDatasetsSummary(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     options?: GetOptions
 ): Promise<TeamSummary> {
     return await get<TeamSummary>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/datasets_summary`,
         options
     );
 }
 
 async function getNetworkInfo(
-    cookieStore: ReadonlyRequestCookies,
     networkId: string,
     options?: GetOptions
 ): Promise<NetworkSummary> {
     return await get<NetworkSummary>(
-        cookieStore,
         `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/info`,
         options
     );
 }
 
 async function getNetworkSummary(
-    cookieStore: ReadonlyRequestCookies,
     networkId: string,
     options?: GetOptions
 ): Promise<NetworkSummary> {
     return await get<NetworkSummary>(
-        cookieStore,
         `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/summary`,
         options
     );
 }
 
 async function getDataCustodianNetworks(
-    cookieStore: ReadonlyRequestCookies,
     networkId: string
 ): Promise<DataCustodianNetwork> {
     return await get<DataCustodianNetwork>(
-        cookieStore,
         `${apis.dataCustodianNetworkV1UrlIP}/${networkId}`
     );
 }
 
 async function getDataset(
-    cookieStore: ReadonlyRequestCookies,
     datasetId: string,
     schemaModel?: string,
     schemaVersion?: string,
@@ -478,14 +441,12 @@ async function getDataset(
     const queryString = params.toString();
 
     return await get<Dataset>(
-        cookieStore,
         queryString ? `${baseUrl}?${queryString}` : baseUrl,
         options
     );
 }
 
 async function getTeamDataset(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     datasetId: string,
     schemaModel?: string,
@@ -502,19 +463,16 @@ async function getTeamDataset(
     const queryString = params.toString();
 
     return await get<Dataset>(
-        cookieStore,
         queryString ? `${baseUrl}?${queryString}` : baseUrl,
         options
     );
 }
 
 async function getDataUse(
-    cookieStore: ReadonlyRequestCookies,
     dataUseId: string,
     options?: GetOptions
 ): Promise<DataUse> {
     const dataUse = await get<DataUse>(
-        cookieStore,
         `${apis.dataUseV2UrlIP}/${dataUseId}`,
         options
     );
@@ -522,27 +480,17 @@ async function getDataUse(
     return dataUse;
 }
 
-async function getTool(
-    cookieStore: ReadonlyRequestCookies,
-    toolId: string,
-    options?: GetOptions
-): Promise<Tool> {
-    const tool = await get<Tool>(
-        cookieStore,
-        `${apis.toolsV2UrlIP}/${toolId}`,
-        options
-    );
+async function getTool(toolId: string, options?: GetOptions): Promise<Tool> {
+    const tool = await get<Tool>(`${apis.toolsV2UrlIP}/${toolId}`, options);
 
     return tool;
 }
 
 async function getReducedTool(
-    cookieStore: ReadonlyRequestCookies,
     toolId: string,
     options?: GetOptions
 ): Promise<Tool> {
     const collection = await get<Tool>(
-        cookieStore,
         `${apis.toolsV1UrlIP}/${toolId}?view_type=mini`,
         options
     );
@@ -551,12 +499,10 @@ async function getReducedTool(
 }
 
 async function getReducedCollection(
-    cookieStore: ReadonlyRequestCookies,
     collectionId: string,
     options?: GetOptions
 ): Promise<ReducedCollection> {
     const collection = await get<ReducedCollection>(
-        cookieStore,
         `${apis.collectionsV2UrlIP}/${collectionId}?view_type=mini`,
         options
     );
@@ -565,12 +511,10 @@ async function getReducedCollection(
 }
 
 async function getSchemaFromTraser(
-    cookieStore: ReadonlyRequestCookies,
     schemaName: string,
     schemaVersion: string
 ): Promise<V4Schema> {
     return get<V4Schema>(
-        cookieStore,
         `${process.env.TRASER_SERVICE_URL}/get/schema?name=${schemaName}&version=${schemaVersion}`,
         {
             cache: {
@@ -582,14 +526,12 @@ async function getSchemaFromTraser(
 }
 
 async function getFormHydration(
-    cookieStore: ReadonlyRequestCookies,
     schemaName: string,
     schemaVersion: string,
     dataTypes?: string[],
     teamId?: string
 ): Promise<FormHydrationSchema> {
     return get<FormHydrationSchema>(
-        cookieStore,
         `${
             apis.formHydrationV1UrlIP
         }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
@@ -598,26 +540,17 @@ async function getFormHydration(
     );
 }
 
-async function getDarSections(
-    cookieStore: ReadonlyRequestCookies
-): Promise<QuestionBankSection[]> {
-    return get<QuestionBankSection[]>(
-        cookieStore,
-        apis.dataAccessSectionV1UrlIP,
-        {
-            cache: {
-                tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
-                revalidate: 4 * 60 * 60,
-            },
-        }
-    );
+async function getDarSections(): Promise<QuestionBankSection[]> {
+    return get<QuestionBankSection[]>(apis.dataAccessSectionV1UrlIP, {
+        cache: {
+            tags: [CACHE_DAR, CACHE_DAR_SECTIONS],
+            revalidate: 4 * 60 * 60,
+        },
+    });
 }
 
-async function getAllDarSections(
-    cookieStore: ReadonlyRequestCookies
-): Promise<QuestionBankSection[]> {
+async function getAllDarSections(): Promise<QuestionBankSection[]> {
     return get<QuestionBankSection[]>(
-        cookieStore,
         `${apis.dataAccessSectionV1UrlIP}?page=-1`,
         {
             cache: {
@@ -629,12 +562,10 @@ async function getAllDarSections(
 }
 
 async function getDarTeamApplication(
-    cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     teamId: string
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}`,
         {
             cache: {
@@ -645,12 +576,10 @@ async function getDarTeamApplication(
 }
 
 async function getDarApplicationUser(
-    cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     userId: string
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
-        cookieStore,
         `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
         {
             cache: {
@@ -661,12 +590,10 @@ async function getDarApplicationUser(
 }
 
 async function getDarAnswersTeam(
-    cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     teamId: string
 ): Promise<DarTemplateCountResponse> {
     return get<DarTemplateCountResponse>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`,
         {
             cache: {
@@ -681,12 +608,10 @@ async function getDarAnswersTeam(
 }
 
 async function getDarAnswersUser(
-    cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     userId: string
 ): Promise<DarApplicationAnswer[]> {
     return get<DarApplicationAnswer[]>(
-        cookieStore,
         `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}/answers`,
         {
             cache: {
@@ -701,12 +626,10 @@ async function getDarAnswersUser(
 }
 
 async function getDarReviewsTeam(
-    cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     teamId: string
 ): Promise<DarReviewsResponse[]> {
     return get<DarReviewsResponse[]>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/reviews`,
         {
             cache: {
@@ -722,12 +645,10 @@ async function getDarReviewsTeam(
 }
 
 async function getDarReviewsUser(
-    cookieStore: ReadonlyRequestCookies,
     applicationId: string,
     userId: string
 ): Promise<DarReviewsResponse[]> {
     return get<DarReviewsResponse[]>(
-        cookieStore,
         `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}/reviews`,
         {
             cache: {
@@ -820,12 +741,10 @@ async function updateDarApplicationCommentUser(
 }
 
 async function getDarTemplates(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     query: string
 ): Promise<PaginationType<DarTemplate[]>> {
     return get<PaginationType<DarTemplate[]>>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/templates${
             query ? `?${query}` : ""
         }`,
@@ -836,23 +755,19 @@ async function getDarTemplates(
 }
 
 async function getDarTemplatesCount(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string
 ): Promise<DarTemplateCountResponse> {
     return get<DarTemplateCountResponse>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/dar/templates/count/published`
     );
 }
 
 async function getWidget(
-    cookieStore: ReadonlyRequestCookies,
     teamId: string,
     widgetId: string,
     options?: GetOptions
 ): Promise<Widget> {
     const widget = await get<Widget>(
-        cookieStore,
         `${apis.teamsV1UrlIP}/${teamId}/widgets/${widgetId}`,
         options
     );
@@ -860,15 +775,8 @@ async function getWidget(
     return widget;
 }
 
-async function getTeamNames(
-    cookieStore: ReadonlyRequestCookies,
-    options?: GetOptions
-): Promise<TeamNames[]> {
-    const names = await get<TeamNames[]>(
-        cookieStore,
-        `${apis.teamsV1UrlIP}/names`,
-        options
-    );
+async function getTeamNames(options?: GetOptions): Promise<TeamNames[]> {
+    const names = await get<TeamNames[]>(`${apis.teamsV1UrlIP}/names`, options);
 
     return names;
 }

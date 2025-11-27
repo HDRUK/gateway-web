@@ -1,16 +1,10 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/nextjs";
 import { withActionBar } from "./withActionBar.decorator";
 import { withDialog } from "./withDialog.decorator";
 import { withIntl } from "./withIntl.decorator";
 import { withMuiTheme } from "./withMuiTheme.decorator";
 
 const preview: Preview = {
-    globals: {
-        locale: "en",
-        locales: {
-            en: "English",
-        },
-    },
     parameters: {
         actions: { argTypesRegex: "^on[A-Z].*" },
         controls: {
@@ -24,6 +18,12 @@ const preview: Preview = {
                 method: "alphabetical",
                 order: ["*", "Playground", "*"],
             },
+        },
+    },
+    initialGlobals: {
+        locale: "en",
+        locales: {
+            en: "English",
         },
     },
 };

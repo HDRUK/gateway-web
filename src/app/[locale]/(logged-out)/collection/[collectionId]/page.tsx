@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
@@ -31,12 +30,11 @@ const TRANSLATION_PATH = "pages.collection";
 export default async function CollectionItemPage({
     params,
 }: {
-    params: { collectionId: string };
+    params: Promise<{ collectionId: string }>;
 }) {
-    const { collectionId } = params;
-    const cookieStore = cookies();
+    const { collectionId } = await params;
     const t = await getTranslations(TRANSLATION_PATH);
-    const collection = await getReducedCollection(cookieStore, collectionId, {
+    const collection = await getReducedCollection(collectionId, {
         suppressError: true,
     });
 

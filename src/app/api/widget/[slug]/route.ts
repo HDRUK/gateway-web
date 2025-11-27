@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import apis from "@/config/apis";
 
 export const revalidate = 180;
-export const dynamic = "force-cache";
 
 const reactUrl = "https://esm.sh/react@18";
 const reactDomUrl = "https://esm.sh/react-dom@18/client";
@@ -34,7 +33,7 @@ export async function GET(req: NextRequest, { params }) {
             );
         }
 
-        const headersList = headers();
+        const headersList = await headers();
         const referer = headersList.get("referer");
 
         const { origin } = new URL(referer!);

@@ -1,7 +1,6 @@
 import { ReactNode, Suspense } from "react";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
-import getConfig from "next/config";
 import { notFound } from "next/navigation";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
 import CustomerSurvey from "@/components/CustomerSurvey";
@@ -15,6 +14,7 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { getHomePageBanner } from "@/utils/cms";
 import metaData from "@/utils/metadata";
+import packageJson from "@/../package.json";
 import {
     isAliasesEnabled,
     isSDEConciergeServiceEnquiryEnabled,
@@ -38,13 +38,13 @@ export const metadata = metaData({
         "The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
 });
 
-export default async function RootLayout({
-    children,
-    params: { locale },
-}: {
-    params: { locale: string };
+export default async function RootLayout(props: {
+    params: Promise<{ locale: string }>;
     children: ReactNode;
 }) {
+    const { children, params } = props;
+    const { locale } = await params;
+
     let messages;
     let homePageBanner: HomepageBannerNode[] = [];
     try {
@@ -56,9 +56,7 @@ export default async function RootLayout({
     const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
     const includeBanners = process.env.NEXT_PUBLIC_INCLUDE_BANNERS === "true";
 
-    const { publicRuntimeConfig } = getConfig();
-
-    const { version } = publicRuntimeConfig;
+    const { version } = packageJson;
 
     const features = {
         isSDEConciergeServiceEnquiryEnabled:

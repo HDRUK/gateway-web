@@ -1,4 +1,5 @@
-import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
+import { TextEncoder, TextDecoder } from "util";
 import { server } from "./mocks/server";
 
 const nextRouterMock = require("next-router-mock");
@@ -6,6 +7,15 @@ const nextRouterMock = require("next-router-mock");
 require("jest-fetch-mock").enableMocks();
 
 jest.mock("next/router", () => nextRouterMock);
+
+if (!global.TextEncoder) {
+    // @ts-ignore
+    global.TextEncoder = TextEncoder;
+}
+if (!global.TextDecoder) {
+    // @ts-ignore
+    global.TextDecoder = TextDecoder;
+}
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
     observe: jest.fn(),

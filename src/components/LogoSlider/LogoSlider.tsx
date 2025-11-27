@@ -101,7 +101,6 @@ const LogoSlider = ({ logos }: LogoSliderProps) => {
                     }}>
                     {[...logos, ...logos].map((logo, index) => (
                         <LogoComponent
-                            // eslint-disable-next-line react/no-array-index-key
                             key={`${logo.alt}-${index}`}
                             logo={logo}
                             setPaused={setPaused}
