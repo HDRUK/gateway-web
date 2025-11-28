@@ -18,7 +18,8 @@ const NavigationEvents = () => {
         if (store.isVisible) {
             hideBar();
         }
-    }, [pathname, store.isVisible, hideBar]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pathname]);
 
     return null;
 };
