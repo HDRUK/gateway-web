@@ -148,5 +148,8 @@
         "semantic-release": "^24.2.1",
         "storybook": "^10.0.7",
         "typescript": "5.9.3"
+    },
+    "overrides": {
+        "parse5": "8.0.0"
     }
 }
