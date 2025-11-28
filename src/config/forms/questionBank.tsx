@@ -39,6 +39,7 @@ const componentsWithOptions = [
 const fieldsWithValidation = [
     inputComponents.TextField,
     inputComponents.TextArea,
+    inputComponents.DocumentExchange,
 ];
 
 const sectionField = {
@@ -256,6 +257,11 @@ const validationSchema = yup
                     }
                 ),
         }),
+        /*document: yup.mixed().when("component", {
+            is: (component: string) => component === "DocumentExchange",
+            then: (schema) => schema.required("File is required for DocumentExchange"),
+            otherwise: (schema) => schema.nullable().notRequired(),
+        })*/
     })
     .concat(settingsSchema);
 

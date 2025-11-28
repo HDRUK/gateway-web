@@ -132,6 +132,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
 
     useEffect(() => {
         if (question) {
+            console.log(question);
             reset(question);
         }
     }, [reset, question, sectionData]);

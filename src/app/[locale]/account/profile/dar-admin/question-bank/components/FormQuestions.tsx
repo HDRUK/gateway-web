@@ -14,7 +14,7 @@ import {
     questionValidationFormFields,
 } from "@/config/forms/questionBank";
 import SelectMultipleOptionsNested from "./SelectMultipleOptionsNested";
-import { FileUploadFields } from "@/interfaces/FileUpload";
+import { FileUploadFields, UploadedFileMetadata } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { EntityType } from "@/consts/entityTypes";
 import useDelete from "@/hooks/useDelete";
@@ -36,14 +36,17 @@ const FormQuestions = ({
     setValue,
     watch,
 }: FormQuestionsProps) => {
-    const fileDownloadPath = `${apis.fileUploadV1Url}`;
+    const fileDownloadPath = `${apis.fileProcessedV1Url}`;
 
-    const removeUploadedFile = useDelete(
-        `${apis.fileProcessedV1Url}`,
+    const removeUploadedFile = questionId ? useDelete(
+        `${apis.questionBankV1Url}/${questionId}/files`,
         {
             itemName: "File",
         }
-    );
+        ) : useDelete(`${apis.fileProcessedV1Url}`,
+        {
+            itemName: "File",
+        });
 
     const hydratedFormFields = useMemo(
         () =>
@@ -79,12 +82,11 @@ const FormQuestions = ({
 
                 if (field.component === "FileUpload") {
                     if (componentType === "DocumentExchange") {
-                        console.log(field);
                         const fileUploadFields : FileUploadFields = {
                             fileDownloadApiPath: fileDownloadPath || undefined,
                             apiPath: `${apis.fileUploadV1Url}?entity_flag=${EntityType.DOCUMENT_EXCHANGE}`,
-                            onFileUploaded: async (response: { filename: any; id: any; }) => {
-                                const newFile = { filename: response.filename, id: response.id };
+                            onFileUploaded: async (response: UploadedFileMetadata) => {
+                                const newFile = { filename: response.filename, uuid: response.uuid };
 
                                 setValue(
                                     "document",

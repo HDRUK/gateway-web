@@ -127,7 +127,7 @@ const ApplicationSection = ({
     };
 
     const removeUploadedFile = useDelete(
-        `${fileProcessedV1Url}/`,
+        `${apis.fileProcessedV1Url}/`,
         {
             itemName: "File",
         }
