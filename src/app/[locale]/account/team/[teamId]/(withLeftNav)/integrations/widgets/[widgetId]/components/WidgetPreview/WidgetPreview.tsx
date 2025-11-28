@@ -55,30 +55,7 @@ const WidgetPreview = ({
 
     const generateWidgetCode = useMemo(() => {
         if (data) {
-            return `
-                <div 
-                    style="
-                        position: relative;
-                        width: ${data?.widget.size_width}${data?.widget.unit};
-                        height: ${data?.widget.size_height}${data?.widget.unit};
-                        max-width: 100%;
-                    "
-                >
-                    <iframe 
-                        title="HDR Gateway Widget"
-                        src="${WIDGET_CODE_PATH}${teamId}-${widgetId}"
-                        style="
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            border: 0;
-                        "
-                        allowfullscreen=""
-                    ></iframe>
-                </div>
-            `;
+            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen=""></iframe></div>`;
         }
         return "";
     }, [data, teamId, widgetId]);
