@@ -27,11 +27,7 @@ const TRANSLATION_PATH = `pages.account.team.widgets.preview`;
 const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/api/widget/`;
 const CURRENT_DOMAIN = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-const WidgetPreview = ({
-    teamId,
-    widgetId,
-    widgetDomains,
-}: WidgetPreviewProps) => {
+const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
