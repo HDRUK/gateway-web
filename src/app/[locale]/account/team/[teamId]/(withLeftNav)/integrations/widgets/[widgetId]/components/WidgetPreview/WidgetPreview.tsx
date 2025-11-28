@@ -91,10 +91,19 @@ const WidgetPreview = ({
                 columnSpacing={2}
                 direction="row"
                 alignItems="stretch">
-                <Grid item mobile={12} laptop={9} sx={{ overflow: "hidden" }}>
+                <Grid
+                    size={{
+                        mobile: 12,
+                        laptop: 9,
+                    }}
+                    sx={{ overflow: "hidden" }}>
                     {data ? <WidgetDisplay data={data} /> : <Loading />}
                 </Grid>
-                <Grid item mobile={12} laptop={3}>
+                <Grid
+                    size={{
+                        mobile: 12,
+                        laptop: 3,
+                    }}>
                     <Typography sx={{ fontWeight: 600, mb: 1 }} fontSize={16}>
                         {t("codeTitle")}
                     </Typography>
