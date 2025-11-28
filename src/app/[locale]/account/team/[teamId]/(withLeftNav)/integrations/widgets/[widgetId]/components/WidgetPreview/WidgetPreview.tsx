@@ -25,6 +25,7 @@ interface WidgetPreviewProps {
 
 const TRANSLATION_PATH = `pages.account.team.widgets.preview`;
 const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/api/widget/`;
+const CURRENT_DOMAIN = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 const WidgetPreview = ({
     teamId,
@@ -43,9 +44,10 @@ const WidgetPreview = ({
     };
 
     const cspHost = new URL(WIDGET_CODE_PATH).host;
+    const currentUrl = new URL(CURRENT_DOMAIN!).host;
 
     const { data } = useGet<WidgetResponse>(
-        `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${widgetDomains?.[0]}`
+        `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${currentUrl}`
     );
 
     const copyToClipboard = (str: string | undefined) => {
