@@ -115,10 +115,11 @@ const CreateWidgetDialog = () => {
                                 {OPTIONS.map(opt => {
                                     return (
                                         <Grid
-                                            item
-                                            mobile={6}
-                                            laptop={3}
-                                            desktop={3}
+                                            size={{
+                                                mobile: 6,
+                                                laptop: 3,
+                                                desktop: 3,
+                                            }}
                                             key={opt.value}>
                                             <Card
                                                 sx={{

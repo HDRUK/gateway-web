@@ -25,12 +25,9 @@ interface WidgetPreviewProps {
 
 const TRANSLATION_PATH = `pages.account.team.widgets.preview`;
 const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/api/widget/`;
+const CURRENT_DOMAIN = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-const WidgetPreview = ({
-    teamId,
-    widgetId,
-    widgetDomains,
-}: WidgetPreviewProps) => {
+const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -43,9 +40,10 @@ const WidgetPreview = ({
     };
 
     const cspHost = new URL(WIDGET_CODE_PATH).host;
+    const currentUrl = new URL(CURRENT_DOMAIN!).host;
 
     const { data } = useGet<WidgetResponse>(
-        `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${widgetDomains?.[0]}`
+        `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${currentUrl}`
     );
 
     const copyToClipboard = (str: string | undefined) => {
@@ -55,30 +53,7 @@ const WidgetPreview = ({
 
     const generateWidgetCode = useMemo(() => {
         if (data) {
-            return `
-                <div 
-                    style="
-                        position: relative;
-                        width: ${data?.widget.size_width}${data?.widget.unit};
-                        height: ${data?.widget.size_height}${data?.widget.unit};
-                        max-width: 100%;
-                    "
-                >
-                    <iframe 
-                        title="HDR Gateway Widget"
-                        src="${WIDGET_CODE_PATH}${teamId}-${widgetId}"
-                        style="
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            border: 0;
-                        "
-                        allowfullscreen=""
-                    ></iframe>
-                </div>
-            `;
+            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen=""></iframe></div>`;
         }
         return "";
     }, [data, teamId, widgetId]);
@@ -91,10 +66,19 @@ const WidgetPreview = ({
                 columnSpacing={2}
                 direction="row"
                 alignItems="stretch">
-                <Grid item mobile={12} laptop={9} sx={{ overflow: "hidden" }}>
+                <Grid
+                    size={{
+                        mobile: 12,
+                        laptop: 9,
+                    }}
+                    sx={{ overflow: "hidden" }}>
                     {data ? <WidgetDisplay data={data} /> : <Loading />}
                 </Grid>
-                <Grid item mobile={12} laptop={3}>
+                <Grid
+                    size={{
+                        mobile: 12,
+                        laptop: 3,
+                    }}>
                     <Typography sx={{ fontWeight: 600, mb: 1 }} fontSize={16}>
                         {t("codeTitle")}
                     </Typography>
