@@ -148,7 +148,6 @@ export default function DarDashboard({
                 previous.action_required
             ),
         }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [statusParam]);
 
     useEffect(() => {
@@ -159,7 +158,6 @@ export default function DarDashboard({
                 actionParam
             ),
         }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [actionParam]);
 
     const { data: counts } = useGet<CountStatus>(`${darApiPath}/count`);

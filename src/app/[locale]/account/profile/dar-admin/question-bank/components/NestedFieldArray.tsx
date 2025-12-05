@@ -82,6 +82,7 @@ const NestedFieldArray = ({ control, index, watch }: NestedFieldArrayProps) => {
                             if (field.component === "FieldArray") {
                                 return (
                                     <SelectMultipleOptions
+                                        key={`options.${index}.children.${nestedIndex}.${field.name}`}
                                         control={control}
                                         {...nestedField}
                                         name={`options.${index}.children.${nestedIndex}.${field.name}`}

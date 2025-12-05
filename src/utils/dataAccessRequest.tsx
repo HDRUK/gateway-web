@@ -232,7 +232,10 @@ const createFileUploadConfig = (
         fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
-            const newFile = { filename: response.filename, id: response.id };
+            const newFile = {
+                filename: response.filename,
+                uuid: response.uuid,
+            };
 
             if (component === inputComponents.FileUpload) {
                 setValue(
@@ -255,7 +258,6 @@ const createFileUploadConfig = (
                     { shouldValidate: true }
                 );
             }
-
             revalidateCacheAction(`${CACHE_DAR_ANSWERS}${applicationId}`);
         },
         ...(isResearcher &&
@@ -266,9 +268,10 @@ const createFileUploadConfig = (
 
                     if (response && prev && typeof prev === "object") {
                         const prevValue = prev.value;
+
                         if (Array.isArray(prevValue)) {
                             setValue(questionId, {
-                                value: prevValue.filter(v => v.id !== fileId),
+                                value: prevValue.filter(v => v.uuid !== fileId),
                             });
                         } else {
                             setValue(questionId, undefined);

@@ -371,6 +371,7 @@ const EditDataUse = () => {
                                 }
                                 contents={section.fields.map(field => (
                                     <Box
+                                        key={field.name}
                                         sx={{
                                             p: 0,
                                             gridColumn: "span 3",

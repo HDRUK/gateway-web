@@ -30,19 +30,17 @@ export default async function MissionsPage() {
                         <p>{t(TRANSLATION_NO_DATA)}</p>
                     )}
                     {allMissionsAndPurposes.map(mission => (
-                        <div>
+                        <div key={mission.node.title}>
                             <div
                                 style={{
                                     fontWeight: "bolder",
                                     fontSize: "16pt",
                                 }}
-                                // eslint-disable-next-line react/no-danger
                                 dangerouslySetInnerHTML={{
                                     __html: mission.node.title,
                                 }}
                             />
                             <div
-                                // eslint-disable-next-line react/no-danger
                                 dangerouslySetInnerHTML={{
                                     __html: mission.node.content,
                                 }}

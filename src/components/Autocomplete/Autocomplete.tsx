@@ -5,8 +5,9 @@ import {
     FilterOptionsState,
     InputAdornment,
     ListItemText,
-    Chip,
     ChipPropsColorOverrides,
+    Chip,
+    Tooltip,
 } from "@mui/material";
 import MuiAutocomplete, {
     createFilterOptions,
@@ -15,6 +16,7 @@ import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import Loading from "../Loading";
+import Typography from "../Typography";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -50,12 +52,15 @@ export interface AutocompleteProps<T extends FieldValues> {
     noOptionsText?: string;
     clearIcon?: boolean;
     chipColor?: keyof ChipPropsColorOverrides;
+    maxLabelLength?: number;
 }
 
 interface SearchOptions {
     value: unknown;
     label: string;
 }
+
+const MAX_DISPLAYED_TAGS = 20;
 
 const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
@@ -80,6 +85,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         id,
         clearIcon = false,
         chipColor,
+        maxLabelLength = 40,
         ...restProps
     } = props;
 
@@ -148,38 +154,82 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 })}
                 options={options}
                 disabled={disabled}
-                renderTags={(tagValue, getTagProps) =>
-                    tagValue?.map((option, index) => {
-                        const chipLabel =
-                            typeof getChipLabel === "function"
-                                ? getChipLabel(options, option)
-                                : option?.label || `${option}`;
-                        return (
-                            <Chip
-                                label={chipLabel || ""}
-                                size="small"
-                                {...(chipColor ? { color: chipColor } : {})}
-                                {...getTagProps({ index })}
-                            />
+                renderTags={(tagValue, getTagProps) => {
+                    const visibleOptions = tagValue.slice(
+                        0,
+                        MAX_DISPLAYED_TAGS
+                    );
+                    const additionalOptions =
+                        tagValue.length - visibleOptions.length;
+
+                    return [
+                        ...visibleOptions.map((option, index) => {
+                            const tagProps = getTagProps({ index });
+                            const { key, ...restTagProps } = tagProps;
+
+                            const rawLabel =
+                                typeof getChipLabel === "function"
+                                    ? getChipLabel(options, option)
+                                    : option?.label ?? String(option);
+
+                            const truncated =
+                                rawLabel && rawLabel.length > maxLabelLength
+                                    ? `${rawLabel.slice(0, maxLabelLength)}...`
+                                    : null;
+
+                            const label = truncated ?? rawLabel;
+                            const isTruncated = truncated !== null;
+
+                            const chip = (
+                                <Chip
+                                    label={label ?? ""}
+                                    size="small"
+                                    color={chipColor ?? undefined}
+                                    {...restTagProps}
+                                    key={option?.label}
+                                />
+                            );
+
+                            return isTruncated ? (
+                                <Tooltip
+                                    key={key}
+                                    title={rawLabel}
+                                    enterDelay={400}
+                                    arrow>
+                                    {/* Tooltip needs a single child */}
+                                    <span style={{ display: "inline-flex" }}>
+                                        {chip}
+                                    </span>
+                                </Tooltip>
+                            ) : (
+                                <span
+                                    key={key}
+                                    style={{ display: "inline-flex" }}>
+                                    {chip}
+                                </span>
+                            );
+                        }),
+                        additionalOptions > 0 ? (
+                            <Typography key="more" style={{ marginLeft: 4 }}>
+                                + {additionalOptions} more
+                            </Typography>
+                        ) : null,
+                    ];
+                }}
+                onChange={(_, value) => {
+                    let newValue: ValueType | ValueType[] | null = null;
+
+                    if (Array.isArray(value)) {
+                        newValue = value.map(v =>
+                            typeof v === "object" ? v.value : v
                         );
-                    })
-                }
-                onChange={(e, v) => {
-                    if (Array.isArray(v)) {
-                        const values = v.map(value => {
-                            if (typeof value === "object") return value?.value;
-                            return value;
-                        });
-                        field.onChange(values);
+                    } else if (typeof value === "object" && value !== null) {
+                        newValue = value.value;
+                    } else {
+                        newValue = value;
                     }
 
-                    if ((v as OptionsType)?.value) {
-                        field.onChange((v as OptionsType).value);
-                    }
-
-                    if (!v) {
-                        field.onChange(v);
-                    }
+                    field.onChange(newValue);
                 }}
                 {...(canCreate && {
                     filterOptions,
@@ -223,6 +273,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 noOptionsText={
                     isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }
+                ListboxProps={{ style: { maxHeight: "35vh" } }}
             />
         </FormInputWrapper>
     );

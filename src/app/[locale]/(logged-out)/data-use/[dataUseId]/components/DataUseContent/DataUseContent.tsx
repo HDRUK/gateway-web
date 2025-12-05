@@ -126,7 +126,7 @@ const DataUseContent = ({
                     gridColumn: { tablet: "span 5", laptop: "span 5" },
                     p: 0,
                 }}>
-                <Paper sx={{ borderRadius: 2, p: 2 }}>
+                <Paper sx={{ p: 2 }}>
                     {populatedSections
                         .filter(section => section.sectionName !== "general")
                         .map((section, index) => (
@@ -171,7 +171,7 @@ const DataUseContent = ({
                                         <BoxContainer
                                             sx={{
                                                 gridTemplateColumns: {
-                                                    desktop: "repeat(4, 1fr)",
+                                                    tablet: "repeat(4, 1fr)",
                                                 },
                                                 gap: 1,
                                                 "&:not(:last-of-type)": {
@@ -182,7 +182,7 @@ const DataUseContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        desktop: "span 1",
+                                                        tablet: "span 1",
                                                     },
                                                     p: 0,
                                                 }}>
@@ -200,7 +200,7 @@ const DataUseContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        desktop: "span 2",
+                                                        tablet: "span 2",
                                                     },
                                                     p: 0,
                                                     display: "flex",

@@ -28,6 +28,7 @@ export default function ReadOnly({
                 },
             ].map(row => (
                 <Box
+                    key={row.label}
                     sx={{
                         p: 0,
                         display: "flex",

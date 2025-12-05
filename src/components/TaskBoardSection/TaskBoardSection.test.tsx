@@ -1,11 +1,9 @@
-import React from "react";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import TaskBoardSection from "@/components/TaskBoardSection";
 import { render, screen } from "@/utils/testUtils";
 
 describe("TaskBoardSection", () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const Component = () => {
         const tasks = [
             {

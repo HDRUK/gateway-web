@@ -1,13 +1,10 @@
-import { cookies } from "next/headers";
 import Box from "@/components/Box";
-import ImageMediaCard from "@/components/ImageMediaCard";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
-import { StaticImages } from "@/config/images";
-import { RouteName } from "@/consts/routeName";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import Integration from "./components/Integration";
 
 export const metadata = metaData(
     {
@@ -19,12 +16,11 @@ export const metadata = metaData(
 export default async function TeamIntegrationsPage({
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
 }) {
-    const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
@@ -39,20 +35,7 @@ export default async function TeamIntegrationsPage({
                     flexDirection: "column",
                     alignItems: "center",
                 }}>
-                <Box sx={{ display: "flex", gap: "40px" }}>
-                    <ImageMediaCard
-                        img={
-                            StaticImages.TEAM_INTEGRATIONS.createNewIntegration
-                        }
-                        href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.CREATE}`}
-                        buttonText="Create new Integration"
-                    />
-                    <ImageMediaCard
-                        img={StaticImages.TEAM_INTEGRATIONS.manageIntegrations}
-                        href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`}
-                        buttonText="Manage Integrations"
-                    />
-                </Box>
+                <Integration teamId={teamId} />
             </Box>
         </ProtectedAccountRoute>
     );

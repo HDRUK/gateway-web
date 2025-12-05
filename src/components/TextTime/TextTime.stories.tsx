@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
 import TextTime from "./TextTime";

@@ -2,7 +2,7 @@ import { Fragment, Suspense } from "react";
 import { Skeleton } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -13,7 +13,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
+import { AspectRatioImage } from "@/consts/image";
 import { getTeamInfo } from "@/utils/api";
 import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
@@ -32,14 +32,13 @@ export const metadata = metaData({
 export default async function DataCustodianItemPage({
     params,
 }: {
-    params: { dataCustodianId: string };
+    params: Promise<{ dataCustodianId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataCustodianId } = params;
-    const cookieStore = cookies();
+    const { dataCustodianId } = await params;
 
-    const infoData = await getTeamInfo(cookieStore, dataCustodianId, {
+    const infoData = await getTeamInfo(dataCustodianId, {
         suppressError: true,
     });
     if (!infoData) notFound();
@@ -80,7 +79,7 @@ export default async function DataCustodianItemPage({
                         {infoData.name}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                        <Image
                             width={554}
                             height={250}
                             alt={infoData.name}
@@ -88,6 +87,7 @@ export default async function DataCustodianItemPage({
                                 infoData?.team_logo ||
                                 StaticImages.BASE.placeholder
                             }
+                            style={AspectRatioImage}
                         />
                     </Box>
                     <ActionBar

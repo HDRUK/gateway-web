@@ -1,5 +1,5 @@
 import Stack from "@mui/material/Stack";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Box from "@/components/Box";
 import ErrorDisplay from "./ErrorDisplay";
 

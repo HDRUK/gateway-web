@@ -10,7 +10,7 @@ import { logger } from "./utils/logger";
 
 const isProd = process.env.NODE_ENV === "production";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     try {
         const token = request.cookies.get(conf.JWT_COOKIE)?.value;
         const authUser = getUserFromToken(token);
@@ -63,5 +63,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+    matcher: ["/((?!api|_next|_vercel|widgets|.*\\..*).*)"],
 };

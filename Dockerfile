@@ -25,6 +25,12 @@ ARG NEXT_PUBLIC_MEDIA_STATIC_URL
 ARG NEXT_PUBLIC_INTEGRATION_OVERVIEW_URL
 ARG TRASER_SERVICE_URL
 
+# COPY . .
+
+# RUN npm i esbuild
+# RUN npm run build:widget
+# RUN rm -rf node_modules
+
 ENV NODE_ENV production
 
 RUN npm install

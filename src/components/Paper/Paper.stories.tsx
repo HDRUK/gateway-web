@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import Paper from "./Paper";
 
 /** Mui documentation: https://mui.com/material-ui/react-paper */
