@@ -1,3 +1,33 @@
+## [2.27.0](https://github.com/HDRUK/gateway-web/compare/v2.26.0...v2.27.0) (2025-12-05)
+
+### ✨ Features
+
+* **GAT-7721:** Revised Cohort Discovery user experience enhancements (#1375) ([6eff390](https://github.com/HDRUK/gateway-web/commit/6eff390ab16b8a0b5368dff7ad5d6fa5c82c17be)), closes [GAT-7721](GAT-7721)
+* **GAT-7826:** Update support centre links (#1376) ([2f38a7e](https://github.com/HDRUK/gateway-web/commit/2f38a7ec3e4984e12e6b0d441ab44e60c91ab12c)), closes [GAT-7826](GAT-7826)
+* **GAT-8031:** Widgets (#1364) ([faf73aa](https://github.com/HDRUK/gateway-web/commit/faf73aa8fe6af56d1d978c7d85f4f7b55a79d7b1)), closes [GAT-8031](GAT-8031)
+* **GAT-8198:** Data custodian networks speed (#1377) ([1d5b172](https://github.com/HDRUK/gateway-web/commit/1d5b1720f869656aa64a9b2f3425a66d29fd2741)), closes [GAT-8198](GAT-8198)
+* **GAT-8200:** Data custodian landing page load times (#1378) ([4cd7098](https://github.com/HDRUK/gateway-web/commit/4cd7098c83bfe77eca8bd73932e14f759750e5b2)), closes [GAT-8200](GAT-8200)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Correct widgets flag (#1384) ([1b43595](https://github.com/HDRUK/gateway-web/commit/1b4359523a44c99d19781cab5564dd25a0b854b2)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Enable Widgets (#1385) ([ed2b457](https://github.com/HDRUK/gateway-web/commit/ed2b457bce41e57bf82d529baf7d3cc03477e98e)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Ensure cache is cleared (#1395) ([afb542e](https://github.com/HDRUK/gateway-web/commit/afb542e979103990b568d25ed40bfc7686cc5dfc)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** fix gcloud up check (#1397) ([2ee3817](https://github.com/HDRUK/gateway-web/commit/2ee381792e993981a2d69780460ab8894546db7b))
+* **GAT-0000:** Fix next build issues (#1392) ([3f72a4e](https://github.com/HDRUK/gateway-web/commit/3f72a4e36c5d70b8d20d1655cacc3462ab825a84))
+* **GAT-0000:** Fix widget modal image path (#1387) ([1438fbc](https://github.com/HDRUK/gateway-web/commit/1438fbc9788a97c0c44878e03b5a1b4de204ebb6))
+* **GAT-0000:** Widget modal mui modal (#1393) ([14521eb](https://github.com/HDRUK/gateway-web/commit/14521eb66dee53b12eb2fb6fdd86b1864ef2c03f)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** widgets appearing server vs client (#1386) ([237aec5](https://github.com/HDRUK/gateway-web/commit/237aec57823dd2652409c9b8abacbf39d06535bb)), closes [GAT-0000](GAT-0000)
+* **GAT-1234:** Defensive checks for cohort response on dataset search page (#1380) ([8e9b9ba](https://github.com/HDRUK/gateway-web/commit/8e9b9ba3e0922429a6c5d9c5f0e5ca7fb38ee66c)), closes [GAT-1234](GAT-1234)
+* **GAT-7593:** Remove extra 0 being displayed (#1382) ([fd1e0bc](https://github.com/HDRUK/gateway-web/commit/fd1e0bca3b54a85ee31f7ef0f8de29d67b7b54a1)), closes [GAT-7593](GAT-7593)
+* **GAT-7677:** Data use responsive tweaks (#1390) ([be806ae](https://github.com/HDRUK/gateway-web/commit/be806ae7784e48b063bffa00bb964e2048cef601)), closes [GAT-7677](GAT-7677)
+* **GAT-7692:** Format filter text when too long (#1383) ([1f9b779](https://github.com/HDRUK/gateway-web/commit/1f9b7796bdf864f1b030a1014eac03cb61f3afae)), closes [GAT-7692](GAT-7692)
+* **GAT-8031:** Fix merge conflict error. (#1389) ([a0d40a0](https://github.com/HDRUK/gateway-web/commit/a0d40a0188256d83d059a307e3212825023797b4))
+* **GAT-8134:** Move file id to uuids (#1371) ([00debeb](https://github.com/HDRUK/gateway-web/commit/00debeb5a179ec3c63c58462531d11c332f0fcec)), closes [GAT-8134](GAT-8134)
+* **GAT-8221:** Tweak navigation events  (#1394) ([923a712](https://github.com/HDRUK/gateway-web/commit/923a712ad773151eb8e8fbff8cc8676ec052d8fa)), closes [GAT-8221](GAT-8221) [navigation](gation)
+* **GAT-8221:** Update package versions (#1379) ([2859129](https://github.com/HDRUK/gateway-web/commit/2859129554bb5c808f9831cb00e714a65be47818)), closes [GAT-8221](GAT-8221)
+* **GAT-8264:** Use next link for homepage info panel buttons (#1391) ([e6a52f0](https://github.com/HDRUK/gateway-web/commit/e6a52f0e4b1a07df9177beaa3baefbfb69e18249)), closes [GAT-8264](GAT-8264)
+
 ## [2.26.0](https://github.com/HDRUK/gateway-web/compare/v2.25.0...v2.26.0) (2025-11-20)
 
 ### ✨ Features
