@@ -15,7 +15,7 @@ export async function GET(req: NextRequest, { params }) {
             new URL(NEXT_PUBLIC_GATEWAY_URL!).origin
         }/${widget}`;
 
-        const { slug } = params;
+        const { slug } = await params;
 
         if (!slug || !slug.includes("-")) {
             return NextResponse.json(
