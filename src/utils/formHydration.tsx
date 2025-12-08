@@ -158,6 +158,7 @@ const formGetSectionStatus = (
     if (isSectionActive) {
         return LegendStatus.ACTIVE;
     }
+    //
     if (
         (!submissionRequested &&
             formSectionHasAllEmptyFields(
