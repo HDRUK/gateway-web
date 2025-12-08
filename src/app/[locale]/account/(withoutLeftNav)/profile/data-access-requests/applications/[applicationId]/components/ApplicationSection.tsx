@@ -332,10 +332,8 @@ const ApplicationSection = ({
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
 
-    const formatFileUploadFields = (component: string, questionId: string) => {
+    const formatFileUploadFields = (component: string, questionId: number) => {
         let fileUploadFields: FileUploadFields | undefined;
-
-        console.log(component);
 
         if (
             component === inputComponents.FileUpload ||
@@ -359,11 +357,10 @@ const ApplicationSection = ({
                     : undefined
             );
 
-            console.log(fileUploadFields);
-
             return fileUploadFields;
         }
     };
+
     const renderFormFields = () =>
         filteredData
             ?.filter(
@@ -373,45 +370,13 @@ const ApplicationSection = ({
                         sectionId
             )
             .map(field => {
-                // console.log(field);
-                // if (field.is_child) return null;
+                if (field.is_child) return null;
 
                 let sectionHeader = null;
                 if (!processedSections.has(field.section_id)) {
                     processedSections.add(field.section_id);
                     sectionHeader = renderSectionHeader(field);
                 }
-
-                // console.log(field);
-
-                let fileUploadFields: FileUploadFields | undefined;
-
-                if (
-                    field.component === inputComponents.FileUpload ||
-                    field.component === inputComponents.FileUploadMultiple
-                ) {
-                    const fileDownloadApiPath = isResearcher
-                        ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
-                        : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
-
-                    fileUploadFields = createFileUploadConfig(
-                        field.question_id.toString(),
-                        field.component,
-                        applicationId,
-                        fileDownloadApiPath,
-                        isResearcher,
-                        setValue,
-                        getValues,
-                        teamApplication?.submission_status !==
-                            DarApplicationStatus.SUBMITTED
-                            ? removeUploadedFile
-                            : undefined
-                    );
-
-                    console.log(fileUploadFields);
-                }
-
-                // console.log(field);
 
                 return (
                     <Fragment key={field.question_id}>
@@ -458,16 +423,16 @@ const ApplicationSection = ({
                                         control,
                                         field.question_id.toString(),
                                         updateGuidanceText,
-                                        formatFileUploadFields(
-                                            field.component,
-                                            field.question_id
-                                        )
+                                        field.component &&
+                                            formatFileUploadFields(
+                                                field.component,
+                                                field.question_id
+                                            )
                                     )}
                                 </Box>
                             </>
                         )}
                         {/* Process child fields when necessary */}
-                        {fileUploadFields?.apiPath}
                         {field.options.flatMap(
                             option =>
                                 option.children?.map(child =>
@@ -500,10 +465,11 @@ const ApplicationSection = ({
                                                     control,
                                                     child.question_id.toString(),
                                                     updateGuidanceText,
-                                                    formatFileUploadFields(
-                                                        child.component,
-                                                        child.question_id
-                                                    )
+                                                    child.component &&
+                                                        formatFileUploadFields(
+                                                            child.component,
+                                                            child.question_id
+                                                        )
                                                 )}
                                             </Box>
                                         </Fragment>
