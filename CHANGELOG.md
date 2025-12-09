@@ -1,3 +1,9 @@
+## [2.27.2](https://github.com/HDRUK/gateway-web/compare/v2.27.1...v2.27.2) (2025-12-09)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Update widget embed code (#1404) ([f01a5cf](https://github.com/HDRUK/gateway-web/commit/f01a5cf73d5481060e5092d1d73f558ef98f0df8)), closes [GAT-0000](GAT-0000)
+
 ## [2.27.1](https://github.com/HDRUK/gateway-web/compare/v2.27.0...v2.27.1) (2025-12-09)
 
 ### 🐛 Bug Fixes
