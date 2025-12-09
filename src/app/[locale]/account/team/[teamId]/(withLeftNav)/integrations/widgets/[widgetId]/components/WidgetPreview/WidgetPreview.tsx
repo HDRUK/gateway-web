@@ -24,7 +24,7 @@ interface WidgetPreviewProps {
 }
 
 const TRANSLATION_PATH = `pages.account.team.widgets.preview`;
-const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/api/widget/`;
+const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/widgets/`;
 const CURRENT_DOMAIN = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
@@ -53,7 +53,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
 
     const generateWidgetCode = useMemo(() => {
         if (data) {
-            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen=""></iframe></div>`;
+            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
         }
         return "";
     }, [data, teamId, widgetId]);
