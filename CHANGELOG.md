@@ -1,3 +1,9 @@
+## [2.27.1](https://github.com/HDRUK/gateway-web/compare/v2.27.0...v2.27.1) (2025-12-09)
+
+### 🐛 Bug Fixes
+
+* **GAT-8299:** Fix await in widget slug (#1401) ([94e3442](https://github.com/HDRUK/gateway-web/commit/94e34429ea8765ccf05a875406b55abdf0f6ad43))
+
 ## [2.27.0](https://github.com/HDRUK/gateway-web/compare/v2.26.0...v2.27.0) (2025-12-05)
 
 ### ✨ Features
