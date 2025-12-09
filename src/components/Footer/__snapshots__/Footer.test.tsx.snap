@@ -144,6 +144,14 @@ exports[`Footer should render component 1`] = `
                 API docs
               </a>
             </li>
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-r8b5xb-MuiTypography-root-MuiLink-root"
+                href="/about/accessibility-statement"
+              >
+                Accessibility Statement
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
