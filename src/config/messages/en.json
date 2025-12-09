@@ -229,7 +229,11 @@
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
             },
-            "backToHomepage": "Back to homepage"
+            "backToHomepage": "Back to homepage",
+            "accessibilityStatement": {
+                "title": "Accessibility Statement",
+                "subTitle": "We are committed to creating an accessible experience for all users"
+            }
         },
         "account": {
             "profile": {
@@ -1607,7 +1611,8 @@
             "termsConditions": "Terms and conditions",
             "privacyPolicy": "Privacy policy",
             "cookieNotice": "Cookie notice",
-            "apiDocs": "API docs"
+            "apiDocs": "API docs",
+            "accessibilityStatement": "Accessibility Statement"
         },
         "DesktopNav": {
             "labels": {

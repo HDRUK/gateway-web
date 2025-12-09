@@ -591,17 +591,17 @@ const theme = createTheme({
                 }),
                 h2: {
                     fontSize: "1.3rem",
-                    fontWeight: 400,
+                    fontWeight: 600,
                     marginBottom: 15,
                 },
                 h3: {
                     fontSize: "1.1rem",
-                    fontWeight: 400,
+                    fontWeight: 600,
                     marginBottom: 2,
                 },
                 h4: {
                     fontSize: "1rem",
-                    fontWeight: 400,
+                    fontWeight: 600,
                     marginBottom: 2,
                 },
                 caption: {
