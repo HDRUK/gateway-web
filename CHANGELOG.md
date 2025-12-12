@@ -1,3 +1,16 @@
+## [2.28.0](https://github.com/HDRUK/gateway-web/compare/v2.27.2...v2.28.0) (2025-12-12)
+
+### ✨ Features
+
+* **GAT-8288:** Add accessibility page (#1406) ([ab23c64](https://github.com/HDRUK/gateway-web/commit/ab23c64b568278032db27fedfbd1dc69e3225d41)), closes [GAT-8288](GAT-8288)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** DAR child question uploads [SUPP-1855] (#1402) ([4cece96](https://github.com/HDRUK/gateway-web/commit/4cece969af062837b68100d4f98cdf61246eaa02)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Update widget embed code (#1404) ([9e399f8](https://github.com/HDRUK/gateway-web/commit/9e399f83b434b73967a4f671d5a0a4ffe8b7220b)), closes [GAT-0000](GAT-0000)
+* **GAT-8299:** Fix await in widget slug (#1401) ([d29deb8](https://github.com/HDRUK/gateway-web/commit/d29deb8f3d12cd947fed82de9c5f7af94cd47507))
+* **GAT-8315:** Update next version (#1407) ([7b0adfb](https://github.com/HDRUK/gateway-web/commit/7b0adfbee78140e118388a135f27a4bde129383e)), closes [GAT-8315](GAT-8315)
+
 ## [2.27.2](https://github.com/HDRUK/gateway-web/compare/v2.27.1...v2.27.2) (2025-12-09)
 
 ### 🐛 Bug Fixes
