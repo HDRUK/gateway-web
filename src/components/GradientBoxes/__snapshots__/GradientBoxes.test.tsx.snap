@@ -14,7 +14,7 @@ exports[`GradientBoxes should render title 1`] = `
         target="_self"
       >
         <div
-          class="MuiTypography-root MuiTypography-h2 mui-style-5zg85o-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 mui-style-1kje510-MuiTypography-root"
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </div>
@@ -49,7 +49,7 @@ exports[`GradientBoxes should render title 1`] = `
         target="_self"
       >
         <div
-          class="MuiTypography-root MuiTypography-h2 mui-style-5zg85o-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 mui-style-1kje510-MuiTypography-root"
         >
           Vestibulum ultrices purus sit amet cursus gravida. 
         </div>
@@ -84,7 +84,7 @@ exports[`GradientBoxes should render title 1`] = `
         target="_self"
       >
         <div
-          class="MuiTypography-root MuiTypography-h2 mui-style-5zg85o-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 mui-style-1kje510-MuiTypography-root"
         >
           Aenean luctus feugiat eros at laoreet.
         </div>
