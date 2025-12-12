@@ -74,7 +74,6 @@ const config: StorybookConfig = {
                 "@/consts": path.resolve(__dirname, "../src/consts"),
                 fs: path.resolve(__dirname, "fsMock.js"),
                 "next/font/google": path.resolve(__dirname, "nextFontMock.ts"),
-                "next/navigation": "next-router-mock",
             };
         }
         return config;

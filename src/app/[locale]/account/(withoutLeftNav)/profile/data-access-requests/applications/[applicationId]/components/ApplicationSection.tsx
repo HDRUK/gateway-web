@@ -332,6 +332,35 @@ const ApplicationSection = ({
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
 
+    const formatFileUploadFields = (component: string, questionId: number) => {
+        let fileUploadFields: FileUploadFields | undefined;
+
+        if (
+            component === inputComponents.FileUpload ||
+            component === inputComponents.FileUploadMultiple
+        ) {
+            const fileDownloadApiPath = isResearcher
+                ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
+                : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
+
+            fileUploadFields = createFileUploadConfig(
+                questionId.toString(),
+                component,
+                applicationId,
+                fileDownloadApiPath,
+                isResearcher,
+                setValue,
+                getValues,
+                teamApplication?.submission_status !==
+                    DarApplicationStatus.SUBMITTED
+                    ? removeUploadedFile
+                    : undefined
+            );
+
+            return fileUploadFields;
+        }
+    };
+
     const renderFormFields = () =>
         filteredData
             ?.filter(
@@ -347,31 +376,6 @@ const ApplicationSection = ({
                 if (!processedSections.has(field.section_id)) {
                     processedSections.add(field.section_id);
                     sectionHeader = renderSectionHeader(field);
-                }
-
-                let fileUploadFields: FileUploadFields | undefined;
-
-                if (
-                    field.component === inputComponents.FileUpload ||
-                    field.component === inputComponents.FileUploadMultiple
-                ) {
-                    const fileDownloadApiPath = isResearcher
-                        ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
-                        : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
-
-                    fileUploadFields = createFileUploadConfig(
-                        field.question_id.toString(),
-                        field.component,
-                        applicationId,
-                        fileDownloadApiPath,
-                        isResearcher,
-                        setValue,
-                        getValues,
-                        teamApplication?.submission_status !==
-                            DarApplicationStatus.SUBMITTED
-                            ? removeUploadedFile
-                            : undefined
-                    );
                 }
 
                 return (
@@ -419,7 +423,11 @@ const ApplicationSection = ({
                                         control,
                                         field.question_id.toString(),
                                         updateGuidanceText,
-                                        fileUploadFields
+                                        field.component &&
+                                            formatFileUploadFields(
+                                                field.component,
+                                                field.question_id
+                                            )
                                     )}
                                 </Box>
                             </>
@@ -456,7 +464,12 @@ const ApplicationSection = ({
                                                     },
                                                     control,
                                                     child.question_id.toString(),
-                                                    updateGuidanceText
+                                                    updateGuidanceText,
+                                                    child.component &&
+                                                        formatFileUploadFields(
+                                                            child.component,
+                                                            child.question_id
+                                                        )
                                                 )}
                                             </Box>
                                         </Fragment>
