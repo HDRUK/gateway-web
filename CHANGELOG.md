@@ -1,3 +1,9 @@
+## [2.28.1](https://github.com/HDRUK/gateway-web/compare/v2.28.0...v2.28.1) (2025-12-12)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Font weight tweak (#1409) ([83bb4fa](https://github.com/HDRUK/gateway-web/commit/83bb4fa36ed6740ec073df1cb019a356e4bf0b6f)), closes [GAT-0000](GAT-0000)
+
 ## [2.28.0](https://github.com/HDRUK/gateway-web/compare/v2.27.2...v2.28.0) (2025-12-12)
 
 ### ✨ Features
