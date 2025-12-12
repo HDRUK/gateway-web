@@ -70,18 +70,21 @@ export const MarkDownSanitizedWithHtml = ({
             component: Typography,
             props: {
                 variant: "h2",
+                sx: { fontWeight: 600 },
             },
         },
         h3: {
             component: Typography,
             props: {
                 variant: "h3",
+                sx: { fontWeight: 600 },
             },
         },
         h4: {
             component: Typography,
             props: {
                 variant: "h4",
+                sx: { fontWeight: 600 },
             },
         },
     };
