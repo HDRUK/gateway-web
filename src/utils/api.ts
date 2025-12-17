@@ -27,6 +27,7 @@ import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { PaginationType } from "@/interfaces/Pagination";
+import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team, TeamNames } from "@/interfaces/Team";
@@ -740,6 +741,16 @@ async function updateDarApplicationCommentUser(
     );
 }
 
+async function getDarTemplate(
+    templateId: string,
+    options?: GetOptions
+): Promise<DarTemplate> {
+    return get<DarTemplate>(
+        `${apis.dataAccessTemplateV1Url}/${templateId}`,
+        options
+    );
+}
+
 async function getDarTemplates(
     teamId: string,
     query: string
@@ -759,6 +770,19 @@ async function getDarTemplatesCount(
 ): Promise<DarTemplateCountResponse> {
     return get<DarTemplateCountResponse>(
         `${apis.teamsV1UrlIP}/${teamId}/dar/templates/count/published`
+    );
+}
+
+async function getDarSectionQuestions(
+    teamId: string,
+    sectionId: number,
+    isChild: number
+): Promise<QuestionBankQuestion[]> {
+    return get<QuestionBankQuestion[]>(
+        `${apis.teamsV1UrlIP}/${teamId}/questions/section/${sectionId}?is_child=${isChild}`,
+        {
+            withPagination: true,
+        }
     );
 }
 
@@ -818,8 +842,10 @@ export {
     createDarApplicationReview,
     updateDarApplicationCommentTeam,
     updateDarApplicationCommentUser,
+    getDarTemplate,
     getDarTemplates,
     getDarTemplatesCount,
+    getDarSectionQuestions,
     getWidget,
     getTeamNames,
 };
