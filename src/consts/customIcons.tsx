@@ -717,6 +717,21 @@ const PanelExpandIcon = createSvgIcon(
     "PanelExpandIcon"
 );
 
+const ReUploadIcon = createSvgIcon(
+    <svg
+        width="16"
+        height="14"
+        viewBox="0 0 16 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M12 0V2H2C0.9 2 0 2.9 0 4V6H2V4H12V6L16 3L12 0ZM4 8L0 11L4 14V12H14C15.1 12 16 11.1 16 10V8H14V10H4V8Z"
+            fill="#475DA7"
+        />
+    </svg>,
+    "ReUploadIcon"
+);
+
 export {
     BookmarksOutlinedIcon,
     BookmarkBorderIcon,
@@ -753,4 +768,5 @@ export {
     SortDateAscIcon,
     SortDateDescIcon,
     PanelExpandIcon,
+    ReUploadIcon,
 };

@@ -19,6 +19,17 @@ const beforeYouBeginSection: QuestionBankSection = {
     parent_section: null,
 };
 
+const fileBasedTemplateSection: QuestionBankSection = {
+    id: 1,
+    created_at: "",
+    updated_at: "",
+    deleted_at: null,
+    name: "File-based Data Access Request Template",
+    description: "",
+    order: 1,
+    parent_section: 1,
+};
+
 const validationSchema = yup.object({
     project_title: yup.string().required().label("Application title"),
 });
@@ -49,6 +60,7 @@ const getFieldType = (componentType: ComponentTypes): string => {
             return "date";
         case "FileUpload":
         case "FileUploadMultiple":
+        case "DocumentExchange":
             return "object";
         default:
             return "string";
@@ -62,7 +74,8 @@ const buildFieldType = (field: DarApplicationQuestion) => ({
     errors: {},
     ...field.validations,
     properties:
-        field.component === inputComponents.FileUpload
+        field.component === inputComponents.FileUpload ||
+        field.component === inputComponents.DocumentExchange
             ? {
                   value: {
                       type: "object",
@@ -133,6 +146,7 @@ export {
     validationSchema as darApplicationValidationSchema,
     beforeYouBeginFormFields,
     beforeYouBeginSection,
+    fileBasedTemplateSection,
     excludedQuestionFields,
     LAST_SAVED_DATE_FORMAT,
     generateYupSchema,

@@ -69,6 +69,7 @@ interface DarApplicationQuestion {
         children: DarApplicationQuestion[];
     }[];
     fields?: DarApplicationQuestion[];
+    document?: UploadedFileMetadata;
 }
 
 interface DarApplicationAnswer {
@@ -99,6 +100,7 @@ interface DarApplication {
         team_id: number;
         updated_at: string;
     }[];
+    application_type: "FORM" | "DOCUMENT";
 }
 
 interface DarApplicationResponses {
@@ -120,6 +122,8 @@ interface DarFormattedField extends FormHydrationField {
         children: DarFormattedField[];
     }[];
     fields?: DarApplicationQuestion[];
+    document?: UploadedFileMetadata;
+    guidance?: string;
 }
 
 export type {

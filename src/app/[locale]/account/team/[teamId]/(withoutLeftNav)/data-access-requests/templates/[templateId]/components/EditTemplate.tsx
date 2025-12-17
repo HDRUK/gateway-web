@@ -48,14 +48,19 @@ function countBySectionId(templateQuestions: DarHasQuestion[]) {
 interface EditTemplateProps {
     teamId: string;
     templateId: string;
+    darTemplateData: DarTemplate;
 }
 
-const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
+const EditTemplate = ({
+    teamId,
+    templateId,
+    darTemplateData,
+}: EditTemplateProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
     const { user } = useAuth();
     const router = useRouter();
 
-    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`;
+    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`;
 
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
@@ -67,6 +72,8 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         mutate: mutateTemplate,
     } = useGet<DarTemplate>(`${apis.dataAccessTemplateV1Url}/${templateId}`, {
         keepPreviousData: true,
+        fallbackData: darTemplateData,
+        revalidateOnMount: false,
     });
 
     const [sectionId, setSectionId] = useState(1);
