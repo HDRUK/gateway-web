@@ -16,4 +16,5 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     Wysiwyg: "Wysiwyg",
     FileUpload: "FileUpload",
     FileUploadMultiple: "FileUploadMultiple",
+    DocumentExchange: "DocumentExchange",
 };

@@ -825,7 +825,11 @@
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
                             "unsavedInfo": "You have changes to your template that will not be saved automatically",
-                            "backLinkText": "Back to DAR Template Management"
+                            "backLinkText": "Back to Data Access Request Templates",
+                            "templateFormName": "Template Form Name",
+                            "templateFormNameInfo": "Fill in the title of the document you are requesting to be filled",
+                            "templateFormGuidance": "Template Form Guidance",
+                            "templateFormGuidanceInfo": "Insert template guidance here"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -1677,6 +1681,14 @@
             "replyInfo": "Type your reply below.",
             "send": "Send",
             "status": "Status"
+        },
+        "DocumentExchange": {
+            "upload": "Upload",
+            "uploadInfo": "Upload your completed form as part of your application.",
+            "download": "Download",
+            "downloadInfo": "Download the form, you can re-download anytime if needed.",
+            "reUpload": "Re-upload",
+            "reUploadInfo": "Re-upload form template here to replace existing file"
         }
     },
     "modules": {

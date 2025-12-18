@@ -1,20 +1,22 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
+import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
     beforeYouBeginSection,
+    fileBasedTemplateSection,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
-import { DarApplicationApprovalStatus } from "@/consts/dataAccess";
+import {
+    DarApplicationApprovalStatus,
+    DarTemplateType,
+} from "@/consts/dataAccess";
 import { RouteName } from "@/consts/routeName";
 import {
     getDarSections,
     getDarAnswersTeam,
     getDarReviewsTeam,
-    getDarTeamApplication,
     getUser,
-    updateDarApplicationTeam,
+    getDarTeamApplication,
 } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import ApplicationSection from "@/app/[locale]/account/(withoutLeftNav)/profile/data-access-requests/applications/[applicationId]/components/ApplicationSection";
@@ -68,14 +70,40 @@ export default async function DarApplicationPage({
     }
 
     // Format sections
-    const formattedSections = [
-        beforeYouBeginSection,
-        ...sections,
-        messageSection,
-    ];
+    let formattedSections: QuestionBankSection[] = [];
+    let parentSections: QuestionBankSection[];
 
-    const parentSections =
-        formattedSections?.filter(s => s.parent_section === null) || [];
+    if (darApplication.application_type === DarTemplateType.DOCUMENT) {
+        formattedSections = [
+            beforeYouBeginSection,
+            fileBasedTemplateSection,
+            messageSection,
+        ];
+
+        parentSections = [
+            beforeYouBeginSection,
+            {
+                id: 1,
+                created_at: "",
+                updated_at: "",
+                deleted_at: null,
+                name: "File-based Template",
+                description: "",
+                parent_section: null,
+                order: 1,
+            },
+            messageSection,
+        ];
+    } else {
+        formattedSections = [
+            beforeYouBeginSection,
+            ...sections,
+            messageSection,
+        ];
+
+        parentSections =
+            formattedSections?.filter(s => s.parent_section === null) || [];
+    }
 
     let sectionId = 0;
 
@@ -98,22 +126,6 @@ export default async function DarApplicationPage({
         !actionRequiredApplicant
     ) {
         sectionId = messageSection.id;
-    }
-
-    const cookieStore = await cookies();
-    const suppress = cookieStore.get("dar-update-suppress");
-
-    // If no approval status, set to feedback
-    if (!teamApplication?.approval_status && !suppress) {
-        await updateDarApplicationTeam(applicationId, teamId, {
-            approval_status: DarApplicationApprovalStatus.FEEDBACK,
-        });
-
-        // Find the specific team and override its approval_status
-        teamApplication = {
-            ...darApplication?.teams?.find(team => team.team_id === +teamId),
-            approval_status: DarApplicationApprovalStatus.FEEDBACK,
-        } as DarTeamApplication;
     }
 
     if (!teamApplication) {

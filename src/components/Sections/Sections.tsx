@@ -11,7 +11,7 @@ type SectionCount = { sectionId: number; count: number };
 interface Props {
     sectionId: number;
     sections: QuestionBankSection[];
-    sectionCounts: SectionCount[];
+    sectionCounts?: SectionCount[];
     handleLegendClick?: (itemIndex: number) => void;
 }
 
@@ -19,7 +19,7 @@ const buildMenu = (
     s: QuestionBankSection,
     sections: QuestionBankSection[],
     sectionId: number,
-    sectionCounts: SectionCount[]
+    sectionCounts?: SectionCount[]
 ) => {
     const findSubSections = (s: QuestionBankSection) =>
         sections?.filter(sub => sub.parent_section === s.id);

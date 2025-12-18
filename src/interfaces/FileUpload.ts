@@ -15,9 +15,13 @@ interface FileUpload {
     structural_metadata?: StructuralMetadata[] | null;
 }
 
-type UploadedFileMetadata = {
+type UploadedFileMetadataValue = {
     uuid: string;
     filename: string;
+};
+
+type UploadedFileMetadata = {
+    value: UploadedFileMetadataValue;
 };
 
 interface FileUploadFields {
@@ -30,4 +34,9 @@ interface FileUploadFields {
     skipImageValidation: boolean;
 }
 
-export type { FileUpload, UploadedFileMetadata, FileUploadFields };
+export type {
+    FileUpload,
+    UploadedFileMetadata,
+    UploadedFileMetadataValue,
+    FileUploadFields,
+};
