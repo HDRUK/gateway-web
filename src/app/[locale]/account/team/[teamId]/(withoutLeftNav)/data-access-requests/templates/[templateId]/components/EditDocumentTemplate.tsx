@@ -32,6 +32,7 @@ import { formatDarQuestion } from "@/utils/dataAccessRequest";
 import { renderFormHydrationField } from "@/utils/formHydration";
 
 const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
+const DOCUMENT_EXCHANGE_TRANSLATION_PATH = "components.DocumentExchange";
 
 interface EditTemplateProps {
     teamId: string;
@@ -79,6 +80,9 @@ const EditDocumentTemplate = ({
     templateId,
 }: EditTemplateProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
+    const tDocumentExchange = useTranslations(
+        DOCUMENT_EXCHANGE_TRANSLATION_PATH
+    );
     const { user } = useAuth();
     const router = useRouter();
 
@@ -134,7 +138,7 @@ const EditDocumentTemplate = ({
                 options: [],
                 all_custodians: true,
                 allow_guidance_override: true,
-                component: "DocumentExchange",
+                component: inputComponents.DocumentExchange,
                 default: true,
                 force_required: false,
                 title: documentExchangeQuestion?.title ?? "",
@@ -184,29 +188,29 @@ const EditDocumentTemplate = ({
 
     const formFields = [
         {
-            label: "Template Form Name",
-            info: "Fill in the title of the document you are requesting to be filled",
+            label: t("templateFormName"),
+            info: t("templateFormNameInfo"),
             name: "title",
             component: inputComponents.TextField,
             required: false,
             selectOnFocus: true,
         },
         {
-            label: "Template Form Guidance",
-            info: "Insert template guidance here",
+            label: t("templateFormGuidance"),
+            info: t("templateFormGuidanceInfo"),
             name: "guidance",
             component: inputComponents.TextArea,
             required: false,
             selectOnFocus: true,
         },
         {
-            label: "Upload",
-            info: "Upload your completed form as part of your application",
+            label: tDocumentExchange("upload"),
+            info: tDocumentExchange("uploadInfo"),
             name: "document",
             component: inputComponents.FileUpload,
             required: false,
             skipImageValidation: true,
-            fileSelectButtonText: "Upload",
+            fileSelectButtonText: tDocumentExchange("upload"),
             apiPath: `${apis.fileUploadV1Url}?entity_flag=document-exchange-upload`,
             showClearButton: true,
             fileDownloadApiPath: apis.fileProcessedV1Url,

@@ -825,7 +825,11 @@
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
                             "unsavedInfo": "You have changes to your template that will not be saved automatically",
-                            "backLinkText": "Back to Data Access Request Templates"
+                            "backLinkText": "Back to Data Access Request Templates",
+                            "templateFormName": "Template Form Name",
+                            "templateFormNameInfo": "Fill in the title of the document you are requesting to be filled",
+                            "templateFormGuidance": "Template Form Guidance",
+                            "templateFormGuidanceInfo": "Insert template guidance here"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
