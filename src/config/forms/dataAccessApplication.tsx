@@ -24,8 +24,9 @@ const fileBasedTemplateSection: QuestionBankSection = {
     created_at: "",
     updated_at: "",
     deleted_at: null,
-    name: "File-based Data Access Request Template",
-    description: "",
+    name: "Data Access Request Application Form",
+    description:
+        "To complete this Data Access Request form, please download a copy of the template below and upload a copy of your completed application form.",
     order: 1,
     parent_section: 1,
 };

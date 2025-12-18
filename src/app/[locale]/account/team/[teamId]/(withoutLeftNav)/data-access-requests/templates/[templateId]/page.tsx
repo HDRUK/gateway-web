@@ -1,6 +1,6 @@
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { DarTemplateType } from "@/consts/dataAccess";
-import { getDarSectionQuestions, getDarTemplate } from "@/utils/api";
+import { getDarTemplate } from "@/utils/api";
 import notFound from "@/app/not-found";
 import EditDocumentTemplate from "./components/EditDocumentTemplate";
 import EditTemplate from "./components/EditTemplate";
@@ -20,10 +20,6 @@ const EditTemplatePage = async ({
         notFound();
     }
 
-    const qbQuestionData = await getDarSectionQuestions(teamId, 1, 0, {
-        suppressError: true,
-    });
-
     return (
         <ProtectedAccountRoute loggedInOnly>
             {darTemplateData.template_type === DarTemplateType.FORM ? (
@@ -37,7 +33,6 @@ const EditTemplatePage = async ({
                     templateId={templateId}
                     teamId={teamId}
                     darTemplateData={darTemplateData}
-                    qbQuestionData={qbQuestionData?.list}
                 />
             )}
         </ProtectedAccountRoute>

@@ -27,7 +27,6 @@ import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { PaginationType } from "@/interfaces/Pagination";
-import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team, TeamNames } from "@/interfaces/Team";
@@ -773,19 +772,6 @@ async function getDarTemplatesCount(
     );
 }
 
-async function getDarSectionQuestions(
-    teamId: string,
-    sectionId: number,
-    isChild: number
-): Promise<QuestionBankQuestion[]> {
-    return get<QuestionBankQuestion[]>(
-        `${apis.teamsV1UrlIP}/${teamId}/questions/section/${sectionId}?is_child=${isChild}`,
-        {
-            withPagination: true,
-        }
-    );
-}
-
 async function getWidget(
     teamId: string,
     widgetId: string,
@@ -845,7 +831,6 @@ export {
     getDarTemplate,
     getDarTemplates,
     getDarTemplatesCount,
-    getDarSectionQuestions,
     getWidget,
     getTeamNames,
 };

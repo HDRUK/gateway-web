@@ -8,7 +8,6 @@ import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { UploadedFileMetadata } from "@/interfaces/FileUpload";
 import {
     QuestionBankCreateUpdateQuestion,
-    QuestionBankQuestion,
     QuestionBankQuestionForm,
 } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
@@ -37,7 +36,6 @@ const EDIT_TEMPLATE_TRANSLATION_PATH = "pages.account.team.dar.template.edit";
 interface EditTemplateProps {
     teamId: string;
     darTemplateData?: DarTemplate;
-    qbQuestionData?: QuestionBankQuestion[];
     templateId: string;
 }
 const sections = [
@@ -53,7 +51,6 @@ const sectionId = 1;
 
 const EditDocumentTemplate = ({
     darTemplateData,
-    qbQuestionData,
     teamId,
     templateId,
 }: EditTemplateProps) => {
@@ -70,15 +67,6 @@ const EditDocumentTemplate = ({
         }
     );
 
-    const { data: qbQuestions } = useGet<QuestionBankQuestion[]>(
-        `${apis.apiV1Url}/teams/${teamId}/questions/section/${sectionId}?is_child=0`,
-        {
-            keepPreviousData: true,
-            fallbackData: qbQuestionData,
-            revalidateOnMount: false,
-        }
-    );
-
     const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`;
 
     const documentExchangeQuestionId = useRef(
@@ -87,12 +75,10 @@ const EditDocumentTemplate = ({
 
     const documentExchangeQuestion = useMemo(
         () =>
-            qbQuestions?.find(
-                qbQuestion =>
-                    qbQuestion.question_id ===
-                    documentExchangeQuestionId.current
-            ),
-        [qbQuestions]
+            templateData?.questions.find(
+                q => q.question_id === documentExchangeQuestionId.current
+            )?.latest_version?.question_json,
+        [templateData]
     );
 
     const updateTemplateQuestions = usePatch(apis.dataAccessTemplateV1Url, {
@@ -153,10 +139,10 @@ const EditDocumentTemplate = ({
                 allow_guidance_override: true,
                 component: "DocumentExchange",
                 default: true,
-                force_required: true,
+                force_required: false,
                 title: documentExchangeQuestion?.title ?? "",
                 guidance: documentExchangeQuestion?.guidance ?? "",
-                document: documentExchangeQuestion?.document,
+                document: documentExchangeQuestion?.field?.document,
             },
         });
 

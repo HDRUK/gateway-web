@@ -85,10 +85,6 @@ const DocumentExchange = ({
     document,
     guidance,
 }: DocumentExchangeProps) => {
-    console.log(fileDownloadApiPath, apiPath, name, guidance);
-
-    console.log(name, info, label);
-
     const t = useTranslations(TRANSLATION_PATH);
 
     const currentControl = control;
