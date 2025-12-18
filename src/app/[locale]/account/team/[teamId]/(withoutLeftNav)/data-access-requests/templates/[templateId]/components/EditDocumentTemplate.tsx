@@ -103,7 +103,7 @@ const EditDocumentTemplate = ({
             templateData?.questions.find(
                 q => q.question_id === documentExchangeQuestionId
             )?.latest_version?.question_json,
-        [templateData]
+        [templateData, documentExchangeQuestionId]
     );
 
     const updateTemplateQuestions = usePatch(apis.dataAccessTemplateV1Url, {
@@ -182,7 +182,6 @@ const EditDocumentTemplate = ({
         ]
     );
 
-    
     const formFields = [
         {
             label: "Template Form Name",
