@@ -5,7 +5,10 @@ import {
     fileBasedTemplateSection,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
-import { DarApplicationApprovalStatus } from "@/consts/dataAccess";
+import {
+    DarApplicationApprovalStatus,
+    DarTemplateType,
+} from "@/consts/dataAccess";
 import {
     getDarAnswersUser,
     getDarApplicationUser,
@@ -71,7 +74,7 @@ export default async function DarApplicationPage({
     let formattedSections: QuestionBankSection[] = [];
     let parentSections: QuestionBankSection[];
 
-    if (darApplication.application_type === "DOCUMENT") {
+    if (darApplication.application_type === DarTemplateType.DOCUMENT) {
         formattedSections = [
             beforeYouBeginSection,
             fileBasedTemplateSection,
@@ -90,7 +93,7 @@ export default async function DarApplicationPage({
                 parent_section: null,
                 order: 1,
             },
-            messageSection,
+            ...(reviews?.length ? [messageSection] : []),
         ];
     } else {
         formattedSections = [

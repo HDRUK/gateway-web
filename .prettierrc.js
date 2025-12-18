@@ -19,4 +19,15 @@ module.exports = {
         "^@/(.*)$",
         "^[./]",
     ],
+    overrides: [
+        {
+            files: "*.json",
+            options: {
+                tabWidth: 2,
+                semi: false,
+                singleQuote: false,
+                importOrder: undefined,
+            },
+        },
+    ],
 };

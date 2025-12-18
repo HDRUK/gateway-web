@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -125,36 +125,6 @@ const EditDocumentTemplate = ({
         }
     );
 
-    const handleSaveChanges = async (
-        formData: QuestionBankQuestionForm,
-        isPublished: boolean
-    ) => {
-        let temporaryDocumentQuestionId;
-        if (!documentExchangeQuestionId) {
-            await createQuestion(formData).then(res => {
-                setDocumentExchangeQuestionId(res);
-                temporaryDocumentQuestionId = res;
-            });
-        } else {
-            await updateQuestion(documentExchangeQuestionId, formData);
-        }
-
-        const updatedQuestion = {
-            id: temporaryDocumentQuestionId || documentExchangeQuestionId,
-            guidance: getValues("guidance"),
-        };
-
-        const payload = {
-            team_id: teamId,
-            user_id: user?.id.toString(),
-            published: isPublished ? 1 : 0,
-            locked: false,
-            questions: [updatedQuestion],
-        };
-
-        await updateTemplateQuestions(templateId, payload);
-    };
-
     const { control, handleSubmit, setValue, getValues } =
         useForm<QuestionBankQuestionForm>({
             defaultValues: {
@@ -173,6 +143,46 @@ const EditDocumentTemplate = ({
             },
         });
 
+    const handleSaveChanges = useCallback(
+        async (formData: QuestionBankQuestionForm, isPublished: boolean) => {
+            let temporaryDocumentQuestionId;
+
+            if (!documentExchangeQuestionId) {
+                const res = await createQuestion(formData);
+                setDocumentExchangeQuestionId(res);
+                temporaryDocumentQuestionId = res;
+            } else {
+                await updateQuestion(documentExchangeQuestionId, formData);
+            }
+
+            const updatedQuestion = {
+                id: temporaryDocumentQuestionId ?? documentExchangeQuestionId,
+                guidance: getValues("guidance"),
+            };
+
+            const payload = {
+                team_id: teamId,
+                user_id: user?.id.toString(),
+                published: isPublished ? 1 : 0,
+                locked: false,
+                questions: [updatedQuestion],
+            };
+
+            await updateTemplateQuestions(templateId, payload);
+        },
+        [
+            documentExchangeQuestionId,
+            createQuestion,
+            updateQuestion,
+            updateTemplateQuestions,
+            getValues,
+            teamId,
+            user?.id,
+            templateId,
+        ]
+    );
+
+    
     const formFields = [
         {
             label: "Template Form Name",
