@@ -170,17 +170,18 @@ const DocumentExchange = ({
                             laptop: 3,
                             desktop: 3,
                         }}>
-                        <Typography fontWeight={600}>Download</Typography>
+                        <Typography fontWeight={600}>
+                            {t("download")}
+                        </Typography>
                         <Typography fontSize={13}>
-                            Download the form, you can re-download anytime if
-                            needed.
+                            {t("downloadInfo")}
                         </Typography>
                         <Divider sx={{ my: 1 }} />
                         <Button
                             startIcon={<FileDownload color="primary" />}
                             variant="text"
                             href={`${apis.fileProcessedV1Url}/${document.value.uuid}/download`}>
-                            Download
+                            {t("download")}
                         </Button>
                     </Grid>
                 )}
@@ -194,12 +195,12 @@ const DocumentExchange = ({
                         desktop: 3,
                     }}>
                     <Typography fontWeight={600}>
-                        {!existingUploadedFile ? "Upload" : "Re-upload"}
+                        {!existingUploadedFile ? t("upload") : t("reUpload")}
                     </Typography>
                     <Typography fontSize={13}>
                         {!existingUploadedFile
-                            ? "Upload your completed form as part of your application."
-                            : "Re-upload form template here to replace existing file"}
+                            ? t("uploadInfo")
+                            : t("reUploadInfo")}
                     </Typography>
                     <Divider sx={{ my: 1 }} />
                     <Button

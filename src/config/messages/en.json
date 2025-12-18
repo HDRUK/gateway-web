@@ -1677,6 +1677,14 @@
             "replyInfo": "Type your reply below.",
             "send": "Send",
             "status": "Status"
+        },
+        "DocumentExchange": {
+            "upload": "Upload",
+            "uploadInfo": "Upload your completed form as part of your application.",
+            "download": "Download",
+            "downloadInfo": "Download the form, you can re-download anytime if needed.",
+            "reUpload": "Re-upload",
+            "reUploadInfo": "Re-upload form template here to replace existing file"
         }
     },
     "modules": {
