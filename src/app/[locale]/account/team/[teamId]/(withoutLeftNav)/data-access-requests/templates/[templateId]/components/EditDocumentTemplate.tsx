@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -47,6 +47,30 @@ const sections = [
     },
 ];
 
+const PreviewContent = ({
+    control,
+    getValues,
+}: {
+    control: Control;
+    getValues: () => unknown;
+}) => {
+    const question = getValues();
+    if (!question) return null;
+
+    const formattedQuestion = question.title && formatDarQuestion(question);
+
+    if (!formattedQuestion) return null;
+
+    return (
+        <>
+            {renderFormHydrationField(
+                { ...formattedQuestion, disabled: true },
+                control
+            )}
+        </>
+    );
+};
+
 const sectionId = 1;
 
 const EditDocumentTemplate = ({
@@ -69,14 +93,15 @@ const EditDocumentTemplate = ({
 
     const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`;
 
-    const documentExchangeQuestionId = useRef(
-        templateData?.questions.find(q => q.section_id === 1)?.question_id
-    );
+    const [documentExchangeQuestionId, setDocumentExchangeQuestionId] =
+        useState<number | string | undefined>(
+            templateData?.questions.find(q => q.section_id === 1)?.question_id
+        );
 
     const documentExchangeQuestion = useMemo(
         () =>
             templateData?.questions.find(
-                q => q.question_id === documentExchangeQuestionId.current
+                q => q.question_id === documentExchangeQuestionId
             )?.latest_version?.question_json,
         [templateData]
     );
@@ -100,20 +125,22 @@ const EditDocumentTemplate = ({
         }
     );
 
-    const handleSaveChanges = async (payloadTest, isPublished: boolean) => {
-        if (!documentExchangeQuestionId.current) {
-            await createQuestion(payloadTest).then(res => {
-                documentExchangeQuestionId.current = res;
+    const handleSaveChanges = async (
+        formData: QuestionBankQuestionForm,
+        isPublished: boolean
+    ) => {
+        let temporaryDocumentQuestionId;
+        if (!documentExchangeQuestionId) {
+            await createQuestion(formData).then(res => {
+                setDocumentExchangeQuestionId(res);
+                temporaryDocumentQuestionId = res;
             });
         } else {
-            await updateQuestion(
-                documentExchangeQuestionId.current,
-                payloadTest
-            );
+            await updateQuestion(documentExchangeQuestionId, formData);
         }
 
         const updatedQuestion = {
-            id: documentExchangeQuestionId.current,
+            id: temporaryDocumentQuestionId || documentExchangeQuestionId,
             guidance: getValues("guidance"),
         };
 
@@ -190,30 +217,6 @@ const EditDocumentTemplate = ({
             hideUpload: false,
         },
     ];
-
-    const PreviewContent = ({
-        control,
-        getValues,
-    }: {
-        control: Control<any>;
-        getValues: () => any;
-    }) => {
-        const question = getValues();
-        if (!question) return null;
-
-        const formattedQuestion = question.title && formatDarQuestion(question);
-
-        if (!formattedQuestion) return null;
-
-        return (
-            <>
-                {renderFormHydrationField(
-                    { ...formattedQuestion, disabled: true },
-                    control
-                )}
-            </>
-        );
-    };
 
     const tabsList = [
         {
