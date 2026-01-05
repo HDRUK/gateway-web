@@ -195,7 +195,8 @@ const createDarSidebarData = (selectedDatasets: SelectedDatasets) => {
         return {
             type: baseType,
             info:
-                DarTemplateType.DOCUMENT.toLowerCase() && isSingleTeam
+                baseType === DarTemplateType.DOCUMENT.toLowerCase() &&
+                isSingleTeam
                     ? `${baseType}MultipleSameTeam`
                     : `${baseType}Multiple`,
             enabled:
