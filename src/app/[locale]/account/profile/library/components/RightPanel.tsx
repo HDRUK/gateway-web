@@ -158,7 +158,7 @@ const RightPanel = ({
                 <Box sx={{ p: 0 }}>
                     <Typography variant="h2">{tDar("title")}</Typography>
                     <Typography>{tDar("text")}</Typography>
-                    {selectedDatasets.length > 0 && (
+                    {darSidebarData.type && (
                         <Box
                             sx={{
                                 backgroundColor: colors.grey100,
