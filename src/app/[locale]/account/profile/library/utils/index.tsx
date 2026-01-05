@@ -4,6 +4,7 @@ import { LibraryListItem, SelectedLibrary } from "@/interfaces/Library";
 import Link from "@/components/Link";
 import StyledCheckbox from "@/components/StyledCheckbox";
 import TooltipIcon from "@/components/TooltipIcon";
+import { DarTemplateType } from "@/consts/dataAccess";
 import { CheckIcon, DeleteForeverIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -33,6 +34,7 @@ const getColumns = ({
                 darEnabled,
                 darTemplatePublished,
                 cohortEnabled,
+                darTemplateType,
             } = row.original;
             return (
                 <div style={{ textAlign: "center" }}>
@@ -49,6 +51,7 @@ const getColumns = ({
                                     darEnabled,
                                     darTemplatePublished,
                                     cohortEnabled,
+                                    darTemplateType,
                                 },
                             })
                         }
@@ -154,4 +157,61 @@ const getColumns = ({
     }),
 ];
 
-export { getColumns };
+type SelectedDatasets = {
+    datasetId: number;
+    name: string;
+    teamId: number;
+    teamName: string;
+    darEnabled: boolean;
+    darTemplatePublished: boolean;
+    cohortEnabled: boolean;
+    darTemplateType: string;
+}[];
+
+const createDarSidebarData = (selectedDatasets: SelectedDatasets) => {
+    if (selectedDatasets.length === 0) {
+        return { type: null, info: null, enabled: false };
+    }
+
+    const applicationTypes = selectedDatasets.flatMap(d => d.darTemplateType);
+
+    const isSingleType = applicationTypes.every(t => t === applicationTypes[0]);
+
+    const isSingleTeam = selectedDatasets.every(
+        d => d.teamId === selectedDatasets[0].teamId
+    );
+
+    const baseType = applicationTypes[0]?.toLowerCase();
+
+    if (selectedDatasets.length === 1) {
+        return {
+            type: baseType,
+            info: `${baseType}Single`,
+            enabled: true,
+        };
+    }
+
+    if (isSingleType) {
+        return {
+            type: baseType,
+            info:
+                DarTemplateType.DOCUMENT.toLowerCase() && isSingleTeam
+                    ? `${baseType}MultipleSameTeam`
+                    : `${baseType}Multiple`,
+            enabled:
+                baseType === DarTemplateType.FORM.toLowerCase()
+                    ? true
+                    : isSingleTeam
+                    ? true
+                    : false,
+        };
+    }
+
+    return {
+        type: "mixed",
+        info: "mixedMultiple",
+        enabled: false,
+    };
+};
+
+export { getColumns, createDarSidebarData };
