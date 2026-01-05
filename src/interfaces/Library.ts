@@ -11,6 +11,7 @@ interface Library {
     data_provider_name: string;
     data_provider_member_of: string;
     dataset_is_cohort_discovery: boolean;
+    data_provider_dar_type: string;
 }
 
 interface SelectedLibrary {
@@ -23,6 +24,7 @@ interface SelectedLibrary {
         darEnabled: boolean;
         darTemplatePublished: boolean;
         cohortEnabled: boolean;
+        darTemplateType: string;
     };
 }
 
@@ -36,6 +38,7 @@ interface LibraryListItem {
     dataCustodian: string;
     entityType: string;
     dataCustodianId: number;
+    darTemplateType: string;
 }
 
 interface NewLibrary {
