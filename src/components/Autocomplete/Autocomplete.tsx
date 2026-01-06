@@ -132,7 +132,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
             <MuiAutocomplete
                 id={id || name}
                 {...field}
-                value={field.value ?? []}
                 {...restProps}
                 freeSolo={freeSolo}
                 multiple={multiple}
@@ -273,7 +272,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 noOptionsText={
                     isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }
-                ListboxProps={{ style: { maxHeight: "35vh" } }}
+                slotProps={{
+                    listbox: { style: { maxHeight: "35vh" } },
+                }}
             />
         </FormInputWrapper>
     );
