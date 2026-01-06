@@ -114,6 +114,8 @@ const formatDarQuestion = (
     ...(field?.fields && {
         fields: field?.fields,
     }),
+    document: field.document,
+    guidance: field.guidance,
 });
 
 const formatDarAnswers = (
@@ -237,7 +239,10 @@ const createFileUploadConfig = (
                 uuid: response.uuid,
             };
 
-            if (component === inputComponents.FileUpload) {
+            if (
+                component === inputComponents.FileUpload ||
+                component === inputComponents.DocumentExchange
+            ) {
                 setValue(
                     questionId,
                     { value: newFile },

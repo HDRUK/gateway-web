@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { FileUploadOutlined } from "@mui/icons-material";
-import { Divider, Tooltip } from "@mui/material";
+import { Divider, Stack, Tooltip } from "@mui/material";
 import { uniq } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
@@ -17,10 +17,14 @@ import FeasibilityEnquirySidebar from "@/modules/FeasibilityEnquirySidebar";
 import GeneralEnquirySidebar from "@/modules/GeneralEnquirySidebar";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useSidebar from "@/hooks/useSidebar";
-import theme from "@/config/theme";
+import { colors } from "@/config/theme";
+import { DarTemplateType } from "@/consts/dataAccess";
 import { QuestionAnswerIcon, DeleteForeverIcon } from "@/consts/icons";
+import { createDarSidebarData } from "../utils";
 
 const TRANSLATION_PATH = "pages.account.profile.library.components.RightPanel";
+const TRANSLATION_PATH_DAR =
+    "pages.account.profile.library.components.RightPanel.dataAccessRequest";
 
 interface RightPanelProps {
     selected: SelectedLibrary;
@@ -34,6 +38,7 @@ const RightPanel = ({
     cohortDiscovery,
 }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tDar = useTranslations(TRANSLATION_PATH_DAR);
     const { showSidebar } = useSidebar();
     const { createDARApplication } = useDataAccessRequest();
     const path = usePathname();
@@ -50,6 +55,7 @@ const RightPanel = ({
                     darEnabled: item.darEnabled,
                     darTemplatePublished: item.darTemplatePublished,
                     cohortEnabled: item.cohortEnabled,
+                    darTemplateType: item.darTemplateType,
                 };
             });
     }, [selected]);
@@ -89,6 +95,10 @@ const RightPanel = ({
             redirectPath: path,
         });
     };
+
+    const darSidebarData = useMemo(() => {
+        return createDarSidebarData(selectedDatasets);
+    }, [selectedDatasets]);
 
     return (
         <Paper sx={{ mb: 2 }}>
@@ -146,10 +156,66 @@ const RightPanel = ({
                 </Box>
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ p: 0 }}>
-                    <Typography variant="h2">
-                        {t("dataAccessRequest.title")}
-                    </Typography>
-                    <Typography>{t("dataAccessRequest.text")}</Typography>
+                    <Typography variant="h2">{tDar("title")}</Typography>
+                    <Typography>{tDar("text")}</Typography>
+                    {darSidebarData.type && (
+                        <Box
+                            sx={{
+                                backgroundColor: colors.grey100,
+                                border: `1px solid ${colors.grey400}`,
+                                gap: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                mt: 2,
+                            }}>
+                            <Stack
+                                direction="row"
+                                useFlexGap
+                                sx={{
+                                    justifyContent: "space-between",
+                                    borderBottom: `1px solid ${colors.grey300}`,
+                                    pb: 1,
+                                }}>
+                                <Stack direction="row" sx={{ p: 0, gap: 1 }}>
+                                    <Box
+                                        sx={{
+                                            p: 0,
+                                            width: 18,
+                                            height: 18,
+                                            borderRadius: "50%",
+                                            background:
+                                                darSidebarData.type ===
+                                                DarTemplateType.DOCUMENT.toLowerCase()
+                                                    ? colors.purple100
+                                                    : darSidebarData.type ===
+                                                      DarTemplateType.FORM.toLowerCase()
+                                                    ? colors.purple500
+                                                    : `linear-gradient(to right, ${colors.purple100} 50%,${colors.purple500} 50%)`,
+                                        }}
+                                    />
+                                    <Typography>
+                                        {darSidebarData.type &&
+                                            tDar(darSidebarData.type)}
+                                    </Typography>
+                                </Stack>
+                                <Typography>
+                                    <Typography
+                                        component="span"
+                                        sx={{
+                                            color: colors.grey600,
+                                            mr: 1,
+                                        }}>
+                                        {tDar("selectedDatasets")}
+                                    </Typography>
+                                    {selectedDatasets.length}
+                                </Typography>
+                            </Stack>
+                            <Typography>
+                                {darSidebarData.info &&
+                                    tDar(darSidebarData.info)}
+                            </Typography>
+                        </Box>
+                    )}
                     <Tooltip
                         title={
                             !selectedDatasets.every(
@@ -157,16 +223,17 @@ const RightPanel = ({
                                     dataset.darEnabled &&
                                     dataset.darTemplatePublished
                             )
-                                ? t("dataAccessRequest.buttonTooltipDar")
+                                ? tDar("buttonTooltipDar")
                                 : selectedDatasets.length > 0
                                 ? ""
-                                : t("dataAccessRequest.buttonTooltip")
+                                : tDar("buttonTooltip")
                         }>
                         <div>
                             <Button
                                 onClick={handleDar}
                                 sx={{ mt: 2, width: "100%" }}
                                 disabled={
+                                    !darSidebarData.enabled ||
                                     !(selectedDatasets.length > 0) ||
                                     !selectedDatasets.every(
                                         dataset =>
@@ -175,7 +242,7 @@ const RightPanel = ({
                                     )
                                 }>
                                 <FileUploadOutlined sx={{ pr: 1 }} />
-                                {t("dataAccessRequest.buttonText")}
+                                {tDar("buttonText")}
                             </Button>
                         </div>
                     </Tooltip>
@@ -218,7 +285,7 @@ const RightPanel = ({
                             sx={{
                                 p: 2,
                                 m: 0,
-                                backgroundColor: theme.palette.greyCustom.main,
+                                backgroundColor: colors.grey,
                             }}>
                             <Button
                                 color="greyCustom"

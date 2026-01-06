@@ -84,7 +84,7 @@ exports[`Footer should render component 1`] = `
           class="mui-style-945zl8"
         >
           ©
-          HDR UK 2025. All rights reserved.
+          HDR UK 2026. All rights reserved.
         </div>
       </div>
       <ul
@@ -142,6 +142,14 @@ exports[`Footer should render component 1`] = `
                 target="_blank"
               >
                 API docs
+              </a>
+            </li>
+            <li>
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-r8b5xb-MuiTypography-root-MuiLink-root"
+                href="/about/accessibility-statement"
+              >
+                Accessibility Statement
               </a>
             </li>
           </ul>

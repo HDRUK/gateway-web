@@ -1,3 +1,34 @@
+## [2.28.1](https://github.com/HDRUK/gateway-web/compare/v2.28.0...v2.28.1) (2025-12-12)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Font weight tweak (#1409) ([83bb4fa](https://github.com/HDRUK/gateway-web/commit/83bb4fa36ed6740ec073df1cb019a356e4bf0b6f)), closes [GAT-0000](GAT-0000)
+
+## [2.28.0](https://github.com/HDRUK/gateway-web/compare/v2.27.2...v2.28.0) (2025-12-12)
+
+### ✨ Features
+
+* **GAT-8288:** Add accessibility page (#1406) ([ab23c64](https://github.com/HDRUK/gateway-web/commit/ab23c64b568278032db27fedfbd1dc69e3225d41)), closes [GAT-8288](GAT-8288)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** DAR child question uploads [SUPP-1855] (#1402) ([4cece96](https://github.com/HDRUK/gateway-web/commit/4cece969af062837b68100d4f98cdf61246eaa02)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Update widget embed code (#1404) ([9e399f8](https://github.com/HDRUK/gateway-web/commit/9e399f83b434b73967a4f671d5a0a4ffe8b7220b)), closes [GAT-0000](GAT-0000)
+* **GAT-8299:** Fix await in widget slug (#1401) ([d29deb8](https://github.com/HDRUK/gateway-web/commit/d29deb8f3d12cd947fed82de9c5f7af94cd47507))
+* **GAT-8315:** Update next version (#1407) ([7b0adfb](https://github.com/HDRUK/gateway-web/commit/7b0adfbee78140e118388a135f27a4bde129383e)), closes [GAT-8315](GAT-8315)
+
+## [2.27.2](https://github.com/HDRUK/gateway-web/compare/v2.27.1...v2.27.2) (2025-12-09)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Update widget embed code (#1404) ([f01a5cf](https://github.com/HDRUK/gateway-web/commit/f01a5cf73d5481060e5092d1d73f558ef98f0df8)), closes [GAT-0000](GAT-0000)
+
+## [2.27.1](https://github.com/HDRUK/gateway-web/compare/v2.27.0...v2.27.1) (2025-12-09)
+
+### 🐛 Bug Fixes
+
+* **GAT-8299:** Fix await in widget slug (#1401) ([94e3442](https://github.com/HDRUK/gateway-web/commit/94e34429ea8765ccf05a875406b55abdf0f6ad43))
+
 ## [2.27.0](https://github.com/HDRUK/gateway-web/compare/v2.26.0...v2.27.0) (2025-12-05)
 
 ### ✨ Features

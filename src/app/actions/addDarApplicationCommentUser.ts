@@ -1,6 +1,8 @@
 "use server";
 
+import { updateTag } from "next/cache";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
+import { CACHE_DAR_REVIEWS } from "@/consts/cache";
 import { updateDarApplicationCommentUser } from "@/utils/api";
 
 export const addDarApplicationCommentUserAction = async (
@@ -16,6 +18,7 @@ export const addDarApplicationCommentUserAction = async (
             userId,
             payload
         );
+        updateTag(`${CACHE_DAR_REVIEWS}${applicationId}`);
         return res;
     } catch (e) {
         console.error(e);

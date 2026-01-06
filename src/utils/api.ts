@@ -740,6 +740,16 @@ async function updateDarApplicationCommentUser(
     );
 }
 
+async function getDarTemplate(
+    templateId: string,
+    options?: GetOptions
+): Promise<DarTemplate> {
+    return get<DarTemplate>(
+        `${apis.dataAccessTemplateV1Url}/${templateId}`,
+        options
+    );
+}
+
 async function getDarTemplates(
     teamId: string,
     query: string
@@ -818,6 +828,7 @@ export {
     createDarApplicationReview,
     updateDarApplicationCommentTeam,
     updateDarApplicationCommentUser,
+    getDarTemplate,
     getDarTemplates,
     getDarTemplatesCount,
     getWidget,

@@ -229,7 +229,11 @@
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
             },
-            "backToHomepage": "Back to homepage"
+            "backToHomepage": "Back to homepage",
+            "accessibilityStatement": {
+                "title": "Accessibility Statement",
+                "subTitle": "We are committed to creating an accessible experience for all users"
+            }
         },
         "account": {
             "profile": {
@@ -407,7 +411,17 @@
                                 "text": "Start your DAR application. Not all Data Custodians on the Gateway have this feature enabled. When DAR is not enabled, raise a feasibility enquiry to contact them directly about datasets.",
                                 "buttonText": "Start a Data Access Request",
                                 "buttonTooltip": "Select at least one dataset to enable",
-                                "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template"
+                                "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template",
+                                "document": "File-based",
+                                "documentSingle": "You have selected a dataset that requires an offline, form-based application. Once the completed form is uploaded, you will be able to track the application progress online through the Gateway.",
+                                "documentMultiple": "You have selected multiple datasets that each require an offline, form-based application. Each must be selected and submitted individually. After uploading the completed forms, you will be able to track all application progress online through the Gateway.",
+                                "documentMultipleSameTeam": "You have selected multiple datasets that each require an offline, form-based application.",
+                                "form": "Web-based",
+                                "formSingle": "You have selected a single dataset that supports an online application. You can proceed to submit a Data Access Request through the Gateway.",
+                                "formMultiple": "You have selected multiple datasets that support a combined application. Starting a Data Access Request will allow you to complete a single form for all selected datasets.",
+                                "mixed": "Mixed",
+                                "mixedMultiple": "You have selected multiple datasets that do not support a combined application. Please select each dataset individually to begin a separate Data Access Request.",
+                                "selectedDatasets": "Selected datasets"
                             },
                             "cohortDiscovery": {
                                 "title": "Cohort Discovery",
@@ -821,7 +835,11 @@
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
                             "unsavedInfo": "You have changes to your template that will not be saved automatically",
-                            "backLinkText": "Back to DAR Template Management"
+                            "backLinkText": "Back to Data Access Request Templates",
+                            "templateFormName": "Template Form Name",
+                            "templateFormNameInfo": "Fill in the title of the document you are requesting to be filled",
+                            "templateFormGuidance": "Template Form Guidance",
+                            "templateFormGuidanceInfo": "Insert template guidance here"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -1607,7 +1625,8 @@
             "termsConditions": "Terms and conditions",
             "privacyPolicy": "Privacy policy",
             "cookieNotice": "Cookie notice",
-            "apiDocs": "API docs"
+            "apiDocs": "API docs",
+            "accessibilityStatement": "Accessibility Statement"
         },
         "DesktopNav": {
             "labels": {
@@ -1672,6 +1691,14 @@
             "replyInfo": "Type your reply below.",
             "send": "Send",
             "status": "Status"
+        },
+        "DocumentExchange": {
+            "upload": "Upload",
+            "uploadInfo": "Upload your completed form as part of your application.",
+            "download": "Download",
+            "downloadInfo": "Download the form, you can re-download anytime if needed.",
+            "reUpload": "Re-upload",
+            "reUploadInfo": "Re-upload form template here to replace existing file"
         }
     },
     "modules": {

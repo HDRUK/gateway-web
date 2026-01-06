@@ -71,6 +71,10 @@ const Footer = () => {
             href: `${process.env.NEXT_PUBLIC_API_BASE_URL}/documentation`,
             label: t("apiDocs"),
         },
+        {
+            href: "/about/accessibility-statement",
+            label: t("accessibilityStatement"),
+        },
     ];
 
     return (
