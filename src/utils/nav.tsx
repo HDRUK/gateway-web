@@ -69,7 +69,7 @@ const getProfileNav = (permissions: {
                 },
                 {
                     label: "Cohort Builder",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/daphne`,
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/cohort-discovery-builder`,
                 },
             ],
         },
@@ -118,6 +118,9 @@ const getTeamNav = (
     features: { [key: string]: boolean }
 ): LeftNavItem[] => {
     const { isWidgetsEnabled } = features;
+
+    //console.log(teamId);
+    //console.log(permissions);
 
     return [
         ...(permissions["roles.read"]
@@ -249,6 +252,18 @@ const getTeamNav = (
                       icon: <DataUseIcon />,
                       label: "Data Uses",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
+                  },
+              ]
+            : []),
+        ...([
+            permissions["cohort.team.read"],
+            permissions["cohort.team.create"],
+        ].every(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <PersonSearchIcon />,
+                      label: "Cohort Discovery",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COHORT_DISCOVERY}`,
                   },
               ]
             : []),

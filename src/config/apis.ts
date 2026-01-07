@@ -38,6 +38,7 @@ const apis = {
     filtersV1UrlIP: `${apiV1IPUrl}/filters`,
     sectorsV1Url: `${apiV1Url}/sectors`,
     tagsV1Url: `${apiV1Url}/tags`,
+    workgroupsV1Url: `${apiV1Url}/workgroups`,
     applicationsV1Url: `${apiV1Url}/applications`,
     applicationsV1UrlIP: `${apiV1IPUrl}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,

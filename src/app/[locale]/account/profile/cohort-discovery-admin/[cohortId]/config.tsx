@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { getChipLabel } from "@/components/Autocomplete/utils";
 import { inputComponents } from "@/config/forms";
 
 const cohortStatusOptions = [
@@ -33,6 +34,21 @@ export const requestStatusField = {
     component: inputComponents.Select,
     options: cohortStatusOptions,
     placeholder: "Select a new status",
+};
+
+export const workgroupField = {
+    label: "Workgroups",
+    name: "workgroup_ids",
+    component: inputComponents.Autocomplete,
+    multiple: true,
+    canCreate: false,
+    isOptionEqualToValue: (
+        option: { value: string | number; label: string },
+        value: string | number
+    ) => option.value === value,
+    getChipLabel,
+    options: [],
+    placeholder: "Select workgroup",
 };
 
 export const detailsField = {
