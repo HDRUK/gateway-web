@@ -3,7 +3,6 @@ const apiV1IPUrl =
     process.env.NODE_ENV === "development"
         ? process.env.NEXT_PUBLIC_API_V1_IP_URL
         : process.env.NEXT_PUBLIC_API_V1_URL;
-console.log(apiV1IPUrl)
 
 const apiV2Url = process.env.NEXT_PUBLIC_API_V2_URL;
 const apiV2IPUrl =
