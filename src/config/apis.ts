@@ -3,6 +3,7 @@ const apiV1IPUrl =
     process.env.NODE_ENV === "development"
         ? process.env.NEXT_PUBLIC_API_V1_IP_URL
         : process.env.NEXT_PUBLIC_API_V1_URL;
+console.log(apiV1IPUrl)
 
 const apiV2Url = process.env.NEXT_PUBLIC_API_V2_URL;
 const apiV2IPUrl =
@@ -13,7 +14,7 @@ const apiV2IPUrl =
 const apis = {
     apiV1Url,
     apiV1IPUrl,
-    enabledFeatures: `${apiV1IPUrl}/feature-flags/enabled`,
+    features: `${apiV1IPUrl}/features`,
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",

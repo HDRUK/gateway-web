@@ -16,10 +16,11 @@ import {
     CloudUploadIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { Role } from "@/interfaces/Role";
 
 const getProfileNav = (permissions: {
     [key: string]: boolean;
-}): LeftNavItem[] => {
+}, roles? : Role[]): LeftNavItem[] => {
     return [
         {
             icon: <PersonOutlineOutlinedIcon />,
@@ -36,6 +37,18 @@ const getProfileNav = (permissions: {
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
+         ...(roles?.some(
+    role => role.name === 'hdruk.superadmin'
+    )
+            ? [
+                  {
+                      icon: <DataUseIcon />,
+                      label: "Feature Flags",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.FEATURES}`,
+
+                  },
+              ]
+            : []),
         ...(permissions["custodians.read"]
             ? [
                   {

@@ -15,7 +15,7 @@ export default async function AccountProfileLayout({
     return (
         <div>
             <TwoColumn
-                leftContent={<LeftNav permissions={permissions} />}
+                leftContent={<LeftNav permissions={permissions} roles={user.roles}/>}
                 rightContent={children}
             />
             <ActionBar />

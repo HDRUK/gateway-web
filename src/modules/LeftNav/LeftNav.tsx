@@ -17,6 +17,7 @@ import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useFeatures } from "@/providers/FeatureProvider";
+import { Role } from "@/interfaces/Role";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -31,14 +32,15 @@ const isExpanded = (
 interface LeftNavProps {
     teamId?: string;
     permissions: { [key: string]: boolean };
+    roles? : Role[]
 }
 
-const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
+const LeftNav = ({ permissions, teamId, roles }: LeftNavProps) => {
     const features = useFeatures();
 
     const navItems = teamId
         ? getTeamNav(permissions, teamId, features)
-        : getProfileNav(permissions);
+        : getProfileNav(permissions, roles);
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
