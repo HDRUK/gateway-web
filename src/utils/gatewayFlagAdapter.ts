@@ -5,7 +5,7 @@ const { isTest } = process.env;
 
 let cache: Record<string, boolean> | null = null;
 let cacheTimestamp: number | null = null;
-const CACHE_TTL_MS = isTest === "true" ? 0 : 5 * 60 * 1000;
+const CACHE_TTL_MS = 5 * 60 * 1000;
 
 export interface Feature {
   id: number;
