@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, useId, useMemo, useState } from "react";
-import React from "react";
 import {
     Box,
     Collapse,
@@ -95,15 +94,6 @@ const LeftNav = ({
             navOpen ? "enteringScreen" : "leavingScreen"
         ];
 
-    const filterSidebarButtonStyles = {
-        py: 1,
-        px: 1,
-        transition: theme.transitions.create("left", {
-            easing,
-            duration,
-        }),
-    };
-
     const opacityFadeStyles = {
         opacity: navOpen ? 1 : 0,
         transition: "opacity 0.3s",
@@ -138,7 +128,7 @@ const LeftNav = ({
                 <IconButton
                     size="small"
                     onClick={() => setLeftNav(!navOpen)}
-                    sx={filterSidebarButtonStyles}>
+                    sx={{ p: 1 }}>
                     <PanelExpandIcon
                         sx={{
                             transform: `scaleX(${navOpen ? 1 : -1})`,
@@ -157,35 +147,25 @@ const LeftNav = ({
                     width: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
                     flexShrink: 0,
                     whiteSpace: "nowrap",
+                    overflowX: "hidden",
+                    transition: theme.transitions.create(["width"], {
+                        easing: easing,
+                        duration: duration,
+                    }),
                     "& .MuiDrawer-paper": {
                         width: WIDTH_NAV_EXPANDED,
                         position: "relative",
-                        boxSizing: "border-box",
-                        background: "none",
-                        transition: theme.transitions.create(
-                            ["width", "margin"],
-                            {
-                                easing: theme.transitions.easing.sharp,
-                                duration: navOpen
-                                    ? theme.transitions.duration.leavingScreen
-                                    : theme.transitions.duration.enteringScreen,
-                            }
-                        ),
                         transform: "none !important",
                         visibility: "visible !important",
+                        transition: theme.transitions.create(["width"], {
+                            easing: easing,
+                            duration: duration,
+                        }),
                     },
-                    overflowX: "hidden",
-                    transition: theme.transitions.create(["width", "margin"], {
-                        easing: theme.transitions.easing.sharp,
-                        duration: theme.transitions.duration.leavingScreen,
-                    }),
-                    visibility: "visible !important",
-                    transform: "none !important",
                 }}
-                PaperProps={{
-                    sx: {
-                        boxShadow: "none",
-                        border: 0,
+                slotProps={{
+                    paper: {
+                        sx: { boxShadow: "none", border: 0 },
                     },
                 }}>
                 <Divider />
@@ -236,9 +216,7 @@ const LeftNav = ({
                                             fontSize: 18,
                                             color: colors.grey600,
                                         }}>
-                                        {React.cloneElement(item.icon, {
-                                            fontSize: "inherit",
-                                        })}
+                                        {item.icon}
                                     </ListItemIcon>
                                     <ListItemText
                                         primary={item.label}
@@ -305,9 +283,7 @@ const LeftNav = ({
                                                 fontSize: 18,
                                                 color: colors.grey600,
                                             }}>
-                                            {React.cloneElement(item.icon, {
-                                                fontSize: "inherit",
-                                            })}
+                                            {item.icon}
                                         </ListItemIcon>
 
                                         <ListItemText
