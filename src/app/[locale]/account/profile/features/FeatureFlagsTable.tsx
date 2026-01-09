@@ -8,17 +8,12 @@ import apis from "@/config/apis";
 import { Feature, FeatureFlagsResponse } from "@/utils/gatewayFlagAdapter";
 import usePut from "@/hooks/usePut";
 
-
-
 export default function FeatureFlagsTable() {
   const { data, isLoading, mutate } = useGet<FeatureFlagsResponse>(
     apis.features
   );
   const toggle = usePut(apis.features)
  
-
-
-
   const columns = [
     {
       field: "name",
