@@ -1,4 +1,4 @@
-import { createGatewayFlagAdapter } from "./gatewayFlagAdapter";
+import { createAPIFlagAdapter } from "./gatewayFlagAdapter";
 
 jest.mock("@/config/apis", () => ({
     __esModule: true,
@@ -13,7 +13,7 @@ describe("createGatewayFlagAdapter", () => {
         Aliases: { enabled: false },
     };
 
-    let adapter: ReturnType<ReturnType<typeof createGatewayFlagAdapter>>;
+    let adapter: ReturnType<ReturnType<typeof createAPIFlagAdapter>>;
 
     beforeEach(() => {
         global.fetch = jest.fn().mockResolvedValue({
@@ -22,7 +22,7 @@ describe("createGatewayFlagAdapter", () => {
         }) as jest.Mock;
 
         jest.useFakeTimers();
-        adapter = createGatewayFlagAdapter()();
+        adapter = createAPIFlagAdapter()();
     });
 
     afterEach(() => {
