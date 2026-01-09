@@ -43,7 +43,7 @@ const getProfileNav = (permissions: {
          ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
             ? [
                   {
-                      icon: <DataUseIcon />,
+                      icon: navIcon(DataUseIcon),
                       label: "Feature Flags",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.FEATURES}`,
 
