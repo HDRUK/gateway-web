@@ -17,6 +17,7 @@ import {
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { Role } from "@/interfaces/Role";
+import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 
 const getProfileNav = (permissions: {
     [key: string]: boolean;
@@ -37,9 +38,7 @@ const getProfileNav = (permissions: {
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
-         ...(roles?.some(
-    role => role.name === 'hdruk.superadmin'
-    )
+         ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
             ? [
                   {
                       icon: <DataUseIcon />,
