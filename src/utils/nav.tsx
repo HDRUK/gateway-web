@@ -1,11 +1,9 @@
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
-    DescriptionIcon,
     ToolIcon,
     HelpOutlineOutlinedIcon,
     DataUseIcon,
-    SettingsOutlinedIcon,
     DatabaseIcon, // CloudUploadIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
@@ -14,6 +12,8 @@ import {
     PersonOutlineOutlinedIcon,
     CohortIcon,
     CloudUploadIcon,
+    TeamMembersIcon,
+    DarIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -69,7 +69,7 @@ const getProfileNav = (permissions: {
             ],
         },
         {
-            icon: <DescriptionIcon />,
+            icon: <DarIcon />,
             label: "Data Access Requests",
             subItems: [
                 {
@@ -118,8 +118,8 @@ const getTeamNav = (
         ...(permissions["roles.read"]
             ? [
                   {
-                      icon: <SettingsOutlinedIcon />,
-                      label: "Team Management",
+                      icon: <TeamMembersIcon />,
+                      label: "Team members",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
                   },
               ]
@@ -181,7 +181,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <DescriptionIcon />,
+                      icon: <DarIcon />,
                       label: "Data Access Requests",
                       subItems: [
                           ...(permissions["data-access-template.read"]
