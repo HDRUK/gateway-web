@@ -9,6 +9,7 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
+                initialExpandLeftNav={true}
             />
         );
 
@@ -23,6 +24,7 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": true }}
                 initialLeftNavOpen={true}
+                initialExpandLeftNav={true}
             />
         );
 
@@ -46,6 +48,7 @@ describe("LeftNav", () => {
                     "integrations.dar": true,
                 }}
                 initialLeftNavOpen={true}
+                initialExpandLeftNav={true}
             />
         );
 
@@ -66,7 +69,6 @@ describe("LeftNav", () => {
 
         const { getByText } = render(
             <LeftNav
-                teamId="1"
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
                 initialExpandLeftNav={true}
@@ -81,7 +83,6 @@ describe("LeftNav", () => {
 
         const { getByText } = render(
             <LeftNav
-                teamId="1"
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
                 initialExpandLeftNav={false}
