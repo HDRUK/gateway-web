@@ -14,7 +14,6 @@ import {
     Tooltip,
 } from "@mui/material";
 import Cookies from "js-cookie";
-import { first } from "lodash";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
