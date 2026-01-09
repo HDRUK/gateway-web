@@ -99,7 +99,6 @@ const formArrayFields = [
         component: inputComponents.Autocomplete,
         name: "id",
         placeholder: "Type to search dataset titles",
-        showClearButton: true,
         required: true,
     },
 ];
