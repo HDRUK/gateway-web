@@ -44,7 +44,7 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
-    collapseLeftNav: boolean;
+    initialExpandLeftNav: boolean;
 }
 
 const ICON_SIZE = "18px";
@@ -56,7 +56,7 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
-    collapseLeftNav,
+    initialExpandLeftNav,
 }: LeftNavProps) => {
     const features = useFeatures();
 
@@ -85,7 +85,7 @@ const LeftNav = ({
 
     const [navOpen, setNavOpen] = useState<boolean>(initialLeftNavOpen);
 
-    const [navCollapsed, setNavCollapsed] = useState<boolean>(collapseLeftNav);
+    const [navExpanded, setNavExpanded] = useState<boolean>(initialExpandLeftNav);
 
     const setLeftNav = (open: boolean) => {
         setNavOpen(open);
@@ -196,16 +196,16 @@ const LeftNav = ({
                             }}>
                             <ListItemButton
                                 onClick={() => {
-                                    setNavCollapsed(!navCollapsed);
+                                    setNavExpanded(!navExpanded);
                                 }}
                                 component="button"
                                 sx={{
                                     width: "100%",
                                     paddingLeft: 1,
                                 }}
-                                aria-expanded={!navCollapsed}
+                                aria-expanded={navExpanded}
                                 aria-controls={
-                                    navCollapsed ? firstNavId : undefined
+                                    navExpanded ? firstNavId : undefined
                                 }
                                 id={`toggle-${firstNavId}`}>
                                 <ListItemIcon
@@ -229,7 +229,7 @@ const LeftNav = ({
                                         ...opacityFadeStyles,
                                     }}
                                 />
-                                {navCollapsed ? (
+                                {navExpanded ? (
                                     <ExpandLessIcon
                                         color="primary"
                                         sx={{
@@ -250,7 +250,7 @@ const LeftNav = ({
                         </Tooltip>
                     </Fragment>
                     <Collapse
-                        in={navCollapsed}
+                        in={navExpanded}
                         timeout="auto"
                         unmountOnExit
                         id={firstNavId}

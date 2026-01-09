@@ -61,4 +61,34 @@ describe("LeftNav", () => {
         ).toBeInTheDocument();
         expect(within(links[3]).getByText("Help")).toBeInTheDocument();
     });
+
+    it("renders can expand", () => {
+
+        const { getByText } = render(
+            <LeftNav
+                teamId="1"
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+                initialExpandLeftNav={true}
+            />
+        );
+
+        expect(getByText("Your Profile")).toBeInTheDocument();
+        expect(getByText("Library")).toBeInTheDocument();
+    });
+
+    it("renders can collapse", () => {
+
+        const { getByText } = render(
+            <LeftNav
+                teamId="1"
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+                initialExpandLeftNav={false}
+            />
+        );
+
+        expect(getByText("Your Profile")).toBeInTheDocument();
+        expect(getByText("Library")).not.toBeInTheDocument();
+    });
 });
