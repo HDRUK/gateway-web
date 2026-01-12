@@ -46,26 +46,29 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-        ...(permissions["cohort.read"]
-            ? [
-                  {
-                      icon: <CohortIcon />,
-                      label: "Cohort Discovery Admin",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
-                  },
-              ]
-            : []),
         {
             icon: <CohortIcon />,
             label: "Cohort Discovery",
             subItems: [
+                ...(permissions["cohort.read"]
+                    ? [
+                          {
+                              label: "User Admin",
+                              href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
+                          },
+                          {
+                              label: "Collection & Workgroup Admin",
+                              href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN_COLLECTIONS}`,
+                          },
+                      ]
+                    : []),
                 {
                     label: "My access request",
                     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
                 },
                 {
                     label: "About this service",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY}`,
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`,
                 },
                 {
                     label: "Cohort Builder",
@@ -118,9 +121,6 @@ const getTeamNav = (
     features: { [key: string]: boolean }
 ): LeftNavItem[] => {
     const { isWidgetsEnabled } = features;
-
-    //console.log(teamId);
-    //console.log(permissions);
 
     return [
         ...(permissions["roles.read"]
