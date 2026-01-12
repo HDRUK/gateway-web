@@ -8,7 +8,7 @@ describe("Nav utils", () => {
         it("should include Team Management item with href", () => {
             const navItems = getTeamNav({ "roles.read": true }, teamId, {});
             const teamManagementItem = navItems.find(
-                item => item.label === "Team Management"
+                item => item.label === "Team members"
             );
 
             expect(teamManagementItem).toBeDefined();

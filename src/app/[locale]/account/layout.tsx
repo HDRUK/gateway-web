@@ -6,7 +6,9 @@ export default async function LoggedInLayout({
     children: React.ReactNode;
 }) {
     return (
-        <Box component="main" sx={{ flexGrow: 1 }}>
+        <Box
+            component="main"
+            sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
             {children}
         </Box>
     );

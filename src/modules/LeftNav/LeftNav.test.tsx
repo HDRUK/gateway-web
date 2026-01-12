@@ -6,7 +6,10 @@ import LeftNav from "./LeftNav";
 describe("LeftNav", () => {
     it("renders the profile navigation item", () => {
         const { getByText, getAllByRole } = render(
-            <LeftNav permissions={{ "cohort.read": false }} />
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+            />
         );
 
         expect(getAllByRole("link")).toHaveLength(6);
@@ -17,7 +20,10 @@ describe("LeftNav", () => {
         mockRouter.push("/initial-path");
 
         const { getByText, getAllByRole } = render(
-            <LeftNav permissions={{ "cohort.read": true }} />
+            <LeftNav
+                permissions={{ "cohort.read": true }}
+                initialLeftNavOpen={true}
+            />
         );
 
         expect(getAllByRole("link")).toHaveLength(7);
@@ -39,15 +45,14 @@ describe("LeftNav", () => {
                     "integrations.metadata": true,
                     "integrations.dar": true,
                 }}
+                initialLeftNavOpen={true}
             />
         );
 
         const links = getAllByRole("link");
         expect(links).toHaveLength(4);
 
-        expect(
-            within(links[0]).getByText("Team Management")
-        ).toBeInTheDocument();
+        expect(within(links[0]).getByText("Team members")).toBeInTheDocument();
         expect(
             within(links[1]).getByText("Custom Integrations")
         ).toBeInTheDocument();
