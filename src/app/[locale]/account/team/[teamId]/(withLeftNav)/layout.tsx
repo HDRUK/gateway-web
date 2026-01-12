@@ -34,8 +34,8 @@ export default async function AccountTeamLayout({
                             "true"
                         }
                         initialExpandLeftNav={
-                            cookieStore.get(config.EXPAND_LEFT_NAV)?.value ===
-                            "true"
+                            !(cookieStore.get(config.EXPAND_LEFT_NAV)?.value ===
+                            "false")
                         }
                     />
                 }

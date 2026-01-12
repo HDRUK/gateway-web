@@ -112,7 +112,7 @@ describe("Nav utils", () => {
                 teamId,
                 {}
             );
-            const integrationsItem = navItems.find(
+            const integrationsItem = navItems.items.find(
                 item => item.label === "Integrations"
             );
 
