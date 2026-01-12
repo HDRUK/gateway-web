@@ -73,9 +73,14 @@ const LeftNav = ({
 
     const itemIds = useMemo(() => {
         return Object.fromEntries(
-            navItems.map((item, index) => [item.label, `${baseId}-${index}`])
+            navItems.items.map((item, index) => [
+                item.label,
+                `${baseId}-${index}`,
+            ])
         );
     }, [navItems, baseId]);
+
+    const topId = `${baseId}-top`;
 
     const toggleMenu = (item: LeftNavItem) => {
         const isOpen = isExpanded(item, expandedSection, trimmedPathname);
@@ -85,11 +90,17 @@ const LeftNav = ({
 
     const [navOpen, setNavOpen] = useState<boolean>(initialLeftNavOpen);
 
-    const [navExpanded, setNavExpanded] = useState<boolean>(initialExpandLeftNav);
-
     const setLeftNav = (open: boolean) => {
         setNavOpen(open);
         Cookies.set(config.LEFT_NAV_COOKIE, open.toString());
+    };
+
+    const [navExpanded, setNavExpanded] =
+        useState<boolean>(initialExpandLeftNav);
+
+    const setLeftNavExpanded = (expanded: boolean) => {
+        setNavExpanded(expanded);
+        Cookies.set(config.EXPAND_LEFT_NAV, expanded.toString());
     };
 
     const easing = theme.transitions.easing[navOpen ? "easeOut" : "easeIn"];
@@ -105,9 +116,6 @@ const LeftNav = ({
 
     const subNavItemSelected = (href: string) =>
         trimmedPathname === href || trimmedPathname.startsWith(`${href}/`);
-
-    const firstNav = navItems[0];
-    const firstNavId = itemIds[firstNav.label];
 
     return (
         <Box>
@@ -178,85 +186,87 @@ const LeftNav = ({
                 <Divider />
 
                 <List component="nav" sx={{ color: colors.grey800 }}>
-                    <Fragment key={firstNav.label}>
-                        <Tooltip
-                            title={firstNav.label}
-                            placement="right"
-                            slotProps={{
-                                popper: {
-                                    modifiers: [
-                                        {
-                                            name: "offset",
-                                            options: {
-                                                offset: [0, -190],
+                    {navItems.top && (
+                        <Fragment key={navItems.top.label}>
+                            <Tooltip
+                                title={navItems.top.label}
+                                placement="right"
+                                slotProps={{
+                                    popper: {
+                                        modifiers: [
+                                            {
+                                                name: "offset",
+                                                options: {
+                                                    offset: [0, -190],
+                                                },
                                             },
-                                        },
-                                    ],
-                                },
-                            }}>
-                            <ListItemButton
-                                onClick={() => {
-                                    setNavExpanded(!navExpanded);
-                                }}
-                                component="button"
-                                sx={{
-                                    width: "100%",
-                                    paddingLeft: 1,
-                                }}
-                                aria-expanded={navExpanded}
-                                aria-controls={
-                                    navExpanded ? firstNavId : undefined
-                                }
-                                id={`toggle-${firstNavId}`}>
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 32,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        fontSize: 18,
-                                        color: colors.grey600,
-                                    }}>
-                                    {firstNav.icon}
-                                </ListItemIcon>
-
-                                <ListItemText
-                                    primary={firstNav.label}
-                                    sx={{
-                                        pointerEvents: navOpen
-                                            ? "auto"
-                                            : "none",
-                                        ...opacityFadeStyles,
+                                        ],
+                                    },
+                                }}>
+                                <ListItemButton
+                                    onClick={() => {
+                                        setLeftNavExpanded(!navExpanded);
                                     }}
-                                />
-                                {navExpanded ? (
-                                    <ExpandLessIcon
-                                        color="primary"
+                                    component="button"
+                                    sx={{
+                                        width: "100%",
+                                        paddingLeft: 1,
+                                    }}
+                                    aria-expanded={navExpanded}
+                                    aria-controls={
+                                        navExpanded ? topId : undefined
+                                    }
+                                    id={`toggle-${topId}`}>
+                                    <ListItemIcon
                                         sx={{
-                                            width: ICON_SIZE,
-                                            height: ICON_SIZE,
+                                            minWidth: 32,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            fontSize: 18,
+                                            color: colors.grey600,
+                                        }}>
+                                        {navItems.top.icon}
+                                    </ListItemIcon>
+
+                                    <ListItemText
+                                        primary={navItems.top.label}
+                                        sx={{
+                                            pointerEvents: navOpen
+                                                ? "auto"
+                                                : "none",
+                                            ...opacityFadeStyles,
                                         }}
                                     />
-                                ) : (
-                                    <ExpandMoreIcon
-                                        color="primary"
-                                        sx={{
-                                            width: ICON_SIZE,
-                                            height: ICON_SIZE,
-                                        }}
-                                    />
-                                )}
-                            </ListItemButton>
-                        </Tooltip>
-                    </Fragment>
+                                    {navExpanded ? (
+                                        <ExpandLessIcon
+                                            color="primary"
+                                            sx={{
+                                                width: ICON_SIZE,
+                                                height: ICON_SIZE,
+                                            }}
+                                        />
+                                    ) : (
+                                        <ExpandMoreIcon
+                                            color="primary"
+                                            sx={{
+                                                width: ICON_SIZE,
+                                                height: ICON_SIZE,
+                                            }}
+                                        />
+                                    )}
+                                </ListItemButton>
+                            </Tooltip>
+                        </Fragment>
+                    )}
                     <Collapse
                         in={navExpanded}
                         timeout="auto"
                         unmountOnExit
-                        id={firstNavId}
+                        id={topId}
                         role="region"
-                        aria-labelledby={`toggle-${firstNavId}`}>
-                        {navItems.map((item, index) => {
+                        aria-labelledby={`toggle-${topId}`}>
+                        {navItems.items.map((item, index) => {
                             const sectionId = itemIds[item.label];
                             const expanded = isExpanded(
                                 item,

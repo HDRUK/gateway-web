@@ -33,6 +33,10 @@ export default async function AccountTeamLayout({
                             cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
                             "true"
                         }
+                        initialExpandLeftNav={
+                            cookieStore.get(config.EXPAND_LEFT_NAV)?.value ===
+                            "true"
+                        }
                     />
                 }
                 rightContent={children}
