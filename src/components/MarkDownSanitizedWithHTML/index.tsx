@@ -6,7 +6,7 @@ import { SxProps } from "@mui/material/styles";
 import { generateHTML, JSONContent } from "@tiptap/react";
 import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
-import { convertNumericalCharaterEntities } from "@/utils/string";
+import { decodeHtmlEntity } from "@/utils/general";
 import { EXTENSIONS } from "../Wysiwyg/consts";
 
 export interface MarkdownWithHtmlProps {
@@ -45,11 +45,10 @@ export const MarkDownSanitizedWithHtml = ({
             // If parsing fails, fallback to raw content
         }
 
-        const sanitized = convertNumericalCharaterEntities(
-            DOMPurify.sanitize(value)
-        );
+        const sanitized = DOMPurify.sanitize(value);
+        const decoded = decodeHtmlEntity(sanitized);
 
-        return sanitized;
+        return decoded;
     }, [content]);
 
     useEffect(() => {
