@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
+import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import config from "@/config/config";
 import theme, { colors } from "@/config/theme";
@@ -117,6 +118,7 @@ const LeftNav = ({
                     display: "flex",
                     justifyContent: navOpen ? "space-between" : "center",
                     alignItems: "center",
+                    maxWidth: WIDTH_NAV_EXPANDED,
                 }}>
                 <Typography
                     sx={{
@@ -127,7 +129,12 @@ const LeftNav = ({
                         ...opacityFadeStyles,
                     }}
                     fontSize={15}>
-                    {navHeading}
+                    {navHeading && (
+                        <EllipsisCharacterLimit
+                            characterLimit={28}
+                            text={navHeading}
+                        />
+                    )}
                 </Typography>
 
                 {!isMobile && (
