@@ -12,6 +12,7 @@ import {
     ListItemIcon,
     ListItemText,
     Tooltip,
+    useMediaQuery,
 } from "@mui/material";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -56,6 +57,7 @@ const LeftNav = ({
     navHeading,
     initialLeftNavOpen,
 }: LeftNavProps) => {
+    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
 
     const navItems = teamId
@@ -81,10 +83,13 @@ const LeftNav = ({
         setExpandedSection(isOpen ? "" : item.label);
     };
 
-    const [navOpen, setNavOpen] = useState<boolean>(initialLeftNavOpen);
+    const [storedNavOpen, setStoredNavOpen] =
+        useState<boolean>(initialLeftNavOpen);
+
+    const navOpen = isMobile ? true : storedNavOpen;
 
     const setLeftNav = (open: boolean) => {
-        setNavOpen(open);
+        setStoredNavOpen(open);
         Cookies.set(config.LEFT_NAV_COOKIE, open.toString());
     };
 
@@ -125,18 +130,20 @@ const LeftNav = ({
                     {navHeading}
                 </Typography>
 
-                <IconButton
-                    size="small"
-                    onClick={() => setLeftNav(!navOpen)}
-                    sx={{ p: 1 }}>
-                    <PanelExpandIcon
-                        sx={{
-                            transform: `scaleX(${navOpen ? 1 : -1})`,
-                            width: ICON_SIZE,
-                            height: ICON_SIZE,
-                        }}
-                    />
-                </IconButton>
+                {!isMobile && (
+                    <IconButton
+                        size="small"
+                        onClick={() => setLeftNav(!navOpen)}
+                        sx={{ p: 1 }}>
+                        <PanelExpandIcon
+                            sx={{
+                                transform: `scaleX(${navOpen ? 1 : -1})`,
+                                width: ICON_SIZE,
+                                height: ICON_SIZE,
+                            }}
+                        />
+                    </IconButton>
+                )}
             </Box>
             <Drawer
                 open={navOpen}
@@ -144,7 +151,10 @@ const LeftNav = ({
                 anchor="left"
                 sx={{
                     p: 0,
-                    width: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
+                    width: {
+                        mobile: "100%",
+                        tablet: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
+                    },
                     flexShrink: 0,
                     whiteSpace: "nowrap",
                     overflowX: "hidden",
@@ -153,7 +163,7 @@ const LeftNav = ({
                         duration: duration,
                     }),
                     "& .MuiDrawer-paper": {
-                        width: WIDTH_NAV_EXPANDED,
+                        width: { mobile: "100%", tablet: WIDTH_NAV_EXPANDED },
                         position: "relative",
                         transform: "none !important",
                         visibility: "visible !important",
