@@ -84,8 +84,9 @@ const LeftNav = ({
         setExpandedSection(isOpen ? "" : item.label);
     };
 
-    const [storedNavOpen, setStoredNavOpen] =
-        useState<boolean>(initialLeftNavOpen);
+    const [storedNavOpen, setStoredNavOpen] = useState<boolean>(
+        initialLeftNavOpen || true
+    );
 
     const navOpen = isMobile ? true : storedNavOpen;
 
