@@ -30,8 +30,10 @@ export default async function AccountTeamLayout({
                         permissions={permissions}
                         navHeading={team.name}
                         initialLeftNavOpen={
-                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
-                            "true"
+                            cookieStore.get(config.LEFT_NAV_COOKIE)
+                                ? cookieStore.get(config.LEFT_NAV_COOKIE)
+                                      ?.value === "true"
+                                : true
                         }
                     />
                 }
