@@ -1,7 +1,13 @@
+import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
+import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
-import { render, within } from "@/utils/testUtils";
+import { fireEvent, render, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
+
+jest.mock("js-cookie", () => ({
+    set: jest.fn(),
+}));
 
 describe("LeftNav", () => {
     it("renders the profile navigation item", () => {
@@ -60,5 +66,45 @@ describe("LeftNav", () => {
             within(links[2]).getByText("Predefined Integrations")
         ).toBeInTheDocument();
         expect(within(links[3]).getByText("Help")).toBeInTheDocument();
+    });
+
+    it("closes the profile navigation and creates cookie", () => {
+        const { getByRole } = render(
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+                navHeading="Team"
+            />
+        );
+
+        const toggle = getByRole("button", {
+            name: "Collapse navigation",
+        });
+        fireEvent.click(toggle);
+
+        expect(Cookies.set).toHaveBeenCalledWith(
+            config.LEFT_NAV_COOKIE,
+            "false"
+        );
+    });
+
+    it("opens the profile navigation and creates cookie", () => {
+        const { getByRole } = render(
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={false}
+                navHeading="Team"
+            />
+        );
+
+        const toggle = getByRole("button", {
+            name: "Expand navigation",
+        });
+        fireEvent.click(toggle);
+
+        expect(Cookies.set).toHaveBeenCalledWith(
+            config.LEFT_NAV_COOKIE,
+            "true"
+        );
     });
 });
