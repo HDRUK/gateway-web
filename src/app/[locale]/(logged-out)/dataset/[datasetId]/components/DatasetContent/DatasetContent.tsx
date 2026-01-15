@@ -164,7 +164,6 @@ const DatasetContent = ({
             }
 
             default: {
-                console.log(value);
                 return (
                     <MarkDownSanitizedWithHtml content={value} wrapper="span" />
                 );
