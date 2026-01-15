@@ -141,7 +141,12 @@ const LeftNav = ({
                     <IconButton
                         size="small"
                         onClick={() => setLeftNav(!navOpen)}
-                        sx={{ p: 1 }}>
+                        sx={{ p: 1 }}
+                        aria-label={
+                            navOpen
+                                ? "Collapse navigation"
+                                : "Expand navigation"
+                        }>
                         <PanelExpandIcon
                             sx={{
                                 transform: `scaleX(${navOpen ? 1 : -1})`,
