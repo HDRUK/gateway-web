@@ -843,7 +843,7 @@ const CreateDataset = ({
                 actionButtonsEnabled={!isSaving}
             />
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0, position: "relative"}}>
                 <Box
                     sx={{
                         flex: 1,
@@ -875,7 +875,9 @@ const CreateDataset = ({
                 {currentSectionIndex < formSections.length - 1 &&
                 currentSectionIndex > 0 ? (
                     <>
-                        <Box sx={{ flex: 2, p: 0 }}>
+                        <Box sx={{ flex: 2, p: 0,
+                        left: 0,
+                        pl: 2 }}>
                             <FormProvider {...methods}>
                                 <Form>
                                     <Paper
@@ -971,14 +973,28 @@ const CreateDataset = ({
                                 </Form>
                             </FormProvider>
                         </Box>
-                        {currentSectionIndex > 0 && (
-                            <Paper
-                                style={{
+                        {currentSectionIndex > 0 && (<>
+                            <Box
+                                sx={{
+                                    width: "25%",
+                                    flexShrink: 0,
                                     flex: 1,
-                                    alignItems: "center",
-                                    padding: theme.spacing(2),
-                                    margin: theme.spacing(1.25),
-                                    wordBreak: "break-word",
+                                    display: "flex",
+                                    marginTop: "10px",
+                                }}
+                            />
+                            <Paper
+                                sx={{
+                                    position: "fixed",
+                                    top: 56*4,
+                                    marginTop: "10px",
+                                    right: 0,              
+                                    width: "25%",
+                                    overflowY: "auto",
+                                    p: 2,
+                                    flex: 1,
+                                    maxHeight: "75vh",
+                                    zIndex: 0,
                                 }}>
                                 <Typography variant="h2">
                                     {t("guidance")}
@@ -990,6 +1006,7 @@ const CreateDataset = ({
                                     />
                                 )}
                             </Paper>
+                            </>
                         )}
                     </>
                 ) : (
