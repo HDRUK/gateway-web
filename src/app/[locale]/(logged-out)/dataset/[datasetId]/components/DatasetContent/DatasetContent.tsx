@@ -41,6 +41,7 @@ const OBSERVATION_DATE = "observationDate";
 const TRANSLATION_PATH = "common";
 const DOI_URL = "https://doi.org/";
 const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
+const FOLLOWUP_PATH = "metadata.metadata.coverage.followUp";
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -163,6 +164,7 @@ const DatasetContent = ({
             }
 
             default: {
+                console.log(value);
                 return (
                     <MarkDownSanitizedWithHtml content={value} wrapper="span" />
                 );
@@ -278,6 +280,14 @@ const DatasetContent = ({
 
                                     if (field.path === DOI_NAME_PATH) {
                                         value = DOI_URL.concat(value);
+                                    }
+
+                                    // Follow up can contain '>' which markdown will try to render as a blockquotes
+                                    // backticks escape it
+                                    if (field.path === FOLLOWUP_PATH) {
+                                        value = value
+                                            .toString()
+                                            .replace(/>/g, "`>`");
                                     }
 
                                     if (!field.label) {
