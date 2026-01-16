@@ -8,12 +8,16 @@ import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import AccountNav from "@/modules/AccountNav";
 import DesktopNav from "@/modules/DesktopNav";
+import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAccountMenu from "@/hooks/useAccountMenu";
+import useAuth from "@/hooks/useAuth";
+import useDialog from "@/hooks/useDialog";
 import { useIsHomePage } from "@/hooks/useIsHomePage";
 import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
@@ -25,6 +29,9 @@ function Header() {
     const HOTJAR_ID = process.env.NEXT_PUBLIC_HOTJAR_ID;
     const HOTJAR_VERSION = 6;
     const isTablet = useMediaQuery("(min-width:640px)");
+    const { isLoggedIn } = useAuth();
+    const { showDialog } = useDialog();
+    const t = useTranslations("components");
 
     if (HOTJAR_ID && typeof window !== "undefined" && !hotjar.initialized()) {
         hotjar.initialize(parseInt(HOTJAR_ID), HOTJAR_VERSION);
@@ -38,6 +45,16 @@ function Header() {
     };
 
     const accountLinks = useAccountMenu();
+
+    const signInNav = [
+        {
+            label: t("DesktopNav.labels.signIn"),
+            action: () => {
+                setAnchorElement(null);
+                showDialog(ProvidersDialog, { isProvidersDialog: true });
+            },
+        },
+    ];
 
     return (
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>
@@ -93,11 +110,11 @@ function Header() {
 
                         <MenuDropdown
                             handleClose={() => setAnchorElement(null)}
-                            menuItems={
-                                isTablet
-                                    ? navItems
-                                    : [...navItems, ...accountLinks]
-                            }
+                            menuItems={[
+                                ...(!isLoggedIn ? signInNav : []),
+                                ...navItems,
+                                ...(isLoggedIn ? accountLinks : []),
+                            ]}
                             anchorElement={anchorElement}
                         />
                     </Box>
