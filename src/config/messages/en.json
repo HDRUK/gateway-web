@@ -1562,6 +1562,43 @@
                     "heading": "Collections which include this analysis, tool or software ({ length })"
                 }
             }
+        },
+        "publication": {
+            "abstract": "Abstract",
+            "details": "Details",
+            "journalName": "Journal name",
+            "journalNameTooltip": "Name of the journal which the article belongs to, e.g. PloS One",
+            "authors": "Author(s)",
+            "authorsTooltip": "List of author details which contains full name, initials and last name",
+            "publicationType": "Publication type",
+            "publicationTypeTooltip": "The type of publication: research article, review article, preprint or book and document",
+            "paperDoi": "DOI",
+            "paperDoiTooltip": "Digital Object Identifier of the article, e.g. 10.1073/pnas.0401194101",
+            "yearOfPublication": "Publication year",
+            "yearOfPublicationTooltip": "Year of the publication",
+            "url": "Web link",
+            "urlTooltip": "Weblink for the publication text or site from which the text is available",
+            "components": {
+                "DatasetsContent": {
+                    "heading": "Datasets related to this Publication ({ length })"
+                },
+                "DatausesContent": {
+                    "heading": "Data Uses / Research Projects which are related to this Publication ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis Scripts & Software related to this Publication ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections which include this Publication ({ length })"
+                },
+                "ActionBar": {
+                    "label": "Back to Publications search results"
+                }
+            },
+            "datasets": "Related Datasets",
+            "dataUses": "Related Data Uses",
+            "tools": "Related Analysis Scripts & Software",
+            "collections": "Related Collections"
         }
     },
     "components": {
