@@ -1,20 +1,19 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
+import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import {
     beforeYouBeginSection,
+    fileBasedTemplateSection,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
 import {
     DarApplicationApprovalStatus,
-    DarApplicationStatus,
+    DarTemplateType,
 } from "@/consts/dataAccess";
 import {
     getDarAnswersUser,
     getDarApplicationUser,
     getDarReviewsUser,
     getUserFromCookie,
-    updateDarApplicationUser,
     getAllDarSections,
 } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -72,13 +71,39 @@ export default async function DarApplicationPage({
     }
 
     // Format sections
-    const formattedSections = [
-        beforeYouBeginSection,
-        ...(reviews?.length ? [...sections, messageSection] : sections),
-    ];
+    let formattedSections: QuestionBankSection[] = [];
+    let parentSections: QuestionBankSection[];
 
-    const parentSections =
-        formattedSections?.filter(s => s.parent_section === null) || [];
+    if (darApplication.application_type === DarTemplateType.DOCUMENT) {
+        formattedSections = [
+            beforeYouBeginSection,
+            fileBasedTemplateSection,
+            ...(reviews?.length ? [messageSection] : []),
+        ];
+
+        parentSections = [
+            beforeYouBeginSection,
+            {
+                id: 1,
+                created_at: "",
+                updated_at: "",
+                deleted_at: null,
+                name: "File-based Template",
+                description: "",
+                parent_section: null,
+                order: 1,
+            },
+            ...(reviews?.length ? [messageSection] : []),
+        ];
+    } else {
+        formattedSections = [
+            beforeYouBeginSection,
+            ...(reviews?.length ? [...sections, messageSection] : sections),
+        ];
+
+        parentSections =
+            formattedSections?.filter(s => s.parent_section === null) || [];
+    }
 
     let sectionId = 0;
 
@@ -86,26 +111,6 @@ export default async function DarApplicationPage({
     let teamApplication = darApplication.teams?.find(
         team => team.team_id === +teamId
     );
-
-    const cookieStore = await cookies();
-    const suppress = cookieStore.get("dar-update-suppress");
-
-    // If no approval status and submitted, set to draft
-    if (
-        !teamApplication?.approval_status &&
-        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED &&
-        !suppress
-    ) {
-        await updateDarApplicationUser(applicationId, userId, {
-            submission_status: DarApplicationStatus.DRAFT,
-        });
-
-        // Find the specific team and override its submission_status
-        teamApplication = {
-            ...darApplication?.teams?.find(team => team.team_id === +teamId),
-            submission_status: DarApplicationStatus.DRAFT,
-        } as DarTeamApplication;
-    }
 
     if (!teamApplication && teamId) {
         return notFound();

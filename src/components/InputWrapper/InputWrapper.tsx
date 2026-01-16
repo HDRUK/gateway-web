@@ -20,6 +20,7 @@ import { TextFieldBaseProps } from "@/components/TextFieldBase/TextFieldBase";
 import TextTime from "@/components/TextTime";
 import ToggleDirection from "@/components/ToggleDirection";
 import { Wysiwyg } from "@/components/Wysiwyg";
+import DocumentExchange from "../DocumentExchange";
 import FileUpload from "../UploadFile";
 import FileUploadMultiple from "../UploadFileMultiple";
 
@@ -68,6 +69,7 @@ function InputWrapper<
         Wysiwyg,
         FileUpload,
         FileUploadMultiple,
+        DocumentExchange,
     };
 
     if (component === "TextTime") {

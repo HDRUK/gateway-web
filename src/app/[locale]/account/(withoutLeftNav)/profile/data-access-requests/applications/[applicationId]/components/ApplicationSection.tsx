@@ -32,7 +32,6 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import {
     beforeYouBeginFormFields,
@@ -48,10 +47,10 @@ import {
     ARRAY_PREFIX,
     DarApplicationApprovalStatus,
     DarApplicationStatus,
+    DarTemplateType,
 } from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon, HelpOutlineIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { setTemporaryCookie } from "@/utils/cookies";
 import {
     createFileUploadConfig,
     formatDarAnswers,
@@ -253,12 +252,6 @@ const ApplicationSection = ({
             );
 
         if (formData) {
-            setTemporaryCookie(
-                config.DAR_UPDATE_SUPPRESS_COOKIE,
-                Date.now().toString(),
-                60
-            );
-
             const [resAnswers, resApplication] = await Promise.all([
                 updateDarApplicationAnswersAction(applicationId, userId, {
                     ...applicationData,
@@ -337,7 +330,8 @@ const ApplicationSection = ({
 
         if (
             component === inputComponents.FileUpload ||
-            component === inputComponents.FileUploadMultiple
+            component === inputComponents.FileUploadMultiple ||
+            component === inputComponents.DocumentExchange
         ) {
             const fileDownloadApiPath = isResearcher
                 ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
@@ -373,7 +367,10 @@ const ApplicationSection = ({
                 if (field.is_child) return null;
 
                 let sectionHeader = null;
-                if (!processedSections.has(field.section_id)) {
+                if (
+                    !processedSections.has(field.section_id) &&
+                    data.application_type !== DarTemplateType.DOCUMENT
+                ) {
                     processedSections.add(field.section_id);
                     sectionHeader = renderSectionHeader(field);
                 }
@@ -422,12 +419,15 @@ const ApplicationSection = ({
                                         },
                                         control,
                                         field.question_id.toString(),
-                                        updateGuidanceText,
+                                        field.component !==
+                                            inputComponents.DocumentExchange &&
+                                            updateGuidanceText,
                                         field.component &&
                                             formatFileUploadFields(
                                                 field.component,
                                                 field.question_id
-                                            )
+                                            ),
+                                        field.document
                                     )}
                                 </Box>
                             </>
@@ -590,10 +590,10 @@ const ApplicationSection = ({
                                 <Typography
                                     variant="h2"
                                     sx={{ p: 2, pl: 0, pb: 1 }}>
-                                    {sections[sectionId].name}
+                                    {sections[sectionId]?.name}
                                 </Typography>
                                 <Typography>
-                                    {sections[sectionId].description}
+                                    {sections[sectionId]?.description}
                                 </Typography>
                             </Box>
                             <Divider variant="fullWidth" />
@@ -677,49 +677,55 @@ const ApplicationSection = ({
 
                         {parentSections.find(
                             section => section.id === sectionId
-                        )?.name !== messageSection.name && (
-                            <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
-                                <Box>
-                                    <Typography
-                                        variant="h3"
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            m: 0,
-                                        }}>
-                                        <HelpOutlineIcon
-                                            sx={{
-                                                mr: 1,
-                                                color: colors.grey600,
-                                                fontSize: 16,
-                                            }}
-                                        />
-                                        {t("guidance")}
-                                    </Typography>
-                                </Box>
-                                <Divider variant="fullWidth" sx={{ mb: 4 }} />
-                                <Box
-                                    sx={{
-                                        pt: 0,
-                                        pb: 0,
-                                    }}>
-                                    {guidanceText ? (
-                                        <MarkDownSanitizedWithHtml
-                                            content={guidanceText}
-                                        />
-                                    ) : (
+                        )?.name !== messageSection.name &&
+                            data.application_type !==
+                                DarTemplateType.DOCUMENT && (
+                                <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
+                                    <Box>
                                         <Typography
+                                            variant="h3"
                                             sx={{
-                                                color: theme.palette.grey[500],
-                                                textAlign: "center",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                m: 0,
                                             }}>
-                                            {t("defaultGuidance")}
+                                            <HelpOutlineIcon
+                                                sx={{
+                                                    mr: 1,
+                                                    color: colors.grey600,
+                                                    fontSize: 16,
+                                                }}
+                                            />
+                                            {t("guidance")}
                                         </Typography>
-                                    )}
+                                    </Box>
+                                    <Divider
+                                        variant="fullWidth"
+                                        sx={{ mb: 4 }}
+                                    />
+                                    <Box
+                                        sx={{
+                                            pt: 0,
+                                            pb: 0,
+                                        }}>
+                                        {guidanceText ? (
+                                            <MarkDownSanitizedWithHtml
+                                                content={guidanceText}
+                                            />
+                                        ) : (
+                                            <Typography
+                                                sx={{
+                                                    color: theme.palette
+                                                        .grey[500],
+                                                    textAlign: "center",
+                                                }}>
+                                                {t("defaultGuidance")}
+                                            </Typography>
+                                        )}
+                                    </Box>
                                 </Box>
-                            </Box>
-                        )}
+                            )}
                     </Box>
                 </Paper>
             </Box>

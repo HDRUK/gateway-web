@@ -1,11 +1,9 @@
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
-    DescriptionIcon,
     ToolIcon,
     HelpOutlineOutlinedIcon,
     DataUseIcon,
-    SettingsOutlinedIcon,
     DatabaseIcon, // CloudUploadIcon,
     BookmarkBorderIcon,
     BookmarkIcon,
@@ -14,32 +12,36 @@ import {
     PersonOutlineOutlinedIcon,
     CohortIcon,
     CloudUploadIcon,
+    TeamMembersIcon,
+    DarIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+
+const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 
 const getProfileNav = (permissions: {
     [key: string]: boolean;
 }): LeftNavItem[] => {
     return [
         {
-            icon: <PersonOutlineOutlinedIcon />,
+            icon: navIcon(PersonOutlineOutlinedIcon),
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
         {
-            icon: <BookmarkBorderIcon />,
+            icon: navIcon(BookmarkBorderIcon),
             label: "Library",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
         },
         {
-            icon: <BookmarkIcon />,
+            icon: navIcon(BookmarkIcon),
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
         ...(permissions["custodians.read"]
             ? [
                   {
-                      icon: <ControlPointIcon />,
+                      icon: navIcon(ControlPointIcon),
                       label: "Teams",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
                   },
@@ -48,14 +50,14 @@ const getProfileNav = (permissions: {
         ...(permissions["cohort.read"]
             ? [
                   {
-                      icon: <CohortIcon />,
+                      icon: navIcon(CohortIcon),
                       label: "Cohort Discovery Admin",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                   },
               ]
             : []),
         {
-            icon: <CohortIcon />,
+            icon: navIcon(CohortIcon),
             label: "Cohort Discovery",
             subItems: [
                 {
@@ -69,7 +71,7 @@ const getProfileNav = (permissions: {
             ],
         },
         {
-            icon: <DescriptionIcon />,
+            icon: navIcon(DarIcon),
             label: "Data Access Requests",
             subItems: [
                 {
@@ -88,17 +90,17 @@ const getProfileNav = (permissions: {
         },
 
         {
-            icon: <ToolIcon />,
+            icon: navIcon(ToolIcon),
             label: "Analysis Scripts & Software",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
         },
         {
-            icon: <PublicationIcon />,
+            icon: navIcon(PublicationIcon),
             label: "Publications",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
         },
         {
-            icon: <BookmarksOutlinedIcon />,
+            icon: navIcon(BookmarksOutlinedIcon),
             label: "Collections",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
         },
@@ -118,8 +120,8 @@ const getTeamNav = (
         ...(permissions["roles.read"]
             ? [
                   {
-                      icon: <SettingsOutlinedIcon />,
-                      label: "Team Management",
+                      icon: navIcon(TeamMembersIcon),
+                      label: "Team members",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
                   },
               ]
@@ -131,7 +133,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <CloudUploadIcon />,
+                      icon: navIcon(CloudUploadIcon),
                       label: "Integrations",
                       subItems: [
                           ...(permissions["applications.read"]
@@ -168,7 +170,7 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: <DatabaseIcon />,
+                      icon: navIcon(DatabaseIcon),
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },
@@ -181,7 +183,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: <DescriptionIcon />,
+                      icon: navIcon(DarIcon),
                       label: "Data Access Requests",
                       subItems: [
                           ...(permissions["data-access-template.read"]
@@ -214,7 +216,7 @@ const getTeamNav = (
         ...(permissions["papers.read"]
             ? [
                   {
-                      icon: <PublicationIcon />,
+                      icon: navIcon(PublicationIcon),
                       label: "Publications",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
                   },
@@ -223,7 +225,7 @@ const getTeamNav = (
         ...(permissions["tools.read"]
             ? [
                   {
-                      icon: <ToolIcon />,
+                      icon: navIcon(ToolIcon),
                       label: "Analysis Scripts & Software",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
                   },
@@ -232,7 +234,7 @@ const getTeamNav = (
         ...(permissions["collections.read"]
             ? [
                   {
-                      icon: <BookmarksOutlinedIcon />,
+                      icon: navIcon(BookmarksOutlinedIcon),
                       label: "Collections",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                   },
@@ -241,14 +243,14 @@ const getTeamNav = (
         ...(permissions["dur.update"]
             ? [
                   {
-                      icon: <DataUseIcon />,
+                      icon: navIcon(DataUseIcon),
                       label: "Data Uses",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
                   },
               ]
             : []),
         {
-            icon: <HelpOutlineOutlinedIcon />,
+            icon: navIcon(HelpOutlineOutlinedIcon),
             label: "Help",
             href: RouteName.DATA_CUSTODIAN_SUPPORT,
         },

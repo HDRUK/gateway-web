@@ -13,7 +13,6 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
-import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import { CACHE_DAR_REVIEWS } from "@/consts/cache";
@@ -22,7 +21,6 @@ import {
     DarApplicationStatus,
 } from "@/consts/dataAccess";
 import { RouteName } from "@/consts/routeName";
-import { setTemporaryCookie } from "@/utils/cookies";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 
@@ -82,12 +80,6 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
         payload: Partial<DarTeamApplication>,
         redirectUrl: string
     ) => {
-        setTemporaryCookie(
-            config.DAR_UPDATE_SUPPRESS_COOKIE,
-            Date.now().toString(),
-            60
-        );
-
         const updateResponse = await updateDarApplicationTeamAction(
             applicationId,
             params.teamId,

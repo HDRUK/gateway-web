@@ -1,12 +1,21 @@
+import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
+import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
-import { render, within } from "@/utils/testUtils";
+import { fireEvent, render, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
+
+jest.mock("js-cookie", () => ({
+    set: jest.fn(),
+}));
 
 describe("LeftNav", () => {
     it("renders the profile navigation item", () => {
         const { getByText, getAllByRole } = render(
-            <LeftNav permissions={{ "cohort.read": false }} />
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+            />
         );
 
         expect(getAllByRole("link")).toHaveLength(6);
@@ -17,7 +26,10 @@ describe("LeftNav", () => {
         mockRouter.push("/initial-path");
 
         const { getByText, getAllByRole } = render(
-            <LeftNav permissions={{ "cohort.read": true }} />
+            <LeftNav
+                permissions={{ "cohort.read": true }}
+                initialLeftNavOpen={true}
+            />
         );
 
         expect(getAllByRole("link")).toHaveLength(7);
@@ -39,15 +51,14 @@ describe("LeftNav", () => {
                     "integrations.metadata": true,
                     "integrations.dar": true,
                 }}
+                initialLeftNavOpen={true}
             />
         );
 
         const links = getAllByRole("link");
         expect(links).toHaveLength(4);
 
-        expect(
-            within(links[0]).getByText("Team Management")
-        ).toBeInTheDocument();
+        expect(within(links[0]).getByText("Team members")).toBeInTheDocument();
         expect(
             within(links[1]).getByText("Custom Integrations")
         ).toBeInTheDocument();
@@ -55,5 +66,45 @@ describe("LeftNav", () => {
             within(links[2]).getByText("Predefined Integrations")
         ).toBeInTheDocument();
         expect(within(links[3]).getByText("Help")).toBeInTheDocument();
+    });
+
+    it("closes the profile navigation and creates cookie", () => {
+        const { getByRole } = render(
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+                navHeading="Team"
+            />
+        );
+
+        const toggle = getByRole("button", {
+            name: "Collapse navigation",
+        });
+        fireEvent.click(toggle);
+
+        expect(Cookies.set).toHaveBeenCalledWith(
+            config.LEFT_NAV_COOKIE,
+            "false"
+        );
+    });
+
+    it("opens the profile navigation and creates cookie", () => {
+        const { getByRole } = render(
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={false}
+                navHeading="Team"
+            />
+        );
+
+        const toggle = getByRole("button", {
+            name: "Expand navigation",
+        });
+        fireEvent.click(toggle);
+
+        expect(Cookies.set).toHaveBeenCalledWith(
+            config.LEFT_NAV_COOKIE,
+            "true"
+        );
     });
 });

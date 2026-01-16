@@ -18,6 +18,7 @@ import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
 import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
+import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
@@ -34,6 +35,8 @@ import {
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
+import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
+import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 
 const TRANSLATION_PATH = "pages.account.team.dataAccessRequests.applications";
 const CHARACTER_LIMIT = 50;
@@ -59,6 +62,7 @@ export default function DarApplicationCard({
     const params = useParams<{ teamId: string }>();
     const { push } = useRouter();
     const { showDialog } = useDialog();
+    const { user } = useAuth();
 
     const isResearcher = !params?.teamId;
     const groupTeamId =
@@ -204,6 +208,33 @@ export default function DarApplicationCard({
             ? [
                   {
                       action: (id: number) => {
+                          if (
+                              isResearcher &&
+                              !approvalStatus &&
+                              submissionStatus ===
+                                  DarApplicationStatus.SUBMITTED
+                          ) {
+                              updateDarApplicationUserAction(
+                                  id.toString(),
+                                  user?.id,
+                                  {
+                                      submission_status:
+                                          DarApplicationStatus.DRAFT,
+                                  }
+                              );
+                          }
+
+                          if (!isResearcher && !approvalStatus) {
+                              updateDarApplicationTeamAction(
+                                  id.toString(),
+                                  teamId,
+                                  {
+                                      approval_status:
+                                          DarApplicationApprovalStatus.FEEDBACK,
+                                  }
+                              );
+                          }
+
                           push(actionButtonHref(id));
                       },
                       icon: DarEditIcon,
