@@ -119,180 +119,14 @@ const LeftNav = ({
     const subNavItemSelected = (href: string) =>
         trimmedPathname === href || trimmedPathname.startsWith(`${href}/`);
 
-    const firstNavIdx = navItems.findIndex(
+    const firstNavIdx = isMobile ? navItems.findIndex(
         item => item.href === trimmedPathname
-    );
-    const firstNavItem = navItems[firstNavIdx];
+    ) : 0;
+
+    const firstNavItem = firstNavIdx === -1 ? navItems[0] : navItems[firstNavIdx];
     const firstNavSectionId = itemIds[firstNavItem.label];
 
-    return (
-        <Box>
-            <Box
-                sx={{
-                    py: "5px",
-                    pl: navOpen ? 2 : 0,
-                    pr: navOpen ? 1 : 0,
-                    display: "flex",
-                    justifyContent: navOpen ? "space-between" : "center",
-                    alignItems: "center",
-                    maxWidth: WIDTH_NAV_EXPANDED,
-                }}>
-                <Typography
-                    sx={{
-                        visibility: navOpen ? "visible" : "hidden",
-                        width: navOpen ? "auto" : 0,
-                        height: navOpen ? "auto" : 0,
-                        whiteSpace: "nowrap",
-                        ...opacityFadeStyles,
-                    }}
-                    fontSize={15}>
-                    {navHeading && (
-                        <EllipsisCharacterLimit
-                            characterLimit={28}
-                            text={navHeading}
-                        />
-                    )}
-                </Typography>
-
-                {!isMobile && (
-                    <IconButton
-                        size="small"
-                        onClick={() => setLeftNav(!navOpen)}
-                        sx={{ p: 1 }}
-                        aria-label={
-                            navOpen
-                                ? "Collapse navigation"
-                                : "Expand navigation"
-                        }>
-                        <PanelExpandIcon
-                            sx={{
-                                transform: `scaleX(${navOpen ? 1 : -1})`,
-                                width: ICON_SIZE,
-                                height: ICON_SIZE,
-                            }}
-                        />
-                    </IconButton>
-                )}
-            </Box>
-            <Drawer
-                open={navOpen}
-                variant="persistent"
-                anchor="left"
-                sx={{
-                    p: 0,
-                    width: {
-                        mobile: "100%",
-                        tablet: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
-                    },
-                    flexShrink: 0,
-                    whiteSpace: "nowrap",
-                    overflowX: "hidden",
-                    transition: theme.transitions.create(["width"], {
-                        easing: easing,
-                        duration: duration,
-                    }),
-                    "& .MuiDrawer-paper": {
-                        width: { mobile: "100%", tablet: WIDTH_NAV_EXPANDED },
-                        position: "relative",
-                        transform: "none !important",
-                        visibility: "visible !important",
-                        transition: theme.transitions.create(["width"], {
-                            easing: easing,
-                            duration: duration,
-                        }),
-                    },
-                }}
-                slotProps={{
-                    paper: {
-                        sx: { boxShadow: "none", border: 0 },
-                    },
-                }}>
-                <Divider />
-
-                <List component="nav" sx={{ color: colors.grey800 }}>
-                    {firstNavItem && (
-                        <Fragment key={firstNavItem.label}>
-                            <Tooltip
-                                title={firstNavItem.label}
-                                placement="right"
-                                slotProps={{
-                                    popper: {
-                                        modifiers: [
-                                            {
-                                                name: "offset",
-                                                options: {
-                                                    offset: [0, -190],
-                                                },
-                                            },
-                                        ],
-                                    },
-                                }}>
-                                <ListItemButton
-                                    onClick={() => {
-                                        setLeftNavExpanded(!navExpanded);
-                                    }}
-                                    component="button"
-                                    sx={{
-                                        width: "100%",
-                                        paddingLeft: 1,
-                                    }}
-                                    aria-expanded={navExpanded}
-                                    aria-controls={
-                                        navExpanded
-                                            ? firstNavSectionId
-                                            : undefined
-                                    }
-                                    id={`toggle-${firstNavSectionId}`}>
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 32,
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            fontSize: 18,
-                                            color: colors.grey600,
-                                        }}>
-                                        {firstNavItem.icon}
-                                    </ListItemIcon>
-
-                                    <ListItemText
-                                        primary={firstNavItem.label}
-                                        sx={{
-                                            pointerEvents: navOpen
-                                                ? "auto"
-                                                : "none",
-                                            ...opacityFadeStyles,
-                                        }}
-                                    />
-                                    {navExpanded ? (
-                                        <ExpandLessIcon
-                                            color="primary"
-                                            sx={{
-                                                width: ICON_SIZE,
-                                                height: ICON_SIZE,
-                                            }}
-                                        />
-                                    ) : (
-                                        <ExpandMoreIcon
-                                            color="primary"
-                                            sx={{
-                                                width: ICON_SIZE,
-                                                height: ICON_SIZE,
-                                            }}
-                                        />
-                                    )}
-                                </ListItemButton>
-                            </Tooltip>
-                        </Fragment>
-                    )}
-                    <Collapse
-                        in={navExpanded}
-                        timeout="auto"
-                        unmountOnExit
-                        id={firstNavSectionId}
-                        role="region"
-                        aria-labelledby={`toggle-${firstNavSectionId}`}>
-                        {navItems.map((item, index) => {
+    const renderedLeftNav = (navItems.map((item, index) => {
                             const sectionId = itemIds[item.label];
                             const expanded = isExpanded(
                                 item,
@@ -300,7 +134,7 @@ const LeftNav = ({
                                 trimmedPathname
                             );
 
-                            if (index == 0) {
+                            if (!isMobile && item === firstNavItem) {
                                 return;
                             }
 
@@ -498,8 +332,182 @@ const LeftNav = ({
                                     )}
                                 </Fragment>
                             );
-                        })}
-                    </Collapse>
+                        })
+                    );
+
+    return (
+        <Box>
+            <Box
+                sx={{
+                    py: "5px",
+                    pl: navOpen ? 2 : 0,
+                    pr: navOpen ? 1 : 0,
+                    display: "flex",
+                    justifyContent: navOpen ? "space-between" : "center",
+                    alignItems: "center",
+                    maxWidth: WIDTH_NAV_EXPANDED,
+                }}>
+                <Typography
+                    sx={{
+                        visibility: navOpen ? "visible" : "hidden",
+                        width: navOpen ? "auto" : 0,
+                        height: navOpen ? "auto" : 0,
+                        whiteSpace: "nowrap",
+                        ...opacityFadeStyles,
+                    }}
+                    fontSize={15}>
+                    {navHeading && (
+                        <EllipsisCharacterLimit
+                            characterLimit={28}
+                            text={navHeading}
+                        />
+                    )}
+                </Typography>
+
+                {!isMobile && (
+                    <IconButton
+                        size="small"
+                        onClick={() => setLeftNav(!navOpen)}
+                        sx={{ p: 1 }}
+                        aria-label={
+                            navOpen
+                                ? "Collapse navigation"
+                                : "Expand navigation"
+                        }>
+                        <PanelExpandIcon
+                            sx={{
+                                transform: `scaleX(${navOpen ? 1 : -1})`,
+                                width: ICON_SIZE,
+                                height: ICON_SIZE,
+                            }}
+                        />
+                    </IconButton>
+                )}
+            </Box>
+            <Drawer
+                open={navOpen}
+                variant="persistent"
+                anchor="left"
+                sx={{
+                    p: 0,
+                    width: {
+                        mobile: "100%",
+                        tablet: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
+                    },
+                    flexShrink: 0,
+                    whiteSpace: "nowrap",
+                    overflowX: "hidden",
+                    transition: theme.transitions.create(["width"], {
+                        easing: easing,
+                        duration: duration,
+                    }),
+                    "& .MuiDrawer-paper": {
+                        width: { mobile: "100%", tablet: WIDTH_NAV_EXPANDED },
+                        position: "relative",
+                        transform: "none !important",
+                        visibility: "visible !important",
+                        transition: theme.transitions.create(["width"], {
+                            easing: easing,
+                            duration: duration,
+                        }),
+                    },
+                }}
+                slotProps={{
+                    paper: {
+                        sx: { boxShadow: "none", border: 0 },
+                    },
+                }}>
+                <Divider />
+
+                <List component="nav" sx={{ color: colors.grey800 }}>
+                    {firstNavItem && (
+                        <Fragment key={firstNavItem.label}>
+                            <Tooltip
+                                title={firstNavItem.label}
+                                placement="right"
+                                slotProps={{
+                                    popper: {
+                                        modifiers: [
+                                            {
+                                                name: "offset",
+                                                options: {
+                                                    offset: [0, -190],
+                                                },
+                                            },
+                                        ],
+                                    },
+                                }}>
+                                <ListItemButton
+                                    onClick={() => {
+                                        setLeftNavExpanded(!navExpanded);
+                                    }}
+                                    component="button"
+                                    sx={{
+                                        width: "100%",
+                                        paddingLeft: 1,
+                                    }}
+                                    aria-expanded={navExpanded}
+                                    aria-controls={
+                                        navExpanded
+                                            ? firstNavSectionId
+                                            : undefined
+                                    }
+                                    id={`toggle-${firstNavSectionId}`}>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 32,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            fontSize: 18,
+                                            color: colors.grey600,
+                                        }}>
+                                        {firstNavItem.icon}
+                                    </ListItemIcon>
+
+                                    <ListItemText
+                                        primary={firstNavItem.label}
+                                        sx={{
+                                            pointerEvents: navOpen
+                                                ? "auto"
+                                                : "none",
+                                            ...opacityFadeStyles,
+                                        }}
+                                    />
+                                    {isMobile && (navExpanded ? (
+                                        <ExpandLessIcon
+                                            color="primary"
+                                            sx={{
+                                                width: ICON_SIZE,
+                                                height: ICON_SIZE,
+                                            }}
+                                        />
+                                    ) : (
+                                        <ExpandMoreIcon
+                                            color="primary"
+                                            sx={{
+                                                width: ICON_SIZE,
+                                                height: ICON_SIZE,
+                                            }}
+                                        />
+                                    ))}
+                                </ListItemButton>
+                            </Tooltip>
+                        </Fragment>
+                    )}
+                    {isMobile ? <Collapse
+                        in={navExpanded}
+                        timeout="auto"
+                        unmountOnExit
+                        id={firstNavSectionId}
+                        role="region"
+                        aria-labelledby={`toggle-${firstNavSectionId}`}>
+
+                        {renderedLeftNav}
+                    </Collapse> : 
+                        renderedLeftNav
+                    }
+
                 </List>
             </Drawer>
         </Box>
