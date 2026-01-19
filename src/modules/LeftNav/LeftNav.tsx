@@ -30,6 +30,7 @@ import {
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useFeatures } from "@/providers/FeatureProvider";
+import { itemsEqual } from "@dnd-kit/sortable/dist/utilities";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -76,14 +77,12 @@ const LeftNav = ({
 
     const itemIds = useMemo(() => {
         return Object.fromEntries(
-            navItems.items.map((item, index) => [
+            navItems.map((item, index) => [
                 item.label,
                 `${baseId}-${index}`,
             ])
         );
     }, [navItems, baseId]);
-
-    const topId = `${baseId}-top`;
 
     const toggleMenu = (item: LeftNavItem) => {
         const isOpen = isExpanded(item, expandedSection, trimmedPathname);
@@ -122,6 +121,10 @@ const LeftNav = ({
 
     const subNavItemSelected = (href: string) =>
         trimmedPathname === href || trimmedPathname.startsWith(`${href}/`);
+
+    const firstNavIdx = navItems.findIndex(item => item.href === trimmedPathname);
+    const firstNavItem = navItems[firstNavIdx];
+    const firstNavSectionId = itemIds[firstNavItem.label];
 
     return (
         <Box>
@@ -208,10 +211,10 @@ const LeftNav = ({
                 <Divider />
 
                 <List component="nav" sx={{ color: colors.grey800 }}>
-                    {navItems.top && (
-                        <Fragment key={navItems.top.label}>
+                    {firstNavItem && (
+                        <Fragment key={firstNavItem.label}>
                             <Tooltip
-                                title={navItems.top.label}
+                                title={firstNavItem.label}
                                 placement="right"
                                 slotProps={{
                                     popper: {
@@ -236,9 +239,9 @@ const LeftNav = ({
                                     }}
                                     aria-expanded={navExpanded}
                                     aria-controls={
-                                        navExpanded ? topId : undefined
+                                        navExpanded ? firstNavSectionId : undefined
                                     }
-                                    id={`toggle-${topId}`}>
+                                    id={`toggle-${firstNavSectionId}`}>
                                     <ListItemIcon
                                         sx={{
                                             minWidth: 32,
@@ -248,11 +251,11 @@ const LeftNav = ({
                                             fontSize: 18,
                                             color: colors.grey600,
                                         }}>
-                                        {navItems.top.icon}
+                                        {firstNavItem.icon}
                                     </ListItemIcon>
 
                                     <ListItemText
-                                        primary={navItems.top.label}
+                                        primary={firstNavItem.label}
                                         sx={{
                                             pointerEvents: navOpen
                                                 ? "auto"
@@ -285,10 +288,10 @@ const LeftNav = ({
                         in={navExpanded}
                         timeout="auto"
                         unmountOnExit
-                        id={topId}
+                        id={firstNavSectionId}
                         role="region"
-                        aria-labelledby={`toggle-${topId}`}>
-                        {navItems.items.map((item, index) => {
+                        aria-labelledby={`toggle-${firstNavSectionId}`}>
+                        {navItems.map((item, index) => {
                             const sectionId = itemIds[item.label];
                             const expanded = isExpanded(
                                 item,

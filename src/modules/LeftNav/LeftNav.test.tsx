@@ -28,7 +28,7 @@ describe("LeftNav", () => {
 
         const { getByText, getAllByRole } = render(
             <LeftNav
-                permissions={{ "cohort.read": true }}
+                permissions={{ "cohort.read": txrue }}
                 initialLeftNavOpen={true}
                 initialExpandLeftNav={true}
             />
@@ -97,6 +97,8 @@ describe("LeftNav", () => {
 
         expect(getByText("Your Profile")).toBeInTheDocument();
         expect(getByText("Library")).not.toBeInTheDocument();
+    });
+    
     it("closes the profile navigation and creates cookie", () => {
         const { getByRole } = render(
             <LeftNav

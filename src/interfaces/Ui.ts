@@ -13,9 +13,4 @@ interface LeftNavItem {
     subItems?: { label: string; href: string }[];
 }
 
-interface LeftNavList {
-    top?: LeftNavItem;
-    items: LeftNavItem[];
-}
-
-export type { IconType, LeftNavItem, LeftNavList };
+export type { IconType, LeftNavItem };
