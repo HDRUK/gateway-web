@@ -22,7 +22,7 @@ const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 const getProfileNav = (permissions: {
     [key: string]: boolean;
 }): LeftNavItem[] => {
-    return ([
+    return [
         {
             icon: navIcon(PersonOutlineOutlinedIcon),
             label: "Your Profile",
@@ -40,21 +40,21 @@ const getProfileNav = (permissions: {
         },
         ...(permissions["custodians.read"]
             ? [
-                    {
-                        icon: navIcon(ControlPointIcon),
-                        label: "Teams",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(ControlPointIcon),
+                      label: "Teams",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
+                  },
+              ]
             : []),
         ...(permissions["cohort.read"]
             ? [
-                    {
-                        icon: navIcon(CohortIcon),
-                        label: "Cohort Discovery Admin",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(CohortIcon),
+                      label: "Cohort Discovery Admin",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
+                  },
+              ]
             : []),
         {
             icon: navIcon(CohortIcon),
@@ -80,11 +80,11 @@ const getProfileNav = (permissions: {
                 },
                 ...(permissions["question-bank.update"]
                     ? [
-                            {
-                                label: "Question Bank",
-                                href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
-                            },
-                        ]
+                          {
+                              label: "Question Bank",
+                              href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}`,
+                          },
+                      ]
                     : []),
             ],
         },
@@ -104,7 +104,7 @@ const getProfileNav = (permissions: {
             label: "Collections",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
         },
-    ])
+    ];
 };
 
 const getTeamNav = (
@@ -116,15 +116,15 @@ const getTeamNav = (
 ): LeftNavItem[] => {
     const { isWidgetsEnabled } = features;
 
-    return ([
+    return [
         ...(permissions["roles.read"]
             ? [
-                    {
-                        icon: navIcon(TeamMembersIcon),
-                        label: "Team members",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(TeamMembersIcon),
+                      label: "Team members",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
+                  },
+              ]
             : []),
         ...([
             permissions["applications.read"],
@@ -132,50 +132,49 @@ const getTeamNav = (
             permissions["integrations.dar"],
         ].some(isTrue => isTrue)
             ? [
-                    {
-                        icon: navIcon(CloudUploadIcon),
-                        label: "Integrations",
-                        subItems: [
-                            ...(permissions["applications.read"]
-                                ? [
+                  {
+                      icon: navIcon(CloudUploadIcon),
+                      label: "Integrations",
+                      subItems: [
+                          ...(permissions["applications.read"]
+                              ? [
                                     {
                                         label: "Custom Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`,
                                     },
                                 ]
-                                : []),
-                            ...([
-                                permissions["integrations.metadata"],
-                                permissions["integrations.dar"],
-                            ].some(isTrue => isTrue)
-                                ? [
+                              : []),
+                          ...([
+                              permissions["integrations.metadata"],
+                              permissions["integrations.dar"],
+                          ].some(isTrue => isTrue)
+                              ? [
                                     {
                                         label: "Predefined Integrations",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`,
                                     },
                                 ]
-                                : []),
-                            ...(permissions["widgets.read"] &&
-                            isWidgetsEnabled
-                                ? [
+                              : []),
+                          ...(permissions["widgets.read"] && isWidgetsEnabled
+                              ? [
                                     {
                                         label: "Widgets",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`,
                                     },
                                 ]
-                                : []),
-                        ],
-                    },
-                ]
+                              : []),
+                      ],
+                  },
+              ]
             : []),
         ...(permissions["datasets.read"]
             ? [
-                    {
-                        icon: navIcon(DatabaseIcon),
-                        label: "Datasets",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(DatabaseIcon),
+                      label: "Datasets",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
+                  },
+              ]
             : []),
         ...([
             permissions["data-access-template.read"],
@@ -183,79 +182,79 @@ const getTeamNav = (
             permissions["data-access-applications.review.read"],
         ].some(isTrue => isTrue)
             ? [
-                    {
-                        icon: navIcon(DarIcon),
-                        label: "Data Access Requests",
-                        subItems: [
-                            ...(permissions["data-access-template.read"]
-                                ? [
+                  {
+                      icon: navIcon(DarIcon),
+                      label: "Data Access Requests",
+                      subItems: [
+                          ...(permissions["data-access-template.read"]
+                              ? [
                                     {
                                         label: "Manage Templates",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`,
                                     },
                                 ]
-                                : []),
-                            ...([
-                                permissions[
-                                    "data-access-applications.provider.read"
-                                ],
-                                permissions[
-                                    "data-access-applications.review.read"
-                                ],
-                            ].some(isTrue => isTrue)
-                                ? [
+                              : []),
+                          ...([
+                              permissions[
+                                  "data-access-applications.provider.read"
+                              ],
+                              permissions[
+                                  "data-access-applications.review.read"
+                              ],
+                          ].some(isTrue => isTrue)
+                              ? [
                                     {
                                         label: "Applications",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`,
                                     },
                                 ]
-                                : []),
-                        ],
-                    },
-                ]
+                              : []),
+                      ],
+                  },
+              ]
             : []),
         ...(permissions["papers.read"]
             ? [
-                    {
-                        icon: navIcon(PublicationIcon),
-                        label: "Publications",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(PublicationIcon),
+                      label: "Publications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
+                  },
+              ]
             : []),
         ...(permissions["tools.read"]
             ? [
-                    {
-                        icon: navIcon(ToolIcon),
-                        label: "Analysis Scripts & Software",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(ToolIcon),
+                      label: "Analysis Scripts & Software",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
+                  },
+              ]
             : []),
         ...(permissions["collections.read"]
             ? [
-                    {
-                        icon: navIcon(BookmarksOutlinedIcon),
-                        label: "Collections",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(BookmarksOutlinedIcon),
+                      label: "Collections",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
+                  },
+              ]
             : []),
         ...(permissions["dur.update"]
             ? [
-                    {
-                        icon: navIcon(DataUseIcon),
-                        label: "Data Uses",
-                        href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
-                    },
-                ]
+                  {
+                      icon: navIcon(DataUseIcon),
+                      label: "Data Uses",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
+                  },
+              ]
             : []),
         {
             icon: navIcon(HelpOutlineOutlinedIcon),
             label: "Help",
             href: RouteName.DATA_CUSTODIAN_SUPPORT,
         },
-    ])
+    ];
 };
 
 export { getProfileNav, getTeamNav };

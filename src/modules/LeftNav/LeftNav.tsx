@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useId, useMemo, useState } from "react";
+import { itemsEqual } from "@dnd-kit/sortable/dist/utilities";
 import {
     Box,
     Collapse,
@@ -30,7 +31,6 @@ import {
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useFeatures } from "@/providers/FeatureProvider";
-import { itemsEqual } from "@dnd-kit/sortable/dist/utilities";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -77,10 +77,7 @@ const LeftNav = ({
 
     const itemIds = useMemo(() => {
         return Object.fromEntries(
-            navItems.map((item, index) => [
-                item.label,
-                `${baseId}-${index}`,
-            ])
+            navItems.map((item, index) => [item.label, `${baseId}-${index}`])
         );
     }, [navItems, baseId]);
 
@@ -122,7 +119,9 @@ const LeftNav = ({
     const subNavItemSelected = (href: string) =>
         trimmedPathname === href || trimmedPathname.startsWith(`${href}/`);
 
-    const firstNavIdx = navItems.findIndex(item => item.href === trimmedPathname);
+    const firstNavIdx = navItems.findIndex(
+        item => item.href === trimmedPathname
+    );
     const firstNavItem = navItems[firstNavIdx];
     const firstNavSectionId = itemIds[firstNavItem.label];
 
@@ -239,7 +238,9 @@ const LeftNav = ({
                                     }}
                                     aria-expanded={navExpanded}
                                     aria-controls={
-                                        navExpanded ? firstNavSectionId : undefined
+                                        navExpanded
+                                            ? firstNavSectionId
+                                            : undefined
                                     }
                                     id={`toggle-${firstNavSectionId}`}>
                                     <ListItemIcon

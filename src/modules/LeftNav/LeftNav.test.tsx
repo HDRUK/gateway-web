@@ -72,7 +72,6 @@ describe("LeftNav", () => {
     });
 
     it("renders can expand", () => {
-
         const { getByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
@@ -86,7 +85,6 @@ describe("LeftNav", () => {
     });
 
     it("renders can collapse", () => {
-
         const { getByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
@@ -98,7 +96,7 @@ describe("LeftNav", () => {
         expect(getByText("Your Profile")).toBeInTheDocument();
         expect(getByText("Library")).not.toBeInTheDocument();
     });
-    
+
     it("closes the profile navigation and creates cookie", () => {
         const { getByRole } = render(
             <LeftNav
