@@ -28,4 +28,8 @@ const setTemporaryCookie = (name: string, value: string, seconds: number) => {
     Cookies.set(name, value, { expires: expiresInDays });
 };
 
-export { getUserFromToken, setTemporaryCookie };
+const checkLeftNavCookie = (cookieValue?: string) => {
+    return cookieValue ? cookieValue === "true" : true;
+};
+
+export { getUserFromToken, setTemporaryCookie, checkLeftNavCookie };

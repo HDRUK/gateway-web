@@ -4,6 +4,7 @@ import TwoColumn from "@/components/TwoColumn";
 import LeftNav from "@/modules/LeftNav";
 import config from "@/config/config";
 import { getUser } from "@/utils/api";
+import { checkLeftNavCookie } from "@/utils/cookies";
 import { getPermissions } from "@/utils/permissions";
 
 export default async function AccountProfileLayout({

@@ -1,6 +1,6 @@
-const apiUrl = 'https://api.healthdatagateway.org';
+const apiUrl = 'http://localhost:8000';
 const schemaModel = 'HDRUK';
-const schemaVersion = '3.0.0';
+const schemaVersion = '4.0.0';
 const ALargeNumber = 10000;
 
 const successfulIds: number[] = [];
