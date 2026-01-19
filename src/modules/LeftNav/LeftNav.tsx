@@ -126,6 +126,8 @@ const LeftNav = ({
     const firstNavItem = firstNavIdx === -1 ? navItems[0] : navItems[firstNavIdx];
     const firstNavSectionId = itemIds[firstNavItem.label];
 
+    const firstNavComponentType = isMobile ? "button": Link;
+
     const renderedLeftNav = (navItems.map((item, index) => {
                             const sectionId = itemIds[item.label];
                             const expanded = isExpanded(
@@ -441,7 +443,7 @@ const LeftNav = ({
                                     onClick={() => {
                                         setLeftNavExpanded(!navExpanded);
                                     }}
-                                    component="button"
+                                    component={firstNavComponentType}
                                     sx={{
                                         width: "100%",
                                         paddingLeft: 1,
@@ -452,7 +454,12 @@ const LeftNav = ({
                                             ? firstNavSectionId
                                             : undefined
                                     }
-                                    id={`toggle-${firstNavSectionId}`}>
+                                    id={`toggle-${firstNavSectionId}`}
+                                    key={firstNavItem.label}
+                                    href={firstNavItem.href || ""}
+                                    passHref
+                                    selected={firstNavItem.href === trimmedPathname}
+                                        >
                                     <ListItemIcon
                                         sx={{
                                             minWidth: 32,
