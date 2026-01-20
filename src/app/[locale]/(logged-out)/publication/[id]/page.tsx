@@ -1,18 +1,20 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
+import { RouteName } from "@/consts/routeName";
 import { getPublication } from "@/utils/api";
 import metaData from "@/utils/metadata";
-import ActionBar from "./components/ActionBar";
 import PublicationContent from "./components/PublicationContent";
 import { publicationFields, relatedContentAccordions } from "./config";
 
@@ -54,7 +56,10 @@ export default async function PublicationItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar />
+                    <HeaderActionBar
+                        backButtonText={t("backLabel")}
+                        backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.TOOLS}`}
+                    />
                     <Box
                         sx={{
                             display: "flex",

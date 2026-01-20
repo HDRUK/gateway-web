@@ -1283,10 +1283,8 @@
         },
         "collection": {
             "introTitle": "Description",
+            "backLabel": "Back to Collections search results",
             "components": {
-                "ActionBar": {
-                    "label": "Back to Collections search results"
-                },
                 "DatasetsContent": {
                     "heading": "Datasets & BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }",
@@ -1317,7 +1315,7 @@
                     "usefulLinks": "Useful links:"
                 },
                 "ActionBar": {
-                    "label": "Back",
+                    "backLabel": "Back",
                     "enquire": "Make a general enquiry",
                     "cohortDiscoveryEnabled": "Start a Cohort Discovery query",
                     "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
@@ -1353,9 +1351,9 @@
             "publications": "Publication",
             "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
+            "backLabel": "Back to Collections search results",
             "components": {
                 "ActionBar": {
-                    "label": "Back to Collections search results",
                     "enquire": "Make an enquiry"
                 },
                 "IntroductionContent": {
@@ -1543,10 +1541,8 @@
             "collections": "Related Collections",
             "authors": "Associated Authors",
             "authorsTooltip": "People who authored this analysis script, tool or software.",
+            "backLabel": "Back to Tools search results",
             "components": {
-                "ActionBar": {
-                    "label": "Back to Tools search results"
-                },
                 "DatasetsContent": {
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
                     "populationSize": "Dataset population size: { length }",
@@ -1590,15 +1586,13 @@
                 },
                 "CollectionsContent": {
                     "heading": "Collections which include this Publication ({ length })"
-                },
-                "ActionBar": {
-                    "label": "Back to Publications search results"
                 }
             },
             "datasets": "Related Datasets",
             "dataUses": "Related Data Uses",
             "tools": "Related Analysis Scripts & Software",
-            "collections": "Related Collections"
+            "collections": "Related Collections",
+            "backLabel": "Back to Publications search results"
         }
     },
     "components": {

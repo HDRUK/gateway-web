@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileExport } from "@/interfaces/FileExport";
 import { SearchCategory } from "@/interfaces/Search";
-import BackButton from "@/components/BackButton";
-import Box from "@/components/Box";
 import Button from "@/components/Button";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import MenuDropdown from "@/components/MenuDropdown";
 import useAuth from "@/hooks/useAuth";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
@@ -25,7 +24,6 @@ import {
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { downloadFile } from "@/utils/download";
-import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
@@ -34,7 +32,6 @@ interface ActionBarProps {
 }
 
 const ActionBar = ({ dataset }: ActionBarProps) => {
-    const router = useRouter();
     const [isDownloading, setIsDownloading] = useState(false);
     const { id: datasetId, name } = dataset;
     const path = usePathname();
@@ -208,93 +205,90 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     };
 
     return (
-        <ActionBarWrapper
-            sx={{
+        <HeaderActionBar
+            backButtonText={t("label")}
+            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`}
+            additionalContentSx={{
                 display: { mobile: "grid", desktop: "flex" },
-                gap: { mobile: 1, desktop: 0 },
-            }}>
-            <BackButton
-                label={t("label")}
-                style={{ margin: 0, justifySelf: "flex-start" }}
-                onClick={() =>
-                    router.push(
-                        `/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`
-                    )
-                }
-            />
-
-            <Box
-                sx={{
-                    display: { mobile: "grid", desktop: "flex" },
-                    gap: 1,
-                    p: 0,
-                    gridTemplateColumns: {
-                        mobile: "repeat(2, minmax(0, 1fr))",
-                        desktop: "none",
-                    },
-                }}>
-                <Button onClick={handleGeneralEnquiryClick}>
-                    <QuestionAnswerIcon
-                        sx={{
-                            pr: 1,
-                            display: { mobile: "none", tablet: "inline-block" },
-                        }}
-                    />
-                    {t("generalEnquiryButtonText")}
-                </Button>
-                <Button onClick={handleFeasibilityEnquiryClick}>
-                    <QuestionAnswerIcon
-                        sx={{
-                            pr: 1,
-                            display: { mobile: "none", tablet: "inline-block" },
-                        }}
-                    />
-                    {t("feasibilityEnquiryButtonText")}
-                </Button>
-                <Button
-                    onClick={handleStartDarRequest}
-                    variant="outlined"
-                    color="secondary">
-                    {t("submitApplication")}
-                </Button>
-
-                <Button
-                    aria-label={t("downloadMetadata")}
-                    variant="text"
-                    startIcon={
-                        <DownloadIcon
+                width: { mobile: "100%", desktop: "auto" },
+                gap: 1,
+                p: 0,
+                gridTemplateColumns: {
+                    mobile: "repeat(2, minmax(0, 1fr))",
+                    desktop: "none",
+                },
+            }}
+            additionalContent={
+                <>
+                    <Button onClick={handleGeneralEnquiryClick}>
+                        <QuestionAnswerIcon
                             sx={{
-                                fill: "primary",
-                            }}
-                        />
-                    }
-                    endIcon={
-                        <ChevronThinIcon
-                            fontSize="medium"
-                            style={{ color: "primary" }}
-                            sx={{
+                                pr: 1,
                                 display: {
                                     mobile: "none",
                                     tablet: "inline-block",
                                 },
                             }}
                         />
-                    }
-                    sx={{
-                        bgcolor: colors.grey200,
-                        ml: { mobile: 0, desktop: 2 },
-                    }}
-                    onClick={handleOpenDropdownMenu}>
-                    {t("downloadMetadata")}
-                </Button>
-                <MenuDropdown
-                    handleClose={() => setAnchorElement(null)}
-                    menuItems={menuItems}
-                    anchorElement={anchorElement}
-                    title="downloads"
-                />
-            </Box>
-        </ActionBarWrapper>
+                        {t("generalEnquiryButtonText")}
+                    </Button>
+                    <Button onClick={handleFeasibilityEnquiryClick}>
+                        <QuestionAnswerIcon
+                            sx={{
+                                pr: 1,
+                                display: {
+                                    mobile: "none",
+                                    tablet: "inline-block",
+                                },
+                            }}
+                        />
+                        {t("feasibilityEnquiryButtonText")}
+                    </Button>
+                    <Button
+                        onClick={handleStartDarRequest}
+                        variant="outlined"
+                        color="secondary">
+                        {t("submitApplication")}
+                    </Button>
+
+                    <Button
+                        aria-label={t("downloadMetadata")}
+                        variant="text"
+                        startIcon={
+                            <DownloadIcon
+                                sx={{
+                                    fill: "primary",
+                                }}
+                            />
+                        }
+                        endIcon={
+                            <ChevronThinIcon
+                                fontSize="medium"
+                                style={{ color: "primary" }}
+                                sx={{
+                                    display: {
+                                        mobile: "none",
+                                        tablet: "inline-block",
+                                    },
+                                }}
+                            />
+                        }
+                        sx={{
+                            bgcolor: colors.grey200,
+                            ml: { mobile: 0, desktop: 2 },
+                        }}
+                        onClick={handleOpenDropdownMenu}>
+                        {t("downloadMetadata")}
+                    </Button>
+                    <MenuDropdown
+                        handleClose={() => setAnchorElement(null)}
+                        menuItems={menuItems}
+                        anchorElement={anchorElement}
+                        title="downloads"
+                    />
+                </>
+            }
+        />
     );
 };
 
