@@ -4,6 +4,7 @@ import TwoColumn from "@/components/TwoColumn";
 import LeftNav from "@/modules/LeftNav";
 import config from "@/config/config";
 import { getTeam, getUser } from "@/utils/api";
+import { checkLeftNavCookie } from "@/utils/cookies";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 
@@ -29,10 +30,9 @@ export default async function AccountTeamLayout({
                         teamId={teamId}
                         permissions={permissions}
                         navHeading={team.name}
-                        initialLeftNavOpen={
-                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
-                            "true"
-                        }
+                        initialLeftNavOpen={checkLeftNavCookie(
+                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value
+                        )}
                     />
                 }
                 rightContent={children}
