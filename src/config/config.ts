@@ -4,7 +4,7 @@ const config = {
     PUBLICATION_LOCAL_STORAGE: "publication-data",
     VIEW_TYPE: "view-type",
     LEFT_NAV_COOKIE: "leftNavOpen",
-    EXPAND_LEFT_NAV: "leftNavExpanded",
+    EXPAND_LEFT_NAV_ON_MOBILE: "leftNavExpanded",
 };
 
 export default config;

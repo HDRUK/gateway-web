@@ -47,7 +47,7 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
-    initialExpandLeftNav: boolean;
+    initialExpandLeftNavOnMobile: boolean;
 }
 
 const ICON_SIZE = "18px";
@@ -59,7 +59,7 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
-    initialExpandLeftNav,
+    initialExpandLeftNavOnMobile,
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
@@ -97,12 +97,12 @@ const LeftNav = ({
         Cookies.set(config.LEFT_NAV_COOKIE, open.toString());
     };
 
-    const [navExpanded, setNavExpanded] =
-        useState<boolean>(initialExpandLeftNav);
+    const [navExpandedOnMobile, setNavExpandedOnMobile] =
+        useState<boolean>(initialExpandLeftNavOnMobile);
 
-    const setLeftNavExpanded = (expanded: boolean) => {
-        setNavExpanded(expanded);
-        Cookies.set(config.EXPAND_LEFT_NAV, expanded.toString());
+    const setLeftNavExpandedOnMobile = (expanded: boolean) => {
+        setNavExpandedOnMobile(expanded);
+        Cookies.set(config.EXPAND_LEFT_NAV_ON_MOBILE, expanded.toString());
     };
 
     const easing = theme.transitions.easing[navOpen ? "easeOut" : "easeIn"];
@@ -119,202 +119,201 @@ const LeftNav = ({
     const subNavItemSelected = (href: string) =>
         trimmedPathname === href || trimmedPathname.startsWith(`${href}/`);
 
-    const firstNavIdx = isMobile ? navItems.findIndex(
-        item => item.href === trimmedPathname
-    ) : 0;
+    const getIdxFromSubItem = (href: string) => {
+        const subItemsIdx = navItems.flatMap((item, index) => {
+            if (item.subItems) {
+                return item.subItems.map(value => ({
+                    value,
+                    originalIndex: index,
+                }));
+            }
+        });
 
-    const firstNavItem = firstNavIdx === -1 ? navItems[0] : navItems[firstNavIdx];
+        return subItemsIdx.find(x => x?.value.href == href)?.originalIndex;
+    };
+
+    const firstNavIdx = isMobile
+        ? navItems.findIndex(item => item.href === trimmedPathname)
+        : 0;
+
+    const subIndexIdx = getIdxFromSubItem(trimmedPathname) ?? 0;
+
+    const firstNavItem =
+        firstNavIdx === -1 ? navItems[subIndexIdx] : navItems[firstNavIdx];
     const firstNavSectionId = itemIds[firstNavItem.label];
 
-    const firstNavComponentType = isMobile ? "button": Link;
+    const firstNavComponentType = isMobile ? "button" : Link;
 
-    const renderedLeftNav = (navItems.map((item, index) => {
-                            const sectionId = itemIds[item.label];
-                            const expanded = isExpanded(
-                                item,
-                                expandedSection,
-                                trimmedPathname
-                            );
+    const renderLeftNavItem = (item : LeftNavItem) => {
+        const sectionId = itemIds[item.label];
+        const expanded = isExpanded(item, expandedSection, trimmedPathname);
 
-                            if (!isMobile && item === firstNavItem) {
-                                return;
+        if (item === firstNavItem) {
+            return;
+        }
+
+        return !item.subItems ? (
+            <Tooltip
+                title={!navOpen ? item.label : ""}
+                placement="right"
+                slotProps={{
+                    popper: {
+                        modifiers: [
+                            {
+                                name: "offset",
+                                options: {
+                                    offset: [0, -190],
+                                },
+                            },
+                        ],
+                    },
+                }}>
+                <ListItemButton
+                    component={Link}
+                    key={item.label}
+                    href={item.href || ""}
+                    passHref
+                    selected={item.href === trimmedPathname}
+                    aria-current={
+                        item.href === trimmedPathname ? "page" : undefined
+                    }
+                    sx={{
+                        paddingLeft: 1,
+                    }}>
+                    <ListItemIcon
+                        sx={{
+                            minWidth: 32,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 18,
+                            color: colors.grey600,
+                        }}>
+                        {item.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={item.label}
+                        sx={{
+                            pointerEvents: navOpen ? "auto" : "none",
+                            ...opacityFadeStyles,
+                        }}
+                    />
+                </ListItemButton>
+            </Tooltip>
+        ) : (
+            <Fragment key={item.label}>
+                <Tooltip
+                    title={!navOpen ? item.label : ""}
+                    placement="right"
+                    slotProps={{
+                        popper: {
+                            modifiers: [
+                                {
+                                    name: "offset",
+                                    options: {
+                                        offset: [0, -190],
+                                    },
+                                },
+                            ],
+                        },
+                    }}>
+                    <ListItemButton
+                        onClick={() => {
+                            if (!navOpen) {
+                                setLeftNav(true);
+
+                                if (
+                                    !isExpanded(
+                                        item,
+                                        expandedSection,
+                                        trimmedPathname
+                                    )
+                                ) {
+                                    toggleMenu(item);
+                                }
+                            } else {
+                                toggleMenu(item);
                             }
+                        }}
+                        component="button"
+                        sx={{
+                            width: "100%",
+                            paddingLeft: 1,
+                        }}
+                        aria-expanded={expanded}
+                        aria-controls={navOpen ? sectionId : undefined}
+                        id={`toggle-${sectionId}`}>
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 32,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: 18,
+                                color: colors.grey600,
+                            }}>
+                            {item.icon}
+                        </ListItemIcon>
 
-                            return !item.subItems ? (
-                                <Tooltip
-                                    title={!navOpen ? item.label : ""}
-                                    placement="right"
-                                    slotProps={{
-                                        popper: {
-                                            modifiers: [
-                                                {
-                                                    name: "offset",
-                                                    options: {
-                                                        offset: [0, -190],
-                                                    },
-                                                },
-                                            ],
-                                        },
-                                    }}>
-                                    <ListItemButton
-                                        component={Link}
-                                        key={item.label}
-                                        href={item.href || ""}
-                                        passHref
-                                        selected={item.href === trimmedPathname}
-                                        aria-current={
-                                            item.href === trimmedPathname
-                                                ? "page"
-                                                : undefined
-                                        }
+                        <ListItemText
+                            primary={item.label}
+                            sx={{
+                                pointerEvents: navOpen ? "auto" : "none",
+                                ...opacityFadeStyles,
+                            }}
+                        />
+                        {expanded ? (
+                            <ExpandLessIcon
+                                color="primary"
+                                sx={{
+                                    width: ICON_SIZE,
+                                    height: ICON_SIZE,
+                                }}
+                            />
+                        ) : (
+                            <ExpandMoreIcon
+                                color="primary"
+                                sx={{
+                                    width: ICON_SIZE,
+                                    height: ICON_SIZE,
+                                }}
+                            />
+                        )}
+                    </ListItemButton>
+                </Tooltip>
+
+                {navOpen && (
+                    <Collapse
+                        in={expanded}
+                        timeout="auto"
+                        unmountOnExit
+                        id={sectionId}
+                        role="region"
+                        aria-labelledby={`toggle-${sectionId}`}>
+                        <List component="div" disablePadding>
+                            {item.subItems.map(subItem => (
+                                <ListItemButton
+                                    component={Link}
+                                    key={subItem.label}
+                                    href={subItem.href}
+                                    passHref
+                                    sx={{
+                                        p: 0,
+                                        color: colors.grey700,
+                                    }}
+                                    aria-current={
+                                        subNavItemSelected(subItem.href)
+                                            ? "page"
+                                            : undefined
+                                    }>
+                                    <ListItemText
                                         sx={{
-                                            paddingLeft: 1,
-                                        }}>
-                                        <ListItemIcon
-                                            sx={{
-                                                minWidth: 32,
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                fontSize: 18,
-                                                color: colors.grey600,
-                                            }}>
-                                            {item.icon}
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={item.label}
-                                            sx={{
-                                                pointerEvents: navOpen
-                                                    ? "auto"
-                                                    : "none",
-                                                ...opacityFadeStyles,
-                                            }}
-                                        />
-                                    </ListItemButton>
-                                </Tooltip>
-                            ) : (
-                                <Fragment key={item.label}>
-                                    <Tooltip
-                                        title={!navOpen ? item.label : ""}
-                                        placement="right"
-                                        slotProps={{
-                                            popper: {
-                                                modifiers: [
-                                                    {
-                                                        name: "offset",
-                                                        options: {
-                                                            offset: [0, -190],
-                                                        },
-                                                    },
-                                                ],
-                                            },
-                                        }}>
-                                        <ListItemButton
-                                            onClick={() => {
-                                                if (!navOpen) {
-                                                    setLeftNav(true);
-
-                                                    if (
-                                                        !isExpanded(
-                                                            item,
-                                                            expandedSection,
-                                                            trimmedPathname
-                                                        )
-                                                    ) {
-                                                        toggleMenu(item);
-                                                    }
-                                                } else {
-                                                    toggleMenu(item);
-                                                }
-                                            }}
-                                            component="button"
-                                            sx={{
-                                                width: "100%",
-                                                paddingLeft: 1,
-                                            }}
-                                            aria-expanded={expanded}
-                                            aria-controls={
-                                                navOpen ? sectionId : undefined
-                                            }
-                                            id={`toggle-${sectionId}`}>
-                                            <ListItemIcon
-                                                sx={{
-                                                    minWidth: 32,
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                    fontSize: 18,
-                                                    color: colors.grey600,
-                                                }}>
-                                                {item.icon}
-                                            </ListItemIcon>
-
-                                            <ListItemText
-                                                primary={item.label}
-                                                sx={{
-                                                    pointerEvents: navOpen
-                                                        ? "auto"
-                                                        : "none",
-                                                    ...opacityFadeStyles,
-                                                }}
-                                            />
-                                            {expanded ? (
-                                                <ExpandLessIcon
-                                                    color="primary"
-                                                    sx={{
-                                                        width: ICON_SIZE,
-                                                        height: ICON_SIZE,
-                                                    }}
-                                                />
-                                            ) : (
-                                                <ExpandMoreIcon
-                                                    color="primary"
-                                                    sx={{
-                                                        width: ICON_SIZE,
-                                                        height: ICON_SIZE,
-                                                    }}
-                                                />
-                                            )}
-                                        </ListItemButton>
-                                    </Tooltip>
-
-                                    {navOpen && (
-                                        <Collapse
-                                            in={expanded}
-                                            timeout="auto"
-                                            unmountOnExit
-                                            id={sectionId}
-                                            role="region"
-                                            aria-labelledby={`toggle-${sectionId}`}>
-                                            <List
-                                                component="div"
-                                                disablePadding>
-                                                {item.subItems.map(subItem => (
-                                                    <ListItemButton
-                                                        component={Link}
-                                                        key={subItem.label}
-                                                        href={subItem.href}
-                                                        passHref
-                                                        sx={{
-                                                            p: 0,
-                                                            color: colors.grey700,
-                                                        }}
-                                                        aria-current={
-                                                            subNavItemSelected(
-                                                                subItem.href
-                                                            )
-                                                                ? "page"
-                                                                : undefined
-                                                        }>
-                                                        <ListItemText
-                                                            sx={{
-                                                                paddingLeft:
-                                                                    "17px",
-                                                                m: 0,
-                                                                ml: 6,
-                                                                py: 1.5,
-                                                                px: 1,
-                                                                borderLeft: `1px solid 
+                                            paddingLeft: "17px",
+                                            m: 0,
+                                            ml: 6,
+                                            py: 1.5,
+                                            px: 1,
+                                            borderLeft: `1px solid 
                                                                 ${
                                                                     subNavItemSelected(
                                                                         subItem.href
@@ -322,20 +321,21 @@ const LeftNav = ({
                                                                         ? colors.green400
                                                                         : colors.grey200
                                                                 }`,
-                                                            }}
-                                                            primary={
-                                                                subItem.label
-                                                            }
-                                                        />
-                                                    </ListItemButton>
-                                                ))}
-                                            </List>
-                                        </Collapse>
-                                    )}
-                                </Fragment>
-                            );
-                        })
-                    );
+                                        }}
+                                        primary={subItem.label}
+                                    />
+                                </ListItemButton>
+                            ))}
+                        </List>
+                    </Collapse>
+                )}
+            </Fragment>
+        );
+    };
+
+    const renderedfirstNavItem = renderLeftNavItem(firstNavItem);
+
+    const renderedLeftNav = navItems.map((item, index) => {return renderLeftNavItem(item)});
 
     return (
         <Box>
@@ -441,25 +441,28 @@ const LeftNav = ({
                                 }}>
                                 <ListItemButton
                                     onClick={() => {
-                                        setLeftNavExpanded(!navExpanded);
+                                        setLeftNavExpandedOnMobile(!navExpandedOnMobile);
                                     }}
                                     component={firstNavComponentType}
                                     sx={{
                                         width: "100%",
                                         paddingLeft: 1,
                                     }}
-                                    aria-expanded={navExpanded}
+                                    aria-expanded={navExpandedOnMobile}
                                     aria-controls={
-                                        navExpanded
+                                        navExpandedOnMobile
                                             ? firstNavSectionId
                                             : undefined
                                     }
                                     id={`toggle-${firstNavSectionId}`}
                                     key={firstNavItem.label}
-                                    href={firstNavItem.href || ""}
+                                    href={
+                                        isMobile ? "" : firstNavItem.href || ""
+                                    }
                                     passHref
-                                    selected={firstNavItem.href === trimmedPathname}
-                                        >
+                                    selected={
+                                        firstNavItem.href === trimmedPathname
+                                    }>
                                     <ListItemIcon
                                         sx={{
                                             minWidth: 32,
@@ -481,40 +484,41 @@ const LeftNav = ({
                                             ...opacityFadeStyles,
                                         }}
                                     />
-                                    {isMobile && (navExpanded ? (
-                                        <ExpandLessIcon
-                                            color="primary"
-                                            sx={{
-                                                width: ICON_SIZE,
-                                                height: ICON_SIZE,
-                                            }}
-                                        />
-                                    ) : (
-                                        <ExpandMoreIcon
-                                            color="primary"
-                                            sx={{
-                                                width: ICON_SIZE,
-                                                height: ICON_SIZE,
-                                            }}
-                                        />
-                                    ))}
+                                    {isMobile &&
+                                        (navExpandedOnMobile ? (
+                                            <ExpandLessIcon
+                                                color="primary"
+                                                sx={{
+                                                    width: ICON_SIZE,
+                                                    height: ICON_SIZE,
+                                                }}
+                                            />
+                                        ) : (
+                                            <ExpandMoreIcon
+                                                color="primary"
+                                                sx={{
+                                                    width: ICON_SIZE,
+                                                    height: ICON_SIZE,
+                                                }}
+                                            />
+                                        ))}
                                 </ListItemButton>
                             </Tooltip>
                         </Fragment>
                     )}
-                    {isMobile ? <Collapse
-                        in={navExpanded}
-                        timeout="auto"
-                        unmountOnExit
-                        id={firstNavSectionId}
-                        role="region"
-                        aria-labelledby={`toggle-${firstNavSectionId}`}>
-
-                        {renderedLeftNav}
-                    </Collapse> : 
+                    {isMobile ? (
+                        <Collapse
+                            in={navExpandedOnMobile}
+                            timeout="auto"
+                            unmountOnExit
+                            id={firstNavSectionId}
+                            role="region"
+                            aria-labelledby={`toggle-${firstNavSectionId}`}>
+                            {renderedLeftNav}
+                        </Collapse>
+                    ) : (
                         renderedLeftNav
-                    }
-
+                    )}
                 </List>
             </Drawer>
         </Box>
