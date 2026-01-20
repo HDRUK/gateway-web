@@ -11,7 +11,9 @@ const defaultValues: TeamEditForm = {
     users: [],
     is_question_bank: false,
     introduction: "",
+    dar_modal_header: "",
     dar_modal_content: "",
+    dar_modal_footer: "",
     aliases: [],
 };
 
@@ -28,7 +30,9 @@ const createDefaultValues: TeamCreateForm = {
     uses_5_safes: true,
     is_question_bank: false,
     introduction: "",
+    dar_modal_header: "",
     dar_modal_content: "",
+    dar_modal_footer: "",
     aliases: [],
 };
 
@@ -42,7 +46,17 @@ const validationSchema = yup.object({
         .min(1, "Team admin(s) is a required field")
         .of(yup.number())
         .label("Team admin(s)"),
+    dar_modal_header: yup
+        .string()
+        .nullable()
+        .label("Dar modal header")
+        .max(255),
     dar_modal_content: yup.string().nullable().label("Dar modal content"),
+    dar_modal_footer: yup
+        .string()
+        .nullable()
+        .label("Dar modal footer")
+        .max(255),
 });
 
 const questionBankField = {
@@ -121,9 +135,20 @@ const formFields = [
         component: inputComponents.TextField,
     },
     {
+        label: "DAR modal header",
+        name: "dar_modal_header",
+        component: inputComponents.TextField,
+        max: 255,
+    },
+    {
         label: "DAR modal content",
         name: "dar_modal_content",
         component: inputComponents.Wysiwyg,
+    },
+    {
+        label: "DAR modal footer",
+        name: "dar_modal_footer",
+        component: inputComponents.TextField,
     },
 ];
 

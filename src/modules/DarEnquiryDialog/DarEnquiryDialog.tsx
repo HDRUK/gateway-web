@@ -27,6 +27,7 @@ export interface DarEnquiryDialogProps {
     url: string;
     modalHeader?: string;
     modalContent?: string;
+    modalFooter?: string;
     datasetIds: number[];
     teamIds: number[];
     redirectPath?: string;
@@ -42,6 +43,7 @@ const DarEnquiryDialog = ({
     hasPublishedDarTemplate,
     modalHeader,
     modalContent,
+    modalFooter,
     url,
     datasetIds,
     teamIds,
@@ -74,6 +76,8 @@ const DarEnquiryDialog = ({
                 ) : (
                     <Typography mb={2}>{t("messageNotEnabled")}</Typography>
                 )}
+
+                {modalFooter && <Typography>{modalFooter}</Typography>}
 
                 {!isDarEnabled && (
                     <Typography>
