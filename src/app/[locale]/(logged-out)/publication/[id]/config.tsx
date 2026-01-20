@@ -42,11 +42,6 @@ const publicationFields: PublicationSection[] = [
                 type: FieldType.TEXT,
             },
             {
-                path: "team_id",
-                type: FieldType.TEXT,
-            },
-
-            {
                 path: "publication_type",
                 type: FieldType.TEXT,
             },
