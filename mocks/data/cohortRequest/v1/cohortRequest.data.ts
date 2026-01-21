@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { CohortRequest } from "@/interfaces/CohortRequest";
 import { generateUserV1 } from "@/mocks/data/user";
 
-const generateCohortRequestV1 = (data = {}): CohortRequest => {
+const generateCohortRequestV1 = (data = {}): Partial<CohortRequest> => {
     return {
         id: faker.datatype.number(),
         request_status: faker.helpers.arrayElement([
