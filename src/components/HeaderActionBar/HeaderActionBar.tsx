@@ -31,7 +31,7 @@ const HeaderActionBar = ({
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
-                boxShadow: "1px 1px 3px 0px #00000017",
+                boxShadow: theme.customShadows.subtle,
                 flexDirection: "column",
                 gap: 2,
 

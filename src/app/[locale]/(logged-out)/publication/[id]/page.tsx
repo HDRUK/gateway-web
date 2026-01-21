@@ -8,6 +8,7 @@ import DataUsesContent from "@/components/DataUsesContent";
 import DatasetsContent from "@/components/DatasetsContent";
 import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
@@ -70,9 +71,11 @@ export default async function PublicationItemPage({
                         }}>
                         <Typography
                             variant="h2"
-                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}
-                            id="anchor1">
-                            {data.paper_title}
+                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}>
+                            <MarkDownSanitizedWithHtml
+                                content={data.paper_title}
+                                wrapper="span"
+                            />
                         </Typography>
 
                         <PublicationContent

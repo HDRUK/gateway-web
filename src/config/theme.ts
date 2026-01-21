@@ -53,6 +53,18 @@ declare module "@mui/material/styles" {
         greyCustom?: PaletteOptions["primary"];
         yellowCustom?: PaletteOptions["primary"];
     }
+
+    interface Theme {
+        customShadows: {
+            subtle: string;
+        };
+    }
+
+    interface ThemeOptions {
+        customShadows?: {
+            subtle?: string;
+        };
+    }
 }
 
 declare module "@mui/material/Button" {
@@ -173,6 +185,8 @@ const palette = {
         contrastText: colors.white,
     },
 };
+
+const subtleShadow = "1px 1px 3px 0 rgba(0,0,0,.09)";
 
 const theme = createTheme({
     typography: {
@@ -511,7 +525,7 @@ const theme = createTheme({
             styleOverrides: {
                 paper: {
                     borderRadius: 0,
-                    boxShadow: "1px 1px 3px 0 rgba(0,0,0,.09)",
+                    boxShadow: subtleShadow,
                 },
             },
         },
@@ -560,7 +574,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 0,
-                    boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+                    boxShadow: subtleShadow,
                 },
             },
         },
@@ -751,6 +765,9 @@ const theme = createTheme({
                 },
             ],
         },
+    },
+    customShadows: {
+        subtle: subtleShadow,
     },
 });
 
