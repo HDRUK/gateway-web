@@ -1,4 +1,4 @@
-import { LeftNavItem, LeftNavList } from "@/interfaces/Ui";
+import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
     ToolIcon,
