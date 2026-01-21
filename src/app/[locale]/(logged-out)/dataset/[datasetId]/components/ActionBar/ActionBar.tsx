@@ -125,6 +125,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
             hasPublishedDarTemplate: team.has_published_dar_template,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
+            modalFooter: team.dar_modal_footer,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             datasetIds: [datasetId],
             teamIds: [team.id],
