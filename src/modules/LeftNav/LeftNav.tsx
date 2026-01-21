@@ -65,7 +65,8 @@ const LeftNav = ({
 
     //const tempPositions =  {"cohort.read": false};
     const tempPositions = permissions;
-    const navItems = teamId
+    const tempTeamId = null;
+    const navItems = tempTeamId
         ? getTeamNav(tempPositions, teamId, features)
         : getProfileNav(tempPositions);
 

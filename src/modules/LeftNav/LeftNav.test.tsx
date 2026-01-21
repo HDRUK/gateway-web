@@ -4,8 +4,7 @@ import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
 import { fireEvent, render, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
-import { TrendingUpTwoTone } from "@mui/icons-material";
-import useMediaQuery from '@mui/material/useMediaQuery';
+
 jest.mock("js-cookie", () => ({
     set: jest.fn(),
 }));
@@ -20,7 +19,9 @@ describe("LeftNav", () => {
             />
         );
 
-        expect(getAllByRole("link")).toHaveLength(6);
+        const links = getAllByRole("link");
+        console.log(links);
+        expect(links).toHaveLength(6);
         expect(getByText("Your Profile")).toBeInTheDocument();
     });
 
